@@ -1,0 +1,53 @@
+@startuml
+title Сценарий 3b — Подтверждение телефона
+left to right direction
+skinparam packageStyle rectangle
+skinparam nodesep 20
+skinparam ranksep 8
+skinparam wrapWidth 120
+
+actor "Страница подтверждения телефона" as PhoneVerifyPage
+actor "Профиль (страница аккаунта)" as ProfilePage
+
+usecase "Проверить SMS-код" as UC_CheckSms
+usecase "Ввести SMS-код" as UC_EnterSms
+usecase "Подтвердить телефон" as UC_ConfirmPhone
+usecase "Код неверен" as UC_BadSms
+usecase "Показать\nошибку кода" as UC_ShowBadSms
+
+usecase "Отправить\nповторно" as UC_Resend
+usecase "Проверить\nлимиты отправки" as UC_CheckResendLimits
+usecase "Лимит\nпревышен" as UC_LimitExceeded
+usecase "Показать\nсообщение о лимите" as UC_ShowLimit
+
+usecase "Открыть\nпрофиль" as UC_OpenProfile
+
+PhoneVerifyPage -- UC_ConfirmPhone
+PhoneVerifyPage -- UC_Resend
+
+UC_ConfirmPhone ..> UC_CheckSms : <<include>>
+UC_CheckSms ..> UC_EnterSms : <<include>>
+UC_BadSms ..> UC_CheckSms : <<extend>>
+UC_BadSms ..> UC_ShowBadSms : <<include>>
+
+UC_Resend ..> UC_CheckResendLimits : <<include>>
+UC_LimitExceeded ..> UC_CheckResendLimits : <<extend>>
+UC_LimitExceeded ..> UC_ShowLimit : <<include>>
+
+UC_ConfirmPhone ..> UC_OpenProfile : <<include>>
+ProfilePage -- UC_OpenProfile
+
+note right of UC_CheckSms
+Предусловие: пользователь получил и ввел SMS-код.
+Алгоритм: сервер проверяет код (валидность, срок, соответствие номеру).
+Постусловие: телефон подтвержден или показана ошибка кода.
+Точки расширения: «Код неверен».
+end note
+
+note right of UC_CheckResendLimits
+Предусловие: пользователь на странице подтверждения телефона.
+Алгоритм: проверить лимиты (не чаще 30с, не более 5 раз/ч).
+Постусловие: либо код отправлен, либо показано сообщение о лимите.
+end note
+
+@enduml

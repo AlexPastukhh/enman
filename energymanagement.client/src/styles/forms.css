@@ -1,0 +1,94 @@
+
+.form{
+ --formGroupMarginTop:1rem;
+
+  width: 30rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 0.1rem solid #ccc;
+  border-radius: 1rem;
+}
+.formTitle{
+  font-size: 2rem;
+}
+.formGroup{
+  width: 80%;
+  margin-top: 1rem;
+  
+  display: flex;
+  flex-direction: column;
+}
+.formControl{  
+  width: 100%;
+  font-size: 1.6rem;
+  padding: 0.8rem; 
+  margin-top: 0.5rem;
+  border-radius: 1rem;
+  border: 0.1rem solid #ccc;
+}
+.form label{
+  font-weight: 400;
+}
+
+
+
+input.formControl:focus{
+  border-color: var(--color-primary);
+  outline: solid;
+  outline-width: 0.2rem;
+  outline-color: var(--color-background);
+}
+
+.passwordWrapper{
+  position: relative;
+}
+
+
+.iconsButton{
+  position: absolute;
+  right: 5%;
+  height: 35%;
+
+  transform: translateY(calc(50% + 0.85rem));
+  background: none;
+  border: none;
+  cursor: pointer;}
+.icon{
+  opacity: 0.7;
+}
+.eyeClosedIcon {
+  width: 115%; /* Match parent width */
+  height: 115%; /* Match parent height */
+  transform: translate(-0.15rem, -0.12rem);
+}
+
+.formErrors{
+  font-size: 1.4rem;
+  margin-top: 0.5rem;
+}
+.errorsHidden{
+  visibility: hidden;
+  transform: translate(-1rem);
+  opacity: 0;
+}
+.errorsVisible{
+  visibility: visible;
+  color: red;
+  transform: translateY(0);
+  transition: all 0.3s ease-in-out;
+}
+
+.formInfoText{
+  display: inline-flex;
+  font-size: 1.2rem;
+}
+.formButtonGroup{
+  margin-top: -0.2rem;
+}
+.closeGroup{
+  margin-top:calc(var(--formGroupMarginTop)-0.5rem);
+}
+

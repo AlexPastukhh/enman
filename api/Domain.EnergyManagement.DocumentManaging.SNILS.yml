@@ -1,0 +1,862 @@
+### YamlMime:ManagedReference
+items:
+- uid: Domain.EnergyManagement.DocumentManaging.SNILS
+  commentId: T:Domain.EnergyManagement.DocumentManaging.SNILS
+  id: SNILS
+  parent: Domain.EnergyManagement.DocumentManaging
+  children:
+  - Domain.EnergyManagement.DocumentManaging.SNILS.Create(System.String)
+  - Domain.EnergyManagement.DocumentManaging.SNILS.GetEqualityComponents
+  - Domain.EnergyManagement.DocumentManaging.SNILS.ToFormattedString
+  - Domain.EnergyManagement.DocumentManaging.SNILS.Value
+  - Domain.EnergyManagement.DocumentManaging.SNILS.op_Implicit(Domain.EnergyManagement.DocumentManaging.SNILS)~System.String
+  langs:
+  - csharp
+  - vb
+  name: SNILS
+  nameWithType: SNILS
+  fullName: Domain.EnergyManagement.DocumentManaging.SNILS
+  type: Class
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/SNILS.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: SNILS
+    path: Domain.EnergyManagement/DocumentManaging/SNILS.cs
+    startLine: 12
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: 'public class SNILS : ValueObject, IComparable, IComparable<ValueObject>'
+    content.vb: Public Class SNILS Inherits ValueObject Implements IComparable, IComparable(Of ValueObject)
+  inheritance:
+  - System.Object
+  - CSharpFunctionalExtensions.ValueObject
+  implements:
+  - System.IComparable
+  - System.IComparable{CSharpFunctionalExtensions.ValueObject}
+  inheritedMembers:
+  - CSharpFunctionalExtensions.ValueObject.Equals(System.Object)
+  - CSharpFunctionalExtensions.ValueObject.GetHashCode
+  - CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+  - CSharpFunctionalExtensions.ValueObject.CompareTo(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Domain.EnergyManagement.DocumentManaging.SNILS.Value
+  commentId: P:Domain.EnergyManagement.DocumentManaging.SNILS.Value
+  id: Value
+  parent: Domain.EnergyManagement.DocumentManaging.SNILS
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: SNILS.Value
+  fullName: Domain.EnergyManagement.DocumentManaging.SNILS.Value
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/SNILS.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: Value
+    path: Domain.EnergyManagement/DocumentManaging/SNILS.cs
+    startLine: 16
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: public string Value { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Value As String
+  overload: Domain.EnergyManagement.DocumentManaging.SNILS.Value*
+- uid: Domain.EnergyManagement.DocumentManaging.SNILS.Create(System.String)
+  commentId: M:Domain.EnergyManagement.DocumentManaging.SNILS.Create(System.String)
+  id: Create(System.String)
+  parent: Domain.EnergyManagement.DocumentManaging.SNILS
+  langs:
+  - csharp
+  - vb
+  name: Create(string)
+  nameWithType: SNILS.Create(string)
+  fullName: Domain.EnergyManagement.DocumentManaging.SNILS.Create(string)
+  type: Method
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/SNILS.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: Create
+    path: Domain.EnergyManagement/DocumentManaging/SNILS.cs
+    startLine: 23
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: public static Result<SNILS, IReadOnlyList<Error>> Create(string value)
+    parameters:
+    - id: value
+      type: System.String
+    return:
+      type: CSharpFunctionalExtensions.Result{Domain.EnergyManagement.DocumentManaging.SNILS,System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.Common.Error}}
+    content.vb: Public Shared Function Create(value As String) As Result(Of SNILS, IReadOnlyList(Of [Error]))
+  overload: Domain.EnergyManagement.DocumentManaging.SNILS.Create*
+  nameWithType.vb: SNILS.Create(String)
+  fullName.vb: Domain.EnergyManagement.DocumentManaging.SNILS.Create(String)
+  name.vb: Create(String)
+- uid: Domain.EnergyManagement.DocumentManaging.SNILS.GetEqualityComponents
+  commentId: M:Domain.EnergyManagement.DocumentManaging.SNILS.GetEqualityComponents
+  id: GetEqualityComponents
+  parent: Domain.EnergyManagement.DocumentManaging.SNILS
+  langs:
+  - csharp
+  - vb
+  name: GetEqualityComponents()
+  nameWithType: SNILS.GetEqualityComponents()
+  fullName: Domain.EnergyManagement.DocumentManaging.SNILS.GetEqualityComponents()
+  type: Method
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/SNILS.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: GetEqualityComponents
+    path: Domain.EnergyManagement/DocumentManaging/SNILS.cs
+    startLine: 90
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  example: []
+  syntax:
+    content: protected override IEnumerable<IComparable> GetEqualityComponents()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.IComparable}
+    content.vb: Protected Overrides Function GetEqualityComponents() As IEnumerable(Of IComparable)
+  overridden: CSharpFunctionalExtensions.ValueObject.GetEqualityComponents
+  overload: Domain.EnergyManagement.DocumentManaging.SNILS.GetEqualityComponents*
+- uid: Domain.EnergyManagement.DocumentManaging.SNILS.ToFormattedString
+  commentId: M:Domain.EnergyManagement.DocumentManaging.SNILS.ToFormattedString
+  id: ToFormattedString
+  parent: Domain.EnergyManagement.DocumentManaging.SNILS
+  langs:
+  - csharp
+  - vb
+  name: ToFormattedString()
+  nameWithType: SNILS.ToFormattedString()
+  fullName: Domain.EnergyManagement.DocumentManaging.SNILS.ToFormattedString()
+  type: Method
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/SNILS.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: ToFormattedString
+    path: Domain.EnergyManagement/DocumentManaging/SNILS.cs
+    startLine: 96
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: public string ToFormattedString()
+    return:
+      type: System.String
+    content.vb: Public Function ToFormattedString() As String
+  overload: Domain.EnergyManagement.DocumentManaging.SNILS.ToFormattedString*
+- uid: Domain.EnergyManagement.DocumentManaging.SNILS.op_Implicit(Domain.EnergyManagement.DocumentManaging.SNILS)~System.String
+  commentId: M:Domain.EnergyManagement.DocumentManaging.SNILS.op_Implicit(Domain.EnergyManagement.DocumentManaging.SNILS)~System.String
+  id: op_Implicit(Domain.EnergyManagement.DocumentManaging.SNILS)~System.String
+  parent: Domain.EnergyManagement.DocumentManaging.SNILS
+  langs:
+  - csharp
+  - vb
+  name: implicit operator string(SNILS)
+  nameWithType: SNILS.implicit operator string(SNILS)
+  fullName: Domain.EnergyManagement.DocumentManaging.SNILS.implicit operator string(Domain.EnergyManagement.DocumentManaging.SNILS)
+  type: Operator
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/SNILS.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: op_Implicit
+    path: Domain.EnergyManagement/DocumentManaging/SNILS.cs
+    startLine: 101
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: public static implicit operator string(SNILS snils)
+    parameters:
+    - id: snils
+      type: Domain.EnergyManagement.DocumentManaging.SNILS
+    return:
+      type: System.String
+    content.vb: Public Shared Widening Operator CType(snils As SNILS) As String
+  overload: Domain.EnergyManagement.DocumentManaging.SNILS.op_Implicit*
+  nameWithType.vb: SNILS.CType(SNILS)
+  fullName.vb: Domain.EnergyManagement.DocumentManaging.SNILS.CType(Domain.EnergyManagement.DocumentManaging.SNILS)
+  name.vb: CType(SNILS)
+references:
+- uid: Domain.EnergyManagement.DocumentManaging
+  commentId: N:Domain.EnergyManagement.DocumentManaging
+  href: Domain.html
+  name: Domain.EnergyManagement.DocumentManaging
+  nameWithType: Domain.EnergyManagement.DocumentManaging
+  fullName: Domain.EnergyManagement.DocumentManaging
+  spec.csharp:
+  - uid: Domain
+    name: Domain
+    href: Domain.html
+  - name: .
+  - uid: Domain.EnergyManagement
+    name: EnergyManagement
+    href: Domain.EnergyManagement.html
+  - name: .
+  - uid: Domain.EnergyManagement.DocumentManaging
+    name: DocumentManaging
+    href: Domain.EnergyManagement.DocumentManaging.html
+  spec.vb:
+  - uid: Domain
+    name: Domain
+    href: Domain.html
+  - name: .
+  - uid: Domain.EnergyManagement
+    name: EnergyManagement
+    href: Domain.EnergyManagement.html
+  - name: .
+  - uid: Domain.EnergyManagement.DocumentManaging
+    name: DocumentManaging
+    href: Domain.EnergyManagement.DocumentManaging.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: CSharpFunctionalExtensions.ValueObject
+  commentId: T:CSharpFunctionalExtensions.ValueObject
+  parent: CSharpFunctionalExtensions
+  isExternal: true
+  name: ValueObject
+  nameWithType: ValueObject
+  fullName: CSharpFunctionalExtensions.ValueObject
+- uid: System.IComparable
+  commentId: T:System.IComparable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable
+  name: IComparable
+  nameWithType: IComparable
+  fullName: System.IComparable
+- uid: System.IComparable{CSharpFunctionalExtensions.ValueObject}
+  commentId: T:System.IComparable{CSharpFunctionalExtensions.ValueObject}
+  parent: System
+  definition: System.IComparable`1
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  name: IComparable<ValueObject>
+  nameWithType: IComparable<ValueObject>
+  fullName: System.IComparable<CSharpFunctionalExtensions.ValueObject>
+  nameWithType.vb: IComparable(Of ValueObject)
+  fullName.vb: System.IComparable(Of CSharpFunctionalExtensions.ValueObject)
+  name.vb: IComparable(Of ValueObject)
+  spec.csharp:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: <
+  - uid: CSharpFunctionalExtensions.ValueObject
+    name: ValueObject
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: CSharpFunctionalExtensions.ValueObject
+    name: ValueObject
+    isExternal: true
+  - name: )
+- uid: CSharpFunctionalExtensions.ValueObject.Equals(System.Object)
+  commentId: M:CSharpFunctionalExtensions.ValueObject.Equals(System.Object)
+  parent: CSharpFunctionalExtensions.ValueObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: Equals(object)
+  nameWithType: ValueObject.Equals(object)
+  fullName: CSharpFunctionalExtensions.ValueObject.Equals(object)
+  nameWithType.vb: ValueObject.Equals(Object)
+  fullName.vb: CSharpFunctionalExtensions.ValueObject.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.ValueObject.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.ValueObject.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: CSharpFunctionalExtensions.ValueObject.GetHashCode
+  commentId: M:CSharpFunctionalExtensions.ValueObject.GetHashCode
+  parent: CSharpFunctionalExtensions.ValueObject
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: ValueObject.GetHashCode()
+  fullName: CSharpFunctionalExtensions.ValueObject.GetHashCode()
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.ValueObject.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.ValueObject.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+- uid: CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+  commentId: M:CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+  parent: CSharpFunctionalExtensions.ValueObject
+  isExternal: true
+  name: CompareTo(ValueObject)
+  nameWithType: ValueObject.CompareTo(ValueObject)
+  fullName: CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: CSharpFunctionalExtensions.ValueObject
+    name: ValueObject
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: CSharpFunctionalExtensions.ValueObject
+    name: ValueObject
+    isExternal: true
+  - name: )
+- uid: CSharpFunctionalExtensions.ValueObject.CompareTo(System.Object)
+  commentId: M:CSharpFunctionalExtensions.ValueObject.CompareTo(System.Object)
+  parent: CSharpFunctionalExtensions.ValueObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: CompareTo(object)
+  nameWithType: ValueObject.CompareTo(object)
+  fullName: CSharpFunctionalExtensions.ValueObject.CompareTo(object)
+  nameWithType.vb: ValueObject.CompareTo(Object)
+  fullName.vb: CSharpFunctionalExtensions.ValueObject.CompareTo(Object)
+  name.vb: CompareTo(Object)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.ValueObject.CompareTo(System.Object)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.ValueObject.CompareTo(System.Object)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: CSharpFunctionalExtensions
+  commentId: N:CSharpFunctionalExtensions
+  isExternal: true
+  name: CSharpFunctionalExtensions
+  nameWithType: CSharpFunctionalExtensions
+  fullName: CSharpFunctionalExtensions
+- uid: System.IComparable`1
+  commentId: T:System.IComparable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  name: IComparable<T>
+  nameWithType: IComparable<T>
+  fullName: System.IComparable<T>
+  nameWithType.vb: IComparable(Of T)
+  fullName.vb: System.IComparable(Of T)
+  name.vb: IComparable(Of T)
+  spec.csharp:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Domain.EnergyManagement.DocumentManaging.SNILS.Value*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.SNILS.Value
+  href: Domain.EnergyManagement.DocumentManaging.SNILS.html#Domain_EnergyManagement_DocumentManaging_SNILS_Value
+  name: Value
+  nameWithType: SNILS.Value
+  fullName: Domain.EnergyManagement.DocumentManaging.SNILS.Value
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Domain.EnergyManagement.DocumentManaging.SNILS.Create*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.SNILS.Create
+  href: Domain.EnergyManagement.DocumentManaging.SNILS.html#Domain_EnergyManagement_DocumentManaging_SNILS_Create_System_String_
+  name: Create
+  nameWithType: SNILS.Create
+  fullName: Domain.EnergyManagement.DocumentManaging.SNILS.Create
+- uid: CSharpFunctionalExtensions.Result{Domain.EnergyManagement.DocumentManaging.SNILS,System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.Common.Error}}
+  commentId: T:CSharpFunctionalExtensions.Result{Domain.EnergyManagement.DocumentManaging.SNILS,System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.Common.Error}}
+  parent: CSharpFunctionalExtensions
+  definition: CSharpFunctionalExtensions.Result`2
+  href: Domain.EnergyManagement.DocumentManaging.SNILS.html
+  name: Result<SNILS, IReadOnlyList<Error>>
+  nameWithType: Result<SNILS, IReadOnlyList<Error>>
+  fullName: CSharpFunctionalExtensions.Result<Domain.EnergyManagement.DocumentManaging.SNILS, System.Collections.Generic.IReadOnlyList<Domain.EnergyManagement.Common.Error>>
+  nameWithType.vb: Result(Of SNILS, IReadOnlyList(Of Error))
+  fullName.vb: CSharpFunctionalExtensions.Result(Of Domain.EnergyManagement.DocumentManaging.SNILS, System.Collections.Generic.IReadOnlyList(Of Domain.EnergyManagement.Common.Error))
+  name.vb: Result(Of SNILS, IReadOnlyList(Of Error))
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: <
+  - uid: Domain.EnergyManagement.DocumentManaging.SNILS
+    name: SNILS
+    href: Domain.EnergyManagement.DocumentManaging.SNILS.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Domain.EnergyManagement.Common.Error
+    name: Error
+    href: Domain.EnergyManagement.Common.Error.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Domain.EnergyManagement.DocumentManaging.SNILS
+    name: SNILS
+    href: Domain.EnergyManagement.DocumentManaging.SNILS.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Domain.EnergyManagement.Common.Error
+    name: Error
+    href: Domain.EnergyManagement.Common.Error.html
+  - name: )
+  - name: )
+- uid: CSharpFunctionalExtensions.Result`2
+  commentId: T:CSharpFunctionalExtensions.Result`2
+  isExternal: true
+  name: Result<T, E>
+  nameWithType: Result<T, E>
+  fullName: CSharpFunctionalExtensions.Result<T, E>
+  nameWithType.vb: Result(Of T, E)
+  fullName.vb: CSharpFunctionalExtensions.Result(Of T, E)
+  name.vb: Result(Of T, E)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: E
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: E
+  - name: )
+- uid: CSharpFunctionalExtensions.ValueObject.GetEqualityComponents
+  commentId: M:CSharpFunctionalExtensions.ValueObject.GetEqualityComponents
+  parent: CSharpFunctionalExtensions.ValueObject
+  isExternal: true
+  name: GetEqualityComponents()
+  nameWithType: ValueObject.GetEqualityComponents()
+  fullName: CSharpFunctionalExtensions.ValueObject.GetEqualityComponents()
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.ValueObject.GetEqualityComponents
+    name: GetEqualityComponents
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.ValueObject.GetEqualityComponents
+    name: GetEqualityComponents
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Domain.EnergyManagement.DocumentManaging.SNILS.GetEqualityComponents*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.SNILS.GetEqualityComponents
+  href: Domain.EnergyManagement.DocumentManaging.SNILS.html#Domain_EnergyManagement_DocumentManaging_SNILS_GetEqualityComponents
+  name: GetEqualityComponents
+  nameWithType: SNILS.GetEqualityComponents
+  fullName: Domain.EnergyManagement.DocumentManaging.SNILS.GetEqualityComponents
+- uid: System.Collections.Generic.IEnumerable{System.IComparable}
+  commentId: T:System.Collections.Generic.IEnumerable{System.IComparable}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<IComparable>
+  nameWithType: IEnumerable<IComparable>
+  fullName: System.Collections.Generic.IEnumerable<System.IComparable>
+  nameWithType.vb: IEnumerable(Of IComparable)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of System.IComparable)
+  name.vb: IEnumerable(Of IComparable)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: System.IComparable
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.IComparable
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Domain.EnergyManagement.DocumentManaging.SNILS.ToFormattedString*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.SNILS.ToFormattedString
+  href: Domain.EnergyManagement.DocumentManaging.SNILS.html#Domain_EnergyManagement_DocumentManaging_SNILS_ToFormattedString
+  name: ToFormattedString
+  nameWithType: SNILS.ToFormattedString
+  fullName: Domain.EnergyManagement.DocumentManaging.SNILS.ToFormattedString
+- uid: Domain.EnergyManagement.DocumentManaging.SNILS.op_Implicit*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.SNILS.op_Implicit
+  name: implicit operator
+  nameWithType: SNILS.implicit operator
+  fullName: Domain.EnergyManagement.DocumentManaging.SNILS.implicit operator
+  nameWithType.vb: SNILS.CType
+  fullName.vb: Domain.EnergyManagement.DocumentManaging.SNILS.CType
+  name.vb: CType
+  spec.csharp:
+  - name: implicit
+  - name: " "
+  - name: operator
+- uid: Domain.EnergyManagement.DocumentManaging.SNILS
+  commentId: T:Domain.EnergyManagement.DocumentManaging.SNILS
+  parent: Domain.EnergyManagement.DocumentManaging
+  href: Domain.EnergyManagement.DocumentManaging.SNILS.html
+  name: SNILS
+  nameWithType: SNILS
+  fullName: Domain.EnergyManagement.DocumentManaging.SNILS

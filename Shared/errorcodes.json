@@ -1,0 +1,25 @@
+{
+  "Email": {
+    "IsRegisteredAlready": "account.email.is.registered.already",
+    "IsRequired": "account.email.is.required",
+    "IsInvalid": "account.email.value.is.invalid"
+  },
+  "Password": {
+    "IsRequired": "account.password.is.required",
+    "IsTooShort": "account.password.is.too.short",
+    "IsTooLong": "account.password.is.too.long",
+    "LacksSpecialChars": "account.password.lacks.special.characters"
+  },
+  "PasswordConfirmation": {
+    "IsRequired": "account.passwordConfirmation.is.required",
+    "DoesNotMatch": "account.passwordConfirmation.doesnt.match"
+  },
+  "Phone": {
+    "IsRequired": "account.phoneNumber.is.required",
+    "IsInvalid": "account.phoneNumber.is.invalid"
+  },
+  "ServerValidationError": {
+    "FieldNameField": "FieldName",
+    "ErrorCodeField": "ErrorCode"
+  }
+}

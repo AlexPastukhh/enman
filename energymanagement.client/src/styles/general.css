@@ -1,0 +1,92 @@
+.link-base-clear {
+  text-decoration: none;
+  color: inherit;
+}
+.textWrapper {
+  font-size: 1.2rem;
+}
+
+.redirectGroup p,
+a {
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+.redirectGroup a {
+  color: var(--color-primary);
+}
+
+
+.button-primary {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--btn-pad-tb) var(--btn-pad-lr);
+  font-size: 1.6rem;
+  border: none;
+  border-radius: var(--btn-b-radius);
+  background-color: var(--color-primary);
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+.button-primary svg {
+  fill: white;
+}
+
+.button-primary:hover{
+  cursor: pointer;
+}
+
+.shrinking-button-primary {
+  position: relative;
+  --btn-primary-pad-tb-shrunk: calc(
+    var(--btn-pad-tb) * 0.5
+  );
+  padding: var(--btn-primary-pad-tb-shrunk) var(--btn-pad-lr);
+}
+.shrinking-button-primary:before {
+  --extra-pad-tb: calc(
+    var(--btn-pad-tb) - var(--btn-primary-pad-tb-shrunk)
+  );
+  content: "";
+  position: absolute;
+  top: calc(var(--extra-pad-tb) * -1);
+  bottom: calc(var(--extra-pad-tb) * -1);
+  left: 0;
+  right: 0;
+  z-index: -1;
+  width: 100%;
+
+  border-radius: var(--btn-b-radius);
+  background-color: var(--color-primary);
+}
+
+.shrinking-button-primary:hover:before {
+  transform: scale(0);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.button-hollow{
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--btn-pad-tb) var(--btn-pad-lr);
+  font-size: 1.6rem;
+  color: var(--color-primary);
+  border:solid 0.1rem var(--color-primary);
+  border-radius: var(--btn-b-radius);
+  transition: all 0.3s ease-in-out;
+
+}
+.button-hollow svg{
+  fill: var(--color-primary);
+}
+
+.button-hollow:hover{
+  cursor: pointer;
+  border-width: 0.2rem;
+  
+}
+

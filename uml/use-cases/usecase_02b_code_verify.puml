@@ -1,0 +1,32 @@
+@startuml
+title Сценарий 2b — Проверка кода восстановления
+left to right direction
+skinparam packageStyle rectangle
+skinparam nodesep 40
+skinparam ranksep 8
+skinparam wrapWidth 120
+
+actor "Форма ввода кода" as CodeForm
+actor "Форма сброса пароля" as ResetForm
+
+usecase "Ввести код" as UC_EnterCode
+usecase "Проверить код" as UC_VerifyCode
+usecase "Код неверен\n/просрочен" as UC_BadCode
+usecase "Показать\nошибку кода" as UC_ShowCodeError
+
+CodeForm -- UC_VerifyCode
+CodeForm -- UC_EnterCode
+UC_VerifyCode ..> UC_EnterCode : <<include>>
+UC_BadCode ..> UC_VerifyCode : <<extend>>
+UC_BadCode ..> UC_ShowCodeError : <<include>>
+
+UC_VerifyCode --> ResetForm : Открыть форму сброса пароля (код принят)
+
+note right of UC_VerifyCode
+Предусловие: пользователь ввел код.
+Алгоритм: сервер проверяет валидность, срок действия и соответствие email.
+Постусловие: либо переход к форме сброса пароля, либо показ ошибки кода.
+Точки расширения: «Код неверен/просрочен».
+end note
+
+@enduml

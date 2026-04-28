@@ -1,0 +1,52 @@
+@startuml
+title Сценарий 5b — Работа в карточке заявки
+left to right direction
+skinparam packageStyle rectangle
+skinparam nodesep 20
+skinparam ranksep 8
+skinparam wrapWidth 120
+
+actor "Карточка заявки" as TicketCard
+
+usecase "Проверить данные\n(автоматически)" as UC_AutoCheck
+usecase "Проверить пункт\nчерез межведомственный запрос" as UC_CheckItem
+usecase "Ошибка\nпроверки" as UC_CheckError
+usecase "Показать\nошибку проверки" as UC_ShowCheckError
+
+usecase "Проверить данные\n(вручную)" as UC_ManualCheck
+
+usecase "Сформировать\nсообщение" as UC_ComposeMsg
+usecase "Выбрать\nшаблон" as UC_SelectTemplate
+usecase "Ввести текст\nвручную" as UC_WriteManual
+usecase "Отправить\nобратную связь" as UC_SendFeedback
+usecase "Отправить на email" as UC_SendEmail
+usecase "Отправить в\nличные сообщения" as UC_SendInbox
+
+TicketCard -- UC_AutoCheck
+TicketCard -- UC_ManualCheck
+TicketCard -- UC_ComposeMsg
+TicketCard -- UC_SendFeedback
+
+UC_AutoCheck ..> UC_CheckItem : <<include>>
+UC_CheckError ..> UC_CheckItem : <<extend>>
+UC_CheckError ..> UC_ShowCheckError : <<include>>
+
+UC_ComposeMsg ..> UC_SelectTemplate : <<include>>
+UC_ComposeMsg ..> UC_WriteManual : <<include>>
+
+UC_SendFeedback ..> UC_SendEmail : <<include>>
+UC_SendFeedback ..> UC_SendInbox : <<include>>
+
+note right of UC_CheckItem
+Предусловие: открыта карточка и выбран пункт проверки.
+Алгоритм: отправить межведомственный запрос; получить результат.
+Постусловие: пункт отмечен корректно/некорректно либо показана ошибка проверки.
+end note
+
+note right of UC_SendFeedback
+Предусловие: составлено сообщение заявителю.
+Алгоритм: отправить на email и продублировать в личные сообщения.
+Постусловие: заявитель получил обратную связь.
+end note
+
+@enduml

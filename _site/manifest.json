@@ -1,0 +1,752 @@
+{
+  "source_base_path": "C:/Users/alexa/Downloads/EnergyManagement/EnergyManagement",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "EnergyManagement.Server/CHANGELOG.md",
+      "output": {
+        ".html": {
+          "relative_path": "EnergyManagement.Server/CHANGELOG.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "PROJECT_PLANNING.md",
+      "output": {
+        ".html": {
+          "relative_path": "PROJECT_PLANNING.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.Class1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.Class1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.Class1",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.Common.Constraints.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.Common.Constraints.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.Common.Constraints",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.Common.Data.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.Common.Data.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.Common.Data",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.Common.Error.Errors.Account.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.Common.Error.Errors.Account.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.Common.Error.Errors.Account",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.Common.Error.Errors.AddressErrors.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.Common.Error.Errors.AddressErrors.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.Common.Error.Errors.AddressErrors",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.Common.Error.Errors.ClientErrors.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.Common.Error.Errors.ClientErrors.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.Common.Error.Errors.ClientErrors",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.Common.Error.Errors.ClientRequestErrors.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.Common.Error.Errors.ClientRequestErrors.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.Common.Error.Errors.ClientRequestErrors",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.Common.Error.Errors.ConstantsErrors.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.Common.Error.Errors.ConstantsErrors.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.Common.Error.Errors.ConstantsErrors",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.Common.Error.Errors.General.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.Common.Error.Errors.General.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.Common.Error.Errors.General",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.Common.Error.Errors.Passport.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.Common.Error.Errors.Passport.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.Common.Error.Errors.Passport",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.Common.Error.Errors.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.Common.Error.Errors.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.Common.Error.Errors",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.Common.Error.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.Common.Error.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.Common.Error",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.Common.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.Common.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.Common",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.Address.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.Address.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging.Address",
+      "Summary": "<p sourcefile=\"api/Domain.EnergyManagement.DocumentManaging.Address.yml\" sourcestartlinenumber=\"1\">Представляет почтовый адрес как объект-значение.\nСодержит обязательные поля (индекс, регион, город, улица, дом)\nи необязательные — корпус и квартира.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.Client.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.Client.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging.Client",
+      "Summary": "<p sourcefile=\"api/Domain.EnergyManagement.DocumentManaging.Client.yml\" sourcestartlinenumber=\"1\">Сущность клиента — содержит идентификатор, email и пароль.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.ClientRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.ClientRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging.ClientRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.ConnectedObject.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.ConnectedObject.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging.ConnectedObject",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.Email.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.Email.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging.Email",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.FullName.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.FullName.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging.FullName",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.IndividualClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.IndividualClient.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging.IndividualClient",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.IndividualRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.IndividualRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging.IndividualRequest",
+      "Summary": "<p sourcefile=\"api/Domain.EnergyManagement.DocumentManaging.IndividualRequest.yml\" sourcestartlinenumber=\"1\">Запрос, исходящий от физического лица. Наследует общую логику запроса из <xref href=\"Domain.EnergyManagement.DocumentManaging.ClientRequest\" data-throw-if-not-resolved=\"false\"></xref>.\nСодержит ссылку на клиента и адрес, на который направлен запрос.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.Manager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.Manager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging.Manager",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.PassportData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.PassportData.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging.PassportData",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.Password.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.Password.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging.Password",
+      "Summary": "<p sourcefile=\"api/Domain.EnergyManagement.DocumentManaging.Password.yml\" sourcestartlinenumber=\"1\">Представляет пароль пользователя как объект-значение. Класс хранит\nпароль в виде хешированной строки и предоставляет фабричные методы\nи методы верификации для создания и проверки пароля без раскрытия\nсамого текста пароля.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.PasswordHash.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.PasswordHash.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging.PasswordHash",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.PhoneNumber.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.PhoneNumber.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging.PhoneNumber",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.RequestReview.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.RequestReview.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging.RequestReview",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.RequestType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.RequestType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging.RequestType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.SNILS.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.SNILS.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging.SNILS",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.DocumentManaging.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.DocumentManaging.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement.DocumentManaging",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Domain.EnergyManagement.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Domain.EnergyManagement.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Domain.EnergyManagement",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/getting-started.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/getting-started.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/address_map.svg",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/address_map.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/address_structure.svg",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/address_structure.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/client_entity.svg",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/client_entity.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/client_entity_2.svg",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/client_entity_2.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/email_regex.svg",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/email_regex.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/passport_example.svg",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/passport_example.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/passport_flow.svg",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/passport_flow.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/password_example.svg",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/password_example.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/password_graph.svg",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/password_graph.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/phone_regex.svg",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/phone_regex.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/request_flow.svg",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/request_flow.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/request_timeline.svg",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/request_timeline.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/introduction.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/introduction.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "docs/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/toc.html"
+        },
+        ".json": {
+          "relative_path": "docs/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "energymanagement.client/CHANGELOG.md",
+      "output": {
+        ".html": {
+          "relative_path": "energymanagement.client/CHANGELOG.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "energymanagement.client/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "energymanagement.client/README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "energymanagement.client/playwright-report/data/488f4e4cd14b02e7efd9012d18f9bf83220931fe.md",
+      "output": {
+        ".html": {
+          "relative_path": "energymanagement.client/playwright-report/data/488f4e4cd14b02e7efd9012d18f9bf83220931fe.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "energymanagement.client/test-results/registerTest-user-registers/error-context.md",
+      "output": {
+        ".html": {
+          "relative_path": "energymanagement.client/test-results/registerTest-user-registers/error-context.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "examples/hospital.proj.client/CHANGELOG.md",
+      "output": {
+        ".html": {
+          "relative_path": "examples/hospital.proj.client/CHANGELOG.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "examples/hospital.proj.client/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "examples/hospital.proj.client/README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "playwright-report/data/40b6fd5cacd3bb00d59a1f08b1d1edfb86041cde.md",
+      "output": {
+        ".html": {
+          "relative_path": "playwright-report/data/40b6fd5cacd3bb00d59a1f08b1d1edfb86041cde.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "playwright-report/data/c268fde6aa943f126d7c746353852daa722c8114.md",
+      "output": {
+        ".html": {
+          "relative_path": "playwright-report/data/c268fde6aa943f126d7c746353852daa722c8114.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "uml/use-cases/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "uml/use-cases/README.html"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

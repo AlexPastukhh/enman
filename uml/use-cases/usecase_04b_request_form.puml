@@ -1,0 +1,37 @@
+@startuml
+title Сценарий 4b — Заполнение формы запроса
+left to right direction
+skinparam packageStyle rectangle
+skinparam nodesep 20
+skinparam ranksep 8
+skinparam wrapWidth 120
+
+actor "Форма запроса" as RequestForm
+actor "Страница успеха отправки" as RequestSuccess
+
+usecase "Ввести адрес\nобъекта" as UC_EnterAddress
+usecase "Ввести текст\nзапроса (≤3000)" as UC_EnterText
+usecase "Проверить\nвалидность формы" as UC_RequestValidate
+usecase "Ошибки\nвалидации" as UC_RequestErrors
+usecase "Отправить\nзапрос" as UC_SubmitRequest
+usecase "Проверить (серверная)\nвалидность" as UC_ServerValidateRequest
+usecase "Показать\nуспех отправки" as UC_ShowRequestSuccess
+
+RequestForm -- UC_SubmitRequest
+RequestForm -- UC_EnterAddress
+RequestForm -- UC_EnterText
+
+UC_SubmitRequest ..> UC_RequestValidate : <<include>>
+UC_RequestErrors ..> UC_RequestValidate : <<extend>>
+UC_SubmitRequest ..> UC_ServerValidateRequest : <<include>>
+UC_RequestErrors ..> UC_ServerValidateRequest : <<extend>>
+UC_SubmitRequest ..> UC_ShowRequestSuccess : <<include>>
+UC_ShowRequestSuccess --> RequestSuccess : Переход на страницу успеха
+
+note right of UC_SubmitRequest
+Предусловие: форма открыта, пользователь авторизован.
+Алгоритм: проверка обязательных полей и длины текста; отправка; серверные проверки согласованности.
+Постусловие: запрос принят и показан успех либо показаны ошибки.
+end note
+
+@enduml

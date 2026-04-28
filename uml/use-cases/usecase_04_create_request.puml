@@ -1,0 +1,27 @@
+@startuml
+title Сценарий 4 — Запрос на техприсоединение (Use Case)
+left to right direction
+skinparam packageStyle rectangle
+skinparam nodesep 20
+skinparam ranksep 8
+skinparam wrapWidth 120
+
+actor "Пользователь" as User
+actor "Хедер (авторизованный)" as Header
+actor "Страница выбора запроса" as RequestTypePage
+actor "Форма запроса" as RequestForm
+actor "Страница успеха отправки" as RequestSuccess
+
+usecase "Нажать\n«Сделать запрос»" as UC_ClickMakeRequest
+usecase "Выбрать тип:\nтехприсоединение" as UC_SelectTech
+User -- UC_ClickMakeRequest
+Header -- UC_ClickMakeRequest
+RequestTypePage -- UC_SelectTech
+RequestForm -- UC_SelectTech
+
+UC_ClickMakeRequest --> RequestTypePage : Открыть страницу выбора запроса
+UC_SelectTech --> RequestForm : Открыть форму запроса (техприсоединение)
+
+UC_ClickMakeRequest ..> UC_SelectTech : <<include>>
+
+@enduml

@@ -1,0 +1,49 @@
+{
+  "authConstants": {
+    "registerIndividualClient": {
+      "email": {
+        "fieldName": "email",
+        "dtoFieldName":"email"
+      },
+      "password": {
+        "fieldName": "password",
+        "dtoFieldName":"password"
+      },
+      "passwordConfirmation": {
+        "fieldName": "passwordConfirmation",
+        "dtoFieldName":"passwordConfirmation"
+      }
+    },
+    "provideIndividualClientsData": {
+      "phoneNumber": {
+        "fieldName": "phoneNumber",
+        "dtoFieldName":"phoneNumber",
+        "charactersLimit":15
+      },
+      "firstName": {
+        "fieldName": "firstName",
+        "dtoFieldName":"firstName",
+        "charactersLimit":15
+      },
+      "middleName": {
+        "fieldName": "middleName",
+        "dtoFieldName":"middleName",
+        "charactersLimit":15
+      },
+      "lastName": {
+        "fieldName": "lastName",
+        "dtoFieldName":"lastName"
+      }
+    }
+    
+  },
+  "generalConstants":{
+    "validationErrorStatusCode":422,
+    "errorsCollectionName":"errors",
+    "exceptionExtensionName":"exception"
+    
+
+}
+    
+    
+}

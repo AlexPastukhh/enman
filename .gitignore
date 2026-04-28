@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+bin/
+obj/
+packages/
+
+# Build outputs
+dist/
+build/
+out/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Runtime data
+*.runtimeconfig.json
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Coverage directory
+coverage/
+*.coverage
+
+# Test results
+TestResults/
+
+# NuGet
+*.nupkg
+
+# Azure
+.azure/
+
+# Rider
+*.sln.iml
+
+# Temp
+temp/
+tmp/

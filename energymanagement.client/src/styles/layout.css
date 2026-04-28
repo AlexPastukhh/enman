@@ -1,0 +1,152 @@
+.header{
+
+
+
+display: flex;
+flex-direction: column;
+}
+.header__top{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:5rem;
+
+    height: var(--header-height);
+    width: 100%;
+    padding-bottom: 3rem;
+    border-bottom:solid 0.1rem var(--color-secondary);
+    background-color: white;
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+}
+
+
+
+.header__home-link{
+    display: flex;
+    gap: 1rem;
+    font-size: 2.5rem;
+    color:var(--color-primary);
+}
+.header__home-link:active{
+    color:inherit;
+}
+.header__home-logo{
+    width: 3.5em;
+    height: 3.5em;
+}
+.header__home-text{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+
+    padding-top: 0.8rem;
+
+}
+.header__home-slogan{
+    margin-top: 0.5rem;
+    padding-left: 1rem;
+    font-size: 1.6rem;
+}
+
+
+.header__actions{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.header__nav-button{
+    width:var(--nav-button-width);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;    
+    gap: 0.5rem;
+
+    font-size: var(--header-nav-btn-fs);
+    
+}
+ 
+.header__contact{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.header__hotline-link{
+  text-decoration: none;
+  color:var(--color-warn);
+    font-size: 2rem;
+}
+
+.header__hotline-link:hover{
+  text-decoration: underline;
+}
+
+.header__hotline-link svg{
+    fill: var(--color-warn);
+}
+
+.header__bottom{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+
+    background-color: var(--color-primary);
+}
+
+.header__bottom-nav{
+    display:flex;
+    gap: 2rem;
+
+}
+
+.header__bottom-nav-link{
+    color:white;
+    padding:var(--nav-link-pad);
+
+    font-size: var(--header-nav-link-fs);
+    text-decoration: none;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex:1;
+
+}
+
+.footer{
+    display: flex;
+    border-top:solid 0.1rem var(--color-secondary);
+    height: var(--footer-height);
+    margin-top: 10rem;
+
+}
+
+.errorMessageWrapper{
+    display:inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffcccc;
+    color: #990000;
+    border: solid 0.1rem #990000;
+    border-radius: 0.5rem; 
+    position:fixed;
+    bottom:2rem;
+    left:50%;
+    transform: translateX(-50%)
+}
+.errorMessage{
+    margin:1rem;
+}
+
+/* Shared */
+
+

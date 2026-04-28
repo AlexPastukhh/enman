@@ -1,0 +1,70 @@
+@startuml
+title Сценарий 5 — Обработка заявок администратором (Use Case)
+left to right direction
+skinparam packageStyle rectangle
+skinparam nodesep 20
+skinparam ranksep 8
+skinparam wrapWidth 120
+
+actor "Администратор" as Admin
+actor "Админ-хедер" as AdminHeader
+actor "Список заявок" as TicketList
+actor "Карточка заявки" as TicketCard
+
+usecase "Открыть раздел\n«Заявки»" as UC_OpenTickets
+usecase "Просмотреть список\n«Новые»" as UC_ViewNew
+usecase "Переключить список:\nобработанные/отклоненные/допущенные" as UC_SwitchStatus
+usecase "Открыть\nзаявку" as UC_OpenTicket
+
+usecase "Проверить данные\n(автоматически)" as UC_AutoCheck
+usecase "Проверить пункт\nчерез межведомственный запрос" as UC_CheckItem
+usecase "Ошибка\nпроверки" as UC_CheckError
+usecase "Показать\nошибку проверки" as UC_ShowCheckError
+
+usecase "Проверить данные\n(вручную)" as UC_ManualCheck
+
+usecase "Сформировать\nсообщение" as UC_ComposeMsg
+usecase "Выбрать\nшаблон" as UC_SelectTemplate
+usecase "Ввести текст\nвручную" as UC_WriteManual
+usecase "Отправить\nобратную связь" as UC_SendFeedback
+usecase "Отправить на email" as UC_SendEmail
+usecase "Отправить в\nличные сообщения" as UC_SendInbox
+
+Admin -- UC_OpenTickets
+AdminHeader -- UC_OpenTickets
+TicketList -- UC_ViewNew
+TicketList -- UC_SwitchStatus
+TicketList -- UC_OpenTicket
+TicketCard -- UC_AutoCheck
+TicketCard -- UC_ManualCheck
+TicketCard -- UC_ComposeMsg
+TicketCard -- UC_SendFeedback
+
+UC_OpenTickets ..> UC_ViewNew : <<include>>
+UC_OpenTicket ..> UC_AutoCheck : <<include>>
+UC_OpenTicket ..> UC_ManualCheck : <<include>>
+
+UC_AutoCheck ..> UC_CheckItem : <<include>>
+UC_CheckError ..> UC_CheckItem : <<extend>>
+UC_CheckError ..> UC_ShowCheckError : <<include>>
+
+UC_ComposeMsg ..> UC_SelectTemplate : <<include>>
+UC_ComposeMsg ..> UC_WriteManual : <<include>>
+
+UC_SendFeedback ..> UC_SendEmail : <<include>>
+UC_SendFeedback ..> UC_SendInbox : <<include>>
+
+note right of UC_CheckItem
+Предусловие:
+ - администратор открыл карточку заявки и выбрал пункт проверки.
+Алгоритм:
+ - отправить межведомственный запрос и получить результат корректности данных.
+Постусловие:
+ - пункт отмечен как корректный/некорректный или выдана ошибка проверки.
+Точки расширения:
+ - «Ошибка проверки».
+end note
+
+UC_OpenTicket --> TicketCard : Открыть карточку заявки
+
+

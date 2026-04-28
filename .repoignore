@@ -1,0 +1,32 @@
+# Ignore everything by default
+*
+
+# Re-allow directories so negated file patterns can match files inside them
+!*/
+
+# Allow C# sources/projects
+!*.cs
+!*.csproj
+!*.sln
+!*.props
+!*.targets
+
+# Allow JavaScript/TypeScript
+!*.js
+!*.cjs
+!*.mjs
+!*.ts
+!*.tsx
+!*.jsx
+
+# Allow JSON/JSONC
+!*.json
+!*.jsonc
+
+# Still ignore common build/output clutter
+bin/
+obj/
+node_modules/
+dist/
+**/*.log
+

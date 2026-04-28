@@ -1,0 +1,897 @@
+### YamlMime:ManagedReference
+items:
+- uid: Domain.EnergyManagement.DocumentManaging.RequestReview
+  commentId: T:Domain.EnergyManagement.DocumentManaging.RequestReview
+  id: RequestReview
+  parent: Domain.EnergyManagement.DocumentManaging
+  children:
+  - Domain.EnergyManagement.DocumentManaging.RequestReview.Commentary
+  - Domain.EnergyManagement.DocumentManaging.RequestReview.IsApproved
+  - Domain.EnergyManagement.DocumentManaging.RequestReview.Manager
+  - Domain.EnergyManagement.DocumentManaging.RequestReview.RequestId
+  - Domain.EnergyManagement.DocumentManaging.RequestReview.ReviewDateTime
+  langs:
+  - csharp
+  - vb
+  name: RequestReview
+  nameWithType: RequestReview
+  fullName: Domain.EnergyManagement.DocumentManaging.RequestReview
+  type: Class
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/RequestReview.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: RequestReview
+    path: Domain.EnergyManagement/DocumentManaging/RequestReview.cs
+    startLine: 8
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: 'public class RequestReview : Entity, IComparable, IComparable<Entity<long>>'
+    content.vb: Public Class RequestReview Inherits Entity Implements IComparable, IComparable(Of Entity(Of Long))
+  inheritance:
+  - System.Object
+  - CSharpFunctionalExtensions.Entity{System.Int64}
+  - CSharpFunctionalExtensions.Entity
+  implements:
+  - System.IComparable
+  - System.IComparable{CSharpFunctionalExtensions.Entity{System.Int64}}
+  inheritedMembers:
+  - CSharpFunctionalExtensions.Entity{System.Int64}.Equals(System.Object)
+  - CSharpFunctionalExtensions.Entity{System.Int64}.GetHashCode
+  - CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(CSharpFunctionalExtensions.Entity{System.Int64})
+  - CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(System.Object)
+  - CSharpFunctionalExtensions.Entity{System.Int64}.Id
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Domain.EnergyManagement.DocumentManaging.RequestReview.RequestId
+  commentId: P:Domain.EnergyManagement.DocumentManaging.RequestReview.RequestId
+  id: RequestId
+  parent: Domain.EnergyManagement.DocumentManaging.RequestReview
+  langs:
+  - csharp
+  - vb
+  name: RequestId
+  nameWithType: RequestReview.RequestId
+  fullName: Domain.EnergyManagement.DocumentManaging.RequestReview.RequestId
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/RequestReview.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: RequestId
+    path: Domain.EnergyManagement/DocumentManaging/RequestReview.cs
+    startLine: 10
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: public long RequestId { get; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: Public Property RequestId As Long
+  overload: Domain.EnergyManagement.DocumentManaging.RequestReview.RequestId*
+- uid: Domain.EnergyManagement.DocumentManaging.RequestReview.Manager
+  commentId: P:Domain.EnergyManagement.DocumentManaging.RequestReview.Manager
+  id: Manager
+  parent: Domain.EnergyManagement.DocumentManaging.RequestReview
+  langs:
+  - csharp
+  - vb
+  name: Manager
+  nameWithType: RequestReview.Manager
+  fullName: Domain.EnergyManagement.DocumentManaging.RequestReview.Manager
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/RequestReview.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: Manager
+    path: Domain.EnergyManagement/DocumentManaging/RequestReview.cs
+    startLine: 11
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: public Manager Manager { get; }
+    parameters: []
+    return:
+      type: Domain.EnergyManagement.DocumentManaging.Manager
+    content.vb: Public Property Manager As Manager
+  overload: Domain.EnergyManagement.DocumentManaging.RequestReview.Manager*
+- uid: Domain.EnergyManagement.DocumentManaging.RequestReview.ReviewDateTime
+  commentId: P:Domain.EnergyManagement.DocumentManaging.RequestReview.ReviewDateTime
+  id: ReviewDateTime
+  parent: Domain.EnergyManagement.DocumentManaging.RequestReview
+  langs:
+  - csharp
+  - vb
+  name: ReviewDateTime
+  nameWithType: RequestReview.ReviewDateTime
+  fullName: Domain.EnergyManagement.DocumentManaging.RequestReview.ReviewDateTime
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/RequestReview.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: ReviewDateTime
+    path: Domain.EnergyManagement/DocumentManaging/RequestReview.cs
+    startLine: 12
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: public DateTimeOffset ReviewDateTime { get; }
+    parameters: []
+    return:
+      type: System.DateTimeOffset
+    content.vb: Public Property ReviewDateTime As DateTimeOffset
+  overload: Domain.EnergyManagement.DocumentManaging.RequestReview.ReviewDateTime*
+- uid: Domain.EnergyManagement.DocumentManaging.RequestReview.IsApproved
+  commentId: P:Domain.EnergyManagement.DocumentManaging.RequestReview.IsApproved
+  id: IsApproved
+  parent: Domain.EnergyManagement.DocumentManaging.RequestReview
+  langs:
+  - csharp
+  - vb
+  name: IsApproved
+  nameWithType: RequestReview.IsApproved
+  fullName: Domain.EnergyManagement.DocumentManaging.RequestReview.IsApproved
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/RequestReview.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: IsApproved
+    path: Domain.EnergyManagement/DocumentManaging/RequestReview.cs
+    startLine: 13
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: public bool IsApproved { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsApproved As Boolean
+  overload: Domain.EnergyManagement.DocumentManaging.RequestReview.IsApproved*
+- uid: Domain.EnergyManagement.DocumentManaging.RequestReview.Commentary
+  commentId: P:Domain.EnergyManagement.DocumentManaging.RequestReview.Commentary
+  id: Commentary
+  parent: Domain.EnergyManagement.DocumentManaging.RequestReview
+  langs:
+  - csharp
+  - vb
+  name: Commentary
+  nameWithType: RequestReview.Commentary
+  fullName: Domain.EnergyManagement.DocumentManaging.RequestReview.Commentary
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/RequestReview.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: Commentary
+    path: Domain.EnergyManagement/DocumentManaging/RequestReview.cs
+    startLine: 14
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: public string Commentary { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Commentary As String
+  overload: Domain.EnergyManagement.DocumentManaging.RequestReview.Commentary*
+references:
+- uid: Domain.EnergyManagement.DocumentManaging
+  commentId: N:Domain.EnergyManagement.DocumentManaging
+  href: Domain.html
+  name: Domain.EnergyManagement.DocumentManaging
+  nameWithType: Domain.EnergyManagement.DocumentManaging
+  fullName: Domain.EnergyManagement.DocumentManaging
+  spec.csharp:
+  - uid: Domain
+    name: Domain
+    href: Domain.html
+  - name: .
+  - uid: Domain.EnergyManagement
+    name: EnergyManagement
+    href: Domain.EnergyManagement.html
+  - name: .
+  - uid: Domain.EnergyManagement.DocumentManaging
+    name: DocumentManaging
+    href: Domain.EnergyManagement.DocumentManaging.html
+  spec.vb:
+  - uid: Domain
+    name: Domain
+    href: Domain.html
+  - name: .
+  - uid: Domain.EnergyManagement
+    name: EnergyManagement
+    href: Domain.EnergyManagement.html
+  - name: .
+  - uid: Domain.EnergyManagement.DocumentManaging
+    name: DocumentManaging
+    href: Domain.EnergyManagement.DocumentManaging.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: CSharpFunctionalExtensions.Entity{System.Int64}
+  commentId: T:CSharpFunctionalExtensions.Entity{System.Int64}
+  parent: CSharpFunctionalExtensions
+  definition: CSharpFunctionalExtensions.Entity`1
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: Entity<long>
+  nameWithType: Entity<long>
+  fullName: CSharpFunctionalExtensions.Entity<long>
+  nameWithType.vb: Entity(Of Long)
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of Long)
+  name.vb: Entity(Of Long)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: <
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity
+  commentId: T:CSharpFunctionalExtensions.Entity
+  parent: CSharpFunctionalExtensions
+  isExternal: true
+  name: Entity
+  nameWithType: Entity
+  fullName: CSharpFunctionalExtensions.Entity
+- uid: System.IComparable
+  commentId: T:System.IComparable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable
+  name: IComparable
+  nameWithType: IComparable
+  fullName: System.IComparable
+- uid: System.IComparable{CSharpFunctionalExtensions.Entity{System.Int64}}
+  commentId: T:System.IComparable{CSharpFunctionalExtensions.Entity{System.Int64}}
+  parent: System
+  definition: System.IComparable`1
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  name: IComparable<Entity<long>>
+  nameWithType: IComparable<Entity<long>>
+  fullName: System.IComparable<CSharpFunctionalExtensions.Entity<long>>
+  nameWithType.vb: IComparable(Of Entity(Of Long))
+  fullName.vb: System.IComparable(Of CSharpFunctionalExtensions.Entity(Of Long))
+  name.vb: IComparable(Of Entity(Of Long))
+  spec.csharp:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: <
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: <
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity{System.Int64}.Equals(System.Object)
+  commentId: M:CSharpFunctionalExtensions.Entity{System.Int64}.Equals(System.Object)
+  parent: CSharpFunctionalExtensions.Entity{System.Int64}
+  definition: CSharpFunctionalExtensions.Entity`1.Equals(System.Object)
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: Equals(object)
+  nameWithType: Entity<long>.Equals(object)
+  fullName: CSharpFunctionalExtensions.Entity<long>.Equals(object)
+  nameWithType.vb: Entity(Of Long).Equals(Object)
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of Long).Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity{System.Int64}.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity{System.Int64}.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity{System.Int64}.GetHashCode
+  commentId: M:CSharpFunctionalExtensions.Entity{System.Int64}.GetHashCode
+  parent: CSharpFunctionalExtensions.Entity{System.Int64}
+  definition: CSharpFunctionalExtensions.Entity`1.GetHashCode
+  name: GetHashCode()
+  nameWithType: Entity<long>.GetHashCode()
+  fullName: CSharpFunctionalExtensions.Entity<long>.GetHashCode()
+  nameWithType.vb: Entity(Of Long).GetHashCode()
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of Long).GetHashCode()
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity{System.Int64}.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity{System.Int64}.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(CSharpFunctionalExtensions.Entity{System.Int64})
+  commentId: M:CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(CSharpFunctionalExtensions.Entity{System.Int64})
+  parent: CSharpFunctionalExtensions.Entity{System.Int64}
+  definition: CSharpFunctionalExtensions.Entity`1.CompareTo(CSharpFunctionalExtensions.Entity{`0})
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: CompareTo(Entity<long>)
+  nameWithType: Entity<long>.CompareTo(Entity<long>)
+  fullName: CSharpFunctionalExtensions.Entity<long>.CompareTo(CSharpFunctionalExtensions.Entity<long>)
+  nameWithType.vb: Entity(Of Long).CompareTo(Entity(Of Long))
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of Long).CompareTo(CSharpFunctionalExtensions.Entity(Of Long))
+  name.vb: CompareTo(Entity(Of Long))
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(CSharpFunctionalExtensions.Entity{System.Int64})
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: <
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(CSharpFunctionalExtensions.Entity{System.Int64})
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(System.Object)
+  commentId: M:CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(System.Object)
+  parent: CSharpFunctionalExtensions.Entity{System.Int64}
+  definition: CSharpFunctionalExtensions.Entity`1.CompareTo(System.Object)
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: CompareTo(object)
+  nameWithType: Entity<long>.CompareTo(object)
+  fullName: CSharpFunctionalExtensions.Entity<long>.CompareTo(object)
+  nameWithType.vb: Entity(Of Long).CompareTo(Object)
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of Long).CompareTo(Object)
+  name.vb: CompareTo(Object)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(System.Object)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(System.Object)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity{System.Int64}.Id
+  commentId: P:CSharpFunctionalExtensions.Entity{System.Int64}.Id
+  parent: CSharpFunctionalExtensions.Entity{System.Int64}
+  definition: CSharpFunctionalExtensions.Entity`1.Id
+  name: Id
+  nameWithType: Entity<long>.Id
+  fullName: CSharpFunctionalExtensions.Entity<long>.Id
+  nameWithType.vb: Entity(Of Long).Id
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of Long).Id
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: CSharpFunctionalExtensions.Entity`1
+  commentId: T:CSharpFunctionalExtensions.Entity`1
+  isExternal: true
+  name: Entity<TId>
+  nameWithType: Entity<TId>
+  fullName: CSharpFunctionalExtensions.Entity<TId>
+  nameWithType.vb: Entity(Of TId)
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of TId)
+  name.vb: Entity(Of TId)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: <
+  - name: TId
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TId
+  - name: )
+- uid: CSharpFunctionalExtensions
+  commentId: N:CSharpFunctionalExtensions
+  isExternal: true
+  name: CSharpFunctionalExtensions
+  nameWithType: CSharpFunctionalExtensions
+  fullName: CSharpFunctionalExtensions
+- uid: System.IComparable`1
+  commentId: T:System.IComparable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  name: IComparable<T>
+  nameWithType: IComparable<T>
+  fullName: System.IComparable<T>
+  nameWithType.vb: IComparable(Of T)
+  fullName.vb: System.IComparable(Of T)
+  name.vb: IComparable(Of T)
+  spec.csharp:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity`1.Equals(System.Object)
+  commentId: M:CSharpFunctionalExtensions.Entity`1.Equals(System.Object)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: Equals(object)
+  nameWithType: Entity<TId>.Equals(object)
+  fullName: CSharpFunctionalExtensions.Entity<TId>.Equals(object)
+  nameWithType.vb: Entity(Of TId).Equals(Object)
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of TId).Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity`1.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity`1.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity`1.GetHashCode
+  commentId: M:CSharpFunctionalExtensions.Entity`1.GetHashCode
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Entity<TId>.GetHashCode()
+  fullName: CSharpFunctionalExtensions.Entity<TId>.GetHashCode()
+  nameWithType.vb: Entity(Of TId).GetHashCode()
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of TId).GetHashCode()
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity`1.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity`1.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity`1.CompareTo(CSharpFunctionalExtensions.Entity{`0})
+  commentId: M:CSharpFunctionalExtensions.Entity`1.CompareTo(CSharpFunctionalExtensions.Entity{`0})
+  isExternal: true
+  name: CompareTo(Entity<TId>)
+  nameWithType: Entity<TId>.CompareTo(Entity<TId>)
+  fullName: CSharpFunctionalExtensions.Entity<TId>.CompareTo(CSharpFunctionalExtensions.Entity<TId>)
+  nameWithType.vb: Entity(Of TId).CompareTo(Entity(Of TId))
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of TId).CompareTo(CSharpFunctionalExtensions.Entity(Of TId))
+  name.vb: CompareTo(Entity(Of TId))
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity`1.CompareTo(CSharpFunctionalExtensions.Entity{`0})
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: <
+  - name: TId
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity`1.CompareTo(CSharpFunctionalExtensions.Entity{`0})
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TId
+  - name: )
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity`1.CompareTo(System.Object)
+  commentId: M:CSharpFunctionalExtensions.Entity`1.CompareTo(System.Object)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: CompareTo(object)
+  nameWithType: Entity<TId>.CompareTo(object)
+  fullName: CSharpFunctionalExtensions.Entity<TId>.CompareTo(object)
+  nameWithType.vb: Entity(Of TId).CompareTo(Object)
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of TId).CompareTo(Object)
+  name.vb: CompareTo(Object)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity`1.CompareTo(System.Object)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity`1.CompareTo(System.Object)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity`1.Id
+  commentId: P:CSharpFunctionalExtensions.Entity`1.Id
+  isExternal: true
+  name: Id
+  nameWithType: Entity<TId>.Id
+  fullName: CSharpFunctionalExtensions.Entity<TId>.Id
+  nameWithType.vb: Entity(Of TId).Id
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of TId).Id
+- uid: Domain.EnergyManagement.DocumentManaging.RequestReview.RequestId*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.RequestReview.RequestId
+  href: Domain.EnergyManagement.DocumentManaging.RequestReview.html#Domain_EnergyManagement_DocumentManaging_RequestReview_RequestId
+  name: RequestId
+  nameWithType: RequestReview.RequestId
+  fullName: Domain.EnergyManagement.DocumentManaging.RequestReview.RequestId
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: Domain.EnergyManagement.DocumentManaging.RequestReview.Manager*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.RequestReview.Manager
+  href: Domain.EnergyManagement.DocumentManaging.RequestReview.html#Domain_EnergyManagement_DocumentManaging_RequestReview_Manager
+  name: Manager
+  nameWithType: RequestReview.Manager
+  fullName: Domain.EnergyManagement.DocumentManaging.RequestReview.Manager
+- uid: Domain.EnergyManagement.DocumentManaging.Manager
+  commentId: T:Domain.EnergyManagement.DocumentManaging.Manager
+  parent: Domain.EnergyManagement.DocumentManaging
+  href: Domain.EnergyManagement.DocumentManaging.Manager.html
+  name: Manager
+  nameWithType: Manager
+  fullName: Domain.EnergyManagement.DocumentManaging.Manager
+- uid: Domain.EnergyManagement.DocumentManaging.RequestReview.ReviewDateTime*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.RequestReview.ReviewDateTime
+  href: Domain.EnergyManagement.DocumentManaging.RequestReview.html#Domain_EnergyManagement_DocumentManaging_RequestReview_ReviewDateTime
+  name: ReviewDateTime
+  nameWithType: RequestReview.ReviewDateTime
+  fullName: Domain.EnergyManagement.DocumentManaging.RequestReview.ReviewDateTime
+- uid: System.DateTimeOffset
+  commentId: T:System.DateTimeOffset
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.datetimeoffset
+  name: DateTimeOffset
+  nameWithType: DateTimeOffset
+  fullName: System.DateTimeOffset
+- uid: Domain.EnergyManagement.DocumentManaging.RequestReview.IsApproved*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.RequestReview.IsApproved
+  href: Domain.EnergyManagement.DocumentManaging.RequestReview.html#Domain_EnergyManagement_DocumentManaging_RequestReview_IsApproved
+  name: IsApproved
+  nameWithType: RequestReview.IsApproved
+  fullName: Domain.EnergyManagement.DocumentManaging.RequestReview.IsApproved
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Domain.EnergyManagement.DocumentManaging.RequestReview.Commentary*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.RequestReview.Commentary
+  href: Domain.EnergyManagement.DocumentManaging.RequestReview.html#Domain_EnergyManagement_DocumentManaging_RequestReview_Commentary
+  name: Commentary
+  nameWithType: RequestReview.Commentary
+  fullName: Domain.EnergyManagement.DocumentManaging.RequestReview.Commentary
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

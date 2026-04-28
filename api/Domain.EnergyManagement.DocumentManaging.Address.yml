@@ -1,0 +1,1169 @@
+### YamlMime:ManagedReference
+items:
+- uid: Domain.EnergyManagement.DocumentManaging.Address
+  commentId: T:Domain.EnergyManagement.DocumentManaging.Address
+  id: Address
+  parent: Domain.EnergyManagement.DocumentManaging
+  children:
+  - Domain.EnergyManagement.DocumentManaging.Address.Apartment
+  - Domain.EnergyManagement.DocumentManaging.Address.Building
+  - Domain.EnergyManagement.DocumentManaging.Address.City
+  - Domain.EnergyManagement.DocumentManaging.Address.Create(System.String,System.String,System.String,System.String,System.String,System.String,System.String)
+  - Domain.EnergyManagement.DocumentManaging.Address.GetEqualityComponents
+  - Domain.EnergyManagement.DocumentManaging.Address.House
+  - Domain.EnergyManagement.DocumentManaging.Address.PostalCode
+  - Domain.EnergyManagement.DocumentManaging.Address.PostalCodeRegex
+  - Domain.EnergyManagement.DocumentManaging.Address.Region
+  - Domain.EnergyManagement.DocumentManaging.Address.Street
+  langs:
+  - csharp
+  - vb
+  name: Address
+  nameWithType: Address
+  fullName: Domain.EnergyManagement.DocumentManaging.Address
+  type: Class
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/Address.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: Address
+    path: Domain.EnergyManagement/DocumentManaging/Address.cs
+    startLine: 16
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: >-
+    Представляет почтовый адрес как объект-значение.
+
+    Содержит обязательные поля (индекс, регион, город, улица, дом)
+
+    и необязательные — корпус и квартира.
+  remarks: >-
+    Визуализация структуры адреса и рекомендуемая нормализация:
+
+    ![Address structure](../docs/images/address_map.svg)
+  example: []
+  syntax:
+    content: 'public class Address : ValueObject, IComparable, IComparable<ValueObject>'
+    content.vb: Public Class Address Inherits ValueObject Implements IComparable, IComparable(Of ValueObject)
+  inheritance:
+  - System.Object
+  - CSharpFunctionalExtensions.ValueObject
+  implements:
+  - System.IComparable
+  - System.IComparable{CSharpFunctionalExtensions.ValueObject}
+  inheritedMembers:
+  - CSharpFunctionalExtensions.ValueObject.Equals(System.Object)
+  - CSharpFunctionalExtensions.ValueObject.GetHashCode
+  - CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+  - CSharpFunctionalExtensions.ValueObject.CompareTo(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Domain.EnergyManagement.DocumentManaging.Address.PostalCode
+  commentId: P:Domain.EnergyManagement.DocumentManaging.Address.PostalCode
+  id: PostalCode
+  parent: Domain.EnergyManagement.DocumentManaging.Address
+  langs:
+  - csharp
+  - vb
+  name: PostalCode
+  nameWithType: Address.PostalCode
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.PostalCode
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/Address.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: PostalCode
+    path: Domain.EnergyManagement/DocumentManaging/Address.cs
+    startLine: 19
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: Почтовый индекс (6 цифр).
+  example: []
+  syntax:
+    content: public string PostalCode { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property PostalCode As String
+  overload: Domain.EnergyManagement.DocumentManaging.Address.PostalCode*
+- uid: Domain.EnergyManagement.DocumentManaging.Address.PostalCodeRegex
+  commentId: F:Domain.EnergyManagement.DocumentManaging.Address.PostalCodeRegex
+  id: PostalCodeRegex
+  parent: Domain.EnergyManagement.DocumentManaging.Address
+  langs:
+  - csharp
+  - vb
+  name: PostalCodeRegex
+  nameWithType: Address.PostalCodeRegex
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.PostalCodeRegex
+  type: Field
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/Address.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: PostalCodeRegex
+    path: Domain.EnergyManagement/DocumentManaging/Address.cs
+    startLine: 20
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: public static Regex PostalCodeRegex
+    return:
+      type: System.Text.RegularExpressions.Regex
+    content.vb: Public Shared PostalCodeRegex As Regex
+- uid: Domain.EnergyManagement.DocumentManaging.Address.Region
+  commentId: P:Domain.EnergyManagement.DocumentManaging.Address.Region
+  id: Region
+  parent: Domain.EnergyManagement.DocumentManaging.Address
+  langs:
+  - csharp
+  - vb
+  name: Region
+  nameWithType: Address.Region
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.Region
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/Address.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: Region
+    path: Domain.EnergyManagement/DocumentManaging/Address.cs
+    startLine: 22
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: Регион проживания.
+  example: []
+  syntax:
+    content: public string Region { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Region As String
+  overload: Domain.EnergyManagement.DocumentManaging.Address.Region*
+- uid: Domain.EnergyManagement.DocumentManaging.Address.City
+  commentId: P:Domain.EnergyManagement.DocumentManaging.Address.City
+  id: City
+  parent: Domain.EnergyManagement.DocumentManaging.Address
+  langs:
+  - csharp
+  - vb
+  name: City
+  nameWithType: Address.City
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.City
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/Address.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: City
+    path: Domain.EnergyManagement/DocumentManaging/Address.cs
+    startLine: 24
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: Город.
+  example: []
+  syntax:
+    content: public string City { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property City As String
+  overload: Domain.EnergyManagement.DocumentManaging.Address.City*
+- uid: Domain.EnergyManagement.DocumentManaging.Address.Street
+  commentId: P:Domain.EnergyManagement.DocumentManaging.Address.Street
+  id: Street
+  parent: Domain.EnergyManagement.DocumentManaging.Address
+  langs:
+  - csharp
+  - vb
+  name: Street
+  nameWithType: Address.Street
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.Street
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/Address.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: Street
+    path: Domain.EnergyManagement/DocumentManaging/Address.cs
+    startLine: 26
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: Улица.
+  example: []
+  syntax:
+    content: public string Street { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Street As String
+  overload: Domain.EnergyManagement.DocumentManaging.Address.Street*
+- uid: Domain.EnergyManagement.DocumentManaging.Address.House
+  commentId: P:Domain.EnergyManagement.DocumentManaging.Address.House
+  id: House
+  parent: Domain.EnergyManagement.DocumentManaging.Address
+  langs:
+  - csharp
+  - vb
+  name: House
+  nameWithType: Address.House
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.House
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/Address.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: House
+    path: Domain.EnergyManagement/DocumentManaging/Address.cs
+    startLine: 28
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: Номер дома.
+  example: []
+  syntax:
+    content: public string House { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property House As String
+  overload: Domain.EnergyManagement.DocumentManaging.Address.House*
+- uid: Domain.EnergyManagement.DocumentManaging.Address.Building
+  commentId: P:Domain.EnergyManagement.DocumentManaging.Address.Building
+  id: Building
+  parent: Domain.EnergyManagement.DocumentManaging.Address
+  langs:
+  - csharp
+  - vb
+  name: Building
+  nameWithType: Address.Building
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.Building
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/Address.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: Building
+    path: Domain.EnergyManagement/DocumentManaging/Address.cs
+    startLine: 31
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: Корпус (если есть).
+  example: []
+  syntax:
+    content: public Maybe<string> Building { get; }
+    parameters: []
+    return:
+      type: CSharpFunctionalExtensions.Maybe{System.String}
+    content.vb: Public ReadOnly Property Building As Maybe(Of String)
+  overload: Domain.EnergyManagement.DocumentManaging.Address.Building*
+- uid: Domain.EnergyManagement.DocumentManaging.Address.Apartment
+  commentId: P:Domain.EnergyManagement.DocumentManaging.Address.Apartment
+  id: Apartment
+  parent: Domain.EnergyManagement.DocumentManaging.Address
+  langs:
+  - csharp
+  - vb
+  name: Apartment
+  nameWithType: Address.Apartment
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.Apartment
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/Address.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: Apartment
+    path: Domain.EnergyManagement/DocumentManaging/Address.cs
+    startLine: 34
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: Квартира (если есть).
+  example: []
+  syntax:
+    content: public Maybe<string> Apartment { get; }
+    parameters: []
+    return:
+      type: CSharpFunctionalExtensions.Maybe{System.String}
+    content.vb: Public ReadOnly Property Apartment As Maybe(Of String)
+  overload: Domain.EnergyManagement.DocumentManaging.Address.Apartment*
+- uid: Domain.EnergyManagement.DocumentManaging.Address.Create(System.String,System.String,System.String,System.String,System.String,System.String,System.String)
+  commentId: M:Domain.EnergyManagement.DocumentManaging.Address.Create(System.String,System.String,System.String,System.String,System.String,System.String,System.String)
+  id: Create(System.String,System.String,System.String,System.String,System.String,System.String,System.String)
+  parent: Domain.EnergyManagement.DocumentManaging.Address
+  langs:
+  - csharp
+  - vb
+  name: Create(string, string, string, string, string, string?, string?)
+  nameWithType: Address.Create(string, string, string, string, string, string?, string?)
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.Create(string, string, string, string, string, string?, string?)
+  type: Method
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/Address.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: Create
+    path: Domain.EnergyManagement/DocumentManaging/Address.cs
+    startLine: 57
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: >-
+    Фабричный метод для создания <xref href="Domain.EnergyManagement.DocumentManaging.Address" data-throw-if-not-resolved="false"></xref> с валидацией полей.
+
+    Возвращает ошибки валидации в случае некорректных входных данных.
+  example: []
+  syntax:
+    content: public static Result<Address, IReadOnlyList<Error>> Create(string postalCode, string region, string city, string street, string house, string? building, string? apartment)
+    parameters:
+    - id: postalCode
+      type: System.String
+    - id: region
+      type: System.String
+    - id: city
+      type: System.String
+    - id: street
+      type: System.String
+    - id: house
+      type: System.String
+    - id: building
+      type: System.String
+    - id: apartment
+      type: System.String
+    return:
+      type: CSharpFunctionalExtensions.Result{Domain.EnergyManagement.DocumentManaging.Address,System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.Common.Error}}
+    content.vb: Public Shared Function Create(postalCode As String, region As String, city As String, street As String, house As String, building As String, apartment As String) As Result(Of Address, IReadOnlyList(Of [Error]))
+  overload: Domain.EnergyManagement.DocumentManaging.Address.Create*
+  nameWithType.vb: Address.Create(String, String, String, String, String, String, String)
+  fullName.vb: Domain.EnergyManagement.DocumentManaging.Address.Create(String, String, String, String, String, String, String)
+  name.vb: Create(String, String, String, String, String, String, String)
+- uid: Domain.EnergyManagement.DocumentManaging.Address.GetEqualityComponents
+  commentId: M:Domain.EnergyManagement.DocumentManaging.Address.GetEqualityComponents
+  id: GetEqualityComponents
+  parent: Domain.EnergyManagement.DocumentManaging.Address
+  langs:
+  - csharp
+  - vb
+  name: GetEqualityComponents()
+  nameWithType: Address.GetEqualityComponents()
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.GetEqualityComponents()
+  type: Method
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/Address.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: GetEqualityComponents
+    path: Domain.EnergyManagement/DocumentManaging/Address.cs
+    startLine: 267
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  example: []
+  syntax:
+    content: protected override IEnumerable<IComparable> GetEqualityComponents()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.IComparable}
+    content.vb: Protected Overrides Function GetEqualityComponents() As IEnumerable(Of IComparable)
+  overridden: CSharpFunctionalExtensions.ValueObject.GetEqualityComponents
+  overload: Domain.EnergyManagement.DocumentManaging.Address.GetEqualityComponents*
+references:
+- uid: Domain.EnergyManagement.DocumentManaging
+  commentId: N:Domain.EnergyManagement.DocumentManaging
+  href: Domain.html
+  name: Domain.EnergyManagement.DocumentManaging
+  nameWithType: Domain.EnergyManagement.DocumentManaging
+  fullName: Domain.EnergyManagement.DocumentManaging
+  spec.csharp:
+  - uid: Domain
+    name: Domain
+    href: Domain.html
+  - name: .
+  - uid: Domain.EnergyManagement
+    name: EnergyManagement
+    href: Domain.EnergyManagement.html
+  - name: .
+  - uid: Domain.EnergyManagement.DocumentManaging
+    name: DocumentManaging
+    href: Domain.EnergyManagement.DocumentManaging.html
+  spec.vb:
+  - uid: Domain
+    name: Domain
+    href: Domain.html
+  - name: .
+  - uid: Domain.EnergyManagement
+    name: EnergyManagement
+    href: Domain.EnergyManagement.html
+  - name: .
+  - uid: Domain.EnergyManagement.DocumentManaging
+    name: DocumentManaging
+    href: Domain.EnergyManagement.DocumentManaging.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: CSharpFunctionalExtensions.ValueObject
+  commentId: T:CSharpFunctionalExtensions.ValueObject
+  parent: CSharpFunctionalExtensions
+  isExternal: true
+  name: ValueObject
+  nameWithType: ValueObject
+  fullName: CSharpFunctionalExtensions.ValueObject
+- uid: System.IComparable
+  commentId: T:System.IComparable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable
+  name: IComparable
+  nameWithType: IComparable
+  fullName: System.IComparable
+- uid: System.IComparable{CSharpFunctionalExtensions.ValueObject}
+  commentId: T:System.IComparable{CSharpFunctionalExtensions.ValueObject}
+  parent: System
+  definition: System.IComparable`1
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  name: IComparable<ValueObject>
+  nameWithType: IComparable<ValueObject>
+  fullName: System.IComparable<CSharpFunctionalExtensions.ValueObject>
+  nameWithType.vb: IComparable(Of ValueObject)
+  fullName.vb: System.IComparable(Of CSharpFunctionalExtensions.ValueObject)
+  name.vb: IComparable(Of ValueObject)
+  spec.csharp:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: <
+  - uid: CSharpFunctionalExtensions.ValueObject
+    name: ValueObject
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: CSharpFunctionalExtensions.ValueObject
+    name: ValueObject
+    isExternal: true
+  - name: )
+- uid: CSharpFunctionalExtensions.ValueObject.Equals(System.Object)
+  commentId: M:CSharpFunctionalExtensions.ValueObject.Equals(System.Object)
+  parent: CSharpFunctionalExtensions.ValueObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: Equals(object)
+  nameWithType: ValueObject.Equals(object)
+  fullName: CSharpFunctionalExtensions.ValueObject.Equals(object)
+  nameWithType.vb: ValueObject.Equals(Object)
+  fullName.vb: CSharpFunctionalExtensions.ValueObject.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.ValueObject.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.ValueObject.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: CSharpFunctionalExtensions.ValueObject.GetHashCode
+  commentId: M:CSharpFunctionalExtensions.ValueObject.GetHashCode
+  parent: CSharpFunctionalExtensions.ValueObject
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: ValueObject.GetHashCode()
+  fullName: CSharpFunctionalExtensions.ValueObject.GetHashCode()
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.ValueObject.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.ValueObject.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+- uid: CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+  commentId: M:CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+  parent: CSharpFunctionalExtensions.ValueObject
+  isExternal: true
+  name: CompareTo(ValueObject)
+  nameWithType: ValueObject.CompareTo(ValueObject)
+  fullName: CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: CSharpFunctionalExtensions.ValueObject
+    name: ValueObject
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: CSharpFunctionalExtensions.ValueObject
+    name: ValueObject
+    isExternal: true
+  - name: )
+- uid: CSharpFunctionalExtensions.ValueObject.CompareTo(System.Object)
+  commentId: M:CSharpFunctionalExtensions.ValueObject.CompareTo(System.Object)
+  parent: CSharpFunctionalExtensions.ValueObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: CompareTo(object)
+  nameWithType: ValueObject.CompareTo(object)
+  fullName: CSharpFunctionalExtensions.ValueObject.CompareTo(object)
+  nameWithType.vb: ValueObject.CompareTo(Object)
+  fullName.vb: CSharpFunctionalExtensions.ValueObject.CompareTo(Object)
+  name.vb: CompareTo(Object)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.ValueObject.CompareTo(System.Object)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.ValueObject.CompareTo(System.Object)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: CSharpFunctionalExtensions
+  commentId: N:CSharpFunctionalExtensions
+  isExternal: true
+  name: CSharpFunctionalExtensions
+  nameWithType: CSharpFunctionalExtensions
+  fullName: CSharpFunctionalExtensions
+- uid: System.IComparable`1
+  commentId: T:System.IComparable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  name: IComparable<T>
+  nameWithType: IComparable<T>
+  fullName: System.IComparable<T>
+  nameWithType.vb: IComparable(Of T)
+  fullName.vb: System.IComparable(Of T)
+  name.vb: IComparable(Of T)
+  spec.csharp:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Domain.EnergyManagement.DocumentManaging.Address.PostalCode*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.Address.PostalCode
+  href: Domain.EnergyManagement.DocumentManaging.Address.html#Domain_EnergyManagement_DocumentManaging_Address_PostalCode
+  name: PostalCode
+  nameWithType: Address.PostalCode
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.PostalCode
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Text.RegularExpressions.Regex
+  commentId: T:System.Text.RegularExpressions.Regex
+  parent: System.Text.RegularExpressions
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.text.regularexpressions.regex
+  name: Regex
+  nameWithType: Regex
+  fullName: System.Text.RegularExpressions.Regex
+- uid: System.Text.RegularExpressions
+  commentId: N:System.Text.RegularExpressions
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Text.RegularExpressions
+  nameWithType: System.Text.RegularExpressions
+  fullName: System.Text.RegularExpressions
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+  - name: .
+  - uid: System.Text.RegularExpressions
+    name: RegularExpressions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.regularexpressions
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Text
+    name: Text
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text
+  - name: .
+  - uid: System.Text.RegularExpressions
+    name: RegularExpressions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.text.regularexpressions
+- uid: Domain.EnergyManagement.DocumentManaging.Address.Region*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.Address.Region
+  href: Domain.EnergyManagement.DocumentManaging.Address.html#Domain_EnergyManagement_DocumentManaging_Address_Region
+  name: Region
+  nameWithType: Address.Region
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.Region
+- uid: Domain.EnergyManagement.DocumentManaging.Address.City*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.Address.City
+  href: Domain.EnergyManagement.DocumentManaging.Address.html#Domain_EnergyManagement_DocumentManaging_Address_City
+  name: City
+  nameWithType: Address.City
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.City
+- uid: Domain.EnergyManagement.DocumentManaging.Address.Street*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.Address.Street
+  href: Domain.EnergyManagement.DocumentManaging.Address.html#Domain_EnergyManagement_DocumentManaging_Address_Street
+  name: Street
+  nameWithType: Address.Street
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.Street
+- uid: Domain.EnergyManagement.DocumentManaging.Address.House*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.Address.House
+  href: Domain.EnergyManagement.DocumentManaging.Address.html#Domain_EnergyManagement_DocumentManaging_Address_House
+  name: House
+  nameWithType: Address.House
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.House
+- uid: Domain.EnergyManagement.DocumentManaging.Address.Building*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.Address.Building
+  href: Domain.EnergyManagement.DocumentManaging.Address.html#Domain_EnergyManagement_DocumentManaging_Address_Building
+  name: Building
+  nameWithType: Address.Building
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.Building
+- uid: CSharpFunctionalExtensions.Maybe{System.String}
+  commentId: T:CSharpFunctionalExtensions.Maybe{System.String}
+  parent: CSharpFunctionalExtensions
+  definition: CSharpFunctionalExtensions.Maybe`1
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: Maybe<string>
+  nameWithType: Maybe<string>
+  fullName: CSharpFunctionalExtensions.Maybe<string>
+  nameWithType.vb: Maybe(Of String)
+  fullName.vb: CSharpFunctionalExtensions.Maybe(Of String)
+  name.vb: Maybe(Of String)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Maybe`1
+    name: Maybe
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Maybe`1
+    name: Maybe
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: CSharpFunctionalExtensions.Maybe`1
+  commentId: T:CSharpFunctionalExtensions.Maybe`1
+  isExternal: true
+  name: Maybe<T>
+  nameWithType: Maybe<T>
+  fullName: CSharpFunctionalExtensions.Maybe<T>
+  nameWithType.vb: Maybe(Of T)
+  fullName.vb: CSharpFunctionalExtensions.Maybe(Of T)
+  name.vb: Maybe(Of T)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Maybe`1
+    name: Maybe
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Maybe`1
+    name: Maybe
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Domain.EnergyManagement.DocumentManaging.Address.Apartment*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.Address.Apartment
+  href: Domain.EnergyManagement.DocumentManaging.Address.html#Domain_EnergyManagement_DocumentManaging_Address_Apartment
+  name: Apartment
+  nameWithType: Address.Apartment
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.Apartment
+- uid: Domain.EnergyManagement.DocumentManaging.Address
+  commentId: T:Domain.EnergyManagement.DocumentManaging.Address
+  parent: Domain.EnergyManagement.DocumentManaging
+  href: Domain.EnergyManagement.DocumentManaging.Address.html
+  name: Address
+  nameWithType: Address
+  fullName: Domain.EnergyManagement.DocumentManaging.Address
+- uid: Domain.EnergyManagement.DocumentManaging.Address.Create*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.Address.Create
+  href: Domain.EnergyManagement.DocumentManaging.Address.html#Domain_EnergyManagement_DocumentManaging_Address_Create_System_String_System_String_System_String_System_String_System_String_System_String_System_String_
+  name: Create
+  nameWithType: Address.Create
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.Create
+- uid: CSharpFunctionalExtensions.Result{Domain.EnergyManagement.DocumentManaging.Address,System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.Common.Error}}
+  commentId: T:CSharpFunctionalExtensions.Result{Domain.EnergyManagement.DocumentManaging.Address,System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.Common.Error}}
+  parent: CSharpFunctionalExtensions
+  definition: CSharpFunctionalExtensions.Result`2
+  href: Domain.EnergyManagement.DocumentManaging.Address.html
+  name: Result<Address, IReadOnlyList<Error>>
+  nameWithType: Result<Address, IReadOnlyList<Error>>
+  fullName: CSharpFunctionalExtensions.Result<Domain.EnergyManagement.DocumentManaging.Address, System.Collections.Generic.IReadOnlyList<Domain.EnergyManagement.Common.Error>>
+  nameWithType.vb: Result(Of Address, IReadOnlyList(Of Error))
+  fullName.vb: CSharpFunctionalExtensions.Result(Of Domain.EnergyManagement.DocumentManaging.Address, System.Collections.Generic.IReadOnlyList(Of Domain.EnergyManagement.Common.Error))
+  name.vb: Result(Of Address, IReadOnlyList(Of Error))
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: <
+  - uid: Domain.EnergyManagement.DocumentManaging.Address
+    name: Address
+    href: Domain.EnergyManagement.DocumentManaging.Address.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Domain.EnergyManagement.Common.Error
+    name: Error
+    href: Domain.EnergyManagement.Common.Error.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Domain.EnergyManagement.DocumentManaging.Address
+    name: Address
+    href: Domain.EnergyManagement.DocumentManaging.Address.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Domain.EnergyManagement.Common.Error
+    name: Error
+    href: Domain.EnergyManagement.Common.Error.html
+  - name: )
+  - name: )
+- uid: CSharpFunctionalExtensions.Result`2
+  commentId: T:CSharpFunctionalExtensions.Result`2
+  isExternal: true
+  name: Result<T, E>
+  nameWithType: Result<T, E>
+  fullName: CSharpFunctionalExtensions.Result<T, E>
+  nameWithType.vb: Result(Of T, E)
+  fullName.vb: CSharpFunctionalExtensions.Result(Of T, E)
+  name.vb: Result(Of T, E)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: E
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: E
+  - name: )
+- uid: CSharpFunctionalExtensions.ValueObject.GetEqualityComponents
+  commentId: M:CSharpFunctionalExtensions.ValueObject.GetEqualityComponents
+  parent: CSharpFunctionalExtensions.ValueObject
+  isExternal: true
+  name: GetEqualityComponents()
+  nameWithType: ValueObject.GetEqualityComponents()
+  fullName: CSharpFunctionalExtensions.ValueObject.GetEqualityComponents()
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.ValueObject.GetEqualityComponents
+    name: GetEqualityComponents
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.ValueObject.GetEqualityComponents
+    name: GetEqualityComponents
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Domain.EnergyManagement.DocumentManaging.Address.GetEqualityComponents*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.Address.GetEqualityComponents
+  href: Domain.EnergyManagement.DocumentManaging.Address.html#Domain_EnergyManagement_DocumentManaging_Address_GetEqualityComponents
+  name: GetEqualityComponents
+  nameWithType: Address.GetEqualityComponents
+  fullName: Domain.EnergyManagement.DocumentManaging.Address.GetEqualityComponents
+- uid: System.Collections.Generic.IEnumerable{System.IComparable}
+  commentId: T:System.Collections.Generic.IEnumerable{System.IComparable}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<IComparable>
+  nameWithType: IEnumerable<IComparable>
+  fullName: System.Collections.Generic.IEnumerable<System.IComparable>
+  nameWithType.vb: IEnumerable(Of IComparable)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of System.IComparable)
+  name.vb: IEnumerable(Of IComparable)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: System.IComparable
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.IComparable
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic

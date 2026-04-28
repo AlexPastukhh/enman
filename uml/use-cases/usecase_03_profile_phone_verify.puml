@@ -1,0 +1,67 @@
+@startuml
+title Сценарий 3 — Доп. данные профиля и подтверждение телефона (Use Case)
+left to right direction
+skinparam packageStyle rectangle
+skinparam nodesep 20
+skinparam ranksep 8
+skinparam wrapWidth 120
+
+actor "Страница профиля" as ProfilePage
+actor "Форма доп. данных" as ProfileForm
+actor "Страница подтверждения телефона" as PhoneVerifyPage
+actor "Форма доп. данных" as ProfileFormEnd
+usecase "Ввести доп данные" as UC_EnterAddtionalData
+usecase "Ввести номер\nтелефона" as UC_EnterPhone
+usecase "Ввести данные ФЛ" as UC_FillFL
+usecase "Ввести данные ЮЛ" as UC_FillUL
+usecase "Ввести данные ИП" as UC_FillIP
+usecase "Проверить\nвалидность формы" as UC_ProfileValidate
+usecase "Отправить\nдоп. данные" as UC_SubmitProfile
+usecase "Открыть страницу\nподтверждения телефона" as UC_OpenPhoneVerify
+usecase "Ошибки\nвалидации" as UC_ProfileErrors
+
+ProfilePage -- UC_EnterAddtionalData
+ProfileForm -- UC_SubmitProfile
+ProfileForm -- UC_EnterPhone
+ProfileForm -- UC_FillFL
+ProfileForm -- UC_FillUL
+ProfileForm -- UC_FillIP
+
+UC_SubmitProfile ..> UC_ProfileValidate : <<include>>
+UC_ProfileErrors ..> UC_ProfileValidate : <<extend>>
+usecase "Проверить (серверная)\nвалидность" as UC_ServerValidateProfile
+UC_SubmitProfile ..> UC_ProfileValidate : <<include>>
+UC_SubmitProfile ..> UC_ServerValidateProfile : <<include>>
+UC_ProfileErrors ..> UC_ServerValidateProfile : <<extend>>
+UC_SubmitProfile ..> UC_OpenPhoneVerify : <<include>>
+UC_SubmitProfile --> PhoneVerifyPage : Перейти к подтверждению телефона (после успешной проверки)
+UC_EnterAddtionalData --> ProfileFormEnd : Открыть форму доп. данных
+
+note right of UC_SubmitProfile
+Предусловие:
+ - пользователь аутентифицирован;
+ - форма доп. данных открыта.
+Алгоритм:
+ - клиентская проверка форматов и
+	 заполнения обязательных полей;
+ - отправка данных на сервер.
+Постусловие:
+ - либо переход к подтверждению телефона,
+ - либо отображение ошибок.
+end note
+
+note right of UC_ServerValidateProfile
+Предусловие:
+ - данные доп. профиля получены на сервере.
+Алгоритм:
+ - повторная проверка формата и обязательности;
+ - бизнес-проверки и проверки целостности,
+	 требующие доступа к БД (например, совпадение
+	 с существующими записями).
+Постусловие:
+ - либо данные приняты и начат процесс
+	 подтверждения телефона, либо возвращены
+	 ошибки валидации.
+end note
+
+@enduml

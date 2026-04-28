@@ -1,0 +1,96 @@
+### YamlMime:TableOfContent
+items:
+- uid: Domain.EnergyManagement
+  name: Domain.EnergyManagement
+  type: Namespace
+  items:
+  - uid: Domain.EnergyManagement.Class1
+    name: Class1
+    type: Class
+- uid: Domain.EnergyManagement.Common
+  name: Domain.EnergyManagement.Common
+  type: Namespace
+  items:
+  - uid: Domain.EnergyManagement.Common.Constraints
+    name: Constraints
+    type: Class
+  - uid: Domain.EnergyManagement.Common.Data
+    name: Data
+    type: Class
+  - uid: Domain.EnergyManagement.Common.Error
+    name: Error
+    type: Class
+  - uid: Domain.EnergyManagement.Common.Error.Errors
+    name: Error.Errors
+    type: Class
+  - uid: Domain.EnergyManagement.Common.Error.Errors.Account
+    name: Error.Errors.Account
+    type: Class
+  - uid: Domain.EnergyManagement.Common.Error.Errors.AddressErrors
+    name: Error.Errors.AddressErrors
+    type: Class
+  - uid: Domain.EnergyManagement.Common.Error.Errors.ClientErrors
+    name: Error.Errors.ClientErrors
+    type: Class
+  - uid: Domain.EnergyManagement.Common.Error.Errors.ClientRequestErrors
+    name: Error.Errors.ClientRequestErrors
+    type: Class
+  - uid: Domain.EnergyManagement.Common.Error.Errors.ConstantsErrors
+    name: Error.Errors.ConstantsErrors
+    type: Class
+  - uid: Domain.EnergyManagement.Common.Error.Errors.General
+    name: Error.Errors.General
+    type: Class
+  - uid: Domain.EnergyManagement.Common.Error.Errors.Passport
+    name: Error.Errors.Passport
+    type: Class
+- uid: Domain.EnergyManagement.DocumentManaging
+  name: Domain.EnergyManagement.DocumentManaging
+  type: Namespace
+  items:
+  - uid: Domain.EnergyManagement.DocumentManaging.Address
+    name: Address
+    type: Class
+  - uid: Domain.EnergyManagement.DocumentManaging.Client
+    name: Client
+    type: Class
+  - uid: Domain.EnergyManagement.DocumentManaging.ClientRequest
+    name: ClientRequest
+    type: Class
+  - uid: Domain.EnergyManagement.DocumentManaging.Email
+    name: Email
+    type: Class
+  - uid: Domain.EnergyManagement.DocumentManaging.FullName
+    name: FullName
+    type: Class
+  - uid: Domain.EnergyManagement.DocumentManaging.IndividualClient
+    name: IndividualClient
+    type: Class
+  - uid: Domain.EnergyManagement.DocumentManaging.IndividualRequest
+    name: IndividualRequest
+    type: Class
+  - uid: Domain.EnergyManagement.DocumentManaging.Manager
+    name: Manager
+    type: Class
+  - uid: Domain.EnergyManagement.DocumentManaging.PassportData
+    name: PassportData
+    type: Class
+  - uid: Domain.EnergyManagement.DocumentManaging.Password
+    name: Password
+    type: Class
+  - uid: Domain.EnergyManagement.DocumentManaging.PasswordHash
+    name: PasswordHash
+    type: Class
+  - uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+    name: PhoneNumber
+    type: Class
+  - uid: Domain.EnergyManagement.DocumentManaging.RequestReview
+    name: RequestReview
+    type: Class
+  - uid: Domain.EnergyManagement.DocumentManaging.RequestType
+    name: RequestType
+    type: Enum
+  - uid: Domain.EnergyManagement.DocumentManaging.SNILS
+    name: SNILS
+    type: Class
+memberLayout: SamePage

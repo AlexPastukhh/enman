@@ -1,0 +1,67 @@
+import { useState } from "react";
+import { EyeIcon, EyeIconSlash } from "../../assets/icons/svgr_barrel";
+import type { FormRegister } from "../../hooks/useFormRegisterDebounce";
+import type { FieldError } from "react-hook-form";
+import { FormFieldBase } from "./FormFieldBase";
+import { formConst } from "./formConst";
+
+export const Password = ({
+  registerFormFn: register,
+  fieldName,
+  labelText,
+  placeHolder,
+  passwordInputId,
+  passwordErrorId: passworErrorId,
+  error,
+}: {
+  registerFormFn: FormRegister;
+  fieldName: string;
+  labelText: string;
+  placeHolder: string;
+  passwordInputId: string;
+  passwordErrorId: string;
+  error?: FieldError;
+}) => {
+  const [showPassword, setShowPassword] = useState(false);
+  return (
+    <>
+      {" "}
+      <FormFieldBase
+        labelText={labelText}
+        inputId={passwordInputId}
+        inputErrorId={passworErrorId}
+        error={error}
+      >
+        <div className="passwordWrapper">
+          <input
+            className="formControl"
+            type={showPassword ? "text" : "password"}
+            id={passwordInputId}
+            placeholder={placeHolder}
+            aria-errormessage={error ? passworErrorId : undefined}
+            aria-invalid={error ? "true" : "false"}
+            {...register(fieldName)}
+          />
+          <button
+            className="iconsButton"
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            aria-label={
+              showPassword
+                ? formConst.ariaLabelHidePwd
+                : formConst.ariaLabelShowPwd
+            }
+            aria-pressed={showPassword ? "true" : "false"}
+            aria-controls={passwordInputId}
+          >
+            {showPassword ? (
+              <EyeIcon aria-hidden="true" className="icon" />
+            ) : (
+              <EyeIconSlash aria-hidden="true" className="icon eyeClosedIcon" />
+            )}
+          </button>
+        </div>
+      </FormFieldBase>
+    </>
+  );
+};

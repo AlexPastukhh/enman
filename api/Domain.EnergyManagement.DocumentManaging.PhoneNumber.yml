@@ -1,0 +1,901 @@
+### YamlMime:ManagedReference
+items:
+- uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+  commentId: T:Domain.EnergyManagement.DocumentManaging.PhoneNumber
+  id: PhoneNumber
+  parent: Domain.EnergyManagement.DocumentManaging
+  children:
+  - Domain.EnergyManagement.DocumentManaging.PhoneNumber.Create(System.String)
+  - Domain.EnergyManagement.DocumentManaging.PhoneNumber.GetEqualityComponents
+  - Domain.EnergyManagement.DocumentManaging.PhoneNumber.Value
+  - Domain.EnergyManagement.DocumentManaging.PhoneNumber.op_Equality(Domain.EnergyManagement.DocumentManaging.PhoneNumber,System.String)
+  - Domain.EnergyManagement.DocumentManaging.PhoneNumber.op_Inequality(Domain.EnergyManagement.DocumentManaging.PhoneNumber,System.String)
+  langs:
+  - csharp
+  - vb
+  name: PhoneNumber
+  nameWithType: PhoneNumber
+  fullName: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+  type: Class
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/PhoneNumber.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: PhoneNumber
+    path: Domain.EnergyManagement/DocumentManaging/PhoneNumber.cs
+    startLine: 8
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: 'public class PhoneNumber : ValueObject, IComparable, IComparable<ValueObject>'
+    content.vb: Public Class PhoneNumber Inherits ValueObject Implements IComparable, IComparable(Of ValueObject)
+  inheritance:
+  - System.Object
+  - CSharpFunctionalExtensions.ValueObject
+  implements:
+  - System.IComparable
+  - System.IComparable{CSharpFunctionalExtensions.ValueObject}
+  inheritedMembers:
+  - CSharpFunctionalExtensions.ValueObject.Equals(System.Object)
+  - CSharpFunctionalExtensions.ValueObject.GetHashCode
+  - CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+  - CSharpFunctionalExtensions.ValueObject.CompareTo(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber.Value
+  commentId: P:Domain.EnergyManagement.DocumentManaging.PhoneNumber.Value
+  id: Value
+  parent: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: PhoneNumber.Value
+  fullName: Domain.EnergyManagement.DocumentManaging.PhoneNumber.Value
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/PhoneNumber.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: Value
+    path: Domain.EnergyManagement/DocumentManaging/PhoneNumber.cs
+    startLine: 17
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: Обёртка для телефонного номера. Содержит валидацию по регулярному выражению.
+  remarks: >-
+    Пример шаблона и соответствие форматов:
+
+    ![Phone regex](../docs/images/phone_regex.svg)
+  example: []
+  syntax:
+    content: public string Value { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Value As String
+  overload: Domain.EnergyManagement.DocumentManaging.PhoneNumber.Value*
+- uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber.Create(System.String)
+  commentId: M:Domain.EnergyManagement.DocumentManaging.PhoneNumber.Create(System.String)
+  id: Create(System.String)
+  parent: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+  langs:
+  - csharp
+  - vb
+  name: Create(string)
+  nameWithType: PhoneNumber.Create(string)
+  fullName: Domain.EnergyManagement.DocumentManaging.PhoneNumber.Create(string)
+  type: Method
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/PhoneNumber.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: Create
+    path: Domain.EnergyManagement/DocumentManaging/PhoneNumber.cs
+    startLine: 23
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: public static Result<PhoneNumber, IReadOnlyList<Error>> Create(string value)
+    parameters:
+    - id: value
+      type: System.String
+    return:
+      type: CSharpFunctionalExtensions.Result{Domain.EnergyManagement.DocumentManaging.PhoneNumber,System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.Common.Error}}
+    content.vb: Public Shared Function Create(value As String) As Result(Of PhoneNumber, IReadOnlyList(Of [Error]))
+  overload: Domain.EnergyManagement.DocumentManaging.PhoneNumber.Create*
+  nameWithType.vb: PhoneNumber.Create(String)
+  fullName.vb: Domain.EnergyManagement.DocumentManaging.PhoneNumber.Create(String)
+  name.vb: Create(String)
+- uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber.op_Equality(Domain.EnergyManagement.DocumentManaging.PhoneNumber,System.String)
+  commentId: M:Domain.EnergyManagement.DocumentManaging.PhoneNumber.op_Equality(Domain.EnergyManagement.DocumentManaging.PhoneNumber,System.String)
+  id: op_Equality(Domain.EnergyManagement.DocumentManaging.PhoneNumber,System.String)
+  parent: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+  langs:
+  - csharp
+  - vb
+  name: operator ==(PhoneNumber, string)
+  nameWithType: PhoneNumber.operator ==(PhoneNumber, string)
+  fullName: Domain.EnergyManagement.DocumentManaging.PhoneNumber.operator ==(Domain.EnergyManagement.DocumentManaging.PhoneNumber, string)
+  type: Operator
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/PhoneNumber.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: op_Equality
+    path: Domain.EnergyManagement/DocumentManaging/PhoneNumber.cs
+    startLine: 44
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: public static bool operator ==(PhoneNumber left, string right)
+    parameters:
+    - id: left
+      type: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+    - id: right
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator =(left As PhoneNumber, right As String) As Boolean
+  overload: Domain.EnergyManagement.DocumentManaging.PhoneNumber.op_Equality*
+  nameWithType.vb: PhoneNumber.=(PhoneNumber, String)
+  fullName.vb: Domain.EnergyManagement.DocumentManaging.PhoneNumber.=(Domain.EnergyManagement.DocumentManaging.PhoneNumber, String)
+  name.vb: =(PhoneNumber, String)
+- uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber.op_Inequality(Domain.EnergyManagement.DocumentManaging.PhoneNumber,System.String)
+  commentId: M:Domain.EnergyManagement.DocumentManaging.PhoneNumber.op_Inequality(Domain.EnergyManagement.DocumentManaging.PhoneNumber,System.String)
+  id: op_Inequality(Domain.EnergyManagement.DocumentManaging.PhoneNumber,System.String)
+  parent: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+  langs:
+  - csharp
+  - vb
+  name: operator !=(PhoneNumber, string)
+  nameWithType: PhoneNumber.operator !=(PhoneNumber, string)
+  fullName: Domain.EnergyManagement.DocumentManaging.PhoneNumber.operator !=(Domain.EnergyManagement.DocumentManaging.PhoneNumber, string)
+  type: Operator
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/PhoneNumber.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: op_Inequality
+    path: Domain.EnergyManagement/DocumentManaging/PhoneNumber.cs
+    startLine: 52
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: public static bool operator !=(PhoneNumber left, string right)
+    parameters:
+    - id: left
+      type: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+    - id: right
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <>(left As PhoneNumber, right As String) As Boolean
+  overload: Domain.EnergyManagement.DocumentManaging.PhoneNumber.op_Inequality*
+  nameWithType.vb: PhoneNumber.<>(PhoneNumber, String)
+  fullName.vb: Domain.EnergyManagement.DocumentManaging.PhoneNumber.<>(Domain.EnergyManagement.DocumentManaging.PhoneNumber, String)
+  name.vb: <>(PhoneNumber, String)
+- uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber.GetEqualityComponents
+  commentId: M:Domain.EnergyManagement.DocumentManaging.PhoneNumber.GetEqualityComponents
+  id: GetEqualityComponents
+  parent: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+  langs:
+  - csharp
+  - vb
+  name: GetEqualityComponents()
+  nameWithType: PhoneNumber.GetEqualityComponents()
+  fullName: Domain.EnergyManagement.DocumentManaging.PhoneNumber.GetEqualityComponents()
+  type: Method
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/PhoneNumber.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: GetEqualityComponents
+    path: Domain.EnergyManagement/DocumentManaging/PhoneNumber.cs
+    startLine: 56
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  example: []
+  syntax:
+    content: protected override IEnumerable<IComparable> GetEqualityComponents()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.IComparable}
+    content.vb: Protected Overrides Function GetEqualityComponents() As IEnumerable(Of IComparable)
+  overridden: CSharpFunctionalExtensions.ValueObject.GetEqualityComponents
+  overload: Domain.EnergyManagement.DocumentManaging.PhoneNumber.GetEqualityComponents*
+references:
+- uid: Domain.EnergyManagement.DocumentManaging
+  commentId: N:Domain.EnergyManagement.DocumentManaging
+  href: Domain.html
+  name: Domain.EnergyManagement.DocumentManaging
+  nameWithType: Domain.EnergyManagement.DocumentManaging
+  fullName: Domain.EnergyManagement.DocumentManaging
+  spec.csharp:
+  - uid: Domain
+    name: Domain
+    href: Domain.html
+  - name: .
+  - uid: Domain.EnergyManagement
+    name: EnergyManagement
+    href: Domain.EnergyManagement.html
+  - name: .
+  - uid: Domain.EnergyManagement.DocumentManaging
+    name: DocumentManaging
+    href: Domain.EnergyManagement.DocumentManaging.html
+  spec.vb:
+  - uid: Domain
+    name: Domain
+    href: Domain.html
+  - name: .
+  - uid: Domain.EnergyManagement
+    name: EnergyManagement
+    href: Domain.EnergyManagement.html
+  - name: .
+  - uid: Domain.EnergyManagement.DocumentManaging
+    name: DocumentManaging
+    href: Domain.EnergyManagement.DocumentManaging.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: CSharpFunctionalExtensions.ValueObject
+  commentId: T:CSharpFunctionalExtensions.ValueObject
+  parent: CSharpFunctionalExtensions
+  isExternal: true
+  name: ValueObject
+  nameWithType: ValueObject
+  fullName: CSharpFunctionalExtensions.ValueObject
+- uid: System.IComparable
+  commentId: T:System.IComparable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable
+  name: IComparable
+  nameWithType: IComparable
+  fullName: System.IComparable
+- uid: System.IComparable{CSharpFunctionalExtensions.ValueObject}
+  commentId: T:System.IComparable{CSharpFunctionalExtensions.ValueObject}
+  parent: System
+  definition: System.IComparable`1
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  name: IComparable<ValueObject>
+  nameWithType: IComparable<ValueObject>
+  fullName: System.IComparable<CSharpFunctionalExtensions.ValueObject>
+  nameWithType.vb: IComparable(Of ValueObject)
+  fullName.vb: System.IComparable(Of CSharpFunctionalExtensions.ValueObject)
+  name.vb: IComparable(Of ValueObject)
+  spec.csharp:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: <
+  - uid: CSharpFunctionalExtensions.ValueObject
+    name: ValueObject
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: CSharpFunctionalExtensions.ValueObject
+    name: ValueObject
+    isExternal: true
+  - name: )
+- uid: CSharpFunctionalExtensions.ValueObject.Equals(System.Object)
+  commentId: M:CSharpFunctionalExtensions.ValueObject.Equals(System.Object)
+  parent: CSharpFunctionalExtensions.ValueObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: Equals(object)
+  nameWithType: ValueObject.Equals(object)
+  fullName: CSharpFunctionalExtensions.ValueObject.Equals(object)
+  nameWithType.vb: ValueObject.Equals(Object)
+  fullName.vb: CSharpFunctionalExtensions.ValueObject.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.ValueObject.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.ValueObject.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: CSharpFunctionalExtensions.ValueObject.GetHashCode
+  commentId: M:CSharpFunctionalExtensions.ValueObject.GetHashCode
+  parent: CSharpFunctionalExtensions.ValueObject
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: ValueObject.GetHashCode()
+  fullName: CSharpFunctionalExtensions.ValueObject.GetHashCode()
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.ValueObject.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.ValueObject.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+- uid: CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+  commentId: M:CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+  parent: CSharpFunctionalExtensions.ValueObject
+  isExternal: true
+  name: CompareTo(ValueObject)
+  nameWithType: ValueObject.CompareTo(ValueObject)
+  fullName: CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: CSharpFunctionalExtensions.ValueObject
+    name: ValueObject
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.ValueObject.CompareTo(CSharpFunctionalExtensions.ValueObject)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: CSharpFunctionalExtensions.ValueObject
+    name: ValueObject
+    isExternal: true
+  - name: )
+- uid: CSharpFunctionalExtensions.ValueObject.CompareTo(System.Object)
+  commentId: M:CSharpFunctionalExtensions.ValueObject.CompareTo(System.Object)
+  parent: CSharpFunctionalExtensions.ValueObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: CompareTo(object)
+  nameWithType: ValueObject.CompareTo(object)
+  fullName: CSharpFunctionalExtensions.ValueObject.CompareTo(object)
+  nameWithType.vb: ValueObject.CompareTo(Object)
+  fullName.vb: CSharpFunctionalExtensions.ValueObject.CompareTo(Object)
+  name.vb: CompareTo(Object)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.ValueObject.CompareTo(System.Object)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.ValueObject.CompareTo(System.Object)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: CSharpFunctionalExtensions
+  commentId: N:CSharpFunctionalExtensions
+  isExternal: true
+  name: CSharpFunctionalExtensions
+  nameWithType: CSharpFunctionalExtensions
+  fullName: CSharpFunctionalExtensions
+- uid: System.IComparable`1
+  commentId: T:System.IComparable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  name: IComparable<T>
+  nameWithType: IComparable<T>
+  fullName: System.IComparable<T>
+  nameWithType.vb: IComparable(Of T)
+  fullName.vb: System.IComparable(Of T)
+  name.vb: IComparable(Of T)
+  spec.csharp:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber.Value*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.PhoneNumber.Value
+  href: Domain.EnergyManagement.DocumentManaging.PhoneNumber.html#Domain_EnergyManagement_DocumentManaging_PhoneNumber_Value
+  name: Value
+  nameWithType: PhoneNumber.Value
+  fullName: Domain.EnergyManagement.DocumentManaging.PhoneNumber.Value
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber.Create*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.PhoneNumber.Create
+  href: Domain.EnergyManagement.DocumentManaging.PhoneNumber.html#Domain_EnergyManagement_DocumentManaging_PhoneNumber_Create_System_String_
+  name: Create
+  nameWithType: PhoneNumber.Create
+  fullName: Domain.EnergyManagement.DocumentManaging.PhoneNumber.Create
+- uid: CSharpFunctionalExtensions.Result{Domain.EnergyManagement.DocumentManaging.PhoneNumber,System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.Common.Error}}
+  commentId: T:CSharpFunctionalExtensions.Result{Domain.EnergyManagement.DocumentManaging.PhoneNumber,System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.Common.Error}}
+  parent: CSharpFunctionalExtensions
+  definition: CSharpFunctionalExtensions.Result`2
+  href: Domain.EnergyManagement.DocumentManaging.PhoneNumber.html
+  name: Result<PhoneNumber, IReadOnlyList<Error>>
+  nameWithType: Result<PhoneNumber, IReadOnlyList<Error>>
+  fullName: CSharpFunctionalExtensions.Result<Domain.EnergyManagement.DocumentManaging.PhoneNumber, System.Collections.Generic.IReadOnlyList<Domain.EnergyManagement.Common.Error>>
+  nameWithType.vb: Result(Of PhoneNumber, IReadOnlyList(Of Error))
+  fullName.vb: CSharpFunctionalExtensions.Result(Of Domain.EnergyManagement.DocumentManaging.PhoneNumber, System.Collections.Generic.IReadOnlyList(Of Domain.EnergyManagement.Common.Error))
+  name.vb: Result(Of PhoneNumber, IReadOnlyList(Of Error))
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: <
+  - uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+    name: PhoneNumber
+    href: Domain.EnergyManagement.DocumentManaging.PhoneNumber.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Domain.EnergyManagement.Common.Error
+    name: Error
+    href: Domain.EnergyManagement.Common.Error.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+    name: PhoneNumber
+    href: Domain.EnergyManagement.DocumentManaging.PhoneNumber.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Domain.EnergyManagement.Common.Error
+    name: Error
+    href: Domain.EnergyManagement.Common.Error.html
+  - name: )
+  - name: )
+- uid: CSharpFunctionalExtensions.Result`2
+  commentId: T:CSharpFunctionalExtensions.Result`2
+  isExternal: true
+  name: Result<T, E>
+  nameWithType: Result<T, E>
+  fullName: CSharpFunctionalExtensions.Result<T, E>
+  nameWithType.vb: Result(Of T, E)
+  fullName.vb: CSharpFunctionalExtensions.Result(Of T, E)
+  name.vb: Result(Of T, E)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: E
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: E
+  - name: )
+- uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber.op_Equality*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.PhoneNumber.op_Equality
+  href: Domain.EnergyManagement.DocumentManaging.PhoneNumber.html#Domain_EnergyManagement_DocumentManaging_PhoneNumber_op_Equality_Domain_EnergyManagement_DocumentManaging_PhoneNumber_System_String_
+  name: operator ==
+  nameWithType: PhoneNumber.operator ==
+  fullName: Domain.EnergyManagement.DocumentManaging.PhoneNumber.operator ==
+  nameWithType.vb: PhoneNumber.=
+  fullName.vb: Domain.EnergyManagement.DocumentManaging.PhoneNumber.=
+  name.vb: =
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber.op_Equality*
+    name: ==
+    href: Domain.EnergyManagement.DocumentManaging.PhoneNumber.html#Domain_EnergyManagement_DocumentManaging_PhoneNumber_op_Equality_Domain_EnergyManagement_DocumentManaging_PhoneNumber_System_String_
+- uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+  commentId: T:Domain.EnergyManagement.DocumentManaging.PhoneNumber
+  parent: Domain.EnergyManagement.DocumentManaging
+  href: Domain.EnergyManagement.DocumentManaging.PhoneNumber.html
+  name: PhoneNumber
+  nameWithType: PhoneNumber
+  fullName: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber.op_Inequality*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.PhoneNumber.op_Inequality
+  href: Domain.EnergyManagement.DocumentManaging.PhoneNumber.html#Domain_EnergyManagement_DocumentManaging_PhoneNumber_op_Inequality_Domain_EnergyManagement_DocumentManaging_PhoneNumber_System_String_
+  name: operator !=
+  nameWithType: PhoneNumber.operator !=
+  fullName: Domain.EnergyManagement.DocumentManaging.PhoneNumber.operator !=
+  nameWithType.vb: PhoneNumber.<>
+  fullName.vb: Domain.EnergyManagement.DocumentManaging.PhoneNumber.<>
+  name.vb: <>
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber.op_Inequality*
+    name: '!='
+    href: Domain.EnergyManagement.DocumentManaging.PhoneNumber.html#Domain_EnergyManagement_DocumentManaging_PhoneNumber_op_Inequality_Domain_EnergyManagement_DocumentManaging_PhoneNumber_System_String_
+- uid: CSharpFunctionalExtensions.ValueObject.GetEqualityComponents
+  commentId: M:CSharpFunctionalExtensions.ValueObject.GetEqualityComponents
+  parent: CSharpFunctionalExtensions.ValueObject
+  isExternal: true
+  name: GetEqualityComponents()
+  nameWithType: ValueObject.GetEqualityComponents()
+  fullName: CSharpFunctionalExtensions.ValueObject.GetEqualityComponents()
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.ValueObject.GetEqualityComponents
+    name: GetEqualityComponents
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.ValueObject.GetEqualityComponents
+    name: GetEqualityComponents
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber.GetEqualityComponents*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.PhoneNumber.GetEqualityComponents
+  href: Domain.EnergyManagement.DocumentManaging.PhoneNumber.html#Domain_EnergyManagement_DocumentManaging_PhoneNumber_GetEqualityComponents
+  name: GetEqualityComponents
+  nameWithType: PhoneNumber.GetEqualityComponents
+  fullName: Domain.EnergyManagement.DocumentManaging.PhoneNumber.GetEqualityComponents
+- uid: System.Collections.Generic.IEnumerable{System.IComparable}
+  commentId: T:System.Collections.Generic.IEnumerable{System.IComparable}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<IComparable>
+  nameWithType: IEnumerable<IComparable>
+  fullName: System.Collections.Generic.IEnumerable<System.IComparable>
+  nameWithType.vb: IEnumerable(Of IComparable)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of System.IComparable)
+  name.vb: IEnumerable(Of IComparable)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: System.IComparable
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.IComparable
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic

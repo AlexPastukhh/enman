@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="180" viewBox="0 0 640 180">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <g font-family="Segoe UI, Arial" fill="#0b1220">
+    <text x="12" y="20" font-size="16" font-weight="600">Passport Data Flow</text>
+    <g transform="translate(0,32)">
+      <rect x="12" y="8" width="180" height="40" rx="6" fill="#eef2ff" stroke="#c7d2fe"/>
+      <text x="28" y="34" font-size="13">Collect (series, number)</text>
+
+      <path d="M210 28 L300 28" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <rect x="312" y="8" width="180" height="40" rx="6" fill="#ecfccb" stroke="#bbf7d0"/>
+      <text x="328" y="34" font-size="13">Validate (format, expiry)</text>
+
+      <path d="M504 28 L600 28" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <rect x="612" y="8" width="0" height="0" fill="none"/>
+    </g>
+    <defs>
+      <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+      </marker>
+    </defs>
+    <text x="12" y="100" font-size="12" fill="#475569">Затем сохраняется в зашифрованном виде или передается на верификацию.</text>
+  </g>
+</svg>

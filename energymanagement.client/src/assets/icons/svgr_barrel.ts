@@ -1,0 +1,6 @@
+export {default as EyeIcon} from "./eye1.svg?react"
+export {default as EyeIconSlash} from "./eye-closed.svg?react"
+export {default as LogoIcon} from "./logo.svg?react"
+export {default as EnterIcon} from "./enter-svgrepo-com.svg?react"
+export {default as MessagesIcon} from "./messages-dots-svgrepo-com.svg?react"
+export {default as PhoneIcon} from "./phone-svgrepo-com.svg?react"

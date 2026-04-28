@@ -1,0 +1,98 @@
+@startuml
+title Сценарий 1 — Регистрация (Use Case)
+left to right direction
+skinparam packageStyle rectangle
+skinparam nodesep 20
+skinparam ranksep 8
+skinparam wrapWidth 120
+
+actor "Пользователь" as User
+actor "Форма регистрации" as RegForm
+actor "Страница успеха регистрации" as RegSuccess
+
+usecase "Открыть форму\nрегистрации" as UC_OpenReg
+usecase "Выбрать тип аккаунта (ФЛ/ИП/ЮЛ)" as UC_SelectType
+usecase "Ввести email" as UC_Email
+usecase "Ввести пароль" as UC_Pass
+usecase "Проверить\nвалидность формы" as UC_Validate
+usecase "Проверить\nуникальность email" as UC_CheckUnique
+usecase "Зарегистрироваться" as UC_Register
+usecase "Показать успех\nи ссылку на вход" as UC_ShowSuccess
+usecase "Проверить (серверная)\nвалидность" as UC_ServerValidate
+
+usecase "Email уже\nиспользован" as UC_EmailUsed
+usecase "Показать ошибку\nи ссылку «Уже есть аккаунт?»" as UC_ShowEmailUsed
+
+usecase "Ошибки\nвалидации" as UC_ValidationErrors
+
+User -- UC_OpenReg
+RegForm -- UC_SelectType
+RegForm -- UC_Email
+RegForm -- UC_Pass
+RegForm -- UC_Register
+
+UC_Register ..> UC_Validate : <<include>>
+UC_Register ..> UC_CheckUnique : <<include>>
+UC_Register ..> UC_ShowSuccess : <<include>>
+UC_Register ..> UC_ServerValidate : <<include>>
+UC_ValidationErrors ..> UC_ServerValidate : <<extend>>
+UC_ShowSuccess --> RegSuccess : Переход на страницу успеха
+
+UC_EmailUsed ..> UC_Register : <<extend>>
+UC_ValidationErrors ..> UC_Register : <<extend>>
+
+UC_EmailUsed ..> UC_ShowEmailUsed : <<include>>
+RegSuccess -- UC_ShowSuccess
+
+note right of UC_Register
+Предусловие:
+ - форма регистрации открыта;
+ - поля email / пароль заполнены.
+Алгоритм:
+ - выполнить клиентскую валидацию;
+ - отправить запрос регистрации;
+ - проверить уникальность email.
+Постусловие:
+ - создан аккаунт и показан экран успеха; или
+ - показана ошибка (email занят / валидация).
+end note
+
+note right of UC_CheckUnique
+Предусловие:
+ - email введён и прошел форматную проверку.
+Алгоритм:
+ - сервер проверяет, что email не занят
+	 в системе.
+Постусловие:
+ - email либо свободен, либо занят.
+Точки расширения:
+ - «Email уже использован».
+end note
+
+note right of UC_ServerValidate
+Предусловие:
+ - данные отправлены с клиента.
+Алгоритм:
+ - повторная (базовая) проверка форматов и
+	 обязательных полей на сервере;
+ - выполнение дополнительных проверок,
+	 требующих БД/политик (уникальность и т.п.).
+Постусловие:
+ - либо данные приняты и можно продолжить
+	 создание учётной записи, либо возвращены
+	 ошибки валидации для отображения.
+end note
+
+note right of UC_Validate
+Предусловие:
+ - пользователь ввел значения полей.
+Алгоритм:
+ - проверка обязательности и форматов
+	 (email, пароль, выбранный тип).
+Постусловие:
+ - форма валидна или есть ошибки.
+Точки расширения:
+ - «Ошибки валидации».
+end note
+
+@enduml

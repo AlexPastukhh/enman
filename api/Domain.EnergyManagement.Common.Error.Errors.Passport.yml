@@ -1,0 +1,621 @@
+### YamlMime:ManagedReference
+items:
+- uid: Domain.EnergyManagement.Common.Error.Errors.Passport
+  commentId: T:Domain.EnergyManagement.Common.Error.Errors.Passport
+  id: Error.Errors.Passport
+  parent: Domain.EnergyManagement.Common
+  children:
+  - Domain.EnergyManagement.Common.Error.Errors.Passport.CodeIsInvalid
+  - Domain.EnergyManagement.Common.Error.Errors.Passport.CodeIsRequired
+  - Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedAtLocationIsRequired
+  - Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedAtTimeIsInTheFuture
+  - Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedAtTimeIsInvalid
+  - Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedAtTimeIsRequired
+  - Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedByIsRequired
+  - Domain.EnergyManagement.Common.Error.Errors.Passport.NumberIsInvalid
+  - Domain.EnergyManagement.Common.Error.Errors.Passport.NumberIsRequired
+  - Domain.EnergyManagement.Common.Error.Errors.Passport.SeriesIsInvalid
+  - Domain.EnergyManagement.Common.Error.Errors.Passport.SeriesIsRequired
+  langs:
+  - csharp
+  - vb
+  name: Error.Errors.Passport
+  nameWithType: Error.Errors.Passport
+  fullName: Domain.EnergyManagement.Common.Error.Errors.Passport
+  type: Class
+  source:
+    remote:
+      path: Domain.EnergyManagement/Common/Error.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: Passport
+    path: Domain.EnergyManagement/Common/Error.cs
+    startLine: 103
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.Common
+  syntax:
+    content: public static class Error.Errors.Passport
+    content.vb: Public Module [Error].Errors.Passport
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Domain.EnergyManagement.Common.Error.Errors.Passport.SeriesIsRequired
+  commentId: F:Domain.EnergyManagement.Common.Error.Errors.Passport.SeriesIsRequired
+  id: SeriesIsRequired
+  parent: Domain.EnergyManagement.Common.Error.Errors.Passport
+  langs:
+  - csharp
+  - vb
+  name: SeriesIsRequired
+  nameWithType: Error.Errors.Passport.SeriesIsRequired
+  fullName: Domain.EnergyManagement.Common.Error.Errors.Passport.SeriesIsRequired
+  type: Field
+  source:
+    remote:
+      path: Domain.EnergyManagement/Common/Error.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: SeriesIsRequired
+    path: Domain.EnergyManagement/Common/Error.cs
+    startLine: 105
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.Common
+  syntax:
+    content: public static readonly Error SeriesIsRequired
+    return:
+      type: Domain.EnergyManagement.Common.Error
+    content.vb: Public Shared ReadOnly SeriesIsRequired As [Error]
+- uid: Domain.EnergyManagement.Common.Error.Errors.Passport.SeriesIsInvalid
+  commentId: F:Domain.EnergyManagement.Common.Error.Errors.Passport.SeriesIsInvalid
+  id: SeriesIsInvalid
+  parent: Domain.EnergyManagement.Common.Error.Errors.Passport
+  langs:
+  - csharp
+  - vb
+  name: SeriesIsInvalid
+  nameWithType: Error.Errors.Passport.SeriesIsInvalid
+  fullName: Domain.EnergyManagement.Common.Error.Errors.Passport.SeriesIsInvalid
+  type: Field
+  source:
+    remote:
+      path: Domain.EnergyManagement/Common/Error.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: SeriesIsInvalid
+    path: Domain.EnergyManagement/Common/Error.cs
+    startLine: 106
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.Common
+  syntax:
+    content: public static readonly Error SeriesIsInvalid
+    return:
+      type: Domain.EnergyManagement.Common.Error
+    content.vb: Public Shared ReadOnly SeriesIsInvalid As [Error]
+- uid: Domain.EnergyManagement.Common.Error.Errors.Passport.NumberIsRequired
+  commentId: F:Domain.EnergyManagement.Common.Error.Errors.Passport.NumberIsRequired
+  id: NumberIsRequired
+  parent: Domain.EnergyManagement.Common.Error.Errors.Passport
+  langs:
+  - csharp
+  - vb
+  name: NumberIsRequired
+  nameWithType: Error.Errors.Passport.NumberIsRequired
+  fullName: Domain.EnergyManagement.Common.Error.Errors.Passport.NumberIsRequired
+  type: Field
+  source:
+    remote:
+      path: Domain.EnergyManagement/Common/Error.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: NumberIsRequired
+    path: Domain.EnergyManagement/Common/Error.cs
+    startLine: 107
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.Common
+  syntax:
+    content: public static readonly Error NumberIsRequired
+    return:
+      type: Domain.EnergyManagement.Common.Error
+    content.vb: Public Shared ReadOnly NumberIsRequired As [Error]
+- uid: Domain.EnergyManagement.Common.Error.Errors.Passport.NumberIsInvalid
+  commentId: F:Domain.EnergyManagement.Common.Error.Errors.Passport.NumberIsInvalid
+  id: NumberIsInvalid
+  parent: Domain.EnergyManagement.Common.Error.Errors.Passport
+  langs:
+  - csharp
+  - vb
+  name: NumberIsInvalid
+  nameWithType: Error.Errors.Passport.NumberIsInvalid
+  fullName: Domain.EnergyManagement.Common.Error.Errors.Passport.NumberIsInvalid
+  type: Field
+  source:
+    remote:
+      path: Domain.EnergyManagement/Common/Error.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: NumberIsInvalid
+    path: Domain.EnergyManagement/Common/Error.cs
+    startLine: 108
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.Common
+  syntax:
+    content: public static readonly Error NumberIsInvalid
+    return:
+      type: Domain.EnergyManagement.Common.Error
+    content.vb: Public Shared ReadOnly NumberIsInvalid As [Error]
+- uid: Domain.EnergyManagement.Common.Error.Errors.Passport.CodeIsRequired
+  commentId: F:Domain.EnergyManagement.Common.Error.Errors.Passport.CodeIsRequired
+  id: CodeIsRequired
+  parent: Domain.EnergyManagement.Common.Error.Errors.Passport
+  langs:
+  - csharp
+  - vb
+  name: CodeIsRequired
+  nameWithType: Error.Errors.Passport.CodeIsRequired
+  fullName: Domain.EnergyManagement.Common.Error.Errors.Passport.CodeIsRequired
+  type: Field
+  source:
+    remote:
+      path: Domain.EnergyManagement/Common/Error.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: CodeIsRequired
+    path: Domain.EnergyManagement/Common/Error.cs
+    startLine: 109
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.Common
+  syntax:
+    content: public static readonly Error CodeIsRequired
+    return:
+      type: Domain.EnergyManagement.Common.Error
+    content.vb: Public Shared ReadOnly CodeIsRequired As [Error]
+- uid: Domain.EnergyManagement.Common.Error.Errors.Passport.CodeIsInvalid
+  commentId: F:Domain.EnergyManagement.Common.Error.Errors.Passport.CodeIsInvalid
+  id: CodeIsInvalid
+  parent: Domain.EnergyManagement.Common.Error.Errors.Passport
+  langs:
+  - csharp
+  - vb
+  name: CodeIsInvalid
+  nameWithType: Error.Errors.Passport.CodeIsInvalid
+  fullName: Domain.EnergyManagement.Common.Error.Errors.Passport.CodeIsInvalid
+  type: Field
+  source:
+    remote:
+      path: Domain.EnergyManagement/Common/Error.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: CodeIsInvalid
+    path: Domain.EnergyManagement/Common/Error.cs
+    startLine: 110
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.Common
+  syntax:
+    content: public static readonly Error CodeIsInvalid
+    return:
+      type: Domain.EnergyManagement.Common.Error
+    content.vb: Public Shared ReadOnly CodeIsInvalid As [Error]
+- uid: Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedByIsRequired
+  commentId: F:Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedByIsRequired
+  id: IssuedByIsRequired
+  parent: Domain.EnergyManagement.Common.Error.Errors.Passport
+  langs:
+  - csharp
+  - vb
+  name: IssuedByIsRequired
+  nameWithType: Error.Errors.Passport.IssuedByIsRequired
+  fullName: Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedByIsRequired
+  type: Field
+  source:
+    remote:
+      path: Domain.EnergyManagement/Common/Error.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: IssuedByIsRequired
+    path: Domain.EnergyManagement/Common/Error.cs
+    startLine: 111
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.Common
+  syntax:
+    content: public static readonly Error IssuedByIsRequired
+    return:
+      type: Domain.EnergyManagement.Common.Error
+    content.vb: Public Shared ReadOnly IssuedByIsRequired As [Error]
+- uid: Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedAtTimeIsRequired
+  commentId: F:Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedAtTimeIsRequired
+  id: IssuedAtTimeIsRequired
+  parent: Domain.EnergyManagement.Common.Error.Errors.Passport
+  langs:
+  - csharp
+  - vb
+  name: IssuedAtTimeIsRequired
+  nameWithType: Error.Errors.Passport.IssuedAtTimeIsRequired
+  fullName: Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedAtTimeIsRequired
+  type: Field
+  source:
+    remote:
+      path: Domain.EnergyManagement/Common/Error.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: IssuedAtTimeIsRequired
+    path: Domain.EnergyManagement/Common/Error.cs
+    startLine: 112
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.Common
+  syntax:
+    content: public static readonly Error IssuedAtTimeIsRequired
+    return:
+      type: Domain.EnergyManagement.Common.Error
+    content.vb: Public Shared ReadOnly IssuedAtTimeIsRequired As [Error]
+- uid: Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedAtTimeIsInvalid
+  commentId: F:Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedAtTimeIsInvalid
+  id: IssuedAtTimeIsInvalid
+  parent: Domain.EnergyManagement.Common.Error.Errors.Passport
+  langs:
+  - csharp
+  - vb
+  name: IssuedAtTimeIsInvalid
+  nameWithType: Error.Errors.Passport.IssuedAtTimeIsInvalid
+  fullName: Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedAtTimeIsInvalid
+  type: Field
+  source:
+    remote:
+      path: Domain.EnergyManagement/Common/Error.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: IssuedAtTimeIsInvalid
+    path: Domain.EnergyManagement/Common/Error.cs
+    startLine: 113
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.Common
+  syntax:
+    content: public static readonly Error IssuedAtTimeIsInvalid
+    return:
+      type: Domain.EnergyManagement.Common.Error
+    content.vb: Public Shared ReadOnly IssuedAtTimeIsInvalid As [Error]
+- uid: Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedAtTimeIsInTheFuture
+  commentId: F:Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedAtTimeIsInTheFuture
+  id: IssuedAtTimeIsInTheFuture
+  parent: Domain.EnergyManagement.Common.Error.Errors.Passport
+  langs:
+  - csharp
+  - vb
+  name: IssuedAtTimeIsInTheFuture
+  nameWithType: Error.Errors.Passport.IssuedAtTimeIsInTheFuture
+  fullName: Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedAtTimeIsInTheFuture
+  type: Field
+  source:
+    remote:
+      path: Domain.EnergyManagement/Common/Error.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: IssuedAtTimeIsInTheFuture
+    path: Domain.EnergyManagement/Common/Error.cs
+    startLine: 114
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.Common
+  syntax:
+    content: public static readonly Error IssuedAtTimeIsInTheFuture
+    return:
+      type: Domain.EnergyManagement.Common.Error
+    content.vb: Public Shared ReadOnly IssuedAtTimeIsInTheFuture As [Error]
+- uid: Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedAtLocationIsRequired
+  commentId: F:Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedAtLocationIsRequired
+  id: IssuedAtLocationIsRequired
+  parent: Domain.EnergyManagement.Common.Error.Errors.Passport
+  langs:
+  - csharp
+  - vb
+  name: IssuedAtLocationIsRequired
+  nameWithType: Error.Errors.Passport.IssuedAtLocationIsRequired
+  fullName: Domain.EnergyManagement.Common.Error.Errors.Passport.IssuedAtLocationIsRequired
+  type: Field
+  source:
+    remote:
+      path: Domain.EnergyManagement/Common/Error.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: IssuedAtLocationIsRequired
+    path: Domain.EnergyManagement/Common/Error.cs
+    startLine: 115
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.Common
+  syntax:
+    content: public static readonly Error IssuedAtLocationIsRequired
+    return:
+      type: Domain.EnergyManagement.Common.Error
+    content.vb: Public Shared ReadOnly IssuedAtLocationIsRequired As [Error]
+references:
+- uid: Domain.EnergyManagement.Common
+  commentId: N:Domain.EnergyManagement.Common
+  href: Domain.html
+  name: Domain.EnergyManagement.Common
+  nameWithType: Domain.EnergyManagement.Common
+  fullName: Domain.EnergyManagement.Common
+  spec.csharp:
+  - uid: Domain
+    name: Domain
+    href: Domain.html
+  - name: .
+  - uid: Domain.EnergyManagement
+    name: EnergyManagement
+    href: Domain.EnergyManagement.html
+  - name: .
+  - uid: Domain.EnergyManagement.Common
+    name: Common
+    href: Domain.EnergyManagement.Common.html
+  spec.vb:
+  - uid: Domain
+    name: Domain
+    href: Domain.html
+  - name: .
+  - uid: Domain.EnergyManagement
+    name: EnergyManagement
+    href: Domain.EnergyManagement.html
+  - name: .
+  - uid: Domain.EnergyManagement.Common
+    name: Common
+    href: Domain.EnergyManagement.Common.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Domain.EnergyManagement.Common.Error
+  commentId: T:Domain.EnergyManagement.Common.Error
+  parent: Domain.EnergyManagement.Common
+  href: Domain.EnergyManagement.Common.Error.html
+  name: Error
+  nameWithType: Error
+  fullName: Domain.EnergyManagement.Common.Error

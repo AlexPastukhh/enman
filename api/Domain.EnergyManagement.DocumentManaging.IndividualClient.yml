@@ -1,0 +1,1384 @@
+### YamlMime:ManagedReference
+items:
+- uid: Domain.EnergyManagement.DocumentManaging.IndividualClient
+  commentId: T:Domain.EnergyManagement.DocumentManaging.IndividualClient
+  id: IndividualClient
+  parent: Domain.EnergyManagement.DocumentManaging
+  children:
+  - Domain.EnergyManagement.DocumentManaging.IndividualClient.ClientRequests
+  - Domain.EnergyManagement.DocumentManaging.IndividualClient.Create(Domain.EnergyManagement.DocumentManaging.Email,Domain.EnergyManagement.DocumentManaging.Password)
+  - Domain.EnergyManagement.DocumentManaging.IndividualClient.CreateConnectionRequest(System.String,Domain.EnergyManagement.DocumentManaging.Address)
+  - Domain.EnergyManagement.DocumentManaging.IndividualClient.FullName
+  - Domain.EnergyManagement.DocumentManaging.IndividualClient.PassportData
+  - Domain.EnergyManagement.DocumentManaging.IndividualClient.PhoneNumber
+  - Domain.EnergyManagement.DocumentManaging.IndividualClient.ProvideDataOrThrow(Domain.EnergyManagement.DocumentManaging.PhoneNumber,Domain.EnergyManagement.DocumentManaging.FullName)
+  langs:
+  - csharp
+  - vb
+  name: IndividualClient
+  nameWithType: IndividualClient
+  fullName: Domain.EnergyManagement.DocumentManaging.IndividualClient
+  type: Class
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/IndividualClient.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: IndividualClient
+    path: Domain.EnergyManagement/DocumentManaging/IndividualClient.cs
+    startLine: 9
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  syntax:
+    content: 'public class IndividualClient : Client, IComparable, IComparable<Entity<long>>'
+    content.vb: Public Class IndividualClient Inherits Client Implements IComparable, IComparable(Of Entity(Of Long))
+  inheritance:
+  - System.Object
+  - CSharpFunctionalExtensions.Entity{System.Int64}
+  - CSharpFunctionalExtensions.Entity
+  - Domain.EnergyManagement.DocumentManaging.Client
+  implements:
+  - System.IComparable
+  - System.IComparable{CSharpFunctionalExtensions.Entity{System.Int64}}
+  inheritedMembers:
+  - Domain.EnergyManagement.DocumentManaging.Client.Email
+  - Domain.EnergyManagement.DocumentManaging.Client.Password
+  - CSharpFunctionalExtensions.Entity{System.Int64}.Equals(System.Object)
+  - CSharpFunctionalExtensions.Entity{System.Int64}.GetHashCode
+  - CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(CSharpFunctionalExtensions.Entity{System.Int64})
+  - CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(System.Object)
+  - CSharpFunctionalExtensions.Entity{System.Int64}.Id
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Domain.EnergyManagement.DocumentManaging.IndividualClient.PhoneNumber
+  commentId: P:Domain.EnergyManagement.DocumentManaging.IndividualClient.PhoneNumber
+  id: PhoneNumber
+  parent: Domain.EnergyManagement.DocumentManaging.IndividualClient
+  langs:
+  - csharp
+  - vb
+  name: PhoneNumber
+  nameWithType: IndividualClient.PhoneNumber
+  fullName: Domain.EnergyManagement.DocumentManaging.IndividualClient.PhoneNumber
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/IndividualClient.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: PhoneNumber
+    path: Domain.EnergyManagement/DocumentManaging/IndividualClient.cs
+    startLine: 13
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: Номер телефона клиента (возможно отсутствует).
+  example: []
+  syntax:
+    content: public Maybe<PhoneNumber> PhoneNumber { get; }
+    parameters: []
+    return:
+      type: CSharpFunctionalExtensions.Maybe{Domain.EnergyManagement.DocumentManaging.PhoneNumber}
+    content.vb: Public ReadOnly Property PhoneNumber As Maybe(Of PhoneNumber)
+  overload: Domain.EnergyManagement.DocumentManaging.IndividualClient.PhoneNumber*
+- uid: Domain.EnergyManagement.DocumentManaging.IndividualClient.FullName
+  commentId: P:Domain.EnergyManagement.DocumentManaging.IndividualClient.FullName
+  id: FullName
+  parent: Domain.EnergyManagement.DocumentManaging.IndividualClient
+  langs:
+  - csharp
+  - vb
+  name: FullName
+  nameWithType: IndividualClient.FullName
+  fullName: Domain.EnergyManagement.DocumentManaging.IndividualClient.FullName
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/IndividualClient.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: FullName
+    path: Domain.EnergyManagement/DocumentManaging/IndividualClient.cs
+    startLine: 16
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: Ф.И.О. клиента (возможно отсутствует).
+  example: []
+  syntax:
+    content: public Maybe<FullName> FullName { get; }
+    parameters: []
+    return:
+      type: CSharpFunctionalExtensions.Maybe{Domain.EnergyManagement.DocumentManaging.FullName}
+    content.vb: Public ReadOnly Property FullName As Maybe(Of FullName)
+  overload: Domain.EnergyManagement.DocumentManaging.IndividualClient.FullName*
+- uid: Domain.EnergyManagement.DocumentManaging.IndividualClient.PassportData
+  commentId: P:Domain.EnergyManagement.DocumentManaging.IndividualClient.PassportData
+  id: PassportData
+  parent: Domain.EnergyManagement.DocumentManaging.IndividualClient
+  langs:
+  - csharp
+  - vb
+  name: PassportData
+  nameWithType: IndividualClient.PassportData
+  fullName: Domain.EnergyManagement.DocumentManaging.IndividualClient.PassportData
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/IndividualClient.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: PassportData
+    path: Domain.EnergyManagement/DocumentManaging/IndividualClient.cs
+    startLine: 19
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: Данные паспорта (возможно отсутствуют).
+  example: []
+  syntax:
+    content: public Maybe<PassportData> PassportData { get; }
+    parameters: []
+    return:
+      type: CSharpFunctionalExtensions.Maybe{Domain.EnergyManagement.DocumentManaging.PassportData}
+    content.vb: Public ReadOnly Property PassportData As Maybe(Of PassportData)
+  overload: Domain.EnergyManagement.DocumentManaging.IndividualClient.PassportData*
+- uid: Domain.EnergyManagement.DocumentManaging.IndividualClient.ClientRequests
+  commentId: P:Domain.EnergyManagement.DocumentManaging.IndividualClient.ClientRequests
+  id: ClientRequests
+  parent: Domain.EnergyManagement.DocumentManaging.IndividualClient
+  langs:
+  - csharp
+  - vb
+  name: ClientRequests
+  nameWithType: IndividualClient.ClientRequests
+  fullName: Domain.EnergyManagement.DocumentManaging.IndividualClient.ClientRequests
+  type: Property
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/IndividualClient.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: ClientRequests
+    path: Domain.EnergyManagement/DocumentManaging/IndividualClient.cs
+    startLine: 24
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: Список запросов, созданных клиентом.
+  example: []
+  syntax:
+    content: public virtual IReadOnlyList<IndividualRequest> ClientRequests { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.DocumentManaging.IndividualRequest}
+    content.vb: Public Overridable ReadOnly Property ClientRequests As IReadOnlyList(Of IndividualRequest)
+  overload: Domain.EnergyManagement.DocumentManaging.IndividualClient.ClientRequests*
+- uid: Domain.EnergyManagement.DocumentManaging.IndividualClient.Create(Domain.EnergyManagement.DocumentManaging.Email,Domain.EnergyManagement.DocumentManaging.Password)
+  commentId: M:Domain.EnergyManagement.DocumentManaging.IndividualClient.Create(Domain.EnergyManagement.DocumentManaging.Email,Domain.EnergyManagement.DocumentManaging.Password)
+  id: Create(Domain.EnergyManagement.DocumentManaging.Email,Domain.EnergyManagement.DocumentManaging.Password)
+  parent: Domain.EnergyManagement.DocumentManaging.IndividualClient
+  langs:
+  - csharp
+  - vb
+  name: Create(Email, Password)
+  nameWithType: IndividualClient.Create(Email, Password)
+  fullName: Domain.EnergyManagement.DocumentManaging.IndividualClient.Create(Domain.EnergyManagement.DocumentManaging.Email, Domain.EnergyManagement.DocumentManaging.Password)
+  type: Method
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/IndividualClient.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: Create
+    path: Domain.EnergyManagement/DocumentManaging/IndividualClient.cs
+    startLine: 45
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: >-
+    Фабричный метод создания `IndividualClient`.
+
+    Валидирует обязательные поля и возвращает объект или ошибки.
+  example: []
+  syntax:
+    content: public static Result<IndividualClient, IReadOnlyList<Error>> Create(Email email, Password password)
+    parameters:
+    - id: email
+      type: Domain.EnergyManagement.DocumentManaging.Email
+    - id: password
+      type: Domain.EnergyManagement.DocumentManaging.Password
+    return:
+      type: CSharpFunctionalExtensions.Result{Domain.EnergyManagement.DocumentManaging.IndividualClient,System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.Common.Error}}
+    content.vb: Public Shared Function Create(email As Email, password As Password) As Result(Of IndividualClient, IReadOnlyList(Of [Error]))
+  overload: Domain.EnergyManagement.DocumentManaging.IndividualClient.Create*
+- uid: Domain.EnergyManagement.DocumentManaging.IndividualClient.ProvideDataOrThrow(Domain.EnergyManagement.DocumentManaging.PhoneNumber,Domain.EnergyManagement.DocumentManaging.FullName)
+  commentId: M:Domain.EnergyManagement.DocumentManaging.IndividualClient.ProvideDataOrThrow(Domain.EnergyManagement.DocumentManaging.PhoneNumber,Domain.EnergyManagement.DocumentManaging.FullName)
+  id: ProvideDataOrThrow(Domain.EnergyManagement.DocumentManaging.PhoneNumber,Domain.EnergyManagement.DocumentManaging.FullName)
+  parent: Domain.EnergyManagement.DocumentManaging.IndividualClient
+  langs:
+  - csharp
+  - vb
+  name: ProvideDataOrThrow(PhoneNumber, FullName)
+  nameWithType: IndividualClient.ProvideDataOrThrow(PhoneNumber, FullName)
+  fullName: Domain.EnergyManagement.DocumentManaging.IndividualClient.ProvideDataOrThrow(Domain.EnergyManagement.DocumentManaging.PhoneNumber, Domain.EnergyManagement.DocumentManaging.FullName)
+  type: Method
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/IndividualClient.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: ProvideDataOrThrow
+    path: Domain.EnergyManagement/DocumentManaging/IndividualClient.cs
+    startLine: 62
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: >-
+    Заполняет дополнительные данные клиента (телефон и Ф.И.О.).
+
+    Бросает исключение Guard при некорректных аргументах.
+  example: []
+  syntax:
+    content: public void ProvideDataOrThrow(PhoneNumber phoneNumber, FullName fullName)
+    parameters:
+    - id: phoneNumber
+      type: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+    - id: fullName
+      type: Domain.EnergyManagement.DocumentManaging.FullName
+    content.vb: Public Sub ProvideDataOrThrow(phoneNumber As PhoneNumber, fullName As FullName)
+  overload: Domain.EnergyManagement.DocumentManaging.IndividualClient.ProvideDataOrThrow*
+- uid: Domain.EnergyManagement.DocumentManaging.IndividualClient.CreateConnectionRequest(System.String,Domain.EnergyManagement.DocumentManaging.Address)
+  commentId: M:Domain.EnergyManagement.DocumentManaging.IndividualClient.CreateConnectionRequest(System.String,Domain.EnergyManagement.DocumentManaging.Address)
+  id: CreateConnectionRequest(System.String,Domain.EnergyManagement.DocumentManaging.Address)
+  parent: Domain.EnergyManagement.DocumentManaging.IndividualClient
+  langs:
+  - csharp
+  - vb
+  name: CreateConnectionRequest(string, Address)
+  nameWithType: IndividualClient.CreateConnectionRequest(string, Address)
+  fullName: Domain.EnergyManagement.DocumentManaging.IndividualClient.CreateConnectionRequest(string, Domain.EnergyManagement.DocumentManaging.Address)
+  type: Method
+  source:
+    remote:
+      path: Domain.EnergyManagement/DocumentManaging/IndividualClient.cs
+      branch: main
+      repo: https://github.com/AlexPastukhh/pr.git
+    id: CreateConnectionRequest
+    path: Domain.EnergyManagement/DocumentManaging/IndividualClient.cs
+    startLine: 78
+  assemblies:
+  - Domain.EnergyManagement
+  namespace: Domain.EnergyManagement.DocumentManaging
+  summary: >-
+    Создаёт подключение (запрос) от данного клиента с указанными деталями и адресом.
+
+    Возвращает ошибки в случае неуспеха создания запроса.
+  example: []
+  syntax:
+    content: public Result<IndividualRequest, IReadOnlyList<Error>> CreateConnectionRequest(string requestDetails, Address address)
+    parameters:
+    - id: requestDetails
+      type: System.String
+    - id: address
+      type: Domain.EnergyManagement.DocumentManaging.Address
+    return:
+      type: CSharpFunctionalExtensions.Result{Domain.EnergyManagement.DocumentManaging.IndividualRequest,System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.Common.Error}}
+    content.vb: Public Function CreateConnectionRequest(requestDetails As String, address As Address) As Result(Of IndividualRequest, IReadOnlyList(Of [Error]))
+  overload: Domain.EnergyManagement.DocumentManaging.IndividualClient.CreateConnectionRequest*
+  nameWithType.vb: IndividualClient.CreateConnectionRequest(String, Address)
+  fullName.vb: Domain.EnergyManagement.DocumentManaging.IndividualClient.CreateConnectionRequest(String, Domain.EnergyManagement.DocumentManaging.Address)
+  name.vb: CreateConnectionRequest(String, Address)
+references:
+- uid: Domain.EnergyManagement.DocumentManaging
+  commentId: N:Domain.EnergyManagement.DocumentManaging
+  href: Domain.html
+  name: Domain.EnergyManagement.DocumentManaging
+  nameWithType: Domain.EnergyManagement.DocumentManaging
+  fullName: Domain.EnergyManagement.DocumentManaging
+  spec.csharp:
+  - uid: Domain
+    name: Domain
+    href: Domain.html
+  - name: .
+  - uid: Domain.EnergyManagement
+    name: EnergyManagement
+    href: Domain.EnergyManagement.html
+  - name: .
+  - uid: Domain.EnergyManagement.DocumentManaging
+    name: DocumentManaging
+    href: Domain.EnergyManagement.DocumentManaging.html
+  spec.vb:
+  - uid: Domain
+    name: Domain
+    href: Domain.html
+  - name: .
+  - uid: Domain.EnergyManagement
+    name: EnergyManagement
+    href: Domain.EnergyManagement.html
+  - name: .
+  - uid: Domain.EnergyManagement.DocumentManaging
+    name: DocumentManaging
+    href: Domain.EnergyManagement.DocumentManaging.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: CSharpFunctionalExtensions.Entity{System.Int64}
+  commentId: T:CSharpFunctionalExtensions.Entity{System.Int64}
+  parent: CSharpFunctionalExtensions
+  definition: CSharpFunctionalExtensions.Entity`1
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: Entity<long>
+  nameWithType: Entity<long>
+  fullName: CSharpFunctionalExtensions.Entity<long>
+  nameWithType.vb: Entity(Of Long)
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of Long)
+  name.vb: Entity(Of Long)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: <
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity
+  commentId: T:CSharpFunctionalExtensions.Entity
+  parent: CSharpFunctionalExtensions
+  isExternal: true
+  name: Entity
+  nameWithType: Entity
+  fullName: CSharpFunctionalExtensions.Entity
+- uid: Domain.EnergyManagement.DocumentManaging.Client
+  commentId: T:Domain.EnergyManagement.DocumentManaging.Client
+  parent: Domain.EnergyManagement.DocumentManaging
+  href: Domain.EnergyManagement.DocumentManaging.Client.html
+  name: Client
+  nameWithType: Client
+  fullName: Domain.EnergyManagement.DocumentManaging.Client
+- uid: System.IComparable
+  commentId: T:System.IComparable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable
+  name: IComparable
+  nameWithType: IComparable
+  fullName: System.IComparable
+- uid: System.IComparable{CSharpFunctionalExtensions.Entity{System.Int64}}
+  commentId: T:System.IComparable{CSharpFunctionalExtensions.Entity{System.Int64}}
+  parent: System
+  definition: System.IComparable`1
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  name: IComparable<Entity<long>>
+  nameWithType: IComparable<Entity<long>>
+  fullName: System.IComparable<CSharpFunctionalExtensions.Entity<long>>
+  nameWithType.vb: IComparable(Of Entity(Of Long))
+  fullName.vb: System.IComparable(Of CSharpFunctionalExtensions.Entity(Of Long))
+  name.vb: IComparable(Of Entity(Of Long))
+  spec.csharp:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: <
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: <
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+  - name: )
+- uid: Domain.EnergyManagement.DocumentManaging.Client.Email
+  commentId: P:Domain.EnergyManagement.DocumentManaging.Client.Email
+  parent: Domain.EnergyManagement.DocumentManaging.Client
+  href: Domain.EnergyManagement.DocumentManaging.Client.html#Domain_EnergyManagement_DocumentManaging_Client_Email
+  name: Email
+  nameWithType: Client.Email
+  fullName: Domain.EnergyManagement.DocumentManaging.Client.Email
+- uid: Domain.EnergyManagement.DocumentManaging.Client.Password
+  commentId: P:Domain.EnergyManagement.DocumentManaging.Client.Password
+  parent: Domain.EnergyManagement.DocumentManaging.Client
+  href: Domain.EnergyManagement.DocumentManaging.Client.html#Domain_EnergyManagement_DocumentManaging_Client_Password
+  name: Password
+  nameWithType: Client.Password
+  fullName: Domain.EnergyManagement.DocumentManaging.Client.Password
+- uid: CSharpFunctionalExtensions.Entity{System.Int64}.Equals(System.Object)
+  commentId: M:CSharpFunctionalExtensions.Entity{System.Int64}.Equals(System.Object)
+  parent: CSharpFunctionalExtensions.Entity{System.Int64}
+  definition: CSharpFunctionalExtensions.Entity`1.Equals(System.Object)
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: Equals(object)
+  nameWithType: Entity<long>.Equals(object)
+  fullName: CSharpFunctionalExtensions.Entity<long>.Equals(object)
+  nameWithType.vb: Entity(Of Long).Equals(Object)
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of Long).Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity{System.Int64}.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity{System.Int64}.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity{System.Int64}.GetHashCode
+  commentId: M:CSharpFunctionalExtensions.Entity{System.Int64}.GetHashCode
+  parent: CSharpFunctionalExtensions.Entity{System.Int64}
+  definition: CSharpFunctionalExtensions.Entity`1.GetHashCode
+  name: GetHashCode()
+  nameWithType: Entity<long>.GetHashCode()
+  fullName: CSharpFunctionalExtensions.Entity<long>.GetHashCode()
+  nameWithType.vb: Entity(Of Long).GetHashCode()
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of Long).GetHashCode()
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity{System.Int64}.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity{System.Int64}.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(CSharpFunctionalExtensions.Entity{System.Int64})
+  commentId: M:CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(CSharpFunctionalExtensions.Entity{System.Int64})
+  parent: CSharpFunctionalExtensions.Entity{System.Int64}
+  definition: CSharpFunctionalExtensions.Entity`1.CompareTo(CSharpFunctionalExtensions.Entity{`0})
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: CompareTo(Entity<long>)
+  nameWithType: Entity<long>.CompareTo(Entity<long>)
+  fullName: CSharpFunctionalExtensions.Entity<long>.CompareTo(CSharpFunctionalExtensions.Entity<long>)
+  nameWithType.vb: Entity(Of Long).CompareTo(Entity(Of Long))
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of Long).CompareTo(CSharpFunctionalExtensions.Entity(Of Long))
+  name.vb: CompareTo(Entity(Of Long))
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(CSharpFunctionalExtensions.Entity{System.Int64})
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: <
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(CSharpFunctionalExtensions.Entity{System.Int64})
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(System.Object)
+  commentId: M:CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(System.Object)
+  parent: CSharpFunctionalExtensions.Entity{System.Int64}
+  definition: CSharpFunctionalExtensions.Entity`1.CompareTo(System.Object)
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: CompareTo(object)
+  nameWithType: Entity<long>.CompareTo(object)
+  fullName: CSharpFunctionalExtensions.Entity<long>.CompareTo(object)
+  nameWithType.vb: Entity(Of Long).CompareTo(Object)
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of Long).CompareTo(Object)
+  name.vb: CompareTo(Object)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(System.Object)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity{System.Int64}.CompareTo(System.Object)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity{System.Int64}.Id
+  commentId: P:CSharpFunctionalExtensions.Entity{System.Int64}.Id
+  parent: CSharpFunctionalExtensions.Entity{System.Int64}
+  definition: CSharpFunctionalExtensions.Entity`1.Id
+  name: Id
+  nameWithType: Entity<long>.Id
+  fullName: CSharpFunctionalExtensions.Entity<long>.Id
+  nameWithType.vb: Entity(Of Long).Id
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of Long).Id
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: CSharpFunctionalExtensions.Entity`1
+  commentId: T:CSharpFunctionalExtensions.Entity`1
+  isExternal: true
+  name: Entity<TId>
+  nameWithType: Entity<TId>
+  fullName: CSharpFunctionalExtensions.Entity<TId>
+  nameWithType.vb: Entity(Of TId)
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of TId)
+  name.vb: Entity(Of TId)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: <
+  - name: TId
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TId
+  - name: )
+- uid: CSharpFunctionalExtensions
+  commentId: N:CSharpFunctionalExtensions
+  isExternal: true
+  name: CSharpFunctionalExtensions
+  nameWithType: CSharpFunctionalExtensions
+  fullName: CSharpFunctionalExtensions
+- uid: System.IComparable`1
+  commentId: T:System.IComparable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  name: IComparable<T>
+  nameWithType: IComparable<T>
+  fullName: System.IComparable<T>
+  nameWithType.vb: IComparable(Of T)
+  fullName.vb: System.IComparable(Of T)
+  name.vb: IComparable(Of T)
+  spec.csharp:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity`1.Equals(System.Object)
+  commentId: M:CSharpFunctionalExtensions.Entity`1.Equals(System.Object)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: Equals(object)
+  nameWithType: Entity<TId>.Equals(object)
+  fullName: CSharpFunctionalExtensions.Entity<TId>.Equals(object)
+  nameWithType.vb: Entity(Of TId).Equals(Object)
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of TId).Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity`1.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity`1.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity`1.GetHashCode
+  commentId: M:CSharpFunctionalExtensions.Entity`1.GetHashCode
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Entity<TId>.GetHashCode()
+  fullName: CSharpFunctionalExtensions.Entity<TId>.GetHashCode()
+  nameWithType.vb: Entity(Of TId).GetHashCode()
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of TId).GetHashCode()
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity`1.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity`1.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity`1.CompareTo(CSharpFunctionalExtensions.Entity{`0})
+  commentId: M:CSharpFunctionalExtensions.Entity`1.CompareTo(CSharpFunctionalExtensions.Entity{`0})
+  isExternal: true
+  name: CompareTo(Entity<TId>)
+  nameWithType: Entity<TId>.CompareTo(Entity<TId>)
+  fullName: CSharpFunctionalExtensions.Entity<TId>.CompareTo(CSharpFunctionalExtensions.Entity<TId>)
+  nameWithType.vb: Entity(Of TId).CompareTo(Entity(Of TId))
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of TId).CompareTo(CSharpFunctionalExtensions.Entity(Of TId))
+  name.vb: CompareTo(Entity(Of TId))
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity`1.CompareTo(CSharpFunctionalExtensions.Entity{`0})
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: <
+  - name: TId
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity`1.CompareTo(CSharpFunctionalExtensions.Entity{`0})
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: CSharpFunctionalExtensions.Entity`1
+    name: Entity
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TId
+  - name: )
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity`1.CompareTo(System.Object)
+  commentId: M:CSharpFunctionalExtensions.Entity`1.CompareTo(System.Object)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: CompareTo(object)
+  nameWithType: Entity<TId>.CompareTo(object)
+  fullName: CSharpFunctionalExtensions.Entity<TId>.CompareTo(object)
+  nameWithType.vb: Entity(Of TId).CompareTo(Object)
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of TId).CompareTo(Object)
+  name.vb: CompareTo(Object)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Entity`1.CompareTo(System.Object)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Entity`1.CompareTo(System.Object)
+    name: CompareTo
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: CSharpFunctionalExtensions.Entity`1.Id
+  commentId: P:CSharpFunctionalExtensions.Entity`1.Id
+  isExternal: true
+  name: Id
+  nameWithType: Entity<TId>.Id
+  fullName: CSharpFunctionalExtensions.Entity<TId>.Id
+  nameWithType.vb: Entity(Of TId).Id
+  fullName.vb: CSharpFunctionalExtensions.Entity(Of TId).Id
+- uid: Domain.EnergyManagement.DocumentManaging.IndividualClient.PhoneNumber*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.IndividualClient.PhoneNumber
+  href: Domain.EnergyManagement.DocumentManaging.IndividualClient.html#Domain_EnergyManagement_DocumentManaging_IndividualClient_PhoneNumber
+  name: PhoneNumber
+  nameWithType: IndividualClient.PhoneNumber
+  fullName: Domain.EnergyManagement.DocumentManaging.IndividualClient.PhoneNumber
+- uid: CSharpFunctionalExtensions.Maybe{Domain.EnergyManagement.DocumentManaging.PhoneNumber}
+  commentId: T:CSharpFunctionalExtensions.Maybe{Domain.EnergyManagement.DocumentManaging.PhoneNumber}
+  parent: CSharpFunctionalExtensions
+  definition: CSharpFunctionalExtensions.Maybe`1
+  href: Domain.EnergyManagement.DocumentManaging.PhoneNumber.html
+  name: Maybe<PhoneNumber>
+  nameWithType: Maybe<PhoneNumber>
+  fullName: CSharpFunctionalExtensions.Maybe<Domain.EnergyManagement.DocumentManaging.PhoneNumber>
+  nameWithType.vb: Maybe(Of PhoneNumber)
+  fullName.vb: CSharpFunctionalExtensions.Maybe(Of Domain.EnergyManagement.DocumentManaging.PhoneNumber)
+  name.vb: Maybe(Of PhoneNumber)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Maybe`1
+    name: Maybe
+    isExternal: true
+  - name: <
+  - uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+    name: PhoneNumber
+    href: Domain.EnergyManagement.DocumentManaging.PhoneNumber.html
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Maybe`1
+    name: Maybe
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+    name: PhoneNumber
+    href: Domain.EnergyManagement.DocumentManaging.PhoneNumber.html
+  - name: )
+- uid: CSharpFunctionalExtensions.Maybe`1
+  commentId: T:CSharpFunctionalExtensions.Maybe`1
+  isExternal: true
+  name: Maybe<T>
+  nameWithType: Maybe<T>
+  fullName: CSharpFunctionalExtensions.Maybe<T>
+  nameWithType.vb: Maybe(Of T)
+  fullName.vb: CSharpFunctionalExtensions.Maybe(Of T)
+  name.vb: Maybe(Of T)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Maybe`1
+    name: Maybe
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Maybe`1
+    name: Maybe
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Domain.EnergyManagement.DocumentManaging.IndividualClient.FullName*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.IndividualClient.FullName
+  href: Domain.EnergyManagement.DocumentManaging.IndividualClient.html#Domain_EnergyManagement_DocumentManaging_IndividualClient_FullName
+  name: FullName
+  nameWithType: IndividualClient.FullName
+  fullName: Domain.EnergyManagement.DocumentManaging.IndividualClient.FullName
+- uid: CSharpFunctionalExtensions.Maybe{Domain.EnergyManagement.DocumentManaging.FullName}
+  commentId: T:CSharpFunctionalExtensions.Maybe{Domain.EnergyManagement.DocumentManaging.FullName}
+  parent: CSharpFunctionalExtensions
+  definition: CSharpFunctionalExtensions.Maybe`1
+  href: Domain.EnergyManagement.DocumentManaging.FullName.html
+  name: Maybe<FullName>
+  nameWithType: Maybe<FullName>
+  fullName: CSharpFunctionalExtensions.Maybe<Domain.EnergyManagement.DocumentManaging.FullName>
+  nameWithType.vb: Maybe(Of FullName)
+  fullName.vb: CSharpFunctionalExtensions.Maybe(Of Domain.EnergyManagement.DocumentManaging.FullName)
+  name.vb: Maybe(Of FullName)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Maybe`1
+    name: Maybe
+    isExternal: true
+  - name: <
+  - uid: Domain.EnergyManagement.DocumentManaging.FullName
+    name: FullName
+    href: Domain.EnergyManagement.DocumentManaging.FullName.html
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Maybe`1
+    name: Maybe
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Domain.EnergyManagement.DocumentManaging.FullName
+    name: FullName
+    href: Domain.EnergyManagement.DocumentManaging.FullName.html
+  - name: )
+- uid: Domain.EnergyManagement.DocumentManaging.IndividualClient.PassportData*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.IndividualClient.PassportData
+  href: Domain.EnergyManagement.DocumentManaging.IndividualClient.html#Domain_EnergyManagement_DocumentManaging_IndividualClient_PassportData
+  name: PassportData
+  nameWithType: IndividualClient.PassportData
+  fullName: Domain.EnergyManagement.DocumentManaging.IndividualClient.PassportData
+- uid: CSharpFunctionalExtensions.Maybe{Domain.EnergyManagement.DocumentManaging.PassportData}
+  commentId: T:CSharpFunctionalExtensions.Maybe{Domain.EnergyManagement.DocumentManaging.PassportData}
+  parent: CSharpFunctionalExtensions
+  definition: CSharpFunctionalExtensions.Maybe`1
+  href: Domain.EnergyManagement.DocumentManaging.PassportData.html
+  name: Maybe<PassportData>
+  nameWithType: Maybe<PassportData>
+  fullName: CSharpFunctionalExtensions.Maybe<Domain.EnergyManagement.DocumentManaging.PassportData>
+  nameWithType.vb: Maybe(Of PassportData)
+  fullName.vb: CSharpFunctionalExtensions.Maybe(Of Domain.EnergyManagement.DocumentManaging.PassportData)
+  name.vb: Maybe(Of PassportData)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Maybe`1
+    name: Maybe
+    isExternal: true
+  - name: <
+  - uid: Domain.EnergyManagement.DocumentManaging.PassportData
+    name: PassportData
+    href: Domain.EnergyManagement.DocumentManaging.PassportData.html
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Maybe`1
+    name: Maybe
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Domain.EnergyManagement.DocumentManaging.PassportData
+    name: PassportData
+    href: Domain.EnergyManagement.DocumentManaging.PassportData.html
+  - name: )
+- uid: Domain.EnergyManagement.DocumentManaging.IndividualClient.ClientRequests*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.IndividualClient.ClientRequests
+  href: Domain.EnergyManagement.DocumentManaging.IndividualClient.html#Domain_EnergyManagement_DocumentManaging_IndividualClient_ClientRequests
+  name: ClientRequests
+  nameWithType: IndividualClient.ClientRequests
+  fullName: Domain.EnergyManagement.DocumentManaging.IndividualClient.ClientRequests
+- uid: System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.DocumentManaging.IndividualRequest}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.DocumentManaging.IndividualRequest}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<IndividualRequest>
+  nameWithType: IReadOnlyList<IndividualRequest>
+  fullName: System.Collections.Generic.IReadOnlyList<Domain.EnergyManagement.DocumentManaging.IndividualRequest>
+  nameWithType.vb: IReadOnlyList(Of IndividualRequest)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Domain.EnergyManagement.DocumentManaging.IndividualRequest)
+  name.vb: IReadOnlyList(Of IndividualRequest)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Domain.EnergyManagement.DocumentManaging.IndividualRequest
+    name: IndividualRequest
+    href: Domain.EnergyManagement.DocumentManaging.IndividualRequest.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Domain.EnergyManagement.DocumentManaging.IndividualRequest
+    name: IndividualRequest
+    href: Domain.EnergyManagement.DocumentManaging.IndividualRequest.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Domain.EnergyManagement.DocumentManaging.IndividualClient.Create*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.IndividualClient.Create
+  href: Domain.EnergyManagement.DocumentManaging.IndividualClient.html#Domain_EnergyManagement_DocumentManaging_IndividualClient_Create_Domain_EnergyManagement_DocumentManaging_Email_Domain_EnergyManagement_DocumentManaging_Password_
+  name: Create
+  nameWithType: IndividualClient.Create
+  fullName: Domain.EnergyManagement.DocumentManaging.IndividualClient.Create
+- uid: Domain.EnergyManagement.DocumentManaging.Email
+  commentId: T:Domain.EnergyManagement.DocumentManaging.Email
+  parent: Domain.EnergyManagement.DocumentManaging
+  href: Domain.EnergyManagement.DocumentManaging.Email.html
+  name: Email
+  nameWithType: Email
+  fullName: Domain.EnergyManagement.DocumentManaging.Email
+- uid: Domain.EnergyManagement.DocumentManaging.Password
+  commentId: T:Domain.EnergyManagement.DocumentManaging.Password
+  parent: Domain.EnergyManagement.DocumentManaging
+  href: Domain.EnergyManagement.DocumentManaging.Password.html
+  name: Password
+  nameWithType: Password
+  fullName: Domain.EnergyManagement.DocumentManaging.Password
+- uid: CSharpFunctionalExtensions.Result{Domain.EnergyManagement.DocumentManaging.IndividualClient,System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.Common.Error}}
+  commentId: T:CSharpFunctionalExtensions.Result{Domain.EnergyManagement.DocumentManaging.IndividualClient,System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.Common.Error}}
+  parent: CSharpFunctionalExtensions
+  definition: CSharpFunctionalExtensions.Result`2
+  href: Domain.EnergyManagement.DocumentManaging.IndividualClient.html
+  name: Result<IndividualClient, IReadOnlyList<Error>>
+  nameWithType: Result<IndividualClient, IReadOnlyList<Error>>
+  fullName: CSharpFunctionalExtensions.Result<Domain.EnergyManagement.DocumentManaging.IndividualClient, System.Collections.Generic.IReadOnlyList<Domain.EnergyManagement.Common.Error>>
+  nameWithType.vb: Result(Of IndividualClient, IReadOnlyList(Of Error))
+  fullName.vb: CSharpFunctionalExtensions.Result(Of Domain.EnergyManagement.DocumentManaging.IndividualClient, System.Collections.Generic.IReadOnlyList(Of Domain.EnergyManagement.Common.Error))
+  name.vb: Result(Of IndividualClient, IReadOnlyList(Of Error))
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: <
+  - uid: Domain.EnergyManagement.DocumentManaging.IndividualClient
+    name: IndividualClient
+    href: Domain.EnergyManagement.DocumentManaging.IndividualClient.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Domain.EnergyManagement.Common.Error
+    name: Error
+    href: Domain.EnergyManagement.Common.Error.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Domain.EnergyManagement.DocumentManaging.IndividualClient
+    name: IndividualClient
+    href: Domain.EnergyManagement.DocumentManaging.IndividualClient.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Domain.EnergyManagement.Common.Error
+    name: Error
+    href: Domain.EnergyManagement.Common.Error.html
+  - name: )
+  - name: )
+- uid: CSharpFunctionalExtensions.Result`2
+  commentId: T:CSharpFunctionalExtensions.Result`2
+  isExternal: true
+  name: Result<T, E>
+  nameWithType: Result<T, E>
+  fullName: CSharpFunctionalExtensions.Result<T, E>
+  nameWithType.vb: Result(Of T, E)
+  fullName.vb: CSharpFunctionalExtensions.Result(Of T, E)
+  name.vb: Result(Of T, E)
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: E
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: E
+  - name: )
+- uid: Domain.EnergyManagement.DocumentManaging.IndividualClient.ProvideDataOrThrow*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.IndividualClient.ProvideDataOrThrow
+  href: Domain.EnergyManagement.DocumentManaging.IndividualClient.html#Domain_EnergyManagement_DocumentManaging_IndividualClient_ProvideDataOrThrow_Domain_EnergyManagement_DocumentManaging_PhoneNumber_Domain_EnergyManagement_DocumentManaging_FullName_
+  name: ProvideDataOrThrow
+  nameWithType: IndividualClient.ProvideDataOrThrow
+  fullName: Domain.EnergyManagement.DocumentManaging.IndividualClient.ProvideDataOrThrow
+- uid: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+  commentId: T:Domain.EnergyManagement.DocumentManaging.PhoneNumber
+  parent: Domain.EnergyManagement.DocumentManaging
+  href: Domain.EnergyManagement.DocumentManaging.PhoneNumber.html
+  name: PhoneNumber
+  nameWithType: PhoneNumber
+  fullName: Domain.EnergyManagement.DocumentManaging.PhoneNumber
+- uid: Domain.EnergyManagement.DocumentManaging.FullName
+  commentId: T:Domain.EnergyManagement.DocumentManaging.FullName
+  parent: Domain.EnergyManagement.DocumentManaging
+  href: Domain.EnergyManagement.DocumentManaging.FullName.html
+  name: FullName
+  nameWithType: FullName
+  fullName: Domain.EnergyManagement.DocumentManaging.FullName
+- uid: Domain.EnergyManagement.DocumentManaging.IndividualClient.CreateConnectionRequest*
+  commentId: Overload:Domain.EnergyManagement.DocumentManaging.IndividualClient.CreateConnectionRequest
+  href: Domain.EnergyManagement.DocumentManaging.IndividualClient.html#Domain_EnergyManagement_DocumentManaging_IndividualClient_CreateConnectionRequest_System_String_Domain_EnergyManagement_DocumentManaging_Address_
+  name: CreateConnectionRequest
+  nameWithType: IndividualClient.CreateConnectionRequest
+  fullName: Domain.EnergyManagement.DocumentManaging.IndividualClient.CreateConnectionRequest
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Domain.EnergyManagement.DocumentManaging.Address
+  commentId: T:Domain.EnergyManagement.DocumentManaging.Address
+  parent: Domain.EnergyManagement.DocumentManaging
+  href: Domain.EnergyManagement.DocumentManaging.Address.html
+  name: Address
+  nameWithType: Address
+  fullName: Domain.EnergyManagement.DocumentManaging.Address
+- uid: CSharpFunctionalExtensions.Result{Domain.EnergyManagement.DocumentManaging.IndividualRequest,System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.Common.Error}}
+  commentId: T:CSharpFunctionalExtensions.Result{Domain.EnergyManagement.DocumentManaging.IndividualRequest,System.Collections.Generic.IReadOnlyList{Domain.EnergyManagement.Common.Error}}
+  parent: CSharpFunctionalExtensions
+  definition: CSharpFunctionalExtensions.Result`2
+  href: Domain.EnergyManagement.DocumentManaging.IndividualRequest.html
+  name: Result<IndividualRequest, IReadOnlyList<Error>>
+  nameWithType: Result<IndividualRequest, IReadOnlyList<Error>>
+  fullName: CSharpFunctionalExtensions.Result<Domain.EnergyManagement.DocumentManaging.IndividualRequest, System.Collections.Generic.IReadOnlyList<Domain.EnergyManagement.Common.Error>>
+  nameWithType.vb: Result(Of IndividualRequest, IReadOnlyList(Of Error))
+  fullName.vb: CSharpFunctionalExtensions.Result(Of Domain.EnergyManagement.DocumentManaging.IndividualRequest, System.Collections.Generic.IReadOnlyList(Of Domain.EnergyManagement.Common.Error))
+  name.vb: Result(Of IndividualRequest, IReadOnlyList(Of Error))
+  spec.csharp:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: <
+  - uid: Domain.EnergyManagement.DocumentManaging.IndividualRequest
+    name: IndividualRequest
+    href: Domain.EnergyManagement.DocumentManaging.IndividualRequest.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Domain.EnergyManagement.Common.Error
+    name: Error
+    href: Domain.EnergyManagement.Common.Error.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: CSharpFunctionalExtensions.Result`2
+    name: Result
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Domain.EnergyManagement.DocumentManaging.IndividualRequest
+    name: IndividualRequest
+    href: Domain.EnergyManagement.DocumentManaging.IndividualRequest.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Domain.EnergyManagement.Common.Error
+    name: Error
+    href: Domain.EnergyManagement.Common.Error.html
+  - name: )
+  - name: )

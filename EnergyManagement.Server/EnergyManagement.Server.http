@@ -1,0 +1,6 @@
+@EnergyManagement.Server_HostAddress = http://localhost:5156
+
+GET {{EnergyManagement.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

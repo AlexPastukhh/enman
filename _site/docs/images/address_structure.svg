@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="140" viewBox="0 0 600 140">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <text x="16" y="20" font-family="Arial" font-size="16" fill="#222">Address structure</text>
+  <g transform="translate(16,32)">
+    <rect x="0" y="0" width="560" height="28" fill="#f6f8fa" stroke="#ddd" rx="6"/>
+    <text x="10" y="18" font-family="Arial" font-size="12">PostalCode (6 digits)</text>
+    <rect x="0" y="40" width="270" height="28" fill="#f0f6ff" stroke="#cfe1ff" rx="6"/>
+    <text x="10" y="58" font-family="Arial" font-size="12">Region</text>
+    <rect x="290" y="40" width="270" height="28" fill="#fff7ec" stroke="#ffe5b4" rx="6"/>
+    <text x="300" y="58" font-family="Arial" font-size="12">City</text>
+    <rect x="0" y="80" width="270" height="28" fill="#ecffef" stroke="#bff0c6" rx="6"/>
+    <text x="10" y="98" font-family="Arial" font-size="12">Street</text>
+    <rect x="290" y="80" width="270" height="28" fill="#fff0f6" stroke="#ffcde6" rx="6"/>
+    <text x="300" y="98" font-family="Arial" font-size="12">House • Building • Apartment</text>
+  </g>
+</svg>
