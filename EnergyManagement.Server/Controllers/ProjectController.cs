@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.EnergyManagement.Common;
+using EnergyManagement.Server.Api.Contracts.Common;
 using EnergyManagement.Server.Data;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
@@ -28,11 +29,11 @@ namespace EnergyManagement.Server.Controllers
             {
                 Type="https://problems-registry.smartbear.com/validation-error",
                 Title="Validation Error",
-                Status=SharedConst.GeneralConstants.ValidationErrorStatusCode,
+                Status=ProblemDetailsContract.ValidationStatusCode,
                 Detail="Validation Error",
                 Extensions=new Dictionary<string, object>()
                 {
-                    {"errors",errors}
+                    {ProblemDetailsContract.ErrorsExtension,errors}
                 }!
             };
             return new ObjectResult(problemDetails){StatusCode=problemDetails.Status};
@@ -45,11 +46,11 @@ namespace EnergyManagement.Server.Controllers
             {
                 Type="https://problems-registry.smartbear.com/validation-error",
                 Title="Validation Error",
-                Status=SharedConst.GeneralConstants.ValidationErrorStatusCode,
+                Status=ProblemDetailsContract.ValidationStatusCode,
                 Detail="Validation Error",
                 Extensions=new Dictionary<string, object>()
                 {
-                    {"errors",errors}
+                    {ProblemDetailsContract.ErrorsExtension,errors}
                 }!
             };
             return new ObjectResult(problemDetails){StatusCode=problemDetails.Status};
@@ -62,11 +63,11 @@ namespace EnergyManagement.Server.Controllers
             {
                 Type="https://problems-registry.smartbear.com/validation-error",
                 Title="Validation Error",
-                Status=SharedConst.GeneralConstants.ValidationErrorStatusCode,
+                Status=ProblemDetailsContract.ValidationStatusCode,
                 Detail="Validation Error",
                 Extensions=new Dictionary<string, object>()
                 {
-                    {"errors",new List<Error>{error}}
+                    {ProblemDetailsContract.ErrorsExtension,new List<Error>{error}}
                 }!
             };
             return new ObjectResult(problemDetails){StatusCode=problemDetails.Status};
@@ -83,7 +84,7 @@ namespace EnergyManagement.Server.Controllers
                 Detail = "Server error",
                 Extensions = new Dictionary<string, object>()
                 {
-                    {"errors",errors}
+                    {ProblemDetailsContract.ErrorsExtension,errors}
                 }!
             };
             return new ObjectResult(problemDetails){StatusCode=problemDetails.Status};
@@ -99,7 +100,7 @@ namespace EnergyManagement.Server.Controllers
                 Detail="Server error",
                 Extensions=new Dictionary<string, object>()
                 {
-                    {"errors",new List<Error>{error}}
+                    {ProblemDetailsContract.ErrorsExtension,new List<Error>{error}}
                 }!
             };
             return new ObjectResult(problemDetails){StatusCode=problemDetails.Status};
@@ -115,7 +116,7 @@ namespace EnergyManagement.Server.Controllers
                 Detail="Server error",
                 Extensions=new Dictionary<string, object>()
                 {
-                    {"exception",ServerExceptionDto.FromException(ex)}
+                    {ProblemDetailsContract.ExceptionExtension,ServerExceptionDto.FromException(ex)}
                 }!
             };
             return new ObjectResult(problemDetails){StatusCode=problemDetails.Status};

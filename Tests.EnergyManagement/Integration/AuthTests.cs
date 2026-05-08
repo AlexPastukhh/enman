@@ -13,6 +13,8 @@ using CSharpFunctionalExtensions;
 using Domain.EnergyManagement.Common;
 using Domain.EnergyManagement.DocumentManaging;
 using EnergyManagement.Server;
+using EnergyManagement.Server.Api.Contracts.Common;
+using EnergyManagement.Server.Api.Routes;
 using EnergyManagement.Server.Data;
 using EnergyManagement.Server.Infrastructure;
 using FluentAssertions;
@@ -108,11 +110,11 @@ namespace Tests.EnergyManagement.Integration
             
             //Act
             
-            var register = await client.PostAsJsonAsync(SharedConst.AppRoutes.LoginPath,dto);
+            var register = await client.PostAsJsonAsync(AuthRoutes.LoginPath,dto);
             
             //Assert 
             await HttpResponseAssertions.For(register, _output)
-                .ShouldBeStatusCode(SharedConst.GeneralConstants.ValidationErrorStatusCode);
+                .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
             
             var problemDetails=await register.Content.ReadFromJsonAsync<ProblemDetails>();
             problemDetails.Should().NotBeNull();
@@ -152,10 +154,10 @@ namespace Tests.EnergyManagement.Integration
             var initCount = DatabaseHelpers.GetCountOfIndividuals(_factory);
             //Act
             
-            var register = await client.PostAsJsonAsync(SharedConst.AppRoutes.RegisterIndividualPath,dto);          
+            var register = await client.PostAsJsonAsync(AuthRoutes.RegisterIndividualPath,dto);          
             //Assert 
             await HttpResponseAssertions.For(register, _output)
-                .ShouldBeStatusCode(SharedConst.GeneralConstants.ValidationErrorStatusCode);
+                .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
             
             var countAfterAttempt = DatabaseHelpers.GetCountOfIndividuals(_factory);
             countAfterAttempt.Should().Be(initCount);
@@ -186,7 +188,7 @@ namespace Tests.EnergyManagement.Integration
                         
             //Act
             
-            var register = await client.PostAsJsonAsync(SharedConst.AppRoutes.RegisterIndividualPath,dto);          
+            var register = await client.PostAsJsonAsync(AuthRoutes.RegisterIndividualPath,dto);          
             
             await HttpResponseAssertions.For(register, _output)
                 .ShouldBeSuccess();
@@ -225,7 +227,7 @@ namespace Tests.EnergyManagement.Integration
             
             //Act
             
-            var register = await client.PostAsJsonAsync(SharedConst.AppRoutes.LoginPath,dto);
+            var register = await client.PostAsJsonAsync(AuthRoutes.LoginPath,dto);
             
 
             //Assert 
@@ -257,7 +259,7 @@ namespace Tests.EnergyManagement.Integration
             
             //Act
             
-            var register = await client.PostAsJsonAsync(SharedConst.AppRoutes.ProvideIndividualClientsDataPath,dto);          
+            var register = await client.PostAsJsonAsync(AuthRoutes.ProvideIndividualClientsDataPath,dto);          
             
             //Assert 
             await HttpResponseAssertions.For(register, _output)
@@ -294,7 +296,7 @@ namespace Tests.EnergyManagement.Integration
             var createNumber= PhoneNumber.Create(dto.PhoneNumber);
             //Act
             
-            var register = await client.PostAsJsonAsync(SharedConst.AppRoutes.ProvideIndividualClientsDataPath,dto);          
+            var register = await client.PostAsJsonAsync(AuthRoutes.ProvideIndividualClientsDataPath,dto);          
             
             //Assert 
             await HttpResponseAssertions.For(register, _output)
@@ -321,7 +323,7 @@ namespace Tests.EnergyManagement.Integration
             
             //Act
             
-            var register = await client.GetAsync(SharedConst.AppRoutes.GetUserPath);          
+            var register = await client.GetAsync(AuthRoutes.GetUserPath);          
             
             //Assert 
             await HttpResponseAssertions.For(register, _output)
@@ -354,12 +356,12 @@ namespace Tests.EnergyManagement.Integration
             }
             
             //Act
-            var register = await client.PostAsJsonAsync(SharedConst.AppRoutes.RegisterIndividualPath,dto);          
+            var register = await client.PostAsJsonAsync(AuthRoutes.RegisterIndividualPath,dto);          
             //Assert 
             
             await HttpResponseAssertions.For(register, _output)
                 .ShouldBeStatusCode(
-                    SharedConst.GeneralConstants.ValidationErrorStatusCode);
+                    ProblemDetailsContract.ValidationStatusCode);
             
             var problemDetails=await register.Content.ReadFromJsonAsync<ProblemDetails>();
             problemDetails.Should().NotBeNull();

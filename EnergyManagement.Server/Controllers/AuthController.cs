@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using EnergyManagement.Server.Commands;
+using EnergyManagement.Server.Api.Routes;
 using EnergyManagement.Server.Data;
 using EnergyManagement.Server.Queries;
 using FluentValidation;
@@ -11,12 +12,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using EnergyManagement.Server.Data;
 
 namespace EnergyManagement.Server.Controllers
 {
     [ApiController]
-    [Route(SharedConst.AppRoutes.AuthControllerRoute)]
+    [Route(AuthRoutes.Controller)]
     public class AuthController : ProjectController
     {
         private readonly ILogger<AuthController> _logger;
@@ -41,7 +41,7 @@ namespace EnergyManagement.Server.Controllers
             _logger = logger;
             _loginValidator = loginValidator;
         }
-        [HttpPost(SharedConst.AppRoutes.RegisterIndividual,Name =SharedConst.AppRoutes.RegisterIndividual)]
+        [HttpPost(AuthRoutes.RegisterIndividual,Name =AuthRoutes.RegisterIndividual)]
         public async Task<ActionResult> Register([FromBody]RegisterClientDto dto)
         {   
             try
@@ -72,7 +72,7 @@ namespace EnergyManagement.Server.Controllers
            
         }
         [Authorize]
-        [HttpPost(SharedConst.AppRoutes.ProvideIndividualClientsData)]
+        [HttpPost(AuthRoutes.ProvideIndividualClientsData)]
         public async Task<ActionResult> ProvideIndividualClientData([FromBody]ProvideIndividualClientsDataDto dto)
         {   
             try
@@ -106,7 +106,7 @@ namespace EnergyManagement.Server.Controllers
             
             return Ok();
         }
-        [HttpPost(SharedConst.AppRoutes.Login)]
+        [HttpPost(AuthRoutes.Login)]
         public async Task<ActionResult> Login([FromBody]LoginDto dto)
         {   
             try
@@ -134,7 +134,7 @@ namespace EnergyManagement.Server.Controllers
             return Ok();
         }
         [Authorize]
-        [HttpGet(SharedConst.AppRoutes.GetUser)]
+        [HttpGet(AuthRoutes.GetUser)]
         public async Task<ActionResult>GetUser()
         {
             try

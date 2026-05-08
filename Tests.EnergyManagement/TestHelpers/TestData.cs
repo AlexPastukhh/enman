@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.EnergyManagement.DocumentManaging;
+using EnergyManagement.Server.Api.Contracts.Auth;
+using EnergyManagement.Server.Api.Contracts.Requests;
+using EnergyManagement.Server.Api.Routes;
 using EnergyManagement.Server.Data;
 using static Domain.EnergyManagement.Common.Error;
 using static Domain.EnergyManagement.Common.Error.Errors;
@@ -157,57 +160,57 @@ namespace Tests.EnergyManagement.TestHelpers
         {
             public static ServerValidationError EmailIsRequired =
                 ServerValidationError.Create(
-                            SharedConst.RegisterClientCnsts.EmailFieldName,
+                            AuthFieldNames.Register.Email,
                             Account.EmailIsRequired.Code,
-                            SharedConst.AppRoutes.RegisterIndividualPath);
+                            AuthRoutes.RegisterIndividualPath);
             public static ServerValidationError EmailIsInvalid =
                 ServerValidationError.Create(
-                            SharedConst.RegisterClientCnsts.EmailFieldName,
+                            AuthFieldNames.Register.Email,
                             Account.EmailIsInvalid.Code,
-                            SharedConst.AppRoutes.RegisterIndividualPath);
+                            AuthRoutes.RegisterIndividualPath);
 
             public static ServerValidationError EmailIsRegisteredAlready =
                 ServerValidationError.Create(
-                            SharedConst.RegisterClientCnsts.EmailFieldName,
+                            AuthFieldNames.Register.Email,
                             Account.EmailIsRegisteredAlready.Code,
-                            SharedConst.AppRoutes.RegisterIndividualPath);
+                            AuthRoutes.RegisterIndividualPath);
 
             public static ServerValidationError PasswordIsRequired =
             ServerValidationError.Create(
-                        SharedConst.RegisterClientCnsts.PasswordFieldName,
+                        AuthFieldNames.Register.Password,
                         Account.PasswordIsRequired.Code,
-                        SharedConst.AppRoutes.RegisterIndividualPath);
+                        AuthRoutes.RegisterIndividualPath);
 
             public static ServerValidationError PasswordIsTooLong =
                 ServerValidationError.Create(
-                            SharedConst.RegisterClientCnsts.PasswordFieldName,
+                            AuthFieldNames.Register.Password,
                             Account.PasswordIsTooLong.Code,
-                            SharedConst.AppRoutes.RegisterIndividualPath);
+                            AuthRoutes.RegisterIndividualPath);
 
             public static ServerValidationError PasswordConfirmationIsRequired =
             ServerValidationError.Create(
-                        SharedConst.RegisterClientCnsts.PasswordConfirmationFieldName,
+                        AuthFieldNames.Register.PasswordConfirmation,
                         Account.PasswordConfirmationIsRequired.Code,
-                        SharedConst.AppRoutes.RegisterIndividualPath);
+                        AuthRoutes.RegisterIndividualPath);
 
             public static ServerValidationError PasswordsDontMatch =
                 ServerValidationError.Create(
-                            SharedConst.RegisterClientCnsts.PasswordConfirmationFieldName,
+                            AuthFieldNames.Register.PasswordConfirmation,
                             Account.PasswordConfirmationDoesntMatch.Code,
-                            SharedConst.AppRoutes.RegisterIndividualPath);
+                            AuthRoutes.RegisterIndividualPath);
 
             public static ServerValidationError EmailWasntRegistered =
             ServerValidationError.Create(
-                        SharedConst.RegisterClientCnsts.EmailFieldName,
+                        AuthFieldNames.Register.Email,
                         Account.EmailWasntRegistered.Code,
-                        SharedConst.AppRoutes.RegisterIndividualPath);
+                        AuthRoutes.RegisterIndividualPath);
 
 
             public static ServerValidationError PasswordLacksSpecialCharacters =
                 ServerValidationError.Create(
-                            SharedConst.RegisterClientCnsts.PasswordFieldName,
+                            AuthFieldNames.Register.Password,
                             Account.PasswordLacksSpecialCharacters.Code,
-                            SharedConst.AppRoutes.RegisterIndividualPath);
+                            AuthRoutes.RegisterIndividualPath);
 
         }
 
@@ -216,50 +219,50 @@ namespace Tests.EnergyManagement.TestHelpers
         {
             public static ServerValidationError EmailIsRequired =
                 ServerValidationError.Create(
-                            SharedConst.LoginConstants.EmailFieldName,
+                            AuthFieldNames.Login.Email,
                             Account.EmailIsRequired.Code,
-                            SharedConst.AppRoutes.LoginPath);
+                            AuthRoutes.LoginPath);
             public static ServerValidationError EmailIsInvalid =
                 ServerValidationError.Create(
-                            SharedConst.LoginConstants.EmailFieldName,
+                            AuthFieldNames.Login.Email,
                             Account.EmailIsInvalid.Code,
-                            SharedConst.AppRoutes.LoginPath);
+                            AuthRoutes.LoginPath);
             public static ServerValidationError EmailIsRegisteredAlready =
                 ServerValidationError.Create(
-                            SharedConst.LoginConstants.EmailFieldName,
+                            AuthFieldNames.Login.Email,
                             Account.EmailIsRegisteredAlready.Code,
-                            SharedConst.AppRoutes.LoginPath);
+                            AuthRoutes.LoginPath);
 
             public static ServerValidationError PasswordIsRequired =
             ServerValidationError.Create(
-                        SharedConst.LoginConstants.PasswordFieldName,
+                        AuthFieldNames.Login.Password,
                         Account.PasswordIsRequired.Code,
-                        SharedConst.AppRoutes.LoginPath);
+                        AuthRoutes.LoginPath);
 
             public static ServerValidationError PasswordIsTooLong =
                 ServerValidationError.Create(
-                            SharedConst.LoginConstants.PasswordFieldName,
+                            AuthFieldNames.Login.Password,
                             Account.PasswordIsTooLong.Code,
-                            SharedConst.AppRoutes.LoginPath);
+                            AuthRoutes.LoginPath);
 
             public static ServerValidationError PasswordIsWrong =
                 ServerValidationError.Create(
-                            SharedConst.LoginConstants.PasswordFieldName,
+                            AuthFieldNames.Login.Password,
                             Account.PasswordIsWrong.Code,
-                            SharedConst.AppRoutes.LoginPath);
+                            AuthRoutes.LoginPath);
 
             public static ServerValidationError EmailWasntRegistered =
             ServerValidationError.Create(
-                        SharedConst.LoginConstants.EmailFieldName,
+                        AuthFieldNames.Login.Email,
                         Account.EmailWasntRegistered.Code,
-                        SharedConst.AppRoutes.LoginPath);
+                        AuthRoutes.LoginPath);
 
 
             public static ServerValidationError PasswordLacksSpecialCharacters =
                 ServerValidationError.Create(
-                            SharedConst.LoginConstants.PasswordFieldName,
+                            AuthFieldNames.Login.Password,
                             Account.PasswordLacksSpecialCharacters.Code,
-                            SharedConst.AppRoutes.LoginPath);
+                            AuthRoutes.LoginPath);
 
         }
 
@@ -267,88 +270,88 @@ namespace Tests.EnergyManagement.TestHelpers
         {
             public static ServerValidationError RequestDetailsIsRequired =
                 ServerValidationError.Create(
-                    SharedConst.IndividualRequestCnsts.RequestDetailsFieldName,
+                    RequestFieldNames.CreateIndividualRequest.RequestDetails,
                     Errors.ClientRequestErrors.ClientRequestTextIsRequired.Code,
-                    SharedConst.AppRoutes.IndivCreateConnectionRequestPath);
+                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
 
             public static ServerValidationError RequestDetailsIsTooLong =
                 ServerValidationError.Create(
-                    SharedConst.IndividualRequestCnsts.RequestDetailsFieldName,
+                    RequestFieldNames.CreateIndividualRequest.RequestDetails,
                     Errors.ClientRequestErrors.ClientRequestTextIsTooLong.Code,
-                    SharedConst.AppRoutes.IndivCreateConnectionRequestPath);
+                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
 
 
             public static ServerValidationError PostalCodeIsRequired =
                 ServerValidationError.Create(
-                    SharedConst.IndividualRequestCnsts.PostalCodeFieldName,
+                    RequestFieldNames.CreateIndividualRequest.PostalCode,
                     Errors.AddressErrors.PostalCodeIsRequired.Code,
-                    SharedConst.AppRoutes.IndivCreateConnectionRequestPath);
+                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
 
             public static ServerValidationError PostalCodeIsInvalid =
                 ServerValidationError.Create(
-                    SharedConst.IndividualRequestCnsts.PostalCodeFieldName,
+                    RequestFieldNames.CreateIndividualRequest.PostalCode,
                     Errors.AddressErrors.PostalCodeIsInvalid.Code,
-                    SharedConst.AppRoutes.IndivCreateConnectionRequestPath);
+                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
 
             public static ServerValidationError RegionIsRequired =
                 ServerValidationError.Create(
-                    SharedConst.IndividualRequestCnsts.RegionFieldName,
+                    RequestFieldNames.CreateIndividualRequest.Region,
                     Errors.AddressErrors.RegionIsRequired.Code,
-                    SharedConst.AppRoutes.IndivCreateConnectionRequestPath);
+                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
 
             public static ServerValidationError RegionIsTooLong =
                 ServerValidationError.Create(
-                    SharedConst.IndividualRequestCnsts.RegionFieldName,
+                    RequestFieldNames.CreateIndividualRequest.Region,
                     Errors.AddressErrors.RegionIsTooLong.Code,
-                    SharedConst.AppRoutes.IndivCreateConnectionRequestPath);
+                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
 
             public static ServerValidationError CityIsRequired =
                 ServerValidationError.Create(
-                    SharedConst.IndividualRequestCnsts.CityFieldName,
+                    RequestFieldNames.CreateIndividualRequest.City,
                     Errors.AddressErrors.CityIsRequired.Code,
-                    SharedConst.AppRoutes.IndivCreateConnectionRequestPath);
+                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
 
             public static ServerValidationError CityIsTooLong =
                 ServerValidationError.Create(
-                    SharedConst.IndividualRequestCnsts.CityFieldName,
+                    RequestFieldNames.CreateIndividualRequest.City,
                     Errors.AddressErrors.CityIsTooLong.Code,
-                    SharedConst.AppRoutes.IndivCreateConnectionRequestPath);
+                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
 
             public static ServerValidationError StreetIsRequired =
                 ServerValidationError.Create(
-                    SharedConst.IndividualRequestCnsts.StreetFieldName,
+                    RequestFieldNames.CreateIndividualRequest.Street,
                     Errors.AddressErrors.StreetIsRequired.Code,
-                    SharedConst.AppRoutes.IndivCreateConnectionRequestPath);
+                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
 
             public static ServerValidationError StreetIsTooLong =
                 ServerValidationError.Create(
-                    SharedConst.IndividualRequestCnsts.StreetFieldName,
+                    RequestFieldNames.CreateIndividualRequest.Street,
                     Errors.AddressErrors.StreetIsTooLong.Code,
-                    SharedConst.AppRoutes.IndivCreateConnectionRequestPath);
+                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
 
             public static ServerValidationError HouseIsRequired =
                 ServerValidationError.Create(
-                    SharedConst.IndividualRequestCnsts.HouseFieldName,
+                    RequestFieldNames.CreateIndividualRequest.House,
                     Errors.AddressErrors.HouseIsRequired.Code,
-                    SharedConst.AppRoutes.IndivCreateConnectionRequestPath);
+                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
 
             public static ServerValidationError HouseIsTooLong =
                 ServerValidationError.Create(
-                    SharedConst.IndividualRequestCnsts.HouseFieldName,
+                    RequestFieldNames.CreateIndividualRequest.House,
                     Errors.AddressErrors.HouseIsTooLong.Code,
-                    SharedConst.AppRoutes.IndivCreateConnectionRequestPath);
+                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
 
             public static ServerValidationError BuildingIsTooLong =
                 ServerValidationError.Create(
-                    SharedConst.IndividualRequestCnsts.BuildingFieldName,
+                    RequestFieldNames.CreateIndividualRequest.Building,
                     Errors.AddressErrors.BuildingIsTooLong.Code,
-                    SharedConst.AppRoutes.IndivCreateConnectionRequestPath);
+                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
 
             public static ServerValidationError ApartmentIsTooLong =
                 ServerValidationError.Create(
-                    SharedConst.IndividualRequestCnsts.ApartmentFieldName,
+                    RequestFieldNames.CreateIndividualRequest.Apartment,
                     Errors.AddressErrors.ApartmentIsTooLong.Code,
-                    SharedConst.AppRoutes.IndivCreateConnectionRequestPath);
+                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
         }
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EnergyManagement.Server.Commands;
+using EnergyManagement.Server.Api.Routes;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace EnergyManagement.Server.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route(ClientRequestRoutes.Controller)]
     public class ClientRequestController : ProjectController
     {
         private readonly AppDbContext _context;
@@ -25,7 +26,7 @@ namespace EnergyManagement.Server.Controllers
             _createIndivRequestValidator = createIndivRequestValidator;
         }
         [Authorize]
-        [HttpPost("IndivCreateConnectionRequest")]
+        [HttpPost(ClientRequestRoutes.IndivCreateConnectionRequest)]
         public async Task<IActionResult> IndivCreateConnectionRequest(CreateIndividualRequestDto dto)
         {
             try

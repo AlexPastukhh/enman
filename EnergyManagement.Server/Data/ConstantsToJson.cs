@@ -46,10 +46,10 @@
 //         public static RoutesConfig Create()
 //         {
 //             return new RoutesConfig(
-//                 SharedConst.AppRoutes.RegisterIndividualPath,
-//                 SharedConst.AppRoutes.ProvideIndividualClientsDataPath,
-//                 SharedConst.AppRoutes.LoginPath,
-//                 SharedConst.AppRoutes.GetUserPath);
+//                 AuthRoutes.RegisterIndividualPath,
+//                 AuthRoutes.ProvideIndividualClientsDataPath,
+//                 AuthRoutes.LoginPath,
+//                 AuthRoutes.GetUserPath);
 //         }
 //     }
     
@@ -66,9 +66,9 @@
 //         public static GeneralConstantsConfig Create()
 //         {
 //             return new GeneralConstantsConfig{
-//                 ValidationErrorStatusCode=SharedConst.GeneralConstants.ValidationErrorStatusCode,
-//                 ErrorsCollectionName=SharedConst.GeneralConstants.ErrorsCollectionName,
-//                 ExceptionExtensionName=SharedConst.GeneralConstants.ExceptionExtensionName
+//                 ValidationErrorStatusCode=ProblemDetailsContract.ValidationStatusCode,
+//                 ErrorsCollectionName=ProblemDetailsContract.ErrorsExtension,
+//                 ExceptionExtensionName=ProblemDetailsContract.ExceptionExtension
 //             };
 //         }
 //     }
@@ -116,10 +116,10 @@
 //             var dto = new LoginDto("","");
 //             return new LoginConstantsConfig(
 //                 FormFieldWithDto.Create(
-//                     SharedConst.LoginConstants.EmailFieldName,
+//                     AuthFieldNames.Login.Email,
 //                     nameof(dto.Email)),
 //                 FormFieldWithDto.Create(
-//                     SharedConst.LoginConstants.PasswordFieldName,
+//                     AuthFieldNames.Login.Password,
 //                     nameof(dto.Password)));
 //         }
 //     }
@@ -144,13 +144,13 @@
             
 //             return new RegisterIndividualConstantsConfig(
 //                 FormFieldWithDto.Create(
-//                     SharedConst.RegisterClientCnsts.EmailFieldName,
+//                     AuthFieldNames.Register.Email,
 //                     nameof(registerDto.Email)),
 //                 FormFieldWithDto.Create(
-//                     SharedConst.RegisterClientCnsts.PasswordFieldName,
+//                     AuthFieldNames.Register.Password,
 //                     nameof(registerDto.Password)),
 //                 FormFieldWithDto.Create(
-//                     SharedConst.RegisterClientCnsts.PasswordConfirmationFieldName,
+//                     AuthFieldNames.Register.PasswordConfirmation,
 //                     nameof(registerDto.PasswordConfirmation)));
 //         }
 //     }
@@ -192,16 +192,16 @@
             
 //         //     // return new ProvideIndClientsDataConfig(
 //         //     //     FormFieldWithDto.Create(
-//         //     //         SharedConst.ProvideIndividualClientsData.PhoneFieldName,
+//         //     //         AuthFieldNames.ProvideIndividualClientData.Phone,
 //         //     //         nameof(dto.PhoneNumber)),
 //         //     //     FormFieldWithDto.Create(
-//         //     //         SharedConst.ProvideIndividualClientsData.FirstNameFieldName,
+//         //     //         AuthFieldNames.ProvideIndividualClientData.FullName,
 //         //     //         nameof(dto.FullNameDto.FirstName)),
 //         //     //     FormFieldWithDto.Create(
-//         //     //         SharedConst.ProvideIndividualClientsData.MiddleNameFieldName,
+//         //     //         AuthFieldNames.ProvideIndividualClientData.FullName,
 //         //     //         nameof(dto.FullNameDto.MiddleName)),
 //         //     //     FormFieldWithDto.Create(
-//         //     //         SharedConst.ProvideIndividualClientsData.LastNameFieldName,
+//         //     //         AuthFieldNames.ProvideIndividualClientData.FullName,
 //         //     //         nameof(dto.FullNameDto.LastName)));
 //         // }
 //     }

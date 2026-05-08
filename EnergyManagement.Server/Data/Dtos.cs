@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using static EnergyManagement.Server.Data.SharedConst;
 
 namespace EnergyManagement.Server.Data
 {

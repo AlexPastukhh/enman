@@ -5,6 +5,8 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Domain.EnergyManagement.DocumentManaging;
 using EnergyManagement.Server;
+using EnergyManagement.Server.Api.Contracts.Common;
+using EnergyManagement.Server.Api.Routes;
 using EnergyManagement.Server.Data;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -51,7 +53,7 @@ namespace Tests.EnergyManagement.Integration
             
 
             // Act
-            var response = await client.PostAsJsonAsync("/api/ClientRequest/IndivCreateConnectionRequest", requestDto);
+            var response = await client.PostAsJsonAsync(ClientRequestRoutes.IndivCreateConnectionRequestPath, requestDto);
 
             // Assert
             await HttpResponseAssertions.For(response).ShouldBeStatusCode(401);
@@ -71,10 +73,10 @@ namespace Tests.EnergyManagement.Integration
             var client = _factory.AuthenticatedInstanceWithClaims([..claims]).CreateClient();
             
             // Act
-            var response = await client.PostAsJsonAsync("/api/ClientRequest/IndivCreateConnectionRequest", requestDto);
+            var response = await client.PostAsJsonAsync(ClientRequestRoutes.IndivCreateConnectionRequestPath, requestDto);
 
             // Assert
-            await HttpResponseAssertions.For(response).ShouldBeStatusCode(SharedConst.GeneralConstants.ValidationErrorStatusCode);
+            await HttpResponseAssertions.For(response).ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
             
             var problemDetails = await IntegrationTestHelper.GetProblemDetailsAsync(response);
             var actualErrors = IntegrationTestHelper.GetValidationErrors(problemDetails);
@@ -116,7 +118,7 @@ namespace Tests.EnergyManagement.Integration
             
 
             // Act
-            var response = await client.PostAsJsonAsync("/api/ClientRequest/IndivCreateConnectionRequest", requestDto);
+            var response = await client.PostAsJsonAsync(ClientRequestRoutes.IndivCreateConnectionRequestPath, requestDto);
 
             // Assert
             await HttpResponseAssertions.For(response).ShouldBeSuccess();

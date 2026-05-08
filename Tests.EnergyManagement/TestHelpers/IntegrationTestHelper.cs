@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.EnergyManagement.DocumentManaging;
+using EnergyManagement.Server.Api.Contracts.Common;
 using EnergyManagement.Server.Data;
 using Microsoft.AspNetCore.Mvc;
 
@@ -88,7 +89,7 @@ namespace Tests.EnergyManagement.TestHelpers
             return IntegrationTestHelper
                 .GetCollectionFromProblemsExtension<ServerValidationError>
                     (problemDetails!,
-                    SharedConst.GeneralConstants.ErrorsCollectionName);
+                    ProblemDetailsContract.ErrorsExtension);
         }
         public static IReadOnlyList<Claim>GetClaimsForIndividual(IndividualClient individual)
         {
@@ -118,8 +119,8 @@ namespace Tests.EnergyManagement.TestHelpers
         //         var root = doc.RootElement;
 
         //         // Extract using standard .NET exception property names
-        //         string? message = GetStringProperty(root, SharedConstants.GeneralConstants.MessagePropertyName);
-        //         string? stackTrace = GetStringProperty(root, SharedConstants.ExceptionExtensionConstants.StackTracePropertyName);
+        //         string? message = GetStringProperty(root, "message");
+        //         string? stackTrace = GetStringProperty(root, "stackTrace");
 
         //         if (message == null && stackTrace == null) return null;
 

@@ -43,9 +43,14 @@ coverage/
 
 # Test results
 TestResults/
+test-results/
+**/test-results/
+playwright-report/
+**/playwright-report/
 
 # NuGet
 *.nupkg
+.dotnet-home/
 
 # Azure
 .azure/
@@ -56,3 +61,10 @@ TestResults/
 # Temp
 temp/
 tmp/
+
+# Generated documentation
+_site/
+api/
+
+# Visual Studio user files
+*.csproj.user

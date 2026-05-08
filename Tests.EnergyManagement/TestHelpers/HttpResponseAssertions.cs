@@ -6,9 +6,9 @@ using Xunit.Sdk;
 using Xunit.Abstractions;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc;
+using EnergyManagement.Server.Api.Contracts.Common;
 using EnergyManagement.Server.Data;
 using System.Net;
-using EnergyManagement.Server.Data;
 
 namespace Tests.EnergyManagement.TestHelpers
 {
@@ -84,7 +84,7 @@ namespace Tests.EnergyManagement.TestHelpers
                 var problemDetails = await _response.Content.ReadFromJsonAsync<ProblemDetails>();
                 if (problemDetails == null ||
                     !problemDetails.Extensions.TryGetValue(
-                        SharedConst.GeneralConstants.ExceptionExtensionName,
+                        ProblemDetailsContract.ExceptionExtension,
                         out var exceptionObj) ||
                     exceptionObj == null)
                 {

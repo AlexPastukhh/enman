@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domain.EnergyManagement.Common;
 using Domain.EnergyManagement.DocumentManaging;
+using EnergyManagement.Server.Api.Contracts.Auth;
+using EnergyManagement.Server.Api.Contracts.Requests;
 using EnergyManagement.Server.Data;
 using EnergyManagement.Server.Repositories;
 using FluentValidation;
@@ -19,7 +21,7 @@ namespace EnergyManagement.Server.Contracts
             
             RuleFor(dto => dto.Email).MustBeValueObject(
                 Email.Create,
-                SharedConst.RegisterClientCnsts.EmailFieldName);
+                AuthFieldNames.Register.Email);
             
             RuleFor(dto => dto.Email).Custom((value,context)=>
             {
@@ -27,16 +29,14 @@ namespace EnergyManagement.Server.Contracts
                 if (isEmailExists)
                 {
                     context.AddFailure(
-                        SharedConst
-                            .RegisterClientCnsts
-                            .EmailFieldName,
+                        AuthFieldNames.Register.Email,
                         Errors.Account.EmailIsRegisteredAlready.Code);
                 }
             }).When(dto=>Email.Create(dto.Email).IsSuccess);
             
             RuleFor(dto => dto.Password).MustBeValueObject(
                 Password.Create,
-                SharedConst.RegisterClientCnsts.PasswordFieldName);
+                AuthFieldNames.Register.Password);
                 
             RuleFor(dto => dto.PasswordConfirmation)
                 .Custom((value,context)=>
@@ -44,17 +44,13 @@ namespace EnergyManagement.Server.Contracts
                     if(string.IsNullOrWhiteSpace(value))
                     {
                         context.AddFailure(
-                        SharedConst
-                            .RegisterClientCnsts
-                            .PasswordConfirmationFieldName,
+                        AuthFieldNames.Register.PasswordConfirmation,
                         Errors.Account.PasswordConfirmationIsRequired.Code);
                     }
                     else if(value!=context.InstanceToValidate.Password)
                     {
                         context.AddFailure(
-                        SharedConst
-                            .RegisterClientCnsts
-                            .PasswordConfirmationFieldName,
+                        AuthFieldNames.Register.PasswordConfirmation,
                         Errors.Account.PasswordConfirmationDoesntMatch.Code);
                     }
                 });
@@ -66,7 +62,7 @@ namespace EnergyManagement.Server.Contracts
         {
             
             RuleFor(dto => dto.Email).MustBeValueObject(Email.Create,
-                SharedConst.LoginConstants.EmailFieldName);
+                AuthFieldNames.Login.Email);
             
             RuleFor(dto => dto.Email).Custom((value,context)=>
             {
@@ -74,16 +70,14 @@ namespace EnergyManagement.Server.Contracts
                 if (!isEmailExists)
                 {
                     context.AddFailure(
-                        SharedConst
-                            .LoginConstants
-                            .EmailFieldName,
+                        AuthFieldNames.Login.Email,
                         Errors.Account.EmailWasntRegistered.Code);
                 }
             }).When(dto=>Email.Create(dto.Email).IsSuccess);
             
             RuleFor(dto => dto.Password).MustBeValueObject(
                 Password.Create,
-                SharedConst.LoginConstants.PasswordFieldName);
+                AuthFieldNames.Login.Password);
             
         }
     }
@@ -95,10 +89,10 @@ namespace EnergyManagement.Server.Contracts
             
             RuleFor(dto => dto.PhoneNumber).MustBeValueObject(
                 PhoneNumber.Create,
-                SharedConst.ProvideIndividualClientsData.PhoneFieldName);
+                AuthFieldNames.ProvideIndividualClientData.Phone);
             
             RuleFor(dto=>dto.FullNameDto)
-                .MustBeFullName(SharedConst.ProvideIndividualClientsData.FullNameFieldName);
+                .MustBeFullName(AuthFieldNames.ProvideIndividualClientData.FullName);
         }
     }
     public class CreateIndividualRequestDtoValidator:AbstractValidator<CreateIndividualRequestDto>
@@ -107,25 +101,25 @@ namespace EnergyManagement.Server.Contracts
         {
                 if( errorCode ==Errors.AddressErrors.PostalCodeIsRequired.Code)
                 {
-                    return SharedConst.IndividualRequestCnsts.PostalCodeFieldName;
+                    return RequestFieldNames.CreateIndividualRequest.PostalCode;
                 }
                 if( errorCode ==Errors.AddressErrors.RegionIsRequired.Code)
                 {
-                    return SharedConst.IndividualRequestCnsts.RegionFieldName;
+                    return RequestFieldNames.CreateIndividualRequest.Region;
                 }
                 if( errorCode ==Errors.AddressErrors.CityIsRequired.Code)
                 {
-                    return SharedConst.IndividualRequestCnsts.CityFieldName;
+                    return RequestFieldNames.CreateIndividualRequest.City;
                 }
                 if( errorCode ==Errors.AddressErrors.StreetIsRequired.Code)
                 {
-                    return SharedConst.IndividualRequestCnsts.StreetFieldName;
+                    return RequestFieldNames.CreateIndividualRequest.Street;
                 }
                 if( errorCode ==Errors.AddressErrors.HouseIsRequired.Code)
                 {
-                    return SharedConst.IndividualRequestCnsts.HouseFieldName;
+                    return RequestFieldNames.CreateIndividualRequest.House;
                 }
-                return SharedConst.IndividualRequestCnsts.AddressFieldName;
+                return RequestFieldNames.CreateIndividualRequest.Address;
             
         }
         public CreateIndividualRequestDtoValidator()
@@ -143,7 +137,7 @@ namespace EnergyManagement.Server.Contracts
                     if(address is null)
                     {
                         context.AddFailure(
-                            SharedConst.IndividualRequestCnsts.AddressFieldName,
+                            RequestFieldNames.CreateIndividualRequest.Address,
                             Errors.AddressErrors.AddressIsRequired.Code);
                     }
                     
