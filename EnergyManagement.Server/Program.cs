@@ -1,4 +1,5 @@
 using EnergyManagement.Server;
+using EnergyManagement.Server.Configuration;
 using EnergyManagement.Server.Contracts;
 using EnergyManagement.Server.Data;
 using EnergyManagement.Server.Infrastructure;
@@ -8,7 +9,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using EnergyManagement.Server.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 
@@ -23,15 +23,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddProblemDetails();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.Configure<DbNameOptions>(builder.Configuration.GetSection("DbName"));
 
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped(
-    _=>new AppDbContext(builder.Configuration.GetConnectionString("ManagementDb")!));
+    _=>new AppDbContext(builder.Configuration.GetConnectionString(ConnectionStringNames.ManagementDb)!));
 builder.Services.AddTransient<IClientRepository,ClientRepository>();
 
 // builder.Services.AddSingleton(_=>ConstantsToWrite.Create());

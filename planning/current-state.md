@@ -2,7 +2,7 @@
 
 ## Current phase
 
-Pre-L1 cleanup completed. Project is being prepared for L1 domain/API refactor.
+Pre-L1 cleanup is mostly completed. The project is being prepared for L1 domain/API refactor.
 
 ## Current date
 
@@ -14,11 +14,11 @@ Pre-L1 cleanup completed. Project is being prepared for L1 domain/API refactor.
 
 ## Current goal
 
-Привести старый учебно-экспериментальный ASP.NET Core + React проект к L1-версии дипломного приложения для обработки клиентских заявок и документооборота сетевой компании ООО «ЗСК».
+Bring the old educational/experimental ASP.NET Core + React project to an L1 diploma MVP for processing client requests and simple document workflow for the network company ООО "ZSK".
 
 ## Current task
 
-Организовать живую planning-документацию по структуре variant 2 и зафиксировать текущее состояние проекта для будущих AI-агентов.
+Fix current integration test infrastructure before L1 refactor: test database connection now uses LocalDB, remaining issue is test data/order isolation.
 
 ## Current implementation status
 
@@ -29,20 +29,16 @@ Pre-L1 cleanup completed. Project is being prepared for L1 domain/API refactor.
 - Domain project.
 - .NET test project.
 - Playwright E2E folder at repository root.
-- Existing domain classes from old model:
+- Existing old domain classes:
   - `Client`;
   - `IndividualClient`;
   - `Manager`;
   - `ClientRequest`;
   - `IndividualRequest`;
   - `RequestReview`.
-- Existing server endpoints for registration/login/user and individual request creation.
+- Existing old server endpoints for registration/login/user and individual request creation.
 - Existing EF Core mapping for old entities.
-- Planning folder with initial documents:
-  - `classes.md`;
-  - `general project info.md`;
-  - `solution-map-and-cleanup-plan.md`;
-  - `usecases.md`.
+- Structured planning folder exists.
 
 ### Pre-L1 cleanup already done
 
@@ -59,6 +55,11 @@ Pre-L1 cleanup completed. Project is being prepared for L1 domain/API refactor.
 - `examples/` removed as non-project donor/example code.
 - E2E tests remain in root `tests/`.
 - .NET tests remain in `Tests.EnergyManagement`.
+- Integration test database connection defaults to LocalDB `TestEnergyManagement` and can be overridden with `ConnectionStrings__Test`.
+- Test host replaces the central `ConnectionStringNames.ManagementDbConfigurationKey`; `DbNameOptions` was removed as unnecessary indirection.
+- Significant architecture/testing/configuration decisions should add short `Diploma note` blocks to `action-log.md`; these notes must not mention AI agents or assistant workflow.
+- Old shared constants were split into focused server API route/contract classes under `EnergyManagement.Server/Api`.
+- `IProblemDetailsService` is registered for API authentication/authorization problem responses.
 
 ## Current L1 implementation cut
 
@@ -82,19 +83,19 @@ L1 business flow:
 
 ```text
 Guest registers
-→ client logs in
-→ client creates IndividualApplicantParty
-→ client submits request
-→ employee sees requests
-→ employee takes request for review
-→ employee approves or rejects
-→ system creates simple ContractDraft on approval
-→ system sends email notification
+-> client logs in
+-> client creates IndividualApplicantParty
+-> client submits request
+-> employee sees requests
+-> employee takes request for review
+-> employee approves or rejects
+-> system creates simple ContractDraft on approval
+-> system sends email notification
 ```
 
 ## Explicitly not in L1
 
-- ИП / ЮЛ applicant types;
+- entrepreneur / legal entity applicant types;
 - document uploads;
 - PDF generation;
 - contract versioning;
@@ -112,36 +113,33 @@ Guest registers
 - real government integrations;
 - electronic signature.
 
-## Next steps
+## Task board
 
-1. Rename current planning files to stable names:
-   - `general project info.md` → `general-project-info.md`;
-   - `classes.md` → `domain-model.md`;
-   - `usecases.md` → `use-cases.md`.
-2. Archive deprecated root `PROJECT_PLANNING.md`.
-3. Fix UTF-8 corruption in the end of `solution-map-and-cleanup-plan.md`.
-4. Add `current-state.md`, `decisions.md`, `action-log.md`, `risk-log.md`, `agent-rules.md`, `layer-plan.md`, `api-plan.md`, `testing-strategy.md`.
-5. Add explicit L1 implementation cut to `domain-model.md`.
-6. Start L1 domain refactor:
-   - `Client` → `Account` / `ClientAccount`;
-   - `IndividualClient` → `IndividualApplicantParty` plus optional profile separation;
-   - `Manager` → `EmployeeAccount`;
-   - `IndividualRequest` → `ConnectionRequest` or `ClientRequest` subclass;
-   - `RequestReview.IsApproved` → `ReviewDecision`.
-7. Add unit tests for L1 domain invariants.
-8. Configure EF Core TPH mapping for L1 inheritance.
-9. Implement L1 API endpoints.
-10. Add integration tests and Playwright E2E scenarios.
+| Status | Task | Notes |
+|---|---|---|
+| done | Rename planning files to stable names | `general-project-info.md`, `domain-model.md`, `use-cases.md` exist. |
+| done | Archive deprecated root `PROJECT_PLANNING.md` | Original file moved to `planning/archive/PROJECT_PLANNING.md`; root copy removed from active planning. |
+| done | Verify UTF-8/mojibake state in planning files | Active planning files were checked with `rg`; mojibake markers were not found outside the archived old root plan. |
+| done | Add living planning documents | `current-state.md`, `decisions.md`, `action-log.md`, `risk-log.md`, `agent-rules.md`, `layer-plan.md`, `api-plan.md`, `testing-strategy.md` exist. |
+| done | Add explicit L1 implementation cut to planning | L1 cut is present here; verify `domain-model.md` before domain refactor. |
+| partial | Split old shared constants | Focused API route/contract classes exist under `EnergyManagement.Server/Api`; old commented constants infrastructure still exists. |
+| active | Stabilize integration test infrastructure | LocalDB connection is fixed; full test run still has data/order coupling failures. |
+| done | Improve planning navigation protocol | README, agent rules and current state now guide next safe actions. |
+| done | Add diploma note protocol | Significant work can now leave short notes for future diploma text in `action-log.md`. |
+| next | Start L1 domain refactor | Begin with `Client` to `Account` / `ClientAccount`. |
+| later | Add unit tests for L1 domain invariants | Do after first L1 domain classes are introduced. |
+| later | Configure EF Core TPH mapping for L1 inheritance | Depends on L1 domain model. |
+| later | Implement L1 API endpoints | Depends on domain and EF mapping. |
+| later | Add integration tests and Playwright E2E scenarios | Depends on L1 API behavior and test database strategy. |
 
 ## Current blockers / known issues
 
-- Integration tests currently require SQL Server/test database.
+- Integration tests currently require SQL Server LocalDB/test database.
 - Full solution build may be affected by frontend `.esproj` / JavaScript SDK availability in some environments.
-- Existing old root `PROJECT_PLANNING.md` conflicts with new layered planning.
 - Existing domain model still uses old class names.
-- Existing planning file `solution-map-and-cleanup-plan.md` contains corrupted text near the end and should be repaired.
-- Existing `general project info.md` contains ChatGPT response wrapper text and should be cleaned.
+- Existing `general-project-info.md` may contain ChatGPT response wrapper text and should be reviewed.
+- Full integration test run currently fails after DB connection succeeds because some tests share data/order state.
 
 ## Last updated
 
-2026-05-08 — planning variant 2 archive prepared from current GitHub branch state and existing planning documents.
+2026-05-08 - diploma note protocol clarified to exclude AI-agent/workflow content.

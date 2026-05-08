@@ -15,8 +15,7 @@ namespace Tests.EnergyManagement.TestHelpers
 {
     public static class DatabaseHelpers
     {
-        public const string ConnectionString =
-            "Data Source=DESKTOP-V6S02NC;Initial Catalog=EnergyManagementTest;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False";
+        public static string ConnectionString => TestDatabaseConnection.ConnectionString;
 
         public static async Task AddValidIndividual(WebAppFactory factory)
         {

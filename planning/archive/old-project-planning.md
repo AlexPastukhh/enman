@@ -1,10 +1,14 @@
 # Deprecated: old PROJECT_PLANNING.md
 
-This file is a placeholder for the old root `PROJECT_PLANNING.md`.
+This file explains why the old root `PROJECT_PLANNING.md` was archived.
 
 ## Status
 
 Deprecated.
+
+The original root file has been moved to:
+
+- `planning/archive/PROJECT_PLANNING.md`
 
 ## Why deprecated
 
@@ -29,6 +33,6 @@ Read instead:
 - `planning/api-plan.md`;
 - `planning/decisions.md`.
 
-## Recommended repository action
+## Repository action completed
 
-Move real root `PROJECT_PLANNING.md` here and keep this deprecation notice at the top, or delete it if all useful content has been migrated.
+The old root plan is no longer active at repository root. Keep it only as historical context.

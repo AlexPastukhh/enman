@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using EnergyManagement.Server;
+using EnergyManagement.Server.Configuration;
 using EnergyManagement.Server.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -25,9 +26,6 @@ namespace Tests.EnergyManagement.Integration
 {
     public class WebAppFactory : WebApplicationFactory<Program>
     {
-        private const string connString = "Data Source=DESKTOP-V6S02NC;Initial Catalog=EnergyManagementTest;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False";
-
-
         public WebAppFactory()
         {
         }
@@ -43,7 +41,14 @@ namespace Tests.EnergyManagement.Integration
         {
             builder.UseEnvironment("Development");
 
-            
+            builder.ConfigureAppConfiguration((_, config) =>
+            {
+                config.AddInMemoryCollection(new Dictionary<string, string?>
+                {
+                    [ConnectionStringNames.ManagementDbConfigurationKey] =
+                        TestDatabaseConnection.ConnectionString
+                });
+            });
 
             // Use ConfigureTestServices instead of ConfigureServices
             // This runs AFTER all framework services are registered
@@ -58,26 +63,8 @@ namespace Tests.EnergyManagement.Integration
                     services.Remove(dbContextDescriptor);
                 }
 
-                // Remove DbNameOptions configuration - FIXED: Find all matching services
-                var optionsDescriptors = services
-                    .Where(d =>
-                        d.ServiceType == typeof(IConfigureOptions<DbNameOptions>) ||
-                        d.ServiceType == typeof(IPostConfigureOptions<DbNameOptions>))
-                    .ToList();
-
-                foreach (var descriptor in optionsDescriptors)
-                {
-                    services.Remove(descriptor);
-                }
-
                 // Register test services
-                services.AddScoped(_ => new AppDbContext(connString));
-
-                // Re-configure DbNameOptions with test value
-                services.Configure<DbNameOptions>(options =>
-                {
-                    options.Name = "Test";
-                });
+                services.AddScoped(_ => new AppDbContext(TestDatabaseConnection.ConnectionString));
             });
 
             base.ConfigureWebHost(builder);

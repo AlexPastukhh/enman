@@ -36,6 +36,57 @@
    - what was not checked;
    - risks or follow-up tasks.
 
+## Final response navigation
+
+Every final response must include enough navigation for the next turn.
+
+Report:
+
+1. Worked task.
+2. Task state: `done`, `partial`, `blocked`, or `needs decision`.
+3. Checks/tests run.
+4. What remains unchecked.
+5. Recommended next 1-3 actions from `current-state.md`.
+6. A direct question to the developer if the next state or next action is ambiguous.
+
+The response should act like HATEOAS in REST: after reading it, the developer should know which safe actions are available next.
+
+## Test reporting
+
+When tests/checks are run, report the useful terminal result in the final response.
+
+Include:
+
+1. Exact command.
+2. Result: passed, failed, or blocked.
+3. Totals when available, for example `80 passed / 9 failed / 89 total`.
+4. Names and short reasons for important failures.
+5. Whether the failure appears related to the current change or to existing/environment state.
+
+Do not only say "tests failed" or "tests passed"; include the actionable result.
+
+## Diploma notes
+
+If completed work is useful for the diploma text, add a short `### Diploma note` block to the related `action-log.md` entry.
+
+Add notes for:
+
+1. Architecture decisions.
+2. Testing strategy or infrastructure.
+3. Configuration/deployment portability.
+4. Maintainability or refactoring rationale.
+5. Risk mitigation and scope control.
+
+Each note should include:
+
+- `Topic`;
+- `Why it matters`;
+- `Possible text use`.
+
+Never add diploma notes about AI agents, assistant workflow, prompts, or internal planning mechanics. The diploma topic is the software system, not AI-assisted development.
+
+Skip diploma notes for small mechanical edits.
+
 ## Hard constraints
 
 - Do not merge `Account` and `ApplicantParty`.

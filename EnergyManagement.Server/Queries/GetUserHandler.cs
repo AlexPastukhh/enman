@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using Dapper;
 using Domain.EnergyManagement.Common;
+using EnergyManagement.Server.Configuration;
+using EnergyManagement.Server.Data;
 using EnergyManagement.Server.Repositories;
 using MediatR;
-using Microsoft.CodeAnalysis.Options;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Options;
-using EnergyManagement.Server.Data;
 
 namespace EnergyManagement.Server.Queries
 {
@@ -18,17 +17,16 @@ namespace EnergyManagement.Server.Queries
     {
         private readonly IClientRepository _client;
         private readonly IConfiguration _configuration;
-        private readonly IOptions<DbNameOptions> _dbName;
-        public GetUserHandler(IClientRepository clientRepository, IConfiguration configuration, IOptions<DbNameOptions> dbName)
+        public GetUserHandler(IClientRepository clientRepository, IConfiguration configuration)
         {
             _client = clientRepository;
             _configuration = configuration;
-            _dbName = dbName;
         }
 
         public async Task<Result<UserDto,Error>> Handle(GetUser request, CancellationToken cancellationToken)
         {
-            var connection = new SqlConnection(_configuration.GetConnectionString(_dbName.Value.Name));
+            var connection = new SqlConnection(
+                _configuration.GetConnectionString(ConnectionStringNames.ManagementDb));
             var sql = @"SELECT c.ClientId, c.Email as Email
                         FROM Clients c
                         WHERE c.ClientId = @ClientId";

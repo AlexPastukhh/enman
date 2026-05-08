@@ -19,8 +19,7 @@ namespace Tests.EnergyManagement.Integration
     {
         protected readonly WebAppFactory _factory;
         protected ITestOutputHelper _output;
-            public const string ConnectionString =
-                "Data Source=DESKTOP-V6S02NC;Initial Catalog=EnergyManagementTest;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False";
+        public static string ConnectionString => TestDatabaseConnection.ConnectionString;
 
         public IntegrationTest(WebAppFactory factory, ITestOutputHelper output)
         {

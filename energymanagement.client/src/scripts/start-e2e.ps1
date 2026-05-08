@@ -7,7 +7,6 @@ $ErrorActionPreference = "Stop"
 
 # env for test run
 $env:ASPNETCORE_ENVIRONMENT = "Test"
-$env:DbName__Name = "ManagementDb"
 
 if ($TestDbConnection) {
   $env:ConnectionStrings__ManagementDb = $TestDbConnection
@@ -15,7 +14,6 @@ if ($TestDbConnection) {
   $env:ConnectionStrings__ManagementDb = $env:ConnectionStrings__Test
 }
 
-Write-Host "DbName:Name = $($env:DbName__Name)"
 Write-Host "ConnectionStrings__ManagementDb = **** (redacted)"
 
 # server project folder (relative to this script) - go up two levels from src/scripts

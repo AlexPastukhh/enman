@@ -126,9 +126,18 @@ employee rejects request
   - `Fixtures/`.
 - E2E tests remain in root `tests/`.
 - Component tests remain in frontend project.
+- Integration tests use LocalDB by default:
+  - `Data Source=(localdb)\MSSQLLocalDB`;
+  - database: `TestEnergyManagement`;
+  - override with environment variable `ConnectionStrings__Test` when moving between PCs.
+- Test host replaces `ConnectionStrings:ManagementDb` with the test connection string so services use the normal application configuration key against the test database.
+- Dapper queries should use `ConnectionStringNames.ManagementDb`; do not hardcode connection string names in handlers.
+- Test configuration overrides should use `ConnectionStringNames.ManagementDbConfigurationKey`.
+- Do not add a separate DB-name switch for tests.
 
 ## Known test risks
 
-- Integration tests require SQL Server/test database.
+- Integration tests require SQL Server LocalDB/test database.
 - Full solution build may depend on frontend `.esproj` support in local environment.
 - E2E tests require both backend and frontend to be running.
+- Current integration tests still have data/order coupling: a full run can fail after connection succeeds if test data is not isolated.

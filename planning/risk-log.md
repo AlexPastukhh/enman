@@ -54,9 +54,13 @@ Keep contract workflow limited to:
 
 ## RISK-004: Old PROJECT_PLANNING.md may confuse agents
 
+### Status
+
+Mitigated on 2026-05-08.
+
 ### Description
 
-Root `PROJECT_PLANNING.md` contains old scenario planning and may conflict with new planning.
+Root `PROJECT_PLANNING.md` contained old scenario planning and could conflict with new planning.
 
 ### Impact
 
@@ -64,7 +68,7 @@ Agent may implement outdated model: ФЛ/ИП/ЮЛ as registration types, phone 
 
 ### Mitigation
 
-Move it to `planning/archive/old-project-planning.md` and mark as deprecated.
+Completed: the original root file was moved to `planning/archive/PROJECT_PLANNING.md`, and `planning/archive/old-project-planning.md` explains why it is deprecated.
 
 ## RISK-005: Planning files may become too large
 
