@@ -1,54 +1,41 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http.Json;
 using System.Security.Claims;
-using System.Text.Json;
 using System.Threading.Tasks;
-using CommunityToolkit.Diagnostics;
-using CSharpFunctionalExtensions;
-using Domain.EnergyManagement.Common;
 using Domain.EnergyManagement.DocumentManaging;
-using EnergyManagement.Server;
 using EnergyManagement.Server.Api.Contracts.Common;
 using EnergyManagement.Server.Api.Routes;
 using EnergyManagement.Server.Data;
-using EnergyManagement.Server.Infrastructure;
 using FluentAssertions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Tests.EnergyManagement.TestHelpers;
 using Xunit.Abstractions;
-using Xunit.Extensions.Ordering;
-using static Domain.EnergyManagement.Common.Error;
 
 namespace Tests.EnergyManagement.Integration
 {
     
-    [Order(1)]
-    public class AuthTests:AuthTestsBase,IClassFixture<WebAppFactory>
+    [Collection("IntegrationTestCollection")]
+    public class AuthTests:AuthTestsBase
     {
-        public static AuthTestsIndividual TestIndividual = new AuthTestsIndividual();
+        private readonly TestIndividualActor _clientActor;
         
-        public static Expression<Func<IAuthenticationService, Task>> ValidSignIn =
+        public static Expression<Func<IAuthenticationService, Task>> ValidSignInFor(TestIndividualActor actor) =>
             authService=>authService
                     .SignInAsync(
                         It.IsAny<HttpContext>(),
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         It.Is<ClaimsPrincipal>(cp=>
-                            TestIndividual.GetClaims().All(c=>
+                            actor.Claims.All(c=>
                                 cp.HasClaim(c.Type,c.Value))),
                         It.Is<AuthenticationProperties>(ap=>ap.IsPersistent==false));
+
         public static Expression<Func<IAuthenticationService, Task>> AnySignIn =
             authService=>authService
                     .SignInAsync(
@@ -57,40 +44,12 @@ namespace Tests.EnergyManagement.Integration
                         It.IsAny<ClaimsPrincipal>(),
                         It.IsAny<AuthenticationProperties>());
                         
-        public AuthTests(WebAppFactory factory, ITestOutputHelper output):base(factory, output)
-        {   
-        }
-        
-        // +  + need e2e + some js tests + finally 
-        // clients request + manager things + some css
-        [Fact,Order(0)]
-        public async Task Chech()
+        public AuthTests(IntegrationTestFixture fixure, ITestOutputHelper output):base(fixure.Factory, output)
         {
-            //Arrange
-            
-            //Act
-            //Assert
-            
+            _clientActor = fixure.Client;
         }
         
-        // [Fact,Order(0)]
-        // public async Task ConstantsDoctorReturnsHealthy()
-        // {
-        //     //Arrange
-        //     var client = _factory.CreateClient();
-        //     //Act
-        //     var response =  await client.GetAsync("/health");
-        //     //Assert
-        //     await HttpResponseAssertions.For(response, _output)
-        //         .ShouldBeSuccess();
-        // }
-        
-        [Fact,Order(1)]
-        public void ClearDatabaseBeforeTests()
-        {
-            ClearDatabase();
-        }
-        [Theory,Order(3)]
+        [Theory]
         [MemberData(nameof(GetInvalidLoginData))]
         public async Task CantLogin(
             string email,
@@ -122,12 +81,7 @@ namespace Tests.EnergyManagement.Integration
             var errors =IntegrationTestHelper.GetValidationErrors(problemDetails);
             errors.Should().NotBeNullOrEmpty();
             
-            var allErrorsContained = errors.All(e=>expectedErrors.Contains(e));
-            if(allErrorsContained==false)
-            {
-                LogTwoErrorCollections(expectedErrors,errors!);
-            }
-            allErrorsContained.Should().BeTrue();
+            IntegrationTestHelper.ShouldHaveValidationErrorsEquivalentTo(errors, expectedErrors);
             
             authServiceMock
                 .Verify(AnySignIn,Times.Never);
@@ -138,7 +92,7 @@ namespace Tests.EnergyManagement.Integration
             }
         }
         
-        [Theory,Order(5)]
+        [Theory]
         [MemberData(nameof(GetInvalidRegisterData))]
         public async Task CantRegisterIndividualWithInvalidData(
             string email,
@@ -168,23 +122,19 @@ namespace Tests.EnergyManagement.Integration
             var errors =IntegrationTestHelper.GetValidationErrors(problemDetails);
             errors.Should().NotBeNullOrEmpty();
             
-            var allErrorsContained = errors.All(e=>expectedErrors.Contains(e));
-            if(allErrorsContained==false)
-            {
-                LogTwoErrorCollections(expectedErrors,errors!);
-            }
-            allErrorsContained.Should().BeTrue();
+            IntegrationTestHelper.ShouldHaveValidationErrorsEquivalentTo(errors, expectedErrors);
         }
           
-        [Fact,Order(7)]
+        [Fact]
         public async Task IndividualClientOnlyRegistersNoLogin()
         {
             //Arrange
             
             var client = _factory.CheckingAuthentication(out var authServiceMock).CreateClient();
+            var email = $"register-{Guid.NewGuid():N}@example.com";
             
             var dto = new RegisterClientDto(
-                ValidTestData.ValidEmail,ValidTestData.ValidPassword,ValidTestData.ValidPassword);
+                email,ValidTestData.ValidPassword,ValidTestData.ValidPassword);
                         
             //Act
             
@@ -205,23 +155,23 @@ namespace Tests.EnergyManagement.Integration
             
             authServiceMock
                 .Verify(AnySignIn,Times.Never);
-                
-            TestIndividual.SetRegisteredIndividual(individual,dto.Password,_output);
+
+            await DatabaseHelpers.DeleteIndividual(dto.Email, _factory);
             
         }
         
-        [Fact,Order(9)]
+        [Fact]
         public async Task IndividualClientLogins()
         {
             //Arrange
-            var claims = TestIndividual.GetClaims();
+            var testClient = _clientActor;
             var identity = new ClaimsIdentity(
-                claims,
+                testClient.Claims,
                 CookieAuthenticationDefaults.AuthenticationScheme);
             
             var client = _factory.CheckingAuthentication(out var authServiceMock).CreateClient();
             
-            var dto = TestIndividual.LoginDto;
+            var dto = testClient.LoginDto;
                 
             
             
@@ -237,13 +187,14 @@ namespace Tests.EnergyManagement.Integration
             
             
             authServiceMock
-                .Verify(ValidSignIn,Times.Once);
+                .Verify(ValidSignInFor(testClient),Times.Once);
         }
         
-        [Fact,Order(10)]
+        [Fact]
         public async Task UnAuthenticatedIndividualCantProvideData()
         {
             //Arrange
+            var testClient = _clientActor;
 
             var client = _factory.CreateClient(
                 new WebApplicationFactoryClientOptions
@@ -265,7 +216,7 @@ namespace Tests.EnergyManagement.Integration
             await HttpResponseAssertions.For(register, _output)
                 .ShouldBeStatusCode((int)HttpStatusCode.Unauthorized);
                             
-            var getIndividual = await DatabaseHelpers.GetIndividualByEmailAsync(_factory, TestIndividual.EmailOrThrow);
+            var getIndividual = await DatabaseHelpers.GetIndividualByEmailAsync(_factory, testClient.Email);
             getIndividual.IsSuccess.Should().BeTrue();
             
             var individual = getIndividual.Value;
@@ -275,51 +226,59 @@ namespace Tests.EnergyManagement.Integration
                       
         }
         
-        [Fact,Order(12)]
+        [Fact]
         public async Task AuthenticatedIndividualProvidesMoreData()
         {
             
             //Arrange
-            var claims = TestIndividual.GetClaims();
-            
-            var client = _factory.AuthenticatedInstanceWithClaims([..claims]).CreateClient();
-            
-            var dto = new ProvideIndividualClientsDataDto(
-                ValidTestData.TestPhoneNumber,
-                new FullNameDto(ValidTestData.FirstName,ValidTestData.MiddleName,ValidTestData.LastName)
-            );
-            
-            var createFullName= FullName.Create(
-                dto.FullNameDto.FirstName,
-                dto.FullNameDto.MiddleName,
-                dto.FullNameDto.LastName);
-            var createNumber= PhoneNumber.Create(dto.PhoneNumber);
-            //Act
-            
-            var register = await client.PostAsJsonAsync(AuthRoutes.ProvideIndividualClientsDataPath,dto);          
-            
-            //Assert 
-            await HttpResponseAssertions.For(register, _output)
-                .ShouldBeSuccess();
-                            
-            var getIndividual = await DatabaseHelpers.GetIndividualByEmailAsync(_factory, TestIndividual.EmailOrThrow);
-            getIndividual.IsSuccess.Should().BeTrue();
-            
-            TestIndividual.UpdateRegisteredIndividual(getIndividual.Value);
-            
-            TestIndividual.HasPhoneNumber(createNumber.Value).Should().BeTrue();
-            TestIndividual.HasFullName(createFullName.Value).Should().BeTrue();
+            var testClient = await DatabaseHelpers.CreateRegisteredIndividualAsync(_factory);
+            try
+            {
+                var client = _factory.AuthenticatedInstanceWithClaims([..testClient.Claims]).CreateClient();
+                
+                var dto = new ProvideIndividualClientsDataDto(
+                    ValidTestData.TestPhoneNumber,
+                    new FullNameDto(ValidTestData.FirstName,ValidTestData.MiddleName,ValidTestData.LastName)
+                );
+                
+                var createFullName= FullName.Create(
+                    dto.FullNameDto.FirstName,
+                    dto.FullNameDto.MiddleName,
+                    dto.FullNameDto.LastName);
+                var createNumber= PhoneNumber.Create(dto.PhoneNumber);
+                //Act
+                
+                var register = await client.PostAsJsonAsync(AuthRoutes.ProvideIndividualClientsDataPath,dto);          
+                
+                //Assert 
+                await HttpResponseAssertions.For(register, _output)
+                    .ShouldBeSuccess();
+                                
+                var getIndividual = await DatabaseHelpers.GetIndividualByEmailAsync(_factory, testClient.Email);
+                getIndividual.IsSuccess.Should().BeTrue();
+                
+                var individual = getIndividual.Value;
+                
+                individual.PhoneNumber.HasValue.Should().BeTrue();
+                individual.FullName.HasValue.Should().BeTrue();
+                individual.PhoneNumber.Value.Equals(createNumber.Value).Should().BeTrue();
+                individual.FullName.Value.Equals(createFullName.Value).Should().BeTrue();
+            }
+            finally
+            {
+                await DatabaseHelpers.DeleteIndividual(testClient.Email, _factory);
+            }
            
         }
         
-        [Fact,Order(15)]
+        [Fact]
         public async Task AuthenticatedIndividualFetchesUserData()
         {
             
             //Arrange
-            var claims = TestIndividual.GetClaims();
+            var testClient = _clientActor;
             
-            var client = _factory.AuthenticatedInstanceWithClaims([..claims]).CreateClient();
+            var client = _factory.AuthenticatedInstanceWithClaims([..testClient.Claims]).CreateClient();
             
             //Act
             
@@ -329,31 +288,26 @@ namespace Tests.EnergyManagement.Integration
             await HttpResponseAssertions.For(register, _output)
                 .ShouldBeSuccess();
                             
-            var getIndividual = await DatabaseHelpers.GetIndividualByEmailAsync(_factory, TestIndividual.EmailOrThrow);
+            var getIndividual = await DatabaseHelpers.GetIndividualByEmailAsync(_factory, testClient.Email);
             getIndividual.IsSuccess.Should().BeTrue();
             
             var userDto =await register.Content.ReadFromJsonAsync<UserDto>();
             userDto.Should().NotBeNull();
             
-            userDto!.Email.Should().Be(TestIndividual.EmailOrThrow);
-            userDto.Id.Should().Be(TestIndividual.Id);      
+            userDto!.Email.Should().Be(testClient.Email);
+            userDto.Id.Should().Be(testClient.Id);      
         }
         
-        [Fact,Order(20)]
+        [Fact]
         public async Task CantRegisterWithSameEmail()
         {
             //Arrange
+            var testClient = _clientActor;
             var client = _factory.CreateClient();
             var dto = new RegisterClientDto(
-                ValidTestData.ValidEmail,ValidTestData.ValidPassword,ValidTestData.ValidPassword);
+                testClient.Email,testClient.Password,testClient.Password);
             
             var initCount = DatabaseHelpers.GetCountOfIndividuals(_factory);
-            
-            var isIndividualExists = await DatabaseHelpers.IsIndividualExists(_factory, dto.Email);
-            if (!isIndividualExists)
-            {
-                await DatabaseHelpers.AddValidIndividual(_factory);
-            }
             
             //Act
             var register = await client.PostAsJsonAsync(AuthRoutes.RegisterIndividualPath,dto);          
@@ -370,8 +324,9 @@ namespace Tests.EnergyManagement.Integration
             errors.Should().NotBeNullOrEmpty();
 
                 
-            errors!.Contains(ServerValidationErrors.Register.EmailIsRegisteredAlready)
-                .Should().BeTrue();
+            IntegrationTestHelper.ShouldHaveValidationErrorsEquivalentTo(
+                errors,
+                [ExpectedValidationErrors.EmailIsRegisteredAlready]);
             
             var countAfterAttempt = DatabaseHelpers.GetCountOfIndividuals(_factory);
             countAfterAttempt.Should().Be(initCount);

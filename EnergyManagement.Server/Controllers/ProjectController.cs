@@ -7,8 +7,6 @@ using EnergyManagement.Server.Api.Contracts.Common;
 using EnergyManagement.Server.Data;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Mvc.Controllers;
 
 namespace EnergyManagement.Server.Controllers
 {
@@ -18,13 +16,7 @@ namespace EnergyManagement.Server.Controllers
     {
         protected ActionResult ProblemDetailsFromValidation(IEnumerable<ValidationFailure>failures)
         {
-            var endpoint = HttpContext.GetEndpoint();
-            var routePath = (endpoint as RouteEndpoint)?.RoutePattern?.RawText
-                            ?? (ControllerContext.ActionDescriptor as ControllerActionDescriptor)?.AttributeRouteInfo?.Template
-                            ?? HttpContext.Request.Path.Value?.TrimStart('/')
-                            ?? string.Empty;
-            
-            var errors =failures.Select(f=>ServerValidationError.Create(f.PropertyName,f.ErrorMessage, routePath));
+            var errors =failures.Select(f=>ServerValidationError.Create(f.PropertyName,f.ErrorMessage));
             var problemDetails = new ProblemDetails()
             {
                 Type="https://problems-registry.smartbear.com/validation-error",

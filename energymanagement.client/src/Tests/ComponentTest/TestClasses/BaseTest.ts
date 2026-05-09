@@ -19,7 +19,6 @@ export class SUTFormField {
   private screen: Screen;
 
   private input: HTMLInputElement;
-  private error?: HTMLParagraphElement;
   private constructor(input: HTMLInputElement, screen: Screen) {
     this.input = input;
     this.screen = screen;
@@ -33,6 +32,9 @@ export class SUTFormField {
       name: formConst.getAriaLabelForError(inputId),
     });
     if (errFound) {
+      if (!errFound.textContent) {
+        return null;
+      }
       return errFound as HTMLParagraphElement;
     }
     return null;
@@ -66,14 +68,12 @@ export class SUTFormField {
       if (err instanceof TimeoutErr) {
         return null;
       }
+      throw err;
     }
     return error as HTMLParagraphElement | null;
   };
   static Create = (screen: Screen, inputLabel: string) => {
-    // const nameRegex = new RegExp(`^${inputLabel}$`);
-    const input = screen.getByRole("textbox", {
-      name: inputLabel,
-    }) as HTMLInputElement;
+    const input = screen.getByLabelText(inputLabel) as HTMLInputElement;
     return new SUTFormField(input, screen);
   };
 

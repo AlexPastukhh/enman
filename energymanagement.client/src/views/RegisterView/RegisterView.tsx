@@ -7,9 +7,14 @@ import { ErrorMessage } from "../../Components/Layout/ErrorMessage";
 const RegisterView = () => {
     const [rootError, setRootError] = useState<string>("");
     return (
-        <div className="register-page">
-
-        </div>
+        <>
+            <Header/>
+            <main className="content register-page">
+                <Register setRootError={setRootError}/>
+            </main>
+            {rootError && <ErrorMessage message={rootError}/>}
+            <Footer/>
+        </>
     )
 }
 

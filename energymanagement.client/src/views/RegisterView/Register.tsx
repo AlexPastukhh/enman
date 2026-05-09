@@ -11,12 +11,15 @@ import { NavLink } from "react-router-dom";
 import { ClientRoutes } from "../../globConstants";
 
 type registerProps = {setRootError:React.Dispatch<React.SetStateAction<string>>}
+
 export const Register: React.FC<registerProps> = ({ setRootError }) => {
+
   const { register, handleSubmit, errors, isSubmitting, fieldNames } =
     useRegister();
     if(errors.root?.message){
       setRootError(errors.root.message)
     }
+    
   return (
     <form onSubmit={handleSubmit} className="form registerForm">
       <FormTitle>{registerConst.registerTitle}</FormTitle>
@@ -24,6 +27,7 @@ export const Register: React.FC<registerProps> = ({ setRootError }) => {
       <FormGroup>
         <FormField
           registerFormFn={register}
+          fieldName={fieldNames.email}
           inputId={registerConst.emailInputId}
           errorId={registerConst.emailErrorsId}
           labelText={registerConst.emailLabel}

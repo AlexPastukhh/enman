@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -13,12 +12,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Xunit.Abstractions;
-using Tests.EnergyManagement.TestHelpers;
 using Microsoft.Extensions.Options;
 using Moq;
 
@@ -26,16 +22,11 @@ namespace Tests.EnergyManagement.Integration
 {
     public class WebAppFactory : WebApplicationFactory<Program>
     {
-        public WebAppFactory()
+        private string ConnectionString { get; } 
+        public WebAppFactory(string connectionString)
         {
+            ConnectionString = connectionString;
         }
-
-        public void SetTestOutputHelper()
-        {
-        }
-        
-
-        
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -46,15 +37,12 @@ namespace Tests.EnergyManagement.Integration
                 config.AddInMemoryCollection(new Dictionary<string, string?>
                 {
                     [ConnectionStringNames.ManagementDbConfigurationKey] =
-                        TestDatabaseConnection.ConnectionString
+                        ConnectionString
                 });
             });
 
-            // Use ConfigureTestServices instead of ConfigureServices
-            // This runs AFTER all framework services are registered
             builder.ConfigureTestServices(services =>
             {
-                // Remove AppDbContext - FIXED: Find the correct service
                 var dbContextDescriptor = services
                     .SingleOrDefault(d => d.ServiceType == typeof(AppDbContext));
 
@@ -63,8 +51,7 @@ namespace Tests.EnergyManagement.Integration
                     services.Remove(dbContextDescriptor);
                 }
 
-                // Register test services
-                services.AddScoped(_ => new AppDbContext(TestDatabaseConnection.ConnectionString));
+                services.AddScoped(_ => new AppDbContext(ConnectionString));
             });
 
             base.ConfigureWebHost(builder);
@@ -121,7 +108,7 @@ namespace Tests.EnergyManagement.Integration
     public class MockAuthenticationHandler
         : AuthenticationHandler<AuthenticationSchemeOptions>
     {
-        private MockClaimSeed Seed;
+        private readonly MockClaimSeed _seed;
         
         public MockAuthenticationHandler(
             IOptionsMonitor<AuthenticationSchemeOptions> options,
@@ -130,12 +117,12 @@ namespace Tests.EnergyManagement.Integration
             MockClaimSeed seed)
             : base(options, logger, encoder)
         {
-            Seed = seed;
+            _seed = seed;
         }
 
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            var claims = Seed.getSeeds();
+            var claims = _seed.GetSeeds();
             var identity = new ClaimsIdentity(
                 claims,
                 CookieAuthenticationDefaults.AuthenticationScheme);
@@ -156,7 +143,7 @@ namespace Tests.EnergyManagement.Integration
             _seed = seed;
         }
 
-        public IEnumerable<Claim> getSeeds() => _seed;
+        public IEnumerable<Claim> GetSeeds() => _seed;
     }
 
     public class TestAuthenticationSchemeProvider

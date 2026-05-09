@@ -1,5 +1,5 @@
 import { ServerRoutes } from "../globConstants";
-import type { SessionState } from "../Context/sessionContext";
+import type { SessionState } from "../hooks/useSession";
 import { fetchWrapper } from "../Utils/fetchWrapper";
 
 export const getUser = async (): Promise<SessionState | null> => {

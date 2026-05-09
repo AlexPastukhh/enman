@@ -1,4 +1,4 @@
-import { StrictMode, useEffect } from 'react'
+import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './styles/index.css'
@@ -9,11 +9,10 @@ import HomeView from './views/HomeView/HomeView.tsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import RegisterView from './views/RegisterView/RegisterView.tsx'
 import { LoginView } from './views/LoginView/LoginView.tsx'
-import SessionProvider from './hooks/useSession.tsx'
+import { SessionProvider } from './hooks/useSession.tsx'
 import { ClientRoutes } from './globConstants.ts'
 import AccountView from './views/AccountView/AccountView.tsx'
-import { PageErrorProvider, usePageError } from './hooks/usePageError.tsx'
-import { LayoutWrapper } from './Components/Layout/LayoutWrapper.tsx'
+import { PageErrorProvider } from './hooks/usePageError.tsx'
 
 const router = createBrowserRouter(
 [
@@ -43,9 +42,7 @@ createRoot(document.getElementById('root')!).render(
 <QueryClientProvider client={queryClient}>
 <PageErrorProvider>
 <SessionProvider>
-  <LayoutWrapper>
     <RouterProvider router={router}/>
-  </LayoutWrapper>
 </SessionProvider>
 </PageErrorProvider>
 </QueryClientProvider>

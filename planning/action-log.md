@@ -157,3 +157,180 @@ Make planning usable as living handoff documentation for future AI agents.
 
 - Diploma notes should describe the developed software system, its architecture, tests, configuration, scope control and risks.
 - Internal planning and AI-assisted workflow may remain useful for development, but should not be presented as diploma content.
+
+## 2026-05-08 - Integration test lifecycle centralized
+
+### Done
+
+- Moved integration test lifecycle ownership to `IntegrationTestFixture`.
+- Removed the old `TestDatabaseConnection` helper.
+- Updated `WebAppFactory` to receive the test connection string from the fixture and use it for both configuration override and `AppDbContext`.
+- Updated the integration test collection to share the fixture and prevent parallel execution against one test database.
+- Added per-scenario database cleanup for client request tests that create users and requests.
+
+### Checks
+
+- `rg "TestDatabaseConnection|ConnectionStrings__Test" Tests.EnergyManagement EnergyManagement.Server` found no remaining references.
+- First `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --logger "console;verbosity=normal"` passed compilation but failed 7 client request validation cases because previous request data leaked between tests.
+- After adding cleanup to the affected scenarios, full `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --logger "console;verbosity=normal"` passed 88/88.
+
+### Diploma note
+
+- Topic: integration testing lifecycle and database isolation.
+- Why it matters: the test suite now centralizes test database setup and prevents shared state from affecting request-processing scenarios.
+- Possible text use: testing chapter, reproducibility, integration testing limitations and mitigation.
+
+## 2026-05-08 - Static test user removed
+
+### Done
+
+- Renamed `IntegrationTestFixure` to `IntegrationTestFixture`.
+- Added immutable `TestIndividualActor` for fixture-created users.
+- Seeded a read-only baseline client in the integration fixture.
+- Removed mutable `TestIndividual` state objects.
+- Moved request DTO comparison to stateless `RequestAssertions`.
+- Updated auth and client request integration tests to use fixture actors or per-scenario users.
+
+### Checks
+
+- `rg "IntegrationTestFixure|TestIndividual.cs|AuthTestsIndividual|RequestsTestIndividual|SetRegisteredIndividual|UpdateRegisteredIndividual|TestIndividual =" Tests.EnergyManagement` found no remaining references.
+- First full `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --logger "console;verbosity=normal"` failed at compile time because `RequestAssertions` missed the DTO namespace import.
+- After fixing the import, full `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --logger "console;verbosity=normal"` passed 88/88.
+
+### Diploma note
+
+- Topic: integration test independence.
+- Why it matters: tests no longer depend on a static mutable user or on previous test execution order; baseline data is prepared by the fixture and exposed through immutable actor objects.
+- Possible text use: testing chapter, reliability of automated tests, test data management.
+
+## 2026-05-08 - Fixture reset model corrected
+
+### Done
+
+- Removed manual fixture reset calls from individual tests.
+- Kept database cleanup and baseline client seed in collection fixture initialization.
+- Stored the shared immutable client actor in test class fields through constructors.
+- Removed the technical `ClearDatabaseBeforeTests` test.
+- Kept per-scenario users local to tests that mutate user state.
+
+### Checks
+
+- `rg "ResetDatabaseAsync|ClearDatabaseBeforeTests|_fixure" Tests.EnergyManagement/Integration Tests.EnergyManagement/TestHelpers` found no remaining references.
+- Full `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --logger "console;verbosity=normal"` passed 87/87.
+
+### Diploma note
+
+- Topic: fixture-based integration test setup.
+- Why it matters: baseline data is created once for the integration test collection, while state-changing scenarios use local test data, reducing order coupling without repeatedly rebuilding the whole database state.
+- Possible text use: testing chapter, integration test setup and data isolation.
+
+## 2026-05-08 - Test project cleanup
+
+### Done
+
+- Removed empty/dummy test files and commented legacy constants test files.
+- Removed `Xunit.Extensions.Ordering` from the test project.
+- Removed `Order` attributes from active integration tests.
+- Cleaned unused `using` directives in active tests/helpers.
+- Simplified `DatabaseHelpers` by removing no-op `try/catch` wrappers.
+- Updated local test-user cleanup to use `try/finally` in mutable integration scenarios.
+- Fixed `HttpResponseAssertions.ShouldBeSuccess` failure wording so it reports expected success instead of an expected `500`.
+- Fixed nullable handling in `IntegrationTestHelper.GetProblemDetailsAsync`.
+
+### Checks
+
+- `rg "Xunit.Extensions.Ordering|\\[Order|TestConstantsData|ConstantsTests|IndividualClientMethodsTests|Assert.True\\(true\\)|Chech|ResetDatabaseAsync|ClearDatabaseBeforeTests" Tests.EnergyManagement` found no remaining references.
+- `rg "catch \\(Exception\\)|catch\\(Exception\\)|FIXED|getSeeds|SetTestOutputHelper" Tests.EnergyManagement -g "*.cs"` found no remaining references.
+- Full `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --logger "console;verbosity=minimal"` passed 85/85.
+
+### Diploma note
+
+- Topic: automated test maintainability.
+- Why it matters: the test suite now contains fewer non-functional artifacts, no explicit order dependency, clearer HTTP diagnostics, and safer cleanup for state-changing integration tests.
+- Possible text use: testing chapter, quality assurance process.
+
+## 2026-05-08 - API validation contract coverage
+
+### Done
+
+- Moved expected API validation errors from `TestData` to focused `ServerValidationErrors`.
+- Removed unused parsing/exception helpers from `IntegrationTestHelper`.
+- Added missing integration validation cases for password special-character rules, wrong login password, request address required fields and address length limits.
+- Fixed auth and client request validation assertions so missing expected errors fail the test instead of only being logged.
+- Fixed server validation field mapping for address fields and `requestDetails`.
+- Changed failed login password handling to return the public `password.is.wrong` validation contract for the `password` field.
+
+### Checks
+
+- First full `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --logger "console;verbosity=normal"` failed 4/94 and exposed contract mismatches:
+  - `requestDetails` was returned as `RequestDetails`;
+  - wrong login password returned an empty parsed validation error because the controller returned raw domain error data.
+- After fixes, full `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --logger "console;verbosity=normal"` passed 94/94.
+
+### Diploma note
+
+- Topic: API contract validation and integration testing.
+- Why it matters: integration tests now verify not only invalid input rejection, but also stable external error codes and field names returned by the backend.
+- Possible text use: testing chapter, API contract reliability, validation behavior.
+
+## 2026-05-09 - Validation assertion helper
+
+### Done
+
+- Renamed expected API validation error helper to `ExpectedValidationErrors`.
+- Replaced repeated integration-test `All/Contains` checks with `IntegrationTestHelper.ShouldHaveValidationErrorsEquivalentTo`.
+- Removed obsolete integration-test error collection logging helper.
+- Updated the missing postal code case to expect the full current API contract: `postalCode.is.required` and `postalCode.is.invalid`.
+
+### Checks
+
+- `rg "ExpectedValidaitonErrors|ServerValidationErrors|allErrorsContained|expectedErrors\\.All|errors\\.All|LogTwoErrorCollections" Tests.EnergyManagement/Integration Tests.EnergyManagement/TestHelpers` found no remaining references.
+- Full `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --logger "console;verbosity=normal"` passed 94/94.
+
+### Diploma note
+
+- Topic: test assertion reliability.
+- Why it matters: validation tests now compare the complete expected and actual error collections, so extra or missing API validation errors are detected.
+- Possible text use: testing chapter, API contract testing methodology.
+
+## 2026-05-09 - Validation error contract simplified
+
+### Done
+
+- Removed route path prefixing from `ServerValidationError.ErrorCode`.
+- Simplified `ServerValidationError.Create` to accept only `fieldName` and `errorCode`.
+- Updated validation problem-details creation to return field/error pairs without endpoint path coupling.
+- Flattened auth expected validation errors in `ExpectedValidationErrors`; kept request/address errors grouped by request contract area.
+- Removed nullable initialization warnings from `ServerValidationError`.
+
+### Checks
+
+- Full `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --logger "console;verbosity=minimal"` passed 94/94.
+
+### Diploma note
+
+- Topic: API validation error contract.
+- Why it matters: validation responses now separate endpoint routing from validation semantics, making client-side handling and automated testing simpler.
+- Possible text use: API design, validation contract, testing chapter.
+
+## 2026-05-09 - Frontend validation tests stabilized
+
+### Done
+
+- Fixed generic form field registration so text inputs call the React Hook Form register function with the field name.
+- Updated registration component tests to assert the submitted DTO and to verify that invalid local form data does not call the register mutation.
+- Fixed component test helpers for password inputs, empty alert elements, and error-code-to-message comparison.
+- Added unit coverage for frontend problem-details parsing and server validation error mapping.
+- Updated frontend session provider usage and related imports so the client project compiles.
+- Restored the register page view to render the registration form and page-level error message.
+
+### Checks
+
+- `npm.cmd run build` in `energymanagement.client` passed; Vite emitted only the large chunk warning.
+- `npm.cmd test -- --run` in `energymanagement.client` passed 21/21 tests.
+
+### Diploma note
+
+- Topic: frontend validation and API error contract handling.
+- Why it matters: registration form tests now cover successful submission, client-side validation blocking, and mapping of backend validation errors to form fields.
+- Possible text use: testing chapter, frontend implementation, validation contract.

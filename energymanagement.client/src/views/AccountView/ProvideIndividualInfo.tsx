@@ -5,7 +5,7 @@ import { FormTitle } from "../../Components/Form/FormTitle";
 import { Password } from "../../Components/Form/PasswordGroup";
 import { useLogin } from "../../hooks/useLogin";
 import { accountConst } from "./accountConst";
-import { loginConst } from "./loginConst";
+import { loginConst } from "../LoginView/loginConst";
 
 export const ProvideIndividualInfo = () => {
   const {
@@ -24,6 +24,7 @@ export const ProvideIndividualInfo = () => {
       <FormGroup>
         <FormField
           registerFormFn={register}
+          fieldName={loginFieldNames.email}
           error={errors[loginFieldNames.email]}
           labelText={emailLabe}
           placeHolder={emailPlaceholder}

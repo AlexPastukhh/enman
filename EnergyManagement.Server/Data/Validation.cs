@@ -99,25 +99,38 @@ namespace EnergyManagement.Server.Contracts
     {
         private string _mapAddressErrorToName(string errorCode)
         {
-                if( errorCode ==Errors.AddressErrors.PostalCodeIsRequired.Code)
+                if( errorCode ==Errors.AddressErrors.PostalCodeIsRequired.Code
+                    || errorCode == Errors.AddressErrors.PostalCodeIsInvalid.Code)
                 {
                     return RequestFieldNames.CreateIndividualRequest.PostalCode;
                 }
-                if( errorCode ==Errors.AddressErrors.RegionIsRequired.Code)
+                if( errorCode ==Errors.AddressErrors.RegionIsRequired.Code
+                    || errorCode == Errors.AddressErrors.RegionIsTooLong.Code)
                 {
                     return RequestFieldNames.CreateIndividualRequest.Region;
                 }
-                if( errorCode ==Errors.AddressErrors.CityIsRequired.Code)
+                if( errorCode ==Errors.AddressErrors.CityIsRequired.Code
+                    || errorCode == Errors.AddressErrors.CityIsTooLong.Code)
                 {
                     return RequestFieldNames.CreateIndividualRequest.City;
                 }
-                if( errorCode ==Errors.AddressErrors.StreetIsRequired.Code)
+                if( errorCode ==Errors.AddressErrors.StreetIsRequired.Code
+                    || errorCode == Errors.AddressErrors.StreetIsTooLong.Code)
                 {
                     return RequestFieldNames.CreateIndividualRequest.Street;
                 }
-                if( errorCode ==Errors.AddressErrors.HouseIsRequired.Code)
+                if( errorCode ==Errors.AddressErrors.HouseIsRequired.Code
+                    || errorCode == Errors.AddressErrors.HouseIsTooLong.Code)
                 {
                     return RequestFieldNames.CreateIndividualRequest.House;
+                }
+                if( errorCode ==Errors.AddressErrors.BuildingIsTooLong.Code)
+                {
+                    return RequestFieldNames.CreateIndividualRequest.Building;
+                }
+                if( errorCode ==Errors.AddressErrors.ApartmentIsTooLong.Code)
+                {
+                    return RequestFieldNames.CreateIndividualRequest.Apartment;
                 }
                 return RequestFieldNames.CreateIndividualRequest.Address;
             
@@ -129,7 +142,8 @@ namespace EnergyManagement.Server.Contracts
                 .NotEmpty()
                 .WithMessage(Errors.ClientRequestErrors.ClientRequestTextIsRequired.Code)
                 .MaximumLength(1000)
-                .WithMessage(Errors.ClientRequestErrors.ClientRequestTextIsTooLong.Code);
+                .WithMessage(Errors.ClientRequestErrors.ClientRequestTextIsTooLong.Code)
+                .OverridePropertyName(RequestFieldNames.CreateIndividualRequest.RequestDetails);
             
             RuleFor(dto=>dto.Address)
                 .Custom((address,context)=>

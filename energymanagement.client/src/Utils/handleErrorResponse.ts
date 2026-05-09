@@ -3,29 +3,28 @@ import {
   getServerErrorsIfAny,
   isProblemDetails,
 } from "./problemDetailsFactory";
-import {
-  getISEObject,
-  getSetErrObjectsFromCol,
-} from "./ServerValidationErrUtils";
 import { generalConstants } from "../globConstants";
+import { parseInternalServerErrorsForSetting, parseServerErrorsForSetting } from "./setErrorObjectUtils";
 
 export const handleErrorResponse = <T extends Record<string, unknown>>(
-  response: Response,
+  responseBody: unknown,
   setErrorFunc: UseFormSetError<T>
 ) => {
   if (
-    isProblemDetails(response) &&
-    response.status == generalConstants.ValidationErrorStatusCode
+    isProblemDetails(responseBody) &&
+    responseBody.status == generalConstants.ValidationErrorStatusCode
   ) {
-    const serverErrors = getServerErrorsIfAny(response);
+    const serverErrors = getServerErrorsIfAny(responseBody);
     if (serverErrors) {
-      const serverErrObjs = getSetErrObjectsFromCol(serverErrors);
-      serverErrObjs.forEach((errObj) => {
+
+      const errorObjectsToSet = parseServerErrorsForSetting(serverErrors);
+      errorObjectsToSet.forEach((errObj) => {
         setErrorFunc(errObj.fieldName, errObj.errorOption);
       });
       return;
     }
   }
-  const internalErrObj = getISEObject();
+  const internalErrObj = parseInternalServerErrorsForSetting();
   setErrorFunc(internalErrObj.fieldName, internalErrObj.errorOption);
 };
+

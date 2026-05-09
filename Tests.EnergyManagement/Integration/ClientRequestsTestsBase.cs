@@ -1,11 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EnergyManagement.Server;
 using EnergyManagement.Server.Data;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
 using Tests.EnergyManagement.TestHelpers;
 using Xunit.Abstractions;
 
@@ -37,7 +31,7 @@ namespace Tests.EnergyManagement.Integration
                         dto,
                         new List<ServerValidationError>
                         {
-                            ServerValidationErrors.CreateConnectionRequest.RequestDetailsIsRequired
+                            ExpectedValidationErrors.CreateConnectionRequest.RequestDetailsIsRequired
                         }
                     };
                 }
@@ -56,7 +50,25 @@ namespace Tests.EnergyManagement.Integration
                         dto,
                         new List<ServerValidationError>
                         {
-                            ServerValidationErrors.CreateConnectionRequest.PostalCodeIsRequired
+                            ExpectedValidationErrors.CreateConnectionRequest.PostalCodeIsRequired,
+                            ExpectedValidationErrors.CreateConnectionRequest.PostalCodeIsInvalid
+                        }
+                    };
+                }
+            }
+
+            public static object[] MissingRegion
+            {
+                get
+                {
+                    var dto = ValidConnectionRequestDto();
+                    dto.Address!.Region = InvalidTestData.Whitespace;
+                    return new object[]
+                    {
+                        dto,
+                        new List<ServerValidationError>
+                        {
+                            ExpectedValidationErrors.CreateConnectionRequest.RegionIsRequired
                         }
                     };
                 }
@@ -73,7 +85,7 @@ namespace Tests.EnergyManagement.Integration
                         dto,
                         new List<ServerValidationError>
                         {
-                            ServerValidationErrors.CreateConnectionRequest.PostalCodeIsInvalid
+                            ExpectedValidationErrors.CreateConnectionRequest.PostalCodeIsInvalid
                         }
                     };
                 }
@@ -90,7 +102,92 @@ namespace Tests.EnergyManagement.Integration
                         dto,
                         new List<ServerValidationError>
                         {
-                            ServerValidationErrors.CreateConnectionRequest.RequestDetailsIsTooLong
+                            ExpectedValidationErrors.CreateConnectionRequest.RequestDetailsIsTooLong
+                        }
+                    };
+                }
+            }
+
+            public static object[] CityTooLong
+            {
+                get
+                {
+                    var dto = ValidConnectionRequestDto();
+                    dto.Address!.City = new string('x', InvalidTestData.LongAddressDataLength);
+                    return new object[]
+                    {
+                        dto,
+                        new List<ServerValidationError>
+                        {
+                            ExpectedValidationErrors.CreateConnectionRequest.CityIsTooLong
+                        }
+                    };
+                }
+            }
+
+            public static object[] MissingStreet
+            {
+                get
+                {
+                    var dto = ValidConnectionRequestDto();
+                    dto.Address!.Street = InvalidTestData.Whitespace;
+                    return new object[]
+                    {
+                        dto,
+                        new List<ServerValidationError>
+                        {
+                            ExpectedValidationErrors.CreateConnectionRequest.StreetIsRequired
+                        }
+                    };
+                }
+            }
+
+            public static object[] StreetTooLong
+            {
+                get
+                {
+                    var dto = ValidConnectionRequestDto();
+                    dto.Address!.Street = new string('x', InvalidTestData.LongAddressDataLength);
+                    return new object[]
+                    {
+                        dto,
+                        new List<ServerValidationError>
+                        {
+                            ExpectedValidationErrors.CreateConnectionRequest.StreetIsTooLong
+                        }
+                    };
+                }
+            }
+
+            public static object[] MissingHouse
+            {
+                get
+                {
+                    var dto = ValidConnectionRequestDto();
+                    dto.Address!.House = InvalidTestData.Whitespace;
+                    return new object[]
+                    {
+                        dto,
+                        new List<ServerValidationError>
+                        {
+                            ExpectedValidationErrors.CreateConnectionRequest.HouseIsRequired
+                        }
+                    };
+                }
+            }
+
+            public static object[] HouseTooLong
+            {
+                get
+                {
+                    var dto = ValidConnectionRequestDto();
+                    dto.Address!.House = new string('x', InvalidTestData.LongAddressDataLength);
+                    return new object[]
+                    {
+                        dto,
+                        new List<ServerValidationError>
+                        {
+                            ExpectedValidationErrors.CreateConnectionRequest.HouseIsTooLong
                         }
                     };
                 }
@@ -108,8 +205,8 @@ namespace Tests.EnergyManagement.Integration
                         dto,
                         new List<ServerValidationError>
                         {
-                            ServerValidationErrors.CreateConnectionRequest.RequestDetailsIsRequired,
-                            ServerValidationErrors.CreateConnectionRequest.CityIsRequired
+                            ExpectedValidationErrors.CreateConnectionRequest.RequestDetailsIsRequired,
+                            ExpectedValidationErrors.CreateConnectionRequest.CityIsRequired
                         }
                     };
                 }
@@ -127,8 +224,8 @@ namespace Tests.EnergyManagement.Integration
                         dto,
                         new List<ServerValidationError>
                         {
-                            ServerValidationErrors.CreateConnectionRequest.PostalCodeIsInvalid,
-                            ServerValidationErrors.CreateConnectionRequest.RegionIsTooLong
+                            ExpectedValidationErrors.CreateConnectionRequest.PostalCodeIsInvalid,
+                            ExpectedValidationErrors.CreateConnectionRequest.RegionIsTooLong
                         }
                     };
                 }
@@ -146,8 +243,8 @@ namespace Tests.EnergyManagement.Integration
                         dto,
                         new List<ServerValidationError>
                         {
-                            ServerValidationErrors.CreateConnectionRequest.BuildingIsTooLong,
-                            ServerValidationErrors.CreateConnectionRequest.ApartmentIsTooLong
+                            ExpectedValidationErrors.CreateConnectionRequest.BuildingIsTooLong,
+                            ExpectedValidationErrors.CreateConnectionRequest.ApartmentIsTooLong
                         }
                     };
                 }
@@ -157,8 +254,14 @@ namespace Tests.EnergyManagement.Integration
             {
                 MissingRequestDetails,
                 MissingPostalCode,
+                MissingRegion,
                 InvalidPostalCodeFormat,
                 RequestDetailsTooLong,
+                CityTooLong,
+                MissingStreet,
+                StreetTooLong,
+                MissingHouse,
+                HouseTooLong,
                 MissingRequestDetailsAndCity,
                 InvalidPostalCodeAndRegionTooLong,
                 BuildingAndApartmentTooLong,

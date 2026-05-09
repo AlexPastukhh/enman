@@ -1,7 +1,7 @@
 
 import { headerConst } from "./headerConst";
 import { NavLink } from "react-router-dom";
-import { EnterIcon, EyeIcon, MessagesIcon, PhoneIcon } from "../../assets/icons/svgr_barrel";
+import { EnterIcon, MessagesIcon, PhoneIcon } from "../../assets/icons/svgr_barrel";
 import { HomeNavLink } from "./HomeNavLink";
 import { NavButtonHollow } from "./NavButtonHollow";
 import { NavButtonPrimary } from "./NavButtonPrimary";
@@ -11,7 +11,7 @@ import { useSession } from "../../hooks/useSession";
 export const Header = () =>
 {
   
-  const {session}= useSession();
+  const session = useSession();
   return (
     <header className="header">
       <div className="header__top">

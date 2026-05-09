@@ -1,12 +1,8 @@
 using Xunit;
 using FluentAssertions;
-using CSharpFunctionalExtensions;
 using Domain.EnergyManagement.Common;
-using static Domain.EnergyManagement.Common.Error;
-using System.Security.Cryptography;
 using static Domain.EnergyManagement.Common.Error.Errors;
 using Tests.EnergyManagement.TestHelpers;
-using Xunit.Sdk;
 using Xunit.Abstractions;
 using Domain.EnergyManagement.DocumentManaging;
 
@@ -91,7 +87,7 @@ namespace Tests.EnergyManagement.Unit
 
             // Assert
             result.IsFailure.Should().BeTrue();
-            result.Error.Contains(Errors.Account.PasswordIsRequired).Should().BeTrue();
+            result.Error.Contains(Account.PasswordIsRequired).Should().BeTrue();
         }
 
         [Fact]
@@ -102,7 +98,7 @@ namespace Tests.EnergyManagement.Unit
 
             // Assert
             result.IsFailure.Should().BeTrue();
-            result.Error.Contains(Errors.Account.PasswordIsTooLong).Should().BeTrue();            
+            result.Error.Contains(Account.PasswordIsTooLong).Should().BeTrue();            
 
         }
 
@@ -118,7 +114,7 @@ namespace Tests.EnergyManagement.Unit
 
             // Assert
             result.IsFailure.Should().BeTrue();
-            result.Error.Contains(Errors.Account.PasswordIsTooShort).Should().BeTrue();
+            result.Error.Contains(Account.PasswordIsTooShort).Should().BeTrue();
         }
         
         [Theory]
@@ -171,7 +167,7 @@ namespace Tests.EnergyManagement.Unit
 
             // Assert
             verifyResult.IsFailure.Should().BeTrue();
-            verifyResult.Error.Should().Be(Errors.Account.PasswordConfirmationDoesntMatch);
+            verifyResult.Error.Should().Be(Account.PasswordConfirmationDoesntMatch);
         }
         
         

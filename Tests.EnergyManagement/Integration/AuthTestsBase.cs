@@ -1,27 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Net;
-using System.Net.Http.Json;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
-using Domain.EnergyManagement.Common;
-using Domain.EnergyManagement.DocumentManaging;
-using EnergyManagement.Server;
 using EnergyManagement.Server.Data;
-using FluentAssertions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Tests.EnergyManagement.TestHelpers;
 using Xunit.Abstractions;
-using static Domain.EnergyManagement.Common.Error.Errors;
-using EnergyManagement.Server.Data;
-using static Tests.EnergyManagement.TestHelpers.ServerValidationErrors;
+using static Tests.EnergyManagement.TestHelpers.ExpectedValidationErrors;
 namespace Tests.EnergyManagement.Integration
 {
     
@@ -42,9 +23,9 @@ namespace Tests.EnergyManagement.Integration
                 InvalidTestData.Whitespace,InvalidTestData.Whitespace,ValidTestData.ValidPassword,
                 new List<ServerValidationError>
                 {
-                    ServerValidationErrors.Register.EmailIsRequired,
-                    ServerValidationErrors.Register.PasswordIsRequired,
-                    ServerValidationErrors.Register.PasswordsDontMatch
+                    ExpectedValidationErrors.EmailIsRequired,
+                    ExpectedValidationErrors.PasswordIsRequired,
+                    ExpectedValidationErrors.PasswordsDontMatch
                 }
             };
             yield return new object[]
@@ -52,8 +33,8 @@ namespace Tests.EnergyManagement.Integration
                 ValidTestData.ValidEmail,InvalidTestData.EmptyString,ValidTestData.ValidPassword,
                 new List<ServerValidationError>
                 {
-                    ServerValidationErrors.Register.PasswordIsRequired,
-                    ServerValidationErrors.Register.PasswordsDontMatch
+                    ExpectedValidationErrors.PasswordIsRequired,
+                    ExpectedValidationErrors.PasswordsDontMatch
                 }
             };
             yield return new object[]
@@ -61,8 +42,8 @@ namespace Tests.EnergyManagement.Integration
                 InvalidTestData.EmptyString,ValidTestData.ValidPassword,InvalidTestData.EmptyString,
                 new List<ServerValidationError>
                 {
-                    ServerValidationErrors.Register.EmailIsRequired,
-                    ServerValidationErrors.Register.PasswordConfirmationIsRequired
+                    ExpectedValidationErrors.EmailIsRequired,
+                    ExpectedValidationErrors.PasswordConfirmationIsRequired
 
                 }
             };
@@ -71,7 +52,15 @@ namespace Tests.EnergyManagement.Integration
                 ValidTestData.ValidEmail,ValidTestData.ValidPassword,ValidTestData.ValidPassword +"1",
                 new List<ServerValidationError>
                 {
-                    ServerValidationErrors.Register.PasswordsDontMatch
+                    ExpectedValidationErrors.PasswordsDontMatch
+                }
+            };
+            yield return new object[]
+            {
+                ValidTestData.ValidEmail,InvalidTestData.PasswordWithoutSpecialChars,InvalidTestData.PasswordWithoutSpecialChars,
+                new List<ServerValidationError>
+                {
+                    ExpectedValidationErrors.PasswordLacksSpecialCharacters
                 }
             };
         }
@@ -83,6 +72,8 @@ namespace Tests.EnergyManagement.Integration
             yield return BadLoginValidationCases.InvalidEmail;
             yield return BadLoginValidationCases.NoPasswordAndEmailUnregistered;
             yield return BadLoginValidationCases.InvalidLongPassword;
+            yield return BadLoginValidationCases.PasswordWithoutSpecialCharacters;
+            yield return BadLoginValidationCases.PasswordIsWrong;
             
         }
         
@@ -97,8 +88,8 @@ namespace Tests.EnergyManagement.Integration
                     false,
                     new List<ServerValidationError>
                     {
-                        ServerValidationErrors.Login.EmailIsRequired,
-                        ServerValidationErrors.Login.PasswordIsRequired
+                        ExpectedValidationErrors.EmailIsRequired,
+                        ExpectedValidationErrors.PasswordIsRequired
                     }
                 };
             
@@ -110,7 +101,7 @@ namespace Tests.EnergyManagement.Integration
                     false,
                     new List<ServerValidationError>
                     {
-                        ServerValidationErrors.Login.EmailIsRequired
+                        ExpectedValidationErrors.EmailIsRequired
                     }
                 };
             public static object[] InvalidEmail =>
@@ -121,7 +112,7 @@ namespace Tests.EnergyManagement.Integration
                     false,
                     new List<ServerValidationError>
                     {
-                        ServerValidationErrors.Login.EmailIsInvalid
+                        ExpectedValidationErrors.EmailIsInvalid
                     }
                 };
             public static object[] EmailWasntRegistered =>
@@ -132,7 +123,7 @@ namespace Tests.EnergyManagement.Integration
                 false,
                 new List<ServerValidationError>
                 {
-                    ServerValidationErrors.Login.EmailWasntRegistered
+                    ExpectedValidationErrors.EmailWasntRegistered
                 }
             };
             public static object[] NoPasswordAndEmailUnregistered =>
@@ -143,8 +134,8 @@ namespace Tests.EnergyManagement.Integration
                     false,
                     new List<ServerValidationError>
                     {
-                        ServerValidationErrors.Login.EmailWasntRegistered,
-                        ServerValidationErrors.Login.PasswordIsRequired
+                        ExpectedValidationErrors.EmailWasntRegistered,
+                        ExpectedValidationErrors.PasswordIsRequired
                     }
                 };
             
@@ -156,7 +147,19 @@ namespace Tests.EnergyManagement.Integration
                     true,
                     new List<ServerValidationError>
                     {
-                        ServerValidationErrors.Login.PasswordIsTooLong
+                        ExpectedValidationErrors.PasswordIsTooLong
+                    }
+                };
+
+            public static object[] PasswordWithoutSpecialCharacters =>
+                new object[]
+                {
+                    ValidTestData.ValidEmail,
+                    InvalidTestData.PasswordWithoutSpecialChars,
+                    true,
+                    new List<ServerValidationError>
+                    {
+                        ExpectedValidationErrors.PasswordLacksSpecialCharacters
                     }
                 };
             
@@ -168,7 +171,7 @@ namespace Tests.EnergyManagement.Integration
                     true,
                     new List<ServerValidationError>
                     {
-                        ServerValidationErrors.Login.PasswordIsWrong
+                        ExpectedValidationErrors.PasswordIsWrong
                     }
                 };
             
@@ -183,9 +186,9 @@ namespace Tests.EnergyManagement.Integration
                     InvalidTestData.Whitespace,InvalidTestData.Whitespace,InvalidTestData.Whitespace,
                     new List<ServerValidationError>
                     {
-                        Register.EmailIsRequired,
-                        Register.PasswordIsRequired,
-                        Register.PasswordConfirmationIsRequired
+                        EmailIsRequired,
+                        PasswordIsRequired,
+                        PasswordConfirmationIsRequired
                     }
                 };
             
@@ -195,7 +198,7 @@ namespace Tests.EnergyManagement.Integration
                     InvalidTestData.Whitespace,ValidTestData.ValidPassword,ValidTestData.ValidPassword,
                     new List<ServerValidationError>
                     {
-                        Register.EmailIsRequired
+                        EmailIsRequired
                     }
                 };
             public static object[] InvalidEmail =>
@@ -204,7 +207,7 @@ namespace Tests.EnergyManagement.Integration
                     InvalidTestData.InvalidEmailNoAddress,ValidTestData.ValidPassword,ValidTestData.ValidPassword,
                     new List<ServerValidationError>
                     {
-                        Register.EmailIsInvalid
+                        EmailIsInvalid
                     }
                 };
             public static object[] EmptyPasswordAndConfirmation =>
@@ -213,9 +216,9 @@ namespace Tests.EnergyManagement.Integration
                     ValidTestData.ValidEmail,InvalidTestData.Whitespace,InvalidTestData.Whitespace,
                     new List<ServerValidationError>
                     {
-                        Register.EmailIsRequired,
-                        Register.PasswordIsRequired,
-                        Register.PasswordConfirmationIsRequired
+                        EmailIsRequired,
+                        PasswordIsRequired,
+                        PasswordConfirmationIsRequired
                     }
                 };
                 
@@ -225,9 +228,9 @@ namespace Tests.EnergyManagement.Integration
                     ValidTestData.ValidEmail,InvalidTestData.Whitespace,ValidTestData.ValidPassword,
                     new List<ServerValidationError>
                     {
-                        Register.EmailIsRequired,
-                        Register.PasswordIsRequired,
-                        Register.PasswordsDontMatch
+                        EmailIsRequired,
+                        PasswordIsRequired,
+                        PasswordsDontMatch
                     }
                 };
             
@@ -237,7 +240,7 @@ namespace Tests.EnergyManagement.Integration
                     ValidTestData.ValidEmail,InvalidTestData.LongPassword,InvalidTestData.LongPassword,
                     new List<ServerValidationError>
                     {
-                        Register.PasswordIsTooLong
+                        PasswordIsTooLong
                     }
                 };
             

@@ -129,15 +129,23 @@ employee rejects request
 - Integration tests use LocalDB by default:
   - `Data Source=(localdb)\MSSQLLocalDB`;
   - database: `TestEnergyManagement`;
-  - override with environment variable `ConnectionStrings__Test` when moving between PCs.
+- The integration fixture owns the current test connection string.
+- Shared baseline users should be seeded once by the collection fixture and exposed as immutable fixture actors, not mutable static test objects.
+- Integration tests should not rely on explicit test ordering.
 - Test host replaces `ConnectionStrings:ManagementDb` with the test connection string so services use the normal application configuration key against the test database.
 - Dapper queries should use `ConnectionStringNames.ManagementDb`; do not hardcode connection string names in handlers.
 - Test configuration overrides should use `ConnectionStringNames.ManagementDbConfigurationKey`.
 - Do not add a separate DB-name switch for tests.
+- Integration tests that mutate user/request state should use unique per-scenario test data and clean it up in the same test when possible.
+- API validation integration tests should verify the external contract: HTTP status, error code, field name, and that invalid requests do not create domain data.
+- Keep shared expected API validation errors in `TestHelpers/ExpectedValidationErrors.cs`; keep raw valid/invalid input values in `TestHelpers/TestData.cs`.
+- For validation rules, cover each public API rule at least once at the integration level when the rule affects the response contract. Domain unit tests can cover lower-level value-object combinations in more detail.
+- Frontend validation tests should distinguish client-side invalid-form behavior from server-side validation responses: invalid local form data must not call mutation functions; backend problem-details handling should be covered by focused unit tests.
+- Frontend form component helpers should assert visible validation messages, while test data may keep canonical error codes and map them through shared client constants.
 
 ## Known test risks
 
 - Integration tests require SQL Server LocalDB/test database.
 - Full solution build may depend on frontend `.esproj` support in local environment.
 - E2E tests require both backend and frontend to be running.
-- Current integration tests still have data/order coupling: a full run can fail after connection succeeds if test data is not isolated.
+- Hidden data/order coupling is the main integration-test risk; keep collection baseline seed explicit and avoid static mutable test actors.

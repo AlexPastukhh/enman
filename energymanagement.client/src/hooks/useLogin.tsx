@@ -21,9 +21,10 @@ export const useLogin = ()=>{
     const navigate = useNavigate();
 
     const queryClient = useQueryClient(); 
-    const loginMutation=useMutation({
+    
+    const loginMutation=useMutation<void, unknown, LoginDto>({
         mutationFn:login,
-        onError:(data:Response)=>{
+        onError:(data:unknown)=>{
             handleErrorResponse(data,setError)  
         },
         onSuccess:async()=>{

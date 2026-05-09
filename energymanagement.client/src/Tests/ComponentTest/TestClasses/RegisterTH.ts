@@ -1,8 +1,9 @@
 import type { Screen } from "@testing-library/react";
 import { SUTFormField } from "./BaseTest";
 import { registerConst } from "../../../views/RegisterView/registerConst";
+import { getMessageFromErrorCode } from "../../../globConstants";
 
-export class RegisterTH {
+export class RegisterTestComp {
   private _emailField: SUTFormField;
   private _passwordField: SUTFormField;
   private _passwordConfirmField: SUTFormField;
@@ -45,7 +46,7 @@ export class RegisterTH {
     const submitButton = screen.getByRole("button", {
       name: registerConst.submitButtonAriaLabel,
     }) as HTMLButtonElement;
-    return new RegisterTH(
+    return new RegisterTestComp(
       emailField,
       passwordField,
       passwordConfirmField,
@@ -59,13 +60,17 @@ export class RegisterTH {
     return hasEmailErr || hasPasswordErr || hasPasswordConfirmErr;
   };
 
-  hasOnlyErrorMessages = async (expectedMessages: string[]): Promise<boolean> => {
+  hasOnlyErrorMessages = async (expectedErrorCodes: string[]): Promise<boolean> => {
+    const expectedMessages = expectedErrorCodes.map(getMessageFromErrorCode);
     const currentMessages = [
       await this._emailField.TryGetErrorMessage(),
       await this._passwordField.TryGetErrorMessage(),
       await this._passwordConfirmField.TryGetErrorMessage(),
     ].filter((msg) => msg !== null);
-    return currentMessages.every((msg)=> expectedMessages.includes(msg));
+    return (
+      currentMessages.length === expectedMessages.length &&
+      currentMessages.every((msg)=> expectedMessages.includes(msg))
+    );
 
   };
 }

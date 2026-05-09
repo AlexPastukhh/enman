@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Tests.EnergyManagement.TestHelpers;
-using Xunit;
-using static Domain.EnergyManagement.Common.Error;
 using Domain.EnergyManagement.DocumentManaging;
 using static Domain.EnergyManagement.Common.Error.Errors.ClientRequestErrors;
 

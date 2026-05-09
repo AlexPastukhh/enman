@@ -5,9 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import type { SubmitHandler } from "react-hook-form"
 import {  useMutation, useQueryClient } from "@tanstack/react-query"
 import { login } from "../MutationFns/login"
-import { isServerValidationError, setServerValidationErr } from "../Utils/ServerValidationErrUtils"
 import { ClientRoutes, Keys } from "../globConstants"
 import { useNavigate } from "react-router-dom"
+import { handleErrorResponse } from "../Utils/handleErrorResponse"
 
 export const useProvideIndInfo = ()=>{
     
@@ -24,9 +24,7 @@ export const useProvideIndInfo = ()=>{
     const loginMutation=useMutation({
         mutationFn:login,
         onError:(error)=>{
-            if(isServerValidationError(error)){
-                setServerValidationErr(error,setError)
-            }   
+            handleErrorResponse(error,setError)  
         },
         onSuccess:async()=>{
             await navigate(ClientRoutes.Home.Path)

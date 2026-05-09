@@ -45,7 +45,7 @@ namespace EnergyManagement.Server.Commands
             var verifyPassword = client.Password.VerifyPassword(request.password);
             if (verifyPassword.IsFailure)
             {
-                return UnitResult.Failure<Error>(Account.PasswordConfirmationDoesntMatch);
+                return UnitResult.Failure<Error>(Account.PasswordIsWrong);
             }
 
             await SignInAsync(client);

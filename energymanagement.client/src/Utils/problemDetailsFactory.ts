@@ -16,8 +16,7 @@ export const isProblemDetails = (error:unknown):error is ProblemDetails=>{
                 && "type" in error
                 && "title" in error
                 && "status" in error
-                && "detail" in error
-                && "instance" in error);
+                && "detail" in error);
 }
 
 export const getServerErrorsIfAny=(problemDetails: ProblemDetails):ServerValidationError[]|undefined=>{

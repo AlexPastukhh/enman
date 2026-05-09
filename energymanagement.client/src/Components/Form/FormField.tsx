@@ -4,6 +4,7 @@ import { FormFieldBase } from "./FormFieldBase";
 
 export const FormField = ({
   registerFormFn,
+  fieldName,
   inputId,
   errorId,
   error,
@@ -11,6 +12,7 @@ export const FormField = ({
   placeHolder,
 }: {
   registerFormFn: FormRegister;
+  fieldName: string;
   inputId: string;
   errorId: string;
   error?: FieldError;
@@ -32,7 +34,7 @@ export const FormField = ({
         placeholder={placeHolder}
         aria-errormessage={error ? errorId : undefined}
         aria-invalid={error ? "true" : "false"}
-        {...registerFormFn}
+        {...registerFormFn(fieldName)}
         />
       </FormFieldBase>
     </>

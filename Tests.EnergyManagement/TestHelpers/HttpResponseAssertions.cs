@@ -1,7 +1,6 @@
 using System;
 using System.Net.Http;
 using System.Text.Json;
-using Xunit;
 using Xunit.Sdk;
 using Xunit.Abstractions;
 using System.Net.Http.Json;
@@ -33,12 +32,18 @@ namespace Tests.EnergyManagement.TestHelpers
         {
             if (!_response.IsSuccessStatusCode)
             {
-               await AssertStatusCode(500, (int)_response.StatusCode);
+                await AssertStatus("2xx success status code", (int)_response.StatusCode);
             }
 
             return this;
         }
-        private async Task AssertStatusCode(int expectedStatus, int actual)
+
+        private Task AssertStatusCode(int expectedStatus, int actual)
+        {
+            return AssertStatus(expectedStatus.ToString(), actual);
+        }
+
+        private async Task AssertStatus(string expectedStatus, int actual)
         {
             if (_response.StatusCode == HttpStatusCode.InternalServerError 
                     && _response.Content.Headers.ContentType?.MediaType == "application/problem+json")

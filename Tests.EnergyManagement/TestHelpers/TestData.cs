@@ -1,14 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Domain.EnergyManagement.DocumentManaging;
-using EnergyManagement.Server.Api.Contracts.Auth;
-using EnergyManagement.Server.Api.Contracts.Requests;
-using EnergyManagement.Server.Api.Routes;
 using EnergyManagement.Server.Data;
-using static Domain.EnergyManagement.Common.Error;
-using static Domain.EnergyManagement.Common.Error.Errors;
 
 namespace Tests.EnergyManagement.TestHelpers
 {
@@ -76,7 +67,7 @@ namespace Tests.EnergyManagement.TestHelpers
             return (fullName, email, phone, password);
         }
 
-        public static (IndividualClient, string) GetBaseIndividualAndPasswordStr()
+        private static (IndividualClient, string) GetBaseIndividualAndPasswordStr()
         {
             var (email, password, passwordStr) = GetBaseDataForIndividualAndPassword();
             return (IndividualClient.Create(email, password).Value, passwordStr);
@@ -102,21 +93,21 @@ namespace Tests.EnergyManagement.TestHelpers
         }
 
 
-        public static (IndividualClient, string) GetIndividualWithOutFullDataAndHisPassword()
+        private static (IndividualClient, string) GetIndividualWithOutFullDataAndHisPassword()
         {
             var (email, password, passwordStr) = GetBaseDataForIndividualAndPassword();
             var individual = IndividualClient.Create(email, password).Value;
             return (individual, passwordStr);
         }
 
-        public static (Email, Password, string) GetBaseDataForIndividualAndPassword()
+        private static (Email, Password, string) GetBaseDataForIndividualAndPassword()
         {
             var email = Email.Create(ValidEmail).Value;
             var passwordStr = ValidPassword;
             var password = Password.Create(passwordStr).Value;
             return (email, password, passwordStr);
         }
-        public static (Email, Password) GetBaseDataForIndividual()
+        private static (Email, Password) GetBaseDataForIndividual()
         {
             var (email, password, _) = GetBaseDataForIndividualAndPassword();
             return (email, password);
@@ -152,211 +143,6 @@ namespace Tests.EnergyManagement.TestHelpers
 
         // Invalid Request Data
         public const int InvalidRequestLength = 3001;
-
-    }
-    public static class ServerValidationErrors
-    {
-        public class Register
-        {
-            public static ServerValidationError EmailIsRequired =
-                ServerValidationError.Create(
-                            AuthFieldNames.Register.Email,
-                            Account.EmailIsRequired.Code,
-                            AuthRoutes.RegisterIndividualPath);
-            public static ServerValidationError EmailIsInvalid =
-                ServerValidationError.Create(
-                            AuthFieldNames.Register.Email,
-                            Account.EmailIsInvalid.Code,
-                            AuthRoutes.RegisterIndividualPath);
-
-            public static ServerValidationError EmailIsRegisteredAlready =
-                ServerValidationError.Create(
-                            AuthFieldNames.Register.Email,
-                            Account.EmailIsRegisteredAlready.Code,
-                            AuthRoutes.RegisterIndividualPath);
-
-            public static ServerValidationError PasswordIsRequired =
-            ServerValidationError.Create(
-                        AuthFieldNames.Register.Password,
-                        Account.PasswordIsRequired.Code,
-                        AuthRoutes.RegisterIndividualPath);
-
-            public static ServerValidationError PasswordIsTooLong =
-                ServerValidationError.Create(
-                            AuthFieldNames.Register.Password,
-                            Account.PasswordIsTooLong.Code,
-                            AuthRoutes.RegisterIndividualPath);
-
-            public static ServerValidationError PasswordConfirmationIsRequired =
-            ServerValidationError.Create(
-                        AuthFieldNames.Register.PasswordConfirmation,
-                        Account.PasswordConfirmationIsRequired.Code,
-                        AuthRoutes.RegisterIndividualPath);
-
-            public static ServerValidationError PasswordsDontMatch =
-                ServerValidationError.Create(
-                            AuthFieldNames.Register.PasswordConfirmation,
-                            Account.PasswordConfirmationDoesntMatch.Code,
-                            AuthRoutes.RegisterIndividualPath);
-
-            public static ServerValidationError EmailWasntRegistered =
-            ServerValidationError.Create(
-                        AuthFieldNames.Register.Email,
-                        Account.EmailWasntRegistered.Code,
-                        AuthRoutes.RegisterIndividualPath);
-
-
-            public static ServerValidationError PasswordLacksSpecialCharacters =
-                ServerValidationError.Create(
-                            AuthFieldNames.Register.Password,
-                            Account.PasswordLacksSpecialCharacters.Code,
-                            AuthRoutes.RegisterIndividualPath);
-
-        }
-
-
-        public static class Login
-        {
-            public static ServerValidationError EmailIsRequired =
-                ServerValidationError.Create(
-                            AuthFieldNames.Login.Email,
-                            Account.EmailIsRequired.Code,
-                            AuthRoutes.LoginPath);
-            public static ServerValidationError EmailIsInvalid =
-                ServerValidationError.Create(
-                            AuthFieldNames.Login.Email,
-                            Account.EmailIsInvalid.Code,
-                            AuthRoutes.LoginPath);
-            public static ServerValidationError EmailIsRegisteredAlready =
-                ServerValidationError.Create(
-                            AuthFieldNames.Login.Email,
-                            Account.EmailIsRegisteredAlready.Code,
-                            AuthRoutes.LoginPath);
-
-            public static ServerValidationError PasswordIsRequired =
-            ServerValidationError.Create(
-                        AuthFieldNames.Login.Password,
-                        Account.PasswordIsRequired.Code,
-                        AuthRoutes.LoginPath);
-
-            public static ServerValidationError PasswordIsTooLong =
-                ServerValidationError.Create(
-                            AuthFieldNames.Login.Password,
-                            Account.PasswordIsTooLong.Code,
-                            AuthRoutes.LoginPath);
-
-            public static ServerValidationError PasswordIsWrong =
-                ServerValidationError.Create(
-                            AuthFieldNames.Login.Password,
-                            Account.PasswordIsWrong.Code,
-                            AuthRoutes.LoginPath);
-
-            public static ServerValidationError EmailWasntRegistered =
-            ServerValidationError.Create(
-                        AuthFieldNames.Login.Email,
-                        Account.EmailWasntRegistered.Code,
-                        AuthRoutes.LoginPath);
-
-
-            public static ServerValidationError PasswordLacksSpecialCharacters =
-                ServerValidationError.Create(
-                            AuthFieldNames.Login.Password,
-                            Account.PasswordLacksSpecialCharacters.Code,
-                            AuthRoutes.LoginPath);
-
-        }
-
-        public static class CreateConnectionRequest
-        {
-            public static ServerValidationError RequestDetailsIsRequired =
-                ServerValidationError.Create(
-                    RequestFieldNames.CreateIndividualRequest.RequestDetails,
-                    Errors.ClientRequestErrors.ClientRequestTextIsRequired.Code,
-                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
-
-            public static ServerValidationError RequestDetailsIsTooLong =
-                ServerValidationError.Create(
-                    RequestFieldNames.CreateIndividualRequest.RequestDetails,
-                    Errors.ClientRequestErrors.ClientRequestTextIsTooLong.Code,
-                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
-
-
-            public static ServerValidationError PostalCodeIsRequired =
-                ServerValidationError.Create(
-                    RequestFieldNames.CreateIndividualRequest.PostalCode,
-                    Errors.AddressErrors.PostalCodeIsRequired.Code,
-                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
-
-            public static ServerValidationError PostalCodeIsInvalid =
-                ServerValidationError.Create(
-                    RequestFieldNames.CreateIndividualRequest.PostalCode,
-                    Errors.AddressErrors.PostalCodeIsInvalid.Code,
-                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
-
-            public static ServerValidationError RegionIsRequired =
-                ServerValidationError.Create(
-                    RequestFieldNames.CreateIndividualRequest.Region,
-                    Errors.AddressErrors.RegionIsRequired.Code,
-                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
-
-            public static ServerValidationError RegionIsTooLong =
-                ServerValidationError.Create(
-                    RequestFieldNames.CreateIndividualRequest.Region,
-                    Errors.AddressErrors.RegionIsTooLong.Code,
-                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
-
-            public static ServerValidationError CityIsRequired =
-                ServerValidationError.Create(
-                    RequestFieldNames.CreateIndividualRequest.City,
-                    Errors.AddressErrors.CityIsRequired.Code,
-                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
-
-            public static ServerValidationError CityIsTooLong =
-                ServerValidationError.Create(
-                    RequestFieldNames.CreateIndividualRequest.City,
-                    Errors.AddressErrors.CityIsTooLong.Code,
-                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
-
-            public static ServerValidationError StreetIsRequired =
-                ServerValidationError.Create(
-                    RequestFieldNames.CreateIndividualRequest.Street,
-                    Errors.AddressErrors.StreetIsRequired.Code,
-                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
-
-            public static ServerValidationError StreetIsTooLong =
-                ServerValidationError.Create(
-                    RequestFieldNames.CreateIndividualRequest.Street,
-                    Errors.AddressErrors.StreetIsTooLong.Code,
-                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
-
-            public static ServerValidationError HouseIsRequired =
-                ServerValidationError.Create(
-                    RequestFieldNames.CreateIndividualRequest.House,
-                    Errors.AddressErrors.HouseIsRequired.Code,
-                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
-
-            public static ServerValidationError HouseIsTooLong =
-                ServerValidationError.Create(
-                    RequestFieldNames.CreateIndividualRequest.House,
-                    Errors.AddressErrors.HouseIsTooLong.Code,
-                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
-
-            public static ServerValidationError BuildingIsTooLong =
-                ServerValidationError.Create(
-                    RequestFieldNames.CreateIndividualRequest.Building,
-                    Errors.AddressErrors.BuildingIsTooLong.Code,
-                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
-
-            public static ServerValidationError ApartmentIsTooLong =
-                ServerValidationError.Create(
-                    RequestFieldNames.CreateIndividualRequest.Apartment,
-                    Errors.AddressErrors.ApartmentIsTooLong.Code,
-                    ClientRequestRoutes.IndivCreateConnectionRequestPath);
-        }
-
-
-
-
 
     }
 }

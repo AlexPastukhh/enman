@@ -27,6 +27,7 @@ export const Login: React.FC<loginProps> = ({ setRootError }) => {
       <FormGroup>
         <FormField
           registerFormFn={register}
+          fieldName={loginFieldNames.email}
           error={errors[loginFieldNames.email]}
           labelText={emailLabel}
           placeHolder={emailPlaceholder}

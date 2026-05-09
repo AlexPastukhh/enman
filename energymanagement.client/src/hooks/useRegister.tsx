@@ -27,7 +27,8 @@ export const useRegister = () => {
   const { register } = useFormRegisterDebounce(originalRegister, trigger);
 
   const navigate = useNavigate();
-  const submitMutation = useMutation<Response, Response, RegisterDto>({
+
+  const submitMutation = useMutation<void, unknown, RegisterDto>({
     mutationFn: registerIndClient,
     onError: (response) => {
       handleErrorResponse(response, setError);

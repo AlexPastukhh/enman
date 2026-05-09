@@ -1,20 +1,12 @@
 namespace Tests.EnergyManagement.Unit;
 
-using Xunit;
 using FluentAssertions;
 using CSharpFunctionalExtensions;
 using Domain.EnergyManagement.Common;
 using static Domain.EnergyManagement.Common.Error.Errors.Account;
 using System.Collections.Generic;
-using System.Reflection;
 using Tests.EnergyManagement.TestHelpers;
 using Domain.EnergyManagement.DocumentManaging;
-using static Domain.EnergyManagement.Common.Error.Errors.ClientRequestErrors;
-
-// ============================================
-// Static Test Data Classes
-// ============================================
-
 
 
 public static class IndividualClientNullCases

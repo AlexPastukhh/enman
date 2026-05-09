@@ -1,7 +1,7 @@
 /**
  * @vitest environment jsdom
  */
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent, { type UserEvent } from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -27,7 +27,7 @@ beforeEach(() => {
 });
 
 import { Register } from "../../views/RegisterView/Register";
-import { RegisterTH } from "./TestClasses/RegisterTH";
+import { RegisterTestComp } from "./TestClasses/RegisterTH";
 import { InvalidTestData, ValidTestData } from "./TestClasses/TestData";
 import { ClientRoutes } from "../../globConstants";
 import {
@@ -51,7 +51,7 @@ const RouteError = () => {
 
 const setUpRegisterTest = (): {
   user: UserEvent;
-  registerHelper: RegisterTH;
+  registerHelper: RegisterTestComp;
 } => {
 
   const routes =  [
@@ -78,17 +78,26 @@ const setUpRegisterTest = (): {
       <RouterProvider router={memoryRouter} />
     </QueryClientProvider>,
   );
+  
   const user = userEvent.setup();
-  const registerComp = RegisterTH.Create(screen);
+  const registerComp = RegisterTestComp.Create(screen);
   return { user, registerHelper: registerComp };
 };
 
 describe("Register", () => {
+  it("renders without errors", async() => {
+    //Arrange & Act
+    const { registerHelper: registerComp } = setUpRegisterTest();
+
+    //Assert
+    const hasErrorsOnRender = await registerComp.hasAnyErrorsAsync();
+    expect(hasErrorsOnRender).toBe(false);    
+
+  });
   it.each(ValidTestData.validRegisterData)(
     "registers successfully",
     async (validData) => {
       //Arrange
-
       const { user, registerHelper: registerComp } = setUpRegisterTest();
 
       mockedRegisterInd.mockResolvedValueOnce(
@@ -96,7 +105,6 @@ describe("Register", () => {
       );
 
       //Act
-      const hasErrorsOnRender = await registerComp.hasAnyErrorsAsync();
 
       await registerComp.emailField.FillAsync(user, validData.email);
       const hasEmailErrors = await registerComp.emailField.HasError();
@@ -117,14 +125,13 @@ describe("Register", () => {
       expect(
         hasEmailErrors ||
           hasPasswordErrors ||
-          hasPasswordConfirmErrors ||
-          hasErrorsOnRender,
+          hasPasswordConfirmErrors
       ).toBe(false);
 
-      expect(mockedRegisterInd).toHaveBeenCalledTimes(1);
-      expect(mockedRegisterInd).toHaveBeenCalledExactlyOnceWith(
-        ClientRoutes.Login.Path,
-      );
+      await waitFor(() => {
+        expect(mockedRegisterInd).toHaveBeenCalledTimes(1);
+      });
+      expect(mockedRegisterInd.mock.calls[0][0]).toEqual(validData);
     },
   );
   it.each(InvalidTestData.invalidRegisterData)(
@@ -138,35 +145,22 @@ describe("Register", () => {
       );
 
       //Act
-      const hasErrorsOnRender = await registerComp.hasAnyErrorsAsync();
-
       await registerComp.emailField.FillAsync(user, invalidData.email);
-      const hasEmailErrors = await registerComp.emailField.HasError();
-
       await registerComp.passwordField.FillAsync(user, invalidData.password);
-      const hasPasswordErrors = await registerComp.passwordField.HasError();
-
       await registerComp.passwordConfirmField.FillAsync(
         user,
         invalidData.passwordConfirmation,
       );
-      const hasPasswordConfirmErrors =
-        await registerComp.passwordConfirmField.HasError();
-
       await user.click(registerComp.submitButton);
 
       //Assert
-      expect(hasErrorsOnRender).toBe(false);
-
-      expect(mockedRegisterInd).toHaveBeenCalledTimes(1);
+      expect(mockedRegisterInd).not.toHaveBeenCalled();
 
       expect(await registerComp.hasOnlyErrorMessages(invalidData.err)).toBe(
         true,
       );
 
-      expect(
-        hasEmailErrors || hasPasswordErrors || hasPasswordConfirmErrors,
-      ).toBe(true);
+      expect(await registerComp.hasAnyErrorsAsync()).toBe(true);
     },
   );
 });

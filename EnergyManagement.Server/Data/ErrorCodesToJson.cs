@@ -55,7 +55,7 @@ namespace EnergyManagement.Server.Data
         }
         public static ServerValidationErrorContract Create()
         {   
-            var instance=ServerValidationError.Create("","",string.Empty);
+            var instance=ServerValidationError.Create("","");
             
             return new ServerValidationErrorContract(
                 nameof(instance.FieldName), 

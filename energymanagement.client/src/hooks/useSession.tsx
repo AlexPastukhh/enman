@@ -10,10 +10,10 @@ export type SessionState = {
     roles: string[];
 };
 
-const sessionContext= createContext<SessionState | undefined>(undefined);
+const sessionContext = createContext<SessionState | null>(null);
 
 export const SessionProvider = ({ children }: { children: ReactNode }) => {
-    const { data } = useQuery<SessionState | undefined>({
+    const { data } = useQuery<SessionState | null>({
         queryKey:[Keys.SessionQueryKey],
         queryFn: getUser,
         staleTime: 5*60*1000,
@@ -21,16 +21,12 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
         retryDelay:2000
         })
     return (
-        <sessionContext.Provider value={data}>
+        <sessionContext.Provider value={data ?? null}>
             {children}
         </sessionContext.Provider>
     )
     }
 
 export const useSession = () => {
-    const session = useContext(sessionContext);
-    if(!session){
-        throw new Error("useSession must be used within a SessionProvider");
-    }
-    return {...session};
+    return useContext(sessionContext);
 }

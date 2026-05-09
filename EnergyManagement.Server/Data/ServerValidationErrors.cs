@@ -1,12 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
-using Domain.EnergyManagement.Common;
-using FluentValidation.Results;
-using EnergyManagement.Server.Data;
 
 namespace EnergyManagement.Server.Data
 {
@@ -14,8 +7,8 @@ namespace EnergyManagement.Server.Data
     
     public class ServerValidationError:ValueObject
     {
-        public string FieldName{get;set;}
-        public string ErrorCode{get;set;}
+        public string FieldName{get;set;} = string.Empty;
+        public string ErrorCode{get;set;} = string.Empty;
         [JsonConstructor]
         private ServerValidationError(string fieldName, string errorCode)
         {
@@ -23,9 +16,8 @@ namespace EnergyManagement.Server.Data
             ErrorCode = errorCode;
         }
         private ServerValidationError(){}
-        public static ServerValidationError Create(string fieldName, string errorCode, string path)
-            => new ServerValidationError(fieldName,
-                string.IsNullOrWhiteSpace(path) ? errorCode : $"{path}.{errorCode}");
+        public static ServerValidationError Create(string fieldName, string errorCode)
+            => new ServerValidationError(fieldName, errorCode);
 
         protected override IEnumerable<IComparable> GetEqualityComponents()
         {

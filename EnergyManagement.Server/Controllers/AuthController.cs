@@ -4,10 +4,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using EnergyManagement.Server.Commands;
+using EnergyManagement.Server.Api.Contracts.Auth;
 using EnergyManagement.Server.Api.Routes;
 using EnergyManagement.Server.Data;
 using EnergyManagement.Server.Queries;
 using FluentValidation;
+using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -120,7 +122,13 @@ namespace EnergyManagement.Server.Controllers
                 var signInClient =await _sender.Send(new SignInClient(dto.Email,dto.Password));
                 if (signInClient.IsFailure)
                 {
-                    return ProblemDetailsFromValidation(signInClient.Error);
+                    return ProblemDetailsFromValidation(
+                        new[]
+                        {
+                            new ValidationFailure(
+                                AuthFieldNames.Login.Password,
+                                signInClient.Error.Code)
+                        });
                 }
                 
             }

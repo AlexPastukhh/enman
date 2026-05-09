@@ -1,6 +1,6 @@
 // src/constants/constants.ts
-import constantsJson from '../../Shared/constants.json' assert { type: 'json' };
-import errorCodesJson from '../../Shared/errorcodes.json' assert { type: 'json' };
+import constantsJson from '../../Shared/constants.json' with { type: 'json' };
+import errorCodesJson from '../../Shared/errorcodes.json' with { type: 'json' };
 
 // Type-safe constants from the shared JSON
 export const constants = constantsJson;
@@ -43,7 +43,7 @@ export const generalConstants ={
   InternalServerErrorMsg:"Something went wrong"
 } as const;
 
-export const SVEFieldNames={
+export const ServerErrorFieldNames={
   FieldNameField: errorCodesJson.ServerValidationError.FieldNameField,
   ErrorCodeField: errorCodesJson.ServerValidationError.ErrorCodeField
 }as const;

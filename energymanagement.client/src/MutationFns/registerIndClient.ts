@@ -4,17 +4,15 @@ import type { RegisterDto } from "../Utils/FormSchemas";
 
 export const registerIndClient = async (
   dto: RegisterDto
-): Promise<Response> => {
+):Promise<void> => {
   const response = await fetchWrapper.post(
     ServerRoutes.RegisterIndividual.Path,
     dto
   );
 
   if (response.ok) {
-    return response.json();
+    return;
   } else {
-    const data = await response.json();
-    return Promise.reject(data);
-
+    throw await response.json();
   }
 };
