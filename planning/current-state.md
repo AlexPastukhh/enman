@@ -63,6 +63,7 @@ Backend and frontend validation contract coverage are stabilized. Next safe task
 - `IProblemDetailsService` is registered for API authentication/authorization problem responses.
 - API validation integration tests now cover the current auth and individual request validation contract, including error codes and field names.
 - Frontend registration component tests and validation-error unit tests pass against the current client-side validation and backend problem-details contract.
+- Auth component debounce validation UX tests use fake timers and cover valid, mixed and invalid field combinations for register/login forms.
 - Frontend production build passes after session provider/import cleanup and registration view restoration.
 
 ## Current L1 implementation cut
@@ -129,7 +130,7 @@ Guest registers
 | partial | Split old shared constants | Focused API route/contract classes exist under `EnergyManagement.Server/Api`; old commented constants infrastructure still exists. |
 | done | Stabilize integration test infrastructure | Shared fixture owns test lifecycle/connection string and immutable baseline actors; full `.NET` test run passed 85/85 after cleanup on 2026-05-08. |
 | done | Cover current API validation contract | Expected validation errors moved to `ExpectedValidationErrors`; auth/request validation cases pass in full `.NET` test run 94/94 on 2026-05-09. |
-| done | Stabilize frontend registration validation tests | Vitest registration component tests and validation-error unit tests pass 21/21; frontend build passes on 2026-05-09. |
+| done | Stabilize frontend registration validation tests | Vitest auth component tests pass 52/52 with deterministic fake-timer debounce UX checks; frontend build passed on 2026-05-09. |
 | done | Improve planning navigation protocol | README, agent rules and current state now guide next safe actions. |
 | done | Add diploma note protocol | Significant work can now leave short notes for future diploma text in `action-log.md`. |
 | next | Start L1 domain refactor | Begin with `Client` to `Account` / `ClientAccount`. |
@@ -148,4 +149,4 @@ Guest registers
 
 ## Last updated
 
-2026-05-09 - Frontend registration validation tests and build stabilized; Vitest passed 21/21 and frontend build passed.
+2026-05-09 - Auth component debounce validation UX tests made deterministic with fake timers; targeted Vitest auth run passed 52/52.

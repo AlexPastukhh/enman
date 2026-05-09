@@ -356,3 +356,23 @@ Make planning usable as living handoff documentation for future AI agents.
 - Topic: frontend component testing methodology.
 - Why it matters: auth form tests now separate validation user experience from submit behavior, making failures easier to diagnose.
 - Possible text use: testing chapter, frontend validation testing.
+
+## 2026-05-09 - Auth debounce UX tests made deterministic
+
+### Done
+
+- Reworked auth component debounce UX tests to use Vitest fake timers.
+- Added explicit checks for three debounce states: immediately after input, just before the debounce delay, and after the debounce delay.
+- Covered valid, mixed valid/invalid, and fully invalid field combinations for register and login validation UX.
+- Added a form-field test helper for direct `change` events in fake-timer scenarios, while keeping `userEvent` for submit-flow tests.
+- Allowed route render test setup to receive `userEvent.setup` options for future timer-sensitive tests.
+
+### Checks
+
+- `npm.cmd test -- --run src/Tests/ComponentTest/Auth.test.tsx` in `energymanagement.client` passed 52/52 auth component tests.
+
+### Diploma note
+
+- Topic: deterministic frontend validation testing.
+- Why it matters: debounce-based form validation is verified without real-time polling, reducing flaky timing behavior while still checking visible user-facing validation states.
+- Possible text use: testing chapter, frontend validation testing methodology.

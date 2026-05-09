@@ -1,7 +1,7 @@
 /**
  * @vitest environment jsdom
  */
-import { cleanup, waitFor } from "@testing-library/react";
+import { act, cleanup, waitFor } from "@testing-library/react";
 import type { UserEvent } from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -11,6 +11,7 @@ vi.mock("*.svg", () => ({
 
 afterEach(() => {
   cleanup();
+  vi.useRealTimers();
 });
 
 const { mockedLogin, mockedRegisterInd } = vi.hoisted(() => ({
@@ -39,7 +40,13 @@ import { ClientRoutes, getMessageFromErrorCode } from "../../globConstants";
 import { InvalidTestData, ValidTestData } from "./TestClasses/TestData";
 import { LoginTestComp } from "./TestClasses/LoginTH";
 import { RegisterTestComp } from "./TestClasses/RegisterTH";
-import { createTestRoute, renderComponentRoute } from "./TestClasses/TestSetup";
+import {
+  createTestRoute,
+  renderComponentRoute,
+  type UserEventSetupOptions,
+} from "./TestClasses/TestSetup";
+
+const debounceValidationDelayMs = 500;
 
 const expectEquivalentMessages = (
   actualMessages: string[],
@@ -60,7 +67,9 @@ const expectEquivalentFieldMessages = (
   expect(actualMessages).toEqual(expectedMessages);
 };
 
-const setUpRegisterTest = (): {
+const setUpRegisterTest = (
+  userOptions?: UserEventSetupOptions,
+): {
   user: UserEvent;
   registerHelper: RegisterTestComp;
 } => {
@@ -73,12 +82,15 @@ const setUpRegisterTest = (): {
       createTestRoute(ClientRoutes.Login.Path, <div>Login Page</div>),
     ],
     ClientRoutes.Register.Path,
+    userOptions,
   );
 
   return { user, registerHelper: RegisterTestComp.Create(screen) };
 };
 
-const setUpLoginTest = (): {
+const setUpLoginTest = (
+  userOptions?: UserEventSetupOptions,
+): {
   user: UserEvent;
   loginHelper: LoginTestComp;
 } => {
@@ -88,9 +100,62 @@ const setUpLoginTest = (): {
       createTestRoute(ClientRoutes.Home.Path, <div>Home Page</div>),
     ],
     ClientRoutes.Login.Path,
+    userOptions,
   );
 
   return { user, loginHelper: LoginTestComp.Create(screen) };
+};
+
+const advanceBeforeDebounceAsync = async () => {
+  await act(async () => {
+    await vi.advanceTimersByTimeAsync(debounceValidationDelayMs - 1);
+  });
+};
+
+const advanceThroughDebounceAsync = async () => {
+  await act(async () => {
+    await vi.advanceTimersByTimeAsync(1);
+  });
+};
+
+const expectRegisterDebouncedValidationUxAsync = async (
+  registerComp: RegisterTestComp,
+  expectedFieldErrors: (string | null)[],
+) => {
+  expectEquivalentFieldMessages(registerComp.getErrorMessagesNow(), [
+    null,
+    null,
+    null,
+  ]);
+
+  await advanceBeforeDebounceAsync();
+  expectEquivalentFieldMessages(registerComp.getErrorMessagesNow(), [
+    null,
+    null,
+    null,
+  ]);
+
+  await advanceThroughDebounceAsync();
+  expectEquivalentFieldMessages(
+    registerComp.getErrorMessagesNow(),
+    expectedFieldErrors,
+  );
+};
+
+const expectLoginDebouncedValidationUxAsync = async (
+  loginComp: LoginTestComp,
+  expectedFieldErrors: (string | null)[],
+) => {
+  expectEquivalentFieldMessages(loginComp.getErrorMessagesNow(), [null, null]);
+
+  await advanceBeforeDebounceAsync();
+  expectEquivalentFieldMessages(loginComp.getErrorMessagesNow(), [null, null]);
+
+  await advanceThroughDebounceAsync();
+  expectEquivalentFieldMessages(
+    loginComp.getErrorMessagesNow(),
+    expectedFieldErrors,
+  );
 };
 
 describe("Register", () => {
@@ -103,28 +168,18 @@ describe("Register", () => {
   it.each(ValidTestData.validRegisterData)(
     "does not show validation errors for valid field values",
     async (validData) => {
-      const { user, registerHelper: registerComp } = setUpRegisterTest();
+      vi.useFakeTimers();
+      const { registerHelper: registerComp } = setUpRegisterTest();
 
-      await registerComp.emailField.FillAsync(user, validData.email);
-      const emailErrors = registerComp.emailField.TryGetErrorMessageDebounced();
+      registerComp.emailField.SetValue(validData.email);
+      registerComp.passwordField.SetValue(validData.password);
+      registerComp.passwordConfirmField.SetValue(validData.passwordConfirmation);
 
-      await registerComp.passwordField.FillAsync(user, validData.password);
-      const passwordErrors = registerComp.passwordField.TryGetErrorMessageDebounced();
-
-      await registerComp.passwordConfirmField.FillAsync(
-        user,
-        validData.passwordConfirmation,
-      );
-      const passwordConfirmErrors =
-        registerComp.passwordConfirmField.TryGetErrorMessageDebounced();
-
-      const actualErrors = await Promise.all([
-        emailErrors,
-        passwordErrors,
-        passwordConfirmErrors,
+      await expectRegisterDebouncedValidationUxAsync(registerComp, [
+        null,
+        null,
+        null,
       ]);
-
-      expectEquivalentFieldMessages(actualErrors, [null, null, null]);
     },
   );
 
@@ -151,28 +206,36 @@ describe("Register", () => {
   it.each(InvalidTestData.mixedRegisterData)(
     "shows exact validation UX for mixed register field values",
     async (mixedData) => {
-      const { user, registerHelper: registerComp } = setUpRegisterTest();
+      vi.useFakeTimers();
+      const { registerHelper: registerComp } = setUpRegisterTest();
 
-      await registerComp.emailField.FillAsync(user, mixedData.email);
-      const emailErrors = registerComp.emailField.TryGetErrorMessageDebounced();
+      registerComp.emailField.SetValue(mixedData.email);
+      registerComp.passwordField.SetValue(mixedData.password);
+      registerComp.passwordConfirmField.SetValue(mixedData.passwordConfirmation);
 
-      await registerComp.passwordField.FillAsync(user, mixedData.password);
-      const passwordErrors = registerComp.passwordField.TryGetErrorMessageDebounced();
-
-      await registerComp.passwordConfirmField.FillAsync(
-        user,
-        mixedData.passwordConfirmation,
+      await expectRegisterDebouncedValidationUxAsync(
+        registerComp,
+        mixedData.expectedFieldErrors,
       );
-      const passwordConfirmErrors =
-        registerComp.passwordConfirmField.TryGetErrorMessageDebounced();
+    },
+  );
 
-      const actualErrors = await Promise.all([
-        emailErrors,
-        passwordErrors,
-        passwordConfirmErrors,
-      ]);
+  it.each(InvalidTestData.invalidRegisterUxData)(
+    "shows exact validation UX for invalid register field values",
+    async (invalidData) => {
+      vi.useFakeTimers();
+      const { registerHelper: registerComp } = setUpRegisterTest();
 
-      expectEquivalentFieldMessages(actualErrors, mixedData.expectedFieldErrors);
+      registerComp.emailField.SetValue(invalidData.email);
+      registerComp.passwordField.SetValue(invalidData.password);
+      registerComp.passwordConfirmField.SetValue(
+        invalidData.passwordConfirmation,
+      );
+
+      await expectRegisterDebouncedValidationUxAsync(
+        registerComp,
+        invalidData.expectedFieldErrors,
+      );
     },
   );
 
@@ -232,17 +295,13 @@ describe("Login", () => {
   it.each(ValidTestData.validLoginData)(
     "does not show validation errors for valid field values",
     async (validData) => {
-      const { user, loginHelper: loginComp } = setUpLoginTest();
+      vi.useFakeTimers();
+      const { loginHelper: loginComp } = setUpLoginTest();
 
-      await loginComp.emailField.FillAsync(user, validData.email);
-      const emailErrors = loginComp.emailField.TryGetErrorMessageDebounced();
+      loginComp.emailField.SetValue(validData.email);
+      loginComp.passwordField.SetValue(validData.password);
 
-      await loginComp.passwordField.FillAsync(user, validData.password);
-      const passwordErrors = loginComp.passwordField.TryGetErrorMessageDebounced();
-
-      const actualErrors = await Promise.all([emailErrors, passwordErrors]);
-
-      expectEquivalentFieldMessages(actualErrors, [null, null]);
+      await expectLoginDebouncedValidationUxAsync(loginComp, [null, null]);
     },
   );
 
@@ -265,17 +324,32 @@ describe("Login", () => {
   it.each(InvalidTestData.mixedLoginData)(
     "shows exact validation UX for mixed login field values",
     async (mixedData) => {
-      const { user, loginHelper: loginComp } = setUpLoginTest();
+      vi.useFakeTimers();
+      const { loginHelper: loginComp } = setUpLoginTest();
 
-      await loginComp.emailField.FillAsync(user, mixedData.email);
-      const emailErrors = loginComp.emailField.TryGetErrorMessageDebounced();
+      loginComp.emailField.SetValue(mixedData.email);
+      loginComp.passwordField.SetValue(mixedData.password);
 
-      await loginComp.passwordField.FillAsync(user, mixedData.password);
-      const passwordErrors = loginComp.passwordField.TryGetErrorMessageDebounced();
+      await expectLoginDebouncedValidationUxAsync(
+        loginComp,
+        mixedData.expectedFieldErrors,
+      );
+    },
+  );
 
-      const actualErrors = await Promise.all([emailErrors, passwordErrors]);
+  it.each(InvalidTestData.invalidLoginUxData)(
+    "shows exact validation UX for invalid login field values",
+    async (invalidData) => {
+      vi.useFakeTimers();
+      const { loginHelper: loginComp } = setUpLoginTest();
 
-      expectEquivalentFieldMessages(actualErrors, mixedData.expectedFieldErrors);
+      loginComp.emailField.SetValue(invalidData.email);
+      loginComp.passwordField.SetValue(invalidData.password);
+
+      await expectLoginDebouncedValidationUxAsync(
+        loginComp,
+        invalidData.expectedFieldErrors,
+      );
     },
   );
 

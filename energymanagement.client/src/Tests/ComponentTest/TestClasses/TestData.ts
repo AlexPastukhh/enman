@@ -46,6 +46,43 @@ export class ValidTestData {
 
 
 export class InvalidTestData {
+  static invalidRegisterUxData = [
+    {
+      // invalid email + invalid password + mismatched confirmation
+      email: "not-an-email",
+      password: "Short1!",
+      passwordConfirmation: "Different1!",
+      expectedFieldErrors: [
+        errorCodes.Email.IsInvalid,
+        errorCodes.Password.IsTooShort,
+        errorCodes.PasswordConfirmation.DoesNotMatch,
+      ],
+    },
+    {
+      // invalid email + password without a special character
+      email: "badformat",
+      password: "NoSpecials12345",
+      passwordConfirmation: "NoSpecials12345",
+      expectedFieldErrors: [
+        errorCodes.Email.IsInvalid,
+        errorCodes.Password.LacksSpecialChars,
+        null,
+      ],
+    },
+  ];
+
+  static invalidLoginUxData = [
+    {
+      // invalid email + invalid password
+      email: "not-an-email",
+      password: "Short1!",
+      expectedFieldErrors: [
+        errorCodes.Email.IsInvalid,
+        errorCodes.Password.IsTooShort,
+      ],
+    },
+  ];
+
   static mixedRegisterData = [
     {
       // valid email + invalid password + valid matching confirmation for the typed password

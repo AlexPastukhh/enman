@@ -142,6 +142,7 @@ employee rejects request
 - For validation rules, cover each public API rule at least once at the integration level when the rule affects the response contract. Domain unit tests can cover lower-level value-object combinations in more detail.
 - Frontend validation tests should distinguish client-side invalid-form behavior from server-side validation responses: invalid local form data must not call mutation functions; backend problem-details handling should be covered by focused unit tests.
 - Frontend form component helpers should assert visible validation messages, while test data may keep canonical error codes and map them through shared client constants.
+- Debounced frontend validation UX should be tested with fake timers when possible: assert no visible errors immediately after input, no visible errors before the debounce delay, and exact expected errors after the debounce delay. Use direct `change` events for timer-control tests and keep `userEvent` for submit-flow behavior.
 
 ## Known test risks
 

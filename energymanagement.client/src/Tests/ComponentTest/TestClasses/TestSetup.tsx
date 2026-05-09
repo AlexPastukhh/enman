@@ -12,6 +12,8 @@ type RouterError = {
   message?: string;
 };
 
+export type UserEventSetupOptions = Parameters<typeof userEvent.setup>[0];
+
 const RouteError = () => {
   const err = useRouteError() as RouterError;
   return (
@@ -33,6 +35,7 @@ export const createTestRoute = (
 export const renderComponentRoute = (
   routes: RouteObject[],
   initialPath: string,
+  userOptions?: UserEventSetupOptions,
 ): { user: UserEvent; screen: typeof screen } => {
   const memoryRouter = createMemoryRouter(routes, {
     initialEntries: [initialPath],
@@ -45,5 +48,5 @@ export const renderComponentRoute = (
     </QueryClientProvider>,
   );
 
-  return { user: userEvent.setup(), screen };
+  return { user: userEvent.setup(userOptions), screen };
 };

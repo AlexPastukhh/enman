@@ -1,4 +1,4 @@
-import { act, type Screen } from "@testing-library/react";
+import { act, fireEvent, type Screen } from "@testing-library/react";
 import { formConst } from "../../../Components/Form/formConst";
 import type { UserEvent } from "@testing-library/user-event";
 
@@ -49,6 +49,10 @@ export class SUTFormField {
     await user.type(this.input, value);
   }
 
+  SetValue(value: string) {
+    fireEvent.change(this.input, { target: { value } });
+  }
+
   async WaitForDebouncedValidationAsync() {
     await act(async () => {
       await new Promise((resolve) =>
@@ -90,6 +94,7 @@ export class SUTFormField {
       if (errorMessage) {
         return errorMessage;
       }
+
       await new Promise((resolve) =>
         setTimeout(resolve, debouncedValidationPollIntervalMs)
       );
