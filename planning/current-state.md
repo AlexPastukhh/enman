@@ -6,7 +6,7 @@ Pre-L1 cleanup is mostly completed. The project is being prepared for L1 domain/
 
 ## Current date
 
-2026-05-09
+2026-05-10
 
 ## Current branch
 
@@ -18,7 +18,7 @@ Bring the old educational/experimental ASP.NET Core + React project to an L1 dip
 
 ## Current task
 
-Backend and frontend validation contract coverage are stabilized. Next safe task: start the L1 domain refactor from `Client` to `Account` / `ClientAccount`.
+Backend and frontend validation contract coverage are stabilized. A parallel L1 domain subset exists, but EF/API still use the old model. Next safe task: align the current L1 domain code with the agreed aggregate boundary rules before duplicating integration/API paths.
 
 ## Current implementation status
 
@@ -36,7 +36,7 @@ Backend and frontend validation contract coverage are stabilized. Next safe task
   - `ClientRequest`;
   - `IndividualRequest`;
   - `RequestReview`.
-- New parallel L1 domain subset exists under `Domain.EnergyManagement.L1`; EF/API still use the old model until the next migration steps.
+- New parallel L1 domain subset exists under `Domain.EnergyManagement.L1`; it is a migration target, and EF/API still use the old model until an explicit migration step.
 - Existing old server endpoints for registration/login/user and individual request creation.
 - Existing EF Core mapping for old entities.
 - Structured planning folder exists.
@@ -70,22 +70,6 @@ Backend and frontend validation contract coverage are stabilized. Next safe task
 
 ## Current L1 implementation cut
 
-L1 must implement only:
-
-- `Account`;
-- `ClientAccount`;
-- `EmployeeAccount`;
-- `ApplicantParty`;
-- `IndividualApplicantParty`;
-- `ClientRequest`;
-- `ConnectionRequest`;
-- `MeteringDeviceRequest`;
-- `RequestStatus`;
-- `RequestReview`;
-- `ReviewDecision`;
-- `ContractDraft`;
-- `EmailNotification`.
-
 Current implemented parallel L1 subset:
 
 - `Account`;
@@ -96,7 +80,15 @@ Current implemented parallel L1 subset:
 - `ConnectionRequest`;
 - `RequestStatus.Submitted`.
 
-L1 business flow:
+Current implemented aggregate roots:
+
+- `ClientAccount`;
+- `IndividualApplicantParty`;
+- `ConnectionRequest`.
+
+Employee/review/contract/email workflow concepts are future candidates, not part of the current implemented L1 subset.
+
+Target later L1 business flow after future migration steps:
 
 ```text
 Guest registers
@@ -147,7 +139,8 @@ Guest registers
 | done | Add diploma note protocol | Significant work can now leave short notes for future diploma text in `action-log.md`. |
 | done | Start L1 domain refactor | Initial parallel `Domain.EnergyManagement.L1` subset added without removing old model. |
 | done | Add unit tests for current L1 domain subset | `L1DomainTests` cover client account, individual applicant party and connection request creation. |
-| next | Duplicate integration path for current L1 subset | Start from auth/account/applicant creation without replacing old EF/API yet. |
+| next | Align current L1 domain code with aggregate boundary rules | Replace cross-aggregate object references with `long` IDs; remove or avoid one-side aggregate collection navigations; keep EF/API old model untouched until an explicit migration step. |
+| later | Duplicate integration path for current L1 subset | Start from auth/account/applicant creation after aggregate boundaries are aligned, without replacing old EF/API yet. |
 | later | Configure EF Core TPH mapping for L1 inheritance | Depends on choosing migration strategy from parallel L1 model to EF. |
 | later | Implement L1 API endpoints | Depends on domain and EF mapping. |
 | later | Add integration tests and Playwright E2E scenarios | Depends on L1 API behavior and test database strategy. |
@@ -163,4 +156,4 @@ Guest registers
 
 ## Last updated
 
-2026-05-09 - Initial parallel L1 domain subset introduced and covered by unit tests; L1DomainTests passed 12/12 and all unit tests passed 73/73.
+2026-05-10 - L1 aggregate boundary rules recorded in planning. Next safe task is aligning the parallel L1 domain code with those rules while keeping EF/API on the old model.

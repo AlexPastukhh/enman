@@ -91,6 +91,11 @@ Skip diploma notes for small mechanical edits.
 
 - Do not merge `Account` and `ApplicantParty`.
 - Do not model ФЛ/ИП/ЮЛ as `Account` subclasses.
+- During L1 refactor, do not create aggregate roots from other aggregate roots.
+- During L1 refactor, do not add one-side collection navigations for inter-aggregate relationships unless explicitly justified.
+- During L1 refactor, use scalar `long` IDs for inter-aggregate references unless a later explicit decision changes this.
+- Do not model aggregate relationships as primitive ID collections such as `List<long> ApplicantPartyIds`.
+- Do not add typed ID value objects yet.
 - Do not add electronic signature.
 - Do not add real government integrations.
 - Do not add SMS before email works.

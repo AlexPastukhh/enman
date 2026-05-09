@@ -18,25 +18,100 @@ ContractDraft  — проект договора по заявке
 
 L2/L3 элементы — это план расширения, а не задача L1.
 
+## L1 aggregate boundaries
+
+The current parallel L1 model is a migration target. EF/API still use the old model until an explicit migration step.
+
+### Current implemented aggregate roots
+
+Current implemented L1 aggregate roots:
+
+- `ClientAccount` owns account/auth lifecycle.
+- `IndividualApplicantParty` owns applicant party/profile data and references the owning client account.
+- `ConnectionRequest` owns request number, details, object address and status, and references the applicant party.
+
+The current implemented L1 subset is intentionally limited to behavior already represented by the old project: registration/login-related account data, physical-person applicant data, request creation, and `RequestStatus.Submitted`.
+
+### Aggregate root creation
+
+- Aggregate roots are created through their own static `Create` methods or through application services/factories dedicated to that aggregate.
+- One aggregate root must not create another aggregate root.
+- Aggregate root constructors should stay private/protected where possible.
+- Application services may coordinate multiple aggregates, load required state, check cross-aggregate rules, and then call the target aggregate `Create` method or domain method.
+
+### Child entity creation
+
+- Child entities are created only by their owning aggregate root.
+- Child entities should not have independent repositories.
+- Child entity `Create`/factory methods should be internal/private if they exist.
+- External code should not create child entities and then attach them manually.
+- Actor is not owner. Future example: `EmployeeAccount` is the reviewer/actor, but the request aggregate owns `RequestReview`.
+
+### Future aggregate candidates and child entities
+
+These future concepts or future responsibilities are preliminary and are not part of the current implemented L1 subset unless explicitly listed above:
+
+- `EmployeeAccount`: future aggregate root when employee flow is implemented.
+- `ClientRequest` / `ConnectionRequest` workflow expansion: the current request aggregate root is limited to submitted connection request creation. Later it should own workflow/status transitions and child `RequestReview` entities.
+- `RequestReview`: future child entity of `ClientRequest`, not a separate aggregate.
+- `RequestDocument`: likely future child entity of `ClientRequest` if documents are submitted/validated as part of request processing.
+- `ApplicantProfileDocument`: possible future child entity of `ApplicantParty` only if profile-level reusable applicant documents are introduced.
+- `ContractDraft`: undecided. In simple L1 it may be child of `ClientRequest`; in L2 with versions/PDF/templates/separate lifecycle it may become a separate aggregate.
+- `EmailNotification` / `OutboxMessage`: not part of the current implemented L1 subset. Later likely application/infrastructure/outbox concern, not necessarily a core aggregate.
+
+### Inter-aggregate references
+
+- Use scalar `long` IDs for inter-aggregate references for now.
+- Do not introduce typed IDs yet unless explicitly requested later.
+- Examples:
+  - `IndividualApplicantParty.ClientAccountId: long`;
+  - `ConnectionRequest.ApplicantPartyId: long`.
+- Aggregate factories and domain methods should prefer IDs or small role/snapshot value objects over fully loaded aggregate navigation objects.
+- Domain behavior must not rely on traversing public navigation graphs across aggregate boundaries.
+
+### EF relationship and navigation rule
+
+- For one-to-many relationships between aggregate roots, model the relationship from the many side with an FK.
+- Do not add a collection navigation on the one/principal side just to express one-to-many.
+- Example:
+  - `ApplicantParty` has `ClientAccountId`;
+  - `ClientAccount` does not need an `ApplicantParties` collection as a domain navigation;
+  - EF mapping can use `HasOne<ClientAccount>().WithMany().HasForeignKey(x => x.ClientAccountId)`.
+- This is a unidirectional relationship / relationship without principal collection navigation, not an absent relationship.
+- Optional EF navigation properties between aggregate roots are allowed only as persistence/read convenience, not as domain ownership.
+- Domain methods/factories should not require those navigation properties to be loaded.
+
+### Primitive collections
+
+- Do not model aggregate relationships as primitive collections like `List<long> ApplicantPartyIds` or `List<long> DocumentIds`.
+- This avoids EF primitive collection tracking/value comparer complexity and keeps ownership clear.
+- If the application needs "all applicant parties for account", use a repository/query by `ClientAccountId`.
+- If an aggregate needs a collection inside it, it should usually be a child entity collection owned by that aggregate, not a primitive ID collection.
+
+### Cross-aggregate invariants
+
+- If a command needs data from another aggregate, the application service loads that aggregate and checks the rule before calling the target aggregate.
+- Example:
+  - load `ApplicantParty` by `applicantPartyId`;
+  - check `ApplicantParty.ClientAccountId == currentClientAccountId`;
+  - call `ConnectionRequest.Create(applicantPartyId, details, address)`.
+- Do not push this check into `ConnectionRequest` by requiring the full `ApplicantParty` aggregate object.
+
 ## L1 implementation cut
 
-В L1 реализуются только:
+Current implemented parallel L1 subset:
 
 ```text
 Account
 ClientAccount
-EmployeeAccount
 ApplicantParty
 IndividualApplicantParty
 ClientRequest
 ConnectionRequest
-MeteringDeviceRequest
-RequestStatus
-RequestReview
-ReviewDecision
-ContractDraft
-EmailNotification
+RequestStatus.Submitted
 ```
+
+Employee/review/contract/email workflow concepts are future candidates until their old-project behavior and tests are intentionally migrated.
 
 ## Identity / Accounts
 

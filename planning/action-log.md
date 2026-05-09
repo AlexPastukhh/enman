@@ -449,3 +449,27 @@ Make planning usable as living handoff documentation for future AI agents.
 - Topic: domain model refactoring and separation of responsibilities.
 - Why it matters: the initial L1 subset separates authentication accounts from applicant/legal party data while keeping the implemented scope aligned with behavior already present in the project.
 - Possible text use: domain design chapter, architecture rationale, testing chapter.
+
+## 2026-05-10 - L1 aggregate boundary rules defined
+
+### Done
+
+- Recorded current implemented L1 aggregate roots:
+  - `ClientAccount`;
+  - `IndividualApplicantParty`;
+  - `ConnectionRequest`.
+- Documented aggregate root creation rules and child entity ownership rules.
+- Recorded future aggregate candidates and child entities separately from the current implemented L1 subset.
+- Accepted `long` IDs as the L1 inter-aggregate reference strategy.
+- Documented EF navigation rules, primitive collection restrictions and cross-aggregate invariant handling.
+- Updated the current task board so the next safe step is aligning the parallel L1 domain code with these rules while keeping EF/API on the old model.
+
+### Checks
+
+- No tests were run because this was a planning-only change.
+
+### Diploma note
+
+- Topic: domain-driven aggregate boundary design.
+- Why it matters: account, applicant and request lifecycles now have explicit ownership boundaries, reducing coupling and avoiding large aggregate graphs during the migration from the old model.
+- Possible text use: domain design chapter, architecture rationale, maintainability and risk mitigation.

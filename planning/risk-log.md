@@ -142,3 +142,17 @@ E2E tests may fail before running, pass/fail inconsistently, or depend on manual
 ### Mitigation
 
 Before using E2E as diploma verification, consolidate Playwright into one config, add service startup strategy, make test data unique/isolated, and clean page object helpers.
+
+## RISK-009: Aggregate root navigation graphs may blur ownership
+
+### Description
+
+Public navigation properties between aggregate roots may blur ownership and lead to large aggregate graphs. This is especially risky during the L1 migration because the parallel L1 domain model is not yet the active EF/API model.
+
+### Impact
+
+Domain behavior may start depending on loaded cross-aggregate navigation graphs, making aggregates harder to test, persist and migrate independently.
+
+### Mitigation
+
+Use scalar `long` IDs as the domain source of truth for inter-aggregate references. Allow EF navigation properties only as persistence/read convenience. Do not add one-side collection navigation for aggregate relationships unless explicitly justified.

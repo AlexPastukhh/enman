@@ -191,3 +191,37 @@ Keep Playwright E2E tests in root `tests/`.
 - no unnecessary churn;
 - component tests remain in frontend project;
 - .NET tests remain in `Tests.EnergyManagement`.
+
+## DEC-009: Use long IDs for inter-aggregate references in L1 migration model
+
+### Status
+
+Accepted
+
+### Context
+
+The parallel L1 domain model is a migration target while EF/API still use the old model. Current L1 aggregate boundaries must stay clear without forcing large public navigation graphs between account, applicant party and request aggregates.
+
+### Decision
+
+Use scalar `long` IDs for inter-aggregate references in the L1 migration model.
+
+Examples:
+
+- `IndividualApplicantParty.ClientAccountId: long`;
+- `ConnectionRequest.ApplicantPartyId: long`.
+
+Do not introduce typed ID value objects yet. Do not model aggregate relationships as primitive ID collections such as `List<long> ApplicantPartyIds`.
+
+### Rationale
+
+- simpler migration path from the existing old model;
+- avoids large object graphs across aggregate boundaries;
+- keeps aggregates independent;
+- avoids EF primitive collection tracking/value comparer complexity.
+
+### Consequences
+
+- application services must load and check related aggregates before calling the target aggregate method;
+- queries/read models handle display joins and view-specific data shape;
+- EF can still define FK relationships without principal collection navigation, for example `HasOne<ClientAccount>().WithMany().HasForeignKey(...)`.
