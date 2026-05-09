@@ -43,33 +43,14 @@ export class LoginTestComp {
     return this._emailField.HasErrorNow() || this._passwordField.HasErrorNow();
   };
 
-  hasAnyErrorsDebounced = async (): Promise<boolean> => {
-    const hasEmailErr = await this._emailField.HasErrorDebounced();
-    const hasPasswordErr = await this._passwordField.HasErrorDebounced();
-    return hasEmailErr || hasPasswordErr;
-  };
-
   getErrorMessagesNow = (): (string | null)[] => {
     const emailErr = this._emailField.TryGetErrorMessageNow();
     const passwordErr = this._passwordField.TryGetErrorMessageNow();
     return [emailErr, passwordErr];
   };
 
-  getErrorMessagesDebounced = async (): Promise<(string | null)[]> => {
-    return Promise.all([
-      this._emailField.TryGetErrorMessageDebounced(),
-      this._passwordField.TryGetErrorMessageDebounced(),
-    ]);
-  };
-
   getVisibleErrorMessagesNow = (): string[] => {
     return this.getErrorMessagesNow().filter(
-      (msg): msg is string => msg !== null
-    );
-  };
-
-  getVisibleErrorMessagesDebounced = async (): Promise<string[]> => {
-    return (await this.getErrorMessagesDebounced()).filter(
       (msg): msg is string => msg !== null
     );
   };

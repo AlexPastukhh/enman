@@ -60,13 +60,6 @@ export class RegisterTestComp {
     );
   };
 
-  hasAnyErrorsDebounced = async (): Promise<boolean> => {
-    const hasEmailErr = await this._emailField.HasErrorDebounced();
-    const hasPasswordErr = await this._passwordField.HasErrorDebounced();
-    const hasPasswordConfirmErr = await this._passwordConfirmField.HasErrorDebounced();
-    return hasEmailErr || hasPasswordErr || hasPasswordConfirmErr;
-  };
-
   getErrorMessagesNow = (): (string | null)[] => {
     const emailErr = this._emailField.TryGetErrorMessageNow();
     const passwordErr = this._passwordField.TryGetErrorMessageNow();
@@ -74,22 +67,8 @@ export class RegisterTestComp {
     return [emailErr, passwordErr, passwordConfirmErr];
   };
 
-  getErrorMessagesDebounced = async (): Promise<(string | null)[]> => {
-    return Promise.all([
-      this._emailField.TryGetErrorMessageDebounced(),
-      this._passwordField.TryGetErrorMessageDebounced(),
-      this._passwordConfirmField.TryGetErrorMessageDebounced(),
-    ]);
-  };
-
   getVisibleErrorMessagesNow = (): string[] => {
     return this.getErrorMessagesNow().filter(
-      (msg): msg is string => msg !== null
-    );
-  };
-
-  getVisibleErrorMessagesDebounced = async (): Promise<string[]> => {
-    return (await this.getErrorMessagesDebounced()).filter(
       (msg): msg is string => msg !== null
     );
   };

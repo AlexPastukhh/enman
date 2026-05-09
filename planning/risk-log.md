@@ -123,3 +123,22 @@ Introduce test DB strategy:
 - localdb;
 - testcontainers;
 - or isolated integration test profile.
+
+## RISK-008: Playwright E2E tests are not a reliable verification layer yet
+
+### Description
+
+The repository has Playwright configuration and root E2E tests, but the current setup is stale:
+
+- root Playwright dependencies are declared but root `node_modules` is not available;
+- no Playwright `webServer` starts frontend/backend services;
+- root and client Playwright configs point to different test directories;
+- root page helpers contain likely runtime bugs such as reading `Locator.isVisible` as a property and not awaiting async fill actions.
+
+### Impact
+
+E2E tests may fail before running, pass/fail inconsistently, or depend on manually prepared local state.
+
+### Mitigation
+
+Before using E2E as diploma verification, consolidate Playwright into one config, add service startup strategy, make test data unique/isolated, and clean page object helpers.

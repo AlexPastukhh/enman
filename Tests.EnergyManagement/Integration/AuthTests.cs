@@ -248,10 +248,10 @@ namespace Tests.EnergyManagement.Integration
                 var createNumber= PhoneNumber.Create(dto.PhoneNumber);
                 //Act
                 
-                var register = await client.PostAsJsonAsync(AuthRoutes.ProvideIndividualClientsDataPath,dto);          
+                var provideData = await client.PostAsJsonAsync(AuthRoutes.ProvideIndividualClientsDataPath,dto);          
                 
                 //Assert 
-                await HttpResponseAssertions.For(register, _output)
+                await HttpResponseAssertions.For(provideData, _output)
                     .ShouldBeSuccess();
                                 
                 var getIndividual = await DatabaseHelpers.GetIndividualByEmailAsync(_factory, testClient.Email);
@@ -282,16 +282,16 @@ namespace Tests.EnergyManagement.Integration
             
             //Act
             
-            var register = await client.GetAsync(AuthRoutes.GetUserPath);          
+            var getUser = await client.GetAsync(AuthRoutes.GetUserPath);          
             
             //Assert 
-            await HttpResponseAssertions.For(register, _output)
+            await HttpResponseAssertions.For(getUser, _output)
                 .ShouldBeSuccess();
                             
             var getIndividual = await DatabaseHelpers.GetIndividualByEmailAsync(_factory, testClient.Email);
             getIndividual.IsSuccess.Should().BeTrue();
             
-            var userDto =await register.Content.ReadFromJsonAsync<UserDto>();
+            var userDto =await getUser.Content.ReadFromJsonAsync<UserDto>();
             userDto.Should().NotBeNull();
             
             userDto!.Email.Should().Be(testClient.Email);

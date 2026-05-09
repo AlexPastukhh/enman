@@ -376,3 +376,75 @@ Make planning usable as living handoff documentation for future AI agents.
 - Topic: deterministic frontend validation testing.
 - Why it matters: debounce-based form validation is verified without real-time polling, reducing flaky timing behavior while still checking visible user-facing validation states.
 - Possible text use: testing chapter, frontend validation testing methodology.
+
+## 2026-05-09 - Frontend test polling helpers removed and Playwright inspected
+
+### Done
+
+- Removed old real-time polling debounce helpers from component test field/page helpers.
+- Updated valid login submit tests to pass form debounce validation through fake timers before clicking the disabled-until-valid submit button.
+- Inspected Playwright-related files:
+  - root `playwright.config.ts`;
+  - client `energymanagement.client/playwright.config.ts`;
+  - root `tests/registerTest.spec.ts`;
+  - root `tests/TestPages/*`.
+
+### Checks
+
+- `rg "TryGetErrorMessageDebounced|GetErrorMessageDebounced|HasErrorDebounced|ExpectNoErrorDuringDebouncedValidationAsync|WaitForDebouncedValidationAsync|getErrorMessagesDebounced|getVisibleErrorMessagesDebounced|hasAnyErrorsDebounced" -n` found no remaining references.
+- `npm.cmd test -- --run src/Tests/ComponentTest/Auth.test.tsx` in `energymanagement.client` passed 52/52 auth component tests.
+- `npm.cmd run build` in `energymanagement.client` passed; Vite emitted only the existing large chunk warning.
+- `npx.cmd playwright test --list` from repository root was blocked by npm cache/registry access.
+- `.\energymanagement.client\node_modules\.bin\playwright.cmd test --config=playwright.config.ts --list` from repository root failed because root `playwright.config.ts` could not resolve `@playwright/test` from root `node_modules`.
+
+### Notes
+
+- Current Playwright tests require separately running frontend and backend services; no `webServer` is configured.
+- Root Playwright dependencies are declared but root `node_modules` is not currently available.
+- The client Playwright config points to `./src/tests`, while active frontend tests are under `src/Tests`; this looks like a stale config.
+- Root E2E page helpers contain likely runtime bugs: `Locator.isVisible` is read as a property instead of called as `isVisible()`, and register form fill does not await async field fills.
+
+### Diploma note
+
+- Topic: E2E testing risk and test infrastructure.
+- Why it matters: browser E2E tests currently exist but are not yet reliable as an automated verification layer because their configuration and page helper abstractions need cleanup.
+- Possible text use: testing chapter, limitations/future work.
+
+## 2026-05-09 - L1 domain model introduced in parallel
+
+### Done
+
+- Added a parallel L1 domain namespace `Domain.EnergyManagement.L1` without deleting or replacing old domain classes.
+- Added L1 account classes:
+  - `Account`;
+  - `ClientAccount`;
+  - `EmployeeAccount`;
+  - `AccountRole`.
+- Added L1 applicant classes:
+  - `ApplicantParty`;
+  - `IndividualApplicantParty`;
+  - `ApplicantPartyType`.
+- Added L1 request/review/contract/notification classes:
+  - `ClientRequest`;
+  - `ConnectionRequest`;
+  - `MeteringDeviceRequest`;
+  - `RequestStatus`;
+  - `RequestReview`;
+  - `ReviewDecision`;
+  - `ContractDraft`;
+  - `EmailNotification`.
+- Added parallel unit tests in `L1DomainTests` while keeping all old unit tests.
+- Kept EF mapping, API handlers and integration tests on the old model for now.
+
+### Checks
+
+- `dotnet build Domain.EnergyManagement/Domain.EnergyManagement.csproj --no-restore` passed with 31 existing warnings.
+- `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --no-build --filter "FullyQualifiedName~L1DomainTests"` passed 22/22.
+- `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --no-build --filter "FullyQualifiedName~Tests.EnergyManagement.Unit"` passed 83/83.
+- `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --filter "FullyQualifiedName~L1DomainTests"` was blocked before useful execution by environment/client `.esproj` restore issues, but the later `--no-build` run passed after compilation.
+
+### Diploma note
+
+- Topic: domain model refactoring and separation of responsibilities.
+- Why it matters: the new L1 model separates authentication accounts from applicant/legal party data and request processing, reducing coupling between login identity and contract/request data.
+- Possible text use: domain design chapter, architecture rationale, testing chapter.

@@ -1,7 +1,7 @@
 /**
  * @vitest environment jsdom
  */
-import { act, cleanup, waitFor } from "@testing-library/react";
+import { act, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import type { UserEvent } from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -115,6 +115,12 @@ const advanceBeforeDebounceAsync = async () => {
 const advanceThroughDebounceAsync = async () => {
   await act(async () => {
     await vi.advanceTimersByTimeAsync(1);
+  });
+};
+
+const advanceThroughFullDebounceAsync = async () => {
+  await act(async () => {
+    await vi.advanceTimersByTimeAsync(debounceValidationDelayMs);
   });
 };
 
@@ -356,15 +362,19 @@ describe("Login", () => {
   it.each(ValidTestData.validLoginData)(
     "submits valid login data",
     async (validData) => {
-      const { user, loginHelper: loginComp } = setUpLoginTest();
+      vi.useFakeTimers();
+      const { loginHelper: loginComp } = setUpLoginTest();
 
       mockedLogin.mockResolvedValueOnce(undefined);
 
-      await loginComp.emailField.FillAsync(user, validData.email);
-      await loginComp.emailField.WaitForDebouncedValidationAsync();
-      await loginComp.passwordField.FillAsync(user, validData.password);
-      await loginComp.passwordField.WaitForDebouncedValidationAsync();
-      await user.click(loginComp.submitButton);
+      loginComp.emailField.SetValue(validData.email);
+      loginComp.passwordField.SetValue(validData.password);
+      await advanceThroughFullDebounceAsync();
+      vi.useRealTimers();
+
+      await act(async () => {
+        fireEvent.click(loginComp.submitButton);
+      });
 
       await waitFor(() => {
         expect(mockedLogin).toHaveBeenCalledTimes(1);
