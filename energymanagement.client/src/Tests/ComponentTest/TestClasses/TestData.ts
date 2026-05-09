@@ -4,6 +4,17 @@ export class ValidTestData {
   static validEmail = "test@example.com" as const;
   static validPassword = "ValidPass123!" as const;
 
+  static validLoginData = [
+    {
+      email: "test1@example.com",
+      password: "ValidPass123!",
+    },
+    {
+      email: "user+alias@example.co.uk",
+      password: "Strong#Password1",
+    },
+  ];
+
   static validRegisterData = [
     {
       email: "test1@example.com",
@@ -35,34 +46,115 @@ export class ValidTestData {
 
 
 export class InvalidTestData {
+  static mixedRegisterData = [
+    {
+      // valid email + invalid password + valid matching confirmation for the typed password
+      email: "mixed-password@example.com",
+      password: "Short1!",
+      passwordConfirmation: "Short1!",
+      expectedFieldErrors: [
+        null,
+        errorCodes.Password.IsTooShort,
+        null,
+      ],
+    },
+    {
+      // invalid email + valid password and confirmation
+      email: "not-an-email",
+      password: "ValidPass123!",
+      passwordConfirmation: "ValidPass123!",
+      expectedFieldErrors: [
+        errorCodes.Email.IsInvalid,
+        null,
+        null,
+      ],
+    },
+    {
+      // valid email/password + mismatched confirmation
+      email: "mixed-confirmation@example.com",
+      password: "ValidPass123!",
+      passwordConfirmation: "DifferentPass123!",
+      expectedFieldErrors: [
+        null,
+        null,
+        errorCodes.PasswordConfirmation.DoesNotMatch,
+      ],
+    },
+  ];
+
+  static mixedLoginData = [
+    {
+      // valid email + invalid password
+      email: "mixed-login@example.com",
+      password: "Short1!",
+      expectedFieldErrors: [
+        null,
+        errorCodes.Password.IsTooShort,
+      ],
+    },
+    {
+      // invalid email + valid password
+      email: "not-an-email",
+      password: "ValidPass123!",
+      expectedFieldErrors: [
+        errorCodes.Email.IsInvalid,
+        null,
+      ],
+    },
+  ];
+
+  static invalidLoginData = [
+    {
+      // invalid email format
+      email: "not-an-email",
+      password: "ValidPass123!",
+      expectedErrors: [errorCodes.Email.IsInvalid],
+    },
+    {
+      // password too short (<12)
+      email: "shortpass@example.com",
+      password: "Short1!",
+      expectedErrors: [errorCodes.Password.IsTooShort],
+    },
+    {
+      // invalid email + password too short
+      email: "not-an-email",
+      password: "Short1!",
+      expectedErrors: [
+        errorCodes.Email.IsInvalid,
+        errorCodes.Password.IsTooShort,
+      ],
+    },
+  ];
+
   static invalidRegisterData = [
     {
       // invalid email format
       email: "not-an-email",
       password: "ValidPass123!",
       passwordConfirmation: "ValidPass123!",
-      err: [errorCodes.Email.IsInvalid] ,
+      expectedErrors: [errorCodes.Email.IsInvalid] ,
     },
     {
       // password too short (<12)
       email: "shortpass@example.com",
       password: "Short1!",
       passwordConfirmation: "Short1!",
-      err: [errorCodes.Password.IsTooShort],
+      expectedErrors: [errorCodes.Password.IsTooShort],
     },
     {
       // missing special character
       email: "nospecial@example.com",
       password: "NoSpecials12345",
       passwordConfirmation: "NoSpecials12345",
-      err: [errorCodes.Password.LacksSpecialChars],
+      expectedErrors: [errorCodes.Password.LacksSpecialChars],
     },
     {
       // password confirmation mismatch
       email: "mismatch@example.com",
       password: "ValidPass123!",
       passwordConfirmation: "DifferentPass123!",
-      err: [errorCodes.PasswordConfirmation.DoesNotMatch],
+      expectedErrors: [errorCodes.PasswordConfirmation.DoesNotMatch],
     },
     {
       // password too long (>50)
@@ -70,14 +162,14 @@ export class InvalidTestData {
       password: "ThisPasswordIsWayTooLongAndExceedsFiftyCharacters!!",
       passwordConfirmation:
         "ThisPasswordIsWayTooLongAndExceedsFiftyCharacters!!",
-      err: [errorCodes.Password.IsTooLong],
+      expectedErrors: [errorCodes.Password.IsTooLong],
     },
     {
       // invalid email + password too short
       email: "not-an-email",
       password: "Short1!",
       passwordConfirmation: "Short1!",
-      err: [
+      expectedErrors: [
         errorCodes.Email.IsInvalid,
         errorCodes.Password.IsTooShort,
       ] ,
@@ -87,7 +179,7 @@ export class InvalidTestData {
       email: "badformat",
       password: "NoSpecials12345",
       passwordConfirmation: "NoSpecials12345",
-      err: [
+      expectedErrors: [
         errorCodes.Email.IsInvalid,
         errorCodes.Password.LacksSpecialChars,
       ],
@@ -97,7 +189,7 @@ export class InvalidTestData {
       email: "user@example.com",
       password: "Short1!",
       passwordConfirmation: "Different1!",
-      err: [
+      expectedErrors: [
         errorCodes.Password.IsTooShort,
         errorCodes.PasswordConfirmation.DoesNotMatch,
       ],
@@ -107,7 +199,7 @@ export class InvalidTestData {
       email: "user2@example.com",
       password: "NoSpecials12345",
       passwordConfirmation: "NoSpecials12345Different",
-      err: [
+      expectedErrors: [
         errorCodes.Password.LacksSpecialChars,
         errorCodes.PasswordConfirmation.DoesNotMatch,
       ],
@@ -118,7 +210,7 @@ export class InvalidTestData {
       password: "ThisPasswordIsWayTooLongAndExceedsFiftyCharacters!!",
       passwordConfirmation:
         "ThisPasswordIsWayTooLongAndExceedsFiftyCharacters!!",
-      err: [
+      expectedErrors: [
         errorCodes.Password.IsTooLong,
       ],
     },
@@ -127,7 +219,7 @@ export class InvalidTestData {
       email: "bad-email",
       password: "ThisPasswordIsWayTooLongAndExceedsFiftyCharacters!!",
       passwordConfirmation: "DifferentLongPassword!!",
-      err: [
+      expectedErrors: [
         errorCodes.Email.IsInvalid,
         errorCodes.Password.IsTooLong,
         errorCodes.PasswordConfirmation.DoesNotMatch,

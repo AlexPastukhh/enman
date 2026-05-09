@@ -1,22 +1,20 @@
 import type { Screen } from "@testing-library/react";
+import { loginConst } from "../../../views/LoginView/loginConst";
 import { SUTFormField } from "./BaseTest";
-import { registerConst } from "../../../views/RegisterView/registerConst";
 
-export class RegisterTestComp {
+export class LoginTestComp {
   private _emailField: SUTFormField;
   private _passwordField: SUTFormField;
-  private _passwordConfirmField: SUTFormField;
   private _submitButton: HTMLButtonElement;
 
   get emailField() {
     return this._emailField;
   }
+
   get passwordField() {
     return this._passwordField;
   }
-  get passwordConfirmField() {
-    return this._passwordConfirmField;
-  }
+
   get submitButton() {
     return this._submitButton;
   }
@@ -24,61 +22,43 @@ export class RegisterTestComp {
   private constructor(
     emailField: SUTFormField,
     passwordField: SUTFormField,
-    passwordConfirmField: SUTFormField,
     submitButton: HTMLButtonElement,
   ) {
     this._emailField = emailField;
     this._passwordField = passwordField;
-    this._passwordConfirmField = passwordConfirmField;
     this._submitButton = submitButton;
   }
+
   static Create = (screen: Screen) => {
-    const emailField = SUTFormField.Create(screen, registerConst.emailLabel);
-    const passwordField = SUTFormField.Create(
-      screen,
-      registerConst.passwordLabel,
-    );
-    const passwordConfirmField = SUTFormField.Create(
-      screen,
-      registerConst.passwordConfirmLabel,
-    );
+    const emailField = SUTFormField.Create(screen, loginConst.emailLabel);
+    const passwordField = SUTFormField.Create(screen, loginConst.passwordLabel);
     const submitButton = screen.getByRole("button", {
-      name: registerConst.submitButtonAriaLabel,
+      name: loginConst.submitButtonText,
     }) as HTMLButtonElement;
-    return new RegisterTestComp(
-      emailField,
-      passwordField,
-      passwordConfirmField,
-      submitButton,
-    );
+
+    return new LoginTestComp(emailField, passwordField, submitButton);
   };
+
   hasAnyErrorsNow = (): boolean => {
-    return (
-      this._emailField.HasErrorNow() ||
-      this._passwordField.HasErrorNow() ||
-      this._passwordConfirmField.HasErrorNow()
-    );
+    return this._emailField.HasErrorNow() || this._passwordField.HasErrorNow();
   };
 
   hasAnyErrorsDebounced = async (): Promise<boolean> => {
     const hasEmailErr = await this._emailField.HasErrorDebounced();
     const hasPasswordErr = await this._passwordField.HasErrorDebounced();
-    const hasPasswordConfirmErr = await this._passwordConfirmField.HasErrorDebounced();
-    return hasEmailErr || hasPasswordErr || hasPasswordConfirmErr;
+    return hasEmailErr || hasPasswordErr;
   };
 
   getErrorMessagesNow = (): (string | null)[] => {
     const emailErr = this._emailField.TryGetErrorMessageNow();
     const passwordErr = this._passwordField.TryGetErrorMessageNow();
-    const passwordConfirmErr = this._passwordConfirmField.TryGetErrorMessageNow();
-    return [emailErr, passwordErr, passwordConfirmErr];
+    return [emailErr, passwordErr];
   };
 
   getErrorMessagesDebounced = async (): Promise<(string | null)[]> => {
     return Promise.all([
       this._emailField.TryGetErrorMessageDebounced(),
       this._passwordField.TryGetErrorMessageDebounced(),
-      this._passwordConfirmField.TryGetErrorMessageDebounced(),
     ]);
   };
 

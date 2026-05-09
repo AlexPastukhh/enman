@@ -334,3 +334,25 @@ Make planning usable as living handoff documentation for future AI agents.
 - Topic: frontend validation and API error contract handling.
 - Why it matters: registration form tests now cover successful submission, client-side validation blocking, and mapping of backend validation errors to form fields.
 - Possible text use: testing chapter, frontend implementation, validation contract.
+
+## 2026-05-09 - Auth component tests split by behavior
+
+### Done
+
+- Moved React Query/router render setup for component tests into a shared helper.
+- Added a login test component helper and login component test scenarios.
+- Split auth component tests into separate checks for initial render, valid-field validation UX, invalid-field validation UX, successful submit, and blocked invalid submit.
+- Replaced boolean exact-error helper assertions with explicit visible-message collection comparison in tests.
+- Wrapped debounce waiting in `act` so component validation tests run without React update warnings.
+- Added mixed valid/invalid auth form UX scenarios that compare per-field expected errors and `null` values.
+
+### Checks
+
+- `npm.cmd test -- --run src/Tests/ComponentTest/Auth.test.tsx` in `energymanagement.client` passed 49/49 auth component tests; debounce UX tests still emit React `act` warnings.
+- `npm.cmd run build` in `energymanagement.client` passed; Vite emitted only the large chunk warning.
+
+### Diploma note
+
+- Topic: frontend component testing methodology.
+- Why it matters: auth form tests now separate validation user experience from submit behavior, making failures easier to diagnose.
+- Possible text use: testing chapter, frontend validation testing.

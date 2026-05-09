@@ -1,19 +1,11 @@
-import { waitFor, type Screen } from "@testing-library/react";
+import { act, type Screen } from "@testing-library/react";
 import { formConst } from "../../../Components/Form/formConst";
 import type { UserEvent } from "@testing-library/user-event";
-import { EMLogger, LogMsgs } from "../../../Utils/Logger";
 
 export class BaseTest {}
 
-
-
-class TimeoutErr extends Error {
-  static TOMessage = "Timeout waiting for condition";
-  constructor() {
-    super(TimeoutErr.TOMessage);
-    this.name = "TimeoutErr";
-  }
-}
+const debouncedValidationDelayMs = 600;
+const debouncedValidationPollIntervalMs = 50;
 
 export class SUTFormField {
   private screen: Screen;
@@ -40,38 +32,14 @@ export class SUTFormField {
     return null;
   };
 
-  private static getErrorIfHasOne = async (
-    screen: Screen,
-    input: HTMLInputElement
-  ): Promise<HTMLParagraphElement | null> => {
-    const inputId = input.id;
-    let error;
-    try {
-      error = await waitFor(
-        () => {
-          const errFound = this.tryGetFormErrorOrNull(screen, inputId);
-          if (errFound) {
-            EMLogger.Warn(LogMsgs.FormTests.FormErrorFound);
-            return errFound;
-          }
-        },
-        {
-          timeout: 2000,
-          interval: 100,
-          onTimeout: () => {
-            EMLogger.Warn(LogMsgs.FormTests.TimeoutWaitingForCondition);
-            throw new TimeoutErr();
-          },
-        }
-      );
-    } catch (err: unknown) {
-      if (err instanceof TimeoutErr) {
-        return null;
-      }
-      throw err;
-    }
-    return error as HTMLParagraphElement | null;
-  };
+  TryGetErrorMessageNow(): string | null {
+    const errOrNull = SUTFormField.tryGetFormErrorOrNull(
+      this.screen,
+      this.input.id
+    );
+    return errOrNull?.textContent ?? null;
+  }
+
   static Create = (screen: Screen, inputLabel: string) => {
     const input = screen.getByLabelText(inputLabel) as HTMLInputElement;
     return new SUTFormField(input, screen);
@@ -81,35 +49,52 @@ export class SUTFormField {
     await user.type(this.input, value);
   }
 
-
-  async HasError(): Promise<boolean> {
-    const errOrNull = await SUTFormField.getErrorIfHasOne(
-      this.screen,
-      this.input
-    );
-    if (errOrNull) {
-      return true;
-    }
-    return false;
+  async WaitForDebouncedValidationAsync() {
+    await act(async () => {
+      await new Promise((resolve) =>
+        setTimeout(resolve, debouncedValidationDelayMs)
+      );
+    });
   }
-  async GetErrorMessage(): Promise<string| Error> {
-    const errOrNull = await SUTFormField.getErrorIfHasOne(
-      this.screen,
-      this.input
-    );
-    if(!errOrNull){
+
+  async ExpectNoErrorDuringDebouncedValidationAsync() {
+    const errorMessage = await this.TryGetErrorMessageDebounced();
+    if (errorMessage) {
+      throw new Error(
+        `Expected no validation error during debounce, but found: ${errorMessage}`
+      );
+    }
+  }
+
+  HasErrorNow(): boolean {
+    return this.TryGetErrorMessageNow() !== null;
+  }
+
+  async HasErrorDebounced(): Promise<boolean> {
+    return (await this.TryGetErrorMessageDebounced()) !== null;
+  }
+
+  async GetErrorMessageDebounced(): Promise<string| Error> {
+    const errOrNull = await this.TryGetErrorMessageDebounced();
+    if (!errOrNull) {
       return new Error("No error present");
     }
-    return errOrNull.textContent;
+    return errOrNull;
   }
-async TryGetErrorMessage(): Promise<string| null> {
-    const errOrNull = await SUTFormField.getErrorIfHasOne(
-      this.screen,
-      this.input
-    );
-    if(!errOrNull){
-      return null;
+
+  async TryGetErrorMessageDebounced(): Promise<string | null> {
+    const startedAt = Date.now();
+
+    while (Date.now() - startedAt < debouncedValidationDelayMs) {
+      const errorMessage = this.TryGetErrorMessageNow();
+      if (errorMessage) {
+        return errorMessage;
+      }
+      await new Promise((resolve) =>
+        setTimeout(resolve, debouncedValidationPollIntervalMs)
+      );
     }
-    return errOrNull.textContent;
+
+    return this.TryGetErrorMessageNow();
   }
 }
