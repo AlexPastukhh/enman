@@ -410,41 +410,42 @@ Make planning usable as living handoff documentation for future AI agents.
 - Why it matters: browser E2E tests currently exist but are not yet reliable as an automated verification layer because their configuration and page helper abstractions need cleanup.
 - Possible text use: testing chapter, limitations/future work.
 
-## 2026-05-09 - L1 domain model introduced in parallel
+## 2026-05-09 - Initial L1 domain subset introduced in parallel
 
 ### Done
 
 - Added a parallel L1 domain namespace `Domain.EnergyManagement.L1` without deleting or replacing old domain classes.
-- Added L1 account classes:
+- Added the initial L1 account subset:
   - `Account`;
   - `ClientAccount`;
-  - `EmployeeAccount`;
   - `AccountRole`.
-- Added L1 applicant classes:
+- Added the initial L1 applicant subset:
   - `ApplicantParty`;
   - `IndividualApplicantParty`;
   - `ApplicantPartyType`.
-- Added L1 request/review/contract/notification classes:
+- Added the initial L1 request subset:
   - `ClientRequest`;
   - `ConnectionRequest`;
+  - `RequestStatus`.
+- Added parallel unit tests in `L1DomainTests` while keeping all old unit tests.
+- Kept EF mapping, API handlers and integration tests on the old model for now.
+- Removed future L1 classes that do not yet have an equivalent tested implementation in the old project:
+  - `EmployeeAccount`;
   - `MeteringDeviceRequest`;
-  - `RequestStatus`;
   - `RequestReview`;
   - `ReviewDecision`;
   - `ContractDraft`;
   - `EmailNotification`.
-- Added parallel unit tests in `L1DomainTests` while keeping all old unit tests.
-- Kept EF mapping, API handlers and integration tests on the old model for now.
 
 ### Checks
 
-- `dotnet build Domain.EnergyManagement/Domain.EnergyManagement.csproj --no-restore` passed with 31 existing warnings.
-- `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --no-build --filter "FullyQualifiedName~L1DomainTests"` passed 22/22.
-- `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --no-build --filter "FullyQualifiedName~Tests.EnergyManagement.Unit"` passed 83/83.
-- `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --filter "FullyQualifiedName~L1DomainTests"` was blocked before useful execution by environment/client `.esproj` restore issues, but the later `--no-build` run passed after compilation.
+- `dotnet build Domain.EnergyManagement/Domain.EnergyManagement.csproj --no-restore` passed.
+- `dotnet build Tests.EnergyManagement/Tests.EnergyManagement.csproj --no-restore -p:BuildProjectReferences=false` compiled `Tests.EnergyManagement.dll` but returned exit code 1 because the referenced client `.esproj` could not resolve `Microsoft.VisualStudio.JavaScript.Sdk` in this environment.
+- `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --no-build --filter "FullyQualifiedName~L1DomainTests"` passed 12/12.
+- `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --no-build --filter "FullyQualifiedName~Tests.EnergyManagement.Unit"` passed 73/73.
 
 ### Diploma note
 
 - Topic: domain model refactoring and separation of responsibilities.
-- Why it matters: the new L1 model separates authentication accounts from applicant/legal party data and request processing, reducing coupling between login identity and contract/request data.
+- Why it matters: the initial L1 subset separates authentication accounts from applicant/legal party data while keeping the implemented scope aligned with behavior already present in the project.
 - Possible text use: domain design chapter, architecture rationale, testing chapter.

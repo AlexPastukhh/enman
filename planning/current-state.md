@@ -36,7 +36,7 @@ Backend and frontend validation contract coverage are stabilized. Next safe task
   - `ClientRequest`;
   - `IndividualRequest`;
   - `RequestReview`.
-- New parallel L1 domain classes exist under `Domain.EnergyManagement.L1`; EF/API still use the old model until the next migration steps.
+- New parallel L1 domain subset exists under `Domain.EnergyManagement.L1`; EF/API still use the old model until the next migration steps.
 - Existing old server endpoints for registration/login/user and individual request creation.
 - Existing EF Core mapping for old entities.
 - Structured planning folder exists.
@@ -66,7 +66,7 @@ Backend and frontend validation contract coverage are stabilized. Next safe task
 - Frontend registration component tests and validation-error unit tests pass against the current client-side validation and backend problem-details contract.
 - Auth component debounce validation UX tests use fake timers and cover valid, mixed and invalid field combinations for register/login forms.
 - Frontend production build passes after session provider/import cleanup and registration view restoration.
-- L1 domain model has been introduced in parallel with old domain classes and is covered by dedicated unit tests.
+- Initial L1 domain subset has been introduced in parallel with old domain classes and is covered by dedicated unit tests.
 
 ## Current L1 implementation cut
 
@@ -85,6 +85,16 @@ L1 must implement only:
 - `ReviewDecision`;
 - `ContractDraft`;
 - `EmailNotification`.
+
+Current implemented parallel L1 subset:
+
+- `Account`;
+- `ClientAccount`;
+- `ApplicantParty`;
+- `IndividualApplicantParty`;
+- `ClientRequest`;
+- `ConnectionRequest`;
+- `RequestStatus.Submitted`.
 
 L1 business flow:
 
@@ -135,9 +145,9 @@ Guest registers
 | done | Stabilize frontend registration validation tests | Vitest auth component tests pass 52/52 with deterministic fake-timer debounce UX checks; frontend build passed on 2026-05-09. |
 | done | Improve planning navigation protocol | README, agent rules and current state now guide next safe actions. |
 | done | Add diploma note protocol | Significant work can now leave short notes for future diploma text in `action-log.md`. |
-| done | Start L1 domain refactor | Parallel `Domain.EnergyManagement.L1` classes added without removing old model. |
-| done | Add unit tests for L1 domain invariants | `L1DomainTests` cover accounts, applicant party, request creation, review flow, contract draft and email notification. |
-| next | Duplicate integration path for L1 model | Start from auth/account/applicant creation without replacing old EF/API yet. |
+| done | Start L1 domain refactor | Initial parallel `Domain.EnergyManagement.L1` subset added without removing old model. |
+| done | Add unit tests for current L1 domain subset | `L1DomainTests` cover client account, individual applicant party and connection request creation. |
+| next | Duplicate integration path for current L1 subset | Start from auth/account/applicant creation without replacing old EF/API yet. |
 | later | Configure EF Core TPH mapping for L1 inheritance | Depends on choosing migration strategy from parallel L1 model to EF. |
 | later | Implement L1 API endpoints | Depends on domain and EF mapping. |
 | later | Add integration tests and Playwright E2E scenarios | Depends on L1 API behavior and test database strategy. |
@@ -153,4 +163,4 @@ Guest registers
 
 ## Last updated
 
-2026-05-09 - Parallel L1 domain model introduced and covered by unit tests; L1DomainTests passed 22/22 and all unit tests passed 83/83.
+2026-05-09 - Initial parallel L1 domain subset introduced and covered by unit tests; L1DomainTests passed 12/12 and all unit tests passed 73/73.
