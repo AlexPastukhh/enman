@@ -473,3 +473,24 @@ Make planning usable as living handoff documentation for future AI agents.
 - Topic: domain-driven aggregate boundary design.
 - Why it matters: account, applicant and request lifecycles now have explicit ownership boundaries, reducing coupling and avoiding large aggregate graphs during the migration from the old model.
 - Possible text use: domain design chapter, architecture rationale, maintainability and risk mitigation.
+
+## 2026-05-10 - L1 aggregate boundary clarification recorded
+
+### Done
+
+- Clarified that inter-aggregate references are stored as scalar `long` IDs, while factories may accept already persisted aggregate objects as creation context.
+- Recorded that referenced aggregates must have valid `Id > 0` before being used as creation context.
+- Clarified that current L1 request aggregate state excludes request number, employee assignment, reviews and workflow methods.
+- Recorded request number policy: technical `Id` is not the public request number, and request numbers should be generated outside the entity if needed later.
+- Recorded L1 password storage rule: account stores `PasswordHash`, while raw password and hash/verify behavior stay outside the aggregate.
+- Added testing guidance for EF-generated IDs and aggregate factory unit/integration coverage.
+
+### Checks
+
+- No tests were run because this was a planning-only change.
+
+### Diploma note
+
+- Topic: aggregate identity and authentication data boundaries.
+- Why it matters: the domain model now separates technical identity, business numbering, password hashing concerns and aggregate references, which makes the migration model clearer and safer to persist.
+- Possible text use: domain design chapter, security/authentication design, testing strategy.

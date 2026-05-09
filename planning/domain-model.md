@@ -28,7 +28,7 @@ Current implemented L1 aggregate roots:
 
 - `ClientAccount` owns account/auth lifecycle.
 - `IndividualApplicantParty` owns applicant party/profile data and references the owning client account.
-- `ConnectionRequest` owns request number, details, object address and status, and references the applicant party.
+- `ConnectionRequest` owns request details, object address and status, and references the applicant party.
 
 The current implemented L1 subset is intentionally limited to behavior already represented by the old project: registration/login-related account data, physical-person applicant data, request creation, and `RequestStatus.Submitted`.
 
@@ -61,13 +61,27 @@ These future concepts or future responsibilities are preliminary and are not par
 
 ### Inter-aggregate references
 
-- Use scalar `long` IDs for inter-aggregate references for now.
+- Store scalar `long` IDs for inter-aggregate references for now.
 - Do not introduce typed IDs yet unless explicitly requested later.
 - Examples:
   - `IndividualApplicantParty.ClientAccountId: long`;
   - `ConnectionRequest.ApplicantPartyId: long`.
-- Aggregate factories and domain methods should prefer IDs or small role/snapshot value objects over fully loaded aggregate navigation objects.
+- This rule describes stored references, not necessarily raw-`long` factory parameters.
+- Raw `long` factory parameters are not preferred where passing an existing aggregate object gives better type safety and expresses a real business precondition.
 - Domain behavior must not rely on traversing public navigation graphs across aggregate boundaries.
+
+### Inter-aggregate creation context
+
+- During current L1 migration, aggregate factories may accept an already existing aggregate object as creation context when this improves type safety and expresses a real business precondition.
+- The created aggregate stores only the referenced aggregate ID.
+- The created aggregate must not store the referenced aggregate object as owned domain navigation.
+- The referenced aggregate must already be persisted and have valid `Id > 0`.
+- If the referenced aggregate has an invalid/default ID, creation should fail or be rejected according to the domain error policy.
+
+Examples:
+
+- `IndividualApplicantParty.Create(clientAccount, fullName, email, phoneNumber)` stores `clientAccount.Id` into `ClientAccountId`.
+- `ConnectionRequest.Create(applicantParty, details, objectAddress)` stores `applicantParty.Id` into `ApplicantPartyId`.
 
 ### EF relationship and navigation rule
 
@@ -94,8 +108,9 @@ These future concepts or future responsibilities are preliminary and are not par
 - Example:
   - load `ApplicantParty` by `applicantPartyId`;
   - check `ApplicantParty.ClientAccountId == currentClientAccountId`;
-  - call `ConnectionRequest.Create(applicantPartyId, details, address)`.
-- Do not push this check into `ConnectionRequest` by requiring the full `ApplicantParty` aggregate object.
+  - call `ConnectionRequest.Create(applicantParty, details, address)`;
+  - `ConnectionRequest` stores only `applicantParty.Id`.
+- Do not push this check into `ConnectionRequest`; ownership and authorization checks that need multiple aggregates belong in the application service.
 
 ## L1 implementation cut
 
@@ -144,17 +159,24 @@ L3 расширения:
 Наследники:
 
 - `ClientAccount` — L1;
-- `EmployeeAccount` — L1.
+- `EmployeeAccount` — later L1.
+
+### Password storage rule
+
+- `Account` stores `PasswordHash`, not a raw password.
+- The old `Password` wrapper should not be used in the L1 account model if it only wraps `PasswordHash` and adds no domain behavior.
+- Raw password exists only at the DTO/command/application-service boundary.
+- Hashing and password verification belong to a password hasher/auth service, not to the account aggregate itself.
 
 ### `ClientAccount` — L1
 
 Аккаунт клиента. Отвечает только за вход клиента в систему.
 
-Связан с одним или несколькими `ApplicantParty`.
+Связь с `ApplicantParty` выражается через `ApplicantParty.ClientAccountId` и запросы по этому FK, а не через доменную collection navigation на стороне `ClientAccount`.
 
 В L1 обычно один `IndividualApplicantParty`.
 
-### `EmployeeAccount` — L1
+### `EmployeeAccount` — later L1
 
 Аккаунт сотрудника, который обрабатывает заявки.
 
@@ -241,26 +263,53 @@ L2 расширения:
 
 ## Requests
 
-### `ClientRequest` — L1
+### `ClientRequest` — current implemented L1 subset
 
-Базовый aggregate заявки.
+Базовый aggregate заявки в текущем узком L1-срезе.
 
-L1 поля:
+Current implemented fields:
 
 - `Id`;
-- `Number`;
 - `ApplicantPartyId`;
 - `RequestType`;
 - `Status`;
 - `Details`;
 - `ObjectAddress`;
-- `CreatedAt`;
+- `CreatedAt`.
+
+Current implemented methods:
+
+- `Create(...)`.
+
+Explicitly not in the current implemented subset:
+
+- `Number`;
+- `AssignedEmployeeId`;
+- `Reviews`;
+- `TakeForReview(...)`;
+- `Approve(...)`;
+- `Reject(...)`;
+- `AttachContractDraft(...)`;
+- `MarkContractDraftSent()`.
+
+### Request number policy
+
+- `Id` is the technical primary key/FK.
+- Request number is a public/business identifier, not the primary key.
+- Request number is not part of the current implemented L1 subset.
+- Do not generate request numbers inside the domain entity with timestamps.
+- If request numbers become necessary later, generate them outside the entity through an application service, generator, or database sequence, then pass/store the generated value intentionally.
+
+### `ClientRequest` — later L1 workflow expansion
+
+Later workflow fields may include:
+
+- `Number`;
 - `AssignedEmployeeId`;
 - `Reviews`.
 
-L1 методы:
+Later workflow methods may include:
 
-- `Create(...)`;
 - `TakeForReview(employeeId)`;
 - `Approve(employeeId, comment)`;
 - `Reject(employeeId, reason)`;
@@ -287,7 +336,7 @@ L2 может добавить:
 
 - `RequestedPowerKw`.
 
-### `MeteringDeviceRequest` — L1
+### `MeteringDeviceRequest` — later L1
 
 Заявка по приборам учета.
 
@@ -297,9 +346,12 @@ L2 может добавить:
 
 ### `RequestStatus`
 
-L1:
+Current implemented L1 subset:
 
 - `Submitted`;
+
+Later L1 workflow expansion:
+
 - `InReview`;
 - `Approved`;
 - `Rejected`;
@@ -318,7 +370,7 @@ L3:
 
 - `Archived`.
 
-### `RequestReview` — L1
+### `RequestReview` — later L1
 
 Решение сотрудника по заявке.
 
@@ -347,7 +399,7 @@ L2:
 
 ## Contracts
 
-### `ContractDraft` — L1
+### `ContractDraft` — later L1
 
 Простой проект договора/документа, создаваемый после одобрения заявки.
 
@@ -416,7 +468,7 @@ L2 расширения:
 
 ## Notifications
 
-### `NotificationMessage` — L1
+### `NotificationMessage` — later L1
 
 Базовое уведомление.
 
@@ -429,7 +481,7 @@ L3 каналы:
 - `Sms`;
 - `InternalMessage`.
 
-### `EmailNotification` — L1
+### `EmailNotification` — later L1
 
 Email-уведомление клиенту.
 

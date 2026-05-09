@@ -92,8 +92,11 @@ Skip diploma notes for small mechanical edits.
 - Do not merge `Account` and `ApplicantParty`.
 - Do not model ФЛ/ИП/ЮЛ as `Account` subclasses.
 - During L1 refactor, do not create aggregate roots from other aggregate roots.
+- Passing an existing aggregate as factory creation context is allowed when it expresses a real precondition.
+- Calling methods like `otherAggregate.CreateX(...)` to create a different aggregate root is not allowed.
 - During L1 refactor, do not add one-side collection navigations for inter-aggregate relationships unless explicitly justified.
-- During L1 refactor, use scalar `long` IDs for inter-aggregate references unless a later explicit decision changes this.
+- During L1 refactor, store scalar `long` IDs for inter-aggregate references unless a later explicit decision changes this.
+- Factory methods may accept an already existing aggregate object as creation context, but the created aggregate must store only the referenced aggregate ID and must not keep a cross-aggregate object reference.
 - Do not model aggregate relationships as primitive ID collections such as `List<long> ApplicantPartyIds`.
 - Do not add typed ID value objects yet.
 - Do not add electronic signature.

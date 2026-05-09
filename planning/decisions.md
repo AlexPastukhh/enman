@@ -204,7 +204,7 @@ The parallel L1 domain model is a migration target while EF/API still use the ol
 
 ### Decision
 
-Use scalar `long` IDs for inter-aggregate references in the L1 migration model.
+Store scalar `long` IDs for inter-aggregate references in the L1 migration model.
 
 Examples:
 
@@ -212,6 +212,17 @@ Examples:
 - `ConnectionRequest.ApplicantPartyId: long`.
 
 Do not introduce typed ID value objects yet. Do not model aggregate relationships as primitive ID collections such as `List<long> ApplicantPartyIds`.
+
+This decision controls what is stored in the domain entity and persisted as an inter-aggregate reference. It does not require every aggregate factory to accept raw `long` parameters.
+
+For type safety during creation, a factory may accept an already existing aggregate object and extract its `Id`, while storing only the scalar `long` FK/reference internally.
+
+Examples:
+
+- `IndividualApplicantParty.Create(ClientAccount clientAccount, ...)` stores `ClientAccountId`;
+- `ConnectionRequest.Create(IndividualApplicantParty applicantParty, ...)` stores `ApplicantPartyId`.
+
+The referenced aggregate must already be persisted and have valid `Id > 0`. Typed ID value objects are still intentionally not introduced in the current step.
 
 ### Rationale
 
@@ -225,3 +236,55 @@ Do not introduce typed ID value objects yet. Do not model aggregate relationship
 - application services must load and check related aggregates before calling the target aggregate method;
 - queries/read models handle display joins and view-specific data shape;
 - EF can still define FK relationships without principal collection navigation, for example `HasOne<ClientAccount>().WithMany().HasForeignKey(...)`.
+- unit tests should not try to simulate EF-generated IDs unless a safe test helper exists;
+- EF-generated ID propagation and FK persistence are integration-test concerns;
+- domain unit tests cover local invariants and invalid non-persisted references where practical.
+
+## DEC-010: Request number is not part of current implemented L1 subset
+
+### Status
+
+Accepted
+
+### Context
+
+The current implemented L1 request subset covers submitted request creation only. A request number is a public/business identifier and has different lifecycle and generation rules than the technical primary key.
+
+### Decision
+
+Keep request number out of the current implemented L1 subset.
+
+- `Id` is technical identity and FK target.
+- Request number is a business/public identifier.
+- Do not generate request numbers inside the entity with timestamps.
+- Add request number later through an application service, generator, or database sequence if it becomes necessary.
+
+### Consequences
+
+- current L1 request creation remains focused on persisted aggregate identity and submitted request data;
+- numbering policy can be designed separately from aggregate construction;
+- timestamp-based collisions and hidden formatting policy inside the entity are avoided.
+
+## DEC-011: Use PasswordHash directly in L1 Account
+
+### Status
+
+Accepted
+
+### Context
+
+The L1 account aggregate owns account/auth lifecycle state, but raw password handling and hashing are application/auth service responsibilities.
+
+### Decision
+
+L1 `Account` stores `PasswordHash` directly.
+
+- Remove/avoid the old `Password` wrapper if it is only a thin wrapper around `PasswordHash`.
+- Raw password stays outside the domain entity.
+- Hashing and password verification belong to the auth/password service.
+
+### Consequences
+
+- account state remains explicit and persistence-friendly;
+- domain model does not imply that raw passwords are stored;
+- password hashing policy can evolve in application/infrastructure services without changing aggregate ownership.

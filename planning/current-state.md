@@ -139,7 +139,7 @@ Guest registers
 | done | Add diploma note protocol | Significant work can now leave short notes for future diploma text in `action-log.md`. |
 | done | Start L1 domain refactor | Initial parallel `Domain.EnergyManagement.L1` subset added without removing old model. |
 | done | Add unit tests for current L1 domain subset | `L1DomainTests` cover client account, individual applicant party and connection request creation. |
-| next | Align current L1 domain code with aggregate boundary rules | Replace cross-aggregate object references with `long` IDs; remove or avoid one-side aggregate collection navigations; keep EF/API old model untouched until an explicit migration step. |
+| next | Align current L1 domain code with aggregate boundary rules | Store cross-aggregate references as scalar `long` IDs; factories may accept existing aggregate objects as creation context and extract IDs; reject non-persisted referenced aggregates with invalid/default IDs; remove or avoid one-side aggregate collection navigations; replace current L1 `Password` usage with `PasswordHash`; remove `Request.Number` from current implemented L1 subset; update L1 unit tests; keep EF/API old model untouched until an explicit migration step. |
 | later | Duplicate integration path for current L1 subset | Start from auth/account/applicant creation after aggregate boundaries are aligned, without replacing old EF/API yet. |
 | later | Configure EF Core TPH mapping for L1 inheritance | Depends on choosing migration strategy from parallel L1 model to EF. |
 | later | Implement L1 API endpoints | Depends on domain and EF mapping. |
@@ -156,4 +156,4 @@ Guest registers
 
 ## Last updated
 
-2026-05-10 - L1 aggregate boundary rules recorded in planning. Next safe task is aligning the parallel L1 domain code with those rules while keeping EF/API on the old model.
+2026-05-10 - L1 aggregate boundary rules clarified in planning. Next safe task is aligning the parallel L1 domain code with stored scalar IDs, aggregate-object creation context, `PasswordHash`, and no current request number while keeping EF/API on the old model.

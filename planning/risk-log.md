@@ -155,4 +155,18 @@ Domain behavior may start depending on loaded cross-aggregate navigation graphs,
 
 ### Mitigation
 
-Use scalar `long` IDs as the domain source of truth for inter-aggregate references. Allow EF navigation properties only as persistence/read convenience. Do not add one-side collection navigation for aggregate relationships unless explicitly justified.
+Store scalar `long` IDs as the domain source of truth for inter-aggregate references. Factory methods may accept existing aggregate objects as creation context, but the created aggregate must not store cross-aggregate object references. Allow EF navigation properties only as persistence/read convenience. Do not add one-side collection navigation for aggregate relationships unless explicitly justified.
+
+## RISK-010: Request number generation may be confused with primary identity
+
+### Description
+
+Public request number is different from the technical database ID. Timestamp generation inside the entity can create collisions and mixes numbering policy with aggregate creation.
+
+### Impact
+
+Request identity rules may become unclear, and domain tests may accidentally depend on time-based formatting instead of business behavior.
+
+### Mitigation
+
+Keep request number outside the current implemented L1 subset. If request numbers become necessary later, generate them in an application service, dedicated generator, or database sequence, then pass/store the generated value intentionally.
