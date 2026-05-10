@@ -11,7 +11,26 @@ public enum AccountRole
     Client
 }
 
-public abstract class Account : Entity
+public abstract class L1Entity : Entity
+{
+    protected static long GuardPersistedReferenceId(
+        L1Entity referencedEntity,
+        string parameterName)
+    {
+        Guard.IsNotNull(referencedEntity);
+
+        if (referencedEntity.Id <= 0)
+        {
+            throw new ArgumentException(
+                "Referenced aggregate must already be persisted and have Id > 0.",
+                parameterName);
+        }
+
+        return referencedEntity.Id;
+    }
+}
+
+public abstract class Account : L1Entity
 {
     public Email Email { get; private set; }
     public PasswordHash PasswordHash { get; private set; }
@@ -66,7 +85,7 @@ public enum ApplicantPartyType
     Individual
 }
 
-public abstract class ApplicantParty : Entity
+public abstract class ApplicantParty : L1Entity
 {
     public long ClientAccountId { get; private set; }
     public ApplicantPartyType ApplicantPartyType { get; private set; }
@@ -80,12 +99,12 @@ public abstract class ApplicantParty : Entity
         Email email,
         PhoneNumber phoneNumber)
     {
-        Guard.IsNotNull(clientAccount);
         Guard.IsNotNull(email);
         Guard.IsNotNull(phoneNumber);
-        GuardReferencedAggregateId(clientAccount.Id, nameof(clientAccount));
 
-        ClientAccountId = clientAccount.Id;
+        ClientAccountId = GuardPersistedReferenceId(
+            clientAccount,
+            nameof(clientAccount));
         ApplicantPartyType = applicantPartyType;
         Email = email;
         PhoneNumber = phoneNumber;
@@ -99,16 +118,6 @@ public abstract class ApplicantParty : Entity
     }
 
     public abstract string GetDisplayName();
-
-    protected static void GuardReferencedAggregateId(long id, string parameterName)
-    {
-        if (id <= 0)
-        {
-            throw new ArgumentException(
-                "Referenced aggregate must already be persisted and have Id > 0.",
-                parameterName);
-        }
-    }
 }
 
 public sealed class IndividualApplicantParty : ApplicantParty
@@ -162,7 +171,7 @@ public enum RequestStatus
     Submitted
 }
 
-public abstract class ClientRequest : Entity
+public abstract class ClientRequest : L1Entity
 {
     public long ApplicantPartyId { get; private set; }
     public ClientRequestType RequestType { get; private set; }
@@ -177,11 +186,11 @@ public abstract class ClientRequest : Entity
         string details,
         Address objectAddress)
     {
-        Guard.IsNotNull(applicantParty);
         Guard.IsNotNull(objectAddress);
-        GuardReferencedAggregateId(applicantParty.Id, nameof(applicantParty));
 
-        ApplicantPartyId = applicantParty.Id;
+        ApplicantPartyId = GuardPersistedReferenceId(
+            applicantParty,
+            nameof(applicantParty));
         RequestType = requestType;
         Details = details;
         ObjectAddress = objectAddress;
@@ -210,16 +219,6 @@ public abstract class ClientRequest : Entity
         }
 
         return errors;
-    }
-
-    protected static void GuardReferencedAggregateId(long id, string parameterName)
-    {
-        if (id <= 0)
-        {
-            throw new ArgumentException(
-                "Referenced aggregate must already be persisted and have Id > 0.",
-                parameterName);
-        }
     }
 }
 

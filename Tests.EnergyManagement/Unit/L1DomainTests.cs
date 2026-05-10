@@ -1,9 +1,8 @@
 using CSharpFunctionalExtensions;
 using Domain.EnergyManagement.Common;
-using Domain.EnergyManagement.DocumentManaging;
 using Domain.EnergyManagement.L1;
 using FluentAssertions;
-using Tests.EnergyManagement.TestHelpers;
+using Tests.EnergyManagement.TestHelpers.L1;
 
 namespace Tests.EnergyManagement.Unit;
 
@@ -11,23 +10,16 @@ public class L1DomainTests
 {
     private static ClientAccount CreateClientAccount()
     {
-        var email = Email.Create(ValidTestData.ValidEmail).Value;
-        var passwordHash = CreatePasswordHash();
-
-        return ClientAccount.Create(email, passwordHash).Value;
-    }
-
-    private static PasswordHash CreatePasswordHash()
-    {
-        var password = Password.Create(ValidTestData.ValidPassword).Value;
-        return PasswordHash.ConvertFromString(password.Hash);
+        return ClientAccount.Create(
+            L1ValidTestData.Email,
+            L1ValidTestData.PasswordHash).Value;
     }
 
     [Fact]
     public void CreatesClientAccountSuccessfully()
     {
-        var (_, email, _, _) = ValidTestData.GetAllIndividualsValues();
-        var passwordHash = CreatePasswordHash();
+        var email = L1ValidTestData.Email;
+        var passwordHash = L1ValidTestData.PasswordHash;
 
         var createAccount = ClientAccount.Create(email, passwordHash);
 
@@ -47,8 +39,8 @@ public class L1DomainTests
         bool isEmailNull,
         bool isPasswordNull)
     {
-        var (_, email, _, _) = ValidTestData.GetAllIndividualsValues();
-        var passwordHash = CreatePasswordHash();
+        var email = L1ValidTestData.Email;
+        var passwordHash = L1ValidTestData.PasswordHash;
         if (isEmailNull)
         {
             email = null!;
@@ -69,14 +61,13 @@ public class L1DomainTests
     public void CantCreateIndividualApplicantPartyForTransientClientAccount()
     {
         var account = CreateClientAccount();
-        var (fullName, email, phone, _) = ValidTestData.GetAllIndividualsValues();
 
         Func<Result<IndividualApplicantParty, IReadOnlyList<Error>>> createApplicantParty =
             () => IndividualApplicantParty.Create(
                 account,
-                fullName,
-                email,
-                phone);
+                L1ValidTestData.FullName,
+                L1ValidTestData.Email,
+                L1ValidTestData.PhoneNumber);
 
         createApplicantParty.Should().Throw<ArgumentException>();
     }
@@ -87,8 +78,8 @@ public class L1DomainTests
         Func<Result<ConnectionRequest, IReadOnlyList<Error>>> createWithoutApplicantParty =
             () => ConnectionRequest.Create(
                 null!,
-                ValidTestData.RequestDetails,
-                ValidTestData.GetAddressWithApartment());
+                L1ValidTestData.RequestDetails,
+                L1ValidTestData.Address);
 
         createWithoutApplicantParty.Should().Throw<Exception>();
     }

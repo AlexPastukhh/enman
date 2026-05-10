@@ -568,3 +568,25 @@ Make planning usable as living handoff documentation for future AI agents.
 - Topic: test boundary discipline.
 - Why it matters: unit tests no longer fake persistence state, so generated identity propagation and foreign-key persistence remain verified at the integration level where EF and the database are actually involved.
 - Possible text use: testing chapter, test pyramid rationale, integration testing responsibilities.
+
+## 2026-05-10 - L1 persisted-reference guard centralized
+
+### Done
+
+- Added `L1Entity` as the base class for current parallel L1 entities.
+- Added `GuardPersistedReferenceId(L1Entity referencedEntity, string parameterName)` so persisted-reference checks accept an L1 entity instead of an arbitrary `long`.
+- Updated `ApplicantParty` and `ClientRequest` constructors to use the shared guard and assign returned scalar IDs.
+- Removed duplicated `GuardReferencedAggregateId(long, string)` methods.
+- Added a minimal L1-specific test helper for valid L1 data, including direct `PasswordHash` construction without using the old `Password` wrapper.
+- Updated `L1DomainTests` to use the L1 helper and keep the no-fake-persisted-ID test boundary.
+
+### Checks
+
+- `dotnet build Domain.EnergyManagement/Domain.EnergyManagement.csproj --no-restore` passed with existing warnings.
+- `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --filter "FullyQualifiedName~L1DomainTests"` was blocked in sandbox by user `NuGet.Config` access / JavaScript SDK resolution, then passed outside sandbox: 6/6.
+
+### Diploma note
+
+- Topic: domain guard reuse and test data separation.
+- Why it matters: persisted-reference validation is centralized in the L1 domain base type, and L1 aggregate tests now use helper data that matches the new domain model instead of old workflow-oriented test fixtures.
+- Possible text use: domain design chapter, testing chapter, maintainability rationale.

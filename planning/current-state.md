@@ -156,4 +156,4 @@ Guest registers
 
 ## Last updated
 
-2026-05-10 - Parallel L1 domain code aligned with stored scalar IDs, aggregate-object creation context, `PasswordHash`, no current request number, and guard behavior for transient referenced aggregates. L1 unit tests no longer imitate persisted IDs; successful inter-aggregate creation with generated IDs is reserved for integration tests. Next safe task is duplicating the integration path for the current L1 subset while keeping EF/API on the old model until an explicit migration step.
+2026-05-10 - Parallel L1 domain code aligned with stored scalar IDs, aggregate-object creation context, `PasswordHash`, no current request number, and centralized `L1Entity` guard behavior for transient referenced aggregates. L1 unit tests use L1-specific helper data and no longer imitate persisted IDs; successful inter-aggregate creation with generated IDs is reserved for integration tests. Next safe task is duplicating the integration path for the current L1 subset while keeping EF/API on the old model until an explicit migration step.
