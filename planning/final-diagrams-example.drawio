@@ -1,0 +1,1025 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT" pages="4">
+  <diagram id="e7b71e9b7c79" name="DB L1 current — final test v2">
+    <mxGraphModel dx="2339" dy="881" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1750" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="page-title" connectable="0" parent="1" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=center;fontSize=36;fontColor=#F8FAFC;fontFamily=Arial;fontStyle=1;" value="DB diagram — L1 current schema" vertex="1">
+          <mxGeometry height="64" width="2120" x="40" y="24" as="geometry" />
+        </mxCell>
+        <mxCell id="db-note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFFBE0;strokeColor=#B8A900;strokeWidth=2;fontSize=18;fontColor=#111827;align=left;verticalAlign=middle;spacing=16;" value="DB diagram:&amp;lt;br&amp;gt;• storage shape only&amp;lt;br&amp;gt;• no domain methods&amp;lt;br&amp;gt;• TPH shown by discriminator columns" vertex="1">
+          <mxGeometry height="145" width="560" x="70" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="db-legend-title" connectable="0" parent="1" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#F8FAFC;fontFamily=Arial;fontStyle=1;" value="Legend" vertex="1">
+          <mxGeometry height="36" width="280" x="70" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="db-legend-box-0" parent="1" style="rounded=1;html=1;fillColor=#E6F4EF;strokeColor=#007A5A;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="26" width="36" x="70" y="378" as="geometry" />
+        </mxCell>
+        <mxCell id="db-legend-txt-0" connectable="0" parent="1" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=17;fontColor=#F8FAFC;fontFamily=Arial;" value="L1 current persisted schema" vertex="1">
+          <mxGeometry height="34" width="520" x="120" y="375" as="geometry" />
+        </mxCell>
+        <mxCell id="db-legend-box-1" parent="1" style="rounded=1;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="26" width="36" x="70" y="422" as="geometry" />
+        </mxCell>
+        <mxCell id="db-legend-txt-1" connectable="0" parent="1" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=17;fontColor=#F8FAFC;fontFamily=Arial;" value="attached edge labels" vertex="1">
+          <mxGeometry height="34" width="520" x="120" y="419" as="geometry" />
+        </mxCell>
+        <mxCell id="db-accounts" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="460" width="1040" x="860" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="db-accounts-header" connectable="0" parent="db-accounts" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#009E73;strokeColor=#007A5A;strokeWidth=2;fontColor=#FFFFFF;fontSize=32;fontStyle=1;align=center;verticalAlign=middle;" value="L1Accounts / Account TPH" vertex="1">
+          <mxGeometry height="72" width="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="db-accounts-body-bg" connectable="0" parent="db-accounts" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#E6F4EF;strokeColor=#007A5A;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="389" width="1040" y="71" as="geometry" />
+        </mxCell>
+        <mxCell id="db-accounts-sec-0" connectable="0" parent="db-accounts" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" value="[identity]" vertex="1">
+          <mxGeometry height="32" width="984" x="28" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="db-accounts-div-0" connectable="0" parent="db-accounts" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" value="" vertex="1">
+          <mxGeometry height="1" width="984" x="28" y="132" as="geometry" />
+        </mxCell>
+        <mxCell id="db-accounts-line-0-0" connectable="0" parent="db-accounts" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#BE185D;fontFamily=Consolas;" value="PK Id : bigint" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="138" as="geometry" />
+        </mxCell>
+        <mxCell id="db-accounts-line-0-1" connectable="0" parent="db-accounts" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#B45309;fontFamily=Consolas;" value="Discriminator AccountType : string" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="172" as="geometry" />
+        </mxCell>
+        <mxCell id="db-accounts-sec-1" connectable="0" parent="db-accounts" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" value="[L1 core]" vertex="1">
+          <mxGeometry height="32" width="984" x="28" y="224" as="geometry" />
+        </mxCell>
+        <mxCell id="db-accounts-div-1" connectable="0" parent="db-accounts" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" value="" vertex="1">
+          <mxGeometry height="1" width="984" x="28" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="db-accounts-line-1-0" connectable="0" parent="db-accounts" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" value="Email : nvarchar(320)" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="266" as="geometry" />
+        </mxCell>
+        <mxCell id="db-accounts-line-1-1" connectable="0" parent="db-accounts" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" value="PasswordHash : nvarchar(max)" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="db-accounts-line-1-2" connectable="0" parent="db-accounts" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" value="Role : int" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="334" as="geometry" />
+        </mxCell>
+        <mxCell id="db-accounts-line-1-3" connectable="0" parent="db-accounts" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" value="IsActive : bit" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="368" as="geometry" />
+        </mxCell>
+        <mxCell id="db-accounts-line-1-4" connectable="0" parent="db-accounts" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" value="CreatedAt : datetimeoffset" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="402" as="geometry" />
+        </mxCell>
+        <mxCell id="db-applicants" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="528" width="1040" x="870" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="db-applicants-header" connectable="0" parent="db-applicants" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#009E73;strokeColor=#007A5A;strokeWidth=2;fontColor=#FFFFFF;fontSize=32;fontStyle=1;align=center;verticalAlign=middle;" value="L1ApplicantParties / ApplicantParty TPH" vertex="1">
+          <mxGeometry height="72" width="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="db-applicants-body-bg" connectable="0" parent="db-applicants" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#E6F4EF;strokeColor=#007A5A;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="457" width="1040" y="71" as="geometry" />
+        </mxCell>
+        <mxCell id="db-applicants-sec-0" connectable="0" parent="db-applicants" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" value="[identity]" vertex="1">
+          <mxGeometry height="32" width="984" x="28" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="db-applicants-div-0" connectable="0" parent="db-applicants" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" value="" vertex="1">
+          <mxGeometry height="1" width="984" x="28" y="132" as="geometry" />
+        </mxCell>
+        <mxCell id="db-applicants-line-0-0" connectable="0" parent="db-applicants" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#BE185D;fontFamily=Consolas;" value="PK Id : bigint" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="138" as="geometry" />
+        </mxCell>
+        <mxCell id="db-applicants-line-0-1" connectable="0" parent="db-applicants" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#B45309;fontFamily=Consolas;" value="Discriminator ApplicantPartyType : string" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="172" as="geometry" />
+        </mxCell>
+        <mxCell id="db-applicants-line-0-2" connectable="0" parent="db-applicants" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#0369A1;fontFamily=Consolas;" value="FK ClientAccountId : bigint" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="206" as="geometry" />
+        </mxCell>
+        <mxCell id="db-applicants-sec-1" connectable="0" parent="db-applicants" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" value="[L1 core]" vertex="1">
+          <mxGeometry height="32" width="984" x="28" y="258" as="geometry" />
+        </mxCell>
+        <mxCell id="db-applicants-div-1" connectable="0" parent="db-applicants" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" value="" vertex="1">
+          <mxGeometry height="1" width="984" x="28" y="294" as="geometry" />
+        </mxCell>
+        <mxCell id="db-applicants-line-1-0" connectable="0" parent="db-applicants" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" value="Email : nvarchar(320)" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="db-applicants-line-1-1" connectable="0" parent="db-applicants" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" value="PhoneNumber : nvarchar(32)" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="334" as="geometry" />
+        </mxCell>
+        <mxCell id="db-applicants-line-1-2" connectable="0" parent="db-applicants" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" value="CreatedAt : datetimeoffset" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="368" as="geometry" />
+        </mxCell>
+        <mxCell id="db-applicants-line-1-3" connectable="0" parent="db-applicants" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" value="FullName_FirstName : nvarchar(100)" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="402" as="geometry" />
+        </mxCell>
+        <mxCell id="db-applicants-line-1-4" connectable="0" parent="db-applicants" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" value="FullName_LastName : nvarchar(100)" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="436" as="geometry" />
+        </mxCell>
+        <mxCell id="db-applicants-line-1-5" connectable="0" parent="db-applicants" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" value="FullName_MiddleName : nvarchar(100)" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="db-requests" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="460" width="1040" x="870" y="1190" as="geometry" />
+        </mxCell>
+        <mxCell id="db-requests-header" connectable="0" parent="db-requests" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#009E73;strokeColor=#007A5A;strokeWidth=2;fontColor=#FFFFFF;fontSize=32;fontStyle=1;align=center;verticalAlign=middle;" value="L1ClientRequests / ClientRequest TPH" vertex="1">
+          <mxGeometry height="72" width="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="db-requests-body-bg" connectable="0" parent="db-requests" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#E6F4EF;strokeColor=#007A5A;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="389" width="1040" y="71" as="geometry" />
+        </mxCell>
+        <mxCell id="db-requests-sec-0" connectable="0" parent="db-requests" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" value="[identity]" vertex="1">
+          <mxGeometry height="32" width="984" x="28" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="db-requests-div-0" connectable="0" parent="db-requests" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" value="" vertex="1">
+          <mxGeometry height="1" width="984" x="28" y="132" as="geometry" />
+        </mxCell>
+        <mxCell id="db-requests-line-0-0" connectable="0" parent="db-requests" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#BE185D;fontFamily=Consolas;" value="PK Id : bigint" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="138" as="geometry" />
+        </mxCell>
+        <mxCell id="db-requests-line-0-1" connectable="0" parent="db-requests" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#B45309;fontFamily=Consolas;" value="Discriminator RequestType : string" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="172" as="geometry" />
+        </mxCell>
+        <mxCell id="db-requests-line-0-2" connectable="0" parent="db-requests" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#0369A1;fontFamily=Consolas;" value="FK ApplicantPartyId : bigint" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="206" as="geometry" />
+        </mxCell>
+        <mxCell id="db-requests-sec-1" connectable="0" parent="db-requests" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" value="[L1 core]" vertex="1">
+          <mxGeometry height="32" width="984" x="28" y="258" as="geometry" />
+        </mxCell>
+        <mxCell id="db-requests-div-1" connectable="0" parent="db-requests" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" value="" vertex="1">
+          <mxGeometry height="1" width="984" x="28" y="294" as="geometry" />
+        </mxCell>
+        <mxCell id="db-requests-line-1-0" connectable="0" parent="db-requests" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" value="Status : int" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="db-requests-line-1-1" connectable="0" parent="db-requests" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" value="Details : nvarchar(3000)" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="334" as="geometry" />
+        </mxCell>
+        <mxCell id="db-requests-line-1-2" connectable="0" parent="db-requests" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" value="ObjectAddress_* : owned columns" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="368" as="geometry" />
+        </mxCell>
+        <mxCell id="db-requests-line-1-3" connectable="0" parent="db-requests" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" value="CreatedAt : datetimeoffset" vertex="1">
+          <mxGeometry height="34" width="984" x="28" y="402" as="geometry" />
+        </mxCell>
+        <mxCell id="db-e1" edge="1" parent="1" source="db-accounts" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#64748B;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;" target="db-applicants" value="1 → many&amp;lt;br&amp;gt;ClientAccountId">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="300" y="-28" as="offset" />
+            <Array as="points">
+              <mxPoint x="1390" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="db-e2" edge="1" parent="1" source="db-applicants" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#64748B;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;" target="db-requests" value="1 → many&amp;lt;br&amp;gt;ApplicantPartyId">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="300" y="-28" as="offset" />
+            <Array as="points">
+              <mxPoint x="1390" y="1140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="469246ef5770" name="Aggregate boundaries — final test v2">
+    <mxGraphModel dx="1800" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2460" pageHeight="1120" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="page-title" value="Domain diagram — L1 aggregate boundaries" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=center;fontSize=36;fontColor=#F8FAFC;fontFamily=Arial;fontStyle=1;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="40" y="24" width="2380" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-bound-acc" value="Account aggregate" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFF7ED;strokeColor=#B87900;strokeWidth=3;fontColor=#92400E;fontSize=26;fontStyle=1;align=center;verticalAlign=top;spacingTop=18;" parent="1" vertex="1">
+          <mxGeometry x="50" y="130" width="620" height="710" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-bound-app" value="ApplicantParty aggregate" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFF7ED;strokeColor=#B87900;strokeWidth=3;fontColor=#92400E;fontSize=26;fontStyle=1;align=center;verticalAlign=top;spacingTop=18;" parent="1" vertex="1">
+          <mxGeometry x="790" y="130" width="720" height="730" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-bound-req" value="ClientRequest aggregate" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFF7ED;strokeColor=#B87900;strokeWidth=3;fontColor=#92400E;fontSize=26;fontStyle=1;align=center;verticalAlign=top;spacingTop=18;" parent="1" vertex="1">
+          <mxGeometry x="1660" y="130" width="720" height="730" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="85" y="225" width="550" height="614" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-header" value="ClientAccount" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#E69F00;strokeColor=#B87900;strokeWidth=2;fontColor=#FFFFFF;fontSize=32;fontStyle=1;align=center;verticalAlign=middle;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="550" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#FFF4D8;strokeColor=#B87900;strokeWidth=2;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="0" y="71" width="550" height="543" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-sec-0" value="[root]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="28" y="96" width="494" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="28" y="132" width="494" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-line-0-0" value="ClientAccount" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="28" y="138" width="494" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-sec-1" value="[properties]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="28" y="190" width="494" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-div-1" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="28" y="226" width="494" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-line-1-0" value="Email" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="28" y="232" width="494" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-line-1-1" value="PasswordHash" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="28" y="266" width="494" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-line-1-2" value="Role" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="28" y="300" width="494" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-line-1-3" value="IsActive" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="28" y="334" width="494" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-line-1-4" value="CreatedAt" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="28" y="368" width="494" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-sec-2" value="[factory]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="28" y="420" width="494" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-div-2" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="28" y="456" width="494" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-line-2-0" value="Create(email, passwordHash)" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="28" y="462" width="494" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-sec-3" value="[ownership]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="28" y="514" width="494" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-div-3" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="28" y="550" width="494" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-acc-line-3-0" value="Does not own ApplicantParties collection" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-acc" vertex="1" connectable="0">
+          <mxGeometry x="28" y="556" width="494" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="830" y="225" width="640" height="580" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-header" value="IndividualApplicantParty" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#E69F00;strokeColor=#B87900;strokeWidth=2;fontColor=#FFFFFF;fontSize=32;fontStyle=1;align=center;verticalAlign=middle;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="640" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#FFF4D8;strokeColor=#B87900;strokeWidth=2;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="0" y="71" width="640" height="509" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-sec-0" value="[root]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="28" y="96" width="584" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="28" y="132" width="584" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-line-0-0" value="IndividualApplicantParty" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="28" y="138" width="584" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-sec-1" value="[stored reference]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="28" y="190" width="584" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-div-1" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="28" y="226" width="584" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-line-1-0" value="ClientAccountId : long" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#0369A1;fontFamily=Consolas;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="28" y="232" width="584" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-sec-2" value="[properties]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="28" y="284" width="584" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-div-2" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="28" y="320" width="584" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-line-2-0" value="FullName" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="28" y="326" width="584" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-line-2-1" value="Email" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="28" y="360" width="584" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-line-2-2" value="PhoneNumber" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="28" y="394" width="584" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-line-2-3" value="CreatedAt" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="28" y="428" width="584" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-sec-3" value="[factory]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="28" y="480" width="584" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-div-3" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="28" y="516" width="584" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-app-line-3-0" value="Create(clientAccount, fullName, email, phone)" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" parent="agg-app" vertex="1" connectable="0">
+          <mxGeometry x="28" y="522" width="584" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="1700" y="225" width="640" height="580" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-header" value="ConnectionRequest" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#E69F00;strokeColor=#B87900;strokeWidth=2;fontColor=#FFFFFF;fontSize=32;fontStyle=1;align=center;verticalAlign=middle;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="640" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#FFF4D8;strokeColor=#B87900;strokeWidth=2;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="0" y="71" width="640" height="509" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-sec-0" value="[root]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="28" y="96" width="584" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="28" y="132" width="584" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-line-0-0" value="ConnectionRequest" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="28" y="138" width="584" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-sec-1" value="[stored reference]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="28" y="190" width="584" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-div-1" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="28" y="226" width="584" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-line-1-0" value="ApplicantPartyId : long" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#0369A1;fontFamily=Consolas;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="28" y="232" width="584" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-sec-2" value="[properties]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="28" y="284" width="584" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-div-2" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="28" y="320" width="584" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-line-2-0" value="Details" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="28" y="326" width="584" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-line-2-1" value="ObjectAddress" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="28" y="360" width="584" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-line-2-2" value="Status" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="28" y="394" width="584" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-line-2-3" value="CreatedAt" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="28" y="428" width="584" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-sec-3" value="[factory]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="28" y="480" width="584" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-div-3" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="28" y="516" width="584" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-req-line-3-0" value="Create(applicantParty, details, objectAddress)" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" parent="agg-req" vertex="1" connectable="0">
+          <mxGeometry x="28" y="522" width="584" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-e1" value="stores id only&amp;lt;br&amp;gt;ClientAccountId" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#B87900;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;dashed=1;" parent="1" edge="1" source="agg-acc" target="agg-app">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720" y="475" />
+            </Array>
+            <mxPoint as="offset" x="0" y="-38" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="agg-e2" value="stores id only&amp;lt;br&amp;gt;ApplicantPartyId" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#B87900;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;dashed=1;" parent="1" edge="1" source="agg-app" target="agg-req">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1585" y="475" />
+            </Array>
+            <mxPoint as="offset" x="0" y="-38" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="agg-note" value="Boundary rule:&amp;lt;br&amp;gt;DB FK does not mean aggregate ownership.&amp;lt;br&amp;gt;Application service loads related aggregate and checks cross-aggregate rules." style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFFBE0;strokeColor=#B8A900;strokeWidth=2;fontSize=18;fontColor=#111827;align=left;verticalAlign=middle;spacing=16;" parent="1" vertex="1">
+          <mxGeometry x="730" y="900" width="930" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-legend-title" value="Legend" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#F8FAFC;fontFamily=Arial;fontStyle=1;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="70" y="900" width="280" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-legend-box-0" value="" style="rounded=1;html=1;fillColor=#FFF7ED;strokeColor=#B87900;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="70" y="948" width="36" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-legend-txt-0" value="aggregate boundary" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=17;fontColor=#F8FAFC;fontFamily=Arial;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="120" y="945" width="520" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-legend-box-1" value="" style="rounded=1;html=1;fillColor=#FFF4D8;strokeColor=#B87900;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="70" y="992" width="36" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-legend-txt-1" value="aggregate root card" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=17;fontColor=#F8FAFC;fontFamily=Arial;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="120" y="989" width="520" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-legend-box-2" value="" style="rounded=1;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="70" y="1036" width="36" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="agg-legend-txt-2" value="ID reference, not ownership" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=17;fontColor=#F8FAFC;fontFamily=Arial;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="120" y="1033" width="520" height="34" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="4622459ef94a" name="Domain model — final test v2">
+    <mxGraphModel dx="1800" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2520" pageHeight="1220" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="page-title" value="Domain diagram — L1 classes, methods and rules" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=center;fontSize=36;fontColor=#F8FAFC;fontFamily=Arial;fontStyle=1;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="40" y="24" width="2440" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="70" y="125" width="600" height="554" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client-header" value="ClientAccount" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#E69F00;strokeColor=#B87900;strokeWidth=2;fontColor=#FFFFFF;fontSize=32;fontStyle=1;align=center;verticalAlign=middle;" parent="dom-client" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="600" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#FFF4D8;strokeColor=#B87900;strokeWidth=2;" parent="dom-client" vertex="1" connectable="0">
+          <mxGeometry x="0" y="71" width="600" height="483" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client-sec-0" value="[properties]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="dom-client" vertex="1" connectable="0">
+          <mxGeometry x="28" y="96" width="544" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="dom-client" vertex="1" connectable="0">
+          <mxGeometry x="28" y="132" width="544" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client-line-0-0" value="Email" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-client" vertex="1" connectable="0">
+          <mxGeometry x="28" y="138" width="544" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client-line-0-1" value="PasswordHash" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-client" vertex="1" connectable="0">
+          <mxGeometry x="28" y="172" width="544" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client-line-0-2" value="Role" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-client" vertex="1" connectable="0">
+          <mxGeometry x="28" y="206" width="544" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client-line-0-3" value="IsActive" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-client" vertex="1" connectable="0">
+          <mxGeometry x="28" y="240" width="544" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client-line-0-4" value="CreatedAt" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-client" vertex="1" connectable="0">
+          <mxGeometry x="28" y="274" width="544" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client-sec-1" value="[factory]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="dom-client" vertex="1" connectable="0">
+          <mxGeometry x="28" y="326" width="544" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client-div-1" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="dom-client" vertex="1" connectable="0">
+          <mxGeometry x="28" y="362" width="544" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client-line-1-0" value="Create(email, passwordHash)" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" parent="dom-client" vertex="1" connectable="0">
+          <mxGeometry x="28" y="368" width="544" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client-sec-2" value="[behavior]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="dom-client" vertex="1" connectable="0">
+          <mxGeometry x="28" y="420" width="544" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client-div-2" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="dom-client" vertex="1" connectable="0">
+          <mxGeometry x="28" y="456" width="544" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client-line-2-0" value="Activate()" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" parent="dom-client" vertex="1" connectable="0">
+          <mxGeometry x="28" y="462" width="544" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-client-line-2-1" value="Deactivate() later" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" parent="dom-client" vertex="1" connectable="0">
+          <mxGeometry x="28" y="496" width="544" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-party" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="800" y="125" width="720" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-party-header" value="IndividualApplicantParty" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#E69F00;strokeColor=#B87900;strokeWidth=2;fontColor=#FFFFFF;fontSize=32;fontStyle=1;align=center;verticalAlign=middle;" parent="dom-party" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="720" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-party-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#FFF4D8;strokeColor=#B87900;strokeWidth=2;" parent="dom-party" vertex="1" connectable="0">
+          <mxGeometry x="0" y="71" width="720" height="449" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-party-sec-0" value="[properties]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="dom-party" vertex="1" connectable="0">
+          <mxGeometry x="28" y="96" width="664" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-party-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="dom-party" vertex="1" connectable="0">
+          <mxGeometry x="28" y="132" width="664" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-party-line-0-0" value="ClientAccountId : long" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#0369A1;fontFamily=Consolas;" parent="dom-party" vertex="1" connectable="0">
+          <mxGeometry x="28" y="138" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-party-line-0-1" value="FullName" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-party" vertex="1" connectable="0">
+          <mxGeometry x="28" y="172" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-party-line-0-2" value="Email" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-party" vertex="1" connectable="0">
+          <mxGeometry x="28" y="206" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-party-line-0-3" value="PhoneNumber" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-party" vertex="1" connectable="0">
+          <mxGeometry x="28" y="240" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-party-line-0-4" value="CreatedAt" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-party" vertex="1" connectable="0">
+          <mxGeometry x="28" y="274" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-party-sec-1" value="[factory]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="dom-party" vertex="1" connectable="0">
+          <mxGeometry x="28" y="326" width="664" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-party-div-1" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="dom-party" vertex="1" connectable="0">
+          <mxGeometry x="28" y="362" width="664" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-party-line-1-0" value="Create(clientAccount, fullName, email, phone)" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" parent="dom-party" vertex="1" connectable="0">
+          <mxGeometry x="28" y="368" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-party-sec-2" value="[behavior]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="dom-party" vertex="1" connectable="0">
+          <mxGeometry x="28" y="420" width="664" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-party-div-2" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="dom-party" vertex="1" connectable="0">
+          <mxGeometry x="28" y="456" width="664" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-party-line-2-0" value="GetDisplayName()" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" parent="dom-party" vertex="1" connectable="0">
+          <mxGeometry x="28" y="462" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-request" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="1720" y="125" width="720" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-request-header" value="ConnectionRequest" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#E69F00;strokeColor=#B87900;strokeWidth=2;fontColor=#FFFFFF;fontSize=32;fontStyle=1;align=center;verticalAlign=middle;" parent="dom-request" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="720" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-request-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#FFF4D8;strokeColor=#B87900;strokeWidth=2;" parent="dom-request" vertex="1" connectable="0">
+          <mxGeometry x="0" y="71" width="720" height="449" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-request-sec-0" value="[properties]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="dom-request" vertex="1" connectable="0">
+          <mxGeometry x="28" y="96" width="664" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-request-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="dom-request" vertex="1" connectable="0">
+          <mxGeometry x="28" y="132" width="664" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-request-line-0-0" value="ApplicantPartyId : long" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#0369A1;fontFamily=Consolas;" parent="dom-request" vertex="1" connectable="0">
+          <mxGeometry x="28" y="138" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-request-line-0-1" value="Details" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-request" vertex="1" connectable="0">
+          <mxGeometry x="28" y="172" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-request-line-0-2" value="ObjectAddress" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-request" vertex="1" connectable="0">
+          <mxGeometry x="28" y="206" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-request-line-0-3" value="Status = Submitted" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-request" vertex="1" connectable="0">
+          <mxGeometry x="28" y="240" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-request-line-0-4" value="CreatedAt" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-request" vertex="1" connectable="0">
+          <mxGeometry x="28" y="274" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-request-sec-1" value="[factory]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="dom-request" vertex="1" connectable="0">
+          <mxGeometry x="28" y="326" width="664" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-request-div-1" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="dom-request" vertex="1" connectable="0">
+          <mxGeometry x="28" y="362" width="664" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-request-line-1-0" value="Create(applicantParty, details, objectAddress)" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#7E22CE;fontFamily=Consolas;" parent="dom-request" vertex="1" connectable="0">
+          <mxGeometry x="28" y="368" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-request-sec-2" value="[behavior]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="dom-request" vertex="1" connectable="0">
+          <mxGeometry x="28" y="420" width="664" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-request-div-2" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="dom-request" vertex="1" connectable="0">
+          <mxGeometry x="28" y="456" width="664" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-request-line-2-0" value="Workflow methods later" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-request" vertex="1" connectable="0">
+          <mxGeometry x="28" y="462" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-rules" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="70" y="820" width="600" height="392" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-rules-header" value="Domain Rules" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#F0E442;strokeColor=#B8A900;strokeWidth=2;fontColor=#FFFFFF;fontSize=32;fontStyle=1;align=center;verticalAlign=middle;" parent="dom-rules" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="600" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-rules-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#FFFBE0;strokeColor=#B8A900;strokeWidth=2;" parent="dom-rules" vertex="1" connectable="0">
+          <mxGeometry x="0" y="71" width="600" height="321" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-rules-sec-0" value="[domain method policy]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="dom-rules" vertex="1" connectable="0">
+          <mxGeometry x="28" y="96" width="544" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-rules-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="dom-rules" vertex="1" connectable="0">
+          <mxGeometry x="28" y="132" width="544" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-rules-line-0-0" value="Result for business/user validation" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-rules" vertex="1" connectable="0">
+          <mxGeometry x="28" y="138" width="544" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-rules-line-0-1" value="Guards for required domain objects" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-rules" vertex="1" connectable="0">
+          <mxGeometry x="28" y="172" width="544" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-rules-line-0-2" value="Id &amp;lt;= 0 reference is contract violation" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#0369A1;fontFamily=Consolas;" parent="dom-rules" vertex="1" connectable="0">
+          <mxGeometry x="28" y="206" width="544" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-rules-sec-1" value="[optional policy]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="dom-rules" vertex="1" connectable="0">
+          <mxGeometry x="28" y="258" width="544" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-rules-div-1" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="dom-rules" vertex="1" connectable="0">
+          <mxGeometry x="28" y="294" width="544" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-rules-line-1-0" value="Maybe&amp;lt;T&amp;gt; for lookup results" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-rules" vertex="1" connectable="0">
+          <mxGeometry x="28" y="300" width="544" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-rules-line-1-1" value="T? for simple persisted optional state" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-rules" vertex="1" connectable="0">
+          <mxGeometry x="28" y="334" width="544" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-vo" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="800" y="880" width="720" height="460" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-vo-header" value="Shared Value Objects" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#56B4E9;strokeColor=#2A8DBF;strokeWidth=2;fontColor=#FFFFFF;fontSize=32;fontStyle=1;align=center;verticalAlign=middle;" parent="dom-vo" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="720" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-vo-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#EAF7FD;strokeColor=#2A8DBF;strokeWidth=2;" parent="dom-vo" vertex="1" connectable="0">
+          <mxGeometry x="0" y="71" width="720" height="389" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-vo-sec-0" value="[value objects]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="dom-vo" vertex="1" connectable="0">
+          <mxGeometry x="28" y="96" width="664" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-vo-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="dom-vo" vertex="1" connectable="0">
+          <mxGeometry x="28" y="132" width="664" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-vo-line-0-0" value="Email" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-vo" vertex="1" connectable="0">
+          <mxGeometry x="28" y="138" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-vo-line-0-1" value="PasswordHash" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-vo" vertex="1" connectable="0">
+          <mxGeometry x="28" y="172" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-vo-line-0-2" value="FullName" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-vo" vertex="1" connectable="0">
+          <mxGeometry x="28" y="206" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-vo-line-0-3" value="PhoneNumber" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-vo" vertex="1" connectable="0">
+          <mxGeometry x="28" y="240" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-vo-line-0-4" value="Address" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-vo" vertex="1" connectable="0">
+          <mxGeometry x="28" y="274" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-vo-sec-1" value="[rule]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=20;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="dom-vo" vertex="1" connectable="0">
+          <mxGeometry x="28" y="326" width="664" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-vo-div-1" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="dom-vo" vertex="1" connectable="0">
+          <mxGeometry x="28" y="362" width="664" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-vo-line-1-0" value="Shared by old and L1 domain" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-vo" vertex="1" connectable="0">
+          <mxGeometry x="28" y="368" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-vo-line-1-1" value="Validated separately" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#111827;fontFamily=Consolas;" parent="dom-vo" vertex="1" connectable="0">
+          <mxGeometry x="28" y="402" width="664" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-e1" value="ClientAccountId" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#5DADE2;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;dashed=1;" parent="1" edge="1" source="dom-client" target="dom-party">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="730" y="410" />
+            </Array>
+            <mxPoint as="offset" x="0" y="-30" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dom-e2" value="ApplicantPartyId" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#5DADE2;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;dashed=1;" parent="1" edge="1" source="dom-party" target="dom-request">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1620" y="410" />
+            </Array>
+            <mxPoint as="offset" x="0" y="-30" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dom-e3" value="uses VOs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#5DADE2;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;dashed=1;" parent="1" edge="1" source="dom-client" target="dom-vo">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720" y="720" />
+              <mxPoint x="890" y="720" />
+            </Array>
+            <mxPoint as="offset" x="0" y="-28" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dom-e4" value="uses VOs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#5DADE2;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;dashed=1;" parent="1" edge="1" source="dom-party" target="dom-vo">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1160" y="790" />
+            </Array>
+            <mxPoint as="offset" x="0" y="-28" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dom-e5" value="uses VOs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#5DADE2;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;dashed=1;" parent="1" edge="1" source="dom-request" target="dom-vo">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1630" y="790" />
+              <mxPoint x="1490" y="790" />
+            </Array>
+            <mxPoint as="offset" x="0" y="-28" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dom-legend-title" value="Legend" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=22;fontColor=#F8FAFC;fontFamily=Arial;fontStyle=1;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="1720" y="900" width="280" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-legend-box-0" value="" style="rounded=1;html=1;fillColor=#FFF4D8;strokeColor=#B87900;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="1720" y="948" width="36" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-legend-txt-0" value="domain class / aggregate root" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=17;fontColor=#F8FAFC;fontFamily=Arial;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="1770" y="945" width="520" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-legend-box-1" value="" style="rounded=1;html=1;fillColor=#EAF7FD;strokeColor=#2A8DBF;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="1720" y="992" width="36" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-legend-txt-1" value="shared value object area" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=17;fontColor=#F8FAFC;fontFamily=Arial;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="1770" y="989" width="520" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-legend-box-2" value="" style="rounded=1;html=1;fillColor=#FFFBE0;strokeColor=#B8A900;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="1720" y="1036" width="36" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="dom-legend-txt-2" value="rule / convention card" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=17;fontColor=#F8FAFC;fontFamily=Arial;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="1770" y="1033" width="520" height="34" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="6cd815a455e1" name="CQRS flow — final test v2">
+    <mxGraphModel dx="1800" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2750" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="page-title" value="Use-case flow — L1 command/query split" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=center;fontSize=36;fontColor=#F8FAFC;fontFamily=Arial;fontStyle=1;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="40" y="24" width="2670" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-http" value="HTTP" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;fontSize=22;fontStyle=1;fontColor=#334155;align=center;verticalAlign=top;spacingTop=18;" parent="1" vertex="1">
+          <mxGeometry x="50" y="110" width="270" height="910" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-controller" value="Controller" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;fontSize=22;fontStyle=1;fontColor=#334155;align=center;verticalAlign=top;spacingTop=18;" parent="1" vertex="1">
+          <mxGeometry x="370" y="110" width="310" height="910" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-app" value="Application / MediatR" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;fontSize=22;fontStyle=1;fontColor=#334155;align=center;verticalAlign=top;spacingTop=18;" parent="1" vertex="1">
+          <mxGeometry x="740" y="110" width="560" height="910" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-domain" value="Domain" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;fontSize=22;fontStyle=1;fontColor=#334155;align=center;verticalAlign=top;spacingTop=18;" parent="1" vertex="1">
+          <mxGeometry x="1360" y="110" width="390" height="910" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-persistence" value="Persistence" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;fontSize=22;fontStyle=1;fontColor=#334155;align=center;verticalAlign=top;spacingTop=18;" parent="1" vertex="1">
+          <mxGeometry x="1810" y="110" width="440" height="910" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-db" value="Database" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1;fontSize=22;fontStyle=1;fontColor=#334155;align=center;verticalAlign=top;spacingTop=18;" parent="1" vertex="1">
+          <mxGeometry x="2310" y="110" width="360" height="910" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-front-post" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="90" y="235" width="210" height="195" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-front-post-header" value="Frontend" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#334155;strokeColor=#64748B;strokeWidth=2;fontColor=#FFFFFF;fontSize=26;fontStyle=1;align=center;verticalAlign=middle;" parent="flow-front-post" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="210" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-front-post-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=2;" parent="flow-front-post" vertex="1" connectable="0">
+          <mxGeometry x="0" y="57" width="210" height="138" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-front-post-sec-0" value="[flow]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=16;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="flow-front-post" vertex="1" connectable="0">
+          <mxGeometry x="28" y="82" width="154" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-front-post-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="flow-front-post" vertex="1" connectable="0">
+          <mxGeometry x="28" y="111" width="154" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-front-post-line-0-0" value="POST command endpoint" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=18;fontColor=#111827;fontFamily=Consolas;" parent="flow-front-post" vertex="1" connectable="0">
+          <mxGeometry x="28" y="117" width="154" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-front-get" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="90" y="675" width="210" height="195" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-front-get-header" value="Frontend" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#334155;strokeColor=#64748B;strokeWidth=2;fontColor=#FFFFFF;fontSize=26;fontStyle=1;align=center;verticalAlign=middle;" parent="flow-front-get" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="210" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-front-get-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=2;" parent="flow-front-get" vertex="1" connectable="0">
+          <mxGeometry x="0" y="57" width="210" height="138" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-front-get-sec-0" value="[flow]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=16;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="flow-front-get" vertex="1" connectable="0">
+          <mxGeometry x="28" y="82" width="154" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-front-get-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="flow-front-get" vertex="1" connectable="0">
+          <mxGeometry x="28" y="111" width="154" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-front-get-line-0-0" value="GET query endpoint" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=18;fontColor=#111827;fontFamily=Consolas;" parent="flow-front-get" vertex="1" connectable="0">
+          <mxGeometry x="28" y="117" width="154" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-ctrl-post" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="405" y="235" width="240" height="195" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-ctrl-post-header" value="Controller" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#334155;strokeColor=#64748B;strokeWidth=2;fontColor=#FFFFFF;fontSize=26;fontStyle=1;align=center;verticalAlign=middle;" parent="flow-ctrl-post" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="240" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-ctrl-post-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=2;" parent="flow-ctrl-post" vertex="1" connectable="0">
+          <mxGeometry x="0" y="57" width="240" height="138" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-ctrl-post-sec-0" value="[flow]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=16;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="flow-ctrl-post" vertex="1" connectable="0">
+          <mxGeometry x="28" y="82" width="184" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-ctrl-post-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="flow-ctrl-post" vertex="1" connectable="0">
+          <mxGeometry x="28" y="111" width="184" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-ctrl-post-line-0-0" value="DTO → command" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=18;fontColor=#111827;fontFamily=Consolas;" parent="flow-ctrl-post" vertex="1" connectable="0">
+          <mxGeometry x="28" y="117" width="184" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-ctrl-post-line-0-1" value="Result → response" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=18;fontColor=#111827;fontFamily=Consolas;" parent="flow-ctrl-post" vertex="1" connectable="0">
+          <mxGeometry x="28" y="144" width="184" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-ctrl-get" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="405" y="675" width="240" height="222" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-ctrl-get-header" value="Controller" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#334155;strokeColor=#64748B;strokeWidth=2;fontColor=#FFFFFF;fontSize=26;fontStyle=1;align=center;verticalAlign=middle;" parent="flow-ctrl-get" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="240" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-ctrl-get-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=2;" parent="flow-ctrl-get" vertex="1" connectable="0">
+          <mxGeometry x="0" y="57" width="240" height="165" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-ctrl-get-sec-0" value="[flow]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=16;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="flow-ctrl-get" vertex="1" connectable="0">
+          <mxGeometry x="28" y="82" width="184" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-ctrl-get-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="flow-ctrl-get" vertex="1" connectable="0">
+          <mxGeometry x="28" y="111" width="184" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-ctrl-get-line-0-0" value="Query params → query" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=18;fontColor=#111827;fontFamily=Consolas;" parent="flow-ctrl-get" vertex="1" connectable="0">
+          <mxGeometry x="28" y="117" width="184" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-ctrl-get-line-0-1" value="DTO → response" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=18;fontColor=#111827;fontFamily=Consolas;" parent="flow-ctrl-get" vertex="1" connectable="0">
+          <mxGeometry x="28" y="171" width="184" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-command" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="790" y="190" width="460" height="322" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-command-header" value="Command Handler" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#F0E442;strokeColor=#B8A900;strokeWidth=2;fontColor=#FFFFFF;fontSize=28;fontStyle=1;align=center;verticalAlign=middle;" parent="flow-command" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="460" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-command-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#FFFBE0;strokeColor=#B8A900;strokeWidth=2;" parent="flow-command" vertex="1" connectable="0">
+          <mxGeometry x="0" y="62" width="460" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-command-sec-0" value="[command side]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=17;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="flow-command" vertex="1" connectable="0">
+          <mxGeometry x="28" y="87" width="404" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-command-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="flow-command" vertex="1" connectable="0">
+          <mxGeometry x="28" y="118" width="404" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-command-line-0-0" value="CreateConnectionRequestCommand" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=19;fontColor=#111827;fontFamily=Consolas;" parent="flow-command" vertex="1" connectable="0">
+          <mxGeometry x="28" y="124" width="404" height="29" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-command-line-0-1" value="Handler loads ApplicantParty" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=19;fontColor=#111827;fontFamily=Consolas;" parent="flow-command" vertex="1" connectable="0">
+          <mxGeometry x="28" y="153" width="404" height="29" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-command-line-0-2" value="Checks ClientAccountId ownership" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=19;fontColor=#0369A1;fontFamily=Consolas;" parent="flow-command" vertex="1" connectable="0">
+          <mxGeometry x="28" y="182" width="404" height="29" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-command-line-0-3" value="ConnectionRequest.Create(...)" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=19;fontColor=#7E22CE;fontFamily=Consolas;" parent="flow-command" vertex="1" connectable="0">
+          <mxGeometry x="28" y="211" width="404" height="29" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-command-line-0-4" value="Repository.Add(request)" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=19;fontColor=#7E22CE;fontFamily=Consolas;" parent="flow-command" vertex="1" connectable="0">
+          <mxGeometry x="28" y="240" width="404" height="29" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-command-line-0-5" value="SaveChanges in handler" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=19;fontColor=#111827;fontFamily=Consolas;" parent="flow-command" vertex="1" connectable="0">
+          <mxGeometry x="28" y="269" width="404" height="29" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-query" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="790" y="600" width="460" height="293" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-query-header" value="Query Handler" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#56B4E9;strokeColor=#2A8DBF;strokeWidth=2;fontColor=#FFFFFF;fontSize=28;fontStyle=1;align=center;verticalAlign=middle;" parent="flow-query" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="460" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-query-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#EAF7FD;strokeColor=#2A8DBF;strokeWidth=2;" parent="flow-query" vertex="1" connectable="0">
+          <mxGeometry x="0" y="62" width="460" height="231" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-query-sec-0" value="[query side]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=17;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="flow-query" vertex="1" connectable="0">
+          <mxGeometry x="28" y="87" width="404" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-query-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="flow-query" vertex="1" connectable="0">
+          <mxGeometry x="28" y="118" width="404" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-query-line-0-0" value="GetMyRequestsQuery" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=19;fontColor=#111827;fontFamily=Consolas;" parent="flow-query" vertex="1" connectable="0">
+          <mxGeometry x="28" y="124" width="404" height="29" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-query-line-0-1" value="Dapper SQL projection" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=19;fontColor=#111827;fontFamily=Consolas;" parent="flow-query" vertex="1" connectable="0">
+          <mxGeometry x="28" y="153" width="404" height="29" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-query-line-0-2" value="Returns flat read DTO" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=19;fontColor=#111827;fontFamily=Consolas;" parent="flow-query" vertex="1" connectable="0">
+          <mxGeometry x="28" y="182" width="404" height="29" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-query-line-0-3" value="No aggregates" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=19;fontColor=#111827;fontFamily=Consolas;" parent="flow-query" vertex="1" connectable="0">
+          <mxGeometry x="28" y="211" width="404" height="29" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-query-line-0-4" value="No SaveChanges" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=19;fontColor=#111827;fontFamily=Consolas;" parent="flow-query" vertex="1" connectable="0">
+          <mxGeometry x="28" y="240" width="404" height="29" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-domain" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="1430" y="365" width="270" height="195" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-domain-header" value="Aggregate" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#E69F00;strokeColor=#B87900;strokeWidth=2;fontColor=#FFFFFF;fontSize=26;fontStyle=1;align=center;verticalAlign=middle;" parent="flow-domain" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="270" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-domain-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#FFF4D8;strokeColor=#B87900;strokeWidth=2;" parent="flow-domain" vertex="1" connectable="0">
+          <mxGeometry x="0" y="57" width="270" height="138" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-domain-sec-0" value="[flow]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=16;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="flow-domain" vertex="1" connectable="0">
+          <mxGeometry x="28" y="82" width="214" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-domain-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="flow-domain" vertex="1" connectable="0">
+          <mxGeometry x="28" y="111" width="214" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-domain-line-0-0" value="Domain factory/method" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=18;fontColor=#111827;fontFamily=Consolas;" parent="flow-domain" vertex="1" connectable="0">
+          <mxGeometry x="28" y="117" width="214" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-domain-line-0-1" value="Business invariants" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=18;fontColor=#111827;fontFamily=Consolas;" parent="flow-domain" vertex="1" connectable="0">
+          <mxGeometry x="28" y="144" width="214" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-repo" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="1870" y="315" width="320" height="168" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-repo-header" value="L1 Repositories / UoW" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#56B4E9;strokeColor=#2A8DBF;strokeWidth=2;fontColor=#FFFFFF;fontSize=26;fontStyle=1;align=center;verticalAlign=middle;" parent="flow-repo" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="320" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-repo-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#EAF7FD;strokeColor=#2A8DBF;strokeWidth=2;" parent="flow-repo" vertex="1" connectable="0">
+          <mxGeometry x="0" y="57" width="320" height="111" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-repo-sec-0" value="[flow]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=16;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="flow-repo" vertex="1" connectable="0">
+          <mxGeometry x="28" y="82" width="264" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-repo-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="flow-repo" vertex="1" connectable="0">
+          <mxGeometry x="28" y="111" width="264" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-repo-line-0-0" value="EF command persistence" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=18;fontColor=#111827;fontFamily=Consolas;" parent="flow-repo" vertex="1" connectable="0">
+          <mxGeometry x="28" y="117" width="264" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-dapper" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="1880" y="710" width="290" height="168" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-dapper-header" value="Dapper" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#56B4E9;strokeColor=#2A8DBF;strokeWidth=2;fontColor=#FFFFFF;fontSize=26;fontStyle=1;align=center;verticalAlign=middle;" parent="flow-dapper" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="290" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-dapper-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#EAF7FD;strokeColor=#2A8DBF;strokeWidth=2;" parent="flow-dapper" vertex="1" connectable="0">
+          <mxGeometry x="0" y="57" width="290" height="111" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-dapper-sec-0" value="[flow]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=16;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="flow-dapper" vertex="1" connectable="0">
+          <mxGeometry x="28" y="82" width="234" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-dapper-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="flow-dapper" vertex="1" connectable="0">
+          <mxGeometry x="28" y="111" width="234" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-dapper-line-0-0" value="Read SQL" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=18;fontColor=#111827;fontFamily=Consolas;" parent="flow-dapper" vertex="1" connectable="0">
+          <mxGeometry x="28" y="117" width="234" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-sql" value="" style="group" parent="1" vertex="1" connectable="1">
+          <mxGeometry x="2360" y="515" width="250" height="168" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-sql-header" value="L1 SQL tables" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#64748B;strokeColor=#94A3B8;strokeWidth=2;fontColor=#FFFFFF;fontSize=26;fontStyle=1;align=center;verticalAlign=middle;" parent="flow-sql" vertex="1" connectable="0">
+          <mxGeometry x="0" y="0" width="250" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-sql-body-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#F8FAFC;strokeColor=#94A3B8;strokeWidth=2;" parent="flow-sql" vertex="1" connectable="0">
+          <mxGeometry x="0" y="57" width="250" height="111" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-sql-sec-0" value="[flow]" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=nowrap;verticalAlign=middle;align=left;fontSize=16;fontColor=#92400E;fontFamily=Consolas;fontStyle=1;" parent="flow-sql" vertex="1" connectable="0">
+          <mxGeometry x="28" y="82" width="194" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-sql-div-0" value="" style="shape=line;html=1;strokeWidth=1;strokeColor=#CBD5E1;" parent="flow-sql" vertex="1" connectable="0">
+          <mxGeometry x="28" y="111" width="194" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-sql-line-0-0" value="same database" style="text;html=1;strokeColor=none;fillColor=none;rounded=0;whiteSpace=wrap;verticalAlign=middle;align=left;fontSize=18;fontColor=#111827;fontFamily=Consolas;" parent="flow-sql" vertex="1" connectable="0">
+          <mxGeometry x="28" y="117" width="194" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="flow-e1" value="HTTP POST" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#64748B;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;" parent="1" edge="1" source="flow-front-post" target="flow-ctrl-post">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="340" y="315" />
+            </Array>
+            <mxPoint as="offset" x="0" y="-22" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-e2" value="MediatR Send" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#64748B;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;" parent="1" edge="1" source="flow-ctrl-post" target="flow-command">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="705" y="315" />
+            </Array>
+            <mxPoint as="offset" x="0" y="-22" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-e3" value="call domain" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#64748B;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;" parent="1" edge="1" source="flow-command" target="flow-domain">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1325" y="440" />
+            </Array>
+            <mxPoint as="offset" x="0" y="-22" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-e4" value="Add + SaveChanges" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#64748B;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;" parent="1" edge="1" source="flow-domain" target="flow-repo">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1780" y="440" />
+            </Array>
+            <mxPoint as="offset" x="0" y="-22" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-e5" value="INSERT/UPDATE" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#64748B;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;" parent="1" edge="1" source="flow-repo" target="flow-sql">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2275" y="465" />
+            </Array>
+            <mxPoint as="offset" x="0" y="-22" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-e6" value="HTTP GET" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#64748B;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;" parent="1" edge="1" source="flow-front-get" target="flow-ctrl-get">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="340" y="755" />
+            </Array>
+            <mxPoint as="offset" x="0" y="-22" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-e7" value="MediatR Send" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#64748B;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;" parent="1" edge="1" source="flow-ctrl-get" target="flow-query">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="705" y="755" />
+            </Array>
+            <mxPoint as="offset" x="0" y="-22" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-e8" value="execute SQL" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#64748B;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;" parent="1" edge="1" source="flow-query" target="flow-dapper">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1760" y="755" />
+            </Array>
+            <mxPoint as="offset" x="0" y="-22" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-e9" value="SELECT" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#64748B;fontColor=#111827;fontSize=20;fontStyle=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;labelBorderColor=#CBD5E1;" parent="1" edge="1" source="flow-dapper" target="flow-sql">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2250" y="755" />
+              <mxPoint x="2485" y="755" />
+              <mxPoint x="2485" y="660" />
+            </Array>
+            <mxPoint as="offset" x="0" y="-22" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow-note" value="CQRS rule:&amp;lt;br&amp;gt;Commands use domain + EF and commit in handler.&amp;lt;br&amp;gt;Queries use Dapper read models and do not touch domain aggregates." style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#FFFBE0;strokeColor=#B8A900;strokeWidth=2;fontSize=18;fontColor=#111827;align=left;verticalAlign=middle;spacing=16;" parent="1" vertex="1">
+          <mxGeometry x="1360" y="875" width="820" height="120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
