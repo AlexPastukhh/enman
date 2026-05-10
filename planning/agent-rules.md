@@ -8,7 +8,9 @@
    - domain task → `domain-model.md`, `decisions.md`, `layer-plan.md`;
    - API task → `api-plan.md`, `use-cases.md`, `decisions.md`;
    - tests → `testing-strategy.md`, `current-state.md`;
-   - architecture/cleanup → `solution-map-and-cleanup-plan.md`, `decisions.md`, `risk-log.md`.
+   - architecture/cleanup → `solution-map-and-cleanup-plan.md`, `decisions.md`, `risk-log.md`;
+   - diagram task -> `diagram-generation-rules*.md` and relevant `.drawio` examples.
+   Diagram files are not part of the default read path; read them only for diagram-related tasks.
 4. Check current git status.
 5. Identify files that may be touched.
 6. If code and planning conflict, report conflict before changing code.

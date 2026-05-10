@@ -152,3 +152,31 @@
 - полноценное подписание договора онлайн.
 
 Эти элементы можно описывать только как перспективы развития.
+
+## Current Migration Context
+
+The project is moving from the old domain/application model to the new L1 model gradually.
+
+At the current stage the old implementation may continue to exist, but new L1 use cases must be built as a separate flow:
+
+- old domain/application flow remains until replaced;
+- new L1 domain/application/persistence flow is added in parallel.
+
+Do not mix old domain classes and L1 domain classes inside the same command handler.
+
+For L1, create separate commands, handlers, repositories, DbContext mapping and tests. Do not partially use new L1 entities inside an old handler.
+
+Allowed temporary coexistence:
+
+```text
+Old controllers/commands/handlers/domain/persistence
+L1 controllers/commands/handlers/domain/persistence
+```
+
+Forbidden hybrid:
+
+```text
+old command handler + L1 domain entity + old repository + old DbContext navigation mapping
+```
+
+This avoids creating an implicit third model during migration.

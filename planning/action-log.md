@@ -590,3 +590,33 @@ Make planning usable as living handoff documentation for future AI agents.
 - Topic: domain guard reuse and test data separation.
 - Why it matters: persisted-reference validation is centralized in the L1 domain base type, and L1 aggregate tests now use helper data that matches the new domain model instead of old workflow-oriented test fixtures.
 - Possible text use: domain design chapter, testing chapter, maintainability rationale.
+
+## 2026-05-11 - L1 application and persistence migration rules recorded
+
+### Done
+
+- Recorded that old domain/application flow may remain until replaced, but new L1 use cases must be added as a separate L1 domain/application/persistence flow.
+- Clarified that old domain classes and L1 domain classes must not be mixed inside one command handler.
+- Recorded controller responsibilities:
+  - controllers are thin HTTP boundaries;
+  - controllers call MediatR commands/queries;
+  - controllers map application results/errors to HTTP responses;
+  - controllers do not contain domain logic or EF/persistence rules.
+- Recorded that normal command handlers own `SaveChangesAsync`; controller-level `SaveChanges` is not a safety net.
+- Recorded command-handler responsibilities as the L1 write use-case boundary.
+- Recorded lightweight CQRS:
+  - commands use EF/repositories/domain aggregates and commit;
+  - queries use Dapper/SQL projections and do not hydrate aggregates or commit.
+- Recorded the need for a separate L1 application slice, L1 repositories and an explicit L1 DbContext parallel to the old `AppDbContext`.
+- Recorded L1 integration-test expectations for generated IDs and FK/reference persistence.
+- Updated planning README / agent rules so diagram-generation files and `.drawio` examples are read only for diagram tasks.
+
+### Checks
+
+- No tests were run because this was a planning-only change.
+
+### Diploma note
+
+- Topic: migration architecture and use-case boundaries.
+- Why it matters: the project now documents how the old implementation can coexist with the new L1 slice without creating hybrid handlers, unclear transaction boundaries or mixed EF models.
+- Possible text use: architecture chapter, implementation migration strategy, testing strategy.

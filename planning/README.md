@@ -26,7 +26,10 @@ Read by task type:
 | Tests | `testing-strategy.md`, `current-state.md` |
 | Architecture / refactoring | `layer-plan.md`, `decisions.md`, `risk-log.md`, `solution-map-and-cleanup-plan.md` |
 | Diploma documentation | `general-project-info.md`, `use-cases.md`, `layer-plan.md` |
+| Diagrams | `diagram-generation-rules*.md`, relevant `.drawio` examples |
 | Cleanup / solution structure | `solution-map-and-cleanup-plan.md`, `action-log.md`, `risk-log.md` |
+
+Diagram-generation files and `.drawio` examples are task-specific references. Read them only when the task is about creating, editing, reviewing, or exporting diagrams; they are not part of the default architecture/API/domain/test read path.
 
 ## Source Of Truth
 

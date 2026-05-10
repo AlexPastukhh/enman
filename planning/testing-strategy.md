@@ -1,3 +1,52 @@
+## L1 Integration Test Rules
+
+Default backend integration tests should go through HTTP.
+
+Use HTTP-level integration tests for backend confidence because they verify:
+
+- route/controller binding;
+- DTO validation;
+- auth/user context;
+- command/query dispatch;
+- handler behavior;
+- EF persistence;
+- HTTP status codes;
+- problem details / validation errors.
+
+### Generated IDs and aggregate references
+
+Successful cross-aggregate ID assignment is tested in integration tests after EF `SaveChanges`.
+
+Unit tests cover:
+
+- pure domain validation;
+- null guards;
+- transient-reference guard;
+- default ID rejection.
+
+Integration tests cover:
+
+- persisted `ClientAccount` gets `Id > 0`;
+- `IndividualApplicantParty.Create(account, ...)` stores `ClientAccountId`;
+- persisted `ApplicantParty` gets `Id > 0`;
+- `ConnectionRequest.Create(applicantParty, ...)` stores `ApplicantPartyId`;
+- EF persists and reloads these IDs correctly.
+
+Do not assert old navigation collection behavior in L1 tests.
+
+Do not check:
+
+```csharp
+updatedIndividual.ClientRequests.LastOrDefault()
+```
+
+For L1, check:
+
+- row in L1 client request table;
+- `ApplicantPartyId` value;
+- Dapper read model result;
+- HTTP response.
+
 # Testing Strategy
 
 ## Цель
