@@ -14,18 +14,18 @@ public enum AccountRole
 public abstract class Account : Entity
 {
     public Email Email { get; private set; }
-    public Password Password { get; private set; }
+    public PasswordHash PasswordHash { get; private set; }
     public AccountRole Role { get; private set; }
     public bool IsActive { get; private set; }
     public DateTimeOffset CreatedAt { get; private set; }
 
-    protected Account(Email email, Password password, AccountRole role)
+    protected Account(Email email, PasswordHash passwordHash, AccountRole role)
     {
         Guard.IsNotNull(email);
-        Guard.IsNotNull(password);
+        Guard.IsNotNull(passwordHash);
 
         Email = email;
-        Password = password;
+        PasswordHash = passwordHash;
         Role = role;
         IsActive = true;
         CreatedAt = DateTimeOffset.UtcNow;
@@ -34,17 +34,14 @@ public abstract class Account : Entity
     protected Account()
     {
         Email = null!;
-        Password = null!;
+        PasswordHash = null!;
     }
 }
 
 public sealed class ClientAccount : Account
 {
-    private readonly List<ApplicantParty> _applicantParties = [];
-    public IReadOnlyList<ApplicantParty> ApplicantParties => _applicantParties.AsReadOnly();
-
-    private ClientAccount(Email email, Password password)
-        : base(email, password, AccountRole.Client)
+    private ClientAccount(Email email, PasswordHash passwordHash)
+        : base(email, passwordHash, AccountRole.Client)
     {
     }
 
@@ -54,25 +51,13 @@ public sealed class ClientAccount : Account
 
     public static Result<ClientAccount, IReadOnlyList<Error>> Create(
         Email email,
-        Password password)
+        PasswordHash passwordHash)
     {
         Guard.IsNotNull(email);
-        Guard.IsNotNull(password);
+        Guard.IsNotNull(passwordHash);
 
         return Result.Success<ClientAccount, IReadOnlyList<Error>>(
-            new ClientAccount(email, password));
-    }
-
-    public void AddApplicantPartyOrThrow(ApplicantParty applicantParty)
-    {
-        Guard.IsNotNull(applicantParty);
-
-        if (applicantParty.ClientAccount != this)
-        {
-            throw new ArgumentException("Applicant party account does not match.");
-        }
-
-        _applicantParties.Add(applicantParty);
+            new ClientAccount(email, passwordHash));
     }
 }
 
@@ -83,7 +68,7 @@ public enum ApplicantPartyType
 
 public abstract class ApplicantParty : Entity
 {
-    public ClientAccount ClientAccount { get; private set; }
+    public long ClientAccountId { get; private set; }
     public ApplicantPartyType ApplicantPartyType { get; private set; }
     public Email Email { get; private set; }
     public PhoneNumber PhoneNumber { get; private set; }
@@ -98,8 +83,9 @@ public abstract class ApplicantParty : Entity
         Guard.IsNotNull(clientAccount);
         Guard.IsNotNull(email);
         Guard.IsNotNull(phoneNumber);
+        GuardReferencedAggregateId(clientAccount.Id, nameof(clientAccount));
 
-        ClientAccount = clientAccount;
+        ClientAccountId = clientAccount.Id;
         ApplicantPartyType = applicantPartyType;
         Email = email;
         PhoneNumber = phoneNumber;
@@ -108,12 +94,21 @@ public abstract class ApplicantParty : Entity
 
     protected ApplicantParty()
     {
-        ClientAccount = null!;
         Email = null!;
         PhoneNumber = null!;
     }
 
     public abstract string GetDisplayName();
+
+    protected static void GuardReferencedAggregateId(long id, string parameterName)
+    {
+        if (id <= 0)
+        {
+            throw new ArgumentException(
+                "Referenced aggregate must already be persisted and have Id > 0.",
+                parameterName);
+        }
+    }
 }
 
 public sealed class IndividualApplicantParty : ApplicantParty
@@ -169,8 +164,7 @@ public enum RequestStatus
 
 public abstract class ClientRequest : Entity
 {
-    public string Number { get; private set; }
-    public ApplicantParty ApplicantParty { get; private set; }
+    public long ApplicantPartyId { get; private set; }
     public ClientRequestType RequestType { get; private set; }
     public RequestStatus Status { get; private set; }
     public string Details { get; private set; }
@@ -185,20 +179,18 @@ public abstract class ClientRequest : Entity
     {
         Guard.IsNotNull(applicantParty);
         Guard.IsNotNull(objectAddress);
+        GuardReferencedAggregateId(applicantParty.Id, nameof(applicantParty));
 
-        ApplicantParty = applicantParty;
+        ApplicantPartyId = applicantParty.Id;
         RequestType = requestType;
         Details = details;
         ObjectAddress = objectAddress;
         Status = RequestStatus.Submitted;
         CreatedAt = DateTimeOffset.UtcNow;
-        Number = $"REQ-{CreatedAt:yyyyMMddHHmmssfff}";
     }
 
     protected ClientRequest()
     {
-        Number = null!;
-        ApplicantParty = null!;
         Details = null!;
         ObjectAddress = null!;
     }
@@ -218,6 +210,16 @@ public abstract class ClientRequest : Entity
         }
 
         return errors;
+    }
+
+    protected static void GuardReferencedAggregateId(long id, string parameterName)
+    {
+        if (id <= 0)
+        {
+            throw new ArgumentException(
+                "Referenced aggregate must already be persisted and have Id > 0.",
+                parameterName);
+        }
     }
 }
 

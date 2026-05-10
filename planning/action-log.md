@@ -494,3 +494,77 @@ Make planning usable as living handoff documentation for future AI agents.
 - Topic: aggregate identity and authentication data boundaries.
 - Why it matters: the domain model now separates technical identity, business numbering, password hashing concerns and aggregate references, which makes the migration model clearer and safer to persist.
 - Possible text use: domain design chapter, security/authentication design, testing strategy.
+
+## 2026-05-10 - Domain error and optional value policy recorded
+
+### Done
+
+- Recorded the domain error policy:
+  - expected business/user validation failures use `Result`;
+  - guards/exceptions are used for null required domain objects/value objects, method contract violations, impossible states and transient referenced aggregates.
+- Clarified that raw primitive user input may be null/empty and should become validation failure at the domain factory boundary.
+- Clarified that a referenced aggregate with `Id <= 0` is an application flow/method contract violation, not normal business validation.
+- Recorded nullable vs `Maybe<T>` usage rules:
+  - nullable `T?` for persisted optional state, DTO/API fields, EF nullable columns, private backing fields and display-only values;
+  - `Maybe<T>` for expected absence in operation results such as repository lookups;
+  - `Result<T>` when absence/failure needs an explicit reason.
+- Recorded that aggregate factories should receive actual required domain objects/value objects, not `Maybe<T>` wrappers.
+- Added guidance to prefer domain behavior methods and predicates over exposing optional state when callers only need an action decision.
+
+### Checks
+
+- No tests were run because this was a planning-only change.
+
+### Diploma note
+
+- Topic: domain validation and optional state design.
+- Why it matters: the domain model now distinguishes user-correctable validation failures from programmer/application-flow errors, and defines how optional data should move between repositories, application services, EF and aggregates.
+- Possible text use: domain design chapter, validation strategy, persistence design rationale.
+
+## 2026-05-10 - Current L1 domain aligned with aggregate boundary rules
+
+### Done
+
+- Updated the parallel L1 account model so `Account` stores `PasswordHash` directly instead of the old `Password` wrapper.
+- Removed the one-side `ClientAccount.ApplicantParties` aggregate collection navigation and `AddApplicantPartyOrThrow`.
+- Replaced stored L1 inter-aggregate object references with scalar IDs:
+  - `ApplicantParty.ClientAccountId`;
+  - `ClientRequest.ApplicantPartyId`.
+- Kept aggregate-object creation context in factories:
+  - `IndividualApplicantParty.Create(clientAccount, ...)`;
+  - `ConnectionRequest.Create(applicantParty, ...)`.
+- Added guard behavior for transient referenced aggregates with `Id <= 0`.
+- Removed `ClientRequest.Number` from the current implemented L1 subset.
+- Updated L1 unit tests for local invariants and guard behavior without changing old EF/API code.
+- Kept old domain model, EF mappings, migrations and API code untouched.
+
+### Checks
+
+- `dotnet build Domain.EnergyManagement/Domain.EnergyManagement.csproj --no-restore` passed with existing warnings.
+- `dotnet build Tests.EnergyManagement/Tests.EnergyManagement.csproj --no-restore -p:BuildProjectReferences=false` passed after rerunning outside sandbox because sandboxed MSBuild could not read user NuGet configuration while resolving the JavaScript SDK.
+- `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --no-build --filter "FullyQualifiedName~L1DomainTests"` passed 14/14.
+
+### Diploma note
+
+- Topic: aggregate boundary implementation.
+- Why it matters: the L1 domain now persists aggregate relationships through scalar identifiers while preserving typed creation context, which keeps aggregate ownership clear and avoids large object graphs during persistence migration.
+- Possible text use: domain design chapter, implementation chapter, testing chapter.
+
+## 2026-05-10 - L1 unit tests stopped imitating persisted aggregate IDs
+
+### Done
+
+- Removed L1 unit-test helpers that manually assigned `Entity.Id` through reflection.
+- Removed successful L1 applicant/request creation unit checks that depended on fake persisted aggregate IDs.
+- Kept L1 unit tests focused on local account creation/null guards and transient-reference guard behavior.
+- Recorded the testing rule that successful inter-aggregate creation with EF-generated IDs belongs to integration tests.
+
+### Checks
+
+- `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --no-build --filter "FullyQualifiedName~L1DomainTests"` passed 6/6.
+
+### Diploma note
+
+- Topic: test boundary discipline.
+- Why it matters: unit tests no longer fake persistence state, so generated identity propagation and foreign-key persistence remain verified at the integration level where EF and the database are actually involved.
+- Possible text use: testing chapter, test pyramid rationale, integration testing responsibilities.

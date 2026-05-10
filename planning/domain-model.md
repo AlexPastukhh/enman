@@ -76,12 +76,97 @@ These future concepts or future responsibilities are preliminary and are not par
 - The created aggregate stores only the referenced aggregate ID.
 - The created aggregate must not store the referenced aggregate object as owned domain navigation.
 - The referenced aggregate must already be persisted and have valid `Id > 0`.
-- If the referenced aggregate has an invalid/default ID, creation should fail or be rejected according to the domain error policy.
+- A referenced aggregate with `Id <= 0` is a method contract/application flow violation, not a normal business validation error.
+- This can be guarded with an exception.
 
 Examples:
 
 - `IndividualApplicantParty.Create(clientAccount, fullName, email, phoneNumber)` stores `clientAccount.Id` into `ClientAccountId`.
 - `ConnectionRequest.Create(applicantParty, details, objectAddress)` stores `applicantParty.Id` into `ApplicantPartyId`.
+
+### Domain error policy
+
+- Use `Result` for expected business/user validation failures.
+- Use exceptions/guards for:
+  - null required domain objects/value objects;
+  - method contract violations;
+  - impossible states;
+  - transient aggregate passed where a persisted aggregate reference is required.
+- Raw user input may be null/empty and should be handled as validation failure when it reaches a domain factory as raw primitive data.
+- Required domain objects and value objects should not be null. Null required domain objects are application/programmer errors.
+- A referenced aggregate with `Id <= 0` is not normal business validation. It means the application tried to use a transient aggregate where an existing persisted aggregate was required.
+
+Examples:
+
+- `ConnectionRequest.Create(applicantParty: null, details, address)` => guard/exception.
+- `ConnectionRequest.Create(applicantParty, details: null/empty/whitespace, address)` => business validation `Result`.
+- `ConnectionRequest.Create(applicantPartyWithId0, details, address)` => method contract/application flow violation.
+
+### Optional values policy
+
+- Use nullable `T?` for:
+  - simple persisted optional state;
+  - DTO/API contract fields;
+  - EF nullable columns;
+  - private backing fields;
+  - UI/display-only optional values.
+- Use `Maybe<T>` for operation results where absence is an expected outcome, especially:
+  - repository lookups;
+  - find/get optional operations;
+  - methods whose main purpose is to attempt to retrieve a value.
+- Use `Result<T>` when failure needs an explicit reason.
+- Do not pass `Maybe<T>` into aggregate factories for required dependencies.
+- Resolve `Maybe<T>` in the application service before calling the domain method.
+- Aggregate factories should receive actual domain objects/value objects, not `Maybe<T>` wrappers for required dependencies.
+- Do not map `Maybe<T>` directly with EF by default.
+- A domain entity may expose a computed `Maybe<T>` over a private nullable backing field only when optionality is an important part of domain language and the benefit outweighs EF/query complexity.
+- Prefer domain behavior methods and predicates over exposing optional state when external code only needs to decide whether an action is allowed.
+
+Good repository/application style:
+
+```csharp
+var maybeApplicantParty = await applicantPartyRepository.GetById(applicantPartyId);
+
+if (maybeApplicantParty.HasNoValue)
+{
+    return Result.Failure<ConnectionRequest, IReadOnlyList<Error>>(
+        [Errors.ApplicantParty.NotFound]);
+}
+
+var applicantParty = maybeApplicantParty.Value;
+
+var createRequest = ConnectionRequest.Create(
+    applicantParty,
+    details,
+    objectAddress);
+```
+
+Avoid passing optional wrappers into required domain dependencies:
+
+```csharp
+var createRequest = ConnectionRequest.Create(
+    maybeApplicantParty,
+    details,
+    objectAddress);
+```
+
+Prefer behavior or predicates when outside code only needs a decision:
+
+```csharp
+if (!request.CanBeTakenForReviewBy(employee))
+{
+    return Result.Failure(Errors.Request.CannotBeTakenForReview);
+}
+```
+
+Instead of exposing optional state only so callers can inspect it:
+
+```csharp
+if (request.AssignedEmployeeId is null)
+{
+    // decide whether review can start outside the aggregate
+}
+```
 
 ### EF relationship and navigation rule
 

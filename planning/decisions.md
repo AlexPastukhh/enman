@@ -288,3 +288,36 @@ L1 `Account` stores `PasswordHash` directly.
 - account state remains explicit and persistence-friendly;
 - domain model does not imply that raw passwords are stored;
 - password hashing policy can evolve in application/infrastructure services without changing aggregate ownership.
+
+## DEC-012: Domain error and optional value policy
+
+### Status
+
+Accepted
+
+### Context
+
+The L1 domain model uses `Result` for validation behavior, but aggregate factories also need clear rules for programmer errors, required dependencies and optional data.
+
+### Decision
+
+Use `Result` for expected business/user validation failures.
+
+Use exceptions/guards for null required domain objects/value objects, method contract violations, impossible states, and transient aggregates passed where persisted aggregate references are required.
+
+Raw user input may be null/empty and should be treated as validation failure when it reaches a domain factory as raw primitive data. Required domain objects and value objects should not be null.
+
+A referenced aggregate with `Id <= 0` is a method contract/application flow violation, not a normal business validation error.
+
+Use nullable `T?` for simple persisted optional state, DTO/API fields, EF nullable columns, private backing fields and UI/display-only optional values.
+
+Use `Maybe<T>` for operation results where absence is expected, especially repository lookups and find/get optional operations. Resolve `Maybe<T>` in the application service before calling aggregate methods. Do not pass `Maybe<T>` into aggregate factories for required dependencies, and do not map `Maybe<T>` directly with EF by default.
+
+Prefer domain behavior methods and predicates over exposing optional state when external code only needs to decide whether an action is allowed.
+
+### Consequences
+
+- aggregate factories receive actual required domain objects/value objects;
+- application services translate missing lookup results into explicit `Result<T>` failures when a reason is needed;
+- EF mapping stays simple by using nullable backing fields/columns instead of mapped `Maybe<T>`;
+- invalid transient referenced aggregates can be guarded with exceptions instead of being modeled as user validation errors.

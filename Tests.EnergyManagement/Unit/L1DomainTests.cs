@@ -4,47 +4,39 @@ using Domain.EnergyManagement.DocumentManaging;
 using Domain.EnergyManagement.L1;
 using FluentAssertions;
 using Tests.EnergyManagement.TestHelpers;
-using static Domain.EnergyManagement.Common.Error.Errors.ClientRequestErrors;
 
 namespace Tests.EnergyManagement.Unit;
 
-public class L1DomainTests : ClientRequestUnitBase
+public class L1DomainTests
 {
     private static ClientAccount CreateClientAccount()
     {
         var email = Email.Create(ValidTestData.ValidEmail).Value;
-        var password = Password.Create(ValidTestData.ValidPassword).Value;
-        return ClientAccount.Create(email, password).Value;
+        var passwordHash = CreatePasswordHash();
+
+        return ClientAccount.Create(email, passwordHash).Value;
     }
 
-    private static IndividualApplicantParty CreateIndividualApplicantParty()
+    private static PasswordHash CreatePasswordHash()
     {
-        var account = CreateClientAccount();
-        var (fullName, email, phone, _) = ValidTestData.GetAllIndividualsValues();
-        var applicantParty = IndividualApplicantParty.Create(
-            account,
-            fullName,
-            email,
-            phone).Value;
-
-        account.AddApplicantPartyOrThrow(applicantParty);
-        return applicantParty;
+        var password = Password.Create(ValidTestData.ValidPassword).Value;
+        return PasswordHash.ConvertFromString(password.Hash);
     }
 
     [Fact]
     public void CreatesClientAccountSuccessfully()
     {
-        var (_, email, _, password) = ValidTestData.GetAllIndividualsValues();
+        var (_, email, _, _) = ValidTestData.GetAllIndividualsValues();
+        var passwordHash = CreatePasswordHash();
 
-        var createAccount = ClientAccount.Create(email, password);
+        var createAccount = ClientAccount.Create(email, passwordHash);
 
         createAccount.IsSuccess.Should().BeTrue();
         var account = createAccount.Value;
         account.Email.Should().Be(email);
-        account.Password.Should().Be(password);
+        account.PasswordHash.Should().Be(passwordHash);
         account.Role.Should().Be(AccountRole.Client);
         account.IsActive.Should().BeTrue();
-        account.ApplicantParties.Should().BeEmpty();
     }
 
     [Theory]
@@ -55,7 +47,8 @@ public class L1DomainTests : ClientRequestUnitBase
         bool isEmailNull,
         bool isPasswordNull)
     {
-        var (_, email, _, password) = ValidTestData.GetAllIndividualsValues();
+        var (_, email, _, _) = ValidTestData.GetAllIndividualsValues();
+        var passwordHash = CreatePasswordHash();
         if (isEmailNull)
         {
             email = null!;
@@ -63,93 +56,40 @@ public class L1DomainTests : ClientRequestUnitBase
 
         if (isPasswordNull)
         {
-            password = null!;
+            passwordHash = null!;
         }
 
         Func<Result<ClientAccount, IReadOnlyList<Error>>> createAccount =
-            () => ClientAccount.Create(email, password);
+            () => ClientAccount.Create(email, passwordHash);
 
         createAccount.Should().Throw<Exception>();
     }
 
     [Fact]
-    public void CreatesIndividualApplicantPartyAndAddsItToClientAccount()
+    public void CantCreateIndividualApplicantPartyForTransientClientAccount()
     {
         var account = CreateClientAccount();
         var (fullName, email, phone, _) = ValidTestData.GetAllIndividualsValues();
 
-        var createApplicantParty = IndividualApplicantParty.Create(
-            account,
-            fullName,
-            email,
-            phone);
-        var applicantParty = createApplicantParty.Value;
-        account.AddApplicantPartyOrThrow(applicantParty);
+        Func<Result<IndividualApplicantParty, IReadOnlyList<Error>>> createApplicantParty =
+            () => IndividualApplicantParty.Create(
+                account,
+                fullName,
+                email,
+                phone);
 
-        createApplicantParty.IsSuccess.Should().BeTrue();
-        applicantParty.ClientAccount.Should().Be(account);
-        applicantParty.ApplicantPartyType.Should().Be(ApplicantPartyType.Individual);
-        applicantParty.FullName.Should().Be(fullName);
-        applicantParty.Email.Should().Be(email);
-        applicantParty.PhoneNumber.Should().Be(phone);
-        applicantParty.GetDisplayName().Should().Be(
-            $"{fullName.LastName} {fullName.FirstName} {fullName.MiddleName}");
-        account.ApplicantParties.Should().ContainSingle()
-            .Which.Should().BeSameAs(applicantParty);
+        createApplicantParty.Should().Throw<ArgumentException>();
     }
 
-    [Theory]
-    [MemberData(nameof(GetValidRequestData))]
-    public void CreatesConnectionRequestSuccessfully(
-        string requestDetails,
-        Address address)
+    [Fact]
+    public void CantCreateConnectionRequestWithoutApplicantParty()
     {
-        var applicantParty = CreateIndividualApplicantParty();
+        Func<Result<ConnectionRequest, IReadOnlyList<Error>>> createWithoutApplicantParty =
+            () => ConnectionRequest.Create(
+                null!,
+                ValidTestData.RequestDetails,
+                ValidTestData.GetAddressWithApartment());
 
-        var createRequest = ConnectionRequest.Create(
-            applicantParty,
-            requestDetails,
-            address);
-
-        createRequest.IsSuccess.Should().BeTrue();
-        var request = createRequest.Value;
-        request.Should().BeOfType<ConnectionRequest>();
-        request.ApplicantParty.Should().Be(applicantParty);
-        request.RequestType.Should().Be(ClientRequestType.Connection);
-        request.Status.Should().Be(RequestStatus.Submitted);
-        request.Details.Should().Be(requestDetails);
-        request.ObjectAddress.Should().Be(address);
-    }
-
-    [Theory]
-    [StringTestData(3001, 3500)]
-    public void CantCreateConnectionRequestWithTooLongRequestDetails(
-        string requestDetails)
-    {
-        var applicantParty = CreateIndividualApplicantParty();
-
-        var createRequest = ConnectionRequest.Create(
-            applicantParty,
-            requestDetails,
-            ValidTestData.GetAddressWithApartment());
-
-        createRequest.IsFailure.Should().BeTrue();
-        createRequest.Error.Should().Contain(ClientRequestTextIsTooLong);
-    }
-
-    [Theory]
-    [StringTestData(0)]
-    public void CantCreateConnectionRequestWithoutRequestDetails(
-        string requestDetails)
-    {
-        var applicantParty = CreateIndividualApplicantParty();
-
-        var createRequest = ConnectionRequest.Create(
-            applicantParty,
-            requestDetails,
-            ValidTestData.GetAddressWithApartment());
-
-        createRequest.IsFailure.Should().BeTrue();
-        createRequest.Error.Should().Contain(ClientRequestTextIsRequired);
+        createWithoutApplicantParty.Should().Throw<Exception>();
     }
 }

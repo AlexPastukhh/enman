@@ -18,7 +18,7 @@ Bring the old educational/experimental ASP.NET Core + React project to an L1 dip
 
 ## Current task
 
-Backend and frontend validation contract coverage are stabilized. A parallel L1 domain subset exists, but EF/API still use the old model. Next safe task: align the current L1 domain code with the agreed aggregate boundary rules before duplicating integration/API paths.
+Backend and frontend validation contract coverage are stabilized. A parallel L1 domain subset exists and is aligned with the agreed aggregate boundary rules, but EF/API still use the old model. Next safe task: duplicate the integration path for the current L1 subset without replacing old EF/API yet.
 
 ## Current implementation status
 
@@ -66,7 +66,7 @@ Backend and frontend validation contract coverage are stabilized. A parallel L1 
 - Frontend registration component tests and validation-error unit tests pass against the current client-side validation and backend problem-details contract.
 - Auth component debounce validation UX tests use fake timers and cover valid, mixed and invalid field combinations for register/login forms.
 - Frontend production build passes after session provider/import cleanup and registration view restoration.
-- Initial L1 domain subset has been introduced in parallel with old domain classes and is covered by dedicated unit tests.
+- Initial L1 domain subset has been introduced in parallel with old domain classes and is covered by dedicated unit tests for local invariants and guard behavior. Successful inter-aggregate creation with generated IDs is reserved for integration tests.
 
 ## Current L1 implementation cut
 
@@ -138,9 +138,9 @@ Guest registers
 | done | Improve planning navigation protocol | README, agent rules and current state now guide next safe actions. |
 | done | Add diploma note protocol | Significant work can now leave short notes for future diploma text in `action-log.md`. |
 | done | Start L1 domain refactor | Initial parallel `Domain.EnergyManagement.L1` subset added without removing old model. |
-| done | Add unit tests for current L1 domain subset | `L1DomainTests` cover client account, individual applicant party and connection request creation. |
-| next | Align current L1 domain code with aggregate boundary rules | Store cross-aggregate references as scalar `long` IDs; factories may accept existing aggregate objects as creation context and extract IDs; reject non-persisted referenced aggregates with invalid/default IDs; remove or avoid one-side aggregate collection navigations; replace current L1 `Password` usage with `PasswordHash`; remove `Request.Number` from current implemented L1 subset; update L1 unit tests; keep EF/API old model untouched until an explicit migration step. |
-| later | Duplicate integration path for current L1 subset | Start from auth/account/applicant creation after aggregate boundaries are aligned, without replacing old EF/API yet. |
+| done | Add unit tests for current L1 domain subset | `L1DomainTests` cover local L1 invariants and guard behavior without imitating persisted aggregate IDs. Successful applicant/request creation with generated IDs is an integration-test concern. |
+| done | Align current L1 domain code with aggregate boundary rules | L1 stores cross-aggregate references as scalar `long` IDs; factories accept existing aggregate objects as creation context and extract IDs; non-persisted referenced aggregates with `Id <= 0` are guarded as contract/application-flow violations; one-side aggregate collection navigation was removed; L1 `Account` uses `PasswordHash`; `Request.Number` is absent from the current implemented L1 subset; L1 unit tests avoid persisted-ID simulation; EF/API old model remains untouched. |
+| next | Duplicate integration path for current L1 subset | Start from auth/account/applicant creation after aggregate boundaries are aligned, without replacing old EF/API yet. |
 | later | Configure EF Core TPH mapping for L1 inheritance | Depends on choosing migration strategy from parallel L1 model to EF. |
 | later | Implement L1 API endpoints | Depends on domain and EF mapping. |
 | later | Add integration tests and Playwright E2E scenarios | Depends on L1 API behavior and test database strategy. |
@@ -156,4 +156,4 @@ Guest registers
 
 ## Last updated
 
-2026-05-10 - L1 aggregate boundary rules clarified in planning. Next safe task is aligning the parallel L1 domain code with stored scalar IDs, aggregate-object creation context, `PasswordHash`, and no current request number while keeping EF/API on the old model.
+2026-05-10 - Parallel L1 domain code aligned with stored scalar IDs, aggregate-object creation context, `PasswordHash`, no current request number, and guard behavior for transient referenced aggregates. L1 unit tests no longer imitate persisted IDs; successful inter-aggregate creation with generated IDs is reserved for integration tests. Next safe task is duplicating the integration path for the current L1 subset while keeping EF/API on the old model until an explicit migration step.
