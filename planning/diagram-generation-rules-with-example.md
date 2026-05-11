@@ -2,6 +2,21 @@
 
 This file captures the current agreed rules for generating project diagrams so that a new chat or AI agent can recreate the same kind of diagram we converged on.
 
+This file focuses on draw.io visual construction rules.
+
+For scenario/use-case semantic rules, read:
+
+```text
+planning/diagram-scenario-spec.md
+```
+
+For prompt protocol and common mistakes, read:
+
+```text
+planning/diagram-prompting-guide.md
+planning/diagram-common-mistakes.md
+```
+
 The current accepted baseline is:
 
 ```text

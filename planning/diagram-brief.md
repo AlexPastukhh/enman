@@ -1,18 +1,53 @@
 # Diagram Brief
 
-This file is the entrypoint for project diagram planning. It is intended for a separate diagram-generation chat or agent.
+Start here before asking any diagram-generation agent to generate diagrams.
 
-The diagram-generation chat must not make architecture decisions. It should generate editable `.drawio` diagrams from the diagram planning files and from the current source-of-truth planning documents.
+This file is the navigation entrypoint for diagram planning. It explains which planning files control scenario semantics, visual construction, prompting protocol, common mistakes and future examples.
+
+The diagram-generation chat must not make architecture decisions. It should generate editable `.drawio` diagrams from the diagram planning files and current source-of-truth planning documents.
 
 ## File Roles
 
-- `diagram-generation-rules-with-example.md` = visual and draw.io technical rules.
-- `final-diagrams-example.drawio` = visual/style reference only.
-- `diagram-scenario-spec.md` = user-facing use-case/scenario diagram logic.
+- `diagram-scenario-spec.md` = source of truth for scenario/use-case semantics.
+- `diagram-generation-rules-with-example.md` = source of truth for draw.io, visual construction, style and layout mechanics.
+- `diagram-prompting-guide.md` = how to prompt diagram-generation agents correctly.
+- `diagram-common-mistakes.md` = repeated mistakes, why they are wrong and reject criteria.
+- `diagram-examples-index.md` = placeholder index of future correct examples.
 - `diagram-domain-db-brief.md` = aggregate/domain and DB diagram content rules.
 - `domain-model.md` = source of domain decisions, not a direct use-case diagram prompt.
+- `final-diagrams-example.drawio` = visual/style reference only, not semantic or business truth.
 
-## Important Warning
+## Mandatory Generation Protocol
+
+```text
+1. Read diagram-brief.md.
+2. Read diagram-scenario-spec.md.
+3. Read diagram-generation-rules-with-example.md.
+4. Read diagram-common-mistakes.md.
+5. Read diagram-prompting-guide.md.
+6. Before generating the full package, create one proof-of-layout page.
+7. Wait for review/approval before generating the full scenario package.
+```
+
+For scenario diagrams, use this additional instruction:
+
+```text
+Read planning/diagram-scenario-spec.md.
+Follow section 20A Lane-Based Layout And Anti-Overlap Rules.
+Before generating a full package, create one proof-of-layout page first.
+```
+
+## Conflict Rule
+
+If files conflict:
+
+- scenario semantics are controlled by `diagram-scenario-spec.md`;
+- visual/draw.io construction is controlled by `diagram-generation-rules-with-example.md`;
+- prompt process is controlled by `diagram-prompting-guide.md`;
+- known anti-patterns are controlled by `diagram-common-mistakes.md`;
+- domain and DB diagram content is controlled by `diagram-domain-db-brief.md` plus domain source files.
+
+## Final Draw.io Example Warning
 
 `final-diagrams-example.drawio` is not a semantic reference for scenario structure.
 
@@ -32,25 +67,6 @@ Do not use it as:
 - a semantic model for future use-case diagrams;
 - a source of architecture decisions.
 
-## Separation of Concerns
-
-Visual/style rules and diagram logic are different concerns.
-
-Visual/style rules answer:
-
-- how cards are built in draw.io;
-- what palette and typography to use;
-- how text is rendered;
-- how edges and labels are styled;
-- how to avoid overflow and cramped layouts.
-
-Diagram logic answers:
-
-- what kind of diagram is being created;
-- what information belongs on the page;
-- which concepts are primary and which are only trace notes;
-- when to split one page into multiple pages.
-
 ## Diagram Families
 
 Keep these diagram families separate.
@@ -67,7 +83,7 @@ Primary structure:
 - preconditions;
 - main flow;
 - include;
-- extend;
+- branches;
 - invariants;
 - observable outcomes.
 
@@ -113,29 +129,23 @@ Primary structure:
 
 This technical flow belongs in an appendix, not in user-facing scenario pages.
 
-## Current Generation Strategy
-
-Generate scenario diagrams in small batches first. Then generate aggregate and DB diagrams separately.
-
-Recommended order:
-
-1. Read `diagram-generation-rules-with-example.md`.
-2. Read `diagram-scenario-spec.md` for scenario/use-case diagrams.
-3. Read `diagram-domain-db-brief.md` only when creating aggregate/domain/DB diagrams.
-4. Use `final-diagrams-example.drawio` only as a style and construction reference.
-
 ## Prompt Seed For Future Diagram Chats
 
 ```text
 You are generating editable draw.io diagrams for the Energy Management project.
 
 Read:
-1. planning/diagram-generation-rules-with-example.md
-2. planning/diagram-brief.md
-3. planning/diagram-scenario-spec.md
+1. planning/diagram-brief.md
+2. planning/diagram-scenario-spec.md
+3. planning/diagram-generation-rules-with-example.md
+4. planning/diagram-common-mistakes.md
+5. planning/diagram-prompting-guide.md
 
 Use planning/final-diagrams-example.drawio only as a visual/style reference.
-Do not treat it as a semantic scenario reference or a required page package.
+Do not treat it as semantic scenario truth or a required page package.
+
+Generate one proof-of-layout page only.
+Do not generate the full package until the proof page is reviewed and accepted.
 
 For use-case diagrams, create user-facing scenario/specification pages.
 Do not create command/domain/table maps as use-case diagrams.

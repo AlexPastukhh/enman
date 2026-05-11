@@ -65,6 +65,22 @@ React component/hook
 
 Technical trace notes are allowed only as small secondary notes when explicitly useful. They must not dominate the scenario diagram.
 
+Semantic correctness is as important as visual correctness.
+
+A scenario diagram must be semantically correct, not only visually clean.
+
+A visually clean diagram is still wrong if:
+
+```text
+- an invariant is attached to the wrong step/state/transition;
+- branch type is mislabeled;
+- [ALT], [EXT] or [VAR] markers are used incorrectly;
+- a precondition duplicates a decision branch;
+- a step postcondition is shown as a scenario precondition;
+- an off-page subscenario link is drawn as a normal current-flow branch;
+- an error branch is marked as [ALT] without reason.
+```
+
 ---
 
 ## 2. Main Scenario Unit
@@ -889,12 +905,47 @@ Submit sign-in
 
 Invariants must be anchored to the step, state or branch they protect.
 
+An invariant must be attached to the step, decision, transition or state where the rule is enforced.
+
+Do not attach an invariant to a late consequence state if enforcement happened earlier.
+
 Good:
 
 ```text
 Invalid credentials branch
 -- protected by -->
 No session is issued for invalid credentials.
+```
+
+Better for Login:
+
+```text
+Credentials valid?
+-- protected by -->
+Session is issued only for valid credentials.
+```
+
+or:
+
+```text
+Transition to Session is issued
+-- protected by -->
+Session is issued only for valid credentials.
+```
+
+Bad:
+
+```text
+Remain unauthenticated
+-- protected by -->
+No session for invalid credentials.
+```
+
+Why bad:
+
+```text
+The invariant is attached to a late consequence state.
+The rule is enforced at the credentials decision or the transition into Session is issued.
 ```
 
 Good:
@@ -1066,6 +1117,25 @@ Clarification [EXT:L2][VAR:MODIFY][ADR?]
 
 Markers should clarify planning, not overwhelm the diagram.
 
+Do not remove planning markers entirely.
+
+Use markers selectively but visibly.
+
+Recommended marker visibility:
+
+```text
+[CORE] may be used on key main-flow nodes and key required branches.
+[ALT], [EXT], [VAR:*], [RISK] and [ADR?] should be used only where they add planning meaning.
+```
+
+Markers are not visual type.
+
+```text
+Color = visual role in this diagram.
+Marker = planning meaning.
+Connector label = semantic relationship.
+```
+
 ---
 
 ## 16. Level Interpretation For Scenario Diagrams
@@ -1172,30 +1242,35 @@ Scenario preconditions:
 - Login screen is reachable.
 
 Main flow:
-Guest opens login screen
--> chooses sign-in path
--> enters credentials
--> submits sign-in
--> <<include>> Validate login form
--> Credentials valid?
+Guest opens login screen [CORE]
+-> enters credentials [CORE]
+-> submits sign-in [CORE]
+-> <<include>> Validate login form [CORE]
+-> Credentials valid? [CORE]
    -> if valid:
-      Session is issued
-      Redirect to requested app page
+      Session is issued [CORE]
+      Redirect to requested app page [CORE]
    -> if invalid:
-      Show sign-in error
-      Remain unauthenticated
+      Show sign-in error [CORE or unmarked required negative branch]
+      Remain unauthenticated [CORE or unmarked required negative branch]
 
-Optional actor choice / recovery link:
+Off-page transition:
 Forgot password selected
--> opens subscenario Password Recovery — SC-03
+-> opens subscenario Password Recovery - SC-03
+
+Item ref:
+SC-02-EXTND-01
 ```
 
 Side constraints:
 
 ```text
 Invariant:
-No session is issued for invalid credentials.
-Attach to invalid branch.
+Session is issued only for valid credentials.
+
+Attach to:
+- Credentials valid?
+- or the transition into Session is issued.
 
 Step-level postcondition:
 Session is issued.
@@ -1227,24 +1302,72 @@ Do not mark invalid credentials as `[ALT]`.
 
 Do not mark forgot password as `[ALT]` by default.
 
+Forgot password should use:
+
+```text
+SC-02-EXTND-01
+```
+
+because it is an off-page/subscenario branch item.
+
 ---
 
 ## 19. Color Guidance For Scenario Semantics
 
-Use colors to distinguish element type, not only roadmap marker.
-
-Suggested colors:
+Use this distinction:
 
 ```text
-Green      = core main flow / successful path
-Red        = error/invalid negative outcome branch
-Purple     = optional actor choice / subscenario link
-Blue       = observable outcomes / end states
-Yellow     = invariants / constraints
-Olive      = preconditions
-Gray       = actor/screen/context
-Cyan/Blue  = include / validation/supporting required step
+Color = visual role in this diagram.
+Marker = planning meaning.
+Connector label = semantic relationship.
 ```
+
+Use this palette meaning:
+
+```text
+Green  = current scenario flow / success path / normal in-page behavior
+Red    = negative, invalid, error, rejection or failure branch shown on this page
+Purple = off-page transition / subscenario link only
+Blue   = decision node, compact end-state block, observable summary
+Cyan   = include / mandatory supporting step
+Yellow = invariant / rule / constraint
+Olive  = precondition
+Gray   = actor/screen/context, metadata, legend
+```
+
+Important purple rule:
+
+```text
+Purple does not mean actor choice in general.
+Purple means the path leaves the current scenario page.
+```
+
+Use purple only for:
+
+```text
+- subscenario link;
+- off-page transition;
+- placeholder for another scenario page;
+- branch not expanded here.
+```
+
+Do not color normal in-page actor choices purple.
+
+If an actor choice continues inside the current scenario, color it according to its role:
+
+```text
+green for normal/current flow;
+red for negative branch;
+blue for decision/summary if appropriate.
+```
+
+For Login:
+
+```text
+Forgot password selected -> Password Recovery - SC-03
+```
+
+is purple because it is an off-page subscenario transition, not because it is an actor choice.
 
 Markers clarify planning meaning:
 
@@ -1307,6 +1430,403 @@ Connector rules:
 - avoid overlapping connectors;
 - if routing becomes messy, split the page or create a subscenario page.
 ```
+
+---
+
+## 20A. Lane-Based Layout And Anti-Overlap Rules
+
+Scenario diagrams must use lane discipline.
+
+The goal is to prevent connector overlap, shape overlap, visual noise and unclear relationships.
+
+A scenario page should not be optimized for compactness. A larger spacious page is preferred over a dense page.
+
+Lane discipline is conceptual.
+
+Visible lane guide lines are optional and should not be drawn by default in final scenario diagrams.
+
+Use visible lane lines only for:
+
+```text
+- proof-of-layout/debug examples;
+- internal layout review;
+- cases where the user explicitly wants visible lanes.
+```
+
+Do not require visible lane lines for all scenario diagrams.
+
+Lane discipline should still be followed:
+
+```text
+- keep main flow clean;
+- keep error branch separate;
+- keep off-page/subscenario links separate;
+- keep invariants local;
+- keep end-state summary compact.
+```
+
+---
+
+### 20A.1 Layout Lanes
+
+Use separate visual lanes for different semantic roles.
+
+Recommended lanes:
+
+```text
+Main flow lane:
+primary scenario path, usually left-to-right or top-to-bottom.
+
+Success/result lane:
+successful result nodes after decisions.
+
+Negative/error lane:
+invalid/error/negative outcome branches.
+
+Actor-choice/subscenario lane:
+optional actor choices and links to subscenario pages.
+
+Constraint lane:
+invariants and required constraints attached to the behavior they protect.
+
+Summary lane:
+compact scenario end states / postconditions.
+```
+
+These lanes do not need to be visibly drawn as swimlanes, but the layout must respect them.
+
+Bad:
+
+```text
+main flow, error flow, recovery path, invariant and end-state links all mixed in the same area
+```
+
+Good:
+
+```text
+main flow remains clean;
+error branch has its own area;
+subscenario link has its own area;
+invariant is local to the branch it protects;
+end states are compact and do not create connector web.
+```
+
+---
+
+### 20A.2 Main Flow Must Stay Clean
+
+The main flow is the visual backbone.
+
+Rules:
+
+```text
+- Do not route secondary connectors across the main flow.
+- Do not place invariants, end-state summaries or subscenario links inside the main flow corridor.
+- Do not allow dashed summary/protection links to visually compete with primary next-step links.
+- If a secondary connector would cross the main flow, move the node closer, move it to a side lane, or remove the connector.
+```
+
+Primary connectors:
+
+```text
+starts
+next
+checks
+if valid
+if invalid
+results in
+```
+
+Secondary connectors:
+
+```text
+include
+protected by
+summarized as
+visible as
+opens subscenario
+condition for
+```
+
+Secondary connectors must stay short and local whenever possible.
+
+---
+
+### 20A.3 Error / Negative Branch Lane
+
+Negative branches should have their own clear lane.
+
+Example:
+
+```text
+Credentials valid?
+-> if invalid:
+   Show sign-in error
+   -> Remain unauthenticated
+   -> local invariant near decision: Session is issued only for valid credentials
+```
+
+Rules:
+
+```text
+- Put negative/error nodes together.
+- Do not mix error branch nodes with actor-choice/subscenario nodes.
+- Do not route recovery/subscenario links through the error lane.
+- Attach error-related invariants close to the error branch.
+```
+
+---
+
+### 20A.4 Actor-Choice / Subscenario Lane
+
+Actor-choice and subscenario links should be visually separated from error/result branches.
+
+Example:
+
+```text
+Forgot password selected
+-> opens subscenario Password Recovery - SC-03
+```
+
+Rules:
+
+```text
+- Put optional actor choices in a separate lower or side lane.
+- Keep the connector from the source step to the actor choice simple.
+- Use labels like "if selected" and "opens subscenario".
+- Do not use generic "extend" connector labels.
+- Do not route subscenario links through error branches, invariants or end-state blocks.
+```
+
+---
+
+### 20A.5 Invariant Placement
+
+Invariants must be local.
+
+Rules:
+
+```text
+- Place invariant nodes near the step, decision, transition, state or branch where the rule is enforced.
+- Use a short "protected by" connector.
+- Do not place unrelated global invariants on the page.
+- Do not stretch invariant connectors across half the diagram.
+- If the invariant protects another scenario, move it to that scenario.
+```
+
+Good:
+
+```text
+Credentials valid?
+-> protected by
+Invariant: Session is issued only for valid credentials
+```
+
+Bad:
+
+```text
+Login scenario contains a far-away invariant:
+Protected app page is accessible only after authentication.
+```
+
+That belongs to a protected-resource-access scenario.
+
+---
+
+### 20A.6 End States / Postconditions Placement
+
+Scenario-level end states are usually a compact summary.
+
+Default rule:
+
+```text
+Do not draw long connectors from every final branch to the end-states block.
+```
+
+Prefer:
+
+```text
+- one compact End states / Postconditions block;
+- no connectors if the block is obviously a summary;
+- or only very short local connectors when they do not create visual noise.
+```
+
+Reject the layout if:
+
+```text
+- end-state summary links cross the main flow;
+- summary links create a web around the page;
+- several dashed summary links overlap each other;
+- the summary block becomes visually more important than the scenario flow.
+```
+
+---
+
+### 20A.7 Include Placement
+
+Include nodes must be attached to the exact required step.
+
+Rules:
+
+```text
+- Put include nodes directly above, below or near the step that requires them.
+- Use a short "include" connector.
+- Do not place all includes in a disconnected summary card.
+- Do not route include connectors through other nodes.
+```
+
+Example:
+
+```text
+Submit sign-in
+-> include
+<<include>> Validate login form
+```
+
+---
+
+### 20A.8 Connector Anchor Rules
+
+Before drawing a connector, choose the least congested side of the source and target nodes.
+
+Rules:
+
+```text
+- Do not stack multiple unrelated connectors on the same side of one shape.
+- Use different sides when a node has multiple relationships.
+- Use top/bottom anchors for vertical relationships.
+- Use left/right anchors for horizontal flow.
+- Keep connector labels away from node text and other connector labels.
+- Do not route connectors through shape bodies.
+- Do not route connectors through text inside shapes.
+- Do not allow connector labels to overlap lines or nodes.
+```
+
+If a node needs many connectors, either:
+
+```text
+- split the node;
+- move related nodes closer;
+- convert a distant connector into a local note;
+- create a subscenario page;
+- enlarge the canvas.
+```
+
+---
+
+### 20A.9 Long Connector Rule
+
+Long connectors are allowed only when they are necessary and visually clean.
+
+Avoid long connectors for:
+
+```text
+- summarized as
+- protected by
+- condition for
+- visible as
+- opens subscenario
+```
+
+These should usually be short and local.
+
+If a long connector is needed, it must:
+
+```text
+- not cross the main flow;
+- not cross node bodies;
+- not overlap another connector;
+- have a clear label;
+- use a free visual lane.
+```
+
+---
+
+### 20A.10 When To Remove A Connector
+
+Not every relationship needs a drawn connector.
+
+Remove or avoid a connector when:
+
+```text
+- the relation is obvious from placement and title;
+- the connector creates visual noise;
+- the connector would cross the main flow;
+- the connector would create a web of summary links;
+- the connector is only decorative.
+```
+
+Example:
+
+```text
+End states / Postconditions
+```
+
+can often be shown as a compact block without connectors.
+
+---
+
+### 20A.11 Anti-Overlap Rejection Criteria
+
+Reject or revise a diagram if:
+
+```text
+- any connector passes through a shape body;
+- any connector passes through body text;
+- connector labels overlap each other;
+- connector labels overlap shapes;
+- more than two unrelated connectors visually merge into one corridor;
+- secondary connectors cross the main flow;
+- invariants are far from the protected branch/state;
+- end-state summary links create a web;
+- actor-choice/subscenario links collide with error branches;
+- the diagram becomes dense just to fit a small canvas.
+```
+
+The correct fix is usually:
+
+```text
+- enlarge the canvas;
+- separate lanes;
+- move secondary nodes closer to their source;
+- remove unnecessary summary connectors;
+- split a complex branch into a subscenario page.
+```
+
+---
+
+### 20A.12 Login Layout Example Rule
+
+For Login-like scenarios, prefer this layout shape:
+
+```text
+Top / main lane:
+Actor/Screen -> Open login screen -> Enter credentials -> Submit sign-in -> Credentials valid?
+
+Success lane:
+Credentials valid? -> if valid -> Session is issued -> Redirect to requested app page
+
+Error lane:
+Credentials valid? -> if invalid -> Show sign-in error -> Remain unauthenticated
+Credentials valid? -> protected by -> Session is issued only for valid credentials
+
+Actor-choice/subscenario lane:
+Open login screen -> if selected -> Forgot password selected -> opens subscenario Password Recovery - SC-03
+
+Summary lane:
+End states / Postconditions as compact block, usually without long connectors.
+```
+
+Do not mix:
+
+```text
+forgot password path
+error branch
+invariant
+end-state summary links
+```
+
+in the same crowded lower-center area.
 
 ---
 
@@ -1439,7 +1959,7 @@ Accept a sample page only if:
 - includes are attached to exact required steps;
 - decision branches are clear;
 - optional actor choices/subscenario links are clear;
-- invariants are connected to protected behavior/state;
+- invariants are connected to the enforcement point they protect;
 - step-level postconditions/outcomes are attached to producing steps;
 - scenario end states are compact;
 - connectors do not overlap shape bodies;
@@ -1460,6 +1980,12 @@ Reject or revise if:
 - old implementation concepts appear;
 - [ALT] is used for normal errors;
 - EXT is used in item refs instead of EXTND.
+- secondary connectors cross the main flow;
+- end-state summary links create a web around the page;
+- invariants are far from the branch/state they protect;
+- actor-choice/subscenario links collide with error branches;
+- more than two unrelated connectors visually merge into one corridor;
+- the diagram becomes dense just to fit a small canvas.
 ```
 
 ---
@@ -1471,6 +1997,8 @@ Create a scenario/use-case flow diagram, not a text-card summary.
 
 Generate one proof-of-layout page first.
 Do not generate the full package until the sample page is accepted.
+
+Semantic correctness and visual correctness are both required.
 
 The main flow must be the visual backbone.
 
@@ -1494,6 +2022,9 @@ Error/invalid branches are usually negative outcome branches, not ALT.
 Use [ALT] narrowly:
 only when a normal step/path is not suitable and another path lets the actor still achieve the same or equivalent goal.
 
+Use purple only for off-page/subscenario links.
+Do not use purple for normal in-page actor choices.
+
 Do not create preconditions that are already represented by decision diamonds.
 Preconditions are usually external facts before the scenario or step.
 
@@ -1501,7 +2032,7 @@ Support both scenario-level and step-level postconditions.
 Attach step-level postconditions/outcomes to the step that produces them.
 Show scenario-level postconditions as compact end states.
 
-Invariants must attach to the step/state/branch they protect.
+Invariants must attach to the enforcement point: the step, decision, transition or state where the rule is protected.
 Do not place unrelated global invariants on a scenario page.
 
 Do not draw large standalone acceptance cards by default.
@@ -1514,4 +2045,18 @@ Avoid connector overlaps.
 Do not route connectors through shape bodies.
 Distribute connector anchors across sides.
 Avoid implementation details.
+
+Use lane discipline:
+- main flow lane;
+- success/result lane;
+- negative/error lane;
+- actor-choice/subscenario lane;
+- constraint/invariant lane;
+- compact summary/end-state lane.
+
+Do not let secondary connectors cross the main flow.
+Do not create long summary connector webs.
+Place invariants near the branch/state they protect.
+Prefer removing summary connectors over creating visual noise.
+Enlarge the canvas instead of making the diagram dense.
 ```
