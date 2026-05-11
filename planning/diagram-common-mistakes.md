@@ -654,3 +654,35 @@ Review/reject rule:
 ```text
 Reject if text escapes outside a shape, touches borders too closely, refs/markers overlap body text, connector labels overlap node text, or a node is too small for its content.
 ```
+
+## 22. Light Theme Used Instead Of Approved Dark Theme
+
+Mistake:
+
+```text
+Using a light/default theme when the project's approved examples use the dark theme.
+```
+
+Why wrong:
+
+```text
+The diagram may be semantically acceptable, but it breaks visual consistency across the planning documentation.
+```
+
+Bad example:
+
+```text
+A scenario diagram with white background and pale nodes when the approved examples use dark grid/background.
+```
+
+Correct approach:
+
+```text
+Use the approved dark theme from scenario-login-correct-v3 unless the user explicitly asks for light theme.
+```
+
+Review/reject rule:
+
+```text
+Reject or revise if the diagram uses a light theme without explicit request.
+```

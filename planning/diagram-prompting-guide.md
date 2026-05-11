@@ -24,6 +24,15 @@ planning/examples/scenario-login-correct-v3.svg
 planning/examples/scenario-login-correct-v3.md
 ```
 
+Use the approved dark visual theme from:
+
+```text
+planning/examples/scenario-login-correct-v3.svg
+planning/examples/scenario-login-correct-v3.drawio
+```
+
+Do not use a light theme unless explicitly requested.
+
 For aggregate/domain or DB diagrams, also require:
 
 ```text
@@ -88,6 +97,10 @@ Do not treat final-diagrams-example.drawio as scenario semantics.
 Visual correctness includes:
 
 ```text
+- uses approved dark project theme;
+- does not silently switch to light theme;
+- semantic colors match diagram-scenario-spec.md;
+- all text is readable on dark background;
 - no text overflow;
 - no shape overlap;
 - no connector overlap;
@@ -158,6 +171,12 @@ Use approved example if relevant:
 - planning/examples/scenario-login-correct-v3.svg
 - planning/examples/scenario-login-correct-v3.md
 
+Use the approved dark visual theme from:
+- planning/examples/scenario-login-correct-v3.svg
+- planning/examples/scenario-login-correct-v3.drawio
+
+Do not use a light theme unless explicitly requested.
+
 Task:
 Generate one proof-of-layout page only.
 
@@ -170,6 +189,10 @@ Quality requirements:
 - main flow is visual backbone;
 - no text-card summary;
 - semantic correctness and visual correctness are both required;
+- uses approved dark project theme;
+- does not silently switch to light theme;
+- semantic colors match diagram-scenario-spec.md;
+- all text is readable on dark background;
 - invariants attach to enforcement point;
 - preconditions do not duplicate decision branches;
 - step postconditions attach to producing step;

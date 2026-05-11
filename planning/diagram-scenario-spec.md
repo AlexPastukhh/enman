@@ -1343,6 +1343,12 @@ Marker = planning meaning.
 Connector label = semantic relationship.
 ```
 
+Color semantics define what each color means.
+
+The default visual theme is controlled by `diagram-generation-rules-with-example.md`.
+
+Use the approved dark theme unless explicitly requested otherwise.
+
 Use this palette meaning:
 
 ```text

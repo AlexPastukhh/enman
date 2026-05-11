@@ -47,6 +47,36 @@ Use C2.4 for:
 - body background as a separate shape
 ```
 
+## Default Scenario Diagram Theme
+
+Use the approved dark theme by default for scenario diagrams.
+
+The canonical visual baseline is:
+
+```text
+planning/examples/scenario-login-correct-v3.svg
+planning/examples/scenario-login-correct-v3.drawio
+planning/examples/scenario-login-correct-v3.md
+```
+
+Do not switch to a light theme unless the user explicitly asks for it.
+
+A diagram may be semantically correct but still visually inconsistent if it ignores the approved theme.
+
+Scenario diagrams should use:
+
+```text
+- dark grid/background;
+- high-contrast readable text;
+- semantic color palette from diagram-scenario-spec.md;
+- spacious layout;
+- readable node sizes;
+- no text overflow;
+- no connector web.
+```
+
+If an external tool or default draw.io style produces a light theme, override it to match the approved dark project style.
+
 The latest accepted test artifact that reflects this direction is:
 
 ```text
@@ -63,9 +93,17 @@ It is not meant to be pixel-perfect, but it reflects the current target style:
 - CQRS flow widened enough to avoid body text leaving the cards.
 ---
 
-# Reference Example File
+# Reference Example Files
 
-Alongside this rules file, keep the accepted example draw.io file:
+For scenario diagrams, the approved canonical visual/style example is:
+
+```text
+planning/examples/scenario-login-correct-v3.drawio
+planning/examples/scenario-login-correct-v3.svg
+planning/examples/scenario-login-correct-v3.md
+```
+
+Older files such as `final-diagrams-example.drawio` are visual history/reference material only.
 
 ```text
 final-diagrams-example.drawio
@@ -115,7 +153,8 @@ The agent should preserve the same overall visual direction unless a later plann
 Copy these principles:
 
 ```text
-- light accepted C2 palette;
+- approved project theme for the requested diagram family;
+- dark theme for scenario diagrams unless explicitly requested otherwise;
 - cards as groups;
 - header shape + body background shape;
 - separate section heading text-shapes;
@@ -153,7 +192,7 @@ If a conflict appears between this rules file and the example:
 1. Follow the rules file for explicit conventions.
 2. Use the example file for visual interpretation.
 3. Do not invent a new palette or rendering approach.
-4. If unsure, preserve the accepted C2 palette and C2.4 line-text card structure.
+4. If unsure, preserve the approved dark scenario theme and C2.4 line-text card structure.
 ```
 
 
