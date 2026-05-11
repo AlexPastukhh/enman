@@ -18,7 +18,7 @@ Bring the old educational/experimental ASP.NET Core + React project to an L1 dip
 
 ## Current task
 
-Backend and frontend validation contract coverage are stabilized. A parallel L1 domain subset exists and is aligned with the agreed aggregate boundary rules, but EF/API still use the old model. Planning now clarifies that new L1 use cases must be implemented as a separate application/persistence slice: thin controllers, command-handler-owned `SaveChanges`, separate L1 commands/handlers/repositories/DbContext, Dapper query side, and HTTP integration tests for generated IDs. Next safe task: duplicate the integration path for the current L1 subset without replacing old EF/API yet.
+Backend and frontend validation contract coverage are stabilized. A parallel L1 domain subset exists and is aligned with the agreed aggregate boundary rules. The first parallel L1 application/persistence/API/integration-test slice now exists for client account registration, individual applicant party creation and connection request creation, while the old EF/API flow remains registered.
 
 ## Current implementation status
 
@@ -36,7 +36,13 @@ Backend and frontend validation contract coverage are stabilized. A parallel L1 
   - `ClientRequest`;
   - `IndividualRequest`;
   - `RequestReview`.
-- New parallel L1 domain subset exists under `Domain.EnergyManagement.L1`; it is a migration target, and EF/API still use the old model until an explicit migration step.
+- New parallel L1 domain subset exists under `Domain.EnergyManagement.L1`.
+- First parallel L1 application/persistence/API slice exists under `EnergyManagement.Server/L1`:
+  - separate `L1DbContext`;
+  - L1 repositories;
+  - L1 commands/handlers;
+  - temporary `/api/l1/...` HTTP endpoints.
+- Old EF/API flow still exists and remains registered in parallel.
 - Existing old server endpoints for registration/login/user and individual request creation.
 - Existing EF Core mapping for old entities.
 - Structured planning folder exists.
@@ -68,6 +74,7 @@ Backend and frontend validation contract coverage are stabilized. A parallel L1 
 - Frontend production build passes after session provider/import cleanup and registration view restoration.
 - Initial L1 domain subset has been introduced in parallel with old domain classes and is covered by dedicated unit tests for local invariants and guard behavior. Successful inter-aggregate creation with generated IDs is reserved for integration tests.
 - L1 migration rules require separate L1 application and persistence flow. Do not mix old domain/application classes with L1 entities inside one command handler.
+- L1 HTTP integration tests verify generated ID propagation and stored scalar cross-aggregate references through the real EF/database path.
 - Diagram generation planning files exist and should be read only for diagram-related tasks.
 
 ## Current L1 implementation cut
@@ -142,9 +149,8 @@ Guest registers
 | done | Start L1 domain refactor | Initial parallel `Domain.EnergyManagement.L1` subset added without removing old model. |
 | done | Add unit tests for current L1 domain subset | `L1DomainTests` cover local L1 invariants and guard behavior without imitating persisted aggregate IDs. Successful applicant/request creation with generated IDs is an integration-test concern. |
 | done | Align current L1 domain code with aggregate boundary rules | L1 stores cross-aggregate references as scalar `long` IDs; factories accept existing aggregate objects as creation context and extract IDs; non-persisted referenced aggregates with `Id <= 0` are guarded as contract/application-flow violations; one-side aggregate collection navigation was removed; L1 `Account` uses `PasswordHash`; `Request.Number` is absent from the current implemented L1 subset; L1 unit tests avoid persisted-ID simulation; EF/API old model remains untouched. |
-| next | Duplicate integration path for current L1 subset | Start from auth/account/applicant creation after aggregate boundaries are aligned. Use separate L1 commands/handlers/repositories/DbContext and HTTP integration tests; do not patch old handlers into a hybrid old+L1 flow. |
-| later | Configure EF Core TPH mapping for L1 inheritance | Depends on choosing migration strategy from parallel L1 model to EF. |
-| later | Implement L1 API endpoints | Depends on domain and EF mapping. |
+| done | Duplicate integration path for current L1 subset | Separate L1 commands/handlers/repositories/DbContext and `/api/l1/...` HTTP endpoints exist for account, applicant party and connection request creation. HTTP integration tests verify generated IDs and FK/reference persistence without old navigation assertions. |
+| later | Add L1 read/query endpoints | Use Dapper/SQL projections; do not hydrate aggregates or call `SaveChanges`. |
 | later | Add integration tests and Playwright E2E scenarios | Depends on L1 API behavior and test database strategy. |
 
 ## Current blockers / known issues
@@ -158,4 +164,4 @@ Guest registers
 
 ## Last updated
 
-2026-05-11 - L1 migration/application/persistence planning clarified: controllers stay thin, command handlers own normal use-case commits, L1 gets separate commands/handlers/repositories/DbContext, query side uses Dapper projections, and generated ID propagation is verified through HTTP integration tests. Diagram planning files are read only for diagram tasks. Next safe task is duplicating the integration path for the current L1 subset while keeping old EF/API flow alive until an explicit migration step.
+2026-05-11 - First parallel L1 application/persistence/API/integration-test slice added for the current L1 subset. Old EF/API flow remains registered. New L1 HTTP integration tests verify generated IDs and stored cross-aggregate references through the real database path.

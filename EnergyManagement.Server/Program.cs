@@ -3,6 +3,9 @@ using EnergyManagement.Server.Configuration;
 using EnergyManagement.Server.Contracts;
 using EnergyManagement.Server.Data;
 using EnergyManagement.Server.Infrastructure;
+using EnergyManagement.Server.L1.Application.Abstractions;
+using EnergyManagement.Server.L1.Persistence;
+using EnergyManagement.Server.L1.Persistence.Repositories;
 using EnergyManagement.Server.Repositories;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -32,7 +35,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped(
     _=>new AppDbContext(builder.Configuration.GetConnectionString(ConnectionStringNames.ManagementDb)!));
+builder.Services.AddScoped(
+    _=>new L1DbContext(builder.Configuration.GetConnectionString(ConnectionStringNames.ManagementDb)!));
 builder.Services.AddTransient<IClientRepository,ClientRepository>();
+builder.Services.AddTransient<IAccountRepository, AccountRepository>();
+builder.Services.AddTransient<IApplicantPartyRepository, ApplicantPartyRepository>();
+builder.Services.AddTransient<IClientRequestRepository, ClientRequestRepository>();
 
 // builder.Services.AddSingleton(_=>ConstantsToWrite.Create());
 builder.Services.AddSingleton(_=>ErrorObject.Create());

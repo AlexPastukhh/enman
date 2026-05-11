@@ -620,3 +620,59 @@ Make planning usable as living handoff documentation for future AI agents.
 - Topic: migration architecture and use-case boundaries.
 - Why it matters: the project now documents how the old implementation can coexist with the new L1 slice without creating hybrid handlers, unclear transaction boundaries or mixed EF models.
 - Possible text use: architecture chapter, implementation migration strategy, testing strategy.
+
+## 2026-05-11 - First parallel L1 application/persistence slice added
+
+### Done
+
+- Added a separate `L1DbContext` for the current L1 domain subset:
+  - `L1Accounts`;
+  - `L1ApplicantParties`;
+  - `L1ClientRequests`.
+- Added L1 repositories that use `L1DbContext` instead of the old `AppDbContext`.
+- Added L1 commands and handlers for:
+  - client account registration;
+  - individual applicant party creation;
+  - connection request creation.
+- Kept normal L1 command commits inside handlers through `SaveChangesAsync`.
+- Added temporary thin L1 HTTP endpoints under `/api/l1/...`.
+- Updated the integration test factory to override `L1DbContext` with the fixture connection string.
+- Added HTTP-level L1 integration tests that verify EF-generated IDs and stored scalar cross-aggregate references.
+- Kept old domain/API/EF flow registered and untouched.
+
+### Checks
+
+- `dotnet build EnergyManagement.Server/EnergyManagement.Server.csproj --no-restore` passed after rerunning outside the sandbox because sandboxed MSBuild could not read user NuGet/SDK configuration.
+- `dotnet build Tests.EnergyManagement/Tests.EnergyManagement.csproj --no-restore` passed with 0 warnings.
+- `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --no-build --filter "FullyQualifiedName~L1SliceIntegrationTests"` passed 8/8.
+- `dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj --no-build` passed 108/108.
+
+### Diploma note
+
+- Topic: incremental migration and integration testing.
+- Why it matters: the new L1 backend path now coexists with the old implementation while using separate persistence, handlers and HTTP integration tests to prove generated identity propagation across aggregate boundaries.
+- Possible text use: implementation chapter, persistence design, testing chapter.
+
+## 2026-05-11 - Diagram planning split by concern
+
+### Done
+
+- Rewrote `diagram-brief.md` as a lightweight diagram-planning entrypoint.
+- Added `diagram-scenario-spec.md` for user-facing use-case/scenario diagram logic.
+- Added `diagram-domain-db-brief.md` for aggregate/domain and DB diagram content rules.
+- Clarified that `final-diagrams-example.drawio` is a visual/style reference only, not a semantic scenario reference or architecture source.
+- Updated diagram generation rules with:
+  - scenario/use-case diagrams as actor/screen/goal behavioral specifications;
+  - separate domain/aggregate, DB schema and technical CQRS diagram families;
+  - stronger edge routing, distributed port and page-splitting guidance.
+- Recorded the user-facing label rule: use "Provide individual applicant data", not "Create individual applicant profile".
+
+### Checks
+
+- Documentation-only change; no tests were run.
+
+### Diploma note
+
+- Topic: diagram documentation structure.
+- Why it matters: project diagrams now distinguish user-facing scenarios from domain, storage and technical implementation views, making diploma diagrams easier to read and less likely to mix architecture layers.
+- Possible text use: diagrams chapter, documentation methodology.

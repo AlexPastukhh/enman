@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using EnergyManagement.Server;
 using EnergyManagement.Server.Configuration;
 using EnergyManagement.Server.Data;
+using EnergyManagement.Server.L1.Persistence;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Hosting;
@@ -52,6 +53,16 @@ namespace Tests.EnergyManagement.Integration
                 }
 
                 services.AddScoped(_ => new AppDbContext(ConnectionString));
+
+                var l1DbContextDescriptor = services
+                    .SingleOrDefault(d => d.ServiceType == typeof(L1DbContext));
+
+                if (l1DbContextDescriptor != null)
+                {
+                    services.Remove(l1DbContextDescriptor);
+                }
+
+                services.AddScoped(_ => new L1DbContext(ConnectionString));
             });
 
             base.ConfigureWebHost(builder);

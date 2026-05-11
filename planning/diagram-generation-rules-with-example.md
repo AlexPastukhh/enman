@@ -50,7 +50,7 @@ Alongside this rules file, keep the accepted example draw.io file:
 final-diagrams-example.drawio
 ```
 
-This file is the current visual and structural reference example.
+This file is the current visual/style and draw.io construction reference example.
 
 Use it as the baseline for:
 
@@ -63,18 +63,28 @@ Use it as the baseline for:
 - aggregate boundary sizing;
 - attached edge labels;
 - line-by-line body text rendering;
-- CQRS lane structure;
 - card width/height refitting under larger text.
 ```
 
 Do not treat `final-diagrams-example.drawio` as a pixel-perfect template.
 
+Also do not treat `final-diagrams-example.drawio` as a semantic scenario reference.
+
 Treat it as:
 
 ```text
 a style reference
-a structure reference
 a practical example of the accepted implementation
+a card construction reference
+```
+
+Do not treat it as:
+
+```text
+a logical scenario structure reference
+a required page package
+a semantic model for future use-case diagrams
+a source of architecture decisions
 ```
 
 The agent should preserve the same overall visual direction unless a later planning note explicitly overrides it.
@@ -105,12 +115,14 @@ Do not blindly copy:
 - exact coordinates;
 - exact page size;
 - exact edge bend points;
+- exact page package;
+- exact scenario/card logic;
 - accidental local compromises;
 - minor overlap that may have been manually fixable;
 - exact number of pixels for every card.
 ```
 
-The goal is to reproduce the **same visual language and construction method**, not to duplicate every coordinate.
+The goal is to reproduce the **same visual language and construction method**, not to duplicate every coordinate or semantic page structure.
 
 ## If rules and example conflict
 
@@ -673,6 +685,22 @@ Not acceptable:
 - huge accidental overlaps;
 - wrong palette.
 
+## 8.5 Page splitting
+
+Prefer readable scenario pages over giant all-system maps.
+
+Rules:
+
+```text
+- one page should represent one coherent scenario, screen, workflow or technical concern;
+- large canvas is allowed;
+- do not force compactness;
+- a clean large diagram is better than a dense small one;
+- if routing becomes messy, split the scenario into another page;
+- if a branch has its own user goal, split it into another page;
+- if a page mixes scenario, domain, DB and CQRS details, split by diagram family.
+```
+
 ---
 
 # 9. Edge Labels
@@ -709,6 +737,42 @@ Labels should:
 - preferably sit in open corridors between cards.
 
 If draw.io places labels slightly oddly, this is acceptable if quick to fix manually.
+
+## 9.4 Edge routing and ports
+
+Edge side selection must be semantic and geometric.
+
+Use the side that matches the visual relationship when practical:
+
+```text
+- if source is below target, connect to the target bottom or source top as appropriate;
+- if source is above target, connect to the target top or source bottom as appropriate;
+- if source is left of target, connect through left/right sides;
+- if source is right of target, connect through right/left sides.
+```
+
+Do not connect many unrelated edges to the same side or point when other ports are free.
+
+Use distributed ports conceptually:
+
+```text
+top-left / top-center / top-right
+right-upper / right-middle / right-lower
+bottom-left / bottom-center / bottom-right
+left-upper / left-middle / left-lower
+```
+
+Reserve routing corridors:
+
+```text
+- edges must not pass through card bodies;
+- edges must not pass through body text;
+- edge labels must not sit on top of card text;
+- parallel edges should have separate routes or offsets;
+- crossing edges should be avoided by moving cards or splitting the page.
+```
+
+If 3-4 edges stack on top of each other, reroute or split the page.
 
 ---
 
@@ -835,7 +899,51 @@ Recommended sections:
 [optional policy]
 ```
 
-## 11.4 CQRS / use-case flow diagrams
+## 11.4 Scenario / use-case diagrams
+
+Use-case diagrams are user-facing scenario/specification diagrams.
+
+They should be organized around:
+
+```text
+actor + screen/application context + user goal
+```
+
+They should show:
+
+```text
+[actor / screen]
+[goal]
+[preconditions]
+[main flow]
+[include]
+[extend]
+[invariants]
+[observable outcomes]
+```
+
+They should not be organized around:
+
+```text
+Command
+Domain
+Writes/Reads table
+Controller/Handler/Repository/DbContext
+```
+
+Technical trace notes are allowed only as secondary, compact notes.
+
+For scenario logic, read:
+
+```text
+diagram-scenario-spec.md
+```
+
+## 11.5 Technical CQRS / application flow diagrams
+
+CQRS/application flow is an optional appendix diagram family.
+
+Do not merge it into user-facing scenario pages.
 
 Use lanes:
 
@@ -905,7 +1013,11 @@ one line = one text shape = one primary line color
 
 ---
 
-# 13. Page Content for the Current Project
+# 13. Technical Content Examples For The Current Project
+
+This section gives compact content examples for DB, aggregate, domain and CQRS appendix diagrams.
+
+Do not use this section as the scenario/use-case page package. For user-facing scenarios, read `diagram-scenario-spec.md`.
 
 ## 13.1 DB L1 current schema
 
@@ -989,7 +1101,7 @@ ApplicantPartyId
 uses VOs
 ```
 
-## 13.4 CQRS / use-case flow
+## 13.4 Technical CQRS appendix flow
 
 Lanes:
 
@@ -1105,7 +1217,9 @@ Before returning a `.drawio` file, check:
 - DB diagram does not show domain methods
 - aggregate diagram clearly shows ID references, not ownership
 - domain model shows methods/rules/value objects
-- CQRS flow separates command/query paths
+- use-case diagrams are user-facing scenario/specification pages
+- CQRS appendix separates command/query paths
+- scenario, domain, DB and CQRS concerns are not mixed on one page
 ```
 
 ---
@@ -1119,8 +1233,9 @@ Create editable draw.io XML diagrams using the accepted diagram convention:
 
 C2/C2.2 visuals + C2.4 text implementation.
 
-Use `final-diagrams-example.drawio` as the visual and structural reference example.
+Use `final-diagrams-example.drawio` as a visual/style and card-construction reference only.
 Do not copy it pixel-perfectly; copy its visual language, palette, card construction, text rendering approach, and layout discipline.
+Do not treat it as a semantic scenario reference, required page package, or architecture source.
 
 Use the accepted C2 palette:
 - L1/DB: header #009E73, body #E6F4EF, stroke #007A5A
@@ -1147,15 +1262,18 @@ If text may wrap, reserve extra vertical height.
 
 Use attached edge labels, not floating badges.
 Use labelBackgroundColor and labelBorderColor.
+Route edges through open corridors.
+Do not stack unrelated edges on the same side/point when other ports are free.
+Do not route edges through card bodies or body text.
 
 Keep layout compact but not cramped.
 Aggregate boundaries should keep top padding for the title but compact sides/bottom.
 
-Generate separate pages:
-1. DB schema
-2. Aggregate boundaries
-3. Domain model
-4. CQRS/use-case flow
+Generate separate diagram families:
+1. Scenario/use-case pages: user-facing behavior and observable outcomes
+2. Aggregate/domain pages: ownership, roots, stored ID references
+3. DB schema pages: storage shape only
+4. CQRS/application flow: optional technical appendix only
 
 Validate XML before returning.
 ```
