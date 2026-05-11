@@ -12,7 +12,8 @@ The diagram-generation chat must not make architecture decisions. It should gene
 - `diagram-generation-rules-with-example.md` = source of truth for draw.io, visual construction, style and layout mechanics.
 - `diagram-prompting-guide.md` = how to prompt diagram-generation agents correctly.
 - `diagram-common-mistakes.md` = repeated mistakes, why they are wrong and reject criteria.
-- `diagram-examples-index.md` = placeholder index of future correct examples.
+- `diagram-examples-index.md` = index of approved and planned correct diagram examples.
+- `planning/examples/` = actual approved examples.
 - `diagram-domain-db-brief.md` = aggregate/domain and DB diagram content rules.
 - `domain-model.md` = source of domain decisions, not a direct use-case diagram prompt.
 - `final-diagrams-example.drawio` = visual/style reference only, not semantic or business truth.
@@ -25,8 +26,9 @@ The diagram-generation chat must not make architecture decisions. It should gene
 3. Read diagram-generation-rules-with-example.md.
 4. Read diagram-common-mistakes.md.
 5. Read diagram-prompting-guide.md.
-6. Before generating the full package, create one proof-of-layout page.
-7. Wait for review/approval before generating the full scenario package.
+6. Check diagram-examples-index.md for approved examples.
+7. Before generating the full package, create one proof-of-layout page.
+8. Wait for review/approval before generating the full scenario package.
 ```
 
 For scenario diagrams, use this additional instruction:
@@ -45,6 +47,7 @@ If files conflict:
 - visual/draw.io construction is controlled by `diagram-generation-rules-with-example.md`;
 - prompt process is controlled by `diagram-prompting-guide.md`;
 - known anti-patterns are controlled by `diagram-common-mistakes.md`;
+- approved examples are indexed by `diagram-examples-index.md`;
 - domain and DB diagram content is controlled by `diagram-domain-db-brief.md` plus domain source files.
 
 ## Final Draw.io Example Warning
@@ -140,9 +143,16 @@ Read:
 3. planning/diagram-generation-rules-with-example.md
 4. planning/diagram-common-mistakes.md
 5. planning/diagram-prompting-guide.md
+6. planning/diagram-examples-index.md
 
 Use planning/final-diagrams-example.drawio only as a visual/style reference.
 Do not treat it as semantic scenario truth or a required page package.
+
+Use approved examples only when relevant.
+Current canonical scenario example:
+- planning/examples/scenario-login-correct-v3.drawio
+- planning/examples/scenario-login-correct-v3.svg
+- planning/examples/scenario-login-correct-v3.md
 
 Generate one proof-of-layout page only.
 Do not generate the full package until the proof page is reviewed and accepted.

@@ -622,3 +622,35 @@ Review/reject rule:
 ```text
 Reject if the diagram becomes dense just to fit a small canvas.
 ```
+
+## 21. Text Escaping Outside Shape Boundaries
+
+Mistake:
+
+```text
+Text, refs, markers or connector labels overflow outside their shapes or overlap other text.
+```
+
+Why wrong:
+
+```text
+The diagram becomes unreadable and cannot be accepted as a polished scenario artifact.
+```
+
+Bad example:
+
+```text
+Text overflows outside End states / Postconditions card.
+```
+
+Correct approach:
+
+```text
+Increase shape size, reduce text, split content, move details to a note, or use a larger canvas.
+```
+
+Review/reject rule:
+
+```text
+Reject if text escapes outside a shape, touches borders too closely, refs/markers overlap body text, connector labels overlap node text, or a node is too small for its content.
+```

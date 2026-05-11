@@ -16,6 +16,14 @@ planning/diagram-common-mistakes.md
 planning/diagram-examples-index.md
 ```
 
+Use approved examples when relevant:
+
+```text
+planning/examples/scenario-login-correct-v3.drawio
+planning/examples/scenario-login-correct-v3.svg
+planning/examples/scenario-login-correct-v3.md
+```
+
 For aggregate/domain or DB diagrams, also require:
 
 ```text
@@ -88,6 +96,7 @@ Visual correctness includes:
 - no long end-state connector webs;
 - spacious canvas over dense layout;
 - lane discipline without mandatory visible lane lines.
+- all text fits inside shapes.
 ```
 
 ## Prevent Text-Card Diagrams
@@ -123,14 +132,15 @@ Ask the diagram agent to return:
 
 ## Placeholder Examples
 
-The examples index may list future files that do not exist yet.
+The examples index lists approved and planned examples.
 
 Tell the diagram agent:
 
 ```text
 Read planning/diagram-examples-index.md for intended examples.
-Do not treat missing example files as an error.
-Do not create example files unless explicitly asked.
+Use approved examples when relevant.
+Do not treat missing TODO example files as an error.
+Do not create new example files unless explicitly asked.
 ```
 
 ## Standard Prompt Skeleton
@@ -142,6 +152,11 @@ Read:
 - planning/diagram-generation-rules-with-example.md
 - planning/diagram-common-mistakes.md
 - planning/diagram-examples-index.md
+
+Use approved example if relevant:
+- planning/examples/scenario-login-correct-v3.drawio
+- planning/examples/scenario-login-correct-v3.svg
+- planning/examples/scenario-login-correct-v3.md
 
 Task:
 Generate one proof-of-layout page only.
@@ -164,7 +179,25 @@ Quality requirements:
 - purple only for off-page/subscenario links;
 - lane discipline is conceptual; visible lane lines are not required;
 - no long end-state connector web;
+- all text must fit inside shapes;
 - no implementation details.
+```
+
+## Correction Protocol
+
+When the user points out an error in a generated diagram:
+
+```text
+1. Identify whether the error is semantic, visual, prompt-related, or documentation-related.
+2. Explain the mistake briefly.
+3. Fix the current diagram or propose a concrete fix.
+4. Check whether the mistake reveals a missing or weak rule in the documentation.
+5. If yes, propose an exact documentation update:
+   - target file;
+   - target section;
+   - exact rule or example to add.
+6. Ask whether to update the docs, unless the user already explicitly asked to update them.
+7. If the mistake is recurring, add it to diagram-common-mistakes.md.
 ```
 
 ## Short Add-On For Every Diagram Prompt

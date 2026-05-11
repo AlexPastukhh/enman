@@ -17,6 +17,12 @@ planning/diagram-prompting-guide.md
 planning/diagram-common-mistakes.md
 ```
 
+For approved examples, read:
+
+```text
+planning/diagram-examples-index.md
+```
+
 The current accepted baseline is:
 
 ```text

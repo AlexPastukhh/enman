@@ -1,26 +1,25 @@
 # Diagram Examples Index
 
-Status: placeholders only; examples will be created later.
+Status: index of approved and planned correct diagram examples.
 
-This file lists future correct diagram examples. Do not treat missing example files as an error.
+Only files marked `Approved` are actual canonical examples.
 
-Example files listed here are placeholders until explicitly created.
-
-Do not create files under `planning/examples/` unless a later task explicitly requests actual example diagrams.
+`TODO` rows are placeholders until explicitly created. Do not treat missing TODO files as an error.
 
 ## Scenario Diagram Examples
 
-| Example | File placeholder | Purpose | Status |
-|---|---|---|---|
-| Login Scenario - SC-02 | `planning/examples/scenario-login-correct.drawio` | Shows decision branch, include, off-page password recovery, local invariant, compact end states | TODO |
-| Client Request Creation - SC-04 | `planning/examples/scenario-request-creation-correct.drawio` | Shows applicant data alternative, request submit, step postconditions, extension links | TODO |
-| Employee Request Review - SC-07 | `planning/examples/scenario-request-review-correct.drawio` | Shows approve/reject branches and review invariants | TODO |
-| Password Recovery - SC-03 | `planning/examples/scenario-password-recovery-correct.drawio` | Shows off-page scenario opened from login | TODO |
+| Example | Draw.io | SVG | Notes | Status | Purpose |
+|---|---|---|---|---|---|
+| Login Scenario - SC-02 | `planning/examples/scenario-login-correct-v3.drawio` | `planning/examples/scenario-login-correct-v3.svg` | `planning/examples/scenario-login-correct-v3.md` | Approved | Canonical scenario-flow example: decision branch, include, off-page password recovery, invariant at enforcement point, compact end states |
+| Client Request Creation - SC-04 | `planning/examples/scenario-request-creation-correct.drawio` | `planning/examples/scenario-request-creation-correct.svg` | `planning/examples/scenario-request-creation-correct.md` | TODO | Applicant data alternative, request submit, step postconditions, extension links |
+| Employee Request Review - SC-07 | `planning/examples/scenario-request-review-correct.drawio` | `planning/examples/scenario-request-review-correct.svg` | `planning/examples/scenario-request-review-correct.md` | TODO | Approve/reject branches and review invariants |
+| Password Recovery - SC-03 | `planning/examples/scenario-password-recovery-correct.drawio` | `planning/examples/scenario-password-recovery-correct.svg` | `planning/examples/scenario-password-recovery-correct.md` | TODO | Off-page scenario opened from login |
 
-## Placeholder Rule
+## Example Rules
 
 ```text
-Example files listed here are placeholders until explicitly created.
-Do not treat missing example files as an error.
-Do not create actual example files during documentation-only planning tasks.
+Only files marked Approved are actual canonical examples.
+TODO rows are placeholders until explicitly created.
+Do not treat missing TODO files as an error.
+Do not create actual example files during documentation-only planning tasks unless explicitly requested.
 ```

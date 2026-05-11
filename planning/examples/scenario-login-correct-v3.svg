@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2500" height="1450" viewBox="0 0 2500 1450">
+
+<defs>
+<pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse">
+  <path d="M 16 0 L 0 0 0 16" fill="none" stroke="#202831" stroke-width="1"/>
+</pattern>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+  <path d="M0,0 L0,6 L9,3 z" fill="#9aa4b2"/>
+</marker>
+</defs>
+
+<rect width="2500" height="1450" fill="#0d1117"/>
+<rect width="2500" height="1450" fill="url(#grid)" opacity="0.55"/>
+<text x="1250.0" y="42" text-anchor="middle" font-size="26" font-weight="800" fill="#f0f6fc">Login Scenario — SC-02</text>
+<text x="1250.0" y="72" text-anchor="middle" font-size="14" fill="#c9d1d9">Correct example v3 · larger summary card · no text overflow · invariant at enforcement point</text>
+<rect x="70" y="130" width="350" height="180" rx="16" fill="#121820" stroke="#b7c0cc" stroke-width="2.4"/>
+<rect x="70" y="130" width="350" height="38" rx="16" fill="#b7c0cc" stroke="#b7c0cc" stroke-width="2.4"/>
+<rect x="70" y="154" width="350" height="14" fill="#b7c0cc" stroke="#b7c0cc" stroke-width="0"/>
+<text x="245.0" y="155" text-anchor="middle" font-size="16" font-weight="800" fill="#0d1117">Actor / Screen</text>
+<text x="88" y="196" font-size="12" font-weight="700" fill="#ffb86c">scenario context</text>
+<text x="88" y="219" font-size="13" fill="#e8edf2">Actor: Guest</text>
+<text x="88" y="236" font-size="13" fill="#e8edf2">Screen: Login screen</text>
+<text x="88" y="253" font-size="13" fill="#e8edf2">Goal: Sign in</text>
+<text x="88" y="270" font-size="13" fill="#e8edf2">Level: L1</text>
+<rect x="70" y="390" width="380" height="155" rx="16" fill="#22250a" stroke="#9ca330" stroke-width="2.4"/>
+<rect x="70" y="390" width="380" height="38" rx="16" fill="#9ca330" stroke="#9ca330" stroke-width="2.4"/>
+<rect x="70" y="414" width="380" height="14" fill="#9ca330" stroke="#9ca330" stroke-width="0"/>
+<text x="260.0" y="415" text-anchor="middle" font-size="16" font-weight="800" fill="#0d1117">Scenario Preconditions</text>
+<text x="88" y="456" font-size="12" font-weight="700" fill="#ffb86c">SC-02-PRE-01..02</text>
+<text x="88" y="479" font-size="13" fill="#e8edf2">Guest is not signed in.</text>
+<text x="88" y="496" font-size="13" fill="#e8edf2">Login screen is reachable.</text>
+<rect x="570" y="150" width="245" height="110" rx="16" fill="#0f2019" stroke="#1f9d72" stroke-width="2.4"/>
+<text x="692.5" y="186.0" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">Open login screen</text>
+<text x="692.5" y="211.0" text-anchor="middle" font-size="11" fill="#c9d1d9">SC-02-STEP-01</text>
+<text x="692.5" y="226.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffb86c">[CORE]</text>
+<rect x="900" y="150" width="245" height="110" rx="16" fill="#0f2019" stroke="#1f9d72" stroke-width="2.4"/>
+<text x="1022.5" y="186.0" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">Enter credentials</text>
+<text x="1022.5" y="211.0" text-anchor="middle" font-size="11" fill="#c9d1d9">SC-02-STEP-02</text>
+<text x="1022.5" y="226.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffb86c">[CORE]</text>
+<rect x="1230" y="150" width="245" height="110" rx="16" fill="#0f2019" stroke="#1f9d72" stroke-width="2.4"/>
+<text x="1352.5" y="186.0" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">Submit sign-in</text>
+<text x="1352.5" y="211.0" text-anchor="middle" font-size="11" fill="#c9d1d9">SC-02-STEP-03</text>
+<text x="1352.5" y="226.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffb86c">[CORE]</text>
+<polygon points="1707.5,120 1845,207.5 1707.5,295 1570,207.5" fill="#102232" stroke="#2f81b7" stroke-width="2.4"/>
+<text x="1707.5" y="188.5" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">Credentials valid?</text>
+<text x="1707.5" y="213.5" text-anchor="middle" font-size="11" fill="#c9d1d9">SC-02-BR-01</text>
+<text x="1707.5" y="228.5" text-anchor="middle" font-size="11" font-weight="700" fill="#ffb86c">[CORE]</text>
+<rect x="1220" y="365" width="280" height="110" rx="16" fill="#10252c" stroke="#39b8d0" stroke-width="2.4"/>
+<text x="1360.0" y="392.0" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">&lt;&lt;include&gt;&gt;</text>
+<text x="1360.0" y="410.0" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">Validate login form</text>
+<text x="1360.0" y="435.0" text-anchor="middle" font-size="11" fill="#c9d1d9">SC-02-INC-01</text>
+<text x="1360.0" y="450.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffb86c">[CORE]</text>
+<rect x="1950" y="130" width="360" height="120" rx="16" fill="#242203" stroke="#8a7a00" stroke-width="2.4"/>
+<text x="2130.0" y="160.5" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">Invariant:</text>
+<text x="2130.0" y="178.5" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">Session only for valid</text>
+<text x="2130.0" y="196.5" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">credentials</text>
+<text x="2130.0" y="221.5" text-anchor="middle" font-size="11" fill="#c9d1d9">SC-02-INV-01</text>
+<rect x="1950" y="365" width="285" height="110" rx="16" fill="#0f2019" stroke="#1f9d72" stroke-width="2.4"/>
+<text x="2092.5" y="401.0" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">Session is issued</text>
+<text x="2092.5" y="426.0" text-anchor="middle" font-size="11" fill="#c9d1d9">SC-02-SPOST-01</text>
+<text x="2092.5" y="441.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffb86c">[CORE]</text>
+<rect x="1950" y="565" width="315" height="120" rx="16" fill="#0f2019" stroke="#1f9d72" stroke-width="2.4"/>
+<text x="2107.5" y="597.0" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">Redirect to requested</text>
+<text x="2107.5" y="615.0" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">app page</text>
+<text x="2107.5" y="640.0" text-anchor="middle" font-size="11" fill="#c9d1d9">SC-02-POST-01</text>
+<text x="2107.5" y="655.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffb86c">[CORE]</text>
+<rect x="1570" y="690" width="285" height="110" rx="16" fill="#271010" stroke="#d04a4a" stroke-width="2.4"/>
+<text x="1712.5" y="726.0" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">Show sign-in error</text>
+<text x="1712.5" y="751.0" text-anchor="middle" font-size="11" fill="#c9d1d9">SC-02-SPOST-02</text>
+<text x="1712.5" y="766.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffb86c">[CORE]</text>
+<rect x="1950" y="690" width="310" height="110" rx="16" fill="#271010" stroke="#d04a4a" stroke-width="2.4"/>
+<text x="2105.0" y="726.0" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">Remain unauthenticated</text>
+<text x="2105.0" y="751.0" text-anchor="middle" font-size="11" fill="#c9d1d9">SC-02-POST-02</text>
+<text x="2105.0" y="766.0" text-anchor="middle" font-size="11" font-weight="700" fill="#ffb86c">[CORE]</text>
+<rect x="570" y="910" width="310" height="115" rx="16" fill="#1b122b" stroke="#8957e5" stroke-width="2.4"/>
+<text x="725.0" y="956.0" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">Forgot password selected</text>
+<text x="725.0" y="981.0" text-anchor="middle" font-size="11" fill="#c9d1d9">SC-02-EXTND-01</text>
+<rect x="960" y="910" width="350" height="115" rx="16" fill="#1b122b" stroke="#8957e5" stroke-width="2.4"/>
+<text x="1135.0" y="947.0" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">Open subscenario:</text>
+<text x="1135.0" y="965.0" text-anchor="middle" font-size="15" font-weight="800" fill="#f5f7fa">Password Recovery</text>
+<text x="1135.0" y="990.0" text-anchor="middle" font-size="11" fill="#c9d1d9">SC-03</text>
+<rect x="1620" y="1020" width="510" height="320" rx="16" fill="#102232" stroke="#2f81b7" stroke-width="2.4"/>
+<rect x="1620" y="1020" width="510" height="38" rx="16" fill="#2f81b7" stroke="#2f81b7" stroke-width="2.4"/>
+<rect x="1620" y="1044" width="510" height="14" fill="#2f81b7" stroke="#2f81b7" stroke-width="0"/>
+<text x="1875.0" y="1045" text-anchor="middle" font-size="16" font-weight="800" fill="#0d1117">End states / Postconditions</text>
+<text x="1638" y="1086" font-size="12" font-weight="700" fill="#ffb86c">compact summary, no long connectors</text>
+<text x="1638" y="1109" font-size="13" fill="#e8edf2">Valid login:</text>
+<text x="1638" y="1126" font-size="13" fill="#e8edf2">- session exists;</text>
+<text x="1638" y="1143" font-size="13" fill="#e8edf2">- requested app page opens.</text>
+<text x="1638" y="1160" font-size="13" fill="#e8edf2"></text>
+<text x="1638" y="1177" font-size="13" fill="#e8edf2">Invalid login:</text>
+<text x="1638" y="1194" font-size="13" fill="#e8edf2">- no session exists;</text>
+<text x="1638" y="1211" font-size="13" fill="#e8edf2">- error is visible.</text>
+<text x="1638" y="1228" font-size="13" fill="#e8edf2"></text>
+<text x="1638" y="1245" font-size="13" fill="#e8edf2">Recovery:</text>
+<text x="1638" y="1262" font-size="13" fill="#e8edf2">- Password Recovery scenario opens.</text>
+<rect x="70" y="1020" width="430" height="245" rx="16" fill="#121820" stroke="#b7c0cc" stroke-width="2.4"/>
+<rect x="70" y="1020" width="430" height="38" rx="16" fill="#b7c0cc" stroke="#b7c0cc" stroke-width="2.4"/>
+<rect x="70" y="1044" width="430" height="14" fill="#b7c0cc" stroke="#b7c0cc" stroke-width="0"/>
+<text x="285.0" y="1045" text-anchor="middle" font-size="16" font-weight="800" fill="#0d1117">Legend</text>
+<text x="88" y="1086" font-size="12" font-weight="700" fill="#ffb86c">semantic colors</text>
+<text x="88" y="1109" font-size="13" fill="#e8edf2">Green = current in-page flow</text>
+<text x="88" y="1126" font-size="13" fill="#e8edf2">Red = negative/error branch</text>
+<text x="88" y="1143" font-size="13" fill="#e8edf2">Purple = off-page/subscenario link</text>
+<text x="88" y="1160" font-size="13" fill="#e8edf2">Blue = decision / end-state summary</text>
+<text x="88" y="1177" font-size="13" fill="#e8edf2">Cyan = include</text>
+<text x="88" y="1194" font-size="13" fill="#e8edf2">Yellow = invariant</text>
+<text x="88" y="1211" font-size="13" fill="#e8edf2">Olive = precondition</text>
+<path d="M 420 220 L 570 220" fill="none" stroke="#9aa4b2" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="435" y="187" width="120" height="24" rx="7" fill="#0f1419" stroke="#30363d" stroke-width="1"/>
+<text x="495" y="204" text-anchor="middle" font-size="12" font-weight="700" fill="#dbeafe">starts</text>
+<path d="M 450 468 L 515 468 L 515 250 L 570 250" fill="none" stroke="#a6a600" stroke-width="2.2" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<rect x="467.6" y="338" width="124.8" height="24" rx="7" fill="#0f1419" stroke="#30363d" stroke-width="1"/>
+<text x="530" y="355" text-anchor="middle" font-size="12" font-weight="700" fill="#dbeafe">condition for</text>
+<path d="M 815 205 L 900 205" fill="none" stroke="#9aa4b2" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="798" y="173" width="120" height="24" rx="7" fill="#0f1419" stroke="#30363d" stroke-width="1"/>
+<text x="858" y="190" text-anchor="middle" font-size="12" font-weight="700" fill="#dbeafe">next</text>
+<path d="M 1145 205 L 1230 205" fill="none" stroke="#9aa4b2" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="1128" y="173" width="120" height="24" rx="7" fill="#0f1419" stroke="#30363d" stroke-width="1"/>
+<text x="1188" y="190" text-anchor="middle" font-size="12" font-weight="700" fill="#dbeafe">next</text>
+<path d="M 1475 205 L 1570 205" fill="none" stroke="#9aa4b2" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="1460" y="173" width="120" height="24" rx="7" fill="#0f1419" stroke="#30363d" stroke-width="1"/>
+<text x="1520" y="190" text-anchor="middle" font-size="12" font-weight="700" fill="#dbeafe">checks</text>
+<path d="M 1370 260 L 1370 365" fill="none" stroke="#39b8d0" stroke-width="2.2" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<rect x="1370" y="298" width="120" height="24" rx="7" fill="#0f1419" stroke="#30363d" stroke-width="1"/>
+<text x="1430" y="315" text-anchor="middle" font-size="12" font-weight="700" fill="#dbeafe">include</text>
+<path d="M 1845 185 L 1950 185" fill="none" stroke="#a6a600" stroke-width="2.2" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<rect x="1838" y="152" width="120" height="24" rx="7" fill="#0f1419" stroke="#30363d" stroke-width="1"/>
+<text x="1898" y="169" text-anchor="middle" font-size="12" font-weight="700" fill="#dbeafe">protected by</text>
+<path d="M 1708 295 L 1708 420 L 1950 420" fill="none" stroke="#9aa4b2" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="1720" y="388" width="120" height="24" rx="7" fill="#0f1419" stroke="#30363d" stroke-width="1"/>
+<text x="1780" y="405" text-anchor="middle" font-size="12" font-weight="700" fill="#dbeafe">if valid</text>
+<path d="M 2092 475 L 2092 565" fill="none" stroke="#9aa4b2" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="2105" y="508" width="120" height="24" rx="7" fill="#0f1419" stroke="#30363d" stroke-width="1"/>
+<text x="2165" y="525" text-anchor="middle" font-size="12" font-weight="700" fill="#dbeafe">results in</text>
+<path d="M 1708 295 L 1708 690" fill="none" stroke="#d04a4a" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="1716" y="491" width="120" height="24" rx="7" fill="#0f1419" stroke="#30363d" stroke-width="1"/>
+<text x="1776" y="508" text-anchor="middle" font-size="12" font-weight="700" fill="#dbeafe">if invalid</text>
+<path d="M 1855 745 L 1950 745" fill="none" stroke="#d04a4a" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="1843" y="713" width="120" height="24" rx="7" fill="#0f1419" stroke="#30363d" stroke-width="1"/>
+<text x="1903" y="730" text-anchor="middle" font-size="12" font-weight="700" fill="#dbeafe">results in</text>
+<path d="M 695 260 L 695 910" fill="none" stroke="#b388ff" stroke-width="2.2" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<rect x="705" y="585" width="120" height="24" rx="7" fill="#0f1419" stroke="#30363d" stroke-width="1"/>
+<text x="765" y="602" text-anchor="middle" font-size="12" font-weight="700" fill="#dbeafe">if selected</text>
+<path d="M 880 968 L 960 968" fill="none" stroke="#b388ff" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="838.4" y="935" width="163.2" height="24" rx="7" fill="#0f1419" stroke="#30363d" stroke-width="1"/>
+<text x="920" y="952" text-anchor="middle" font-size="12" font-weight="700" fill="#dbeafe">opens subscenario</text>
+<text x="70" y="1402" font-size="13" fill="#8b949e">Text-fit rule applied: all labels, refs, markers and summary body text stay inside shape boundaries with padding.</text>
+</svg>

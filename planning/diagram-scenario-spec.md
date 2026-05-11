@@ -81,6 +81,17 @@ A visually clean diagram is still wrong if:
 - an error branch is marked as [ALT] without reason.
 ```
 
+Visual correctness is also required:
+
+```text
+- main flow is clear;
+- no text-card-only diagrams;
+- connectors do not overlap;
+- text fits inside shapes;
+- no connector web;
+- layout is spacious.
+```
+
 ---
 
 ## 2. Main Scenario Unit
@@ -1233,6 +1244,14 @@ For this specific case, inline applicant data can be `[ALT]` because it is an al
 
 Use this as a reference for the intended scenario style.
 
+Approved canonical example files:
+
+```text
+planning/examples/scenario-login-correct-v3.drawio
+planning/examples/scenario-login-correct-v3.svg
+planning/examples/scenario-login-correct-v3.md
+```
+
 ```text
 Actor / Screen:
 Guest — Login screen
@@ -1309,6 +1328,8 @@ SC-02-EXTND-01
 ```
 
 because it is an off-page/subscenario branch item.
+
+Purple is used for the Password Recovery path because it leaves the current scenario page.
 
 ---
 
@@ -1830,6 +1851,36 @@ in the same crowded lower-center area.
 
 ---
 
+## 20B. Text Fit Rule
+
+Text must fit inside every shape.
+
+No label, ref, marker or body text may overflow outside the shape boundary.
+
+If text does not fit:
+
+```text
+- increase the shape size;
+- reduce the text;
+- split the node;
+- move details to a note;
+- or use a larger canvas.
+```
+
+Never accept overflow as a valid diagram result.
+
+Reject if:
+
+```text
+- text escapes outside a shape;
+- text touches borders too closely;
+- refs/markers overlap body text;
+- connector labels overlap node text;
+- a node is too small for its content.
+```
+
+---
+
 ## 21. Scenario Page Splitting Rules
 
 Create a separate subscenario page when:
@@ -1986,6 +2037,11 @@ Reject or revise if:
 - actor-choice/subscenario links collide with error branches;
 - more than two unrelated connectors visually merge into one corridor;
 - the diagram becomes dense just to fit a small canvas.
+- text escapes outside a shape;
+- text touches borders too closely;
+- refs/markers overlap body text;
+- connector labels overlap node text;
+- a node is too small for its content.
 ```
 
 ---
@@ -2059,4 +2115,5 @@ Do not create long summary connector webs.
 Place invariants near the branch/state they protect.
 Prefer removing summary connectors over creating visual noise.
 Enlarge the canvas instead of making the diagram dense.
+All text must fit inside shapes.
 ```
