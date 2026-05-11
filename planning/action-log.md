@@ -676,3 +676,19 @@ Make planning usable as living handoff documentation for future AI agents.
 - Topic: diagram documentation structure.
 - Why it matters: project diagrams now distinguish user-facing scenarios from domain, storage and technical implementation views, making diploma diagrams easier to read and less likely to mix architecture layers.
 - Possible text use: diagrams chapter, documentation methodology.
+
+## 2026-05-11 - Scenario diagram level markers clarified
+
+### Done
+
+- Added the final target picture rule to `diagram-scenario-spec.md`.
+- Clarified that scenario diagrams normally show one coherent final target scenario, not separate V1/V2/V3 versions by level.
+- Clarified that L1/L2/L3 labels are subtle roadmap markers, while the primary reading order remains actor, screen/context, goal, flow, branches and outcomes.
+- Renamed scenario package headings from level-first headings to:
+  - Core Scenario Pages;
+  - Extension Scenario Pages;
+  - Advanced / Cross-Cutting Scenario Pages.
+
+### Checks
+
+- Documentation-only change; no tests were run.

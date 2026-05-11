@@ -183,6 +183,28 @@ For scenario diagrams:
 - L2 is optional or extended workflow around the same scenario.
 - L3 is future or cross-cutting capability related to the scenario.
 
+## Final Target Picture Rule
+
+Scenario diagrams should normally show the final target behavior for the selected scenario, not three separate versions of the same scenario by level.
+
+L1/L2/L3 labels are roadmap and implementation-planning metadata.
+
+They may be shown as subtle badges, small labels, border accents or legend markers, but they must not dominate the scenario.
+
+The primary reading order must remain user-facing:
+
+```text
+actor -> screen/context -> user goal -> main flow -> branches -> observable outcomes
+```
+
+Do not generate separate V1/V2/V3 versions of the same scenario unless explicitly requested.
+
+Prefer one coherent final scenario diagram with:
+
+- L1 as the main MVP path;
+- L2 as optional/extended branches;
+- L3 as future/cross-cutting branches or linked subscenarios.
+
 ## Applicant Data Naming
 
 Do not use this as the primary user-facing label:
@@ -232,7 +254,7 @@ Do not duplicate the domain concept in user-facing diagrams. The scenario is abo
 00 Scenario Overview / Navigation Map
 ```
 
-### L1 Core Scenario Pages
+### Core Scenario Pages
 
 ```text
 01 Guest Registration Scenario
@@ -246,7 +268,7 @@ Do not duplicate the domain concept in user-facing diagrams. The scenario is abo
 09 Rejection Result Scenario
 ```
 
-### L2 Extension Scenario Pages
+### Extension Scenario Pages
 
 ```text
 10 Extended Applicant Data Scenario
@@ -256,7 +278,7 @@ Do not duplicate the domain concept in user-facing diagrams. The scenario is abo
 14 Mock Verification Scenario
 ```
 
-### L3 Advanced Scenario / Capability Pages
+### Advanced / Cross-Cutting Scenario Pages
 
 ```text
 15 Security / Account Protection Scenario
