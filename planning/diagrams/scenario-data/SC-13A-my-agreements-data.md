@@ -22,7 +22,8 @@ Core statuses:
 ```text
 - AwaitingClientConfirmation;
 - SentByClient;
-- Accepted.
+- Accepted;
+- Rejected.
 ```
 
 Future statuses:
@@ -30,7 +31,6 @@ Future statuses:
 ```text
 [VAR:EXPAND]
 - Signed;
-- Rejected;
 - Expired;
 - Superseded;
 - Cancelled.
@@ -58,11 +58,12 @@ Extension / Future DATA:
 - date/period only if UX later needs time-based filtering.
 ```
 
-Open questions:
+Notes:
 
 ```text
-Q: Should My Agreements include only proposals or also final accepted/signed agreements after future signature flow?
-Q: Does approval always create an agreement proposal, or does employee send it separately?
+My Agreements includes all own agreement proposals, not only pending proposals.
+Date/period filtering is future only.
+Rejected is core because employee-sent replacement rejects/replaces previous client-sent proposal.
 ```
 
 Scenario spec references:

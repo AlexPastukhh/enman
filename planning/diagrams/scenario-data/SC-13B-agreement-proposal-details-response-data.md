@@ -15,6 +15,7 @@ Visible DATA:
 - agreement proposal summary/name;
 - sender: employee or client;
 - agreement proposal status;
+- text details/comment sent with proposal;
 - attached agreement document/file;
 - available client action for current status.
 ```
@@ -24,7 +25,8 @@ Core statuses:
 ```text
 - AwaitingClientConfirmation;
 - SentByClient;
-- Accepted.
+- Accepted;
+- Rejected.
 ```
 
 Future statuses:
@@ -32,17 +34,16 @@ Future statuses:
 ```text
 [VAR:EXPAND]
 - Signed;
-- Rejected;
 - Expired;
 - Superseded;
 - Cancelled.
 ```
 
-### SC-13B-DATA-02 — Client agreement attachment DATA
+### SC-13B-DATA-02 — Client agreement proposal submission DATA
 
-Type: Attachment DATA  
+Type: Attachment DATA / Input DATA  
 Actor: Client  
-Used by: send own agreement version/counterproposal branch
+Used by: send own agreement version branch
 
 Attachment DATA:
 
@@ -50,11 +51,17 @@ Attachment DATA:
 - client-selected agreement document/version to send back.
 ```
 
+Input DATA:
+
+```text
+- text details/comment sent with client proposal.
+```
+
 Extension / Future DATA:
 
 ```text
 [VAR:EXPAND]
-- optional comment/message;
+- comment-only message without sending a new proposal;
 - electronic signature status;
 - signed agreement document;
 - signature timestamp;
@@ -65,16 +72,9 @@ Notes:
 
 ```text
 Accept/confirm is scenario branch/action, not DATA subtype.
-The key agreement proposal DATA for flow is sender + status + attached document.
-```
-
-Open questions:
-
-```text
-Q: Is accept/confirm legally meaningful acceptance or only confirmation of the current proposal?
-Q: Can client send multiple versions, or only one response per awaiting proposal?
-Q: Does employee see and accept/reject client-sent proposal in a future employee agreement scenario?
-Q: Should final accepted proposal become a separate final Agreement entity later?
+Client can send only one own proposal version in response to an employee-sent proposal in core.
+Client cannot start agreement proposal exchange without an employee-sent proposal.
+The key agreement proposal DATA for flow is sender + status + attached document + text details/comment.
 ```
 
 Scenario spec references:

@@ -1,6 +1,7 @@
 # Scenario DATA Index
 
-Status: draft per-scenario DATA catalog
+Status: current per-scenario DATA catalog  
+Scope: scenario DATA specs used by corrected scenario text specifications
 
 This folder contains scenario DATA specs.
 
@@ -63,8 +64,36 @@ SC-07B-employee-request-review-data.md
 SC-10-applicant-data.md
 SC-13A-my-agreements-data.md
 SC-13B-agreement-proposal-details-response-data.md
+SC-13C-employee-agreements-data.md
+SC-13D-employee-agreement-proposal-create-response-data.md
 SC-14-client-data-verification-data.md
 ```
+
+## Request Creation DATA Summary
+
+Request object location means:
+
+```text
+object address
+```
+
+Applicant DATA in request creation may be:
+
+```text
+- copied/prefilled from previously provided matching applicant DATA;
+- entered inline if no matching applicant DATA exists;
+- edited for this specific request if client wants different data.
+```
+
+Future UX:
+
+```text
+[VAR:EXPAND]
+- clear prefilled applicant DATA action;
+- restore prefilled applicant DATA action.
+```
+
+Clearing or editing request-local applicant fields does not delete saved applicant DATA.
 
 ## Applicant DATA Summary
 
@@ -97,25 +126,40 @@ actual/residential address as target/future expansion
 Agreement Proposal means:
 
 ```text
-a concrete agreement document/version sent by one side to another side in the context of an approved request.
+a concrete agreement document/version sent by one side to another side in the context of an Approved request.
 ```
 
-Core statuses:
+Core agreement proposal statuses:
 
 ```text
 AwaitingClientConfirmation
 SentByClient
 Accepted
+Rejected
 ```
 
-Future statuses:
+Core agreement proposal DATA:
 
 ```text
+- related Approved request;
+- sender: employee or client;
+- status;
+- attached agreement document/file;
+- text details/comment;
+- visible summary/name.
+```
+
+Future statuses / behaviors:
+
+```text
+[VAR:EXPAND]
 Signed
-Rejected
 Expired
 Superseded
 Cancelled
+comment-only discussion
+return to older proposal version
+close/reject approved request if agreement cannot be reached
 ```
 
 ## Deferred / Removed
@@ -126,3 +170,15 @@ SC-12 is merged into SC-05 + SC-04.
 SC-16 is removed.
 SC-18 is deferred.
 ```
+
+## Responsibility Table Readiness
+
+For responsibility tables, use this DATA index together with:
+
+```text
+planning/diagrams/scenario-text-specs/
+planning/scenario-specification-principles.md
+planning/diagrams/scenario-diagram-consistency-report.md
+```
+
+Do not use stale generated package summaries as semantic source of truth.
