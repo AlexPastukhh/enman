@@ -2,20 +2,6 @@
 
 Status: draft textual scenario specification package for scenario semantic correction pass.
 
-Purpose: provide one Markdown companion specification per corrected scenario / scenario status item before regenerating scenario diagrams.
-
-These files are not responsibility tables and do not define architecture implementation. They describe user-facing behavior, entry points, preconditions, DATA refs, main flow, branches, invariants, outcomes, open questions and ADR candidates.
-
-## Source Of Truth
-
-Read first:
-
-```text
-planning/scenario-specification-principles.md
-planning/diagram-scenario-spec.md
-planning/diagrams/scenario-data/00-scenario-data-index.md
-```
-
 ## Corrected Scenario Set
 
 Core package:
@@ -32,11 +18,14 @@ SC-07A Employee Request Details
 SC-07B Employee Request Review
 ```
 
-Merged / removed from old core package:
+Merged / removed:
 
 ```text
-SC-08  Approved Result — merged into SC-07B + SC-05 + SC-13A/SC-13B
+SC-08  Approved Result — merged into SC-07B + SC-05 + SC-13A/SC-13B/SC-13C/SC-13D
 SC-09  Rejected Result — merged into SC-07B + SC-05
+SC-12  Review Feedback / Correction Navigation — merged into SC-05 + SC-04
+SC-16  Removed: Notification Navigation is part of SC-05 / SC-13 / review-result flows
+SC-18  Archive / Audit — deferred / low priority
 ```
 
 Extension / corrected:
@@ -44,103 +33,31 @@ Extension / corrected:
 ```text
 SC-10  Applicant Data
 SC-11  Request Documents
-SC-12  Review Feedback / Correction Navigation — merged into SC-05 + SC-04
 SC-13A My Agreements
 SC-13B Agreement Proposal Details / Response
+SC-13C Employee Agreements
+SC-13D Employee Agreement Proposal Create / Send Version
 SC-14  Client Data Verification — future employee-started action, not triggered-by
-```
-
-Advanced / policy / deferred:
-
-```text
 SC-15  Security Text Specification
-SC-16  Removed: Notification Navigation is part of SC-05 / SC-13 / review-result flows
 SC-17  Anonymous Request
-SC-18  Archive / Audit — deferred / low priority
 ```
 
-## Global Decisions Reflected Here
+## Request Creation Decisions Reflected Here
 
-Request statuses:
+Request object location means object address.
 
-```text
-InReview
-Approved
-Rejected
-```
-
-Removed / no longer used:
+Applicant DATA behavior in request creation:
 
 ```text
-Submitted status in scenario specs
-standalone Approved Result scenario
-standalone Rejected Result scenario
-standalone Reliable Notification Delivery scenario
-Contract Acknowledgement wording
-Clarification as L1 live update submitted request
-generic triggered-by for normal UX paths
-email link as default entry-point wording, except explicit password recovery email
-mandatory dark theme
-DETAIL terminology
-```
-
-## Applicant Decisions Reflected Here
-
-Applicant types:
-
-```text
-physical person
-individual entrepreneur
-legal entity
-```
-
-Physical person applicant target DATA:
-
-```text
-- ФИО;
-- СНИЛС;
-- паспортные данные;
-- phone;
-- email;
-- actual/residential address as target/future expansion relative to current implemented L1.
-```
-
-Individual entrepreneur applicant DATA:
-
-```text
-- ФИО ИП;
-- ИНН;
-- ОГРНИП;
-- phone;
-- email;
-- registration address as future/extension.
-```
-
-Legal entity applicant DATA:
-
-```text
-- organization name;
-- ИНН;
-- ОГРН;
-- phone;
-- email;
-- legal address / КПП / representative as future/extension.
+- matching previously provided applicant DATA may be copied/prefilled into the request form;
+- if no matching applicant DATA exists, client enters applicant DATA inline;
+- if client wants different applicant DATA for this request, client edits the request form fields;
+- clear/restore prefill controls are future UX, not current core.
 ```
 
 ## Agreement Proposal Decisions Reflected Here
 
-Use:
-
-```text
-Agreement Proposal
-```
-
-Meaning:
-
-```text
-Agreement Proposal = конкретный вариант договора / договорный документ,
-отправленный одной стороной другой стороне в рамках approved request.
-```
+Agreement Proposal = concrete agreement document/version sent by one side to another side in the context of an Approved request.
 
 Core statuses:
 
@@ -148,50 +65,18 @@ Core statuses:
 AwaitingClientConfirmation
 SentByClient
 Accepted
-```
-
-Future statuses:
-
-```text
-Signed
 Rejected
-Expired
-Superseded
-Cancelled
 ```
 
-Key flow DATA:
+Core agreement proposal rules:
 
 ```text
-- related Approved request;
-- sender: employee or client;
-- status;
-- attached agreement document/file;
-- visible summary/name.
-```
-
-## DATA Rules Reflected Here
-
-Use:
-
-```text
-DATA blocks for actor-entered, actor-visible, selected, filtered or attached data.
-```
-
-Do not use:
-
-```text
-DETAIL
-SC-XX-DETAIL-YY
-```
-
-Do not put into DATA files:
-
-```text
-validation/rules sections
-testable behavior sections
-branches
-invariants
-access rules
-security policy
+- agreement proposal exchange starts only by employee action on an Approved request;
+- employee can start agreement proposal creation from Approved request details or Approved request list row/action;
+- approval does not automatically create agreement proposal;
+- employee and client proposal submissions include attached agreement document/file and text details/comment;
+- client can send only one own proposal version in response to an employee-sent proposal in core;
+- client cannot start agreement proposal exchange without an existing employee-sent proposal;
+- employee responds to client-sent proposal by sending a new employee version;
+- when employee sends a new version in response to a client-sent proposal, the previous client-sent proposal becomes Rejected.
 ```

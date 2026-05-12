@@ -6,7 +6,7 @@ Corrected scenario specification draft.
 
 ## Purpose
 
-Client views agreement proposals related to approved requests and selects one for details/response.
+Client views all own agreement proposals and selects one for details/response.
 
 ## Actor / Screen
 
@@ -23,7 +23,7 @@ Entry B: Client continues after request approval when agreement proposal may be 
 ## Preconditions
 
 - Client is signed in.
-- Client has at least one approved request or agreement proposal, or empty state is shown.
+- Client has at least one agreement proposal, or empty state is shown.
 
 ## DATA
 
@@ -69,57 +69,43 @@ Extension / Future DATA:
 
 ## Branches
 
-### Agreement proposal awaits client confirmation
+### Employee-sent proposal awaits client confirmation
 
 -> status = AwaitingClientConfirmation  
+-> sender = employee  
 -> item is visible in My Agreements  
 -> client can open details and respond
 
-### Agreement proposal was sent by client
+### Proposal was sent by client
 
 -> status = SentByClient  
+-> sender = client  
 -> item is visible in My Agreements  
 -> client can open details and see sent proposal state
 
-### Agreement proposal accepted
+### Proposal accepted
 
 -> status = Accepted  
 -> item is visible in My Agreements  
 -> client can open details and see accepted state
 
+### Proposal rejected/replaced by new employee version
+
+-> status = Rejected  
+-> item remains visible in My Agreements  
+-> client can open details and see that newer employee version replaced/rejected it
+
 ## Invariants
 
 Client can view only own agreement proposals.
 
-Attach to:
+Agreement proposal must be related to an Approved request accessible to this client.
 
-- My Agreements list loaded;
-- Agreement Proposal Details opens.
-
-Agreement proposal must be related to an approved request accessible to this client.
-
-Attach to:
-
-- list item visibility;
-- details open transition.
+Client cannot start agreement proposal exchange without an employee-sent proposal.
 
 ## Outcomes
 
-- Client sees own agreement proposals.
+- Client sees all own agreement proposals.
 - Client sees proposal sender and status.
+- Client can filter proposals.
 - Client can select one proposal and open details.
-- Client cannot see another client's agreement proposals.
-
-## Open Questions
-
-Q: Should My Agreements include only proposals or also final accepted/signed agreements after future signature flow?
-
-Q: Is date/period filtering needed in L1, or future only?
-
-Q: Does approval always create an agreement proposal, or does employee send it separately?
-
-## Diagram Notes
-
-- Do not use Contract Acknowledgement wording.
-- Agreement proposal list follows the same list/filter/select pattern as My Requests.
-- Keep filtering separate from selecting/opening details.

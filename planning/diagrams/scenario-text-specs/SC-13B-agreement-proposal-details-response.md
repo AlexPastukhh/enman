@@ -6,7 +6,7 @@ Corrected scenario specification draft.
 
 ## Purpose
 
-Client views one agreement proposal and either confirms/accepts it or sends own agreement proposal version back.
+Client views one agreement proposal and either accepts an employee-sent proposal or sends one own agreement proposal version back.
 
 ## Actor / Screen
 
@@ -38,11 +38,12 @@ Visible DATA:
 - agreement proposal summary/name;
 - sender: employee or client;
 - agreement proposal status;
+- text details/comment sent with proposal;
 - attached agreement document/file;
 - available client action for current status.
 ```
 
-Client agreement attachment DATA  
+Client agreement proposal submission DATA  
 `SC-13B-DATA-02`
 
 Attachment DATA:
@@ -51,11 +52,17 @@ Attachment DATA:
 - client-selected agreement document/version to send back.
 ```
 
+Input DATA:
+
+```text
+- text details/comment sent with client proposal.
+```
+
 Extension / Future DATA:
 
 ```text
 [VAR:EXPAND]
-- optional comment/message;
+- comment-only message without sending a new proposal;
 - electronic signature status;
 - signed agreement document;
 - signature timestamp;
@@ -67,21 +74,21 @@ Extension / Future DATA:
 1. Client opens Agreement Proposal Details.
 2. Related Approved request is visible.
 3. Agreement proposal document/summary is visible.
-4. Sender and status are visible.
-5. If proposal awaits client confirmation, client can accept current proposal or send own version.
+4. Sender, status and text details/comment are visible.
+5. If proposal awaits client confirmation, client can accept current proposal or send one own version.
 6. Client chooses action.
 7. If accepted, agreement proposal status becomes Accepted.
-8. If client sends own version, client attaches agreement document/version and submits it.
+8. If client sends own version, client attaches agreement document/version, enters text details/comment and submits it.
 9. Client-sent proposal becomes visible with status SentByClient.
 
 ## Branches
 
-### Proposal awaits client confirmation
+### Employee proposal awaits client confirmation
 
 -> status = AwaitingClientConfirmation  
 -> proposal was sent by employee  
 -> client can accept proposal  
--> client can attach/send own version
+-> client can attach/send one own version with text details/comment
 
 ### Client accepts proposal
 
@@ -92,6 +99,7 @@ Extension / Future DATA:
 ### Client sends own proposal version
 
 -> client attaches own agreement document/version  
+-> client enters text details/comment  
 -> client submits own version  
 -> new/client-sent agreement proposal is recorded  
 -> status = SentByClient  
@@ -101,67 +109,33 @@ Extension / Future DATA:
 
 -> status = SentByClient  
 -> client sees sent proposal state  
--> no duplicate response action unless future workflow allows it
+-> no duplicate client response action in core
 
-### Proposal already accepted
+### Proposal accepted
 
 -> status = Accepted  
 -> client sees accepted state  
 -> no response action is needed
 
+### Proposal rejected/replaced
+
+-> status = Rejected  
+-> client sees rejected/replaced state  
+-> newer employee version should be available separately if employee sent one
+
 ## Invariants
 
 Client can open only own agreement proposal details.
 
-Attach to:
+Client can respond only to employee-sent proposal awaiting client confirmation.
 
-- Agreement Proposal Details opens.
+Client can send only one own proposal version in response to an employee proposal in core.
 
-Client can respond only to proposal available for client response.
-
-Attach to:
-
-- action availability;
-- accept/send own version transitions.
-
-Client-sent own version must include an attached agreement document/version.
-
-Attach to:
-
-- send own version transition.
-
-## Step Postconditions
-
-- Agreement proposal status becomes Accepted after client accepts.
-- Client-sent proposal/version becomes visible after client submits own version.
+Client-sent own version must include attached agreement document/version.
 
 ## Outcomes
 
 - Client can review agreement proposal.
 - Client can accept employee-sent proposal.
-- Client can send own agreement document/version back.
+- Client can send one own agreement document/version back with text details/comment.
 - Client sees current proposal status.
-
-## ADR / Policy Candidates
-
-ADR?: Agreement Proposal is a document/version sent by one side to the other side.
-
-ADR?: Core statuses are AwaitingClientConfirmation, SentByClient and Accepted.
-
-ADR?: Electronic signature is future behavior, not current core.
-
-## Open Questions
-
-Q: Is accept/confirm legally meaningful acceptance or only confirmation of the current proposal?
-
-Q: Can client send multiple versions, or only one response per awaiting proposal?
-
-Q: Does employee see and accept/reject client-sent proposal in a future employee agreement scenario?
-
-Q: Should final accepted proposal become a separate final Agreement entity later?
-
-## Diagram Notes
-
-- Key flow DATA is sender + status.
-- Do not model template generation, PDF generation, provider, filesystem or DB storage.
-- Do not include electronic signature as core behavior.
