@@ -78,7 +78,7 @@ Reject if connectors cross shape bodies, body text or each other in dense corrid
 Mistake:
 
 ```text
-include, protected by, summarized as or opens subscenario connectors cross the main flow corridor.
+include, protected by, summarized as, details or opens subscenario connectors cross the main flow corridor.
 ```
 
 Why wrong:
@@ -655,36 +655,42 @@ Review/reject rule:
 Reject if text escapes outside a shape, touches borders too closely, refs/markers overlap body text, connector labels overlap node text, or a node is too small for its content.
 ```
 
-## 22. Light Theme Used Instead Of Approved Dark Theme
+## 22. Inconsistent Or Low-Contrast Theme
 
 Mistake:
 
 ```text
-Using a light/default theme when the project's approved examples use the dark theme.
+The diagram uses a theme that is inconsistent across pages, unreadable, low contrast, or incompatible with semantic colors.
 ```
 
 Why wrong:
 
 ```text
-The diagram may be semantically acceptable, but it breaks visual consistency across the planning documentation.
+Theme is visual presentation, not scenario semantics.
+Light or dark can be acceptable, but the chosen theme must preserve readability, semantic color meaning and package consistency.
 ```
 
-Bad example:
+Bad examples:
 
 ```text
-A scenario diagram with white background and pale nodes when the approved examples use dark grid/background.
+One scenario package mixes light and dark pages without explicit reason.
+Semantic colors are unreadable on the chosen background.
+Pale nodes make markers and refs hard to read.
+The diagram silently changes visual language from page to page.
 ```
 
 Correct approach:
 
 ```text
-Use the approved dark theme from scenario-login-correct-v3 unless the user explicitly asks for light theme.
+Use one consistent readable theme per package.
+Preserve semantic color meanings.
+Ensure text and connector labels are readable on the chosen background.
 ```
 
 Review/reject rule:
 
 ```text
-Reject or revise if the diagram uses a light theme without explicit request.
+Reject or revise if the theme is inconsistent, low-contrast, unreadable or makes semantic colors ambiguous.
 ```
 
 ## 23. Writing To The Repository Without Explicit Request
@@ -794,4 +800,237 @@ Review/reject rule:
 
 ```text
 Reject if the global overview contains detailed scenario steps, decision branches, includes, invariants, postconditions, acceptance details, implementation details or connector web.
+```
+
+## 26. Vague Input Or Filter Step Without Details
+
+Mistake:
+
+```text
+A scenario uses a broad step such as "Enter registration data", "Fill request details" or "Filter/search requests" without clarifying what data or criteria matter.
+```
+
+Why wrong:
+
+```text
+The flow node is too vague for later planning, but making it a huge text block would damage the diagram.
+```
+
+Bad example:
+
+```text
+Enter registration data
+SC-01-STEP-02
+```
+
+with no indication of what data is entered.
+
+Correct approach:
+
+```text
+Use a compact flow step plus a secondary DETAIL node.
+
+Enter registration data
+SC-01-STEP-02
+
+details ->
+Registration data details
+SC-01-DETAIL-01
+- email
+- password
+- password confirmation
+```
+
+For search/filter:
+
+```text
+Filter/search requests
+SC-05-STEP-03
+
+details ->
+Request filter criteria
+SC-05-DETAIL-01
+- status
+- request type
+- date/period
+```
+
+Review/reject rule:
+
+```text
+Reject if important input/filter/search steps remain too vague and no DETAIL node or equivalent clarification is provided.
+```
+
+## 27. Validation Error Treated As Final Scenario Failure By Default
+
+Mistake:
+
+```text
+Invalid input always leads to a terminal "request/account/document not created" end state.
+```
+
+Why wrong:
+
+```text
+Most validation errors are correctable. The actor can usually fix the input and continue the same scenario.
+```
+
+Bad example:
+
+```text
+Request invalid?
+-> validation errors visible
+-> request not created
+```
+
+as the only invalid branch.
+
+Correct approach:
+
+```text
+Request invalid?
+-> validation errors visible
+-> client corrects request details
+-> back to Fill request details
+```
+
+Keep `not created/not saved/not attached` as invariant or invalid-attempt outcome:
+
+```text
+Invalid request is not accepted.
+Invalid registration data must not create an account.
+Rejected document is not attached.
+```
+
+Review/reject rule:
+
+```text
+Reject if correctable validation errors are always modeled as terminal scenario failure without a correction loop or clear abandon/cancel path.
+```
+
+## 28. "Opened From" Relationship Modeled As Wrong Off-Page Link
+
+Mistake:
+
+```text
+A scenario uses a purple off-page link only to explain that it may be opened from another scenario.
+```
+
+Why wrong:
+
+```text
+Purple/off-page links mean the current scenario leaves to another page/subscenario.
+If the issue is how this scenario starts, it is often better represented as multiple entry points with their own preconditions.
+```
+
+Bad example:
+
+```text
+Extended Applicant Data
+-> purple link "opened from Request Creation"
+```
+
+when the diagram is trying to explain that applicant data can be reached in more than one way.
+
+Correct approach:
+
+```text
+Entry A:
+Client opens applicant data page directly.
+Precondition: client is signed in and applicant data page is reachable.
+
+Entry B:
+Client reaches applicant data from Request Creation — SC-04.
+Precondition: request creation is in progress and applicant data is missing or needs update.
+```
+
+Review/reject rule:
+
+```text
+Reject if purple links are used to describe entry context rather than an actual transition leaving the current scenario.
+```
+
+## 29. Filter/Search/Select Collapsed Into One Step
+
+Mistake:
+
+```text
+The diagram uses one combined step: "filter/search/select request".
+```
+
+Why wrong:
+
+```text
+Finding a request and selecting a request are different user behaviors.
+Filter/search criteria also need their own detail if they matter for planning.
+```
+
+Bad example:
+
+```text
+Filter/search/select request
+SC-06-STEP-03
+```
+
+Correct approach:
+
+```text
+Filter/search requests
+SC-06-STEP-03
+
+details ->
+Employee dashboard filter criteria
+SC-06-DETAIL-01
+
+Select request for review
+SC-06-STEP-04
+```
+
+Review/reject rule:
+
+```text
+Reject if filter/search/select are collapsed and the scenario loses the distinction between search support and selecting an item.
+```
+
+## 30. Generated Scenario Packages Placed In A Non-Canonical Folder
+
+Mistake:
+
+```text
+Generated scenario packages are placed in an unexpected second canonical folder.
+```
+
+Why wrong:
+
+```text
+Planning agents need one stable source of truth for scenario packages.
+Multiple canonical-looking folders create ambiguity.
+```
+
+Correct approach:
+
+```text
+Use planning/diagrams/ for generated scenario packages, overview and consistency reports.
+
+Use planning/examples/ only for approved canonical examples.
+```
+
+Typical scenario package paths:
+
+```text
+planning/diagrams/scenario-core-package.drawio
+planning/diagrams/scenario-core-package.md
+planning/diagrams/scenario-extension-package.drawio
+planning/diagrams/scenario-extension-package.md
+planning/diagrams/scenario-advanced-package.drawio
+planning/diagrams/scenario-advanced-package.md
+planning/diagrams/scenario-overview.drawio
+planning/diagrams/scenario-overview.md
+planning/diagrams/scenario-diagram-consistency-report.md
+```
+
+Review/reject rule:
+
+```text
+Reject if generated scenario packages are split across competing canonical folders without explicit user instruction.
 ```

@@ -2,7 +2,7 @@
 
 Status: permanent visual/construction guide for editable draw.io diagrams.
 
-Scope: visual construction, draw.io/editability rules, layout discipline and theme rules.
+Scope: visual construction, draw.io/editability rules, layout discipline, theme consistency and readability rules.
 
 This file does **not** define scenario semantics. For scenario/use-case semantics, read:
 
@@ -78,22 +78,26 @@ If unclear, do not write. Return generated artifacts and ask for explicit repo-w
 
 ---
 
-## 1. Theme Boundary Rule
+## 1. Theme Consistency Rule
 
-There are two visual baselines in the repository history:
+Theme is visual presentation, not scenario semantics.
+
+Scenario diagrams may use a light or dark theme.
+
+The selected theme must be:
 
 ```text
-1. Approved dark scenario/use-case theme.
-2. Older C2/C2.2 light-card technical diagram baseline.
+- consistent within one diagram package;
+- readable without excessive zoom;
+- compatible with semantic colors;
+- editable in draw.io;
+- aligned with approved scenario-flow examples;
+- not switched silently between pages.
 ```
 
-Do not mix them.
+Canonical scenario examples define scenario grammar, layout discipline, semantic color usage and readable flow construction. They do **not** force a mandatory background theme.
 
-### 1.1 Scenario / Use-Case Diagrams
-
-Scenario/use-case diagrams must use the approved dark project theme by default.
-
-Canonical scenario visual baseline:
+Canonical scenario visual/semantic baseline:
 
 ```text
 planning/examples/scenario-login-correct-v3.drawio
@@ -105,9 +109,8 @@ planning/examples/scenario-login-correct-v3.md
 Scenario diagrams should use:
 
 ```text
-- dark background / dark grid;
+- a consistent background across the package;
 - high-contrast readable text;
-- dark node bodies;
 - semantic colors from planning/diagram-scenario-spec.md;
 - spacious layout;
 - readable node sizes;
@@ -118,18 +121,40 @@ Scenario diagrams should use:
 Do not use:
 
 ```text
-- white canvas;
-- default draw.io light theme;
-- old C2 light card bodies as the scenario default;
-- pale low-contrast cards;
-- unreadable text on dark background.
+- low-contrast text;
+- unreadable pale cards;
+- mixed light/dark pages inside one package without explicit reason;
+- semantic colors that lose meaning on the selected background;
+- default draw.io styling that breaks the project visual language;
+- a theme change as a substitute for semantic correction.
 ```
 
-A scenario diagram may be semantically correct and still be rejected if it uses a light/default theme without explicit user request.
+A scenario diagram may be semantically correct and still be rejected if the chosen theme is inconsistent, unreadable, or does not preserve semantic colors.
+
+### 1.1 Scenario / Use-Case Diagrams
+
+Scenario/use-case diagrams are controlled by:
+
+```text
+planning/diagram-scenario-spec.md
+```
+
+They must keep:
+
+```text
+- main flow as the visual backbone;
+- semantic colors with stable meaning;
+- readable labels and item refs;
+- local, meaningful connectors;
+- compact end states;
+- editable shapes.
+```
+
+The theme may be light or dark. The chosen theme must stay consistent across the generated package unless the user explicitly requests otherwise.
 
 ### 1.2 Domain / Aggregate / DB / Technical Appendix Diagrams
 
-The older C2/C2.2 light-card baseline may still be used for non-scenario technical diagrams unless a later task says otherwise.
+Non-scenario technical diagrams may use their own visual baseline unless a task says otherwise.
 
 This includes:
 
@@ -145,7 +170,7 @@ For these diagram families, light card bodies and dark text may be acceptable.
 Important:
 
 ```text
-Do not apply the old light-card C2 baseline to scenario/use-case diagrams.
+Do not let technical diagram palette rules override scenario semantics or scenario color meanings.
 ```
 
 ### 1.3 final-diagrams-example.drawio
@@ -170,7 +195,7 @@ Do not use it as:
 - required page package;
 - semantic model for use-case diagrams;
 - source of architecture decisions;
-- reason to replace the dark scenario theme with a light theme.
+- reason to force a specific scenario background theme.
 ```
 
 ---
@@ -208,7 +233,7 @@ Not acceptable:
 - major shape overlap;
 - connector web;
 - connectors through body text;
-- wrong theme for the diagram family;
+- inconsistent or low-contrast theme;
 - invalid draw.io XML;
 - diagrams that cannot be edited as normal draw.io shapes.
 ```
@@ -260,7 +285,7 @@ Scenario semantics are controlled by:
 planning/diagram-scenario-spec.md
 ```
 
-Scenario visual baseline is the approved dark theme.
+Scenario visual baseline is controlled by approved scenario-flow examples plus the theme consistency rule in this file.
 
 ### 3.2 Domain Model Diagrams
 
@@ -399,6 +424,10 @@ Important:
 Purple does not mean actor choice in general.
 Purple means the path leaves the current scenario page.
 ```
+
+Semantic colors must remain readable on the chosen theme.
+
+If a semantic color is unreadable on the chosen background, adjust the fill/stroke shade while preserving the semantic meaning.
 
 Scenario diagram layout must follow:
 
@@ -722,7 +751,7 @@ ApplicantPartyId
 
 This section applies to non-scenario technical diagrams unless a task says otherwise.
 
-Do not use this palette as the default for scenario/use-case diagrams.
+Do not let this palette override scenario semantic colors or scenario flow rules.
 
 ### 11.1 L1 / DB Tables
 
@@ -784,33 +813,34 @@ title:  #334155
 
 ## 12. Rejected Approaches And Mistakes
 
-### 12.1 Rejected: Light Theme For Scenario Diagrams
+### 12.1 Rejected: Inconsistent Or Low-Contrast Theme
 
 Mistake:
 
 ```text
-Using a white/default draw.io canvas for scenario/use-case diagrams.
+Using a theme that is inconsistent across pages, unreadable, or incompatible with semantic colors.
 ```
 
 Correct:
 
 ```text
-Use the approved dark scenario theme from scenario-login-correct-v3 unless the user explicitly asks for light theme.
+Use one consistent readable theme per package.
+Light or dark is acceptable if text contrast, semantic colors and project visual language remain clear.
 ```
 
-### 12.2 Rejected: Applying Old C2 Light Cards To Scenario Diagrams
+### 12.2 Rejected: Theme Switch As Semantic Correction
 
 Mistake:
 
 ```text
-Reading the old technical C2 palette and using light card bodies for scenario pages.
+Changing the theme or colors to hide semantic or layout problems.
 ```
 
 Correct:
 
 ```text
-Scenario diagrams use the approved dark scenario theme.
-The old C2 light-card palette is only for non-scenario technical diagrams unless explicitly requested.
+Fix semantic errors, connector routing, text overflow and shape layout directly.
+Theme choice is not a substitute for correct scenario structure.
 ```
 
 ### 12.3 Rejected: One Large HTML Body Label
@@ -874,9 +904,11 @@ Before returning a `.drawio` file, check:
 ### Theme
 
 ```text
-- scenario diagrams use approved dark theme;
-- technical/domain/DB diagrams use the requested or appropriate family theme;
-- old C2 light-card baseline is not applied to scenario pages by mistake.
+- one consistent readable theme is used within the package;
+- semantic colors remain meaningful and readable;
+- text contrast is sufficient on the chosen background;
+- theme does not change between pages without explicit reason;
+- technical/domain/DB diagrams use the requested or appropriate family theme.
 ```
 
 ### Text
@@ -946,8 +978,9 @@ Read:
 - planning/diagram-examples-index.md
 
 For scenario/use-case diagrams:
-- use the approved dark theme from planning/examples/scenario-login-correct-v3.*;
-- do not use the old light C2 palette;
+- use the approved scenario-flow examples for grammar, spacing and semantic color usage;
+- light or dark theme is acceptable if consistent and readable;
+- do not silently switch theme inside one package;
 - follow semantic colors from diagram-scenario-spec.md;
 - keep main flow as visual backbone;
 - avoid text-card summaries;
@@ -955,11 +988,10 @@ For scenario/use-case diagrams:
 
 For domain/aggregate/DB/technical appendix diagrams:
 - use the appropriate technical diagram family rules;
-- old C2/C2.2 light-card baseline may be used unless overridden;
 - keep diagrams editable.
 
 Use final-diagrams-example.drawio only as secondary / legacy visual-style reference.
-Do not treat it as scenario semantics or as reason to replace the dark scenario theme.
+Do not treat it as scenario semantics or as reason to force a specific scenario background theme.
 
 Do not create, update, delete, move, rename or commit repository files unless explicitly asked.
 Return reviewable artifacts and suggested target paths.

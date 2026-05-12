@@ -55,11 +55,12 @@ If unclear, do not write. Return generated artifacts and ask for explicit repo-w
 ## File Roles
 
 - `diagram-scenario-spec.md` = source of truth for scenario/use-case semantics.
-- `diagram-generation-rules-with-example.md` = source of truth for draw.io, visual construction, style and layout mechanics.
+- `diagram-generation-rules-with-example.md` = source of truth for draw.io, visual construction, style consistency and layout mechanics.
 - `diagram-prompting-guide.md` = how to prompt diagram-generation agents correctly.
 - `diagram-common-mistakes.md` = repeated mistakes, why they are wrong and reject criteria.
 - `diagram-examples-index.md` = index of approved and planned correct diagram examples.
 - `planning/examples/` = actual approved examples.
+- `planning/diagrams/` = canonical generated scenario diagram packages, scenario overview and consistency reports.
 - `diagram-domain-db-brief.md` = aggregate/domain and DB diagram content rules.
 - `domain-model.md` = source of domain decisions, not a direct use-case diagram prompt.
 - `final-diagrams-example.drawio` = secondary visual/style reference only, not semantic or business truth.
@@ -125,7 +126,9 @@ planning/examples/scenario-login-correct-v3.png
 planning/examples/scenario-login-correct-v3.md
 ```
 
-Use the approved dark visual theme for scenario/use-case diagrams unless the user explicitly asks for a light theme.
+Use the approved scenario visual language from canonical examples.
+
+Theme may be light or dark, but it must be consistent within one package, readable on the chosen background and preserve semantic colors.
 
 For scenario diagrams, use this additional instruction:
 
@@ -134,6 +137,7 @@ Read planning/diagram-scenario-spec.md.
 Follow section 20A Lane-Based Layout And Anti-Overlap Rules.
 Use the generation mode requested by the user: proof-only, single scenario, package, overview or prompt/docs-only.
 Do not add a proof step unless the user asked for proof or the task is explicitly a calibration/smoke-test task.
+Use a consistent readable theme and preserve semantic color meanings.
 ```
 
 ## Conflict Rule
@@ -177,7 +181,7 @@ Do not use it as:
 - a required page package;
 - a semantic model for future use-case diagrams;
 - a source of architecture decisions;
-- a reason to replace the approved dark scenario theme with a light theme.
+- a reason to force a specific scenario background theme.
 
 ## Diagram Families
 
@@ -201,10 +205,11 @@ Primary structure:
 
 These diagrams must not be command/domain/table maps.
 
-Default visual theme:
+Default visual rule:
 
 ```text
-approved dark scenario theme from scenario-login-correct-v3
+Use the approved scenario visual language from canonical examples.
+The selected theme may be light or dark, but must be consistent, readable and preserve semantic colors.
 ```
 
 ### Domain / Aggregate Boundary Diagrams
@@ -266,11 +271,12 @@ Use the approved canonical scenario example when generating scenario/use-case di
 - planning/examples/scenario-login-correct-v3.png
 - planning/examples/scenario-login-correct-v3.md
 
-Use the approved dark visual theme for scenario/use-case diagrams.
-Do not use a light theme unless explicitly requested.
+Use the approved scenario visual language from canonical examples.
+Theme may be light or dark, but it must be consistent within one package, readable on the chosen background and preserve semantic colors.
+Do not silently switch theme inside one package.
 
 Use planning/final-diagrams-example.drawio only as secondary / legacy visual-style reference.
-Do not treat it as semantic scenario truth or a required page package.
+Do not treat it as semantic scenario truth, a required page package or a reason to force a specific background theme.
 
 Task:
 <state the requested generation mode explicitly: proof-only, single scenario, package, overview, docs/prompt-only>

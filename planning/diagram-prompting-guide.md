@@ -26,15 +26,11 @@ planning/examples/scenario-login-correct-v3.png
 planning/examples/scenario-login-correct-v3.md
 ```
 
-Use the approved dark visual theme from:
+Use the approved scenario visual language from canonical examples.
 
-```text
-planning/examples/scenario-login-correct-v3.svg
-planning/examples/scenario-login-correct-v3.png
-planning/examples/scenario-login-correct-v3.drawio
-```
+Theme may be light or dark, but it must be consistent within one package, readable on the chosen background and preserve semantic colors.
 
-Do not use a light theme unless explicitly requested.
+Do not silently switch theme inside one package.
 
 For aggregate/domain or DB diagrams, also require:
 
@@ -42,6 +38,34 @@ For aggregate/domain or DB diagrams, also require:
 planning/diagram-domain-db-brief.md
 planning/domain-model.md
 ```
+
+## Artifact Location Guidance
+
+Use these folder roles in prompts:
+
+```text
+planning/examples/
+= approved canonical examples
+
+planning/diagrams/
+= canonical generated scenario diagram packages, scenario overview and consistency reports
+```
+
+Typical generated scenario targets:
+
+```text
+planning/diagrams/scenario-core-package.drawio
+planning/diagrams/scenario-core-package.md
+planning/diagrams/scenario-extension-package.drawio
+planning/diagrams/scenario-extension-package.md
+planning/diagrams/scenario-advanced-package.drawio
+planning/diagrams/scenario-advanced-package.md
+planning/diagrams/scenario-overview.drawio
+planning/diagrams/scenario-overview.md
+planning/diagrams/scenario-diagram-consistency-report.md
+```
+
+These paths may be suggested as target locations, but repository files must not be written unless the user explicitly asks for repository modification.
 
 ## Generation Mode Selection
 
@@ -128,17 +152,20 @@ Tell the diagram agent:
 
 ```text
 Visual and draw.io construction rules are controlled by planning/diagram-generation-rules-with-example.md.
-Use final-diagrams-example.drawio only as a visual/style reference.
+Use approved scenario examples for scenario grammar, layout discipline, semantic colors and readable flow construction.
+Use final-diagrams-example.drawio only as a secondary visual/style reference.
 Do not treat final-diagrams-example.drawio as scenario semantics.
+Do not use final-diagrams-example.drawio as a reason to force a specific scenario background theme.
 ```
 
 Visual correctness includes:
 
 ```text
-- uses approved dark project theme;
-- does not silently switch to light theme;
+- uses one consistent readable theme within the package;
+- does not silently switch theme between pages;
 - semantic colors match diagram-scenario-spec.md;
-- all text is readable on dark background;
+- semantic colors remain readable on the chosen background;
+- all text is readable on the chosen background;
 - no text overflow;
 - no shape overlap;
 - no connector overlap;
@@ -201,6 +228,20 @@ For package mode:
 - Markdown summary;
 - list of pages created;
 - cross-page links;
+- semantic self-check;
+- visual self-check.
+```
+
+For overview mode:
+
+```text
+- generated overview artifact;
+- preview if possible;
+- Markdown summary;
+- scenario areas/groups;
+- scenario list by area;
+- high-level relationships shown;
+- relationships intentionally omitted to avoid clutter;
 - semantic self-check;
 - visual self-check.
 ```
@@ -297,12 +338,14 @@ Use approved example if relevant:
 - planning/examples/scenario-login-correct-v3.png
 - planning/examples/scenario-login-correct-v3.md
 
-Use the approved dark visual theme from:
-- planning/examples/scenario-login-correct-v3.svg
-- planning/examples/scenario-login-correct-v3.png
-- planning/examples/scenario-login-correct-v3.drawio
+Use the approved scenario visual language from canonical examples.
+Theme may be light or dark, but it must be consistent within one package, readable on the chosen background and preserve semantic colors.
+Do not silently switch theme inside one package.
 
-Do not use a light theme unless explicitly requested.
+Suggested target paths, if relevant:
+- planning/diagrams/<artifact-name>.drawio
+- planning/diagrams/<artifact-name>.md
+- planning/diagrams/<artifact-name>.png
 
 Task:
 <state the requested generation mode explicitly: proof-only, single scenario, package, overview, docs/prompt-only>
@@ -321,10 +364,11 @@ Quality requirements:
 - main flow is visual backbone;
 - no text-card summary;
 - semantic correctness and visual correctness are both required;
-- uses approved dark project theme;
-- does not silently switch to light theme;
+- uses one consistent readable theme within the package;
+- does not silently switch theme between pages;
 - semantic colors match diagram-scenario-spec.md;
-- all text is readable on dark background;
+- semantic colors remain readable on the chosen background;
+- all text is readable on the chosen background;
 - invariants attach to enforcement point;
 - preconditions do not duplicate decision branches;
 - step postconditions attach to producing step;
@@ -362,4 +406,5 @@ Read planning/diagram-scenario-spec.md.
 Follow section 20A Lane-Based Layout And Anti-Overlap Rules.
 Use the generation mode requested by the user: proof-only, single scenario, package, overview or prompt/docs-only.
 Do not add a proof step unless the user asked for proof or the task is explicitly a calibration/smoke-test task.
+Use one consistent readable theme and preserve semantic color meanings.
 ```
