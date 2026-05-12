@@ -9,10 +9,22 @@ Scope: scenario/use-case diagrams only, not domain/aggregate/DB/CQRS diagrams
 
 This file defines the logic, structure and semantic grammar for user-facing scenario/use-case diagrams.
 
-It does not define draw.io visual construction details such as palette, typography, card implementation, XML structure, or line-by-line text rendering. For those rules, read:
+It does **not** define draw.io visual construction details such as palette, typography, XML structure or line-by-line text rendering. For those rules, read:
 
 ```text
 planning/diagram-generation-rules-with-example.md
+```
+
+For prompt protocol, read:
+
+```text
+planning/diagram-prompting-guide.md
+```
+
+For common mistakes and reject criteria, read:
+
+```text
+planning/diagram-common-mistakes.md
 ```
 
 This file answers:
@@ -61,6 +73,10 @@ SQL table
 aggregate method
 command/query class
 React component/hook
+provider API
+outbox table
+database table
+background job implementation
 ```
 
 Technical trace notes are allowed only as small secondary notes when explicitly useful. They must not dominate the scenario diagram.
@@ -78,12 +94,14 @@ A visually clean diagram is still wrong if:
 - a precondition duplicates a decision branch;
 - a step postcondition is shown as a scenario precondition;
 - an off-page subscenario link is drawn as a normal current-flow branch;
-- an error branch is marked as [ALT] without reason.
+- an error branch is marked as [ALT] without reason;
+- implementation details dominate the page.
 ```
 
 Visual correctness is also required:
 
 ```text
+- approved dark scenario theme is used unless explicitly overridden;
 - main flow is clear;
 - no text-card-only diagrams;
 - connectors do not overlap;
@@ -94,7 +112,61 @@ Visual correctness is also required:
 
 ---
 
-## 2. Main Scenario Unit
+## 2. Generation Mode Note
+
+This specification defines scenario semantics. It does not force one generation workflow for every prompt.
+
+Common generation modes:
+
+```text
+1. Proof-of-layout only
+2. Single scenario page
+3. Scenario package
+4. Global scenario overview / navigation map
+5. Documentation-only or prompt-only task
+```
+
+Use the mode requested by the user.
+
+Proof-of-layout is useful, but it is not mandatory for every request.
+
+Do **not** automatically add a proof step when:
+
+```text
+- the user asked for one scenario page;
+- the user asked for a package;
+- the user asked for a global overview;
+- an approved style/baseline already exists;
+- the task is not explicitly a calibration/smoke-test task.
+```
+
+Use proof-of-layout when:
+
+```text
+- the user explicitly asks for proof / sample / one-page layout first;
+- the diagram type is new or not yet calibrated;
+- the visual style is new or disputed;
+- no approved example exists;
+- the scenario is complex, uncertain or likely to produce connector/layout problems;
+- a full package would be expensive to redo if the layout is wrong.
+```
+
+When a proof page is requested, it should test:
+
+```text
+- main flow shape;
+- semantic correctness;
+- connector routing;
+- lane discipline;
+- text density;
+- visual style;
+- anti-overlap rules;
+- marker usage.
+```
+
+---
+
+## 3. Main Scenario Unit
 
 The main unit is:
 
@@ -143,7 +215,7 @@ Employee Review Scenario
 
 ---
 
-## 3. Scenario Diagram Is Not A Text Spec On Canvas
+## 4. Scenario Diagram Is Not A Text Spec On Canvas
 
 A scenario diagram must visualize scenario structure.
 
@@ -180,52 +252,84 @@ The main flow should be the visual backbone.
 
 ---
 
-## 4. Mandatory Smoke Test Protocol
+## 5. Global Scenario Overview
 
-Do not ask a diagram agent to generate the full scenario package immediately.
+A global scenario overview is **not** one unified scenario.
 
-Always start with one proof-of-layout page.
+It is a scenario-area navigation map.
 
-Recommended smoke-test page:
-
-```text
-SC-04 Client Request Creation
-```
-
-Alternative:
+Suggested target files:
 
 ```text
-SC-02 Login
+planning/diagrams/scenario-overview.drawio
+planning/diagrams/scenario-overview.md
 ```
 
-Prompt requirement:
+Purpose:
 
 ```text
-Generate only one proof-of-layout page first.
-Do not generate the full package yet.
-The goal is to validate layout, connector routing, density, labels and visual language.
+Show what scenario pages exist.
+Show which user/application area they belong to.
+Show only high-level relationships between scenario pages.
 ```
 
-The sample must prove:
+It should group scenarios by areas such as:
 
 ```text
-- main flow is visually obvious;
-- the diagram is not just text cards;
-- includes are attached to exact required steps;
-- branches are connected to exact decision/action points;
-- invariants are anchored to protected behavior/state;
-- step postconditions/outcomes are attached to producing steps;
-- scenario end states are compact;
-- connectors are meaningful and readable;
-- layout is spacious;
-- implementation details are absent.
+Guest / Auth Area
+Client Request Area
+Employee Review Area
+Result / Notification / System Area
 ```
 
-Only after the sample is accepted should the full package be generated.
+Scenario cards in the overview should show:
+
+```text
+Scenario title
+Scenario ref
+Scope marker
+Short purpose
+```
+
+Example:
+
+```text
+Client Request Creation
+SC-04
+[CORE]
+Submit connection request
+```
+
+Do not include detailed scenario internals on the global overview:
+
+```text
+no detailed steps
+no decision branches
+no includes
+no invariants
+no postconditions
+no acceptance details
+no implementation details
+no connector web
+```
+
+The overview may show high-level links such as:
+
+```text
+SC-01 Registration -> SC-02 Login
+SC-02 Login -> SC-03 Password Recovery
+SC-04 Request Creation -> SC-05 Request Status / Result
+SC-06 Employee Dashboard -> SC-07 Employee Review
+SC-07 Employee Review -> SC-08 Approval Result
+SC-07 Employee Review -> SC-09 Rejection Result
+SC-08 / SC-09 -> SC-16 Reliable Notification Delivery
+```
+
+If the map becomes crowded, remove links and mention omitted relationships in the Markdown summary.
 
 ---
 
-## 5. Recommended Scenario Page Structure
+## 6. Recommended Scenario Page Structure
 
 A scenario page should usually contain:
 
@@ -255,9 +359,9 @@ Metadata must not compete with the main flow.
 
 ---
 
-## 6. Node Types
+## 7. Node Types
 
-### 6.1 Actor / Screen Node
+### 7.1 Actor / Screen Node
 
 Contains:
 
@@ -277,9 +381,7 @@ Goal: Sign in
 L1
 ```
 
----
-
-### 6.2 Main Flow Node
+### 7.2 Main Flow Node
 
 Contains:
 
@@ -298,9 +400,7 @@ SC-02-STEP-03
 
 Do not put long paragraphs inside flow nodes.
 
----
-
-### 6.3 Decision / Branch Node
+### 7.3 Decision / Branch Node
 
 Represents a conditional result inside the scenario.
 
@@ -320,9 +420,7 @@ if invalid
 
 A decision node is not an extension by itself.
 
----
-
-### 6.4 Actor Choice Node
+### 7.4 Actor Choice Node
 
 Represents a deliberate actor choice.
 
@@ -340,9 +438,7 @@ if selected
 opens subscenario
 ```
 
----
-
-### 6.5 Include Node
+### 7.5 Include Node
 
 Use explicit `<<include>>` for mandatory reusable steps.
 
@@ -358,9 +454,7 @@ An include must attach to the exact step that requires it.
 
 Do not put all includes into one disconnected summary card.
 
----
-
-### 6.6 Optional / Subscenario Link Node
+### 7.6 Optional / Subscenario Link Node
 
 Use for optional selected paths, complex branches or linked subscenarios.
 
@@ -375,9 +469,7 @@ Use `EXTND` in item refs for these branch/link items.
 
 Do not use `EXT` in item refs because `[EXT]` is reserved for the roadmap marker.
 
----
-
-### 6.7 Invariant Node
+### 7.7 Invariant Node
 
 Invariants must attach to the step, state or branch they protect.
 
@@ -385,7 +477,7 @@ Example:
 
 ```text
 Invariant
-No session is issued for invalid credentials
+Session is issued only for valid credentials
 SC-02-INV-01
 ```
 
@@ -395,9 +487,7 @@ Connector label:
 protected by
 ```
 
----
-
-### 6.8 Step-Level Postcondition Node
+### 7.8 Step-Level Postcondition Node
 
 A step-level postcondition is a result produced by a specific step.
 
@@ -417,9 +507,7 @@ SC-04-SPOST-01
 
 Attach it to the step that produces it.
 
----
-
-### 6.9 Observable Outcome Node
+### 7.9 Observable Outcome Node
 
 Observable outcomes are externally visible or verifiable results.
 
@@ -434,9 +522,7 @@ Email notification is sent
 
 Use them only when they add useful verification meaning beyond the immediate flow node.
 
----
-
-### 6.10 Scenario End States / Postconditions Block
+### 7.10 Scenario End States / Postconditions Block
 
 Use a compact block for final scenario states.
 
@@ -459,9 +545,7 @@ Forgot password:
 
 This block should be compact and secondary.
 
----
-
-### 6.11 Acceptance Criteria
+### 7.11 Acceptance Criteria
 
 Acceptance criteria remain important in the text scenario spec.
 
@@ -477,7 +561,7 @@ If acceptance must be visible, use a compact `End states / acceptance summary` b
 
 ---
 
-## 7. Item Reference Codes
+## 8. Item Reference Codes
 
 Use readable labels plus strict refs.
 
@@ -537,11 +621,11 @@ SC-02-EXTND-01
 
 ---
 
-## 8. Preconditions
+## 9. Preconditions
 
 There are two kinds of preconditions.
 
-### 8.1 Scenario-Level Preconditions
+### 9.1 Scenario-Level Preconditions
 
 Scenario-level preconditions describe facts outside the scenario that must already be true before the scenario starts.
 
@@ -575,7 +659,7 @@ Credentials valid?
 
 So `credentials are valid` is not a scenario precondition. It is a branch condition/result inside the scenario.
 
-### 8.2 Step-Level Preconditions
+### 9.2 Step-Level Preconditions
 
 Some complex steps can have their own preconditions.
 
@@ -615,11 +699,11 @@ Use preconditions for facts that exist before the scenario/step and are not the 
 
 ---
 
-## 9. Postconditions
+## 10. Postconditions
 
 There are two kinds of postconditions.
 
-### 9.1 Scenario-Level Postconditions / End States
+### 10.1 Scenario-Level Postconditions / End States
 
 Scenario-level postconditions summarize possible final states of the scenario.
 
@@ -642,7 +726,7 @@ Show them as a compact `End states / Postconditions` block.
 
 Do not make this block more visually important than the main flow.
 
-### 9.2 Step-Level Postconditions
+### 10.2 Step-Level Postconditions
 
 Complex steps can produce concrete results.
 
@@ -672,7 +756,7 @@ Scenario-level postconditions summarize final end states.
 
 ---
 
-## 10. Decision Branches, Actor Choices, Errors And Optional Paths
+## 11. Decision Branches, Actor Choices, Errors And Optional Paths
 
 Do not use `extend` as a generic connector label.
 
@@ -702,9 +786,7 @@ link
 
 unless explicitly needed.
 
----
-
-### 10.1 Decision Node
+### 11.1 Decision Node
 
 Decision nodes represent conditional outcomes inside the scenario.
 
@@ -718,9 +800,7 @@ Credentials valid?
 
 This is normal scenario behavior, not an extension.
 
----
-
-### 10.2 Actor Choice
+### 11.2 Actor Choice
 
 Actor choice is when the actor deliberately chooses a different action/path.
 
@@ -738,9 +818,7 @@ if selected
 opens subscenario
 ```
 
----
-
-### 10.3 Error / Negative Outcome Branch
+### 11.3 Error / Negative Outcome Branch
 
 Error handling can be required current behavior.
 
@@ -766,9 +844,7 @@ Use `[CORE]` only when it is important to emphasize that this error handling is 
 
 Do not use `[ALT]` just because the branch is not the success path.
 
----
-
-### 10.4 Narrow `[ALT]` Rule
+### 11.4 Narrow `[ALT]` Rule
 
 Use `[ALT]` narrowly.
 
@@ -855,9 +931,7 @@ If unsure, do not use [ALT].
 Use clear branch labels instead.
 ```
 
----
-
-### 10.5 Roadmap `[EXT]` Marker
+### 11.5 Roadmap `[EXT]` Marker
 
 `[EXT]` is a roadmap/scope marker.
 
@@ -872,7 +946,7 @@ Examples:
 ```text
 Upload documents. [EXT:L2]
 Anonymous request. [EXT:L3]
-Reliable outbox delivery. [EXT:L3]
+Reliable notification delivery. [EXT:L3]
 ```
 
 `[EXT]` is not a connector label and not an item-ref code.
@@ -881,7 +955,7 @@ Use it as a small marker only when a behavior is truly future/additional.
 
 ---
 
-## 11. Include Semantics
+## 12. Include Semantics
 
 `<<include>>` means a mandatory reusable step or subscenario required for the current scenario to complete.
 
@@ -912,7 +986,7 @@ Submit sign-in
 
 ---
 
-## 12. Invariant Semantics
+## 13. Invariant Semantics
 
 Invariants must be anchored to the step, state or branch they protect.
 
@@ -921,14 +995,6 @@ An invariant must be attached to the step, decision, transition or state where t
 Do not attach an invariant to a late consequence state if enforcement happened earlier.
 
 Good:
-
-```text
-Invalid credentials branch
--- protected by -->
-No session is issued for invalid credentials.
-```
-
-Better for Login:
 
 ```text
 Credentials valid?
@@ -962,7 +1028,7 @@ The rule is enforced at the credentials decision or the transition into Session 
 Good:
 
 ```text
-Submit request
+Submit request / Request valid?
 -- protected by -->
 Invalid request is not accepted.
 ```
@@ -990,7 +1056,7 @@ Place invariants where the protected behavior/state is visible in the flow.
 
 ---
 
-## 13. Acceptance Criteria In Diagrams
+## 14. Acceptance Criteria In Diagrams
 
 Acceptance criteria remain part of the scenario spec.
 
@@ -1029,7 +1095,7 @@ Do not let acceptance blocks compete with the main flow.
 
 ---
 
-## 14. Observable Outcomes
+## 15. Observable Outcomes
 
 Observable outcomes are externally visible or verifiable results.
 
@@ -1074,7 +1140,7 @@ Only use trace notes when they help and do not dominate the diagram.
 
 ---
 
-## 15. Marker Model For Diagrams
+## 16. Marker Model For Diagrams
 
 Use lightweight markers from the planning workflow.
 
@@ -1149,13 +1215,13 @@ Connector label = semantic relationship.
 
 ---
 
-## 16. Level Interpretation For Scenario Diagrams
+## 17. Level Interpretation For Scenario Diagrams
 
 Use levels as final target scenario levels, not as current code state.
 
 ```text
 L1 = final MVP user-facing scenarios
-L2 = extended diploma workflow branches/scenarios
+L2 = extended workflow branches/scenarios
 L3 = advanced/future scenario branches or cross-cutting capabilities
 ```
 
@@ -1189,7 +1255,7 @@ Do not generate separate V1/V2/V3 versions of the same scenario unless explicitl
 
 ---
 
-## 17. Applicant Data Naming
+## 18. Applicant Data Naming
 
 Do not use this as the primary user-facing label:
 
@@ -1213,7 +1279,7 @@ but the user-facing scenario is about providing data.
 
 There are two valid UX entry points.
 
-### 17.1 Profile-First
+### 18.1 Profile-First
 
 ```text
 Client opens profile/applicant data page
@@ -1222,7 +1288,7 @@ Client opens profile/applicant data page
 -> system reuses saved applicant data
 ```
 
-### 17.2 Request-First / Inline
+### 18.2 Request-First / Inline
 
 ```text
 Client starts request
@@ -1240,7 +1306,7 @@ For this specific case, inline applicant data can be `[ALT]` because it is an al
 
 ---
 
-## 18. Recommended Login Scenario Grammar
+## 19. Recommended Login Scenario Grammar
 
 Use this as a reference for the intended scenario style.
 
@@ -1249,6 +1315,7 @@ Approved canonical example files:
 ```text
 planning/examples/scenario-login-correct-v3.drawio
 planning/examples/scenario-login-correct-v3.svg
+planning/examples/scenario-login-correct-v3.png
 planning/examples/scenario-login-correct-v3.md
 ```
 
@@ -1333,7 +1400,7 @@ Purple is used for the Password Recovery path because it leaves the current scen
 
 ---
 
-## 19. Color Guidance For Scenario Semantics
+## 20. Color Guidance For Scenario Semantics
 
 Use this distinction:
 
@@ -1412,7 +1479,7 @@ Do not rely on markers alone for visual type.
 
 ---
 
-## 20. Connector Semantics
+## 21. Connector Semantics
 
 Every connector must mean something.
 
@@ -1421,6 +1488,7 @@ Useful connector labels:
 ```text
 starts
 next
+checks
 requires
 include
 if selected
@@ -1434,6 +1502,7 @@ results in
 visible as
 protected by
 notifies
+future branch
 ```
 
 Avoid vague labels:
@@ -1460,7 +1529,7 @@ Connector rules:
 
 ---
 
-## 20A. Lane-Based Layout And Anti-Overlap Rules
+## 22. Lane-Based Layout And Anti-Overlap Rules
 
 Scenario diagrams must use lane discipline.
 
@@ -1492,9 +1561,7 @@ Lane discipline should still be followed:
 - keep end-state summary compact.
 ```
 
----
-
-### 20A.1 Layout Lanes
+### 22.1 Layout Lanes
 
 Use separate visual lanes for different semantic roles.
 
@@ -1538,9 +1605,7 @@ invariant is local to the branch it protects;
 end states are compact and do not create connector web.
 ```
 
----
-
-### 20A.2 Main Flow Must Stay Clean
+### 22.2 Main Flow Must Stay Clean
 
 The main flow is the visual backbone.
 
@@ -1577,291 +1642,25 @@ condition for
 
 Secondary connectors must stay short and local whenever possible.
 
----
+### 22.3 End-State Summary
 
-### 20A.3 Error / Negative Branch Lane
-
-Negative branches should have their own clear lane.
-
-Example:
-
-```text
-Credentials valid?
--> if invalid:
-   Show sign-in error
-   -> Remain unauthenticated
-   -> local invariant near decision: Session is issued only for valid credentials
-```
-
-Rules:
-
-```text
-- Put negative/error nodes together.
-- Do not mix error branch nodes with actor-choice/subscenario nodes.
-- Do not route recovery/subscenario links through the error lane.
-- Attach error-related invariants close to the error branch.
-```
-
----
-
-### 20A.4 Actor-Choice / Subscenario Lane
-
-Actor-choice and subscenario links should be visually separated from error/result branches.
-
-Example:
-
-```text
-Forgot password selected
--> opens subscenario Password Recovery - SC-03
-```
-
-Rules:
-
-```text
-- Put optional actor choices in a separate lower or side lane.
-- Keep the connector from the source step to the actor choice simple.
-- Use labels like "if selected" and "opens subscenario".
-- Do not use generic "extend" connector labels.
-- Do not route subscenario links through error branches, invariants or end-state blocks.
-```
-
----
-
-### 20A.5 Invariant Placement
-
-Invariants must be local.
-
-Rules:
-
-```text
-- Place invariant nodes near the step, decision, transition, state or branch where the rule is enforced.
-- Use a short "protected by" connector.
-- Do not place unrelated global invariants on the page.
-- Do not stretch invariant connectors across half the diagram.
-- If the invariant protects another scenario, move it to that scenario.
-```
-
-Good:
-
-```text
-Credentials valid?
--> protected by
-Invariant: Session is issued only for valid credentials
-```
-
-Bad:
-
-```text
-Login scenario contains a far-away invariant:
-Protected app page is accessible only after authentication.
-```
-
-That belongs to a protected-resource-access scenario.
-
----
-
-### 20A.6 End States / Postconditions Placement
-
-Scenario-level end states are usually a compact summary.
-
-Default rule:
-
-```text
-Do not draw long connectors from every final branch to the end-states block.
-```
+Do not draw a long connector from every final branch into the end-state block.
 
 Prefer:
 
 ```text
-- one compact End states / Postconditions block;
-- no connectors if the block is obviously a summary;
-- or only very short local connectors when they do not create visual noise.
+compact End states / Postconditions block
+placed near the final branches
+with zero or minimal connectors
 ```
 
-Reject the layout if:
+A summary block may be visually associated by placement alone.
 
-```text
-- end-state summary links cross the main flow;
-- summary links create a web around the page;
-- several dashed summary links overlap each other;
-- the summary block becomes visually more important than the scenario flow.
-```
-
----
-
-### 20A.7 Include Placement
-
-Include nodes must be attached to the exact required step.
-
-Rules:
-
-```text
-- Put include nodes directly above, below or near the step that requires them.
-- Use a short "include" connector.
-- Do not place all includes in a disconnected summary card.
-- Do not route include connectors through other nodes.
-```
-
-Example:
-
-```text
-Submit sign-in
--> include
-<<include>> Validate login form
-```
-
----
-
-### 20A.8 Connector Anchor Rules
-
-Before drawing a connector, choose the least congested side of the source and target nodes.
-
-Rules:
-
-```text
-- Do not stack multiple unrelated connectors on the same side of one shape.
-- Use different sides when a node has multiple relationships.
-- Use top/bottom anchors for vertical relationships.
-- Use left/right anchors for horizontal flow.
-- Keep connector labels away from node text and other connector labels.
-- Do not route connectors through shape bodies.
-- Do not route connectors through text inside shapes.
-- Do not allow connector labels to overlap lines or nodes.
-```
-
-If a node needs many connectors, either:
-
-```text
-- split the node;
-- move related nodes closer;
-- convert a distant connector into a local note;
-- create a subscenario page;
-- enlarge the canvas.
-```
-
----
-
-### 20A.9 Long Connector Rule
-
-Long connectors are allowed only when they are necessary and visually clean.
-
-Avoid long connectors for:
-
-```text
-- summarized as
-- protected by
-- condition for
-- visible as
-- opens subscenario
-```
-
-These should usually be short and local.
-
-If a long connector is needed, it must:
-
-```text
-- not cross the main flow;
-- not cross node bodies;
-- not overlap another connector;
-- have a clear label;
-- use a free visual lane.
-```
-
----
-
-### 20A.10 When To Remove A Connector
-
-Not every relationship needs a drawn connector.
-
-Remove or avoid a connector when:
-
-```text
-- the relation is obvious from placement and title;
-- the connector creates visual noise;
-- the connector would cross the main flow;
-- the connector would create a web of summary links;
-- the connector is only decorative.
-```
-
-Example:
-
-```text
-End states / Postconditions
-```
-
-can often be shown as a compact block without connectors.
-
----
-
-### 20A.11 Anti-Overlap Rejection Criteria
-
-Reject or revise a diagram if:
-
-```text
-- any connector passes through a shape body;
-- any connector passes through body text;
-- connector labels overlap each other;
-- connector labels overlap shapes;
-- more than two unrelated connectors visually merge into one corridor;
-- secondary connectors cross the main flow;
-- invariants are far from the protected branch/state;
-- end-state summary links create a web;
-- actor-choice/subscenario links collide with error branches;
-- the diagram becomes dense just to fit a small canvas.
-```
-
-The correct fix is usually:
-
-```text
-- enlarge the canvas;
-- separate lanes;
-- move secondary nodes closer to their source;
-- remove unnecessary summary connectors;
-- split a complex branch into a subscenario page.
-```
-
----
-
-### 20A.12 Login Layout Example Rule
-
-For Login-like scenarios, prefer this layout shape:
-
-```text
-Top / main lane:
-Actor/Screen -> Open login screen -> Enter credentials -> Submit sign-in -> Credentials valid?
-
-Success lane:
-Credentials valid? -> if valid -> Session is issued -> Redirect to requested app page
-
-Error lane:
-Credentials valid? -> if invalid -> Show sign-in error -> Remain unauthenticated
-Credentials valid? -> protected by -> Session is issued only for valid credentials
-
-Actor-choice/subscenario lane:
-Open login screen -> if selected -> Forgot password selected -> opens subscenario Password Recovery - SC-03
-
-Summary lane:
-End states / Postconditions as compact block, usually without long connectors.
-```
-
-Do not mix:
-
-```text
-forgot password path
-error branch
-invariant
-end-state summary links
-```
-
-in the same crowded lower-center area.
-
----
-
-## 20B. Text Fit Rule
+### 22.4 Text Fit
 
 Text must fit inside every shape.
 
-No label, ref, marker or body text may overflow outside the shape boundary.
+No label, ref, marker, or body text may overflow outside the shape boundary.
 
 If text does not fit:
 
@@ -1873,253 +1672,93 @@ If text does not fit:
 - or use a larger canvas.
 ```
 
-Never accept overflow as a valid diagram result.
-
-Reject if:
-
-```text
-- text escapes outside a shape;
-- text touches borders too closely;
-- refs/markers overlap body text;
-- connector labels overlap node text;
-- a node is too small for its content.
-```
+Never accept overflow as valid.
 
 ---
 
-## 21. Scenario Page Splitting Rules
+## 23. Scenario Diagram Self-Check
 
-Create a separate subscenario page when:
+Before accepting a scenario diagram, check:
 
-```text
-- branch has its own user goal;
-- branch has more than 3-4 meaningful steps;
-- branch introduces a separate actor/screen;
-- branch has its own acceptance criteria;
-- branch has its own extension/change markers;
-- connectors become crowded;
-- page starts looking like a command/domain/table map.
-```
-
-Examples:
+### Semantic correctness
 
 ```text
-Login -> Password Recovery — SC-03
-Request Creation -> Request Documents — SC-11
-Employee Review -> Clarification — SC-12
-Approval -> Reliable Notification Delivery — SC-16
-```
-
-Prefer scenario pages over one giant all-system map.
-
-Large canvas is allowed.
-
-A clean large diagram is better than a dense small one.
-
----
-
-## 22. Recommended Scenario Page Package
-
-### Overview
-
-```text
-00 Scenario Overview / Navigation Map
-```
-
-### Core Scenario Pages
-
-```text
-01 Guest Registration Scenario
-02 Login Scenario
-03 Password Recovery Scenario
-04 Client Request Creation Scenario
-05 Client Request Status / Result Scenario
-06 Employee Request Dashboard Scenario
-07 Employee Request Review Scenario
-08 Approval Result: Contract Draft + Email Notification
-09 Rejection Result Scenario
-```
-
-### Extension Scenario Pages
-
-```text
-10 Extended Applicant Data Scenario
-11 Request Documents Scenario
-12 Clarification Scenario
-13 Contract Acknowledgement Scenario
-14 Mock Verification Scenario
-```
-
-### Advanced / Cross-Cutting Scenario Pages
-
-```text
-15 Security / Account Protection Scenario
-16 Reliable Notification Delivery Scenario
-17 Anonymous Request Scenario
-18 Archive / Audit Scenario
-```
-
----
-
-## 23. Recommended Generation Batches
-
-### First Batch
-
-```text
-00 Scenario Overview
-01 Guest Registration Scenario
-02 Login Scenario
-04 Client Request Creation Scenario
-06 Employee Request Dashboard Scenario
-07 Employee Request Review Scenario
-```
-
-### Second Batch
-
-```text
-03 Password Recovery Scenario
-05 Client Request Status / Result Scenario
-08 Approval Result
-09 Rejection Result
-10 Extended Applicant Data
-11 Request Documents
-12 Clarification
-```
-
-### Third Batch
-
-```text
-13 Contract Acknowledgement
-14 Mock Verification
-15 Security / Account Protection
-16 Reliable Notification Delivery
-17 Anonymous Request
-18 Archive / Audit
-```
-
-But before any batch generation:
-
-```text
-Generate one proof-of-layout page first.
-```
-
----
-
-## 24. Review Checklist
-
-Accept a sample page only if:
-
-```text
-- it is understandable without reading a separate spec;
-- it looks like scenario flow, not text cards;
-- main flow is visually obvious;
-- includes are attached to exact required steps;
-- decision branches are clear;
-- optional actor choices/subscenario links are clear;
-- invariants are connected to the enforcement point they protect;
-- step-level postconditions/outcomes are attached to producing steps;
+- scenario page is user-facing behavior, not implementation flow;
+- main unit is actor + screen/context + goal;
+- preconditions do not duplicate decisions;
+- decisions are decisions, not generic extensions;
+- invalid/error branches are not [ALT] by default;
+- [ALT] is used narrowly;
+- [EXT] is not used in item refs;
+- EXTND is used for off-page/subscenario item refs;
+- invariants attach to enforcement points;
+- step postconditions attach to producing steps;
 - scenario end states are compact;
-- connectors do not overlap shape bodies;
-- connectors do not all attach to one side;
-- there is enough whitespace;
-- markers are present only where useful;
-- implementation details are absent.
+- observable outcomes are externally visible/verifiable;
+- no unrelated global invariant is placed on a specific scenario page.
 ```
 
-Reject or revise if:
+### Visual correctness
 
 ```text
-- the diagram is mostly large text blocks;
-- connectors are decorative rather than meaningful;
-- labels are too small;
-- page is too dense;
-- branches are crammed into the main page;
-- old implementation concepts appear;
-- [ALT] is used for normal errors;
-- EXT is used in item refs instead of EXTND.
-- secondary connectors cross the main flow;
-- end-state summary links create a web around the page;
-- invariants are far from the branch/state they protect;
-- actor-choice/subscenario links collide with error branches;
-- more than two unrelated connectors visually merge into one corridor;
-- the diagram becomes dense just to fit a small canvas.
-- text escapes outside a shape;
-- text touches borders too closely;
-- refs/markers overlap body text;
-- connector labels overlap node text;
-- a node is too small for its content.
+- approved dark scenario theme is used unless explicitly requested otherwise;
+- main flow is visually obvious;
+- diagram is not a text-card summary;
+- no connector web;
+- no connector crosses shape bodies;
+- no connector crosses body text;
+- secondary connectors do not cross the main flow;
+- text fits inside shapes;
+- connector labels do not overlap nodes;
+- layout is spacious.
+```
+
+### Marker/color correctness
+
+```text
+- color means visual role;
+- marker means planning meaning;
+- connector label means semantic relationship;
+- purple means off-page/subscenario only;
+- red means negative/error/rejection/failure branch;
+- yellow means invariant/rule/constraint;
+- cyan means include/mandatory supporting step;
+- markers are selective but visible.
 ```
 
 ---
 
-## 25. Prompt Snippet For Future Diagram Agents
+## 24. Minimal Prompt Add-On
+
+Use this short block in scenario diagram prompts:
 
 ```text
-Create a scenario/use-case flow diagram, not a text-card summary.
+Read planning/diagram-scenario-spec.md.
 
-Generate one proof-of-layout page first.
-Do not generate the full package until the sample page is accepted.
+Scenario diagrams are user-facing behavioral specification diagrams.
+Do not create command/domain/table maps.
 
-Semantic correctness and visual correctness are both required.
+Use the requested generation mode:
+- proof-only;
+- single scenario;
+- package;
+- global overview;
+- prompt/docs-only.
 
-The main flow must be the visual backbone.
+Do not add a proof step unless the user asked for proof or the task is explicitly a calibration/smoke-test task.
 
-Use intuitive connector labels instead of UML jargon.
-Do not label optional links as "extend" unless explicitly needed.
-Use labels such as:
-- if selected
-- opens subscenario
-- if valid
-- if invalid
-- if missing
-- results in
-- protected by
+Use approved dark scenario theme unless explicitly requested otherwise.
 
-Use EXTND in item IDs for extension/optional branch items.
-Reserve [EXT] for roadmap/scope markers.
-
-Do not mark every error path as [ALT].
-Error/invalid branches are usually negative outcome branches, not ALT.
-
-Use [ALT] narrowly:
-only when a normal step/path is not suitable and another path lets the actor still achieve the same or equivalent goal.
-
-Use purple only for off-page/subscenario links.
-Do not use purple for normal in-page actor choices.
-
-Do not create preconditions that are already represented by decision diamonds.
-Preconditions are usually external facts before the scenario or step.
-
-Support both scenario-level and step-level postconditions.
-Attach step-level postconditions/outcomes to the step that produces them.
-Show scenario-level postconditions as compact end states.
-
-Invariants must attach to the enforcement point: the step, decision, transition or state where the rule is protected.
-Do not place unrelated global invariants on a scenario page.
-
-Do not draw large standalone acceptance cards by default.
-Let the scenario flow express acceptance.
-Use a compact end-state/acceptance summary only if needed.
-
-Use readable labels plus strict refs.
-Keep layout spacious.
-Avoid connector overlaps.
-Do not route connectors through shape bodies.
-Distribute connector anchors across sides.
-Avoid implementation details.
-
-Use lane discipline:
-- main flow lane;
-- success/result lane;
-- negative/error lane;
-- actor-choice/subscenario lane;
-- constraint/invariant lane;
-- compact summary/end-state lane.
-
-Do not let secondary connectors cross the main flow.
-Do not create long summary connector webs.
-Place invariants near the branch/state they protect.
-Prefer removing summary connectors over creating visual noise.
-Enlarge the canvas instead of making the diagram dense.
+Main flow must be the visual backbone.
+No text-card summaries.
+Invariants attach to enforcement points.
+Preconditions do not duplicate decision branches.
+Step postconditions attach to producing steps.
+Use EXTND in item refs.
+Use [ALT] narrowly.
+Purple only means off-page/subscenario link.
+No generic "extend" connector.
+No implementation details.
 All text must fit inside shapes.
+No connector web.
 ```

@@ -714,3 +714,84 @@ Review/reject rule:
 ```text
 Reject or revise if the agent modifies repository files without an explicit repo-write request.
 ```
+
+## 24. Forcing Proof-Of-Layout When User Asked For Another Mode
+
+Mistake:
+
+```text
+The user asks for one scenario page or a scenario package, but the diagram agent refuses and generates only a proof-of-layout page.
+```
+
+Why wrong:
+
+```text
+Proof-of-layout is useful for calibration, but it is not mandatory for every request.
+The agent must follow the user's requested generation mode.
+```
+
+Bad example:
+
+```text
+User: Generate the extension scenario package.
+Agent: I will only create one proof page and wait for approval.
+```
+
+Correct approach:
+
+```text
+If the user asks for proof / sample / layout test, generate proof only.
+If the user asks for one scenario, generate one scenario page.
+If the user asks for a package, generate the requested package directly.
+Use proof first only when requested or when the task is explicitly a calibration/smoke-test task.
+```
+
+Review/reject rule:
+
+```text
+Reject if the agent adds a proof step that the user did not request and the task already has an approved style/baseline.
+```
+
+## 25. Global Scenario Overview Turned Into Mega-Workflow
+
+Mistake:
+
+```text
+The global scenario overview is drawn as one huge workflow containing all steps, branches, includes, invariants and postconditions from SC-01..SC-18.
+```
+
+Why wrong:
+
+```text
+Global overview is a navigation/area map, not a scenario.
+It should help the reader see which scenario pages exist and how they are grouped by user/application area.
+```
+
+Bad example:
+
+```text
+One giant diagram:
+Registration steps -> Login steps -> Request creation branches -> Employee review branches -> Notifications -> Archive,
+with all invariants and outcomes connected into one connector web.
+```
+
+Correct approach:
+
+```text
+Create an area/navigation map.
+Group scenario cards by area:
+- Guest / Auth Area
+- Client Request Area
+- Employee Review Area
+- Result / Notification / System Area
+
+Show scenario titles, refs, scope markers and short purpose.
+Show only high-level relationships between scenario pages.
+Do not include detailed scenario internals.
+```
+
+Review/reject rule:
+
+```text
+Reject if the global overview contains detailed scenario steps, decision branches, includes, invariants, postconditions, acceptance details, implementation details or connector web.
+```

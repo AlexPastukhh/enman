@@ -62,27 +62,78 @@ If unclear, do not write. Return generated artifacts and ask for explicit repo-w
 - `planning/examples/` = actual approved examples.
 - `diagram-domain-db-brief.md` = aggregate/domain and DB diagram content rules.
 - `domain-model.md` = source of domain decisions, not a direct use-case diagram prompt.
-- `final-diagrams-example.drawio` = visual/style reference only, not semantic or business truth.
+- `final-diagrams-example.drawio` = secondary visual/style reference only, not semantic or business truth.
 
-## Mandatory Generation Protocol
+## Generation Protocol
+
+The diagram prompt must follow the requested generation mode.
+
+Common modes:
 
 ```text
-1. Read diagram-brief.md.
-2. Read diagram-scenario-spec.md.
-3. Read diagram-generation-rules-with-example.md.
-4. Read diagram-common-mistakes.md.
-5. Read diagram-prompting-guide.md.
-6. Check diagram-examples-index.md for approved examples.
-7. Before generating the full package, create one proof-of-layout page.
-8. Wait for review/approval before generating the full scenario package.
+1. Proof-of-layout only
+2. Single scenario page
+3. Scenario package
+4. Global scenario overview / navigation map
+5. Documentation-only or prompt-only task
 ```
+
+Do not force a proof-of-layout step for every task.
+
+Proof-of-layout is useful, but it is not mandatory when the user did not ask for proof and the task already has an approved style/baseline.
+
+Use proof-of-layout when:
+
+```text
+- the user explicitly asks for proof / sample / one-page layout first;
+- the diagram type is new or not yet calibrated;
+- the visual style is new or disputed;
+- the diagram agent is uncalibrated and no approved example exists;
+- the scenario is complex, uncertain or likely to produce connector/layout problems;
+- a full package would be expensive to redo if the layout is wrong.
+```
+
+If the user asks for one scenario, generate that one scenario page only.
+
+If the user asks for a package, generate the requested package directly.
+
+If the user asks for a global overview, create an area/navigation overview, not a detailed scenario workflow.
+
+If the user asks only for a prompt or documentation update, do not generate diagrams.
+
+## Standard Read Order
+
+For scenario diagrams, a diagram-generation agent should read:
+
+```text
+1. planning/diagram-brief.md
+2. planning/diagram-scenario-spec.md
+3. planning/diagram-generation-rules-with-example.md
+4. planning/diagram-prompting-guide.md
+5. planning/diagram-common-mistakes.md
+6. planning/diagram-examples-index.md
+```
+
+Use approved examples when relevant.
+
+Current canonical scenario example:
+
+```text
+planning/examples/scenario-login-correct-v3.drawio
+planning/examples/scenario-login-correct-v3.svg
+planning/examples/scenario-login-correct-v3.png
+planning/examples/scenario-login-correct-v3.md
+```
+
+Use the approved dark visual theme for scenario/use-case diagrams unless the user explicitly asks for a light theme.
 
 For scenario diagrams, use this additional instruction:
 
 ```text
 Read planning/diagram-scenario-spec.md.
 Follow section 20A Lane-Based Layout And Anti-Overlap Rules.
-Before generating a full package, create one proof-of-layout page first.
+Use the generation mode requested by the user: proof-only, single scenario, package, overview or prompt/docs-only.
+Do not add a proof step unless the user asked for proof or the task is explicitly a calibration/smoke-test task.
 ```
 
 ## Conflict Rule
@@ -98,23 +149,35 @@ If files conflict:
 
 ## Final Draw.io Example Warning
 
-`final-diagrams-example.drawio` is not a semantic reference for scenario structure.
+`final-diagrams-example.drawio` is not the canonical scenario diagram reference.
+
+The canonical scenario diagram reference is:
+
+```text
+planning/examples/scenario-login-correct-v3.drawio
+planning/examples/scenario-login-correct-v3.svg
+planning/examples/scenario-login-correct-v3.png
+planning/examples/scenario-login-correct-v3.md
+```
+
+Use `final-diagrams-example.drawio` only as secondary / legacy visual-style reference material.
 
 Use it for:
 
-- accepted palette;
+- accepted legacy palette examples;
 - card construction;
 - editable grouped cards;
 - line-by-line body text implementation;
 - attached edge label style;
-- general C2 visual language.
+- general C2 visual language when generating non-scenario technical diagrams.
 
 Do not use it as:
 
 - a logical scenario structure reference;
 - a required page package;
 - a semantic model for future use-case diagrams;
-- a source of architecture decisions.
+- a source of architecture decisions;
+- a reason to replace the approved dark scenario theme with a light theme.
 
 ## Diagram Families
 
@@ -137,6 +200,12 @@ Primary structure:
 - observable outcomes.
 
 These diagrams must not be command/domain/table maps.
+
+Default visual theme:
+
+```text
+approved dark scenario theme from scenario-login-correct-v3
+```
 
 ### Domain / Aggregate Boundary Diagrams
 
@@ -187,21 +256,28 @@ Read:
 1. planning/diagram-brief.md
 2. planning/diagram-scenario-spec.md
 3. planning/diagram-generation-rules-with-example.md
-4. planning/diagram-common-mistakes.md
-5. planning/diagram-prompting-guide.md
+4. planning/diagram-prompting-guide.md
+5. planning/diagram-common-mistakes.md
 6. planning/diagram-examples-index.md
 
-Use planning/final-diagrams-example.drawio only as a visual/style reference.
-Do not treat it as semantic scenario truth or a required page package.
-
-Use approved examples only when relevant.
-Current canonical scenario example:
+Use the approved canonical scenario example when generating scenario/use-case diagrams:
 - planning/examples/scenario-login-correct-v3.drawio
 - planning/examples/scenario-login-correct-v3.svg
+- planning/examples/scenario-login-correct-v3.png
 - planning/examples/scenario-login-correct-v3.md
 
-Generate one proof-of-layout page only.
-Do not generate the full package until the proof page is reviewed and accepted.
+Use the approved dark visual theme for scenario/use-case diagrams.
+Do not use a light theme unless explicitly requested.
+
+Use planning/final-diagrams-example.drawio only as secondary / legacy visual-style reference.
+Do not treat it as semantic scenario truth or a required page package.
+
+Task:
+<state the requested generation mode explicitly: proof-only, single scenario, package, overview, docs/prompt-only>
+
+Do not add a proof step unless the user asked for proof or the task is explicitly a calibration/smoke-test task.
+
+Do not write generated files into the repository unless the user explicitly asks for repository modification.
 
 For use-case diagrams, create user-facing scenario/specification pages.
 Do not create command/domain/table maps as use-case diagrams.

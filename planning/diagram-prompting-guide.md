@@ -12,6 +12,7 @@ For scenario/use-case diagrams, require the diagram agent to read:
 planning/diagram-brief.md
 planning/diagram-scenario-spec.md
 planning/diagram-generation-rules-with-example.md
+planning/diagram-prompting-guide.md
 planning/diagram-common-mistakes.md
 planning/diagram-examples-index.md
 ```
@@ -21,6 +22,7 @@ Use approved examples when relevant:
 ```text
 planning/examples/scenario-login-correct-v3.drawio
 planning/examples/scenario-login-correct-v3.svg
+planning/examples/scenario-login-correct-v3.png
 planning/examples/scenario-login-correct-v3.md
 ```
 
@@ -28,6 +30,7 @@ Use the approved dark visual theme from:
 
 ```text
 planning/examples/scenario-login-correct-v3.svg
+planning/examples/scenario-login-correct-v3.png
 planning/examples/scenario-login-correct-v3.drawio
 ```
 
@@ -40,13 +43,48 @@ planning/diagram-domain-db-brief.md
 planning/domain-model.md
 ```
 
-## Mandatory Proof-Of-Layout First
+## Generation Mode Selection
 
-Do not ask for a full diagram package immediately.
+Do not force one generation mode for every task.
 
-Always ask for one proof-of-layout page first.
+The diagram prompt must follow the user's requested mode.
 
-The proof page should test:
+Common modes:
+
+```text
+1. Proof-of-layout only
+2. Single scenario page
+3. Scenario package
+4. Global scenario overview / navigation map
+5. Documentation-only or prompt-only task
+```
+
+If the user asks for a proof, smoke test or layout sample, generate one proof-of-layout page only.
+
+If the user asks for one scenario, generate that one scenario page only.
+
+If the user asks for a package, generate the requested package directly.
+
+If the user asks for a global overview, create an area/navigation overview, not a detailed scenario workflow.
+
+If the user asks only for a prompt or documentation update, do not generate diagrams.
+
+Proof-of-layout is useful, but it is not mandatory for every request.
+
+Do not automatically insert a proof step when the user did not ask for one and the task already has an approved style/baseline.
+
+A proof-of-layout is recommended when:
+
+```text
+- the user explicitly asks for proof / sample / one-page layout first;
+- the diagram type is new or not yet calibrated;
+- the visual style is new or disputed;
+- the diagram agent is uncalibrated and no approved example exists;
+- the scenario is complex, uncertain or likely to produce connector/layout problems;
+- a full package would be expensive to redo if the layout is wrong.
+```
+
+When a proof page is requested, it should test:
 
 ```text
 - scenario flow shape;
@@ -59,7 +97,7 @@ The proof page should test:
 - marker usage.
 ```
 
-Only after the proof page is reviewed and accepted should the full package be generated.
+After the proof page is reviewed and accepted, the user may ask for a full package using the same style and rules.
 
 ## Semantic Source Of Truth
 
@@ -108,7 +146,7 @@ Visual correctness includes:
 - no connectors through body text;
 - no long end-state connector webs;
 - spacious canvas over dense layout;
-- lane discipline without mandatory visible lane lines.
+- lane discipline without mandatory visible lane lines;
 - all text fits inside shapes.
 ```
 
@@ -132,7 +170,9 @@ Reject a diagram if it is mostly large disconnected text blocks.
 
 ## Reviewable Output
 
-Ask the diagram agent to return:
+Ask the diagram agent to return the artifacts appropriate to the requested mode.
+
+For proof-of-layout mode:
 
 ```text
 - one generated proof-of-layout page;
@@ -141,6 +181,28 @@ Ask the diagram agent to return:
 - list of markers used and why;
 - notes on any intentionally omitted connectors;
 - explicit statement that no full package was generated yet.
+```
+
+For single-scenario mode:
+
+```text
+- one generated scenario page;
+- preview if possible;
+- short Markdown explanation;
+- semantic self-check;
+- visual self-check.
+```
+
+For package mode:
+
+```text
+- generated package artifact;
+- preview if possible;
+- Markdown summary;
+- list of pages created;
+- cross-page links;
+- semantic self-check;
+- visual self-check.
 ```
 
 ## Repository Write Permission
@@ -225,29 +287,35 @@ Read:
 - planning/diagram-brief.md
 - planning/diagram-scenario-spec.md
 - planning/diagram-generation-rules-with-example.md
+- planning/diagram-prompting-guide.md
 - planning/diagram-common-mistakes.md
 - planning/diagram-examples-index.md
 
 Use approved example if relevant:
 - planning/examples/scenario-login-correct-v3.drawio
 - planning/examples/scenario-login-correct-v3.svg
+- planning/examples/scenario-login-correct-v3.png
 - planning/examples/scenario-login-correct-v3.md
 
 Use the approved dark visual theme from:
 - planning/examples/scenario-login-correct-v3.svg
+- planning/examples/scenario-login-correct-v3.png
 - planning/examples/scenario-login-correct-v3.drawio
 
 Do not use a light theme unless explicitly requested.
 
 Task:
-Generate one proof-of-layout page only.
+<state the requested generation mode explicitly: proof-only, single scenario, package, overview, docs/prompt-only>
 
-Do not generate the full package yet.
+Do not add a proof step unless the user asked for proof or the task is explicitly a calibration/smoke-test task.
 
 Do not write generated files into the repository unless the user explicitly asks for repository modification.
 
-Scenario:
-<scenario name and ref>
+Scenario / package:
+<scenario name/ref or package scope>
+
+Source scenario content:
+<paste exact scenario spec / package section when available>
 
 Quality requirements:
 - main flow is visual backbone;
@@ -292,5 +360,6 @@ When the user points out an error in a generated diagram:
 ```text
 Read planning/diagram-scenario-spec.md.
 Follow section 20A Lane-Based Layout And Anti-Overlap Rules.
-Before generating a full package, create one proof-of-layout page first.
+Use the generation mode requested by the user: proof-only, single scenario, package, overview or prompt/docs-only.
+Do not add a proof step unless the user asked for proof or the task is explicitly a calibration/smoke-test task.
 ```

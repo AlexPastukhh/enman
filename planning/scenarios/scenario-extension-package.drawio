@@ -1,0 +1,1050 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT" pages="5">
+  <diagram id="scenario-extension-sc-10" name="10 Extended Applicant Data Scenario — SC-10">
+    <mxGraphModel dx="3000" dy="1800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="1800" math="0" shadow="0" background="#0d1117">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#0d1117;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="3000" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_0" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_160" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="160" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_320" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="320" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_480" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="480" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_640" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="640" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_800" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="800" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_960" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="960" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1120" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1280" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1440" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1600" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1600" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1760" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1760" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1920" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1920" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2080" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2080" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2240" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2240" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2400" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2400" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2560" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2560" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2720" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2720" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2880" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2880" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_0" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_160" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="160" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_320" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="320" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_480" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="480" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_640" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="640" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_800" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="800" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_960" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="960" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1120" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1120" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1280" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1280" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1440" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1440" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1600" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1600" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1760" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1760" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="title" value="&lt;b&gt;Extended Applicant Data Scenario — SC-10&lt;/b&gt;&lt;br&gt;Provide or update richer applicant data · extension package page 10" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0d1117;strokeColor=#30363d;fontColor=#f0f6fc;fontSize=16;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="650" y="20" width="1700" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_actor" value="&lt;b&gt;Actor / Screen&lt;/b&gt;&lt;br&gt;Actor: Client&lt;br&gt;Screen: Applicant data / profile data screen&lt;br&gt;Goal: Provide extended applicant data&lt;br&gt;Level: L2&lt;br&gt;[EXT:L2]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#121820;strokeColor=#b7c0cc;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="70" y="130" width="410" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_pre" value="&lt;b&gt;Scenario Preconditions&lt;/b&gt;&lt;br&gt;Client is signed in.&lt;br&gt;Applicant data screen is reachable.&lt;br&gt;SC-10-PRE-01..02" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#22250a;strokeColor=#9ca330;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="70" y="405" width="450" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_legend" value="&lt;b&gt;Legend&lt;/b&gt;&lt;br&gt;Green = current in-page flow&lt;br&gt;Red = negative/error branch&lt;br&gt;Purple = off-page/subscenario link&lt;br&gt;Blue = decision / end-state summary&lt;br&gt;Cyan = include&lt;br&gt;Yellow = invariant / rule&lt;br&gt;Olive = precondition&lt;br&gt;Gray = actor/context/metadata" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#121820;strokeColor=#b7c0cc;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="70" y="1410" width="500" height="285" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_open" value="&lt;b&gt;Open applicant data page&lt;/b&gt;&lt;br&gt;SC-10-STEP-01&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="600" y="150" width="300" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_enter" value="&lt;b&gt;Enter or update applicant data&lt;/b&gt;&lt;br&gt;SC-10-STEP-02&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="990" y="150" width="340" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_inc" value="&lt;b&gt;&amp;lt;&amp;lt;include&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;Validate applicant data&lt;br&gt;SC-10-INC-01&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#10252c;strokeColor=#39b8d0;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="995" y="385" width="340" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_decision" value="&lt;b&gt;Applicant data valid?&lt;/b&gt;&lt;br&gt;SC-10-BR-01&lt;br&gt;[CORE]" style="rhombus;whiteSpace=wrap;html=1;fillColor=#102232;strokeColor=#2f81b7;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1445" y="105" width="320" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_inv" value="&lt;b&gt;Invariant&lt;/b&gt;&lt;br&gt;Invalid applicant data is not saved&lt;br&gt;SC-10-INV-01" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#242203;strokeColor=#8a7a00;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1885" y="120" width="430" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_saved" value="&lt;b&gt;Applicant data is saved&lt;/b&gt;&lt;br&gt;SC-10-SPOST-01&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1885" y="395" width="360" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_reusable" value="&lt;b&gt;Updated applicant data is visible/reusable&lt;/b&gt;&lt;br&gt;SC-10-OUT-01&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2350" y="395" width="400" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_errors" value="&lt;b&gt;Validation errors are visible&lt;/b&gt;&lt;br&gt;SC-10-SPOST-02&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#271010;strokeColor=#d04a4a;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1445" y="745" width="360" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_not_saved" value="&lt;b&gt;Applicant data is not saved&lt;/b&gt;&lt;br&gt;SC-10-POST-02&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#271010;strokeColor=#d04a4a;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1885" y="745" width="360" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_corelink" value="&lt;b&gt;Off-page link&lt;/b&gt;&lt;br&gt;Request Creation — SC-04&lt;br&gt;SC-10-EXTND-01" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1b122b;strokeColor=#8957e5;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1125" width="430" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_inline" value="&lt;b&gt;Alternative entry&lt;/b&gt;&lt;br&gt;Provide applicant data inline in SC-04&lt;br&gt;SC-10-EXTND-02&lt;br&gt;[ALT]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1b122b;strokeColor=#8957e5;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="1125" width="470" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_variant" value="&lt;b&gt;Planning marker&lt;/b&gt;&lt;br&gt;Applicant type may expand: individual → entrepreneur/legal entity&lt;br&gt;[VAR:EXPAND]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#121820;strokeColor=#b7c0cc;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1410" width="570" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_end" value="&lt;b&gt;End states / Postconditions&lt;/b&gt;&lt;br&gt;Valid data:&lt;br&gt;- applicant data is saved;&lt;br&gt;- updated data is visible/reusable.&lt;br&gt;&lt;br&gt;Invalid data:&lt;br&gt;- validation errors are visible;&lt;br&gt;- invalid data is not saved.&lt;br&gt;&lt;br&gt;Inline entry:&lt;br&gt;- Request Creation — SC-04 handles same goal." style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#102232;strokeColor=#2f81b7;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2210" y="1050" width="570" height="395" as="geometry" />
+        </mxCell>
+        <mxCell id="footer" value="Text-fit self-check applied: labels, refs, markers and body text stay inside shape boundaries with padding. Generated as review artifact only; not written to repository." style="text;html=1;strokeColor=none;fillColor=none;fontColor=#8b949e;fontSize=13;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="70" y="1740" width="2860" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_e1" value="starts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc10_actor" target="sc10_open">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_e2" value="condition for" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#a6a600;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc10_pre" target="sc10_open">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_e3" value="next" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc10_open" target="sc10_enter">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_e4" value="checks" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc10_enter" target="sc10_decision">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_e5" value="include" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#39b8d0;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc10_enter" target="sc10_inc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_e6" value="protected by" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#a6a600;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc10_decision" target="sc10_inv">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_e7" value="if valid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc10_decision" target="sc10_saved">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_e8" value="results in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc10_saved" target="sc10_reusable">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_e9" value="if invalid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d04a4a;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc10_decision" target="sc10_errors">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_e10" value="results in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d04a4a;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc10_errors" target="sc10_not_saved">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_e11" value="opened from" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#b388ff;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc10_open" target="sc10_corelink">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc10_e12" value="alternate route" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#b388ff;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc10_corelink" target="sc10_inline">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="scenario-extension-sc-11" name="11 Request Documents Scenario — SC-11">
+    <mxGraphModel dx="1052" dy="225" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="1800" background="#0d1117" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bg" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#0d1117;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="1800" width="3000" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_0" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_160" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="160" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_320" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="320" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_480" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="480" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_640" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="640" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_800" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_960" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="960" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1120" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="1120" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1280" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="1280" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1440" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="1440" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1600" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="1600" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1760" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="1760" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1920" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="1920" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2080" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="2080" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2240" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="2240" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2400" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="2400" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2560" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="2560" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2720" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="2720" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2880" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry height="1800" x="2880" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_0" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry width="3000" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_160" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry width="3000" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_320" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry width="3000" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_480" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry width="3000" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_640" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry width="3000" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_800" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry width="3000" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_960" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry width="3000" y="960" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1120" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry width="3000" y="1120" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1280" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry width="3000" y="1280" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1440" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry width="3000" y="1440" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1600" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry width="3000" y="1600" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1760" parent="1" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" value="" vertex="1">
+          <mxGeometry width="3000" y="1760" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0d1117;strokeColor=#30363d;fontColor=#f0f6fc;fontSize=16;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;Request Documents Scenario — SC-11&lt;/b&gt;&lt;br&gt;Attach/manage documents for a request · extension package page 11" vertex="1">
+          <mxGeometry height="75" width="1700" x="650" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_actor" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#121820;strokeColor=#b7c0cc;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;Actor / Screen&lt;/b&gt;&lt;br&gt;Actor: Client&lt;br&gt;Screen: Request documents section/page&lt;br&gt;Goal: Attach or manage request documents&lt;br&gt;Level: L2&lt;br&gt;[EXT:L2]" vertex="1">
+          <mxGeometry height="190" width="410" x="70" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_pre" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#22250a;strokeColor=#9ca330;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;Scenario Preconditions&lt;/b&gt;&lt;br&gt;Client is signed in.&lt;br&gt;Request creation/status context is available.&lt;br&gt;SC-11-PRE-01..02" vertex="1">
+          <mxGeometry height="190" width="450" x="70" y="395" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_legend" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#121820;strokeColor=#b7c0cc;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;Legend&lt;/b&gt;&lt;br&gt;Green = current in-page flow&lt;br&gt;Red = negative/error branch&lt;br&gt;Purple = off-page/subscenario link&lt;br&gt;Blue = decision / end-state summary&lt;br&gt;Cyan = include&lt;br&gt;Yellow = invariant / rule&lt;br&gt;Olive = precondition&lt;br&gt;Gray = actor/context/metadata" vertex="1">
+          <mxGeometry height="285" width="500" x="70" y="1410" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_open" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;Open request documents section&lt;/b&gt;&lt;br&gt;SC-11-STEP-01&lt;br&gt;[CORE]" vertex="1">
+          <mxGeometry height="115" width="330" x="600" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_select" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;Select document to upload&lt;/b&gt;&lt;br&gt;SC-11-STEP-02&lt;br&gt;[CORE]" vertex="1">
+          <mxGeometry height="115" width="330" x="1020" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_inc" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#10252c;strokeColor=#39b8d0;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;&amp;lt;&amp;lt;include&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;Validate document&lt;br&gt;SC-11-INC-01&lt;br&gt;[CORE]" vertex="1">
+          <mxGeometry height="125" width="330" x="1020" y="385" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_decision" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#102232;strokeColor=#2f81b7;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;Document accepted?&lt;/b&gt;&lt;br&gt;SC-11-BR-01&lt;br&gt;[CORE]" vertex="1">
+          <mxGeometry height="220" width="320" x="1455" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_inv" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#242203;strokeColor=#8a7a00;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;Invariant&lt;/b&gt;&lt;br&gt;Rejected/invalid document is not attached&lt;br&gt;SC-11-INV-01" vertex="1">
+          <mxGeometry height="135" width="450" x="1885" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_attached" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;Document is attached to request&lt;/b&gt;&lt;br&gt;SC-11-SPOST-01&lt;br&gt;[CORE]" vertex="1">
+          <mxGeometry height="125" width="380" x="1885" y="395" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_visible" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;Attached document is visible&lt;/b&gt;&lt;br&gt;SC-11-OUT-01&lt;br&gt;[CORE]" vertex="1">
+          <mxGeometry height="125" width="380" x="2350" y="395" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_error" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#271010;strokeColor=#d04a4a;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;Upload error is visible&lt;/b&gt;&lt;br&gt;SC-11-SPOST-02&lt;br&gt;[CORE]" vertex="1">
+          <mxGeometry height="125" width="350" x="1455" y="745" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_not_attached" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#271010;strokeColor=#d04a4a;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;Document is not attached&lt;/b&gt;&lt;br&gt;SC-11-POST-02&lt;br&gt;[CORE]" vertex="1">
+          <mxGeometry height="125" width="380" x="1885" y="745" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_sc04" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1b122b;strokeColor=#8957e5;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;Off-page link&lt;/b&gt;&lt;br&gt;Request Creation — SC-04&lt;br&gt;SC-11-EXTND-01" vertex="1">
+          <mxGeometry height="125" width="430" x="600" y="1125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_sc05" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1b122b;strokeColor=#8957e5;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;Off-page link&lt;/b&gt;&lt;br&gt;Client Request Status / Result — SC-05&lt;br&gt;SC-11-EXTND-02" vertex="1">
+          <mxGeometry height="125" width="470" x="1090" y="1125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_variant" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#121820;strokeColor=#b7c0cc;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;Planning marker&lt;/b&gt;&lt;br&gt;Document types / document rules may expand later&lt;br&gt;[VAR:EXPAND]" vertex="1">
+          <mxGeometry height="150" width="570" x="600" y="1410" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_end" parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#102232;strokeColor=#2f81b7;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" value="&lt;b&gt;End states / Postconditions&lt;/b&gt;&lt;br&gt;Accepted document:&lt;br&gt;- document is attached;&lt;br&gt;- attachment is visible on request.&lt;br&gt;&lt;br&gt;Rejected document:&lt;br&gt;- upload error is visible;&lt;br&gt;- document is not attached.&lt;br&gt;&lt;br&gt;Entry points:&lt;br&gt;- SC-04 during creation;&lt;br&gt;- SC-05 after submission." vertex="1">
+          <mxGeometry height="380" width="570" x="2210" y="1050" as="geometry" />
+        </mxCell>
+        <mxCell id="footer" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontColor=#8b949e;fontSize=13;whiteSpace=wrap;" value="Text-fit self-check applied: labels, refs, markers and body text stay inside shape boundaries with padding. Generated as review artifact only; not written to repository." vertex="1">
+          <mxGeometry height="30" width="2860" x="70" y="1740" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_e1" edge="1" parent="1" source="sc11_actor" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" target="sc11_open" value="starts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_e2" edge="1" parent="1" source="sc11_pre" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#a6a600;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" target="sc11_open" value="condition for">
+          <mxGeometry relative="1" x="-0.1489" y="-10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="700" y="490" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sc11_e3" edge="1" parent="1" source="sc11_open" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" target="sc11_select" value="next">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_e4" edge="1" parent="1" source="sc11_select" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" target="sc11_decision" value="checks">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_e5" edge="1" parent="1" source="sc11_select" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#39b8d0;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" target="sc11_inc" value="include">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_e6" edge="1" parent="1" source="sc11_decision" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#a6a600;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" target="sc11_inv" value="protected by">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_e7" edge="1" parent="1" source="sc11_decision" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="sc11_attached" value="if accepted">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1775" y="300" />
+              <mxPoint x="1960" y="300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sc11_e8" edge="1" parent="1" source="sc11_attached" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" target="sc11_visible" value="results in">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_e9" edge="1" parent="1" source="sc11_decision" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d04a4a;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" target="sc11_error" value="if rejected">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_e10" edge="1" parent="1" source="sc11_error" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d04a4a;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" target="sc11_not_attached" value="results in">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_e11" edge="1" parent="1" source="sc11_open" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#b388ff;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" target="sc11_sc04" value="reached from">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc11_e12" edge="1" parent="1" source="sc11_open" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#b388ff;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" target="sc11_sc05" value="managed from">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1000" y="236" />
+              <mxPoint x="1000" y="1188" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="scenario-extension-sc-12" name="12 Clarification Scenario — SC-12">
+    <mxGraphModel dx="3000" dy="1800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="1800" math="0" shadow="0" background="#0d1117">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#0d1117;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="3000" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_0" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_160" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="160" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_320" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="320" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_480" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="480" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_640" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="640" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_800" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="800" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_960" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="960" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1120" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1280" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1440" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1600" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1600" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1760" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1760" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1920" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1920" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2080" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2080" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2240" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2240" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2400" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2400" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2560" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2560" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2720" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2720" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2880" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2880" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_0" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_160" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="160" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_320" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="320" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_480" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="480" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_640" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="640" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_800" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="800" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_960" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="960" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1120" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1120" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1280" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1280" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1440" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1440" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1600" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1600" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1760" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1760" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="title" value="&lt;b&gt;Clarification Scenario — SC-12&lt;/b&gt;&lt;br&gt;Employee requests clarification; client answers · extension package page 12" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0d1117;strokeColor=#30363d;fontColor=#f0f6fc;fontSize=16;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="650" y="20" width="1700" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_employee_actor" value="&lt;b&gt;Actor / Screen&lt;/b&gt;&lt;br&gt;Actor: Employee&lt;br&gt;Screen: Request review screen&lt;br&gt;Goal: Request clarification&lt;br&gt;Level: L2&lt;br&gt;[EXT:L2]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#121820;strokeColor=#b7c0cc;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="70" y="130" width="430" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_client_actor" value="&lt;b&gt;Actor / Screen&lt;/b&gt;&lt;br&gt;Actor: Client&lt;br&gt;Screen: Request status/result page&lt;br&gt;Goal: Provide clarification response&lt;br&gt;Level: L2&lt;br&gt;[EXT:L2]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#121820;strokeColor=#b7c0cc;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="70" y="350" width="430" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_pre" value="&lt;b&gt;Scenario Preconditions&lt;/b&gt;&lt;br&gt;Employee can review submitted request.&lt;br&gt;Client can access request status/result page.&lt;br&gt;Request is not final.&lt;br&gt;SC-12-PRE-01..03" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#22250a;strokeColor=#9ca330;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="70" y="590" width="470" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_review" value="&lt;b&gt;Employee reviews request&lt;/b&gt;&lt;br&gt;SC-12-STEP-01&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="600" y="150" width="310" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_select" value="&lt;b&gt;Select request clarification&lt;/b&gt;&lt;br&gt;SC-12-STEP-02&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="980" y="150" width="330" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_write" value="&lt;b&gt;Write clarification question&lt;/b&gt;&lt;br&gt;SC-12-STEP-03&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="150" width="350" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_submit_req" value="&lt;b&gt;Clarification request is submitted&lt;/b&gt;&lt;br&gt;SC-12-SPOST-01&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="150" width="370" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_status" value="&lt;b&gt;Request status becomes Needs clarification&lt;/b&gt;&lt;br&gt;SC-12-SPOST-02&lt;br&gt;[CORE][VAR:MODIFY]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2240" y="150" width="410" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_blocked" value="&lt;b&gt;Final review decision is blocked while unresolved&lt;/b&gt;&lt;br&gt;SC-12-OUT-01&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#271010;strokeColor=#d04a4a;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2240" y="365" width="410" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_inv1" value="&lt;b&gt;Invariant&lt;/b&gt;&lt;br&gt;Request cannot be approved/rejected while required clarification is unresolved&lt;br&gt;SC-12-INV-01" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#242203;strokeColor=#8a7a00;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2560" y="565" width="390" height="145" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_client_open" value="&lt;b&gt;Client opens request status/result page&lt;/b&gt;&lt;br&gt;SC-12-STEP-04&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="600" y="705" width="350" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_visible" value="&lt;b&gt;Clarification request is visible&lt;/b&gt;&lt;br&gt;SC-12-OUT-02&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="705" width="350" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_response" value="&lt;b&gt;Client provides clarification response&lt;/b&gt;&lt;br&gt;SC-12-STEP-05&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="705" width="350" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_inc" value="&lt;b&gt;&amp;lt;&amp;lt;include&amp;gt;&amp;gt;&lt;/b&gt;&lt;br&gt;Validate clarification response&lt;br&gt;SC-12-INC-01&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#10252c;strokeColor=#39b8d0;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="945" width="360" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_decision" value="&lt;b&gt;Clarification response valid?&lt;/b&gt;&lt;br&gt;SC-12-BR-01&lt;br&gt;[CORE]" style="rhombus;whiteSpace=wrap;html=1;fillColor=#102232;strokeColor=#2f81b7;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1840" y="660" width="340" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_resp_submitted" value="&lt;b&gt;Clarification response is submitted&lt;/b&gt;&lt;br&gt;SC-12-SPOST-03&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2240" y="705" width="390" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_employee_sees" value="&lt;b&gt;Employee can see clarification&lt;/b&gt;&lt;br&gt;SC-12-OUT-03&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2240" y="900" width="390" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_continue" value="&lt;b&gt;Review can continue&lt;/b&gt;&lt;br&gt;SC-12-POST-01&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2240" y="1095" width="390" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_errors" value="&lt;b&gt;Validation errors are visible&lt;/b&gt;&lt;br&gt;SC-12-SPOST-04&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#271010;strokeColor=#d04a4a;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1840" y="1220" width="340" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_not_submitted" value="&lt;b&gt;Clarification response is not submitted&lt;/b&gt;&lt;br&gt;SC-12-POST-02&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#271010;strokeColor=#d04a4a;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2240" y="1220" width="390" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_inv2" value="&lt;b&gt;Invariant&lt;/b&gt;&lt;br&gt;Invalid clarification response is not submitted&lt;br&gt;SC-12-INV-02" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#242203;strokeColor=#8a7a00;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1840" y="1435" width="450" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_sc07" value="&lt;b&gt;Off-page link&lt;/b&gt;&lt;br&gt;Employee Request Review — SC-07&lt;br&gt;SC-12-EXTND-01" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1b122b;strokeColor=#8957e5;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="600" y="390" width="430" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_sc05" value="&lt;b&gt;Off-page link&lt;/b&gt;&lt;br&gt;Client Request Status / Result — SC-05&lt;br&gt;SC-12-EXTND-02" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1b122b;strokeColor=#8957e5;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1045" width="470" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_marker" value="&lt;b&gt;Planning markers&lt;/b&gt;&lt;br&gt;Clarification modifies workflow/status rules.&lt;br&gt;[VAR:MODIFY][ADR?]&lt;br&gt;ADR likely for state model and final-decision gating." style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#121820;strokeColor=#b7c0cc;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1410" width="620" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_end" value="&lt;b&gt;End states / Postconditions&lt;/b&gt;&lt;br&gt;Clarification requested:&lt;br&gt;- status is Needs clarification;&lt;br&gt;- final decision is blocked.&lt;br&gt;&lt;br&gt;Valid response:&lt;br&gt;- response is submitted;&lt;br&gt;- employee can continue review.&lt;br&gt;&lt;br&gt;Invalid response:&lt;br&gt;- errors are visible;&lt;br&gt;- response is not submitted." style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#102232;strokeColor=#2f81b7;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2440" y="1410" width="510" height="285" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_legend" value="&lt;b&gt;Legend&lt;/b&gt;&lt;br&gt;Green = current in-page flow&lt;br&gt;Red = negative/error branch&lt;br&gt;Purple = off-page/subscenario link&lt;br&gt;Blue = decision / summary&lt;br&gt;Cyan = include&lt;br&gt;Yellow = invariant&lt;br&gt;Olive = precondition&lt;br&gt;Gray = actor/context/metadata" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#121820;strokeColor=#b7c0cc;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="70" y="1410" width="500" height="285" as="geometry" />
+        </mxCell>
+        <mxCell id="footer" value="Text-fit self-check applied: labels, refs, markers and body text stay inside shape boundaries with padding. Generated as review artifact only; not written to repository." style="text;html=1;strokeColor=none;fillColor=none;fontColor=#8b949e;fontSize=13;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="70" y="1740" width="2860" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e1" value="starts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc12_employee_actor" target="sc12_review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e2" value="condition for" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#a6a600;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc12_pre" target="sc12_review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e3" value="next" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc12_review" target="sc12_select">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e4" value="next" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc12_select" target="sc12_write">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e5" value="next" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc12_write" target="sc12_submit_req">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e6" value="results in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc12_submit_req" target="sc12_status">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e7" value="results in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d04a4a;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc12_status" target="sc12_blocked">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e8" value="protected by" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#a6a600;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc12_blocked" target="sc12_inv1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e10" value="starts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc12_client_actor" target="sc12_client_open">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e11" value="next" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc12_client_open" target="sc12_visible">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e12" value="next" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc12_visible" target="sc12_response">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e13" value="checks" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc12_response" target="sc12_decision">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e14" value="include" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#39b8d0;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc12_response" target="sc12_inc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e15" value="if valid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc12_decision" target="sc12_resp_submitted">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e16" value="results in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc12_resp_submitted" target="sc12_employee_sees">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e17" value="results in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc12_employee_sees" target="sc12_continue">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e18" value="if invalid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d04a4a;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc12_decision" target="sc12_errors">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e19" value="results in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d04a4a;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc12_errors" target="sc12_not_submitted">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e20" value="protected by" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#a6a600;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc12_decision" target="sc12_inv2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e21" value="opened from" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#b388ff;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc12_review" target="sc12_sc07">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc12_e22" value="opened from" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#b388ff;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc12_client_open" target="sc12_sc05">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="scenario-extension-sc-13" name="13 Contract Acknowledgement Scenario — SC-13">
+    <mxGraphModel dx="3000" dy="1800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="1800" math="0" shadow="0" background="#0d1117">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#0d1117;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="3000" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_0" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_160" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="160" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_320" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="320" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_480" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="480" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_640" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="640" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_800" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="800" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_960" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="960" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1120" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1280" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1440" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1600" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1600" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1760" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1760" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1920" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1920" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2080" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2080" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2240" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2240" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2400" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2400" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2560" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2560" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2720" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2720" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2880" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2880" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_0" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_160" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="160" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_320" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="320" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_480" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="480" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_640" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="640" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_800" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="800" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_960" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="960" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1120" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1120" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1280" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1280" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1440" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1440" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1600" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1600" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1760" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1760" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="title" value="&lt;b&gt;Contract Acknowledgement Scenario — SC-13&lt;/b&gt;&lt;br&gt;Client reviews approved contract draft and acknowledges if required · extension package page 13" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0d1117;strokeColor=#30363d;fontColor=#f0f6fc;fontSize=16;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="650" y="20" width="1700" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_actor" value="&lt;b&gt;Actor / Screen&lt;/b&gt;&lt;br&gt;Actor: Client&lt;br&gt;Screen: Approved request / contract draft page&lt;br&gt;Goal: Review and acknowledge contract draft&lt;br&gt;Level: L2&lt;br&gt;[EXT:L2]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#121820;strokeColor=#b7c0cc;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="70" y="130" width="410" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_pre" value="&lt;b&gt;Scenario Preconditions&lt;/b&gt;&lt;br&gt;Client is signed in.&lt;br&gt;Approval result is visible to client.&lt;br&gt;SC-13-PRE-01..02" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#22250a;strokeColor=#9ca330;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="70" y="405" width="450" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_legend" value="&lt;b&gt;Legend&lt;/b&gt;&lt;br&gt;Green = current in-page flow&lt;br&gt;Red = negative/error branch&lt;br&gt;Purple = off-page/subscenario link&lt;br&gt;Blue = decision / end-state summary&lt;br&gt;Cyan = include&lt;br&gt;Yellow = invariant / rule&lt;br&gt;Olive = precondition&lt;br&gt;Gray = actor/context/metadata" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#121820;strokeColor=#b7c0cc;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="70" y="1410" width="500" height="285" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_result" value="&lt;b&gt;Approved result is visible&lt;/b&gt;&lt;br&gt;SC-13-STEP-01&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="600" y="150" width="330" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_draft" value="&lt;b&gt;Contract draft is available&lt;/b&gt;&lt;br&gt;SC-13-SPOST-01&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="150" width="340" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_open" value="&lt;b&gt;Client opens contract draft&lt;/b&gt;&lt;br&gt;SC-13-STEP-02&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1430" y="150" width="330" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_decision" value="&lt;b&gt;Contract draft readable/available?&lt;/b&gt;&lt;br&gt;SC-13-BR-01&lt;br&gt;[CORE]" style="rhombus;whiteSpace=wrap;html=1;fillColor=#102232;strokeColor=#2f81b7;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1840" y="105" width="330" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_inv" value="&lt;b&gt;Invariant&lt;/b&gt;&lt;br&gt;Client cannot acknowledge unavailable contract draft&lt;br&gt;SC-13-INV-01" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#242203;strokeColor=#8a7a00;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2250" y="120" width="450" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_review" value="&lt;b&gt;Client reviews contract draft&lt;/b&gt;&lt;br&gt;SC-13-STEP-03&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2250" y="395" width="350" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_ack" value="&lt;b&gt;Client acknowledges contract draft&lt;/b&gt;&lt;br&gt;SC-13-STEP-04&lt;br&gt;[CORE][VAR:MODIFY]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2250" y="590" width="350" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_recorded" value="&lt;b&gt;Acknowledgement is recorded/visible&lt;/b&gt;&lt;br&gt;SC-13-SPOST-02&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2250" y="790" width="400" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_unavailable" value="&lt;b&gt;Contract draft unavailable message is visible&lt;/b&gt;&lt;br&gt;SC-13-SPOST-03&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#271010;strokeColor=#d04a4a;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1840" y="745" width="350" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_not_recorded" value="&lt;b&gt;Acknowledgement is not recorded&lt;/b&gt;&lt;br&gt;SC-13-POST-02&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#271010;strokeColor=#d04a4a;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2250" y="1000" width="390" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_sc08" value="&lt;b&gt;Off-page link&lt;/b&gt;&lt;br&gt;Approval Result — SC-08&lt;br&gt;SC-13-EXTND-01" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1b122b;strokeColor=#8957e5;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1125" width="440" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_marker" value="&lt;b&gt;Planning marker&lt;/b&gt;&lt;br&gt;Acknowledgement requirement may change by contract workflow.&lt;br&gt;[VAR:MODIFY]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#121820;strokeColor=#b7c0cc;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1410" width="580" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_end" value="&lt;b&gt;End states / Postconditions&lt;/b&gt;&lt;br&gt;Draft available:&lt;br&gt;- contract draft is visible/readable;&lt;br&gt;- acknowledgement can be recorded.&lt;br&gt;&lt;br&gt;Draft unavailable:&lt;br&gt;- unavailable message is visible;&lt;br&gt;- acknowledgement is not recorded.&lt;br&gt;&lt;br&gt;Approval link:&lt;br&gt;- entered from Approval Result — SC-08." style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#102232;strokeColor=#2f81b7;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2130" y="1260" width="610" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="footer" value="Text-fit self-check applied: labels, refs, markers and body text stay inside shape boundaries with padding. Generated as review artifact only; not written to repository." style="text;html=1;strokeColor=none;fillColor=none;fontColor=#8b949e;fontSize=13;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="70" y="1740" width="2860" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_e1" value="starts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc13_actor" target="sc13_result">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_e2" value="condition for" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#a6a600;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc13_pre" target="sc13_result">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_e3" value="next" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc13_result" target="sc13_draft">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_e4" value="next" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc13_draft" target="sc13_open">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_e5" value="checks" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc13_open" target="sc13_decision">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_e6" value="protected by" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#a6a600;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc13_decision" target="sc13_inv">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_e7" value="if available" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc13_decision" target="sc13_review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_e8" value="next" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc13_review" target="sc13_ack">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_e9" value="results in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc13_ack" target="sc13_recorded">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_e10" value="if unavailable" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d04a4a;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc13_decision" target="sc13_unavailable">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_e11" value="results in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d04a4a;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc13_unavailable" target="sc13_not_recorded">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc13_e12" value="entered from" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#b388ff;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc13_result" target="sc13_sc08">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="scenario-extension-sc-14" name="14 Mock Verification Scenario — SC-14">
+    <mxGraphModel dx="3000" dy="1800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="1800" math="0" shadow="0" background="#0d1117">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#0d1117;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="3000" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_0" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_160" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="160" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_320" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="320" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_480" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="480" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_640" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="640" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_800" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="800" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_960" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="960" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1120" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1280" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1440" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1600" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1600" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1760" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1760" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_1920" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="1920" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2080" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2080" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2240" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2240" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2400" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2400" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2560" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2560" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2720" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2720" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_v_2880" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="2880" y="0" width="0" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_0" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_160" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="160" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_320" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="320" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_480" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="480" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_640" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="640" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_800" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="800" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_960" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="960" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1120" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1120" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1280" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1280" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1440" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1440" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1600" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1600" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_h_1760" value="" style="shape=line;html=1;strokeColor=#202831;strokeWidth=1;opacity=45;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1760" width="3000" height="0" as="geometry" />
+        </mxCell>
+        <mxCell id="title" value="&lt;b&gt;Mock Verification Scenario — SC-14&lt;/b&gt;&lt;br&gt;System performs mock/external verification · extension package page 14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0d1117;strokeColor=#30363d;fontColor=#f0f6fc;fontSize=16;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="650" y="20" width="1700" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_actor" value="&lt;b&gt;Actor / Context&lt;/b&gt;&lt;br&gt;Actor: System&lt;br&gt;Context: Verification processing&lt;br&gt;Goal: Verify applicant/request data&lt;br&gt;Level: L2/L3&lt;br&gt;[EXT:L2]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#121820;strokeColor=#b7c0cc;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="70" y="130" width="410" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_pre" value="&lt;b&gt;Scenario Preconditions&lt;/b&gt;&lt;br&gt;Request exists.&lt;br&gt;Verification is required/requested.&lt;br&gt;SC-14-PRE-01..02" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#22250a;strokeColor=#9ca330;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="70" y="405" width="450" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_legend" value="&lt;b&gt;Legend&lt;/b&gt;&lt;br&gt;Green = current in-page flow&lt;br&gt;Red = negative/error branch&lt;br&gt;Purple = off-page/subscenario link&lt;br&gt;Blue = decision / end-state summary&lt;br&gt;Cyan = include&lt;br&gt;Yellow = invariant / rule&lt;br&gt;Olive = precondition&lt;br&gt;Gray = actor/context/metadata" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#121820;strokeColor=#b7c0cc;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="70" y="1410" width="500" height="285" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_requested" value="&lt;b&gt;Verification is requested&lt;/b&gt;&lt;br&gt;SC-14-STEP-01&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="600" y="150" width="340" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_run" value="&lt;b&gt;Mock/external verification runs&lt;/b&gt;&lt;br&gt;SC-14-STEP-02&lt;br&gt;[CORE][VAR:REPLACE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="150" width="380" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_decision" value="&lt;b&gt;Verification result available?&lt;/b&gt;&lt;br&gt;SC-14-BR-01&lt;br&gt;[CORE]" style="rhombus;whiteSpace=wrap;html=1;fillColor=#102232;strokeColor=#2f81b7;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1480" y="105" width="340" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_inv" value="&lt;b&gt;Invariant&lt;/b&gt;&lt;br&gt;Request must not proceed as verified without successful verification result&lt;br&gt;SC-14-INV-01" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#242203;strokeColor=#8a7a00;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1900" y="120" width="520" height="145" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_passed" value="&lt;b&gt;Verification result is accepted&lt;/b&gt;&lt;br&gt;SC-14-SPOST-01&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1900" y="395" width="380" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_continue" value="&lt;b&gt;Request can continue&lt;/b&gt;&lt;br&gt;SC-14-POST-01&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#0f2019;strokeColor=#1f9d72;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2360" y="395" width="380" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_failed" value="&lt;b&gt;Verification issue is visible/recorded&lt;/b&gt;&lt;br&gt;SC-14-SPOST-02&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#271010;strokeColor=#d04a4a;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1480" y="745" width="380" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_cannot" value="&lt;b&gt;Request cannot proceed as verified&lt;/b&gt;&lt;br&gt;SC-14-POST-02&lt;br&gt;[CORE]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#271010;strokeColor=#d04a4a;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1900" y="745" width="410" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_unavailable" value="&lt;b&gt;Verification unavailable&lt;/b&gt;&lt;br&gt;SC-14-BR-02&lt;br&gt;[RISK][ADR?]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#271010;strokeColor=#d04a4a;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1480" y="1095" width="380" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_manual" value="&lt;b&gt;Retry/manual handling path is visible or deferred&lt;/b&gt;&lt;br&gt;SC-14-POST-03&lt;br&gt;[RISK][ADR?]" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#271010;strokeColor=#d04a4a;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1900" y="1095" width="440" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_sc04" value="&lt;b&gt;Off-page link&lt;/b&gt;&lt;br&gt;Request Creation — SC-04&lt;br&gt;SC-14-EXTND-01" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1b122b;strokeColor=#8957e5;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1125" width="430" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_sc07" value="&lt;b&gt;Off-page link&lt;/b&gt;&lt;br&gt;Employee Request Review — SC-07&lt;br&gt;SC-14-EXTND-02" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#1b122b;strokeColor=#8957e5;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="1285" width="420" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_marker" value="&lt;b&gt;Planning markers&lt;/b&gt;&lt;br&gt;Mock verification can be replaced by a real provider.&lt;br&gt;[VAR:REPLACE]&lt;br&gt;Unavailable handling is intentionally marked for decision/risk review." style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#121820;strokeColor=#b7c0cc;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1450" width="650" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_end" value="&lt;b&gt;End states / Postconditions&lt;/b&gt;&lt;br&gt;Passed:&lt;br&gt;- verification result is accepted;&lt;br&gt;- request can continue.&lt;br&gt;&lt;br&gt;Failed:&lt;br&gt;- issue is visible/recorded;&lt;br&gt;- request cannot proceed as verified.&lt;br&gt;&lt;br&gt;Unavailable:&lt;br&gt;- retry/manual handling is visible or deferred;&lt;br&gt;- no verified continuation occurs." style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#102232;strokeColor=#2f81b7;fontColor=#f0f6fc;fontSize=14;spacing=12;spacingTop=8;spacingBottom=8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="2380" y="960" width="560" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="footer" value="Text-fit self-check applied: labels, refs, markers and body text stay inside shape boundaries with padding. Generated as review artifact only; not written to repository." style="text;html=1;strokeColor=none;fillColor=none;fontColor=#8b949e;fontSize=13;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="70" y="1740" width="2860" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_e1" value="starts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc14_actor" target="sc14_requested">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_e2" value="condition for" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#a6a600;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc14_pre" target="sc14_requested">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_e3" value="next" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc14_requested" target="sc14_run">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_e4" value="checks" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc14_run" target="sc14_decision">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_e5" value="protected by" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#a6a600;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc14_decision" target="sc14_inv">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_e6" value="if passed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc14_decision" target="sc14_passed">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_e7" value="results in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#9aa4b2;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc14_passed" target="sc14_continue">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_e8" value="if failed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d04a4a;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc14_decision" target="sc14_failed">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_e9" value="results in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d04a4a;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc14_failed" target="sc14_cannot">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_e10" value="if unavailable" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d04a4a;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc14_decision" target="sc14_unavailable">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_e11" value="results in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#d04a4a;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;" edge="1" parent="1" source="sc14_unavailable" target="sc14_manual">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_e12" value="triggered by" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#b388ff;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc14_sc04" target="sc14_requested">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sc14_e13" value="used by" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#b388ff;fontColor=#dbeafe;labelBackgroundColor=#0f1419;labelBorderColor=#30363d;fontSize=13;fontStyle=1;dashed=1;" edge="1" parent="1" source="sc14_sc07" target="sc14_requested">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
