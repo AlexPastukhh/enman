@@ -1,40 +1,56 @@
 # Scenario Folder Replacement Notes
 
-Apply this archive as merge/overwrite, not destructive delete, unless you intentionally want to remove existing visual artifacts.
+This update finalizes applicant DATA and agreement proposal DATA after discussion.
 
-Keep existing `.drawio`, `.png`, `.svg` files if they are not included here.
+## Replace / add
 
-New root file:
+Replace:
 
 ```text
-planning/scenario-specification-principles.md
+planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
+planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
+planning/diagrams/scenario-data/00-scenario-data-index.md
+planning/diagrams/scenario-data/SC-04-request-creation-data.md
 ```
 
-Root docs replaced:
+Add:
 
 ```text
-planning/diagram-brief.md
-planning/diagram-scenario-spec.md
-planning/diagram-prompting-guide.md
-planning/diagram-common-mistakes.md
+planning/diagrams/scenario-text-specs/SC-13A-my-agreements.md
+planning/diagrams/scenario-text-specs/SC-13B-agreement-proposal-details-response.md
+planning/diagrams/scenario-data/SC-10-applicant-data.md
+planning/diagrams/scenario-data/SC-13A-my-agreements-data.md
+planning/diagrams/scenario-data/SC-13B-agreement-proposal-details-response-data.md
 ```
 
-New/updated folders:
+Remove old pending files if they exist:
 
 ```text
-planning/diagrams/scenario-text-specs/
-planning/diagrams/scenario-data/
+planning/diagrams/scenario-text-specs/SC-13-pending-agreement-proposal-model.md
+planning/diagrams/scenario-data/SC-10-applicant-data-pending.md
+planning/diagrams/scenario-data/SC-13-agreement-proposal-data-pending.md
 ```
 
-Manual cleanup if old files exist:
+## Decisions
+
+Applicant types:
 
 ```text
-remove: planning/diagrams/scenario-text-specs/SC-03B-set-new-password.md
-use:    planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md
+physical person
+individual entrepreneur
+legal entity
+```
 
-remove: planning/diagrams/scenario-text-specs/SC-12-review-feedback-correction-navigation.md
-use:    planning/diagrams/scenario-text-specs/SC-12-merged-review-feedback-correction-navigation.md
+Agreement Proposal:
 
-remove: planning/diagrams/scenario-text-specs/SC-13-my-agreements-agreement-response.md
-use:    planning/diagrams/scenario-text-specs/SC-13-pending-agreement-proposal-model.md
+```text
+Agreement Proposal = concrete agreement document/version sent by one side to another side.
+```
+
+Core statuses:
+
+```text
+AwaitingClientConfirmation
+SentByClient
+Accepted
 ```
