@@ -14,6 +14,7 @@ Currently approved canonical example:
 ```text
 scenario-login-correct-v3.drawio
 scenario-login-correct-v3.svg
+scenario-login-correct-v3.png
 scenario-login-correct-v3.md
 ```
 
@@ -30,9 +31,10 @@ Every approved example should include:
 ```text
 .drawio
 .svg
+.png
 .md
 ```
 
-For future approved examples, a PNG preview may be added as a quick visual reference.
+For future approved examples, a PNG preview may be added as a quick visual reference. The canonical Login example already includes one.
 
 The `.md` file must explain scenario logic and why the example is correct, not just a changelog.

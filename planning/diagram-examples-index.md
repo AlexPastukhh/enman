@@ -26,11 +26,11 @@ Approved examples may include:
 .md = semantic explanation of why the example is correct
 ```
 
-For Login Correct V3, the approved files are `.drawio`, `.svg`, and `.md`.
+For Login Correct V3, the approved files are `.drawio`, `.svg`, `.png`, and `.md`.
 
-`planning/examples/scenario-login-correct-v3.png` is the intended optional quick visual reference name if a PNG preview is added later.
+`planning/examples/scenario-login-correct-v3.png` is the approved quick visual reference for the canonical Login example.
 
-Do not create a PNG preview unless a task explicitly asks for it.
+For future examples, do not create PNG previews unless a task explicitly asks for them.
 
 ## Example Rules
 
