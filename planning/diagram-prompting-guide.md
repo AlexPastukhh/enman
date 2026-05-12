@@ -143,6 +143,68 @@ Ask the diagram agent to return:
 - explicit statement that no full package was generated yet.
 ```
 
+## Repository Write Permission
+
+Tell the diagram agent:
+
+```text
+Diagram generation and repository modification are separate actions.
+
+Do not create, update, delete, move, rename or commit files in the repository unless the user explicitly asks you to modify the repository.
+
+By default, generate reviewable artifacts only:
+- draw.io file output;
+- SVG/PNG preview output;
+- Markdown summary output;
+- suggested target paths.
+
+You may suggest repository paths, but must not write to those paths without explicit instruction.
+```
+
+Allowed without an explicit repo-write request:
+
+```text
+- generate downloadable files;
+- provide a patch proposal;
+- list intended repository paths;
+- explain where the user should place files;
+- create a prompt for another agent.
+```
+
+Not allowed without an explicit repo-write request:
+
+```text
+- create files in repository;
+- update existing repository files;
+- delete files;
+- rename files;
+- move files;
+- commit changes;
+- open PR;
+- modify planning docs.
+```
+
+Interpret these requests as artifact generation only:
+
+```text
+generate diagrams
+create a draw.io file
+make a preview
+give me the package
+```
+
+Interpret these as explicit repo-write requests:
+
+```text
+add these files to the repository
+commit this to the repo
+update planning/...
+create the file in GitHub
+modify the repository
+```
+
+If unclear, do not write. Return generated artifacts and ask for explicit repo-write instruction.
+
 ## Placeholder Examples
 
 The examples index lists approved and planned examples.
@@ -181,6 +243,8 @@ Task:
 Generate one proof-of-layout page only.
 
 Do not generate the full package yet.
+
+Do not write generated files into the repository unless the user explicitly asks for repository modification.
 
 Scenario:
 <scenario name and ref>

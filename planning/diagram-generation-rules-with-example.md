@@ -4,6 +4,52 @@ This file captures the current agreed rules for generating project diagrams so t
 
 This file focuses on draw.io visual construction rules.
 
+## Repository Write Permission
+
+Diagram generation and repository modification are separate actions.
+
+Diagram-generation agents must not create, update, delete, move, rename or commit files in the repository unless the user explicitly asks them to modify the repository.
+
+Default output should be reviewable artifacts only:
+
+```text
+- draw.io file output;
+- SVG/PNG preview output;
+- Markdown summary output;
+- suggested target paths.
+```
+
+Agents may suggest repository paths, but must not write to those paths without explicit instruction.
+
+Allowed without an explicit repo-write request:
+
+```text
+- generate downloadable files;
+- provide a patch proposal;
+- list intended repository paths;
+- explain where the user should place files;
+- create a prompt for another agent.
+```
+
+Not allowed without an explicit repo-write request:
+
+```text
+- create files in repository;
+- update existing repository files;
+- delete files;
+- rename files;
+- move files;
+- commit changes;
+- open PR;
+- modify planning docs.
+```
+
+Requests such as "generate diagrams", "create a draw.io file", "make a preview" and "give me the package" mean generate reviewable artifacts, not write to the repository.
+
+Only write to the repository when the user explicitly says "add these files to the repository", "commit this to the repo", "update planning/...", "create the file in GitHub" or "modify the repository".
+
+If unclear, do not write. Return generated artifacts and ask for explicit repo-write instruction.
+
 For scenario/use-case semantic rules, read:
 
 ```text

@@ -81,6 +81,84 @@ Database convenience
 -> polluted user scenario
 ```
 
+### 1.1 Workflow Guardrails For Planning Agents
+
+Scenario responsibility decomposition must start from the canonical scenario package.
+
+For core decomposition, required files are:
+
+```text
+planning/diagrams/scenario-core-package.md
+planning/diagrams/scenario-core-package.drawio
+```
+
+The canonical scenario package is the only source of truth for scenario responsibility decomposition.
+
+Repository write rule:
+
+```text
+- only modify planning files explicitly requested by the task;
+- do not create or update diagram files unless the task explicitly grants that write scope;
+- missing canonical scenario package files are blockers, not permission to invent replacement artifacts.
+```
+
+`current-state.md` is background context only. It may explain what is currently implemented or what is next, but it must not be used as the source of rows for scenario responsibility decomposition.
+
+If the canonical scenario package is missing, `scenario-responsibility-core.md` is blocked.
+
+In the blocked state:
+
+```text
+- report the missing canonical files;
+- report the next expected artifact;
+- do not invent scenario rows from current-state.md;
+- do not create scenario-responsibility-template.md by default.
+```
+
+Avoid speculative/intermediate planning files.
+
+Create new planning files only when they represent a real workflow stage.
+
+For example, `Domain Model Draft` may start as a section inside `domain-discovery-core.md` and only become a separate file if it is large or stable enough to need independent ownership.
+
+Avoid premature implementation terms before scenario-to-slice planning.
+
+Before scenario-to-slice planning, prefer:
+
+```text
+observable read / visibility responsibility
+```
+
+over:
+
+```text
+read model
+projection
+DTO
+query handler
+controller
+endpoint
+repository
+DbContext
+table
+handler
+React hook
+```
+
+Ports/adapters are planned only after scenario-to-slice maps.
+
+Do not create ports just because a dependency exists.
+
+A port needs a reason:
+
+```text
+external dependency
+replaceability
+testing boundary
+failure behavior
+ADR-worthy decision
+```
+
 ---
 
 ## 2. Global Reference Rule
@@ -333,6 +411,22 @@ scenario marker
 -> ADR decision
 ```
 
+Changeability/extensibility markers must be carried from the first responsibility tables through all later artifacts.
+
+The final `changeability-extensibility-map.md` is consolidation, not the first place to track `[EXT]`, `[VAR:*]`, `[RISK]` or `[ADR?]`.
+
+Every later artifact should preserve or intentionally resolve the marker meaning:
+
+```text
+scenario responsibility table
+-> consolidated layer maps
+-> domain discovery / aggregate design
+-> scenario-to-slice map
+-> slice cards
+-> changeability-extensibility-map
+-> ADRs when needed
+```
+
 ---
 
 ## 4. Scenario Catalog
@@ -370,7 +464,7 @@ Column purpose:
 | Login | SC-02 | Guest — Login screen | Sign in | High | L1 | Draft | session issued |
 | Password Recovery | SC-03 | Guest — Password recovery screen | Restore access | Medium | L1/L2 | Idea | subscenario of login |
 | Client Request Creation | SC-04 | Client — Request creation screen | Submit connection request | High | L1 | Draft | applicant data may be inline |
-| Client Request Status / Result | SC-05 | Client — Status page | View request status/result | High | L1 | Draft | read model |
+| Client Request Status / Result | SC-05 | Client — Status page | View request status/result | High | L1 | Draft | observable visibility |
 | Employee Request Dashboard | SC-06 | Employee — Dashboard | Find submitted requests | High | L1 | Draft | queue/list |
 | Employee Request Review | SC-07 | Employee — Review screen | Approve or reject request | High | L1 | Draft | review workflow |
 | Approval Result: Contract Draft + Email Notification | SC-08 | System / Employee result context | Prepare approval result | High | L1/L2 | Draft | contract + notification |
@@ -824,6 +918,19 @@ test suite
 
 ### 7.2 Input
 
+The canonical scenario package is the required source of rows for this stage.
+
+For core decomposition, read:
+
+```text
+planning/diagrams/scenario-core-package.md
+planning/diagrams/scenario-core-package.drawio
+```
+
+Do not use `current-state.md` as the source of decomposition rows. It is background context only.
+
+If the canonical package is missing, block `scenario-responsibility-core.md`, report the missing files and wait for the scenario package. Do not create `scenario-responsibility-template.md` by default.
+
 Use all meaningful scenario elements:
 
 ```text
@@ -848,7 +955,7 @@ UI / Screen behavior
 Application boundary / orchestration
 Auth / Security / Framework
 Domain
-Read model / Query
+Observable read / visibility responsibility
 Persistence
 Infrastructure / External integration
 Cross-cutting / Observability
@@ -862,7 +969,7 @@ Domain
 Application
 Auth/Security/Framework
 UI
-Read model
+Observable read / visibility
 Infrastructure
 Open question
 ```
@@ -876,7 +983,7 @@ For each scenario item ask:
 2. Is this auth/security/framework behavior?
 3. Is this application orchestration?
 4. Is this domain rule/state/invariant?
-5. Is this read model/query behavior?
+5. Is this observable read/visibility behavior?
 6. Is this persistence outcome?
 7. Is this integration/infrastructure behavior?
 8. Is this cross-cutting concern?
@@ -913,11 +1020,11 @@ Column purpose:
 |---|---|---|---|---|---|---|---|---|---|---|
 | Signed-in client | SC-04-PRE-01 | Client is signed in | Precondition | user authenticated | Auth / Security | no | CORE | — | — | framework/app auth |
 | Request details input | SC-04-STEP-01 | Client fills request details | Main flow | user input | UI / App boundary | weak | CORE | — | — | input collection |
-| Valid request accepted | SC-04-AC-01 | Valid request shows Submitted status | Acceptance | behavior complete | Domain + Read model | yes | CORE | — | — | status + visible result |
+| Valid request accepted | SC-04-AC-01 | Valid request shows Submitted status | Acceptance | behavior complete | Domain + observable visibility | yes | CORE | — | — | status + visible result |
 | Inline applicant data | SC-04-ALT-01 | Applicant data missing -> fill inline | Extend/Alt | collect applicant data | App + Domain | yes | ALT | VAR:EXPAND | ADR? | same domain result as profile-first |
 | Invalid request rejected | SC-04-INV-01 | Invalid request is not accepted | Invariant | no invalid request saved | Domain + App boundary | yes | CORE | — | — | final guard in domain/value objects |
 | Submitted status | SC-04-POST-01 | Request status becomes Submitted | Postcondition | initial lifecycle state | Domain | yes | CORE | — | — | request lifecycle state |
-| Employee queue visibility | SC-04-POST-02 | Employee can see request in queue | Observable outcome | request visible in queue | Read model / Query | weak | CORE | — | — | projection/read model |
+| Employee queue visibility | SC-04-POST-02 | Employee can see request in queue | Observable outcome | request visible in queue | Observable read / visibility | weak | CORE | — | — | visible queue responsibility |
 | Request documents | SC-04-EXT-01 | Upload documents | Extend | optional future branch | App + Domain + Infra later | yes | EXT:L2 | maybe VAR:MODIFY | — | separate scenario/slice |
 
 ### 7.7 Rules
@@ -939,7 +1046,7 @@ Good planning hints:
 ```text
 separate scenario later
 domain abstraction candidate
-read model candidate
+observable visibility candidate
 external dependency candidate
 ownership rule candidate
 ```
@@ -1043,18 +1150,33 @@ Purpose:
 Plan user-visible read needs without forcing read-only scenarios through aggregates.
 ```
 
+Before scenario-to-slice planning, this map should still be understood as observable read / visibility responsibility.
+
+Do not introduce concrete read-model implementation terms too early.
+
+Allowed early wording:
+
+```text
+user-visible data
+visibility need
+observable read responsibility
+status/list/detail visibility
+```
+
+Concrete terms such as read model, DTO, projection, query handler, SQL, Dapper or table belong later in scenario-to-slice planning or implementation maps.
+
 Template:
 
-| Scenario | Scenario ref | Scenario item | Item ref | User-visible data | Query/read model | Source domain state | Filters/sorting | Scope | Change | Risk/Decision |
+| Scenario | Scenario ref | Scenario item | Item ref | User-visible data | Observable visibility need | Source domain state | Filters/sorting | Scope | Change | Risk/Decision |
 |---|---|---|---|---|---|---|---|---|---|---|
 
 Example:
 
-| Scenario | Scenario ref | Scenario item | Item ref | User-visible data | Query/read model | Source domain state | Filters/sorting | Scope | Change | Risk/Decision |
+| Scenario | Scenario ref | Scenario item | Item ref | User-visible data | Observable visibility need | Source domain state | Filters/sorting | Scope | Change | Risk/Decision |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Client Request Status | SC-05 | Client sees own requests | SC-05-STEP-01 | own request list | MyRequestsDto | Request status | by client/account | CORE | filters later | — |
-| Employee Dashboard | SC-06 | Employee sees submitted queue | SC-06-STEP-01 | submitted requests | EmployeeRequestQueueDto | Submitted requests | status/date | CORE | assignment later | — |
-| Employee Review | SC-07 | Employee opens request details | SC-07-STEP-02 | request + applicant details | RequestDetailsDto | Request + applicant data | by request id | CORE | documents later | — |
+| Client Request Status | SC-05 | Client sees own requests | SC-05-STEP-01 | own request list | own request visibility | Request status | by client/account | CORE | filters later | — |
+| Employee Dashboard | SC-06 | Employee sees submitted queue | SC-06-STEP-01 | submitted requests | submitted queue visibility | Submitted requests | status/date | CORE | assignment later | — |
+| Employee Review | SC-07 | Employee opens request details | SC-07-STEP-02 | request + applicant details | request detail visibility | Request + applicant data | by request id | CORE | documents later | — |
 
 ### 8.6 Consolidated Infrastructure/Integration Map
 
@@ -1063,6 +1185,12 @@ Purpose:
 ```text
 Identify external, replaceable or technical capabilities.
 ```
+
+At this stage, treat port/adapter names as tentative capability signals only.
+
+Do not create actual ports here just because a dependency exists.
+
+Ports/adapters are planned after scenario-to-slice maps, when the slice role, failure behavior, replaceability and test boundary are clearer.
 
 Template:
 
@@ -1107,7 +1235,7 @@ For every domain-related row, ask:
 
 ```text
 Is this real business/domain logic,
-or is this UI, application orchestration, auth/security, persistence, read model, integration, or infrastructure?
+or is this UI, application orchestration, auth/security, persistence, observable visibility, integration, or infrastructure?
 ```
 
 ### 9.3 Domain Discovery Table
@@ -1125,7 +1253,7 @@ Example:
 | Client Request Creation | SC-04 | Applicant data missing | SC-04-ALT-01 | need applicant identity/data | Applicant data | required before request | Scenario/App/Domain | two UX entry points |
 | Employee Request Review | SC-07 | Employee approves request | SC-07-STEP-03 | request receives decision | Review / Decision | Approved final state | Domain | transition rule |
 | Approval Result / Notification | SC-08 | Email notification is sent | SC-08-OUT-01 | client is informed | Notification | after decision | App/Infra | port/outbox candidate |
-| Client Request Status | SC-05 | Client sees status | SC-05-STEP-01 | display current state | Request status read model | visible to client | Query/read side | projection candidate |
+| Client Request Status | SC-05 | Client sees status | SC-05-STEP-01 | display current state | Request status visibility | visible to client | Observable visibility | visibility candidate |
 
 ### 9.4 Domain Signals
 
@@ -1166,6 +1294,12 @@ They do not automatically require event-driven implementation.
 ### 9.6 Domain Model Draft
 
 Build the initial domain model from discovery.
+
+Avoid speculative/intermediate planning files.
+
+The domain model draft may start as a section inside `domain-discovery-core.md`.
+
+Create a separate domain model file only when the draft becomes a real workflow artifact with enough stable content to own independently.
 
 Model possible:
 
@@ -1306,7 +1440,7 @@ Submit request -> primary aggregate: ClientRequest
 Approve request -> primary aggregate: ClientRequest
 Provide applicant data -> primary aggregate: ApplicantParty
 Register account -> primary aggregate: Account
-View request status -> no aggregate method; read model/query
+View request status -> no aggregate method; observable visibility responsibility
 ```
 
 Do not force read-only scenarios to hydrate aggregates.
@@ -1725,7 +1859,14 @@ If many controlled extensions attach at the same point:
 consider pipeline/hook/policy list.
 
 If external technology/provider is involved:
-use port/adapter.
+consider whether a port/adapter is justified.
+
+Use a port only when there is a reason:
+- external dependency;
+- replaceability;
+- testing boundary;
+- failure behavior;
+- ADR-worthy decision.
 
 If the choice is significant or hard to reverse:
 create ADR.
@@ -1747,6 +1888,22 @@ It may depend on INotificationPort, approval side-effect interface, event, or pi
 ---
 
 ## 14. Ports And Adapters
+
+Ports/adapters are planned only after scenario-to-slice maps.
+
+Do not create ports just because a dependency exists.
+
+A port needs a reason:
+
+```text
+external dependency
+replaceability
+testing boundary
+failure behavior
+ADR-worthy decision
+```
+
+Before scenario-to-slice planning, record only a tentative external/replacement signal.
 
 ### 14.1 Definition
 
@@ -2275,6 +2432,23 @@ ADR candidates
 tests/protection
 ```
 
+Changeability tracking does not start here.
+
+`changeability-extensibility-map.md` is a consolidation artifact.
+
+`[EXT]`, `[VAR:*]`, `[RISK]` and `[ADR?]` markers must already be carried from:
+
+```text
+scenario specs
+-> scenario responsibility tables
+-> consolidated layer maps
+-> domain discovery / aggregate design
+-> scenario-to-slice maps
+-> slice cards
+```
+
+This map gathers and normalizes those signals; it must not be the first place where extension, volatility, risk or ADR candidates appear.
+
 ### 20.2 Local And Global Tracking
 
 Local:
@@ -2514,6 +2688,12 @@ planning/changeability-map.md
 planning/adr/
 ```
 
+Do not create speculative templates by default.
+
+If the canonical scenario package is missing, do not create `scenario-responsibility-template.md`; report the missing canonical files and the next expected artifact instead.
+
+Create a planning file only when it represents a real workflow stage with useful content.
+
 Responsibilities:
 
 ```text
@@ -2636,12 +2816,12 @@ Employee can see request in submitted queue.
 |---|---|---|---|---|---|---|---|---|---|
 | Signed-in client | SC-04-PRE-01 | Client is signed in | Precondition | Auth/Security | no | CORE | — | — | framework/app auth |
 | Fill request details | SC-04-STEP-02 | Client fills request details | Main step | UI/Application boundary | weak | CORE | — | — | input collection |
-| Valid request accepted | SC-04-AC-01 | Valid request shows Submitted status | Acceptance | Domain + Read model | yes | CORE | — | — | status + visible result |
+| Valid request accepted | SC-04-AC-01 | Valid request shows Submitted status | Acceptance | Domain + observable visibility | yes | CORE | — | — | status + visible result |
 | Inline applicant data | SC-04-ALT-01 | Applicant data missing -> fill inline | Extend/Alt | Scenario/Application + Domain | yes | ALT | VAR:EXPAND | ADR? | same domain result as profile-first |
 | Validate request form | SC-04-INC-01 | Validate request form | Include | UI + App + Domain/VO | yes | CORE | — | — | final guard in domain/value objects |
 | Invalid request rejected | SC-04-INV-01 | Invalid request is not accepted | Invariant | Domain + App boundary | yes | CORE | — | — | final guard |
 | Submitted status | SC-04-POST-01 | Request status becomes Submitted | Postcondition | Domain | yes | CORE | — | — | lifecycle state |
-| Employee queue visibility | SC-04-POST-02 | Employee can see request | Outcome | Read model/Query | weak | CORE | — | — | projection |
+| Employee queue visibility | SC-04-POST-02 | Employee can see request | Outcome | Observable read / visibility | weak | CORE | — | — | visible queue responsibility |
 | Request documents | SC-04-EXT-01 | Upload documents | Extend | App + Domain + Infra later | yes | EXT:L2 | maybe VAR:MODIFY | — | separate scenario/slice |
 
 ### 25.4 Domain Discovery
@@ -2792,10 +2972,10 @@ Expected next step:
 4. Add lightweight Scope / Change / Risk markers.
 5. Build Scenario Responsibility Tables.
 6. Consolidate Layer Maps.
-7. Use domain rows to design domain model and aggregates.
+7. Use domain rows to design domain discovery, domain model draft and aggregates.
 8. Use aggregates + scenario interactions to create Scenario-To-Slice Map.
 9. Create Slice Cards.
-10. Extract Changeability Map and ADR candidates.
+10. Consolidate Changeability Map and ADR candidates from markers carried through earlier artifacts.
 11. Create Implementation Maps if slices become numerous.
 12. Implement walking skeleton / slices.
 ```

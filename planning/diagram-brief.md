@@ -6,6 +6,52 @@ This file is the navigation entrypoint for diagram planning. It explains which p
 
 The diagram-generation chat must not make architecture decisions. It should generate editable `.drawio` diagrams from the diagram planning files and current source-of-truth planning documents.
 
+## Repository Write Permission Rule
+
+Diagram generation and repository modification are separate actions.
+
+Diagram-generation agents must not create, update, delete, move, rename or commit files in the repository unless the user explicitly asks them to modify the repository.
+
+By default, diagram agents should generate reviewable artifacts only:
+
+```text
+- draw.io file output;
+- SVG/PNG preview output;
+- Markdown summary output;
+- suggested target paths.
+```
+
+They may suggest repository paths, but must not write to those paths without explicit instruction.
+
+Allowed without an explicit repo-write request:
+
+```text
+- generate downloadable files;
+- provide a patch proposal;
+- list intended repository paths;
+- explain where the user should place files;
+- create a prompt for another agent.
+```
+
+Not allowed without an explicit repo-write request:
+
+```text
+- create files in repository;
+- update existing repository files;
+- delete files;
+- rename files;
+- move files;
+- commit changes;
+- open PR;
+- modify planning docs.
+```
+
+If the user says "generate diagrams", "create a draw.io file", "make a preview" or "give me the package", treat that as a request for reviewable artifacts, not permission to write to the repository.
+
+Only write to the repository if the user explicitly says "add these files to the repository", "commit this to the repo", "update planning/...", "create the file in GitHub" or "modify the repository".
+
+If unclear, do not write. Return generated artifacts and ask for explicit repo-write instruction.
+
 ## File Roles
 
 - `diagram-scenario-spec.md` = source of truth for scenario/use-case semantics.

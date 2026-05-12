@@ -686,3 +686,31 @@ Review/reject rule:
 ```text
 Reject or revise if the diagram uses a light theme without explicit request.
 ```
+
+## 23. Writing To The Repository Without Explicit Request
+
+Mistake:
+
+```text
+Writing generated diagrams, previews, summaries or planning updates into the repository when the user only asked to generate diagrams.
+```
+
+Why wrong:
+
+```text
+Generated diagrams should be reviewed before being committed.
+Diagram generation and repository modification are separate actions.
+```
+
+Correct approach:
+
+```text
+Generate reviewable artifacts and suggest target paths.
+Allowed artifact outputs include draw.io output, SVG/PNG preview output, Markdown summary output, patch proposals and prompts for another agent.
+```
+
+Review/reject rule:
+
+```text
+Reject or revise if the agent modifies repository files without an explicit repo-write request.
+```
