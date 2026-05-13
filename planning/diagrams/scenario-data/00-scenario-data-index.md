@@ -33,7 +33,7 @@ Those belong to:
 ```text
 planning/scenario-domain-validation-principles.md
 planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-planning/tables/scenario-domain-design-input-core.md
+planning/tables/pre-domain-variants-input.md
 ```
 
 ## DATA Types
@@ -177,14 +177,14 @@ SC-16 is removed.
 SC-18 is deferred.
 ```
 
-## Domain Planning Use
+## Domain Variant Use
 
 DATA specs feed:
 
 ```text
 planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-planning/tables/scenario-domain-design-input-core.md
-planning/tables/domain-discovery-core.md
+planning/tables/pre-domain-variants-input.md
+domain model variants
 ```
 
 Do not use DATA files as DB schema or DTO contract.

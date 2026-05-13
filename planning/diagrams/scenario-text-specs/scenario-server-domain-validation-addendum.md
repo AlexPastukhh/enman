@@ -594,12 +594,12 @@ Use this file with:
 ```text
 planning/diagrams/scenario-text-specs/
 planning/diagrams/scenario-data/
-planning/tables/scenario-domain-design-input-core.md
+planning/tables/pre-domain-variants-input.md
 ```
 
 Do not copy validation rules into DATA files.
 
-When domain models are designed, prefer:
+When generating domain variants, prefer:
 
 ```text
 value object creation / domain method result

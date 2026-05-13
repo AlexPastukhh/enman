@@ -12,6 +12,7 @@ planning/scenario-domain-validation-principles.md
 planning/diagrams/scenario-data/00-scenario-data-index.md
 planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
 planning/diagrams/scenario-diagram-consistency-report.md
+planning/tables/pre-domain-variants-input.md
 ```
 
 ## 2. Corrected Scenario Set
@@ -116,10 +117,17 @@ Core agreement proposal rules:
 - previous client-sent proposal becomes Rejected when employee sends a new version.
 ```
 
-## 5. Downstream Consumers
+## 5. Current Downstream Use
+
+```text
+planning/tables/pre-domain-variants-input.md
+domain model variants
+later aggregate/slice planning after domain direction is chosen
+```
+
+Do not route the current workflow through:
 
 ```text
 planning/tables/scenario-domain-design-input-core.md
 planning/tables/domain-discovery-core.md
-planning/tables/ui-page-responsibility-map-core.md
 ```
