@@ -1,14 +1,14 @@
 # Scenario Diagram Consistency Report
 
-Status: current consistency gate before responsibility tables  
+Status: current consistency gate before domain discovery  
 Branch: `my-changes`  
-Scope: scenario text specs, scenario DATA specs, generated package summaries, and responsibility-table readiness
+Scope: scenario text specs, scenario DATA specs, validation addendum, generated package summaries, and domain-planning readiness
 
 ## 1. Purpose
 
 This report records the current scenario source-of-truth state after semantic correction.
 
-It exists to prevent responsibility tables from being generated from stale diagram package summaries.
+It prevents planning agents from using stale diagram package summaries or stale `.drawio` pages as source of truth.
 
 ## 2. Current Source Of Truth
 
@@ -16,17 +16,20 @@ Use these as semantic source of truth:
 
 ```text
 planning/scenario-specification-principles.md
+planning/scenario-domain-validation-principles.md
 planning/diagram-scenario-spec.md
 planning/diagrams/scenario-text-specs/
 planning/diagrams/scenario-data/
+planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
 planning/diagrams/scenario-diagram-consistency-report.md
+planning/tables/scenario-domain-design-input-core.md
 ```
 
 Do not use old generated package summaries as semantic source of truth.
 
-## 3. Scenario Text Specs Status
+## 3. Current Scenario Text Specs
 
-Current corrected scenario text specs define this model:
+Active:
 
 ```text
 SC-01  Guest Registration
@@ -61,7 +64,7 @@ SC-18  Archive / Audit — deferred / low priority
 
 ## 4. DATA Specs Status
 
-DATA files are aligned to corrected text specs when they include:
+DATA files are current when they include:
 
 ```text
 SC-04 request creation applicant prefill/inline behavior
@@ -72,20 +75,29 @@ SC-13C employee agreement proposal list DATA
 SC-13D employee agreement proposal create/send version DATA
 ```
 
-Agreement proposal core statuses are:
+## 5. Validation Status
+
+Server/domain validation is now tracked in:
 
 ```text
-AwaitingClientConfirmation
-SentByClient
-Accepted
-Rejected
+planning/scenario-domain-validation-principles.md
+planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+planning/tables/scenario-domain-design-input-core.md
 ```
 
-`Rejected` is core because employee-sent replacement rejects/replaces the previous client-sent proposal.
+Validation source-of-truth direction:
 
-## 5. Stale Package Summary Status
+```text
+value object construction / domain method
+-> validation result
+-> server validation response
+```
 
-The following generated package summaries were based on older scenario semantics and must not be used as source of truth for responsibility tables:
+Client-side validation is UX feedback only.
+
+## 6. Stale Package Summary Status
+
+The following generated package summaries were based on older scenario semantics and must not be used as source of truth for domain planning:
 
 ```text
 planning/diagrams/scenario-core-package.md
@@ -93,122 +105,38 @@ planning/diagrams/scenario-extension-package.md
 planning/diagrams/scenario-advanced-package.md
 ```
 
-They should be replaced by superseded compatibility notes until visual diagrams are regenerated from corrected text specs.
+Existing `.drawio`, `.png`, `.svg` files may still be visually useful, but if they represent old SC-08/SC-09/SC-12/SC-13/SC-16 semantics, they are stale for domain-planning generation.
 
-Existing `.drawio`, `.png`, `.svg` files may still be visually useful, but if they represent old SC-08/SC-09/SC-12/SC-13/SC-16 semantics, they are stale for responsibility-table generation.
+## 7. Domain Planning Readiness
 
-## 6. Key Corrections
-
-### Request statuses
-
-Use:
+The active bridge artifact is:
 
 ```text
-InReview
-Approved
-Rejected
+planning/tables/scenario-domain-design-input-core.md
 ```
 
-Do not use `Submitted` in scenario specs unless reintroduced later with precise meaning.
+It replaces the earlier broad responsibility-table direction.
 
-### Request object location
-
-Request object location means:
+Next artifact:
 
 ```text
-object address
+planning/tables/domain-discovery-core.md
 ```
 
-### Request creation applicant DATA
-
-When request creation needs applicant DATA:
+Use the domain design input to produce:
 
 ```text
-- matching saved applicant DATA may be copied/prefilled into request form;
-- if no matching applicant DATA exists, client enters applicant DATA inline;
-- client can edit prefilled fields for this request;
-- future UX may add clear/restore prefill controls;
-- clearing/editing request-local applicant fields does not delete saved applicant DATA.
+- value object set;
+- domain concepts;
+- entity candidates;
+- aggregate root options;
+- aggregate boundary variants;
+- domain method candidates;
+- ADR candidates.
 ```
 
-### Agreement proposal exchange
-
-Core rules:
-
-```text
-- exchange starts only by employee action from Approved request;
-- approval does not automatically create agreement proposal;
-- employee can start from Approved request details or Approved request list row/action;
-- client can only send proposal in response to employee-sent proposal;
-- both employee and client submissions include attached agreement document/file and text details/comment;
-- client sends only one own proposal version in response in core;
-- employee responds to client-sent proposal by sending a new employee version;
-- previous client-sent proposal becomes Rejected when employee sends new version.
-```
-
-## 7. Responsibility Table Readiness
-
-After this report and the DATA replacements are applied, responsibility tables may be started from corrected textual specs and DATA specs.
-
-Recommended first table:
-
-```text
-planning/tables/scenario-responsibility-core.md
-```
-
-Recommended source set for that table:
-
-```text
-planning/scenario-specification-principles.md
-planning/diagram-scenario-spec.md
-planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
-planning/diagrams/scenario-text-specs/
-planning/diagrams/scenario-data/00-scenario-data-index.md
-planning/diagrams/scenario-data/
-planning/diagrams/scenario-diagram-consistency-report.md
-```
-
-Do not use stale generated package summaries or stale `.drawio` pages as authoritative source until regenerated.
-
-## 8. Table Generation Scope Recommendation
-
-For the first responsibility table pass, include:
-
-```text
-SC-01
-SC-02
-SC-03A
-SC-03B
-SC-04
-SC-05
-SC-06
-SC-07A
-SC-07B
-SC-10
-SC-11
-SC-13A
-SC-13B
-SC-13C
-SC-13D
-SC-14
-SC-15
-SC-17
-```
-
-Handle separately:
-
-```text
-SC-08 merged
-SC-09 merged
-SC-12 merged
-SC-16 removed
-SC-18 deferred
-```
-
-## 9. Open Consistency Notes
+## 8. Visual Diagram Note
 
 Visual diagram packages still need regeneration if they are expected to match corrected text specs.
 
 Until regenerated, diagrams are secondary visual references only.
-
-Responsibility tables should cite / reference scenario text spec item refs and DATA refs rather than old diagram item refs.

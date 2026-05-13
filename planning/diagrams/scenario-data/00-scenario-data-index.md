@@ -28,7 +28,13 @@ DATA files must not contain:
 - security policy.
 ```
 
-Those belong to scenario text specs, security specs or later testing maps.
+Those belong to:
+
+```text
+planning/scenario-domain-validation-principles.md
+planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+planning/tables/scenario-domain-design-input-core.md
+```
 
 ## DATA Types
 
@@ -171,14 +177,14 @@ SC-16 is removed.
 SC-18 is deferred.
 ```
 
-## Responsibility Table Readiness
+## Domain Planning Use
 
-For responsibility tables, use this DATA index together with:
+DATA specs feed:
 
 ```text
-planning/diagrams/scenario-text-specs/
-planning/scenario-specification-principles.md
-planning/diagrams/scenario-diagram-consistency-report.md
+planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+planning/tables/scenario-domain-design-input-core.md
+planning/tables/domain-discovery-core.md
 ```
 
-Do not use stale generated package summaries as semantic source of truth.
+Do not use DATA files as DB schema or DTO contract.
