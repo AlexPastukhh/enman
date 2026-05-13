@@ -32,6 +32,23 @@ Choose domain model direction.
 Then plan aggregates/slices/implementation.
 ```
 
+## Replacement File Generation
+
+Manual replacement-package generation is documented in:
+
+```text
+planning/replacement-file-generation-guide.md
+```
+
+When the user asks for replacement files:
+
+```text
+- generate complete files;
+- keep repository-relative paths;
+- package them in a zip;
+- include previous unapplied archive content if the user says it was not applied.
+```
+
 ## Why No More Intermediate Tables Now
 
 Do not add more intermediate files such as:

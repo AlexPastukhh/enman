@@ -2,7 +2,7 @@
 
 Status: simplified current workflow
 
-## Current point
+## Current Point
 
 Scenario text specifications are ready.
 
@@ -10,13 +10,13 @@ Scenario DATA files are ready.
 
 Validation-related file remains part of the workflow.
 
-The next bridge file is:
+The current bridge file is:
 
 ```text
 planning/tables/pre-domain-variants-input.md
 ```
 
-## Current workflow
+## Current Workflow
 
 ```text
 scenario text specs
@@ -30,7 +30,7 @@ scenario text specs
 -> then plan aggregates/slices/implementation
 ```
 
-## Source files for domain variants
+## Source Files For Domain Variants
 
 Use exactly these inputs:
 
@@ -41,7 +41,7 @@ Use exactly these inputs:
 4. planning/tables/pre-domain-variants-input.md
 ```
 
-## Purpose of pre-domain-variants-input
+## Purpose Of pre-domain-variants-input
 
 It collects:
 
@@ -63,7 +63,7 @@ It helps discover:
 - pieces from which domain variants can be assembled.
 ```
 
-## What it does not contain
+## What It Does Not Contain
 
 It does not contain:
 
@@ -78,7 +78,25 @@ It does not contain:
 
 Value objects are discovered while generating each domain variant.
 
-## Current next step
+## Replacement File Generation Workflow
+
+When the user asks for files to replace in the repository manually, use:
+
+```text
+planning/replacement-file-generation-guide.md
+```
+
+Rules:
+
+```text
+- generate complete replacement files;
+- preserve repository-relative paths;
+- package files in a zip archive;
+- include all files from a previous archive if the user says it was not applied;
+- do not output patches or fragments unless explicitly asked.
+```
+
+## Current Next Step
 
 ```text
 Generate domain model variant 1.

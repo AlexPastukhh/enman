@@ -34,12 +34,13 @@ Use this read order:
 2. planning/planning-workflow-current.md
 3. planning/scenario-specification-principles.md
 4. planning/scenario-domain-validation-principles.md
-5. planning/diagrams/README.md
-6. planning/diagrams/scenario-text-specs/README.md
-7. planning/diagrams/scenario-data/README.md
-8. planning/diagrams/scenario-diagram-consistency-report.md
-9. planning/tables/README.md
-10. planning/tables/pre-domain-variants-input.md
+5. planning/replacement-file-generation-guide.md
+6. planning/diagrams/README.md
+7. planning/diagrams/scenario-text-specs/README.md
+8. planning/diagrams/scenario-data/README.md
+9. planning/diagrams/scenario-diagram-consistency-report.md
+10. planning/tables/README.md
+11. planning/tables/pre-domain-variants-input.md
 ```
 
 ## 3. Source Files For Domain Variants
@@ -83,7 +84,26 @@ It collects:
 
 It intentionally does not contain a value object catalog. Value objects are discovered while generating each domain variant.
 
-## 5. Superseded / Not Current
+## 5. Replacement File Generation Workflow
+
+When the user asks for files to replace manually, use:
+
+```text
+planning/replacement-file-generation-guide.md
+```
+
+Current replacement-file rule:
+
+```text
+generate complete files
+package them with repository-relative paths
+include all needed files if previous archive was not applied
+keep the response practical and list target paths
+```
+
+Do not provide partial snippets unless explicitly requested.
+
+## 6. Superseded / Not Current
 
 Do not use this old path as the current workflow:
 
@@ -109,13 +129,13 @@ planning/tables/scenario-domain-responsibility-core.md
 
 If such files exist historically, treat them as stale/superseded planning notes, not as current source of truth.
 
-## 6. Diagram / Scenario Source Of Truth
+## 7. Diagram / Scenario Source Of Truth
 
 Use corrected text specs and DATA specs as semantic source of truth.
 
 Generated diagram package summaries and old `.drawio` pages may exist for visual reference, but they are not semantic source of truth until regenerated from corrected text specs.
 
-## 7. Folder Map
+## 8. Folder Map
 
 ```text
 planning/
@@ -123,6 +143,7 @@ planning/
   planning-workflow-current.md
   scenario-specification-principles.md
   scenario-domain-validation-principles.md
+  replacement-file-generation-guide.md
   scenario-to-implementation-workflow-v5-consolidated.md  # superseded compatibility note
 
 planning/diagrams/
@@ -137,7 +158,7 @@ planning/tables/
   pre-domain-variants-input.md
 ```
 
-## 8. Agent Rules
+## 9. Agent Rules
 
 Planning agents should:
 
@@ -148,6 +169,8 @@ Planning agents should:
 - keep validation in validation-related files and scenario specs;
 - use pre-domain-variants-input.md before generating domain variants;
 - generate domain variants one by one;
+- generate complete replacement files when the user asks for manual replacement files;
+- include all files from previous unapplied archive when the user says it was not applied;
 - avoid implementation terms before scenario-to-slice planning;
 - create or update files only when explicitly requested.
 ```
