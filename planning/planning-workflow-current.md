@@ -1,205 +1,85 @@
 # Current Planning Workflow
 
-Status: current workflow source of truth  
-Supersedes: `planning/scenario-to-implementation-workflow-v5-consolidated.md` for current project planning
+Status: simplified current workflow
 
-## 1. Purpose
+## Current point
 
-This workflow describes the current reliable path from corrected scenarios to domain model and implementation planning.
+Scenario text specifications are ready.
 
-The important correction from older workflow drafts:
+Scenario DATA files are ready.
+
+Validation-related file remains part of the workflow.
+
+The next bridge file is:
 
 ```text
-Do not stop at broad responsibility-by-layer tables.
-Move from scenarios to domain design input:
-value objects, domain validation, state transitions, invariants and aggregate boundary pressure.
+planning/tables/pre-domain-variants-input.md
 ```
 
-## 2. Current Workflow
+## Current workflow
 
 ```text
-0. Planning navigation / indexes
-1. Scenario specification principles
-2. Corrected scenario text specs
-3. Scenario DATA specs
-4. Scenario consistency report
-5. Server/domain validation addendum
-6. Scenario domain design input gate
-7. Scenario domain design input
-8. Domain discovery
-9. Aggregate boundary candidates
-10. Domain model options
-11. UI page responsibility map
-12. Scenario-to-slice map
-13. Slice cards
-14. Ports/adapters map
-15. Testing map
-16. Changeability/extensibility map
-17. ADR candidates
-18. Walking skeleton / delivery plan
+scenario text specs
+-> scenario DATA files
+-> validation-related file
+-> pre-domain-variants-input.md
+-> generate domain model variant 1
+-> generate domain model variant 2
+-> compare/refine variants
+-> choose domain model direction
+-> then plan aggregates/slices/implementation
 ```
 
-## 3. Current Completed Inputs
+## Source files for domain variants
+
+Use exactly these inputs:
 
 ```text
-planning/scenario-specification-principles.md
-planning/diagrams/scenario-text-specs/
-planning/diagrams/scenario-data/
-planning/diagrams/scenario-diagram-consistency-report.md
+1. planning/diagrams/scenario-text-specs/
+2. planning/diagrams/scenario-data/
+3. planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+4. planning/tables/pre-domain-variants-input.md
 ```
 
-## 4. Current Added Inputs
+## Purpose of pre-domain-variants-input
+
+It collects:
 
 ```text
-planning/scenario-domain-validation-principles.md
-planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-planning/tables/scenario-domain-design-input-gate.md
-planning/tables/scenario-domain-design-input-core.md
+- invariants;
+- write state persisted by scenarios;
+- state/status values;
+- actions that change state;
+- rules that allow/forbid state changes;
+- no-write behavior when validation or state rules fail.
 ```
 
-## 5. Scenario Domain Design Input Gate
-
-After scenario text specs and scenario DATA specs are ready, create/update:
+It helps discover:
 
 ```text
-planning/tables/scenario-domain-design-input-core.md
+- possible domain methods;
+- possible aggregate consistency boundaries;
+- state that must be protected by domain logic;
+- pieces from which domain variants can be assembled.
 ```
 
-This file is required before:
+## What it does not contain
+
+It does not contain:
 
 ```text
-planning/tables/domain-discovery-core.md
-```
-
-The gate exists because scenario specs and DATA files are not yet enough to design aggregates directly.
-
-Scenario specs tell us:
-
-```text
-- what actor does;
-- what actor sees;
-- what data is entered/selected/attached;
-- what observable outcome exists.
-```
-
-Domain design input extracts:
-
-```text
-- value object candidates;
-- server-side/domain validation rules;
-- persisted state/status values;
-- state-transition invariants;
-- candidate domain methods;
-- aggregate owner candidates;
-- aggregate boundary pressure;
-- domain decisions / ADR candidates.
-```
-
-The most important part of this gate is the state/invariant catalog:
-
-```text
-persisted state
--> invariant depending on that state
--> candidate method that changes/checks that state
--> candidate owner/aggregate
-```
-
-Example:
-
-```text
-Request.status = InReview
--> only InReview request can be Approved/Rejected
--> Request.Approve(...) / Request.Reject(...)
--> Request aggregate candidate
-```
-
-Do not skip this gate.
-
-Do not replace it with generic responsibility-by-layer tables.
-
-## 6. Active Next Step
-
-Create:
-
-```text
-planning/tables/domain-discovery-core.md
-```
-
-Inputs:
-
-```text
-planning/tables/scenario-domain-design-input-core.md
-planning/scenario-domain-validation-principles.md
-planning/diagrams/scenario-text-specs/
-planning/diagrams/scenario-data/
-planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-```
-
-Output should propose:
-
-```text
-- confirmed domain concepts;
-- value object set;
-- entity candidates;
-- aggregate root options;
-- aggregate boundary variants;
-- recommended first implementation cut;
-- domain method candidates per aggregate;
-- ADR candidates.
-```
-
-## 7. Validation Rule
-
-The current validation model is:
-
-```text
-client-side validation = UX feedback only;
-server-side validation = authoritative use-case boundary validation;
-domain/value-object validation = source of truth for data validity and state-transition validity.
-```
-
-Use this flow:
-
-```text
-form/input payload
--> application use case
--> value object construction / domain method
--> validation result
--> server validation response or successful state change
-```
-
-## 8. What Not To Do Now
-
-Do not create:
-
-```text
+- value object catalog;
+- final aggregates;
+- final domain model;
 - database schema;
-- repository design;
-- controller/endpoint map;
-- React component plan;
-- CQRS command/query map;
-- final aggregate implementation;
-- ports/adapters map before slice planning.
+- endpoints;
+- UI page map.
 ```
 
-Do not use stale diagram package summaries as source of truth.
+Value objects are discovered while generating each domain variant.
 
-## 9. Separate Track: UI Page Map
-
-UI/page planning is useful, but it should not be mixed into domain discovery.
-
-Create separately after domain design input:
+## Current next step
 
 ```text
-planning/tables/ui-page-responsibility-map-core.md
-```
-
-It should cover:
-
-```text
-- pages;
-- visible DATA per page;
-- actions per page;
-- status-dependent UI states;
-- navigation between pages/scenarios.
+Generate domain model variant 1.
 ```

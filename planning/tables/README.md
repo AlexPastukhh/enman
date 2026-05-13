@@ -1,96 +1,76 @@
 # Planning Tables Index
 
-Status: current planning tables navigation index
+Status: simplified current planning tables navigation
 
-## 1. Current Active Gate
+## Current stage
 
-Read first:
+Scenario text specs and DATA files are ready.
+
+Validation-related file is kept separately.
+
+Before generating domain variants, use:
 
 ```text
-planning/tables/scenario-domain-design-input-gate.md
+planning/tables/pre-domain-variants-input.md
 ```
 
-Active bridge artifact:
+## Current read order
 
 ```text
-planning/tables/scenario-domain-design-input-core.md
+1. planning/diagrams/scenario-text-specs/
+2. planning/diagrams/scenario-data/
+3. planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+4. planning/tables/pre-domain-variants-input.md
 ```
 
-This is the required bridge from scenarios/DATA/validation to domain model design.
+## Why this file exists
 
-## 2. Why This Table Exists
-
-Do not skip directly from scenario specs and DATA files to aggregate design.
-
-The workflow needs an intermediate design input that extracts:
+`pre-domain-variants-input.md` collects the material needed before generating domain variants:
 
 ```text
-- value object candidates;
-- server-side/domain validation rules;
-- persisted state/status values;
-- state-transition invariants;
-- candidate domain methods;
-- aggregate owner candidates;
-- aggregate boundary pressure;
-- open domain decisions / ADR candidates.
+- invariants;
+- write state;
+- persisted statuses;
+- state-changing actions;
+- state-dependent allowed/forbidden actions;
+- no-write behavior.
 ```
 
-This is what `scenario-domain-design-input-core.md` does.
+It intentionally does not contain a value object catalog.
 
-## 3. Superseded
+Value objects should be discovered directly while generating each domain variant from:
 
 ```text
-planning/tables/scenario-responsibility-core.md
-planning/tables/scenario-domain-responsibility-core.md
+scenario specs
+DATA files
+validation-related file
+pre-domain-variants-input.md
 ```
 
-These older responsibility-table directions are superseded by:
+## Current next step
 
 ```text
-planning/tables/scenario-domain-design-input-core.md
+Generate domain model variant 1.
 ```
 
-## 4. Current Table Order
+Then generate more variants until one is selected/refined.
+
+## Avoid for now
+
+Do not add more intermediate files such as:
 
 ```text
-1. scenario-domain-design-input-gate.md
-2. scenario-domain-design-input-core.md
-3. domain-discovery-core.md
-4. aggregate-boundary-candidates-core.md
-5. domain-model-options-core.md
-6. ui-page-responsibility-map-core.md
-7. scenario-to-slice-map-core.md
-8. slice-cards-core.md
-9. ports-adapters-map.md
-10. testing-map.md
-11. changeability-extensibility-map.md
-12. adr-candidates.md
-13. walking-skeleton-slice-delivery-plan.md
+domain-discovery-core.md
+aggregate-boundary-candidates-core.md
+domain-model-options-core.md
+scenario-domain-responsibility-core.md
+scenario-domain-design-input-core.md
 ```
 
-## 5. Current Next Step
+Those names are too technical and fragmented for the current workflow.
 
-Create:
-
-```text
-planning/tables/domain-discovery-core.md
-```
-
-Input:
+Keep the post-scenario bridge as one file:
 
 ```text
-planning/tables/scenario-domain-design-input-gate.md
-planning/tables/scenario-domain-design-input-core.md
-```
-
-## 6. Rule
-
-Do not create database schema, endpoints, handlers or UI components from `scenario-domain-design-input-core.md` directly.
-
-First produce:
-
-```text
-planning/tables/domain-discovery-core.md
-planning/tables/aggregate-boundary-candidates-core.md
-planning/tables/domain-model-options-core.md
+pre-domain-variants-input.md
 ```
