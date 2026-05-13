@@ -24,18 +24,19 @@ value objects, domain validation, state transitions, invariants and aggregate bo
 3. Scenario DATA specs
 4. Scenario consistency report
 5. Server/domain validation addendum
-6. Scenario domain design input
-7. Domain discovery
-8. Aggregate boundary candidates
-9. Domain model options
-10. UI page responsibility map
-11. Scenario-to-slice map
-12. Slice cards
-13. Ports/adapters map
-14. Testing map
-15. Changeability/extensibility map
-16. ADR candidates
-17. Walking skeleton / delivery plan
+6. Scenario domain design input gate
+7. Scenario domain design input
+8. Domain discovery
+9. Aggregate boundary candidates
+10. Domain model options
+11. UI page responsibility map
+12. Scenario-to-slice map
+13. Slice cards
+14. Ports/adapters map
+15. Testing map
+16. Changeability/extensibility map
+17. ADR candidates
+18. Walking skeleton / delivery plan
 ```
 
 ## 3. Current Completed Inputs
@@ -52,10 +53,71 @@ planning/diagrams/scenario-diagram-consistency-report.md
 ```text
 planning/scenario-domain-validation-principles.md
 planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+planning/tables/scenario-domain-design-input-gate.md
 planning/tables/scenario-domain-design-input-core.md
 ```
 
-## 5. Active Next Step
+## 5. Scenario Domain Design Input Gate
+
+After scenario text specs and scenario DATA specs are ready, create/update:
+
+```text
+planning/tables/scenario-domain-design-input-core.md
+```
+
+This file is required before:
+
+```text
+planning/tables/domain-discovery-core.md
+```
+
+The gate exists because scenario specs and DATA files are not yet enough to design aggregates directly.
+
+Scenario specs tell us:
+
+```text
+- what actor does;
+- what actor sees;
+- what data is entered/selected/attached;
+- what observable outcome exists.
+```
+
+Domain design input extracts:
+
+```text
+- value object candidates;
+- server-side/domain validation rules;
+- persisted state/status values;
+- state-transition invariants;
+- candidate domain methods;
+- aggregate owner candidates;
+- aggregate boundary pressure;
+- domain decisions / ADR candidates.
+```
+
+The most important part of this gate is the state/invariant catalog:
+
+```text
+persisted state
+-> invariant depending on that state
+-> candidate method that changes/checks that state
+-> candidate owner/aggregate
+```
+
+Example:
+
+```text
+Request.status = InReview
+-> only InReview request can be Approved/Rejected
+-> Request.Approve(...) / Request.Reject(...)
+-> Request aggregate candidate
+```
+
+Do not skip this gate.
+
+Do not replace it with generic responsibility-by-layer tables.
+
+## 6. Active Next Step
 
 Create:
 
@@ -86,7 +148,7 @@ Output should propose:
 - ADR candidates.
 ```
 
-## 6. Validation Rule
+## 7. Validation Rule
 
 The current validation model is:
 
@@ -106,7 +168,7 @@ form/input payload
 -> server validation response or successful state change
 ```
 
-## 7. What Not To Do Now
+## 8. What Not To Do Now
 
 Do not create:
 
@@ -122,7 +184,7 @@ Do not create:
 
 Do not use stale diagram package summaries as source of truth.
 
-## 8. Separate Track: UI Page Map
+## 9. Separate Track: UI Page Map
 
 UI/page planning is useful, but it should not be mixed into domain discovery.
 
