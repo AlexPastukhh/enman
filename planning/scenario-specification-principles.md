@@ -14,6 +14,7 @@ planning/scenario-specification-principles.md
 planning/scenario-domain-validation-principles.md
 planning/diagrams/scenario-text-specs/README.md
 planning/diagrams/scenario-data/README.md
+planning/tables/pre-domain-variants-input.md
 ```
 
 ## 2. Scenario Specs
@@ -75,7 +76,13 @@ DATA files must not contain:
 - security policy.
 ```
 
-Validation belongs in scenario text specs, validation addendum and domain design input.
+Validation belongs in scenario text specs and validation addendum.
+
+The pre-domain bridge uses DATA and validation-related files but does not replace them:
+
+```text
+planning/tables/pre-domain-variants-input.md
+```
 
 ## 4. Validation
 
@@ -202,14 +209,27 @@ Core agreement proposal rules:
 
 ## 7. Source Of Truth Rule
 
-Use corrected text specs, DATA specs, validation addendum and consistency report.
+Use corrected text specs, DATA specs, validation addendum, consistency report and pre-domain variants input.
 
 Do not use stale generated diagram package summaries or stale `.drawio` pages as semantic source of truth until regenerated.
 
-## 8. Next Planning Step
+## 8. Current Domain-Planning Step
 
-The next domain planning artifact after scenario/domain-design input is:
+The current bridge after scenarios/DATA/validation is:
 
 ```text
-planning/tables/domain-discovery-core.md
+planning/tables/pre-domain-variants-input.md
+```
+
+The current next step after that bridge is:
+
+```text
+Generate domain model variant 1.
+```
+
+Do not use the old path as current workflow:
+
+```text
+scenario-domain-design-input-core.md
+-> domain-discovery-core.md
 ```

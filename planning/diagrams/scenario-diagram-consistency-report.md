@@ -1,8 +1,8 @@
 # Scenario Diagram Consistency Report
 
-Status: current consistency gate before domain discovery  
+Status: current consistency gate before domain variant generation  
 Branch: `my-changes`  
-Scope: scenario text specs, scenario DATA specs, validation addendum, generated package summaries, and domain-planning readiness
+Scope: scenario text specs, scenario DATA specs, validation addendum, generated package summaries, and domain-variant readiness
 
 ## 1. Purpose
 
@@ -22,7 +22,7 @@ planning/diagrams/scenario-text-specs/
 planning/diagrams/scenario-data/
 planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
 planning/diagrams/scenario-diagram-consistency-report.md
-planning/tables/scenario-domain-design-input-core.md
+planning/tables/pre-domain-variants-input.md
 ```
 
 Do not use old generated package summaries as semantic source of truth.
@@ -77,12 +77,11 @@ SC-13D employee agreement proposal create/send version DATA
 
 ## 5. Validation Status
 
-Server/domain validation is now tracked in:
+Server/domain validation is tracked in:
 
 ```text
 planning/scenario-domain-validation-principles.md
 planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-planning/tables/scenario-domain-design-input-core.md
 ```
 
 Validation source-of-truth direction:
@@ -95,7 +94,60 @@ value object construction / domain method
 
 Client-side validation is UX feedback only.
 
-## 6. Stale Package Summary Status
+## 6. Pre-Domain Variant Readiness
+
+The active post-scenario bridge file is:
+
+```text
+planning/tables/pre-domain-variants-input.md
+```
+
+It collects:
+
+```text
+- invariants;
+- persisted/write state;
+- state/status values;
+- state-changing actions;
+- state-dependent allowed/forbidden actions;
+- no-write behavior;
+- method pressure.
+```
+
+Next artifact:
+
+```text
+domain model variant 1
+```
+
+Use these inputs for domain variants:
+
+```text
+1. planning/diagrams/scenario-text-specs/
+2. planning/diagrams/scenario-data/
+3. planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+4. planning/tables/pre-domain-variants-input.md
+```
+
+## 7. Superseded Domain-Planning Path
+
+Do not use this as the current workflow:
+
+```text
+scenario-domain-design-input-core.md
+-> domain-discovery-core.md
+-> aggregate-boundary-candidates-core.md
+-> domain-model-options-core.md
+```
+
+Those names are too fragmented for the current workflow and are superseded by:
+
+```text
+pre-domain-variants-input.md
+-> domain model variants
+```
+
+## 8. Stale Package Summary Status
 
 The following generated package summaries were based on older scenario semantics and must not be used as source of truth for domain planning:
 
@@ -105,37 +157,9 @@ planning/diagrams/scenario-extension-package.md
 planning/diagrams/scenario-advanced-package.md
 ```
 
-Existing `.drawio`, `.png`, `.svg` files may still be visually useful, but if they represent old SC-08/SC-09/SC-12/SC-13/SC-16 semantics, they are stale for domain-planning generation.
+Existing `.drawio`, `.png`, `.svg` files may still be visually useful, but if they represent old SC-08/SC-09/SC-12/SC-13/SC-16 semantics, they are stale for domain-variant generation.
 
-## 7. Domain Planning Readiness
-
-The active bridge artifact is:
-
-```text
-planning/tables/scenario-domain-design-input-core.md
-```
-
-It replaces the earlier broad responsibility-table direction.
-
-Next artifact:
-
-```text
-planning/tables/domain-discovery-core.md
-```
-
-Use the domain design input to produce:
-
-```text
-- value object set;
-- domain concepts;
-- entity candidates;
-- aggregate root options;
-- aggregate boundary variants;
-- domain method candidates;
-- ADR candidates.
-```
-
-## 8. Visual Diagram Note
+## 9. Visual Diagram Note
 
 Visual diagram packages still need regeneration if they are expected to match corrected text specs.
 

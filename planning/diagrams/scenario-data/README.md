@@ -42,7 +42,12 @@ Validation belongs to:
 ```text
 planning/scenario-domain-validation-principles.md
 planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-planning/tables/scenario-domain-design-input-core.md
+```
+
+The post-scenario bridge uses DATA together with validation-related files:
+
+```text
+planning/tables/pre-domain-variants-input.md
 ```
 
 ## 4. Active DATA Files
@@ -59,18 +64,31 @@ DATA specs feed:
 
 ```text
 scenario-server-domain-validation-addendum.md
-scenario-domain-design-input-core.md
-domain-discovery-core.md
-ui-page-responsibility-map-core.md
+pre-domain-variants-input.md
+domain model variants
 ```
 
 DATA fields are candidates for:
 
 ```text
-- value objects;
+- value objects discovered during domain variant generation;
 - visible page data;
 - command/input objects later;
 - persistence fields later.
 ```
 
 But DATA files themselves are not DB schemas or DTO contracts.
+
+## 6. Current Next Step
+
+After DATA and validation-related files, use:
+
+```text
+planning/tables/pre-domain-variants-input.md
+```
+
+Then generate:
+
+```text
+domain model variant 1
+```

@@ -26,7 +26,7 @@ scenario-*.drawio / .svg / .png
   visual artifacts, only authoritative after regenerated from corrected text specs
 ```
 
-## 3. Important Reports
+## 3. Important Report
 
 ```text
 planning/diagrams/scenario-diagram-consistency-report.md
@@ -46,15 +46,28 @@ planning/diagrams/scenario-advanced-package.md
 
 Do not use them as semantic source of truth for domain planning.
 
-## 5. How To Continue
+## 5. How To Continue To Domain Variants
 
-For domain planning, read:
+For domain variant generation, read:
 
 ```text
 planning/diagrams/scenario-text-specs/README.md
 planning/diagrams/scenario-data/README.md
 planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-planning/tables/scenario-domain-design-input-core.md
+planning/tables/pre-domain-variants-input.md
 ```
 
-For diagram regeneration, read diagram-specific rules separately and regenerate diagrams from corrected text specs.
+Then generate:
+
+```text
+domain model variant 1
+```
+
+Do not route diagram/domain planning through:
+
+```text
+planning/tables/scenario-domain-design-input-core.md
+planning/tables/domain-discovery-core.md
+```
+
+Those are not the current workflow.

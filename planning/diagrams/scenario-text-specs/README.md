@@ -61,18 +61,30 @@ It records:
 ```text
 - client-side validation;
 - server-side / domain validation;
-- value object candidates;
-- domain validation hints per scenario.
+- value object / domain validation hints per scenario.
 ```
 
 Do not move these validation rules into DATA files.
 
-## 6. Current Downstream Consumers
+## 6. Current Downstream Consumer
+
+Current post-scenario bridge:
+
+```text
+planning/tables/pre-domain-variants-input.md
+```
+
+Current next step after the bridge:
+
+```text
+Generate domain model variant 1.
+```
+
+Do not use the old downstream path as current workflow:
 
 ```text
 planning/tables/scenario-domain-design-input-core.md
 planning/tables/domain-discovery-core.md
-planning/tables/ui-page-responsibility-map-core.md
 ```
 
 ## 7. Rule

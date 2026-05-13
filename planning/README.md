@@ -3,9 +3,31 @@
 Status: current planning navigation index  
 Scope: repository planning artifacts and read order
 
-## 1. Start Here
+## 1. Current Workflow
 
-Use this read order for current planning work:
+The current planning workflow is the simplified domain-variant workflow:
+
+```text
+scenario text specs
+-> scenario DATA files
+-> validation-related file
+-> pre-domain-variants-input.md
+-> generate domain model variant 1
+-> generate domain model variant 2
+-> compare/refine variants
+-> choose domain model direction
+-> then plan aggregates/slices/implementation
+```
+
+The current next working step is:
+
+```text
+Generate domain model variant 1.
+```
+
+## 2. Current Read Order
+
+Use this read order:
 
 ```text
 1. planning/README.md
@@ -17,118 +39,83 @@ Use this read order for current planning work:
 7. planning/diagrams/scenario-data/README.md
 8. planning/diagrams/scenario-diagram-consistency-report.md
 9. planning/tables/README.md
-10. planning/tables/scenario-domain-design-input-gate.md
-11. planning/tables/scenario-domain-design-input-core.md
+10. planning/tables/pre-domain-variants-input.md
 ```
 
-## 2. Current Planning Phase
+## 3. Source Files For Domain Variants
 
-The project is past the initial scenario correction phase.
-
-Current phase:
+Use exactly these inputs when generating domain model variants:
 
 ```text
-scenario specs + DATA
--> server/domain validation
--> scenario domain design input gate
--> value object candidates
--> state-transition invariants
--> aggregate boundary inputs
--> domain discovery
+1. planning/diagrams/scenario-text-specs/
+2. planning/diagrams/scenario-data/
+3. planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+4. planning/tables/pre-domain-variants-input.md
 ```
 
-Active required bridge artifact:
+Optional context:
 
 ```text
-planning/tables/scenario-domain-design-input-core.md
-```
-
-Gate/contract for this artifact:
-
-```text
-planning/tables/scenario-domain-design-input-gate.md
-```
-
-Next artifact:
-
-```text
-planning/tables/domain-discovery-core.md
-```
-
-## 3. Scenario Domain Design Input Gate
-
-After scenario text specs and scenario DATA files are ready, create or update:
-
-```text
-planning/tables/scenario-domain-design-input-core.md
-```
-
-This is a required gate before `domain-discovery-core.md`.
-
-It must collect:
-
-```text
-- value object candidates;
-- server-side/domain validation rules;
-- state/status values;
-- state-transition invariants;
-- candidate domain methods;
-- aggregate owner candidates;
-- aggregate boundary pressure;
-- unresolved domain decisions / ADR candidates.
-```
-
-This artifact exists because scenarios and DATA files describe behavior and data, but domain modeling needs an intermediate design input that extracts:
-
-```text
-what values must be valid
-what states are persisted
-what state transitions are allowed
-what methods should guard those transitions
-what object/aggregate should own those rules
-```
-
-Do not skip from scenarios/DATA directly to aggregate design.
-
-Do not replace this gate with generic layer-responsibility tables.
-
-## 4. Current Source Of Truth
-
-Use:
-
-```text
+planning/diagrams/scenario-diagram-consistency-report.md
 planning/scenario-specification-principles.md
 planning/scenario-domain-validation-principles.md
-planning/diagrams/scenario-text-specs/
-planning/diagrams/scenario-data/
-planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-planning/diagrams/scenario-diagram-consistency-report.md
-planning/tables/scenario-domain-design-input-gate.md
-planning/tables/scenario-domain-design-input-core.md
 ```
 
-## 5. Stale / Compatibility Artifacts
+## 4. Current Bridge File
 
-Generated scenario package summaries and old draw.io pages may exist for visual reference.
-
-They are not semantic source of truth until regenerated from corrected text specs.
-
-Do not build planning tables from stale package summaries.
-
-Superseded table directions:
+The only active post-scenario bridge file is:
 
 ```text
+planning/tables/pre-domain-variants-input.md
+```
+
+It collects:
+
+```text
+- invariants;
+- write state persisted by scenarios;
+- state/status values;
+- state-changing actions;
+- state-dependent allowed/forbidden actions;
+- no-write behavior;
+- method pressure for domain variant generation.
+```
+
+It intentionally does not contain a value object catalog. Value objects are discovered while generating each domain variant.
+
+## 5. Superseded / Not Current
+
+Do not use this old path as the current workflow:
+
+```text
+scenario-domain-design-input-gate.md
+-> scenario-domain-design-input-core.md
+-> domain-discovery-core.md
+-> aggregate-boundary-candidates-core.md
+-> domain-model-options-core.md
+```
+
+Do not create these as active intermediate files now:
+
+```text
+planning/tables/scenario-domain-design-input-gate.md
+planning/tables/scenario-domain-design-input-core.md
+planning/tables/domain-discovery-core.md
+planning/tables/aggregate-boundary-candidates-core.md
+planning/tables/domain-model-options-core.md
 planning/tables/scenario-responsibility-core.md
 planning/tables/scenario-domain-responsibility-core.md
 ```
 
-Active replacement:
+If such files exist historically, treat them as stale/superseded planning notes, not as current source of truth.
 
-```text
-planning/tables/scenario-domain-design-input-core.md
-```
+## 6. Diagram / Scenario Source Of Truth
 
-## 6. Folder Map
+Use corrected text specs and DATA specs as semantic source of truth.
+
+Generated diagram package summaries and old `.drawio` pages may exist for visual reference, but they are not semantic source of truth until regenerated from corrected text specs.
+
+## 7. Folder Map
 
 ```text
 planning/
@@ -147,24 +134,20 @@ planning/diagrams/
 planning/tables/
   README.md
   00-planning-tables-index.md
-  scenario-domain-design-input-gate.md
-  scenario-domain-design-input-core.md
-  domain-discovery-core.md                         # next
-  ui-page-responsibility-map-core.md               # later, separate from domain discovery
+  pre-domain-variants-input.md
 ```
 
-## 7. Agent Rules
+## 8. Agent Rules
 
 Planning agents should:
 
 ```text
 - read current indexes first;
-- use corrected text specs and DATA specs as scenario source of truth;
+- use corrected scenario text specs and DATA specs as source of truth;
 - keep DATA files narrow;
-- keep validation in scenario specs/addendum and domain design input;
-- use domain/value objects as validation source of truth;
-- always pass through scenario-domain-design-input-core.md before domain discovery;
-- treat state/status transition invariants as primary aggregate-boundary evidence;
+- keep validation in validation-related files and scenario specs;
+- use pre-domain-variants-input.md before generating domain variants;
+- generate domain variants one by one;
 - avoid implementation terms before scenario-to-slice planning;
 - create or update files only when explicitly requested.
 ```
