@@ -6,19 +6,25 @@ Status: current planning tables navigation
 
 Scenario text specs and DATA files are ready.
 
-Validation-related file is kept separately.
+Validation-related files are kept separately.
 
-Before generating domain drafts, use:
+The current coverage baselines are:
 
 ```text
 planning/tables/pre-domain-variants-input.md
 planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 ```
 
-Historical filename note:
+The current saved domain draft is:
 
 ```text
-pre-domain-variants-input.md now acts as the Scenario Behavior Coverage Baseline.
+planning/tables/domain-drafts/domain-draft-01.md
+```
+
+The current L1 implementation planning entry point is:
+
+```text
+planning/l1-domain-implementation-cut.md
 ```
 
 ## 2. Current read order
@@ -32,42 +38,11 @@ pre-domain-variants-input.md now acts as the Scenario Behavior Coverage Baseline
 6. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 7. planning/domain-draft-generation-guide.md
 8. planning/tables/domain-drafts/README.md
+9. planning/tables/domain-drafts/domain-draft-01.md
+10. planning/l1-domain-implementation-cut.md
 ```
 
-## 3. Why pre-domain-variants-input.md exists
-
-It collects scenario-derived behavior items with stable IDs before domain drafts are created.
-
-It includes:
-
-```text
-- command behavior cards;
-- scenario state/condition matrices;
-- impossible business state candidates;
-- value integrity / anti-primitive-obsession items;
-- use-case coordination items;
-- read/access/integration/future items.
-```
-
-Account activation items are tracked in a focused addendum:
-
-```text
-scenario-behavior-baseline-account-activation-addendum.md
-```
-
-It intentionally does not define:
-
-```text
-- domain classes;
-- aggregate boundaries;
-- final method names;
-- final persistence schema;
-- final layer placement.
-```
-
-Each domain draft uses the stable item IDs to show coverage.
-
-## 4. Current domain draft output folder
+## 3. Current domain draft output folder
 
 Use:
 
@@ -75,11 +50,35 @@ Use:
 planning/tables/domain-drafts/
 ```
 
-Expected first draft path:
+Current saved draft:
 
 ```text
 planning/tables/domain-drafts/domain-draft-01.md
 ```
+
+Future drafts:
+
+```text
+domain-draft-02.md
+domain-draft-03.md
+...
+final-domain-model-candidate.md
+```
+
+## 4. Implementation readiness
+
+After a draft exists, the current step is not “create draft 1”.
+
+The current step is:
+
+```text
+Review / refine domain-draft-01.md for L1 implementation readiness.
+Use planning/l1-domain-implementation-cut.md before asking an implementation agent to code.
+```
+
+Implementation agents should be given a narrow L1 cut.
+
+Do not ask implementation agents to implement the whole draft in one step.
 
 ## 5. Replacement file generation
 
@@ -89,19 +88,11 @@ Manual replacement-file generation is documented in:
 planning/replacement-file-generation-guide.md
 ```
 
-When the user asks for replacement files:
-
-```text
-- generate complete files;
-- keep repository-relative paths;
-- package them in a zip;
-- include previous unapplied archive content if the user says it was not applied.
-```
-
 ## 6. Current next step
 
 ```text
-Create / refine domain draft 1.
+Review / refine domain-draft-01.md.
+Then start the first L1 domain implementation cut from planning/l1-domain-implementation-cut.md.
 ```
 
 ## 7. Avoid
@@ -116,12 +107,3 @@ scenario-domain-responsibility-core.md
 scenario-domain-design-input-core.md
 scenario-domain-design-input-gate.md
 ```
-
-Do not use the older competing-variant workflow:
-
-```text
-planning/domain-model-variant-generation-guide.md
-planning/tables/domain-variants/
-```
-
-If those files exist historically, treat them as stale/superseded notes or delete/archive them.

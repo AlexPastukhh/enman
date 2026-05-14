@@ -1,90 +1,133 @@
 # Domain Model
 
-## Главная архитектурная идея
+Status: background / implementation compatibility note  
+Current target domain direction: `planning/tables/domain-drafts/domain-draft-01.md`  
+Current L1 implementation cut: `planning/l1-domain-implementation-cut.md`
+
+## 1. Purpose Of This File
+
+This file preserves useful older L1 domain rules and implementation compatibility notes.
+
+It is not the current target domain draft.
+
+The current target domain model direction is:
+
+```text
+planning/tables/domain-drafts/domain-draft-01.md
+```
+
+The current narrow implementation task boundary is:
+
+```text
+planning/l1-domain-implementation-cut.md
+```
+
+If this file conflicts with `domain-draft-01.md`, prefer the draft for target domain direction.
+
+## 2. Main Architecture Idea
 
 ФЛ / ИП / ЮЛ — это не разные аккаунты, а разные типы заявителя.
 
 ```text
-Account        — кто входит в систему
-ApplicantParty — от чьего имени подается заявка
-Employee       — кто обрабатывает заявку
-ClientRequest  — сама заявка
-ContractDraft  — проект договора по заявке
+Account         — кто входит в систему
+ApplicantParty  — от чьего имени подается заявка
+Employee        — кто обрабатывает заявку
+ConnectionRequest — сама заявка
+AgreementProposalExchange — future post-approval proposal exchange
 ```
 
-## Важное правило реализации L1
+## 3. Current Implemented Snapshot vs Target Direction
 
-Этот файл описывает целевую модель по всем слоям, но при реализации L1 запрещено добавлять L2/L3 поля и методы в код, если они не нужны текущему L1-сценарию.
+Current implemented parallel L1 subset may still include:
 
-L2/L3 элементы — это план расширения, а не задача L1.
+```text
+RequestStatus.Submitted
+```
 
-## L1 aggregate boundaries
+Target request lifecycle in `domain-draft-01.md` is:
 
-The current parallel L1 model is a migration target. EF/API still use the old model until an explicit migration step.
+```text
+InReview
+Approved
+Rejected
+```
 
-### Current implemented aggregate roots
+`Submitted` should be treated as legacy/current implementation background unless explicitly reintroduced with separate meaning.
 
-Current implemented L1 aggregate roots:
+## 4. L1 Aggregate Boundaries
 
-- `ClientAccount` owns account/auth lifecycle.
-- `IndividualApplicantParty` owns applicant party/profile data and references the owning client account.
-- `ConnectionRequest` owns request details, object address and status, and references the applicant party.
+Current implemented aggregate roots:
 
-The current implemented L1 subset is intentionally limited to behavior already represented by the old project: registration/login-related account data, physical-person applicant data, request creation, and `RequestStatus.Submitted`.
+```text
+ClientAccount
+IndividualApplicantParty
+ConnectionRequest
+```
 
-### Aggregate root creation
+Target/refined aggregate candidates from draft:
+
+```text
+ClientAccount
+ApplicantParty / IndividualApplicantParty
+ConnectionRequest
+AgreementProposalExchange later
+```
+
+Agreement proposal exchange is not part of the first implementation cut unless explicitly requested.
+
+## 5. Aggregate Root Creation Rules
 
 - Aggregate roots are created through their own static `Create` methods or through application services/factories dedicated to that aggregate.
 - One aggregate root must not create another aggregate root.
 - Aggregate root constructors should stay private/protected where possible.
 - Application services may coordinate multiple aggregates, load required state, check cross-aggregate rules, and then call the target aggregate `Create` method or domain method.
 
-### Child entity creation
+## 6. Child Entity Creation Rules
 
 - Child entities are created only by their owning aggregate root.
 - Child entities should not have independent repositories.
 - Child entity `Create`/factory methods should be internal/private if they exist.
 - External code should not create child entities and then attach them manually.
-- Actor is not owner. Future example: `EmployeeAccount` is the reviewer/actor, but the request aggregate owns `RequestReview`.
 
-### Future aggregate candidates and child entities
-
-These future concepts or future responsibilities are preliminary and are not part of the current implemented L1 subset unless explicitly listed above:
-
-- `EmployeeAccount`: future aggregate root when employee flow is implemented.
-- `ClientRequest` / `ConnectionRequest` workflow expansion: the current request aggregate root is limited to submitted connection request creation. Later it should own workflow/status transitions and child `RequestReview` entities.
-- `RequestReview`: future child entity of `ClientRequest`, not a separate aggregate.
-- `RequestDocument`: likely future child entity of `ClientRequest` if documents are submitted/validated as part of request processing.
-- `ApplicantProfileDocument`: possible future child entity of `ApplicantParty` only if profile-level reusable applicant documents are introduced.
-- `ContractDraft`: undecided. In simple L1 it may be child of `ClientRequest`; in L2 with versions/PDF/templates/separate lifecycle it may become a separate aggregate.
-- `EmailNotification` / `OutboxMessage`: not part of the current implemented L1 subset. Later likely application/infrastructure/outbox concern, not necessarily a core aggregate.
-
-### Inter-aggregate references
+## 7. Inter-Aggregate References
 
 - Store scalar `long` IDs for inter-aggregate references for now.
 - Do not introduce typed IDs yet unless explicitly requested later.
 - Examples:
   - `IndividualApplicantParty.ClientAccountId: long`;
   - `ConnectionRequest.ApplicantPartyId: long`.
-- This rule describes stored references, not necessarily raw-`long` factory parameters.
-- Raw `long` factory parameters are not preferred where passing an existing aggregate object gives better type safety and expresses a real business precondition.
 - Domain behavior must not rely on traversing public navigation graphs across aggregate boundaries.
+- Read/query convenience should not change write aggregate shape.
 
-### Inter-aggregate creation context
+## 8. Inter-Aggregate Creation Context
 
-- During current L1 migration, aggregate factories may accept an already existing aggregate object as creation context when this improves type safety and expresses a real business precondition.
-- The created aggregate stores only the referenced aggregate ID.
-- The created aggregate must not store the referenced aggregate object as owned domain navigation.
-- The referenced aggregate must already be persisted and have valid `Id > 0`.
-- A referenced aggregate with `Id <= 0` is a method contract/application flow violation, not a normal business validation error.
-- This can be guarded with an exception.
+Current implementation may pass an existing aggregate object as creation context when it improves type safety.
 
-Examples:
+Target draft refinement:
 
-- `IndividualApplicantParty.Create(clientAccount, fullName, email, phoneNumber)` stores `clientAccount.Id` into `ClientAccountId`.
-- `ConnectionRequest.Create(applicantParty, details, objectAddress)` stores `applicantParty.Id` into `ApplicantPartyId`.
+```text
+Account activation guard belongs in application/auth layer.
+ApplicantParty factory should not duplicate activation checks internally.
+```
 
-### Domain error policy
+Preferred current target shape for applicant creation:
+
+```csharp
+var account = await accounts.GetById(currentClientAccountId);
+
+var activated = account.EnsureActivated();
+if (activated.IsFailure)
+    return activated;
+
+var applicant = IndividualApplicantParty.Create(
+    account.Id,
+    fullName,
+    applicantContactEmail,
+    phoneNumber,
+    clock.UtcNow);
+```
+
+## 9. Domain Error Policy
 
 - Use `Result` for expected business/user validation failures.
 - Use exceptions/guards for:
@@ -93,529 +136,226 @@ Examples:
   - impossible states;
   - transient aggregate passed where a persisted aggregate reference is required.
 - Raw user input may be null/empty and should be handled as validation failure when it reaches a domain factory as raw primitive data.
-- Required domain objects and value objects should not be null. Null required domain objects are application/programmer errors.
+- Required domain objects and value objects should not be null.
 - A referenced aggregate with `Id <= 0` is not normal business validation. It means the application tried to use a transient aggregate where an existing persisted aggregate was required.
 
-Examples:
+## 10. Optional Values Policy
 
-- `ConnectionRequest.Create(applicantParty: null, details, address)` => guard/exception.
-- `ConnectionRequest.Create(applicantParty, details: null/empty/whitespace, address)` => business validation `Result`.
-- `ConnectionRequest.Create(applicantPartyWithId0, details, address)` => method contract/application flow violation.
-
-### Optional values policy
-
-- Use nullable `T?` for:
-  - simple persisted optional state;
-  - DTO/API contract fields;
-  - EF nullable columns;
-  - private backing fields;
-  - UI/display-only optional values.
-- Use `Maybe<T>` for operation results where absence is an expected outcome, especially:
-  - repository lookups;
-  - find/get optional operations;
-  - methods whose main purpose is to attempt to retrieve a value.
+- Use nullable `T?` for simple persisted optional state, DTO/API fields, EF nullable columns, private backing fields and UI/display-only optional values.
+- Use `Maybe<T>` for operation results where absence is an expected outcome, especially repository lookups.
 - Use `Result<T>` when failure needs an explicit reason.
 - Do not pass `Maybe<T>` into aggregate factories for required dependencies.
 - Resolve `Maybe<T>` in the application service before calling the domain method.
-- Aggregate factories should receive actual domain objects/value objects, not `Maybe<T>` wrappers for required dependencies.
-- Do not map `Maybe<T>` directly with EF by default.
-- A domain entity may expose a computed `Maybe<T>` over a private nullable backing field only when optionality is an important part of domain language and the benefit outweighs EF/query complexity.
-- Prefer domain behavior methods and predicates over exposing optional state when external code only needs to decide whether an action is allowed.
 
-Good repository/application style:
-
-```csharp
-var maybeApplicantParty = await applicantPartyRepository.GetById(applicantPartyId);
-
-if (maybeApplicantParty.HasNoValue)
-{
-    return Result.Failure<ConnectionRequest, IReadOnlyList<Error>>(
-        [Errors.ApplicantParty.NotFound]);
-}
-
-var applicantParty = maybeApplicantParty.Value;
-
-var createRequest = ConnectionRequest.Create(
-    applicantParty,
-    details,
-    objectAddress);
-```
-
-Avoid passing optional wrappers into required domain dependencies:
-
-```csharp
-var createRequest = ConnectionRequest.Create(
-    maybeApplicantParty,
-    details,
-    objectAddress);
-```
-
-Prefer behavior or predicates when outside code only needs a decision:
-
-```csharp
-if (!request.CanBeTakenForReviewBy(employee))
-{
-    return Result.Failure(Errors.Request.CannotBeTakenForReview);
-}
-```
-
-Instead of exposing optional state only so callers can inspect it:
-
-```csharp
-if (request.AssignedEmployeeId is null)
-{
-    // decide whether review can start outside the aggregate
-}
-```
-
-### EF relationship and navigation rule
+## 11. EF Relationship And Navigation Rule
 
 - For one-to-many relationships between aggregate roots, model the relationship from the many side with an FK.
 - Do not add a collection navigation on the one/principal side just to express one-to-many.
 - Example:
   - `ApplicantParty` has `ClientAccountId`;
-  - `ClientAccount` does not need an `ApplicantParties` collection as a domain navigation;
-  - EF mapping can use `HasOne<ClientAccount>().WithMany().HasForeignKey(x => x.ClientAccountId)`.
-- This is a unidirectional relationship / relationship without principal collection navigation, not an absent relationship.
+  - `ClientAccount` does not need an `ApplicantParties` collection as a domain navigation.
 - Optional EF navigation properties between aggregate roots are allowed only as persistence/read convenience, not as domain ownership.
 - Domain methods/factories should not require those navigation properties to be loaded.
 
-### Primitive collections
+## 12. Primitive Collections
 
 - Do not model aggregate relationships as primitive collections like `List<long> ApplicantPartyIds` or `List<long> DocumentIds`.
-- This avoids EF primitive collection tracking/value comparer complexity and keeps ownership clear.
 - If the application needs "all applicant parties for account", use a repository/query by `ClientAccountId`.
 - If an aggregate needs a collection inside it, it should usually be a child entity collection owned by that aggregate, not a primitive ID collection.
 
-### Cross-aggregate invariants
+## 13. Cross-Aggregate Invariants
 
-- If a command needs data from another aggregate, the application service loads that aggregate and checks the rule before calling the target aggregate.
-- Example:
-  - load `ApplicantParty` by `applicantPartyId`;
-  - check `ApplicantParty.ClientAccountId == currentClientAccountId`;
-  - call `ConnectionRequest.Create(applicantParty, details, address)`;
-  - `ConnectionRequest` stores only `applicantParty.Id`.
-- Do not push this check into `ConnectionRequest`; ownership and authorization checks that need multiple aggregates belong in the application service.
+If a command needs data from another aggregate, the application service loads that aggregate and checks the rule before calling the target aggregate.
 
-## L1 implementation cut
-
-Current implemented parallel L1 subset:
+Example:
 
 ```text
-Account
-ClientAccount
-ApplicantParty
-IndividualApplicantParty
-ClientRequest
-ConnectionRequest
-RequestStatus.Submitted
+load ApplicantParty by applicantPartyId
+check ApplicantParty.ClientAccountId == currentClientAccountId
+call ConnectionRequest.Create(applicantParty, details, address)
+ConnectionRequest stores only applicantParty.Id
 ```
 
-Employee/review/contract/email workflow concepts are future candidates until their old-project behavior and tests are intentionally migrated.
+Do not push current-user ownership checks into `ConnectionRequest`.
 
-## Identity / Accounts
+## 14. Current First L1 Implementation Cut
 
-### `Account` — L1
+Use:
 
-Базовая учетная запись пользователя.
+```text
+planning/l1-domain-implementation-cut.md
+```
 
-L1 поля:
+First implementation cut:
 
-- `Id`;
-- `Email`;
-- `PasswordHash`;
-- `Role`;
-- `IsActive`;
-- `CreatedAt`.
+```text
+Account / ClientAccount activation marker
+Account.EnsureActivated
+ApplicantParty / IndividualApplicantParty
+ApplicantPartyVerificationStatus: Unverified / Verified
+ConnectionRequest
+RequestStatus: InReview / Approved / Rejected
+ReviewDecisionRecord
+Approve / Reject
+optional RejectionFeedback
+domain unit tests
+```
 
-L2 расширения:
+Out of first cut:
 
-- `EmailConfirmed`;
-- `EmailConfirmationToken`;
-- `PasswordResetToken`;
-- `PasswordResetTokenExpiresAt`.
+```text
+AgreementProposalExchange
+VerificationResult
+AnonymousSubmission
+future applicant types
+documents/file storage
+persistence/API/UI/read models
+```
 
-L3 расширения:
+## 15. Identity / Accounts
 
-- `LastLoginAt`;
-- `LockoutUntil`;
-- `AuthProvider`.
+`ClientAccount` owns account/auth identity.
 
-Наследники:
+Current core registration creates Active account.
 
-- `ClientAccount` — L1;
-- `EmployeeAccount` — later L1.
+Protected use cases require active account.
 
-### Password storage rule
+Important rule:
+
+```text
+Account.EnsureActivated is called by application service/auth policy before protected use cases.
+Business aggregates should not duplicate activation checks internally.
+```
+
+Password storage rule:
 
 - `Account` stores `PasswordHash`, not a raw password.
-- The old `Password` wrapper should not be used in the L1 account model if it only wraps `PasswordHash` and adds no domain behavior.
 - Raw password exists only at the DTO/command/application-service boundary.
-- Hashing and password verification belong to a password hasher/auth service, not to the account aggregate itself.
+- Hashing and password verification belong to password hasher/auth service, not to the account aggregate itself.
 
-### `ClientAccount` — L1
+## 16. Applicant Parties
 
-Аккаунт клиента. Отвечает только за вход клиента в систему.
+Target current direction:
 
-Связь с `ApplicantParty` выражается через `ApplicantParty.ClientAccountId` и запросы по этому FK, а не через доменную collection navigation на стороне `ClientAccount`.
+```text
+ApplicantParty is persisted applicant domain object.
+ApplicantParty belongs to ClientAccount by ClientAccountId.
+ApplicantParty uses inheritance for Individual / Entrepreneur / LegalEntity.
+```
 
-В L1 обычно один `IndividualApplicantParty`.
+Current core:
 
-### `EmployeeAccount` — later L1
+```text
+IndividualApplicantParty
+ApplicantPartyVerificationStatus.Unverified
+ApplicantPartyVerificationStatus.Verified
+```
 
-Аккаунт сотрудника, который обрабатывает заявки.
+Editing/version-like policy:
 
-L3 может иметь `WindowsIdentityLink` для Negotiate-аутентификации.
+```text
+Changing applicant data creates a new version-like ApplicantParty record.
+Verified records are preserved.
+Request-referenced records are preserved.
+Current active record is preserved.
+Irrelevant inactive unverified records may be removed or archived.
+```
 
-## Applicant Parties
+## 17. Requests
 
-### `ApplicantParty` — L1
+Target current direction:
 
-Базовый класс заявителя.
+```text
+ConnectionRequest stores ApplicantPartyId.
+ConnectionRequest does not store ClientAccountId.
+ConnectionRequest starts as InReview.
+ConnectionRequest can be Approved or Rejected.
+```
 
-L1 поля:
+Current target statuses:
 
-- `Id`;
-- `ClientAccountId`;
-- `ApplicantPartyType`;
-- `Email`;
-- `PhoneNumber`;
-- `CreatedAt`.
+```text
+InReview
+Approved
+Rejected
+```
 
-L1 методы:
+Legacy/current implementation status:
 
-- `GetDisplayName()`.
+```text
+Submitted
+```
 
-Не делать в L1:
-
-- `CreateSnapshot()`;
-- паспортные данные;
-- ИНН;
-- ОГРН;
-- ОГРНИП;
-- анонимного заявителя.
-
-Snapshot лучше создавать в L2 через отдельный сервис/фабрику, чтобы L1-домен не зависел от L2-типа.
-
-### `IndividualApplicantParty` — L1
-
-Физическое лицо.
-
-L1 поля:
-
-- `FullName`;
-- `Email`;
-- `PhoneNumber`.
-
-L2 расширения:
-
-- `PassportData`;
-- `ActualAddress`.
-
-### `EntrepreneurApplicantParty` — L2
-
-Индивидуальный предприниматель.
-
-Поля:
-
-- `FullName`;
-- `Inn`;
-- `Ogrnip`;
-- `RegistrationAddress`.
-
-### `LegalEntityApplicantParty` — L2
-
-Юридическое лицо.
-
-Поля:
-
-- `OrganizationName`;
-- `Inn`;
-- `Ogrn`;
-- `LegalAddress`.
-
-### `AnonymousApplicantParty` — L3
-
-Анонимный заявитель без `ClientAccountId`.
-
-Используется только для L3 anonymous requests.
-
-### `ApplicantSnapshot` — L2
-
-Снимок данных заявителя на момент подачи заявки.
-
-Нужен, чтобы изменение профиля пользователя не меняло исторические заявки.
-
-## Requests
-
-### `ClientRequest` — current implemented L1 subset
-
-Базовый aggregate заявки в текущем узком L1-срезе.
-
-Current implemented fields:
-
-- `Id`;
-- `ApplicantPartyId`;
-- `RequestType`;
-- `Status`;
-- `Details`;
-- `ObjectAddress`;
-- `CreatedAt`.
-
-Current implemented methods:
-
-- `Create(...)`.
-
-Explicitly not in the current implemented subset:
-
-- `Number`;
-- `AssignedEmployeeId`;
-- `Reviews`;
-- `TakeForReview(...)`;
-- `Approve(...)`;
-- `Reject(...)`;
-- `AttachContractDraft(...)`;
-- `MarkContractDraftSent()`.
-
-### Request number policy
+Request number policy:
 
 - `Id` is the technical primary key/FK.
-- Request number is a public/business identifier, not the primary key.
-- Request number is not part of the current implemented L1 subset.
+- Request number is a future public/business identifier, not the primary key.
+- Request number is not part of the first implementation cut.
 - Do not generate request numbers inside the domain entity with timestamps.
-- If request numbers become necessary later, generate them outside the entity through an application service, generator, or database sequence, then pass/store the generated value intentionally.
 
-### `ClientRequest` — later L1 workflow expansion
+## 18. Review
 
-Later workflow fields may include:
+Target current direction:
 
-- `Number`;
-- `AssignedEmployeeId`;
-- `Reviews`.
+```text
+ReviewDecisionRecord is child state of ConnectionRequest.
+Approval records review decision.
+Rejection records review decision with optional RejectionFeedback.
+RejectionFeedback is optional in domain.
+UI should warn if employee rejects without feedback.
+```
 
-Later workflow methods may include:
+## 19. Agreement Proposal Exchange
 
-- `TakeForReview(employeeId)`;
-- `Approve(employeeId, comment)`;
-- `Reject(employeeId, reason)`;
-- `AttachContractDraft(contractDraftId)`;
-- `MarkContractDraftSent()`.
+Agreement proposal exchange is in `domain-draft-01.md` but outside the first implementation cut.
 
-L2 расширения:
+Current draft decisions:
 
-- `ApplicantSnapshot`;
-- `Documents`;
-- `History`;
-- `VerificationResult`;
-- `Comments`.
+```text
+AgreementProposalExchange has its own status.
+AgreementProposalExchange stores ActiveProposalVersion, not ActiveProposalId.
+AgreementProposal Id is DB technical identity.
+AgreementProposalVersion is aggregate-generated domain version.
+AgreementProposalNumber is optional/future public number.
+SupersededByCounterProposal is used for replacement, not Rejected.
+Final agreement refusal is not current core.
+```
 
-L3 расширения:
+Final agreement refusal likely requires request-level post-approval outcome such as:
 
-- `Archive()`.
+```text
+agreement not concluded
+failed agreement flow
+closed without agreement
+```
 
-### `ConnectionRequest` — L1
+## 20. Documents / Notifications / Verification / Audit
 
-Заявка на технологическое присоединение.
+These are outside the first implementation cut.
 
-L2 может добавить:
+Future/deferred concepts:
 
-- `RequestedPowerKw`.
+```text
+RequestDocument
+GeneratedDocument
+NotificationMessage
+EmailNotification
+OutboxMessage
+VerificationResult
+VerificationProvider
+AuditLogEntry
+```
 
-### `MeteringDeviceRequest` — later L1
+## 21. EF Core Mapping Strategy
 
-Заявка по приборам учета.
+Historical mapping ideas remain background only.
 
-L2 может добавить:
+Do not start persistence mapping from this file for the first L1 implementation cut.
 
-- `MeteringDeviceWorkType`.
+First L1 cut should be:
 
-### `RequestStatus`
+```text
+domain classes + domain unit tests
+```
 
-Current implemented L1 subset:
-
-- `Submitted`;
-
-Later L1 workflow expansion:
-
-- `InReview`;
-- `Approved`;
-- `Rejected`;
-- `ContractDraftSent`.
-
-L2:
-
-- `NeedClarification`;
-- `VerificationInProgress`;
-- `VerificationFailed`;
-- `ContractDraftPrepared`;
-- `CorrectionRequested`;
-- `Completed`.
-
-L3:
-
-- `Archived`.
-
-### `RequestReview` — later L1
-
-Решение сотрудника по заявке.
-
-L1 поля:
-
-- `Id`;
-- `RequestId`;
-- `EmployeeId`;
-- `Decision`;
-- `Comment`;
-- `CreatedAt`.
-
-Важно: не использовать `bool IsApproved`. Использовать `ReviewDecision`.
-
-### `ReviewDecision`
-
-L1:
-
-- `Approved`;
-- `Rejected`.
-
-L2:
-
-- `NeedClarification`;
-- `ManualReviewRequired`.
-
-## Contracts
-
-### `ContractDraft` — later L1
-
-Простой проект договора/документа, создаваемый после одобрения заявки.
-
-Рекомендация: в L1 сделать один `ContractDraft` без наследования.
-
-L1 поля:
-
-- `Id`;
-- `RequestId`;
-- `ContractNumber`;
-- `RequestType`;
-- `Status`;
-- `Text`;
-- `CreatedAt`;
-- `CreatedByEmployeeId`;
-- `PdfFilePath` optional.
-
-L2 расширения:
-
-- `TemplateId`;
-- `CurrentVersionId`;
-- `SentAt`;
-- `AcknowledgedAt`;
-- `ContractDraftVersion`;
-- `ContractTemplate`;
-- `ContractEvent`;
-- `ContractAcknowledgement`.
-
-Не делать в L1:
-
-- наследников `ConnectionContractDraft` / `MeteringServiceContractDraft`, если нет реальных отличий;
-- юридическое подписание;
-- электронную подпись.
-
-### `ContractTemplate` — L2
-
-Шаблон договора.
-
-### `ContractDraftVersion` — L2
-
-Версия проекта договора.
-
-### `ContractAcknowledgement` — L2
-
-Подтверждение ознакомления клиента с проектом договора.
-
-## Documents
-
-### `RequestDocument` — L2
-
-Документ, прикрепленный к заявке.
-
-Типы:
-
-- паспорт;
-- доверенность;
-- правоустанавливающий документ;
-- проект договора;
-- технические условия;
-- письмо об отказе;
-- прочее.
-
-### `GeneratedDocument` — L2
-
-Документ, созданный системой, например PDF договора.
-
-## Notifications
-
-### `NotificationMessage` — later L1
-
-Базовое уведомление.
-
-L1 канал:
-
-- `Email`.
-
-L3 каналы:
-
-- `Sms`;
-- `InternalMessage`.
-
-### `EmailNotification` — later L1
-
-Email-уведомление клиенту.
-
-### `FeedbackTemplate` — L2
-
-Шаблон обратной связи.
-
-### `OutboxMessage` — L3
-
-Надежная отправка уведомлений.
-
-## Verification
-
-L2-only:
-
-- `VerificationRequest`;
-- `VerificationResult`;
-- `VerificationCheckResult`;
-- `ExternalVerificationService`.
-
-Реальные внешние интеграции не делать.
-
-## Security / Audit
-
-L3-only:
-
-- `LoginAttempt`;
-- `AccountLock`;
-- `SecurityEvent`;
-- `AuditLogEntry`;
-- `WindowsIdentityLink`;
-- `RateLimitRule`;
-- `EmailDeliveryAttempt`.
-
-## EF Core mapping strategy
-
-| Hierarchy | Recommended mapping |
-|---|---|
-| `Account` → `ClientAccount` / `EmployeeAccount` | TPH |
-| `ApplicantParty` → ФЛ / ИП / ЮЛ / Anonymous | TPH |
-| `ClientRequest` → `ConnectionRequest` / `MeteringDeviceRequest` | TPH |
-| `NotificationMessage` → Email / SMS / Internal | TPH |
-| `ContractDraft` | One table in L1; type enum or optional TPH in L2 |
-
-Не использовать наследование для:
-
-- `RequestDocument`;
-- `ContractTemplate`;
-- `FeedbackTemplate`;
-- `VerificationResult`;
-- `AuditLogEntry`;
-- `OutboxMessage`.
+Persistence/API/UI should be planned after the domain cut is stable.

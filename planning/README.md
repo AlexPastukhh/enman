@@ -18,100 +18,41 @@ scenario text specs
 -> coverage review
 -> ...
 -> final domain model candidate
--> then plan aggregates/slices/implementation
+-> implementation readiness review
+-> L1 domain implementation cut
+-> domain classes + unit tests
+-> then plan application/API/persistence/UI slices
 ```
 
-The current main-domain next working step is:
+The current main-domain working step is:
 
 ```text
-Create / refine domain draft 1 using the scenario behavior coverage baseline.
+Review / refine planning/tables/domain-drafts/domain-draft-01.md for L1 implementation readiness.
 ```
 
-## 2. What Changed From The Older “Domain Variants” Wording
-
-Older notes used wording like:
+The current implementation planning entry point is:
 
 ```text
-domain model variant 1
-domain model variant 2
-compare/refine variants
-choose domain model direction
+planning/l1-domain-implementation-cut.md
 ```
 
-That wording is superseded.
+## 2. Current L1 Implementation Readiness Position
 
-Current meaning:
+`domain-draft-01.md` exists and is the current first saved domain draft.
+
+Before asking an implementation agent to code L1, use this order:
 
 ```text
-Domain draft N = complete current snapshot of the same developing domain model.
-Domain draft N+1 = same direction, but more detailed, with better scenario behavior coverage and fewer questions.
+1. Review domain-draft-01.md.
+2. Use planning/l1-domain-implementation-cut.md.
+3. Implement only the agreed L1 domain cut.
+4. Add domain unit tests for local invariants and no-write behavior.
+5. Do not implement persistence/API/UI unless explicitly requested.
 ```
 
-The goal is not to create competing alternative designs.
+Do not ask an agent to implement the whole draft at once.
 
-The goal is to gradually discover the final domain model.
-
-## 3. Parallel UI Planning Branch
-
-UI planning is a separate parallel branch after scenario text specs and DATA files are ready.
-
-It does not replace domain draft planning.
-
-UI planning workflow:
-
-```text
-scenario text specs
--> scenario DATA files
--> validation-related file
--> ui-planning-workflow.md
--> test-site-ui-plan.md
--> ui-questions-register.md
--> optional visual / HTML / React low-fidelity mockup later
-```
-
-Current UI planning entry point:
-
-```text
-planning/ui/README.md
-```
-
-Current UI planning outputs:
-
-```text
-planning/ui/test-site-ui-plan.md
-planning/ui/ui-questions-register.md
-```
-
-## 4. VKR Clean Writing Support
-
-The current internal guide for clean VKR wording is:
-
-```text
-planning/vkr-formulation-guide.md
-```
-
-Use it when creating or editing:
-
-```text
-vkr-clean/
-presentation/
-```
-
-This guide is not diploma text.
-
-It exists to keep clean VKR materials:
-
-```text
-- project-specific;
-- evidence-based;
-- free from internal planning wording;
-- separated by implementation status;
-- written in normal academic engineering style.
-```
-
-## 5. Current Read Order
-
-Use this read order for the whole planning area:
+## 3. Current Read Order
 
 ```text
 1. planning/README.md
@@ -119,42 +60,46 @@ Use this read order for the whole planning area:
 3. planning/scenario-specification-principles.md
 4. planning/scenario-domain-validation-principles.md
 5. planning/replacement-file-generation-guide.md
-6. planning/vkr-formulation-guide.md
-7. planning/diagrams/README.md
-8. planning/diagrams/scenario-text-specs/README.md
-9. planning/diagrams/scenario-data/README.md
-10. planning/diagrams/scenario-diagram-consistency-report.md
-11. planning/tables/README.md
-12. planning/tables/pre-domain-variants-input.md
-13. planning/domain-draft-generation-guide.md
-14. planning/tables/domain-drafts/README.md
-15. planning/ui/README.md
-16. planning/ui/ui-planning-workflow.md
-17. planning/ui/test-site-ui-plan.md
-18. planning/ui/ui-questions-register.md
+6. planning/diagrams/README.md
+7. planning/diagrams/scenario-text-specs/README.md
+8. planning/diagrams/scenario-data/README.md
+9. planning/tables/README.md
+10. planning/tables/pre-domain-variants-input.md
+11. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
+12. planning/domain-draft-generation-guide.md
+13. planning/tables/domain-drafts/README.md
+14. planning/tables/domain-drafts/domain-draft-01.md
+15. planning/l1-domain-implementation-cut.md
+16. planning/current-state.md
+17. planning/domain-model.md
+18. planning/ui/README.md
 ```
 
-## 6. Source Files For Domain Drafts
+## 4. Source Files For Domain Drafts
 
-Use exactly these inputs when generating domain drafts:
+Use exactly these inputs when generating or refining domain drafts:
 
 ```text
 1. planning/diagrams/scenario-text-specs/
 2. planning/diagrams/scenario-data/
 3. planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-4. planning/tables/pre-domain-variants-input.md
-5. planning/domain-draft-generation-guide.md
+4. planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
+5. planning/tables/pre-domain-variants-input.md
+6. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
+7. planning/domain-draft-generation-guide.md
 ```
 
 Optional context:
 
 ```text
+planning/current-state.md
+planning/domain-model.md
 planning/diagrams/scenario-diagram-consistency-report.md
 planning/scenario-specification-principles.md
 planning/scenario-domain-validation-principles.md
 ```
 
-## 7. Scenario Behavior Coverage Baseline
+## 5. Scenario Behavior Coverage Baseline
 
 The active pre-domain control artifact is:
 
@@ -168,38 +113,13 @@ Despite the historical filename, this file now acts as:
 Scenario Behavior Coverage Baseline
 ```
 
-It collects scenario-derived behavior items with stable IDs:
-
-```text
-- command behavior items;
-- scenario state/condition items;
-- impossible business state candidates;
-- value integrity / anti-primitive-obsession items;
-- use-case coordination items;
-- read/access/integration/future items.
-```
+It collects scenario-derived behavior items with stable IDs.
 
 It does not define domain classes, aggregates or final method names.
 
 Each domain draft uses those item IDs to show what is covered, partial, unresolved, deferred or placed outside the current domain model.
 
-## 8. Source Files For UI Planning
-
-Use these inputs when creating `test-site-ui-plan.md`:
-
-```text
-1. planning/diagrams/scenario-text-specs/
-2. planning/diagrams/scenario-data/
-3. planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-4. planning/tables/pre-domain-variants-input.md
-5. planning/diagrams/scenario-diagram-consistency-report.md
-6. planning/scenario-specification-principles.md
-7. planning/ui/ui-planning-workflow.md
-```
-
-UI planning output is textual page planning, not final visual design.
-
-## 9. Replacement File Generation Workflow
+## 6. Replacement File Generation Workflow
 
 When the user asks for files to replace manually, use:
 
@@ -218,9 +138,9 @@ keep the response practical and list target paths
 
 Do not provide partial snippets unless explicitly requested.
 
-## 10. Superseded / Not Current
+## 7. Superseded / Not Current
 
-Do not use this old path as the current workflow:
+Do not use the old path as the current workflow:
 
 ```text
 scenario-domain-design-input-gate.md
@@ -239,76 +159,20 @@ domain model variant 1
 -> choose one
 ```
 
-If these files/folders exist from older packages, treat them as stale/superseded notes:
+If old files/folders exist, treat them as stale/superseded notes.
 
-```text
-planning/domain-model-variant-generation-guide.md
-planning/tables/domain-variants/
-planning/tables/scenario-domain-design-input-gate.md
-planning/tables/scenario-domain-design-input-core.md
-planning/tables/domain-discovery-core.md
-planning/tables/aggregate-boundary-candidates-core.md
-planning/tables/domain-model-options-core.md
-```
-
-## 11. Diagram / Scenario Source Of Truth
-
-Use corrected text specs and DATA specs as semantic source of truth.
-
-Generated diagram package summaries and old `.drawio` pages may exist for visual reference, but they are not semantic source of truth until regenerated from corrected text specs.
-
-## 12. Folder Map
-
-```text
-planning/
-  README.md
-  planning-workflow-current.md
-  scenario-specification-principles.md
-  scenario-domain-validation-principles.md
-  replacement-file-generation-guide.md
-  domain-draft-generation-guide.md
-  vkr-formulation-guide.md
-  scenario-to-implementation-workflow-v5-consolidated.md  # superseded compatibility note
-
-planning/diagrams/
-  README.md
-  scenario-text-specs/
-  scenario-data/
-  scenario-diagram-consistency-report.md
-
-planning/tables/
-  README.md
-  00-planning-tables-index.md
-  pre-domain-variants-input.md
-  domain-drafts/
-
-planning/ui/
-  README.md
-  ui-planning-workflow.md
-  test-site-ui-plan.md
-  ui-questions-register.md
-  mockup-generation-guide.md
-  prompts/
-```
-
-## 13. Agent Rules
+## 8. Agent Rules
 
 Planning agents should:
 
 ```text
 - read current indexes first;
 - use corrected scenario text specs and DATA specs as source of truth;
-- keep DATA files narrow;
-- keep validation in validation-related files and scenario specs;
 - use pre-domain-variants-input.md as scenario behavior coverage baseline before generating domain drafts;
-- generate domain drafts iteratively, not competing alternatives;
-- each draft must include coverage against baseline item IDs;
-- use planning/ui/README.md and ui-planning-workflow.md before UI planning;
-- keep textual UI plans separate from visual/HTML prototypes;
-- use planning/vkr-formulation-guide.md when writing or editing clean VKR and presentation materials;
-- keep internal wording out of vkr-clean/ and presentation/;
-- generate complete replacement files when the user asks for manual replacement files;
-- include all files from previous unapplied archive when the user says it was not applied;
-- avoid implementation terms before scenario-to-slice planning;
+- after a draft exists, do not say “create draft 1” as the current step;
+- use planning/l1-domain-implementation-cut.md before giving L1 coding work to an implementation agent;
+- keep L1 implementation narrow: domain classes + unit tests first;
+- do not implement persistence/API/UI unless explicitly requested;
+- use progressive file splitting during L1 implementation;
 - create or update files only when explicitly requested.
 ```

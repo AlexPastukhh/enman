@@ -8,7 +8,7 @@ Scenario text specifications are ready.
 
 Scenario DATA files are ready.
 
-Validation-related file remains part of the workflow.
+Validation-related files remain part of the workflow.
 
 The current pre-domain control artifact is:
 
@@ -22,22 +22,16 @@ Historical filename note:
 pre-domain-variants-input.md now acts as the Scenario Behavior Coverage Baseline.
 ```
 
-The current domain draft guide is:
+The current saved domain draft is:
 
 ```text
-planning/domain-draft-generation-guide.md
+planning/tables/domain-drafts/domain-draft-01.md
 ```
 
-The current UI-planning entry point is:
+The current L1 implementation planning entry point is:
 
 ```text
-planning/ui/README.md
-```
-
-The current VKR wording guide is:
-
-```text
-planning/vkr-formulation-guide.md
+planning/l1-domain-implementation-cut.md
 ```
 
 ## 2. Main Domain Workflow
@@ -53,7 +47,10 @@ scenario text specs
 -> coverage review
 -> ...
 -> final domain model candidate
--> then plan aggregates/slices/implementation
+-> implementation readiness review
+-> L1 implementation cut
+-> domain classes + unit tests
+-> then application/API/persistence/UI planning
 ```
 
 The goal is gradual domain discovery, not selection between competing domain alternatives.
@@ -61,8 +58,6 @@ The goal is gradual domain discovery, not selection between competing domain alt
 ## 3. What A Domain Draft Means
 
 Each domain draft is a complete snapshot of the current domain understanding.
-
-Each draft includes the same required sections.
 
 Each next draft should:
 
@@ -76,6 +71,8 @@ Each next draft should:
 - make use-case coordination decisions clearer.
 ```
 
+`domain-draft-01.md` already exists. The current task is review/refinement for implementation readiness, not creating the first draft from scratch.
+
 ## 4. Source Files For Domain Drafts
 
 Use exactly these inputs:
@@ -84,32 +81,13 @@ Use exactly these inputs:
 1. planning/diagrams/scenario-text-specs/
 2. planning/diagrams/scenario-data/
 3. planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-4. planning/tables/pre-domain-variants-input.md
-5. planning/domain-draft-generation-guide.md
+4. planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
+5. planning/tables/pre-domain-variants-input.md
+6. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
+7. planning/domain-draft-generation-guide.md
 ```
 
-## 5. Purpose Of Scenario Behavior Coverage Baseline
-
-`planning/tables/pre-domain-variants-input.md` collects scenario-derived coverage items with stable IDs.
-
-It exists before domain drafts.
-
-It does not define domain classes, aggregates or final method names.
-
-It records:
-
-```text
-- required behavior / guarantees from scenarios;
-- failure / no-write guarantees;
-- scenario state/condition matrices;
-- impossible business state candidates;
-- value integrity / anti-primitive-obsession items;
-- use-case coordination items;
-- read/access/integration/future behavior items;
-- draft questions that future domain drafts must answer.
-```
-
-## 6. How Coverage Works
+## 5. How Coverage Works
 
 The baseline gives each behavior item a stable ID.
 
@@ -117,21 +95,11 @@ Each domain draft has a coverage section:
 
 ```text
 Item ID
+Readable requirement / invariant
 Status
 Draft answer / placement
 Covered by
 Gap / next action
-```
-
-Coverage statuses:
-
-```text
-Missing
-Partial
-Covered
-Resolved outside current domain model
-Deferred
-Question
 ```
 
 Coverage item does not mean “domain class must implement this.”
@@ -142,104 +110,60 @@ Coverage item means:
 the system must explain/cover this behavior.
 ```
 
-A domain draft may cover it with:
+## 6. L1 Implementation Readiness
+
+Before implementation work, read:
 
 ```text
-- domain class;
-- value object;
-- domain service;
-- application/use-case orchestration;
-- read/query/access placement;
-- DB constraint;
-- infrastructure/integration;
-- deferred future decision.
+planning/tables/domain-drafts/domain-draft-01.md
+planning/l1-domain-implementation-cut.md
+planning/current-state.md
+planning/domain-model.md
 ```
 
-## 7. Parallel UI Planning Branch
-
-UI planning is a parallel branch after scenario text specs and DATA files are ready.
-
-It does not replace domain draft planning.
-
-UI planning creates a textual test-site UI plan, not final visual design.
-
-Workflow:
+Interpretation:
 
 ```text
-scenario text specs
--> scenario DATA files
--> validation-related file
--> ui-planning-workflow.md
--> test-site-ui-plan.md
--> ui-questions-register.md
--> optional visual / HTML / React low-fidelity mockup later
+domain-draft-01.md = target domain direction for next L1 domain refinement.
+current-state.md = repository implementation snapshot.
+domain-model.md = background L1 rules and compatibility notes.
+l1-domain-implementation-cut.md = narrow implementation task boundary.
 ```
 
-Inputs:
+The first implementation agent should not implement the whole draft.
+
+The first implementation agent should implement only the agreed L1 domain cut:
 
 ```text
-planning/diagrams/scenario-text-specs/
-planning/diagrams/scenario-data/
-planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-planning/tables/pre-domain-variants-input.md
-planning/diagrams/scenario-diagram-consistency-report.md
-planning/scenario-specification-principles.md
-planning/ui/ui-planning-workflow.md
+domain classes + unit tests
+no persistence
+no API
+no UI
+no agreement exchange unless explicitly included
 ```
 
-Outputs:
+## 7. L1 File Strategy
+
+Use progressive file splitting.
+
+During first implementation of a mini-cut, keep related domain code close enough for agent readability.
+
+After the mini-cut is behavior-complete and unit tests are green, split/normalize files into production structure.
+
+Do not keep the whole L1 domain in one giant file until the end.
+
+Do not create excessive micro-files before behavior stabilizes.
+
+Recommended mini-cut order:
 
 ```text
-planning/ui/test-site-ui-plan.md
-planning/ui/ui-questions-register.md
+1. Account / ClientAccount activation marker
+2. ApplicantParty / IndividualApplicantParty
+3. ConnectionRequest / review behavior
+4. AgreementProposalExchange later, after core request/refactor is stable
 ```
 
-## 8. Scenario / DATA Feedback From UI Planning
-
-UI planning can reveal that a scenario or DATA file is underspecified.
-
-Use this rule:
-
-```text
-If the UI plan reveals that the user must see, understand, or do something for the use case to be valid, update the scenario spec.
-
-If it reveals that a page needs a specific visible/input/selectable/filter/attachment DATA item to support an already-defined scenario, update the DATA file.
-
-If the issue is only layout, component choice, navigation style, or one of several acceptable UX options, keep it in test-site-ui-plan.md or ui-questions-register.md.
-```
-
-## 9. VKR Clean Writing Branch
-
-VKR clean writing is a supporting branch, not a replacement for domain or UI planning.
-
-Use:
-
-```text
-planning/vkr-formulation-guide.md
-```
-
-when creating or editing:
-
-```text
-vkr-clean/
-presentation/
-```
-
-Purpose:
-
-```text
-- keep wording academic and project-specific;
-- remove generic and promotional phrasing;
-- avoid transferring internal planning wording into clean materials;
-- distinguish implemented, designed, planned and deferred functionality;
-- keep statements tied to repository evidence, project materials or user-provided facts.
-```
-
-This file may contain bad/good examples and reusable writing instructions.
-
-It must not be copied into final VKR text.
-
-## 10. Replacement File Generation Workflow
+## 8. Replacement File Generation Workflow
 
 When the user asks for files to replace in the repository manually, use:
 
@@ -257,22 +181,13 @@ Rules:
 - do not output patches or fragments unless explicitly asked.
 ```
 
-## 11. Current Next Steps
+## 9. Current Next Steps
 
 Main domain branch:
 
 ```text
-Create / refine domain draft 1 in planning/tables/domain-drafts/.
+Review / refine planning/tables/domain-drafts/domain-draft-01.md for implementation readiness.
+Then use planning/l1-domain-implementation-cut.md to start narrow L1 domain implementation.
 ```
 
-UI branch:
-
-```text
-Create / fill planning/ui/test-site-ui-plan.md and planning/ui/ui-questions-register.md.
-```
-
-VKR clean writing branch:
-
-```text
-Use planning/vkr-formulation-guide.md when extending vkr-clean/ and presentation/.
-```
+UI branch and VKR branch remain parallel/supporting branches.

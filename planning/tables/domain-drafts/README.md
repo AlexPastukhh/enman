@@ -10,20 +10,7 @@ A domain draft is a complete snapshot of current domain understanding.
 
 A domain draft is not a competing alternative design.
 
-Each next draft should refine the same domain direction and improve:
-
-```text
-- class/aggregate boundaries;
-- owned state;
-- methods/commands;
-- state/condition handling;
-- impossible state prevention;
-- value integrity coverage;
-- use-case coordination decisions;
-- account activation / protected access placement;
-- scenario behavior coverage;
-- open question reduction.
-```
+Each next draft should refine the same domain direction and improve coverage and reduce open questions.
 
 ## 2. Inputs
 
@@ -54,14 +41,6 @@ domain-draft-03.md
 final-domain-model-candidate.md
 ```
 
-Do not use names like:
-
-```text
-applicant-party-centric-balanced-boundaries.md
-```
-
-for current active drafts unless explicitly archived as old exploratory notes.
-
 ## 4. Required draft sections
 
 Each draft should include:
@@ -81,10 +60,6 @@ Each draft should include:
 12. Scenario Questions / Gaps For Next Draft
 13. What Changed Since Previous Draft
 ```
-
-Early drafts may be rough and partial.
-
-Later drafts should cover more baseline items and have fewer questions.
 
 ## 5. Coverage rule
 
@@ -106,13 +81,14 @@ Deferred
 Question
 ```
 
-## 6. Account activation coverage
-
-Domain drafts must cover account activation items from:
+Coverage tables should include both:
 
 ```text
-planning/tables/scenario-behavior-baseline-account-activation-addendum.md
+- stable item ID;
+- readable requirement / invariant explanation.
 ```
+
+## 6. Account activation coverage
 
 Current direction:
 
@@ -123,20 +99,20 @@ Current direction:
 - future implementation: AccountActivated authorization policy, possibly backed by account_activated claim.
 ```
 
-Business aggregates such as Request, AgreementProposal and ApplicantData should not duplicate account activation checks internally unless the draft explicitly justifies that decision.
+Business aggregates such as Request, AgreementProposal and ApplicantParty should not duplicate account activation checks internally unless the draft explicitly justifies that decision.
 
 ## 7. Current next step
 
 ```text
-Review / refine planning/tables/domain-drafts/domain-draft-01.md
+Review / refine planning/tables/domain-drafts/domain-draft-01.md for L1 implementation readiness.
 ```
 
 Then:
 
 ```text
-coverage review
--> domain-draft-02.md
+planning/l1-domain-implementation-cut.md
+-> L1 domain classes + unit tests
 -> coverage review
--> ...
--> final-domain-model-candidate.md
+-> domain-draft-02.md if more domain refinement is needed
+-> final-domain-model-candidate.md later
 ```

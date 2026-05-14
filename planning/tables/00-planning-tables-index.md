@@ -1,6 +1,6 @@
 # Planning Tables Index
 
-Status: current table index for gradual domain discovery
+Status: current table index for gradual domain discovery and L1 implementation readiness
 
 ## 1. Current Active Files
 
@@ -10,6 +10,7 @@ Status: current table index for gradual domain discovery
 | 2 | `scenario-behavior-baseline-account-activation-addendum.md` | active baseline addendum | Add account activation / protected-use-case coverage items and questions. |
 | 3 | `domain-drafts/README.md` | current draft folder index | Explains where iterative domain drafts are stored. |
 | 4 | `domain-drafts/domain-draft-01.md` | current first saved domain draft | ApplicantParty-centric domain model snapshot with coverage against scenario behavior baseline. |
+| 5 | `../l1-domain-implementation-cut.md` | current implementation-readiness guide | Defines the narrow first L1 domain implementation cut and file strategy. |
 
 ## 2. Current Read Order
 
@@ -23,22 +24,23 @@ Status: current table index for gradual domain discovery
 7. planning/domain-draft-generation-guide.md
 8. planning/tables/domain-drafts/README.md
 9. planning/tables/domain-drafts/domain-draft-01.md
+10. planning/l1-domain-implementation-cut.md
 ```
 
 ## 3. Current Next Step
 
 ```text
-Review / refine planning/tables/domain-drafts/domain-draft-01.md
+Review / refine planning/tables/domain-drafts/domain-draft-01.md for L1 implementation readiness.
 ```
 
 Then:
 
 ```text
-coverage review
--> domain-draft-02.md
--> coverage review
--> ...
--> final domain model candidate
+define/confirm L1 implementation cut
+-> implement domain classes + unit tests
+-> run tests
+-> split/normalize files after each green mini-cut
+-> then continue with application/API/persistence slices
 ```
 
 ## 4. Replacement File Generation
@@ -47,15 +49,6 @@ Manual replacement-package generation is documented in:
 
 ```text
 planning/replacement-file-generation-guide.md
-```
-
-When the user asks for replacement files:
-
-```text
-- generate complete files;
-- keep repository-relative paths;
-- package them in a zip;
-- include previous unapplied archive content if the user says it was not applied.
 ```
 
 ## 5. Why No More Intermediate Tables Now
@@ -84,18 +77,12 @@ The current draft folder is:
 domain-drafts/
 ```
 
+The current implementation-readiness file is:
+
+```text
+planning/l1-domain-implementation-cut.md
+```
+
 ## 6. Superseded / Historical
 
-If these files exist historically, treat them as stale/superseded notes, not active workflow:
-
-| File / folder | Current replacement |
-|---|---|
-| `scenario-domain-design-input-gate.md` | `pre-domain-variants-input.md` + current workflow docs |
-| `scenario-domain-design-input-core.md` | `pre-domain-variants-input.md` |
-| `domain-discovery-core.md` | iterative domain drafts |
-| `aggregate-boundary-candidates-core.md` | domain drafts + coverage review |
-| `domain-model-options-core.md` | domain drafts + coverage review |
-| `scenario-responsibility-core.md` | `pre-domain-variants-input.md` |
-| `scenario-domain-responsibility-core.md` | `pre-domain-variants-input.md` |
-| `planning/domain-model-variant-generation-guide.md` | `planning/domain-draft-generation-guide.md` |
-| `planning/tables/domain-variants/` | `planning/tables/domain-drafts/` |
+If old workflow files exist historically, treat them as stale/superseded notes, not active workflow.

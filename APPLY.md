@@ -1,47 +1,65 @@
-# Apply enman-vkr-formulation-guide-v1.zip
+# APPLY
 
-This archive adds an internal VKR formulation guide and updates planning navigation.
+Archive: `enman-l1-readiness-update-v1.zip`
 
-## Files
-
-- `planning/README.md`
-- `planning/planning-workflow-current.md`
-- `planning/vkr-formulation-guide.md`
-- `MANIFEST.md`
-- `APPLY.md`
+This package contains complete replacement files with repository-relative paths.
 
 ## PowerShell / VS Code Terminal
 
+From the repository root:
+
 ```powershell
-cd "C:\enman\enman"
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-formulation-guide-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-l1-readiness-update-v1.zip" -DestinationPath . -Force
 git status
-git diff
-```
-
-If OK:
-
-```powershell
-git add planning/README.md planning/planning-workflow-current.md planning/vkr-formulation-guide.md
-git commit -m "Add VKR formulation guide"
 ```
 
 ## Git Bash / WSL
 
+From the repository root:
+
 ```bash
-cd /c/enman/enman
-unzip -o "/c/Users/alexa/Downloads/enman-vkr-formulation-guide-v1.zip" -d .
+unzip -o /mnt/c/Users/alexa/Downloads/enman-l1-readiness-update-v1.zip -d .
 git status
-git diff
 ```
 
-If OK:
+## Files to add
 
-```bash
-git add planning/README.md planning/planning-workflow-current.md planning/vkr-formulation-guide.md
-git commit -m "Add VKR formulation guide"
+```text
+planning/l1-domain-implementation-cut.md
 ```
 
-## Deletions
+## Files to replace
 
-No deletions are required.
+```text
+planning/README.md
+planning/planning-workflow-current.md
+planning/tables/README.md
+planning/tables/00-planning-tables-index.md
+planning/tables/domain-drafts/README.md
+planning/tables/domain-drafts/domain-draft-01.md
+planning/current-state.md
+planning/domain-model.md
+```
+
+## Files to delete
+
+```text
+Nothing.
+```
+
+## Verification
+
+After applying, check that these files exist:
+
+```text
+planning/tables/domain-drafts/domain-draft-01.md
+planning/l1-domain-implementation-cut.md
+```
+
+Then read:
+
+```text
+planning/l1-domain-implementation-cut.md
+```
+
+before starting L1 implementation with an agent.

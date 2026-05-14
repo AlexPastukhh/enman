@@ -2,11 +2,7 @@
 
 ## Current phase
 
-Pre-L1 cleanup is mostly completed. The project is being prepared for L1 domain/API refactor.
-
-## Current date
-
-2026-05-11
+Pre-L1 planning cleanup is focused on making the next L1 domain implementation step safe for an implementation agent.
 
 ## Current branch
 
@@ -16,106 +12,166 @@ Pre-L1 cleanup is mostly completed. The project is being prepared for L1 domain/
 
 Bring the old educational/experimental ASP.NET Core + React project to an L1 diploma MVP for processing client requests and simple document workflow for the network company ООО "ZSK".
 
-## Current task
+## Current planning status
 
-Backend and frontend validation contract coverage are stabilized. A parallel L1 domain subset exists and is aligned with the agreed aggregate boundary rules. The first parallel L1 application/persistence/API/integration-test slice now exists for client account registration, individual applicant party creation and connection request creation, while the old EF/API flow remains registered.
+Scenario text specifications, DATA files, validation-related files and scenario behavior coverage baselines exist.
+
+The current saved domain draft is:
+
+```text
+planning/tables/domain-drafts/domain-draft-01.md
+```
+
+The current implementation-readiness guide is:
+
+```text
+planning/l1-domain-implementation-cut.md
+```
 
 ## Current implementation status
 
-### Already present in repository
+The repository already contains an older/current implementation snapshot and a parallel L1 subset.
+
+This file is a repository implementation snapshot.
+
+It is not the target domain model for the next L1 implementation step.
+
+Target domain direction is now captured in:
+
+```text
+planning/tables/domain-drafts/domain-draft-01.md
+```
+
+Narrow implementation instructions are captured in:
+
+```text
+planning/l1-domain-implementation-cut.md
+```
+
+## Already present in repository
 
 - ASP.NET Core backend project.
 - React/Vite/TypeScript frontend project.
 - Domain project.
 - .NET test project.
 - Playwright E2E folder at repository root.
-- Existing old domain classes:
-  - `Client`;
-  - `IndividualClient`;
-  - `Manager`;
-  - `ClientRequest`;
-  - `IndividualRequest`;
-  - `RequestReview`.
+- Existing old domain classes.
 - New parallel L1 domain subset exists under `Domain.EnergyManagement.L1`.
-- First parallel L1 application/persistence/API slice exists under `EnergyManagement.Server/L1`:
-  - separate `L1DbContext`;
-  - L1 repositories;
-  - L1 commands/handlers;
-  - temporary `/api/l1/...` HTTP endpoints.
+- First parallel L1 application/persistence/API slice exists under `EnergyManagement.Server/L1`.
 - Old EF/API flow still exists and remains registered in parallel.
-- Existing old server endpoints for registration/login/user and individual request creation.
-- Existing EF Core mapping for old entities.
 - Structured planning folder exists.
 
-### Pre-L1 cleanup already done
+## Current implemented L1 snapshot
 
-- `.gitignore` updated for generated artifacts.
-- Generated folders removed/ignored:
-  - `_site/`;
-  - `api/`;
-  - `playwright-report/`;
-  - `test-results/`;
-  - client Playwright reports/test-results.
-- Template files removed:
-  - ASP.NET `WeatherForecast`;
-  - Vite/React template assets.
-- `examples/` removed as non-project donor/example code.
-- E2E tests remain in root `tests/`.
-- .NET tests remain in `Tests.EnergyManagement`.
-- Integration test database connection is owned by `IntegrationTestFixture` and currently targets LocalDB `TestEnergyManagement`.
-- Integration tests use immutable fixture actors for baseline users instead of static mutable test users; the baseline user is seeded once during collection fixture initialization.
-- Test host receives the fixture connection string and replaces the central `ConnectionStringNames.ManagementDbConfigurationKey`; `DbNameOptions` was removed as unnecessary indirection.
-- Significant architecture/testing/configuration decisions should add short `Diploma note` blocks to `action-log.md`; these notes must not mention AI agents or assistant workflow.
-- Old shared constants were split into focused server API route/contract classes under `EnergyManagement.Server/Api`.
-- `IProblemDetailsService` is registered for API authentication/authorization problem responses.
-- API validation integration tests now cover the current auth and individual request validation contract, including error codes and field names.
-- Frontend registration component tests and validation-error unit tests pass against the current client-side validation and backend problem-details contract.
-- Auth component debounce validation UX tests use fake timers and cover valid, mixed and invalid field combinations for register/login forms.
-- Frontend production build passes after session provider/import cleanup and registration view restoration.
-- Initial L1 domain subset has been introduced in parallel with old domain classes and is covered by dedicated unit tests for local invariants and guard behavior. Successful inter-aggregate creation with generated IDs is reserved for integration tests.
-- L1 migration rules require separate L1 application and persistence flow. Do not mix old domain/application classes with L1 entities inside one command handler.
-- L1 HTTP integration tests verify generated ID propagation and stored scalar cross-aggregate references through the real EF/database path.
-- Diagram generation planning files exist and should be read only for diagram-related tasks.
+Current implemented parallel L1 subset may still contain older target names/statuses:
 
-## Current L1 implementation cut
-
-Current implemented parallel L1 subset:
-
-- `Account`;
-- `ClientAccount`;
-- `ApplicantParty`;
-- `IndividualApplicantParty`;
-- `ClientRequest`;
-- `ConnectionRequest`;
-- `RequestStatus.Submitted`.
+```text
+Account
+ClientAccount
+ApplicantParty
+IndividualApplicantParty
+ClientRequest
+ConnectionRequest
+RequestStatus.Submitted
+```
 
 Current implemented aggregate roots:
 
-- `ClientAccount`;
-- `IndividualApplicantParty`;
-- `ConnectionRequest`.
-
-Employee/review/contract/email workflow concepts are future candidates, not part of the current implemented L1 subset.
-
-Target later L1 business flow after future migration steps:
-
 ```text
-Guest registers
--> client logs in
--> client creates IndividualApplicantParty
--> client submits request
--> employee sees requests
--> employee takes request for review
--> employee approves or rejects
--> system creates simple ContractDraft on approval
--> system sends email notification
+ClientAccount
+IndividualApplicantParty
+ConnectionRequest
 ```
 
-## Explicitly not in L1
+Important:
+
+```text
+This is implementation/background snapshot.
+It is not the target for the next L1 domain refinement.
+```
+
+Target request statuses for the next domain direction are:
+
+```text
+InReview
+Approved
+Rejected
+```
+
+`Submitted` is legacy/current implementation state unless explicitly reintroduced with separate business meaning.
+
+## Current implementation-readiness decision
+
+Do not ask an implementation agent to implement the whole domain draft.
+
+Use:
+
+```text
+planning/l1-domain-implementation-cut.md
+```
+
+First L1 domain implementation should focus on:
+
+```text
+Account / ClientAccount activation marker
+Account.EnsureActivated
+ApplicantParty / IndividualApplicantParty
+ApplicantPartyVerificationStatus: Unverified / Verified
+ConnectionRequest
+RequestStatus: InReview / Approved / Rejected
+ReviewDecisionRecord
+Approve / Reject
+optional RejectionFeedback
+domain unit tests
+```
+
+Explicitly out of first cut unless requested:
+
+```text
+persistence
+API
+UI
+Dapper read models
+AgreementProposalExchange
+file/blob storage
+verification provider
+anonymous request
+future applicant types
+email confirmation flow
+password recovery flow
+notification sending
+```
+
+## Current planning rules for L1 implementation
+
+Use progressive file splitting.
+
+Recommended mini-cut order:
+
+```text
+1. Account / ClientAccount activation marker
+2. ApplicantParty / IndividualApplicantParty
+3. ConnectionRequest / review behavior
+4. AgreementProposalExchange later, after core request/refactor is stable
+```
+
+For each mini-cut:
+
+```text
+implement behavior
+add unit tests
+get tests green
+split/normalize files
+run tests again
+```
+
+## Explicitly not in first L1 implementation cut
 
 - entrepreneur / legal entity applicant types;
 - document uploads;
 - PDF generation;
+- agreement proposal exchange;
+- final agreement refusal;
 - contract versioning;
 - mock verification;
 - request clarification;
@@ -131,37 +187,15 @@ Guest registers
 - real government integrations;
 - electronic signature.
 
-## Task board
-
-| Status | Task | Notes |
-|---|---|---|
-| done | Rename planning files to stable names | `general-project-info.md`, `domain-model.md`, `use-cases.md` exist. |
-| done | Archive deprecated root `PROJECT_PLANNING.md` | Original file moved to `planning/archive/PROJECT_PLANNING.md`; root copy removed from active planning. |
-| done | Verify UTF-8/mojibake state in planning files | Active planning files were checked with `rg`; mojibake markers were not found outside the archived old root plan. |
-| done | Add living planning documents | `current-state.md`, `decisions.md`, `action-log.md`, `risk-log.md`, `agent-rules.md`, `layer-plan.md`, `api-plan.md`, `testing-strategy.md` exist. |
-| done | Add explicit L1 implementation cut to planning | L1 cut is present here; verify `domain-model.md` before domain refactor. |
-| partial | Split old shared constants | Focused API route/contract classes exist under `EnergyManagement.Server/Api`; old commented constants infrastructure still exists. |
-| done | Stabilize integration test infrastructure | Shared fixture owns test lifecycle/connection string and immutable baseline actors; full `.NET` test run passed 85/85 after cleanup on 2026-05-08. |
-| done | Cover current API validation contract | Expected validation errors moved to `ExpectedValidationErrors`; auth/request validation cases pass in full `.NET` test run 94/94 on 2026-05-09. |
-| done | Stabilize frontend registration validation tests | Vitest auth component tests pass 52/52 with deterministic fake-timer debounce UX checks; frontend build passed on 2026-05-09. |
-| done | Improve planning navigation protocol | README, agent rules and current state now guide next safe actions. |
-| done | Add diploma note protocol | Significant work can now leave short notes for future diploma text in `action-log.md`. |
-| done | Start L1 domain refactor | Initial parallel `Domain.EnergyManagement.L1` subset added without removing old model. |
-| done | Add unit tests for current L1 domain subset | `L1DomainTests` cover local L1 invariants and guard behavior without imitating persisted aggregate IDs. Successful applicant/request creation with generated IDs is an integration-test concern. |
-| done | Align current L1 domain code with aggregate boundary rules | L1 stores cross-aggregate references as scalar `long` IDs; factories accept existing aggregate objects as creation context and extract IDs; non-persisted referenced aggregates with `Id <= 0` are guarded as contract/application-flow violations; one-side aggregate collection navigation was removed; L1 `Account` uses `PasswordHash`; `Request.Number` is absent from the current implemented L1 subset; L1 unit tests avoid persisted-ID simulation; EF/API old model remains untouched. |
-| done | Duplicate integration path for current L1 subset | Separate L1 commands/handlers/repositories/DbContext and `/api/l1/...` HTTP endpoints exist for account, applicant party and connection request creation. HTTP integration tests verify generated IDs and FK/reference persistence without old navigation assertions. |
-| later | Add L1 read/query endpoints | Use Dapper/SQL projections; do not hydrate aggregates or call `SaveChanges`. |
-| later | Add integration tests and Playwright E2E scenarios | Depends on L1 API behavior and test database strategy. |
-
 ## Current blockers / known issues
 
-- Integration tests currently require SQL Server LocalDB/test database.
+- Integration tests may require SQL Server LocalDB/test database.
 - Full solution build may be affected by frontend `.esproj` / JavaScript SDK availability in some environments.
-- Playwright E2E tests/config are stale: root dependencies are not currently installed, no frontend/backend `webServer` is configured, and page helpers need cleanup before E2E can be trusted.
-- Existing domain model still uses old class names.
-- Existing `general-project-info.md` may contain ChatGPT response wrapper text and should be reviewed.
-- Integration tests rely on collection fixture baseline seed plus local per-scenario data for state-changing cases; new integration tests should avoid hidden shared state and static mutable actors.
+- Playwright E2E tests/config may be stale.
+- Existing old domain model still uses old class names.
+- Current implemented L1 subset may still contain `RequestStatus.Submitted`; target draft uses `InReview`.
+- Existing `planning/domain-model.md` is a background/compatibility note, not the current target domain draft.
 
 ## Last updated
 
-2026-05-11 - First parallel L1 application/persistence/API/integration-test slice added for the current L1 subset. Old EF/API flow remains registered. New L1 HTTP integration tests verify generated IDs and stored cross-aggregate references through the real database path.
+2026-05-14 - Current state reframed for domain-draft-01 implementation readiness and narrow L1 domain implementation cut.

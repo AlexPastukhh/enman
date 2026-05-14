@@ -13,6 +13,7 @@ import { SessionProvider } from './hooks/useSession.tsx'
 import { ClientRoutes } from './globConstants.ts'
 import AccountView from './views/AccountView/AccountView.tsx'
 import { PageErrorProvider } from './hooks/usePageError.tsx'
+import TestSiteMockup from './test-site-mockup/TestSiteMockup.tsx'
 
 const router = createBrowserRouter(
 [
@@ -31,6 +32,10 @@ const router = createBrowserRouter(
 {
   path:ClientRoutes.Account.Path,
   element:<AccountView/>
+},
+{
+  path:"/test-ui",
+  element:<TestSiteMockup/>
 }
 ]
 );
