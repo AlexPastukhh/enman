@@ -1,7 +1,7 @@
 # L1 Slice Drafting Guide
 
 Status: current slice drafting workflow  
-Scope: L1 slice boundary discovery and per-slice implementation planning
+Scope: L1 slice boundary discovery, per-slice implementation planning, Client/UI flow and shared support
 
 ## 1. Purpose
 
@@ -27,20 +27,9 @@ Slice = independently testable unit of observable behavior
         + implementation path needed to deliver/test that behavior.
 ```
 
-A valid slice has:
+A valid slice has observable behavior, clear start/end, scenario-derived flow, DATA/items/invariants/no-write rules in that flow, independent testability, clear dependency/extension markers, package boundary and implementation path in the per-slice file.
 
-```text
-- observable behavior;
-- clear start and end;
-- scenario-derived flow;
-- DATA / behavior items / invariants / no-write rules included in that flow;
-- independent testability;
-- clear dependency/extension markers;
-- clear package boundary: L1 / L2 / later;
-- clear implementation path in the per-slice file.
-```
-
-A slice is not a controller method, endpoint alone, repository, DB table, React component, aggregate alone, or arbitrary technical task.
+A slice is not a controller method, endpoint alone, repository, DB table, React component, aggregate alone, shared helper, or arbitrary technical task.
 
 ## 3. Two-Level File Model
 
@@ -56,12 +45,6 @@ It contains slice discovery rules, slice boundary criteria, composite overview t
 
 It does not contain detailed implementation flow.
 
-The boundary file answers:
-
-```text
-What are the slices and why are they real slices?
-```
-
 ### 3.2 Per-slice files
 
 Per-slice files contain detailed implementation planning.
@@ -74,7 +57,7 @@ They include:
 - flow coverage overview near the beginning;
 - Scenario Slice Flow duplicated/refined from the boundary draft;
 - Implementation Flow;
-- UI blueprint;
+- Client/UI Flow as the first implementation-flow section when relevant;
 - Test Plan / Test Coverage;
 - detailed implementation notes;
 - decisions;
@@ -82,34 +65,7 @@ They include:
 - implementation checklist.
 ```
 
-A per-slice file answers:
-
-```text
-How is this slice implemented and tested?
-```
-
-## 4. Slice Discovery Questions
-
-Ask before naming slices:
-
-```text
-1. What separate observable behavior units exist in this scenario?
-2. What does the user or system observe on success?
-3. What failure/no-write behavior is observable?
-4. Which behavior changes state?
-5. Which behavior is read/visibility-only?
-6. Which behavior is UI-only or UX-only?
-7. Which behavior extends an existing flow?
-8. Which behavior depends on another slice?
-9. Which behavior could be a plugin/replaceable module or external integration?
-10. Which behavior is cross-cutting across multiple slices?
-11. Can this behavior be tested independently?
-12. Can it be tested without full UI?
-13. Does it belong to current L1 or later package?
-14. Is it a slice, a branch of a slice, or a cross-cutting concern?
-```
-
-## 5. Scenario Slice Flow
+## 4. Scenario Slice Flow
 
 Scenario Slice Flow belongs both to the general boundary draft and per-slice files.
 
@@ -124,73 +80,138 @@ Each flow step should include:
 - behavior item refs;
 - invariants / rules;
 - no-write expectations;
-- UI/read/UX candidate items if relevant;
+- client/UI/read/UX candidate items if relevant;
 - note about related/dependent slices if this step is split out.
 ```
 
-Example:
-
-```text
-F04. Client provides request details.
-     DATA:
-     - request details text
-
-     Items / rules:
-     - REQ-CMD-CREATE-001
-     - invalid request details do not create request
-
-     No-write:
-     - failed validation creates no persisted request
-```
-
-## 6. Implementation Flow
+## 5. Implementation Flow
 
 Implementation Flow belongs to per-slice files, not to the general boundary draft.
 
-Typical flow:
+When the slice has client-visible behavior, the first implementation-flow section must be:
 
 ```text
-I01. UI blueprint
+I01 — Client/UI Flow
+```
+
+Then continue with server-side and persistence layers:
+
+```text
+I01. Client/UI Flow
 I02. API endpoint / contract
-I03. Controller / endpoint handler
+I03. Server endpoint / handler
 I04. Application service / orchestration
 I05. Domain method calls
 I06. Persistence / transaction / read model
 I07. Response mapping
-I08. Testing hooks / integration boundary
 ```
 
-Implementation Flow should be written in words first.
+Implementation Flow should be written in words first. As the draft matures, it may include pseudocode or real code snippets inside specific implementation flow sections. If something is not implemented, say so explicitly.
 
-As the draft matures, it may include pseudocode or real code snippets inside specific implementation flow sections.
+## 6. Client/UI Flow Rule
 
-If something is not implemented, say so explicitly.
+Client/UI Flow is part of Implementation Flow.
 
-## 7. UI Blueprint Rule
+It must describe concrete UI, not only abstract “UI calls API”.
 
-Every per-slice file should mention UI.
-
-If UI is inside this slice, describe it as part of the Implementation Flow.
-
-If UI is a dependent slice, still include a UI blueprint:
+Include:
 
 ```text
-UI is not part of the current implemented scope.
-Related UI slice: ...
-Blueprint:
-- screen/page;
-- user action;
-- inputs/visible data;
-- success feedback;
-- validation/error feedback;
-- navigation/result.
+- page/screen name;
+- component/form name;
+- visible data;
+- input fields;
+- buttons/actions;
+- disabled/hidden/action-availability rules;
+- deferred client-side validation behavior;
+- where field-level errors are shown;
+- where global/form-level errors are shown;
+- API request DTO construction;
+- API client call;
+- CSRF/antiforgery request token use for unsafe requests when applicable;
+- server validation/problem mapping;
+- success state;
+- navigation after success;
+- client-side tests needed.
 ```
 
-## 8. Test Planning Rule
+## 7. Current Client-Side Logic Notes
+
+Current known client-side logic includes:
+
+```text
+- deferred validation after input changes;
+- client-side validation tests for that delayed behavior;
+- server/global error message display;
+- field-level error display;
+- future applicant-data prefill into request forms;
+- future client auth/session support for ASP.NET Core cookie auth and antiforgery tokens.
+```
+
+Client validation is described in the validation addendum, but behavior baseline may not yet expose stable client/UI item IDs. When needed, add `CLIENT-*` candidate items in per-slice files first.
+
+## 8. Antiforgery / CSRF Shared Support Rule
+
+ASP.NET Core cookie-auth unsafe requests need antiforgery support.
+
+This is not a business slice.
+
+Use:
+
+```text
+[SHARED SUPPORT][AUTH/FRAMEWORK][CROSS-SLICE]
+```
+
+Client responsibilities:
+
+```text
+- fetch request token;
+- store token in runtime client state;
+- attach token to unsafe requests;
+- refetch token when auth/session state changes;
+- usually refetch after login/logout so token pair matches the current security context.
+```
+
+Server responsibilities:
+
+```text
+- use IAntiforgery to create/write antiforgery cookie and produce request token;
+- expose token fetch path/endpoint;
+- validate unsafe requests using ASP.NET Core antiforgery infrastructure.
+```
+
+Document detailed support in:
+
+```text
+planning/slices/shared/antiforgery-token-session-context.md
+```
+
+## 9. Shared Support Rule
+
+Shared helpers/support artifacts used by multiple slices should be documented under:
+
+```text
+planning/slices/shared/
+```
+
+They are not slices unless they become independently observable behavior.
+
+Examples:
+
+```text
+- client/server validation error mapping;
+- deferred client validation pattern;
+- antiforgery token/session-context support;
+- applicant data prefill notes used by request UI slices;
+- shared API request helpers;
+- server application result mapping.
+```
+
+## 10. Test Planning Rule
 
 Tests should not be mixed into implementation narrative.
 
-Implementation Flow may briefly say “verified by integration test”, but detailed test planning belongs to:
+Use a separate section:
 
 ```text
 ## Test Plan / Test Coverage
@@ -199,35 +220,26 @@ Implementation Flow may briefly say “verified by integration test”, but deta
 Use groups:
 
 ```text
-Domain unit tests
-Application tests
-Integration tests
-UI/component/E2E tests
-Current coverage
-Missing tests
-No-write tests
+Client tests
+- component/page tests;
+- deferred validation tests;
+- request builder/API client tests;
+- server error mapping tests;
+- navigation tests.
+
+Server tests
+- domain unit tests;
+- application tests;
+- integration/API/persistence tests;
+- no-write tests.
+
+End-to-end tests
+- full user flow after client and server parts are stable.
 ```
 
-## 9. General Boundary File Structure
+End-to-end tests should be placed at the end of the slice explanation because they verify the whole assembled flow.
 
-```text
-1. Purpose
-2. Slice boundary criteria
-3. Package / marker model
-4. Composite L1 slice overview
-5. Boundary questions overview
-6. Scenario flow assignment coverage overview
-7. Existing L1 foundation context
-8. Scenario sections
-9. Consolidated slice boundary table
-10. Extension / dependent / later-package slice register
-11. Decisions / resolved boundary questions
-12. Open boundary questions
-13. ADR candidates
-14. Next per-slice files
-```
-
-## 10. Per-Slice File Structure
+## 11. Per-Slice File Structure
 
 ```text
 1. Slice overview
@@ -235,28 +247,26 @@ No-write tests
 3. Flow coverage overview
 4. Scenario Slice Flow
 5. Implementation Flow
-6. UI Blueprint
-7. Test Plan / Test Coverage
+   I01. Client/UI Flow
+   I02. API endpoint / contract
+   I03. Server endpoint / handler
+   I04. Application service / orchestration
+   I05. Domain method calls
+   I06. Persistence / transaction / read model
+   I07. Response mapping
+6. Test Plan / Test Coverage
+   - Client tests
+   - Server tests
+   - End-to-end tests
+7. Shared support used by this slice
 8. Detailed Implementation Notes
 9. Decisions
 10. ADR Links / Candidates
 11. Implementation Checklist
 ```
 
-## 11. Auth / Framework Guard Rule
-
-Protected active account guard is not a standalone business slice.
-
-It is:
-
-```text
-[AUTH/FRAMEWORK][CROSS-CUTTING]
-```
-
-It is applied through application service / auth boundary inside protected slices.
-
 ## 12. Done Criteria
 
 General boundary draft is acceptable when it identifies real slices, embeds DATA/items/invariants/no-write expectations into Scenario Slice Flow, makes L1/L2/dependent/extension split explicit, and collects boundary questions/decisions.
 
-Per-slice file is acceptable when it duplicates/refines Scenario Slice Flow, has Implementation Flow, includes UI blueprint, separates tests, documents current vs planned implementation, and has an implementation checklist.
+Per-slice file is acceptable when it duplicates/refines Scenario Slice Flow, has Client/UI-first Implementation Flow when relevant, separates tests, documents current vs planned implementation, references shared support, and has an implementation checklist.
