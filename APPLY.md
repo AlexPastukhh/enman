@@ -1,35 +1,97 @@
-# Применение пакета чистых материалов ВКР
+# APPLY
 
-Пакет содержит complete replacement files для папок:
+Package: `enman-domain-draft-01-package-v1.zip`
+
+Purpose:
 
 ```text
-vkr-clean/
-presentation/
+Add the first saved domain draft and update planning-table navigation.
 ```
 
-Тема ВКР:
+## Files to add / replace
 
-> «Разработка web-приложения для автоматизации ведения документооборота и обработки клиентских заявок в сетевой компании ООО „ЗСК“»
+Add:
 
-PowerShell / VS Code Terminal:
+```text
+planning/tables/domain-drafts/domain-draft-01.md
+```
+
+Replace:
+
+```text
+planning/tables/domain-drafts/README.md
+planning/tables/00-planning-tables-index.md
+```
+
+Delete:
+
+```text
+Nothing.
+```
+
+## Apply with PowerShell / VS Code Terminal
+
+From the repository root:
 
 ```powershell
-cd "C:\enman\enman"
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-clean-zsk-package.zip" -DestinationPath . -Force
+Expand-Archive -Path .\enman-domain-draft-01-package-v1.zip -DestinationPath . -Force
 git status
-git diff
 ```
 
-Если всё ок:
+Then review:
 
 ```powershell
-git add vkr-clean presentation
-git commit -m "Update VKR materials for ZSK document workflow topic"
+code planning\tables\domain-drafts\domain-draft-01.md
+code planning\tables\domain-drafts\README.md
+code planning\tables\00-planning-tables-index.md
 ```
 
-После применения проверить:
+Commit manually when ready:
 
-1. Соответствует ли название организации требованиям кафедры.
-2. Нужно ли указывать ООО «ЗСК» как условную организацию или как пример сетевой компании.
-3. Какой статус функций сотрудника и email-уведомлений подтвержден кодом на момент финальной сдачи.
-4. Должен ли финальный текст описывать только реализованную версию или также проектную целевую версию.
+```powershell
+git add planning/tables/domain-drafts/domain-draft-01.md `
+        planning/tables/domain-drafts/README.md `
+        planning/tables/00-planning-tables-index.md
+
+git commit -m "Add first domain draft"
+```
+
+## Apply with Git Bash / WSL
+
+From the repository root:
+
+```bash
+unzip -o enman-domain-draft-01-package-v1.zip
+git status
+```
+
+Then review:
+
+```bash
+code planning/tables/domain-drafts/domain-draft-01.md
+code planning/tables/domain-drafts/README.md
+code planning/tables/00-planning-tables-index.md
+```
+
+Commit manually when ready:
+
+```bash
+git add planning/tables/domain-drafts/domain-draft-01.md \
+        planning/tables/domain-drafts/README.md \
+        planning/tables/00-planning-tables-index.md
+
+git commit -m "Add first domain draft"
+```
+
+## Next step after applying
+
+```text
+Review / refine planning/tables/domain-drafts/domain-draft-01.md
+```
+
+Then:
+
+```text
+coverage review
+-> domain-draft-02.md
+```

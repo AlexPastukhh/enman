@@ -9,6 +9,7 @@ Status: current table index for gradual domain discovery
 | 1 | `pre-domain-variants-input.md` | current pre-domain coverage baseline | Collect scenario-derived behavior items with stable IDs. |
 | 2 | `scenario-behavior-baseline-account-activation-addendum.md` | active baseline addendum | Add account activation / protected-use-case coverage items and questions. |
 | 3 | `domain-drafts/README.md` | current draft folder index | Explains where iterative domain drafts are stored. |
+| 4 | `domain-drafts/domain-draft-01.md` | current first saved domain draft | ApplicantParty-centric domain model snapshot with coverage against scenario behavior baseline. |
 
 ## 2. Current Read Order
 
@@ -21,19 +22,20 @@ Status: current table index for gradual domain discovery
 6. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 7. planning/domain-draft-generation-guide.md
 8. planning/tables/domain-drafts/README.md
+9. planning/tables/domain-drafts/domain-draft-01.md
 ```
 
 ## 3. Current Next Step
 
 ```text
-Create / refine planning/tables/domain-drafts/domain-draft-01.md
+Review / refine planning/tables/domain-drafts/domain-draft-01.md
 ```
 
 Then:
 
 ```text
 coverage review
--> domain draft 2
+-> domain-draft-02.md
 -> coverage review
 -> ...
 -> final domain model candidate

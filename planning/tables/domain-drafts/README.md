@@ -39,10 +39,15 @@ planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 planning/domain-draft-generation-guide.md
 ```
 
-## 3. Expected files
+## 3. Current draft files
+
+| File | Status | Purpose |
+|---|---|---|
+| `domain-draft-01.md` | current first saved draft | ApplicantParty-centric domain model snapshot with coverage against scenario behavior baseline. |
+
+Expected future files:
 
 ```text
-domain-draft-01.md
 domain-draft-02.md
 domain-draft-03.md
 ...
@@ -120,8 +125,18 @@ Current direction:
 
 Business aggregates such as Request, AgreementProposal and ApplicantData should not duplicate account activation checks internally unless the draft explicitly justifies that decision.
 
-## 7. Current next file
+## 7. Current next step
 
 ```text
-planning/tables/domain-drafts/domain-draft-01.md
+Review / refine planning/tables/domain-drafts/domain-draft-01.md
+```
+
+Then:
+
+```text
+coverage review
+-> domain-draft-02.md
+-> coverage review
+-> ...
+-> final-domain-model-candidate.md
 ```
