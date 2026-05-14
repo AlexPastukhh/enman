@@ -86,7 +86,7 @@ Then use/refine the relevant per-slice file before implementing the next slice.
 Current urgent slice issue:
 
 ```text
-SL-REQ-001 Submitted vs InReview integration/API expectation conflict.
+SL-REQ-001 Submitted vs InReview integration/API expectation conflict has been resolved; active L1 request creation uses InReview.
 ```
 
 ## 6. Avoid

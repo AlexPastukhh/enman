@@ -38,7 +38,7 @@ AgreementProposalExchange — future post-approval proposal exchange
 
 ## 3. Current Implemented Snapshot vs Target Direction
 
-Current implemented parallel L1 subset may still include:
+Previous implemented parallel L1 subset included:
 
 ```text
 RequestStatus.Submitted
@@ -52,7 +52,7 @@ Approved
 Rejected
 ```
 
-`Submitted` should be treated as legacy/current implementation background unless explicitly reintroduced with separate meaning.
+`Submitted` is legacy implementation background and is not used by the current L1 request creation target unless explicitly reintroduced with separate meaning.
 
 ## 4. L1 Aggregate Boundaries
 

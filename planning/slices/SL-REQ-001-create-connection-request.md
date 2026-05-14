@@ -1,10 +1,10 @@
 # SL-REQ-001 — Create ConnectionRequest From ApplicantParty
 
-Status: implemented slice draft with known conflict  
+Status: implemented slice draft  
 Package: `[L1]`  
 Source scenario: `SC-04 Client Request Creation`  
 Slice type: backend / API / persistence slice with dependent UI/read/extension slices  
-Current implementation status: implemented, but full integration suite has `Submitted` vs `InReview` conflict
+Current implementation status: implemented; active API/persistence/integration expectation uses `InReview`
 
 ## 1. Slice Overview
 
@@ -40,8 +40,8 @@ Related extension / dependent slices:
 
 | Question | Why it matters | Current answer / candidate | Blocks implementation? |
 |---|---|---|---|
-| Should integration expectation be updated from Submitted to InReview? | Full test conflict | Yes, align with target InReview | Yes |
-| Should API expose InReview directly or map display text? | Contract/UI | Prefer domain status unless display mapping exists | Yes |
+| Should integration expectation be updated from Submitted to InReview? | Full test conflict | Resolved: aligned with target InReview | No |
+| Should API expose InReview directly or map display text? | Contract/UI | API exposes domain status InReview directly | No |
 | Is ApplicantParty ownership mismatch checked? | Security/access | Needs confirmation/add test | Before production |
 | Should request creation require current active ApplicantParty? | Version semantics | Clarify in this slice file before hardening | Medium |
 | Should validation tests assert no persisted row? | No-write guarantee | Add if feasible | No |
@@ -51,7 +51,7 @@ Related extension / dependent slices:
 | Flow part | Current coverage | Missing / separate slice |
 |---|---|---|
 | Create request from ApplicantParty | Implemented | ownership mismatch unclear |
-| Request starts InReview | Domain implemented | integration expectation still Submitted |
+| Request starts InReview | Domain/API/persistence/integration implemented | - |
 | Missing ApplicantParty validation | Integration-tested | wrong-owner case missing |
 | Empty details validation | Integration-tested | no-row assertion missing |
 | Object address persistence | Successful path partially covered | missing/invalid address test |
@@ -109,7 +109,7 @@ Current implementation: UI is not part of this backend/API/persistence slice.
 
 `POST /api/l1/requests` receives ApplicantPartyId, details and address DTO.
 
-Known conflict: API/integration expectation still uses Submitted in one test; target domain status is InReview.
+API returns the domain status directly. Created requests return InReview.
 
 ### I03 — Application service
 
@@ -168,7 +168,7 @@ Create_fails_without_object_address
 Create_guards_transient_applicant_party
 ```
 
-Needed: update Submitted expectation to InReview, wrong-owner test, object address failure test, no-write assertions if feasible.
+Needed: wrong-owner test, object address failure test, no-write assertions if feasible.
 
 ## 8. Detailed Implementation Notes
 
@@ -184,7 +184,7 @@ Reason:
 A created request immediately enters employee review queue.
 
 Consequence:
-Integration/API expectations must align with InReview.
+Integration/API expectations align with InReview.
 ```
 
 ```text
@@ -205,7 +205,7 @@ ADR candidates should be promoted to `planning/adr/adr-candidates.md` when the d
 [x] Missing ApplicantParty validation
 [x] Empty details validation
 [x] Domain initial status InReview
-[ ] Fix integration/API expectation from Submitted to InReview
+[x] Fix integration/API expectation from Submitted to InReview
 [ ] Confirm/add ApplicantParty ownership mismatch check
 [ ] Add missing object address integration test
 [ ] Add no-write DB assertions for failure paths if feasible

@@ -63,7 +63,7 @@ planning/l1-domain-implementation-cut.md
 
 ## Current implemented L1 snapshot
 
-Current implemented parallel L1 subset may still contain older target names/statuses:
+Current implemented parallel L1 subset has been aligned with the target request lifecycle:
 
 ```text
 Account
@@ -72,7 +72,9 @@ ApplicantParty
 IndividualApplicantParty
 ClientRequest
 ConnectionRequest
-RequestStatus.Submitted
+RequestStatus.InReview
+RequestStatus.Approved
+RequestStatus.Rejected
 ```
 
 Current implemented aggregate roots:
@@ -90,7 +92,7 @@ This is implementation/background snapshot.
 It is not the target for the next L1 domain refinement.
 ```
 
-Target request statuses for the next domain direction are:
+Current target/current L1 request statuses are:
 
 ```text
 InReview
@@ -98,7 +100,7 @@ Approved
 Rejected
 ```
 
-`Submitted` is legacy/current implementation state unless explicitly reintroduced with separate business meaning.
+`Submitted` is legacy terminology and is not used by the current L1 request creation implementation.
 
 ## Current implementation-readiness decision
 
@@ -193,9 +195,9 @@ run tests again
 - Full solution build may be affected by frontend `.esproj` / JavaScript SDK availability in some environments.
 - Playwright E2E tests/config may be stale.
 - Existing old domain model still uses old class names.
-- Current implemented L1 subset may still contain `RequestStatus.Submitted`; target draft uses `InReview`.
+- `RequestStatus.Submitted` has been removed from active L1 request creation expectations; created L1 requests use `InReview`.
 - Existing `planning/domain-model.md` is a background/compatibility note, not the current target domain draft.
 
 ## Last updated
 
-2026-05-14 - Current state reframed for domain-draft-01 implementation readiness and narrow L1 domain implementation cut.
+2026-05-14 - SL-REQ-001 request creation status aligned to `InReview`; legacy `Submitted` expectation removed from active L1 implementation/tests.

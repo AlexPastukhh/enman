@@ -52,7 +52,7 @@ Slice planning after the first green domain foundation:
 planning/slices/l1-slice-drafting-guide.md
 ```
 
-Current repo implementation may still contain older L1 names/statuses such as:
+Previous/current-background repo implementation notes may mention older L1 names/statuses such as:
 
 ```text
 RequestStatus.Submitted
@@ -66,7 +66,7 @@ Approved
 Rejected
 ```
 
-`Submitted` is legacy/current implementation background unless explicitly reintroduced with separate meaning.
+`Submitted` is legacy implementation background and is not used by the current L1 request creation target unless explicitly reintroduced with separate meaning.
 
 ## 3. First L1 Domain Implementation Cut
 

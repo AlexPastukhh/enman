@@ -69,7 +69,7 @@ It is [AUTH/FRAMEWORK][CROSS-CUTTING] and is applied inside protected applicatio
 |---|---|---|---|---|---|---|
 | SL-ACC-001 Register client account | SC-01 | Backend / API / persistence | [L1][IMPLEMENTED] | Valid slice | Implemented | Auth extensions are separate slices |
 | SL-APPL-001 Create individual ApplicantParty | SC-10 | Backend / API / persistence, dependent UI | [L1][IMPLEMENTED] | Valid slice | Implemented | Replacement/current-active workflow is separate |
-| SL-REQ-001 Create ConnectionRequest | SC-04 | Backend / API / persistence, dependent UI/read | [L1][IMPLEMENTED] | Valid slice | Implemented with status conflict | Submitted vs InReview expectation |
+| SL-REQ-001 Create ConnectionRequest | SC-04 | Backend / API / persistence, dependent UI/read | [L1][IMPLEMENTED] | Valid slice | Implemented | Dependent UI/read slices remain separate |
 | SL-REVIEW-001 Approve request and verify ApplicantParty | SC-07B | Backend / API / persistence, dependent read/UI | [L1][PARTIAL] | Valid slice | Domain foundation only | Needs application/API/persistence slice |
 | SL-REVIEW-002 Reject request | SC-07B | Backend / API / persistence, dependent UI/read | [L1][PARTIAL] | Valid slice | Domain foundation only | Needs application/API/persistence slice |
 | SL-REQ-READ-001 My Requests visibility | SC-05 | Read/query + API + UI | [READ][DEPENDENT][PLANNED] | Valid dependent slice | Not implemented | Needs read projection/access planning |
@@ -88,7 +88,7 @@ It is [AUTH/FRAMEWORK][CROSS-CUTTING] and is applied inside protected applicatio
 | Should documents be part of request creation? | Yes | SC-04 / SC-11 | No. Documents are an extension slice. | No | Maybe |
 | Should approve and applicant verification be one slice? | Yes | SC-07B | Yes for L1 application slice: one use case coordinates both in transaction. | Yes before implementation | Yes |
 | Should reject feedback warning be part of domain rejection slice? | Yes | SC-07B | No. Domain allows optional feedback; UI warning is dependent UI slice. | No | Maybe |
-| Should Submitted be preserved as API value? | Yes | SC-04 / SL-REQ-001 | Current target is InReview; integration/API should align. | Yes | Yes |
+| Should Submitted be preserved as API value? | Yes | SC-04 / SL-REQ-001 | No. Current target/API/persistence value is InReview. | No | Yes |
 | Should future agreement proposal be part of approval slice? | Yes | SC-07B / SC-13D | No. Approval enables proposal but does not create it. | No | Yes |
 
 ## 6. Scenario Flow Assignment Coverage Overview
@@ -99,7 +99,7 @@ It is [AUTH/FRAMEWORK][CROSS-CUTTING] and is applied inside protected applicatio
 | SC-01 | Email confirmation / PendingActivation | account activation lifecycle | SL-AUTH-EMAIL-001 | [EXTENSION][L2] | Separate slice | Not part of L1 registration slice |
 | SC-10 | Save individual applicant data | APPL-CMD-SAVE-001, APPL-VI-001, full name/email/phone | SL-APPL-001 | [L1] | Assigned | Current implementation exists |
 | SC-10 | Replace current active applicant | current-active marker, version-like behavior | SL-APPL-002 | [EXTENSION][L1/L2] | Separate slice | Current marker exists but workflow not implemented |
-| SC-04 | Create request command | REQ-CMD-CREATE-001, REQ-LC-001, REQ-IBS-003, REQ-VI-001 | SL-REQ-001 | [L1] | Assigned | Implemented with status conflict |
+| SC-04 | Create request command | REQ-CMD-CREATE-001, REQ-LC-001, REQ-IBS-003, REQ-VI-001 | SL-REQ-001 | [L1] | Assigned | Implemented with InReview initial status |
 | SC-04 | Request creation form | input fields, validation feedback, success feedback | SL-REQ-UI-001 | [UI][DEPENDENT] | Separate slice | UI depends on backend/API contract |
 | SC-04 / SC-05 | Client sees own request | REQ-READ-001 | SL-REQ-READ-001 | [READ][DEPENDENT] | Separate slice | Read/query projection |
 | SC-11 | Attach documents to request | DOC-CMD-ATTACH-001, file/document refs | SL-DOC-001 | [EXTENSION] | Separate slice | Not part of core request creation |
@@ -122,11 +122,11 @@ Approve / Reject domain behavior
 
 The implemented foundation is useful for slices, but the foundation itself is not a full scenario slice.
 
-Known current implementation conflict:
+Current SL-REQ-001 implementation alignment:
 
 ```text
-ConnectionRequest domain target uses InReview.
-One existing integration expectation still expects Submitted.
+ConnectionRequest domain/API/persistence/integration expectation uses InReview.
+Submitted is legacy terminology and not an active L1 request creation status.
 ```
 
 ## 8. Scenario Sections
@@ -360,13 +360,13 @@ F06. Result is available.
 | Should applicant replacement be L1 or L2? | SL-APPL-002 | Package split | No | L1/L2 depending on UI need | Maybe |
 | Should approve+verify be implemented before read slices? | SL-REVIEW-001 | Delivery order | No | likely yes, after request creation conflict fixed | Maybe |
 | Should My Requests be L1 read slice before review slices? | SL-REQ-READ-001 | Delivery order | No | depends on demo needs | No |
-| Should status conflict be fixed before new slices? | SL-REQ-001 | Integration/API contract | Yes | update Submitted to InReview | Yes |
+| Should status conflict be fixed before new slices? | SL-REQ-001 | Integration/API contract | Resolved | Submitted expectation updated to InReview | Yes |
 
 ## 12. ADR Candidates
 
 | ADR candidate | Decision needed | Related slices | Urgency |
 |---|---|---|---|
-| Request initial status: InReview vs Submitted | Align domain/API/integration contract | SL-REQ-001 | High |
+| Request initial status: InReview vs Submitted | Align domain/API/integration contract | SL-REQ-001 | Resolved |
 | Command/read slice split | Use read projection instead of write model duplication | SL-REQ-001, SL-REQ-READ-001 | Medium |
 | Approval verifies ApplicantParty via application service | Multi-aggregate transaction boundary | SL-REVIEW-001 | High before review implementation |
 | Active account guard placement | Auth/framework/application boundary | Protected slices | Medium |
@@ -388,8 +388,7 @@ planning/slices/SL-REVIEW-002-reject-request.md
 Recommended next implementation focus:
 
 ```text
-1. Resolve SL-REQ-001 Submitted/InReview conflict.
-2. Then choose either:
+1. Choose either:
    - SL-REVIEW-001 approve + verify applicant;
    - or SL-REQ-READ-001 My Requests visibility, depending on demo needs.
 ```

@@ -64,7 +64,7 @@ For L1, check:
 
 ## L1 unit tests
 
-Current implemented L1 unit tests are limited to the parallel subset that already maps to legacy behavior: `ClientAccount`, `IndividualApplicantParty`, `ConnectionRequest`, and `RequestStatus.Submitted`. Employee review, contract and email scenarios are later workflow expansion tests.
+Current implemented L1 unit tests cover the parallel subset for `ClientAccount`, `IndividualApplicantParty`, `ConnectionRequest`, and target request statuses `InReview`, `Approved`, `Rejected`. Employee review, contract and email scenarios are later workflow expansion tests.
 
 ### Account
 
@@ -85,7 +85,7 @@ Current implemented L1 unit tests are limited to the parallel subset that alread
 - create metering device request;
 - cannot create request without details;
 - cannot create request with too long details;
-- initial status is `Submitted`.
+- initial status is `InReview`.
 
 ## L1 aggregate ID testing rule
 

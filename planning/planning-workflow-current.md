@@ -106,12 +106,12 @@ Use:
 10. actual L1 tests
 ```
 
-## 6. Current Known Slice Issue
+## 6. Current Slice Status
 
-Current high-priority issue:
+Recent resolved issue:
 
 ```text
-SL-REQ-001 has a Submitted vs InReview conflict.
+SL-REQ-001 Submitted vs InReview conflict has been resolved in active implementation/tests.
 ```
 
 Target domain direction:
@@ -122,7 +122,7 @@ Approved
 Rejected
 ```
 
-The request creation integration/API expectation should be aligned with `InReview` unless a separate display/status mapping decision is made.
+The request creation integration/API expectation is aligned with `InReview`.
 
 ## 7. L1 Testing Position
 
@@ -157,9 +157,8 @@ Recommended next steps:
 ```text
 1. Apply current slice workflow documentation update.
 2. Review l1-slice-boundary-draft-01.md.
-3. Resolve SL-REQ-001 Submitted/InReview conflict.
-4. Choose the next slice implementation target.
-5. Before implementation, create/refine the relevant per-slice file.
+3. Choose the next slice implementation target.
+4. Before implementation, create/refine the relevant per-slice file.
 ```
 
 ## 10. Replacement File Generation Workflow

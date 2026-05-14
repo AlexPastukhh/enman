@@ -76,10 +76,10 @@ public sealed class L1SliceIntegrationTests
 
         response.RequestId.Should().BeGreaterThan(0);
         response.ApplicantPartyId.Should().Be(applicantParty.ApplicantPartyId);
-        response.Status.Should().Be("Submitted");
+        response.Status.Should().Be("InReview");
         row.Should().NotBeNull();
         row!.ApplicantPartyId.Should().Be(applicantParty.ApplicantPartyId);
-        row.Status.Should().Be("Submitted");
+        row.Status.Should().Be("InReview");
         row.Details.Should().Be(RequestDetails);
         row.City.Should().Be(City);
         row.Street.Should().Be(Street);
