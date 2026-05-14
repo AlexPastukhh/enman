@@ -1,65 +1,51 @@
-# APPLY
+# Apply Instructions
 
-Archive: `enman-l1-readiness-update-v1.zip`
-
-This package contains complete replacement files with repository-relative paths.
+Apply from the repository root.
 
 ## PowerShell / VS Code Terminal
 
-From the repository root:
-
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-l1-readiness-update-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-l1-domain-testing-rules-v1.zip" -DestinationPath . -Force
 git status
 ```
 
 ## Git Bash / WSL
 
-From the repository root:
-
 ```bash
-unzip -o /mnt/c/Users/alexa/Downloads/enman-l1-readiness-update-v1.zip -d .
+unzip -o /mnt/c/Users/alexa/Downloads/enman-l1-domain-testing-rules-v1.zip -d .
 git status
 ```
 
-## Files to add
+## Expected changes
+
+Add:
 
 ```text
-planning/l1-domain-implementation-cut.md
+planning/l1-domain-testing-rules.md
 ```
 
-## Files to replace
+Replace:
 
 ```text
 planning/README.md
 planning/planning-workflow-current.md
 planning/tables/README.md
-planning/tables/00-planning-tables-index.md
-planning/tables/domain-drafts/README.md
-planning/tables/domain-drafts/domain-draft-01.md
-planning/current-state.md
-planning/domain-model.md
-```
-
-## Files to delete
-
-```text
-Nothing.
-```
-
-## Verification
-
-After applying, check that these files exist:
-
-```text
-planning/tables/domain-drafts/domain-draft-01.md
 planning/l1-domain-implementation-cut.md
 ```
 
-Then read:
+Delete:
 
 ```text
+nothing
+```
+
+## After applying
+
+Review:
+
+```text
+planning/l1-domain-testing-rules.md
 planning/l1-domain-implementation-cut.md
 ```
 
-before starting L1 implementation with an agent.
+Then use both files when preparing the L1 implementation agent prompt.

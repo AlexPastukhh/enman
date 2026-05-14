@@ -11,6 +11,7 @@ Use it after reading:
 
 ```text
 planning/tables/domain-drafts/domain-draft-01.md
+planning/l1-domain-testing-rules.md
 planning/current-state.md
 planning/domain-model.md
 ```
@@ -25,6 +26,13 @@ Target domain direction:
 
 ```text
 planning/tables/domain-drafts/domain-draft-01.md
+```
+
+Implementation/testing guides:
+
+```text
+planning/l1-domain-implementation-cut.md
+planning/l1-domain-testing-rules.md
 ```
 
 Implementation/background context:
@@ -80,6 +88,12 @@ Unit tests should cover:
 - optional rejection feedback;
 - applicant verification rules;
 - account activation guard behavior.
+```
+
+Detailed testing rules are in:
+
+```text
+planning/l1-domain-testing-rules.md
 ```
 
 ## 4. Explicitly Out Of Scope For First Cut
@@ -211,6 +225,24 @@ UI should warn when rejecting without feedback.
 
 ## 8. Unit Test Scope
 
+Read first:
+
+```text
+planning/l1-domain-testing-rules.md
+```
+
+Technical baseline:
+
+```text
+Tests.EnergyManagement
+xUnit
+FluentAssertions
+```
+
+Existing tests under `Tests.EnergyManagement/` are the valid local style examples.
+
+If exact existing test class/method names are needed, inspect the local checkout before implementation.
+
 Recommended test groups:
 
 ```text
@@ -240,7 +272,36 @@ ConnectionRequestReviewTests
   FailedApproveOrReject_DoesNotChangeState
 ```
 
-## 9. Progressive File Splitting Strategy
+These names are target/recommended tests, not claims that they already exist.
+
+## 9. Unit vs Integration Testing Rule
+
+Unit tests come first.
+
+Integration tests start after the first L1 domain implementation is green.
+
+Do not mix these into the first domain unit-test cut:
+
+```text
+database tests
+API tests
+WebApplicationFactory tests
+EF mapping tests
+Dapper query tests
+Playwright/E2E tests
+```
+
+Integration tests later should verify:
+
+```text
+- application/API + persistence integration;
+- transaction behavior;
+- DB mapping and constraints;
+- failed command does not partially persist state;
+- external adapters through fakes/test doubles where needed.
+```
+
+## 10. Progressive File Splitting Strategy
 
 Use progressive file splitting.
 
@@ -317,7 +378,7 @@ Requests/RequestDomain.cs
 
 But split after the mini-cut is green.
 
-## 10. AgreementProposalExchange Position
+## 11. AgreementProposalExchange Position
 
 `AgreementProposalExchange` is in `domain-draft-01.md`, but it is not part of the first implementation cut.
 
@@ -328,12 +389,12 @@ Agreement exchange has additional decisions around proposal versions, public num
 The first L1 implementation should stabilize account/applicant/request review behavior first.
 ```
 
-## 11. Implementation Agent Prompt Shape
+## 12. Implementation Agent Prompt Shape
 
 Use this shape when asking an implementation agent:
 
 ```text
-Implement only the L1 domain classes and unit tests described in planning/l1-domain-implementation-cut.md.
+Implement only the L1 domain classes and unit tests described in planning/l1-domain-implementation-cut.md and planning/l1-domain-testing-rules.md.
 
 Do not implement persistence/API/UI.
 
@@ -345,6 +406,8 @@ Use domain-draft-01.md as target domain direction, but follow the narrower L1 cu
 
 Add/adjust unit tests for local domain invariants and no-write behavior.
 
+Use existing Tests.EnergyManagement as the local test style baseline.
+
 Use progressive file splitting:
 - stabilize each mini-cut;
 - get tests green;
@@ -352,13 +415,14 @@ Use progressive file splitting:
 - run tests again.
 ```
 
-## 12. Done Criteria
+## 13. Done Criteria
 
 The first L1 domain implementation cut is done when:
 
 ```text
 - domain classes compile;
 - unit tests cover local invariants and state transitions;
+- unit tests cover no-write behavior for failed commands;
 - no persistence/API/UI work is mixed into the same step;
 - target RequestStatus uses InReview / Approved / Rejected for the new/refined L1 domain direction;
 - rejection feedback is optional in domain;

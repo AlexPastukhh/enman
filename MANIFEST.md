@@ -1,46 +1,49 @@
-# MANIFEST
+# Manifest — L1 Domain Testing Rules Update
 
-Archive: enman-l1-readiness-update-v1.zip
+Archive: `enman-l1-domain-testing-rules-v1.zip`
 
-Purpose:
-Prepare planning docs for starting the first L1 domain implementation step with an implementation agent.
-
-Repository branch:
-my-changes
-
-## Files included
-
-| Path | Action | Purpose |
-|---|---|---|
-| `planning/README.md` | replace | Update global planning navigation: domain-draft-01 exists; next step is L1 readiness/cut. |
-| `planning/planning-workflow-current.md` | replace | Update workflow from “create draft 1” to “review/refine draft 01 then L1 implementation cut”. |
-| `planning/tables/README.md` | replace | Update planning tables navigation for saved draft and L1 implementation cut. |
-| `planning/tables/00-planning-tables-index.md` | replace | Add implementation-readiness file to active files/read order. |
-| `planning/tables/domain-drafts/README.md` | replace | Clarify current draft status and next step. |
-| `planning/tables/domain-drafts/domain-draft-01.md` | replace | Refine draft for pre-L1 readiness; move activation guard out of ApplicantParty factory. |
-| `planning/l1-domain-implementation-cut.md` | add | New guide for first L1 domain implementation cut and progressive file splitting. |
-| `planning/current-state.md` | replace | Reframe as implementation snapshot/background, not target domain model. |
-| `planning/domain-model.md` | replace | Reframe as background compatibility note, not current target draft. |
-| `APPLY.md` | add to archive root | Manual application instructions. |
-| `MANIFEST.md` | add to archive root | This manifest. |
-
-## Deletions
-
-Nothing should be deleted.
-
-## Next step after applying
-
-Review:
+## Files
 
 ```text
+planning/l1-domain-testing-rules.md
+planning/README.md
+planning/planning-workflow-current.md
+planning/tables/README.md
 planning/l1-domain-implementation-cut.md
-planning/tables/domain-drafts/domain-draft-01.md
+APPLY.md
+MANIFEST.md
 ```
 
-Then give the implementation agent a narrow task:
+## Add
 
 ```text
-Implement L1 domain classes and unit tests only.
-Do not implement persistence/API/UI.
-Do not implement AgreementProposalExchange yet.
+planning/l1-domain-testing-rules.md
+```
+
+## Replace
+
+```text
+planning/README.md
+planning/planning-workflow-current.md
+planning/tables/README.md
+planning/l1-domain-implementation-cut.md
+```
+
+## Delete
+
+```text
+nothing
+```
+
+## Purpose
+
+Add a dedicated L1 domain testing rules artifact and update navigation so implementation agents know:
+
+```text
+- unit tests are first;
+- integration tests come later;
+- existing Tests.EnergyManagement is the valid local style baseline;
+- xUnit + FluentAssertions are the current unit test baseline;
+- no-write behavior must be tested;
+- persistence/API/UI tests are out of the first domain unit-test cut.
 ```
