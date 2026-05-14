@@ -34,6 +34,12 @@ The current UI-planning entry point is:
 planning/ui/README.md
 ```
 
+The current VKR wording guide is:
+
+```text
+planning/vkr-formulation-guide.md
+```
+
 ## 2. Main Domain Workflow
 
 ```text
@@ -202,7 +208,38 @@ If it reveals that a page needs a specific visible/input/selectable/filter/attac
 If the issue is only layout, component choice, navigation style, or one of several acceptable UX options, keep it in test-site-ui-plan.md or ui-questions-register.md.
 ```
 
-## 9. Replacement File Generation Workflow
+## 9. VKR Clean Writing Branch
+
+VKR clean writing is a supporting branch, not a replacement for domain or UI planning.
+
+Use:
+
+```text
+planning/vkr-formulation-guide.md
+```
+
+when creating or editing:
+
+```text
+vkr-clean/
+presentation/
+```
+
+Purpose:
+
+```text
+- keep wording academic and project-specific;
+- remove generic and promotional phrasing;
+- avoid transferring internal planning wording into clean materials;
+- distinguish implemented, designed, planned and deferred functionality;
+- keep statements tied to repository evidence, project materials or user-provided facts.
+```
+
+This file may contain bad/good examples and reusable writing instructions.
+
+It must not be copied into final VKR text.
+
+## 10. Replacement File Generation Workflow
 
 When the user asks for files to replace in the repository manually, use:
 
@@ -220,7 +257,7 @@ Rules:
 - do not output patches or fragments unless explicitly asked.
 ```
 
-## 10. Current Next Steps
+## 11. Current Next Steps
 
 Main domain branch:
 
@@ -232,4 +269,10 @@ UI branch:
 
 ```text
 Create / fill planning/ui/test-site-ui-plan.md and planning/ui/ui-questions-register.md.
+```
+
+VKR clean writing branch:
+
+```text
+Use planning/vkr-formulation-guide.md when extending vkr-clean/ and presentation/.
 ```

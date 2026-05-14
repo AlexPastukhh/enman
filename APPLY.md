@@ -1,97 +1,47 @@
-# APPLY
+# Apply enman-vkr-formulation-guide-v1.zip
 
-Package: `enman-domain-draft-01-package-v1.zip`
+This archive adds an internal VKR formulation guide and updates planning navigation.
 
-Purpose:
+## Files
 
-```text
-Add the first saved domain draft and update planning-table navigation.
-```
+- `planning/README.md`
+- `planning/planning-workflow-current.md`
+- `planning/vkr-formulation-guide.md`
+- `MANIFEST.md`
+- `APPLY.md`
 
-## Files to add / replace
-
-Add:
-
-```text
-planning/tables/domain-drafts/domain-draft-01.md
-```
-
-Replace:
-
-```text
-planning/tables/domain-drafts/README.md
-planning/tables/00-planning-tables-index.md
-```
-
-Delete:
-
-```text
-Nothing.
-```
-
-## Apply with PowerShell / VS Code Terminal
-
-From the repository root:
+## PowerShell / VS Code Terminal
 
 ```powershell
-Expand-Archive -Path .\enman-domain-draft-01-package-v1.zip -DestinationPath . -Force
+cd "C:\enman\enman"
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-formulation-guide-v1.zip" -DestinationPath . -Force
 git status
+git diff
 ```
 
-Then review:
+If OK:
 
 ```powershell
-code planning\tables\domain-drafts\domain-draft-01.md
-code planning\tables\domain-drafts\README.md
-code planning\tables\00-planning-tables-index.md
+git add planning/README.md planning/planning-workflow-current.md planning/vkr-formulation-guide.md
+git commit -m "Add VKR formulation guide"
 ```
 
-Commit manually when ready:
-
-```powershell
-git add planning/tables/domain-drafts/domain-draft-01.md `
-        planning/tables/domain-drafts/README.md `
-        planning/tables/00-planning-tables-index.md
-
-git commit -m "Add first domain draft"
-```
-
-## Apply with Git Bash / WSL
-
-From the repository root:
+## Git Bash / WSL
 
 ```bash
-unzip -o enman-domain-draft-01-package-v1.zip
+cd /c/enman/enman
+unzip -o "/c/Users/alexa/Downloads/enman-vkr-formulation-guide-v1.zip" -d .
 git status
+git diff
 ```
 
-Then review:
+If OK:
 
 ```bash
-code planning/tables/domain-drafts/domain-draft-01.md
-code planning/tables/domain-drafts/README.md
-code planning/tables/00-planning-tables-index.md
+git add planning/README.md planning/planning-workflow-current.md planning/vkr-formulation-guide.md
+git commit -m "Add VKR formulation guide"
 ```
 
-Commit manually when ready:
+## Deletions
 
-```bash
-git add planning/tables/domain-drafts/domain-draft-01.md \
-        planning/tables/domain-drafts/README.md \
-        planning/tables/00-planning-tables-index.md
-
-git commit -m "Add first domain draft"
-```
-
-## Next step after applying
-
-```text
-Review / refine planning/tables/domain-drafts/domain-draft-01.md
-```
-
-Then:
-
-```text
-coverage review
--> domain-draft-02.md
-```
+No deletions are required.
