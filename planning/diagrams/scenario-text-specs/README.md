@@ -6,13 +6,14 @@ Status: current scenario text-spec navigation index
 
 This folder contains corrected textual scenario specifications.
 
-They are the primary scenario source of truth together with DATA specs and the validation addendum.
+They are the primary scenario source of truth together with DATA specs and validation/security addenda.
 
 ## 2. Read First
 
 ```text
 00-scenario-text-specs-index.md
 scenario-server-domain-validation-addendum.md
+scenario-account-activation-security-addendum.md
 ```
 
 ## 3. Active Scenario Specs
@@ -48,23 +49,25 @@ SC-16-removed-notification-navigation.md
 SC-18-archive-audit-deferred.md
 ```
 
-## 5. Validation Addendum
+## 5. Validation / Security Addenda
 
 Use:
 
 ```text
 scenario-server-domain-validation-addendum.md
+scenario-account-activation-security-addendum.md
 ```
 
-It records:
+They record:
 
 ```text
 - client-side validation;
 - server-side / domain validation;
-- value object / domain validation hints per scenario.
+- value object / domain validation hints per scenario;
+- account activation / protected access requirements.
 ```
 
-Do not move these validation rules into DATA files.
+Do not move these validation/security rules into DATA files.
 
 ## 6. Current Downstream Use
 
@@ -72,6 +75,12 @@ Current pre-domain coverage baseline:
 
 ```text
 planning/tables/pre-domain-variants-input.md
+```
+
+Account activation baseline addendum:
+
+```text
+planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 ```
 
 Current domain draft branch:

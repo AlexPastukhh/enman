@@ -20,6 +20,7 @@ Each next draft should refine the same domain direction and improve:
 - impossible state prevention;
 - value integrity coverage;
 - use-case coordination decisions;
+- account activation / protected access placement;
 - scenario behavior coverage;
 - open question reduction.
 ```
@@ -32,7 +33,9 @@ Each draft must use:
 planning/diagrams/scenario-text-specs/
 planning/diagrams/scenario-data/
 planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
 planning/tables/pre-domain-variants-input.md
+planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 planning/domain-draft-generation-guide.md
 ```
 
@@ -70,7 +73,7 @@ Each draft should include:
 9. Use-Case Coordination Decisions
 10. Coverage Against Scenario Behavior Baseline
 11. Cross-Layer Placement Notes
-12. Open Questions / Gaps For Next Draft
+12. Scenario Questions / Gaps For Next Draft
 13. What Changed Since Previous Draft
 ```
 
@@ -84,6 +87,7 @@ Each draft must reference stable item IDs from:
 
 ```text
 planning/tables/pre-domain-variants-input.md
+planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 ```
 
 Coverage statuses:
@@ -97,7 +101,26 @@ Deferred
 Question
 ```
 
-## 6. Current next file
+## 6. Account activation coverage
+
+Domain drafts must cover account activation items from:
+
+```text
+planning/tables/scenario-behavior-baseline-account-activation-addendum.md
+```
+
+Current direction:
+
+```text
+- current core registration creates Active account;
+- protected client/employee functionality requires activated account;
+- current implementation: application service guard + Account.EnsureActivated;
+- future implementation: AccountActivated authorization policy, possibly backed by account_activated claim.
+```
+
+Business aggregates such as Request, AgreementProposal and ApplicantData should not duplicate account activation checks internally unless the draft explicitly justifies that decision.
+
+## 7. Current next file
 
 ```text
 planning/tables/domain-drafts/domain-draft-01.md

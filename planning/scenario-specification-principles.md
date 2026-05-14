@@ -15,6 +15,7 @@ planning/scenario-domain-validation-principles.md
 planning/diagrams/scenario-text-specs/README.md
 planning/diagrams/scenario-data/README.md
 planning/tables/pre-domain-variants-input.md
+planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 planning/domain-draft-generation-guide.md
 planning/ui/README.md
 ```
@@ -75,6 +76,7 @@ Each request shows current status.
 Rejected request details show rejection feedback.
 Employee can review only InReview requests.
 Client can accept only employee-sent agreement proposal awaiting confirmation.
+Non-active account cannot access protected functionality.
 ```
 
 Do not put layout or component choices into scenario specs.
@@ -87,6 +89,12 @@ The scenario behavior coverage baseline is:
 planning/tables/pre-domain-variants-input.md
 ```
 
+Focused baseline addenda may extend it:
+
+```text
+planning/tables/scenario-behavior-baseline-account-activation-addendum.md
+```
+
 It can be started while scenario specs and DATA files are being written.
 
 It is derived from scenario specs and DATA files.
@@ -97,9 +105,36 @@ If baseline creation reveals a missing required behavior, update the scenario sp
 
 If baseline creation reveals a missing visible/input/selectable/filter/attachment data item, update the DATA file.
 
+If baseline creation reveals several possible UX/business interpretations, add a scenario question to the baseline and, if important, to the related scenario spec.
+
 Do not let the baseline silently invent business behavior.
 
-## 5. DATA
+## 5. Scenario Questions
+
+Use scenario questions when:
+
+```text
+- scenarios do not define enough behavior to choose one implementation;
+- several valid UX/business interpretations exist;
+- a future flow may change the core behavior;
+- a rule is accepted generally but exact user-facing outcome is not fixed.
+```
+
+Scenario questions can be recorded in:
+
+```text
+- related scenario spec Open Questions;
+- focused baseline addendum as SQ items;
+- future ADR if the answer affects architecture or security.
+```
+
+Example:
+
+```text
+If user created account but did not activate it and then tries to log in, should login fail, create limited session, or allow session while blocking protected actions with AccountActivated policy?
+```
+
+## 6. DATA
 
 Use `DATA`, not `DETAIL`.
 
@@ -141,7 +176,7 @@ UI planning uses DATA to define visible/input/selectable page content:
 planning/ui/test-site-ui-plan.md
 ```
 
-## 6. Validation
+## 7. Validation
 
 Scenario specs should distinguish:
 
@@ -159,6 +194,7 @@ value objects
 domain model methods
 domain factories
 state-transition methods
+authorization / account policy guards
 ```
 
 The companion validation file is:
@@ -185,7 +221,9 @@ for data/value shape questions such as email, phone, object address, passport da
 
 State transition validation belongs to scenario state/condition matrices and command behavior items.
 
-## 7. Current Scenario Set
+Account activation belongs to account/security policy behavior and protected-use-case preconditions.
+
+## 8. Current Scenario Set
 
 Active:
 
@@ -220,7 +258,7 @@ SC-16  Notification Navigation — removed as standalone
 SC-18  Archive / Audit — deferred
 ```
 
-## 8. Current Project Decisions
+## 9. Current Project Decisions
 
 Request statuses:
 
@@ -276,18 +314,30 @@ Core agreement proposal rules:
 - previous client-sent proposal becomes Rejected when employee sends a new version.
 ```
 
-## 9. Source Of Truth Rule
+Account activation rules:
+
+```text
+- Account has activation state/marker.
+- Current core registration creates an activated account.
+- Protected client/employee functionality requires activated account.
+- Non-active account cannot execute protected business commands or access protected pages/data.
+- Current implementation direction: application service guard + Account.EnsureActivated.
+- Future implementation direction: AccountActivated authorization policy, possibly backed by account_activated claim to avoid database lookup on every protected request.
+```
+
+## 10. Source Of Truth Rule
 
 Use corrected text specs, DATA specs, validation addendum, consistency report and scenario behavior coverage baseline.
 
 Do not use stale generated diagram package summaries or stale `.drawio` pages as semantic source of truth until regenerated.
 
-## 10. Current Domain-Planning Step
+## 11. Current Domain-Planning Step
 
 The current pre-domain coverage baseline is:
 
 ```text
 planning/tables/pre-domain-variants-input.md
+planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 ```
 
 The current domain draft guide is:
@@ -311,7 +361,7 @@ scenario-domain-design-input-core.md
 
 Do not use competing-domain-variant comparison as the current workflow.
 
-## 11. Current UI-Planning Step
+## 12. Current UI-Planning Step
 
 The current UI-planning branch starts at:
 

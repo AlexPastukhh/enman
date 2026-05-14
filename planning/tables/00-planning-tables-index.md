@@ -7,7 +7,8 @@ Status: current table index for gradual domain discovery
 | Order | File | Status | Purpose |
 |---:|---|---|---|
 | 1 | `pre-domain-variants-input.md` | current pre-domain coverage baseline | Collect scenario-derived behavior items with stable IDs. |
-| 2 | `domain-drafts/README.md` | current draft folder index | Explains where iterative domain drafts are stored. |
+| 2 | `scenario-behavior-baseline-account-activation-addendum.md` | active baseline addendum | Add account activation / protected-use-case coverage items and questions. |
+| 3 | `domain-drafts/README.md` | current draft folder index | Explains where iterative domain drafts are stored. |
 
 ## 2. Current Read Order
 
@@ -15,9 +16,11 @@ Status: current table index for gradual domain discovery
 1. planning/diagrams/scenario-text-specs/
 2. planning/diagrams/scenario-data/
 3. planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-4. planning/tables/pre-domain-variants-input.md
-5. planning/domain-draft-generation-guide.md
-6. planning/tables/domain-drafts/README.md
+4. planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
+5. planning/tables/pre-domain-variants-input.md
+6. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
+7. planning/domain-draft-generation-guide.md
+8. planning/tables/domain-drafts/README.md
 ```
 
 ## 3. Current Next Step
@@ -66,10 +69,11 @@ scenario-domain-design-input-core.md
 scenario-domain-design-input-gate.md
 ```
 
-The current pre-domain control file is:
+The current pre-domain control files are:
 
 ```text
 pre-domain-variants-input.md
+scenario-behavior-baseline-account-activation-addendum.md
 ```
 
 The current draft folder is:

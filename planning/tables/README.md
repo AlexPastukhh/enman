@@ -12,6 +12,7 @@ Before generating domain drafts, use:
 
 ```text
 planning/tables/pre-domain-variants-input.md
+planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 ```
 
 Historical filename note:
@@ -26,9 +27,11 @@ pre-domain-variants-input.md now acts as the Scenario Behavior Coverage Baseline
 1. planning/diagrams/scenario-text-specs/
 2. planning/diagrams/scenario-data/
 3. planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-4. planning/tables/pre-domain-variants-input.md
-5. planning/domain-draft-generation-guide.md
-6. planning/tables/domain-drafts/README.md
+4. planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
+5. planning/tables/pre-domain-variants-input.md
+6. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
+7. planning/domain-draft-generation-guide.md
+8. planning/tables/domain-drafts/README.md
 ```
 
 ## 3. Why pre-domain-variants-input.md exists
@@ -44,6 +47,12 @@ It includes:
 - value integrity / anti-primitive-obsession items;
 - use-case coordination items;
 - read/access/integration/future items.
+```
+
+Account activation items are tracked in a focused addendum:
+
+```text
+scenario-behavior-baseline-account-activation-addendum.md
 ```
 
 It intentionally does not define:
