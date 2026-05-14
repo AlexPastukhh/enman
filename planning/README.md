@@ -5,105 +5,48 @@ Scope: repository planning artifacts and read order
 
 ## 1. Current Main Workflow
 
-The current main planning workflow is gradual domain discovery followed by domain foundation, slice drafting and implementation planning:
+The current workflow is scenario-first, then domain foundation, then slice-by-slice implementation planning:
 
 ```text
 scenario text specs
 -> scenario DATA files
--> validation-related file
+-> validation-related files
 -> scenario behavior coverage baseline
--> domain draft 1
--> coverage review
--> domain draft 2
--> coverage review
--> ...
--> final domain model candidate
--> implementation readiness review
+-> domain draft(s)
 -> L1 domain implementation cut
--> domain testing rules
--> domain classes + unit tests
--> L1 slice drafting
--> scenario-to-slice coverage review
--> application/API/persistence/UI slices
--> ADR updates as decisions stabilize
+-> L1 domain testing rules
+-> L1 domain foundation implementation
+-> L1 slice boundary draft
+-> per-slice implementation files
+-> implement one slice at a time
+-> update coverage / decisions / ADR candidates
 ```
 
-The current main-domain working step is:
+The current active planning focus is:
 
 ```text
-Review / refine planning/tables/domain-drafts/domain-draft-01.md for L1 implementation readiness.
+L1 slice boundary and per-slice implementation planning.
 ```
 
-The current L1 implementation planning entry points are:
-
-```text
-planning/l1-domain-implementation-cut.md
-planning/l1-domain-testing-rules.md
-```
-
-The current slice and ADR planning entry points are:
+## 2. Current L1 Slice Entry Points
 
 ```text
 planning/slices/README.md
 planning/slices/l1-slice-drafting-guide.md
-planning/adr/README.md
-planning/adr/adr-candidates.md
+planning/slices/l1-slice-boundary-draft-01.md
 ```
 
-## 2. Current L1 Implementation Readiness Position
-
-`domain-draft-01.md` exists and is the current first saved domain draft.
-
-Before asking an implementation agent to code L1, use this order:
+Current implemented/partial slice files:
 
 ```text
-1. Review domain-draft-01.md.
-2. Use planning/l1-domain-implementation-cut.md.
-3. Use planning/l1-domain-testing-rules.md.
-4. Implement only the agreed L1 domain cut.
-5. Add domain unit tests for local invariants and no-write behavior.
-6. Do not implement persistence/API/UI unless explicitly requested.
+planning/slices/SL-ACC-001-register-client-account.md
+planning/slices/SL-APPL-001-create-individual-applicant-party.md
+planning/slices/SL-REQ-001-create-connection-request.md
+planning/slices/SL-REVIEW-001-approve-request-and-verify-applicant.md
+planning/slices/SL-REVIEW-002-reject-request.md
 ```
 
-Do not ask an agent to implement the whole draft at once.
-
-Unit tests are first.
-
-Integration tests are planned after the first domain implementation is green.
-
-## 3. Slice Planning Position
-
-The L1 domain cut does not replace slice planning.
-
-The L1 domain cut is a domain-foundation cut.
-
-After the first green L1 domain implementation, create L1 slice drafts before application/API/persistence/UI implementation work.
-
-Slice definition:
-
-```text
-Slice = independently testable unit of observable behavior
-        + implementation path needed to deliver/test that behavior.
-```
-
-Slices are derived from:
-
-```text
-scenarios
-scenario DATA facts
-scenario behavior baseline items
-domain draft / L1 domain implementation result
-```
-
-Slice drafts should organize work by scenario sections and list the slices derived from each scenario.
-
-Use:
-
-```text
-planning/slices/l1-slice-drafting-guide.md
-```
-
-## 4. Current Read Order
+## 3. Current Read Order
 
 ```text
 1. planning/README.md
@@ -124,79 +67,69 @@ planning/slices/l1-slice-drafting-guide.md
 16. planning/l1-domain-testing-rules.md
 17. planning/slices/README.md
 18. planning/slices/l1-slice-drafting-guide.md
-19. planning/adr/README.md
-20. planning/adr/adr-candidates.md
-21. planning/current-state.md
-22. planning/domain-model.md
-23. planning/ui/README.md
+19. planning/slices/l1-slice-boundary-draft-01.md
+20. planning/slices/SL-REQ-001-create-connection-request.md
+21. planning/adr/README.md
+22. planning/adr/adr-candidates.md
+23. planning/current-state.md
+24. planning/domain-model.md
+25. planning/ui/README.md
 ```
 
-## 5. Source Files For Domain Drafts
+## 4. Slice Planning Position
 
-Use exactly these inputs when generating or refining domain drafts:
+Slice definition:
 
 ```text
-1. planning/diagrams/scenario-text-specs/
-2. planning/diagrams/scenario-data/
-3. planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-4. planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
-5. planning/tables/pre-domain-variants-input.md
-6. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
-7. planning/domain-draft-generation-guide.md
+Slice = independently testable unit of observable behavior
+        + implementation path needed to deliver/test that behavior.
 ```
 
-Optional context:
+There are two slice planning levels:
 
 ```text
-planning/current-state.md
-planning/domain-model.md
-planning/diagrams/scenario-diagram-consistency-report.md
-planning/scenario-specification-principles.md
-planning/scenario-domain-validation-principles.md
+General boundary draft:
+- identifies real slices;
+- explains why each slice is valid;
+- shows Scenario Slice Flow;
+- assigns scenario flow parts to slices;
+- collects boundary questions/decisions.
+
+Per-slice file:
+- duplicates/refines Scenario Slice Flow;
+- adds Implementation Flow;
+- includes UI blueprint;
+- includes test plan;
+- includes detailed implementation notes and checklist.
 ```
 
-## 6. Scenario Behavior Coverage Baseline
+Do not put detailed implementation flow into the general boundary draft.
 
-The active pre-domain control artifact is:
+Do not implement new application/API/persistence/UI work before the relevant per-slice file exists.
+
+## 5. Source Files For Slice Drafts
+
+Use:
 
 ```text
+planning/diagrams/scenario-text-specs/
+planning/diagrams/scenario-data/
 planning/tables/pre-domain-variants-input.md
+planning/tables/scenario-behavior-baseline-account-activation-addendum.md
+planning/tables/domain-drafts/domain-draft-01.md
+planning/l1-domain-implementation-cut.md
+planning/l1-domain-testing-rules.md
+planning/slices/l1-slice-drafting-guide.md
+actual L1 implementation result
+actual L1 tests
 ```
 
-Despite the historical filename, this file now acts as:
-
-```text
-Scenario Behavior Coverage Baseline
-```
-
-It collects scenario-derived behavior items with stable IDs.
-
-It does not define domain classes, aggregates, slices or final method names.
-
-Each domain draft uses those item IDs to show what is covered, partial, unresolved, deferred or placed outside the current domain model.
-
-Each slice draft uses those item IDs to show which behavior is planned in which independently testable slice.
-
-If slice planning reveals missing UI/read/UX items, add them as candidate items in the slice draft before promoting them to the baseline.
-
-## 7. L1 Testing Rules
+## 6. L1 Testing Rules
 
 The current L1 testing rules are:
 
 ```text
 planning/l1-domain-testing-rules.md
-```
-
-Use this file before giving implementation work to an agent.
-
-Current testing position:
-
-```text
-- unit tests first;
-- existing Tests.EnergyManagement is the local test project and style baseline;
-- xUnit + FluentAssertions are the current unit-test baseline;
-- integration tests come after the first green domain implementation;
-- do not mix persistence/API/UI tests into the first L1 domain cut.
 ```
 
 Existing tests under:
@@ -205,11 +138,13 @@ Existing tests under:
 Tests.EnergyManagement/
 ```
 
-are the valid local examples for test style.
+are valid local examples for test style.
 
-If exact existing test class/method names are needed, inspect the local checkout before writing the implementation prompt.
+Unit tests are first for domain foundation.
 
-## 8. ADR Planning
+Integration/UI tests are planned in the relevant per-slice files.
+
+## 7. ADR Planning
 
 ADR candidates are collected in:
 
@@ -217,11 +152,7 @@ ADR candidates are collected in:
 planning/adr/adr-candidates.md
 ```
 
-Do not write full ADRs for every minor choice.
-
-Add ADR candidates when a decision affects multiple slices, layer boundaries, plugin/external dependencies, persistence/read model strategy, transaction boundaries, testing strategy, or diploma-level architecture explanation.
-
-## 9. Replacement File Generation Workflow
+## 8. Replacement File Generation Workflow
 
 When the user asks for files to replace manually, use:
 
@@ -229,18 +160,9 @@ When the user asks for files to replace manually, use:
 planning/replacement-file-generation-guide.md
 ```
 
-Current replacement-file rule:
+Generate complete files, package them with repository-relative paths, and include `APPLY.md` / `MANIFEST.md`.
 
-```text
-generate complete files
-package them with repository-relative paths
-include all needed files if previous archive was not applied
-keep the response practical and list target paths
-```
-
-Do not provide partial snippets unless explicitly requested.
-
-## 10. Superseded / Not Current
+## 9. Superseded / Not Current
 
 Do not use the old path as the current workflow:
 
@@ -252,34 +174,4 @@ scenario-domain-design-input-gate.md
 -> domain-model-options-core.md
 ```
 
-Do not use this as the current domain workflow:
-
-```text
-domain model variant 1
--> domain model variant 2
--> compare competing variants
--> choose one
-```
-
 If old files/folders exist, treat them as stale/superseded notes.
-
-## 11. Agent Rules
-
-Planning agents should:
-
-```text
-- read current indexes first;
-- use corrected scenario text specs and DATA specs as source of truth;
-- use pre-domain-variants-input.md as scenario behavior coverage baseline before generating domain drafts;
-- after a draft exists, do not say “create draft 1” as the current step;
-- use planning/l1-domain-implementation-cut.md before giving L1 coding work to an implementation agent;
-- use planning/l1-domain-testing-rules.md before writing L1 tests;
-- keep L1 implementation narrow: domain classes + unit tests first;
-- use existing Tests.EnergyManagement as the local test style baseline;
-- do not implement persistence/API/UI unless explicitly requested;
-- use progressive file splitting during L1 implementation;
-- after green L1 domain foundation, use planning/slices/l1-slice-drafting-guide.md before planning application/API/persistence/UI work;
-- derive slices from scenarios, behavior items and independent testability;
-- collect ADR candidates when decisions affect multiple slices or architecture boundaries;
-- create or update files only when explicitly requested.
-```

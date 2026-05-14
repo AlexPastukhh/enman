@@ -1,64 +1,41 @@
-# Apply enman-slice-and-adr-workflow-v1.zip
+# Apply Instructions
 
-## Purpose
+Archive:
 
-This archive adds slice drafting workflow documentation and ADR candidate tracking, and updates planning navigation.
+```text
+enman-l1-slice-boundary-package-v1.zip
+```
 
-It does not modify source code.
+Apply from repository root:
 
-## Files
+```powershell
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-l1-slice-boundary-package-v1.zip" -DestinationPath . -Force
+git status
+```
 
-Add:
+## Add
+
+```text
+planning/slices/l1-slice-boundary-draft-01.md
+planning/slices/SL-ACC-001-register-client-account.md
+planning/slices/SL-APPL-001-create-individual-applicant-party.md
+planning/slices/SL-REQ-001-create-connection-request.md
+planning/slices/SL-REVIEW-001-approve-request-and-verify-applicant.md
+planning/slices/SL-REVIEW-002-reject-request.md
+```
+
+## Replace
 
 ```text
 planning/slices/README.md
 planning/slices/l1-slice-drafting-guide.md
-planning/adr/README.md
-planning/adr/adr-candidates.md
-```
-
-Replace:
-
-```text
 planning/README.md
 planning/planning-workflow-current.md
 planning/tables/README.md
-planning/l1-domain-implementation-cut.md
 ```
 
-Delete:
+## Delete
 
 ```text
 nothing
 ```
-
-## PowerShell / VS Code Terminal
-
-Run from repository root:
-
-```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-slice-and-adr-workflow-v1.zip" -DestinationPath . -Force
-git status
-```
-
-## Git Bash / WSL
-
-Run from repository root:
-
-```bash
-unzip -o /mnt/c/Users/alexa/Downloads/enman-slice-and-adr-workflow-v1.zip
-git status
-```
-
-## Expected result
-
-After applying, the repo should contain:
-
-```text
-planning/slices/README.md
-planning/slices/l1-slice-drafting-guide.md
-planning/adr/README.md
-planning/adr/adr-candidates.md
-```
-
-and navigation should mention that after green L1 domain foundation, the next planning step is L1 slice drafting before application/API/persistence/UI work.
