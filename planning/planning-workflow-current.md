@@ -35,7 +35,16 @@ planning/l1-domain-implementation-cut.md
 planning/l1-domain-testing-rules.md
 ```
 
-## 2. Main Domain Workflow
+The current slice and ADR planning entry points are:
+
+```text
+planning/slices/README.md
+planning/slices/l1-slice-drafting-guide.md
+planning/adr/README.md
+planning/adr/adr-candidates.md
+```
+
+## 2. Main Domain And Slice Workflow
 
 ```text
 scenario text specs
@@ -52,10 +61,15 @@ scenario text specs
 -> L1 implementation cut
 -> domain testing rules
 -> domain classes + unit tests
--> then application/API/persistence/UI planning
+-> L1 slice drafts
+-> scenario-to-slice coverage review
+-> application/API/persistence/UI slices
+-> ADR updates as decisions stabilize
 ```
 
-The goal is gradual domain discovery, not selection between competing domain alternatives.
+The goal is gradual domain discovery followed by scenario-derived slice planning.
+
+The goal is not selection between competing domain alternatives.
 
 ## 3. What A Domain Draft Means
 
@@ -75,7 +89,38 @@ Each next draft should:
 
 `domain-draft-01.md` already exists. The current task is review/refinement for implementation readiness, not creating the first draft from scratch.
 
-## 4. Source Files For Domain Drafts
+## 4. What A Slice Draft Means
+
+A slice draft is a scenario-derived implementation planning artifact.
+
+Working definition:
+
+```text
+Slice = independently testable unit of observable behavior
+        + implementation path needed to deliver/test that behavior.
+```
+
+A slice draft should:
+
+```text
+- start from scenarios;
+- list relevant scenario-derived behavior items;
+- include relevant DATA facts;
+- mark candidate missing UI/read/UX items;
+- derive independently testable slices;
+- describe domain/application/persistence/read/API/UI/auth/infra participation;
+- include test coverage;
+- include per-slice coverage;
+- include behavior item coverage;
+- collect questions locally and in one consolidated section;
+- collect ADR candidates.
+```
+
+The L1 domain implementation cut is not a full scenario slice.
+
+It is a domain-foundation cut that prepares the project for later application/API/persistence/UI slice planning.
+
+## 5. Source Files For Domain Drafts
 
 Use exactly these inputs:
 
@@ -89,7 +134,29 @@ Use exactly these inputs:
 7. planning/domain-draft-generation-guide.md
 ```
 
-## 5. How Coverage Works
+## 6. Source Files For Slice Drafts
+
+Use:
+
+```text
+1. planning/diagrams/scenario-text-specs/
+2. planning/diagrams/scenario-data/
+3. planning/tables/pre-domain-variants-input.md
+4. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
+5. planning/tables/domain-drafts/domain-draft-01.md
+6. planning/l1-domain-implementation-cut.md
+7. planning/l1-domain-testing-rules.md
+8. planning/slices/l1-slice-drafting-guide.md
+```
+
+After implementation starts, also use:
+
+```text
+actual L1 domain implementation result
+actual L1 domain unit tests
+```
+
+## 7. How Coverage Works
 
 The baseline gives each behavior item a stable ID.
 
@@ -112,7 +179,11 @@ Coverage item means:
 the system must explain/cover this behavior.
 ```
 
-## 6. L1 Implementation Readiness
+Slice drafts then map behavior items into independently testable slices.
+
+If a needed UI/read/UX behavior item is missing from the baseline, mark it as a candidate item in the slice draft and review it before promoting it to the baseline.
+
+## 8. L1 Implementation Readiness
 
 Before implementation work, read:
 
@@ -146,7 +217,7 @@ no UI
 no agreement exchange unless explicitly included
 ```
 
-## 7. L1 Testing Position
+## 9. L1 Testing Position
 
 Testing entry point:
 
@@ -185,7 +256,7 @@ are valid local examples.
 
 If exact current test names are needed, inspect the local checkout and list them before implementation.
 
-## 8. L1 File Strategy
+## 10. L1 File Strategy
 
 Use progressive file splitting.
 
@@ -206,7 +277,19 @@ Recommended mini-cut order:
 4. AgreementProposalExchange later, after core request/refactor is stable
 ```
 
-## 9. Replacement File Generation Workflow
+## 11. ADR Position
+
+ADR candidates are collected in:
+
+```text
+planning/adr/adr-candidates.md
+```
+
+Do not write full ADRs unless explicitly requested.
+
+Add candidates when a decision affects multiple slices, layer boundaries, plugin/external dependencies, persistence/read model tradeoffs, transaction boundaries, testing strategy, or diploma-level architecture explanation.
+
+## 12. Replacement File Generation Workflow
 
 When the user asks for files to replace in the repository manually, use:
 
@@ -224,13 +307,14 @@ Rules:
 - do not output patches or fragments unless explicitly asked.
 ```
 
-## 10. Current Next Steps
+## 13. Current Next Steps
 
 Main domain branch:
 
 ```text
 Review / refine planning/tables/domain-drafts/domain-draft-01.md for implementation readiness.
 Then use planning/l1-domain-implementation-cut.md and planning/l1-domain-testing-rules.md to start narrow L1 domain implementation.
+After first green L1 domain foundation, use planning/slices/l1-slice-drafting-guide.md to create L1 slice drafts before application/API/persistence/UI work.
 ```
 
 UI branch and VKR branch remain parallel/supporting branches.

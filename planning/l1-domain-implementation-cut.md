@@ -20,6 +20,10 @@ This file exists because `domain-draft-01.md` is broader than the first implemen
 
 Do not ask an implementation agent to implement the whole draft at once.
 
+This file does not replace slice planning.
+
+The first L1 cut is a domain-foundation cut, not a full scenario/application slice.
+
 ## 2. Source Of Truth
 
 Target domain direction:
@@ -40,6 +44,12 @@ Implementation/background context:
 ```text
 planning/current-state.md
 planning/domain-model.md
+```
+
+Slice planning after the first green domain foundation:
+
+```text
+planning/slices/l1-slice-drafting-guide.md
 ```
 
 Current repo implementation may still contain older L1 names/statuses such as:
@@ -378,7 +388,42 @@ Requests/RequestDomain.cs
 
 But split after the mini-cut is green.
 
-## 11. AgreementProposalExchange Position
+## 11. After Green L1 Domain Foundation: Slice Drafting
+
+After the first L1 domain classes compile and unit tests are green, do not jump directly to controllers, persistence or UI.
+
+Next planning step:
+
+```text
+planning/slices/l1-slice-drafting-guide.md
+```
+
+The goal is to create L1 slice drafts before application/API/persistence/UI implementation.
+
+Slice definition:
+
+```text
+Slice = independently testable unit of observable behavior
+        + implementation path needed to deliver/test that behavior.
+```
+
+Slice drafts should:
+
+```text
+- start from scenarios;
+- list scenario-derived behavior items;
+- include relevant DATA facts;
+- mark missing UI/read/UX candidate items;
+- derive testable behavior slices;
+- map each slice to domain/application/persistence/API/UI/auth/infra/tests;
+- include per-slice coverage;
+- include behavior item coverage;
+- include test coverage;
+- collect local and consolidated questions;
+- collect ADR candidates.
+```
+
+## 12. AgreementProposalExchange Position
 
 `AgreementProposalExchange` is in `domain-draft-01.md`, but it is not part of the first implementation cut.
 
@@ -389,7 +434,7 @@ Agreement exchange has additional decisions around proposal versions, public num
 The first L1 implementation should stabilize account/applicant/request review behavior first.
 ```
 
-## 12. Implementation Agent Prompt Shape
+## 13. Implementation Agent Prompt Shape
 
 Use this shape when asking an implementation agent:
 
@@ -413,9 +458,11 @@ Use progressive file splitting:
 - get tests green;
 - split/normalize files;
 - run tests again.
+
+After green L1 domain foundation, stop before application/API/persistence/UI work and create L1 slice drafts using planning/slices/l1-slice-drafting-guide.md.
 ```
 
-## 13. Done Criteria
+## 14. Done Criteria
 
 The first L1 domain implementation cut is done when:
 
@@ -427,5 +474,6 @@ The first L1 domain implementation cut is done when:
 - target RequestStatus uses InReview / Approved / Rejected for the new/refined L1 domain direction;
 - rejection feedback is optional in domain;
 - account activation guard is not duplicated inside ApplicantParty factory;
-- existing old flow is not accidentally broken unless migration is explicitly requested.
+- existing old flow is not accidentally broken unless migration is explicitly requested;
+- next step is slice drafting before application/API/persistence/UI implementation.
 ```

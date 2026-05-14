@@ -1,27 +1,20 @@
-# Apply Instructions
+# Apply enman-slice-and-adr-workflow-v1.zip
 
-Apply from the repository root.
+## Purpose
 
-## PowerShell / VS Code Terminal
+This archive adds slice drafting workflow documentation and ADR candidate tracking, and updates planning navigation.
 
-```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-l1-domain-testing-rules-v1.zip" -DestinationPath . -Force
-git status
-```
+It does not modify source code.
 
-## Git Bash / WSL
-
-```bash
-unzip -o /mnt/c/Users/alexa/Downloads/enman-l1-domain-testing-rules-v1.zip -d .
-git status
-```
-
-## Expected changes
+## Files
 
 Add:
 
 ```text
-planning/l1-domain-testing-rules.md
+planning/slices/README.md
+planning/slices/l1-slice-drafting-guide.md
+planning/adr/README.md
+planning/adr/adr-candidates.md
 ```
 
 Replace:
@@ -39,13 +32,33 @@ Delete:
 nothing
 ```
 
-## After applying
+## PowerShell / VS Code Terminal
 
-Review:
+Run from repository root:
 
-```text
-planning/l1-domain-testing-rules.md
-planning/l1-domain-implementation-cut.md
+```powershell
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-slice-and-adr-workflow-v1.zip" -DestinationPath . -Force
+git status
 ```
 
-Then use both files when preparing the L1 implementation agent prompt.
+## Git Bash / WSL
+
+Run from repository root:
+
+```bash
+unzip -o /mnt/c/Users/alexa/Downloads/enman-slice-and-adr-workflow-v1.zip
+git status
+```
+
+## Expected result
+
+After applying, the repo should contain:
+
+```text
+planning/slices/README.md
+planning/slices/l1-slice-drafting-guide.md
+planning/adr/README.md
+planning/adr/adr-candidates.md
+```
+
+and navigation should mention that after green L1 domain foundation, the next planning step is L1 slice drafting before application/API/persistence/UI work.

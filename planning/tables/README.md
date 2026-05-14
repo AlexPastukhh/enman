@@ -28,6 +28,15 @@ planning/l1-domain-implementation-cut.md
 planning/l1-domain-testing-rules.md
 ```
 
+The current slice and ADR planning entry points are:
+
+```text
+planning/slices/README.md
+planning/slices/l1-slice-drafting-guide.md
+planning/adr/README.md
+planning/adr/adr-candidates.md
+```
+
 ## 2. Current read order
 
 ```text
@@ -42,6 +51,10 @@ planning/l1-domain-testing-rules.md
 9. planning/tables/domain-drafts/domain-draft-01.md
 10. planning/l1-domain-implementation-cut.md
 11. planning/l1-domain-testing-rules.md
+12. planning/slices/README.md
+13. planning/slices/l1-slice-drafting-guide.md
+14. planning/adr/README.md
+15. planning/adr/adr-candidates.md
 ```
 
 ## 3. Current domain draft output folder
@@ -83,7 +96,30 @@ Implementation agents should be given a narrow L1 cut.
 
 Do not ask implementation agents to implement the whole draft in one step.
 
-## 5. Testing rules
+## 5. Slice planning
+
+The L1 domain cut is not a full scenario slice.
+
+It is a domain-foundation cut.
+
+After the first green L1 domain implementation, use:
+
+```text
+planning/slices/l1-slice-drafting-guide.md
+```
+
+to create L1 slice drafts.
+
+Slice definition:
+
+```text
+Slice = independently testable unit of observable behavior
+        + implementation path needed to deliver/test that behavior.
+```
+
+Slice drafts should map scenarios and behavior items to independently testable slices and then to domain/application/persistence/API/UI/auth/infra/tests.
+
+## 6. Testing rules
 
 The current testing guide is:
 
@@ -101,7 +137,19 @@ Current testing position:
 - Moq and WebApplicationFactory are available for later boundary/integration tests.
 ```
 
-## 6. Replacement file generation
+## 7. ADR candidates
+
+ADR candidates are collected in:
+
+```text
+planning/adr/adr-candidates.md
+```
+
+Add candidates when decisions affect multiple slices or architecture boundaries.
+
+Do not write full ADRs unless explicitly requested.
+
+## 8. Replacement file generation
 
 Manual replacement-file generation is documented in:
 
@@ -109,16 +157,19 @@ Manual replacement-file generation is documented in:
 planning/replacement-file-generation-guide.md
 ```
 
-## 7. Current next step
+## 9. Current next step
 
 ```text
 Review / refine domain-draft-01.md.
 Then start the first L1 domain implementation cut from:
 - planning/l1-domain-implementation-cut.md
 - planning/l1-domain-testing-rules.md
+
+After green L1 domain foundation, create L1 slice drafts from:
+- planning/slices/l1-slice-drafting-guide.md
 ```
 
-## 8. Avoid
+## 10. Avoid
 
 Do not add or use old intermediate files such as:
 

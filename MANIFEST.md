@@ -1,26 +1,15 @@
-# Manifest — L1 Domain Testing Rules Update
+# Manifest — enman-slice-and-adr-workflow-v1.zip
 
-Archive: `enman-l1-domain-testing-rules-v1.zip`
-
-## Files
+## Added files
 
 ```text
-planning/l1-domain-testing-rules.md
-planning/README.md
-planning/planning-workflow-current.md
-planning/tables/README.md
-planning/l1-domain-implementation-cut.md
-APPLY.md
-MANIFEST.md
+planning/slices/README.md
+planning/slices/l1-slice-drafting-guide.md
+planning/adr/README.md
+planning/adr/adr-candidates.md
 ```
 
-## Add
-
-```text
-planning/l1-domain-testing-rules.md
-```
-
-## Replace
+## Replaced files
 
 ```text
 planning/README.md
@@ -29,21 +18,23 @@ planning/tables/README.md
 planning/l1-domain-implementation-cut.md
 ```
 
-## Delete
+## Deleted files
 
 ```text
-nothing
+none
 ```
 
-## Purpose
-
-Add a dedicated L1 domain testing rules artifact and update navigation so implementation agents know:
+## Summary of changes
 
 ```text
-- unit tests are first;
-- integration tests come later;
-- existing Tests.EnergyManagement is the valid local style baseline;
-- xUnit + FluentAssertions are the current unit test baseline;
-- no-write behavior must be tested;
-- persistence/API/UI tests are out of the first domain unit-test cut.
+- Adds slice planning index.
+- Adds L1 slice drafting guide.
+- Defines slice as independently testable observable behavior + implementation path.
+- Adds scenario-first slice discovery questions.
+- Adds per-scenario / per-slice structure.
+- Adds per-slice coverage, behavior item coverage, non-domain/deferred coverage and test coverage formats.
+- Requires local and consolidated questions, like domain drafts.
+- Adds ADR index and candidate list.
+- Updates navigation to show that L1 domain cut is a domain-foundation cut, not a full scenario slice.
+- Updates L1 cut guide to stop before application/API/persistence/UI and create slice drafts after green domain foundation.
 ```
