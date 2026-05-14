@@ -136,6 +136,20 @@ public class Error : ValueObject
             public static readonly Error ClientRequestTextIsTooLong = Create("client.request.text.is.too.long", 400);
 
         }
+
+        public static class L1Domain
+        {
+            public static readonly Error AccountNotActivated = Create("l1.account.not.activated", 400);
+            public static readonly Error ClientAccountIsRequired = Create("l1.client.account.is.required", 400);
+            public static readonly Error ApplicantPartyIsIncomplete = Create("l1.applicant.party.is.incomplete", 400);
+            public static readonly Error ApplicantPartyIsRequired = Create("l1.applicant.party.is.required", 400);
+            public static readonly Error ApplicantPartyMustBePersisted = Create("l1.applicant.party.must.be.persisted", 400);
+            public static readonly Error RequestObjectAddressIsRequired = Create("l1.request.object.address.is.required", 400);
+            public static readonly Error ReviewerIsRequired = Create("l1.request.reviewer.is.required", 400);
+            public static readonly Error OnlyInReviewRequestCanBeApproved = Create("l1.request.only.in.review.can.be.approved", 400);
+            public static readonly Error OnlyInReviewRequestCanBeRejected = Create("l1.request.only.in.review.can.be.rejected", 400);
+            public static readonly Error RejectionFeedbackIsTooLong = Create("l1.request.rejection.feedback.is.too.long", 400);
+        }
     }
 }
 
