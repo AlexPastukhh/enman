@@ -1,7 +1,7 @@
 # Scenario Specification Principles
 
 Status: current source of truth for scenario specification principles  
-Scope: textual scenario specs, scenario diagrams, scenario DATA blocks, validation addendum
+Scope: textual scenario specs, scenario diagrams, scenario DATA blocks, validation addendum, UI-planning feedback rules, domain-draft coverage baseline feedback
 
 ## 1. Read Order
 
@@ -15,6 +15,8 @@ planning/scenario-domain-validation-principles.md
 planning/diagrams/scenario-text-specs/README.md
 planning/diagrams/scenario-data/README.md
 planning/tables/pre-domain-variants-input.md
+planning/domain-draft-generation-guide.md
+planning/ui/README.md
 ```
 
 ## 2. Scenario Specs
@@ -31,6 +33,7 @@ They may contain:
 - main flow;
 - branches;
 - invariants;
+- observable UI requirements;
 - client-side validation;
 - server-side / domain validation;
 - observable outcomes;
@@ -46,10 +49,57 @@ They must not become:
 - database schemas;
 - ORM/EF mappings;
 - React component plans;
-- final aggregate implementation.
+- final aggregate implementation;
+- final visual design.
 ```
 
-## 3. DATA
+## 3. Observable UI Requirements In Scenario Specs
+
+Scenario specs may include mandatory business-visible UI behavior.
+
+This means:
+
+```text
+what user must see;
+what user must understand;
+what action must be available;
+what status/result/feedback must be visible;
+what forbidden access/action must be prevented or rejected.
+```
+
+Examples:
+
+```text
+Client sees own requests list.
+Each request shows current status.
+Rejected request details show rejection feedback.
+Employee can review only InReview requests.
+Client can accept only employee-sent agreement proposal awaiting confirmation.
+```
+
+Do not put layout or component choices into scenario specs.
+
+## 4. Scenario Behavior Coverage Baseline Feedback
+
+The scenario behavior coverage baseline is:
+
+```text
+planning/tables/pre-domain-variants-input.md
+```
+
+It can be started while scenario specs and DATA files are being written.
+
+It is derived from scenario specs and DATA files.
+
+It may reveal that a scenario is underspecified.
+
+If baseline creation reveals a missing required behavior, update the scenario spec.
+
+If baseline creation reveals a missing visible/input/selectable/filter/attachment data item, update the DATA file.
+
+Do not let the baseline silently invent business behavior.
+
+## 5. DATA
 
 Use `DATA`, not `DETAIL`.
 
@@ -73,18 +123,25 @@ DATA files must not contain:
 - preconditions;
 - branches;
 - access rules;
-- security policy.
+- security policy;
+- layout choices.
 ```
 
 Validation belongs in scenario text specs and validation addendum.
 
-The pre-domain bridge uses DATA and validation-related files but does not replace them:
+The pre-domain coverage baseline uses DATA but does not replace DATA files:
 
 ```text
 planning/tables/pre-domain-variants-input.md
 ```
 
-## 4. Validation
+UI planning uses DATA to define visible/input/selectable page content:
+
+```text
+planning/ui/test-site-ui-plan.md
+```
+
+## 6. Validation
 
 Scenario specs should distinguish:
 
@@ -116,7 +173,19 @@ The validation principles file is:
 planning/scenario-domain-validation-principles.md
 ```
 
-## 5. Current Scenario Set
+In the scenario behavior coverage baseline, avoid using broad `validation` wording for all rule types.
+
+Use:
+
+```text
+Value Integrity / Anti-Primitive-Obsession Items
+```
+
+for data/value shape questions such as email, phone, object address, passport data, SNILS/INN/OGRN and agreement document references.
+
+State transition validation belongs to scenario state/condition matrices and command behavior items.
+
+## 7. Current Scenario Set
 
 Active:
 
@@ -151,7 +220,7 @@ SC-16  Notification Navigation — removed as standalone
 SC-18  Archive / Audit — deferred
 ```
 
-## 6. Current Project Decisions
+## 8. Current Project Decisions
 
 Request statuses:
 
@@ -207,24 +276,30 @@ Core agreement proposal rules:
 - previous client-sent proposal becomes Rejected when employee sends a new version.
 ```
 
-## 7. Source Of Truth Rule
+## 9. Source Of Truth Rule
 
-Use corrected text specs, DATA specs, validation addendum, consistency report and pre-domain variants input.
+Use corrected text specs, DATA specs, validation addendum, consistency report and scenario behavior coverage baseline.
 
 Do not use stale generated diagram package summaries or stale `.drawio` pages as semantic source of truth until regenerated.
 
-## 8. Current Domain-Planning Step
+## 10. Current Domain-Planning Step
 
-The current bridge after scenarios/DATA/validation is:
+The current pre-domain coverage baseline is:
 
 ```text
 planning/tables/pre-domain-variants-input.md
 ```
 
-The current next step after that bridge is:
+The current domain draft guide is:
 
 ```text
-Generate domain model variant 1.
+planning/domain-draft-generation-guide.md
+```
+
+The current next step after the baseline is:
+
+```text
+Create / refine domain draft 1.
 ```
 
 Do not use the old path as current workflow:
@@ -233,3 +308,23 @@ Do not use the old path as current workflow:
 scenario-domain-design-input-core.md
 -> domain-discovery-core.md
 ```
+
+Do not use competing-domain-variant comparison as the current workflow.
+
+## 11. Current UI-Planning Step
+
+The current UI-planning branch starts at:
+
+```text
+planning/ui/README.md
+planning/ui/ui-planning-workflow.md
+```
+
+Current UI outputs:
+
+```text
+planning/ui/test-site-ui-plan.md
+planning/ui/ui-questions-register.md
+```
+
+The UI plan is textual page planning, not final visual design.

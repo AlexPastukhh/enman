@@ -1,53 +1,78 @@
 # Planning Tables Index
 
-Status: simplified current planning tables navigation
+Status: current planning tables navigation
 
-## Current stage
+## 1. Current stage
 
 Scenario text specs and DATA files are ready.
 
 Validation-related file is kept separately.
 
-Before generating domain variants, use:
+Before generating domain drafts, use:
 
 ```text
 planning/tables/pre-domain-variants-input.md
 ```
 
-## Current read order
+Historical filename note:
+
+```text
+pre-domain-variants-input.md now acts as the Scenario Behavior Coverage Baseline.
+```
+
+## 2. Current read order
 
 ```text
 1. planning/diagrams/scenario-text-specs/
 2. planning/diagrams/scenario-data/
 3. planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
 4. planning/tables/pre-domain-variants-input.md
+5. planning/domain-draft-generation-guide.md
+6. planning/tables/domain-drafts/README.md
 ```
 
-## Why this file exists
+## 3. Why pre-domain-variants-input.md exists
 
-`pre-domain-variants-input.md` collects the material needed before generating domain variants:
+It collects scenario-derived behavior items with stable IDs before domain drafts are created.
+
+It includes:
 
 ```text
-- invariants;
-- write state;
-- persisted statuses;
-- state-changing actions;
-- state-dependent allowed/forbidden actions;
-- no-write behavior.
+- command behavior cards;
+- scenario state/condition matrices;
+- impossible business state candidates;
+- value integrity / anti-primitive-obsession items;
+- use-case coordination items;
+- read/access/integration/future items.
 ```
 
-It intentionally does not contain a value object catalog.
-
-Value objects should be discovered directly while generating each domain variant from:
+It intentionally does not define:
 
 ```text
-scenario specs
-DATA files
-validation-related file
-pre-domain-variants-input.md
+- domain classes;
+- aggregate boundaries;
+- final method names;
+- final persistence schema;
+- final layer placement.
 ```
 
-## Replacement file generation
+Each domain draft uses the stable item IDs to show coverage.
+
+## 4. Current domain draft output folder
+
+Use:
+
+```text
+planning/tables/domain-drafts/
+```
+
+Expected first draft path:
+
+```text
+planning/tables/domain-drafts/domain-draft-01.md
+```
+
+## 5. Replacement file generation
 
 Manual replacement-file generation is documented in:
 
@@ -64,17 +89,15 @@ When the user asks for replacement files:
 - include previous unapplied archive content if the user says it was not applied.
 ```
 
-## Current next step
+## 6. Current next step
 
 ```text
-Generate domain model variant 1.
+Create / refine domain draft 1.
 ```
 
-Then generate more variants until one is selected/refined.
+## 7. Avoid
 
-## Avoid for now
-
-Do not add more intermediate files such as:
+Do not add or use old intermediate files such as:
 
 ```text
 domain-discovery-core.md
@@ -82,12 +105,14 @@ aggregate-boundary-candidates-core.md
 domain-model-options-core.md
 scenario-domain-responsibility-core.md
 scenario-domain-design-input-core.md
+scenario-domain-design-input-gate.md
 ```
 
-Those names are too technical and fragmented for the current workflow.
-
-Keep the post-scenario bridge as one file:
+Do not use the older competing-variant workflow:
 
 ```text
-pre-domain-variants-input.md
+planning/domain-model-variant-generation-guide.md
+planning/tables/domain-variants/
 ```
+
+If those files exist historically, treat them as stale/superseded notes or delete/archive them.

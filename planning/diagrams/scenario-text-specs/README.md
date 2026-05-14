@@ -66,18 +66,38 @@ It records:
 
 Do not move these validation rules into DATA files.
 
-## 6. Current Downstream Consumer
+## 6. Current Downstream Use
 
-Current post-scenario bridge:
+Current pre-domain coverage baseline:
 
 ```text
 planning/tables/pre-domain-variants-input.md
 ```
 
-Current next step after the bridge:
+Current domain draft branch:
 
 ```text
-Generate domain model variant 1.
+planning/domain-draft-generation-guide.md
+planning/tables/domain-drafts/
+```
+
+Current UI planning branch:
+
+```text
+planning/ui/test-site-ui-plan.md
+planning/ui/ui-questions-register.md
+```
+
+Current next domain step:
+
+```text
+Create / refine domain draft 1.
+```
+
+Current next UI step:
+
+```text
+Create/fill test-site-ui-plan.md and ui-questions-register.md.
 ```
 
 Do not use the old downstream path as current workflow:
@@ -85,11 +105,14 @@ Do not use the old downstream path as current workflow:
 ```text
 planning/tables/scenario-domain-design-input-core.md
 planning/tables/domain-discovery-core.md
+planning/tables/domain-variants/
 ```
 
 ## 7. Rule
 
 Scenario text specs describe behavior and domain-relevant rules.
+
+They may contain mandatory observable UI requirements.
 
 They do not define:
 
@@ -99,5 +122,6 @@ They do not define:
 - database schema;
 - ORM mappings;
 - React components;
-- final aggregate implementation.
+- final aggregate implementation;
+- final visual design.
 ```

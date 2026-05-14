@@ -34,7 +34,8 @@ DATA files must not contain:
 - preconditions;
 - branches;
 - access rules;
-- security policy.
+- security policy;
+- layout choices.
 ```
 
 Validation belongs to:
@@ -44,10 +45,16 @@ planning/scenario-domain-validation-principles.md
 planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
 ```
 
-The post-scenario bridge uses DATA together with validation-related files:
+The pre-domain coverage baseline uses DATA together with scenario and validation-related files:
 
 ```text
 planning/tables/pre-domain-variants-input.md
+```
+
+The UI planning branch uses DATA to define visible/input/selectable page content:
+
+```text
+planning/ui/test-site-ui-plan.md
 ```
 
 ## 4. Active DATA Files
@@ -65,30 +72,35 @@ DATA specs feed:
 ```text
 scenario-server-domain-validation-addendum.md
 pre-domain-variants-input.md
-domain model variants
+domain drafts
+test-site-ui-plan.md
+ui-questions-register.md
 ```
 
 DATA fields are candidates for:
 
 ```text
-- value objects discovered during domain variant generation;
+- value integrity / anti-primitive-obsession items in the coverage baseline;
+- value objects discovered during domain draft generation;
 - visible page data;
 - command/input objects later;
 - persistence fields later.
 ```
 
-But DATA files themselves are not DB schemas or DTO contracts.
+But DATA files themselves are not DB schemas, DTO contracts or UI layouts.
 
-## 6. Current Next Step
+## 6. Current Next Steps
 
-After DATA and validation-related files, use:
+Domain branch:
 
 ```text
 planning/tables/pre-domain-variants-input.md
+-> planning/tables/domain-drafts/domain-draft-01.md
 ```
 
-Then generate:
+UI branch:
 
 ```text
-domain model variant 1
+planning/ui/test-site-ui-plan.md
+planning/ui/ui-questions-register.md
 ```

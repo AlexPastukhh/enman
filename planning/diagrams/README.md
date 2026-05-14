@@ -44,23 +44,25 @@ planning/diagrams/scenario-extension-package.md
 planning/diagrams/scenario-advanced-package.md
 ```
 
-Do not use them as semantic source of truth for domain planning.
+Do not use them as semantic source of truth for domain planning or UI planning.
 
-## 5. How To Continue To Domain Variants
+## 5. How To Continue To Domain Drafts
 
-For domain variant generation, read:
+For gradual domain discovery, read:
 
 ```text
 planning/diagrams/scenario-text-specs/README.md
 planning/diagrams/scenario-data/README.md
 planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
 planning/tables/pre-domain-variants-input.md
+planning/domain-draft-generation-guide.md
+planning/tables/domain-drafts/README.md
 ```
 
-Then generate:
+Then create/refine:
 
 ```text
-domain model variant 1
+planning/tables/domain-drafts/domain-draft-01.md
 ```
 
 Do not route diagram/domain planning through:
@@ -68,6 +70,31 @@ Do not route diagram/domain planning through:
 ```text
 planning/tables/scenario-domain-design-input-core.md
 planning/tables/domain-discovery-core.md
+planning/tables/domain-variants/
 ```
 
 Those are not the current workflow.
+
+## 6. How To Continue To UI Planning
+
+For textual UI planning, read:
+
+```text
+planning/ui/README.md
+planning/ui/ui-planning-workflow.md
+planning/diagrams/scenario-text-specs/
+planning/diagrams/scenario-data/
+planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+planning/tables/pre-domain-variants-input.md
+```
+
+Then create/update:
+
+```text
+planning/ui/test-site-ui-plan.md
+planning/ui/ui-questions-register.md
+```
+
+Do not create final UI design or HTML prototype directly from scenario files.
+
+Create the textual UI plan first.
