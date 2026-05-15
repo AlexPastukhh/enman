@@ -280,19 +280,81 @@ Test / Verification Plan format:
 | Test / check | Verifies | Layer | Status |
 |---|---|---|---|
 
-## 9. Open Questions First Rule
+## 9. Questions / Decisions Rule
 
-In `Questions / Decisions`, list items in this order:
+Questions are not just a local note dump.
+
+They are a review mechanism for unresolved behavior, API, implementation, client, test, security and architecture decisions.
+
+In every `Questions / Decisions` section, list items in this order:
 
 ```text
 1. open questions;
-2. unresolved behavior / contract / design risks;
-3. accepted decisions.
+2. blocked or unresolved behavior / contract / design risks;
+3. future-review questions that can affect later work;
+4. assumptions / accepted directions that future work must remember;
+5. resolved or superseded decisions, only when useful as history.
 ```
 
-This keeps review focused on what can still change behavior, API contract, implementation direction or testing responsibility.
+Every non-trivial question should include:
 
-Accepted decisions should still be recorded, but they should not hide unresolved questions below them.
+```text
+ID
+Question status
+Question
+Assumption / current direction
+Impact
+Shared register / local-only reason
+```
+
+Use these question status values:
+
+| Status | Meaning |
+|---|---|
+| `open` | Needs an answer before related behavior/contract/design can be finalized. |
+| `blocked` | Cannot be answered until another decision/source/implementation is available. |
+| `assumption` | A working answer is being used so draft work can continue; user confirmation/refinement is expected. |
+| `accepted direction` | Direction is accepted enough for planning and should be remembered by future work. |
+| `future review` | Not a current blocker; revisit when the related future slice/hardening/client work starts. |
+| `resolved` | Answered and no longer open. Keep only if useful for traceability. |
+| `superseded` | Replaced by a newer question/decision/source. |
+| `local only` | Intentionally not mirrored globally; local file must say why. |
+
+Assumption rule:
+
+```text
+If a draft can proceed without a final answer, write a reasonable assumption/current direction.
+The assumption must be explicit enough for the user to confirm, reject or refine.
+Do not hide assumptions in prose.
+Do not mark an assumption as resolved.
+```
+
+For already implemented slices, the assumption can be current repo evidence.
+
+For early drafts, the assumption should be a proposed working answer:
+
+```text
+Draft assumes ... until user confirms/refines.
+```
+
+Example local question:
+
+```text
+### Q-REQ-001 — Should applicant party be verified before request creation?
+
+Question status: future review
+Question:
+Should request creation require a verified applicant party?
+
+Assumption / current direction:
+Current backend does not require verification. Draft assumes verification is a separate policy/slice until user changes the target behavior.
+
+Impact:
+Can affect request creation validation, API errors, client UX and E2E coverage.
+
+Shared register:
+planning/slices/slice-questions-register.md / Q-SL-REQ-005
+```
 
 ## 10. Shared Question/Register Rule
 
@@ -314,6 +376,8 @@ Rules:
 
 ```text
 - Mirror currently relevant local questions to `slice-questions-register.md`.
+- Each mirrored question must have a clear question status.
+- Each unresolved/non-final mirrored question must have an assumption/current direction.
 - Mirror extension/change pressure to `slice-extension-points-register.md`.
 - Mirror concrete future implementation/client/testing notes to `slice-implementation-notes-register.md`.
 - If a question remains local only, state why.
@@ -386,6 +450,8 @@ Source behavior items:
 ## 7. Next Step
 ```
 
+The shortened draft `Questions / Decisions` section must still include question status and assumptions/current directions.
+
 Use this template for early client sidecar drafts:
 
 ```text
@@ -433,6 +499,8 @@ Current implementation status:
 ## 12. Implementation Checklist
 ```
 
+The full draft `Questions / Decisions` section must include question status, assumptions/current directions and shared register back-references when practical.
+
 ## 14. Business Slice Intake Checklist
 
 ```text
@@ -447,6 +515,7 @@ Current implementation status:
 9. Check planning/slices/cross-cutting/ if the slice uses cross-cutting support.
 10. Check planning/client/ and client architecture docs if client work is involved.
 11. If scenario/API/constants/testing/security ambiguity exists, stop and resolve or record it first.
+12. When a draft proceeds on an assumption, write the assumption explicitly.
 ```
 
 ## 15. Client Sidecar Draft Rule

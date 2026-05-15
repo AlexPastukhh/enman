@@ -7,7 +7,7 @@ Scope: domain drafts, business slices, client sidecars, cross-cutting/helper sli
 
 Draft-driven discovery means we do not try to fully design implementation in one perfect pass.
 
-We create a draft, use it to discover missing behavior, questions, contract gaps, flow gaps and verification gaps, then refine the next draft or move to implementation when the remaining risk is acceptable.
+We create a draft, use it to discover missing behavior, questions, assumptions, contract gaps, flow gaps and verification gaps, then refine the next draft or move to implementation when the remaining risk is acceptable.
 
 This was used for domain planning and must also apply to all slice work.
 
@@ -22,7 +22,6 @@ source requirements
 -> behavior coverage
 -> implementation direction
 -> test / verification planning
--> local/global register sync
 -> status reconciliation
 -> next draft or implementation step
 ```
@@ -30,6 +29,8 @@ source requirements
 The loop is intentionally iterative.
 
 A draft can be useful before it is complete, as long as unresolved questions, assumptions and coverage gaps are visible.
+
+When a draft proceeds on a working assumption, the assumption must be explicit enough for review.
 
 ## 3. Applies To
 
@@ -119,7 +120,6 @@ scenario-derived behavior items
 -> Implementation Flow
 -> Behavior Coverage
 -> Test / Verification Plan
--> Local / Shared Register Sync
 ```
 
 Visual flows are review maps.
@@ -137,7 +137,7 @@ A business slice draft should make visible:
 - which API contract is used or introduced;
 - which implementation layers are responsible;
 - which open questions can still change behavior, API, testing or client planning;
-- which local questions are mirrored to the shared slice question register;
+- which assumptions are being used until questions are answered;
 - how implementation will be verified after behavior coverage is defined.
 ```
 
@@ -151,8 +151,7 @@ behavior item update
 API contract update
 client sidecar update
 cross-cutting/helper slice update
-slice question register update
-extension/implementation notes register update
+shared question/register update
 ```
 
 ## 7. Client Sidecar Drafts
@@ -169,7 +168,6 @@ client behavior to implement
 -> Behavior Coverage
 -> Client / Component / E2E Verification Plan
 -> Covered Scenario / UI Behavior Items
--> Local / Shared Register Sync
 ```
 
 Client draft-driven discovery must identify:
@@ -186,7 +184,7 @@ Client draft-driven discovery must identify:
 - E2E only for completed cross-layer flow;
 - temporary handwritten DTOs, if any, until generated contract coverage is complete;
 - open questions that block or affect implementation;
-- shared register updates needed for future client work.
+- assumptions being used until those questions are resolved.
 ```
 
 A `.client.md` file should not be created in advance.
@@ -212,7 +210,6 @@ concern-derived behavior items
 -> Behavior Coverage
 -> Test / Check Plan
 -> Consumer Rule
--> Local / Shared Register Sync
 ```
 
 Concern-derived source types include:
@@ -238,7 +235,6 @@ Documentation/status reconciliation drafts use the same idea:
 current repo facts
 -> stale/missing docs list
 -> questions/assumptions
--> local/global sync check
 -> replacement file plan
 -> archive
 -> next reconciliation
@@ -252,49 +248,45 @@ If docs and repo evidence disagree, record the disagreement before updating stat
 
 If a draft exposes a question that can change behavior, API contract, client architecture, testing responsibility, E2E scope, scenario meaning or diagram interpretation, stop or record it prominently before implementation continues.
 
-Each question should have:
+Open questions and unresolved risks should appear before accepted decisions.
+
+Every non-trivial question should have:
 
 ```text
 ID
 area
+question status
 question
-current assumption/preferred answer
+assumption / current direction
 impact
-status
-shared register link, if mirrored
+shared register or local-only reason
 ```
 
-In slice drafts, open questions and unresolved risks should appear before accepted decisions.
+Use clear question statuses:
+
+```text
+open
+blocked
+assumption
+accepted direction
+future review
+resolved
+superseded
+local only
+```
+
+Assumption rule:
+
+```text
+If work proceeds before a final answer exists, write a reasonable assumption/current direction.
+The assumption should be clear enough for the user to confirm, reject or refine.
+Do not hide assumptions in prose.
+Do not mark assumptions as resolved.
+```
 
 Accepted decisions are still recorded, but they should not hide unresolved questions below them.
 
-## 11. Local / Shared Register Rule
-
-Local `Questions / Decisions` sections are required.
-
-They keep local context.
-
-Shared registers are also required when the question or note can affect future work.
-
-Use:
-
-```text
-planning/slices/slice-questions-register.md
-planning/slices/slice-extension-points-register.md
-planning/slices/slice-implementation-notes-register.md
-```
-
-Rules:
-
-```text
-- Mirror currently relevant local slice/client/cross-cutting questions to `slice-questions-register.md`.
-- Mirror extension/change pressure to `slice-extension-points-register.md`.
-- Mirror concrete future implementation/client/testing notes to `slice-implementation-notes-register.md`.
-- If a question remains local only, state why.
-- If a shared register row becomes stale, update or supersede it.
-```
-
-## 12. Behavior Coverage Rule
+## 11. Behavior Coverage Rule
 
 Behavior Coverage answers:
 
@@ -327,7 +319,7 @@ A draft can have behavior coverage gaps even when the test plan is detailed.
 
 A draft can also have good behavior coverage before final test details are known.
 
-## 13. Test / Verification Plan Rule
+## 12. Test / Verification Plan Rule
 
 Test / Verification Plan answers:
 
@@ -355,7 +347,7 @@ Do not use the verification plan to replace Behavior Coverage.
 
 Do not treat an E2E test as proof that every UI detail is covered.
 
-## 14. Visual Flow Rule
+## 13. Visual Flow Rule
 
 Visual flows are diagram-like text maps used to make responsibility, branching and boundaries clear.
 
@@ -386,17 +378,19 @@ A linear arrow list can be acceptable for early shortened drafts.
 
 Full slice files should use diagram-like maps when branching, boundaries or dependent slices matter.
 
-## 15. Do Not
+## 14. Do Not
 
 ```text
 - Do not treat the first draft as final.
 - Do not hide questions in prose only.
+- Do not leave question status implicit.
+- Do not proceed on an unresolved question without writing the assumption/current direction.
+- Do not mark assumptions as resolved.
 - Do not implement through unresolved behavior/API questions.
 - Do not create client sidecars before client work starts.
 - Do not invent behavior items inside a slice draft.
 - Do not mix Behavior Coverage with Test / Verification Plan.
 - Do not skip visual flow maps in full slice files when branching or boundaries matter.
-- Do not leave important local questions only in local files when they affect future work.
 - Do not skip draft flow for technical/cross-cutting concerns.
 - Do not skip docs/status reconciliation after implementation changes.
 ```
