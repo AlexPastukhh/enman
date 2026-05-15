@@ -5,6 +5,7 @@ using EnergyManagement.Server.Controllers;
 using EnergyManagement.Server.L1.Api;
 using EnergyManagement.Server.L1.Application.Commands;
 using EnergyManagement.Server.L1.Application.Queries;
+using EnergyManagement.Server.L1.Application.Security;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -90,7 +91,7 @@ public sealed class L1Controller : ProjectController
     {
         try
         {
-            if (!TryGetCurrentAccountId(out var accountId))
+            if (!TryGetCurrentL1AccountId(out var accountId))
             {
                 return Unauthorized();
             }
@@ -133,7 +134,11 @@ public sealed class L1Controller : ProjectController
     {
         try
         {
-            var accountId = GetCurrentAccountId();
+            if (!TryGetCurrentL1AccountId(out var accountId))
+            {
+                return Unauthorized();
+            }
+
             var result = await _sender.Send(
                 new L1CreateIndividualApplicantPartyCommand(
                     accountId,
@@ -155,7 +160,7 @@ public sealed class L1Controller : ProjectController
 
     [Authorize]
     [HttpPost("requests", Name = "L1CreateConnectionRequest")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(L1CreateConnectionRequestResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
@@ -166,10 +171,15 @@ public sealed class L1Controller : ProjectController
     {
         try
         {
-            var accountId = GetCurrentAccountId();
+            if (!TryGetCurrentL1AccountId(out var accountId))
+            {
+                return Unauthorized();
+            }
+
             var result = await _sender.Send(
                 new L1CreateConnectionRequestCommand(
                     accountId,
+                    dto.ApplicantPartyId,
                     dto.Details,
                     dto.Address.PostalCode,
                     dto.Address.Region,
@@ -189,18 +199,16 @@ public sealed class L1Controller : ProjectController
         }
     }
 
-    private long GetCurrentAccountId()
+    private bool TryGetCurrentL1AccountId(out long accountId)
     {
-        if (!TryGetCurrentAccountId(out var accountId))
+        accountId = default;
+
+        var authModel = User.FindFirstValue(L1AuthClaimTypes.AuthModel);
+        if (authModel != L1AuthClaimTypes.AuthModelValue)
         {
-            throw new InvalidOperationException("Authenticated user does not have a valid NameIdentifier claim.");
+            return false;
         }
 
-        return accountId;
-    }
-
-    private bool TryGetCurrentAccountId(out long accountId)
-    {
         var claimValue = User.FindFirstValue(ClaimTypes.NameIdentifier);
         return long.TryParse(claimValue, out accountId);
     }
@@ -211,7 +219,8 @@ public sealed class L1Controller : ProjectController
         {
             new(ClaimTypes.NameIdentifier, account.AccountId.ToString()),
             new(ClaimTypes.Email, account.Email),
-            new(ClaimTypes.Role, account.Role)
+            new(ClaimTypes.Role, account.Role),
+            new(L1AuthClaimTypes.AuthModel, L1AuthClaimTypes.AuthModelValue)
         };
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

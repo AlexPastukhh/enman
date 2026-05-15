@@ -10,7 +10,7 @@ using static Domain.EnergyManagement.Common.Error;
 namespace EnergyManagement.Server.L1.Application.Commands;
 
 public sealed class L1CreateConnectionRequestHandler
-    : IRequestHandler<L1CreateConnectionRequestCommand, UnitResult<IReadOnlyList<Error>>>
+    : IRequestHandler<L1CreateConnectionRequestCommand, Result<L1CreateConnectionRequestResponse, IReadOnlyList<Error>>>
 {
     private readonly IApplicantPartyRepository _applicantParties;
     private readonly IClientRequestRepository _clientRequests;
@@ -26,18 +26,24 @@ public sealed class L1CreateConnectionRequestHandler
         _context = context;
     }
 
-    public async Task<UnitResult<IReadOnlyList<Error>>> Handle(
+    public async Task<Result<L1CreateConnectionRequestResponse, IReadOnlyList<Error>>> Handle(
         L1CreateConnectionRequestCommand command,
         CancellationToken cancellationToken)
     {
-        var applicantParty = await _applicantParties.GetCurrentActiveIndividualByClientAccountIdAsync(
-            command.ClientAccountId,
+        var applicantParty = await _applicantParties.GetByIdAsync(
+            command.ApplicantPartyId,
             cancellationToken);
 
         if (applicantParty is null)
         {
-            return UnitResult.Failure<IReadOnlyList<Error>>(
+            return Result.Failure<L1CreateConnectionRequestResponse, IReadOnlyList<Error>>(
                 [Errors.L1Domain.ApplicantPartyIsRequired]);
+        }
+
+        if (applicantParty.ClientAccountId != command.ClientAccountId)
+        {
+            return Result.Failure<L1CreateConnectionRequestResponse, IReadOnlyList<Error>>(
+                [Errors.General.ValueIsInvalid]);
         }
 
         var addressResult = Address.Create(
@@ -51,7 +57,7 @@ public sealed class L1CreateConnectionRequestHandler
 
         if (addressResult.IsFailure)
         {
-            return UnitResult.Failure<IReadOnlyList<Error>>(
+            return Result.Failure<L1CreateConnectionRequestResponse, IReadOnlyList<Error>>(
                 addressResult.Error);
         }
 
@@ -62,13 +68,17 @@ public sealed class L1CreateConnectionRequestHandler
 
         if (requestResult.IsFailure)
         {
-            return UnitResult.Failure<IReadOnlyList<Error>>(
+            return Result.Failure<L1CreateConnectionRequestResponse, IReadOnlyList<Error>>(
                 requestResult.Error);
         }
 
         _clientRequests.Add(requestResult.Value);
         await _context.SaveChangesAsync(cancellationToken);
 
-        return UnitResult.Success<IReadOnlyList<Error>>();
+        return Result.Success<L1CreateConnectionRequestResponse, IReadOnlyList<Error>>(
+            new L1CreateConnectionRequestResponse(
+                requestResult.Value.Id,
+                requestResult.Value.ApplicantPartyId,
+                requestResult.Value.Status.ToString()));
     }
 }

@@ -39,6 +39,7 @@ public sealed record L1CreateIndividualApplicantPartyResponse(
 
 public sealed record L1CreateConnectionRequestCommand(
     long ClientAccountId,
+    long ApplicantPartyId,
     string Details,
     string PostalCode,
     string Region,
@@ -47,4 +48,9 @@ public sealed record L1CreateConnectionRequestCommand(
     string House,
     string? Building,
     string? Apartment)
-    : IRequest<UnitResult<IReadOnlyList<Error>>>;
+    : IRequest<Result<L1CreateConnectionRequestResponse, IReadOnlyList<Error>>>;
+
+public sealed record L1CreateConnectionRequestResponse(
+    long RequestId,
+    long ApplicantPartyId,
+    string Status);

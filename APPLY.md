@@ -1,12 +1,17 @@
-# Apply — enman-l1-shortened-slice-draft-workflow-v1
+# Apply — enman-ui-command-success-convention-v1
 
-From the repository root, run:
+Apply from the repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-l1-shortened-slice-draft-workflow-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-ui-command-success-convention-v1.zip" -DestinationPath . -Force
 git status
 ```
 
-This archive contains complete repo-relative replacement files only.
+Review the affected files:
 
-Do not commit `MANIFEST.md` or `APPLY.md` unless explicitly requested.
+```powershell
+git diff -- planning/client/cross-cutting/CL-COMMAND-001-command-success-without-required-response-body.md
+git diff -- planning/client/cross-cutting/README.md
+git diff -- planning/client/README.md
+git diff -- planning/diagrams/scenario-ui-specs/README.md
+```

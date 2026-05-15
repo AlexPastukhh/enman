@@ -1,10 +1,12 @@
-# Manifest — enman-l1-shortened-slice-draft-workflow-v1
+# Manifest — enman-ui-command-success-convention-v1
 
 ## Add
-- none
+- planning/client/cross-cutting/CL-COMMAND-001-command-success-without-required-response-body.md
 
 ## Replace
-- planning/slices/l1-slice-drafting-guide.md
+- planning/client/README.md
+- planning/client/cross-cutting/README.md
+- planning/diagrams/scenario-ui-specs/README.md
 
 ## Delete
 - none

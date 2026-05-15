@@ -42,7 +42,40 @@ Scenario UI spec   = UI-visible requirements and accepted UI decisions.
 
 Those belong in `.client.md` sidecars or client implementation docs.
 
-## 4. UI Behavior Items
+## 4. UI Specs Vs Client Implementation Conventions
+
+Scenario UI specs define UI-visible outcomes.
+
+Client implementation conventions define reusable ways to implement those outcomes.
+
+A UI spec should not turn an implementation convention into a domain or API requirement unless the scenario explicitly needs it.
+
+Example:
+
+```text
+UI-visible requirement:
+  after successful request creation, show success outcome and move user to My Requests.
+
+Client implementation convention:
+  if returned entity data is not needed, HTTP success is enough for command confirmation.
+
+Not implied:
+  domain/API must return requestId/status by default.
+```
+
+Use client-wide conventions from:
+
+```text
+planning/client/cross-cutting/
+```
+
+For command success flows without required response body, use:
+
+```text
+planning/client/cross-cutting/CL-COMMAND-001-command-success-without-required-response-body.md
+```
+
+## 5. UI Behavior Items
 
 UI behavior items answer:
 
@@ -63,7 +96,7 @@ SC-07B-UI-004 — Warn before rejecting with empty feedback.
 SC-07B-UI-005 — Do not show auto-created agreement proposal after approval.
 ```
 
-## 5. Status Values
+## 6. Status Values
 
 ```text
 requirement
@@ -76,13 +109,13 @@ superseded
 
 In this project, an accepted convention is binding until explicitly changed.
 
-## 6. Creation Rule
+## 7. Creation Rule
 
 Do not create every scenario UI spec in advance.
 
 Create a concrete `SC-XX-...-ui.md` file when UI planning starts for that scenario or when a UI-visible decision must not be lost.
 
-## 7. Template
+## 8. Template
 
 ```text
 # SC-XX — Scenario Name UI Spec
@@ -103,6 +136,8 @@ Behavior item sources:
 ## 9. Downstream Use
 ```
 
-## 8. Downstream Use
+## 9. Downstream Use
 
-Scenario UI specs feed `.client.md` UI Behavior Coverage, Scenario / DATA / UI Spec Coverage, component discovery, accessibility contract, client tests, and UI-related scenario questions.
+Scenario UI specs feed `.client.md` UI Behavior Coverage, Scenario / DATA / UI Spec Coverage, component discovery, accessibility contract, client tests, E2E and UI-related scenario questions.
+
+When a UI spec relies on a client-wide convention, reference that convention explicitly rather than restating it as scenario/domain behavior.
