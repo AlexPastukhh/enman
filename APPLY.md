@@ -1,8 +1,8 @@
-# Apply — enman-draft-driven-discovery-coverage-sync-v1
+# Apply — enman-local-global-doc-governance-and-slice-registers-v1
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-draft-driven-discovery-coverage-sync-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-local-global-doc-governance-and-slice-registers-v1.zip" -DestinationPath . -Force
 git status
 ```
 
-Do not commit `MANIFEST.md` or `APPLY.md` unless you intentionally want to keep archive metadata in the repository.
+Review the diff before committing. Do not commit `MANIFEST.md` or `APPLY.md` unless you intentionally want to keep the archive metadata in the repository.

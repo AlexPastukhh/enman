@@ -39,6 +39,7 @@ planning/planning-doc-responsibility-map.md
 planning/documentation/README.md
 planning/documentation/documentation-update-workflow.md
 planning/documentation/status-reconciliation-workflow.md
+planning/documentation/local-global-documentation-sync-workflow.md
 planning/replacement-file-generation-guide.md
 ```
 
@@ -69,6 +70,36 @@ Examples:
 - For E2E status, check playwright.config.ts, tests/e2e, package.json.
 - For L1 slices, check EnergyManagement.Server/L1, Domain.EnergyManagement/L1, Tests.EnergyManagement/Integration/L1.
 ```
+
+## Local / Global Sync Requirement
+
+Do not update only a local file when the change must be visible globally.
+
+Use:
+
+```text
+planning/documentation/local-global-documentation-sync-workflow.md
+```
+
+Check whether local changes require updates to:
+
+```text
+planning/README.md
+planning/planning-doc-responsibility-map.md
+folder README.md
+planning/slices/slice-questions-register.md
+planning/slices/slice-extension-points-register.md
+planning/slices/slice-implementation-notes-register.md
+planning/diagrams/scenario-questions-register.md
+planning/adr/architecture-decision-notes.md
+planning/adr/adr-candidates.md
+```
+
+Important local slice questions should be mirrored into `planning/slices/slice-questions-register.md` when they remain relevant after the local draft.
+
+Extension/change pressure belongs to `slice-extension-points-register.md`.
+
+Concrete future implementation/client/testing notes belong to `slice-implementation-notes-register.md`.
 
 ## Current Baseline To Verify, Not Assume
 
@@ -108,8 +139,9 @@ Before creating an archive, produce a short preflight summary:
 1. Files checked.
 2. Current implementation facts.
 3. Docs that are stale or missing.
-4. Proposed add/replace/delete list.
-5. Blocking questions, if any, with assumptions.
+4. Local/global register sync needed.
+5. Proposed add/replace/delete list.
+6. Blocking questions, if any, with assumptions.
 ```
 
 If there are no blocking questions, proceed to create the archive.
@@ -151,6 +183,14 @@ planning/planning-agent-protocol.md, if workflow changes
 planning/adr/architecture-decision-notes.md and adr-candidates.md, if accepted decisions change
 ```
 
+## Question Rules
+
+Important open questions come before accepted decisions.
+
+This applies to slice docs, client sidecars, cross-cutting docs, scenario clarifications, status reconciliation docs and ADR candidates.
+
+If a local question can affect future work, mirror it into the relevant shared register.
+
 ## Status Rules
 
 Use precise status labels:
@@ -165,6 +205,8 @@ deferred
 future review
 open question
 accepted direction
+resolved
+superseded
 ```
 
 Do not mark future/planned work as implemented.
@@ -207,7 +249,16 @@ Do not migrate it to L1 unless auth consolidation is explicitly in scope.
 All slice-related planning uses draft-driven discovery:
 
 ```text
-source requirements -> draft -> questions -> assumptions -> coverage -> implementation flow -> tests -> next draft
+source requirements
+-> draft
+-> open questions and assumptions
+-> visual flow maps
+-> detailed flow
+-> behavior coverage
+-> implementation direction
+-> test / verification planning
+-> status reconciliation
+-> next draft or implementation step
 ```
 
 This applies to:
@@ -241,6 +292,7 @@ Use it to discover behavior, contract gaps, client questions, component placemen
 - Do not mix unrelated documentation areas into one archive.
 - Do not forget MANIFEST.md and APPLY.md.
 - Do not redo already implemented OpenAPI/constants/E2E infrastructure during documentation-only work.
+- Do not leave important local slice questions only in local tables.
 ```
 
 ## Final Response

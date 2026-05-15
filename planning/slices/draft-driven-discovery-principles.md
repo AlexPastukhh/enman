@@ -22,6 +22,7 @@ source requirements
 -> behavior coverage
 -> implementation direction
 -> test / verification planning
+-> local/global register sync
 -> status reconciliation
 -> next draft or implementation step
 ```
@@ -118,6 +119,7 @@ scenario-derived behavior items
 -> Implementation Flow
 -> Behavior Coverage
 -> Test / Verification Plan
+-> Local / Shared Register Sync
 ```
 
 Visual flows are review maps.
@@ -135,6 +137,7 @@ A business slice draft should make visible:
 - which API contract is used or introduced;
 - which implementation layers are responsible;
 - which open questions can still change behavior, API, testing or client planning;
+- which local questions are mirrored to the shared slice question register;
 - how implementation will be verified after behavior coverage is defined.
 ```
 
@@ -148,6 +151,8 @@ behavior item update
 API contract update
 client sidecar update
 cross-cutting/helper slice update
+slice question register update
+extension/implementation notes register update
 ```
 
 ## 7. Client Sidecar Drafts
@@ -164,6 +169,7 @@ client behavior to implement
 -> Behavior Coverage
 -> Client / Component / E2E Verification Plan
 -> Covered Scenario / UI Behavior Items
+-> Local / Shared Register Sync
 ```
 
 Client draft-driven discovery must identify:
@@ -179,7 +185,8 @@ Client draft-driven discovery must identify:
 - component/client tests;
 - E2E only for completed cross-layer flow;
 - temporary handwritten DTOs, if any, until generated contract coverage is complete;
-- open questions that block or affect implementation.
+- open questions that block or affect implementation;
+- shared register updates needed for future client work.
 ```
 
 A `.client.md` file should not be created in advance.
@@ -205,6 +212,7 @@ concern-derived behavior items
 -> Behavior Coverage
 -> Test / Check Plan
 -> Consumer Rule
+-> Local / Shared Register Sync
 ```
 
 Concern-derived source types include:
@@ -230,6 +238,7 @@ Documentation/status reconciliation drafts use the same idea:
 current repo facts
 -> stale/missing docs list
 -> questions/assumptions
+-> local/global sync check
 -> replacement file plan
 -> archive
 -> next reconciliation
@@ -252,13 +261,40 @@ question
 current assumption/preferred answer
 impact
 status
+shared register link, if mirrored
 ```
 
 In slice drafts, open questions and unresolved risks should appear before accepted decisions.
 
 Accepted decisions are still recorded, but they should not hide unresolved questions below them.
 
-## 11. Behavior Coverage Rule
+## 11. Local / Shared Register Rule
+
+Local `Questions / Decisions` sections are required.
+
+They keep local context.
+
+Shared registers are also required when the question or note can affect future work.
+
+Use:
+
+```text
+planning/slices/slice-questions-register.md
+planning/slices/slice-extension-points-register.md
+planning/slices/slice-implementation-notes-register.md
+```
+
+Rules:
+
+```text
+- Mirror currently relevant local slice/client/cross-cutting questions to `slice-questions-register.md`.
+- Mirror extension/change pressure to `slice-extension-points-register.md`.
+- Mirror concrete future implementation/client/testing notes to `slice-implementation-notes-register.md`.
+- If a question remains local only, state why.
+- If a shared register row becomes stale, update or supersede it.
+```
+
+## 12. Behavior Coverage Rule
 
 Behavior Coverage answers:
 
@@ -291,7 +327,7 @@ A draft can have behavior coverage gaps even when the test plan is detailed.
 
 A draft can also have good behavior coverage before final test details are known.
 
-## 12. Test / Verification Plan Rule
+## 13. Test / Verification Plan Rule
 
 Test / Verification Plan answers:
 
@@ -319,7 +355,7 @@ Do not use the verification plan to replace Behavior Coverage.
 
 Do not treat an E2E test as proof that every UI detail is covered.
 
-## 13. Visual Flow Rule
+## 14. Visual Flow Rule
 
 Visual flows are diagram-like text maps used to make responsibility, branching and boundaries clear.
 
@@ -350,7 +386,7 @@ A linear arrow list can be acceptable for early shortened drafts.
 
 Full slice files should use diagram-like maps when branching, boundaries or dependent slices matter.
 
-## 14. Do Not
+## 15. Do Not
 
 ```text
 - Do not treat the first draft as final.
@@ -360,6 +396,7 @@ Full slice files should use diagram-like maps when branching, boundaries or depe
 - Do not invent behavior items inside a slice draft.
 - Do not mix Behavior Coverage with Test / Verification Plan.
 - Do not skip visual flow maps in full slice files when branching or boundaries matter.
+- Do not leave important local questions only in local files when they affect future work.
 - Do not skip draft flow for technical/cross-cutting concerns.
 - Do not skip docs/status reconciliation after implementation changes.
 ```

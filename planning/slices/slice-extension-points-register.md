@@ -1,7 +1,7 @@
 # Slice Extension Points Register
 
 Status: active register  
-Scope: cross-slice extension points, change points, extension pressure, anti-coupling decisions and related questions
+Scope: cross-slice extension points, change points, extension pressure, anti-coupling decisions and related extension questions
 
 ## 1. Purpose
 
@@ -9,7 +9,17 @@ This register makes planned extension points and extension pressure visible acro
 
 It must be checked before starting a parent slice or `.client.md` sidecar.
 
-It does not replace local slice sections. It provides cross-slice overview and coverage.
+It does not replace local slice sections.
+
+It also does not replace:
+
+```text
+planning/slices/slice-questions-register.md
+```
+
+Use the slice questions register as the shared overview of currently relevant local slice questions.
+
+Use this extension register when a question is tied to extension/change pressure, anti-coupling or future slices.
 
 ## 2. Intake Rule
 
@@ -17,10 +27,12 @@ Before starting a slice/client sidecar:
 
 ```text
 1. Search this register by parent slice, future slice, scenario and layer.
-2. Check whether relevant extension pressure affects current implementation.
-3. Decide whether current work needs explicit seam, anti-coupling only, convention-first, ignore, or revisit.
-4. Record the decision locally in the slice/client file.
-5. Update this register when the decision can affect future slices.
+2. Search `slice-questions-register.md` for related local questions.
+3. Check whether relevant extension pressure affects current implementation.
+4. Decide whether current work needs explicit seam, anti-coupling only, convention-first, ignore, or revisit.
+5. Record the decision locally in the slice/client file.
+6. Update this register when the decision can affect future slices.
+7. Update `slice-questions-register.md` when a local/cross-slice question status changes.
 ```
 
 ## 3. Extension Points Coverage
@@ -52,10 +64,18 @@ Before starting a slice/client sidecar:
 | CP-REVIEW-ENTRY-001 | Review read/client slices | Server + Client | Review page entry vs startReview command | page routing / possible application command | navigation/read context only | no | route/read tests | active |
 | CP-ERROR-MAPPING-001 | multiple slices | Server + Client | Domain/application error to HTTP/client display | response mapper + client error mapper | stable problem/error mapping | later | integration/client error tests | active |
 | CP-FORM-VALIDATION-001 | form sidecars | Client | Deferred validation behavior | CL-FORM-VALIDATION-001 / form hooks | deferred after input, immediate on submit | maybe | client form tests | active |
-| CP-STYLING-001 | client sidecars | Client | Project styling theme/tokens | CSS variables / CSS Modules | plain CSS + CSS Modules + tokens | yes | visual/component checks | active |
+| CP-STYLING-001 | client sidecars | Client | Project styling theme/tokens | CSS variables / CSS Modules + tokens | plain CSS + CSS Modules + tokens | yes | visual/component checks | active |
 | CP-A11Y-001 | client sidecars | Client | Accessibility/ARIA choices | native semantics + ARIA only when needed | role/label-first | no | Testing Library semantic queries | active |
 
 ## 6. Questions Across Slices
+
+This section contains extension/change-related questions.
+
+For the broader shared overview of local slice questions, use:
+
+```text
+planning/slices/slice-questions-register.md
+```
 
 | ID | Related slice(s) | Related EP/CP | Question | Assumption | Why it matters | Blocks current work? | Status |
 |---|---|---|---|---|---|---|---|

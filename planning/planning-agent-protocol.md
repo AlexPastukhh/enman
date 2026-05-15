@@ -6,6 +6,8 @@ Status: current collaboration protocol
 
 Do not continue implementation planning through a question that may change required behavior, API contract, security requirement, client-facing constants, testing responsibility, E2E scope, cross-layer responsibility, scenario meaning or diagram interpretation.
 
+If the question is not blocking the current task, record it with a status and sync it to the relevant shared register when it can affect future work.
+
 ## 2. Documentation Update Agent Rule
 
 Documentation-only agents must read:
@@ -14,6 +16,7 @@ Documentation-only agents must read:
 planning/documentation/README.md
 planning/documentation/documentation-update-workflow.md
 planning/documentation/status-reconciliation-workflow.md
+planning/documentation/local-global-documentation-sync-workflow.md
 planning/replacement-file-generation-guide.md
 ```
 
@@ -22,12 +25,69 @@ Documentation-only agents must:
 ```text
 - inspect current repo state before changing docs;
 - update navigation/responsibility maps when adding docs;
+- synchronize local docs with shared registers when needed;
 - create archive packages with full replacement files;
 - not change code;
 - not write directly to GitHub unless explicitly asked.
 ```
 
-## 3. Diagram Generation Workflow Rule
+## 3. Local / Global Sync Rule
+
+Local planning files own detailed context.
+
+Shared indexes/registers own discoverability across time and chats.
+
+When a local planning file introduces or changes a question, decision, future note, extension pressure or status, decide whether a shared file must also be updated.
+
+Use:
+
+```text
+planning/documentation/local-global-documentation-sync-workflow.md
+```
+
+Important local slice questions that remain relevant after the local draft must be mirrored into:
+
+```text
+planning/slices/slice-questions-register.md
+```
+
+Extension/change pressure belongs in:
+
+```text
+planning/slices/slice-extension-points-register.md
+```
+
+Concrete future implementation/client/testing notes belong in:
+
+```text
+planning/slices/slice-implementation-notes-register.md
+```
+
+## 4. Questions First Rule
+
+In any `Questions / Decisions` section, list:
+
+```text
+1. open questions;
+2. unresolved behavior / contract / design risks;
+3. accepted decisions.
+```
+
+This applies to:
+
+```text
+business slice files
+client sidecars
+cross-cutting/helper slices
+scenario clarifications
+status reconciliation docs
+ADR candidates
+diagram planning docs
+```
+
+Accepted decisions should not hide unresolved questions below them.
+
+## 5. Diagram Generation Workflow Rule
 
 Diagram-related planning must use:
 
@@ -61,24 +121,28 @@ internal workflow
 planning chat
 ```
 
-## 4. Draft-Driven Discovery Rule
+## 6. Draft-Driven Discovery Rule
 
 All slice-related planning uses draft-driven discovery:
 
 ```text
 source requirements
 -> draft
--> questions/assumptions
--> coverage
--> flow
--> implementation/test planning
--> next draft or implementation
+-> open questions and assumptions
+-> visual flow maps
+-> detailed flow
+-> behavior coverage
+-> implementation direction
+-> test / verification planning
+-> status reconciliation
+-> next draft or implementation step
 ```
 
 Use:
 
 ```text
 planning/slices/draft-driven-discovery-principles.md
+planning/slices/l1-slice-drafting-guide.md
 ```
 
 This applies to:
@@ -93,7 +157,7 @@ documentation/status reconciliation drafts
 diagram planning drafts
 ```
 
-## 5. Client / Server Contract Rule
+## 7. Client / Server Contract Rule
 
 Before planning missing client slices, check:
 
@@ -116,7 +180,7 @@ error code strings
 
 Use generated OpenAPI types for structure and generated constants for semantics.
 
-## 6. OpenAPI / Constants Split Rule
+## 8. OpenAPI / Constants Split Rule
 
 ```text
 OpenAPI = structural contract:
@@ -129,13 +193,13 @@ Generated constants JSON = semantic contract:
 
 Do not collapse these into one artifact.
 
-## 7. Generated Artifact Rule
+## 9. Generated Artifact Rule
 
 Generated artifacts are produced by explicit commands/checks.
 
 Do not write generated client artifacts during normal server startup.
 
-## 8. Endpoint Classification Rule
+## 10. Endpoint Classification Rule
 
 Before generating client API types/wrappers for a slice, classify endpoint as:
 
@@ -148,7 +212,7 @@ internal/not client-facing
 
 If current endpoint status is unclear, ask or document assumption before implementation.
 
-## 9. Cross-Cutting / Helper Slice Rule
+## 11. Cross-Cutting / Helper Slice Rule
 
 When work is cross-cutting or helper-like, do not bury it only in workflow docs or shared notes.
 
@@ -168,20 +232,23 @@ Use:
 planning/slices/cross-cutting/
 ```
 
-## 10. Same Format Rule
+## 12. Same Format Rule
 
 Cross-cutting/helper slices must follow the same planning shape as business slices:
 
 ```text
 source requirements
 -> behavior items
+-> visual concern/scenario flow, when useful
 -> concern slice flow
+-> visual implementation flow
 -> implementation flow
+-> behavior coverage
 -> tests/checks
 -> coverage/questions/ADR impact
 ```
 
-## 11. CSRF / Antiforgery Rule
+## 13. CSRF / Antiforgery Rule
 
 When planning browser unsafe API request security, use:
 
@@ -189,7 +256,7 @@ When planning browser unsafe API request security, use:
 planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```
 
-## 12. Testing Responsibility Rule
+## 14. Testing Responsibility Rule
 
 When planning slice/client/API work, classify tests as:
 
@@ -206,7 +273,7 @@ Use:
 planning/testing/testing-principles.md
 ```
 
-## 13. Implementation Flow Detail Filter
+## 15. Implementation Flow Detail Filter
 
 Slice flow may include involved classes, methods and short code snippets.
 
@@ -218,7 +285,7 @@ If class/method details make the flow noisy, suggest a sibling `.impl.md` file.
 
 Do not create `.impl.md` in advance.
 
-## 14. Do Not
+## 16. Do Not
 
 ```text
 - Do not implement client slices by manually guessing API contract.
@@ -233,4 +300,5 @@ Do not create `.impl.md` in advance.
 - Do not use PlantUML as the primary diagram deliverable unless explicitly asked.
 - Do not overclaim diagram implementation status.
 - Do not use GitHub mutation tools during documentation-only archive work unless explicitly requested.
+- Do not leave important local questions only in local files when they affect future work.
 ```

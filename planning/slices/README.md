@@ -1,11 +1,13 @@
 # Slice Planning Index
 
 Status: current slice-planning navigation index  
-Scope: business slices, client sidecars, cross-cutting/helper slices, examples, test planning, API contract artifacts, client architecture, extension/change points and implementation notes
+Scope: business slices, client sidecars, cross-cutting/helper slices, examples, shared registers, test planning, API contract artifacts, client architecture, extension/change points and implementation notes
 
 ## 1. Purpose
 
 This folder documents how to derive implementation slices from scenarios/concerns and how to plan implementation one slice at a time.
+
+It is also the entry point for slice-wide shared registers.
 
 ## 2. Draft-Driven Discovery
 
@@ -85,6 +87,7 @@ planning/slices/implementation-principles.md
 planning/slices/client-architecture-principles.md
 planning/slices/client-component-discovery-guide.md
 planning/slices/change-extension-points-principles.md
+planning/slices/slice-questions-register.md
 planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
 planning/slices/shared/README.md
@@ -92,7 +95,53 @@ planning/slices/cross-cutting/README.md
 planning/slices/examples/README.md
 ```
 
-## 6. Examples
+## 6. Slice Registers
+
+Use shared registers to keep local slice discoveries visible across time and chats.
+
+```text
+planning/slices/slice-questions-register.md
+planning/slices/slice-extension-points-register.md
+planning/slices/slice-implementation-notes-register.md
+```
+
+### Slice questions register
+
+`slice-questions-register.md` is the shared overview of currently relevant local slice/client/cross-cutting questions.
+
+Local `Questions / Decisions` sections remain the source of detailed context.
+
+The register makes important local questions discoverable from one place.
+
+### Extension points register
+
+`slice-extension-points-register.md` owns extension points, change pressure, anti-coupling decisions and extension-related questions.
+
+### Implementation notes register
+
+`slice-implementation-notes-register.md` owns concrete future implementation/client/testing notes that are not yet assigned to an active slice or sidecar.
+
+## 7. Question Sync Rule
+
+When a local slice/client/cross-cutting file has a question that remains relevant after the local draft, mirror it into:
+
+```text
+planning/slices/slice-questions-register.md
+```
+
+Also update specialized registers when needed:
+
+```text
+extension/change pressure -> slice-extension-points-register.md
+future implementation/client/testing note -> slice-implementation-notes-register.md
+scenario/domain ambiguity -> planning/diagrams/scenario-questions-register.md
+```
+
+Open questions and unresolved risks should appear before accepted decisions in local files and registers.
+
+If a question remains local only, state why.
+
+## 8. Examples
 
 Use:
 
@@ -111,7 +160,7 @@ The early short example shows the valid shortened working format.
 
 The full backend slice example shows visual maps before detailed scenario/implementation flows.
 
-## 7. Cross-Cutting / Helper Slices
+## 9. Cross-Cutting / Helper Slices
 
 Use:
 
@@ -140,7 +189,7 @@ Cross-cutting/helper slices must have:
 - ADR impact.
 ```
 
-## 8. API Contract Support
+## 10. API Contract Support
 
 API contract docs live in:
 
@@ -150,7 +199,7 @@ planning/api/
 
 Use them before client slice implementation.
 
-## 9. Shared Notes
+## 11. Shared Notes
 
 Use:
 
@@ -160,7 +209,7 @@ planning/slices/shared/
 
 for reusable notes/helpers that do not have a full slice behavior/test flow.
 
-## 10. Testing Support
+## 12. Testing Support
 
 Testing workflow lives in:
 
@@ -168,7 +217,7 @@ Testing workflow lives in:
 planning/testing/
 ```
 
-## 11. Parent Business Slice Files
+## 13. Parent Business Slice Files
 
 Parent business slice files own:
 
@@ -180,6 +229,8 @@ Parent business slice files own:
 - Visual Implementation Flow;
 - cross-layer Implementation Flow;
 - API contract;
+- local Questions / Decisions;
+- links/back-references to shared registers when questions are mirrored;
 - extension/change/pressure decisions;
 - application/domain/persistence responsibilities;
 - server/integration tests;
@@ -188,10 +239,12 @@ Parent business slice files own:
 - link to `.client.md` sidecar when client work starts.
 ```
 
-## 12. Client Sidecar Files
+## 14. Client Sidecar Files
 
 A `.client.md` file is created only when concrete client work starts.
 
 It owns detailed client implementation planning and client/component tests.
 
 It should include E2E coverage only for cross-layer behavior that truly needs browser-client-server wiring.
+
+Client sidecars also follow the local/global question sync rule.

@@ -1,7 +1,7 @@
 # Documentation Update Workflow Index
 
 Status: current documentation-update workflow index  
-Scope: documentation-only agents, status reconciliation, archive generation and navigation updates
+Scope: documentation-only agents, status reconciliation, local/global synchronization, archive generation and navigation updates
 
 ## 1. Purpose
 
@@ -12,6 +12,7 @@ A documentation update agent must:
 ```text
 - read current repo state before changing docs;
 - reconcile docs with implemented/planned/deferred status;
+- synchronize local docs with shared indexes/registers;
 - update navigation/responsibility maps together with new docs;
 - create archive packages for manual application;
 - never write directly to GitHub unless explicitly asked.
@@ -22,6 +23,7 @@ A documentation update agent must:
 ```text
 planning/documentation/documentation-update-workflow.md
 planning/documentation/status-reconciliation-workflow.md
+planning/documentation/local-global-documentation-sync-workflow.md
 planning/documentation/documentation-update-agent-prompt.md
 ```
 
@@ -41,8 +43,9 @@ planning/replacement-file-generation-guide.md
 5. planning/documentation/README.md
 6. planning/documentation/documentation-update-workflow.md
 7. planning/documentation/status-reconciliation-workflow.md
-8. planning/replacement-file-generation-guide.md
-9. relevant domain/API/testing/slice/client docs for the requested area
+8. planning/documentation/local-global-documentation-sync-workflow.md
+9. planning/replacement-file-generation-guide.md
+10. relevant domain/API/testing/slice/client docs for the requested area
 ```
 
 ## 4. Documentation-Only Agent Rule
@@ -62,7 +65,19 @@ Documentation-only work must not:
 
 Output is an archive with complete replacement/add files unless the user explicitly asks for direct repository writes.
 
-## 5. Draft-Driven Discovery Link
+## 5. Local / Global Sync Rule
+
+Documentation-only work must check whether local changes need shared index/register updates.
+
+Use:
+
+```text
+planning/documentation/local-global-documentation-sync-workflow.md
+```
+
+Important local slice questions should not remain discoverable only from one slice file when they can affect other work.
+
+## 6. Draft-Driven Discovery Link
 
 All slice families use draft-driven discovery:
 
