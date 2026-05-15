@@ -17,5 +17,5 @@ public sealed class ClientConstantsJsonSerializer
     }
 
     public string SerializeArtifact<T>(T artifact)
-        => JsonSerializer.Serialize(artifact, Options) + Environment.NewLine;
+        => JsonSerializer.Serialize(artifact, Options) + "\n";
 }
