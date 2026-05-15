@@ -1,7 +1,7 @@
 # Slice Questions Register
 
-Status: active register  
-Scope: shared overview of currently relevant local slice, client sidecar and cross-cutting/helper questions
+Status: active register / synchronized with current implemented backend L1 slice docs  
+Scope: shared overview of currently relevant local slice, client sidecar and cross-cutting/helper questions, future-review items and important accepted directions
 
 ## 1. Purpose
 
@@ -12,10 +12,18 @@ Local `Questions / Decisions` sections keep detailed context.
 This register answers:
 
 ```text
-Where are the still-open, future-review or otherwise important questions discovered by local slice/client/cross-cutting docs?
+Where are the still-open, future-review, deferred or otherwise important questions discovered by local slice/client/cross-cutting docs?
 ```
 
 It should be checked before starting or reviewing a parent slice, `.client.md` sidecar or cross-cutting/helper slice.
+
+This file is synchronized with the current backend L1 slice docs:
+
+```text
+planning/slices/SL-ACC-001-register-client-account.md
+planning/slices/SL-APPL-001-create-individual-applicant-party.md
+planning/slices/SL-REQ-001-create-connection-request.md
+```
 
 ## 2. Relationship To Local Files
 
@@ -26,28 +34,29 @@ This register does not replace local questions.
 Instead:
 
 ```text
-local slice/client/cross-cutting question
+local slice/client/cross-cutting question or important accepted direction
         ↓
-keep local context in the local file
+keep detailed context in the local file
         ↓
-mirror currently relevant question here
+mirror currently relevant question or accepted direction here
         ↓
-link back from local file to register ID when practical
+use the local file as the source of detailed scope/status
 ```
 
 The goal is not to duplicate every paragraph from local docs.
 
-The goal is to make unresolved, future-review and important accepted-direction questions discoverable from one shared place.
+The goal is to make unresolved, future-review, deferred and important accepted-direction items discoverable from one shared place.
 
 ## 3. What Belongs Here
 
-Mirror a local question here when it is:
+Mirror a local item here when it is:
 
 ```text
 - open;
 - blocked;
 - an assumption waiting for confirmation;
 - future review;
+- deferred;
 - accepted direction but important for future work;
 - unresolved risk;
 - cross-slice relevant;
@@ -71,7 +80,7 @@ ID
 Local file(s)
 Area
 Question status
-Question
+Question / decision question
 Assumption / current direction
 Impact / shared target
 Blocks current work?
@@ -86,6 +95,7 @@ Status values:
 | `assumption` | A working answer is being used so draft work can continue; user confirmation/refinement is expected. |
 | `accepted direction` | Direction is accepted enough for planning and should be remembered by future work. |
 | `future review` | Not a current blocker; revisit when the related future slice/hardening/client work starts. |
+| `deferred` | Intentionally outside the current implemented slice; belongs to a later slice or planning pass. |
 | `resolved` | Answered and no longer open. Keep only if useful for traceability. |
 | `superseded` | Replaced by a newer question/decision/source. |
 | `local only` | Intentionally not mirrored globally; local file must say why. |
@@ -110,7 +120,7 @@ Do not mark an assumption as resolved.
 
 | Register | Use for |
 |---|---|
-| `slice-questions-register.md` | Shared overview of currently relevant local slice questions |
+| `slice-questions-register.md` | Shared overview of currently relevant local slice questions and important accepted directions |
 | `slice-extension-points-register.md` | Extension points, change pressure, anti-coupling decisions and extension-related cross-slice questions |
 | `slice-implementation-notes-register.md` | Concrete future implementation/client/testing notes not yet assigned to an active file |
 | `planning/diagrams/scenario-questions-register.md` | Scenario/domain questions that can change source scenario behavior or diagrams |
@@ -134,20 +144,31 @@ Before starting or updating a slice/client sidecar:
 
 ## 7. Questions Register
 
-| ID | Local file(s) | Area | Question status | Question | Assumption / current direction | Impact / shared target | Blocks current work? |
+| ID | Local file(s) | Area | Question status | Question / decision question | Assumption / current direction | Impact / shared target | Blocks current work? |
 |---|---|---|---|---|---|---|---|
-| Q-SL-ACC-001 | `SL-ACC-001-register-client-account.md` | Registration uniqueness | future review | Should duplicate email be enforced by application precheck, DB unique constraint, or both? | Current implemented slice uses application precheck. Draft assumes DB uniqueness is future hardening unless explicitly pulled into current persistence work. | possible future hardening / DB constraint decision | no |
-| Q-SL-ACC-002 | `SL-ACC-001-register-client-account.md` | Account lifecycle | future review | Should PendingActivation be introduced after registration? | Current L1 keeps registration Active. Draft assumes PendingActivation/email confirmation is a separate future slice. | extension/future slice | no |
-| Q-SL-ACC-003 | `SL-ACC-001-register-client-account.md` | Auth guard | open | Where should active-account guard be enforced? | Draft assumes shared application/auth boundary, not duplicated inside every aggregate. Needs confirmation before protected future slices depend on this policy. | cross-slice auth/security planning | yes for protected future slices |
-| Q-SL-APPL-001 | `SL-APPL-001-create-individual-applicant-party.md` | Applicant versioning | open | One current active ApplicantParty per account or per applicant type? | Draft assumes current active individual applicant party for current implemented request flow; final replacement policy remains unresolved. | extension/change pressure | no for current create slice |
-| Q-SL-APPL-002 | `SL-APPL-001-create-individual-applicant-party.md` | API error semantics | future review | Should missing account return validation, unauthorized, forbidden, or not found? | Current implementation returns validation problem for missing account after authenticated context. Draft assumes this stays until API/security semantics change. | API/security semantics | no |
-| Q-SL-APPL-003 | `SL-APPL-001-create-individual-applicant-party.md` | Data semantics | accepted direction | Should applicant contact email duplicate account email? | Applicant email may differ from account email. Keep separate unless scenario/DATA changes. | scenario/DATA consistency | no |
-| Q-SL-REQ-001 | `SL-REQ-001-create-connection-request.md` | My Requests read model | open | What exact My Requests list/detail response does the client need after navigation? | Draft assumes request creation command does not need returned request data; read/list slice defines My Requests shape later. | future read/client slice | no |
-| Q-SL-REQ-002 | `SL-REQ-001-create-connection-request.md` | Applicant party versions | future review | How are older applicant party versions made inactive when replacement/edit flow is implemented? | Current request flow uses current active applicant lookup. Draft assumes version management is handled by future replacement slice. | applicant replacement slice | no |
-| Q-SL-REQ-003 | `SL-REQ-001-create-connection-request.md` | UI/client | open | What concrete page/form implements request creation? | Draft assumes no `.client.md` is created until concrete client work starts. | client sidecar | no |
-| Q-SL-REQ-004 | `SL-REQ-001-create-connection-request.md` | Security | open | When should unsafe browser commands enforce CSRF? | Draft assumes CC-CSRF-001 governs concrete unsafe browser request handling; current backend slice docs do not implement CSRF. | CSRF cross-cutting slice | no for current docs |
+| SL-ACC-Q-001 | `SL-ACC-001-register-client-account.md` | DB hardening | future review | Should duplicate email also be enforced by a DB unique constraint? | Current implementation evidence says duplicate email is rejected by application precheck. Do not add DB uniqueness in documentation/status reconciliation work. | possible future persistence hardening / DB constraint decision | no |
+| SL-ACC-Q-002 | `SL-ACC-001-register-client-account.md` | Activation lifecycle | deferred | Should PendingActivation/email confirmation be introduced? | Current L1 registration creates an Active ClientAccount. Draft assumes PendingActivation/email confirmation is a separate L2 extension slice. | auth lifecycle extension | no |
+| SL-ACC-Q-003 | `SL-ACC-001-register-client-account.md` | Auth UX | open | Should registration automatically sign the user in? | Current backend registration returns `AccountId` + `Email` and does not issue a session in this slice. Draft assumes auto-login is a separate auth/client flow decision. | dependent auth/client UI flow | no for current backend docs; yes before final auth UX/client implementation |
+| SL-ACC-D-001 | `SL-ACC-001-register-client-account.md` | API contract | accepted direction | Does the current backend registration API accept `passwordConfirm`? | Current implementation evidence says the backend DTO contains `email` + `password` only. Password confirmation is a dependent client/UI validation concern unless a future backend contract change adds it. | API/client contract and registration UI sidecar | no |
+| SL-APPL-Q-001 | `SL-APPL-001-create-individual-applicant-party.md` | Replacement/versioning | future review | Is “current active applicant party” unique per account or per applicant type? | Current implemented flow creates a current active IndividualApplicantParty. Draft assumes uniqueness/replacement policy belongs to a separate replacement/versioning slice. | applicant replacement/current-active policy | no for current implemented save slice |
+| SL-APPL-Q-002 | `SL-APPL-001-create-individual-applicant-party.md` | Missing account semantics | future review | Should a missing account under authenticated claim return validation, unauthorized, forbidden or not found? | Current implementation evidence says missing account returns validation ProblemDetails after authenticated context. Keep this unless API/security policy changes. | API/security semantics | no |
+| SL-APPL-Q-003 | `SL-APPL-001-create-individual-applicant-party.md` | Applicant verification | deferred | When is external verification required before request creation/review? | Current save command creates applicant data as Unverified and does not require external provider integration. Draft assumes verification/provider behavior is a separate slice/policy. | verification/provider slice and review/request policy | no |
+| SL-APPL-Q-004 | `SL-APPL-001-create-individual-applicant-party.md` | Non-individual applicants | deferred | When do entrepreneur/legal-entity applicant shapes enter L1? | Current implemented slice covers IndividualApplicantParty only. Draft assumes entrepreneur/legal entity shapes are separate applicant-type extension slices. | future applicant type slices | no |
+| SL-APPL-D-001 | `SL-APPL-001-create-individual-applicant-party.md` | Data semantics | accepted direction | Should applicant contact email duplicate account email? | Applicant contact email may differ from account email. Keep them separate unless scenario/DATA changes. | scenario/DATA consistency and client form mapping | no |
+| SL-REQ-Q-001 | `SL-REQ-001-create-connection-request.md` | My Requests read model | open | What exact My Requests list/detail response does the client need after navigation? | Draft assumes request creation command does not need returned request data; the read/list/detail slice defines My Requests shape later. | future read/client slice | no for current backend docs |
+| SL-REQ-Q-002 | `SL-REQ-001-create-connection-request.md` | Applicant versions | future review | How are older applicant party versions made inactive when replacement/edit flow exists? | Current request flow uses current active individual applicant lookup. Draft assumes version management is handled by future replacement/versioning slice. | applicant replacement slice | no |
+| SL-REQ-Q-003 | `SL-REQ-001-create-connection-request.md` | Client UI | open | What concrete page/form implements request creation? | Draft assumes no `.client.md` is created until concrete client work starts. | request creation client sidecar | no for backend docs |
+| SL-REQ-Q-004 | `SL-REQ-001-create-connection-request.md` | Security | open | When should unsafe browser commands enforce CSRF? | Draft assumes CC-CSRF-001 governs concrete unsafe browser request handling. Current backend slice docs do not implement CSRF. | CSRF cross-cutting slice and future client/security work | no for current docs |
+| SL-REQ-Q-005 | `SL-REQ-001-create-connection-request.md` | Verification | future review | Must applicant party be verified before request creation? | Current backend implementation does not require applicant verification before request creation. Draft assumes verification requirement is a separate future policy/slice if adopted. | verification/provider policy and request creation rules | no |
+| SL-REQ-D-001 | `SL-REQ-001-create-connection-request.md` | Command response | accepted direction | Does create request command require returned request data? | Current implementation returns HTTP success without required response body. Client success handling can show a success message and navigate to My Requests without request id/status/body. | request creation client sidecar and API contract | no |
 
-## 8. Closed / Resolved Question Policy
+## 8. Superseded / Removed During This Sync
+
+| Previous register item | Status | Reason |
+|---|---|---|
+| `Q-SL-ACC-003` — active-account guard placement | superseded / removed from active register | The current local `SL-ACC-001` `Questions / Decisions` section no longer contains this question. The current local `SL-ACC-Q-003` is the auth UX auto-login question. Reintroduce active-account guard placement as a local question in an auth/security slice if future protected-slice planning needs it. |
+
+## 9. Closed / Resolved Question Policy
 
 Resolved questions may be removed from the active table when they are no longer useful for future work.
 

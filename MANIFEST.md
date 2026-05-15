@@ -1,19 +1,50 @@
-# Manifest — enman-single-diagram-chat-role-workflow-v1
+# MANIFEST
 
-## Add
-- `planning/agent-roles-and-required-actions.md`
-- `planning/diagrams/scenario-drafting-workflow.md`
+Archive: `enman-slice-questions-register-sync.zip`
+
+Purpose: synchronize the shared slice questions register with the current implemented backend L1 slice documentation.
 
 ## Replace
-- `planning/README.md`
-- `planning/planning-agent-protocol.md`
-- `planning/planning-doc-responsibility-map.md`
-- `planning/scenario-specification-principles.md`
-- `planning/diagrams/README.md`
-- `planning/diagrams/diagram-prompt-generation-workflow.md`
+
+```text
+planning/slices/slice-questions-register.md
+```
+
+## Add
+
+```text
+MANIFEST.md
+APPLY.md
+```
 
 ## Delete
-- none
 
-## Note
-If `enman-agent-roles-scenario-diagram-workflow-v1.zip` was already applied, the two Add files above are corrected replacements. This archive supersedes the earlier split-role diagram wording and keeps one Diagram Chat role.
+```text
+None
+```
+
+## Scope
+
+This archive updates documentation only.
+
+It does not include:
+
+```text
+- production code
+- generated artifacts
+- runtime behavior changes
+- GitHub branch/commit/PR changes
+- client sidecars
+- backend implementation changes
+- UI pages
+- CSRF implementation
+- DB uniqueness constraints
+```
+
+## Source slice files used for sync
+
+```text
+planning/slices/SL-ACC-001-register-client-account.md
+planning/slices/SL-APPL-001-create-individual-applicant-party.md
+planning/slices/SL-REQ-001-create-connection-request.md
+```
