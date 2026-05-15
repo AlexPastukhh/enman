@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { EyeIcon, EyeIconSlash } from "../../assets/icons/svgr_barrel";
-import type { DebouncedFormRegister } from "../../shared/form/formTypes";
+import { EyeIcon, EyeIconSlash } from "../../../assets/icons/svgr_barrel";
+import type { DebouncedFormRegister } from "../../form/formTypes";
 import type { FieldError, FieldValues } from "react-hook-form";
 import { FormFieldBase } from "./FormFieldBase";
 import { formConst } from "./formConst";

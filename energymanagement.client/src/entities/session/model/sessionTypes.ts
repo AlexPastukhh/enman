@@ -8,13 +8,26 @@ export type SessionState = {
   isAuthenticated: boolean;
 };
 
+const requireCurrentUserField = <T>(
+  value: T | null | undefined,
+  fieldName: string,
+): T => {
+  if (value === null || value === undefined) {
+    throw new Error(`L1 current-user response is missing ${fieldName}.`);
+  }
+
+  return value;
+};
+
 export const mapCurrentUserToSession = (
   response: L1CurrentUserResponse,
 ): SessionState => ({
-  accountId: response.accountId ?? 0,
-  email: response.email ?? "",
-  role: response.role ?? "",
-  isActive: response.isActive ?? false,
-  isAuthenticated: response.isAuthenticated ?? false,
+  accountId: requireCurrentUserField(response.accountId, "accountId"),
+  email: requireCurrentUserField(response.email, "email"),
+  role: requireCurrentUserField(response.role, "role"),
+  isActive: requireCurrentUserField(response.isActive, "isActive"),
+  isAuthenticated: requireCurrentUserField(
+    response.isAuthenticated,
+    "isAuthenticated",
+  ),
 });
-

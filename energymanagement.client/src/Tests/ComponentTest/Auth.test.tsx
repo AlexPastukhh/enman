@@ -78,7 +78,7 @@ const setUpRegisterTest = (
     [
       createTestRoute(
         clientRoutes.register,
-        <RegisterForm setRootError={vi.fn()} />,
+        <RegisterForm />,
       ),
       createTestRoute(clientRoutes.login, <div>Login Page</div>),
     ],
@@ -97,7 +97,7 @@ const setUpLoginTest = (
 } => {
   const { user, screen } = renderComponentRoute(
     [
-      createTestRoute(clientRoutes.login, <LoginForm setRootError={vi.fn()} />),
+      createTestRoute(clientRoutes.login, <LoginForm />),
       createTestRoute(clientRoutes.home, <div>Home Page</div>),
     ],
     clientRoutes.login,

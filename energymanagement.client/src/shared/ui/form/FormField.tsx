@@ -1,5 +1,5 @@
 import type { FieldError, FieldValues } from "react-hook-form";
-import type { DebouncedFormRegister } from "../../shared/form/formTypes";
+import type { DebouncedFormRegister } from "../../form/formTypes";
 import { FormFieldBase } from "./FormFieldBase";
 
 export const FormField = ({
@@ -28,13 +28,13 @@ export const FormField = ({
         error={error}
       >
         <input
-        className="formControl"
-        type="text"
-        id={inputId}
-        placeholder={placeHolder}
-        aria-errormessage={error ? errorId : undefined}
-        aria-invalid={error ? "true" : "false"}
-        {...registerFormFn(fieldName)}
+          className="formControl"
+          type="text"
+          id={inputId}
+          placeholder={placeHolder}
+          aria-errormessage={error ? errorId : undefined}
+          aria-invalid={error ? "true" : "false"}
+          {...registerFormFn(fieldName)}
         />
       </FormFieldBase>
     </>

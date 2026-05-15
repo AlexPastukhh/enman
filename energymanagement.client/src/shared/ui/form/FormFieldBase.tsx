@@ -1,6 +1,7 @@
 import type { FieldError } from "react-hook-form";
 import { FormErrors } from "./FormErrors";
 import { formConst } from "./formConst";
+import "./form.css";
 
 export const FormFieldBase = ({
   labelText,
@@ -22,8 +23,7 @@ export const FormFieldBase = ({
       </label>
       {children}
       <FormErrors
-        aria-label
-            ={formConst.getAriaLabelForError(inputId)}
+        aria-label={formConst.getAriaLabelForError(inputId)}
         role="alert"
         id={inputErrorId}
         error={error}

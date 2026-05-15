@@ -1,5 +1,5 @@
 import { fireEvent, type Screen } from "@testing-library/react";
-import { formConst } from "../../../Components/Form/formConst";
+import { formConst } from "../../../shared/ui/form/formConst";
 import type { UserEvent } from "@testing-library/user-event";
 
 export class BaseTest {}

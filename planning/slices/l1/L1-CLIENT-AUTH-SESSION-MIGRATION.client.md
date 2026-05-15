@@ -1,6 +1,6 @@
 # L1-CLIENT-AUTH-SESSION-MIGRATION.client - Early Short Draft
 
-Status: implementation started; cleanup pass completed
+Status: implementation started; shared form/root-error cleanup completed
 Slice type: client sidecar / client migration slice
 Scope: existing register, login, current-user/session, logout API helper, and route/provider wiring
 Source scenario/UI behavior items: Source BI TBD labels are temporary and must be replaced when authoritative source behavior IDs are identified.
@@ -60,7 +60,11 @@ Composes layout and feature form
         |
         v
 [features/auth/register | features/auth/login]
-Owns form schema, DTO mapping, submit behavior
+Owns form schema, DTO mapping, submit behavior, root command error display
+        |
+        v
+[shared/ui/form]
+Provides reusable form primitives and shared form styling
         |
         v
 [shared/api/l1AuthApi.ts]
@@ -87,13 +91,23 @@ Current note: this sidecar uses temporary `Source BI TBD` labels. They must be r
 
 Status: open / follow-up
 
-Current note: migrated route wiring no longer uses old register/login/session modules, but unmigrated legacy files still exist in `src/views`, `src/hooks`, `src/MutationFns`, and `src/QueryFns`. Deletion should happen after a dedicated import scan confirms no remaining build-time or planned compatibility dependency.
+Current note: migrated route wiring no longer uses old register/login/session modules. Legacy auth/session files still exist and are internally connected through old views and hooks:
+
+```text
+views/RegisterView/Register.tsx -> hooks/useRegister.tsx -> MutationFns/registerIndClient.ts -> globConstants.ServerRoutes
+views/LoginView/Login.tsx -> hooks/useLogin.tsx -> MutationFns/login.ts -> globConstants.ServerRoutes
+views/AccountView/ProvideIndividualInfo.tsx -> hooks/useLogin.tsx
+views/AccountView/AccountView.tsx -> hooks/useSession.tsx
+QueryFns/getUser.ts -> hooks/useSession.tsx -> globConstants.ServerRoutes
+```
+
+These files are not used by the migrated app router, but they were left in place in this pass to avoid deleting adjacent legacy account/provide-individual code without a dedicated removal task.
 
 ### Q-CLIENT-AUTH-003 - Should session mapper fail hard on missing required current-user fields?
 
-Status: open / follow-up
+Status: decided
 
-Current note: `mapCurrentUserToSession` keeps conservative defaults for missing optional OpenAPI fields. A later hardening pass should decide whether missing `accountId`, `email`, `role`, `isActive`, or `isAuthenticated` should throw a contract error.
+Decision: `mapCurrentUserToSession` now fails fast if authenticated current-user responses omit `accountId`, `email`, `role`, `isActive`, or `isAuthenticated`. A `401` current-user response still maps to unauthenticated session.
 
 ### Q-CLIENT-AUTH-004 - Should logout get visible UI now?
 
@@ -113,6 +127,24 @@ Status: decided
 
 `globConstants.ts` and legacy `constants.Routes` may remain for unmigrated code. Migrated auth/session flows use `shared/config/clientRoutes.ts` and `shared/api/l1ApiPaths.ts`.
 
+### D-CLIENT-AUTH-003 - Root command errors are feature-owned
+
+Status: decided
+
+Register and login command root errors are rendered inside `RegisterForm` and `LoginForm`. Pages compose layout only and no longer receive `setRootError` from auth features.
+
+### D-CLIENT-AUTH-004 - L1 API path constants are OpenAPI-key typed
+
+Status: decided
+
+`shared/api/l1ApiPaths.ts` keeps explicit path strings but constrains them with `satisfies Record<string, keyof paths>` from generated OpenAPI types. This reduces drift without introducing a full generated client.
+
+### D-CLIENT-AUTH-005 - Shared form primitives moved to shared UI
+
+Status: decided
+
+Reusable form primitives live under `shared/ui/form`. Shared form CSS lives next to those primitives. Register-specific form placement styling lives in `features/auth/register/ui/registerForm.css`.
+
 ## 4. Behavior Coverage
 
 Behavior Coverage is not Test Coverage. This table explains how the implementation covers the intended behavior. Verification is listed separately.
@@ -123,7 +155,9 @@ Behavior Coverage is not Test Coverage. This table explains how the implementati
 | Source BI TBD: registered client can login and establish session state | `features/auth/login` maps form values to `L1LoginRequest`, calls `POST /api/l1/auth/login`, invalidates the session query, and navigates home on success. |
 | Source BI TBD: unauthenticated current-user lookup does not become a fatal page error | `entities/session/api/getCurrentSession.ts` treats `401` from `GET /api/l1/auth/current-user` as `null` session. |
 | Source BI TBD: server validation errors are shown as field/root errors | `shared/api/problemDetails.ts` reads generated ProblemDetails constants and maps server validation errors through feature field maps. |
-| Source BI TBD: root form errors are surfaced at page level | `RegisterForm` and `LoginForm` sync `errors.root?.message` to page-level error state after render with `useEffect`. |
+| Source BI TBD: root form errors are visible without page coupling | `RegisterForm` and `LoginForm` render `errors.root?.message` inside the feature form with `role="alert"`. |
+| Source BI TBD: reusable form UI follows shared placement | `shared/ui/form` owns reusable form primitives and shared form CSS; auth features import form primitives from the shared layer. |
+| Source BI TBD: L1 current-user contract issues are not silently hidden | `mapCurrentUserToSession` throws when authenticated current-user responses miss required fields. |
 
 ## 5. Client / Component / E2E Verification Plan
 
@@ -132,6 +166,7 @@ Behavior Coverage is not Test Coverage. This table explains how the implementati
 | Build/typecheck | Run `npm.cmd --prefix energymanagement.client run build`. |
 | Component/client tests | Keep role/label-facing register/login validation and submit tests. |
 | Session API behavior | Test that current-user `401` maps to unauthenticated session. |
+| Session contract safety | Test that missing required current-user fields throw a contract error. |
 | E2E register | Browser submits the register form and waits for real `POST /api/l1/auth/register`. |
 | E2E login | Test setup creates an L1 account, browser submits login, and waits for real `POST /api/l1/auth/login`. |
 | API contract | Run `npm.cmd run check:api` to confirm OpenAPI/types are current. |
@@ -142,9 +177,10 @@ Behavior Coverage is not Test Coverage. This table explains how the implementati
 - Source BI TBD: registered client can login and establish session state.
 - Source BI TBD: unauthenticated current-user lookup does not become a fatal page error.
 - Source BI TBD: server validation errors are shown as field/root errors.
-- Source BI TBD: root form errors are surfaced at page level.
+- Source BI TBD: root form errors are visible without page coupling.
+- Source BI TBD: reusable form UI follows shared placement.
+- Source BI TBD: L1 current-user contract issues are not silently hidden.
 
 ## 7. Next Step
 
-Replace temporary `Source BI TBD` labels with authoritative behavior IDs, then migrate or delete the remaining legacy auth/session files in a focused cleanup once their remaining imports are fully understood.
-
+Replace temporary `Source BI TBD` labels with authoritative behavior IDs, then run a focused legacy removal task for unused `views/*`, `hooks/*`, `MutationFns/*`, `QueryFns/*`, and the remaining old `Utils/*` / `globConstants.ts` consumers.

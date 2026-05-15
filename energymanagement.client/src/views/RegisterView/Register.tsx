@@ -1,11 +1,11 @@
 import { useRegister } from "../../hooks/useRegister";
-import '../../styles/Register.css'
+import "../../features/auth/register/ui/registerForm.css";
 
-import { Password } from "../../Components/Form/PasswordGroup";
-import { FormButton } from "../../Components/Form/FormButton";
-import { FormGroup } from "../../Components/Form/FormGroup";
-import { FormTitle } from "../../Components/Form/FormTitle";
-import { FormField } from "../../Components/Form/FormField";
+import { Password } from "../../shared/ui/form/PasswordGroup";
+import { FormButton } from "../../shared/ui/form/FormButton";
+import { FormGroup } from "../../shared/ui/form/FormGroup";
+import { FormTitle } from "../../shared/ui/form/FormTitle";
+import { FormField } from "../../shared/ui/form/FormField";
 import { registerConst } from "./registerConst";
 import { NavLink } from "react-router-dom";
 import { ClientRoutes } from "../../globConstants";

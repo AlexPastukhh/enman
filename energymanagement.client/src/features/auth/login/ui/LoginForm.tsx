@@ -1,17 +1,12 @@
-import { useEffect } from "react";
-import { FormButton } from "../../../../Components/Form/FormButton";
-import { FormField } from "../../../../Components/Form/FormField";
-import { FormGroup } from "../../../../Components/Form/FormGroup";
-import { FormTitle } from "../../../../Components/Form/FormTitle";
-import { Password } from "../../../../Components/Form/PasswordGroup";
+import { FormButton } from "../../../../shared/ui/form/FormButton";
+import { FormField } from "../../../../shared/ui/form/FormField";
+import { FormGroup } from "../../../../shared/ui/form/FormGroup";
+import { FormTitle } from "../../../../shared/ui/form/FormTitle";
+import { Password } from "../../../../shared/ui/form/PasswordGroup";
 import { useLoginForm } from "../model/useLoginForm";
 import { loginConst } from "./loginConst";
 
-type LoginFormProps = {
-  setRootError: React.Dispatch<React.SetStateAction<string>>;
-};
-
-export const LoginForm = ({ setRootError }: LoginFormProps) => {
+export const LoginForm = () => {
   const {
     errors,
     register,
@@ -21,13 +16,14 @@ export const LoginForm = ({ setRootError }: LoginFormProps) => {
     isValid,
   } = useLoginForm();
 
-  useEffect(() => {
-    setRootError(errors.root?.message ?? "");
-  }, [errors.root?.message, setRootError]);
-
   return (
     <form className="form" onSubmit={handleSubmit}>
       <FormTitle>{loginConst.loginTitle}</FormTitle>
+      {errors.root?.message && (
+        <p className="formRootError" role="alert">
+          {errors.root.message}
+        </p>
+      )}
       <FormGroup>
         <FormField
           registerFormFn={register}

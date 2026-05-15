@@ -1,30 +1,26 @@
-import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { FormButton } from "../../../../Components/Form/FormButton";
-import { FormField } from "../../../../Components/Form/FormField";
-import { FormGroup } from "../../../../Components/Form/FormGroup";
-import { FormTitle } from "../../../../Components/Form/FormTitle";
-import { Password } from "../../../../Components/Form/PasswordGroup";
-import "../../../../styles/Register.css";
+import { FormButton } from "../../../../shared/ui/form/FormButton";
+import { FormField } from "../../../../shared/ui/form/FormField";
+import { FormGroup } from "../../../../shared/ui/form/FormGroup";
+import { FormTitle } from "../../../../shared/ui/form/FormTitle";
+import { Password } from "../../../../shared/ui/form/PasswordGroup";
 import { clientRoutes } from "../../../../shared/config/clientRoutes";
 import { useRegisterForm } from "../model/useRegisterForm";
+import "./registerForm.css";
 import { registerConst } from "./registerConst";
 
-type RegisterFormProps = {
-  setRootError: React.Dispatch<React.SetStateAction<string>>;
-};
-
-export const RegisterForm = ({ setRootError }: RegisterFormProps) => {
+export const RegisterForm = () => {
   const { register, handleSubmit, errors, isSubmitting, fieldNames } =
     useRegisterForm();
-
-  useEffect(() => {
-    setRootError(errors.root?.message ?? "");
-  }, [errors.root?.message, setRootError]);
 
   return (
     <form onSubmit={handleSubmit} className="form registerForm">
       <FormTitle>{registerConst.registerTitle}</FormTitle>
+      {errors.root?.message && (
+        <p className="formRootError" role="alert">
+          {errors.root.message}
+        </p>
+      )}
 
       <FormGroup>
         <FormField

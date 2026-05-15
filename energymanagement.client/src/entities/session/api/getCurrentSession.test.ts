@@ -21,4 +21,20 @@ describe("getCurrentSession", () => {
 
     await expect(getCurrentSession()).resolves.toBeNull();
   });
+
+  it("fails when an authenticated current-user response misses required fields", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        new Response(JSON.stringify({ email: "client@example.com" }), {
+          status: 200,
+          headers: { "content-type": "application/json" },
+        }),
+      ),
+    );
+
+    await expect(getCurrentSession()).rejects.toThrow(
+      "L1 current-user response is missing accountId.",
+    );
+  });
 });
