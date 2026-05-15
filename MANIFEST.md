@@ -1,18 +1,32 @@
-# Manifest — enman-client-sidecar-architecture-mapping-v1
+# Manifest — enman-client-ui-specs-component-a11y-change-extension-points-workflow-v1
 
 ## Add
 
-- planning/slices/client-architecture-principles.md
+- planning/diagrams/scenario-ui-specs/README.md
+- planning/diagrams/scenario-ui-specs/00-scenario-ui-specs-index.md
+- planning/client/README.md
+- planning/client/cross-cutting/README.md
+- planning/client/cross-cutting/CL-FORM-VALIDATION-001-deferred-validation.md
+- planning/client/cross-cutting/CL-ERROR-HANDLING-001-client-server-errors.md
+- planning/client/cross-cutting/CL-STYLING-001-css-modules-tokens.md
+- planning/client/cross-cutting/CL-A11Y-001-accessibility-and-aria.md
+- planning/slices/client-component-discovery-guide.md
+- planning/slices/change-extension-points-principles.md
+- planning/slices/slice-extension-points-register.md
 
 ## Replace
 
-- planning/slices/l1-slice-drafting-guide.md
-- planning/slices/implementation-principles.md
-- planning/slices/README.md
+- planning/README.md
 - planning/planning-workflow-current.md
 - planning/planning-agent-protocol.md
-- planning/README.md
 - planning/planning-doc-responsibility-map.md
+- planning/scenario-specification-principles.md
+- planning/diagrams/README.md
+- planning/diagrams/scenario-text-specs/README.md
+- planning/slices/README.md
+- planning/slices/l1-slice-drafting-guide.md
+- planning/slices/implementation-principles.md
+- planning/slices/client-architecture-principles.md
 
 ## Delete
 

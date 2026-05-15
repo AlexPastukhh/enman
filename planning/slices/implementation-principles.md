@@ -7,23 +7,11 @@ Scope: general implementation rules near slice planning
 
 This file stores stable implementation principles.
 
-It is not a backlog of future implementation thoughts. Future concrete notes belong in:
+Future concrete notes belong in `planning/slices/slice-implementation-notes-register.md`.
 
-```text
-planning/slices/slice-implementation-notes-register.md
-```
+Cross-slice extension/change decisions belong in `planning/slices/slice-extension-points-register.md`.
 
-Reusable mechanisms belong in:
-
-```text
-planning/slices/shared/
-```
-
-Client architecture mapping belongs in:
-
-```text
-planning/slices/client-architecture-principles.md
-```
+Client-wide conventions belong in `planning/client/`.
 
 ## 2. Parent Slice And Client Sidecar
 
@@ -35,6 +23,9 @@ Parent slice file owns:
 - behavior item coverage summary;
 - API contract;
 - server/client shared expectations;
+- Server / Cross-Layer Extension Points;
+- Server / Cross-Layer Change Points;
+- Extension Pressure / Anti-Coupling Decisions;
 - application/domain/persistence responsibilities;
 - server/integration tests.
 ```
@@ -43,18 +34,18 @@ Client sidecar owns detailed frontend/client implementation when client work sta
 
 ```text
 - Client Behavior Coverage;
+- UI Behavior Coverage;
 - Client Implementation Questions Register;
-- Scenario / DATA Coverage;
+- Scenario / DATA / UI Spec Coverage;
 - Client Architecture Mapping;
+- Client Extension Points;
+- Client Behavior Change Points;
+- Client Extension Pressure / Anti-Coupling Decisions;
+- Component / Layout Plan;
+- Styling Change Points;
+- Accessibility / ARIA Contract;
 - API Contract Used By Client;
-- routes;
-- pages;
-- entity read modules;
-- command features;
-- widgets if needed;
-- components;
-- query hooks;
-- mutation hooks;
+- routes/pages/entities/features/widgets/components/hooks;
 - form state;
 - DTO mapping;
 - cache invalidation;
@@ -62,117 +53,67 @@ Client sidecar owns detailed frontend/client implementation when client work sta
 - client tests.
 ```
 
-Do not create `.client.md` before work starts on the concrete client layer.
-
 ## 3. API Contract Ownership
 
 The API contract belongs in the parent slice file.
 
 Client sidecar must reference the parent slice API section and must not invent a different backend contract.
 
-## 4. Client Sidecar Starts With Coverage And Questions
+## 4. Change / Extension Points
 
-A `.client.md` file starts with fast-access planning tables:
+Use:
 
 ```text
-1. Client Behavior Coverage
-2. Client Implementation Questions Register
-3. Scenario / DATA Coverage
-4. Client Architecture Mapping
-5. API Contract Used By Client
+planning/slices/change-extension-points-principles.md
+planning/slices/slice-extension-points-register.md
 ```
 
-Only then it describes routes, pages, entities, features, widgets, components, query functions, mutations, hooks, DTO mapping, action availability, success/failure handling, cache and tests.
+Known future extension points must influence current implementation planning.
 
-## 5. Client Architecture Mapping
+For each extension pressure case, decide explicit seam now, anti-coupling only, convention-first and accept possible future refactor, ignore because certainty is low, or revisit later.
 
-Planning slice and frontend feature are not 1:1.
+## 5. Client Architecture And Component Planning
 
 Use:
 
 ```text
 planning/slices/client-architecture-principles.md
+planning/slices/client-component-discovery-guide.md
+planning/client/
 ```
 
-Default mapping:
-
-```text
-Read slice    -> pages + entities (+ widgets if reused)
-Command slice -> pages + features + entities
-Shared concern -> app / shared
-```
-
-Command slice client implementation may use pages and entities, but command behavior should live in features.
+A `.client.md` file starts with coverage/questions tables, then architecture, extension/change points, component/layout plan, styling and accessibility, then implementation flow.
 
 ## 6. Form Values vs API DTO
 
 Client form values may differ from API DTOs.
 
-Use separate FormValues and DTO mapping when there is:
+Use separate FormValues and DTO mapping when there is trim/normalization, empty string to null, confirmation fields, UI-only state, select conversion, nested DTO shape, File/FormData, filters/search values, or warning/confirmation state that should not be sent to server.
+
+## 7. Client-Wide Conventions
+
+Use:
 
 ```text
-trim / normalization
-empty string -> null
-confirmation fields
-UI-only checkbox/state
-select string -> number conversion
-flat form -> nested DTO
-File/FormData upload
-filters/search values
-warning/confirmation state that should not be sent to server
+planning/client/cross-cutting/CL-FORM-VALIDATION-001-deferred-validation.md
+planning/client/cross-cutting/CL-ERROR-HANDLING-001-client-server-errors.md
+planning/client/cross-cutting/CL-STYLING-001-css-modules-tokens.md
+planning/client/cross-cutting/CL-A11Y-001-accessibility-and-aria.md
 ```
 
-Detailed reusable note:
-
-```text
-planning/slices/shared/client-form-values-to-api-dto-mapping.md
-```
-
-## 7. Deferred Validation
-
-Deferred validation is current client-side behavior and may be tested.
-
-Detailed reusable note:
-
-```text
-planning/slices/shared/client-deferred-validation.md
-```
-
-## 8. Server Errors To Client Errors
-
-Server validation/problem responses should map to client-readable field/global errors.
-
-Detailed reusable note:
-
-```text
-planning/slices/shared/client-server-validation-error-mapping.md
-```
-
-## 9. CSRF / Antiforgery With Cookie Auth
+## 8. CSRF / Antiforgery With Cookie Auth
 
 Unsafe requests using ASP.NET Core cookie auth need antiforgery support.
 
-This is shared support, not a business slice.
+Detailed reusable note may remain in `planning/slices/shared/antiforgery-token-session-context.md`.
 
-Detailed reusable note:
-
-```text
-planning/slices/shared/antiforgery-token-session-context.md
-```
-
-## 10. Applicant Data Prefill
+## 9. Applicant Data Prefill
 
 Applicant data may be prefilled into request forms.
 
 Editing request-local fields must not mutate saved ApplicantParty.
 
-Detailed reusable note:
-
-```text
-planning/slices/shared/client-applicant-data-prefill-notes.md
-```
-
-## 11. Tests
+## 10. Tests
 
 Separate tests from implementation narrative:
 
@@ -181,5 +122,3 @@ Client tests
 Server tests
 End-to-end tests
 ```
-
-End-to-end tests go last because they verify the assembled full flow.

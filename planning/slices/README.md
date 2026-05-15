@@ -1,21 +1,11 @@
 # Slice Planning Index
 
 Status: current slice-planning navigation index  
-Scope: scenario-derived slice boundary discovery, parent slice files, client sidecars, client architecture, implementation notes and shared support
+Scope: slice boundary discovery, parent slice files, client sidecars, client architecture, component discovery, extension/change points, implementation notes and shared support
 
 ## 1. Purpose
 
-This folder documents how to derive implementation slices from scenarios and how to plan implementation one slice at a time.
-
-It does not own global planning/agent/replacement workflow rules.
-
-Use central files for global rules:
-
-```text
-planning/planning-workflow-current.md
-planning/planning-agent-protocol.md
-planning/planning-doc-responsibility-map.md
-```
+This folder documents how to derive implementation slices from scenarios and plan implementation one slice at a time.
 
 ## 2. Current Slice Workflow
 
@@ -23,7 +13,9 @@ planning/planning-doc-responsibility-map.md
 scenario text spec
 + scenario DATA file
 + validation/security addendum
++ scenario UI spec when client-visible behavior is planned
 -> per-scenario behavior items
+-> UI behavior items
 -> scenario questions register
 -> L1 slice boundary draft
 -> parent vertical slice file
@@ -33,26 +25,7 @@ scenario text spec
 
 ## 3. Responsibility
 
-This folder owns:
-
-```text
-- slice discovery;
-- parent vertical slice files;
-- client sidecar files;
-- client architecture planning principles;
-- shared support docs;
-- implementation principles near slice work;
-- future implementation notes register.
-```
-
-It does not own:
-
-```text
-- global agent protocol;
-- replacement package rules;
-- scenario source-of-truth rules;
-- document responsibility map.
-```
+This folder owns slice discovery, parent vertical slice files, client sidecar files, client architecture planning principles, client component discovery guide, change/extension/extension pressure principles, extension points register, shared support docs, implementation principles near slice work and future implementation notes register.
 
 ## 4. Slice Support Files
 
@@ -60,23 +33,14 @@ It does not own:
 planning/slices/l1-slice-drafting-guide.md
 planning/slices/implementation-principles.md
 planning/slices/client-architecture-principles.md
+planning/slices/client-component-discovery-guide.md
+planning/slices/change-extension-points-principles.md
+planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
 planning/slices/shared/README.md
 ```
 
-## 5. General Boundary Draft
-
-Use:
-
-```text
-planning/slices/l1-slice-boundary-draft-01.md
-```
-
-It discovers real slices, proves boundaries and includes Scenario Slice Flow.
-
-It must not contain detailed implementation flow.
-
-## 6. Parent Slice Files
+## 5. Parent Slice Files
 
 Parent slice files own:
 
@@ -86,95 +50,58 @@ Parent slice files own:
 - behavior item coverage summary;
 - API contract;
 - cross-layer Implementation Flow;
+- Server / Cross-Layer Extension Points;
+- Server / Cross-Layer Change Points;
+- Extension Pressure / Anti-Coupling Decisions;
 - application/domain/persistence responsibilities;
 - server/integration tests;
-- link to .client.md sidecar when client work starts.
+- link to `.client.md` sidecar when client work starts.
 ```
 
-## 7. Client Sidecar Files
+## 6. Client Sidecar Files
 
 A `.client.md` file is created only when concrete client work starts.
 
-Example:
+It must include Client Behavior Coverage, UI Behavior Coverage, questions, Scenario / DATA / UI Spec Coverage, Client Architecture Mapping, Client Extension Points, Client Behavior Change Points, Client Extension Pressure / Anti-Coupling Decisions, Component / Layout Plan, Styling Change Points, Accessibility / ARIA Contract, API Contract Used By Client, Client Implementation Flow, Client Types and Client Tests.
 
-```text
-planning/slices/SL-REQ-001-create-connection-request.client.md
-```
-
-Client sidecar owns detailed client implementation and client tests.
-
-It must include:
-
-```text
-Client Behavior Coverage
-Client Implementation Questions Register
-Scenario / DATA Coverage
-Client Architecture Mapping
-API Contract Used By Client
-Client Implementation Flow
-Client Types
-Client Tests
-```
-
-The sidecar must use the API contract from the parent slice file.
-
-## 8. Client Architecture Mapping
+## 7. Client Architecture / Component / A11Y
 
 Use:
 
 ```text
 planning/slices/client-architecture-principles.md
+planning/slices/client-component-discovery-guide.md
+planning/client/
 ```
 
-Core rule:
+## 8. Change / Extension Points
+
+Use:
 
 ```text
-Planning slice and frontend feature are not 1:1.
+planning/slices/change-extension-points-principles.md
+planning/slices/slice-extension-points-register.md
 ```
 
-Default mapping:
-
-```text
-Read slice    -> pages + entities (+ widgets if reused)
-Command slice -> pages + features + entities
-Shared concern -> app / shared
-```
+Known future extension points must be reviewed during current slice planning.
 
 ## 9. Slice Intake Checklist
-
-Before starting any slice/client sidecar:
 
 ```text
 1. Read target scenario text spec.
 2. Read target DATA file.
 3. Read validation/security addendum entries.
 4. Read relevant behavior items if they exist.
-5. Check planning/diagrams/scenario-questions-register.md.
-6. Check planning/slices/slice-implementation-notes-register.md.
-7. Check relevant shared support docs.
-8. If client work is involved, check planning/slices/client-architecture-principles.md.
-9. If scenario-level ambiguity exists, stop and resolve it through scenario question loop.
+5. Read relevant scenario UI spec if client-visible behavior is involved.
+6. Check planning/diagrams/scenario-questions-register.md.
+7. Check planning/slices/slice-implementation-notes-register.md.
+8. Check planning/slices/slice-extension-points-register.md.
+9. Check relevant shared support docs.
+10. If client work is involved, check planning/client/ and planning/slices/client-architecture-principles.md.
+11. If scenario-level ambiguity exists, stop and resolve it through scenario question loop.
 ```
 
-## 10. Shared Support Artifacts
-
-Reusable helpers used by multiple slices are documented under:
-
-```text
-planning/slices/shared/
-```
-
-Current shared support docs:
-
-```text
-planning/slices/shared/client-deferred-validation.md
-planning/slices/shared/client-server-validation-error-mapping.md
-planning/slices/shared/client-form-values-to-api-dto-mapping.md
-planning/slices/shared/antiforgery-token-session-context.md
-planning/slices/shared/client-applicant-data-prefill-notes.md
-```
-
-## 11. Current Files
+## 10. Current Files
 
 General boundary draft:
 
@@ -193,9 +120,3 @@ planning/slices/SL-REVIEW-002-reject-request.md
 ```
 
 Expected future client sidecars are not created until concrete client work starts.
-
-## 12. Current Next Step
-
-Get or prepare concrete UI plan for the next client layer.
-
-Then create the relevant `.client.md` sidecar and implement the client work.

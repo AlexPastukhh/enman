@@ -6,7 +6,7 @@ Status: current scenario text-spec navigation index
 
 This folder contains corrected textual scenario specifications.
 
-They are the primary scenario source of truth together with DATA specs, validation/security addenda, scenario questions and per-scenario behavior items.
+They are the primary scenario source of truth together with DATA specs, UI specs, validation/security addenda, scenario questions and per-scenario behavior items.
 
 ## 2. Read First
 
@@ -14,6 +14,8 @@ They are the primary scenario source of truth together with DATA specs, validati
 00-scenario-text-specs-index.md
 scenario-server-domain-validation-addendum.md
 scenario-account-activation-security-addendum.md
+../scenario-data/README.md
+../scenario-ui-specs/README.md
 ../scenario-questions-register.md
 ../scenario-behavior-items/README.md
 ../scenario-behavior-items/00-scenario-behavior-items-index.md
@@ -42,7 +44,19 @@ SC-15-security-text-specification.md
 SC-17-anonymous-request.md
 ```
 
-## 4. Validation / Security Addenda
+## 4. Scenario UI Specs
+
+Use:
+
+```text
+planning/diagrams/scenario-ui-specs/
+```
+
+when UI-visible requirements need more detail than the scenario text spec.
+
+Do not put React component/layout implementation into scenario text specs.
+
+## 5. Validation / Security Addenda
 
 Use:
 
@@ -53,7 +67,7 @@ scenario-account-activation-security-addendum.md
 
 Do not move these validation/security rules into DATA files.
 
-## 5. Scenario Questions
+## 6. Scenario Questions
 
 If scenario text specs are underspecified, add or update:
 
@@ -61,9 +75,7 @@ If scenario text specs are underspecified, add or update:
 planning/diagrams/scenario-questions-register.md
 ```
 
-Use the scenario question loop before continuing implementation planning.
-
-## 6. Behavior Items
+## 7. Behavior Items
 
 Scenario text specs feed per-scenario behavior items:
 
@@ -71,9 +83,9 @@ Scenario text specs feed per-scenario behavior items:
 planning/diagrams/scenario-behavior-items/
 ```
 
-Behavior items must not invent new behavior. If behavior is missing, update the scenario spec first.
+UI behavior items should be derived from scenario/spec/UI requirements when client-visible behavior is planned.
 
-## 7. Rule
+## 8. Rule
 
 Scenario text specs describe behavior and domain-relevant rules.
 

@@ -1,7 +1,7 @@
 # Scenario Specification Principles
 
 Status: current source of truth for scenario specification principles  
-Scope: textual scenario specs, scenario DATA blocks, validation addenda, behavior items and scenario questions
+Scope: textual scenario specs, scenario DATA blocks, scenario UI specs, validation addenda, behavior items and scenario questions
 
 ## 1. Read Order
 
@@ -13,9 +13,10 @@ planning/scenario-specification-principles.md
 planning/scenario-domain-validation-principles.md
 planning/diagrams/scenario-text-specs/README.md
 planning/diagrams/scenario-data/README.md
+planning/diagrams/scenario-ui-specs/README.md
 planning/diagrams/scenario-questions-register.md
 planning/diagrams/scenario-behavior-items/README.md
-planning/tables/pre-domain-variants-input.md
+planning/client/README.md
 planning/slices/README.md
 ```
 
@@ -29,23 +30,18 @@ They must not become controller specs, endpoint maps, DB schemas, ORM mappings, 
 
 ## 3. Scenario Drafting Output Set
 
-For each active scenario, maintain these artifacts together:
+For each active scenario, maintain these artifacts together when relevant:
 
 ```text
 1. Scenario text spec.
 2. Scenario DATA spec.
-3. Validation/security addendum entries, when needed.
-4. Per-scenario behavior items file, when behavior items are migrated/created.
-5. Scenario questions register entries, when unresolved questions exist.
+3. Scenario UI spec, when client-visible behavior is being planned.
+4. Validation/security addendum entries, when needed.
+5. Per-scenario behavior items file.
+6. Scenario questions register entries, when unresolved questions exist.
 ```
 
-Behavior items are derived from scenario main flow, branches, invariants, outcomes, DATA requirements and validation/security addenda.
-
-Behavior items must not invent new behavior.
-
 ## 4. Scenario Question Loop
-
-When domain draft, slice draft, client sidecar or implementation planning reveals a scenario-level question:
 
 ```text
 question appears
@@ -54,12 +50,13 @@ question appears
 -> clarify / choose current direction
 -> update scenario text spec if behavior changed
 -> update DATA file if visible/input/selectable/filter/attachment data changed
+-> update scenario UI spec if UI-visible requirement changed
 -> update validation/security addendum if needed
--> update behavior items if required behavior changed
+-> update behavior items / UI behavior items if required behavior changed
 -> continue implementation planning
 ```
 
-Scenario-level means the question affects required behavior, DATA, validation/security, user-visible outcome or scenario semantics.
+Scenario-level means the question affects required behavior, DATA, UI-visible requirement, validation/security, user-visible outcome or scenario semantics.
 
 ## 5. Observable UI Requirements In Scenario Specs
 
@@ -75,9 +72,23 @@ what forbidden access/action must be prevented or rejected
 
 Do not put layout or component choices into scenario specs.
 
+Detailed UI-visible decisions can be placed in scenario UI specs.
+
 Detailed client implementation belongs in `.client.md` sidecars when concrete client work starts.
 
-## 6. Scenario Behavior Items
+## 6. Scenario UI Specs
+
+Scenario UI specs live under:
+
+```text
+planning/diagrams/scenario-ui-specs/
+```
+
+They capture UI-visible requirements, UI behavior items, accepted UI decisions and UI questions.
+
+They do not define React components, hooks, API adapters, CSS module filenames or final visual design.
+
+## 7. Scenario Behavior Items
 
 Per-scenario behavior items live under:
 
@@ -85,95 +96,38 @@ Per-scenario behavior items live under:
 planning/diagrams/scenario-behavior-items/
 ```
 
-The compiled downstream baseline remains:
+Behavior items and UI behavior items must not invent new behavior.
 
-```text
-planning/tables/pre-domain-variants-input.md
-```
-
-Use the same behavior item category/card/table style as the compiled baseline.
-
-Default categories:
-
-```text
-CMD
-LC
-IBS
-VI
-UCQ
-READ
-INT
-FUT
-NW
-SQ
-```
-
-Behavior item migration / cleanup is a separate future step.
-
-## 7. DATA
-
-Use `DATA`, not `DETAIL`.
+## 8. DATA
 
 DATA means only what actor enters, sees, selects, filters/searches by, attaches/uploads, or references as visible/selectable business item.
 
 DATA files must not contain validation/rules sections, testable behavior sections, invariants, preconditions, branches, access rules, security policy or layout choices.
 
-DATA specs feed per-scenario behavior items, scenario questions register, domain drafts, slice boundary drafts, parent slice files, client sidecar Scenario / DATA Coverage tables and read/query DTO planning.
-
-## 8. Validation
+## 9. Validation
 
 Scenario specs should distinguish client-side validation from server-side/domain validation.
 
-Client-side validation is UX feedback and correction loop.
-
-Server-side/domain validation is authoritative.
-
-Use:
+## 10. Current Project Decisions
 
 ```text
-planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-planning/scenario-domain-validation-principles.md
-```
+Request statuses: InReview, Approved, Rejected.
+Do not use Submitted unless reintroduced later with precise meaning.
 
-## 9. Current Project Decisions
-
-Request statuses:
-
-```text
-InReview
-Approved
-Rejected
-```
-
-Do not use `Submitted` unless reintroduced later with precise meaning.
-
-Applicant DATA reuse in request creation:
-
-```text
-matching saved applicant DATA may be copied/prefilled into request form
-client may edit prefilled request-local fields
-editing request-local fields does not delete or mutate saved ApplicantData
-```
-
-Agreement proposal rule:
-
-```text
 Approval does not automatically create agreement proposal.
 Agreement proposal starts only by employee action on an Approved request.
 ```
 
-## 10. Source Of Truth Rule
+## 11. Source Of Truth Rule
 
-Use corrected text specs, DATA specs, validation addenda, scenario questions register and behavior items.
+Use corrected text specs, DATA specs, scenario UI specs, validation addenda, scenario questions register and behavior items.
 
 Do not use stale generated diagram package summaries or stale `.drawio` pages as semantic source of truth until regenerated.
 
-## 11. Current Downstream Planning Step
-
-Current active branch:
+## 12. Current Downstream Planning Step
 
 ```text
-scenario specs / DATA / validation
--> behavior items / questions register
+scenario specs / DATA / UI specs / validation
+-> behavior items / UI behavior items / questions register
 -> slice boundary / parent slice / client sidecar workflow
 ```
