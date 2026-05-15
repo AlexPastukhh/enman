@@ -7,7 +7,7 @@ Scope: domain drafts, business slices, client sidecars, cross-cutting/helper sli
 
 Draft-driven discovery means we do not try to fully design implementation in one perfect pass.
 
-We create a draft, use it to discover missing behavior/questions/contract gaps, resolve or record them, then refine the next draft.
+We create a draft, use it to discover missing behavior, questions, contract gaps, flow gaps and verification gaps, then refine the next draft or move to implementation when the remaining risk is acceptable.
 
 This was used for domain planning and must also apply to all slice work.
 
@@ -16,13 +16,19 @@ This was used for domain planning and must also apply to all slice work.
 ```text
 source requirements
 -> draft
--> questions and assumptions
+-> open questions and assumptions
+-> visual flow maps
+-> detailed flow
 -> behavior coverage
--> flow coverage
--> implementation/test planning
+-> implementation direction
+-> test / verification planning
 -> status reconciliation
 -> next draft or implementation step
 ```
+
+The loop is intentionally iterative.
+
+A draft can be useful before it is complete, as long as unresolved questions, assumptions and coverage gaps are visible.
 
 ## 3. Applies To
 
@@ -40,7 +46,49 @@ diagram planning drafts
 
 It is not domain-only.
 
-## 4. Why It Matters
+## 4. Draft Formats
+
+Slice drafts can use different working formats depending on stage.
+
+Default early format:
+
+```text
+shortened working draft
+```
+
+Use it for:
+
+```text
+- early discussion;
+- scenario logic checks;
+- slice boundary checks;
+- implementation direction;
+- questions and coverage discovery.
+```
+
+Full slice format:
+
+```text
+full backend / business / cross-cutting / client sidecar draft
+```
+
+Use it for:
+
+```text
+- final documentation pass;
+- detailed review;
+- debugging complex logic;
+- transfer into planning docs;
+- preparation for implementation by another agent.
+```
+
+The practical slice drafting rules and templates live in:
+
+```text
+planning/slices/l1-slice-drafting-guide.md
+```
+
+## 5. Why It Matters
 
 Drafts reveal:
 
@@ -56,15 +104,38 @@ Drafts reveal:
 - implementation blockers.
 ```
 
-## 5. Business Slice Drafts
+## 6. Business Slice Drafts
 
-Business slice drafts use:
+Business slice drafts start from accepted source behavior.
+
+They use this discovery chain:
 
 ```text
 scenario-derived behavior items
+-> Visual Scenario Flow
 -> Scenario Slice Flow
+-> Visual Implementation Flow
 -> Implementation Flow
--> tests
+-> Behavior Coverage
+-> Test / Verification Plan
+```
+
+Visual flows are review maps.
+
+Detailed flows are the source-linked explanation of scenario behavior and implementation responsibility.
+
+Behavior Coverage and Test / Verification Plan are separate sections.
+
+A business slice draft should make visible:
+
+```text
+- which scenario behavior it covers;
+- which source behavior items are in scope;
+- which behavior is delegated to dependent slices;
+- which API contract is used or introduced;
+- which implementation layers are responsible;
+- which open questions can still change behavior, API, testing or client planning;
+- how implementation will be verified after behavior coverage is defined.
 ```
 
 Draft questions can lead back to:
@@ -79,19 +150,20 @@ client sidecar update
 cross-cutting/helper slice update
 ```
 
-## 6. Client Sidecar Drafts
+## 7. Client Sidecar Drafts
 
 Client sidecar drafts are created only when concrete client work starts.
 
-They use:
+They use this discovery chain:
 
 ```text
 client behavior to implement
--> client questions/assumptions
--> contract used by client
--> client coverage matrix
--> client implementation flow
--> component/API/hook/form/test planning
+-> Visual UI / Scenario Flow
+-> Visual Client Implementation Flow
+-> Questions / Decisions
+-> Behavior Coverage
+-> Client / Component / E2E Verification Plan
+-> Covered Scenario / UI Behavior Items
 ```
 
 Client draft-driven discovery must identify:
@@ -106,22 +178,33 @@ Client draft-driven discovery must identify:
 - ProblemDetails parsing/mapping;
 - component/client tests;
 - E2E only for completed cross-layer flow;
-- temporary handwritten DTOs, if any, until CC-API contract is complete;
+- temporary handwritten DTOs, if any, until generated contract coverage is complete;
 - open questions that block or affect implementation.
 ```
 
-A `.client.md` file should not be created in advance, but once client work starts it becomes the draft/discovery file for that client slice.
+A `.client.md` file should not be created in advance.
 
-## 7. Cross-Cutting / Helper Drafts
+Once client work starts, it becomes the draft/discovery file for that client slice.
 
-Cross-cutting/helper drafts use:
+Client architecture placement is not a behavior item.
+
+Placement belongs to Visual Client Implementation Flow, component discovery or client architecture notes.
+
+## 8. Cross-Cutting / Helper Drafts
+
+Cross-cutting/helper drafts start from concern-derived behavior.
+
+They use this discovery chain:
 
 ```text
 concern-derived behavior items
+-> Visual Concern / Scenario Flow, when useful
 -> Concern Slice Flow
+-> Visual Implementation Flow
 -> Implementation Flow
--> tests/checks
--> consumer rules
+-> Behavior Coverage
+-> Test / Check Plan
+-> Consumer Rule
 ```
 
 Concern-derived source types include:
@@ -135,7 +218,11 @@ client-cross-cutting-derived
 infrastructure-derived
 ```
 
-## 8. Documentation Drafts
+Concern-derived behavior items are first-class behavior items.
+
+Do not hide cross-cutting behavior only in prose or implementation notes.
+
+## 9. Documentation Drafts
 
 Documentation/status reconciliation drafts use the same idea:
 
@@ -148,9 +235,13 @@ current repo facts
 -> next reconciliation
 ```
 
-## 9. Question Rule
+Documentation drafts must not overclaim implementation status.
 
-If a draft exposes a question that can change behavior/API/client architecture/testing, stop or record it prominently before implementation continues.
+If docs and repo evidence disagree, record the disagreement before updating status wording.
+
+## 10. Question Rule
+
+If a draft exposes a question that can change behavior, API contract, client architecture, testing responsibility, E2E scope, scenario meaning or diagram interpretation, stop or record it prominently before implementation continues.
 
 Each question should have:
 
@@ -163,37 +254,112 @@ impact
 status
 ```
 
-## 10. Coverage Rule
+In slice drafts, open questions and unresolved risks should appear before accepted decisions.
 
-Every draft should make coverage visible:
+Accepted decisions are still recorded, but they should not hide unresolved questions below them.
 
-```text
-behavior item
-flow step
-implementation step
-test/check coverage
-status
-```
+## 11. Behavior Coverage Rule
 
-For client sidecars, coverage should also include:
+Behavior Coverage answers:
 
 ```text
-route/page
-feature/component
-API function
-hook
-form/validation
-error handling
-test coverage
+Does the draft description cover the required source behavior?
 ```
 
-## 11. Do Not
+Behavior Coverage must link source behavior to draft explanation.
+
+Preferred format:
+
+| Scenario / concern behavior item | How draft covers it | Draft location | Status |
+|---|---|---|---|
+
+Behavior Coverage may reference:
+
+```text
+- source behavior item ID;
+- scenario text spec;
+- DATA/UI spec;
+- validation/security addendum;
+- concern-derived behavior item;
+- specific visual/detailed flow section;
+- decision or question that limits coverage.
+```
+
+Behavior Coverage is not Test Coverage.
+
+A draft can have behavior coverage gaps even when the test plan is detailed.
+
+A draft can also have good behavior coverage before final test details are known.
+
+## 12. Test / Verification Plan Rule
+
+Test / Verification Plan answers:
+
+```text
+How will implemented code or UI behavior be verified later?
+```
+
+Preferred format:
+
+| Test / check | Verifies | Layer | Status |
+|---|---|---|---|
+
+Verification planning may include:
+
+```text
+- domain/unit tests;
+- application/API integration tests;
+- generated artifact checks;
+- client/component tests;
+- E2E tests only for completed cross-layer behavior;
+- manual/documentation checks where appropriate.
+```
+
+Do not use the verification plan to replace Behavior Coverage.
+
+Do not treat an E2E test as proof that every UI detail is covered.
+
+## 13. Visual Flow Rule
+
+Visual flows are diagram-like text maps used to make responsibility, branching and boundaries clear.
+
+They should be used before detailed flow sections in full slice files.
+
+Visual Scenario Flow shows:
+
+```text
+- actor/system behavior;
+- success path;
+- important failure/no-write branches;
+- out-of-scope or dependent slices;
+- visible outcome.
+```
+
+Visual Implementation Flow shows:
+
+```text
+- API or UI entry point;
+- application/use-case boundary;
+- domain responsibility;
+- persistence responsibility;
+- error/no-write path;
+- generated contract/client convention boundary when relevant.
+```
+
+A linear arrow list can be acceptable for early shortened drafts.
+
+Full slice files should use diagram-like maps when branching, boundaries or dependent slices matter.
+
+## 14. Do Not
 
 ```text
 - Do not treat the first draft as final.
 - Do not hide questions in prose only.
 - Do not implement through unresolved behavior/API questions.
 - Do not create client sidecars before client work starts.
+- Do not invent behavior items inside a slice draft.
+- Do not mix Behavior Coverage with Test / Verification Plan.
+- Do not skip visual flow maps in full slice files when branching or boundaries matter.
 - Do not skip draft flow for technical/cross-cutting concerns.
 - Do not skip docs/status reconciliation after implementation changes.
 ```
