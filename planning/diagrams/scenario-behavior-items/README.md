@@ -25,7 +25,15 @@ Business slices primarily consume scenario-derived behavior items.
 
 Cross-cutting/helper slices consume concern-derived behavior items.
 
-## 3. Cross-Cutting Behavior Item Rule
+## 3. Current Scenario-Derived Behavior Item Files
+
+```text
+SC-10-applicant-data-behavior-items.md
+```
+
+`SC-10-applicant-data-behavior-items.md` covers Applicant Data / Account page behavior items, including current applicant state, saved/read-only UI outcome and no create-request entry in the applicant create UI slice.
+
+## 4. Cross-Cutting Behavior Item Rule
 
 Cross-cutting behavior items are first-class behavior items.
 
@@ -37,13 +45,13 @@ They must:
 - be covered by implementation flow and tests or marked as not covered yet.
 ```
 
-## 4. Current Cross-Cutting Behavior Item Files
+## 5. Current Cross-Cutting Behavior Item Files
 
 ```text
 CC-CSRF-001-antiforgery-behavior-items.md
 ```
 
-## 5. Related Cross-Cutting Slices
+## 6. Related Cross-Cutting Slices
 
 ```text
 planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md

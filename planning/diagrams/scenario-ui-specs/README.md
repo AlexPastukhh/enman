@@ -42,7 +42,15 @@ Scenario UI spec   = UI-visible requirements and accepted UI decisions.
 
 Those belong in `.client.md` sidecars or client implementation docs.
 
-## 4. UI Specs Vs Client Implementation Conventions
+## 4. Current UI Spec Files
+
+```text
+SC-10-applicant-data-ui.md
+```
+
+`SC-10-applicant-data-ui.md` records Account page / applicant data UI-visible behavior for current-applicant state, applicant creation success outcome, no create-request entry in the applicant create slice, and future current-applicant read behavior.
+
+## 5. UI Specs Vs Client Implementation Conventions
 
 Scenario UI specs define UI-visible outcomes.
 
@@ -75,7 +83,7 @@ For command success flows without required response body, use:
 planning/client/cross-cutting/CL-COMMAND-001-command-success-without-required-response-body.md
 ```
 
-## 5. UI Behavior Items
+## 6. UI Behavior Items
 
 UI behavior items answer:
 
@@ -96,7 +104,7 @@ SC-07B-UI-004 — Warn before rejecting with empty feedback.
 SC-07B-UI-005 — Do not show auto-created agreement proposal after approval.
 ```
 
-## 6. Status Values
+## 7. Status Values
 
 ```text
 requirement
@@ -109,13 +117,13 @@ superseded
 
 In this project, an accepted convention is binding until explicitly changed.
 
-## 7. Creation Rule
+## 8. Creation Rule
 
 Do not create every scenario UI spec in advance.
 
 Create a concrete `SC-XX-...-ui.md` file when UI planning starts for that scenario or when a UI-visible decision must not be lost.
 
-## 8. Template
+## 9. Template
 
 ```text
 # SC-XX — Scenario Name UI Spec
@@ -136,7 +144,7 @@ Behavior item sources:
 ## 9. Downstream Use
 ```
 
-## 9. Downstream Use
+## 10. Downstream Use
 
 Scenario UI specs feed `.client.md` UI Behavior Coverage, Scenario / DATA / UI Spec Coverage, component discovery, accessibility contract, client tests, E2E and UI-related scenario questions.
 

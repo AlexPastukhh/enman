@@ -7,6 +7,10 @@ Scope: scenario-derived and concern-derived behavior item files
 
 Scenario-derived files are created per scenario when scenario behavior is prepared for domain/slice/client planning.
 
+| File | Scenario | Source type | Primary downstream use |
+|---|---|---|---|
+| `SC-10-applicant-data-behavior-items.md` | SC-10 Applicant Data | scenario-derived | applicant data backend/client slices, future current-applicant read slice, future applicant replacement/edit slice |
+
 ## 2. Cross-Cutting / Concern-Derived Behavior Items
 
 | File | Source type | Primary slice |
@@ -28,3 +32,5 @@ infrastructure-derived
 ```
 
 Cross-cutting behavior items must be reflected in the corresponding cross-cutting/helper slice Concern Flow before Implementation Flow.
+
+Scenario-derived behavior items must trace back to scenario text, DATA, UI specs or validation/security addenda.

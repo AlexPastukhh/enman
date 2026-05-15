@@ -1,15 +1,15 @@
-# Manifest — enman-l1-backend-client-state-docs-v1
+# Manifest — enman-sc10-applicant-ui-scenario-and-register-sync-v1
 
 ## Add
-- planning/slices/SL-AUTH-001-login-client-account.md
-- planning/slices/SL-AUTH-002-current-user.md
-- planning/slices/SL-AUTH-003-logout.md
+- planning/diagrams/scenario-ui-specs/SC-10-applicant-data-ui.md
+- planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
 
 ## Replace
-- planning/README.md
-- planning/planning-workflow-current.md
-- planning/client/README.md
-- planning/slices/README.md
+- planning/diagrams/scenario-ui-specs/README.md
+- planning/diagrams/scenario-behavior-items/README.md
+- planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
+- planning/diagrams/scenario-data/SC-10-applicant-data.md
+- planning/diagrams/scenario-questions-register.md
 - planning/slices/slice-questions-register.md
 - planning/slices/slice-implementation-notes-register.md
 

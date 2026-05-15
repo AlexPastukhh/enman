@@ -1,8 +1,10 @@
-# Apply — enman-l1-backend-client-state-docs-v1
+# Apply — enman-sc10-applicant-ui-scenario-and-register-sync-v1
+
+From repository root, run:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-l1-backend-client-state-docs-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-sc10-applicant-ui-scenario-and-register-sync-v1.zip" -DestinationPath . -Force
 git status
 ```
 
-This archive contains complete repo-relative files only.
+Review changed files before committing.
