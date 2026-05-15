@@ -1,59 +1,17 @@
-# MANIFEST — Applicant Current Active Scenario Sync
-
-Archive: `enman-scenario-applicant-current-active-sync.zip`
-
-Purpose:
-
-Synchronize scenario/source documentation after the accepted decision:
-
-```text
-One L1 account has one current active ApplicantParty at a time.
-Applicant types are alternative shapes of the account-level applicant profile,
-not independent simultaneously-active current applicant contexts per type.
-```
+# Manifest — enman-l1-backend-client-state-docs-v1
 
 ## Add
-
-```text
-(none)
-```
+- planning/slices/SL-AUTH-001-login-client-account.md
+- planning/slices/SL-AUTH-002-current-user.md
+- planning/slices/SL-AUTH-003-logout.md
 
 ## Replace
-
-```text
-planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
-planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
-planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
-planning/diagrams/scenario-data/00-scenario-data-index.md
-planning/diagrams/scenario-data/SC-10-applicant-data.md
-planning/diagrams/scenario-data/SC-04-request-creation-data.md
-planning/diagrams/scenario-questions-register.md
-planning/slices/slice-questions-register.md
-planning/slices/slice-implementation-notes-register.md
-```
+- planning/README.md
+- planning/planning-workflow-current.md
+- planning/client/README.md
+- planning/slices/README.md
+- planning/slices/slice-questions-register.md
+- planning/slices/slice-implementation-notes-register.md
 
 ## Delete
-
-```text
-(none)
-```
-
-## Scope
-
-This is a documentation-only archive.
-
-It updates scenario text, DATA summaries, scenario questions and shared slice registers so downstream slice/client planning uses the accepted one-current-active-ApplicantParty-per-account direction.
-
-## Non-goals
-
-```text
-- no production code changes;
-- no runtime behavior changes;
-- no generated artifact changes;
-- no DB constraints or migrations;
-- no client sidecars;
-- no request creation UI;
-- no My Requests UI/read implementation;
-- no CSRF implementation;
-- no GitHub writes, branch, commit or PR.
-```
+- none

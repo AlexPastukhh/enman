@@ -1,6 +1,6 @@
 # Slice Implementation Notes Register
 
-Status: active / synchronized with applicant current-active scenario decision  
+Status: active / synchronized with current implemented backend L1 slice docs and client-missing state  
 Scope: concrete implementation notes for future slices/client sidecars/shared support
 
 ## 1. Purpose
@@ -42,10 +42,35 @@ Before starting work on a slice/client sidecar:
 6. If the note reveals scenario/DATA/validation ambiguity, stop and use the scenario question loop.
 ```
 
-## 3. Notes Register
+## 3. Current Backend / Client Implementation Boundary
+
+Current repo evidence says:
+
+```text
+- L1 backend/API/session/persistence flows are implemented for register/login/current-user/logout/applicant/request.
+- Generated OpenAPI TypeScript types include L1 paths/types.
+- Concrete L1 client feature UI and client sidecars are not completed.
+```
+
+Recommended client work order:
+
+```text
+L1 auth/session client baseline
+-> applicant data UI
+-> request creation UI
+-> My Requests read/list/detail
+-> browser E2E happy paths
+```
+
+## 4. Notes Register
 
 | ID | Related slice / future slice | Scenario | Layer | Tags | Note | Why it matters | Promote to | Status |
 |---|---|---|---|---|---|---|---|---|
+| NOTE-AUTH-CLIENT-001 | `SL-AUTH-001` / `SL-AUTH-002` / `SL-AUTH-003` / future auth `.client.md` | auth/session | Client/UI | auth-session, current-user, route-guard | Create the L1 auth/session client baseline before applicant/request UI. It should cover login, current-user bootstrap, logout, session state, route guard direction and generated type usage. | Applicant/request UI endpoints are protected; doing them before auth baseline creates duplicated temporary auth handling. | `.client.md` auth/session sidecar | open |
+| NOTE-AUTH-CLIENT-002 | `SL-AUTH-001` / registration client | SC-01/auth | Client/UI | registration, auto-login | Registration backend returns `AccountId` + `Email` and does not issue a session. Client registration flow must decide whether to route to login, automatically login after successful registration, or show a confirmation/success state. | Prevents assuming auto-login from backend registration response. | auth/register `.client.md` + slice questions register | open |
+| NOTE-AUTH-CLIENT-003 | `SL-AUTH-002` | auth/session | Client/UI | current-user, bootstrap, cache | Current-user client handling should distinguish 401 unauthenticated from server/global failures and should define app bootstrap/protected route behavior. | Affects route guard UX, loading states and query cache strategy. | auth/session `.client.md` | open |
+| NOTE-AUTH-CLIENT-004 | `SL-AUTH-003` | auth/session | Client/UI | logout, cache, navigation | Logout client handling should clear auth state and decide whether to invalidate all user-scoped queries and where to navigate. | Prevents stale user data after logout. | auth/session `.client.md` | open |
+| NOTE-AUTH-E2E-001 | auth/session client | auth/session | Testing | e2e, auth | L1 login/current-user/logout browser E2E should be added only after concrete auth UI/session client work exists. | Avoids migrating/proliferating E2E before client baseline is real. | testing plan / auth `.client.md` | open |
 | NOTE-REQ-UI-001 | SL-REQ-001 / request creation client | SC-04 | Client/UI | applicant-context, current-active, form | Request creation UI should show/reference the account's current active ApplicantParty summary. If applicant data is missing or wrong, the user should go through SC-10 Applicant Data / future replacement flow before submit. The request creation form should not create a separate request-local applicant identity in the current core direction. | Keeps UI, DTO mapping and scenario wording aligned with the one-current-active-ApplicantParty-per-account decision. Prevents accidental request-local applicant override behavior. | `.client.md` + behavior items when request creation client work starts | open |
 | NOTE-REQ-UI-002 | SL-REQ-001 / request creation client | SC-04 | Client/UI | command-success, navigation | For command flows where the client does not need created entity data to continue, HTTP success without required body is enough. Client shows a success message and navigates to the next read-context screen. | Prevents client code from depending on command response fields that are not needed for the user flow. | `.client.md` | open |
 | NOTE-CLIENT-AUTH-001 | multiple client slices | cross-scenario | Client/Server shared support | csrf, auth, cookie | Unsafe requests with ASP.NET Core cookie auth need antiforgery token fetch/store/attach/refetch on auth/session changes. | Affects all unsafe client mutations and diploma security explanation. | shared support + ADR candidate + extension register if broad security decision changes | open |
@@ -56,13 +81,13 @@ Before starting work on a slice/client sidecar:
 | NOTE-REVIEW-STALE-001 | SL-REVIEW-001 / SL-REVIEW-002 | SC-07B | Client/UI | stale-state, refetch | Review page should refetch details after domain/server rejection because request status may be stale. | Affects error handling and cache invalidation. | `.client.md` | open |
 | NOTE-REQ-UI-TEST-001 | SL-REQ-001 / request creation client | SC-04 | Testing | client-tests, e2e | Request creation Client/UI should have tests for deferred validation, server error mapping, current-active applicant context display/redirect/update path, DTO building, antiforgery helper use and success navigation; E2E comes after client+server flow is stable. | Prevents under-tested client layer and keeps tests aligned with current active applicant scenario decision. | `.client.md` | open |
 
-## 4. Superseded Notes
+## 5. Superseded Notes
 
 | ID | Status | Reason |
 |---|---|---|
 | Previous wording of `NOTE-REQ-UI-001` | superseded | Earlier wording allowed request-local applicant prefill/editing without mutating saved ApplicantParty. Scenario direction now says request creation references the account's current active ApplicantParty; applicant changes go through SC-10 / replacement flow before submit. |
 
-## 5. Status Values
+## 6. Status Values
 
 ```text
 open

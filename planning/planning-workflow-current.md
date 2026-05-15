@@ -1,14 +1,22 @@
 # Current Planning Workflow
 
-Status: current workflow
+Status: current workflow  
+Scope: current implementation baseline, planning gates and next work direction
 
 ## 1. Current Point
 
 ```text
-Client/server contract artifact infrastructure is now the current first-stage baseline.
+OpenAPI structural contract + generated semantic constants are first-stage/baseline support.
 
-OpenAPI structural contract + generated semantic constants are available through explicit generation/check commands.
-The next work should consume those artifacts through draft-driven L1/client slice planning, not reimplement the artifact infrastructure.
+L1 backend/API/persistence flow is implemented for the current core backend slices:
+- register client account;
+- login client account;
+- current user;
+- logout;
+- create individual applicant party;
+- create connection request.
+
+The next work should consume these implemented backend contracts through draft-driven client sidecar planning, not reimplement backend/API infrastructure.
 ```
 
 ## 2. Current Contract Artifact Baseline
@@ -20,10 +28,22 @@ Repo-grounded baseline:
 | OpenAPI artifact | `EnergyManagement.Tools generate-openapi`, `Shared/openapi.json`, `energymanagement.client/src/shared/api/generated/openapi-types.ts`, root `generate/check:api` scripts | first-stage implemented | Use and check existing artifacts; do not redo infrastructure unless explicitly in scope |
 | Generated constants | `EnergyManagement.Tools generate-client-constants`, `Shared/constants.json`, `Shared/errorcodes.json`, Tools checker/tests | implemented baseline | Use generated semantic constants; add new constants through the existing generator/check flow |
 | L1 endpoint metadata | `EnergyManagement.Server/L1/Controllers/L1Controller.cs` exposes L1 request/response DTOs and ProblemDetails statuses | first-stage implemented | Keep metadata updated when API changes |
+| L1 generated TS types | `energymanagement.client/src/shared/api/generated/openapi-types.ts` includes L1 auth/applicant/request paths and DTOs | support baseline available | Client slices should consume generated types when concrete client work starts |
 | Client API wrappers | Thin handwritten wrappers are still the expected first-stage strategy, but migration is per client slice | planned per slice | Use generated OpenAPI types when concrete client work starts |
 | E2E auth baseline | Root Playwright config and `tests/e2e/auth` register/login coverage | implemented baseline | Protect current legacy-auth E2E unless L1 auth consolidation is explicitly in scope |
 
-## 3. Contract Artifact Gate For New Work
+## 3. Current L1 Backend Baseline
+
+| Backend area | Current evidence | Status | Client/UI status | Next planning action |
+|---|---|---|---|---|
+| Register client account | `POST /api/l1/auth/register`; `L1RegisterClientAccountDto(email,password)`; `L1RegisterClientAccountResponse(AccountId,Email)`; integration tests for creation/duplicate email | implemented backend/API/persistence | Registration page, password confirmation UI and auto-login decision are not completed client flows | Use `SL-ACC-001`; plan registration/auth client sidecar when concrete client work starts |
+| Login client account | `POST /api/l1/auth/login`; command handler validates credentials/activation, signs L1 cookie, returns current-user shape; tests cover success and safe invalid failures | implemented backend/API/session | Login form/session state integration is not completed client flow | Use `SL-AUTH-001`; start auth/session client baseline before protected UI flows |
+| Current user | `GET /api/l1/auth/current-user`; L1 marker/current account lookup; tests cover unauth, non-existing account, legacy-shaped cookie rejection and valid marker | implemented backend/API/session query | Client bootstrapping/route guard/current user cache is not completed client flow | Use `SL-AUTH-002`; plan client auth bootstrap with login/logout |
+| Logout | `POST /api/l1/auth/logout`; clears cookie and returns 204; test confirms current-user becomes 401 | implemented backend/API/session | Logout UI/session invalidation is not completed client flow | Use `SL-AUTH-003`; treat as unsafe browser command for future CSRF planning |
+| Create individual applicant party | protected `POST /api/l1/applicant-parties/individual`; account id derived from L1 cookie; response ids; integration tests | implemented backend/API/persistence | Applicant form UI and field-level ProblemDetails mapping are not completed client flows | Use `SL-APPL-001`; plan after auth/session baseline |
+| Create connection request | protected `POST /api/l1/requests`; DTO `details + address`; server-selected current active applicant; no required response body; integration/domain tests | implemented backend/API/persistence | Request creation UI, My Requests read context and E2E browser flow are not completed client flows | Use `SL-REQ-001`; plan after applicant data UI |
+
+## 4. Contract Artifact Gate For New Work
 
 Before implementing or updating a client/server slice:
 
@@ -48,14 +68,14 @@ dotnet run --project EnergyManagement.Tools -- generate-client-constants --out S
 dotnet run --project EnergyManagement.Tools -- generate-client-constants --out Shared --check
 ```
 
-## 4. OpenAPI Gate
+## 5. OpenAPI Gate
 
 For any API endpoint used by client:
 
 ```text
 - endpoint/method is documented;
 - request DTO is documented;
-- response DTO is documented;
+- response DTO or absence of required body is documented;
 - success status is documented;
 - ProblemDetails statuses are documented;
 - endpoint contract status is explicit;
@@ -64,7 +84,9 @@ For any API endpoint used by client:
 
 Do not treat missing client wrapper migration as missing OpenAPI infrastructure.
 
-## 5. Constants Gate
+Do not treat generated TypeScript types as implemented feature UI.
+
+## 6. Constants Gate
 
 When a slice introduces client-facing constants/error codes:
 
@@ -82,7 +104,7 @@ When a slice introduces client-facing constants/error codes:
 8. Run generate-client-constants --check.
 ```
 
-## 6. Cross-Cutting / Helper Slice Workflow
+## 7. Cross-Cutting / Helper Slice Workflow
 
 Cross-cutting/helper slices follow the same planning shape as business slices:
 
@@ -97,7 +119,7 @@ source requirements
 
 If current repo evidence shows a cross-cutting slice is now implemented, update its status table rather than leaving all coverage as planned.
 
-## 7. CSRF Gate
+## 8. CSRF Gate
 
 When planning browser unsafe API requests or auth/session flow:
 
@@ -109,9 +131,9 @@ When planning browser unsafe API requests or auth/session flow:
 5. Do not implement antiforgery mechanics separately inside business slices.
 ```
 
-Current known status remains docs/planning unless repo evidence later shows antiforgery implementation.
+Current known status remains docs/planning/future hardening unless repo evidence later shows antiforgery implementation.
 
-## 8. Testing Workflow Gate
+## 9. Testing Workflow Gate
 
 When planning or implementing a slice, classify test coverage by layer:
 
@@ -131,7 +153,38 @@ planning/testing/e2e-testing-workflow.md
 
 Do not migrate the existing auth E2E from legacy AuthController endpoints to L1 unless auth consolidation is explicitly in scope.
 
-## 9. Implementation Flow Detail Rule
+For L1 applicant/request browser E2E, wait until the corresponding client feature UI/read flow exists.
+
+## 10. Current Client Work Order
+
+Recommended order for the next concrete client work:
+
+```text
+1. Auth/session client baseline:
+   - login;
+   - current-user bootstrapping;
+   - logout;
+   - session state/route guard direction.
+
+2. Applicant Data UI:
+   - individual applicant form;
+   - ProblemDetails field/global mapping;
+   - success handling.
+
+3. Request Creation UI:
+   - current active applicant context display;
+   - request details/address form;
+   - command success convention;
+   - ProblemDetails display.
+
+4. My Requests read/list/detail:
+   - target read model;
+   - route/navigation target for request creation success.
+
+5. Browser E2E happy paths after client and read flows exist.
+```
+
+## 11. Implementation Flow Detail Rule
 
 Implementation flow must not become a full code listing.
 

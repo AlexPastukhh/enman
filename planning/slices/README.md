@@ -70,13 +70,29 @@ They are examples only and are not current implementation evidence unless copied
 
 ## 4. Current Backend Slice Files
 
+Current implemented L1 backend/API/persistence/session slice docs:
+
 ```text
 planning/slices/SL-ACC-001-register-client-account.md
+planning/slices/SL-AUTH-001-login-client-account.md
+planning/slices/SL-AUTH-002-current-user.md
+planning/slices/SL-AUTH-003-logout.md
 planning/slices/SL-APPL-001-create-individual-applicant-party.md
 planning/slices/SL-REQ-001-create-connection-request.md
 ```
 
-These files are current backend/API/persistence slice docs and should follow the full backend slice flow rule.
+Status summary:
+
+| Slice | Backend/API status | Client/UI status |
+|---|---|---|
+| `SL-ACC-001` | implemented register endpoint, persistence and tests | registration UI/password confirmation/auto-login decision are future client/auth work |
+| `SL-AUTH-001` | implemented login endpoint, L1 cookie session and tests | login client form/session state is future client work |
+| `SL-AUTH-002` | implemented current-user endpoint/query/session validation and tests | current-user bootstrap/route guard is future client work |
+| `SL-AUTH-003` | implemented logout endpoint/session clearing and tests | logout UI/cache/navigation/CSRF handling is future client work |
+| `SL-APPL-001` | implemented applicant create endpoint, persistence and tests | applicant data form UI and ProblemDetails mapping are future client work |
+| `SL-REQ-001` | implemented request create endpoint, server-selected applicant, no required body and tests | request form UI, My Requests read screens and E2E are future client/read work |
+
+These files are current backend/API/persistence/session slice docs and should follow the full backend slice flow rule.
 
 ## 5. Slice Support Files
 
@@ -199,6 +215,10 @@ planning/api/
 
 Use them before client slice implementation.
 
+For current L1 client work, generated OpenAPI TypeScript types already include L1 auth/applicant/request paths and DTOs.
+
+Generated types are support artifacts, not completed feature UI.
+
 ## 11. Shared Notes
 
 Use:
@@ -216,6 +236,15 @@ Testing workflow lives in:
 ```text
 planning/testing/
 ```
+
+Current L1 backend slices are covered primarily by:
+
+```text
+Tests.EnergyManagement/Integration/L1/L1SliceIntegrationTests.cs
+Tests.EnergyManagement/Domain/**
+```
+
+Browser E2E for applicant/request flows should wait until concrete client/read UI exists.
 
 ## 13. Parent Business Slice Files
 
@@ -248,3 +277,13 @@ It owns detailed client implementation planning and client/component tests.
 It should include E2E coverage only for cross-layer behavior that truly needs browser-client-server wiring.
 
 Client sidecars also follow the local/global question sync rule.
+
+Recommended next client order:
+
+```text
+L1 auth/session client baseline
+-> Applicant Data UI
+-> Request Creation UI
+-> My Requests read/list/detail
+-> Browser E2E happy paths
+```
