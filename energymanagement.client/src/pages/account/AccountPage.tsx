@@ -1,7 +1,7 @@
-import { Footer } from "../../Components/Layout/Footer";
-import { Header } from "../../Components/Layout/Header";
-import { RegisterForm } from "../../features/auth/register/ui/RegisterForm";
 import { useSession } from "../../entities/session/model/useSession";
+import { RegisterForm } from "../../features/auth/register/ui/RegisterForm";
+import { Footer } from "../../shared/ui/layout/Footer";
+import { Header } from "../../shared/ui/layout/Header";
 
 const AccountPage = () => {
   const session = useSession();

@@ -1,5 +1,5 @@
-import { Footer } from "../../Components/Layout/Footer";
-import { Header } from "../../Components/Layout/Header";
+import { Footer } from "../../shared/ui/layout/Footer";
+import { Header } from "../../shared/ui/layout/Header";
 
 const HomePage = () => (
   <>
@@ -10,4 +10,3 @@ const HomePage = () => (
 );
 
 export default HomePage;
-

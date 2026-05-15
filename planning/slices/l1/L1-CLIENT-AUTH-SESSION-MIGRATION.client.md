@@ -1,6 +1,6 @@
 # L1-CLIENT-AUTH-SESSION-MIGRATION.client - Early Short Draft
 
-Status: implementation started; legacy auth/session leftovers removed
+Status: implementation started; legacy auth/session leftovers removed; layout moved to shared UI
 Slice type: client sidecar / client migration slice
 Scope: existing register, login, current-user/session, logout API helper, and route/provider wiring
 Source scenario/UI behavior items: Source BI TBD labels are temporary and must be replaced when authoritative source behavior IDs are identified.
@@ -56,7 +56,7 @@ Mounts providers and router
         |
         v
 [pages/register | pages/login | pages/account]
-Composes layout and feature form or temporary account shell
+Composes shared layout and feature form or temporary account shell
         |
         v
 [features/auth/register | features/auth/login]
@@ -65,6 +65,10 @@ Owns form schema, DTO mapping, submit behavior, root command error display
         v
 [shared/ui/form]
 Provides reusable form primitives and shared form styling
+        |
+        v
+[shared/ui/layout]
+Provides reusable layout primitives used by pages
         |
         v
 [shared/api/l1AuthApi.ts]
@@ -125,11 +129,11 @@ Status: decided
 
 Register form keeps password confirmation as client-only validation state. The L1 API request sends only `email` and `password`.
 
-### D-CLIENT-AUTH-002 - Legacy route constants remain outside migrated flows
+### D-CLIENT-AUTH-002 - Legacy route constants were removed from the client
 
 Status: decided
 
-`globConstants.ts` and legacy `constants.Routes` may remain for unmigrated code. Migrated auth/session flows use `shared/config/clientRoutes.ts` and `shared/api/l1ApiPaths.ts`.
+`globConstants.ts` and legacy `constants.Routes` were removed after the remaining consumers were identified as part of the unreachable legacy chain. Migrated auth/session flows use `shared/config/clientRoutes.ts`, `shared/api/l1ApiPaths.ts`, generated constants, and entity/feature-local query keys.
 
 ### D-CLIENT-AUTH-003 - Root command errors are feature-owned
 
@@ -149,23 +153,17 @@ Status: decided
 
 Reusable form primitives live under `shared/ui/form`. Shared form CSS lives next to those primitives. Register-specific form placement styling lives in `features/auth/register/ui/registerForm.css`.
 
-### D-CLIENT-AUTH-006 - globConstants removed
+### D-CLIENT-AUTH-006 - Shared layout primitives moved to shared UI
 
 Status: decided
 
-`globConstants.ts` was deleted after the remaining consumers were identified as part of the unreachable legacy chain. Current client routes live in `shared/config/clientRoutes.ts`, generated constants live in `shared/constants/generatedConstants.ts`, API paths live in `shared/api/l1ApiPaths.ts`, and session query keys live in `entities/session/model/sessionKeys.ts`.
+Reusable layout primitives live under `shared/ui/layout`. Active pages import `Header`, `Footer`, and related layout primitives from the shared layer instead of `Components/Layout`.
 
 ### D-CLIENT-AUTH-007 - AccountPage remains a temporary L1 shell
 
 Status: decided
 
 `pages/account/AccountPage.tsx` remains a simple L1 account shell that reads the migrated session entity and shows basic session output. Applicant party UI belongs to a future L1 applicant party client sidecar and is not implemented here.
-
-### Q-CLIENT-AUTH-005 - Should layout components move out of `Components/Layout`?
-
-Status: open / follow-up
-
-Current note: active pages still import `Components/Layout/Header`, `Footer`, and related layout pieces. They are retained for now and should be moved to `shared/ui/layout` in a separate layout cleanup.
 
 ## 4. Behavior Coverage
 
@@ -179,6 +177,7 @@ Behavior Coverage is not Test Coverage. This table explains how the implementati
 | Source BI TBD: server validation errors are shown as field/root errors | `shared/api/problemDetails.ts` reads generated ProblemDetails constants and maps server validation errors through feature field maps. |
 | Source BI TBD: root form errors are visible without page coupling | `RegisterForm` and `LoginForm` render `errors.root?.message` inside the feature form with `role="alert"`. |
 | Source BI TBD: reusable form UI follows shared placement | `shared/ui/form` owns reusable form primitives and shared form CSS; auth features import form primitives from the shared layer. |
+| Source BI TBD: reusable layout UI follows shared placement | `shared/ui/layout` owns reusable layout primitives; active pages import layout primitives from the shared layer. |
 | Source BI TBD: L1 current-user contract issues are not silently hidden | `mapCurrentUserToSession` throws when authenticated current-user responses miss required fields. |
 | Source BI TBD: migrated auth/session route wiring is isolated from legacy client code | Legacy `views`, `hooks`, `MutationFns`, `QueryFns`, `Utils`, and `globConstants.ts` were removed after import scan. Active route wiring uses `app/pages/features/entities/shared`. |
 | Source BI TBD: account route is present but does not start future applicant work | `AccountPage` stays a temporary session-backed shell and does not implement applicant party UI. |
@@ -204,10 +203,11 @@ Behavior Coverage is not Test Coverage. This table explains how the implementati
 - Source BI TBD: server validation errors are shown as field/root errors.
 - Source BI TBD: root form errors are visible without page coupling.
 - Source BI TBD: reusable form UI follows shared placement.
+- Source BI TBD: reusable layout UI follows shared placement.
 - Source BI TBD: L1 current-user contract issues are not silently hidden.
 - Source BI TBD: migrated auth/session route wiring is isolated from legacy client code.
 - Source BI TBD: account route is present but does not start future applicant work.
 
 ## 7. Next Step
 
-Replace temporary `Source BI TBD` labels with authoritative behavior IDs, then move retained layout components from `Components/Layout` to `shared/ui/layout` in a separate cleanup. Future applicant party UI should get its own L1 client sidecar.
+Replace temporary `Source BI TBD` labels with authoritative behavior IDs. Future applicant party UI should get its own L1 client sidecar.

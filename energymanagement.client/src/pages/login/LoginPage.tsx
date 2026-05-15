@@ -1,6 +1,6 @@
-import { Footer } from "../../Components/Layout/Footer";
-import { Header } from "../../Components/Layout/Header";
 import { LoginForm } from "../../features/auth/login/ui/LoginForm";
+import { Footer } from "../../shared/ui/layout/Footer";
+import { Header } from "../../shared/ui/layout/Header";
 
 export const LoginPage = () => {
   return (
