@@ -1,4 +1,4 @@
-import { errorCodes } from "../../../globConstants";
+import { errorCodes } from "../../../shared/constants/generatedConstants";
 
 export class ValidTestData {
   static validEmail = "test@example.com" as const;

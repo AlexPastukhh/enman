@@ -1,6 +1,6 @@
 import type { Screen } from "@testing-library/react";
 import { SUTFormField } from "./BaseTest";
-import { registerConst } from "../../../views/RegisterView/registerConst";
+import { registerConst } from "../../../features/auth/register/ui/registerConst";
 
 export class RegisterTestComp {
   private _emailField: SUTFormField;

@@ -6,7 +6,7 @@ import { HomeNavLink } from "./HomeNavLink";
 import { NavButtonHollow } from "./NavButtonHollow";
 import { NavButtonPrimary } from "./NavButtonPrimary";
 import { HeaderNavLink } from "./HeaderNavLink";
-import { useSession } from "../../hooks/useSession";
+import { useSession } from "../../entities/session/model/useSession";
 
 export const Header = () =>
 {

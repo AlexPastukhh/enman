@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { EyeIcon, EyeIconSlash } from "../../assets/icons/svgr_barrel";
-import type { FormRegister } from "../../hooks/useFormRegisterDebounce";
-import type { FieldError } from "react-hook-form";
+import type { DebouncedFormRegister } from "../../shared/form/formTypes";
+import type { FieldError, FieldValues } from "react-hook-form";
 import { FormFieldBase } from "./FormFieldBase";
 import { formConst } from "./formConst";
 
@@ -14,7 +14,7 @@ export const Password = ({
   passwordErrorId: passworErrorId,
   error,
 }: {
-  registerFormFn: FormRegister;
+  registerFormFn: DebouncedFormRegister<FieldValues>;
   fieldName: string;
   labelText: string;
   placeHolder: string;

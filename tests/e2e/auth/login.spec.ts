@@ -6,11 +6,10 @@ import { uniqueEmail, validPassword } from "../support/testData";
 test("user logs in through real client-server flow", async ({ page, request }) => {
   const email = uniqueEmail("login");
 
-  const setupResponse = await request.post("/api/auth/registerIndividual", {
+  const setupResponse = await request.post("/api/l1/auth/register", {
     data: {
       email,
       password: validPassword,
-      passwordConfirmation: validPassword,
     },
   });
   expect(setupResponse.ok()).toBeTruthy();
@@ -22,7 +21,7 @@ test("user logs in through real client-server flow", async ({ page, request }) =
   const loginResponsePromise = waitForApiResponse(
     page,
     "POST",
-    "/api/auth/login"
+    "/api/l1/auth/login"
   );
 
   await loginPage.login({

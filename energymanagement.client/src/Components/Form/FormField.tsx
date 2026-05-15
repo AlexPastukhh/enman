@@ -1,5 +1,5 @@
-import type { FieldError } from "react-hook-form";
-import type { FormRegister } from "../../hooks/useFormRegisterDebounce";
+import type { FieldError, FieldValues } from "react-hook-form";
+import type { DebouncedFormRegister } from "../../shared/form/formTypes";
 import { FormFieldBase } from "./FormFieldBase";
 
 export const FormField = ({
@@ -11,7 +11,7 @@ export const FormField = ({
   labelText,
   placeHolder,
 }: {
-  registerFormFn: FormRegister;
+  registerFormFn: DebouncedFormRegister<FieldValues>;
   fieldName: string;
   inputId: string;
   errorId: string;

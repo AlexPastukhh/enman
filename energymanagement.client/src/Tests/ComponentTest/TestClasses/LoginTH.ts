@@ -1,5 +1,5 @@
 import type { Screen } from "@testing-library/react";
-import { loginConst } from "../../../views/LoginView/loginConst";
+import { loginConst } from "../../../features/auth/login/ui/loginConst";
 import { SUTFormField } from "./BaseTest";
 
 export class LoginTestComp {

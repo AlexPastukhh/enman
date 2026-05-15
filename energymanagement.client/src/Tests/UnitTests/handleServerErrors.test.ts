@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import { errorCodes, generalConstants, ServerErrorFieldNames } from "../../globConstants";
+import { errorCodes } from "../../shared/constants/generatedConstants";
+import { generalConstants, ServerErrorFieldNames } from "../../globConstants";
 import { handleErrorResponse } from "../../Utils/handleErrorResponse";
 import { getServerErrorsIfAny, isProblemDetails } from "../../Utils/problemDetailsFactory";
 import { parseServerErrorsForSetting } from "../../Utils/setErrorObjectUtils";

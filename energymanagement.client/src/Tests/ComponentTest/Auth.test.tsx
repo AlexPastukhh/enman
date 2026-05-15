@@ -19,13 +19,13 @@ const { mockedLogin, mockedRegisterInd } = vi.hoisted(() => ({
   mockedRegisterInd: vi.fn(),
 }));
 
-vi.mock("../../MutationFns/login", () => ({
-  login: mockedLogin,
+vi.mock("../../features/auth/login/api/loginClientAccount", () => ({
+  loginClientAccount: mockedLogin,
   __esModule: true,
 }));
 
-vi.mock("../../MutationFns/registerIndClient", () => ({
-  registerIndClient: mockedRegisterInd,
+vi.mock("../../features/auth/register/api/registerClientAccount", () => ({
+  registerClientAccount: mockedRegisterInd,
   __esModule: true,
 }));
 
@@ -34,9 +34,10 @@ beforeEach(() => {
   mockedRegisterInd.mockReset();
 });
 
-import { Login } from "../../views/LoginView/Login";
-import { Register } from "../../views/RegisterView/Register";
-import { ClientRoutes, getMessageFromErrorCode } from "../../globConstants";
+import { LoginForm } from "../../features/auth/login/ui/LoginForm";
+import { RegisterForm } from "../../features/auth/register/ui/RegisterForm";
+import { clientRoutes } from "../../shared/config/clientRoutes";
+import { getMessageFromErrorCode } from "../../shared/errors/clientErrorMessages";
 import { InvalidTestData, ValidTestData } from "./TestClasses/TestData";
 import { LoginTestComp } from "./TestClasses/LoginTH";
 import { RegisterTestComp } from "./TestClasses/RegisterTH";
@@ -76,12 +77,12 @@ const setUpRegisterTest = (
   const { user, screen } = renderComponentRoute(
     [
       createTestRoute(
-        ClientRoutes.Register.Path,
-        <Register setRootError={vi.fn()} />,
+        clientRoutes.register,
+        <RegisterForm setRootError={vi.fn()} />,
       ),
-      createTestRoute(ClientRoutes.Login.Path, <div>Login Page</div>),
+      createTestRoute(clientRoutes.login, <div>Login Page</div>),
     ],
-    ClientRoutes.Register.Path,
+    clientRoutes.register,
     userOptions,
   );
 
@@ -96,10 +97,10 @@ const setUpLoginTest = (
 } => {
   const { user, screen } = renderComponentRoute(
     [
-      createTestRoute(ClientRoutes.Login.Path, <Login setRootError={vi.fn()} />),
-      createTestRoute(ClientRoutes.Home.Path, <div>Home Page</div>),
+      createTestRoute(clientRoutes.login, <LoginForm setRootError={vi.fn()} />),
+      createTestRoute(clientRoutes.home, <div>Home Page</div>),
     ],
-    ClientRoutes.Login.Path,
+    clientRoutes.login,
     userOptions,
   );
 
