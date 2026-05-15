@@ -1,8 +1,4 @@
-.registerViewContent{
-    align-items: center;
-}
 .registerForm{
   margin-top: calc(var(--header-height) / 2);
-  
 }
 

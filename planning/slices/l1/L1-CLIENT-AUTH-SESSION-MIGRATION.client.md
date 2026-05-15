@@ -1,6 +1,6 @@
 # L1-CLIENT-AUTH-SESSION-MIGRATION.client - Early Short Draft
 
-Status: implementation started; shared form/root-error cleanup completed
+Status: implementation started; legacy auth/session leftovers removed
 Slice type: client sidecar / client migration slice
 Scope: existing register, login, current-user/session, logout API helper, and route/provider wiring
 Source scenario/UI behavior items: Source BI TBD labels are temporary and must be replaced when authoritative source behavior IDs are identified.
@@ -55,8 +55,8 @@ Refreshes session and navigates Home
 Mounts providers and router
         |
         v
-[pages/register | pages/login]
-Composes layout and feature form
+[pages/register | pages/login | pages/account]
+Composes layout and feature form or temporary account shell
         |
         v
 [features/auth/register | features/auth/login]
@@ -89,19 +89,23 @@ Current note: this sidecar uses temporary `Source BI TBD` labels. They must be r
 
 ### Q-CLIENT-AUTH-002 - When should legacy views/hooks/MutationFns/QueryFns be deleted?
 
-Status: open / follow-up
+Status: decided
 
-Current note: migrated route wiring no longer uses old register/login/session modules. Legacy auth/session files still exist and are internally connected through old views and hooks:
+Decision: the unreachable legacy auth/session chain was deleted after import scan confirmed active app/tests no longer use it.
 
 ```text
-views/RegisterView/Register.tsx -> hooks/useRegister.tsx -> MutationFns/registerIndClient.ts -> globConstants.ServerRoutes
-views/LoginView/Login.tsx -> hooks/useLogin.tsx -> MutationFns/login.ts -> globConstants.ServerRoutes
-views/AccountView/ProvideIndividualInfo.tsx -> hooks/useLogin.tsx
-views/AccountView/AccountView.tsx -> hooks/useSession.tsx
-QueryFns/getUser.ts -> hooks/useSession.tsx -> globConstants.ServerRoutes
+Deleted:
+- src/views/**
+- src/hooks/**
+- src/MutationFns/**
+- src/QueryFns/**
+- src/Utils/**
+- src/globConstants.ts
+- src/Tests/UnitTests/handleServerErrors.test.ts
+- src/Components/General/TextWrapper.tsx
 ```
 
-These files are not used by the migrated app router, but they were left in place in this pass to avoid deleting adjacent legacy account/provide-individual code without a dedicated removal task.
+The active app route wiring now uses only `app`, `pages`, `features`, `entities`, and `shared` for auth/session behavior.
 
 ### Q-CLIENT-AUTH-003 - Should session mapper fail hard on missing required current-user fields?
 
@@ -145,6 +149,24 @@ Status: decided
 
 Reusable form primitives live under `shared/ui/form`. Shared form CSS lives next to those primitives. Register-specific form placement styling lives in `features/auth/register/ui/registerForm.css`.
 
+### D-CLIENT-AUTH-006 - globConstants removed
+
+Status: decided
+
+`globConstants.ts` was deleted after the remaining consumers were identified as part of the unreachable legacy chain. Current client routes live in `shared/config/clientRoutes.ts`, generated constants live in `shared/constants/generatedConstants.ts`, API paths live in `shared/api/l1ApiPaths.ts`, and session query keys live in `entities/session/model/sessionKeys.ts`.
+
+### D-CLIENT-AUTH-007 - AccountPage remains a temporary L1 shell
+
+Status: decided
+
+`pages/account/AccountPage.tsx` remains a simple L1 account shell that reads the migrated session entity and shows basic session output. Applicant party UI belongs to a future L1 applicant party client sidecar and is not implemented here.
+
+### Q-CLIENT-AUTH-005 - Should layout components move out of `Components/Layout`?
+
+Status: open / follow-up
+
+Current note: active pages still import `Components/Layout/Header`, `Footer`, and related layout pieces. They are retained for now and should be moved to `shared/ui/layout` in a separate layout cleanup.
+
 ## 4. Behavior Coverage
 
 Behavior Coverage is not Test Coverage. This table explains how the implementation covers the intended behavior. Verification is listed separately.
@@ -158,6 +180,8 @@ Behavior Coverage is not Test Coverage. This table explains how the implementati
 | Source BI TBD: root form errors are visible without page coupling | `RegisterForm` and `LoginForm` render `errors.root?.message` inside the feature form with `role="alert"`. |
 | Source BI TBD: reusable form UI follows shared placement | `shared/ui/form` owns reusable form primitives and shared form CSS; auth features import form primitives from the shared layer. |
 | Source BI TBD: L1 current-user contract issues are not silently hidden | `mapCurrentUserToSession` throws when authenticated current-user responses miss required fields. |
+| Source BI TBD: migrated auth/session route wiring is isolated from legacy client code | Legacy `views`, `hooks`, `MutationFns`, `QueryFns`, `Utils`, and `globConstants.ts` were removed after import scan. Active route wiring uses `app/pages/features/entities/shared`. |
+| Source BI TBD: account route is present but does not start future applicant work | `AccountPage` stays a temporary session-backed shell and does not implement applicant party UI. |
 
 ## 5. Client / Component / E2E Verification Plan
 
@@ -170,6 +194,7 @@ Behavior Coverage is not Test Coverage. This table explains how the implementati
 | E2E register | Browser submits the register form and waits for real `POST /api/l1/auth/register`. |
 | E2E login | Test setup creates an L1 account, browser submits login, and waits for real `POST /api/l1/auth/login`. |
 | API contract | Run `npm.cmd run check:api` to confirm OpenAPI/types are current. |
+| Legacy cleanup | Run import scans for legacy names and verify build/tests/E2E after deletion. |
 
 ## 6. Covered Scenario / UI Behavior Items
 
@@ -180,7 +205,9 @@ Behavior Coverage is not Test Coverage. This table explains how the implementati
 - Source BI TBD: root form errors are visible without page coupling.
 - Source BI TBD: reusable form UI follows shared placement.
 - Source BI TBD: L1 current-user contract issues are not silently hidden.
+- Source BI TBD: migrated auth/session route wiring is isolated from legacy client code.
+- Source BI TBD: account route is present but does not start future applicant work.
 
 ## 7. Next Step
 
-Replace temporary `Source BI TBD` labels with authoritative behavior IDs, then run a focused legacy removal task for unused `views/*`, `hooks/*`, `MutationFns/*`, `QueryFns/*`, and the remaining old `Utils/*` / `globConstants.ts` consumers.
+Replace temporary `Source BI TBD` labels with authoritative behavior IDs, then move retained layout components from `Components/Layout` to `shared/ui/layout` in a separate cleanup. Future applicant party UI should get its own L1 client sidecar.
