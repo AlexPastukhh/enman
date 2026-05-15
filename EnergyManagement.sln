@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.EnergyManagement", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.EnergyManagement", "Tests.EnergyManagement\Tests.EnergyManagement.csproj", "{44D98551-F9F9-4BBA-99F1-929DD401A6C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnergyManagement.Tools", "EnergyManagement.Tools\EnergyManagement.Tools.csproj", "{10EB4533-CDB6-4F7D-96F1-EF0C5E310499}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnergyManagement.Tools.Tests", "EnergyManagement.Tools.Tests\EnergyManagement.Tools.Tests.csproj", "{18F6A201-6A21-421E-BB6B-2A58587BA72F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,14 @@ Global
 		{44D98551-F9F9-4BBA-99F1-929DD401A6C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44D98551-F9F9-4BBA-99F1-929DD401A6C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44D98551-F9F9-4BBA-99F1-929DD401A6C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10EB4533-CDB6-4F7D-96F1-EF0C5E310499}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10EB4533-CDB6-4F7D-96F1-EF0C5E310499}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10EB4533-CDB6-4F7D-96F1-EF0C5E310499}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10EB4533-CDB6-4F7D-96F1-EF0C5E310499}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18F6A201-6A21-421E-BB6B-2A58587BA72F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18F6A201-6A21-421E-BB6B-2A58587BA72F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18F6A201-6A21-421E-BB6B-2A58587BA72F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18F6A201-6A21-421E-BB6B-2A58587BA72F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
