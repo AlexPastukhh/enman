@@ -1,4 +1,5 @@
 using EnergyManagement.Tools.ClientConstants;
+using EnergyManagement.Tools.OpenApi;
 using EnergyManagement.Tools.TestDatabase;
 
 if (args.Length == 0)
@@ -16,6 +17,12 @@ return args[0] switch
         new ClientConstantsJsonSerializer(),
         new ClientConstantsWriter(),
         new ClientConstantsChecker()).ExecuteAsync(args),
+    "generate-openapi" => await new GenerateOpenApiCommand(
+        new OpenApiServerProcessRunner(),
+        new OpenApiDocumentFetcher(),
+        new OpenApiJsonFormatter(),
+        new OpenApiArtifactWriter(),
+        new OpenApiArtifactChecker()).ExecuteAsync(args),
     "reset-test-db" => await new ResetTestDatabaseCommand().ExecuteAsync(args),
     _ => UnknownCommand(args[0])
 };
@@ -31,5 +38,6 @@ static void WriteUsage(TextWriter writer)
 {
     writer.WriteLine("Usage:");
     writer.WriteLine("  dotnet run --project EnergyManagement.Tools -- generate-client-constants --out <directory> [--check]");
+    writer.WriteLine("  dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json [--check]");
     writer.WriteLine("  dotnet run --project EnergyManagement.Tools -- reset-test-db [--connection <connection string>]");
 }

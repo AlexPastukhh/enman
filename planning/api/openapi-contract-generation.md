@@ -1,6 +1,6 @@
 # OpenAPI Contract Generation
 
-Status: current target direction  
+Status: current implemented workflow
 Scope: OpenAPI as structural API contract, Shared/openapi.json and generated TypeScript DTO/types
 
 ## 1. Purpose
@@ -30,7 +30,7 @@ Client local code = UI messages and behavior mapping.
 
 ## 3. Current Server Prerequisites
 
-Current server already has the basic Swagger setup direction:
+Current server already has:
 
 ```text
 AddEndpointsApiExplorer()
@@ -57,86 +57,57 @@ For client-facing endpoints:
 - no accidental internal DTO exposure.
 ```
 
-Example direction:
-
-```csharp
-[ProducesResponseType(typeof(L1RegisterClientAccountResponse), StatusCodes.Status200OK)]
-[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-```
-
-Protected endpoint direction:
-
-```csharp
-[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
-```
-
 ## 5. Public Contract Endpoint Classification
 
-Before generation, classify endpoints:
+Current classification:
 
 ```text
-target L1 contract
-legacy/current support
-temporary compatibility
-internal/not client-facing
-```
+target L1 contract:
+  POST /api/l1/auth/register
+  POST /api/l1/applicant-parties/individual
+  POST /api/l1/requests
 
-Current planning direction:
+legacy/current auth support:
+  AuthController endpoints under /api/auth
 
-```text
-L1 endpoints are target contract for new L1 slices.
-Legacy AuthController endpoints remain current/legacy auth support until migration.
+temporary compatibility:
+  existing route constants in Shared/constants.json while the client migration is incomplete
 ```
 
 Do not remove legacy routes from client constants until the client has moved away from them.
 
-## 6. Shared/openapi.json Generation Options
+## 6. Shared/openapi.json Generation
 
-### Option A — running server
-
-```bash
-dotnet run --project EnergyManagement.Server/EnergyManagement.Server.csproj
-curl -k https://localhost:7250/swagger/v1/swagger.json -o Shared/openapi.json
-```
-
-Pros:
-
-```text
-simple; matches runtime.
-```
-
-Cons:
-
-```text
-requires running server; weaker for check mode/CI.
-```
-
-### Option B — Swashbuckle CLI
+Current command:
 
 ```bash
-dotnet tool install Swashbuckle.AspNetCore.Cli
-dotnet build EnergyManagement.Server/EnergyManagement.Server.csproj
+dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
+```
+
+Check mode:
+
+```bash
+dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check
+```
+
+The tool:
+
+```text
+- starts the backend with --no-launch-profile;
+- does not start frontend/Vite;
+- uses the shared TestEnergyManagement LocalDB connection string;
+- fetches /swagger/v1/swagger.json over development HTTPS;
+- parses and re-serializes deterministic indented JSON;
+- writes Shared/openapi.json only in write mode;
+- compares without writing in --check mode.
+```
+
+Normal server startup must not write generated OpenAPI artifacts.
+
+Swashbuckle CLI remains a possible future alternative:
+
+```bash
 dotnet swagger tofile --output Shared/openapi.json EnergyManagement.Server/bin/Debug/net8.0/EnergyManagement.Server.dll v1
-```
-
-Pros:
-
-```text
-better for generation/check pipeline.
-```
-
-Cons:
-
-```text
-may need startup/config work if app startup requires DB/secrets.
-```
-
-Current direction:
-
-```text
-Start with Option A if fastest, then move to CLI/tool command when stable.
 ```
 
 ## 7. Generated TypeScript Types
@@ -144,7 +115,13 @@ Start with Option A if fastest, then move to CLI/tool command when stable.
 First stage:
 
 ```bash
-npx openapi-typescript Shared/openapi.json -o energymanagement.client/src/shared/api/generated/openapi-types.ts
+npm --prefix energymanagement.client run generate:api-types
+```
+
+Output:
+
+```text
+energymanagement.client/src/shared/api/generated/openapi-types.ts
 ```
 
 First-stage client strategy:
@@ -171,17 +148,20 @@ Shared/openapi.json is up to date with server metadata.
 generated openapi-types.ts is up to date with Shared/openapi.json.
 ```
 
-Possible check strategy:
+Current check strategy:
 
 ```bash
-npm run generate:api
-git diff --exit-code Shared/openapi.json energymanagement.client/src/shared/api/generated/openapi-types.ts
+npm run check:api
 ```
 
-or later:
+Root scripts:
 
-```bash
-dotnet run --project EnergyManagement.Tools -- check-contracts
+```text
+npm run generate:openapi
+npm run check:openapi
+npm run generate:api-types
+npm run generate:api
+npm run check:api
 ```
 
 ## 9. Relationship To CC-API-001

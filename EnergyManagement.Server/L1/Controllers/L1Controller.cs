@@ -25,7 +25,10 @@ public sealed class L1Controller : ProjectController
         _logger = logger;
     }
 
-    [HttpPost("auth/register")]
+    [HttpPost("auth/register", Name = "L1RegisterClientAccount")]
+    [ProducesResponseType(typeof(L1RegisterClientAccountResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Register(
         [FromBody] L1RegisterClientAccountDto dto,
         CancellationToken cancellationToken)
@@ -46,7 +49,12 @@ public sealed class L1Controller : ProjectController
     }
 
     [Authorize]
-    [HttpPost("applicant-parties/individual")]
+    [HttpPost("applicant-parties/individual", Name = "L1CreateIndividualApplicantParty")]
+    [ProducesResponseType(typeof(L1CreateIndividualApplicantPartyResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateIndividualApplicantParty(
         [FromBody] L1CreateIndividualApplicantPartyDto dto,
         CancellationToken cancellationToken)
@@ -74,7 +82,12 @@ public sealed class L1Controller : ProjectController
     }
 
     [Authorize]
-    [HttpPost("requests")]
+    [HttpPost("requests", Name = "L1CreateConnectionRequest")]
+    [ProducesResponseType(typeof(L1CreateConnectionRequestResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateConnectionRequest(
         [FromBody] L1CreateConnectionRequestDto dto,
         CancellationToken cancellationToken)

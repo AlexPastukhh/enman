@@ -1,6 +1,6 @@
 # CC-API-001 — OpenAPI Contract Artifacts And Type Generation
 
-Status: implementation-ready draft  
+Status: partially implemented
 Slice type: cross-cutting slice  
 Layers: Server API metadata + Shared/openapi.json + client generated TypeScript types + checks  
 Depends on: ASP.NET Core API controllers, Swashbuckle/OpenAPI, client API layer  
@@ -530,6 +530,50 @@ Parent slice API table:
 | Q-CC-API-005 | OperationId policy? | use stable operation ids where practical. | open |
 | Q-CC-API-006 | Where should generated types live? | `energymanagement.client/src/shared/api/generated/openapi-types.ts`. | accepted direction |
 | Q-CC-API-007 | How to check stale artifacts? | generation + git diff check first; Tools command later if useful. | open |
+
+## 11.1 Current Implementation Notes
+
+Implemented first-stage workflow:
+
+```text
+dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
+dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check
+npm --prefix energymanagement.client run generate:api-types
+```
+
+Root scripts:
+
+```text
+npm run generate:openapi
+npm run check:openapi
+npm run generate:api-types
+npm run generate:api
+npm run check:api
+```
+
+Generated artifacts:
+
+```text
+Shared/openapi.json
+energymanagement.client/src/shared/api/generated/openapi-types.ts
+```
+
+Current endpoint classification:
+
+```text
+target L1 contract:
+  POST /api/l1/auth/register
+  POST /api/l1/applicant-parties/individual
+  POST /api/l1/requests
+
+legacy/current auth support:
+  AuthController endpoints under /api/auth
+
+temporary compatibility:
+  existing route constants in Shared/constants.json while the client migration is incomplete
+```
+
+Current scope is types-only generation. Thin handwritten client API wrappers are still a later migration step.
 
 ## 12. ADR Impact
 

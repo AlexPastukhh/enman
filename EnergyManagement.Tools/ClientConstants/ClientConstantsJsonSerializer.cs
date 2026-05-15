@@ -17,5 +17,8 @@ public sealed class ClientConstantsJsonSerializer
     }
 
     public string SerializeArtifact<T>(T artifact)
-        => JsonSerializer.Serialize(artifact, Options) + "\n";
+        => NormalizeLineEndings(JsonSerializer.Serialize(artifact, Options)) + "\n";
+
+    private static string NormalizeLineEndings(string content)
+        => content.Replace("\r\n", "\n", StringComparison.Ordinal);
 }
