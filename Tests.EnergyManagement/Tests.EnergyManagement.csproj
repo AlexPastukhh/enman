@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Domain.EnergyManagement\Domain.EnergyManagement.csproj" />
     <ProjectReference Include="..\EnergyManagement.Server\EnergyManagement.Server.csproj" />
+    <ProjectReference Include="..\EnergyManagement.Testing\EnergyManagement.Testing.csproj" />
   </ItemGroup>
 
   <ItemGroup>

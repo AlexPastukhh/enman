@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "test:e2e": "playwright test",
-    "test:e2e:headed": "playwright test --headed",
-    "test:e2e:ui": "playwright test --ui"
+    "test:e2e": "dotnet run --project EnergyManagement.Tools -- reset-test-db && playwright test",
+    "test:e2e:headed": "dotnet run --project EnergyManagement.Tools -- reset-test-db && playwright test --headed",
+    "test:e2e:ui": "dotnet run --project EnergyManagement.Tools -- reset-test-db && playwright test --ui"
   },
   "engines": {
     "node": ">=22.12.0",

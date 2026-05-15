@@ -1,6 +1,9 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const isCI = !!process.env.CI;
+// Keep in sync with TestDatabaseDefaults.LocalDbConnectionString.
+const testDatabaseConnectionString =
+  "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=TestEnergyManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -45,6 +48,7 @@ export default defineConfig({
       stderr: "pipe",
       env: {
         ASPNETCORE_ENVIRONMENT: "Development",
+        ConnectionStrings__ManagementDb: testDatabaseConnectionString,
       },
     },
     {

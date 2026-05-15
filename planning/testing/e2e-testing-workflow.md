@@ -202,7 +202,37 @@ Tests must not depend on:
 
 For login E2E, the existing user precondition may be created through API setup. The login behavior itself must still be tested through the UI.
 
-## 10. Server Communication Assertion
+## 10. E2E Test Database Strategy
+
+E2E uses the LocalDB test database:
+
+```text
+TestEnergyManagement
+```
+
+This is the same database target used by integration tests. The shared reset logic lives in:
+
+```text
+EnergyManagement.Testing/TestDatabase/TestDatabaseManager.cs
+```
+
+The repository E2E scripts reset the test database before Playwright starts:
+
+```bash
+dotnet run --project EnergyManagement.Tools -- reset-test-db
+```
+
+Playwright then starts the real backend process with:
+
+```text
+ConnectionStrings__ManagementDb = TestEnergyManagement LocalDB connection string
+```
+
+E2E must not use the developer database from `appsettings.json` by accident. The backend webServer environment in `playwright.config.ts` owns the test connection string for E2E.
+
+Integration tests and E2E share `TestDatabaseManager`, but they should not run concurrently against the same LocalDB database until stronger per-run isolation exists.
+
+## 11. Server Communication Assertion
 
 E2E should explicitly wait for the relevant API response:
 
@@ -216,7 +246,7 @@ const responsePromise = waitForApiResponse(
 
 Avoid broad waits such as "any POST" when a route-specific path can be used.
 
-## 11. Current Coverage
+## 12. Current Coverage
 
 Implemented:
 
@@ -231,7 +261,7 @@ Optional future coverage:
 duplicate email coarse failure, only if current UI exposes a stable coarse error surface.
 ```
 
-## 12. What Not To Test In E2E
+## 13. What Not To Test In E2E
 
 Do not expand E2E to cover:
 

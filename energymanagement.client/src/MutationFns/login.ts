@@ -9,7 +9,7 @@ export const login =async(dto: LoginDto): Promise<void>=>{
                                                 {credentials:'include'})
 
         if (response.ok) {
-            return response.json();
+            return;
         }else {
            throw await response.json();
         }

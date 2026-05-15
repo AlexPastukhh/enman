@@ -1,0 +1,134 @@
+using System.Data;
+using EnergyManagement.Server;
+using EnergyManagement.Server.L1.Persistence;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
+
+namespace EnergyManagement.Testing.TestDatabase;
+
+public sealed class TestDatabaseManager
+{
+    private readonly string _connectionString;
+
+    public TestDatabaseManager(string connectionString)
+    {
+        _connectionString = connectionString;
+    }
+
+    public async Task ResetAsync(CancellationToken cancellationToken = default)
+    {
+        await EnsureTablesCreatedAsync(cancellationToken);
+        await ClearAsync(cancellationToken);
+    }
+
+    public async Task EnsureTablesCreatedAsync(CancellationToken cancellationToken = default)
+    {
+        await EnsureDatabaseCreatedAsync(cancellationToken);
+        await EnsureAppTablesCreatedAsync(cancellationToken);
+        await EnsureL1TablesCreatedAsync(cancellationToken);
+    }
+
+    public async Task ClearAsync(CancellationToken cancellationToken = default)
+    {
+        const string query = """
+            BEGIN TRANSACTION;
+            IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL DELETE FROM dbo.L1ClientRequests;
+            IF OBJECT_ID(N'dbo.L1ApplicantParties', N'U') IS NOT NULL DELETE FROM dbo.L1ApplicantParties;
+            IF OBJECT_ID(N'dbo.L1Accounts', N'U') IS NOT NULL DELETE FROM dbo.L1Accounts;
+            IF OBJECT_ID(N'dbo.RequestReviews', N'U') IS NOT NULL DELETE FROM dbo.RequestReviews;
+            IF OBJECT_ID(N'dbo.Requests', N'U') IS NOT NULL DELETE FROM dbo.Requests;
+            IF OBJECT_ID(N'dbo.IndividualClients', N'U') IS NOT NULL DELETE FROM dbo.IndividualClients;
+            IF OBJECT_ID(N'dbo.Clients', N'U') IS NOT NULL DELETE FROM dbo.Clients;
+            IF OBJECT_ID(N'dbo.Managers', N'U') IS NOT NULL DELETE FROM dbo.Managers;
+            COMMIT TRANSACTION;
+            """;
+
+        await using var connection = new SqlConnection(_connectionString);
+        await connection.OpenAsync(cancellationToken);
+
+        await using var command = new SqlCommand(query, connection)
+        {
+            CommandType = CommandType.Text
+        };
+
+        await command.ExecuteNonQueryAsync(cancellationToken);
+    }
+
+    private async Task EnsureDatabaseCreatedAsync(CancellationToken cancellationToken)
+    {
+        var builder = new SqlConnectionStringBuilder(_connectionString);
+        var catalog = builder.InitialCatalog;
+        if (string.IsNullOrWhiteSpace(catalog))
+        {
+            throw new InvalidOperationException("The test database connection string must include an Initial Catalog.");
+        }
+
+        builder.InitialCatalog = "master";
+
+        await using var connection = new SqlConnection(builder.ConnectionString);
+        await connection.OpenAsync(cancellationToken);
+
+        var databaseName = QuoteSqlIdentifier(catalog);
+        await using var command = new SqlCommand(
+            $"IF DB_ID(@databaseName) IS NULL CREATE DATABASE {databaseName};",
+            connection);
+        command.Parameters.AddWithValue("@databaseName", catalog);
+
+        await command.ExecuteNonQueryAsync(cancellationToken);
+    }
+
+    private async Task EnsureAppTablesCreatedAsync(CancellationToken cancellationToken)
+    {
+        var clientsExists = await TableExistsAsync("Clients", cancellationToken);
+        var individualClientsExists = await TableExistsAsync("IndividualClients", cancellationToken);
+
+        if (clientsExists && individualClientsExists)
+        {
+            return;
+        }
+
+        if (clientsExists || individualClientsExists)
+        {
+            throw new InvalidOperationException(
+                "The AppDbContext test schema is partial. Expected both Clients and IndividualClients to exist before reset.");
+        }
+
+        await using var context = new AppDbContext(_connectionString);
+        var databaseCreator = context.GetService<IRelationalDatabaseCreator>();
+        await databaseCreator.CreateTablesAsync(cancellationToken);
+    }
+
+    private async Task EnsureL1TablesCreatedAsync(CancellationToken cancellationToken)
+    {
+        if (await TableExistsAsync("L1Accounts", cancellationToken))
+        {
+            return;
+        }
+
+        await using var context = new L1DbContext(_connectionString);
+        var databaseCreator = context.GetService<IRelationalDatabaseCreator>();
+        await databaseCreator.CreateTablesAsync(cancellationToken);
+    }
+
+    private async Task<bool> TableExistsAsync(string tableName, CancellationToken cancellationToken)
+    {
+        await using var connection = new SqlConnection(_connectionString);
+        await connection.OpenAsync(cancellationToken);
+
+        await using var command = new SqlCommand(
+            "SELECT CASE WHEN OBJECT_ID(@tableName, N'U') IS NULL THEN 0 ELSE 1 END",
+            connection);
+        command.Parameters.AddWithValue("@tableName", $"dbo.{tableName}");
+
+        var scalar = await command.ExecuteScalarAsync(cancellationToken)
+            ?? throw new InvalidOperationException($"Could not check {tableName} table existence.");
+
+        return (int)scalar == 1;
+    }
+
+    private static string QuoteSqlIdentifier(string value)
+    {
+        return $"[{value.Replace("]", "]]", StringComparison.Ordinal)}]";
+    }
+}
