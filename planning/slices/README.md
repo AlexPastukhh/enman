@@ -50,6 +50,14 @@ Client implementation file for a concrete business slice.
 
 Client sidecars are not created in advance. They are created or updated when concrete client work starts and then used as draft/discovery files.
 
+Current active client sidecar draft:
+
+```text
+planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
+```
+
+This sidecar is a planning draft for Applicant Data UI. It does not mean the client implementation already exists.
+
 ### Cross-cutting slice
 
 Technical/support slice with observable behavior, concern-derived behavior items, concern flow, implementation flow and tests/checks, used by multiple business slices.
@@ -89,12 +97,24 @@ Status summary:
 | `SL-AUTH-001` | implemented login endpoint, L1 cookie session and tests | login client form/session state is future client work |
 | `SL-AUTH-002` | implemented current-user endpoint/query/session validation and tests | current-user bootstrap/route guard is future client work |
 | `SL-AUTH-003` | implemented logout endpoint/session clearing and tests | logout UI/cache/navigation/CSRF handling is future client work |
-| `SL-APPL-001` | implemented applicant create endpoint, persistence and tests | applicant data form UI and ProblemDetails mapping are future client work |
+| `SL-APPL-001` | implemented applicant create endpoint, persistence and tests | client sidecar draft exists: `SL-APPL-001-create-individual-applicant-party.client.md`; implementation not completed |
 | `SL-REQ-001` | implemented request create endpoint, server-selected applicant, no required body and tests | request form UI, My Requests read screens and E2E are future client/read work |
 
 These files are current backend/API/persistence/session slice docs and should follow the full backend slice flow rule.
 
-## 5. Slice Support Files
+## 5. Current Client Sidecar Files
+
+```text
+planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
+```
+
+Current sidecar status:
+
+| Sidecar | Parent slice | Status | Notes |
+|---|---|---|---|
+| `SL-APPL-001-create-individual-applicant-party.client.md` | `SL-APPL-001` | implementation-ready client draft / not implemented | Account page applicant create UI; stable refresh depends on future `L1-APPLICANT-PARTY-READ-CURRENT` |
+
+## 6. Slice Support Files
 
 ```text
 planning/slices/draft-driven-discovery-principles.md
@@ -111,7 +131,7 @@ planning/slices/cross-cutting/README.md
 planning/slices/examples/README.md
 ```
 
-## 6. Slice Registers
+## 7. Slice Registers
 
 Use shared registers to keep local slice discoveries visible across time and chats.
 
@@ -137,7 +157,7 @@ The register makes important local questions discoverable from one place.
 
 `slice-implementation-notes-register.md` owns concrete future implementation/client/testing notes that are not yet assigned to an active slice or sidecar.
 
-## 7. Question Sync Rule
+## 8. Question Sync Rule
 
 When a local slice/client/cross-cutting file has a question that remains relevant after the local draft, mirror it into:
 
@@ -157,7 +177,7 @@ Open questions and unresolved risks should appear before accepted decisions in l
 
 If a question remains local only, state why.
 
-## 8. Examples
+## 9. Examples
 
 Use:
 
@@ -176,7 +196,7 @@ The early short example shows the valid shortened working format.
 
 The full backend slice example shows visual maps before detailed scenario/implementation flows.
 
-## 9. Cross-Cutting / Helper Slices
+## 10. Cross-Cutting / Helper Slices
 
 Use:
 
@@ -205,7 +225,7 @@ Cross-cutting/helper slices must have:
 - ADR impact.
 ```
 
-## 10. API Contract Support
+## 11. API Contract Support
 
 API contract docs live in:
 
@@ -219,7 +239,7 @@ For current L1 client work, generated OpenAPI TypeScript types already include L
 
 Generated types are support artifacts, not completed feature UI.
 
-## 11. Shared Notes
+## 12. Shared Notes
 
 Use:
 
@@ -229,7 +249,7 @@ planning/slices/shared/
 
 for reusable notes/helpers that do not have a full slice behavior/test flow.
 
-## 12. Testing Support
+## 13. Testing Support
 
 Testing workflow lives in:
 
@@ -246,7 +266,7 @@ Tests.EnergyManagement/Domain/**
 
 Browser E2E for applicant/request flows should wait until concrete client/read UI exists.
 
-## 13. Parent Business Slice Files
+## 14. Parent Business Slice Files
 
 Parent business slice files own:
 
@@ -268,7 +288,7 @@ Parent business slice files own:
 - link to `.client.md` sidecar when client work starts.
 ```
 
-## 14. Client Sidecar Files
+## 15. Client Sidecar Files
 
 A `.client.md` file is created only when concrete client work starts.
 
@@ -286,4 +306,12 @@ L1 auth/session client baseline
 -> Request Creation UI
 -> My Requests read/list/detail
 -> Browser E2E happy paths
+```
+
+Current exception / active draft:
+
+```text
+SL-APPL-001-create-individual-applicant-party.client.md is being drafted now
+because concrete Applicant Data UI planning has started.
+It should still consume or coordinate with the future auth/session client baseline.
 ```

@@ -1,6 +1,6 @@
 # Slice Implementation Notes Register
 
-Status: active / synchronized with applicant current-active scenario decision  
+Status: active / synchronized with current implemented backend L1 slice docs, client-missing state and Applicant Data UI sidecar draft  
 Scope: concrete implementation notes for future slices/client sidecars/shared support
 
 ## 1. Purpose
@@ -42,17 +42,44 @@ Before starting work on a slice/client sidecar:
 6. If the note reveals scenario/DATA/validation ambiguity, stop and use the scenario question loop.
 ```
 
-## 3. Notes Register
+## 3. Current Backend / Client Implementation Boundary
+
+Current repo evidence says:
+
+```text
+- L1 backend/API/session/persistence flows are implemented for register/login/current-user/logout/applicant/request.
+- Generated OpenAPI TypeScript types include L1 paths/types.
+- Concrete L1 client feature UI is not completed.
+- Applicant Data UI now has an implementation-ready sidecar draft:
+  planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
+```
+
+Recommended client work order:
+
+```text
+L1 auth/session client baseline
+-> applicant data UI
+-> current applicant read model
+-> request creation UI
+-> My Requests read/list/detail
+-> browser E2E happy paths
+```
+
+## 4. Notes Register
 
 | ID | Related slice / future slice | Scenario | Layer | Tags | Note | Why it matters | Promote to | Status |
 |---|---|---|---|---|---|---|---|---|
-| NOTE-APPL-CLIENT-001 | future `SL-APPL-001...client.md` | SC-10 | Client/UI | account-page, applicant-form | Applicant party create form can live on Account page for the first client implementation. The feature should remain reusable if the route changes later. | Gives the current client draft a concrete working assumption without forcing a permanent route decision. | `.client.md` when applicant client work starts | open |
-| NOTE-APPL-CLIENT-002 | future `SL-APPL-001...client.md` | SC-10 | Client/UI | command-success, read-only-state | After successful applicant party creation, switch submitted applicant data to read-only local state, show Edit action and show a self-dismissing success notification. | Defines the immediate UI outcome without requiring a read endpoint first. | `.client.md` + client/component tests | open |
-| NOTE-APPL-CLIENT-003 | future `SL-APPL-001...client.md` / request creation client | SC-10 / SC-04 | Client/UI | applicantPartyId, request-context | Do not store/use returned applicantPartyId for request creation. Request creation should use server-selected current active ApplicantParty. | Prevents client-side spoofing/coupling and keeps request creation aligned with current-active policy. | `.client.md` + request creation client sidecar | open |
-| NOTE-APPL-CLIENT-004 | future `SL-APPL-001...client.md` / auth client baseline | SC-10 | Client/UI | session, current-user | Do not refetch current-user/session after applicant party creation unless current-user contract later includes applicant state. Applicant state belongs to current-applicant read model. | Keeps auth/session state separate from applicant profile state. | auth/client docs if current-user expands | open |
-| NOTE-APPL-CLIENT-005 | future `SL-APPL-001...client.md` / request creation client | SC-10 / SC-04 | Client/UI | navigation, request-entry | Applicant party create UI must not introduce create-request entry. The exact entry point belongs to future request creation client planning. | Prevents current applicant slice from owning unrelated navigation decisions. | request creation client sidecar | open |
-| NOTE-APPL-READ-001 | future `L1-APPLICANT-PARTY-READ-CURRENT` | SC-10 | Client/API | current-applicant-read, refresh | Account page needs a current-applicant read model for stable refresh behavior, preferably auth-derived `GET /api/l1/applicant-parties/current-individual` or equivalent. | Without this, Account page can only show local post-submit state after create. | future read slice + API/client contract planning | open |
-| NOTE-APPL-READ-002 | future current-applicant read / verification | SC-10 | Client/UI | verification-status | Future Account page may show applicant verification state: Not verified, Under review / pending verification, Verified, Rejected / requires update. | Keeps verification UI pressure visible without adding it to the first create command. | future read/verification slice | open |
+| NOTE-AUTH-CLIENT-001 | `SL-AUTH-001` / `SL-AUTH-002` / `SL-AUTH-003` / future auth `.client.md` | auth/session | Client/UI | auth-session, current-user, route-guard | Create the L1 auth/session client baseline before or alongside protected applicant/request UI. It should cover login, current-user bootstrap, logout, session state, route guard direction and generated type usage. | Applicant/request UI endpoints are protected; doing them before auth baseline creates duplicated temporary auth handling. | `.client.md` auth/session sidecar | open |
+| NOTE-AUTH-CLIENT-002 | `SL-AUTH-001` / registration client | SC-01/auth | Client/UI | registration, auto-login | Registration backend returns `AccountId` + `Email` and does not issue a session. Client registration flow must decide whether to route to login, automatically login after successful registration, or show a confirmation/success state. | Prevents assuming auto-login from backend registration response. | auth/register `.client.md` + slice questions register | open |
+| NOTE-AUTH-CLIENT-003 | `SL-AUTH-002` | auth/session | Client/UI | current-user, bootstrap, cache | Current-user client handling should distinguish 401 unauthenticated from server/global failures and should define app bootstrap/protected route behavior. | Affects route guard UX, loading states and query cache strategy. | auth/session `.client.md` | open |
+| NOTE-AUTH-CLIENT-004 | `SL-AUTH-003` | auth/session | Client/UI | logout, cache, navigation | Logout client handling should clear auth state and decide whether to invalidate all user-scoped queries and where to navigate. | Prevents stale user data after logout. | auth/session `.client.md` | open |
+| NOTE-AUTH-E2E-001 | auth/session client | auth/session | Testing | e2e, auth | L1 login/current-user/logout browser E2E should be added only after concrete auth UI/session client work exists. | Avoids migrating/proliferating E2E before client baseline is real. | testing plan / auth `.client.md` | open |
+| NOTE-APPL-CLIENT-001 | `SL-APPL-001-create-individual-applicant-party.client.md` | SC-10 | Client/UI | account-page, create-form | Account page hosts the first individual applicant party create form for now. The create feature should remain reusable under feature/entity layers if route composition changes later. | Keeps the first UI implementation concrete without coupling feature code to one route forever. | active `.client.md` | promoted-to-client-sidecar |
+| NOTE-APPL-CLIENT-002 | `SL-APPL-001-create-individual-applicant-party.client.md` | SC-10 | Client/UI | success-state, read-only | After create success, the UI may switch to read-only local applicant state using submitted values and show a self-dismissing success notification. | Enables first command-sidecar implementation before the stable read-current endpoint exists. | active `.client.md` | promoted-to-client-sidecar |
+| NOTE-APPL-CLIENT-003 | `SL-APPL-001-create-individual-applicant-party.client.md` | SC-10 / SC-04 | Client/UI | applicant-id, request-context | Do not store `applicantPartyId` for request creation. The request creation backend uses server-selected current active ApplicantParty. | Prevents accidental client spoofing/coupling to command response identity. | active `.client.md` + slice questions register | promoted-to-client-sidecar |
+| NOTE-APPL-CLIENT-004 | `SL-APPL-001-create-individual-applicant-party.client.md` | auth/session | Client/UI | session, current-user | Applicant party creation should not refetch current-user/session by default. Applicant party state belongs to applicant read model, not auth session. | Prevents mixing applicant data state into authentication state unless current-user contract explicitly changes. | active `.client.md` + slice questions register | promoted-to-client-sidecar |
+| NOTE-APPL-CLIENT-005 | `SL-APPL-001-create-individual-applicant-party.client.md` | SC-10 / SC-04 | Client/UI | request-entry, scope-boundary | Applicant create sidecar does not introduce create request entry. Future request creation sidecar decides entry location. Do not create a standalone test only for absence of that entry. | Keeps applicant create UI focused and avoids testing unrelated absence/scope boundaries. | active `.client.md` + slice questions register | promoted-to-client-sidecar |
+| NOTE-APPL-READ-001 | `L1-APPLICANT-PARTY-READ-CURRENT` | SC-10 | Client/API | current-applicant, read-model, refresh | Stable Account page state after refresh needs a current applicant read slice. Target direction: `GET /api/l1/applicant-parties/current-individual`, with server-derived current account context. | Without a read model, the create sidecar can only use local post-submit state. | future read slice + slice questions register | open |
 | NOTE-REQ-UI-001 | SL-REQ-001 / request creation client | SC-04 | Client/UI | applicant-context, current-active, form | Request creation UI should show/reference the account's current active ApplicantParty summary. If applicant data is missing or wrong, the user should go through SC-10 Applicant Data / future replacement flow before submit. The request creation form should not create a separate request-local applicant identity in the current core direction. | Keeps UI, DTO mapping and scenario wording aligned with the one-current-active-ApplicantParty-per-account decision. Prevents accidental request-local applicant override behavior. | `.client.md` + behavior items when request creation client work starts | open |
 | NOTE-REQ-UI-002 | SL-REQ-001 / request creation client | SC-04 | Client/UI | command-success, navigation | For command flows where the client does not need created entity data to continue, HTTP success without required body is enough. Client shows a success message and navigates to the next read-context screen. | Prevents client code from depending on command response fields that are not needed for the user flow. | `.client.md` | open |
 | NOTE-CLIENT-AUTH-001 | multiple client slices | cross-scenario | Client/Server shared support | csrf, auth, cookie | Unsafe requests with ASP.NET Core cookie auth need antiforgery token fetch/store/attach/refetch on auth/session changes. | Affects all unsafe client mutations and diploma security explanation. | shared support + ADR candidate + extension register if broad security decision changes | open |
@@ -63,13 +90,13 @@ Before starting work on a slice/client sidecar:
 | NOTE-REVIEW-STALE-001 | SL-REVIEW-001 / SL-REVIEW-002 | SC-07B | Client/UI | stale-state, refetch | Review page should refetch details after domain/server rejection because request status may be stale. | Affects error handling and cache invalidation. | `.client.md` | open |
 | NOTE-REQ-UI-TEST-001 | SL-REQ-001 / request creation client | SC-04 | Testing | client-tests, e2e | Request creation Client/UI should have tests for deferred validation, server error mapping, current-active applicant context display/redirect/update path, DTO building, antiforgery helper use and success navigation; E2E comes after client+server flow is stable. | Prevents under-tested client layer and keeps tests aligned with current active applicant scenario decision. | `.client.md` | open |
 
-## 4. Superseded Notes
+## 5. Superseded Notes
 
 | ID | Status | Reason |
 |---|---|---|
 | Previous wording of `NOTE-REQ-UI-001` | superseded | Earlier wording allowed request-local applicant prefill/editing without mutating saved ApplicantParty. Scenario direction now says request creation references the account's current active ApplicantParty; applicant changes go through SC-10 / replacement flow before submit. |
 
-## 5. Status Values
+## 6. Status Values
 
 ```text
 open

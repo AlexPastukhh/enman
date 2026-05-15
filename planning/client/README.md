@@ -52,19 +52,28 @@ Current repo state:
 - Generated OpenAPI TypeScript support exists in `energymanagement.client/src/shared/api/generated/openapi-types.ts`.
 - `energymanagement.client/package.json` has `generate:api-types` using `../Shared/openapi.json`.
 - Generated types/support are not the same as completed L1 feature UI.
-- Concrete L1 client feature flows and `.client.md` sidecars are still future/concrete-client-work tasks.
+- Concrete L1 client feature flows are not completed yet.
 ```
 
-Current missing client feature flows:
+Current active client sidecar draft:
+
+```text
+planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
+```
+
+This is an implementation-ready client draft for Applicant Data UI. It does not mean the client implementation already exists.
+
+Current missing / future client feature flows:
 
 ```text
 1. Registration UI / auth client flow.
 2. Login/current-user/logout client integration.
-3. Applicant data form UI.
-4. Request creation form UI.
-5. My Requests read/list/detail UI.
-6. Client-side ProblemDetails/error mapping for these flows.
-7. E2E browser flows for applicant/request creation after client/read UI exists.
+3. Applicant data form UI implementation from the current sidecar draft.
+4. Current applicant read model / Account page stable refresh state.
+5. Request creation form UI.
+6. My Requests read/list/detail UI.
+7. Client-side ProblemDetails/error mapping for these flows.
+8. E2E browser flows for applicant/request creation after client/read UI exists.
 ```
 
 Recommended client work order:
@@ -72,9 +81,17 @@ Recommended client work order:
 ```text
 auth/session baseline
 -> applicant data UI
+-> current applicant read model
 -> request creation UI
 -> My Requests read/list/detail
 -> browser E2E happy paths
+```
+
+Current planning note:
+
+```text
+Applicant Data UI sidecar is being drafted now.
+It should consume generated L1 applicant-party types and should not implement create request entry or request form behavior.
 ```
 
 ## 5. Relationship To `planning/slices/shared`
