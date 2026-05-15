@@ -1,30 +1,36 @@
-# Manifest — enman-workflow-sidecar-behavior-items-package-v1
+# Manifest — enman-scenario-behavior-items-migration-v1
 
-## Add or replace if missing
+## Add / replace if missing
 
-- planning/planning-agent-protocol.md
-- planning/slices/implementation-principles.md
-- planning/slices/slice-implementation-notes-register.md
-- planning/diagrams/scenario-questions-register.md
 - planning/diagrams/scenario-behavior-items/README.md
 - planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
-- planning/slices/shared/README.md
-- planning/slices/shared/client-deferred-validation.md
-- planning/slices/shared/client-server-validation-error-mapping.md
-- planning/slices/shared/client-form-values-to-api-dto-mapping.md
-- planning/slices/shared/antiforgery-token-session-context.md
-- planning/slices/shared/client-applicant-data-prefill-notes.md
+- planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-02-login-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-03A-password-recovery-request-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-05-my-requests-own-request-details-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-06-employee-request-dashboard-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-07A-employee-request-details-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-07B-employee-request-review-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-11-request-documents-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-13A-my-agreements-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-13B-agreement-proposal-details-response-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-13C-employee-agreements-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-14-client-data-verification-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-15-security-text-specification-behavior-items.md
+- planning/diagrams/scenario-behavior-items/SC-17-anonymous-request-behavior-items.md
+- planning/diagrams/scenario-questions-register.md
 
 ## Replace
 
 - planning/README.md
 - planning/planning-workflow-current.md
-- planning/scenario-specification-principles.md
 - planning/diagrams/README.md
 - planning/diagrams/scenario-text-specs/README.md
 - planning/diagrams/scenario-data/README.md
-- planning/slices/README.md
-- planning/slices/l1-slice-drafting-guide.md
 - planning/tables/README.md
 
 ## Delete

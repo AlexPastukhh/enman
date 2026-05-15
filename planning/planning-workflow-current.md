@@ -7,7 +7,8 @@ Status: current workflow
 The current active workflow step is:
 
 ```text
-prepare slice/client-sidecar workflow and then complete missing Client/UI for already implemented server-side L1 logic
+scenario behavior items have been migrated into per-scenario files;
+next implementation planning should use those files for slice/client coverage.
 ```
 
 ## 2. Main Workflow
@@ -41,7 +42,7 @@ question
 -> continue implementation planning
 ```
 
-## 4. Slice Intake Checklist
+## 4. Slice / Client Intake Checklist
 
 Before starting any parent slice or `.client.md` sidecar:
 
@@ -49,7 +50,7 @@ Before starting any parent slice or `.client.md` sidecar:
 1. Read target scenario text spec.
 2. Read target DATA file.
 3. Read validation/security addendum entries.
-4. Read relevant per-scenario behavior items if they exist.
+4. Read relevant per-scenario behavior item file.
 5. Check planning/diagrams/scenario-questions-register.md.
 6. Check planning/slices/slice-implementation-notes-register.md.
 7. Check relevant shared support docs under planning/slices/shared/.
@@ -57,36 +58,30 @@ Before starting any parent slice or `.client.md` sidecar:
 9. If scenario-level ambiguity exists, stop and resolve it first.
 ```
 
-## 5. Parent Slice vs Client Sidecar
+## 5. Behavior Items Position
 
-Parent slice owns vertical behavior, Scenario Slice Flow, behavior item coverage summary, API contract, application/domain/persistence responsibilities and server/integration tests.
+Primary scenario-specific behavior item source:
 
-`.client.md` sidecar is created only when concrete client work starts and owns detailed client implementation.
+```text
+planning/diagrams/scenario-behavior-items/
+```
 
-## 6. Behavior Items Position
-
-The compiled baseline remains:
+Compiled baselines remain for history/cross-checking:
 
 ```text
 planning/tables/pre-domain-variants-input.md
 planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 ```
 
-New workflow introduces per-scenario behavior item files:
+## 6. Current Slice Status
 
-```text
-planning/diagrams/scenario-behavior-items/
-```
-
-Behavior items migration / cleanup is a separate future step.
-
-## 7. Current Slice Status
+Resolved issue:
 
 ```text
 SL-REQ-001 Submitted vs InReview conflict has been resolved in active implementation/tests.
 ```
 
-Target statuses:
+Target request statuses:
 
 ```text
 InReview
@@ -94,35 +89,31 @@ Approved
 Rejected
 ```
 
-## 8. Current Next Steps
+## 7. Current Next Steps
+
+Recommended next steps:
 
 ```text
-1. Apply workflow/navigation package.
-2. Get or prepare concrete UI plan for the next client layer.
-3. Run the slice intake checklist.
-4. Create the relevant .client.md sidecar.
+1. Review migrated behavior item files for target scenario.
+2. Resolve any blocking scenario questions.
+3. Get/prepare concrete UI plan for the next client layer.
+4. Create the relevant .client.md sidecar only when concrete client work starts.
 5. Implement the client layer and tests.
 ```
 
-Likely next target:
+Likely target:
 
 ```text
 Request creation Client/UI for already implemented SL-REQ-001 server-side behavior.
 ```
 
-## 9. Future Cleanup Steps
+## 8. Future Cleanup Steps
 
 Track separately:
 
 ```text
-1. Behavior items migration / cleanup.
-2. Workflow centralization audit.
+1. Workflow centralization audit.
+2. Planning document responsibility map.
 ```
 
-## 10. Replacement File Generation Workflow
-
-When the user asks for files to replace manually, use:
-
-```text
-planning/replacement-file-generation-guide.md
-```
+Local coverage tables and local questions are allowed to remain local.

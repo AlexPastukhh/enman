@@ -23,13 +23,20 @@ DATA means only what actor:
 00-scenario-data-index.md
 ../scenario-questions-register.md
 ../scenario-behavior-items/README.md
+../scenario-behavior-items/00-scenario-behavior-items-index.md
 ```
 
 ## 3. DATA Is Not Validation
 
 DATA files must not contain validation/rules sections, testable behavior sections, invariants, preconditions, branches, access rules, security policy or layout choices.
 
-Validation belongs to scenario text specs and validation/security addenda.
+Validation belongs to:
+
+```text
+planning/scenario-domain-validation-principles.md
+planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
+```
 
 ## 4. Scenario Questions
 
@@ -48,7 +55,7 @@ DATA specs feed:
 ```text
 scenario questions register
 per-scenario behavior items
-pre-domain-variants-input.md compiled baseline
+compiled baselines
 domain drafts
 slice boundary drafts
 parent slice files
@@ -57,21 +64,12 @@ read/query DTO planning
 client-visible page data planning
 ```
 
-DATA fields are candidates for value integrity items, value objects, visible page data, form input values, command/input objects, read DTO fields and persistence fields.
-
 DATA files themselves are not DB schemas, DTO contracts or UI layouts.
 
-## 6. Current Next Steps
+## 6. Active DATA Files
 
-Current flow:
+See:
 
 ```text
-scenario text specs
-+ scenario DATA files
-+ validation/security addenda
--> scenario questions register
--> per-scenario behavior items
--> slice/domain/client planning
+00-scenario-data-index.md
 ```
-
-Behavior item migration / cleanup is a separate future step.

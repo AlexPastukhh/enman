@@ -21,13 +21,9 @@ scenario text specs
 
 ## 2. Current Active Planning Focus
 
-```text
-prepare slice/client-sidecar workflow, then complete missing Client/UI around already implemented server-side L1 logic
-```
+Use migrated per-scenario behavior item files to support the next concrete slice/client planning step.
 
 Do not create `.client.md` files in advance.
-
-Create a `.client.md` sidecar only when work starts on the concrete client layer of a concrete slice.
 
 ## 3. Current Read Order
 
@@ -37,39 +33,57 @@ Create a `.client.md` sidecar only when work starts on the concrete client layer
 3. planning/planning-agent-protocol.md
 4. planning/scenario-specification-principles.md
 5. planning/scenario-domain-validation-principles.md
-6. planning/replacement-file-generation-guide.md
 
-7. planning/diagrams/README.md
-8. planning/diagrams/scenario-text-specs/README.md
-9. planning/diagrams/scenario-data/README.md
-10. planning/diagrams/scenario-questions-register.md
-11. planning/diagrams/scenario-behavior-items/README.md
-12. planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
+6. planning/diagrams/README.md
+7. planning/diagrams/scenario-text-specs/README.md
+8. planning/diagrams/scenario-data/README.md
+9. planning/diagrams/scenario-questions-register.md
+10. planning/diagrams/scenario-behavior-items/README.md
+11. planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
 
-13. planning/tables/README.md
-14. planning/tables/pre-domain-variants-input.md
-15. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
+12. planning/tables/README.md
+13. planning/tables/pre-domain-variants-input.md
+14. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 
-16. planning/domain-draft-generation-guide.md
-17. planning/tables/domain-drafts/README.md
-18. planning/tables/domain-drafts/domain-draft-01.md
-19. planning/l1-domain-implementation-cut.md
-20. planning/l1-domain-testing-rules.md
+15. planning/domain-draft-generation-guide.md
+16. planning/tables/domain-drafts/README.md
+17. planning/tables/domain-drafts/domain-draft-01.md
+18. planning/l1-domain-implementation-cut.md
+19. planning/l1-domain-testing-rules.md
 
-21. planning/slices/README.md
-22. planning/slices/l1-slice-drafting-guide.md
-23. planning/slices/implementation-principles.md
-24. planning/slices/slice-implementation-notes-register.md
-25. planning/slices/shared/README.md
-26. planning/slices/l1-slice-boundary-draft-01.md
+20. planning/slices/README.md
+21. planning/slices/l1-slice-drafting-guide.md
+22. planning/slices/implementation-principles.md
+23. planning/slices/slice-implementation-notes-register.md
+24. planning/slices/shared/README.md
+25. planning/slices/l1-slice-boundary-draft-01.md
 
-27. planning/adr/README.md
-28. planning/adr/adr-candidates.md
-29. planning/current-state.md
-30. planning/domain-model.md
+26. planning/adr/README.md
+27. planning/adr/adr-candidates.md
 ```
 
-## 4. Scenario Question Loop
+## 4. Behavior Items Position
+
+Primary scenario-specific behavior item source:
+
+```text
+planning/diagrams/scenario-behavior-items/
+```
+
+Compiled baselines remain for history/cross-checking:
+
+```text
+planning/tables/pre-domain-variants-input.md
+planning/tables/scenario-behavior-baseline-account-activation-addendum.md
+```
+
+## 5. Slice And Client Sidecar Position
+
+Parent slice file owns vertical behavior and API/server responsibilities.
+
+`.client.md` sidecar owns detailed client implementation when client work starts.
+
+## 6. Scenario Question Loop
 
 If a scenario-level question appears during planning:
 
@@ -81,46 +95,7 @@ question
 -> continue implementation planning
 ```
 
-## 5. Current Slice Entry Points
-
-```text
-planning/slices/README.md
-planning/slices/l1-slice-drafting-guide.md
-planning/slices/implementation-principles.md
-planning/slices/slice-implementation-notes-register.md
-planning/slices/l1-slice-boundary-draft-01.md
-```
-
-## 6. Behavior Items Position
-
-The compiled downstream baseline remains:
-
-```text
-planning/tables/pre-domain-variants-input.md
-```
-
-Future per-scenario behavior item files live under:
-
-```text
-planning/diagrams/scenario-behavior-items/
-```
-
-Behavior item migration/cleanup is a separate future step.
-
-## 7. Future Cleanup Steps
-
-Do not mix these into unrelated implementation packages:
-
-```text
-1. Behavior items migration / cleanup.
-2. Workflow centralization audit.
-```
-
-Workflow centralization audit means finding files that contain global workflow rules outside central workflow/common docs and moving those rules to central files.
-
-Local coverage tables and local questions are allowed to remain local.
-
-## 8. Replacement File Generation Workflow
+## 7. Replacement File Generation Workflow
 
 When the user asks for files to replace manually, use:
 
@@ -128,14 +103,4 @@ When the user asks for files to replace manually, use:
 planning/replacement-file-generation-guide.md
 ```
 
-## 9. Superseded / Not Current
-
-Do not use the old path as current workflow:
-
-```text
-scenario-domain-design-input-gate.md
--> scenario-domain-design-input-core.md
--> domain-discovery-core.md
--> aggregate-boundary-candidates-core.md
--> domain-model-options-core.md
-```
+Generate complete files, package them with repository-relative paths, and include `APPLY.md` / `MANIFEST.md`.
