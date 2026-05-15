@@ -3,22 +3,29 @@
 Archive:
 
 ```text
-enman-client-ui-shared-support-workflow-v1.zip
+enman-workflow-sidecar-behavior-items-package-v1.zip
 ```
 
 Apply from repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-client-ui-shared-support-workflow-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-workflow-sidecar-behavior-items-package-v1.zip" -DestinationPath . -Force
 git status
 ```
 
-## Add
+## Add or replace if missing
 
 ```text
+planning/planning-agent-protocol.md
+planning/slices/implementation-principles.md
+planning/slices/slice-implementation-notes-register.md
+planning/diagrams/scenario-questions-register.md
+planning/diagrams/scenario-behavior-items/README.md
+planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
 planning/slices/shared/README.md
 planning/slices/shared/client-deferred-validation.md
 planning/slices/shared/client-server-validation-error-mapping.md
+planning/slices/shared/client-form-values-to-api-dto-mapping.md
 planning/slices/shared/antiforgery-token-session-context.md
 planning/slices/shared/client-applicant-data-prefill-notes.md
 ```
@@ -26,10 +33,15 @@ planning/slices/shared/client-applicant-data-prefill-notes.md
 ## Replace
 
 ```text
+planning/README.md
+planning/planning-workflow-current.md
+planning/scenario-specification-principles.md
+planning/diagrams/README.md
+planning/diagrams/scenario-text-specs/README.md
+planning/diagrams/scenario-data/README.md
 planning/slices/README.md
 planning/slices/l1-slice-drafting-guide.md
-planning/slices/l1-slice-boundary-draft-01.md
-planning/slices/SL-REQ-001-create-connection-request.md
+planning/tables/README.md
 ```
 
 ## Delete
@@ -40,16 +52,12 @@ nothing
 
 ## Notes
 
-This package does not change the resolved `InReview` status direction.
+This package does not create any `.client.md` sidecar for a concrete slice.
 
-It prepares slice docs for the next implementation step:
+Client sidecars are created only when concrete client work starts.
 
-```text
-complete missing Client/UI for already implemented server-side request creation logic
-```
+Behavior items migration/cleanup is not done in this package. This package adds the folder/index/rules only.
 
-Recommended next planning input:
+Workflow centralization audit is not done in this package. It is recorded as a future cleanup step.
 
-```text
-UI plan for SL-REQ-UI-001 Request creation Client/UI
-```
+Resolved `InReview` direction is preserved.

@@ -21,86 +21,57 @@ DATA means only what actor:
 
 ```text
 00-scenario-data-index.md
+../scenario-questions-register.md
+../scenario-behavior-items/README.md
 ```
 
 ## 3. DATA Is Not Validation
 
-DATA files must not contain:
+DATA files must not contain validation/rules sections, testable behavior sections, invariants, preconditions, branches, access rules, security policy or layout choices.
+
+Validation belongs to scenario text specs and validation/security addenda.
+
+## 4. Scenario Questions
+
+If DATA is underspecified, add/update:
 
 ```text
-- validation/rules sections;
-- testable behavior sections;
-- invariants;
-- preconditions;
-- branches;
-- access rules;
-- security policy;
-- layout choices.
+planning/diagrams/scenario-questions-register.md
 ```
 
-Validation belongs to:
-
-```text
-planning/scenario-domain-validation-principles.md
-planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-```
-
-The pre-domain coverage baseline uses DATA together with scenario and validation-related files:
-
-```text
-planning/tables/pre-domain-variants-input.md
-```
-
-The UI planning branch uses DATA to define visible/input/selectable page content:
-
-```text
-planning/ui/test-site-ui-plan.md
-```
-
-## 4. Active DATA Files
-
-See:
-
-```text
-00-scenario-data-index.md
-```
+Use the scenario question loop before continuing implementation planning.
 
 ## 5. Downstream Use
 
 DATA specs feed:
 
 ```text
-scenario-server-domain-validation-addendum.md
-pre-domain-variants-input.md
+scenario questions register
+per-scenario behavior items
+pre-domain-variants-input.md compiled baseline
 domain drafts
-test-site-ui-plan.md
-ui-questions-register.md
+slice boundary drafts
+parent slice files
+.client.md Scenario / DATA Coverage tables
+read/query DTO planning
+client-visible page data planning
 ```
 
-DATA fields are candidates for:
+DATA fields are candidates for value integrity items, value objects, visible page data, form input values, command/input objects, read DTO fields and persistence fields.
 
-```text
-- value integrity / anti-primitive-obsession items in the coverage baseline;
-- value objects discovered during domain draft generation;
-- visible page data;
-- command/input objects later;
-- persistence fields later.
-```
-
-But DATA files themselves are not DB schemas, DTO contracts or UI layouts.
+DATA files themselves are not DB schemas, DTO contracts or UI layouts.
 
 ## 6. Current Next Steps
 
-Domain branch:
+Current flow:
 
 ```text
-planning/tables/pre-domain-variants-input.md
--> planning/tables/domain-drafts/domain-draft-01.md
+scenario text specs
++ scenario DATA files
++ validation/security addenda
+-> scenario questions register
+-> per-scenario behavior items
+-> slice/domain/client planning
 ```
 
-UI branch:
-
-```text
-planning/ui/test-site-ui-plan.md
-planning/ui/ui-questions-register.md
-```
+Behavior item migration / cleanup is a separate future step.

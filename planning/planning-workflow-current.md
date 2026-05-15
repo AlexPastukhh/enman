@@ -7,114 +7,86 @@ Status: current workflow
 The current active workflow step is:
 
 ```text
-Use the general L1 slice boundary draft and per-slice files to plan/implement one slice at a time.
-```
-
-The current slice planning files are:
-
-```text
-planning/slices/README.md
-planning/slices/l1-slice-drafting-guide.md
-planning/slices/l1-slice-boundary-draft-01.md
+prepare slice/client-sidecar workflow and then complete missing Client/UI for already implemented server-side L1 logic
 ```
 
 ## 2. Main Workflow
 
 ```text
 scenario text specs
--> scenario DATA files
--> validation-related files
--> scenario behavior coverage baseline
--> domain draft(s)
--> L1 domain implementation cut
--> domain testing rules
--> L1 domain foundation
++ scenario DATA files
++ validation/security addenda
+-> per-scenario behavior items
+-> scenario questions register
+-> domain draft(s) / L1 domain foundation
 -> L1 slice boundary draft
--> per-slice implementation files
--> implement one slice at a time
+-> parent vertical slice files
+-> .client.md sidecar when concrete client work starts
+-> implement one slice/client layer at a time
 -> update coverage / questions / ADR candidates
 ```
 
-## 3. What A Slice Boundary Draft Means
+## 3. Scenario Question Loop
 
-The general boundary draft is:
-
-```text
-planning/slices/l1-slice-boundary-draft-01.md
-```
-
-It identifies real slices from scenarios.
-
-It should:
+When planning discovers a question that affects scenario behavior, DATA, validation/security or visible outcome:
 
 ```text
-- start from scenarios;
-- list derived slices;
-- explain why each is a real slice;
-- include Scenario Slice Flow;
-- embed DATA / behavior items / invariants / no-write rules in flow steps;
-- mark dependent/extension/UI/read/plugin slices;
-- split L1 and later-package behavior;
-- collect boundary questions and decisions;
-- collect ADR candidates.
+question
+-> clarify / choose current direction
+-> update scenario text spec if behavior changed
+-> update DATA file if visible/input/selectable/filter/attachment data changed
+-> update validation/security addendum if needed
+-> update behavior items if required behavior changed
+-> update scenario questions register
+-> continue implementation planning
 ```
 
-It should not contain detailed implementation flow.
+## 4. Slice Intake Checklist
 
-## 4. What A Per-Slice File Means
-
-A per-slice file is the implementation-planning artifact for one slice.
-
-It should:
+Before starting any parent slice or `.client.md` sidecar:
 
 ```text
-- duplicate/refine Scenario Slice Flow;
-- add Implementation Flow;
-- include UI blueprint;
-- include questions overview near the beginning;
-- include flow coverage overview near the beginning;
-- describe API/application/domain/persistence/read/UI/auth/infra participation;
-- keep tests in a separate Test Plan / Test Coverage section;
-- include detailed implementation notes and pseudocode/code snippets when useful;
-- include implementation checklist.
+1. Read target scenario text spec.
+2. Read target DATA file.
+3. Read validation/security addendum entries.
+4. Read relevant per-scenario behavior items if they exist.
+5. Check planning/diagrams/scenario-questions-register.md.
+6. Check planning/slices/slice-implementation-notes-register.md.
+7. Check relevant shared support docs under planning/slices/shared/.
+8. Promote relevant notes/questions.
+9. If scenario-level ambiguity exists, stop and resolve it first.
 ```
 
-Current per-slice files:
+## 5. Parent Slice vs Client Sidecar
+
+Parent slice owns vertical behavior, Scenario Slice Flow, behavior item coverage summary, API contract, application/domain/persistence responsibilities and server/integration tests.
+
+`.client.md` sidecar is created only when concrete client work starts and owns detailed client implementation.
+
+## 6. Behavior Items Position
+
+The compiled baseline remains:
 
 ```text
-planning/slices/SL-ACC-001-register-client-account.md
-planning/slices/SL-APPL-001-create-individual-applicant-party.md
-planning/slices/SL-REQ-001-create-connection-request.md
-planning/slices/SL-REVIEW-001-approve-request-and-verify-applicant.md
-planning/slices/SL-REVIEW-002-reject-request.md
+planning/tables/pre-domain-variants-input.md
+planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 ```
 
-## 5. Source Files For Slice Drafts
-
-Use:
+New workflow introduces per-scenario behavior item files:
 
 ```text
-1. planning/diagrams/scenario-text-specs/
-2. planning/diagrams/scenario-data/
-3. planning/tables/pre-domain-variants-input.md
-4. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
-5. planning/tables/domain-drafts/domain-draft-01.md
-6. planning/l1-domain-implementation-cut.md
-7. planning/l1-domain-testing-rules.md
-8. planning/slices/l1-slice-drafting-guide.md
-9. actual L1 implementation result
-10. actual L1 tests
+planning/diagrams/scenario-behavior-items/
 ```
 
-## 6. Current Slice Status
+Behavior items migration / cleanup is a separate future step.
 
-Recent resolved issue:
+## 7. Current Slice Status
 
 ```text
 SL-REQ-001 Submitted vs InReview conflict has been resolved in active implementation/tests.
 ```
 
-Target domain direction:
+Target statuses:
 
 ```text
 InReview
@@ -122,43 +94,29 @@ Approved
 Rejected
 ```
 
-The request creation integration/API expectation is aligned with `InReview`.
-
-## 7. L1 Testing Position
-
-Testing guide:
+## 8. Current Next Steps
 
 ```text
-planning/l1-domain-testing-rules.md
+1. Apply workflow/navigation package.
+2. Get or prepare concrete UI plan for the next client layer.
+3. Run the slice intake checklist.
+4. Create the relevant .client.md sidecar.
+5. Implement the client layer and tests.
 ```
 
-Current decisions:
+Likely next target:
 
 ```text
-- unit tests first for domain foundation;
-- integration tests are per-slice after behavior is stable;
-- UI tests are per UI/full-stack slice;
-- existing Tests.EnergyManagement is the local style baseline;
-- tests verify observable behavior and no-write guarantees.
+Request creation Client/UI for already implemented SL-REQ-001 server-side behavior.
 ```
 
-## 8. ADR Position
+## 9. Future Cleanup Steps
 
-ADR candidates are collected in:
-
-```text
-planning/adr/adr-candidates.md
-```
-
-## 9. Current Next Steps
-
-Recommended next steps:
+Track separately:
 
 ```text
-1. Apply current slice workflow documentation update.
-2. Review l1-slice-boundary-draft-01.md.
-3. Choose the next slice implementation target.
-4. Before implementation, create/refine the relevant per-slice file.
+1. Behavior items migration / cleanup.
+2. Workflow centralization audit.
 ```
 
 ## 10. Replacement File Generation Workflow

@@ -2,7 +2,7 @@
 
 Status: current planning tables navigation
 
-## 1. Current stage
+## 1. Current Role
 
 The current saved domain draft is:
 
@@ -10,83 +10,80 @@ The current saved domain draft is:
 planning/tables/domain-drafts/domain-draft-01.md
 ```
 
-The current L1 implementation planning entry points are:
+The compiled behavior baseline remains:
 
 ```text
-planning/l1-domain-implementation-cut.md
-planning/l1-domain-testing-rules.md
+planning/tables/pre-domain-variants-input.md
+planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 ```
 
-The current slice and ADR planning entry points are:
+New workflow introduces per-scenario behavior item files under:
 
 ```text
-planning/slices/README.md
-planning/slices/l1-slice-drafting-guide.md
-planning/slices/l1-slice-boundary-draft-01.md
-planning/adr/README.md
-planning/adr/adr-candidates.md
+planning/diagrams/scenario-behavior-items/
 ```
 
-## 2. Current read order
+`pre-domain-variants-input.md` remains useful as a compiled downstream baseline / existing domain draft input.
+
+It is no longer the only intended upstream source for future slice/client planning.
+
+## 2. Current Read Order
 
 ```text
 1. planning/diagrams/scenario-text-specs/
 2. planning/diagrams/scenario-data/
-3. planning/tables/pre-domain-variants-input.md
-4. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
-5. planning/tables/domain-drafts/domain-draft-01.md
-6. planning/l1-domain-implementation-cut.md
-7. planning/l1-domain-testing-rules.md
-8. planning/slices/README.md
-9. planning/slices/l1-slice-drafting-guide.md
-10. planning/slices/l1-slice-boundary-draft-01.md
-11. planning/adr/README.md
-12. planning/adr/adr-candidates.md
+3. planning/diagrams/scenario-questions-register.md
+4. planning/diagrams/scenario-behavior-items/README.md
+5. planning/tables/pre-domain-variants-input.md
+6. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
+7. planning/tables/domain-drafts/domain-draft-01.md
+8. planning/l1-domain-implementation-cut.md
+9. planning/l1-domain-testing-rules.md
+10. planning/slices/README.md
+11. planning/slices/l1-slice-drafting-guide.md
+12. planning/slices/l1-slice-boundary-draft-01.md
+13. planning/adr/README.md
+14. planning/adr/adr-candidates.md
 ```
 
-## 3. Slice planning
+## 3. Behavior Items Position
 
-The L1 domain cut is not a full scenario slice.
-
-It is a domain foundation.
-
-Current slice planning is split into:
+Future desired flow:
 
 ```text
-General boundary draft:
+scenario text spec
++ scenario DATA file
++ validation/security addendum
+-> per-scenario behavior items
+-> domain drafts / slice drafts / client sidecars
+```
+
+Behavior items migration / cleanup is a separate future step.
+
+## 4. Slice Planning
+
+Current slice planning entry points:
+
+```text
+planning/slices/README.md
+planning/slices/l1-slice-drafting-guide.md
+planning/slices/implementation-principles.md
+planning/slices/slice-implementation-notes-register.md
 planning/slices/l1-slice-boundary-draft-01.md
-
-Per-slice implementation files:
-planning/slices/SL-ACC-001-register-client-account.md
-planning/slices/SL-APPL-001-create-individual-applicant-party.md
-planning/slices/SL-REQ-001-create-connection-request.md
-planning/slices/SL-REVIEW-001-approve-request-and-verify-applicant.md
-planning/slices/SL-REVIEW-002-reject-request.md
 ```
 
-General boundary file identifies and justifies slices.
+Parent slice files plan vertical behavior and API/server responsibilities.
 
-Per-slice files plan implementation flow, UI blueprint, tests and checklist.
+`.client.md` sidecars are created only when concrete client work starts.
 
-## 4. Testing rules
+## 5. Current Next Step
 
-The current testing guide is:
+Use the updated workflow to prepare the next concrete Client/UI sidecar after getting a UI plan.
 
-```text
-planning/l1-domain-testing-rules.md
-```
-
-## 5. Current next step
+Likely target:
 
 ```text
-Use planning/slices/l1-slice-boundary-draft-01.md to confirm current L1 slice boundaries.
-Then use/refine the relevant per-slice file before implementing the next slice.
-```
-
-Current urgent slice issue:
-
-```text
-SL-REQ-001 Submitted vs InReview integration/API expectation conflict has been resolved; active L1 request creation uses InReview.
+request creation Client/UI for already implemented SL-REQ-001 server-side behavior
 ```
 
 ## 6. Avoid

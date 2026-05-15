@@ -7,20 +7,6 @@ Marker: `[SHARED SUPPORT][CLIENT/UI][CROSS-SLICE]`
 
 Document the recurring client-side validation pattern where validation happens after a short delay following user input.
 
-This is important because current client tests already cover delayed/deferred validation behavior.
-
-## Why This Is Not A Slice
-
-Deferred validation is not independent business behavior.
-
-It supports Client/UI slices such as:
-
-```text
-SL-REQ-UI-001 — Request creation Client/UI
-SL-APPL-UI-001 — Applicant data Client/UI
-SL-REVIEW-UI-001 — Employee review Client/UI
-```
-
 ## Expected Behavior
 
 ```text
@@ -33,9 +19,9 @@ SL-REVIEW-UI-001 — Employee review Client/UI
 - valid input clears the relevant error.
 ```
 
-## Slice Usage Notes
+## Sidecar Usage
 
-Per-slice files should specify:
+A `.client.md` file should specify:
 
 ```text
 - which page/form uses deferred validation;
@@ -50,4 +36,4 @@ Per-slice files should specify:
 
 Shared helper tests may verify debounce/timing behavior.
 
-Slice client tests should verify concrete form behavior.
+Slice client tests verify concrete form behavior.

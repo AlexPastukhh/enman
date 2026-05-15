@@ -6,7 +6,7 @@ Status: current scenario text-spec navigation index
 
 This folder contains corrected textual scenario specifications.
 
-They are the primary scenario source of truth together with DATA specs and validation/security addenda.
+They are the primary scenario source of truth together with DATA specs, validation/security addenda, scenario questions register and behavior items.
 
 ## 2. Read First
 
@@ -14,123 +14,65 @@ They are the primary scenario source of truth together with DATA specs and valid
 00-scenario-text-specs-index.md
 scenario-server-domain-validation-addendum.md
 scenario-account-activation-security-addendum.md
+../scenario-questions-register.md
+../scenario-behavior-items/README.md
 ```
 
-## 3. Active Scenario Specs
+## 3. Scenario Questions
+
+If scenario text specs are underspecified, add or update:
 
 ```text
-SC-01-guest-registration.md
-SC-02-login.md
-SC-03A-password-recovery-request.md
-SC-03B-account-owner-verified.md
-SC-04-client-request-creation.md
-SC-05-my-requests-own-request-details.md
-SC-06-employee-request-dashboard.md
-SC-07A-employee-request-details.md
-SC-07B-employee-request-review.md
-SC-10-applicant-data.md
-SC-11-request-documents.md
-SC-13A-my-agreements.md
-SC-13B-agreement-proposal-details-response.md
-SC-13C-employee-agreements.md
-SC-13D-employee-agreement-proposal-create-response.md
-SC-14-client-data-verification.md
-SC-15-security-text-specification.md
-SC-17-anonymous-request.md
+planning/diagrams/scenario-questions-register.md
 ```
 
-## 4. Merged / Removed / Deferred Specs
+Use the scenario question loop:
 
 ```text
-SC-08-merged-approved-result.md
-SC-09-merged-rejected-result.md
-SC-12-merged-review-feedback-correction-navigation.md
-SC-16-removed-notification-navigation.md
-SC-18-archive-audit-deferred.md
+question
+-> clarify
+-> update scenario spec / DATA / validation if needed
+-> update behavior items if needed
+-> continue implementation planning
 ```
 
-## 5. Validation / Security Addenda
+## 4. Behavior Items
 
-Use:
+Scenario text specs feed per-scenario behavior items:
 
 ```text
-scenario-server-domain-validation-addendum.md
-scenario-account-activation-security-addendum.md
+planning/diagrams/scenario-behavior-items/
 ```
 
-They record:
+Behavior items must not invent new behavior. If behavior is missing, update the scenario spec first.
+
+Behavior item migration / cleanup is a separate future step.
+
+## 5. Current Downstream Use
+
+Current downstream consumers:
 
 ```text
-- client-side validation;
-- server-side / domain validation;
-- value object / domain validation hints per scenario;
-- account activation / protected access requirements.
+scenario DATA files
+validation/security addenda
+scenario questions register
+per-scenario behavior items
+domain drafts
+slice boundary drafts
+parent vertical slice files
+.client.md sidecars when concrete client work starts
 ```
 
-Do not move these validation/security rules into DATA files.
-
-## 6. Current Downstream Use
-
-Current pre-domain coverage baseline:
+The compiled downstream baseline remains:
 
 ```text
 planning/tables/pre-domain-variants-input.md
 ```
 
-Account activation baseline addendum:
-
-```text
-planning/tables/scenario-behavior-baseline-account-activation-addendum.md
-```
-
-Current domain draft branch:
-
-```text
-planning/domain-draft-generation-guide.md
-planning/tables/domain-drafts/
-```
-
-Current UI planning branch:
-
-```text
-planning/ui/test-site-ui-plan.md
-planning/ui/ui-questions-register.md
-```
-
-Current next domain step:
-
-```text
-Create / refine domain draft 1.
-```
-
-Current next UI step:
-
-```text
-Create/fill test-site-ui-plan.md and ui-questions-register.md.
-```
-
-Do not use the old downstream path as current workflow:
-
-```text
-planning/tables/scenario-domain-design-input-core.md
-planning/tables/domain-discovery-core.md
-planning/tables/domain-variants/
-```
-
-## 7. Rule
+## 6. Rule
 
 Scenario text specs describe behavior and domain-relevant rules.
 
 They may contain mandatory observable UI requirements.
 
-They do not define:
-
-```text
-- controllers;
-- endpoints;
-- database schema;
-- ORM mappings;
-- React components;
-- final aggregate implementation;
-- final visual design.
-```
+They do not define controllers, endpoints, database schema, ORM mappings, React components, final aggregate implementation or final visual design.
