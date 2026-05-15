@@ -18,6 +18,20 @@ export const authFieldNames = {
   },
 } as const;
 
+export const applicantPartyFieldNames = {
+  createIndividual: {
+    firstName:
+      constants.AuthConstants.ProvideIndividualClientsData.FirstName.FieldName,
+    middleName:
+      constants.AuthConstants.ProvideIndividualClientsData.MiddleName.FieldName,
+    lastName:
+      constants.AuthConstants.ProvideIndividualClientsData.LastName.FieldName,
+    email: constants.AuthConstants.RegisterIndividualClient.Email.FieldName,
+    phoneNumber:
+      constants.AuthConstants.ProvideIndividualClientsData.PhoneNumber.FieldName,
+  },
+} as const;
+
 export const serverValidationFieldNames = {
   fieldName: errorCodes.ServerValidationError.FieldNameField,
   errorCode: errorCodes.ServerValidationError.ErrorCodeField,
@@ -28,4 +42,3 @@ export const generalConstants = {
   errorsCollectionName: constants.GeneralConstants.ErrorsCollectionName,
   rootErrorName: "root",
 } as const;
-

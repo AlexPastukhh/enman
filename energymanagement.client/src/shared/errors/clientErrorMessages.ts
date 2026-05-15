@@ -15,8 +15,15 @@ export const errorToMessageMap: Record<string, string> = {
     "Password confirmation does not match.",
   [errorCodes.PasswordConfirmation.IsRequired]:
     "Password confirmation is required.",
+  [errorCodes.Phone.IsRequired]: "Phone number is required.",
+  [errorCodes.Phone.IsInvalid]: "Phone number format is invalid.",
+  "account.firstName.is.required": "First name is required.",
+  "account.firstName.is.too.large": "First name is too long.",
+  "account.middleName.is.required": "Middle name is required.",
+  "account.middleName.is.too.large": "Middle name is too long.",
+  "account.lastName.is.required": "Last name is required.",
+  "account.lastName.is.too.large": "Last name is too long.",
 };
 
 export const getMessageFromErrorCode = (code: string): string =>
   errorToMessageMap[code] ?? "An unknown error occurred.";
-

@@ -9,6 +9,7 @@ export const useFormWrapper = <TFormValues extends FieldValues>(
     formState: { errors, isSubmitting, isValid },
     setError,
     trigger,
+    reset,
   } = useForm<TFormValues>({
     resolver,
     mode: "onBlur",
@@ -22,6 +23,6 @@ export const useFormWrapper = <TFormValues extends FieldValues>(
     isValid,
     setError,
     trigger,
+    reset,
   };
 };
-
