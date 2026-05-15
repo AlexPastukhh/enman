@@ -1,6 +1,6 @@
 # Scenario Behavior Coverage Baseline
 
-Status: first coverage-baseline draft  
+Status: first coverage-baseline draft / agreement replacement terminology reconciled  
 Historical filename: `planning/tables/pre-domain-variants-input.md`
 
 ## 1. Purpose
@@ -45,6 +45,7 @@ planning/diagrams/scenario-text-specs/
 planning/diagrams/scenario-data/
 planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
 planning/scenario-domain-validation-principles.md
+planning/diagrams/scenario-clarifications/AGR-001-agreement-proposal-replacement-terminology.md
 ```
 
 Optional context:
@@ -137,9 +138,9 @@ Detailed item descriptions live in later sections.
 | AGR-LC-002 | LC | Awaiting proposal can be accepted | SC-13B | 6.2 | Needs draft answer |
 | AGR-LC-003 | LC | Awaiting proposal can receive client version | SC-13B | 6.2 | Needs draft answer |
 | AGR-LC-004 | LC | Accepted proposal has no response actions in core | SC-13B | 6.2 | Needs draft answer |
-| AGR-LC-005 | LC | Rejected proposal has no response actions in core | SC-13B | 6.2 | Needs draft answer |
+| AGR-LC-005 | LC | Explicitly rejected proposal has no response actions in core | SC-13B | 6.2 | Needs draft answer |
 | AGR-LC-006 | LC | Client own version can be sent only once in core | SC-13B | 6.3 | Needs draft answer |
-| AGR-LC-007 | LC | Employee new version rejects previous client version | SC-13D | 6.2 | Needs draft answer |
+| AGR-LC-007 | LC | Employee new version supersedes previous client version | SC-13D | 6.2 | Needs draft answer |
 | REQ-IBS-001 | IBS | Approved request has review decision | SC-07B | 7.1 | Needs draft answer |
 | REQ-IBS-002 | IBS | Rejected request has feedback if required | SC-07B / SC-05 | 7.1 | Question |
 | REQ-IBS-003 | IBS | Request has object address | SC-04 | 7.1 | Needs draft answer |
@@ -168,12 +169,6 @@ State/condition-specific applicability belongs to section 6.
 
 ### 5.1 ACC-CMD-REGISTER-001 — Register account
 
-Source:
-
-```text
-SC-01 Guest Registration
-```
-
 Required behavior / guarantee:
 
 ```text
@@ -186,21 +181,9 @@ Failure / no-write guarantee:
 Invalid registration input does not create account.
 ```
 
-Draft must explain:
-
-```text
-- whether this remains outside main business domain as auth/account boundary;
-- how account identity becomes available to request/applicant/agreement behavior;
-- how email/password value integrity is represented or intentionally delegated.
-```
+Draft must explain account boundary, identity availability to request/applicant/agreement behavior, and value integrity placement.
 
 ### 5.2 ACC-CMD-RECOVERY-001 — Request password recovery
-
-Source:
-
-```text
-SC-03A Password Recovery Request
-```
 
 Required behavior / guarantee:
 
@@ -214,20 +197,7 @@ Failure / no-write guarantee:
 If email is not registered, no recovery context is created and account existence is not revealed.
 ```
 
-Draft must explain:
-
-```text
-- whether recovery context is part of auth boundary, business domain, or excluded from current domain draft;
-- what state/condition controls ability to set a new password.
-```
-
 ### 5.3 ACC-CMD-RESET-001 — Set new password
-
-Source:
-
-```text
-SC-03B Account Owner Verified / Password Reset Choice
-```
 
 Required behavior / guarantee:
 
@@ -241,20 +211,7 @@ Failure / no-write guarantee:
 Invalid, expired or used recovery context does not update password.
 ```
 
-Draft must explain:
-
-```text
-- whether recovery token/context lifecycle is modeled in current domain draft;
-- whether password/account mechanics are treated as auth/framework boundary.
-```
-
 ### 5.4 APPL-CMD-SAVE-001 — Save applicant data
-
-Source:
-
-```text
-SC-10 Applicant Data
-```
 
 Required behavior / guarantee:
 
@@ -269,21 +226,9 @@ Invalid applicant data is not saved.
 Standalone applicant data save/edit must not start verification.
 ```
 
-Draft must explain:
-
-```text
-- how saved ApplicantData-like concept is represented;
-- how applicant type affects required data shape;
-- how standalone saved applicant data is separated from request-local applicant data.
-```
+Draft must explain saved ApplicantData-like representation, applicant type shape, and request-local separation.
 
 ### 5.5 REQ-CMD-CREATE-001 — Create request
-
-Source:
-
-```text
-SC-04 Client Request Creation
-```
 
 Required behavior / guarantee:
 
@@ -298,22 +243,7 @@ If request data is invalid, no request is created.
 If saved ApplicantData was used as source, it is not mutated by failed or edited request-local data.
 ```
 
-Draft must explain:
-
-```text
-- how request creation is represented;
-- how initial InReview status is assigned;
-- how request-local applicant data is represented;
-- how copied applicant data is protected from implicit mutation.
-```
-
 ### 5.6 REQ-CMD-APPROVE-001 — Approve request
-
-Source:
-
-```text
-SC-07B Employee Request Review
-```
 
 Required behavior / guarantee:
 
@@ -337,21 +267,9 @@ REQ-IBS-001
 AGR-UCQ-002
 ```
 
-Draft must explain:
-
-```text
-- how approval command relates to request lifecycle;
-- how review decision and status change stay consistent;
-- why approval does not automatically create agreement proposal.
-```
+Draft must explain approval lifecycle, decision consistency and why approval does not automatically create agreement proposal.
 
 ### 5.7 REQ-CMD-REJECT-001 — Reject request
-
-Source:
-
-```text
-SC-07B Employee Request Review
-```
 
 Required behavior / guarantee:
 
@@ -374,21 +292,9 @@ REQ-LC-006
 REQ-IBS-002
 ```
 
-Draft must explain:
-
-```text
-- how rejection command relates to request lifecycle;
-- whether rejection feedback is mandatory;
-- how rejection feedback is kept consistent with Rejected status.
-```
+Draft must explain rejection lifecycle, whether rejection feedback is mandatory, and feedback/status consistency.
 
 ### 5.8 DOC-CMD-ATTACH-001 — Attach request document
-
-Source:
-
-```text
-SC-11 Request Documents
-```
 
 Required behavior / guarantee:
 
@@ -403,20 +309,7 @@ Invalid/rejected document is not attached.
 Physical file/blob storage failure does not create accepted domain attachment state.
 ```
 
-Draft must explain:
-
-```text
-- whether request document attachment is part of current request model;
-- what domain state is a document reference/metadata versus infrastructure file/blob content.
-```
-
 ### 5.9 AGR-CMD-EMP-SEND-001 — Employee sends first agreement proposal
-
-Source:
-
-```text
-SC-13D Employee Agreement Proposal Create / Send Version
-```
 
 Required behavior / guarantee:
 
@@ -441,21 +334,9 @@ AGR-VI-001
 AGR-VI-002
 ```
 
-Draft must explain:
-
-```text
-- how first employee proposal is represented;
-- how proposal is related to Approved request;
-- how proposal status AwaitingClientConfirmation is established.
-```
+Draft must explain first employee proposal representation, Approved request condition and AwaitingClientConfirmation status.
 
 ### 5.10 AGR-CMD-CLIENT-ACCEPT-001 — Client accepts proposal
-
-Source:
-
-```text
-SC-13B Agreement Proposal Details / Response
-```
 
 Required behavior / guarantee:
 
@@ -477,20 +358,7 @@ AGR-LC-004
 AGR-LC-005
 ```
 
-Draft must explain:
-
-```text
-- how proposal acceptability is represented;
-- how accepted state affects future actions in core.
-```
-
 ### 5.11 AGR-CMD-CLIENT-SEND-001 — Client sends own proposal version
-
-Source:
-
-```text
-SC-13B Agreement Proposal Details / Response
-```
 
 Required behavior / guarantee:
 
@@ -514,26 +382,12 @@ AGR-VI-001
 AGR-VI-002
 ```
 
-Draft must explain:
-
-```text
-- how client response is represented;
-- how one-own-version core limit is enforced;
-- how client response remains tied to employee proposal/exchange.
-```
-
 ### 5.12 AGR-CMD-EMP-NEW-001 — Employee sends new version after client proposal
-
-Source:
-
-```text
-SC-13D Employee Agreement Proposal Create / Send Version
-```
 
 Required behavior / guarantee:
 
 ```text
-Employee can respond to a client-sent proposal version by sending a new employee proposal version; the previous client-sent proposal becomes Rejected in core.
+Employee can respond to a client-sent proposal version by sending a new employee proposal version; the previous client-sent proposal becomes superseded/replaced by counterproposal.
 ```
 
 Failure / no-write guarantee:
@@ -552,20 +406,9 @@ AGR-VI-001
 AGR-VI-002
 ```
 
-Draft must explain:
-
-```text
-- how proposal version sequence/replacement is represented;
-- how previous client proposal becomes Rejected when employee sends a new version.
-```
+Draft must explain proposal version sequence/replacement and how previous client proposal becomes `SupersededByCounterProposal` when employee sends a new version.
 
 ### 5.13 VER-CMD-START-001 — Start request-context verification
-
-Source:
-
-```text
-SC-14 Client Data Verification
-```
 
 Required behavior / guarantee:
 
@@ -580,20 +423,7 @@ Verification cannot start without request context.
 Standalone ApplicantData edit/save does not create verification state.
 ```
 
-Draft must explain:
-
-```text
-- whether verification is deferred;
-- if modeled, where request-context verification result belongs.
-```
-
 ### 5.14 ANON-CMD-SUBMIT-001 — Submit anonymous request/contact
-
-Source:
-
-```text
-SC-17 Anonymous Request
-```
 
 Required behavior / guarantee:
 
@@ -605,13 +435,6 @@ Failure / no-write guarantee:
 
 ```text
 Invalid contact/request data is not recorded.
-```
-
-Draft must explain:
-
-```text
-- whether this becomes AnonymousRequest, ContactRequest or DraftRequest;
-- whether it is deferred from current core.
 ```
 
 ## 6. Scenario State / Condition Matrices
@@ -665,26 +488,31 @@ Rejected
 Lifecycle concept:
 
 ```text
-Agreement proposal status
+Agreement proposal status / lifecycle term
 ```
 
-Known scenario states:
+Known scenario states / terms:
 
 ```text
 AwaitingClientConfirmation
 SentByClient
+SupersededByCounterProposal
 Accepted
 Rejected
 ```
+
+`Rejected` means explicit rejection/decline only.
+
+`SupersededByCounterProposal` means a proposal version was replaced by the opposite party's counterproposal.
 
 | ID | Current condition | Scenario action | Result condition | Allowed? | Required behavior / guarantee | Failure / no-write guarantee | Draft must explain |
 |---|---|---|---|---|---|---|
 | AGR-LC-001 | no exchange/proposal for approved request | employee sends first proposal | employee proposal AwaitingClientConfirmation | Yes | First employee proposal starts exchange and awaits client confirmation. | No proposal created if request is not Approved or input invalid. | How proposal exchange starts and how request condition is checked. |
 | AGR-LC-002 | employee proposal AwaitingClientConfirmation | client accepts | proposal Accepted | Yes | Client can accept active employee proposal. | Wrong status/context remains unchanged. | How acceptability is checked. |
-| AGR-LC-003 | employee proposal AwaitingClientConfirmation | client sends own version | client proposal SentByClient | Yes | Client can send own version in response. | Wrong status/context/input creates no client version. | How client response is represented. |
+| AGR-LC-003 | employee proposal AwaitingClientConfirmation | client sends own version | previous employee proposal SupersededByCounterProposal + client proposal SentByClient | Yes | Client can send own version in response; previous active employee version is superseded/replaced. | Wrong status/context/input creates no client version and leaves previous proposal unchanged. | How client response and replacement are represented. |
 | AGR-LC-004 | proposal Accepted | client accepts/sends own version | unchanged | No | Accepted proposal has no response actions in core. | Status unchanged; no new proposal. | How final/inactive proposal actions are prevented. |
-| AGR-LC-005 | proposal Rejected | client accepts/sends own version | unchanged | No | Rejected proposal has no response actions in core. | Status unchanged; no new proposal. | How inactive proposal actions are prevented. |
-| AGR-LC-007 | client proposal SentByClient | employee sends new version | previous client proposal Rejected + new employee proposal AwaitingClientConfirmation | Yes | Employee new version rejects/replaces previous client proposal. | Invalid previous state/input leaves previous proposal unchanged and no new proposal. | How version replacement/status update is represented. |
+| AGR-LC-005 | proposal Rejected | client accepts/sends own version | unchanged | No | Explicitly rejected proposal has no response actions in core. | Status unchanged; no new proposal. | How explicit rejection/inactive proposal actions are prevented. |
+| AGR-LC-007 | client proposal SentByClient | employee sends new version | previous client proposal SupersededByCounterProposal + new employee proposal AwaitingClientConfirmation | Yes | Employee new version supersedes/replaces previous client proposal. | Invalid previous state/input leaves previous proposal unchanged and no new proposal. | How version replacement/status update is represented. |
 
 ### 6.3 Client own proposal count/limit condition
 
@@ -730,6 +558,7 @@ What business-invalid combination of data/state must never exist?
 | AGR-IBS-001 | Agreement proposal without sender. | SC-13A..SC-13D | Proposal flow depends on who sent version: employee or client. | Invalid proposal input creates no proposal. | How sender/source is represented. |
 | AGR-IBS-002 | Agreement proposal without attached document/file. | SC-13B / SC-13D | Core proposal is a concrete agreement document/version. | Missing document creates no proposal. | How proposal document/reference is represented. |
 | AGR-IBS-003 | Client-started agreement exchange without employee proposal. | SC-13B / SC-13D | Core exchange starts only by employee. | Client cannot create first proposal. | How exchange start is constrained. |
+| AGR-IBS-004 | Proposal replacement represented as ordinary rejection without explicit decline. | SC-13B / SC-13D / AGR-001 | Replacement and rejection are different business meanings. | Counterproposal replacement should preserve replacement semantics. | How `SupersededByCounterProposal` differs from `Rejected`. |
 
 ## 8. Value Integrity / Anti-Primitive-Obsession Items
 

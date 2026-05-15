@@ -55,7 +55,7 @@ Visible DATA:
 Visible DATA after employee sends new version:
 
 ```text
-- previous client-sent proposal status = Rejected;
+- previous client-sent proposal status/lifecycle term = SupersededByCounterProposal;
 - new employee proposal status = AwaitingClientConfirmation.
 ```
 
@@ -76,7 +76,8 @@ Notes:
 ```text
 Agreement proposal exchange starts only by employee action on an Approved request.
 Employee and client proposal submissions both include file/document and text details/comment.
-When employee sends a new version in response to a client-sent proposal, the previous client-sent proposal becomes Rejected.
+When employee sends a new version in response to a client-sent proposal, the previous client-sent proposal is superseded/replaced by counterproposal.
+Do not describe or draw this replacement as ordinary Rejected unless there is an explicit rejection/decline action.
 ```
 
 Scenario spec references:

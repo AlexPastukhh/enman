@@ -380,7 +380,7 @@ Server-side / domain validation:
 ```text
 - My Agreements list must be scoped to current client ownership;
 - client can view only own agreement proposals;
-- agreement proposal status must be supported domain status;
+- agreement proposal status/lifecycle term must be supported;
 - proposal must be related to Approved request accessible to client.
 ```
 
@@ -477,7 +477,7 @@ Server-side / domain validation:
 - employee-sent proposal must include text details/comment if required by domain rule;
 - initial employee-sent proposal receives status AwaitingClientConfirmation;
 - employee can send new version in response to client-sent proposal;
-- when employee sends new version, previous client-sent proposal becomes Rejected;
+- when employee sends new version, previous client-sent proposal becomes SupersededByCounterProposal / superseded by counterproposal;
 - client cannot start agreement proposal exchange.
 ```
 

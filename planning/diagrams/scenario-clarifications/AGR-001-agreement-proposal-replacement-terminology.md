@@ -60,14 +60,17 @@ replaced by employee counterproposal
 замещён встречным вариантом сотрудника
 ```
 
-## 5. Source Summary Cleanup
+## 5. Source Summary And Detailed Source Cleanup
 
-The current source-summary direction is:
+The current source direction is:
 
 ```text
-- scenario text/DATA summaries should use superseded/replaced wording for replacement;
-- Rejected should remain only for explicit rejection/decline;
-- diagram generation should not treat old Rejected-for-replacement wording as a valid source of truth.
+- scenario text/DATA summaries use superseded/replaced wording for replacement;
+- detailed SC-13B/SC-13D text specs use superseded/replaced wording for replacement;
+- detailed SC-13B/SC-13D DATA specs expose SupersededByCounterProposal as a status/lifecycle term;
+- validation and pre-domain behavior baseline use superseded/replaced wording for counterproposal replacement;
+- Rejected remains only for explicit rejection/decline;
+- diagram generation must not treat old Rejected-for-replacement wording as a valid source of truth.
 ```
 
 If any remaining scenario text file, DATA file, behavior item, lifecycle note or old prompt still says `Rejected` for replacement/counterproposal:
@@ -89,22 +92,26 @@ If any remaining scenario text file, DATA file, behavior item, lifecycle note or
 
 ## 7. Source Cleanup Targets
 
-Current cleanup should cover source-summary files used by diagram preflight:
+Current cleanup covers the source-summary and detailed source files used by diagram preflight:
 
 ```text
 planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
 planning/diagrams/scenario-data/00-scenario-data-index.md
 planning/diagrams/scenario-questions-register.md
+planning/diagrams/scenario-text-specs/SC-13B-agreement-proposal-details-response.md
+planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
+planning/diagrams/scenario-data/SC-13B-agreement-proposal-details-response-data.md
+planning/diagrams/scenario-data/SC-13D-employee-agreement-proposal-create-response-data.md
+planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+planning/tables/pre-domain-variants-input.md
 ```
 
-Later cleanup should still check detailed sources when agreement implementation planning starts:
+Later cleanup should still check additional detailed sources when agreement implementation planning starts:
 
 ```text
-SC-13B agreement proposal response spec
-SC-13D agreement proposal create/send version spec
-agreement proposal behavior items
-agreement proposal lifecycle notes
-domain draft notes if they contain Rejected for replacement
+agreement proposal behavior items, if created later
+agreement proposal lifecycle notes, if created later
+domain implementation slice notes if they contain Rejected for replacement
 old diagram prompts that mention agreement proposal lifecycle
 ```
 

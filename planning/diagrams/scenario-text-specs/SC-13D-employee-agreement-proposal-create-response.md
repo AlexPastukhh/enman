@@ -90,7 +90,7 @@ Visible DATA after submit:
 -> previous proposal status = SentByClient  
 -> employee attaches new document and text details/comment  
 -> employee submits new employee version  
--> previous client-sent proposal becomes Rejected  
+-> previous client-sent proposal becomes SupersededByCounterProposal  
 -> new employee proposal status = AwaitingClientConfirmation
 
 ### Request is not Approved
@@ -115,7 +115,9 @@ Client cannot start agreement proposal exchange without an employee-sent proposa
 
 Employee-sent proposal must include attached agreement document/version and text details/comment.
 
-When employee sends a new version in response to a client-sent proposal, the previous client-sent proposal becomes Rejected.
+When employee sends a new version in response to a client-sent proposal, the previous client-sent proposal is superseded/replaced by the employee counterproposal.
+
+The previous client-sent proposal must not be treated as ordinary `Rejected` unless there is a separate explicit rejection/decline action.
 
 ## Outcomes
 
@@ -123,4 +125,4 @@ When employee sends a new version in response to a client-sent proposal, the pre
 - Employee can send agreement document/version with text details/comment.
 - Client can see employee-sent proposal in My Agreements.
 - Employee can respond to client-sent proposal by sending a new version.
-- Client-sent proposal is rejected/replaced when employee sends a new version.
+- Client-sent proposal is superseded/replaced by the employee counterproposal when employee sends a new version.

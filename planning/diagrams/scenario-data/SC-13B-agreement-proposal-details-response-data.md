@@ -14,19 +14,30 @@ Visible DATA:
 - related Approved request;
 - agreement proposal summary/name;
 - sender: employee or client;
-- agreement proposal status;
+- agreement proposal status / lifecycle term;
 - text details/comment sent with proposal;
 - attached agreement document/file;
 - available client action for current status.
 ```
 
-Core statuses:
+Diagram-safe status / lifecycle terms:
 
 ```text
 - AwaitingClientConfirmation;
 - SentByClient;
+- SupersededByCounterProposal;
 - Accepted;
 - Rejected.
+```
+
+Status meaning:
+
+```text
+Rejected
+= explicit rejection/decline of a proposal.
+
+SupersededByCounterProposal
+= proposal is no longer current because another party sent a replacing counterproposal.
 ```
 
 Future statuses:
@@ -35,7 +46,6 @@ Future statuses:
 [VAR:EXPAND]
 - Signed;
 - Expired;
-- Superseded;
 - Cancelled.
 ```
 
@@ -74,7 +84,9 @@ Notes:
 Accept/confirm is scenario branch/action, not DATA subtype.
 Client can send only one own proposal version in response to an employee-sent proposal in core.
 Client cannot start agreement proposal exchange without an employee-sent proposal.
-The key agreement proposal DATA for flow is sender + status + attached document + text details/comment.
+The key agreement proposal DATA for flow is sender + status/lifecycle term + attached document + text details/comment.
+Rejected is only explicit rejection/decline.
+Superseded/replaced-by-counterproposal is represented as SupersededByCounterProposal, not Rejected.
 ```
 
 Scenario spec references:
