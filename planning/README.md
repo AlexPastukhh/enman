@@ -6,9 +6,8 @@ Scope: repository planning artifacts and read order
 ## 1. Current Active Planning Focus
 
 ```text
-Cross-cutting/helper slice workflow,
-CC-CONST-001 as the implementation-ready constants generation/testing slice,
-and API/client contract support.
+Testing workflow and E2E Playwright workflow,
+while keeping CC-CONST-001 as the implementation-ready constants generation/testing cross-cutting slice.
 ```
 
 Do not create `.client.md` files in advance.
@@ -28,32 +27,55 @@ Do not create full numbered ADRs unless explicitly requested.
 7. planning/adr/architecture-decision-notes.md
 8. planning/adr/adr-candidates.md
 
-9. planning/api/README.md
-10. planning/api/api-error-contract.md
-11. planning/api/api-error-mapping-boundary.md
-12. planning/api/openapi-contract-generation.md
-13. planning/api/client-constants-generation.md
-14. planning/api/fluentvalidation-error-code-policy-note.md
+9. planning/testing/README.md
+10. planning/testing/testing-principles.md
+11. planning/testing/e2e-playwright-workflow.md
+12. planning/testing/test-object-patterns.md
+13. planning/testing/playwright-e2e-cleanup-plan.md
 
-15. planning/scenario-specification-principles.md
-16. planning/scenario-domain-validation-principles.md
-17. planning/diagrams/README.md
-18. planning/client/README.md
-19. planning/client/cross-cutting/README.md
+14. planning/api/README.md
+15. planning/api/api-error-contract.md
+16. planning/api/api-error-mapping-boundary.md
+17. planning/api/openapi-contract-generation.md
+18. planning/api/client-constants-generation.md
+19. planning/api/fluentvalidation-error-code-policy-note.md
 
-20. planning/slices/README.md
-21. planning/slices/cross-cutting/README.md
-22. planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
-23. planning/slices/l1-slice-drafting-guide.md
-24. planning/slices/implementation-principles.md
-25. planning/slices/client-architecture-principles.md
-26. planning/slices/client-component-discovery-guide.md
-27. planning/slices/change-extension-points-principles.md
-28. planning/slices/slice-extension-points-register.md
-29. planning/replacement-file-generation-guide.md
+20. planning/scenario-specification-principles.md
+21. planning/scenario-domain-validation-principles.md
+22. planning/diagrams/README.md
+23. planning/client/README.md
+24. planning/client/cross-cutting/README.md
+
+25. planning/slices/README.md
+26. planning/slices/cross-cutting/README.md
+27. planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
+28. planning/slices/l1-slice-drafting-guide.md
+29. planning/slices/implementation-principles.md
+30. planning/slices/client-architecture-principles.md
+31. planning/slices/client-component-discovery-guide.md
+32. planning/slices/change-extension-points-principles.md
+33. planning/slices/slice-extension-points-register.md
+34. planning/replacement-file-generation-guide.md
 ```
 
-## 3. Cross-Cutting And Helper Slices
+## 3. Testing Direction
+
+Use:
+
+```text
+planning/testing/
+```
+
+for cross-slice testing principles, E2E Playwright workflow, Page Object / Component Object rules and Playwright cleanup plan.
+
+Key current decision:
+
+```text
+E2E tests prove cross-layer browser-client-server wiring.
+Detailed client-visible UI behavior belongs to client/component tests.
+```
+
+## 4. Cross-Cutting And Helper Slices
 
 Use:
 
@@ -71,7 +93,7 @@ planning/slices/shared/
 
 for reusable notes/helpers that do not have full slice behavior/test flow.
 
-## 4. Constants Direction
+## 5. Constants Direction
 
 Primary source for constants writer/checker/testing:
 
@@ -85,12 +107,11 @@ API relationship note:
 planning/api/client-constants-generation.md
 ```
 
-## 5. Current Next Step
+## 6. Current Next Step
 
 ```text
-1. Apply this archive.
-2. Use CC-CONST-001 as implementation plan for EnergyManagement.Tools constants generator/checker/tests.
-3. Use generated JSON for ordinary API integration error-code expectations.
-4. Use literal integration tests only for critical behavioral codes.
-5. Keep class/method details inside flow only when they clarify behavior.
+1. Apply this testing/E2E workflow archive.
+2. Use planning/testing/e2e-playwright-workflow.md before changing Playwright code.
+3. Then implement Playwright cleanup from planning/testing/playwright-e2e-cleanup-plan.md.
+4. Keep E2E focused on cross-layer communication, not exhaustive UI behavior.
 ```

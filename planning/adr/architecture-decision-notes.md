@@ -3,7 +3,20 @@
 Status: active accepted-decision registry  
 Scope: current accepted architecture decisions that guide planning/implementation and may support diploma text
 
-## Cross-Cutting / Constants Decisions
+## 1. Testing / E2E Decisions
+
+| ID | Decision | Current accepted direction | Rationale / trade-off | Affected artifacts | ADR promotion |
+|---|---|---|---|---|---|
+| ADN-063 | Testing responsibility split | Domain unit, server integration/API, client/component and E2E tests have separate responsibilities. | Prevents E2E from becoming slow duplicated component/server testing. | `planning/testing/testing-principles.md` | Candidate |
+| ADN-064 | E2E scope | E2E verifies browser -> client -> HTTP API -> server/persistence/session -> visible outcome wiring, not exhaustive client-visible UI behavior. | Keeps E2E focused on cross-layer confidence; detailed UI remains in component tests. | `planning/testing/e2e-playwright-workflow.md` | Likely ADR |
+| ADN-065 | Playwright explicit webServer startup | Playwright should explicitly start backend and frontend through webServer. | Removes manual startup ambiguity and makes E2E workflow reproducible. | Playwright config, testing workflow | Candidate |
+| ADN-066 | E2E frontend-origin/proxy strategy | Browser opens frontend origin, client uses relative `/api`, Vite proxy forwards to backend. | Avoids browser CORS in dev E2E and matches current Vite setup. | Vite, Playwright, E2E docs | Candidate |
+| ADN-067 | Locator strategy | Use role/label-first locators, native semantics first, explicit ARIA only when needed. | Improves accessibility, test readability and locator stability. | A11Y docs, E2E docs, client tests | Candidate |
+| ADN-068 | Playwright exact matching policy | Use `{ exact: true }` or escaped anchored regex; do not build raw regex from UI text. | Playwright name matching defaults differ from Testing Library; raw regex can break literal text matching. | E2E helpers, locator docs | Candidate |
+| ADN-069 | Page Object vs Component Object split | E2E Page Objects are thin/stateless by default and receive scenario data in action methods; Component Objects may expose detailed UI state helpers. | Keeps E2E readable as scenario flow and keeps UI-detail checks in component tests. | E2E tests, client/component tests | Candidate |
+| ADN-070 | Current Playwright cleanup direction | Move to root Playwright config, root `tests/e2e`, webServer backend+frontend, unique data, simplified E2E assertions. | Aligns repo with E2E responsibility and existing root tests. | `planning/testing/playwright-e2e-cleanup-plan.md` | Candidate |
+
+## 2. Cross-Cutting / Constants Decisions
 
 | ID | Decision | Current accepted direction | Rationale / trade-off | Affected artifacts | ADR promotion |
 |---|---|---|---|---|---|
@@ -13,7 +26,7 @@ Scope: current accepted architecture decisions that guide planning/implementatio
 | ADN-061 | Cross-cutting/helper slices are allowed | Technical/support work with behavior, implementation flow and tests can be documented as cross-cutting/helper slice. | Avoids burying implementation-ready support work in generic workflow notes. | slice workflow docs | Candidate |
 | ADN-062 | Implementation flow detail filter | Include classes/methods/code snippets only for key decisions/boundaries/non-obvious behavior; keep routine code high-level. | Keeps slice files readable while still useful for diploma/implementation. | slice docs, client docs, cross-cutting slices | Candidate |
 
-## Existing API/Contract Decisions Referenced By CC-CONST
+## 3. Existing API/Contract Decisions Referenced By Testing
 
 | ID | Decision | Current accepted direction |
 |---|---|---|

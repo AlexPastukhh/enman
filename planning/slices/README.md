@@ -1,7 +1,7 @@
 # Slice Planning Index
 
 Status: current slice-planning navigation index  
-Scope: business slices, client sidecars, cross-cutting/helper slices, client architecture, extension/change points and implementation notes
+Scope: business slices, client sidecars, cross-cutting/helper slices, test planning, client architecture, extension/change points and implementation notes
 
 ## 1. Purpose
 
@@ -39,7 +39,25 @@ planning/slices/shared/README.md
 planning/slices/cross-cutting/README.md
 ```
 
-## 4. Cross-Cutting / Helper Slices
+## 4. Testing Support
+
+Testing workflow lives in:
+
+```text
+planning/testing/
+```
+
+Use it when planning:
+
+```text
+client/component tests
+server integration/API tests
+end-to-end tests
+Playwright cleanup
+Page Object / Component Object decisions
+```
+
+## 5. Cross-Cutting / Helper Slices
 
 Use:
 
@@ -64,7 +82,7 @@ Cross-cutting/helper slices must have:
 - ADR impact.
 ```
 
-## 5. Shared Notes
+## 6. Shared Notes
 
 Use:
 
@@ -74,7 +92,7 @@ planning/slices/shared/
 
 for reusable notes/helpers that do not have a full slice behavior/test flow.
 
-## 6. Parent Slice Files
+## 7. Parent Slice Files
 
 Parent business slice files own:
 
@@ -87,11 +105,14 @@ Parent business slice files own:
 - extension/change/pressure decisions;
 - application/domain/persistence responsibilities;
 - server/integration tests;
+- end-to-end test coverage summary when relevant;
 - link to `.client.md` sidecar when client work starts.
 ```
 
-## 7. Client Sidecar Files
+## 8. Client Sidecar Files
 
 A `.client.md` file is created only when concrete client work starts.
 
-It owns detailed client implementation planning and client tests.
+It owns detailed client implementation planning and client/component tests.
+
+It should include E2E coverage only for cross-layer behavior that truly needs browser-client-server wiring.

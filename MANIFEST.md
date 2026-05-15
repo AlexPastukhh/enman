@@ -1,9 +1,12 @@
-# Manifest — enman-cross-cutting-constants-slice-workflow-v1
+# Manifest — enman-testing-e2e-playwright-workflow-v1
 
 ## Add
 
-- planning/slices/cross-cutting/README.md
-- planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
+- planning/testing/README.md
+- planning/testing/testing-principles.md
+- planning/testing/e2e-playwright-workflow.md
+- planning/testing/test-object-patterns.md
+- planning/testing/playwright-e2e-cleanup-plan.md
 
 ## Replace
 
@@ -14,12 +17,10 @@
 - planning/slices/README.md
 - planning/slices/l1-slice-drafting-guide.md
 - planning/slices/implementation-principles.md
-- planning/api/README.md
-- planning/api/client-constants-generation.md
+- planning/client/cross-cutting/CL-A11Y-001-accessibility-and-aria.md
 - planning/adr/architecture-decision-notes.md
 - planning/adr/adr-candidates.md
-- planning/constants/README.md
 
-## Optional manual cleanup
+## Delete
 
-- If older `planning/constants/*.md` files from the previous constants archive exist, keep only `planning/constants/README.md` or treat old detailed files as superseded by `CC-CONST-001`.
+- nothing

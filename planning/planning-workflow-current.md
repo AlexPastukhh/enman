@@ -5,11 +5,74 @@ Status: current workflow
 ## 1. Current Point
 
 ```text
-Client constants generation/testing is treated as a cross-cutting slice,
-not merely as workflow notes or an API reference.
+Testing workflow and E2E Playwright workflow are being introduced before changing Playwright code.
 ```
 
-## 2. Cross-Cutting Slice Workflow
+## 2. Testing Workflow Gate
+
+When planning or implementing a slice, classify test coverage by layer:
+
+```text
+Domain unit tests
+Server integration/API tests
+Client/component tests
+End-to-end tests
+```
+
+Use:
+
+```text
+planning/testing/testing-principles.md
+```
+
+Do not push detailed client-visible UI behavior into E2E when component/client tests are the correct layer.
+
+## 3. E2E Gate
+
+When a slice needs E2E coverage, read:
+
+```text
+planning/testing/e2e-playwright-workflow.md
+planning/testing/test-object-patterns.md
+```
+
+E2E must prove cross-layer flow:
+
+```text
+browser -> client -> HTTP API -> server/application/domain/persistence/session -> visible outcome
+```
+
+E2E should not exhaustively prove:
+
+```text
+field validation matrix
+ARIA field relations
+disabled-state matrix
+client error parser details
+```
+
+## 4. Playwright Infrastructure Gate
+
+Before changing Playwright config/tests, read:
+
+```text
+planning/testing/playwright-e2e-cleanup-plan.md
+```
+
+Current target:
+
+```text
+- root playwright.config.ts;
+- testDir: ./tests/e2e;
+- explicit webServer backend + frontend;
+- headless by default;
+- root npm scripts;
+- role/label-first locators;
+- unique test data;
+- E2E Page Objects thin and mostly stateless.
+```
+
+## 5. Cross-Cutting Slice Workflow
 
 When work is not a business scenario slice but has observable support behavior, implementation flow and tests, use a cross-cutting/helper slice.
 
@@ -23,7 +86,7 @@ cross-cutting/helper behavior
 -> ADR impact
 ```
 
-## 3. Constants Gate
+## 6. Constants Gate
 
 When a slice introduces client-facing constants/error codes:
 
@@ -42,7 +105,7 @@ When a slice introduces client-facing constants/error codes:
 7. Run generate-client-constants --check.
 ```
 
-## 4. Implementation Flow Detail Rule
+## 7. Implementation Flow Detail Rule
 
 Implementation flow must not become a full code listing.
 
@@ -67,8 +130,8 @@ If details dominate the flow, extract them into a sibling `.impl.md`.
 
 Do not create `.impl.md` in advance.
 
-## 5. Current Next Step
+## 8. Current Next Step
 
 ```text
-Implement or prompt implementation of CC-CONST-001 only after this docs package is applied.
+After this docs update, implement Playwright cleanup according to planning/testing/playwright-e2e-cleanup-plan.md.
 ```
