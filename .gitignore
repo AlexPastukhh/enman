@@ -64,7 +64,7 @@ tmp/
 
 # Generated documentation
 _site/
-api/
+/api/
 
 # Visual Studio user files
 *.csproj.user
