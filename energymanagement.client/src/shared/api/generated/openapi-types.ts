@@ -298,8 +298,17 @@ export interface components {
             apartment?: string | null;
         };
         L1CreateConnectionRequestDto: {
+            /** Format: int64 */
+            applicantPartyId?: number;
             details?: string | null;
             address?: components["schemas"]["L1AddressDto"];
+        };
+        L1CreateConnectionRequestResponse: {
+            /** Format: int64 */
+            requestId?: number;
+            /** Format: int64 */
+            applicantPartyId?: number;
+            status?: string | null;
         };
         L1CreateIndividualApplicantPartyDto: {
             fullName?: components["schemas"]["L1FullNameDto"];
@@ -659,7 +668,11 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "text/plain": components["schemas"]["L1CreateConnectionRequestResponse"];
+                    "application/json": components["schemas"]["L1CreateConnectionRequestResponse"];
+                    "text/json": components["schemas"]["L1CreateConnectionRequestResponse"];
+                };
             };
             /** @description Unauthorized */
             401: {
