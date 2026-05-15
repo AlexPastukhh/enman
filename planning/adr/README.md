@@ -1,122 +1,116 @@
 # Architecture Decision Records Index
 
 Status: current ADR planning entry point  
-Scope: ADR candidates, accepted architecture decision notes and future architecture decision records
+Scope: accepted architecture decision notes, ADR candidates and future full ADRs
 
 ## 1. Purpose
 
-This folder collects architecture decisions and ADR candidates discovered during domain drafting, slice drafting, client planning and implementation planning.
+This folder captures architecture decisions discovered during domain drafting, slice drafting, client planning and implementation planning.
 
-ADR documentation is useful because planning and architectural reasoning are part of the project value and can support diploma explanation.
+Full numbered ADRs are not being created yet unless explicitly requested.
 
-## 2. Current ADR Files
+## 2. Files
 
 ```text
 planning/adr/README.md
 planning/adr/adr-workflow.md
+planning/adr/architecture-decision-notes.md
 planning/adr/adr-candidates.md
-planning/adr/architecture-decision-notes.md
 ```
 
-## 3. Current ADR Workflow
+## 3. What Is What
 
-Use three levels:
+### Architecture decision notes
 
-```text
-1. ADR candidate
-   A decision may matter enough to document formally later.
-
-2. Architecture decision note
-   A decision is accepted/current enough to guide planning,
-   but is not yet a full numbered ADR.
-
-3. Full numbered ADR
-   A stable important decision is documented formally.
-```
-
-Start with candidates and decision notes.
-
-Do not create numbered ADRs until explicitly requested.
-
-## 4. When To Add An ADR Candidate
-
-Add a candidate when a decision:
-
-```text
-- affects multiple slices;
-- changes layer boundaries;
-- has meaningful alternatives;
-- is useful for diploma architecture explanation;
-- is expensive to change later;
-- introduces a plugin/external provider boundary;
-- decides read model vs write model duplication;
-- decides transaction boundaries between aggregates;
-- changes auth/framework placement;
-- changes testing strategy or delivery workflow;
-- changes client-wide UI/testing conventions;
-- introduces change/extension/extension-pressure strategy.
-```
-
-## 5. When To Add A Decision Note
-
-Add/update a note in:
+File:
 
 ```text
 planning/adr/architecture-decision-notes.md
 ```
 
-when a decision:
+Meaning:
 
 ```text
-- was discussed and accepted;
-- is already used by planning;
-- has rationale/trade-off worth preserving;
-- should be visible for future agents;
+accepted/current decisions that guide planning and implementation now.
+```
+
+Use this file before making implementation/slice/client decisions.
+
+### ADR candidates
+
+File:
+
+```text
+planning/adr/adr-candidates.md
+```
+
+Meaning:
+
+```text
+promotion backlog for decisions that may later become full numbered ADRs.
+```
+
+Candidates are not the primary guiding source.
+
+### Full numbered ADRs
+
+Pattern:
+
+```text
+planning/adr/ADR-0001-title.md
+```
+
+Meaning:
+
+```text
+formal architecture decision records.
+```
+
+Do not create full numbered ADRs unless explicitly requested.
+
+## 4. Source Priority
+
+```text
+1. Full numbered ADR, if present.
+2. architecture-decision-notes.md.
+3. Local slice/domain/client decision sections.
+4. adr-candidates.md as promotion backlog.
+```
+
+If candidate and note conflict, stop and clarify.
+
+## 5. When To Update Decision Notes
+
+Update `architecture-decision-notes.md` when a decision:
+
+```text
+- is accepted/current enough to guide planning;
+- has meaningful alternatives or trade-off;
+- affects multiple slices or layers;
+- should not remain only in chat/local file;
 - may be useful in diploma text.
 ```
 
-## 6. Full ADR Format Later
+## 6. When To Update Candidates
 
-When promoted, a full ADR should include:
+Update `adr-candidates.md` when a decision:
 
 ```text
-Title
-Status
-Context
-Decision
-Options considered
-Consequences
-Affected scenarios/slices
-Tests / verification
-Links to planning artifacts
-Open follow-up questions
+- may deserve a full numbered ADR later;
+- is architecturally significant;
+- affects multiple slices/layers;
+- is expensive to change;
+- has useful alternatives/consequences for diploma.
 ```
 
-## 7. Relationship To Slice Planning
+## 7. Agent Rule
 
-Slice planning should collect ADR candidates and decision notes whenever a slice reveals a cross-cutting decision.
-
-Examples:
+Agents must report ADR impact in planning/archive/implementation responses when relevant:
 
 ```text
-external verification provider as plugin slice
-read projection instead of duplicating ClientAccountId in write aggregate
-final agreement refusal requiring request-level outcome
-auth activation guard placement
-client sidecar architecture mapping
-extension pressure / anti-coupling decision
-```
-
-## 8. Agent Rules
-
-Agents should:
-
-```text
-- not write full numbered ADRs unless explicitly asked;
-- add/update candidates when a decision affects multiple slices or architecture boundaries;
-- add/update decision notes when a discussed decision becomes current direction;
-- avoid turning every minor naming choice into an ADR;
-- link candidates/notes to scenarios/slices when possible;
-- keep ADR candidates and notes readable for diploma explanation;
-- include ADR impact in archive summaries and implementation prompts when relevant.
+ADR impact:
+- no ADR update needed
+- decision note added/updated
+- candidate added/updated
+- full ADR promotion proposed
 ```

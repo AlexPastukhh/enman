@@ -1,13 +1,14 @@
-# Manifest — enman-adr-decision-capture-workflow-v1
+# Manifest — enman-adr-decision-notes-audit-v1
 
 ## Add
 
-- planning/adr/adr-workflow.md
-- planning/adr/architecture-decision-notes.md
+- planning/adr/decision-capture-audit.md
 
 ## Replace
 
 - planning/adr/README.md
+- planning/adr/adr-workflow.md
+- planning/adr/architecture-decision-notes.md
 - planning/adr/adr-candidates.md
 - planning/planning-agent-protocol.md
 - planning/README.md

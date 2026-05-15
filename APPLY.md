@@ -3,27 +3,28 @@
 Archive:
 
 ```text
-enman-adr-decision-capture-workflow-v1.zip
+enman-adr-decision-notes-audit-v1.zip
 ```
 
 Apply from repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-adr-decision-capture-workflow-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-adr-decision-notes-audit-v1.zip" -DestinationPath . -Force
 git status
 ```
 
 ## Add
 
 ```text
-planning/adr/adr-workflow.md
-planning/adr/architecture-decision-notes.md
+planning/adr/decision-capture-audit.md
 ```
 
 ## Replace
 
 ```text
 planning/adr/README.md
+planning/adr/adr-workflow.md
+planning/adr/architecture-decision-notes.md
 planning/adr/adr-candidates.md
 planning/planning-agent-protocol.md
 planning/README.md
@@ -39,18 +40,13 @@ nothing
 
 ## Notes
 
-This package strengthens ADR workflow and captures accepted architecture decisions with rationale.
+This package does not create full numbered ADRs.
 
-It adds:
-- ADR workflow levels: candidate, accepted decision note, full ADR;
-- accepted architecture decision notes for discussed/current decisions;
-- expanded ADR candidates;
-- ADR capture rule in agent protocol;
-- ADR gate in current workflow;
-- ADR responsibility rules.
+It makes the distinction explicit:
 
-It does not:
-- create full numbered ADRs;
-- change code/API/domain/tests;
-- create `.client.md`;
-- change scenario/domain behavior.
+```text
+architecture-decision-notes.md = accepted/current decisions guiding planning.
+adr-candidates.md = backlog of possible future full ADRs.
+```
+
+It also performs a decision-capture audit over current planning docs and expands accepted decision notes.

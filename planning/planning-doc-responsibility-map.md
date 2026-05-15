@@ -38,7 +38,7 @@ File:
 planning/adr/README.md
 ```
 
-Owns ADR folder navigation and high-level ADR workflow.
+Owns ADR folder navigation and high-level distinction between decision notes, candidates and full ADRs.
 
 ### ADR workflow
 
@@ -51,22 +51,13 @@ planning/adr/adr-workflow.md
 Owns:
 
 ```text
-- when to create candidate;
-- when to create decision note;
-- when to promote to full ADR;
-- ADR templates;
+- decision documentation levels;
+- source priority;
+- when to create/update notes;
+- when to create/update candidates;
+- when to promote full ADR;
 - agent ADR capture rules.
 ```
-
-### ADR candidates
-
-File:
-
-```text
-planning/adr/adr-candidates.md
-```
-
-Owns possible/future full ADR candidates and open/semi-stable architecture decisions.
 
 ### Architecture decision notes
 
@@ -76,7 +67,21 @@ File:
 planning/adr/architecture-decision-notes.md
 ```
 
-Owns accepted/current architecture decisions with rationale that are not yet full numbered ADRs.
+Owns accepted/current architecture decisions that guide planning and implementation.
+
+This is the guiding decision registry until full numbered ADRs are created.
+
+### ADR candidates
+
+File:
+
+```text
+planning/adr/adr-candidates.md
+```
+
+Owns possible/future full ADR candidates and promotion backlog.
+
+It is not the primary guiding source.
 
 ### Full ADRs
 
@@ -140,17 +145,17 @@ When unsure where content belongs, ask:
 1. all planning / all agents -> planning-agent-protocol.md or planning-workflow-current.md
 2. read order / navigation -> README.md or local README
 3. file type ownership -> planning-doc-responsibility-map.md
-4. scenario behavior -> scenario text spec
-5. actor-visible data -> scenario DATA file
-6. UI-visible requirement -> scenario UI spec
-7. derived behavior item coverage -> scenario behavior item file
-8. client-wide convention -> planning/client/cross-cutting/
-9. slice boundary -> slice boundary draft
-10. one vertical slice -> parent slice file
-11. detailed frontend implementation for one slice -> `.client.md`
-12. change/extension principles -> change-extension-points-principles.md
-13. cross-slice extension/pressure overview -> slice-extension-points-register.md
-14. possible formal architecture decision -> adr-candidates.md
-15. accepted architecture decision with rationale -> architecture-decision-notes.md
+4. accepted/current architecture decision -> architecture-decision-notes.md
+5. possible future full ADR -> adr-candidates.md
+6. scenario behavior -> scenario text spec
+7. actor-visible data -> scenario DATA file
+8. UI-visible requirement -> scenario UI spec
+9. derived behavior item coverage -> scenario behavior item file
+10. client-wide convention -> planning/client/cross-cutting/
+11. slice boundary -> slice boundary draft
+12. one vertical slice -> parent slice file
+13. detailed frontend implementation for one slice -> `.client.md`
+14. change/extension principles -> change-extension-points-principles.md
+15. cross-slice extension/pressure overview -> slice-extension-points-register.md
 16. future implementation thought not yet assigned -> slice-implementation-notes-register.md
 ```

@@ -7,17 +7,17 @@ Status: current workflow
 The current active workflow step is:
 
 ```text
-ADR workflow and architecture decision notes have been introduced.
+architecture decision notes have been audited and promoted as the guiding decision registry.
 ```
 
-Previously completed planning steps:
+Current ADR rule:
 
 ```text
-scenario behavior items migrated into per-scenario files;
-planning document responsibility map introduced;
-client architecture mapping rules introduced;
-UI specs/client conventions/change-extension workflow introduced.
+architecture-decision-notes.md = accepted/current decisions that guide planning.
+adr-candidates.md = backlog of possible future full ADRs.
 ```
+
+Do not create full numbered ADRs unless explicitly requested.
 
 ## 2. Main Workflow
 
@@ -29,6 +29,7 @@ scenario text specs
 -> per-scenario behavior items
 -> UI behavior items when client-visible behavior is being planned
 -> scenario questions register
+-> architecture decision notes / ADR candidates when decisions are made
 -> domain draft(s) / L1 domain foundation
 -> L1 slice boundary draft
 -> parent vertical slice files
@@ -46,11 +47,13 @@ planning/README.md
 planning/planning-workflow-current.md
 planning/planning-agent-protocol.md
 planning/planning-doc-responsibility-map.md
+planning/adr/adr-workflow.md
+planning/adr/architecture-decision-notes.md
+planning/adr/adr-candidates.md
 planning/scenario-specification-principles.md
 planning/slices/l1-slice-drafting-guide.md
 planning/slices/implementation-principles.md
 planning/slices/change-extension-points-principles.md
-planning/adr/adr-workflow.md
 ```
 
 ## 4. Scenario Question Loop
@@ -66,7 +69,7 @@ question
 -> update validation/security addendum if needed
 -> update behavior items / UI behavior items if required behavior changed
 -> update scenario questions register
--> update ADR candidate/note if decision is architecturally relevant
+-> update architecture-decision-notes / adr-candidates if architecture decision changed
 -> continue implementation planning
 ```
 
@@ -75,16 +78,16 @@ question
 Before starting any parent slice or `.client.md` sidecar:
 
 ```text
-1. Read target scenario text spec.
-2. Read target DATA file.
-3. Read validation/security addendum entries.
-4. Read relevant per-scenario behavior item file.
-5. Read relevant scenario UI spec if client-visible behavior is involved.
-6. Check planning/diagrams/scenario-questions-register.md.
-7. Check planning/slices/slice-implementation-notes-register.md.
-8. Check planning/slices/slice-extension-points-register.md.
-9. Check planning/adr/adr-candidates.md.
-10. Check planning/adr/architecture-decision-notes.md.
+1. Read planning/adr/architecture-decision-notes.md.
+2. Read planning/adr/adr-candidates.md.
+3. Read target scenario text spec.
+4. Read target DATA file.
+5. Read validation/security addendum entries.
+6. Read relevant per-scenario behavior item file.
+7. Read relevant scenario UI spec if client-visible behavior is involved.
+8. Check planning/diagrams/scenario-questions-register.md.
+9. Check planning/slices/slice-implementation-notes-register.md.
+10. Check planning/slices/slice-extension-points-register.md.
 11. Check relevant shared support docs under planning/slices/shared/.
 12. If client work is involved, check planning/client/ and planning/slices/client-architecture-principles.md.
 13. Promote relevant notes/questions/extension pressure/ADR decisions.
@@ -97,8 +100,8 @@ When a planning or implementation step makes an architecture decision, classify 
 
 ```text
 no ADR relevance
+add/update architecture decision note
 add/update ADR candidate
-add/update accepted architecture decision note
 propose full ADR promotion
 ```
 
@@ -106,19 +109,17 @@ Use:
 
 ```text
 planning/adr/adr-workflow.md
-planning/adr/adr-candidates.md
 planning/adr/architecture-decision-notes.md
+planning/adr/adr-candidates.md
 ```
-
-Do not create full numbered ADRs unless explicitly requested.
 
 ## 7. Current Next Steps
 
 Recommended next steps:
 
 ```text
-1. Apply this ADR workflow package.
-2. Use ADR candidates and decision notes during future slice/client planning.
+1. Apply ADR decision notes audit package.
+2. Use architecture-decision-notes as guiding registry.
 3. Review relevant ADR notes before target scenario/client work.
 4. Get/prepare concrete UI plan for the next client layer.
 5. Create the relevant `.client.md` sidecar only when concrete client work starts.

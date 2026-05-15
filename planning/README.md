@@ -26,19 +26,13 @@ scenario text specs
 Current focus:
 
 ```text
-ADR workflow and accepted architecture decision notes.
-```
-
-Already completed recent planning steps:
-
-```text
-scenario behavior items migrated into per-scenario files;
-planning document responsibility map introduced;
-client architecture mapping rules introduced;
-UI specs/client conventions/change-extension workflow introduced.
+accepted architecture decision notes are now the guiding decision registry;
+ADR candidates are the promotion backlog for possible future full ADRs.
 ```
 
 Do not create `.client.md` files in advance.
+
+Do not create full numbered ADRs unless explicitly requested.
 
 ## 3. Current Read Order
 
@@ -47,46 +41,47 @@ Do not create `.client.md` files in advance.
 2. planning/planning-workflow-current.md
 3. planning/planning-agent-protocol.md
 4. planning/planning-doc-responsibility-map.md
-5. planning/scenario-specification-principles.md
-6. planning/scenario-domain-validation-principles.md
 
-7. planning/diagrams/README.md
-8. planning/diagrams/scenario-text-specs/README.md
-9. planning/diagrams/scenario-data/README.md
-10. planning/diagrams/scenario-ui-specs/README.md
-11. planning/diagrams/scenario-ui-specs/00-scenario-ui-specs-index.md
-12. planning/diagrams/scenario-questions-register.md
-13. planning/diagrams/scenario-behavior-items/README.md
-14. planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
+5. planning/adr/README.md
+6. planning/adr/adr-workflow.md
+7. planning/adr/architecture-decision-notes.md
+8. planning/adr/adr-candidates.md
 
-15. planning/client/README.md
-16. planning/client/cross-cutting/README.md
+9. planning/scenario-specification-principles.md
+10. planning/scenario-domain-validation-principles.md
 
-17. planning/tables/README.md
-18. planning/tables/pre-domain-variants-input.md
-19. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
+11. planning/diagrams/README.md
+12. planning/diagrams/scenario-text-specs/README.md
+13. planning/diagrams/scenario-data/README.md
+14. planning/diagrams/scenario-ui-specs/README.md
+15. planning/diagrams/scenario-ui-specs/00-scenario-ui-specs-index.md
+16. planning/diagrams/scenario-questions-register.md
+17. planning/diagrams/scenario-behavior-items/README.md
+18. planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
 
-20. planning/domain-draft-generation-guide.md
-21. planning/tables/domain-drafts/README.md
-22. planning/tables/domain-drafts/domain-draft-01.md
-23. planning/l1-domain-implementation-cut.md
-24. planning/l1-domain-testing-rules.md
+19. planning/client/README.md
+20. planning/client/cross-cutting/README.md
 
-25. planning/slices/README.md
-26. planning/slices/l1-slice-drafting-guide.md
-27. planning/slices/implementation-principles.md
-28. planning/slices/client-architecture-principles.md
-29. planning/slices/client-component-discovery-guide.md
-30. planning/slices/change-extension-points-principles.md
-31. planning/slices/slice-extension-points-register.md
-32. planning/slices/slice-implementation-notes-register.md
-33. planning/slices/shared/README.md
-34. planning/slices/l1-slice-boundary-draft-01.md
+21. planning/tables/README.md
+22. planning/tables/pre-domain-variants-input.md
+23. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 
-35. planning/adr/README.md
-36. planning/adr/adr-workflow.md
-37. planning/adr/adr-candidates.md
-38. planning/adr/architecture-decision-notes.md
+24. planning/domain-draft-generation-guide.md
+25. planning/tables/domain-drafts/README.md
+26. planning/tables/domain-drafts/domain-draft-01.md
+27. planning/l1-domain-implementation-cut.md
+28. planning/l1-domain-testing-rules.md
+
+29. planning/slices/README.md
+30. planning/slices/l1-slice-drafting-guide.md
+31. planning/slices/implementation-principles.md
+32. planning/slices/client-architecture-principles.md
+33. planning/slices/client-component-discovery-guide.md
+34. planning/slices/change-extension-points-principles.md
+35. planning/slices/slice-extension-points-register.md
+36. planning/slices/slice-implementation-notes-register.md
+37. planning/slices/shared/README.md
+38. planning/slices/l1-slice-boundary-draft-01.md
 
 39. planning/replacement-file-generation-guide.md
 ```
@@ -99,47 +94,32 @@ ADR entry point:
 planning/adr/README.md
 ```
 
-Current ADR workflow:
+Use:
 
 ```text
-planning/adr/adr-workflow.md
-planning/adr/adr-candidates.md
 planning/adr/architecture-decision-notes.md
 ```
 
-Use ADR candidates for decisions that may become full ADRs later.
-
-Use architecture decision notes for accepted/current decisions with rationale that should not remain only in chat.
-
-Do not create full numbered ADRs unless explicitly requested.
-
-## 5. Responsibility Map
+as the current guiding accepted decision registry.
 
 Use:
 
 ```text
-planning/planning-doc-responsibility-map.md
+planning/adr/adr-candidates.md
 ```
 
-to decide where planning content belongs.
+as the backlog of possible future full ADRs.
 
-## 6. Agent Protocol
+If they conflict, stop and clarify.
 
-Use:
+## 5. Current Next Step
 
-```text
-planning/planning-agent-protocol.md
-```
-
-for stop-and-ask rules, relevant questions, assumptions, next-step protocol, ADR capture rule and no-auto-continue rule.
-
-## 7. Current Next Step
-
-After applying the ADR package:
+After applying ADR decision notes audit:
 
 ```text
-1. use ADR candidates and decision notes during future slice/client planning;
-2. promote important stable decisions to full ADR only when explicitly requested;
-3. include ADR impact in future archive summaries / implementation prompts;
-4. continue toward target scenario UI plan and concrete `.client.md` only when client work starts.
+1. use architecture-decision-notes during future planning and implementation;
+2. update decision notes when accepted decisions are made;
+3. update ADR candidates when a decision may need full ADR later;
+4. include ADR impact in future archive summaries / implementation prompts;
+5. continue toward target scenario UI plan and concrete `.client.md` only when client work starts.
 ```

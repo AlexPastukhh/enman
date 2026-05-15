@@ -20,6 +20,8 @@ planning/slices/client-component-discovery-guide.md
 planning/slices/change-extension-points-principles.md
 planning/slices/slice-extension-points-register.md
 planning/adr/adr-workflow.md
+planning/adr/architecture-decision-notes.md
+planning/adr/adr-candidates.md
 ```
 
 ## 2. Core Rule
@@ -63,6 +65,7 @@ question about scenario / DATA / UI / validation / visible outcome
 -> update DATA file if visible/input/selectable/filter/attachment data changed
 -> update validation/security addendum if needed
 -> update behavior items / UI behavior items if required behavior changed
+-> update architecture-decision-notes / adr-candidates if architecture decision changed
 -> continue implementation planning
 ```
 
@@ -72,22 +75,48 @@ Before starting a new slice or `.client.md` sidecar:
 
 ```text
 1. Read current planning entry points.
-2. Read the target scenario text spec.
-3. Read the target scenario DATA file.
-4. Read relevant validation/security addendum entries.
-5. Read relevant per-scenario behavior items.
-6. Read relevant scenario UI spec if client-visible behavior is involved.
-7. Check planning/diagrams/scenario-questions-register.md.
-8. Check planning/slices/slice-implementation-notes-register.md.
-9. Check planning/slices/slice-extension-points-register.md.
-10. Check planning/adr/adr-candidates.md and planning/adr/architecture-decision-notes.md for relevant decisions.
-11. Check relevant shared support docs.
-12. If client work is involved, check planning/client/ and planning/slices/client-architecture-principles.md.
-13. Promote relevant notes/questions/extension pressure/ADR decisions.
-14. Only then create/refine the slice file or `.client.md`.
+2. Read planning/adr/architecture-decision-notes.md.
+3. Read planning/adr/adr-candidates.md.
+4. Read the target scenario text spec.
+5. Read the target scenario DATA file.
+6. Read relevant validation/security addendum entries.
+7. Read relevant per-scenario behavior items.
+8. Read relevant scenario UI spec if client-visible behavior is involved.
+9. Check planning/diagrams/scenario-questions-register.md.
+10. Check planning/slices/slice-implementation-notes-register.md.
+11. Check planning/slices/slice-extension-points-register.md.
+12. Check relevant shared support docs.
+13. If client work is involved, check planning/client/ and planning/slices/client-architecture-principles.md.
+14. Promote relevant notes/questions/extension pressure/ADR decisions.
+15. Only then create/refine the slice file or `.client.md`.
 ```
 
-## 7. Change / Extension Point Rule
+## 7. ADR Capture Rule
+
+When planning or implementation reveals an architectural decision, classify ADR impact:
+
+```text
+no ADR relevance
+add/update architecture decision note
+add/update ADR candidate
+propose full ADR promotion
+```
+
+Use:
+
+```text
+planning/adr/adr-workflow.md
+planning/adr/architecture-decision-notes.md
+planning/adr/adr-candidates.md
+```
+
+`architecture-decision-notes.md` is the accepted decision registry.
+
+`adr-candidates.md` is the promotion backlog, not the primary guiding source.
+
+Do not create full numbered ADRs unless explicitly requested.
+
+## 8. Change / Extension Point Rule
 
 When making implementation decisions, classify potential seams as:
 
@@ -110,40 +139,6 @@ For each known extension pressure case, decide explicitly:
 ```
 
 Record the decision locally and, when it affects future slices, in `planning/slices/slice-extension-points-register.md`.
-
-## 8. ADR Capture Rule
-
-When planning or implementation reveals an architectural decision, classify ADR impact:
-
-```text
-no ADR relevance
-add/update ADR candidate
-add/update accepted architecture decision note
-propose full ADR promotion
-```
-
-Use:
-
-```text
-planning/adr/adr-workflow.md
-planning/adr/adr-candidates.md
-planning/adr/architecture-decision-notes.md
-```
-
-Add/update an ADR candidate when the decision affects multiple slices, layer boundaries, transaction boundaries, plugin/provider boundaries, testing strategy, client/server conventions, extension/change points or diploma-worthy architecture reasoning.
-
-Add/update an accepted decision note when a discussed decision becomes current direction and should not be lost.
-
-Do not create full numbered ADRs unless explicitly requested.
-
-Every archive summary / implementation prompt should include:
-
-```text
-ADR impact:
-...
-```
-
-when relevant.
 
 ## 9. Client Sidecar Rule
 
@@ -216,7 +211,8 @@ Before generating an archive:
 - Do not ask a question without giving the current assumption/preferred answer.
 - Do not turn every future extension into abstraction now.
 - Do not ignore known extension pressure when planning current implementation.
-- Do not lose accepted architecture decisions in chat only.
+- Do not lose accepted architecture decisions in chat/local docs only.
+- Do not use adr-candidates as the sole guiding source.
 - Do not create full numbered ADRs unless explicitly requested.
 - Do not bury global workflow rules in local files.
 - Do not auto-continue to the next slice without a user request.
