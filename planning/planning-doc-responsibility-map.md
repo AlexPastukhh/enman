@@ -21,11 +21,29 @@ A file should contain only content that belongs to its responsibility zone.
 
 | File / folder | Responsibility |
 |---|---|
+| `planning/slices/README.md` | Slice-planning navigation, current backend slice files, examples and support docs |
 | `planning/slices/draft-driven-discovery-principles.md` | Draft-driven discovery for domain/business/client/cross-cutting/testing/documentation drafts |
-| `planning/slices/l1-slice-drafting-guide.md` | Practical L1 slice drafting workflow and templates |
+| `planning/slices/l1-slice-drafting-guide.md` | Practical L1 slice drafting workflow, shortened/full draft templates and visual flow rules |
+| `planning/slices/SL-*.md` | Active parent backend/business slice docs; own vertical behavior, visual scenario/implementation maps, detailed flows, API contract, coverage and tests |
+| `planning/slices/examples/` | Example-only slice drafts used to demonstrate valid shortened/full slice formats |
+| `planning/slices/examples/README.md` | Slice examples index and example usage rules |
+| `planning/slices/examples/L1-CONNECTION-REQUEST-CREATE-early-short-draft-example.md` | Valid shortened slice draft example |
+| `planning/slices/examples/SL-ACC-001-register-client-account-full-slice-example.md` | Valid full backend slice example with visual maps before detailed flows |
 | `planning/slices/client-architecture-principles.md` | Client sidecar architecture mapping and frontend layer decisions |
 
-## 4. API Contract Responsibility
+## 4. Client Planning Responsibility
+
+| File / folder | Responsibility |
+|---|---|
+| `planning/client/` | Client-wide planning index and client convention navigation |
+| `planning/client/cross-cutting/` | Client-wide reusable UI/client implementation conventions |
+| `planning/client/cross-cutting/CL-COMMAND-001-command-success-without-required-response-body.md` | Command success convention for flows where HTTP success is enough and no response body is required by default |
+| `planning/client/cross-cutting/CL-FORM-VALIDATION-001-deferred-validation.md` | Deferred/client-side validation convention |
+| `planning/client/cross-cutting/CL-ERROR-HANDLING-001-client-server-errors.md` | Client-side API error handling convention |
+| `planning/client/cross-cutting/CL-STYLING-001-css-modules-tokens.md` | Styling convention |
+| `planning/client/cross-cutting/CL-A11Y-001-accessibility-and-aria.md` | Accessibility convention |
+
+## 5. API Contract Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -37,7 +55,7 @@ A file should contain only content that belongs to its responsibility zone.
 | `planning/api/client-constants-generation.md` | API relationship to generated semantic constants |
 | `planning/api/fluentvalidation-error-code-policy-note.md` | Deferred FluentValidation ErrorMessage/ErrorCode migration note |
 
-## 5. Cross-Cutting / Helper Slice Responsibility
+## 6. Cross-Cutting / Helper Slice Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -46,7 +64,7 @@ A file should contain only content that belongs to its responsibility zone.
 | `planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md` | Constants generation/checking/testing cross-cutting slice |
 | `planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md` | Antiforgery token/session context cross-cutting slice |
 
-## 6. Scenario / Security Specification Responsibility
+## 7. Scenario / Security Specification Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -56,7 +74,7 @@ A file should contain only content that belongs to its responsibility zone.
 | `scenario-browser-security-addendum.md` | Cross-cutting browser security requirements, including CSRF/antiforgery |
 | `planning/diagrams/scenario-clarifications/` | Temporary scenario clarifications and diagram guardrails |
 
-## 7. Diagram Generation Responsibility
+## 8. Diagram Generation Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -64,41 +82,44 @@ A file should contain only content that belongs to its responsibility zone.
 | `planning/diagrams/drawio-diagram-generation-workflow.md` | Draw.io XML target format, multi-page diagram book structure, page naming, VKR-clean text rules and diagram archive rules |
 | `planning/diagrams/vkr-clean-drafts/` | Optional fallback location for draft `.drawio` diagram books and companion diagram planning files before `vkr-clean/` is active |
 
-## 8. Behavior Items Responsibility
+## 9. Behavior Items Responsibility
 
 | File / folder | Responsibility |
 |---|---|
 | `planning/diagrams/scenario-behavior-items/` | Scenario-derived and concern-derived behavior items |
 | `CC-CSRF-001-antiforgery-behavior-items.md` | Security-derived behavior items for CSRF cross-cutting slice |
 
-## 9. Testing Responsibility
+## 10. Testing Responsibility
 
 ```text
 planning/testing/
 = cross-slice testing principles, E2E workflow, test object patterns, Playwright cleanup plan.
 ```
 
-## 10. Responsibility Decision Heuristic
+## 11. Responsibility Decision Heuristic
 
 ```text
 1. documentation-only workflow/status reconciliation -> planning/documentation/
 2. archive creation rules -> planning/replacement-file-generation-guide.md
 3. draft-driven discovery across slice families -> planning/slices/draft-driven-discovery-principles.md
-4. client/server contract split -> planning/api/client-server-contract-principles.md
-5. OpenAPI artifact/type generation implementation flow -> CC-API-001
-6. generated semantic constants writer/checker/testing -> CC-CONST-001
-7. API error contract / ProblemDetails / ServerError / OpenAPI -> planning/api/
-8. browser security requirement / CSRF requirement -> scenario-browser-security-addendum.md
-9. CSRF behavior items -> CC-CSRF-001-antiforgery-behavior-items.md
-10. CSRF implementation flow/tests -> CC-CSRF-001-antiforgery-token-session-context.md
-11. diagram prompt-generation workflow -> planning/diagrams/diagram-prompt-generation-workflow.md
-12. draw.io XML / diagram book artifact workflow -> planning/diagrams/drawio-diagram-generation-workflow.md
-13. diagram scenario terminology conflicts -> planning/diagrams/scenario-clarifications/
-14. test layer boundaries / E2E workflow -> planning/testing/
-15. client-wide UI convention -> planning/client/cross-cutting/
-16. accepted/current architecture decision -> architecture-decision-notes.md
-17. possible future full ADR -> adr-candidates.md
-18. one vertical business slice -> parent slice file
-19. detailed frontend implementation for one business slice -> `.client.md`
-20. reusable note without full behavior/test flow -> planning/slices/shared/
+4. practical slice drafting workflow and templates -> planning/slices/l1-slice-drafting-guide.md
+5. active parent backend/business slice file -> planning/slices/SL-*.md
+6. slice examples -> planning/slices/examples/
+7. client-wide UI/client convention -> planning/client/cross-cutting/
+8. client/server contract split -> planning/api/client-server-contract-principles.md
+9. OpenAPI artifact/type generation implementation flow -> CC-API-001
+10. generated semantic constants writer/checker/testing -> CC-CONST-001
+11. API error contract / ProblemDetails / ServerError / OpenAPI -> planning/api/
+12. browser security requirement / CSRF requirement -> scenario-browser-security-addendum.md
+13. CSRF behavior items -> CC-CSRF-001-antiforgery-behavior-items.md
+14. CSRF implementation flow/tests -> CC-CSRF-001-antiforgery-token-session-context.md
+15. diagram prompt-generation workflow -> planning/diagrams/diagram-prompt-generation-workflow.md
+16. draw.io XML / diagram book artifact workflow -> planning/diagrams/drawio-diagram-generation-workflow.md
+17. diagram scenario terminology conflicts -> planning/diagrams/scenario-clarifications/
+18. test layer boundaries / E2E workflow -> planning/testing/
+19. accepted/current architecture decision -> architecture-decision-notes.md
+20. possible future full ADR -> adr-candidates.md
+21. one vertical business slice -> parent slice file
+22. detailed frontend implementation for one business slice -> `.client.md`
+23. reusable note without full behavior/test flow -> planning/slices/shared/
 ```

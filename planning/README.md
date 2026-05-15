@@ -19,6 +19,8 @@ Do not write directly to GitHub from documentation-only work unless explicitly r
 
 For diagram generation, use repo-grounded preflight first and target draw.io XML diagram-book artifacts.
 
+Full backend slice docs should include diagram-like Visual Scenario Flow and Visual Implementation Flow before detailed flow sections.
+
 ## 2. Current Read Order
 
 ```text
@@ -75,19 +77,25 @@ For diagram generation, use repo-grounded preflight first and target draw.io XML
 
 45. planning/slices/README.md
 46. planning/slices/draft-driven-discovery-principles.md
-47. planning/slices/cross-cutting/README.md
-48. planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
-49. planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
-50. planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
-51. planning/slices/shared/README.md
-52. planning/slices/shared/antiforgery-token-session-context.md
-53. planning/slices/l1-slice-drafting-guide.md
-54. planning/slices/implementation-principles.md
-55. planning/slices/client-architecture-principles.md
-56. planning/slices/client-component-discovery-guide.md
-57. planning/slices/change-extension-points-principles.md
-58. planning/slices/slice-extension-points-register.md
-59. planning/replacement-file-generation-guide.md
+47. planning/slices/l1-slice-drafting-guide.md
+48. planning/slices/SL-ACC-001-register-client-account.md
+49. planning/slices/SL-APPL-001-create-individual-applicant-party.md
+50. planning/slices/SL-REQ-001-create-connection-request.md
+51. planning/slices/examples/README.md
+52. planning/slices/examples/L1-CONNECTION-REQUEST-CREATE-early-short-draft-example.md
+53. planning/slices/examples/SL-ACC-001-register-client-account-full-slice-example.md
+54. planning/slices/cross-cutting/README.md
+55. planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
+56. planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
+57. planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
+58. planning/slices/shared/README.md
+59. planning/slices/shared/antiforgery-token-session-context.md
+60. planning/slices/implementation-principles.md
+61. planning/slices/client-architecture-principles.md
+62. planning/slices/client-component-discovery-guide.md
+63. planning/slices/change-extension-points-principles.md
+64. planning/slices/slice-extension-points-register.md
+65. planning/replacement-file-generation-guide.md
 ```
 
 ## 3. Documentation Update Direction
@@ -126,6 +134,18 @@ cross-cutting/helper slice drafts
 testing/support drafts
 documentation/status reconciliation drafts
 diagram planning drafts
+```
+
+Practical slice workflow:
+
+```text
+planning/slices/l1-slice-drafting-guide.md
+```
+
+Slice examples:
+
+```text
+planning/slices/examples/
 ```
 
 ## 5. Client / Server Contract Direction
@@ -213,5 +233,6 @@ planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 2. Do not redo already implemented OpenAPI/constants/E2E infrastructure.
 3. Use draft-driven discovery for L1 consolidation and client sidecar work.
 4. Client work should proceed from confirmed backend-backed slices and generated contract artifacts.
-5. For diagrams, create a diagram-generation prompt first, then run diagram chat Phase 1 preflight before generating `.drawio` XML.
+5. For full backend slice docs, keep visual maps before detailed scenario/implementation flows.
+6. For diagrams, create a diagram-generation prompt first, then run diagram chat Phase 1 preflight before generating `.drawio` XML.
 ```

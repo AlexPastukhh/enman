@@ -84,16 +84,10 @@ public sealed class L1SliceIntegrationTests
 
         var requestResponse = await client.PostAsJsonAsync(
             "/api/l1/requests",
-            ValidConnectionRequestDto(applicantParty.ApplicantPartyId));
+            ValidConnectionRequestDto());
         await HttpResponseAssertions.For(requestResponse, _output).ShouldBeSuccess();
 
-        var request = await requestResponse.Content.ReadFromJsonAsync<L1CreateConnectionRequestResponse>()
-            ?? throw new InvalidOperationException("L1 request response body was empty.");
-
-        request.ApplicantPartyId.Should().Be(applicantParty.ApplicantPartyId);
-        request.Status.Should().Be("InReview");
-
-        var row = await GetRequestRowAsync(request.RequestId);
+        var row = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
         row!.ApplicantPartyId.Should().Be(applicantParty.ApplicantPartyId);
         row.Status.Should().Be("InReview");
         login.AccountId.Should().Be(applicantParty.ClientAccountId);
@@ -248,21 +242,17 @@ public sealed class L1SliceIntegrationTests
     }
 
     [Fact]
-    public async Task CreateConnectionRequest_StoresProvidedOwnedApplicantPartyReference()
+    public async Task CreateConnectionRequest_StoresServerSelectedCurrentActiveApplicantPartyReference()
     {
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
 
-        var response = await CreateConnectionRequestAsync(
-            account.AccountId,
-            applicantParty.ApplicantPartyId);
+        await CreateConnectionRequestAsync(account.AccountId);
 
-        var row = await GetRequestRowAsync(response.RequestId);
+        var row = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
 
-        response.RequestId.Should().BeGreaterThan(0);
-        response.ApplicantPartyId.Should().Be(applicantParty.ApplicantPartyId);
-        response.Status.Should().Be("InReview");
         row.Should().NotBeNull();
+        row!.Id.Should().BeGreaterThan(0);
         row!.ApplicantPartyId.Should().Be(applicantParty.ApplicantPartyId);
         row.Status.Should().Be("InReview");
         row.Details.Should().Be(RequestDetails);
@@ -275,16 +265,14 @@ public sealed class L1SliceIntegrationTests
     {
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
-        var request = await CreateConnectionRequestAsync(
-            account.AccountId,
-            applicantParty.ApplicantPartyId);
+        await CreateConnectionRequestAsync(account.AccountId);
 
         var applicantPartyRow = await GetApplicantPartyRowAsync(applicantParty.ApplicantPartyId);
-        var requestRow = await GetRequestRowAsync(request.RequestId);
+        var requestRow = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
 
         account.AccountId.Should().BeGreaterThan(0);
         applicantParty.ApplicantPartyId.Should().BeGreaterThan(0);
-        request.RequestId.Should().BeGreaterThan(0);
+        requestRow!.Id.Should().BeGreaterThan(0);
         applicantPartyRow!.ClientAccountId.Should().Be(account.AccountId);
         requestRow!.ApplicantPartyId.Should().Be(applicantParty.ApplicantPartyId);
     }
@@ -317,7 +305,7 @@ public sealed class L1SliceIntegrationTests
     }
 
     [Fact]
-    public async Task CreateConnectionRequest_ForMissingApplicantParty_ReturnsValidationProblem()
+    public async Task CreateConnectionRequest_WithoutCurrentActiveApplicantParty_ReturnsValidationProblem()
     {
         var account = await RegisterAccountAsync();
         var client = AuthenticatedL1Client(account.AccountId);
@@ -325,7 +313,7 @@ public sealed class L1SliceIntegrationTests
 
         var response = await client.PostAsJsonAsync(
             "/api/l1/requests",
-            ValidConnectionRequestDto(applicantPartyId: 797_979));
+            ValidConnectionRequestDto());
 
         await HttpResponseAssertions.For(response, _output)
             .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
@@ -343,23 +331,7 @@ public sealed class L1SliceIntegrationTests
 
         var response = await client.PostAsJsonAsync(
             "/api/l1/requests",
-            ValidConnectionRequestDto(applicantParty.ApplicantPartyId, details: " "));
-
-        await HttpResponseAssertions.For(response, _output)
-            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
-    }
-
-    [Fact]
-    public async Task CreateConnectionRequest_WithApplicantPartyOwnedByAnotherAccount_ReturnsValidationProblem()
-    {
-        var accountA = await RegisterAccountAsync();
-        var accountB = await RegisterAccountAsync();
-        var applicantPartyA = await CreateApplicantPartyAsync(accountA.AccountId);
-        var clientB = AuthenticatedL1Client(accountB.AccountId);
-
-        var response = await clientB.PostAsJsonAsync(
-            "/api/l1/requests",
-            ValidConnectionRequestDto(applicantPartyA.ApplicantPartyId));
+            ValidConnectionRequestDto(details: " "));
 
         await HttpResponseAssertions.For(response, _output)
             .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
@@ -414,19 +386,17 @@ public sealed class L1SliceIntegrationTests
             ?? throw new InvalidOperationException("L1 applicant party response body was empty.");
     }
 
-    private async Task<L1CreateConnectionRequestResponse> CreateConnectionRequestAsync(
+    private async Task<HttpResponseMessage> CreateConnectionRequestAsync(
         long accountId,
-        long applicantPartyId,
         string details = RequestDetails)
     {
         var response = await AuthenticatedL1Client(accountId).PostAsJsonAsync(
             "/api/l1/requests",
-            ValidConnectionRequestDto(applicantPartyId, details));
+            ValidConnectionRequestDto(details));
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
-        return await response.Content.ReadFromJsonAsync<L1CreateConnectionRequestResponse>()
-            ?? throw new InvalidOperationException("L1 request response body was empty.");
+        return response;
     }
 
     private HttpClient AuthenticatedL1Client(
@@ -459,11 +429,9 @@ public sealed class L1SliceIntegrationTests
     }
 
     private static L1CreateConnectionRequestDto ValidConnectionRequestDto(
-        long applicantPartyId,
         string details = RequestDetails)
     {
         return new L1CreateConnectionRequestDto(
-            applicantPartyId,
             details,
             new L1AddressDto(
                 PostalCode,

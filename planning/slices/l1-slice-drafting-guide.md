@@ -72,26 +72,67 @@ only when source behavior item IDs have not been attached yet.
 
 That marker is temporary and must be replaced with real scenario behavior IDs before finalizing the slice draft.
 
-## 3. Visual Scenario Flow Rule
+Reference example:
+
+```text
+planning/slices/examples/L1-CONNECTION-REQUEST-CREATE-early-short-draft-example.md
+```
+
+## 3. Visual Flow Rule
+
+Visual flow means a diagram-like text map, not only a linear arrow list.
+
+A linear list can be enough for a very early shortened draft, but full slice files should use visual maps when branching, responsibility boundaries or out-of-scope/dependent slices matter.
+
+Visual maps should make it easy to see:
+
+```text
+- who acts;
+- what the system decides;
+- where success and failure branches split;
+- what is inside current slice scope;
+- what is delegated to dependent slices;
+- where the implementation crosses API/application/domain/persistence/client-contract boundaries.
+```
+
+## 4. Visual Scenario Flow Rule
 
 Visual Scenario Flow shows the real scenario flow, or the part of the scenario flow, covered by the slice.
 
 It must describe user/system behavior, not controller, handler, repository, mapper or DTO mechanics.
 
+A good Visual Scenario Flow usually includes:
+
+```text
+- actor box;
+- system boundary box;
+- happy path;
+- important failure/no-write branches;
+- success outcome;
+- dependent/out-of-scope slice notes.
+```
+
 Good scenario flow:
 
 ```text
-[Client]
-Submits connection request data
-        ↓
-[System]
-Creates connection request for current account applicant context
-        ↓
-[System]
-Moves request into review
-        ↓
-[Client]
-Sees success outcome
+┌──────────────┐
+│    Client    │
+└──────┬───────┘
+       │ submits command data
+       ▼
+┌──────────────────────────────┐
+│            System            │
+│ validates scenario condition │
+└───────────┬──────────────────┘
+            │
+     ┌──────┴───────┐
+     │              │
+   valid          invalid
+     │              │
+     ▼              ▼
+┌──────────┐   ┌────────────────────┐
+│ Success  │   │ Error / no write   │
+└──────────┘   └────────────────────┘
 ```
 
 Bad scenario flow:
@@ -101,7 +142,7 @@ Bad scenario flow:
 Extracts claim
         ↓
 [Repository]
-Loads applicant party
+Loads entity
         ↓
 [DbContext]
 Saves entity
@@ -109,25 +150,51 @@ Saves entity
 
 That is implementation flow, not scenario flow.
 
-## 4. Visual Implementation Flow Rule
+## 5. Visual Implementation Flow Rule
 
 Visual Implementation Flow shows how the slice implements the scenario behavior technically.
 
-In a shortened draft, implementation flow should stay high-level, but each step should mark the layer or folder clearly.
+It should mark layers, folders or boundaries clearly.
 
-Backend example:
+For backend slices, include the relevant technical boundaries:
 
 ```text
-[API Controller]
-        ↓
-[Application Handler]
-        ↓
-[Domain]
-        ↓
-[Persistence]
+┌──────────────────────┐
+│ API Controller       │
+└──────────┬───────────┘
+           ▼
+┌──────────────────────┐
+│ Application Handler  │
+└──────────┬───────────┘
+           ▼
+┌──────────────────────┐
+│ Domain               │
+└──────────┬───────────┘
+           ▼
+┌──────────────────────┐
+│ Persistence          │
+└──────────────────────┘
 ```
 
-Client sidecar example:
+When the slice has failure/no-write behavior, show that branch explicitly:
+
+```text
+┌──────────────────────────────┐
+│ Application condition exists?│
+└──────────────┬───────────────┘
+               │
+       ┌───────┴────────┐
+       │                │
+     yes                no
+       │                │
+       ▼                ▼
+┌─────────────┐   ┌──────────────────────┐
+│ Domain work │   │ ProblemDetails / no  │
+│ + persist   │   │ write                │
+└─────────────┘   └──────────────────────┘
+```
+
+For client sidecars, include client placement boundaries:
 
 ```text
 [Page / Route]
@@ -139,16 +206,6 @@ Client sidecar example:
 [Shared API]
         ↓
 [Generated Contracts]
-```
-
-When useful, include folders or placement hints:
-
-```text
-[Page: pages/create-request]
-        ↓
-[Feature: features/create-connection-request]
-        ↓
-[Shared API: shared/api]
 ```
 
 Code, DTO shapes and method names belong in the implementation flow only when they clarify:
@@ -165,7 +222,48 @@ Code, DTO shapes and method names belong in the implementation flow only when th
 
 Routine mechanics stay high-level.
 
-## 5. Scenario Behavior Items Rule
+## 6. Full Backend Slice File Rule
+
+Full backend slice files must include visual flow maps before detailed flow sections.
+
+Required order for backend parent slice files:
+
+```text
+## Visual Scenario Flow
+diagram-like scenario map
+
+## Scenario Slice Flow
+detailed scenario/source behavior flow
+
+## Visual Implementation Flow
+diagram-like technical flow map
+
+## Implementation Flow
+detailed layer/API/application/domain/persistence flow
+```
+
+The visual sections do not replace the detailed sections.
+
+They provide a quick review map before the detailed flow.
+
+Full slice files should also include:
+
+```text
+- source scenario / source behavior items;
+- API contract;
+- questions and decisions;
+- behavior coverage;
+- test / verification plan;
+- dependent or follow-up slices.
+```
+
+Reference example:
+
+```text
+planning/slices/examples/SL-ACC-001-register-client-account-full-slice-example.md
+```
+
+## 7. Scenario Behavior Items Rule
 
 Behavior items are not invented inside the slice draft.
 
@@ -202,7 +300,7 @@ Client architecture placement is not a behavior item.
 
 For example, choosing `features/create-request` vs `shared/api` belongs to Visual Implementation Flow or component discovery, not to Scenario Behavior Items.
 
-## 6. Behavior Coverage Is Not Test Coverage
+## 8. Behavior Coverage Is Not Test Coverage
 
 Behavior Coverage answers:
 
@@ -232,7 +330,7 @@ Behavior Coverage can be complete while Test / Verification Plan is still partia
 
 A test plan can be detailed while Behavior Coverage is still blocked by unresolved source behavior.
 
-## 7. Open Questions First Rule
+## 9. Open Questions First Rule
 
 In `Questions / Decisions`, list items in this order:
 
@@ -246,7 +344,7 @@ This keeps review focused on what can still change behavior, API contract, imple
 
 Accepted decisions should still be recorded, but they should not hide unresolved questions below them.
 
-## 8. Client Sidecar Shortened Draft Rule
+## 10. Client Sidecar Shortened Draft Rule
 
 Client sidecars follow the same default shortened draft rule.
 
@@ -293,7 +391,7 @@ Do not create `.client.md` in advance.
 
 Create or update it when concrete client work starts.
 
-## 9. Shortened Draft Template
+## 11. Shortened Draft Template
 
 Use this template for early backend, business, helper or cross-cutting slice drafts:
 
@@ -336,202 +434,34 @@ Contract sources:
 ## 7. Next Step
 ```
 
-## 10. Example — Early Short Backend Draft
+## 12. Full Backend Slice Template
 
-This is an example of a good early shortened draft.
-
-It is intentionally not a full final slice file.
-
-# L1-CONNECTION-REQUEST-CREATE — Early Short Draft
-
-**Status:** early target draft  
-**Slice type:** backend command slice  
-**Scope:** create connection request for authenticated L1 client account  
-**Contract direction:** client submits request data; server derives account/applicant context  
-**Response direction:** HTTP success is enough for initial command confirmation  
-**Source behavior items:** TBD from scenario behavior register
-
-## 1. Visual Scenario Flow
+Use this template for full backend/API/persistence slice files:
 
 ```text
-[Client]
-Submits connection request data
-        ↓
-[System]
-Determines applicant context for authenticated account
-        ↓
-[System]
-Creates connection request
-        ↓
-[System]
-Moves request into review
-        ↓
-[System]
-Reports successful request creation
-        ↓
-[Client]
-Shows success message and navigates to My Requests
+# SLICE-ID — Title
+
+Status:
+Package:
+Source scenario:
+Slice type:
+Current implementation status:
+
+## 1. Slice Overview
+## 2. Sources / Source Behavior Items
+## 3. Visual Scenario Flow
+## 4. Scenario Slice Flow
+## 5. Visual Implementation Flow
+## 6. Implementation Flow
+## 7. API Contract
+## 8. Questions / Decisions
+## 9. Behavior Coverage
+## 10. Test / Verification Plan
+## 11. Dependent / Follow-up Slices
+## 12. Implementation Checklist
 ```
 
-Scenario note:
-
-The client submits the data needed to create a connection request.
-
-The system creates the request for the authenticated account's current applicant context.
-
-The created request enters review.
-
-The client does not need created request data for the initial command flow. HTTP success is enough to show a success message and move the user to My Requests.
-
-## 2. Visual Implementation Flow
-
-```text
-[API Controller: L1 requests]
-POST /api/l1/requests
-Receives request data
-        ↓
-[API Controller]
-Derives current client account from auth context
-        ↓
-[Application Handler]
-Finds applicant context for current account
-        ↓
-[Application Handler]
-Rejects command if required applicant context is missing
-        ↓
-[Domain]
-Creates request address/value objects
-        ↓
-[Domain]
-Creates ConnectionRequest in review state
-        ↓
-[Persistence]
-Stores created request
-        ↓
-[API Controller]
-Returns HTTP success without required response body
-```
-
-Implementation note:
-
-Target API input contains request data only.
-
-The client should not submit account identity.
-
-The command response does not need to return `requestId`, `status`, applicant identity or account identity unless a later scenario explicitly needs those values.
-
-## 3. Questions / Decisions
-
-### Q-REQ-001 — Should applicant party be verified before request creation?
-
-**Status:** open.
-
-Current active applicant context and verification status answer different questions.
-
-Current active context decides which applicant identity is used.
-
-Verification status decides whether applicant data is trusted enough for request creation.
-
-### Q-REQ-002 — How do we prevent ambiguous current applicant context?
-
-**Status:** open.
-
-The system should not silently create a request if the account has ambiguous active applicant state.
-
-This can be handled as an application invariant first and strengthened with persistence constraints later if needed.
-
-### Q-REQ-003 — What is the final My Requests destination?
-
-**Status:** open.
-
-Success UX direction is accepted: show success message and navigate to My Requests.
-
-The final route belongs to the read/list requests slice.
-
-### Q-REQ-004 — Should the create command return request data?
-
-**Decision direction:** no for the initial command flow.
-
-HTTP success is enough for the client to show a success message and navigate to My Requests.
-
-### Q-REQ-005 — Should the client provide account identity?
-
-**Decision:** no.
-
-Account identity is derived from authenticated user context.
-
-## 4. Behavior Coverage
-
-| Scenario behavior item | How draft covers it | Draft location | Status |
-|---|---|---|---|
-| Source BI TBD — Client submits connection request data | Draft says API receives request data for creation. | Scenario Flow / Implementation Flow | covered |
-| Source BI TBD — System creates connection request for authenticated account context | Draft says system derives account context and finds applicant context server-side. | Scenario Flow / Implementation Flow | covered, with open applicant-context questions |
-| Source BI TBD — Request enters review | Draft says domain creates `ConnectionRequest` in review state. | Scenario Flow / Implementation Flow | covered |
-| Source BI TBD — System reports successful request creation | Draft says API returns HTTP success without required response body. | Scenario Flow / Implementation Flow / Decisions | covered |
-| Source BI TBD — Client sees success outcome | Draft says client shows success message and navigates to My Requests. | Scenario Flow / Decisions | partially covered; client sidecar needed |
-| Source BI TBD — My Requests read context | Draft identifies My Requests as target but delegates final route/read behavior to read/list slice. | Questions / Decisions | open |
-
-## 5. Test / Verification Plan
-
-| Test / check | Verifies | Layer | Status |
-|---|---|---|---|
-| Successful create request integration test | Request is created for the authenticated account's resolved applicant context. | API + Application + Persistence | planned |
-| Missing applicant context integration test | Request creation fails when required applicant context is absent. | Application + API error mapping | planned |
-| No write on failed command | Failed creation does not persist request. | Persistence | planned |
-| Request starts in review | Created request has `InReview` state. | Domain + Persistence | planned |
-| Minimal success response | Client can treat HTTP success as command confirmation. | API contract | planned |
-| OpenAPI/type regeneration | Generated contract reflects target request/response shape. | Tooling + client contract | planned |
-| E2E create request happy path | UI submit leads to real API success and navigation outcome. | Browser + Client + API + Persistence | planned |
-| Component/client tests | Form behavior, validation display, pending state, success message. | Client feature | client sidecar |
-
-Note: verification plan must not become the behavior coverage table. It verifies implementation after behavior coverage is defined.
-
-## 6. Covered Scenario Behavior Items
-
-Temporary working list until source behavior IDs are attached:
-
-### Source BI TBD — Client submits connection request data
-
-The client submits data needed to create a connection request.
-
-### Source BI TBD — System creates connection request for authenticated account context
-
-The system creates the request using server-resolved account/applicant context.
-
-### Source BI TBD — Request enters review
-
-The created request enters review state.
-
-### Source BI TBD — System reports successful request creation
-
-The system reports command success through HTTP success.
-
-### Source BI TBD — Client sees success outcome
-
-The client shows a success message and navigates to My Requests.
-
-## 7. Next Step
-
-Before implementation, attach real scenario behavior item IDs.
-
-Then update backend contract and implementation:
-
-```text
-Update request DTO to contain request data only
-Update command to use server-derived account/applicant context
-Update handler to resolve applicant context server-side
-Return HTTP success without required response body
-Update integration tests
-Regenerate OpenAPI and TypeScript types
-```
-
-Then create/update client sidecar with:
-
-```text
-HTTP success -> success message -> navigate to My Requests
-```
-
-## 11. Business Slice Intake Checklist
+## 13. Business Slice Intake Checklist
 
 ```text
 1. Read architecture decision notes and ADR candidates.
@@ -547,7 +477,7 @@ HTTP success -> success message -> navigate to My Requests
 11. If scenario/API/constants/testing/security ambiguity exists, stop and resolve it first.
 ```
 
-## 12. Client Sidecar Draft Rule
+## 14. Client Sidecar Draft Rule
 
 Client sidecar drafts are created only when concrete client work starts.
 
@@ -569,7 +499,7 @@ It must discover and track:
 - E2E boundaries.
 ```
 
-## 13. API Contract Section
+## 15. API Contract Section
 
 Parent slice API section should include:
 
@@ -595,14 +525,14 @@ Also include:
 - whether route is temporary legacy constants route or OpenAPI structural route.
 ```
 
-## 14. Client Sidecar API Section
+## 16. Client Sidecar API Section
 
 `.client.md` should include:
 
 | Client API function | Endpoint | Generated OpenAPI type(s) used | Error constants used | Status |
 |---|---|---|---|---|
 
-## 15. Cross-Cutting / Helper Slice Intake Checklist
+## 17. Cross-Cutting / Helper Slice Intake Checklist
 
 ```text
 1. Identify source requirement type:
@@ -615,7 +545,7 @@ Also include:
 7. Update cross-cutting index and relevant navigation.
 ```
 
-## 16. Test Coverage Sections
+## 18. Test Coverage Sections
 
 Parent slice and `.client.md` should separate:
 
@@ -632,7 +562,7 @@ planning/testing/testing-principles.md
 planning/testing/e2e-testing-workflow.md
 ```
 
-## 17. E2E Coverage Table
+## 19. E2E Coverage Table
 
 If E2E is relevant, include:
 
@@ -647,7 +577,7 @@ browser -> client -> HTTP API -> server/application/domain/persistence/session -
 
 Do not use E2E to exhaustively test client-visible UI behavior.
 
-## 18. Client Test Coverage Table
+## 20. Client Test Coverage Table
 
 If client-visible UI behavior is involved, include:
 
@@ -656,19 +586,19 @@ If client-visible UI behavior is involved, include:
 
 Detailed UI validation belongs here, not in happy-path E2E.
 
-## 19. Business Slice Flow Rule
+## 21. Business Slice Flow Rule
 
 Business slices use:
 
 ```text
 Scenario-derived behavior items
+-> Visual Scenario Flow
 -> Scenario Slice Flow
+-> Visual Implementation Flow
 -> Implementation Flow
 ```
 
-For early shortened drafts, Scenario Slice Flow may be represented as Visual Scenario Flow.
-
-## 20. Cross-Cutting / Helper Slice Flow Rule
+## 22. Cross-Cutting / Helper Slice Flow Rule
 
 Cross-cutting/helper slices use:
 
@@ -693,7 +623,7 @@ These items are first-class behavior items and must be covered by the concern fl
 
 For early shortened drafts, Concern Slice Flow may be represented as a visual concern/scenario flow when that is clearer.
 
-## 21. Cross-Cutting / Helper Slice Template
+## 23. Cross-Cutting / Helper Slice Template
 
 ```text
 # CC-XXX — Title
@@ -720,7 +650,7 @@ Used by:
 
 For early cross-cutting/helper discovery, use the shortened draft format first unless the user explicitly asks for the full template.
 
-## 22. Implementation Flow Detail Rule
+## 24. Implementation Flow Detail Rule
 
 Implementation flow may include involved classes, methods and short code snippets.
 
@@ -745,7 +675,7 @@ If details make the flow noisy, extract them into a sibling `.impl.md` file.
 
 Do not create `.impl.md` in advance.
 
-## 23. Constants Consumer Rule
+## 25. Constants Consumer Rule
 
 If a business slice introduces client-facing error codes, read:
 
@@ -753,7 +683,7 @@ If a business slice introduces client-facing error codes, read:
 planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
 ```
 
-## 24. OpenAPI Consumer Rule
+## 26. OpenAPI Consumer Rule
 
 If a business/client slice uses server API, read:
 
@@ -762,7 +692,7 @@ planning/api/client-server-contract-principles.md
 planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
 ```
 
-## 25. CSRF Consumer Rule
+## 27. CSRF Consumer Rule
 
 If a business slice introduces browser unsafe API command, read:
 

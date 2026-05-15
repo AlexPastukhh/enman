@@ -36,25 +36,73 @@ Related extension / dependent slices:
 [UI][DEPENDENT] SL-APPL-UI-001 — Applicant data form UI
 ```
 
-## 2. Questions Overview
+## 2. Sources / Source Behavior Items
 
-| Question | Why it matters | Current answer / candidate | Blocks implementation? |
-|---|---|---|---|
-| One current active ApplicantParty per account or per applicant type? | Replacement slice | Unresolved; separate SL-APPL-002 | No |
-| Should missing account return validation, unauthorized, forbidden, or not found? | API/security semantics | Current integration expects validation problem | No |
-| Should applicant contact email duplicate account email? | Data semantics | No; applicant email may differ from account email | No |
-| Should active-account guard be inside ApplicantParty factory? | Boundary | No; application/auth concern | No |
+Sources:
 
-## 3. Flow Coverage Overview
+```text
+planning/diagrams/scenario-text-specs/
+planning/diagrams/scenario-data/
+planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+planning/tables/pre-domain-variants-input.md
+```
 
-| Flow part | Current coverage | Missing / separate slice |
-|---|---|---|
-| Individual applicant data accepted | Implemented | UI separate |
-| ApplicantParty linked to account | Implemented/integration-tested | ownership/auth semantics review later |
-| Starts Unverified/current active | Domain implemented | integration may not assert all state |
-| Applicant replacement | Not in this slice | SL-APPL-002 |
-| External verification | Not in this slice | SL-VER-001 |
-| Future applicant types | Not in this slice | L2 extension slices |
+Behavior items:
+
+```text
+APPL-CMD-SAVE-001 — Save applicant data
+APPL-VI-001 — Applicant data by applicant type
+```
+
+## 3. Visual Scenario Flow
+
+```text
+┌──────────────────────────────────────────────┐
+│ Client                                       │
+│ submits individual applicant data            │
+│ full name + contact email + phone            │
+└──────────────┬───────────────────────────────┘
+               │
+               ▼
+┌──────────────────────────────────────────────┐
+│ System                                       │
+│ authenticated client account context is known│
+└──────────────┬───────────────────────────────┘
+               │ validate account/applicant data
+               ▼
+┌──────────────────────────────────────────────┐
+│ Input accepted and account exists?           │
+└──────────────┬───────────────────────────────┘
+               │
+       ┌───────┴────────┐
+       │                │
+      yes               no
+       │                │
+       ▼                ▼
+┌──────────────────────┐   ┌──────────────────────────────┐
+│ Create Individual     │   │ Validation/access error       │
+│ ApplicantParty        │   │ no applicant party created    │
+└──────────┬───────────┘   └──────────────┬───────────────┘
+           │                              │
+           ▼                              ▼
+┌──────────────────────┐        ┌──────────────────────────┐
+│ Link to account       │        │ Client corrects input or  │
+│ current active        │        │ resolves account issue    │
+│ Unverified            │        └──────────────────────────┘
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────────────────────────────┐
+│ ApplicantParty saved                         │
+│ can be used by request creation slice        │
+└──────────────────────────────────────────────┘
+
+Out of this backend slice:
+- applicant form UI;
+- applicant replacement/versioning;
+- external verification;
+- entrepreneur/legal entity applicant types.
+```
 
 ## 4. Scenario Slice Flow
 
@@ -86,7 +134,53 @@ Expected result: ApplicantParty row exists and can be used by request creation.
 
 DATA: ApplicantPartyId, ClientAccountId.
 
-## 5. Implementation Flow
+## 5. Visual Implementation Flow
+
+```text
+┌──────────────────────────────────────────────┐
+│ API Controller                               │
+│ POST /api/l1/applicant-parties/individual    │
+│ Body: full name + contact email + phone      │
+└──────────────┬───────────────────────────────┘
+               │ derive ClientAccountId
+               │ from authenticated context
+               ▼
+┌──────────────────────────────────────────────┐
+│ Application Handler                          │
+│ create individual applicant party command    │
+└──────────────┬───────────────────────────────┘
+               │ ensure account exists /
+               │ protected action allowed
+               ▼
+┌──────────────────────────────────────────────┐
+│ Account exists and input accepted?           │
+└──────────────┬───────────────────────────────┘
+               │
+       ┌───────┴────────┐
+       │                │
+      yes               no
+       │                │
+       ▼                ▼
+┌──────────────────────┐   ┌──────────────────────────────┐
+│ Domain               │   │ API error mapping             │
+│ IndividualApplicant  │   │ validation ProblemDetails     │
+│ Party.Create         │   │ no applicant write            │
+└──────────┬───────────┘   └──────────────────────────────┘
+           │
+           ▼
+┌──────────────────────────────────────────────┐
+│ Persistence                                  │
+│ store applicant party linked to account      │
+└──────────────┬───────────────────────────────┘
+               │
+               ▼
+┌──────────────────────────────────────────────┐
+│ API response                                 │
+│ ApplicantPartyId + ClientAccountId           │
+└──────────────────────────────────────────────┘
+```
+
+## 6. Implementation Flow
 
 ### I01 — UI blueprint
 
@@ -112,19 +206,57 @@ ApplicantParty row is stored with ClientAccountId and individual data.
 
 Response returns ApplicantPartyId and ClientAccountId.
 
-## 6. UI Blueprint
+## 7. API Contract
 
-Dependent UI blueprint:
+| Endpoint | Method | Request DTO | Response DTO | Statuses | Contract status | OpenAPI exposed? |
+|---|---|---|---|---|---|---|
+| `/api/l1/applicant-parties/individual` | POST | individual applicant party data | ApplicantPartyId + ClientAccountId | 200, 401, 403, 422, 500 | target L1 | yes |
+
+Contract notes:
 
 ```text
-- client opens applicant data form;
-- enters full name, applicant contact email and phone;
-- submits;
-- sees validation errors or saved applicant data result;
-- later can choose saved ApplicantParty during request creation.
+- client does not submit arbitrary account ownership;
+- account context is resolved by server/auth boundary;
+- applicant contact email may differ from account email;
+- missing account or invalid input returns validation ProblemDetails.
 ```
 
-## 7. Test Plan / Test Coverage
+## 8. Questions / Decisions
+
+Open questions:
+
+| Question | Why it matters | Current answer / candidate | Blocks implementation? |
+|---|---|---|---|
+| One current active ApplicantParty per account or per applicant type? | Replacement slice | Unresolved; separate SL-APPL-002 | No |
+| Should missing account return validation, unauthorized, forbidden, or not found? | API/security semantics | Current integration expects validation problem | No |
+| Should applicant contact email duplicate account email? | Data semantics | No; applicant email may differ from account email | No |
+| Should active-account guard be inside ApplicantParty factory? | Boundary | No; application/auth concern | No |
+
+Accepted decisions:
+
+```text
+Decision:
+ApplicantParty creation uses clientAccountId, not ClientAccount domain object.
+
+Reason:
+Active account guard belongs to application/auth boundary.
+
+Consequence:
+Application service coordinates account lookup/guard before creating applicant party.
+```
+
+## 9. Behavior Coverage
+
+| Scenario behavior item | How draft covers it | Draft location | Status |
+|---|---|---|---|
+| APPL-CMD-SAVE-001 — Save applicant data | API/application/domain flow creates individual applicant party from accepted input. | Scenario Slice Flow / Implementation Flow | covered |
+| APPL-VI-001 — Applicant data by applicant type | Individual data shape is validated before save. | Scenario Slice Flow / Visual Implementation Flow | covered |
+| ApplicantParty linked to account | Application resolves account context and persists ClientAccountId. | Visual Implementation Flow / Implementation Flow | covered |
+| ApplicantParty starts Unverified/current active | Scenario flow and domain notes record initial state. | Scenario Slice Flow / Behavior Coverage | covered |
+| Applicant replacement/versioning | Explicitly separate slice. | Slice Overview / Questions | deferred |
+| Applicant UI behavior | Explicitly separate dependent slice. | Visual Scenario Flow / UI Blueprint | separate UI slice |
+
+## 10. Test / Verification Plan
 
 Current integration coverage:
 
@@ -142,28 +274,18 @@ MarkVerified_succeeds_when_minimum_data_present
 MarkInactiveVersion_marks_current_flag_false
 ```
 
-## 8. Detailed Implementation Notes
-
-This section is intentionally implementation-focused and may include pseudocode or code snippets in later drafts.
-
-## 9. Decisions
+## 11. Dependent / Follow-up Slices
 
 ```text
-Decision:
-ApplicantParty creation uses clientAccountId, not ClientAccount domain object.
-
-Reason:
-Active account guard belongs to application/auth boundary.
-
-Consequence:
-Application service coordinates account lookup/guard before creating applicant party.
+[EXTENSION][L1/L2] SL-APPL-002 — Replace current active ApplicantParty version
+[EXTENSION][L2] SL-APPL-TYPE-ENT-001 — Entrepreneur applicant type
+[EXTENSION][L2] SL-APPL-TYPE-LEGAL-001 — Legal entity applicant type
+[PLUGIN][DEPENDENT] SL-VER-001 — Applicant verification through external provider
+[DEPENDENT] SL-REQ-001 — Create request from ApplicantParty
+[UI][DEPENDENT] SL-APPL-UI-001 — Applicant data form UI
 ```
 
-## 10. ADR Links / Candidates
-
-ADR candidates should be promoted to `planning/adr/adr-candidates.md` when the decision affects multiple slices or diploma-level architecture explanation.
-
-## 11. Implementation Checklist
+## 12. Implementation Checklist
 
 ```text
 [x] Create individual ApplicantParty

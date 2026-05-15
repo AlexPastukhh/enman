@@ -35,23 +35,66 @@ Related extension / dependent slices:
 [AUTH/FRAMEWORK][CROSS-CUTTING] AUTH-GUARD-001 — Active account guard for protected actions
 ```
 
-## 2. Questions Overview
+## 2. Sources / Source Behavior Items
 
-| Question | Why it matters | Current answer / candidate | Blocks implementation? |
-|---|---|---|---|
-| Should duplicate email be enforced by application precheck, DB unique constraint, or both? | Registration uniqueness | Prefer both eventually; current integration proves validation behavior | No |
-| Should PendingActivation be introduced in L2? | Account lifecycle | Separate extension slice | No |
-| Where should active-account guard be enforced? | Protected slices | Application service / auth framework, not aggregate duplication | Yes for protected slices |
+Sources:
 
-## 3. Flow Coverage Overview
+```text
+planning/diagrams/scenario-text-specs/SC-01-guest-registration.md
+planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+planning/tables/pre-domain-variants-input.md
+planning/api/api-error-contract.md
+planning/api/api-error-mapping-boundary.md
+```
 
-| Flow part | Current coverage | Missing / separate slice |
-|---|---|---|
-| Registration input accepted | Implemented through API/integration path | UI separate |
-| Account created as active | Implemented | PendingActivation extension |
-| Duplicate email rejected | Integration-tested | DB constraint decision later |
-| Registration UI | Not in this slice | SL-AUTH-UI-001 |
-| Email confirmation | Not in this slice | SL-AUTH-EMAIL-001 |
+Behavior items:
+
+```text
+ACC-CMD-REGISTER-001 — Register account
+```
+
+## 3. Visual Scenario Flow
+
+```text
+┌──────────────────┐
+│      Guest       │
+└────────┬─────────┘
+         │ opens registration screen
+         │ enters email + password + confirmation
+         ▼
+┌──────────────────────────────────────────────┐
+│ Client UI                                    │
+│ visible validation/correction feedback       │
+└────────┬─────────────────────────────────────┘
+         │ submits registration
+         ▼
+┌──────────────────────────────────────────────┐
+│ System                                       │
+│ checks whether registration data is accepted │
+└────────┬─────────────────────────────────────┘
+         │
+   ┌─────┴─────┐
+   │           │
+accepted    rejected
+   │           │
+   ▼           ▼
+┌──────────────────────────────┐   ┌─────────────────────────────┐
+│ Create client account         │   │ No account is created        │
+│ Current L1 core: Active       │   │ validation/business errors   │
+└──────────────┬───────────────┘   └──────────────┬──────────────┘
+               │                                  │
+               ▼                                  ▼
+┌──────────────────────────────┐       ┌──────────────────────────┐
+│ Registration success visible  │       │ Guest corrects input     │
+└──────────────────────────────┘       └──────────────────────────┘
+
+Out of this backend slice:
+- registration UI;
+- automatic sign-in decision;
+- email confirmation / PendingActivation;
+- password recovery;
+- account hardening.
+```
 
 ## 4. Scenario Slice Flow
 
@@ -78,7 +121,56 @@ Expected result: persisted account identity exists and can be referenced by late
 
 DATA: AccountId, Email.
 
-## 5. Implementation Flow
+## 5. Visual Implementation Flow
+
+```text
+┌──────────────────────────────────────────────┐
+│ API Controller                               │
+│ POST /api/l1/auth/register                   │
+│ Body: email + password + passwordConfirm     │
+└──────────────┬───────────────────────────────┘
+               │ map/validate request shape
+               ▼
+┌──────────────────────────────────────────────┐
+│ Application Handler                          │
+│ register client account command              │
+└──────────────┬───────────────────────────────┘
+               │ check duplicate email /
+               │ registration command validity
+               ▼
+┌──────────────────────────────────────────────┐
+│ Registration accepted?                       │
+└──────────────┬───────────────────────────────┘
+               │
+       ┌───────┴────────┐
+       │                │
+      yes               no
+       │                │
+       ▼                ▼
+┌──────────────────────┐   ┌──────────────────────────────┐
+│ Security boundary    │   │ API error mapping             │
+│ hash password        │   │ validation ProblemDetails     │
+└──────────┬───────────┘   │ no account write              │
+           │               └──────────────────────────────┘
+           ▼
+┌──────────────────────┐
+│ Domain / Account     │
+│ ClientAccount.Register│
+│ Activation = Active  │
+└──────────┬───────────┘
+           ▼
+┌──────────────────────┐
+│ Persistence          │
+│ store account row    │
+└──────────┬───────────┘
+           ▼
+┌──────────────────────────────────────────────┐
+│ API response                                 │
+│ account identity or validation ProblemDetails│
+└──────────────────────────────────────────────┘
+```
+
+## 6. Implementation Flow
 
 ### I01 — UI blueprint
 
@@ -104,21 +196,55 @@ L1 account row is created with account type/role/email/password hash/is-active s
 
 Response exposes AccountId and Email.
 
-## 6. UI Blueprint
+## 7. API Contract
 
-UI is handled by `[UI][DEPENDENT] SL-AUTH-UI-001`.
+| Endpoint | Method | Request DTO | Response DTO | Statuses | Contract status | OpenAPI exposed? |
+|---|---|---|---|---|---|---|
+| `/api/l1/auth/register` | POST | registration DTO | account identity or validation ProblemDetails | 200, 401/403 if protected later, 422, 500 | target L1 | yes |
 
-Blueprint:
+Contract notes:
 
 ```text
-- user opens registration screen;
-- enters email/password/password confirmation;
-- submits;
-- sees validation errors or registration success;
-- after success user can continue to authenticated flow depending on auth UX.
+- registration input includes email, password and password confirmation;
+- raw password is never persisted as domain state;
+- duplicate/invalid input returns validation ProblemDetails;
+- generated OpenAPI types and constants must match the active contract.
 ```
 
-## 7. Test Plan / Test Coverage
+## 8. Questions / Decisions
+
+Open questions:
+
+| Question | Why it matters | Current answer / candidate | Blocks implementation? |
+|---|---|---|---|
+| Should duplicate email be enforced by application precheck, DB unique constraint, or both? | Registration uniqueness | Prefer both eventually; current integration proves validation behavior | No |
+| Should PendingActivation be introduced in L2? | Account lifecycle | Separate extension slice | No |
+| Where should active-account guard be enforced? | Protected slices | Application service / auth framework, not aggregate duplication | Yes for protected slices |
+
+Accepted decisions:
+
+```text
+Decision:
+Current L1 registration creates active ClientAccount.
+
+Reason:
+L1 goal is to unblock protected client flows without implementing email confirmation.
+
+Consequence:
+Email confirmation / PendingActivation becomes an extension slice.
+```
+
+## 9. Behavior Coverage
+
+| Scenario behavior item | How draft covers it | Draft location | Status |
+|---|---|---|---|
+| ACC-CMD-REGISTER-001 — Register account | Registration command receives accepted input and creates account identity. | Scenario Slice Flow / Implementation Flow | covered |
+| Invalid registration input creates no account | Rejected branch returns validation ProblemDetails and no write. | Visual Scenario Flow / Visual Implementation Flow | covered |
+| Account created as active in current core | Domain/account step creates active account. | Scenario Slice Flow / Implementation Flow / Decisions | covered |
+| Registration UI visible success/errors | UI is identified as dependent slice. | Visual Scenario Flow / UI Blueprint | separate UI slice |
+| PendingActivation | Deferred to extension slice. | Slice Overview / Decisions | deferred |
+
+## 10. Test / Verification Plan
 
 Current integration coverage:
 
@@ -138,28 +264,17 @@ EnsureActivated_fails_for_non_active_account
 
 Missing/later: UI tests, email confirmation tests, stronger DB uniqueness tests if DB constraint is introduced.
 
-## 8. Detailed Implementation Notes
-
-This section is intentionally implementation-focused and may include pseudocode or code snippets in later drafts.
-
-## 9. Decisions
+## 11. Dependent / Follow-up Slices
 
 ```text
-Decision:
-Current L1 registration creates active ClientAccount.
-
-Reason:
-L1 goal is to unblock protected client flows without implementing email confirmation.
-
-Consequence:
-Email confirmation / PendingActivation becomes an extension slice.
+[UI][DEPENDENT] SL-AUTH-UI-001 — Login / registration / recovery UI
+[EXTENSION][L2] SL-AUTH-EMAIL-001 — Email confirmation / PendingActivation flow
+[EXTENSION][L2] SL-AUTH-RECOVERY-001 — Password recovery flow
+[EXTENSION][L2] SL-AUTH-HARDENING-001 — Rate limiting / lockout / auth hardening
+[AUTH/FRAMEWORK][CROSS-CUTTING] AUTH-GUARD-001 — Active account guard for protected actions
 ```
 
-## 10. ADR Links / Candidates
-
-ADR candidates should be promoted to `planning/adr/adr-candidates.md` when the decision affects multiple slices or diploma-level architecture explanation.
-
-## 11. Implementation Checklist
+## 12. Implementation Checklist
 
 ```text
 [x] Register client account through API

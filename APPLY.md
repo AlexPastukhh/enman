@@ -1,17 +1,23 @@
-# Apply — enman-ui-command-success-convention-v1
+# Apply — enman-slice-visual-flow-docs-v1.zip
 
-Apply from the repository root:
+From the repository root, run:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-ui-command-success-convention-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-slice-visual-flow-docs-v1.zip" -DestinationPath . -Force
 git status
 ```
 
-Review the affected files:
+Recommended checks:
 
 ```powershell
-git diff -- planning/client/cross-cutting/CL-COMMAND-001-command-success-without-required-response-body.md
-git diff -- planning/client/cross-cutting/README.md
-git diff -- planning/client/README.md
-git diff -- planning/diagrams/scenario-ui-specs/README.md
+git diff -- planning/slices/l1-slice-drafting-guide.md
+git diff -- planning/slices/README.md
+git diff -- planning/slices/SL-ACC-001-register-client-account.md
+git diff -- planning/slices/SL-APPL-001-create-individual-applicant-party.md
+git diff -- planning/slices/SL-REQ-001-create-connection-request.md
+git diff -- planning/slices/examples/README.md
+git diff -- planning/README.md
+git diff -- planning/planning-doc-responsibility-map.md
 ```
+
+Do not commit `MANIFEST.md` or `APPLY.md` unless explicitly requested.

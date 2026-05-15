@@ -1,7 +1,7 @@
 # Slice Planning Index
 
 Status: current slice-planning navigation index  
-Scope: business slices, client sidecars, cross-cutting/helper slices, test planning, API contract artifacts, client architecture, extension/change points and implementation notes
+Scope: business slices, client sidecars, cross-cutting/helper slices, examples, test planning, API contract artifacts, client architecture, extension/change points and implementation notes
 
 ## 1. Purpose
 
@@ -31,6 +31,17 @@ documentation/status reconciliation drafts
 
 Scenario-derived business behavior slice.
 
+Full backend/API/persistence business slice files should include:
+
+```text
+Visual Scenario Flow
+-> Scenario Slice Flow
+-> Visual Implementation Flow
+-> Implementation Flow
+```
+
+Visual flow sections should be diagram-like maps, not only linear arrow lists.
+
 ### Client sidecar
 
 Client implementation file for a concrete business slice.
@@ -45,7 +56,27 @@ Technical/support slice with observable behavior, concern-derived behavior items
 
 Smaller reusable helper/support behavior with implementation and tests.
 
-## 4. Slice Support Files
+### Example slice draft
+
+Example files live in:
+
+```text
+planning/slices/examples/
+```
+
+They are examples only and are not current implementation evidence unless copied into an active slice and reconciled with current repo state.
+
+## 4. Current Backend Slice Files
+
+```text
+planning/slices/SL-ACC-001-register-client-account.md
+planning/slices/SL-APPL-001-create-individual-applicant-party.md
+planning/slices/SL-REQ-001-create-connection-request.md
+```
+
+These files are current backend/API/persistence slice docs and should follow the full backend slice flow rule.
+
+## 5. Slice Support Files
 
 ```text
 planning/slices/draft-driven-discovery-principles.md
@@ -58,9 +89,29 @@ planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
 planning/slices/shared/README.md
 planning/slices/cross-cutting/README.md
+planning/slices/examples/README.md
 ```
 
-## 5. Cross-Cutting / Helper Slices
+## 6. Examples
+
+Use:
+
+```text
+planning/slices/examples/
+```
+
+Current examples:
+
+```text
+planning/slices/examples/L1-CONNECTION-REQUEST-CREATE-early-short-draft-example.md
+planning/slices/examples/SL-ACC-001-register-client-account-full-slice-example.md
+```
+
+The early short example shows the valid shortened working format.
+
+The full backend slice example shows visual maps before detailed scenario/implementation flows.
+
+## 7. Cross-Cutting / Helper Slices
 
 Use:
 
@@ -89,7 +140,7 @@ Cross-cutting/helper slices must have:
 - ADR impact.
 ```
 
-## 6. API Contract Support
+## 8. API Contract Support
 
 API contract docs live in:
 
@@ -99,7 +150,7 @@ planning/api/
 
 Use them before client slice implementation.
 
-## 7. Shared Notes
+## 9. Shared Notes
 
 Use:
 
@@ -109,7 +160,7 @@ planning/slices/shared/
 
 for reusable notes/helpers that do not have a full slice behavior/test flow.
 
-## 8. Testing Support
+## 10. Testing Support
 
 Testing workflow lives in:
 
@@ -117,16 +168,18 @@ Testing workflow lives in:
 planning/testing/
 ```
 
-## 9. Parent Business Slice Files
+## 11. Parent Business Slice Files
 
 Parent business slice files own:
 
 ```text
 - vertical behavior;
+- Visual Scenario Flow;
 - Scenario Slice Flow;
 - behavior item coverage summary;
-- API contract;
+- Visual Implementation Flow;
 - cross-layer Implementation Flow;
+- API contract;
 - extension/change/pressure decisions;
 - application/domain/persistence responsibilities;
 - server/integration tests;
@@ -135,7 +188,7 @@ Parent business slice files own:
 - link to `.client.md` sidecar when client work starts.
 ```
 
-## 10. Client Sidecar Files
+## 12. Client Sidecar Files
 
 A `.client.md` file is created only when concrete client work starts.
 
