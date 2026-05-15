@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { FormButton } from "../../../../Components/Form/FormButton";
 import { FormField } from "../../../../Components/Form/FormField";
@@ -17,9 +18,9 @@ export const RegisterForm = ({ setRootError }: RegisterFormProps) => {
   const { register, handleSubmit, errors, isSubmitting, fieldNames } =
     useRegisterForm();
 
-  if (errors.root?.message) {
-    setRootError(errors.root.message);
-  }
+  useEffect(() => {
+    setRootError(errors.root?.message ?? "");
+  }, [errors.root?.message, setRootError]);
 
   return (
     <form onSubmit={handleSubmit} className="form registerForm">
@@ -88,4 +89,3 @@ export const RegisterForm = ({ setRootError }: RegisterFormProps) => {
     </form>
   );
 };
-

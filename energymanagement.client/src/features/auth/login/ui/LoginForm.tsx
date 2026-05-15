@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { FormButton } from "../../../../Components/Form/FormButton";
 import { FormField } from "../../../../Components/Form/FormField";
 import { FormGroup } from "../../../../Components/Form/FormGroup";
@@ -20,9 +21,9 @@ export const LoginForm = ({ setRootError }: LoginFormProps) => {
     isValid,
   } = useLoginForm();
 
-  if (errors.root?.message) {
-    setRootError(errors.root.message);
-  }
+  useEffect(() => {
+    setRootError(errors.root?.message ?? "");
+  }, [errors.root?.message, setRootError]);
 
   return (
     <form className="form" onSubmit={handleSubmit}>
@@ -58,4 +59,3 @@ export const LoginForm = ({ setRootError }: LoginFormProps) => {
     </form>
   );
 };
-

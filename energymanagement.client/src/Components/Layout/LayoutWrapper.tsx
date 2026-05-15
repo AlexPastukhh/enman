@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { usePageError } from "../../hooks/usePageError";
+import { usePageError } from "../../shared/errors/pageErrorContext";
 import { ErrorMessage } from "./ErrorMessage";
 import { Footer } from "./Footer"
 import { Header } from "./Header"
