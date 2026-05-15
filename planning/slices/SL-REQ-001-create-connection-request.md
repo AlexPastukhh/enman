@@ -3,39 +3,59 @@
 Status: implemented backend/API/persistence slice  
 Package: `[L1]`  
 Source scenario: `SC-04 Client Request Creation`  
-Slice type: backend / API / persistence slice with dependent Client/UI/read/extension slices  
-Current implementation status: implemented backend/API/persistence; client/UI/read slices remain separate
+Slice type: backend / API / persistence slice with dependent client/UI/read/security/extension slices  
+Current implementation status: implemented backend/API/persistence and integration-tested; request creation UI, My Requests read screens and broad CSRF rollout remain separate
 
 ## 1. Slice Overview
 
 Observable behavior:
 
 ```text
-Client submits connection request data.
-System creates a connection request for the current active applicant party of the authenticated account.
+Authenticated L1 client submits connection request data.
+System creates a connection request for the current active individual applicant party of the authenticated account.
 Created request enters InReview state.
+API returns command success without a required response body.
 ```
 
 Backend scope implemented by this slice:
 
 ```text
-submit request data
--> server selects current active applicant party
--> create request
--> request enters InReview
--> API returns success
+protected L1 request endpoint
+-> details + object address command input
+-> authenticated account id from L1 auth context
+-> server-selected current active individual ApplicantParty
+-> request details/address validation
+-> ConnectionRequest creation
+-> InReview status
+-> persistence
+-> HTTP success with no required response body
+```
+
+Current implementation evidence checked for this reconciliation:
+
+```text
+EnergyManagement.Server/L1/Controllers/L1Controller.cs
+EnergyManagement.Server/L1/Api/L1Dtos.cs
+EnergyManagement.Server/L1/Application/Commands/L1Commands.cs
+EnergyManagement.Server/L1/Application/Commands/L1CreateConnectionRequestHandler.cs
+Domain.EnergyManagement/L1/Requests/ClientRequest.cs
+Domain.EnergyManagement/L1/Requests/ConnectionRequest.cs
+Tests.EnergyManagement/Integration/L1/L1SliceIntegrationTests.cs
+Tests.EnergyManagement/Domain/Requests/ConnectionRequestCreationTests.cs
+planning/client/cross-cutting/CL-COMMAND-001-command-success-without-required-response-body.md
 ```
 
 Out of this backend slice:
 
 ```text
-- concrete request creation page;
+- concrete request creation page/client sidecar;
 - My Requests read/list/detail screen;
-- document upload;
+- request document upload;
 - notifications;
-- employee review;
+- employee review workflow;
 - applicant party replacement/version management;
-- broad CSRF rollout.
+- broad CSRF rollout;
+- client retry/token mechanics.
 ```
 
 Client success handling should follow:
@@ -46,7 +66,7 @@ planning/client/cross-cutting/CL-COMMAND-001-command-success-without-required-re
 
 ## 2. Sources / Source Behavior Items
 
-Sources:
+Scenario / planning sources:
 
 ```text
 planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
@@ -55,9 +75,12 @@ planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum
 planning/tables/pre-domain-variants-input.md
 planning/api/client-server-contract-principles.md
 planning/api/api-error-contract.md
+planning/client/cross-cutting/CL-COMMAND-001-command-success-without-required-response-body.md
+planning/slices/slice-extension-points-register.md
+planning/slices/slice-implementation-notes-register.md
 ```
 
-Behavior items used by this slice:
+Behavior items covered by this backend slice:
 
 ```text
 REQ-CMD-CREATE-001 — Create request
@@ -66,24 +89,43 @@ REQ-VI-001 — Object address value integrity
 REQ-UCQ-001 — Request uses saved ApplicantData without mutating it
 ```
 
-Current implementation narrows applicant context to the current active individual applicant party.
+Scenario facts used by the backend slice:
+
+```text
+- Client submits request details and object address.
+- Authenticated account context is server-side context.
+- Client must not submit applicantPartyId/clientAccountId for the create command.
+- Server selects the current active individual applicant party.
+- Missing current active applicant party rejects the command and writes no request row.
+- Accepted request starts InReview.
+- Initial command success does not require returned request id/status/body.
+```
+
+Client/UI facts intentionally not implemented here:
+
+```text
+- request creation form/page;
+- success message rendering;
+- navigation to My Requests;
+- My Requests route/read model;
+- field-level ProblemDetails display.
+```
 
 ## 3. Visual Scenario Flow
 
 ```text
 ┌──────────────────────────────────────────────┐
-│ Client                                       │
+│ Authenticated L1 Client                      │
 │ submits connection request data              │
-│ details + address                            │
+│ details + object address                     │
 └──────────────┬───────────────────────────────┘
                │
                ▼
 ┌──────────────────────────────────────────────┐
-│ System                                       │
-│ authenticated L1 client account is known     │
+│ L1 System                                    │
+│ resolves client account id from auth context │
 └──────────────┬───────────────────────────────┘
-               │ resolve current active
-               │ individual ApplicantParty
+               │ find current active individual ApplicantParty
                ▼
 ┌──────────────────────────────────────────────┐
 │ Current active applicant party exists?       │
@@ -95,35 +137,42 @@ Current implementation narrows applicant context to the current active individua
        │                │
        ▼                ▼
 ┌──────────────────────┐   ┌──────────────────────────────┐
-│ Create request        │   │ Validation error              │
-│ for selected party    │   │ no request is created         │
+│ Validate details and  │   │ Validation ProblemDetails     │
+│ object address        │   │ no request is created         │
 └──────────┬───────────┘   └──────────────┬───────────────┘
            │                              │
            ▼                              ▼
 ┌──────────────────────┐        ┌──────────────────────────┐
-│ Request enters        │        │ Client keeps/corrects     │
-│ InReview state        │        │ request form context      │
+│ Create request for    │        │ Client can keep/correct  │
+│ selected party        │        │ request form context     │
 └──────────┬───────────┘        └──────────────────────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Request enters        │
+│ InReview state        │
+└──────────┬───────────┘
            │
            ▼
 ┌──────────────────────────────────────────────┐
 │ Command success                              │
-│ HTTP success is enough for this command flow │
+│ HTTP success is enough for initial flow      │
 └──────────────┬───────────────────────────────┘
                │
                ▼
 ┌──────────────────────────────────────────────┐
 │ Dependent client UI                          │
 │ show success message                         │
-│ navigate to My Requests                      │
+│ navigate to My Requests read context         │
 └──────────────────────────────────────────────┘
 
-Dependent / out-of-scope slices:
+Dependent / out-of-scope:
 - request creation UI sidecar;
 - My Requests read/list/detail slice;
 - request document upload;
-- notification/navigation;
-- employee review.
+- notification/navigation details;
+- employee review;
+- CSRF broad rollout.
 ```
 
 ## 4. Scenario Slice Flow
@@ -131,32 +180,33 @@ Dependent / out-of-scope slices:
 | Step | Actor / system | Behavior | Source / item | Scope status |
 |---|---|---|---|---|
 | F01 | Client | Submits request details and object address. | SC-04 / REQ-CMD-CREATE-001 | source behavior |
-| F02 | System | Uses authenticated L1 client account context. | API/security boundary | backend slice |
-| F03 | System | Resolves current active individual applicant party for the account. | REQ-UCQ-001 / current implementation direction | backend slice |
-| F04 | System | Rejects command if current active applicant party is missing. | validation/no-write behavior | backend slice |
-| F05 | System | Validates request details and address. | REQ-VI-001 / validation addendum | backend/domain slice |
-| F06 | System | Creates `ConnectionRequest` for selected applicant party. | REQ-CMD-CREATE-001 | backend/domain slice |
+| F02 | API/Auth boundary | Derives current L1 client account id from authenticated user context. | API/security boundary | backend/API slice |
+| F03 | System | Resolves current active individual applicant party for the account. | REQ-UCQ-001 / current implementation | backend/application slice |
+| F04 | System | Rejects command if current active applicant party is missing. | validation/no-write behavior | backend/API slice |
+| F05 | System | Validates request details and object address. | REQ-VI-001 / validation addendum | backend/domain slice |
+| F06 | System | Creates `ConnectionRequest` for the selected applicant party. | REQ-CMD-CREATE-001 | backend/domain slice |
 | F07 | System | Sets created request state to `InReview`. | REQ-LC-001 | backend/domain slice |
-| F08 | System | Persists request with server-selected `ApplicantPartyId`. | persistence responsibility | backend slice |
+| F08 | System | Persists request with server-selected `ApplicantPartyId`. | persistence responsibility | backend/persistence slice |
 | F09 | API | Returns command success without required response body. | CL-COMMAND-001 / API contract | backend/API slice |
-| F10 | Client UI | Shows success message and navigates to My Requests. | UI convention / dependent sidecar | dependent client slice |
-| F11 | Client UI | Shows ProblemDetails validation errors and preserves input where appropriate. | API error contract / client error convention | dependent client slice |
+| F10 | Client UI | Shows success message and navigates to My Requests. | CL-COMMAND-001 / UI behavior | dependent client sidecar |
+| F11 | Client UI | Shows ProblemDetails validation errors and preserves input where appropriate. | API error contract / client error convention | dependent client sidecar |
 
 ## 5. Visual Implementation Flow
 
 ```text
 ┌──────────────────────────────────────────────┐
 │ API Controller                               │
+│ [Authorize]                                  │
 │ POST /api/l1/requests                        │
 │ Body: details + address                      │
 │ No applicantPartyId/clientAccountId in body  │
 └──────────────┬───────────────────────────────┘
-               │ derive ClientAccountId
-               │ from authenticated user context
+               │ TryGetCurrentL1AccountId
+               │ builds command with server account id
                ▼
 ┌──────────────────────────────────────────────┐
 │ Application Handler                          │
-│ Create connection request command            │
+│ L1CreateConnectionRequestHandler             │
 └──────────────┬───────────────────────────────┘
                │ load current active individual
                │ applicant party for account
@@ -171,23 +221,23 @@ Dependent / out-of-scope slices:
        │                │
        ▼                ▼
 ┌──────────────────────┐   ┌──────────────────────────────┐
-│ Domain               │   │ Application/API error         │
+│ Domain               │   │ API error mapping             │
 │ Address.Create       │   │ validation ProblemDetails     │
-│ ConnectionRequest    │   │ no write                      │
+│ ConnectionRequest    │   │ no request write              │
 │ .Create              │   └──────────────────────────────┘
 └──────────┬───────────┘
            │
            ▼
 ┌──────────────────────────────────────────────┐
 │ Persistence                                  │
-│ store request with server-selected           │
-│ ApplicantPartyId and InReview status         │
+│ L1ClientRequests row                         │
+│ selected ApplicantPartyId + InReview status  │
 └──────────────┬───────────────────────────────┘
                │
                ▼
 ┌──────────────────────────────────────────────┐
 │ API Controller                               │
-│ returns HTTP success without required body   │
+│ returns 200 OK with no required body         │
 └──────────────┬───────────────────────────────┘
                │
                ▼
@@ -200,65 +250,74 @@ Dependent / out-of-scope slices:
 
 ## 6. Implementation Flow
 
-| Step | Layer | Responsibility | Notes |
+| Step | Layer | Responsibility | Current implementation note |
 |---|---|---|---|
-| I01 | API Controller | Accept `POST /api/l1/requests`. | Request body contains `details` and `address`. |
-| I02 | API/Auth boundary | Derive current client account id from authenticated user context. | Client must not submit account identity. |
-| I03 | Application Handler | Resolve current active individual applicant party for account. | Current implementation uses server-selected applicant party. |
-| I04 | Application Handler | Return validation ProblemDetails if applicant party is missing. | No request row is created. |
-| I05 | Domain | Create address/value objects and request details. | Invalid details/address fail before persistence. |
-| I06 | Domain | Create `ConnectionRequest` in `InReview` state. | Covers `REQ-LC-001`. |
-| I07 | Persistence | Store request with selected `ApplicantPartyId`. | Applicant party is selected server-side. |
-| I08 | API Controller | Return success without required response body. | Client command confirmation uses HTTP success. |
-| I09 | Client sidecar | Show success message and navigate to My Requests. | Dependent slice, not implemented here. |
-| I10 | Client sidecar | Parse ProblemDetails and show errors. | Dependent slice, not implemented here. |
+| I01 | API Controller | Expose protected create request endpoint. | `[Authorize] POST /api/l1/requests`. |
+| I02 | API/Auth boundary | Derive current client account id from L1 auth claims. | Client must not submit account identity. |
+| I03 | API DTO | Receive create-request body. | `L1CreateConnectionRequestDto(details, address)`; no `applicantPartyId` or `clientAccountId`. |
+| I04 | Application Handler | Resolve current active individual applicant party for account. | Uses repository current-active individual lookup. |
+| I05 | Application Handler | Reject missing applicant context. | Returns `ApplicantPartyIsRequired` validation failure; no request row is created. |
+| I06 | Domain/value objects | Validate object address and request details. | `Address.Create(...)`; `ConnectionRequest.Create(...)`. |
+| I07 | Domain | Create connection request in `InReview`. | `ClientRequest` base initializes `Status = RequestStatus.InReview`. |
+| I08 | Persistence | Store request with selected applicant party id. | `_clientRequests.Add(...)` + `L1DbContext.SaveChangesAsync(...)`. |
+| I09 | API response | Return HTTP success without required response body. | Controller maps `UnitResult` success to `Ok()`. |
+| I10 | Dependent client | Show success message and navigate to My Requests. | Not part of this backend archive; follows CL-COMMAND-001 when client work starts. |
+| I11 | Dependent client | Parse ProblemDetails and preserve/correct input on failure. | Not part of this backend archive. |
 
 ## 7. API Contract
 
 | Endpoint | Method | Request DTO | Response DTO | Statuses | Contract status | OpenAPI exposed? |
 |---|---|---|---|---|---|---|
-| `/api/l1/requests` | POST | `L1CreateConnectionRequestDto` with `details` and `address` | none required | 200, 401, 403, 422, 500 | target L1 | yes |
+| `/api/l1/requests` | POST | `L1CreateConnectionRequestDto` with `details`, `address` | none required | 200, 401, 403, 422, 500 | target L1 | yes |
 
 Contract rule:
 
 ```text
 The request body must not include applicantPartyId or clientAccountId.
-ClientAccountId comes from auth context.
+ClientAccountId comes from authenticated L1 context.
 ApplicantPartyId is selected by the server from the current active individual applicant party.
+Successful command completion does not require requestId/status/body for the initial UI flow.
 ```
 
-Generated contract coverage:
+Generated contract coverage should show:
 
 ```text
-Shared/openapi.json and generated openapi-types.ts must show:
 - POST /api/l1/requests request body has details + address;
-- POST /api/l1/requests request body does not have applicantPartyId;
-- command success has no required response body.
+- request body does not have applicantPartyId/clientAccountId;
+- 200 success has no required response body;
+- ProblemDetails statuses are documented for auth/validation/server failures.
+```
+
+Security note:
+
+```text
+This slice is an unsafe browser command consumer of the future/broader antiforgery concern, but this documentation archive does not implement CSRF.
+Parent client/security work should use CC-CSRF-001 when concrete unsafe browser request handling is started.
 ```
 
 ## 8. Questions / Decisions
 
-Open questions:
+Open questions and unresolved future review items:
 
 | ID | Area | Question | Current direction | Status |
 |---|---|---|---|---|
-| SL-REQ-Q-001 | Read model | What exact My Requests list/detail response does the client need after navigation? | Separate read slice | open |
-| SL-REQ-Q-002 | Applicant party versions | How are older applicant party versions made inactive when replacement/edit flow is implemented? | Keep current active lookup now; version management later | future |
-| SL-REQ-Q-003 | UI | What concrete page/form implements request creation? | Dependent client sidecar when client work starts | open |
-| SL-REQ-Q-004 | Security | When should unsafe browser commands enforce CSRF? | CC-CSRF-001 before broad client unsafe requests | open |
+| SL-REQ-Q-001 | Read model | What exact My Requests list/detail response does the client need after navigation? | Separate read/list/detail slice. | open |
+| SL-REQ-Q-002 | Applicant versions | How are older applicant party versions made inactive when replacement/edit flow exists? | Keep current active lookup now; replacement/versioning later. | future review |
+| SL-REQ-Q-003 | Client UI | What concrete page/form implements request creation? | Create/update client sidecar only when concrete client work starts. | open |
+| SL-REQ-Q-004 | Security | When should unsafe browser commands enforce CSRF? | Use CC-CSRF-001 in concrete security/client work; do not implement here. | open |
+| SL-REQ-Q-005 | Verification | Must applicant party be verified before request creation? | Current backend does not require verification; verification is a separate slice/policy. | future review |
 
 Accepted decisions:
 
 ```text
 Decision:
-Create request command treats HTTP success as confirmation and does not require response body for the initial command flow.
+Request creation command treats HTTP success as enough for the initial command confirmation.
 
 Reason:
-The client does not need created entity data to continue this command flow.
+The next expected user step is a read-context screen; the initial client flow does not require requestId/status/body from the command.
 
 Consequence:
-Client UI can show a success message and navigate to My Requests.
-The request read/list contract belongs to a separate My Requests/read slice.
+Client UI can show a success message and navigate to My Requests without depending on a response DTO.
 ```
 
 ```text
@@ -274,10 +333,18 @@ Missing current active applicant party returns validation ProblemDetails and no 
 
 ```text
 Decision:
-A created request starts in InReview.
+A created connection request starts in InReview.
 
 Reason:
-A created request immediately enters the employee review queue.
+A newly submitted client request enters the employee review queue.
+```
+
+```text
+Decision:
+Request creation does not mutate saved ApplicantParty data.
+
+Reason:
+The request stores selected ApplicantPartyId and request-local details/address; applicant data editing/replacement is a separate concern.
 ```
 
 ## 9. Behavior Coverage
@@ -285,65 +352,66 @@ A created request immediately enters the employee review queue.
 | Scenario behavior item | How draft covers it | Draft location | Status |
 |---|---|---|---|
 | REQ-CMD-CREATE-001 — Create request | API/application/domain flow creates request from submitted details/address and server-selected applicant party. | Visual Scenario Flow / Scenario Slice Flow / Implementation Flow | covered |
-| REQ-LC-001 — Request creation creates InReview | Domain creates `ConnectionRequest` in `InReview` state. | Scenario Slice Flow / Implementation Flow | covered |
-| REQ-VI-001 — Object address value integrity | Domain/value-object step validates address before persistence. | Implementation Flow | covered |
-| REQ-UCQ-001 — Request uses saved/current applicant context without client spoofing | Application resolves current active applicant party server-side; DTO does not expose applicantPartyId. | Visual Implementation Flow / API Contract | covered |
-| Missing applicant context no-write | Missing current active applicant party returns validation ProblemDetails and creates no request. | Visual Scenario Flow / Visual Implementation Flow / Implementation Flow | covered |
-| Client success outcome | HTTP success can drive success message and My Requests navigation. | Visual Scenario Flow / CL-COMMAND-001 reference | partially covered; client sidecar needed |
-| My Requests read context | Read/list destination is identified but delegated to read slice. | Questions / Dependent slices | open |
+| REQ-LC-001 — Request creation creates InReview | Domain request creation initializes status to `InReview`; integration test checks persisted status. | Scenario Slice Flow / Implementation Flow / Test Plan | covered |
+| REQ-VI-001 — Object address value integrity | Address value object is created before request persistence. | Implementation Flow / Test Plan | covered |
+| REQ-UCQ-001 — Request uses saved/current applicant context without client spoofing | DTO omits applicantPartyId/clientAccountId; application resolves applicant party server-side. | Visual Implementation Flow / API Contract | covered |
+| Missing applicant context no-write | Missing current active applicant party returns validation ProblemDetails and request count remains unchanged. | Visual Scenario Flow / Visual Implementation Flow / Test Plan | covered |
+| Client success outcome | HTTP success is enough for success message and My Requests navigation. | Visual Scenario Flow / API Contract / CL-COMMAND-001 | partially covered; dependent client sidecar |
+| My Requests read context | Read/list/detail destination is identified but delegated to read slice. | Questions / Dependent Slices | open |
+| CSRF unsafe request protection | Identified as cross-cutting future/concrete client-security work. | API Contract security note / Questions | deferred; not implemented here |
 
 ## 10. Test / Verification Plan
 
-Server integration coverage:
-
 | Test / check | Verifies | Layer | Status |
 |---|---|---|---|
-| Create request stores server-selected current active applicant party id | Client cannot spoof applicant party and server chooses current active party. | API + Application + Persistence | implemented |
-| Created request starts InReview | Request lifecycle state after creation. | Domain + Persistence | implemented |
-| Details and address are persisted | Request data is stored. | API + Persistence | implemented |
-| Missing current active applicant party returns validation ProblemDetails | Failure branch and no-write behavior. | Application + API error mapping | implemented |
-| Empty details returns validation ProblemDetails | Domain/application validation. | API + Domain/Application | implemented |
-| Request DTO does not expose applicantPartyId | Contract safety. | API/OpenAPI | implemented |
-
-Domain unit coverage:
-
-```text
-- ConnectionRequest.Create creates InReview request;
-- create fails without details;
-- create fails without object address;
-- transient applicant party is guarded.
-```
-
-Client/UI coverage:
-
-```text
-Deferred until the request creation UI sidecar starts.
-```
+| `L1LoginCookie_CreateConnectionRequest_Succeeds` | Authenticated L1 flow can create applicant then request; request is persisted in InReview. | API + Auth/session + Application + Persistence | implemented |
+| `CreateConnectionRequest_StoresServerSelectedCurrentActiveApplicantPartyReference` | Server selects current active applicant party; persisted request uses selected ApplicantPartyId and stores details/address. | API + Application + Persistence | implemented |
+| `L1Flow_PropagatesEfGeneratedIdsAcrossAggregates` | Account, applicant and request generated ids propagate across aggregate references. | API + Persistence | implemented |
+| `CreateConnectionRequest_WithoutCurrentActiveApplicantParty_ReturnsValidationProblem` | Missing applicant party returns validation ProblemDetails and no request row is created. | Application + API error mapping + Persistence | implemented |
+| `CreateConnectionRequest_WithEmptyDetails_ReturnsValidationProblem` | Empty request details fail validation. | API + Domain/Application | implemented |
+| `Create_creates_in_review_request` | Domain creates connection request with selected applicant id and InReview status. | Domain unit | implemented |
+| `Create_fails_without_details` | Domain rejects missing details. | Domain unit | implemented |
+| `Create_fails_without_object_address` | Domain rejects missing object address. | Domain unit | implemented |
+| `Create_guards_transient_applicant_party` | Domain guards against non-persisted applicant reference. | Domain unit | implemented |
+| OpenAPI/generated type check | Endpoint schema/statuses stay aligned with generated contract artifacts. | Tooling/API contract | available through existing API check workflow |
+| Request creation client/component tests | Form behavior, ProblemDetails display, DTO mapping, success message/navigation. | Client/component | dependent sidecar; not created here |
+| E2E request creation happy path | Browser -> client -> API -> persistence -> success outcome/navigation. | Browser + client + server | future when client/UI/read flow exists |
+| CSRF tests | Antiforgery token fetch/attach/failure behavior. | Security/client/server | deferred to CC-CSRF/concrete client-security work |
 
 ## 11. Dependent / Follow-up Slices
 
 ```text
-[UI][DEPENDENT] Request creation form sidecar
+[UI][DEPENDENT] Request creation form client sidecar
 [READ][DEPENDENT] My Requests read/list/detail slice
 [EXTENSION] Request documents
-[EXTENSION] Notifications/navigation
+[EXTENSION] Notifications/navigation details
 [EMPLOYEE] Employee review workflow
 [SECURITY][CROSS-CUTTING] CC-CSRF-001 unsafe browser command protection
 [APPLICANT][EXTENSION] Applicant party replacement/version management
+[POLICY][FUTURE] Applicant verification requirement before request creation, if adopted
 ```
 
 ## 12. Implementation Checklist
 
 ```text
-[x] POST /api/l1/requests accepts details + address
+[x] POST /api/l1/requests exists
+[x] endpoint is protected by authorization
+[x] request DTO contains details + address
 [x] request body omits applicantPartyId/clientAccountId
-[x] client account id comes from auth context
+[x] client account id comes from L1 auth context
 [x] current active individual applicant party is selected server-side
 [x] missing applicant party returns validation ProblemDetails
-[x] request starts InReview
-[x] request persisted with selected ApplicantPartyId
+[x] missing applicant party creates no request row
+[x] address/details are validated before persistence
+[x] ConnectionRequest is created in InReview state
+[x] request is persisted with selected ApplicantPartyId
 [x] success has no required response body
-[ ] request creation UI sidecar
+[x] integration tests cover success, no-write missing applicant and empty details validation
+[x] domain tests cover InReview creation and failure branches
+[ ] request creation UI/client sidecar
 [ ] My Requests read/list/detail slice
+[ ] E2E browser flow after client/read implementation exists
 [ ] CSRF broad unsafe command rollout
+[ ] applicant replacement/versioning slice
+[ ] applicant verification policy, if later adopted
 ```
