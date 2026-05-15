@@ -23,7 +23,7 @@ export class RegisterPage {
       .getByLabel(exactTextIgnoreCase("Confirm Password"))
       .fill(values.passwordConfirmation);
     await this.page
-      .getByRole("button", { name: "Register", exact: true })
+      .getByRole("button", { name: "Register Button", exact: true })
       .click();
   }
 

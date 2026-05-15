@@ -30,7 +30,7 @@ Do not create full numbered ADRs unless explicitly requested.
 
 9. planning/testing/README.md
 10. planning/testing/testing-principles.md
-11. planning/testing/e2e-playwright-workflow.md
+11. planning/testing/e2e-testing-workflow.md
 12. planning/testing/test-object-patterns.md
 13. planning/testing/playwright-e2e-cleanup-plan.md
 

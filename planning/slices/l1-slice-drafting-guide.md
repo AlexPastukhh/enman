@@ -78,7 +78,7 @@ Use:
 
 ```text
 planning/testing/testing-principles.md
-planning/testing/e2e-playwright-workflow.md
+planning/testing/e2e-testing-workflow.md
 ```
 
 ## 6. E2E Coverage Table
