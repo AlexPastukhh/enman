@@ -3,18 +3,19 @@
 Status: current planning navigation index  
 Scope: repository planning artifacts and read order
 
-## Current Active Planning Focus
+## 1. Current Active Planning Focus
 
 ```text
-API contract / OpenAPI / client constants generation workflow
-and accessibility as client component/test contract.
+Cross-cutting/helper slice workflow,
+CC-CONST-001 as the implementation-ready constants generation/testing slice,
+and API/client contract support.
 ```
 
 Do not create `.client.md` files in advance.
 
 Do not create full numbered ADRs unless explicitly requested.
 
-## Current Read Order
+## 2. Current Read Order
 
 ```text
 1. planning/README.md
@@ -39,32 +40,57 @@ Do not create full numbered ADRs unless explicitly requested.
 17. planning/diagrams/README.md
 18. planning/client/README.md
 19. planning/client/cross-cutting/README.md
+
 20. planning/slices/README.md
-21. planning/slices/l1-slice-drafting-guide.md
-22. planning/slices/implementation-principles.md
-23. planning/slices/client-architecture-principles.md
-24. planning/slices/client-component-discovery-guide.md
-25. planning/slices/change-extension-points-principles.md
-26. planning/slices/slice-extension-points-register.md
-27. planning/replacement-file-generation-guide.md
+21. planning/slices/cross-cutting/README.md
+22. planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
+23. planning/slices/l1-slice-drafting-guide.md
+24. planning/slices/implementation-principles.md
+25. planning/slices/client-architecture-principles.md
+26. planning/slices/client-component-discovery-guide.md
+27. planning/slices/change-extension-points-principles.md
+28. planning/slices/slice-extension-points-register.md
+29. planning/replacement-file-generation-guide.md
 ```
 
-## API Contract Docs
+## 3. Cross-Cutting And Helper Slices
 
 Use:
 
 ```text
-planning/api/
+planning/slices/cross-cutting/
 ```
 
-for native ProblemDetails error contract, ServerError / ServerValidationError, OpenAPI structural contract, generated shared constants JSON, client-facing vs internal error distinction and FluentValidation error-code migration note.
+for technical/support slices with observable behavior, implementation flow and tests.
 
-## Current Next Step
+Use:
 
 ```text
-1. use planning/api docs during API/client slice work;
-2. use hardened CL-A11Y-001 during client component/test planning;
-3. inspect FluentValidation helpers before changing ErrorMessage/ErrorCode mapping;
-4. plan API error mapper / ProblemDetails factory as a separate API boundary step;
-5. keep .NET upgrade deferred as infra task.
+planning/slices/shared/
+```
+
+for reusable notes/helpers that do not have full slice behavior/test flow.
+
+## 4. Constants Direction
+
+Primary source for constants writer/checker/testing:
+
+```text
+planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
+```
+
+API relationship note:
+
+```text
+planning/api/client-constants-generation.md
+```
+
+## 5. Current Next Step
+
+```text
+1. Apply this archive.
+2. Use CC-CONST-001 as implementation plan for EnergyManagement.Tools constants generator/checker/tests.
+3. Use generated JSON for ordinary API integration error-code expectations.
+4. Use literal integration tests only for critical behavioral codes.
+5. Keep class/method details inside flow only when they clarify behavior.
 ```

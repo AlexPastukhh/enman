@@ -1,28 +1,25 @@
-# Manifest — enman-api-contract-openapi-constants-a11y-workflow-v1
+# Manifest — enman-cross-cutting-constants-slice-workflow-v1
 
 ## Add
 
-- planning/api/README.md
-- planning/api/api-error-contract.md
-- planning/api/api-error-mapping-boundary.md
-- planning/api/openapi-contract-generation.md
-- planning/api/client-constants-generation.md
-- planning/api/fluentvalidation-error-code-policy-note.md
+- planning/slices/cross-cutting/README.md
+- planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
 
 ## Replace
 
-- planning/client/cross-cutting/CL-A11Y-001-accessibility-and-aria.md
-- planning/client/cross-cutting/README.md
-- planning/client/cross-cutting/CL-ERROR-HANDLING-001-client-server-errors.md
-- planning/slices/client-component-discovery-guide.md
-- planning/slices/l1-slice-drafting-guide.md
-- planning/slices/implementation-principles.md
 - planning/README.md
 - planning/planning-workflow-current.md
 - planning/planning-agent-protocol.md
 - planning/planning-doc-responsibility-map.md
+- planning/slices/README.md
+- planning/slices/l1-slice-drafting-guide.md
+- planning/slices/implementation-principles.md
+- planning/api/README.md
+- planning/api/client-constants-generation.md
 - planning/adr/architecture-decision-notes.md
+- planning/adr/adr-candidates.md
+- planning/constants/README.md
 
-## Delete
+## Optional manual cleanup
 
-- nothing
+- If older `planning/constants/*.md` files from the previous constants archive exist, keep only `planning/constants/README.md` or treat old detailed files as superseded by `CC-CONST-001`.

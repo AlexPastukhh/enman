@@ -3,94 +3,54 @@
 Status: current common implementation principles  
 Scope: general implementation rules near slice planning
 
-## Responsibility
+## 1. Cross-Cutting And Helper Slices
 
-API boundary rules belong in:
+Cross-cutting/helper slices are allowed.
 
-```text
-planning/api/
-```
-
-Client-wide conventions belong in:
+They are not business scenario slices, but they must still have:
 
 ```text
-planning/client/
+- observable/support behavior;
+- implementation flow;
+- test plan;
+- consumers / used-by slices;
+- coverage table;
+- local questions;
+- ADR impact when relevant.
 ```
-
-## API Contract Ownership
-
-Parent slice owns what server promises.
-
-Client sidecar owns how client uses that promise.
 
 Use:
 
 ```text
-planning/api/api-error-contract.md
-planning/api/openapi-contract-generation.md
-planning/api/client-constants-generation.md
+planning/slices/cross-cutting/
 ```
 
-## OpenAPI And Constants Split
+## 2. Implementation Flow Detail Filter
+
+Implementation flow is behavior-first.
+
+Detailed class/method/code explanations are included only when they clarify behavior, boundary, trade-off, error handling, testability, no-write/no-side-effect guarantees, generated artifact shape or API/client contract.
+
+Routine code mechanics should be described high-level.
+
+If flow becomes too noisy, extract detailed class/method reference into a sibling `.impl.md`.
+
+Do not create `.impl.md` files in advance.
+
+## 3. Constants Generation / Testing
+
+Primary source:
 
 ```text
-OpenAPI = structural contract:
-  endpoints, methods, DTOs, response schemas, status codes.
-
-Generated shared constants JSON = semantic constants:
-  client-facing error codes, ProblemDetails extension names,
-  ServerError field names, temporary route/field constants if needed.
+planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
 ```
 
-Client message text is presentation and belongs to client.
-
-## Native ProblemDetails
-
-Native ASP.NET `ProblemDetails` remains the default API error envelope.
-
-Client-facing errors are placed into a shared `errors` extension.
-
-`ServerError` / `ServerValidationError` is API-facing DTO when returned through `ProblemDetails`.
-
-## Error Code Policy
-
-Error codes are stable human-readable symbolic identifiers.
-
-They are not user-facing messages.
-
-Client must import generated/shared error code constants instead of hardcoding code strings.
-
-## DTO Field Name Policy
-
-Server validation errors use API DTO field names.
-
-Client maps API DTO field names to form field names when needed.
-
-## Client Constants Generation
-
-Generate shared client constants using an explicit command, not a hosted service at application startup.
-
-## FluentValidation Deferred Question
-
-Do not migrate FluentValidation `ErrorMessage`/`ErrorCode` usage blindly.
-
-Use:
+Core rules:
 
 ```text
-planning/api/fluentvalidation-error-code-policy-note.md
-```
-
-before changing validation error-code mapping.
-
-## Tests
-
-API contract tests should verify:
-
-```text
-- ProblemDetails status;
-- errors extension exists;
-- each client-facing error has FieldName/ErrorCode as expected;
-- FieldName is API DTO field name;
-- ErrorCode is stable generated/shared code;
-- internal errors are not exposed as client-facing codes.
+- Generate Shared/constants.json and Shared/errorcodes.json by explicit Tools command.
+- `--check` compares generated output with committed files and does not write.
+- Client must not hardcode error code strings.
+- API integration tests should read generated artifact for ordinary codes.
+- Critical behavioral codes get literal integration contract tests.
 ```

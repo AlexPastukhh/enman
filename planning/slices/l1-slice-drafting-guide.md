@@ -1,142 +1,88 @@
 # L1 Slice Drafting Guide
 
 Status: current slice drafting workflow  
-Scope: L1 slice boundary discovery, parent slice files, client sidecars, API contract, UI specs, component discovery, extension/change points, shared support and registers
+Scope: business slices, cross-cutting/helper slices, client sidecars, implementation flow and tests
 
-## Purpose
-
-```text
-scenario specs / DATA / UI specs / validation-security
--> per-scenario behavior items / UI behavior items
--> scenario questions register
--> L1 slice boundary draft
--> parent slice file
--> .client.md sidecar when concrete client work starts
--> implement one slice/client layer
--> update coverage / questions / decisions / ADR candidates / extension register
-```
-
-## Slice Intake Checklist
+## 1. Business Slice Intake Checklist
 
 ```text
 1. Read architecture decision notes and ADR candidates.
 2. Read target scenario text spec and DATA file.
-3. Read validation/security addendum entries.
-4. Read relevant behavior items.
-5. Read scenario UI spec if client-visible behavior is involved.
-6. Check scenario questions register.
-7. Check slice implementation notes and extension register.
-8. Check planning/api/ for API contract rules if API/client work is involved.
-9. Check planning/client/ and client architecture docs if client work is involved.
-10. Promote relevant notes/questions/extension pressure/ADR decisions.
-11. If scenario-level/API ambiguity exists, stop and resolve it first.
+3. Read relevant behavior items and scenario UI spec if client-visible behavior is involved.
+4. Check scenario questions register.
+5. Check slice implementation notes and extension register.
+6. Check planning/api/ if API/client work is involved.
+7. Check planning/slices/cross-cutting/ if the slice uses cross-cutting support.
+8. Check planning/client/ and client architecture docs if client work is involved.
+9. If scenario/API/constants ambiguity exists, stop and resolve it first.
 ```
 
-## Parent Slice File
-
-Parent slice files include:
+## 2. Cross-Cutting / Helper Slice Template
 
 ```text
-- Slice overview;
-- questions overview near the beginning;
-- flow coverage overview near the beginning;
-- Scenario Slice Flow;
-- behavior item coverage summary;
-- Implementation Flow;
-- API contract;
-- API / Error Contract Check;
-- Server / Cross-Layer Extension Points;
-- Server / Cross-Layer Change Points;
-- Extension Pressure / Anti-Coupling Decisions;
-- application/domain/persistence responsibilities;
-- server/integration test plan;
-- decisions;
-- implementation checklist.
-```
-
-### API Layer
-
-Parent slice API layer should include:
-
-```text
-- endpoint path and method;
-- request DTO;
-- response DTO;
-- OpenAPI exposure expectations;
-- status codes;
-- native ProblemDetails contract;
-- ServerError / ServerValidationError shape;
-- client-facing error codes;
-- DTO field names used by validation errors;
-- internal/server-only errors explicitly out of client contract.
-```
-
-Client-facing error table:
-
-| Error code | FieldName | HTTP status | Source | Client handling |
-|---|---|---:|---|---|
-
-Only include errors intentionally returned to the client.
-
-## Client Sidecar Structure
-
-```text
-# SL-XXX Client Layer — Title
+# CC-XXX — Title
 
 Status:
-Parent slice:
-Slice type: read / command / mixed
-Client architecture type:
-Scenario sources:
-DATA sources:
-Scenario UI spec sources:
-Behavior item sources:
-API contract sources:
-Client cross-cutting sources:
+Slice type: cross-cutting slice / helper slice
+Layers:
+Depends on:
+Used by:
 
-## 1. Client Behavior Coverage
-## 2. UI Behavior Coverage
-## 3. Client Implementation Questions Register
-## 4. Scenario / DATA / UI Spec Coverage
-## 5. Client Architecture Mapping
-## 6. Client Extension Points
-## 7. Client Behavior Change Points
-## 8. Client Extension Pressure / Anti-Coupling Decisions
-## 9. Component / Layout Plan
-## 10. Styling Change Points
-## 11. Accessibility / ARIA Contract
-## 12. API Contract Used By Client
-## 13. API / Error Contract Usage
-## 14. API Contract Check
-## 15. Server DTO Field To Client Form Field Mapping
-## 16. Client Implementation Flow
-## 17. Client Types
-## 18. Client Tests
-## 19. Out Of Scope
-## 20. Scenario / DATA / UI / API Questions To Register
+## 1. Purpose
+## 2. Why This Is A Cross-Cutting/Helper Slice
+## 3. Inputs / Sources
+## 4. Pseudo Behavior Items
+## 5. Coverage Overview
+## 6. Implementation Flow
+## 7. Target Types / Components
+## 8. Test Plan
+## 9. Consumer Rule For Business Slices
+## 10. Local Questions
+## 11. ADR Impact
 ```
 
-## API / Error Contract Usage
+## 3. Implementation Flow Detail Rule
 
-Client sidecar must describe:
+Implementation flow may include involved classes, methods and short code snippets.
+
+Include them when they explain:
 
 ```text
-- generated OpenAPI DTO/types used by client;
-- generated shared constants JSON used by client;
-- native ProblemDetails parsing;
-- shared errors extension usage;
-- FieldName / ErrorCode key usage;
-- DTO field -> form field mapping;
-- known error code -> UI behavior;
-- stale state / refetch behavior;
-- generic fallback for unknown/internal errors.
+- contract boundary;
+- non-obvious behavior;
+- behavior that was discussed/questioned;
+- important trade-off;
+- extension/change point;
+- error handling;
+- testability;
+- no-write/no-side-effect guarantee;
+- generated artifact shape;
+- API/client boundary.
 ```
 
-API Contract Check table:
+Keep routine mechanics high-level.
 
-| Contract item | Source of truth | Used by client? | Client handling | Status |
-|---|---|---|---|---|
+If details make the flow noisy, extract them into a sibling `.impl.md` file.
 
-## Accessibility
+Do not create `.impl.md` in advance.
 
-Accessibility / ARIA Contract is mandatory for `.client.md`.
+## 4. Constants Consumer Rule
+
+If a business slice introduces client-facing error codes, read:
+
+```text
+planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
+```
+
+Then classify each code as:
+
+```text
+ordinary validation
+important domain
+critical behavioral
+```
+
+Parent slice API table:
+
+| Error code | FieldName | HTTP status | Stability | Client handling | Literal test? |
+|---|---|---:|---|---|---|

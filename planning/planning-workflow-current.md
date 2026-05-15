@@ -2,54 +2,73 @@
 
 Status: current workflow
 
-## Current Point
+## 1. Current Point
 
 ```text
-API contract / OpenAPI / client constants generation workflow
-and accessibility-as-test-contract hardening have been introduced.
+Client constants generation/testing is treated as a cross-cutting slice,
+not merely as workflow notes or an API reference.
 ```
 
-## Main Workflow
+## 2. Cross-Cutting Slice Workflow
+
+When work is not a business scenario slice but has observable support behavior, implementation flow and tests, use a cross-cutting/helper slice.
 
 ```text
-scenario text specs
-+ scenario DATA files
-+ validation/security addenda
-+ scenario UI specs when client-visible behavior is being planned
--> behavior items / UI behavior items
--> scenario questions register
--> architecture decision notes / ADR candidates when decisions are made
--> domain draft(s) / L1 domain foundation
--> L1 slice boundary draft
--> parent vertical slice files with API/error contract
--> .client.md sidecar when concrete client work starts
--> implement one slice/client layer at a time
+cross-cutting/helper behavior
+-> coverage table
+-> implementation flow
+-> involved classes/methods only where useful
+-> test plan
+-> consumer rule for business slices
+-> ADR impact
 ```
 
-## API Contract Gate
+## 3. Constants Gate
 
-When a slice exposes or consumes API:
+When a slice introduces client-facing constants/error codes:
 
 ```text
-1. Parent slice documents endpoint/request/response/status/Error contract.
-2. OpenAPI structural contract is identified.
-3. Client-facing error codes are listed.
-4. Internal/server-only errors are excluded from client contract.
-5. Client sidecar maps DTO fields, error codes and stale/refetch behavior.
-6. Generated constants and OpenAPI types are referenced.
+1. Check CC-CONST-001.
+2. Classify code:
+   - ordinary validation;
+   - important domain;
+   - critical behavioral.
+3. Update parent slice API error table.
+4. Regenerate Shared/*.json.
+5. Add/adjust API integration test:
+   - generated JSON expectation for ordinary codes;
+   - literal expectation for critical behavioral codes.
+6. If client work exists, map ErrorCode -> UI behavior in `.client.md`.
+7. Run generate-client-constants --check.
 ```
 
-Use:
+## 4. Implementation Flow Detail Rule
+
+Implementation flow must not become a full code listing.
+
+Include class/method/code details only when they explain:
 
 ```text
-planning/api/api-error-contract.md
-planning/api/openapi-contract-generation.md
-planning/api/client-constants-generation.md
+- contract boundary;
+- non-obvious behavior;
+- behavior that was discussed/questioned;
+- important trade-off;
+- extension/change point;
+- error handling;
+- testability;
+- no-write/no-side-effect guarantee;
+- generated artifact shape;
+- API/client boundary.
 ```
 
-## Deferred Infra
+Routine implementation details stay high-level.
+
+If details dominate the flow, extract them into a sibling `.impl.md`.
+
+Do not create `.impl.md` in advance.
+
+## 5. Current Next Step
 
 ```text
-.NET upgrade is deferred.
-Do not mix runtime upgrade with API contract / client UI work.
+Implement or prompt implementation of CC-CONST-001 only after this docs package is applied.
 ```
