@@ -21,7 +21,7 @@ documentation update and status reconciliation agent
 Your task:
 
 ```text
-Update planning/documentation files only.
+Update planning documentation files only, across relevant planning folders.
 Do not implement code.
 Do not create commits, branches, PRs or direct GitHub changes.
 Produce an archive with complete repo-relative files for manual application.
@@ -69,6 +69,36 @@ Examples:
 - For E2E status, check playwright.config.ts, tests/e2e, package.json.
 - For L1 slices, check EnergyManagement.Server/L1, Domain.EnergyManagement/L1, Tests.EnergyManagement/Integration/L1.
 ```
+
+## Current Baseline To Verify, Not Assume
+
+Verify in repo before using these statuses:
+
+```text
+CC-API-001:
+  likely first-stage implemented:
+  generate-openapi command, Shared/openapi.json, generated openapi-types.ts,
+  root generate/check API scripts and L1 OpenAPI metadata.
+  Client wrapper migration and CI hardening likely remain future/per-slice.
+
+CC-CONST-001:
+  likely implemented baseline:
+  generate-client-constants command, Shared/constants.json, Shared/errorcodes.json,
+  checker and Tools tests.
+  Client consumer adoption/API literal tests likely remain per slice.
+
+E2E:
+  likely implemented baseline:
+  root Playwright config, tests/e2e/auth register/login, backend+frontend webServer,
+  reset-test-db before Playwright.
+  Existing auth E2E likely uses legacy AuthController endpoints.
+  Do not migrate it to L1 unless auth consolidation is explicitly in scope.
+
+CSRF:
+  likely planned/docs-only unless repo shows AddAntiforgery/token endpoint/filter/client helper.
+```
+
+If repo evidence differs, follow repo evidence.
 
 ## Required Preflight Response
 
@@ -141,6 +171,37 @@ Do not mark future/planned work as implemented.
 
 Do not keep stale “planned” wording after implementation evidence exists.
 
+When implementation exists but hardening remains, use:
+
+```text
+first-stage implemented / hardening planned
+implemented baseline / consumer adoption continues per slice
+```
+
+## Prompt Impact Rule
+
+If implementation status changed, update prompts/instructions so future chats do not redo old work.
+
+For example:
+
+```text
+Old:
+Implement OpenAPI artifacts before client work.
+
+New:
+OpenAPI first-stage is implemented.
+Run npm run check:api.
+Use generated openapi-types.ts.
+Do not redo OpenAPI infrastructure unless explicitly asked.
+```
+
+Protect working baseline:
+
+```text
+Existing auth E2E uses legacy AuthController endpoints.
+Do not migrate it to L1 unless auth consolidation is explicitly in scope.
+```
+
 ## Draft-Driven Discovery Rule
 
 All slice-related planning uses draft-driven discovery:
@@ -179,6 +240,7 @@ Use it to discover behavior, contract gaps, client questions, component placemen
 - Do not silently resolve scenario/domain conflicts.
 - Do not mix unrelated documentation areas into one archive.
 - Do not forget MANIFEST.md and APPLY.md.
+- Do not redo already implemented OpenAPI/constants/E2E infrastructure during documentation-only work.
 ```
 
 ## Final Response

@@ -12,6 +12,14 @@ OpenAPI = structural API contract.
 Generated constants JSON = semantic constants not represented well by OpenAPI.
 ```
 
+Current repo status:
+
+```text
+OpenAPI/types generation is first-stage implemented.
+Generated semantic constants are implemented baseline.
+Client wrapper migration remains per concrete client slice.
+```
+
 ## 2. OpenAPI Owns Structural Contract
 
 OpenAPI owns:
@@ -30,6 +38,13 @@ OpenAPI owns:
 
 OpenAPI is the source for generated TypeScript API DTO/response types.
 
+Current artifacts:
+
+```text
+Shared/openapi.json
+energymanagement.client/src/shared/api/generated/openapi-types.ts
+```
+
 ## 3. Generated Constants Own Semantic Contract
 
 Generated constants JSON owns:
@@ -44,6 +59,13 @@ Generated constants JSON owns:
 
 Generated constants JSON does not own DTO shape when OpenAPI covers it.
 
+Current artifacts:
+
+```text
+Shared/constants.json
+Shared/errorcodes.json
+```
+
 ## 4. No Server Startup Writes
 
 Generated artifacts must not be written during normal server startup.
@@ -51,6 +73,17 @@ Generated artifacts must not be written during normal server startup.
 Do not use hosted service / runtime file writer as the primary generation path.
 
 Use explicit commands.
+
+Current commands include:
+
+```bash
+dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
+dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check
+dotnet run --project EnergyManagement.Tools -- generate-client-constants --out Shared
+dotnet run --project EnergyManagement.Tools -- generate-client-constants --out Shared --check
+npm run generate:api
+npm run check:api
+```
 
 ## 5. Generated Artifacts Are Committed
 
@@ -76,12 +109,21 @@ L1 endpoints are the target public contract for new L1 slices.
 Legacy AuthController endpoints remain current/legacy auth support until login/getUser/registration migration is completed.
 ```
 
-Before generating client types for a slice, the parent slice/API planning must identify whether it uses:
+Before generating or consuming client types for a slice, the parent slice/API planning must identify whether it uses:
 
 ```text
 target L1 endpoint
 legacy/current endpoint
 temporary compatibility endpoint
+internal/not client-facing endpoint
+```
+
+Current target L1 endpoints visible in the generated OpenAPI artifact:
+
+```text
+POST /api/l1/auth/register
+POST /api/l1/applicant-parties/individual
+POST /api/l1/requests
 ```
 
 ## 7. Legacy Route Constants
@@ -95,6 +137,8 @@ Current direction:
 - move endpoint path/route usage toward OpenAPI-generated contract;
 - avoid adding new route constants when OpenAPI can cover them.
 ```
+
+Do not remove legacy route constants as part of documentation-only reconciliation.
 
 ## 8. Client API Layer Rule
 
@@ -128,14 +172,25 @@ slice/client docs
 
 ## 10. Current Work Order
 
-Before missing client slices:
+For new client/server slice work:
 
 ```text
-1. Add/update API contract docs.
-2. Improve OpenAPI metadata.
-3. Generate Shared/openapi.json.
-4. Generate client OpenAPI types.
-5. Implement explicit client constants generator/checker.
-6. Update client API layer to use generated types.
-7. Then implement missing client slices.
+1. Read current API contract docs and cross-cutting slice status.
+2. Do not redo OpenAPI/constants infrastructure unless tooling hardening is explicitly in scope.
+3. Classify endpoint status.
+4. Update server endpoint/DTO/status metadata if the contract changes.
+5. Regenerate/check OpenAPI and generated TypeScript types.
+6. Regenerate/check semantic constants if new client-facing semantic constants are introduced.
+7. Update thin client API wrappers to use generated types for the concrete slice.
+8. Add/update server/client/E2E tests according to the testing responsibility boundary.
+9. Update parent slice and `.client.md` docs only when concrete client work starts.
 ```
+
+## 11. Remaining Future Review Items
+
+| ID | Area | Question / review item | Current direction | Status |
+|---|---|---|---|---|
+| CSR-FR-001 | Full generated client | Should generated types evolve into a generated client? | Types-only first | future review |
+| CSR-FR-002 | CI gate | Should `npm run check:api` and constants check be mandatory in CI? | Keep commands checkable; revisit with CI hardening | future review |
+| CSR-FR-003 | Legacy auth migration | When should legacy AuthController client flows move to L1 endpoints? | Only under explicit L1 auth consolidation scope | open question |
+| CSR-FR-004 | Route constants retirement | When can legacy route constants be removed from `Shared/constants.json`? | After client route usage is backed by OpenAPI/typed wrappers | future review |

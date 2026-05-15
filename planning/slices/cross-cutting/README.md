@@ -51,8 +51,8 @@ planning/slices/shared/*.md
 
 | Slice | Purpose | Status |
 |---|---|---|
-| `CC-API-001-openapi-contract-artifacts-and-type-generation.md` | Generates/checks structural OpenAPI contract artifacts and client TypeScript types | implementation-ready draft |
-| `CC-CONST-001-client-constants-generation-and-contract-testing.md` | Generates/checks client-facing semantic constants and testing strategy | implementation-ready |
+| `CC-API-001-openapi-contract-artifacts-and-type-generation.md` | Generates/checks structural OpenAPI contract artifacts and client TypeScript types | first-stage implemented; client wrapper migration and hardening planned |
+| `CC-CONST-001-client-constants-generation-and-contract-testing.md` | Generates/checks client-facing semantic constants and testing strategy | implemented baseline; client-consumer usage remains per slice |
 | `CC-CSRF-001-antiforgery-token-session-context.md` | Antiforgery token/session context behavior, failure normalization and tests | implementation-ready draft |
 
 ## 4. When To Create A Cross-Cutting Or Helper Slice

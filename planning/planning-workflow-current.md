@@ -5,26 +5,50 @@ Status: current workflow
 ## 1. Current Point
 
 ```text
-Client/server contract artifacts are the next blocker before missing client slices:
-OpenAPI structural contract + generated semantic constants.
+Client/server contract artifact infrastructure is now the current first-stage baseline.
+
+OpenAPI structural contract + generated semantic constants are available through explicit generation/check commands.
+The next work should consume those artifacts through draft-driven L1/client slice planning, not reimplement the artifact infrastructure.
 ```
 
-## 2. Contract Artifact Gate
+## 2. Current Contract Artifact Baseline
 
-Before implementing missing client slices:
+Repo-grounded baseline:
+
+| Area | Current evidence | Status | Current rule |
+|---|---|---|---|
+| OpenAPI artifact | `EnergyManagement.Tools generate-openapi`, `Shared/openapi.json`, `energymanagement.client/src/shared/api/generated/openapi-types.ts`, root `generate/check:api` scripts | first-stage implemented | Use and check existing artifacts; do not redo infrastructure unless explicitly in scope |
+| Generated constants | `EnergyManagement.Tools generate-client-constants`, `Shared/constants.json`, `Shared/errorcodes.json`, Tools checker/tests | implemented baseline | Use generated semantic constants; add new constants through the existing generator/check flow |
+| L1 endpoint metadata | `EnergyManagement.Server/L1/Controllers/L1Controller.cs` exposes L1 request/response DTOs and ProblemDetails statuses | first-stage implemented | Keep metadata updated when API changes |
+| Client API wrappers | Thin handwritten wrappers are still the expected first-stage strategy, but migration is per client slice | planned per slice | Use generated OpenAPI types when concrete client work starts |
+| E2E auth baseline | Root Playwright config and `tests/e2e/auth` register/login coverage | implemented baseline | Protect current legacy-auth E2E unless L1 auth consolidation is explicitly in scope |
+
+## 3. Contract Artifact Gate For New Work
+
+Before implementing or updating a client/server slice:
 
 ```text
 1. Read planning/api/client-server-contract-principles.md.
 2. Read CC-API-001.
 3. Read CC-CONST-001.
-4. Classify current endpoints as target L1 / legacy-current / compatibility / internal.
-5. Generate/check Shared/openapi.json.
-6. Generate/check client OpenAPI TypeScript types.
-7. Generate/check Shared/constants.json and Shared/errorcodes.json.
-8. Update client API wrappers to use generated types and constants.
+4. Classify endpoint usage as target L1 / legacy-current / temporary compatibility / internal.
+5. Run or rely on existing OpenAPI and constants artifact checks.
+6. Use generated OpenAPI TypeScript types for request/response DTOs.
+7. Use generated constants for semantic error/field/extension names.
+8. Do not recreate OpenAPI/constants tooling unless the task explicitly asks for tooling hardening.
 ```
 
-## 3. OpenAPI Gate
+Current commands:
+
+```bash
+npm run generate:api
+npm run check:api
+
+dotnet run --project EnergyManagement.Tools -- generate-client-constants --out Shared
+dotnet run --project EnergyManagement.Tools -- generate-client-constants --out Shared --check
+```
+
+## 4. OpenAPI Gate
 
 For any API endpoint used by client:
 
@@ -38,7 +62,9 @@ For any API endpoint used by client:
 - generated client type is available when client consumes it.
 ```
 
-## 4. Constants Gate
+Do not treat missing client wrapper migration as missing OpenAPI infrastructure.
+
+## 5. Constants Gate
 
 When a slice introduces client-facing constants/error codes:
 
@@ -49,13 +75,14 @@ When a slice introduces client-facing constants/error codes:
    - important domain;
    - critical behavioral.
 3. Update parent slice API error table.
-4. Regenerate Shared/*.json.
-5. Add/adjust API integration test.
-6. If client work exists, map ErrorCode -> UI behavior in `.client.md`.
-7. Run generate-client-constants --check.
+4. Add/update source C# constants through the existing source of truth.
+5. Regenerate Shared/constants.json and Shared/errorcodes.json.
+6. Add/adjust API integration test or Tools test as appropriate.
+7. If client work exists, map ErrorCode -> UI behavior in `.client.md`.
+8. Run generate-client-constants --check.
 ```
 
-## 5. Cross-Cutting / Helper Slice Workflow
+## 6. Cross-Cutting / Helper Slice Workflow
 
 Cross-cutting/helper slices follow the same planning shape as business slices:
 
@@ -68,7 +95,9 @@ source requirements
 -> coverage/questions/ADR impact
 ```
 
-## 6. CSRF Gate
+If current repo evidence shows a cross-cutting slice is now implemented, update its status table rather than leaving all coverage as planned.
+
+## 7. CSRF Gate
 
 When planning browser unsafe API requests or auth/session flow:
 
@@ -80,7 +109,9 @@ When planning browser unsafe API requests or auth/session flow:
 5. Do not implement antiforgery mechanics separately inside business slices.
 ```
 
-## 7. Testing Workflow Gate
+Current known status remains docs/planning unless repo evidence later shows antiforgery implementation.
+
+## 8. Testing Workflow Gate
 
 When planning or implementing a slice, classify test coverage by layer:
 
@@ -95,9 +126,12 @@ Use:
 
 ```text
 planning/testing/testing-principles.md
+planning/testing/e2e-testing-workflow.md
 ```
 
-## 8. Implementation Flow Detail Rule
+Do not migrate the existing auth E2E from legacy AuthController endpoints to L1 unless auth consolidation is explicitly in scope.
+
+## 9. Implementation Flow Detail Rule
 
 Implementation flow must not become a full code listing.
 

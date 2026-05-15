@@ -1,14 +1,10 @@
-# Apply — enman-diagram-prompt-and-drawio-workflow-docs-v1.zip
+# Apply — enman-doc-status-reconciliation-2026-05-16
 
 From the repository root, run:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-diagram-prompt-and-drawio-workflow-docs-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-doc-status-reconciliation-2026-05-16-v2.zip" -DestinationPath . -Force
 git status
 ```
 
-Then review:
-
-```powershell
-git diff -- planning
-```
+This archive contains complete replacement files only. It does not include code changes, generated artifacts, branch changes, commits or PRs.

@@ -1,6 +1,6 @@
 # OpenAPI Contract Generation
 
-Status: current implemented workflow
+Status: current first-stage implemented workflow
 Scope: OpenAPI as structural API contract, Shared/openapi.json and generated TypeScript DTO/types
 
 ## 1. Purpose
@@ -30,16 +30,16 @@ Client local code = UI messages and behavior mapping.
 
 ## 3. Current Server Prerequisites
 
-Current server already has:
+Current server has Swagger/OpenAPI infrastructure and explicit L1 response metadata.
+
+OpenAPI work now means:
 
 ```text
-AddEndpointsApiExplorer()
-AddSwaggerGen()
-Development Swagger middleware
-Swashbuckle.AspNetCore package
+- keep metadata quality high when endpoints change;
+- regenerate/check committed artifacts;
+- use generated TypeScript types from client code;
+- do not reimplement the tooling baseline unless hardening is explicitly in scope.
 ```
-
-OpenAPI work should improve metadata quality, not merely enable Swagger UI.
 
 ## 4. OpenAPI Quality Checklist
 
@@ -141,13 +141,6 @@ Reason:
 
 ## 8. Check Mode / Generated Artifact Verification
 
-Target checks:
-
-```text
-Shared/openapi.json is up to date with server metadata.
-generated openapi-types.ts is up to date with Shared/openapi.json.
-```
-
 Current check strategy:
 
 ```bash
@@ -164,12 +157,21 @@ npm run generate:api
 npm run check:api
 ```
 
+`check:api` verifies:
+
+```text
+Shared/openapi.json is up to date with server metadata.
+generated openapi-types.ts is up to date with Shared/openapi.json.
+```
+
 ## 9. Relationship To CC-API-001
 
-Implementation-ready workflow lives in:
+Current implementation/status reconciliation lives in:
 
 ```text
 planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
 ```
 
 This file owns API-level principles and generation direction.
+
+CC-API-001 owns the cross-cutting implementation status, remaining hardening questions and consumer rules.
