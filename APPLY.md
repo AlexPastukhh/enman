@@ -3,29 +3,37 @@
 Archive:
 
 ```text
-enman-diagram-scenario-clarifications-v1.zip
+enman-documentation-update-workflow-and-draft-driven-discovery-v1.zip
 ```
 
 Apply from repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-diagram-scenario-clarifications-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-documentation-update-workflow-and-draft-driven-discovery-v1.zip" -DestinationPath . -Force
 git status
 ```
 
 ## Add
 
 ```text
-planning/diagrams/scenario-clarifications/README.md
-planning/diagrams/scenario-clarifications/AGR-001-agreement-proposal-replacement-terminology.md
-planning/diagrams/scenario-clarifications/diagram-generation-readiness-guardrails.md
-planning/diagrams/scenario-clarifications/scenario-spec-pre-diagram-review.md
+planning/documentation/README.md
+planning/documentation/documentation-update-workflow.md
+planning/documentation/status-reconciliation-workflow.md
+planning/documentation/documentation-update-agent-prompt.md
+planning/slices/draft-driven-discovery-principles.md
 ```
 
 ## Replace
 
 ```text
-nothing
+planning/README.md
+planning/planning-agent-protocol.md
+planning/planning-doc-responsibility-map.md
+planning/replacement-file-generation-guide.md
+planning/slices/README.md
+planning/slices/l1-slice-drafting-guide.md
+planning/slices/implementation-principles.md
+planning/slices/client-architecture-principles.md
 ```
 
 ## Delete
@@ -34,29 +42,20 @@ nothing
 nothing
 ```
 
-## Why this archive is non-invasive
-
-This package does not overwrite scenario specs because agreement proposal files were not reliably located through the connector search in this pass.
-
-Instead it adds a clear diagram-generation guardrail:
-
-```text
-agreement proposal replacement/counterproposal must not be drawn as ordinary Rejected.
-Use superseded/replaced by counterproposal / SupersededByCounterProposal.
-```
-
-Later cleanup can update SC-13B/SC-13D/index files directly after their exact current paths are confirmed.
-
 ## Notes
 
 This package:
-- adds a scenario clarification area;
-- records the agreement proposal replacement conflict;
-- gives diagram-generation guardrails;
-- marks the clarification as blocking only for agreement proposal lifecycle diagrams.
+- adds documentation-only update workflow docs;
+- adds a reusable documentation update agent prompt;
+- adds status reconciliation workflow;
+- strengthens archive rules: archive-only by default, no direct GitHub writes/mutations;
+- adds draft-driven discovery principles;
+- explicitly applies draft-driven discovery to client sidecars and all slice families;
+- updates navigation and responsibility map.
 
 It does not:
 - change code;
-- overwrite scenario specs;
-- create or modify diagrams;
-- decide final enum name beyond current planning assumption.
+- create commits/branches/PRs;
+- create full numbered ADRs;
+- create client sidecar files;
+- reconcile every current implementation status.

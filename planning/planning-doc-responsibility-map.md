@@ -6,7 +6,26 @@ Status: current responsibility map
 
 A file should contain only content that belongs to its responsibility zone.
 
-## 2. API Contract Responsibility
+## 2. Documentation Update Responsibility
+
+| File / folder | Responsibility |
+|---|---|
+| `planning/documentation/` | Documentation-only workflow, status reconciliation, documentation agent prompt |
+| `planning/documentation/README.md` | Documentation workflow index |
+| `planning/documentation/documentation-update-workflow.md` | How documentation-only updates are planned and produced |
+| `planning/documentation/status-reconciliation-workflow.md` | How to align docs with current implementation status |
+| `planning/documentation/documentation-update-agent-prompt.md` | Reusable prompt for a documentation-only chat |
+| `planning/replacement-file-generation-guide.md` | Archive/package generation rules for manual repo application |
+
+## 3. Slice Discovery Responsibility
+
+| File / folder | Responsibility |
+|---|---|
+| `planning/slices/draft-driven-discovery-principles.md` | Draft-driven discovery for domain/business/client/cross-cutting/testing/documentation drafts |
+| `planning/slices/l1-slice-drafting-guide.md` | Practical L1 slice drafting workflow and templates |
+| `planning/slices/client-architecture-principles.md` | Client sidecar architecture mapping and frontend layer decisions |
+
+## 4. API Contract Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -18,7 +37,7 @@ A file should contain only content that belongs to its responsibility zone.
 | `planning/api/client-constants-generation.md` | API relationship to generated semantic constants |
 | `planning/api/fluentvalidation-error-code-policy-note.md` | Deferred FluentValidation ErrorMessage/ErrorCode migration note |
 
-## 3. Cross-Cutting / Helper Slice Responsibility
+## 5. Cross-Cutting / Helper Slice Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -27,42 +46,46 @@ A file should contain only content that belongs to its responsibility zone.
 | `planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md` | Constants generation/checking/testing cross-cutting slice |
 | `planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md` | Antiforgery token/session context cross-cutting slice |
 
-## 4. Scenario / Security Specification Responsibility
+## 6. Scenario / Security Specification Responsibility
 
 | File / folder | Responsibility |
 |---|---|
 | `planning/diagrams/scenario-text-specs/` | Scenario text specs and cross-scenario addenda |
 | `scenario-browser-security-addendum.md` | Cross-cutting browser security requirements, including CSRF/antiforgery |
+| `planning/diagrams/scenario-clarifications/` | Temporary scenario clarifications and diagram guardrails |
 
-## 5. Behavior Items Responsibility
+## 7. Behavior Items Responsibility
 
 | File / folder | Responsibility |
 |---|---|
 | `planning/diagrams/scenario-behavior-items/` | Scenario-derived and concern-derived behavior items |
 | `CC-CSRF-001-antiforgery-behavior-items.md` | Security-derived behavior items for CSRF cross-cutting slice |
 
-## 6. Testing Responsibility
+## 8. Testing Responsibility
 
 ```text
 planning/testing/
 = cross-slice testing principles, E2E workflow, test object patterns, Playwright cleanup plan.
 ```
 
-## 7. Responsibility Decision Heuristic
+## 9. Responsibility Decision Heuristic
 
 ```text
-1. client/server contract split -> planning/api/client-server-contract-principles.md
-2. OpenAPI artifact/type generation implementation flow -> CC-API-001
-3. generated semantic constants writer/checker/testing -> CC-CONST-001
-4. API error contract / ProblemDetails / ServerError / OpenAPI -> planning/api/
-5. browser security requirement / CSRF requirement -> scenario-browser-security-addendum.md
-6. CSRF behavior items -> CC-CSRF-001-antiforgery-behavior-items.md
-7. CSRF implementation flow/tests -> CC-CSRF-001-antiforgery-token-session-context.md
-8. test layer boundaries / E2E workflow -> planning/testing/
-9. client-wide UI convention -> planning/client/cross-cutting/
-10. accepted/current architecture decision -> architecture-decision-notes.md
-11. possible future full ADR -> adr-candidates.md
-12. one vertical business slice -> parent slice file
-13. detailed frontend implementation for one business slice -> `.client.md`
-14. reusable note without full behavior/test flow -> planning/slices/shared/
+1. documentation-only workflow/status reconciliation -> planning/documentation/
+2. archive creation rules -> planning/replacement-file-generation-guide.md
+3. draft-driven discovery across slice families -> planning/slices/draft-driven-discovery-principles.md
+4. client/server contract split -> planning/api/client-server-contract-principles.md
+5. OpenAPI artifact/type generation implementation flow -> CC-API-001
+6. generated semantic constants writer/checker/testing -> CC-CONST-001
+7. API error contract / ProblemDetails / ServerError / OpenAPI -> planning/api/
+8. browser security requirement / CSRF requirement -> scenario-browser-security-addendum.md
+9. CSRF behavior items -> CC-CSRF-001-antiforgery-behavior-items.md
+10. CSRF implementation flow/tests -> CC-CSRF-001-antiforgery-token-session-context.md
+11. test layer boundaries / E2E workflow -> planning/testing/
+12. client-wide UI convention -> planning/client/cross-cutting/
+13. accepted/current architecture decision -> architecture-decision-notes.md
+14. possible future full ADR -> adr-candidates.md
+15. one vertical business slice -> parent slice file
+16. detailed frontend implementation for one business slice -> `.client.md`
+17. reusable note without full behavior/test flow -> planning/slices/shared/
 ```

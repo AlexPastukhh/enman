@@ -6,7 +6,59 @@ Status: current collaboration protocol
 
 Do not continue implementation planning through a question that may change required behavior, API contract, security requirement, client-facing constants, testing responsibility, E2E scope, or cross-layer responsibility.
 
-## 2. Client / Server Contract Rule
+## 2. Documentation Update Agent Rule
+
+Documentation-only agents must read:
+
+```text
+planning/documentation/README.md
+planning/documentation/documentation-update-workflow.md
+planning/documentation/status-reconciliation-workflow.md
+planning/replacement-file-generation-guide.md
+```
+
+Documentation-only agents must:
+
+```text
+- inspect current repo state before changing docs;
+- update navigation/responsibility maps when adding docs;
+- create archive packages with full replacement files;
+- not change code;
+- not write directly to GitHub unless explicitly asked.
+```
+
+## 3. Draft-Driven Discovery Rule
+
+All slice-related planning uses draft-driven discovery:
+
+```text
+source requirements
+-> draft
+-> questions/assumptions
+-> coverage
+-> flow
+-> implementation/test planning
+-> next draft or implementation
+```
+
+Use:
+
+```text
+planning/slices/draft-driven-discovery-principles.md
+```
+
+This applies to:
+
+```text
+domain drafts
+business slices
+client sidecar slices
+cross-cutting/helper slices
+testing/support slices
+documentation/status reconciliation drafts
+```
+
+## 4. Client / Server Contract Rule
 
 Before planning missing client slices, check:
 
@@ -29,7 +81,7 @@ error code strings
 
 Use generated OpenAPI types for structure and generated constants for semantics.
 
-## 3. OpenAPI / Constants Split Rule
+## 5. OpenAPI / Constants Split Rule
 
 ```text
 OpenAPI = structural contract:
@@ -42,13 +94,13 @@ Generated constants JSON = semantic contract:
 
 Do not collapse these into one artifact.
 
-## 4. Generated Artifact Rule
+## 6. Generated Artifact Rule
 
 Generated artifacts are produced by explicit commands/checks.
 
 Do not write generated client artifacts during normal server startup.
 
-## 5. Endpoint Classification Rule
+## 7. Endpoint Classification Rule
 
 Before generating client API types/wrappers for a slice, classify endpoint as:
 
@@ -61,7 +113,7 @@ internal/not client-facing
 
 If current endpoint status is unclear, ask or document assumption before implementation.
 
-## 6. Cross-Cutting / Helper Slice Rule
+## 8. Cross-Cutting / Helper Slice Rule
 
 When work is cross-cutting or helper-like, do not bury it only in workflow docs or shared notes.
 
@@ -81,7 +133,7 @@ Use:
 planning/slices/cross-cutting/
 ```
 
-## 7. Same Format Rule
+## 9. Same Format Rule
 
 Cross-cutting/helper slices must follow the same planning shape as business slices:
 
@@ -94,7 +146,7 @@ source requirements
 -> coverage/questions/ADR impact
 ```
 
-## 8. CSRF / Antiforgery Rule
+## 10. CSRF / Antiforgery Rule
 
 When planning browser unsafe API request security, use:
 
@@ -102,7 +154,7 @@ When planning browser unsafe API request security, use:
 planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```
 
-## 9. Testing Responsibility Rule
+## 11. Testing Responsibility Rule
 
 When planning slice/client/API work, classify tests as:
 
@@ -119,7 +171,7 @@ Use:
 planning/testing/testing-principles.md
 ```
 
-## 10. Implementation Flow Detail Filter
+## 12. Implementation Flow Detail Filter
 
 Slice flow may include involved classes, methods and short code snippets.
 
@@ -131,7 +183,7 @@ If class/method details make the flow noisy, suggest a sibling `.impl.md` file.
 
 Do not create `.impl.md` in advance.
 
-## 11. Do Not
+## 13. Do Not
 
 ```text
 - Do not implement client slices by manually guessing API contract.
@@ -142,4 +194,5 @@ Do not create `.impl.md` in advance.
 - Do not skip behavior items for technical concerns when traceability is needed.
 - Do not label antiforgery failure by generic HTTP 400.
 - Do not blindly replay unsafe requests after token refresh.
+- Do not use GitHub mutation tools during documentation-only archive work unless explicitly requested.
 ```

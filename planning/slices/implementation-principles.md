@@ -18,7 +18,30 @@ source requirements
 
 Cross-cutting/helper slices are not allowed to skip behavior/flow just because the concern is technical.
 
-## 2. Client / Server Contract Principle
+## 2. Draft-Driven Discovery Principle
+
+Use:
+
+```text
+planning/slices/draft-driven-discovery-principles.md
+```
+
+Draft-driven discovery applies to all slice implementation work:
+
+```text
+domain
+business slices
+client sidecars
+cross-cutting/helper slices
+testing/support slices
+documentation/status reconciliation drafts
+```
+
+A draft is allowed to reveal questions and gaps.
+
+Do not push implementation through unresolved behavior/API/client/testing questions.
+
+## 3. Client / Server Contract Principle
 
 Before implementing missing client slices:
 
@@ -37,7 +60,7 @@ planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-gen
 planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
 ```
 
-## 3. OpenAPI And Constants Split
+## 4. OpenAPI And Constants Split
 
 ```text
 OpenAPI = structural contract:
@@ -50,7 +73,7 @@ Generated shared constants JSON = semantic constants:
 
 Do not use one artifact to replace the other.
 
-## 4. Testing Responsibility
+## 5. Testing Responsibility
 
 Use:
 
@@ -75,7 +98,7 @@ E2E tests
 
 Do not make E2E duplicate the full client/component test matrix.
 
-## 5. Cross-Cutting And Helper Slices
+## 6. Cross-Cutting And Helper Slices
 
 Cross-cutting/helper slices are allowed.
 
@@ -99,7 +122,7 @@ Use:
 planning/slices/cross-cutting/
 ```
 
-## 6. Implementation Flow Detail Filter
+## 7. Implementation Flow Detail Filter
 
 Implementation flow is behavior-first.
 
@@ -111,7 +134,7 @@ If flow becomes too noisy, extract detailed class/method reference into a siblin
 
 Do not create `.impl.md` files in advance.
 
-## 7. Constants Generation / Testing
+## 8. Constants Generation / Testing
 
 Primary source:
 
@@ -130,7 +153,7 @@ Core rules:
 - Route constants are temporary during OpenAPI migration.
 ```
 
-## 8. OpenAPI Contract Artifacts
+## 9. OpenAPI Contract Artifacts
 
 Primary source:
 
@@ -149,7 +172,7 @@ Core rules:
 - no generated artifacts are written during normal server startup.
 ```
 
-## 9. Antiforgery / CSRF
+## 10. Antiforgery / CSRF
 
 Primary source:
 

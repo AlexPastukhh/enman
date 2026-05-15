@@ -1,15 +1,23 @@
-# Manifest — enman-diagram-scenario-clarifications-v1
+# Manifest — enman-documentation-update-workflow-and-draft-driven-discovery-v1
 
 ## Add
 
-- planning/diagrams/scenario-clarifications/README.md
-- planning/diagrams/scenario-clarifications/AGR-001-agreement-proposal-replacement-terminology.md
-- planning/diagrams/scenario-clarifications/diagram-generation-readiness-guardrails.md
-- planning/diagrams/scenario-clarifications/scenario-spec-pre-diagram-review.md
+- planning/documentation/README.md
+- planning/documentation/documentation-update-workflow.md
+- planning/documentation/status-reconciliation-workflow.md
+- planning/documentation/documentation-update-agent-prompt.md
+- planning/slices/draft-driven-discovery-principles.md
 
 ## Replace
 
-- nothing
+- planning/README.md
+- planning/planning-agent-protocol.md
+- planning/planning-doc-responsibility-map.md
+- planning/replacement-file-generation-guide.md
+- planning/slices/README.md
+- planning/slices/l1-slice-drafting-guide.md
+- planning/slices/implementation-principles.md
+- planning/slices/client-architecture-principles.md
 
 ## Delete
 

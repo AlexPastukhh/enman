@@ -3,22 +3,75 @@
 Status: current slice drafting workflow  
 Scope: business slices, cross-cutting/helper slices, client sidecars, implementation flow and tests
 
-## 1. Business Slice Intake Checklist
+## 1. Draft-Driven Discovery Gate
+
+Before drafting any slice, read:
+
+```text
+planning/slices/draft-driven-discovery-principles.md
+```
+
+All slice work uses draft-driven discovery:
+
+```text
+source requirements
+-> draft
+-> questions/assumptions
+-> coverage
+-> flow
+-> implementation/test planning
+-> next draft or implementation
+```
+
+This applies to:
+
+```text
+business slices
+client sidecars
+cross-cutting/helper slices
+testing/support slices
+documentation/status reconciliation drafts
+```
+
+## 2. Business Slice Intake Checklist
 
 ```text
 1. Read architecture decision notes and ADR candidates.
-2. Read planning/testing/ if tests/E2E/client test responsibilities are involved.
-3. Read planning/api/ if API/client contract work is involved.
-4. Read target scenario text spec and DATA file.
-5. Read relevant behavior items and scenario UI spec if client-visible behavior is involved.
-6. Check scenario questions register.
-7. Check slice implementation notes and extension register.
-8. Check planning/slices/cross-cutting/ if the slice uses cross-cutting support.
-9. Check planning/client/ and client architecture docs if client work is involved.
-10. If scenario/API/constants/testing/security ambiguity exists, stop and resolve it first.
+2. Read draft-driven discovery principles.
+3. Read planning/testing/ if tests/E2E/client test responsibilities are involved.
+4. Read planning/api/ if API/client contract work is involved.
+5. Read target scenario text spec and DATA file.
+6. Read relevant behavior items and scenario UI spec if client-visible behavior is involved.
+7. Check scenario questions register.
+8. Check slice implementation notes and extension register.
+9. Check planning/slices/cross-cutting/ if the slice uses cross-cutting support.
+10. Check planning/client/ and client architecture docs if client work is involved.
+11. If scenario/API/constants/testing/security ambiguity exists, stop and resolve it first.
 ```
 
-## 2. API Contract Section
+## 3. Client Sidecar Draft Rule
+
+Client sidecar drafts are created only when concrete client work starts.
+
+A `.client.md` sidecar is the draft-driven discovery file for client implementation.
+
+It must discover and track:
+
+```text
+- client behavior to implement;
+- client questions/assumptions;
+- contract used by client;
+- route/page/feature/entity/shared mapping;
+- generated OpenAPI types used;
+- generated constants/error codes used;
+- component placement;
+- form/validation behavior;
+- ProblemDetails/error mapping;
+- client/component tests;
+- E2E boundaries.
+```
+
+## 4. API Contract Section
 
 Parent slice API section should include:
 
@@ -44,14 +97,14 @@ Also include:
 - whether route is temporary legacy constants route or OpenAPI structural route.
 ```
 
-## 3. Client Sidecar API Section
+## 5. Client Sidecar API Section
 
 `.client.md` should include:
 
 | Client API function | Endpoint | Generated OpenAPI type(s) used | Error constants used | Status |
 |---|---|---|---|---|
 
-## 4. Cross-Cutting / Helper Slice Intake Checklist
+## 6. Cross-Cutting / Helper Slice Intake Checklist
 
 ```text
 1. Identify source requirement type:
@@ -64,7 +117,7 @@ Also include:
 7. Update cross-cutting index and relevant navigation.
 ```
 
-## 5. Test Coverage Sections
+## 7. Test Coverage Sections
 
 Parent slice and `.client.md` should separate:
 
@@ -81,7 +134,7 @@ planning/testing/testing-principles.md
 planning/testing/e2e-testing-workflow.md
 ```
 
-## 6. E2E Coverage Table
+## 8. E2E Coverage Table
 
 If E2E is relevant, include:
 
@@ -96,7 +149,7 @@ browser -> client -> HTTP API -> server/application/domain/persistence/session -
 
 Do not use E2E to exhaustively test client-visible UI behavior.
 
-## 7. Client Test Coverage Table
+## 9. Client Test Coverage Table
 
 If client-visible UI behavior is involved, include:
 
@@ -105,7 +158,7 @@ If client-visible UI behavior is involved, include:
 
 Detailed UI validation belongs here, not in happy-path E2E.
 
-## 8. Business Slice Flow Rule
+## 10. Business Slice Flow Rule
 
 Business slices use:
 
@@ -115,7 +168,7 @@ Scenario-derived behavior items
 -> Implementation Flow
 ```
 
-## 9. Cross-Cutting / Helper Slice Flow Rule
+## 11. Cross-Cutting / Helper Slice Flow Rule
 
 Cross-cutting/helper slices use:
 
@@ -138,7 +191,7 @@ infrastructure-derived
 
 These items are first-class behavior items and must be covered by the concern flow.
 
-## 10. Cross-Cutting / Helper Slice Template
+## 12. Cross-Cutting / Helper Slice Template
 
 ```text
 # CC-XXX — Title
@@ -163,7 +216,7 @@ Used by:
 ## 12. ADR Impact
 ```
 
-## 11. Implementation Flow Detail Rule
+## 13. Implementation Flow Detail Rule
 
 Implementation flow may include involved classes, methods and short code snippets.
 
@@ -188,7 +241,7 @@ If details make the flow noisy, extract them into a sibling `.impl.md` file.
 
 Do not create `.impl.md` in advance.
 
-## 12. Constants Consumer Rule
+## 14. Constants Consumer Rule
 
 If a business slice introduces client-facing error codes, read:
 
@@ -196,7 +249,7 @@ If a business slice introduces client-facing error codes, read:
 planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
 ```
 
-## 13. OpenAPI Consumer Rule
+## 15. OpenAPI Consumer Rule
 
 If a business/client slice uses server API, read:
 
@@ -205,7 +258,7 @@ planning/api/client-server-contract-principles.md
 planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
 ```
 
-## 14. CSRF Consumer Rule
+## 16. CSRF Consumer Rule
 
 If a business slice introduces browser unsafe API command, read:
 

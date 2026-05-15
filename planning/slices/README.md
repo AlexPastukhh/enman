@@ -7,7 +7,25 @@ Scope: business slices, client sidecars, cross-cutting/helper slices, test plann
 
 This folder documents how to derive implementation slices from scenarios/concerns and how to plan implementation one slice at a time.
 
-## 2. Slice Types
+## 2. Draft-Driven Discovery
+
+All slice families use draft-driven discovery:
+
+```text
+planning/slices/draft-driven-discovery-principles.md
+```
+
+This applies to:
+
+```text
+business slices
+client sidecars
+cross-cutting/helper slices
+testing/support slices
+documentation/status reconciliation drafts
+```
+
+## 3. Slice Types
 
 ### Business slice
 
@@ -17,6 +35,8 @@ Scenario-derived business behavior slice.
 
 Client implementation file for a concrete business slice.
 
+Client sidecars are not created in advance. They are created or updated when concrete client work starts and then used as draft/discovery files.
+
 ### Cross-cutting slice
 
 Technical/support slice with observable behavior, concern-derived behavior items, concern flow, implementation flow and tests/checks, used by multiple business slices.
@@ -25,9 +45,10 @@ Technical/support slice with observable behavior, concern-derived behavior items
 
 Smaller reusable helper/support behavior with implementation and tests.
 
-## 3. Slice Support Files
+## 4. Slice Support Files
 
 ```text
+planning/slices/draft-driven-discovery-principles.md
 planning/slices/l1-slice-drafting-guide.md
 planning/slices/implementation-principles.md
 planning/slices/client-architecture-principles.md
@@ -39,7 +60,7 @@ planning/slices/shared/README.md
 planning/slices/cross-cutting/README.md
 ```
 
-## 4. Cross-Cutting / Helper Slices
+## 5. Cross-Cutting / Helper Slices
 
 Use:
 
@@ -68,7 +89,7 @@ Cross-cutting/helper slices must have:
 - ADR impact.
 ```
 
-## 5. API Contract Support
+## 6. API Contract Support
 
 API contract docs live in:
 
@@ -78,7 +99,7 @@ planning/api/
 
 Use them before client slice implementation.
 
-## 6. Shared Notes
+## 7. Shared Notes
 
 Use:
 
@@ -88,7 +109,7 @@ planning/slices/shared/
 
 for reusable notes/helpers that do not have a full slice behavior/test flow.
 
-## 7. Testing Support
+## 8. Testing Support
 
 Testing workflow lives in:
 
@@ -96,7 +117,7 @@ Testing workflow lives in:
 planning/testing/
 ```
 
-## 8. Parent Business Slice Files
+## 9. Parent Business Slice Files
 
 Parent business slice files own:
 
@@ -114,7 +135,7 @@ Parent business slice files own:
 - link to `.client.md` sidecar when client work starts.
 ```
 
-## 9. Client Sidecar Files
+## 10. Client Sidecar Files
 
 A `.client.md` file is created only when concrete client work starts.
 

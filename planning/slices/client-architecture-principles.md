@@ -42,7 +42,35 @@ planning/slices/change-extension-points-principles.md
 planning/slices/slice-extension-points-register.md
 ```
 
-## 2. Frontend Architecture Terms
+## 2. Draft-Driven Client Discovery
+
+Client sidecar work uses draft-driven discovery.
+
+Primary source:
+
+```text
+planning/slices/draft-driven-discovery-principles.md
+```
+
+Client sidecars are created only when concrete client work starts.
+
+The `.client.md` file is the discovery draft for:
+
+```text
+- client behavior to implement;
+- contract used by client;
+- route/page/feature/entity/shared mapping;
+- component placement;
+- form/validation logic;
+- ProblemDetails/error mapping;
+- client tests;
+- E2E boundaries;
+- open questions and assumptions.
+```
+
+Do not implement UI directly from a rough idea without updating the client sidecar draft.
+
+## 3. Frontend Architecture Terms
 
 ### app
 
@@ -76,7 +104,7 @@ Domain-agnostic primitives and utilities.
 
 Does not own business-specific types/components such as RequestStatusBadge, ApplicantSummaryCard, ApproveRequestDto or RejectRequestForm.
 
-## 3. Read Slice Mapping
+## 4. Read Slice Mapping
 
 Read slice client logic is usually:
 
@@ -90,7 +118,7 @@ Filtering is part of a read slice when it only changes read query state.
 
 Filtering becomes a command feature only if a user action changes persistent state.
 
-## 4. Command Slice Mapping
+## 5. Command Slice Mapping
 
 Command slice client implementation usually maps to:
 
@@ -108,7 +136,7 @@ entities = reusable read data and display dependencies
 
 Do not say “command logic lives in pages”.
 
-## 5. Entity Query Hook Rule
+## 6. Entity Query Hook Rule
 
 Entity-level React Query hooks are allowed when they remain generic read hooks.
 
@@ -120,7 +148,7 @@ Caller options may override ordinary query options, but must not replace queryKe
 
 `enabled` should be combined with the base guard.
 
-## 6. Component Placement Rule
+## 7. Component Placement Rule
 
 | Component kind | Preferred layer | Example |
 |---|---|---|
@@ -131,13 +159,13 @@ Caller options may override ordinary query options, but must not replace queryKe
 | Reusable large composition | widgets, only if reused | EmployeeRequestDetailsPanel |
 | Domain-agnostic primitive | shared | Button |
 
-## 7. Review Page Rule
+## 8. Review Page Rule
 
 Opening a review page is not a command feature if it is only navigation/read context.
 
 Do not create `features/start-review/` unless entering review creates server-side state.
 
-## 8. Extension Pressure In Client Architecture
+## 9. Extension Pressure In Client Architecture
 
 Default architecture conventions can be adjusted when known extension pressure would otherwise create harmful coupling.
 
@@ -152,11 +180,11 @@ Approve request feature should not import or navigate to agreement proposal crea
 because agreement proposal creation is a separate future slice.
 ```
 
-## 9. Client Sidecar Architecture Mapping Section
+## 10. Client Sidecar Architecture Mapping Section
 
 Each `.client.md` file must include Client Architecture Mapping and explain which client architecture part covers which behavior/UI item.
 
-## 10. Client Architecture Questions
+## 11. Client Architecture Questions
 
 Question types include architecture, read-vs-command, feature-vs-page, entity-vs-feature, page-vs-widget, entity-query-hook, component-placement, client/API, cache, presentation, accessibility, styling, extension-pressure and scenario-level.
 
