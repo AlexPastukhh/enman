@@ -15,10 +15,23 @@ Scope: business slices, cross-cutting/helper slices, client sidecars, implementa
 7. Check planning/api/ if API/client work is involved.
 8. Check planning/slices/cross-cutting/ if the slice uses cross-cutting support.
 9. Check planning/client/ and client architecture docs if client work is involved.
-10. If scenario/API/constants/testing ambiguity exists, stop and resolve it first.
+10. If scenario/API/constants/testing/security ambiguity exists, stop and resolve it first.
 ```
 
-## 2. Test Coverage Sections
+## 2. Cross-Cutting / Helper Slice Intake Checklist
+
+```text
+1. Identify source requirement type:
+   security / API contract / tooling / testing / infrastructure / client-cross-cutting.
+2. Check whether a specification/addendum/source note already exists.
+3. Create or update concern-derived behavior items.
+4. Ensure every behavior item appears in Concern Slice Flow.
+5. Only after the concern flow, write Implementation Flow.
+6. Add coverage, test plan, consumer rule, local questions and ADR impact.
+7. Update cross-cutting index and relevant navigation.
+```
+
+## 3. Test Coverage Sections
 
 Parent slice and `.client.md` should separate:
 
@@ -35,7 +48,7 @@ planning/testing/testing-principles.md
 planning/testing/e2e-playwright-workflow.md
 ```
 
-## 3. E2E Coverage Table
+## 4. E2E Coverage Table
 
 If E2E is relevant, include:
 
@@ -50,7 +63,7 @@ browser -> client -> HTTP API -> server/application/domain/persistence/session -
 
 Do not use E2E to exhaustively test client-visible UI behavior.
 
-## 4. Client Test Coverage Table
+## 5. Client Test Coverage Table
 
 If client-visible UI behavior is involved, include:
 
@@ -59,7 +72,40 @@ If client-visible UI behavior is involved, include:
 
 Detailed UI validation belongs here, not in happy-path E2E.
 
-## 5. Cross-Cutting / Helper Slice Template
+## 6. Business Slice Flow Rule
+
+Business slices use:
+
+```text
+Scenario-derived behavior items
+-> Scenario Slice Flow
+-> Implementation Flow
+```
+
+## 7. Cross-Cutting / Helper Slice Flow Rule
+
+Cross-cutting/helper slices use:
+
+```text
+Concern-derived behavior items
+-> Concern Slice Flow
+-> Implementation Flow
+```
+
+Concern-derived behavior item source can be:
+
+```text
+security-derived
+API-contract-derived
+tooling-derived
+testing-derived
+client-cross-cutting-derived
+infrastructure-derived
+```
+
+These items are first-class behavior items and must be covered by the concern flow.
+
+## 8. Cross-Cutting / Helper Slice Template
 
 ```text
 # CC-XXX — Title
@@ -73,17 +119,18 @@ Used by:
 ## 1. Purpose
 ## 2. Why This Is A Cross-Cutting/Helper Slice
 ## 3. Inputs / Sources
-## 4. Pseudo Behavior Items
+## 4. Concern-Derived Behavior Items
 ## 5. Coverage Overview
-## 6. Implementation Flow
-## 7. Target Types / Components
-## 8. Test Plan
-## 9. Consumer Rule For Business Slices
-## 10. Local Questions
-## 11. ADR Impact
+## 6. Concern Slice Flow
+## 7. Implementation Flow
+## 8. Target Types / Components
+## 9. Test Plan
+## 10. Consumer Rule For Business Slices
+## 11. Local Questions
+## 12. ADR Impact
 ```
 
-## 6. Implementation Flow Detail Rule
+## 9. Implementation Flow Detail Rule
 
 Implementation flow may include involved classes, methods and short code snippets.
 
@@ -108,7 +155,7 @@ If details make the flow noisy, extract them into a sibling `.impl.md` file.
 
 Do not create `.impl.md` in advance.
 
-## 7. Constants Consumer Rule
+## 10. Constants Consumer Rule
 
 If a business slice introduces client-facing error codes, read:
 
@@ -128,3 +175,17 @@ Parent slice API table:
 
 | Error code | FieldName | HTTP status | Stability | Client handling | Literal test? |
 |---|---|---:|---|---|---|
+
+## 11. CSRF Consumer Rule
+
+If a business slice introduces browser unsafe API command, read:
+
+```text
+planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
+```
+
+Parent slice API/security note:
+
+```text
+Unsafe browser API requests are protected by CC-CSRF-001.
+```

@@ -1,54 +1,69 @@
-# Shared Support — Antiforgery Token / Session Context
+# Antiforgery Token / Session Context Note
 
-Status: support note  
-Marker: `[SHARED SUPPORT][AUTH/FRAMEWORK][CROSS-SLICE]`
+Status: shared support note; superseded as primary implementation plan  
+Scope: quick reference for antiforgery token/session context concerns
 
-## Purpose
+## 1. Primary Slice
 
-Document cross-slice Client/Server support for ASP.NET Core cookie authentication and antiforgery protection.
-
-## Client Responsibility
+Primary implementation-ready cross-cutting slice:
 
 ```text
-- fetch antiforgery request token;
-- store request token in client runtime state;
-- attach request token to unsafe requests;
-- refetch token when auth/session state changes;
-- usually refetch after login/logout because the token pair is tied to the current security context;
-- handle missing/expired token by refetching or showing recoverable error depending on request state.
+planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```
 
-## Server Responsibility
+Security requirements source:
 
 ```text
-- use ASP.NET Core IAntiforgery;
-- create/write antiforgery cookie;
-- provide request token to client through a safe endpoint or response flow;
-- validate unsafe requests with current cookie/session context.
+planning/diagrams/scenario-text-specs/scenario-browser-security-addendum.md
 ```
 
-## Mental Model
+Behavior items:
 
 ```text
-Before login/logout:
-token pair belongs to previous security/session state.
-
-After login/logout:
-cookie/session context changed.
-
-Therefore:
-client should fetch a fresh antiforgery token pair for the new state before unsafe requests.
+planning/diagrams/scenario-behavior-items/CC-CSRF-001-antiforgery-behavior-items.md
 ```
 
-## Tests
+## 2. Purpose
+
+This file remains a short shared support note.
+
+Do not treat it as the source of truth for implementation flow.
+
+## 3. Core Model
 
 ```text
-- client helper tests for token storage/attach/refetch behavior;
-- server integration tests for token issue endpoint if implemented;
-- per-slice client tests verify unsafe requests use token helper;
-- E2E tests can cover login -> unsafe request and logout -> fresh token flow later.
+Server:
+- uses antiforgery services;
+- issues request token/cookie/context for browser client;
+- validates unsafe browser API requests;
+- normalizes antiforgery failure into project ProblemDetails.
+
+Client:
+- fetches and stores request token;
+- attaches token to unsafe requests;
+- refetches/resets token after login/logout/session context change;
+- does not blindly replay unsafe commands after token refresh.
 ```
 
-## Diploma Note
+## 4. Session Context
 
-ASP.NET Core cookie authentication protects session identity, while antiforgery protects unsafe browser requests from cross-site request forgery.
+Token validity is tied to the current security/session context.
+
+After login/logout/session reset, token should be refetched or reset.
+
+## 5. Tests
+
+Detailed test plan lives in:
+
+```text
+planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
+```
+
+Short summary:
+
+```text
+- server integration tests for missing/invalid/valid token;
+- server integration test that ordinary DTO validation is not mislabeled as antiforgery failure;
+- client tests for fetch/store/attach/refetch/no-blind-replay;
+- later E2E smoke for login/session + one unsafe command.
+```

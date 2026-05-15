@@ -1,94 +1,41 @@
-# Scenario Text Specs Index
+# Scenario Text Specifications Index
 
-Status: current scenario text-spec navigation index
+Status: current scenario text/specification index  
+Scope: scenario text specifications and cross-scenario addenda
 
 ## 1. Purpose
 
-This folder contains corrected textual scenario specifications.
+Scenario text specs describe use cases and behavior requirements.
 
-They are the primary scenario source of truth together with DATA specs, UI specs, validation/security addenda, scenario questions and per-scenario behavior items.
+Some requirements affect many scenarios and are documented as addenda instead of being repeated in every scenario.
 
-## 2. Read First
-
-```text
-00-scenario-text-specs-index.md
-scenario-server-domain-validation-addendum.md
-scenario-account-activation-security-addendum.md
-../scenario-data/README.md
-../scenario-ui-specs/README.md
-../scenario-questions-register.md
-../scenario-behavior-items/README.md
-../scenario-behavior-items/00-scenario-behavior-items-index.md
-```
-
-## 3. Active Scenario Specs
+## 2. Security / Cross-Scenario Addenda
 
 ```text
-SC-01-guest-registration.md
-SC-02-login.md
-SC-03A-password-recovery-request.md
-SC-03B-account-owner-verified.md
-SC-04-client-request-creation.md
-SC-05-my-requests-own-request-details.md
-SC-06-employee-request-dashboard.md
-SC-07A-employee-request-details.md
-SC-07B-employee-request-review.md
-SC-10-applicant-data.md
-SC-11-request-documents.md
-SC-13A-my-agreements.md
-SC-13B-agreement-proposal-details-response.md
-SC-13C-employee-agreements.md
-SC-13D-employee-agreement-proposal-create-response.md
-SC-14-client-data-verification.md
 SC-15-security-text-specification.md
-SC-17-anonymous-request.md
-```
-
-## 4. Scenario UI Specs
-
-Use:
-
-```text
-planning/diagrams/scenario-ui-specs/
-```
-
-when UI-visible requirements need more detail than the scenario text spec.
-
-Do not put React component/layout implementation into scenario text specs.
-
-## 5. Validation / Security Addenda
-
-Use:
-
-```text
-scenario-server-domain-validation-addendum.md
 scenario-account-activation-security-addendum.md
+scenario-browser-security-addendum.md
+scenario-server-domain-validation-addendum.md
 ```
 
-Do not move these validation/security rules into DATA files.
+## 3. Browser Security Addendum
 
-## 6. Scenario Questions
-
-If scenario text specs are underspecified, add or update:
+Use:
 
 ```text
-planning/diagrams/scenario-questions-register.md
+scenario-browser-security-addendum.md
 ```
 
-## 7. Behavior Items
+for browser security requirements such as antiforgery/CSRF with cookie authentication.
 
-Scenario text specs feed per-scenario behavior items:
+Behavior items derived from it are security-derived cross-cutting behavior items.
+
+## 4. Rule
+
+Do not mix concrete implementation details directly into scenario text specs.
+
+Implementation-ready behavior belongs in slice files, such as:
 
 ```text
-planning/diagrams/scenario-behavior-items/
+planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```
-
-UI behavior items should be derived from scenario/spec/UI requirements when client-visible behavior is planned.
-
-## 8. Rule
-
-Scenario text specs describe behavior and domain-relevant rules.
-
-They may contain mandatory observable UI requirements.
-
-They do not define controllers, endpoints, database schema, ORM mappings, React components, final aggregate implementation or final visual design.

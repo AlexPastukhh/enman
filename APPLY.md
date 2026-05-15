@@ -3,24 +3,22 @@
 Archive:
 
 ```text
-enman-testing-e2e-playwright-workflow-v1.zip
+enman-csrf-cross-cutting-slice-workflow-v1.zip
 ```
 
 Apply from repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-testing-e2e-playwright-workflow-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-csrf-cross-cutting-slice-workflow-v1.zip" -DestinationPath . -Force
 git status
 ```
 
 ## Add
 
 ```text
-planning/testing/README.md
-planning/testing/testing-principles.md
-planning/testing/e2e-playwright-workflow.md
-planning/testing/test-object-patterns.md
-planning/testing/playwright-e2e-cleanup-plan.md
+planning/diagrams/scenario-text-specs/scenario-browser-security-addendum.md
+planning/diagrams/scenario-behavior-items/CC-CSRF-001-antiforgery-behavior-items.md
+planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```
 
 ## Replace
@@ -30,10 +28,17 @@ planning/README.md
 planning/planning-workflow-current.md
 planning/planning-agent-protocol.md
 planning/planning-doc-responsibility-map.md
+planning/diagrams/README.md
+planning/diagrams/scenario-text-specs/README.md
+planning/diagrams/scenario-behavior-items/README.md
+planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
 planning/slices/README.md
+planning/slices/cross-cutting/README.md
+planning/slices/shared/README.md
+planning/slices/shared/antiforgery-token-session-context.md
 planning/slices/l1-slice-drafting-guide.md
 planning/slices/implementation-principles.md
-planning/client/cross-cutting/CL-A11Y-001-accessibility-and-aria.md
+planning/api/api-error-contract.md
 planning/adr/architecture-decision-notes.md
 planning/adr/adr-candidates.md
 ```
@@ -47,19 +52,18 @@ nothing
 ## Notes
 
 This package:
-- adds a central testing planning area;
-- defines test responsibility boundaries;
-- defines E2E Playwright workflow;
-- documents explicit Playwright webServer backend+frontend strategy;
-- documents Vite proxy / CORS reasoning;
-- documents locator policy and Playwright exact matching caveat;
-- documents Page Object vs Component Object responsibilities;
-- provides a current Playwright cleanup plan.
+- does not create a new `planning/security/` folder;
+- uses existing scenario/specification structure for security addenda;
+- creates browser security addendum as cross-cutting security requirement source;
+- creates security-derived behavior items for CSRF;
+- creates `CC-CSRF-001` as implementation-ready cross-cutting slice;
+- updates cross-cutting/helper workflow to require the same source-items-flow-implementation-tests format as business slices;
+- keeps `planning/slices/shared/antiforgery-token-session-context.md` as a source/support note, not primary implementation plan.
 
 It does not:
 - change code;
-- create root playwright.config.ts;
-- move tests;
-- edit package.json;
-- fix current async bugs;
-- create full numbered ADRs.
+- create full numbered ADRs;
+- implement ASP.NET antiforgery configuration;
+- implement result filter;
+- implement client token helper;
+- add tests.

@@ -3,7 +3,22 @@
 Status: current common implementation principles  
 Scope: general implementation rules near slice planning
 
-## 1. Testing Responsibility
+## 1. Same Format Principle
+
+Business, cross-cutting and helper slices use the same planning discipline:
+
+```text
+source requirements
+-> behavior items
+-> slice/concern flow
+-> implementation flow
+-> tests
+-> coverage/questions/ADR impact
+```
+
+Cross-cutting/helper slices are not allowed to skip behavior/flow just because the concern is technical.
+
+## 2. Testing Responsibility
 
 Use:
 
@@ -28,7 +43,7 @@ E2E tests
 
 Do not make E2E duplicate the full client/component test matrix.
 
-## 2. E2E / Playwright
+## 3. E2E / Playwright
 
 Use:
 
@@ -40,7 +55,7 @@ planning/testing/playwright-e2e-cleanup-plan.md
 
 E2E must use role/label-first locators and explicit Playwright webServer startup.
 
-## 3. Cross-Cutting And Helper Slices
+## 4. Cross-Cutting And Helper Slices
 
 Cross-cutting/helper slices are allowed.
 
@@ -48,6 +63,8 @@ They are not business scenario slices, but they must still have:
 
 ```text
 - observable/support behavior;
+- concern-derived behavior items;
+- concern slice flow;
 - implementation flow;
 - test plan;
 - consumers / used-by slices;
@@ -62,7 +79,22 @@ Use:
 planning/slices/cross-cutting/
 ```
 
-## 4. Implementation Flow Detail Filter
+## 5. Concern-Derived Behavior Items
+
+Concern-derived behavior items may come from:
+
+```text
+security requirements
+API contract requirements
+tooling requirements
+testing workflow requirements
+client cross-cutting conventions
+infrastructure requirements
+```
+
+They are first-class behavior items and must be reflected in the Concern Slice Flow before implementation details.
+
+## 6. Implementation Flow Detail Filter
 
 Implementation flow is behavior-first.
 
@@ -74,7 +106,7 @@ If flow becomes too noisy, extract detailed class/method reference into a siblin
 
 Do not create `.impl.md` files in advance.
 
-## 5. Constants Generation / Testing
+## 7. Constants Generation / Testing
 
 Primary source:
 
@@ -90,4 +122,23 @@ Core rules:
 - Client must not hardcode error code strings.
 - API integration tests should read generated artifact for ordinary codes.
 - Critical behavioral codes get literal integration contract tests.
+```
+
+## 8. Antiforgery / CSRF
+
+Primary source:
+
+```text
+planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
+```
+
+Core rules:
+
+```text
+- cookie-authenticated browser unsafe API requests require antiforgery protection;
+- client fetches/stores/attaches token through shared helpers;
+- session context changes require token refetch/reset;
+- antiforgery failure is normalized into API ProblemDetails;
+- normalization checks antiforgery failure marker/result, not generic HTTP 400;
+- client does not blindly replay unsafe commands after token refresh.
 ```

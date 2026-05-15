@@ -6,8 +6,8 @@ Scope: repository planning artifacts and read order
 ## 1. Current Active Planning Focus
 
 ```text
-Testing workflow and E2E Playwright workflow,
-while keeping CC-CONST-001 as the implementation-ready constants generation/testing cross-cutting slice.
+CSRF/antiforgery as cross-cutting security slice,
+with security-derived behavior items and unified cross-cutting/helper slice format.
 ```
 
 Do not create `.client.md` files in advance.
@@ -40,39 +40,51 @@ Do not create full numbered ADRs unless explicitly requested.
 18. planning/api/client-constants-generation.md
 19. planning/api/fluentvalidation-error-code-policy-note.md
 
-20. planning/scenario-specification-principles.md
-21. planning/scenario-domain-validation-principles.md
-22. planning/diagrams/README.md
-23. planning/client/README.md
-24. planning/client/cross-cutting/README.md
+20. planning/diagrams/README.md
+21. planning/diagrams/scenario-text-specs/README.md
+22. planning/diagrams/scenario-text-specs/scenario-browser-security-addendum.md
+23. planning/diagrams/scenario-behavior-items/README.md
+24. planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
+25. planning/diagrams/scenario-behavior-items/CC-CSRF-001-antiforgery-behavior-items.md
 
-25. planning/slices/README.md
-26. planning/slices/cross-cutting/README.md
-27. planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
-28. planning/slices/l1-slice-drafting-guide.md
-29. planning/slices/implementation-principles.md
-30. planning/slices/client-architecture-principles.md
-31. planning/slices/client-component-discovery-guide.md
-32. planning/slices/change-extension-points-principles.md
-33. planning/slices/slice-extension-points-register.md
-34. planning/replacement-file-generation-guide.md
+26. planning/scenario-specification-principles.md
+27. planning/scenario-domain-validation-principles.md
+28. planning/client/README.md
+29. planning/client/cross-cutting/README.md
+
+30. planning/slices/README.md
+31. planning/slices/cross-cutting/README.md
+32. planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
+33. planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
+34. planning/slices/shared/README.md
+35. planning/slices/shared/antiforgery-token-session-context.md
+36. planning/slices/l1-slice-drafting-guide.md
+37. planning/slices/implementation-principles.md
+38. planning/slices/client-architecture-principles.md
+39. planning/slices/client-component-discovery-guide.md
+40. planning/slices/change-extension-points-principles.md
+41. planning/slices/slice-extension-points-register.md
+42. planning/replacement-file-generation-guide.md
 ```
 
-## 3. Testing Direction
+## 3. CSRF / Antiforgery Direction
 
-Use:
+Security requirements:
 
 ```text
-planning/testing/
+planning/diagrams/scenario-text-specs/scenario-browser-security-addendum.md
 ```
 
-for cross-slice testing principles, E2E Playwright workflow, Page Object / Component Object rules and Playwright cleanup plan.
-
-Key current decision:
+Behavior items:
 
 ```text
-E2E tests prove cross-layer browser-client-server wiring.
-Detailed client-visible UI behavior belongs to client/component tests.
+planning/diagrams/scenario-behavior-items/CC-CSRF-001-antiforgery-behavior-items.md
+```
+
+Implementation-ready cross-cutting slice:
+
+```text
+planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```
 
 ## 4. Cross-Cutting And Helper Slices
@@ -83,7 +95,7 @@ Use:
 planning/slices/cross-cutting/
 ```
 
-for technical/support slices with observable behavior, implementation flow and tests.
+for technical/support slices with observable behavior, concern-derived behavior items, concern flow, implementation flow and tests.
 
 Use:
 
@@ -93,25 +105,11 @@ planning/slices/shared/
 
 for reusable notes/helpers that do not have full slice behavior/test flow.
 
-## 5. Constants Direction
-
-Primary source for constants writer/checker/testing:
+## 5. Current Next Step
 
 ```text
-planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
-```
-
-API relationship note:
-
-```text
-planning/api/client-constants-generation.md
-```
-
-## 6. Current Next Step
-
-```text
-1. Apply this testing/E2E workflow archive.
-2. Use planning/testing/e2e-playwright-workflow.md before changing Playwright code.
-3. Then implement Playwright cleanup from planning/testing/playwright-e2e-cleanup-plan.md.
-4. Keep E2E focused on cross-layer communication, not exhaustive UI behavior.
+1. Apply this archive.
+2. Use CC-CSRF-001 as the implementation-ready planning file for antiforgery work.
+3. Keep behavior items -> concern flow -> implementation flow traceability.
+4. Do not implement CSRF from loose notes only.
 ```

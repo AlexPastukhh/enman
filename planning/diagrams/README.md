@@ -1,90 +1,59 @@
-# Diagrams And Scenario Specs Index
+# Scenario / Diagram Planning Index
 
-Status: current navigation index for `planning/diagrams`
+Status: current scenario/specification planning index  
+Scope: scenario text specs, DATA, UI specs, validation/security addenda, behavior items and questions
 
-## 1. Responsibility
+## 1. Purpose
 
-This folder owns scenario-related source artifacts:
+This folder contains scenario and specification source artifacts.
+
+## 2. Main Artifact Types
 
 ```text
 scenario text specs
-scenario DATA specs
+scenario DATA files
 scenario UI specs
 validation/security addenda
 scenario questions register
-per-scenario behavior items
-scenario diagram consistency report
+scenario behavior items
 ```
 
-It does not own global planning workflow rules.
+## 3. Security Addenda
 
-## 2. Current Semantic Source Of Truth
+Scenario/security addenda may record rules that affect many scenarios without editing every scenario file.
 
-Use:
+Current security addenda:
 
 ```text
-planning/diagrams/scenario-text-specs/
-planning/diagrams/scenario-data/
-planning/diagrams/scenario-ui-specs/
-planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+planning/diagrams/scenario-text-specs/SC-15-security-text-specification.md
 planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
-planning/diagrams/scenario-questions-register.md
-planning/diagrams/scenario-behavior-items/
-planning/diagrams/scenario-diagram-consistency-report.md
+planning/diagrams/scenario-text-specs/scenario-browser-security-addendum.md
 ```
 
-## 3. Scenario UI Specs
+## 4. Behavior Items
 
-Scenario UI spec folder:
+Behavior items may be:
 
 ```text
-planning/diagrams/scenario-ui-specs/
+scenario-derived
+security-derived cross-cutting
+API-contract-derived cross-cutting
+tooling/testing-derived cross-cutting
 ```
 
-UI specs capture UI-visible requirements and UI behavior items.
+Cross-cutting behavior items must clearly state their source type.
 
-They do not define React implementation details.
+## 5. CSRF / Antiforgery
 
-## 4. Scenario Questions
-
-Central scenario-stage questions register:
+CSRF requirements and behavior items:
 
 ```text
-planning/diagrams/scenario-questions-register.md
+planning/diagrams/scenario-text-specs/scenario-browser-security-addendum.md
+planning/diagrams/scenario-behavior-items/CC-CSRF-001-antiforgery-behavior-items.md
 ```
 
-Use it when questions affect scenario behavior, DATA, UI-visible requirement, validation/security or visible outcome.
-
-## 5. Scenario Behavior Items
-
-Behavior item folder:
+Implementation-ready cross-cutting slice:
 
 ```text
-planning/diagrams/scenario-behavior-items/
-```
-
-Behavior items are derived from scenario text specs, DATA specs, UI specs, validation/security addenda and existing compiled baselines.
-
-## 6. Stale Package Summaries
-
-The old package summaries are compatibility notes / stale visual summaries:
-
-```text
-planning/diagrams/scenario-core-package.md
-planning/diagrams/scenario-extension-package.md
-planning/diagrams/scenario-advanced-package.md
-```
-
-Do not use them as semantic source of truth for domain planning, slice planning or client planning.
-
-## 7. How To Continue
-
-```text
-planning/diagrams/scenario-text-specs/README.md
-planning/diagrams/scenario-data/README.md
-planning/diagrams/scenario-ui-specs/README.md
-planning/diagrams/scenario-ui-specs/00-scenario-ui-specs-index.md
-planning/diagrams/scenario-questions-register.md
-planning/diagrams/scenario-behavior-items/README.md
-planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
+planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```

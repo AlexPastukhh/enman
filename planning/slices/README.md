@@ -5,7 +5,7 @@ Scope: business slices, client sidecars, cross-cutting/helper slices, test plann
 
 ## 1. Purpose
 
-This folder documents how to derive implementation slices from scenarios and how to plan implementation one slice at a time.
+This folder documents how to derive implementation slices from scenarios/concerns and how to plan implementation one slice at a time.
 
 ## 2. Slice Types
 
@@ -19,7 +19,7 @@ Client implementation file for a concrete business slice.
 
 ### Cross-cutting slice
 
-Technical/support slice with observable behavior, implementation flow and tests, used by multiple business slices.
+Technical/support slice with observable behavior, concern-derived behavior items, concern flow, implementation flow and tests, used by multiple business slices.
 
 ### Helper slice
 
@@ -39,25 +39,7 @@ planning/slices/shared/README.md
 planning/slices/cross-cutting/README.md
 ```
 
-## 4. Testing Support
-
-Testing workflow lives in:
-
-```text
-planning/testing/
-```
-
-Use it when planning:
-
-```text
-client/component tests
-server integration/API tests
-end-to-end tests
-Playwright cleanup
-Page Object / Component Object decisions
-```
-
-## 5. Cross-Cutting / Helper Slices
+## 4. Cross-Cutting / Helper Slices
 
 Use:
 
@@ -69,12 +51,15 @@ Current cross-cutting slices:
 
 ```text
 planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
+planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```
 
 Cross-cutting/helper slices must have:
 
 ```text
 - observable/support behavior;
+- concern-derived behavior items;
+- concern slice flow;
 - implementation flow;
 - tests;
 - consumers / used-by slices;
@@ -82,7 +67,7 @@ Cross-cutting/helper slices must have:
 - ADR impact.
 ```
 
-## 6. Shared Notes
+## 5. Shared Notes
 
 Use:
 
@@ -92,7 +77,15 @@ planning/slices/shared/
 
 for reusable notes/helpers that do not have a full slice behavior/test flow.
 
-## 7. Parent Slice Files
+## 6. Testing Support
+
+Testing workflow lives in:
+
+```text
+planning/testing/
+```
+
+## 7. Parent Business Slice Files
 
 Parent business slice files own:
 
@@ -106,6 +99,7 @@ Parent business slice files own:
 - application/domain/persistence responsibilities;
 - server/integration tests;
 - end-to-end test coverage summary when relevant;
+- links to cross-cutting/helper slices when used;
 - link to `.client.md` sidecar when client work starts.
 ```
 

@@ -1,42 +1,44 @@
-# Shared Slice Support Index
+# Shared Slice Notes
 
-Status: current shared support index  
-Scope: reusable client/server support used by multiple slices
+Status: current shared notes index  
+Scope: reusable support notes that are not necessarily full slices
 
 ## 1. Purpose
 
-This folder documents reusable support mechanisms used by multiple slices.
+This folder contains reusable notes/helpers that may support multiple slices.
 
-Shared support is not automatically a business slice.
+A shared note is not automatically a cross-cutting/helper slice.
 
-Use marker:
-
-```text
-[SHARED SUPPORT][CROSS-SLICE]
-```
-
-## 2. Current Shared Support Documents
+If a shared note gains observable behavior, implementation flow, tests and multiple consumers, create or update a cross-cutting/helper slice under:
 
 ```text
-planning/slices/shared/client-deferred-validation.md
-planning/slices/shared/client-server-validation-error-mapping.md
-planning/slices/shared/client-form-values-to-api-dto-mapping.md
-planning/slices/shared/antiforgery-token-session-context.md
-planning/slices/shared/client-applicant-data-prefill-notes.md
+planning/slices/cross-cutting/
 ```
 
-## 3. Current Support Areas
+## 2. Current Shared Notes
 
-| Support artifact | Marker | Used by | Why separate |
-|---|---|---|---|
-| Deferred client validation | [SHARED SUPPORT][CLIENT/UI] | form-based Client/UI sidecars | Repeated delayed validation behavior |
-| Client/server validation error mapping | [SHARED SUPPORT][CLIENT/UI] | form/API slices | Consistent field/global error display |
-| FormValues to API DTO mapping | [SHARED SUPPORT][CLIENT/UI] | form/mutation slices | Prevents coupling between UI form state and API contract |
-| Antiforgery token/session context | [SHARED SUPPORT][AUTH/FRAMEWORK] | unsafe cookie-auth requests | Cross-slice CSRF protection |
-| Applicant data prefill notes | [SHARED SUPPORT][CLIENT/UI] | request creation Client/UI | Reusable notes before concrete sidecar implementation |
+```text
+antiforgery-token-session-context.md
+```
 
-## 4. Rule
+## 3. Antiforgery Note
 
-Do not turn shared support into a business slice unless it becomes independently observable behavior.
+The antiforgery shared note is now a source/support note.
 
-Describe concrete usage inside each parent slice file or `.client.md`.
+Primary implementation-ready cross-cutting slice:
+
+```text
+planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
+```
+
+Behavior items:
+
+```text
+planning/diagrams/scenario-behavior-items/CC-CSRF-001-antiforgery-behavior-items.md
+```
+
+Security requirements source:
+
+```text
+planning/diagrams/scenario-text-specs/scenario-browser-security-addendum.md
+```

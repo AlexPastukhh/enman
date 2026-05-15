@@ -1,12 +1,10 @@
-# Manifest — enman-testing-e2e-playwright-workflow-v1
+# Manifest — enman-csrf-cross-cutting-slice-workflow-v1
 
 ## Add
 
-- planning/testing/README.md
-- planning/testing/testing-principles.md
-- planning/testing/e2e-playwright-workflow.md
-- planning/testing/test-object-patterns.md
-- planning/testing/playwright-e2e-cleanup-plan.md
+- planning/diagrams/scenario-text-specs/scenario-browser-security-addendum.md
+- planning/diagrams/scenario-behavior-items/CC-CSRF-001-antiforgery-behavior-items.md
+- planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 
 ## Replace
 
@@ -14,10 +12,17 @@
 - planning/planning-workflow-current.md
 - planning/planning-agent-protocol.md
 - planning/planning-doc-responsibility-map.md
+- planning/diagrams/README.md
+- planning/diagrams/scenario-text-specs/README.md
+- planning/diagrams/scenario-behavior-items/README.md
+- planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
 - planning/slices/README.md
+- planning/slices/cross-cutting/README.md
+- planning/slices/shared/README.md
+- planning/slices/shared/antiforgery-token-session-context.md
 - planning/slices/l1-slice-drafting-guide.md
 - planning/slices/implementation-principles.md
-- planning/client/cross-cutting/CL-A11Y-001-accessibility-and-aria.md
+- planning/api/api-error-contract.md
 - planning/adr/architecture-decision-notes.md
 - planning/adr/adr-candidates.md
 

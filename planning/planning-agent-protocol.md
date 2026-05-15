@@ -4,9 +4,72 @@ Status: current collaboration protocol
 
 ## 1. Core Rule
 
-Do not continue implementation planning through a question that may change required behavior, API contract, client-facing constants, testing responsibility, E2E scope, or cross-layer responsibility.
+Do not continue implementation planning through a question that may change required behavior, API contract, security requirement, client-facing constants, testing responsibility, E2E scope, or cross-layer responsibility.
 
-## 2. Testing Responsibility Rule
+## 2. Cross-Cutting / Helper Slice Rule
+
+When work is cross-cutting or helper-like, do not bury it only in workflow docs or shared notes.
+
+Create or update a cross-cutting/helper slice if the work has:
+
+```text
+- observable/support behavior;
+- concrete implementation flow;
+- independent tests;
+- multiple consumers;
+- contract/helper/tooling/security responsibility.
+```
+
+Use:
+
+```text
+planning/slices/cross-cutting/
+```
+
+## 3. Same Format Rule
+
+Cross-cutting/helper slices must follow the same planning shape as business slices:
+
+```text
+source requirements
+-> behavior items
+-> concern slice flow
+-> implementation flow
+-> tests
+-> coverage/questions/ADR impact
+```
+
+They must not skip behavior items or flow just because the concern is technical.
+
+## 4. Concern-Derived Behavior Items Rule
+
+When behavior items are not scenario-derived, label their source type clearly:
+
+```text
+security-derived
+API-contract-derived
+tooling-derived
+testing-derived
+client-cross-cutting-derived
+infrastructure-derived
+```
+
+Every behavior item must be reflected in the Concern Slice Flow before Implementation Flow.
+
+## 5. CSRF / Antiforgery Rule
+
+When planning browser unsafe API request security:
+
+```text
+1. Use scenario-browser-security-addendum.md as requirements source.
+2. Use CC-CSRF-001-antiforgery-behavior-items.md as behavior item source.
+3. Use CC-CSRF-001-antiforgery-token-session-context.md as implementation-ready slice.
+4. Normalize antiforgery failures through project API error contract.
+5. If using always-run result filter, check antiforgery failure marker/result, not generic HTTP 400.
+6. Do not let client blindly replay unsafe commands after token refresh.
+```
+
+## 6. Testing Responsibility Rule
 
 When planning slice/client/API work, classify tests as:
 
@@ -23,122 +86,15 @@ Use:
 planning/testing/testing-principles.md
 ```
 
-If a behavior is detailed client-visible UI behavior, prefer client/component tests.
+## 7. Constants Capture Rule
 
-If a behavior proves browser-client-server-persistence/session wiring, use E2E.
-
-## 3. E2E Planning Rule
-
-Before proposing or changing Playwright/E2E code, read:
-
-```text
-planning/testing/e2e-playwright-workflow.md
-planning/testing/test-object-patterns.md
-planning/testing/playwright-e2e-cleanup-plan.md
-```
-
-The agent must identify:
-
-```text
-- what cross-layer behavior E2E proves;
-- what UI details should remain in component/client tests;
-- what server/API behavior should remain in integration tests;
-- how backend/frontend are started;
-- what test data isolation strategy is used;
-- what locators are used;
-- whether Page Object is too stateful or too UI-detail-heavy.
-```
-
-## 4. Playwright WebServer Rule
-
-E2E Playwright should explicitly start backend and frontend through `webServer`.
-
-Do not rely on manual startup as the primary workflow.
-
-Browser should open the frontend origin, and client API calls should use relative `/api` paths through Vite proxy unless CORS is intentionally configured and documented.
-
-## 5. Locator Rule
-
-Use role/label-first locators.
-
-```text
-getByRole(role, { name }) for buttons, links, headings, alerts, dialogs, navigation.
-getByLabel(label) for form controls, especially password inputs.
-getByText(text) for non-interactive visible results when appropriate.
-getByTestId only when no meaningful user-facing semantic target exists.
-```
-
-Playwright exact matching rule:
-
-```text
-- Playwright string name matching is substring/case-insensitive by default.
-- Use { exact: true } for exact case-sensitive matching.
-- Use escaped anchored regex for exact case-insensitive matching.
-- Do not build raw regex from UI text without escaping.
-```
-
-## 6. Test Object Rule
-
-E2E Page Objects:
-
-```text
-- hide locator mechanics and repeated user actions;
-- remain thin;
-- receive scenario input data in action methods by default;
-- do not own detailed field validation / ARIA / UI-state assertions.
-```
-
-Component Objects:
-
-```text
-- may expose detailed UI state helpers;
-- may store render/user/setup context;
-- can own field error/deferred validation/ARIA state helpers.
-```
-
-## 7. Cross-Cutting / Helper Slice Rule
-
-When a user identifies work as cross-cutting or helper-like, do not bury it only in workflow docs.
-
-Create or update a cross-cutting/helper slice if the work has:
-
-```text
-- observable/support behavior;
-- concrete implementation flow;
-- independent tests;
-- multiple consumers;
-- contract/helper/tooling responsibility.
-```
-
-Use:
-
-```text
-planning/slices/cross-cutting/
-```
-
-## 8. Constants Capture Rule
-
-When planning or implementing client-facing constants, identify:
-
-```text
-- source C# constant;
-- generated JSON artifact path;
-- whether client imports it;
-- ordinary validation / important domain / critical behavioral classification;
-- whether integration tests should read generated JSON;
-- whether a literal integration contract test is needed;
-- whether Shared/*.json must be regenerated;
-- whether --check should be run;
-- whether client parser/message/behavior tests must change.
-```
-
-Use:
+When planning or implementing client-facing constants, use:
 
 ```text
 planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
 ```
 
-## 9. Implementation Flow Detail Filter
+## 8. Implementation Flow Detail Filter
 
 Slice flow may include involved classes, methods and short code snippets.
 
@@ -150,16 +106,15 @@ If class/method details make the flow noisy, suggest a sibling `.impl.md` file.
 
 Do not create `.impl.md` in advance.
 
-## 10. Do Not
+## 9. Do Not
 
 ```text
+- Do not implement cross-cutting security from loose notes only.
+- Do not skip behavior items for technical concerns when we need traceability.
+- Do not label antiforgery failure by generic HTTP 400.
+- Do not blindly replay unsafe requests after token refresh.
 - Do not use hosted service generation as primary constants generation path.
 - Do not make --check modify files.
 - Do not literal-test every validation code by default.
-- Do not add regex convention tests or golden-file tests unless explicitly decided.
-- Do not migrate FluentValidation ErrorMessage/ErrorCode usage without inspecting helpers/tests.
-- Do not turn implementation flow into full code listing.
 - Do not make E2E duplicate all component/client UI behavior.
-- Do not rely on manual backend/frontend startup as the primary E2E workflow.
-- Do not build raw regex locators from UI text without escaping.
 ```
