@@ -96,13 +96,24 @@ concrete agreement document/version sent by one side to the other side
 in the context of an Approved request.
 ```
 
-Core agreement proposal statuses:
+Diagram-safe agreement proposal lifecycle terms:
 
 ```text
 AwaitingClientConfirmation
 SentByClient
+SupersededByCounterProposal
 Accepted
 Rejected
+```
+
+Agreement proposal status meaning:
+
+```text
+Rejected
+= explicit rejection/decline of a proposal.
+
+SupersededByCounterProposal
+= proposal is no longer current because the opposite party sent a replacing counterproposal.
 ```
 
 Core agreement proposal rules:
@@ -114,7 +125,20 @@ Core agreement proposal rules:
 - client can send only one own proposal version in response to an employee-sent proposal in core;
 - client cannot start exchange without employee-sent proposal;
 - employee responds to client-sent proposal by sending a new employee version;
-- previous client-sent proposal becomes Rejected when employee sends a new version.
+- previous client-sent proposal is superseded/replaced by the employee counterproposal;
+- previous client-sent proposal must not be described or drawn as ordinary Rejected merely because it was replaced.
+```
+
+Diagram-generation guard:
+
+```text
+Do not draw replacement/counterproposal as Rejected.
+
+Use:
+- superseded/replaced by counterproposal;
+- SupersededByCounterProposal, if a domain state name is needed.
+
+Rejected is only for explicit rejection/decline.
 ```
 
 ## 5. Current Downstream Use
@@ -123,6 +147,7 @@ Core agreement proposal rules:
 planning/tables/pre-domain-variants-input.md
 domain model variants
 later aggregate/slice planning after domain direction is chosen
+diagram-generation Phase 1 preflight and agreement batch generation
 ```
 
 Do not route the current workflow through:

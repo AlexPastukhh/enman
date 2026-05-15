@@ -6,6 +6,17 @@ public sealed record L1RegisterClientAccountDto(
     [property: JsonPropertyName("email")] string Email,
     [property: JsonPropertyName("password")] string Password);
 
+public sealed record L1LoginRequest(
+    [property: JsonPropertyName("email")] string Email,
+    [property: JsonPropertyName("password")] string Password);
+
+public sealed record L1CurrentUserResponse(
+    [property: JsonPropertyName("accountId")] long AccountId,
+    [property: JsonPropertyName("email")] string Email,
+    [property: JsonPropertyName("role")] string Role,
+    [property: JsonPropertyName("isActive")] bool IsActive,
+    [property: JsonPropertyName("isAuthenticated")] bool IsAuthenticated);
+
 public sealed record L1CreateIndividualApplicantPartyDto(
     [property: JsonPropertyName("fullName")] L1FullNameDto FullName,
     [property: JsonPropertyName("email")] string Email,

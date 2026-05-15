@@ -36,6 +36,41 @@ public static partial class L1PasswordHasher
             PasswordHash.ConvertFromString(hashString));
     }
 
+    public static bool VerifyPassword(PasswordHash passwordHash, string password)
+    {
+        if (string.IsNullOrWhiteSpace(password))
+        {
+            return false;
+        }
+
+        var valueParts = passwordHash.Value.Split("-");
+        if (valueParts.Length != 2)
+        {
+            return false;
+        }
+
+        byte[] hash;
+        byte[] salt;
+        try
+        {
+            hash = Convert.FromHexString(valueParts[0]);
+            salt = Convert.FromHexString(valueParts[1]);
+        }
+        catch (FormatException)
+        {
+            return false;
+        }
+
+        var newHash = Rfc2898DeriveBytes.Pbkdf2(
+            password,
+            salt,
+            Iterations,
+            AlgorithmName,
+            HashSize);
+
+        return CryptographicOperations.FixedTimeEquals(hash, newHash);
+    }
+
     private static IReadOnlyList<Error> ValidatePassword(string password)
     {
         var errors = new List<Error>();

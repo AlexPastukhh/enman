@@ -135,13 +135,24 @@ Agreement Proposal means:
 a concrete agreement document/version sent by one side to another side in the context of an Approved request.
 ```
 
-Core agreement proposal statuses:
+Diagram-safe agreement proposal status terms:
 
 ```text
 AwaitingClientConfirmation
 SentByClient
+SupersededByCounterProposal
 Accepted
 Rejected
+```
+
+Status meaning:
+
+```text
+Rejected
+= explicit rejection/decline of a proposal.
+
+SupersededByCounterProposal
+= proposal is no longer current because another party sent a replacing counterproposal.
 ```
 
 Core agreement proposal DATA:
@@ -149,10 +160,18 @@ Core agreement proposal DATA:
 ```text
 - related Approved request;
 - sender: employee or client;
-- status;
+- status / lifecycle term;
 - attached agreement document/file;
 - text details/comment;
 - visible summary/name.
+```
+
+Replacement / counterproposal rule:
+
+```text
+A previous client-sent proposal replaced by an employee counterproposal is superseded/replaced by counterproposal.
+
+It must not be modeled as ordinary Rejected unless there is an explicit rejection/decline action.
 ```
 
 Future statuses / behaviors:
@@ -161,7 +180,6 @@ Future statuses / behaviors:
 [VAR:EXPAND]
 Signed
 Expired
-Superseded
 Cancelled
 comment-only discussion
 return to older proposal version
@@ -185,6 +203,7 @@ DATA specs feed:
 planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
 planning/tables/pre-domain-variants-input.md
 domain model variants
+diagram-generation Phase 1 preflight and agreement batch generation
 ```
 
 Do not use DATA files as DB schema or DTO contract.

@@ -13,6 +13,17 @@ public sealed record L1RegisterClientAccountResponse(
     long AccountId,
     string Email);
 
+public sealed record L1LoginClientAccountCommand(
+    string Email,
+    string Password)
+    : IRequest<Result<L1LoginClientAccountResponse, IReadOnlyList<Error>>>;
+
+public sealed record L1LoginClientAccountResponse(
+    long AccountId,
+    string Email,
+    string Role,
+    bool IsActive);
+
 public sealed record L1CreateIndividualApplicantPartyCommand(
     long ClientAccountId,
     string FirstName,

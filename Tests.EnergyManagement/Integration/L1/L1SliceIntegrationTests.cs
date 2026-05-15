@@ -1,4 +1,5 @@
 using System.Data;
+using System.Net;
 using System.Net.Http.Json;
 using System.Security.Claims;
 using EnergyManagement.Server.Api.Contracts.Common;
@@ -23,6 +24,160 @@ public sealed class L1SliceIntegrationTests
         _fixture = fixture;
         _factory = fixture.Factory;
         _output = output;
+    }
+
+    [Fact]
+    public async Task L1RegisterLoginAndCurrentUser_UsesL1AccountIdentity()
+    {
+        var email = UniqueEmail();
+        var account = await RegisterAccountAsync(email);
+        var client = _factory.CreateClient();
+
+        var login = await LoginAsync(client, email, ValidPassword);
+        var currentUser = await GetCurrentUserAsync(client);
+
+        login.AccountId.Should().Be(account.AccountId);
+        login.Email.Should().Be(email);
+        login.Role.Should().Be("Client");
+        login.IsActive.Should().BeTrue();
+        login.IsAuthenticated.Should().BeTrue();
+
+        currentUser.Should().BeEquivalentTo(login);
+    }
+
+    [Fact]
+    public async Task L1LoginCookie_CreateIndividualApplicantParty_Succeeds()
+    {
+        var email = UniqueEmail();
+        var account = await RegisterAccountAsync(email);
+        var client = _factory.CreateClient();
+        await LoginAsync(client, email, ValidPassword);
+
+        var response = await client.PostAsJsonAsync(
+            "/api/l1/applicant-parties/individual",
+            ValidApplicantPartyDto());
+
+        await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
+
+        var applicantParty = await response.Content.ReadFromJsonAsync<L1CreateIndividualApplicantPartyResponse>()
+            ?? throw new InvalidOperationException("L1 applicant party response body was empty.");
+
+        applicantParty.ClientAccountId.Should().Be(account.AccountId);
+    }
+
+    [Fact]
+    public async Task L1LoginCookie_CreateConnectionRequest_Succeeds()
+    {
+        var email = UniqueEmail();
+        await RegisterAccountAsync(email);
+        var client = _factory.CreateClient();
+        var login = await LoginAsync(client, email, ValidPassword);
+
+        var applicantResponse = await client.PostAsJsonAsync(
+            "/api/l1/applicant-parties/individual",
+            ValidApplicantPartyDto());
+        await HttpResponseAssertions.For(applicantResponse, _output).ShouldBeSuccess();
+        var applicantParty = await applicantResponse.Content
+            .ReadFromJsonAsync<L1CreateIndividualApplicantPartyResponse>()
+            ?? throw new InvalidOperationException("L1 applicant party response body was empty.");
+
+        var requestResponse = await client.PostAsJsonAsync(
+            "/api/l1/requests",
+            ValidConnectionRequestDto(applicantParty.ApplicantPartyId));
+        await HttpResponseAssertions.For(requestResponse, _output).ShouldBeSuccess();
+
+        var request = await requestResponse.Content.ReadFromJsonAsync<L1CreateConnectionRequestResponse>()
+            ?? throw new InvalidOperationException("L1 request response body was empty.");
+
+        request.ApplicantPartyId.Should().Be(applicantParty.ApplicantPartyId);
+        request.Status.Should().Be("InReview");
+
+        var row = await GetRequestRowAsync(request.RequestId);
+        row!.ApplicantPartyId.Should().Be(applicantParty.ApplicantPartyId);
+        login.AccountId.Should().Be(applicantParty.ClientAccountId);
+    }
+
+    [Fact]
+    public async Task L1Login_WithInvalidPassword_ReturnsValidationProblem()
+    {
+        var email = UniqueEmail();
+        await RegisterAccountAsync(email);
+
+        var response = await _factory.CreateClient().PostAsJsonAsync(
+            "/api/l1/auth/login",
+            new L1LoginRequest(email, "WrongPassword!123"));
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+    }
+
+    [Fact]
+    public async Task L1Login_WithUnknownEmail_ReturnsSameSafeFailureAsInvalidPassword()
+    {
+        var email = UniqueEmail();
+        await RegisterAccountAsync(email);
+        var client = _factory.CreateClient();
+
+        var invalidPassword = await client.PostAsJsonAsync(
+            "/api/l1/auth/login",
+            new L1LoginRequest(email, "WrongPassword!123"));
+        var unknownEmail = await client.PostAsJsonAsync(
+            "/api/l1/auth/login",
+            new L1LoginRequest(UniqueEmail(), "WrongPassword!123"));
+
+        await HttpResponseAssertions.For(invalidPassword, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+        await HttpResponseAssertions.For(unknownEmail, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+
+        var invalidPasswordBody = await invalidPassword.Content.ReadAsStringAsync();
+        var unknownEmailBody = await unknownEmail.Content.ReadAsStringAsync();
+        unknownEmailBody.Should().Be(invalidPasswordBody);
+    }
+
+    [Fact]
+    public async Task L1CurrentUser_WithoutAuth_ReturnsUnauthorized()
+    {
+        var response = await _factory.CreateClient().GetAsync("/api/l1/auth/current-user");
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode((int)HttpStatusCode.Unauthorized);
+    }
+
+    [Fact]
+    public async Task L1ProtectedEndpoint_WithoutAuth_ReturnsUnauthorized()
+    {
+        var response = await _factory.CreateClient().PostAsJsonAsync(
+            "/api/l1/applicant-parties/individual",
+            ValidApplicantPartyDto());
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode((int)HttpStatusCode.Unauthorized);
+    }
+
+    [Fact]
+    public async Task L1CurrentUser_WithNonExistingAccountClaim_ReturnsUnauthorized()
+    {
+        var response = await AuthenticatedClient(989_898).GetAsync("/api/l1/auth/current-user");
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode((int)HttpStatusCode.Unauthorized);
+    }
+
+    [Fact]
+    public async Task L1Logout_AfterLogin_RemovesCurrentUserSession()
+    {
+        var email = UniqueEmail();
+        await RegisterAccountAsync(email);
+        var client = _factory.CreateClient();
+        await LoginAsync(client, email, ValidPassword);
+
+        var logout = await client.PostAsync("/api/l1/auth/logout", content: null);
+        logout.StatusCode.Should().Be(HttpStatusCode.NoContent);
+
+        var currentUser = await client.GetAsync("/api/l1/auth/current-user");
+        await HttpResponseAssertions.For(currentUser, _output)
+            .ShouldBeStatusCode((int)HttpStatusCode.Unauthorized);
     }
 
     [Fact]
@@ -170,6 +325,31 @@ public sealed class L1SliceIntegrationTests
 
         return await response.Content.ReadFromJsonAsync<L1RegisterClientAccountResponse>()
             ?? throw new InvalidOperationException("L1 register response body was empty.");
+    }
+
+    private async Task<L1CurrentUserResponse> LoginAsync(
+        HttpClient client,
+        string email,
+        string password)
+    {
+        var response = await client.PostAsJsonAsync(
+            "/api/l1/auth/login",
+            new L1LoginRequest(email, password));
+
+        await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
+
+        return await response.Content.ReadFromJsonAsync<L1CurrentUserResponse>()
+            ?? throw new InvalidOperationException("L1 login response body was empty.");
+    }
+
+    private async Task<L1CurrentUserResponse> GetCurrentUserAsync(HttpClient client)
+    {
+        var response = await client.GetAsync("/api/l1/auth/current-user");
+
+        await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
+
+        return await response.Content.ReadFromJsonAsync<L1CurrentUserResponse>()
+            ?? throw new InvalidOperationException("L1 current-user response body was empty.");
     }
 
     private async Task<L1CreateIndividualApplicantPartyResponse> CreateApplicantPartyAsync(long accountId)

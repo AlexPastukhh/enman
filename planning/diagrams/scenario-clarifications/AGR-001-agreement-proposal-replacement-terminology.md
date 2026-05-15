@@ -1,17 +1,17 @@
 # AGR-001 — Agreement Proposal Replacement Terminology
 
-Status: current clarification before diagram generation  
+Status: accepted clarification / source-cleanup guardrail  
 Scope: SC-13B / SC-13D agreement proposal lifecycle and diagrams
 
 ## 1. Problem
 
-Some scenario/index text may still describe agreement proposal replacement as:
+Older scenario/index text described agreement proposal replacement as:
 
 ```text
 previous client-sent proposal becomes Rejected
 ```
 
-This is not the current preferred meaning.
+This is not the current accepted meaning for replacement by counterproposal.
 
 ## 2. Current Accepted Direction
 
@@ -60,37 +60,52 @@ replaced by employee counterproposal
 замещён встречным вариантом сотрудника
 ```
 
-## 5. If Source Specs Still Say Rejected
+## 5. Source Summary Cleanup
 
-If scenario index, SC-13B, SC-13D, behavior items or older lifecycle notes still say `Rejected` for replacement/counterproposal:
+The current source-summary direction is:
 
 ```text
-- treat that as a known documentation conflict;
-- do not silently draw it as Rejected;
-- add a note to the diagram prompt/output;
-- keep a cleanup item to update the source spec later.
+- scenario text/DATA summaries should use superseded/replaced wording for replacement;
+- Rejected should remain only for explicit rejection/decline;
+- diagram generation should not treat old Rejected-for-replacement wording as a valid source of truth.
 ```
 
-## 6. Open Question
+If any remaining scenario text file, DATA file, behavior item, lifecycle note or old prompt still says `Rejected` for replacement/counterproposal:
+
+```text
+- treat that as stale wording;
+- do not silently draw it as Rejected;
+- use the accepted superseded/replaced direction;
+- add a cleanup item for that specific source file.
+```
+
+## 6. Open / Future Questions
 
 | ID | Question | Current assumption | Status |
 |---|---|---|---|
 | Q-AGR-LC-001 | Does `SupersededByCounterProposal` apply only when employee replaces a client-sent proposal, or symmetrically to any proposal replaced by the opposite party's counterproposal? | For now it definitely applies to a client-sent proposal replaced by an employee counterproposal. Symmetry can be decided later. | open |
-| Q-AGR-LC-002 | Should domain enum name use `SupersededByCounterProposal`, `Superseded`, or another final term? | Use `SupersededByCounterProposal` for precise technical planning, and “superseded/replaced by counterproposal” in diagrams/diploma text. | open |
+| Q-AGR-LC-002 | Should final domain enum name use `SupersededByCounterProposal`, `Superseded`, or another term? | Use `SupersededByCounterProposal` for precise technical planning, and “superseded/replaced by counterproposal” in diagrams/diploma text. | future review |
 | Q-AGR-LC-003 | Should `Rejected` remain available for explicit decline of an agreement proposal? | Yes. Rejected is still valid for explicit rejection, not replacement. | accepted assumption |
 
 ## 7. Source Cleanup Targets
 
-Later cleanup should check and update:
+Current cleanup should cover source-summary files used by diagram preflight:
 
 ```text
-scenario index / master scenario navigation
+planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
+planning/diagrams/scenario-data/00-scenario-data-index.md
+planning/diagrams/scenario-questions-register.md
+```
+
+Later cleanup should still check detailed sources when agreement implementation planning starts:
+
+```text
 SC-13B agreement proposal response spec
 SC-13D agreement proposal create/send version spec
 agreement proposal behavior items
 agreement proposal lifecycle notes
-diagram prompts that mention agreement proposal lifecycle
 domain draft notes if they contain Rejected for replacement
+old diagram prompts that mention agreement proposal lifecycle
 ```
 
 ## 8. Prompt Snippet For Diagram Chat
@@ -98,8 +113,8 @@ domain draft notes if they contain Rejected for replacement
 ```text
 Do not draw agreement proposal replacement as Rejected.
 
-If SC-13B/SC-13D or scenario index still says Rejected for a proposal replaced by a counterproposal,
-treat it as a known documentation conflict.
+If SC-13B/SC-13D or an older source still says Rejected for a proposal replaced by a counterproposal,
+treat it as stale wording unless a newer explicit decision says otherwise.
 
 Use:
 - superseded/replaced by counterproposal

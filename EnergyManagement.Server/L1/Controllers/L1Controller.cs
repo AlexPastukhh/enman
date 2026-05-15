@@ -4,7 +4,10 @@ using Domain.EnergyManagement.Common;
 using EnergyManagement.Server.Controllers;
 using EnergyManagement.Server.L1.Api;
 using EnergyManagement.Server.L1.Application.Commands;
+using EnergyManagement.Server.L1.Application.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,6 +49,75 @@ public sealed class L1Controller : ProjectController
             _logger.LogError(ex, "L1 register client account failed.");
             return ProblemDetailsWithExceptionDev(ex);
         }
+    }
+
+    [HttpPost("auth/login", Name = "L1LoginClientAccount")]
+    [ProducesResponseType(typeof(L1CurrentUserResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Login(
+        [FromBody] L1LoginRequest dto,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var result = await _sender.Send(
+                new L1LoginClientAccountCommand(dto.Email, dto.Password),
+                cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return ProblemDetailsFromValidation(result.Error);
+            }
+
+            await SignInL1AccountAsync(result.Value);
+
+            return Ok(ToCurrentUserResponse(result.Value));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "L1 login failed.");
+            return ProblemDetailsWithExceptionDev(ex);
+        }
+    }
+
+    [Authorize]
+    [HttpGet("auth/current-user", Name = "L1GetCurrentUser")]
+    [ProducesResponseType(typeof(L1CurrentUserResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> CurrentUser(CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (!TryGetCurrentAccountId(out var accountId))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _sender.Send(new L1GetCurrentUserQuery(accountId), cancellationToken);
+            if (result.IsFailure)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(ToCurrentUserResponse(result.Value));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "L1 current-user failed.");
+            return ProblemDetailsWithExceptionDev(ex);
+        }
+    }
+
+    [Authorize]
+    [HttpPost("auth/logout", Name = "L1Logout")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> Logout()
+    {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        return NoContent();
     }
 
     [Authorize]
@@ -120,13 +192,56 @@ public sealed class L1Controller : ProjectController
 
     private long GetCurrentAccountId()
     {
-        var claimValue = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (!long.TryParse(claimValue, out var accountId))
+        if (!TryGetCurrentAccountId(out var accountId))
         {
             throw new InvalidOperationException("Authenticated user does not have a valid NameIdentifier claim.");
         }
 
         return accountId;
+    }
+
+    private bool TryGetCurrentAccountId(out long accountId)
+    {
+        var claimValue = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        return long.TryParse(claimValue, out accountId);
+    }
+
+    private async Task SignInL1AccountAsync(L1LoginClientAccountResponse account)
+    {
+        var claims = new List<Claim>
+        {
+            new(ClaimTypes.NameIdentifier, account.AccountId.ToString()),
+            new(ClaimTypes.Email, account.Email),
+            new(ClaimTypes.Role, account.Role)
+        };
+
+        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        var principal = new ClaimsPrincipal(identity);
+
+        await HttpContext.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            principal,
+            new AuthenticationProperties { IsPersistent = false });
+    }
+
+    private static L1CurrentUserResponse ToCurrentUserResponse(L1LoginClientAccountResponse account)
+    {
+        return new L1CurrentUserResponse(
+            account.AccountId,
+            account.Email,
+            account.Role,
+            account.IsActive,
+            IsAuthenticated: true);
+    }
+
+    private static L1CurrentUserResponse ToCurrentUserResponse(L1GetCurrentUserResponse account)
+    {
+        return new L1CurrentUserResponse(
+            account.AccountId,
+            account.Email,
+            account.Role,
+            account.IsActive,
+            IsAuthenticated: true);
     }
 
     private ActionResult ToActionResult<TValue>(

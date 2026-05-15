@@ -32,10 +32,34 @@ question appears
 | Q-SC-15-002 | SC-15 | ACC-SQ-003 | Does account activation apply identically to client and employee accounts? | Employee flows may require same policy or separate employee-status policy. | A. same policy B. client only C. separate employee policy | avoid assuming silently | future employee/auth work | open |
 | Q-SC-04-001 | SC-04 / SC-10 | REQ-UCQ-001 | Which ApplicantParty data is copied/prefilled into request creation form, and which fields are request-local only? | Affects request creation Client/UI, DTO mapping and user understanding; must not mutate saved ApplicantParty accidentally. | A. summary only B. prefill editable request-local fields C. read-only copied fields | B for fields that belong to request-local input; no mutation of saved ApplicantParty | SL-REQ-001 client sidecar | open |
 | Q-SC-07B-001 | SC-07B / SC-05 | REQ-IBS-002 / REQ-CMD-REJECT-001 | Is rejection explanation required or optional? | Affects reject form, DTO, domain rule, client warning and rejected details. | A. required B. optional + UI warning/confirmation C. optional no warning | B; current domain feedback optional, UI should warn/confirm | reject client/API planning | open |
-| Q-SC-13D-001 | SC-13D / SC-13B | AGR-LC-007 / AGR-CMD-EMP-NEW-001 | Should replaced proposal version be named Superseded/Replaced instead of Rejected? | Legacy baseline used Rejected for replacement, but current domain decision prefers SupersededByCounterProposal/Replaced semantics. | A. Rejected B. Superseded C. Replaced D. RejectedByCounterProposal | B/C preferred; domain draft uses superseded/replaced meaning | agreement proposal implementation | open |
+| Q-SC-13D-001 | SC-13D / SC-13B | AGR-LC-007 / AGR-CMD-EMP-NEW-001 | Should replaced proposal version be named Superseded/Replaced instead of Rejected? | Legacy wording used Rejected for replacement, but the current diagram/source direction is that replacement by counterproposal is not ordinary rejection. | A. Rejected B. Superseded C. Replaced D. SupersededByCounterProposal | Use superseded/replaced by counterproposal in scenario/diagram wording; use SupersededByCounterProposal if a domain state name is needed. Rejected is only for explicit rejection/decline. | no longer blocks diagram generation after source cleanup; exact final enum naming can be revisited during agreement implementation | accepted direction |
 | Q-SC-13D-002 | SC-13D / SC-13B | AGR-VI-002 | Are proposal text details/comment required or optional? | Affects proposal DTO, validation, client form and domain value requirement. | A. required B. optional C. required only for specific sender/action | pending | agreement proposal planning | open |
 
-## 4. Rule
+## 4. Resolved / Accepted Direction Notes
+
+### Q-SC-13D-001 — Agreement proposal replacement terminology
+
+Current accepted direction for scenario summaries, DATA summaries and diagram generation:
+
+```text
+Do not describe proposal replacement/counterproposal as ordinary Rejected.
+
+Use:
+- superseded/replaced by counterproposal;
+- SupersededByCounterProposal, if a domain state name is needed.
+
+Rejected remains valid only for explicit rejection/decline.
+```
+
+This resolves the diagram/source conflict for current diagram generation.
+
+Remaining future implementation detail:
+
+```text
+The final domain enum name can still be reviewed during agreement proposal implementation.
+```
+
+## 5. Rule
 
 If a question is resolved and changes sources, update scenario text spec, DATA file, validation/security addendum and affected behavior items.
 
