@@ -1,61 +1,78 @@
-# Diagram Prompt Generation Workflow
+# Diagram Request / Prompt And Preflight Workflow
 
 Status: current workflow  
-Scope: how to prepare a repo-grounded prompt for a separate diagram-generation chat
+Scope: how scenario/documentation/planning work prepares a repo-grounded diagram request, and how the single Diagram Chat runs preflight/generation
 
 ## 1. Purpose
 
-This file explains how a documentation/planning chat prepares a prompt for a separate diagram-generation chat.
-
-The prompt-generation chat does not draw diagrams itself.
-
-It prepares a repo-grounded prompt that tells the diagram-generation chat:
+This file explains two connected activities without creating two separate diagram roles:
 
 ```text
-- which current repository sources to read;
-- how to identify actual scenario/spec folders and index files;
-- how to detect conflicts before drawing;
-- how to avoid overclaiming implementation status;
-- how to generate selected diagram batches;
-- how to package complete files for manual application.
+1. A scenario/documentation/planning chat may prepare a repo-grounded diagram request/prompt.
+2. The single Diagram Chat consumes that request, rereads the repo, runs preflight and later generates selected draw.io diagrams.
 ```
 
-## 2. Role Split
+There is no separate prompt-architect role for diagrams.
 
-### Prompt-generation chat
-
-The prompt-generation chat:
+The role is:
 
 ```text
-- reads current planning navigation and diagram/source docs;
-- discovers actual source folders and index filenames;
-- identifies relevant scenario/spec/DATA/UI/API/security sources;
-- writes a prompt for the diagram-generation chat;
-- does not create `.drawio`, XML, PNG, SVG, PlantUML or other diagram artifacts.
+Diagram Chat
 ```
 
-### Diagram-generation chat
-
-The diagram-generation chat:
+The Diagram Chat owns:
 
 ```text
-- reads the repository again from current branch;
-- performs Phase 1 preflight first;
-- generates only the selected diagram batch after user instruction;
-- prefers one draw.io XML diagram book;
-- packages complete files in an archive;
-- does not write directly to GitHub unless explicitly asked.
+Phase 1 — preflight / source reconciliation / batch plan
+Phase 2 — selected draw.io XML generation
+Phase 3 — archive packaging
 ```
 
-## 3. Required Prompt Read Rules
+Scenario Draft Chat may prepare the request/prompt when diagrams are requested from scenario sources, but it does not draw diagrams.
 
-The generated prompt must tell the diagram-generation chat not to work from memory.
+## 2. Role Boundary
+
+### Scenario/documentation/planning chat
+
+May prepare a diagram request/prompt.
+
+It must:
+
+```text
+- read current planning navigation and diagram/source docs;
+- discover actual source folders and index filenames;
+- identify relevant scenario/spec/DATA/UI/API/security sources;
+- identify known clarifications and source conflicts;
+- suggest a diagram batch;
+- hand the request to the Diagram Chat;
+- not create `.drawio`, XML, PNG, SVG, PlantUML or other diagram artifacts.
+```
+
+### Diagram Chat
+
+Consumes the request/prompt but still rereads the repository.
+
+It must:
+
+```text
+- read the repository again from current branch;
+- perform Phase 1 preflight first;
+- generate only the selected diagram batch after user instruction;
+- prefer one draw.io XML diagram book;
+- package complete files in an archive;
+- not write directly to GitHub unless explicitly asked.
+```
+
+## 3. Required Read Rules For Diagram Requests
+
+A diagram request/prompt must tell the Diagram Chat not to work from memory.
 
 It must require reading central navigation first:
 
 ```text
 planning/README.md
 planning/planning-workflow-current.md
+planning/planning-agent-protocol.md
 planning/scenario-specification-principles.md
 planning/scenario-domain-validation-principles.md
 planning/current-state.md, if exists
@@ -65,6 +82,7 @@ Then it must require reading diagram/source navigation:
 
 ```text
 planning/diagrams/README.md
+planning/diagrams/scenario-drafting-workflow.md
 planning/diagrams/diagram-prompt-generation-workflow.md
 planning/diagrams/drawio-diagram-generation-workflow.md
 planning/diagrams/scenario-text-specs/README.md
@@ -75,7 +93,7 @@ planning/diagrams/scenario-clarifications/README.md, if exists
 planning/diagrams/scenario-questions-register.md, if exists
 ```
 
-It must require discovering and listing the actual index files before using them.
+It must require discovering and listing actual index files before using them.
 
 Current known index files include:
 
@@ -95,7 +113,7 @@ unless the current repository actually contains them.
 
 ## 4. Required Source Coverage
 
-The diagram prompt must require the diagram-generation chat to inspect sources relevant to the selected batch.
+The Diagram Chat must inspect sources relevant to the selected batch.
 
 Required source families:
 
@@ -134,11 +152,9 @@ Shared/errorcodes.json
 energymanagement.client/src/shared/api/generated/openapi-types.ts
 ```
 
-The prompt must say that docs do not override current implementation evidence when deciding `[IMPLEMENTED]` vs `[DESIGNED]` or `[PLANNED]`.
+Docs do not override current implementation evidence when deciding `[IMPLEMENTED]` vs `[DESIGNED]` or `[PLANNED]`.
 
 ## 5. Status Markers
-
-The generated prompt must require status markers in diagrams and/or diagram notes.
 
 Use only these markers:
 
@@ -150,8 +166,6 @@ Use only these markers:
 [DEFERRED]
 [QUESTION]
 ```
-
-Marker meaning:
 
 | Marker | Meaning |
 |---|---|
@@ -168,7 +182,7 @@ Do not mark a future workflow `[CORE]` if it is outside the current diploma/MVP 
 
 ## 6. Required Conflict Checks
 
-The generated prompt must require searching/checking these terms before drawing lifecycle, sequence or domain diagrams:
+Before drawing lifecycle, sequence or domain diagrams, check these terms:
 
 ```text
 Rejected
@@ -218,9 +232,7 @@ planning/diagrams/scenario-clarifications/AGR-001-agreement-proposal-replacement
 
 ## 7. VKR-Clean Diagram Language Rule
 
-The prompt must forbid AI/internal workflow wording in final VKR-clean diagrams and VKR-clean diagram docs.
-
-Final diagrams and VKR-clean docs must not mention:
+Final draw.io diagrams and VKR-clean diagram docs must not mention:
 
 ```text
 AI
@@ -246,15 +258,13 @@ Persistence
 external provider
 ```
 
-Internal planning files may describe prompt and agent workflow because they are not VKR-clean deliverables.
+Internal planning files may describe request/prompt and workflow because they are not VKR-clean deliverables.
 
-## 8. Required Diagram Prompt Phases
-
-The generated prompt must use these phases.
+## 8. Diagram Chat Phases
 
 ### Phase 1 — Preflight only
 
-The diagram-generation chat must:
+The Diagram Chat must:
 
 ```text
 - read current repo sources;
@@ -294,7 +304,7 @@ Preflight output must include:
 
 ### Phase 2 — Generate selected batch
 
-Only after user selects a batch or explicitly asks for generation, the diagram-generation chat generates diagrams.
+Only after the user selects a batch or explicitly asks for generation, the Diagram Chat generates diagrams.
 
 Rules:
 
@@ -308,7 +318,7 @@ Rules:
 
 ### Phase 3 — Archive
 
-The diagram-generation chat packages complete repo-relative files:
+The Diagram Chat packages complete repo-relative files:
 
 ```text
 MANIFEST.md
@@ -323,7 +333,7 @@ No direct GitHub writes.
 
 ## 9. Recommended Batch Plan
 
-Do not ask the diagram-generation chat to generate all diagrams at once by default.
+Do not generate all diagrams at once by default.
 
 Recommended batches:
 
@@ -358,14 +368,14 @@ agreement-proposal-sequence
 
 Keep the agreement batch separate because agreement proposal replacement has known terminology risk around `Rejected` vs `SupersededByCounterProposal`.
 
-## 10. Diagram Prompt Skeleton
+## 10. Diagram Request / Prompt Skeleton
 
-Use this as a starting point when preparing a prompt for a diagram-generation chat:
+Use this as a starting point when preparing a request for the Diagram Chat:
 
 ```text
 You work with repository https://github.com/AlexPastukhh/enman on branch my-changes.
 
-Role: diagram-generation agent.
+Role: Diagram Chat.
 
 Goal: generate repo-grounded VKR-clean diagrams as draw.io XML.
 
@@ -387,9 +397,10 @@ Final VKR-clean diagrams must not mention AI, ChatGPT, prompt, agent, internal w
 ## 11. Do Not
 
 ```text
-- Do not generate diagrams in the prompt-generation chat.
-- Do not ask the diagram-generation chat to draw everything at once by default.
-- Do not let the diagram-generation chat work from memory.
+- Do not split diagram work into separate prompt/preflight and generation roles.
+- Do not generate diagrams inside Scenario Draft Chat.
+- Do not ask the Diagram Chat to draw everything at once by default.
+- Do not let the Diagram Chat work from memory or from stale prompt text only.
 - Do not hide source conflicts.
 - Do not overclaim implementation status.
 - Do not use PlantUML as the primary deliverable unless explicitly asked.

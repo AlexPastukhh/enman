@@ -6,9 +6,44 @@ Status: current collaboration protocol
 
 Do not continue implementation planning through a question that may change required behavior, API contract, security requirement, client-facing constants, testing responsibility, E2E scope, cross-layer responsibility, scenario meaning or diagram interpretation.
 
-If the question is not blocking the current task, record it with a status and sync it to the relevant shared register when it can affect future work.
+If the question is not blocking the current task, record it with a status and assumption/current direction, then sync it to the relevant shared register when it can affect future work.
 
-## 2. Documentation Update Agent Rule
+## 2. Role Identification Rule
+
+Before specialized work, identify the active role using:
+
+```text
+planning/agent-roles-and-required-actions.md
+```
+
+Core roles:
+
+```text
+Documentation Keeper / Status Reconciliation Chat
+Scenario Draft Chat
+Domain Draft Chat
+Slice Draft Chat
+Diagram Chat
+Architecture / Implementation Handoff Chat
+API / Contract Keeper Gate
+Testing / E2E Keeper Gate
+```
+
+If a task crosses role boundaries, stop and write a handoff note instead of silently changing responsibility.
+
+Handoff format:
+
+```text
+Boundary reached:
+Target role:
+Reason:
+Current facts:
+Open questions:
+Assumption / current direction:
+Recommended next action:
+```
+
+## 3. Documentation Update Agent Rule
 
 Documentation-only agents must read:
 
@@ -31,7 +66,7 @@ Documentation-only agents must:
 - not write directly to GitHub unless explicitly asked.
 ```
 
-## 3. Local / Global Sync Rule
+## 4. Local / Global Sync Rule
 
 Local planning files own detailed context.
 
@@ -63,19 +98,40 @@ Concrete future implementation/client/testing notes belong in:
 planning/slices/slice-implementation-notes-register.md
 ```
 
-## 4. Questions First Rule
+Scenario/domain questions that can change scenario behavior, DATA, UI-visible behavior or diagram semantics belong in:
+
+```text
+planning/diagrams/scenario-questions-register.md
+planning/diagrams/scenario-clarifications/, when accepted clarification is needed
+```
+
+## 5. Questions First And Assumption Rule
 
 In any `Questions / Decisions` section, list:
 
 ```text
 1. open questions;
-2. unresolved behavior / contract / design risks;
-3. accepted decisions.
+2. blocked questions;
+3. assumptions/current directions needing confirmation;
+4. unresolved behavior / contract / design risks;
+5. accepted decisions;
+6. resolved/superseded history only when still useful.
+```
+
+Each important question should include:
+
+```text
+Question status:
+Question:
+Assumption / current direction:
+Impact:
+Shared register / local-only reason:
 ```
 
 This applies to:
 
 ```text
+scenario specs and scenario registers
 business slice files
 client sidecars
 cross-cutting/helper slices
@@ -87,7 +143,33 @@ diagram planning docs
 
 Accepted decisions should not hide unresolved questions below them.
 
-## 5. Diagram Generation Workflow Rule
+## 6. Scenario Drafting Rule
+
+Scenario drafting uses:
+
+```text
+planning/scenario-specification-principles.md
+planning/scenario-domain-validation-principles.md
+planning/diagrams/scenario-drafting-workflow.md
+```
+
+Scenario Draft Chat must maintain related artifacts together when relevant:
+
+```text
+scenario text spec
+scenario DATA spec
+scenario UI spec
+validation/security addendum
+scenario behavior items
+scenario questions register
+scenario clarifications
+```
+
+Scenario Draft Chat may prepare a repo-grounded diagram request/prompt when diagrams are requested from scenario sources.
+
+That request is handed to the single Diagram Chat. Scenario Draft Chat does not draw diagrams itself.
+
+## 7. Diagram Workflow Rule
 
 Diagram-related planning must use:
 
@@ -99,8 +181,8 @@ planning/diagrams/drawio-diagram-generation-workflow.md
 Rules:
 
 ```text
-- a documentation/prompt chat prepares a repo-grounded prompt; it does not draw diagrams itself;
-- a diagram-generation chat must run Phase 1 preflight before generating diagrams;
+- a scenario/documentation/prompt chat prepares a repo-grounded prompt; it does not draw diagrams itself;
+- the single Diagram Chat must run Phase 1 preflight before generating diagrams;
 - target diagram format is draw.io XML;
 - preferred artifact is one multi-page `.drawio` diagram book;
 - do not ask for all diagrams at once by default;
@@ -121,7 +203,7 @@ internal workflow
 planning chat
 ```
 
-## 6. Draft-Driven Discovery Rule
+## 8. Draft-Driven Discovery Rule
 
 All slice-related planning uses draft-driven discovery:
 
@@ -157,7 +239,7 @@ documentation/status reconciliation drafts
 diagram planning drafts
 ```
 
-## 7. Client / Server Contract Rule
+## 9. Client / Server Contract Rule
 
 Before planning missing client slices, check:
 
@@ -180,7 +262,7 @@ error code strings
 
 Use generated OpenAPI types for structure and generated constants for semantics.
 
-## 8. OpenAPI / Constants Split Rule
+## 10. OpenAPI / Constants Split Rule
 
 ```text
 OpenAPI = structural contract:
@@ -193,13 +275,13 @@ Generated constants JSON = semantic contract:
 
 Do not collapse these into one artifact.
 
-## 9. Generated Artifact Rule
+## 11. Generated Artifact Rule
 
 Generated artifacts are produced by explicit commands/checks.
 
 Do not write generated client artifacts during normal server startup.
 
-## 10. Endpoint Classification Rule
+## 12. Endpoint Classification Rule
 
 Before generating client API types/wrappers for a slice, classify endpoint as:
 
@@ -212,7 +294,7 @@ internal/not client-facing
 
 If current endpoint status is unclear, ask or document assumption before implementation.
 
-## 11. Cross-Cutting / Helper Slice Rule
+## 13. Cross-Cutting / Helper Slice Rule
 
 When work is cross-cutting or helper-like, do not bury it only in workflow docs or shared notes.
 
@@ -232,7 +314,7 @@ Use:
 planning/slices/cross-cutting/
 ```
 
-## 12. Same Format Rule
+## 14. Same Format Rule
 
 Cross-cutting/helper slices must follow the same planning shape as business slices:
 
@@ -248,7 +330,7 @@ source requirements
 -> coverage/questions/ADR impact
 ```
 
-## 13. CSRF / Antiforgery Rule
+## 15. CSRF / Antiforgery Rule
 
 When planning browser unsafe API request security, use:
 
@@ -256,7 +338,7 @@ When planning browser unsafe API request security, use:
 planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```
 
-## 14. Testing Responsibility Rule
+## 16. Testing Responsibility Rule
 
 When planning slice/client/API work, classify tests as:
 
@@ -273,7 +355,7 @@ Use:
 planning/testing/testing-principles.md
 ```
 
-## 15. Implementation Flow Detail Filter
+## 17. Implementation Flow Detail Filter
 
 Slice flow may include involved classes, methods and short code snippets.
 
@@ -285,7 +367,7 @@ If class/method details make the flow noisy, suggest a sibling `.impl.md` file.
 
 Do not create `.impl.md` in advance.
 
-## 16. Do Not
+## 18. Do Not
 
 ```text
 - Do not implement client slices by manually guessing API contract.
@@ -301,4 +383,5 @@ Do not create `.impl.md` in advance.
 - Do not overclaim diagram implementation status.
 - Do not use GitHub mutation tools during documentation-only archive work unless explicitly requested.
 - Do not leave important local questions only in local files when they affect future work.
+- Do not hide assumptions in prose.
 ```

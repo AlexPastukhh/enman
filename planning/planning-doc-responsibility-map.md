@@ -8,7 +8,15 @@ A file should contain only content that belongs to its responsibility zone.
 
 When a local file contains information that affects future work, synchronize it with the correct shared index/register.
 
-## 2. Documentation Update Responsibility
+## 2. Agent Role Responsibility
+
+| File / folder | Responsibility |
+|---|---|
+| `planning/agent-roles-and-required-actions.md` | Cross-project role map: documentation keeper, scenario draft, domain draft, slice draft, diagram prompt, diagram generation, implementation handoff and API/testing gates |
+| `planning/planning-agent-protocol.md` | Shared collaboration protocol, role boundary rules, question/assumption rules and cross-cutting planning rules |
+| `planning/planning-workflow-current.md` | Current planning baseline and active workflow gates |
+
+## 3. Documentation Update Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -20,7 +28,32 @@ When a local file contains information that affects future work, synchronize it 
 | `planning/documentation/documentation-update-agent-prompt.md` | Reusable prompt for a documentation-only chat |
 | `planning/replacement-file-generation-guide.md` | Archive/package generation rules for manual repo application |
 
-## 3. Slice Discovery Responsibility
+## 4. Scenario Drafting Responsibility
+
+| File / folder | Responsibility |
+|---|---|
+| `planning/scenario-specification-principles.md` | Scenario specification principles and source-of-truth rules for scenario text/DATA/UI/behavior/question artifacts |
+| `planning/scenario-domain-validation-principles.md` | Client-side vs server/domain validation distinction and domain-design input rules |
+| `planning/diagrams/scenario-drafting-workflow.md` | Practical scenario draft workflow; how to maintain text specs, DATA, UI specs, behavior items, questions and diagram requests/prompts together |
+| `planning/diagrams/scenario-text-specs/` | Scenario text specs and cross-scenario addenda |
+| `planning/diagrams/scenario-data/` | Scenario DATA files: entered/seen/selected/filtered/attached/referenced data only |
+| `planning/diagrams/scenario-ui-specs/` | UI-visible requirements and accepted UI decisions, not React implementation |
+| `planning/diagrams/scenario-behavior-items/` | Scenario-derived and concern-derived behavior items |
+| `planning/diagrams/scenario-questions-register.md` | Scenario/domain questions that can change scenario behavior, DATA, UI requirements or diagrams |
+| `planning/diagrams/scenario-clarifications/` | Accepted scenario clarifications and diagram guardrails when sources conflict |
+
+Scenario Draft Chat may prepare a diagram request/prompt using `diagram-prompt-generation-workflow.md`, but it does not draw diagrams.
+
+## 5. Diagram Responsibility
+
+| File / folder | Responsibility |
+|---|---|
+| `planning/diagrams/README.md` | Scenario/diagram planning index, source read order and diagram workflow navigation |
+| `planning/diagrams/diagram-prompt-generation-workflow.md` | How a scenario/documentation/planning chat prepares a repo-grounded diagram request/prompt for the single Diagram Chat; also defines Diagram Chat preflight phases |
+| `planning/diagrams/drawio-diagram-generation-workflow.md` | Draw.io XML target format, multi-page diagram book structure, page naming, VKR-clean text rules and diagram archive rules |
+| `planning/diagrams/vkr-clean-drafts/` | Optional fallback location for draft `.drawio` diagram books and companion diagram planning files before `vkr-clean/` is active |
+
+## 6. Slice Discovery Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -34,7 +67,7 @@ When a local file contains information that affects future work, synchronize it 
 | `planning/slices/examples/SL-ACC-001-register-client-account-full-slice-example.md` | Valid full backend slice example with visual maps before detailed flows |
 | `planning/slices/client-architecture-principles.md` | Client sidecar architecture mapping and frontend layer decisions |
 
-## 4. Slice Registers Responsibility
+## 7. Slice Registers Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -48,7 +81,21 @@ The extension register does not replace the question register.
 
 The implementation notes register does not replace either; it stores future implementation notes.
 
-## 5. Client Planning Responsibility
+## 8. Domain Draft Responsibility
+
+| File / folder | Responsibility |
+|---|---|
+| `planning/domain-model.md` | Background / implementation compatibility note; not always current target direction |
+| `planning/tables/domain-drafts/` | Target domain draft files derived from scenarios/DATA/validation sources |
+| `planning/l1-domain-implementation-cut.md` | Narrow first implementation cut after broad domain draft |
+| `planning/l1-domain-testing-rules.md` | Domain testing rules for the implementation cut |
+| `planning/tables/pre-domain-variants-input.md` | Pre-domain scenario/behavior/domain-input notes used before final domain draft |
+
+If a domain question changes scenario meaning, sync with scenario questions/clarifications.
+
+If a domain question affects downstream slices, sync with slice questions register.
+
+## 9. Client Planning Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -60,7 +107,7 @@ The implementation notes register does not replace either; it stores future impl
 | `planning/client/cross-cutting/CL-STYLING-001-css-modules-tokens.md` | Styling convention |
 | `planning/client/cross-cutting/CL-A11Y-001-accessibility-and-aria.md` | Accessibility convention |
 
-## 6. API Contract Responsibility
+## 10. API Contract Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -72,7 +119,7 @@ The implementation notes register does not replace either; it stores future impl
 | `planning/api/client-constants-generation.md` | API relationship to generated semantic constants |
 | `planning/api/fluentvalidation-error-code-policy-note.md` | Deferred FluentValidation ErrorMessage/ErrorCode migration note |
 
-## 7. Cross-Cutting / Helper Slice Responsibility
+## 11. Cross-Cutting / Helper Slice Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -81,68 +128,42 @@ The implementation notes register does not replace either; it stores future impl
 | `planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md` | Constants generation/checking/testing cross-cutting slice |
 | `planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md` | Antiforgery token/session context cross-cutting slice |
 
-## 8. Scenario / Security Specification Responsibility
-
-| File / folder | Responsibility |
-|---|---|
-| `planning/diagrams/` | Scenario/specification source index and diagram-generation workflow docs |
-| `planning/diagrams/README.md` | Scenario/diagram planning index, source read order and diagram workflow navigation |
-| `planning/diagrams/scenario-text-specs/` | Scenario text specs and cross-scenario addenda |
-| `scenario-browser-security-addendum.md` | Cross-cutting browser security requirements, including CSRF/antiforgery |
-| `planning/diagrams/scenario-questions-register.md` | Scenario/domain questions that can change scenario behavior or diagrams |
-| `planning/diagrams/scenario-clarifications/` | Temporary scenario clarifications and diagram guardrails |
-
-## 9. Diagram Generation Responsibility
-
-| File / folder | Responsibility |
-|---|---|
-| `planning/diagrams/diagram-prompt-generation-workflow.md` | How to prepare a repo-grounded prompt for a separate diagram-generation chat; includes preflight, batching, source checks, conflict checks and status markers |
-| `planning/diagrams/drawio-diagram-generation-workflow.md` | Draw.io XML target format, multi-page diagram book structure, page naming, VKR-clean text rules and diagram archive rules |
-| `planning/diagrams/vkr-clean-drafts/` | Optional fallback location for draft `.drawio` diagram books and companion diagram planning files before `vkr-clean/` is active |
-
-## 10. Behavior Items Responsibility
-
-| File / folder | Responsibility |
-|---|---|
-| `planning/diagrams/scenario-behavior-items/` | Scenario-derived and concern-derived behavior items |
-| `CC-CSRF-001-antiforgery-behavior-items.md` | Security-derived behavior items for CSRF cross-cutting slice |
-
-## 11. Testing Responsibility
+## 12. Testing Responsibility
 
 ```text
 planning/testing/
 = cross-slice testing principles, E2E workflow, test object patterns, Playwright cleanup plan.
 ```
 
-## 12. Responsibility Decision Heuristic
+## 13. Responsibility Decision Heuristic
 
 ```text
-1. documentation-only workflow/status reconciliation -> planning/documentation/
-2. local/global sync workflow -> planning/documentation/local-global-documentation-sync-workflow.md
-3. archive creation rules -> planning/replacement-file-generation-guide.md
-4. draft-driven discovery across slice families -> planning/slices/draft-driven-discovery-principles.md
-5. practical slice drafting workflow and templates -> planning/slices/l1-slice-drafting-guide.md
-6. active parent backend/business slice file -> planning/slices/SL-*.md
-7. slice-wide question overview -> planning/slices/slice-questions-register.md
-8. extension/change pressure -> planning/slices/slice-extension-points-register.md
-9. future implementation/client/testing note -> planning/slices/slice-implementation-notes-register.md
-10. slice examples -> planning/slices/examples/
-11. client-wide UI/client convention -> planning/client/cross-cutting/
-12. client/server contract split -> planning/api/client-server-contract-principles.md
-13. OpenAPI artifact/type generation implementation flow -> CC-API-001
-14. generated semantic constants writer/checker/testing -> CC-CONST-001
-15. API error contract / ProblemDetails / ServerError / OpenAPI -> planning/api/
-16. browser security requirement / CSRF requirement -> scenario-browser-security-addendum.md
-17. CSRF behavior items -> CC-CSRF-001-antiforgery-behavior-items.md
-18. CSRF implementation flow/tests -> CC-CSRF-001-antiforgery-token-session-context.md
-19. diagram prompt-generation workflow -> planning/diagrams/diagram-prompt-generation-workflow.md
-20. draw.io XML / diagram book artifact workflow -> planning/diagrams/drawio-diagram-generation-workflow.md
-21. diagram scenario terminology conflicts -> planning/diagrams/scenario-clarifications/
-22. scenario/domain questions -> planning/diagrams/scenario-questions-register.md
-23. test layer boundaries / E2E workflow -> planning/testing/
-24. accepted/current architecture decision -> architecture-decision-notes.md
-25. possible future full ADR -> adr-candidates.md
-26. one vertical business slice -> parent slice file
+1. agent role / required actions -> planning/agent-roles-and-required-actions.md
+2. documentation-only workflow/status reconciliation -> planning/documentation/
+3. local/global sync workflow -> planning/documentation/local-global-documentation-sync-workflow.md
+4. archive creation rules -> planning/replacement-file-generation-guide.md
+5. scenario drafting workflow -> planning/diagrams/scenario-drafting-workflow.md
+6. scenario text/DATA/UI/behavior/question artifacts -> planning/diagrams/scenario-*/
+7. diagram request/prompt and preflight workflow -> planning/diagrams/diagram-prompt-generation-workflow.md
+8. draw.io XML / diagram book artifact workflow -> planning/diagrams/drawio-diagram-generation-workflow.md
+9. draft-driven discovery across slice families -> planning/slices/draft-driven-discovery-principles.md
+10. practical slice drafting workflow and templates -> planning/slices/l1-slice-drafting-guide.md
+11. active parent backend/business slice file -> planning/slices/SL-*.md
+12. slice-wide question overview -> planning/slices/slice-questions-register.md
+13. extension/change pressure -> planning/slices/slice-extension-points-register.md
+14. future implementation/client/testing note -> planning/slices/slice-implementation-notes-register.md
+15. domain draft/implementation cut -> domain draft files + l1-domain-implementation-cut.md
+16. client-wide UI/client convention -> planning/client/cross-cutting/
+17. client/server contract split -> planning/api/client-server-contract-principles.md
+18. OpenAPI artifact/type generation implementation flow -> CC-API-001
+19. generated semantic constants writer/checker/testing -> CC-CONST-001
+20. API error contract / ProblemDetails / ServerError / OpenAPI -> planning/api/
+21. browser security requirement / CSRF requirement -> scenario-browser-security-addendum.md
+22. CSRF behavior items -> CC-CSRF-001-antiforgery-behavior-items.md
+23. CSRF implementation flow/tests -> CC-CSRF-001-antiforgery-token-session-context.md
+24. test layer boundaries / E2E workflow -> planning/testing/
+25. accepted/current architecture decision -> architecture-decision-notes.md
+26. possible future full ADR -> adr-candidates.md
 27. detailed frontend implementation for one business slice -> `.client.md`
 28. reusable note without full behavior/test flow -> planning/slices/shared/
 ```

@@ -1,22 +1,24 @@
 # Scenario / Diagram Planning Index
 
 Status: current scenario/specification and diagram workflow index  
-Scope: scenario text specs, DATA, UI specs, validation/security addenda, behavior items, questions, diagram prompt workflow and draw.io diagram generation workflow
+Scope: scenario text specs, DATA, UI specs, validation/security addenda, behavior items, questions, scenario drafting workflow, diagram prompt workflow and draw.io diagram generation workflow
 
 ## 1. Purpose
 
 This folder contains scenario and specification source artifacts and diagram-generation workflow docs.
 
-It supports two related but separate activities:
+It supports three related but separate activities:
 
 ```text
-scenario/specification planning
-repo-grounded diagram generation for VKR-clean artifacts
+scenario/specification drafting
+repo-grounded diagram prompt preparation
+repo-grounded draw.io diagram generation for VKR-clean artifacts
 ```
 
 ## 2. Main Artifact Types
 
 ```text
+scenario drafting workflow
 scenario text specs
 scenario DATA files
 scenario UI specs
@@ -24,13 +26,44 @@ validation/security addenda
 scenario questions register
 scenario behavior items
 scenario clarifications
-diagram prompt-generation workflow
+diagram request/prompt and preflight workflow
 draw.io diagram-generation workflow
 ```
 
-## 3. Diagram Workflow Files
+## 3. Scenario Drafting Workflow
 
-Use these files when preparing or running a diagram-generation chat:
+Use this file when creating or updating scenarios:
+
+```text
+planning/diagrams/scenario-drafting-workflow.md
+```
+
+Scenario drafting must keep related artifacts synchronized:
+
+```text
+scenario text spec
+scenario DATA spec
+scenario UI spec, when relevant
+validation/security addendum, when relevant
+scenario behavior items
+scenario questions register
+scenario clarifications, when needed
+```
+
+Scenario Draft Chat may prepare a diagram request/prompt when diagrams are requested from scenario sources.
+
+It must use:
+
+```text
+planning/diagrams/diagram-prompt-generation-workflow.md
+planning/diagrams/drawio-diagram-generation-workflow.md
+```
+
+It does not draw diagrams itself.
+
+## 4. Diagram Workflow Files
+
+Use these files when preparing a diagram request or running the Diagram Chat:
 
 ```text
 planning/diagrams/diagram-prompt-generation-workflow.md
@@ -41,20 +74,21 @@ Responsibilities:
 
 | File | Responsibility |
 |---|---|
-| `diagram-prompt-generation-workflow.md` | How a documentation/planning chat prepares a repo-grounded prompt for a separate diagram-generation chat. |
+| `scenario-drafting-workflow.md` | How a Scenario Draft Chat maintains scenario text, DATA, UI, behavior items, questions and diagram prompt handoff together. |
+| `diagram-prompt-generation-workflow.md` | How a scenario/documentation/planning chat prepares a repo-grounded diagram request/prompt for the single Diagram Chat, and how the Diagram Chat runs preflight. |
 | `drawio-diagram-generation-workflow.md` | Target diagram format, diagram book structure, draw.io XML rules and diagram archive rules. |
 
 Core rule:
 
 ```text
-diagram prompt workflow -> draw.io XML workflow -> navigation
+scenario sources -> diagram prompt workflow -> draw.io XML workflow -> navigation
 ```
 
-The documentation/prompt chat does not draw diagrams itself.
+The scenario/documentation/prompt chat does not draw diagrams itself.
 
-The diagram-generation chat should first run preflight, then generate only a selected diagram batch.
+The Diagram Chat should first run preflight, then generate only a selected diagram batch.
 
-## 4. Target Diagram Format
+## 5. Target Diagram Format
 
 Target format:
 
@@ -82,13 +116,14 @@ planning/diagrams/vkr-clean-drafts/enman-vkr-diagrams.drawio
 
 Do not use PlantUML as the primary deliverable unless the user explicitly asks.
 
-## 5. Scenario Source Read Order
+## 6. Scenario Source Read Order
 
 For scenario/diagram work, read:
 
 ```text
 planning/scenario-specification-principles.md
 planning/scenario-domain-validation-principles.md
+planning/diagrams/scenario-drafting-workflow.md
 planning/diagrams/scenario-text-specs/README.md
 planning/diagrams/scenario-data/README.md
 planning/diagrams/scenario-ui-specs/README.md, if exists
@@ -107,7 +142,7 @@ planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
 
 Do not guess index filenames. Check the current repository.
 
-## 6. Security Addenda
+## 7. Security Addenda
 
 Scenario/security addenda may record rules that affect many scenarios without editing every scenario file.
 
@@ -119,7 +154,7 @@ planning/diagrams/scenario-text-specs/scenario-account-activation-security-adden
 planning/diagrams/scenario-text-specs/scenario-browser-security-addendum.md
 ```
 
-## 7. Behavior Items
+## 8. Behavior Items
 
 Behavior items may be:
 
@@ -134,7 +169,9 @@ infrastructure-derived
 
 Cross-cutting behavior items must clearly state their source type.
 
-## 8. Scenario Clarifications Before Diagram Generation
+Scenario behavior items should be updated together with scenario text/DATA/UI changes when required behavior changes.
+
+## 9. Scenario Clarifications Before Diagram Generation
 
 Diagram generation must check scenario clarifications before drawing.
 
@@ -158,7 +195,7 @@ Primary clarification:
 planning/diagrams/scenario-clarifications/AGR-001-agreement-proposal-replacement-terminology.md
 ```
 
-## 9. Status Markers For Diagrams
+## 10. Status Markers For Diagrams
 
 Diagram prompts must require status markers when status may be misunderstood:
 
@@ -175,7 +212,7 @@ Do not overclaim implementation status.
 
 A diagram element is `[IMPLEMENTED]` only when current repo implementation evidence confirms it in the stated scope.
 
-## 10. VKR-Clean Diagram Language
+## 11. VKR-Clean Diagram Language
 
 Final draw.io diagrams and VKR-clean companion docs must not mention:
 
@@ -203,7 +240,7 @@ Persistence
 external provider
 ```
 
-## 11. CSRF / Antiforgery
+## 12. CSRF / Antiforgery
 
 CSRF requirements and behavior items:
 

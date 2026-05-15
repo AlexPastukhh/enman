@@ -1,19 +1,21 @@
-# APPLY — Question Status And Assumption Workflow Sync
+# APPLY — enman-single-diagram-chat-role-workflow-v1
 
 Apply from repository root on branch `my-changes`.
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-question-status-assumption-workflow-sync-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-single-diagram-chat-role-workflow-v1.zip" -DestinationPath . -Force
 git status
 ```
 
-After applying, review:
+Review:
 
-```text
-planning/documentation/local-global-documentation-sync-workflow.md
-planning/slices/slice-questions-register.md
-planning/slices/l1-slice-drafting-guide.md
-planning/slices/draft-driven-discovery-principles.md
+```powershell
+git diff -- planning/agent-roles-and-required-actions.md
+git diff -- planning/diagrams/scenario-drafting-workflow.md
+git diff -- planning/README.md
+git diff -- planning/planning-agent-protocol.md
+git diff -- planning/planning-doc-responsibility-map.md
+git diff -- planning/scenario-specification-principles.md
+git diff -- planning/diagrams/README.md
+git diff -- planning/diagrams/diagram-prompt-generation-workflow.md
 ```
-
-This archive is documentation-only. It does not contain runtime code or generated artifacts.
