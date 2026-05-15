@@ -26,8 +26,7 @@ scenario text specs
 Current focus:
 
 ```text
-UI specs, client component discovery, styling/accessibility conventions,
-and server/client change-extension points with extension pressure.
+ADR workflow and accepted architecture decision notes.
 ```
 
 Already completed recent planning steps:
@@ -35,7 +34,8 @@ Already completed recent planning steps:
 ```text
 scenario behavior items migrated into per-scenario files;
 planning document responsibility map introduced;
-client architecture mapping rules introduced.
+client architecture mapping rules introduced;
+UI specs/client conventions/change-extension workflow introduced.
 ```
 
 Do not create `.client.md` files in advance.
@@ -83,92 +83,63 @@ Do not create `.client.md` files in advance.
 33. planning/slices/shared/README.md
 34. planning/slices/l1-slice-boundary-draft-01.md
 
-35. planning/replacement-file-generation-guide.md
-36. planning/adr/README.md
+35. planning/adr/README.md
+36. planning/adr/adr-workflow.md
 37. planning/adr/adr-candidates.md
+38. planning/adr/architecture-decision-notes.md
+
+39. planning/replacement-file-generation-guide.md
 ```
 
-## 4. Responsibility Map
+## 4. ADR / Architecture Decision Documentation
 
-Use `planning/planning-doc-responsibility-map.md` to decide where planning content belongs.
-
-## 5. Agent Protocol
-
-Use `planning/planning-agent-protocol.md` for stop-and-ask rules, relevant questions, assumptions-with-questions, next-step protocol, no-auto-continue, archive behavior, and change/extension/pressure classification.
-
-## 6. Behavior Items And UI Specs
-
-Primary scenario-specific behavior item source:
+ADR entry point:
 
 ```text
-planning/diagrams/scenario-behavior-items/
+planning/adr/README.md
 ```
 
-Scenario UI specs live under:
+Current ADR workflow:
 
 ```text
-planning/diagrams/scenario-ui-specs/
+planning/adr/adr-workflow.md
+planning/adr/adr-candidates.md
+planning/adr/architecture-decision-notes.md
 ```
 
-Create concrete UI specs when UI planning starts for a scenario.
+Use ADR candidates for decisions that may become full ADRs later.
 
-## 7. Client Planning
+Use architecture decision notes for accepted/current decisions with rationale that should not remain only in chat.
 
-Client-wide conventions:
+Do not create full numbered ADRs unless explicitly requested.
 
-```text
-planning/client/
-planning/client/cross-cutting/
-```
-
-Client architecture mapping:
-
-```text
-planning/slices/client-architecture-principles.md
-```
-
-Component discovery:
-
-```text
-planning/slices/client-component-discovery-guide.md
-```
-
-## 8. Change / Extension Points
+## 5. Responsibility Map
 
 Use:
 
 ```text
-planning/slices/change-extension-points-principles.md
-planning/slices/slice-extension-points-register.md
+planning/planning-doc-responsibility-map.md
 ```
 
-Known future extension points must be reviewed during current slice planning.
+to decide where planning content belongs.
 
-This does not mean every future extension requires abstraction now.
+## 6. Agent Protocol
 
-## 9. Scenario Question Loop
+Use:
 
 ```text
-question
--> clarify
--> update scenario spec / DATA / UI spec / validation-security addendum if needed
--> update behavior items if needed
--> update scenario questions register
--> continue implementation planning
+planning/planning-agent-protocol.md
 ```
 
-## 10. Replacement File Generation Workflow
+for stop-and-ask rules, relevant questions, assumptions, next-step protocol, ADR capture rule and no-auto-continue rule.
 
-When the user asks for files to replace manually, use `planning/replacement-file-generation-guide.md`.
+## 7. Current Next Step
 
-## 11. Current Next Step
-
-After applying this workflow package:
+After applying the ADR package:
 
 ```text
-1. use UI specs and client-wide docs for future `.client.md`;
-2. check extension points register before parent slice / client sidecar work;
-3. review migrated behavior items for the next target scenario;
-4. get/prepare UI plan;
-5. create concrete `.client.md` only when client work starts.
+1. use ADR candidates and decision notes during future slice/client planning;
+2. promote important stable decisions to full ADR only when explicitly requested;
+3. include ADR impact in future archive summaries / implementation prompts;
+4. continue toward target scenario UI plan and concrete `.client.md` only when client work starts.
 ```

@@ -7,8 +7,7 @@ Status: current workflow
 The current active workflow step is:
 
 ```text
-UI specs, client component discovery, accessibility/styling conventions,
-and server/client change-extension points with extension pressure have been introduced.
+ADR workflow and architecture decision notes have been introduced.
 ```
 
 Previously completed planning steps:
@@ -16,7 +15,8 @@ Previously completed planning steps:
 ```text
 scenario behavior items migrated into per-scenario files;
 planning document responsibility map introduced;
-client architecture mapping rules introduced.
+client architecture mapping rules introduced;
+UI specs/client conventions/change-extension workflow introduced.
 ```
 
 ## 2. Main Workflow
@@ -34,10 +34,12 @@ scenario text specs
 -> parent vertical slice files
 -> .client.md sidecar when concrete client work starts
 -> implement one slice/client layer at a time
--> update coverage / questions / ADR candidates / extension register
+-> update coverage / questions / ADR candidates / decision notes / extension register
 ```
 
 ## 3. Central Workflow Files
+
+Read central workflow/common files first:
 
 ```text
 planning/README.md
@@ -47,12 +49,13 @@ planning/planning-doc-responsibility-map.md
 planning/scenario-specification-principles.md
 planning/slices/l1-slice-drafting-guide.md
 planning/slices/implementation-principles.md
-planning/slices/client-architecture-principles.md
-planning/slices/client-component-discovery-guide.md
 planning/slices/change-extension-points-principles.md
+planning/adr/adr-workflow.md
 ```
 
 ## 4. Scenario Question Loop
+
+When planning discovers a question that affects scenario behavior, DATA, UI-visible requirements, validation/security or visible outcome:
 
 ```text
 question
@@ -63,18 +66,13 @@ question
 -> update validation/security addendum if needed
 -> update behavior items / UI behavior items if required behavior changed
 -> update scenario questions register
+-> update ADR candidate/note if decision is architecturally relevant
 -> continue implementation planning
 ```
 
-## 5. Relevant Questions Rule
+## 5. Slice / Client Intake Checklist
 
-Before a planning/archive/implementation step, ask only questions that can affect that step.
-
-For each question, include the current assumption/preferred answer.
-
-Future-only questions should be recorded in the appropriate register instead of interrupting the current work.
-
-## 6. Slice / Client Intake Checklist
+Before starting any parent slice or `.client.md` sidecar:
 
 ```text
 1. Read target scenario text spec.
@@ -85,76 +83,46 @@ Future-only questions should be recorded in the appropriate register instead of 
 6. Check planning/diagrams/scenario-questions-register.md.
 7. Check planning/slices/slice-implementation-notes-register.md.
 8. Check planning/slices/slice-extension-points-register.md.
-9. Check relevant shared support docs under planning/slices/shared/.
-10. If client work is involved, check planning/client/ and planning/slices/client-architecture-principles.md.
-11. Promote relevant notes/questions/extension pressure decisions.
-12. If scenario-level ambiguity exists, stop and resolve it first.
+9. Check planning/adr/adr-candidates.md.
+10. Check planning/adr/architecture-decision-notes.md.
+11. Check relevant shared support docs under planning/slices/shared/.
+12. If client work is involved, check planning/client/ and planning/slices/client-architecture-principles.md.
+13. Promote relevant notes/questions/extension pressure/ADR decisions.
+14. If scenario-level ambiguity exists, stop and resolve it first.
 ```
 
-## 7. Client Planning
+## 6. ADR Gate
 
-A `.client.md` sidecar must cover:
-
-```text
-UI Behavior Coverage
-Client Architecture Mapping
-Component / Layout Plan
-Styling Change Points
-Accessibility / ARIA Contract
-Client Extension Points
-Client Behavior Change Points
-Client Extension Pressure / Anti-Coupling Decisions
-```
-
-## 8. Change / Extension Points Gate
-
-Before implementation decisions, classify potential seams as:
+When a planning or implementation step makes an architecture decision, classify ADR impact:
 
 ```text
-hard invariant
-current behavior change point
-future extension point
-extension pressure
-unnecessary abstraction
+no ADR relevance
+add/update ADR candidate
+add/update accepted architecture decision note
+propose full ADR promotion
 ```
 
 Use:
 
 ```text
-planning/slices/change-extension-points-principles.md
-planning/slices/slice-extension-points-register.md
+planning/adr/adr-workflow.md
+planning/adr/adr-candidates.md
+planning/adr/architecture-decision-notes.md
 ```
 
-## 9. File Responsibility Gate
+Do not create full numbered ADRs unless explicitly requested.
 
-Before adding or moving planning content, check `planning/planning-doc-responsibility-map.md`.
+## 7. Current Next Steps
 
-## 10. Current Slice Status
-
-Resolved issue:
+Recommended next steps:
 
 ```text
-SL-REQ-001 Submitted vs InReview conflict has been resolved in active implementation/tests.
-```
-
-Target request statuses:
-
-```text
-InReview
-Approved
-Rejected
-```
-
-## 11. Current Next Steps
-
-```text
-1. Apply this workflow package.
-2. Use scenario UI specs/client-wide docs/change-extension docs for future `.client.md` files.
-3. Review migrated behavior item files and extension points register for target scenario.
-4. Resolve any blocking scenario/UI/extension questions.
-5. Get/prepare concrete UI plan for the next client layer.
-6. Create the relevant `.client.md` sidecar only when concrete client work starts.
-7. Implement the client layer and tests.
+1. Apply this ADR workflow package.
+2. Use ADR candidates and decision notes during future slice/client planning.
+3. Review relevant ADR notes before target scenario/client work.
+4. Get/prepare concrete UI plan for the next client layer.
+5. Create the relevant `.client.md` sidecar only when concrete client work starts.
+6. Implement the client layer and tests.
 ```
 
 Likely implementation target after planning cleanup:
@@ -163,14 +131,18 @@ Likely implementation target after planning cleanup:
 Request creation Client/UI for already implemented SL-REQ-001 server-side behavior.
 ```
 
-## 12. Future Cleanup Steps
+## 8. Next Step Protocol
+
+Every archive summary / implementation prompt should include:
 
 ```text
-1. Workflow centralization audit.
-2. Planning docs responsibility cleanup.
-3. Concrete scenario UI spec creation for the next target scenario.
+Current state
+Relevant questions for this step
+Assumptions used
+Blocking questions
+ADR impact
+Next action
+Do not do
+Success criteria
+Stop and ask if
 ```
-
-## 13. Next Step Protocol
-
-Every archive summary / implementation prompt should include current state, relevant questions, assumptions, blocking questions, next action, do-not-do, success criteria and stop-and-ask conditions.
