@@ -29,4 +29,17 @@ public sealed class ApplicantPartyRepository : IApplicantPartyRepository
             x => x.ClientAccountId == accountId,
             cancellationToken);
     }
+
+    public Task<IndividualApplicantParty?> GetCurrentActiveIndividualByClientAccountIdAsync(
+        long clientAccountId,
+        CancellationToken cancellationToken)
+    {
+        return _context.ApplicantParties
+            .OfType<IndividualApplicantParty>()
+            .FirstOrDefaultAsync(
+                x => x.ClientAccountId == clientAccountId
+                    && x.IsCurrentActiveVersion
+                    && x.ApplicantPartyType == ApplicantPartyType.Individual,
+                cancellationToken);
+    }
 }

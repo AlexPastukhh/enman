@@ -1,20 +1,12 @@
-# Apply — enman-agreement-proposal-replacement-docs-consistency-v2.zip
+# Apply — enman-l1-shortened-slice-draft-workflow-v1
 
-From repository root on branch `my-changes`, run:
+From the repository root, run:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-agreement-proposal-replacement-docs-consistency-v2.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-l1-shortened-slice-draft-workflow-v1.zip" -DestinationPath . -Force
 git status
 ```
 
-Then inspect:
+This archive contains complete repo-relative replacement files only.
 
-```powershell
-git diff -- planning/diagrams/scenario-text-specs/SC-13B-agreement-proposal-details-response.md
-git diff -- planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
-git diff -- planning/diagrams/scenario-data/SC-13B-agreement-proposal-details-response-data.md
-git diff -- planning/diagrams/scenario-data/SC-13D-employee-agreement-proposal-create-response-data.md
-git diff -- planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-git diff -- planning/tables/pre-domain-variants-input.md
-git diff -- planning/diagrams/scenario-clarifications/AGR-001-agreement-proposal-replacement-terminology.md
-```
+Do not commit `MANIFEST.md` or `APPLY.md` unless explicitly requested.

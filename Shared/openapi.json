@@ -579,24 +579,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/L1CreateConnectionRequestResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/L1CreateConnectionRequestResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/L1CreateConnectionRequestResponse"
-                }
-              }
-            }
+            "description": "Success"
           },
           "401": {
             "description": "Unauthorized",
@@ -786,34 +769,12 @@
       "L1CreateConnectionRequestDto": {
         "type": "object",
         "properties": {
-          "applicantPartyId": {
-            "type": "integer",
-            "format": "int64"
-          },
           "details": {
             "type": "string",
             "nullable": true
           },
           "address": {
             "$ref": "#/components/schemas/L1AddressDto"
-          }
-        },
-        "additionalProperties": false
-      },
-      "L1CreateConnectionRequestResponse": {
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "applicantPartyId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "status": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false

@@ -1,324 +1,158 @@
-# SL-REQ-001 — Create ConnectionRequest From ApplicantParty
+# SL-REQ-001 - Create Connection Request From Current Applicant Party
 
-Status: implemented slice draft  
+Status: implemented backend/API/persistence slice  
 Package: `[L1]`  
 Source scenario: `SC-04 Client Request Creation`  
-Slice type: backend / API / persistence slice with dependent Client/UI/read/extension slices  
-Current implementation status: implemented; active API/persistence/integration expectation uses `InReview`
+Slice type: backend / API / persistence slice with dependent Client/UI/read/extension slices
 
-## 1. Slice Overview
-
-Observable behavior:
+## 1. Visual Scenario Flow
 
 ```text
-Client creates a connection request from an existing ApplicantParty.
-Accepted request is persisted and starts with target status InReview.
+[Client]
+Submits connection request data
+        ↓
+[System]
+Uses current active applicant party of authenticated account
+        ↓
+[System]
+Creates connection request for that applicant party
+        ↓
+[System]
+Moves request into InReview state
+        ↓
+[System]
+Reports successful request creation
+        ↓
+[Client]
+Shows success message and navigates to My Requests
 ```
 
-Why this is a real slice:
+Backend scope implemented by this slice:
 
 ```text
-- separate command behavior;
-- clear success result: request is created;
-- clear failure/no-write behavior: invalid request does not create request;
-- independently testable through domain unit tests and API/persistence integration tests;
-- does not require Client/UI, documents, notifications, agreements, or My Requests read view.
+submit request data
+-> server selects current active applicant party
+-> create request
+-> request enters InReview
+-> API returns success
 ```
 
-Related extension / dependent slices:
+Client UI, My Requests read view, documents, notifications and review workflows are separate slices.
+
+## 2. Visual Implementation Flow
 
 ```text
-[CLIENT/UI][DEPENDENT] SL-REQ-UI-001 — Request creation Client/UI
-[READ][DEPENDENT] SL-REQ-READ-001 — My Requests visibility
-[EXTENSION] SL-DOC-001 — Attach documents to request
-[EXTENSION] SL-ANON-001 — Anonymous request creation
-[DEPENDENT] SL-REVIEW-001 — Approve request and verify applicant
-[DEPENDENT] SL-REVIEW-002 — Reject request
+[API Controller]
+POST /api/l1/requests
+Receives: details + address
+        ↓
+[API Controller]
+Derives current client account id from auth context
+        ↓
+[Application Handler]
+Finds current active individual applicant party for account
+        ↓
+[Application Handler]
+Rejects request if current active applicant party is missing
+        ↓
+[Domain]
+Creates Address value object
+        ↓
+[Domain]
+Creates ConnectionRequest for selected applicant party
+        ↓
+[Persistence]
+Stores request with server-selected ApplicantPartyId
+        ↓
+[API Controller]
+Returns success without required body
 ```
 
-Shared support likely used by dependent Client/UI slice:
+Current API contract:
+
+| Endpoint | Method | Request DTO | Response DTO | Statuses | Contract status | OpenAPI exposed? |
+|---|---|---|---|---|---|---|
+| `/api/l1/requests` | POST | `L1CreateConnectionRequestDto` with `details` and `address` | none required | 200, 401, 403, 422, 500 | target L1 | yes |
+
+Contract rule:
 
 ```text
-[SHARED SUPPORT] CLIENT-VALIDATION-SUPPORT-001 — deferred client validation
-[SHARED SUPPORT] ERROR-MAPPING-SUPPORT-001 — server validation errors to field/global client errors
-[SHARED SUPPORT] CSRF-SUPPORT-001 — antiforgery token/session context for unsafe requests
-[SHARED SUPPORT] PREFILL-SUPPORT-001 — applicant data prefill notes
+The request body must not include applicantPartyId or clientAccountId.
+ClientAccountId comes from auth context.
+ApplicantPartyId is selected by the server from the current active individual applicant party.
 ```
 
-## 2. Questions Overview
-
-| Question | Why it matters | Current answer / candidate | Blocks implementation? |
-|---|---|---|---|
-| Should integration expectation be updated from Submitted to InReview? | Full test conflict | Resolved: aligned with target InReview | No |
-| Should API expose InReview directly or map display text? | Contract/Client UI | API exposes domain status InReview directly | No |
-| Is ApplicantParty ownership mismatch checked? | Security/access | Needs confirmation/add test | Before production |
-| Should request creation require current active ApplicantParty? | Version semantics | Clarify before hardening | Medium |
-| Should validation tests assert no persisted row? | No-write guarantee | Add if feasible | No |
-| What concrete Client/UI page/form implements request creation? | Needed for dependent Client/UI implementation | Get UI plan from UI planning chat | Yes for SL-REQ-UI-001 |
-| How should applicant data be prefilled into request form? | Prevents accidental mutation of saved ApplicantParty | Prefill only; no saved ApplicantParty mutation | Yes for SL-REQ-UI-001 |
-| How are unsafe requests protected from CSRF? | Cookie auth requires antiforgery handling | Use shared antiforgery token/session support | Yes before broad Client/UI unsafe requests |
-
-## 3. Flow Coverage Overview
-
-| Flow part | Current coverage | Missing / separate slice |
-|---|---|---|
-| Create request from ApplicantParty | Implemented | ownership mismatch unclear |
-| Request starts InReview | Domain/API/persistence/integration implemented | - |
-| Missing ApplicantParty validation | Integration-tested | wrong-owner case missing |
-| Empty details validation | Integration-tested | no-row assertion missing |
-| Object address persistence | Successful path partially covered | missing/invalid address test |
-| Request creation Client/UI | Not in this slice | SL-REQ-UI-001 |
-| Deferred client validation | Shared support/current client pattern | document/use in SL-REQ-UI-001 |
-| Server error mapping to client messages | Shared support/future implementation | ERROR-MAPPING-SUPPORT-001 |
-| CSRF token support for unsafe request | Shared support/future implementation | CSRF-SUPPORT-001 |
-| My Requests visibility | Not in this slice | SL-REQ-READ-001 |
-| Documents | Not in this slice | SL-DOC-001 |
-
-## 4. Scenario Slice Flow
-
-### F01 — Client starts request creation
-
-DATA: current client context.  
-Rule: protected client action; active-account guard is application/auth concern.
-
-### F02 — Client selects ApplicantParty
-
-DATA: ApplicantPartyId, applicant source/contact data.  
-Items: `REQ-UCQ-001`.  
-Rule: request uses ApplicantParty without mutating saved applicant data.
-
-### F03 — System checks ApplicantParty belongs to current client
-
-DATA: ApplicantParty.ClientAccountId, current ClientAccountId.  
-Rule: client must not create request using another client’s ApplicantParty.
-
-### F04 — Client provides request details
-
-DATA: request details text.  
-Items: `REQ-CMD-CREATE-001`.  
-No-write: invalid or empty details do not create request.
-
-### F05 — Client provides object address
-
-DATA: object address.  
-Items/invariants: `REQ-IBS-003`, `REQ-VI-001`.  
-Invariant: request cannot exist without object address.
-
-### F06 — System creates ConnectionRequest
-
-DATA: ApplicantPartyId, details, object address.  
-Items: `REQ-LC-001`.  
-Expected result: request is created with status InReview.
-
-### F07 — System persists request and returns result
-
-DATA: RequestId, ApplicantPartyId, Status.
-
-## 5. Implementation Flow
-
-### I01 — Client/UI Flow
-
-Current implementation:
-
-```text
-Client/UI is not part of this implemented backend/API/persistence slice.
-It is planned as dependent slice SL-REQ-UI-001.
-```
-
-Concrete Client/UI details must come from the UI planning chat before implementation.
-
-Expected Client/UI flow for dependent slice:
-
-```text
-Page:
-Request creation page.
-
-Form/component:
-Connection request form.
-
-Visible data:
-- selected/current ApplicantParty summary;
-- request details;
-- object address fields;
-- current validation state.
-
-Fields:
-- ApplicantParty selector or summary;
-- request details textarea;
-- object address fields.
-
-Primary action:
-Create request button.
-
-Client-side validation:
-- deferred validation after input changes;
-- submit triggers immediate validation if needed;
-- field errors are shown near affected fields;
-- global/form errors are shown in a form-level area.
-
-Applicant data prefill:
-- if request form needs applicant fields, prefill from selected ApplicantParty;
-- editing request-local fields must not mutate saved ApplicantParty.
-
-Unsafe request support:
-- submit uses current CSRF/antiforgery request token;
-- token support comes from shared CSRF support.
-
-Success:
-- response status is InReview;
-- UI shows success or navigates to request details / My Requests depending on UI plan.
-```
-
-### I02 — API endpoint / contract
-
-`POST /api/l1/requests` receives ApplicantPartyId, details and address DTO.
-
-API returns the domain status directly. Created requests return InReview.
-
-### I03 — Server endpoint / handler
-
-Server endpoint accepts the request DTO and delegates to the application flow.
-
-### I04 — Application service / orchestration
-
-Resolve current account, apply active guard, load ApplicantParty, check ownership, call `ConnectionRequest.Create(...)`, persist request, return identity/status.
-
-### I05 — Domain
-
-`ConnectionRequest.Create(...)`, `ClientRequest`, `RequestStatus`, `Address`.
-
-### I06 — Persistence / transaction
-
-Request row is stored with ApplicantPartyId, Status, Details and ObjectAddress fields.
-
-### I07 — Response mapping
-
-Return created request id, applicant party id and status.
-
-## 6. Test Plan / Test Coverage
-
-### Client tests
-
-Planned for dependent `SL-REQ-UI-001`:
-
-```text
-- request creation page renders expected form;
-- deferred validation runs after input delay;
-- invalid details/address show field-level errors;
-- server validation/problem response maps to field/global errors;
-- create button builds correct API request DTO;
-- unsafe request uses antiforgery token helper;
-- successful InReview response shows success/navigates according to UI plan;
-- applicant data prefill works without mutating saved ApplicantParty.
-```
-
-### Server tests
-
-Current integration coverage:
-
-```text
-CreateConnectionRequest_StoresGeneratedApplicantPartyReference
-CreateConnectionRequest_ForMissingApplicantParty_ReturnsValidationProblem
-CreateConnectionRequest_WithEmptyDetails_ReturnsValidationProblem
-L1Flow_PropagatesEfGeneratedIdsAcrossAggregates
-```
-
-Expected/current domain unit coverage:
-
-```text
-Create_creates_in_review_request
-Create_fails_without_details
-Create_fails_without_object_address
-Create_guards_transient_applicant_party
-```
-
-Needed server tests:
-
-```text
-- wrong-owner ApplicantParty test;
-- object address failure test;
-- no-write assertions if feasible.
-```
-
-### End-to-end tests
-
-Planned after dependent Client/UI slice is implemented:
-
-```text
-- user creates request through browser/client UI;
-- backend persists request;
-- created request status is InReview;
-- validation errors are visible when input is invalid.
-```
-
-## 7. Shared Support Used By This Slice
-
-```text
-planning/slices/shared/client-deferred-validation.md
-planning/slices/shared/client-server-validation-error-mapping.md
-planning/slices/shared/antiforgery-token-session-context.md
-planning/slices/shared/client-applicant-data-prefill-notes.md
-```
-
-## 8. Detailed Implementation Notes
-
-This section is intentionally implementation-focused and may include pseudocode or code snippets in later drafts.
-
-The next implementation document should likely be `SL-REQ-UI-001-request-creation-client-ui.md`, after getting a concrete UI plan.
-
-## 9. Decisions
+## 3. Questions / Decisions
 
 ```text
 Decision:
-Request creation initial status is InReview.
+Create request command treats HTTP success as confirmation and does not require response body for the initial command flow.
 
 Reason:
-A created request immediately enters employee review queue.
+The client does not need created entity data to continue this command flow.
 
 Consequence:
-Integration/API expectations align with InReview.
+Client UI can show a success message and navigate to My Requests.
+The request read/list contract belongs to a separate My Requests/read slice.
 ```
 
 ```text
 Decision:
-My Requests visibility is a separate read/query slice.
-```
-
-```text
-Decision:
-Request creation Client/UI is a dependent slice, not part of SL-REQ-001 backend implementation scope.
+Request creation uses the current active individual applicant party for the authenticated account.
 
 Reason:
-Server/API/persistence behavior is already testable and implemented; client can be completed separately with its own tests.
+The client must not choose or spoof ApplicantPartyId in the command body.
+
+Consequence:
+Missing current active applicant party returns validation ProblemDetails and no request row is created.
 ```
-
-## 10. ADR Links / Candidates
-
-Potential candidates:
 
 ```text
-- ASP.NET Core cookie auth + antiforgery token support.
-- Client/server validation error mapping.
-- Request creation Client/UI as dependent slice.
+Decision:
+A created request starts in InReview.
+
+Reason:
+A created request immediately enters the employee review queue.
 ```
 
-## 11. Implementation Checklist
+Open questions:
+
+| ID | Area | Question | Current direction | Status |
+|---|---|---|---|---|
+| SL-REQ-Q-001 | Read model | What exact My Requests list/detail response does the client need after navigation? | Separate read slice | open |
+| SL-REQ-Q-002 | Applicant party versions | How are older applicant party versions made inactive when replacement/edit flow is implemented? | Keep current active lookup now; version management later | future |
+| SL-REQ-Q-003 | UI | What concrete page/form implements request creation? | Dependent client sidecar when client work starts | open |
+| SL-REQ-Q-004 | Security | When should unsafe browser commands enforce CSRF? | CC-CSRF-001 before broad client unsafe requests | open |
+
+## 4. Coverage
+
+Server integration coverage:
 
 ```text
-[x] Create request from ApplicantParty
-[x] Persist ApplicantPartyId
-[x] Persist details/address
-[x] Missing ApplicantParty validation
-[x] Empty details validation
-[x] Domain initial status InReview
-[x] Fix integration/API expectation from Submitted to InReview
-[ ] Confirm/add ApplicantParty ownership mismatch check
-[ ] Add missing object address integration test
-[ ] Add no-write DB assertions for failure paths if feasible
-[ ] Get concrete UI plan for request creation page/form
-[ ] Create/refine SL-REQ-UI-001 request creation Client/UI slice file
-[ ] Implement request creation Client/UI
-[ ] Add client tests
-[ ] Add E2E tests after Client/UI and server flow are stable
-[ ] Plan dependent My Requests read slice
+- create request stores server-selected current active applicant party id;
+- created request starts InReview;
+- details and address are persisted;
+- missing current active applicant party returns validation ProblemDetails;
+- empty details returns validation ProblemDetails;
+- request DTO does not expose applicantPartyId.
 ```
+
+Domain unit coverage:
+
+```text
+- ConnectionRequest.Create creates InReview request;
+- create fails without details;
+- create fails without object address;
+- transient applicant party is guarded.
+```
+
+Generated contract coverage:
+
+```text
+Shared/openapi.json and generated openapi-types.ts must show:
+- POST /api/l1/requests request body has details + address;
+- POST /api/l1/requests request body does not have applicantPartyId;
+- command success has no required response body.
+```
+
+Client/UI coverage is deferred until the request creation UI sidecar starts.

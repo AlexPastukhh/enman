@@ -92,6 +92,11 @@ public class L1DbContext : DbContext
                 .HasMaxLength(50)
                 .IsRequired();
 
+            applicantParty.Property(x => x.IsCurrentActiveVersion)
+                .HasField("_isCurrentActiveVersion")
+                .HasColumnName("IsCurrentActiveVersion")
+                .IsRequired();
+
             applicantParty.OwnsOne(x => x.Email, email =>
             {
                 email.Property(x => x.Value)

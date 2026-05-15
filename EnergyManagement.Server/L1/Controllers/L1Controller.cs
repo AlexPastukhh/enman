@@ -155,7 +155,7 @@ public sealed class L1Controller : ProjectController
 
     [Authorize]
     [HttpPost("requests", Name = "L1CreateConnectionRequest")]
-    [ProducesResponseType(typeof(L1CreateConnectionRequestResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
@@ -170,7 +170,6 @@ public sealed class L1Controller : ProjectController
             var result = await _sender.Send(
                 new L1CreateConnectionRequestCommand(
                     accountId,
-                    dto.ApplicantPartyId,
                     dto.Details,
                     dto.Address.PostalCode,
                     dto.Address.Region,
@@ -253,5 +252,15 @@ public sealed class L1Controller : ProjectController
         }
 
         return Ok(result.Value);
+    }
+
+    private ActionResult ToActionResult(UnitResult<IReadOnlyList<Error>> result)
+    {
+        if (result.IsFailure)
+        {
+            return ProblemDetailsFromValidation(result.Error);
+        }
+
+        return Ok();
     }
 }

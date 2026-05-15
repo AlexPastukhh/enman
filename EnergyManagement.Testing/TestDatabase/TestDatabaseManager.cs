@@ -103,12 +103,36 @@ public sealed class TestDatabaseManager
     {
         if (await TableExistsAsync("L1Accounts", cancellationToken))
         {
+            await EnsureL1ApplicantPartyCurrentVersionColumnAsync(cancellationToken);
             return;
         }
 
         await using var context = new L1DbContext(_connectionString);
         var databaseCreator = context.GetService<IRelationalDatabaseCreator>();
         await databaseCreator.CreateTablesAsync(cancellationToken);
+    }
+
+    private async Task EnsureL1ApplicantPartyCurrentVersionColumnAsync(CancellationToken cancellationToken)
+    {
+        const string query = """
+            IF OBJECT_ID(N'dbo.L1ApplicantParties', N'U') IS NOT NULL
+               AND COL_LENGTH(N'dbo.L1ApplicantParties', N'IsCurrentActiveVersion') IS NULL
+            BEGIN
+                ALTER TABLE dbo.L1ApplicantParties
+                ADD IsCurrentActiveVersion bit NOT NULL
+                    CONSTRAINT DF_L1ApplicantParties_IsCurrentActiveVersion DEFAULT 1;
+            END
+            """;
+
+        await using var connection = new SqlConnection(_connectionString);
+        await connection.OpenAsync(cancellationToken);
+
+        await using var command = new SqlCommand(query, connection)
+        {
+            CommandType = CommandType.Text
+        };
+
+        await command.ExecuteNonQueryAsync(cancellationToken);
     }
 
     private async Task<bool> TableExistsAsync(string tableName, CancellationToken cancellationToken)

@@ -28,7 +28,6 @@ public sealed record L1FullNameDto(
     [property: JsonPropertyName("lastName")] string LastName);
 
 public sealed record L1CreateConnectionRequestDto(
-    [property: JsonPropertyName("applicantPartyId")] long ApplicantPartyId,
     [property: JsonPropertyName("details")] string Details,
     [property: JsonPropertyName("address")] L1AddressDto Address);
 
