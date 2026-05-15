@@ -49,8 +49,8 @@ export default defineConfig({
     },
     {
       name: "frontend",
-      command: "npm --prefix energymanagement.client run dev",
-      url: "https://localhost:5173",
+      command: "npm --prefix energymanagement.client run dev -- --host 127.0.0.1",
+      url: "https://127.0.0.1:5173",
       reuseExistingServer: !isCI,
       timeout: 120_000,
       ignoreHTTPSErrors: true,

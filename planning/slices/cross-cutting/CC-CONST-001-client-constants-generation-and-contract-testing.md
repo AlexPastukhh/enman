@@ -3,17 +3,17 @@
 Status: implementation-ready  
 Slice type: cross-cutting slice  
 Layers: Tools + Shared artifacts + API integration tests + client contract support  
-Depends on: API error contract  
-Used by: any slice with client-facing error codes / ProblemDetails / DTO field errors
+Depends on: API error contract, client/server contract principles  
+Used by: any slice with client-facing error codes / ProblemDetails / DTO field errors / semantic constants
 
 ## 1. Purpose
 
-Provide a generated client-facing constants artifact and testing strategy so server/client API contracts are not verified only by C# constant self-equality.
+Provide a generated client-facing semantic constants artifact and testing strategy so server/client API contracts are not verified only by C# constant self-equality.
 
-This slice gives the project an explicit implementation and test path for:
+This slice covers:
 
 ```text
-server-owned constants
+server-owned semantic constants
 -> generated Shared/constants.json and Shared/errorcodes.json
 -> client imports
 -> API integration tests
@@ -24,7 +24,14 @@ server-owned constants
 
 This is not an individual business scenario slice.
 
-It is cross-cutting because many business slices may introduce or consume client-facing error codes, DTO field names, ProblemDetails extension names, or API constants.
+It is cross-cutting because many business slices may introduce or consume:
+
+```text
+client-facing error codes
+ProblemDetails extension names
+ServerError / ServerValidationError field names
+temporary route constants while OpenAPI migration is incomplete
+```
 
 ### Observable/support behavior
 
@@ -57,121 +64,212 @@ It is cross-cutting because many business slices may introduce or consume client
 - client parser remains tested on the client side.
 ```
 
-## 3. Cross-Cutting Inputs
+## 3. Inputs / Sources
 
-Source inputs:
-
-```text
-- planning/api/api-error-contract.md;
-- existing Shared/constants.json and Shared/errorcodes.json;
-- existing client import path / generated JSON imports;
-- server constants / error codes;
-- ServerValidationError / ProblemDetails contract;
-- future parent slice API error tables.
-```
-
-## 4. Pseudo Behavior Items
-
-| ID | Behavior |
+| Source | Purpose |
 |---|---|
-| CC-CONST-CMD-001 | Generate committed client constants artifacts. |
-| CC-CONST-CMD-002 | Check committed artifacts without modifying files. |
-| CC-CONST-ART-001 | `constants.json` and `errorcodes.json` have stable expected shape. |
-| CC-CONST-ERR-001 | `ErrorCode` and `FieldName` contract is exposed to the client. |
-| CC-CONST-TEST-001 | API integration tests can read generated artifact. |
-| CC-CONST-TEST-002 | Critical behavioral codes can be literal-tested. |
-| CC-CONST-NW-001 | Do not use hosted service generation as the primary path. |
-| CC-CONST-NW-002 | Do not migrate FluentValidation `ErrorMessage`/`ErrorCode` blindly. |
-| CC-CONST-NW-003 | Do not add regex convention tests or full golden-file tests initially. |
+| `planning/api/client-server-contract-principles.md` | OpenAPI vs generated constants split |
+| `planning/api/api-error-contract.md` | ProblemDetails / ServerError / ErrorCode contract |
+| `planning/api/client-constants-generation.md` | API relationship note |
+| `Shared/constants.json` | Generated semantic constants artifact |
+| `Shared/errorcodes.json` | Generated error-code artifact |
+| server constants / error codes | Source of truth |
+| parent slice API error tables | Consumer source |
+| `.client.md` sidecars | Client handling consumer |
+
+## 4. Concern-Derived Behavior Items
+
+| ID | Behavior | Concern flow step |
+|---|---|---|
+| CC-CONST-SRC-001 | Server C# constants are source of truth for semantic constants. | F01 |
+| CC-CONST-ART-001 | Tool generates committed `Shared/constants.json` and `Shared/errorcodes.json`. | F02 |
+| CC-CONST-CMD-001 | Normal command writes generated constants artifacts. | F02 |
+| CC-CONST-CMD-002 | Check mode compares committed artifacts without modifying files. | F03 |
+| CC-CONST-ERR-001 | ErrorCode and FieldName contract is exposed to client artifact. | F04 |
+| CC-CONST-CL-001 | Client imports generated semantic constants and does not hardcode strings. | F05 |
+| CC-CONST-TEST-001 | API integration tests can read generated artifact. | F06 |
+| CC-CONST-TEST-002 | Critical behavioral codes can be literal-tested. | F07 |
+| CC-CONST-NW-001 | Do not use hosted service generation as the primary path. | F08 |
+| CC-CONST-NW-002 | Do not migrate FluentValidation `ErrorMessage`/`ErrorCode` blindly. | F08 |
+| CC-CONST-NW-003 | Do not add regex convention tests or full golden-file tests initially. | F08 |
+| CC-CONST-NW-004 | Do not treat route constants as long-term replacement for OpenAPI route contract. | F08 |
 
 ## 5. Coverage Overview
 
-| Pseudo behavior item | Implemented by | Test coverage | Used by slices? | Status |
+| Behavior item | Concern flow | Implementation flow | Test coverage | Status |
 |---|---|---|---|---|
-| CC-CONST-CMD-001 | Tools command + SnapshotFactory + Serializer + Writer | writer + serializer tests | all API/client slices that need constants | planned |
-| CC-CONST-CMD-002 | Tools command + Checker | checker tests including no-modify | local/CI verification | planned |
-| CC-CONST-ART-001 | Snapshot records + serializer | shape/casing/stability tests | client imports | planned |
-| CC-CONST-ERR-001 | ServerValidationError contract snapshot | shape tests + API integration tests | API error handling slices | planned |
-| CC-CONST-TEST-001 | ClientContractArtifacts integration-test helper | API integration tests | API slices | planned |
-| CC-CONST-TEST-002 | literal integration assertions | selected API integration tests | critical behavioral errors | planned |
-| CC-CONST-NW-001 | explicit command design | command/check workflow | all constants changes | accepted |
-| CC-CONST-NW-002 | deferred FluentValidation note | inspection before migration | validation/API hardening | accepted |
-| CC-CONST-NW-003 | test strategy rule | no tests now | Tools.Tests | accepted |
+| CC-CONST-SRC-001 | F01 | I01 | snapshot tests | planned |
+| CC-CONST-ART-001 | F02 | I03-I05 | writer + serializer tests | planned |
+| CC-CONST-CMD-001 | F02 | I02/I05 | command/writer tests | planned |
+| CC-CONST-CMD-002 | F03 | I06 | checker no-modify tests | planned |
+| CC-CONST-ERR-001 | F04 | I01/I03 | shape + API tests | planned |
+| CC-CONST-CL-001 | F05 | I09 | client parser/import tests | planned |
+| CC-CONST-TEST-001 | F06 | I07 | API integration tests | planned |
+| CC-CONST-TEST-002 | F07 | I08 | selected literal tests | planned |
+| CC-CONST-NW-001 | F08 | I02/I06 | command-only workflow | accepted |
+| CC-CONST-NW-002 | F08 | I10 | inspection before migration | accepted |
+| CC-CONST-NW-003 | F08 | I10 | not in first implementation | accepted |
+| CC-CONST-NW-004 | F08 | I10 | OpenAPI migration docs | accepted |
 
-## 6. Implementation Flow
+## 6. Semantic Constants Concern Flow
 
-### C01 — CLI entry
+### F01 — Server constants remain semantic source of truth
 
-Behavior item:
+Server C# constants define semantic values that client must not invent.
 
-```text
-CC-CONST-CMD-001
-CC-CONST-CMD-002
-```
-
-High-level behavior:
+Covers:
 
 ```text
-Developer runs EnergyManagement.Tools command.
+CC-CONST-SRC-001
 ```
 
-Command examples:
-
-```bash
-dotnet run --project EnergyManagement.Tools -- generate-client-constants --out Shared
-dotnet run --project EnergyManagement.Tools -- generate-client-constants --out Shared --check
-```
-
-Implementation:
+Examples:
 
 ```text
-Program.cs dispatches `generate-client-constants` to GenerateClientConstantsCommand.
-GenerateClientConstantsOptions captures --out and --check.
+stable client-facing error codes
+ProblemDetails extension names
+ServerError / ServerValidationError field names
 ```
 
-Key point:
+### F02 — Tool generates committed constants artifacts
 
-```text
---check is our custom command mode, not built-in dotnet behavior.
-```
+Explicit tool command generates artifacts.
 
-Routine details such as basic argument parsing can stay high-level unless they become error-prone.
-
-### C02 — Output path and options
-
-Behavior item:
-
-```text
-CC-CONST-CMD-001
-CC-CONST-CMD-002
-```
-
-Implementation:
-
-```text
-GenerateClientConstantsOptions stores --out and --check.
-ClientConstantsPathResolver resolves the output directory.
-```
-
-Current direction:
-
-```text
-Use explicit --out Shared first.
-```
-
-Open question:
-
-```text
-Default output path can be added later if needed.
-```
-
-### C03 — Snapshot creation
-
-Behavior item:
+Covers:
 
 ```text
 CC-CONST-ART-001
+CC-CONST-CMD-001
+```
+
+Artifacts:
+
+```text
+Shared/constants.json
+Shared/errorcodes.json
+```
+
+Required behavior:
+
+```text
+normal generation writes files only when command is explicitly run.
+```
+
+### F03 — Check mode detects stale artifacts without writing
+
+Check mode compares generated output with committed files.
+
+Covers:
+
+```text
+CC-CONST-CMD-002
+```
+
+Required behavior:
+
+```text
+--check fails if artifacts are missing/outdated;
+--check does not repair or modify files.
+```
+
+### F04 — Client can parse semantic error contract
+
+Generated constants expose field/extension names required by client parser.
+
+Covers:
+
+```text
 CC-CONST-ERR-001
+```
+
+Required behavior:
+
+```text
+client parser should not hardcode errors extension name,
+FieldName property name or ErrorCode property name.
+```
+
+### F05 — Client imports generated constants
+
+Client uses generated artifacts, not handwritten string copies.
+
+Covers:
+
+```text
+CC-CONST-CL-001
+```
+
+Required behavior:
+
+```text
+ErrorCode -> UI message/behavior mapping uses imported constants.
+```
+
+### F06 — API tests check against client-facing artifact
+
+Most client-facing API error tests read expected values from generated artifact.
+
+Covers:
+
+```text
+CC-CONST-TEST-001
+```
+
+Required behavior:
+
+```text
+test real HTTP response against the same artifact the client imports.
+```
+
+### F07 — Critical behavioral codes can be literal-protected
+
+Critical behavioral error codes may have literal integration tests.
+
+Covers:
+
+```text
+CC-CONST-TEST-002
+```
+
+Criteria:
+
+```text
+client takes a separate branch;
+code controls stale/refetch/access/not-found behavior;
+changing it requires client/docs/test update.
+```
+
+### F08 — Boundaries and non-goals are explicit
+
+Constants generation stays separate from OpenAPI and server startup.
+
+Covers:
+
+```text
+CC-CONST-NW-001
+CC-CONST-NW-002
+CC-CONST-NW-003
+CC-CONST-NW-004
+```
+
+Required behavior:
+
+```text
+no hosted service generation;
+no blind FluentValidation migration;
+no regex/golden tests initially;
+route constants are temporary while OpenAPI transition is incomplete.
+```
+
+## 7. Implementation Flow
+
+### I01 — Snapshot creation
+
+Concern flow:
+
+```text
+F01
+F04
 ```
 
 Implementation:
@@ -204,18 +302,35 @@ private static ServerValidationErrorContractSnapshot CreateServerValidationError
 }
 ```
 
-Why this matters:
+### I02 — CLI command
+
+Concern flow:
 
 ```text
-Client parser should not hardcode FieldName/ErrorCode field-name strings.
+F02
+F03
+F08
 ```
 
-### C04 — Artifact creation and serialization
+Command examples:
 
-Behavior item:
+```bash
+dotnet run --project EnergyManagement.Tools -- generate-client-constants --out Shared
+dotnet run --project EnergyManagement.Tools -- generate-client-constants --out Shared --check
+```
+
+Key point:
 
 ```text
-CC-CONST-ART-001
+--check is our custom command mode, not built-in dotnet behavior.
+```
+
+### I03 — Artifact creation and serialization
+
+Concern flow:
+
+```text
+F02
 ```
 
 Implementation:
@@ -235,14 +350,34 @@ Key points:
 - no environment-specific values.
 ```
 
-Routine details such as simple record construction stay high-level.
+### I04 — Output path and options
 
-### C05 — Write mode
-
-Behavior item:
+Concern flow:
 
 ```text
-CC-CONST-CMD-001
+F02
+F03
+```
+
+Implementation:
+
+```text
+GenerateClientConstantsOptions stores --out and --check.
+ClientConstantsPathResolver resolves the output directory.
+```
+
+Current direction:
+
+```text
+Use explicit --out Shared first.
+```
+
+### I05 — Write mode
+
+Concern flow:
+
+```text
+F02
 ```
 
 Implementation:
@@ -261,20 +396,12 @@ Key responsibilities:
 - fail clearly if output path is invalid.
 ```
 
-Tests:
+### I06 — Check mode
+
+Concern flow:
 
 ```text
-Writer_WritesConstantsAndErrorCodesFiles
-Writer_CreatesOutputDirectory_WhenItDoesNotExist
-Writer_Throws_WhenOutputPathIsAFile
-```
-
-### C06 — Check mode
-
-Behavior item:
-
-```text
-CC-CONST-CMD-002
+F03
 ```
 
 Implementation:
@@ -289,7 +416,7 @@ Key point:
 --check must not write or repair files.
 ```
 
-It should return a failure result when:
+Failure cases:
 
 ```text
 - constants.json is outdated;
@@ -297,22 +424,12 @@ It should return a failure result when:
 - either file is missing.
 ```
 
-Tests:
+### I07 — API integration-test consumption
+
+Concern flow:
 
 ```text
-Checker_ReturnsSuccess_WhenFilesMatchGeneratedArtifacts
-Checker_ReturnsFailure_WhenErrorCodesFileIsOutdated
-Checker_ReturnsFailure_WhenConstantsFileIsOutdated
-Checker_ReturnsFailure_WhenFileIsMissing
-Checker_DoesNotModifyFiles_WhenMismatchExists
-```
-
-### C07 — API integration-test consumption
-
-Behavior item:
-
-```text
-CC-CONST-TEST-001
+F06
 ```
 
 Implementation:
@@ -328,26 +445,12 @@ For ordinary client-facing codes, expected value should come from generated arti
 not directly from C# constants.
 ```
 
-Sketch:
+### I08 — Literal integration contract tests for critical behavioral codes
 
-```csharp
-var expectedCode = _clientContracts.GetErrorCode("Email", "IsRequired");
-
-Assert.Equal(expectedCode, actualError.ErrorCode);
-```
-
-Why this matters:
+Concern flow:
 
 ```text
-This verifies the real client-facing artifact used by the frontend.
-```
-
-### C08 — Literal integration contract tests for critical behavioral codes
-
-Behavior item:
-
-```text
-CC-CONST-TEST-002
+F07
 ```
 
 Rule:
@@ -357,41 +460,13 @@ Literal tests are only for critical behavioral codes,
 not for every validation code.
 ```
 
-Criteria:
+### I09 — Client parser tests stay client-side
+
+Concern flow:
 
 ```text
-- client takes a separate branch by this code;
-- code controls stale/refetch behavior;
-- code controls access denied / not found / forbidden state;
-- code disables/removes actions or updates action availability;
-- code starts a recovery path;
-- changing it requires updating `.client.md`, scenario UI spec or client behavior coverage.
-```
-
-Example:
-
-```csharp
-Assert.Equal("request.review.request.not.in.review", actualError.ErrorCode);
-```
-
-Purpose:
-
-```text
-A literal test fails when a public behavioral signal is renamed accidentally.
-```
-
-### C09 — Client parser tests stay client-side
-
-Behavior item:
-
-```text
-CC-CONST-TEST-001
-```
-
-Rule:
-
-```text
-Server/tool tests do not duplicate client parser behavior.
+F05
+F06
 ```
 
 Client tests verify:
@@ -404,7 +479,27 @@ Client tests verify:
 - ErrorCode -> UI message/state mapping.
 ```
 
-## 7. Target Tools Types
+### I10 — Deferred/non-goal handling
+
+Concern flow:
+
+```text
+F08
+```
+
+Do not do in first implementation unless explicitly requested:
+
+```text
+- full golden-file tests;
+- error-code format regex/convention tests;
+- full generated API client;
+- .NET upgrade;
+- FluentValidation ErrorCode migration without inspection;
+- client parser redesign without client tests;
+- long-term new route constants when OpenAPI can cover routes.
+```
+
+## 8. Target Tools Types
 
 | Type | Responsibility |
 |---|---|
@@ -423,15 +518,7 @@ This table is not a full class reference.
 
 Keep class details in flow only where they clarify behavior.
 
-If class/method details start dominating the slice flow, extract them into:
-
-```text
-planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.impl.md
-```
-
-Do not create `.impl.md` in advance.
-
-## 8. Test Plan
+## 9. Test Plan
 
 ### Tools unit tests
 
@@ -481,19 +568,6 @@ Use only for critical behavioral codes.
 
 Client side owns parser/mapping/UI behavior tests.
 
-## 9. Not Now
-
-Do not do in the first implementation unless explicitly requested:
-
-```text
-- full golden-file tests;
-- error-code format regex/convention tests;
-- full generated API client;
-- .NET upgrade;
-- FluentValidation ErrorCode migration without inspection;
-- client parser redesign without client tests.
-```
-
 ## 10. Consumer Rule For Business Slices
 
 When a business slice introduces a client-facing error code:
@@ -518,33 +592,28 @@ Parent slice API table:
 | Error code | FieldName | HTTP status | Stability | Client handling | Literal test? |
 |---|---|---:|---|---|---|
 
-Client sidecar table:
-
-| Error code | Client branch? | Handling | Literal test? |
-|---|---:|---|---:|
-
 ## 11. Local Questions
 
 | ID | Question | Assumption / current direction | Status |
 |---|---|---|---|
 | Q-CC-CONST-001 | Exact source constants project now or later? | Start with existing server/shared constants, move to API contracts project later. | open |
-| Q-CC-CONST-002 | Exact output path default? | Keep `--out Shared` explicit first. | accepted for first step |
-| Q-CC-CONST-003 | Exact OpenAPI TypeScript tool? | Out of scope for this cross-cutting slice. | open |
+| Q-CC-CONST-002 | Exact output path default? | Keep `--out Shared` explicit first. | accepted |
+| Q-CC-CONST-003 | Exact route constants removal plan? | keep legacy routes until client OpenAPI migration. | open |
 | Q-CC-CONST-004 | FluentValidation ErrorMessage vs ErrorCode? | Deferred inspection note. | open |
 | Q-CC-CONST-005 | Add golden tests now? | No. | accepted |
 | Q-CC-CONST-006 | Add regex convention tests now? | No. | accepted |
-| Q-CC-CONST-007 | Should client constants generator run in server startup? | No; explicit command only. | accepted |
 
 ## 12. ADR Impact
 
 Decision notes / ADR candidates:
 
 ```text
-- generated client constants as cross-cutting slice;
+- generated semantic constants as cross-cutting slice;
 - constants testing strategy;
 - no convention/golden tests initially;
 - explicit command over hosted service;
-- critical behavioral literal contract tests.
+- critical behavioral literal contract tests;
+- route constants are temporary during OpenAPI migration.
 ```
 
 No full numbered ADR is created by this slice draft.

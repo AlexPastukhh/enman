@@ -56,7 +56,7 @@ Playwright owns both processes through `webServer`:
 
 ```text
 backend  -> dotnet run --project EnergyManagement.Server/EnergyManagement.Server.csproj --no-launch-profile -- --urls https://localhost:7250
-frontend -> npm --prefix energymanagement.client run dev
+frontend -> npm --prefix energymanagement.client run dev -- --host 127.0.0.1
 ```
 
 Backend uses `--no-launch-profile` so ASP.NET SpaProxy does not start a second Vite process.
@@ -65,8 +65,12 @@ Readiness targets:
 
 ```text
 backend  -> https://localhost:7250/swagger/index.html
-frontend -> https://localhost:5173
+frontend -> https://127.0.0.1:5173
 ```
+
+The Playwright browser still opens `https://localhost:5173`. The frontend
+readiness URL uses `127.0.0.1` to avoid local IPv6 `localhost` resolution issues
+where Node probes `::1` while Vite is listening on IPv4.
 
 ## 4. Vite Proxy And CORS Rule
 

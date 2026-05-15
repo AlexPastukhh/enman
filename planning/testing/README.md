@@ -20,7 +20,7 @@ end-to-end tests
 
 ```text
 planning/testing/testing-principles.md
-planning/testing/e2e-playwright-workflow.md
+planning/testing/e2e-testing-workflow.md
 planning/testing/test-object-patterns.md
 planning/testing/playwright-e2e-cleanup-plan.md
 ```
@@ -53,7 +53,7 @@ Detailed server/API behavior belongs to server integration/API tests.
 ```text
 1. planning/testing/README.md
 2. planning/testing/testing-principles.md
-3. planning/testing/e2e-playwright-workflow.md
+3. planning/testing/e2e-testing-workflow.md
 4. planning/testing/test-object-patterns.md
 5. planning/testing/playwright-e2e-cleanup-plan.md
 ```

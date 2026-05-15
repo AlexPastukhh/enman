@@ -1,7 +1,7 @@
 # Slice Planning Index
 
 Status: current slice-planning navigation index  
-Scope: business slices, client sidecars, cross-cutting/helper slices, test planning, client architecture, extension/change points and implementation notes
+Scope: business slices, client sidecars, cross-cutting/helper slices, test planning, API contract artifacts, client architecture, extension/change points and implementation notes
 
 ## 1. Purpose
 
@@ -19,7 +19,7 @@ Client implementation file for a concrete business slice.
 
 ### Cross-cutting slice
 
-Technical/support slice with observable behavior, concern-derived behavior items, concern flow, implementation flow and tests, used by multiple business slices.
+Technical/support slice with observable behavior, concern-derived behavior items, concern flow, implementation flow and tests/checks, used by multiple business slices.
 
 ### Helper slice
 
@@ -50,6 +50,7 @@ planning/slices/cross-cutting/
 Current cross-cutting slices:
 
 ```text
+planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
 planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
 planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```
@@ -61,13 +62,23 @@ Cross-cutting/helper slices must have:
 - concern-derived behavior items;
 - concern slice flow;
 - implementation flow;
-- tests;
+- tests/checks;
 - consumers / used-by slices;
 - local questions;
 - ADR impact.
 ```
 
-## 5. Shared Notes
+## 5. API Contract Support
+
+API contract docs live in:
+
+```text
+planning/api/
+```
+
+Use them before client slice implementation.
+
+## 6. Shared Notes
 
 Use:
 
@@ -77,7 +88,7 @@ planning/slices/shared/
 
 for reusable notes/helpers that do not have a full slice behavior/test flow.
 
-## 6. Testing Support
+## 7. Testing Support
 
 Testing workflow lives in:
 
@@ -85,7 +96,7 @@ Testing workflow lives in:
 planning/testing/
 ```
 
-## 7. Parent Business Slice Files
+## 8. Parent Business Slice Files
 
 Parent business slice files own:
 
@@ -103,7 +114,7 @@ Parent business slice files own:
 - link to `.client.md` sidecar when client work starts.
 ```
 
-## 8. Client Sidecar Files
+## 9. Client Sidecar Files
 
 A `.client.md` file is created only when concrete client work starts.
 

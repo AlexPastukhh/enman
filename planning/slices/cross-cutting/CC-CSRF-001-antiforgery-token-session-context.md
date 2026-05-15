@@ -73,7 +73,7 @@ It is cross-cutting because it protects many browser command slices and auth/ses
 | `planning/api/api-error-contract.md` | ProblemDetails / ServerError contract |
 | `planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md` | Generated client-facing error code/constants strategy |
 | `planning/testing/testing-principles.md` | Test layer boundaries |
-| `planning/testing/e2e-playwright-workflow.md` | Later E2E coverage |
+| `planning/testing/e2e-testing-workflow.md` | Later E2E coverage |
 
 ## 4. Concern-Derived Behavior Items
 

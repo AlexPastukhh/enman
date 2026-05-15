@@ -126,6 +126,6 @@ ARIA is usually not needed for native buttons, inputs with labels, textareas wit
 
 ```text
 planning/testing/testing-principles.md
-planning/testing/e2e-playwright-workflow.md
+planning/testing/e2e-testing-workflow.md
 planning/testing/test-object-patterns.md
 ```

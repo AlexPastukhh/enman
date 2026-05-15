@@ -26,6 +26,7 @@ Technical/support slice with observable behavior, implementation flow and tests,
 Examples:
 
 ```text
+CC-API-001-openapi-contract-artifacts-and-type-generation.md
 CC-CONST-001-client-constants-generation-and-contract-testing.md
 CC-CSRF-001-antiforgery-token-session-context.md
 ```
@@ -50,7 +51,8 @@ planning/slices/shared/*.md
 
 | Slice | Purpose | Status |
 |---|---|---|
-| `CC-CONST-001-client-constants-generation-and-contract-testing.md` | Generates and verifies client-facing constants artifacts and testing strategy | implementation-ready |
+| `CC-API-001-openapi-contract-artifacts-and-type-generation.md` | Generates/checks structural OpenAPI contract artifacts and client TypeScript types | implementation-ready draft |
+| `CC-CONST-001-client-constants-generation-and-contract-testing.md` | Generates/checks client-facing semantic constants and testing strategy | implementation-ready |
 | `CC-CSRF-001-antiforgery-token-session-context.md` | Antiforgery token/session context behavior, failure normalization and tests | implementation-ready draft |
 
 ## 4. When To Create A Cross-Cutting Or Helper Slice
@@ -61,12 +63,12 @@ Create one when the work:
 - is used by multiple business slices;
 - has observable/support behavior;
 - has a concrete implementation path;
-- has independent tests;
+- has independent tests/checks;
 - introduces a reusable contract, artifact, tool, helper, mapper or shared support flow;
 - is too concrete to be only a workflow note.
 ```
 
-Do not create one for a purely conceptual rule with no implementation/test path.
+Do not create one for a purely conceptual rule with no implementation/test/check path.
 
 ## 5. Same Format Rule
 
@@ -77,7 +79,7 @@ source requirements
 -> behavior items
 -> slice flow
 -> implementation flow
--> tests
+-> tests/checks
 -> coverage/questions/ADR impact
 ```
 
@@ -146,7 +148,7 @@ Used by:
 ## 6. Concern Slice Flow
 ## 7. Implementation Flow
 ## 8. Target Types / Components
-## 9. Test Plan
+## 9. Test / Check Plan
 ## 10. Consumer Rule For Business Slices
 ## 11. Local Questions
 ## 12. ADR Impact
@@ -156,7 +158,7 @@ Used by:
 
 Every behavior item must appear in the slice flow before implementation flow.
 
-The flow explains required behavior in user/system/security/tooling terms.
+The flow explains required behavior in user/system/security/tooling/API terms.
 
 Implementation Flow then explains how this required behavior is implemented.
 
@@ -175,21 +177,13 @@ Include code/class/method details when they explain:
 - important trade-off;
 - future extension/change point;
 - error handling;
-- testability;
+- testability/checkability;
 - no-write/no-side-effect guarantee;
 - generated artifact shape;
 - API/client boundary.
 ```
 
-Keep high-level only when implementation is routine:
-
-```text
-- basic argument parsing;
-- simple file write mechanics;
-- obvious object construction;
-- plain DTO records;
-- straightforward method forwarding.
-```
+Keep high-level only when implementation is routine.
 
 If class/method details make the flow noisy, extract them into a sibling `.impl.md` file.
 

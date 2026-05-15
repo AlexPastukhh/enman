@@ -12,13 +12,45 @@ source requirements
 -> behavior items
 -> slice/concern flow
 -> implementation flow
--> tests
+-> tests/checks
 -> coverage/questions/ADR impact
 ```
 
 Cross-cutting/helper slices are not allowed to skip behavior/flow just because the concern is technical.
 
-## 2. Testing Responsibility
+## 2. Client / Server Contract Principle
+
+Before implementing missing client slices:
+
+```text
+OpenAPI structural contract must be clear.
+Generated semantic constants must be clear.
+Client API wrappers should use generated OpenAPI types.
+Client error parsing/mapping should use generated constants.
+```
+
+Use:
+
+```text
+planning/api/client-server-contract-principles.md
+planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
+planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
+```
+
+## 3. OpenAPI And Constants Split
+
+```text
+OpenAPI = structural contract:
+  endpoints, methods, DTOs, response schemas, status codes.
+
+Generated shared constants JSON = semantic constants:
+  client-facing error codes, ProblemDetails extension names,
+  ServerError field names, temporary route constants if needed.
+```
+
+Do not use one artifact to replace the other.
+
+## 4. Testing Responsibility
 
 Use:
 
@@ -43,19 +75,7 @@ E2E tests
 
 Do not make E2E duplicate the full client/component test matrix.
 
-## 3. E2E / Playwright
-
-Use:
-
-```text
-planning/testing/e2e-playwright-workflow.md
-planning/testing/test-object-patterns.md
-planning/testing/playwright-e2e-cleanup-plan.md
-```
-
-E2E must use role/label-first locators and explicit Playwright webServer startup.
-
-## 4. Cross-Cutting And Helper Slices
+## 5. Cross-Cutting And Helper Slices
 
 Cross-cutting/helper slices are allowed.
 
@@ -66,7 +86,7 @@ They are not business scenario slices, but they must still have:
 - concern-derived behavior items;
 - concern slice flow;
 - implementation flow;
-- test plan;
+- test/check plan;
 - consumers / used-by slices;
 - coverage table;
 - local questions;
@@ -79,26 +99,11 @@ Use:
 planning/slices/cross-cutting/
 ```
 
-## 5. Concern-Derived Behavior Items
-
-Concern-derived behavior items may come from:
-
-```text
-security requirements
-API contract requirements
-tooling requirements
-testing workflow requirements
-client cross-cutting conventions
-infrastructure requirements
-```
-
-They are first-class behavior items and must be reflected in the Concern Slice Flow before implementation details.
-
 ## 6. Implementation Flow Detail Filter
 
 Implementation flow is behavior-first.
 
-Detailed class/method/code explanations are included only when they clarify behavior, boundary, trade-off, error handling, testability, no-write/no-side-effect guarantees, generated artifact shape or API/client contract.
+Detailed class/method/code explanations are included only when they clarify behavior, boundary, trade-off, error handling, testability/checkability, no-write/no-side-effect guarantees, generated artifact shape or API/client contract.
 
 Routine code mechanics should be described high-level.
 
@@ -122,23 +127,32 @@ Core rules:
 - Client must not hardcode error code strings.
 - API integration tests should read generated artifact for ordinary codes.
 - Critical behavioral codes get literal integration contract tests.
+- Route constants are temporary during OpenAPI migration.
 ```
 
-## 8. Antiforgery / CSRF
+## 8. OpenAPI Contract Artifacts
 
 Primary source:
 
 ```text
-planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
+planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
 ```
 
 Core rules:
 
 ```text
-- cookie-authenticated browser unsafe API requests require antiforgery protection;
-- client fetches/stores/attaches token through shared helpers;
-- session context changes require token refetch/reset;
-- antiforgery failure is normalized into API ProblemDetails;
-- normalization checks antiforgery failure marker/result, not generic HTTP 400;
-- client does not blindly replay unsafe commands after token refresh.
+- OpenAPI owns structural contract;
+- Shared/openapi.json is generated and committed;
+- client OpenAPI TypeScript types are generated from Shared/openapi.json;
+- thin handwritten client API wrappers use generated types first;
+- generated artifacts are checked for staleness;
+- no generated artifacts are written during normal server startup.
+```
+
+## 9. Antiforgery / CSRF
+
+Primary source:
+
+```text
+planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```

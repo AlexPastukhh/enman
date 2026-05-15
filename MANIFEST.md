@@ -1,10 +1,15 @@
-# Manifest — enman-csrf-cross-cutting-slice-workflow-v1
+# Manifest — enman-api-openapi-contract-artifacts-workflow-v1
 
 ## Add
 
-- planning/diagrams/scenario-text-specs/scenario-browser-security-addendum.md
-- planning/diagrams/scenario-behavior-items/CC-CSRF-001-antiforgery-behavior-items.md
-- planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
+- planning/api/README.md
+- planning/api/client-server-contract-principles.md
+- planning/api/api-error-contract.md
+- planning/api/api-error-mapping-boundary.md
+- planning/api/openapi-contract-generation.md
+- planning/api/client-constants-generation.md
+- planning/api/fluentvalidation-error-code-policy-note.md
+- planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
 
 ## Replace
 
@@ -12,17 +17,11 @@
 - planning/planning-workflow-current.md
 - planning/planning-agent-protocol.md
 - planning/planning-doc-responsibility-map.md
-- planning/diagrams/README.md
-- planning/diagrams/scenario-text-specs/README.md
-- planning/diagrams/scenario-behavior-items/README.md
-- planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
 - planning/slices/README.md
 - planning/slices/cross-cutting/README.md
-- planning/slices/shared/README.md
-- planning/slices/shared/antiforgery-token-session-context.md
+- planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
 - planning/slices/l1-slice-drafting-guide.md
 - planning/slices/implementation-principles.md
-- planning/api/api-error-contract.md
 - planning/adr/architecture-decision-notes.md
 - planning/adr/adr-candidates.md
 
