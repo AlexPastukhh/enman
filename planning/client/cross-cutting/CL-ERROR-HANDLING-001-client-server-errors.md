@@ -1,36 +1,52 @@
-# CL-ERROR-HANDLING-001 — Client / Server Error Mapping
+# CL-ERROR-HANDLING-001 — Client / Server Error Handling
 
 Status: current client-wide convention  
 Type: client cross-cutting behavior
 
-## 1. Purpose
+## Purpose
 
-Define how server validation/problem responses become client-visible field/global errors.
+Define client-side conventions for handling API errors.
 
-## 2. Client Responsibility
+API boundary contract lives in:
 
 ```text
-- receive server validation/problem response;
-- map known field errors to concrete fields;
-- show unknown/global errors in form-level or page-level error area;
-- preserve user input where appropriate;
-- avoid hiding actionable server errors behind generic messages.
+planning/api/api-error-contract.md
+planning/api/api-error-mapping-boundary.md
 ```
 
-## 3. Error UI Placement
+## Client Responsibility
 
-| Error type | UI placement | Notes |
-|---|---|---|
-| Field validation | near field | Use associated field label/error relation when possible |
-| Form/global validation | form error area | Does not belong to one field |
-| Stale/domain conflict | action/page error area | Example: request already processed |
-| Forbidden | page-level forbidden state or action error | Depends on route/action context |
-| Unexpected server failure | page/form error area | Avoid technical details |
+```text
+- parse native ProblemDetails through shared parser;
+- locate shared errors extension using generated constants;
+- read FieldName and ErrorCode using generated constants;
+- map API DTO field names to client form fields when needed;
+- show field errors near fields;
+- show root/domain/stale/access errors in form/page/action areas;
+- map error codes to UI messages locally;
+- preserve user input where appropriate;
+- refetch/invalidate read context for stale-state errors when required.
+```
 
-## 4. Change Points
+## Source Of Truth
 
-| ID | Behavior aspect | Change point | Current decision |
-|---|---|---|---|
-| CP-CL-ERR-001 | Domain/application error mapping | problem response parser | use stable mapper |
-| CP-CL-ERR-002 | Field/global split | mapping rules | field errors near field, unknown errors global |
-| CP-CL-ERR-003 | Auth/forbidden display | page/action-level handling | route or action context decides |
+| Contract item | Source |
+|---|---|
+| DTO shapes | OpenAPI |
+| ProblemDetails/ServerError shape | OpenAPI + `planning/api/api-error-contract.md` |
+| errors extension name | generated shared constants JSON |
+| FieldName/ErrorCode keys | generated shared constants JSON |
+| error code values | generated shared errorcodes JSON |
+| user-facing message text | client message map/presentation |
+
+## Tests
+
+Sidecars should include tests for concrete error handling used by the slice:
+
+```text
+- field error maps to the correct field;
+- root/domain error is shown in action/form area;
+- stale-state error triggers expected refetch/invalidation;
+- unknown/internal error shows generic message;
+- user input is preserved where expected.
+```

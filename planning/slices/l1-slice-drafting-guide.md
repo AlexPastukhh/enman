@@ -1,9 +1,9 @@
 # L1 Slice Drafting Guide
 
 Status: current slice drafting workflow  
-Scope: L1 slice boundary discovery, parent slice files, client sidecars, UI specs, component discovery, extension/change points, shared support and registers
+Scope: L1 slice boundary discovery, parent slice files, client sidecars, API contract, UI specs, component discovery, extension/change points, shared support and registers
 
-## 1. Purpose
+## Purpose
 
 ```text
 scenario specs / DATA / UI specs / validation-security
@@ -16,35 +16,23 @@ scenario specs / DATA / UI specs / validation-security
 -> update coverage / questions / decisions / ADR candidates / extension register
 ```
 
-## 2. Working Definition
+## Slice Intake Checklist
 
 ```text
-Slice = independently testable unit of observable behavior
-        + implementation path needed to deliver/test that behavior.
-```
-
-## 3. Scenario Question Rule
-
-If a question affects scenario behavior, DATA, UI-visible requirement, validation/security, API contract or user-visible outcome, stop and use the scenario question loop.
-
-## 4. Slice Intake Checklist
-
-```text
-1. Read target scenario text spec.
-2. Read target DATA file.
+1. Read architecture decision notes and ADR candidates.
+2. Read target scenario text spec and DATA file.
 3. Read validation/security addendum entries.
-4. Read relevant per-scenario behavior items if they exist.
-5. Read relevant scenario UI spec if client-visible behavior is involved.
-6. Check planning/diagrams/scenario-questions-register.md.
-7. Check planning/slices/slice-implementation-notes-register.md.
-8. Check planning/slices/slice-extension-points-register.md.
-9. Check relevant shared support docs.
-10. Check planning/client/ and planning/slices/client-architecture-principles.md if client work is involved.
-11. Promote relevant notes/questions/extension pressure decisions.
-12. If scenario-level ambiguity exists, stop and resolve it first.
+4. Read relevant behavior items.
+5. Read scenario UI spec if client-visible behavior is involved.
+6. Check scenario questions register.
+7. Check slice implementation notes and extension register.
+8. Check planning/api/ for API contract rules if API/client work is involved.
+9. Check planning/client/ and client architecture docs if client work is involved.
+10. Promote relevant notes/questions/extension pressure/ADR decisions.
+11. If scenario-level/API ambiguity exists, stop and resolve it first.
 ```
 
-## 5. Parent Slice File
+## Parent Slice File
 
 Parent slice files include:
 
@@ -56,6 +44,7 @@ Parent slice files include:
 - behavior item coverage summary;
 - Implementation Flow;
 - API contract;
+- API / Error Contract Check;
 - Server / Cross-Layer Extension Points;
 - Server / Cross-Layer Change Points;
 - Extension Pressure / Anti-Coupling Decisions;
@@ -65,36 +54,31 @@ Parent slice files include:
 - implementation checklist.
 ```
 
-Parent slice owns API contract.
+### API Layer
 
-### 5.1 Server / Cross-Layer Extension Points
-
-| ID | Future extension slice | Current seam/source | Current decision | What current slice must avoid | Status |
-|---|---|---|---|---|---|
-
-### 5.2 Server / Cross-Layer Change Points
-
-| ID | Behavior aspect | Change point | Owner | Current decision | Configurable now? | Tests affected |
-|---|---|---|---|---|---|---|
-
-### 5.3 Extension Pressure / Anti-Coupling Decisions
-
-| ID | Related extension point | Pressure source | Probability/certainty | Time horizon | Current decision | Anti-coupling constraint | Trade-off | Status |
-|---|---|---|---|---|---|---|---|---|
-
-If empty:
+Parent slice API layer should include:
 
 ```text
-No planned extension/change points in current draft.
+- endpoint path and method;
+- request DTO;
+- response DTO;
+- OpenAPI exposure expectations;
+- status codes;
+- native ProblemDetails contract;
+- ServerError / ServerValidationError shape;
+- client-facing error codes;
+- DTO field names used by validation errors;
+- internal/server-only errors explicitly out of client contract.
 ```
 
-## 6. Client Sidecar Rule
+Client-facing error table:
 
-If a slice has non-trivial client/UI work, create a `.client.md` file next to the parent slice file when client work starts.
+| Error code | FieldName | HTTP status | Source | Client handling |
+|---|---|---:|---|---|
 
-Do not create `.client.md` in advance.
+Only include errors intentionally returned to the client.
 
-## 7. Client Sidecar Structure
+## Client Sidecar Structure
 
 ```text
 # SL-XXX Client Layer — Title
@@ -107,6 +91,7 @@ Scenario sources:
 DATA sources:
 Scenario UI spec sources:
 Behavior item sources:
+API contract sources:
 Client cross-cutting sources:
 
 ## 1. Client Behavior Coverage
@@ -121,77 +106,37 @@ Client cross-cutting sources:
 ## 10. Styling Change Points
 ## 11. Accessibility / ARIA Contract
 ## 12. API Contract Used By Client
-## 13. Client Implementation Flow
-## 14. Client Types
-## 15. Client Tests
-## 16. Out Of Scope
-## 17. Scenario / DATA / UI Questions To Register
+## 13. API / Error Contract Usage
+## 14. API Contract Check
+## 15. Server DTO Field To Client Form Field Mapping
+## 16. Client Implementation Flow
+## 17. Client Types
+## 18. Client Tests
+## 19. Out Of Scope
+## 20. Scenario / DATA / UI / API Questions To Register
 ```
 
-## 8. Client Coverage Tables
+## API / Error Contract Usage
 
-Client Behavior Coverage columns:
+Client sidecar must describe:
 
 ```text
-Behavior item
-Category
-Source
-Required client behavior
-DATA required by client
-Client target
-Status
-Test coverage
+- generated OpenAPI DTO/types used by client;
+- generated shared constants JSON used by client;
+- native ProblemDetails parsing;
+- shared errors extension usage;
+- FieldName / ErrorCode key usage;
+- DTO field -> form field mapping;
+- known error code -> UI behavior;
+- stale state / refetch behavior;
+- generic fallback for unknown/internal errors.
 ```
 
-UI Behavior Coverage columns:
+API Contract Check table:
 
-```text
-UI item
-Source
-Required UI behavior
-User-visible result
-Client target
-Status
-Test coverage
-```
+| Contract item | Source of truth | Used by client? | Client handling | Status |
+|---|---|---|---|---|
 
-Question types may include architecture, read-vs-command, feature-vs-page, entity-vs-feature, page-vs-widget, entity-query-hook, component-placement, client/API, cache, presentation, accessibility, styling, extension-point, change-point, extension-pressure and scenario-level.
+## Accessibility
 
-## 9. Client Architecture / Component / A11Y
-
-Use:
-
-```text
-planning/slices/client-architecture-principles.md
-planning/slices/client-component-discovery-guide.md
-planning/client/cross-cutting/
-```
-
-## 10. Client Implementation Flow
-
-```text
-C01 — Routes
-C02 — Pages
-C03 — Entity Read Modules
-C04 — Widgets, if needed
-C05 — Command Features
-C06 — Components
-C07 — Query Hooks
-C08 — Mutation Hooks
-C09 — Form State / DTO Mapping
-C10 — Action Availability
-C11 — Submit Flow
-C12 — Success Handling
-C13 — Failure Handling
-C14 — Cache / Invalidation
-```
-
-## 11. Test Planning Rule
-
-Use groups:
-
-```text
-Client tests
-Server tests
-End-to-end tests
-```
+Accessibility / ARIA Contract is mandatory for `.client.md`.

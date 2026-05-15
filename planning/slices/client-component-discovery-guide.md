@@ -1,9 +1,9 @@
 # Client Component Discovery Guide
 
 Status: current component discovery workflow  
-Scope: how `.client.md` sidecars discover components, layouts, styling and accessibility contracts
+Scope: how `.client.md` sidecars discover components, layouts, styling, accessibility and API-contract usage
 
-## 1. Purpose
+## Purpose
 
 Component discovery derives client components from scenario behavior, UI specs, DATA and slice behavior.
 
@@ -15,30 +15,25 @@ It answers:
 - what data it receives;
 - what state it owns;
 - whether it calls API;
+- what API/error contract it uses;
 - how it is styled;
 - how it is accessible;
 - how it is tested.
 ```
 
-## 2. Component / Layout Plan
-
-Each `.client.md` should include:
-
-```text
 ## Component / Layout Plan
-```
 
 Recommended columns:
 
-| Component | Layer | Responsibility | Behavior/UI items | Data input | Owns state? | Calls API? | Styling owner | Reusable? | Test focus |
-|---|---|---|---|---|---|---|---|---|---|
+| Component | Layer | Responsibility | Behavior/UI items | Data input | Owns state? | Calls API? | API contract used? | Styling owner | Reusable? | Test focus |
+|---|---|---|---|---|---|---|---|---|---|---|
 
 Accessibility columns may be included here or in a separate accessibility table:
 
 | Semantic element / role | Accessible name source | Keyboard behavior | ARIA decision | Test query |
 |---|---|---|---|---|
 
-## 3. Component Discovery Questions
+## Component Discovery Questions
 
 ```text
 Purpose:
@@ -51,50 +46,42 @@ Layer:
 
 Data:
 - What data does it receive?
-- Whole DTO or smaller view props?
+- Whole DTO, generated OpenAPI type, or smaller view props?
 - Is mapper needed?
 
-State:
-- Does it own page state, form state, mutation state, visual state?
-- Should state be lifted?
-
-API:
+API / Error Contract:
 - Does it call API?
 - Read or command?
 - Should this be entity hook or feature hook instead?
-
-Reuse:
-- Page-local, entity display, feature action, widget, or shared primitive?
-- Is reuse real now or speculative?
-
-Styling:
-- Who owns internal styling?
-- Who owns layout placement?
-- Which styling change points are needed?
+- Which generated OpenAPI type is used?
+- Which generated error codes/constants are used?
+- Does it handle field errors, root errors, stale-state errors, or generic errors?
+- Does it need DTO field -> form field mapping?
 
 Accessibility:
-- Native element first?
-- Accessible name?
+- Native semantic element first?
+- Accessible name source?
 - Keyboard behavior?
-- ARIA needed?
-- Test query?
-
-Tests:
-- Which minimal test proves behavior coverage?
-- Is this component tested directly or through page/feature test?
+- Is ARIA actually needed?
+- What Testing Library query proves user-visible behavior?
 ```
 
-## 4. Layer Placement Quick Guide
+Accessibility gate:
 
-| Component kind | Preferred layer | Example |
-|---|---|---|
-| Route/screen composition | pages | EmployeeRequestReviewPage |
-| Page-local list/table/filter | pages/.../components | EmployeeRequestsTable |
-| Business data display | entities | RequestStatusBadge |
-| Command action/form | features | ApproveRequestAction |
-| Reusable large composition | widgets, only if reused | EmployeeRequestDetailsPanel |
-| Domain-agnostic primitive | shared | Button |
+```text
+If a component cannot be tested by role/name/label when it should be user-interactive or user-understandable,
+check whether the component is correctly designed for the user.
+```
 
-## 5. Rule Against Premature Widgets
+## API Contract Rule
 
-A widget is introduced only after a large page-local block is reused or is clearly about to be reused by another concrete page/slice.
+A component/feature must not invent API shape or error codes.
+
+Use:
+
+```text
+planning/api/
+parent slice API layer
+generated OpenAPI types
+generated shared constants JSON
+```
