@@ -1,6 +1,6 @@
 import { useMemo, useState, type ChangeEvent } from "react";
-import { Footer } from "../Components/Layout/Footer";
-import { Header } from "../Components/Layout/Header";
+import { Footer } from "../shared/ui/layout/Footer";
+import { Header } from "../shared/ui/layout/Header";
 import {
   accountStates,
   agreementSenders,
