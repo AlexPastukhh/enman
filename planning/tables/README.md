@@ -2,7 +2,21 @@
 
 Status: current planning tables navigation
 
-## 1. Current Role
+## 1. Responsibility
+
+This folder owns compiled tables and historical/aggregate baselines.
+
+It does not own global planning workflow rules. Use:
+
+```text
+planning/planning-workflow-current.md
+planning/planning-agent-protocol.md
+planning/planning-doc-responsibility-map.md
+```
+
+for global workflow/agent/responsibility rules.
+
+## 2. Current Role
 
 The compiled behavior baseline remains:
 
@@ -21,7 +35,7 @@ planning/diagrams/scenario-behavior-items/
 
 Future slice/client planning should prefer per-scenario behavior item files and use compiled baselines for cross-checking/history.
 
-## 2. Current Read Order
+## 3. Current Read Order
 
 ```text
 1. planning/diagrams/scenario-text-specs/
@@ -36,7 +50,7 @@ Future slice/client planning should prefer per-scenario behavior item files and 
 10. planning/slices/l1-slice-drafting-guide.md
 ```
 
-## 3. Behavior Items Position
+## 4. Behavior Items Position
 
 Desired flow:
 
@@ -50,7 +64,7 @@ scenario text spec
 
 The compiled baseline can be regenerated or cross-checked later after per-scenario files stabilize.
 
-## 4. Avoid
+## 5. Avoid
 
 Do not add or use old intermediate files such as:
 

@@ -21,7 +21,17 @@ scenario text specs
 
 ## 2. Current Active Planning Focus
 
-Use migrated per-scenario behavior item files to support the next concrete slice/client planning step.
+Current focus:
+
+```text
+document responsibility map + agent next-step/relevant-question protocol
+```
+
+Already completed recent planning step:
+
+```text
+scenario behavior items migrated into per-scenario files
+```
 
 Do not create `.client.md` files in advance.
 
@@ -31,38 +41,76 @@ Do not create `.client.md` files in advance.
 1. planning/README.md
 2. planning/planning-workflow-current.md
 3. planning/planning-agent-protocol.md
-4. planning/scenario-specification-principles.md
-5. planning/scenario-domain-validation-principles.md
+4. planning/planning-doc-responsibility-map.md
+5. planning/scenario-specification-principles.md
+6. planning/scenario-domain-validation-principles.md
 
-6. planning/diagrams/README.md
-7. planning/diagrams/scenario-text-specs/README.md
-8. planning/diagrams/scenario-data/README.md
-9. planning/diagrams/scenario-questions-register.md
-10. planning/diagrams/scenario-behavior-items/README.md
-11. planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
+7. planning/diagrams/README.md
+8. planning/diagrams/scenario-text-specs/README.md
+9. planning/diagrams/scenario-data/README.md
+10. planning/diagrams/scenario-questions-register.md
+11. planning/diagrams/scenario-behavior-items/README.md
+12. planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
 
-12. planning/tables/README.md
-13. planning/tables/pre-domain-variants-input.md
-14. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
+13. planning/tables/README.md
+14. planning/tables/pre-domain-variants-input.md
+15. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 
-15. planning/domain-draft-generation-guide.md
-16. planning/tables/domain-drafts/README.md
-17. planning/tables/domain-drafts/domain-draft-01.md
-18. planning/l1-domain-implementation-cut.md
-19. planning/l1-domain-testing-rules.md
+16. planning/domain-draft-generation-guide.md
+17. planning/tables/domain-drafts/README.md
+18. planning/tables/domain-drafts/domain-draft-01.md
+19. planning/l1-domain-implementation-cut.md
+20. planning/l1-domain-testing-rules.md
 
-20. planning/slices/README.md
-21. planning/slices/l1-slice-drafting-guide.md
-22. planning/slices/implementation-principles.md
-23. planning/slices/slice-implementation-notes-register.md
-24. planning/slices/shared/README.md
-25. planning/slices/l1-slice-boundary-draft-01.md
+21. planning/slices/README.md
+22. planning/slices/l1-slice-drafting-guide.md
+23. planning/slices/implementation-principles.md
+24. planning/slices/slice-implementation-notes-register.md
+25. planning/slices/shared/README.md
+26. planning/slices/l1-slice-boundary-draft-01.md
 
-26. planning/adr/README.md
-27. planning/adr/adr-candidates.md
+27. planning/replacement-file-generation-guide.md
+28. planning/adr/README.md
+29. planning/adr/adr-candidates.md
 ```
 
-## 4. Behavior Items Position
+## 4. Responsibility Map
+
+Use:
+
+```text
+planning/planning-doc-responsibility-map.md
+```
+
+to decide where planning content belongs.
+
+Core rule:
+
+```text
+global workflow/common rules belong in central workflow/common files;
+local coverage/questions/decisions/details stay in local files.
+```
+
+## 5. Agent Protocol
+
+Use:
+
+```text
+planning/planning-agent-protocol.md
+```
+
+for:
+
+```text
+- stop-and-ask rules;
+- relevant questions rule;
+- assumptions-with-questions rule;
+- next-step protocol;
+- no-auto-continue rule;
+- archive behavior.
+```
+
+## 6. Behavior Items Position
 
 Primary scenario-specific behavior item source:
 
@@ -77,13 +125,13 @@ planning/tables/pre-domain-variants-input.md
 planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 ```
 
-## 5. Slice And Client Sidecar Position
+## 7. Slice And Client Sidecar Position
 
 Parent slice file owns vertical behavior and API/server responsibilities.
 
 `.client.md` sidecar owns detailed client implementation when client work starts.
 
-## 6. Scenario Question Loop
+## 8. Scenario Question Loop
 
 If a scenario-level question appears during planning:
 
@@ -95,7 +143,7 @@ question
 -> continue implementation planning
 ```
 
-## 7. Replacement File Generation Workflow
+## 9. Replacement File Generation Workflow
 
 When the user asks for files to replace manually, use:
 
@@ -104,3 +152,14 @@ planning/replacement-file-generation-guide.md
 ```
 
 Generate complete files, package them with repository-relative paths, and include `APPLY.md` / `MANIFEST.md`.
+
+## 10. Current Next Step
+
+After applying the responsibility-map package:
+
+```text
+1. use responsibility map for future doc updates;
+2. review migrated behavior items for the next target scenario;
+3. get/prepare UI plan;
+4. create concrete .client.md only when client work starts.
+```

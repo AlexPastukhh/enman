@@ -1,7 +1,7 @@
 # Planning Agent Protocol
 
 Status: current collaboration protocol  
-Scope: AI/chat agents working with scenarios, behavior items, slices, client sidecars and replacement packages
+Scope: AI/chat agents working with scenarios, behavior items, slices, client sidecars, responsibility maps and replacement packages
 
 ## 1. Purpose
 
@@ -10,8 +10,9 @@ This file centralizes how planning agents should work in this repository.
 It complements:
 
 ```text
-planning/replacement-file-generation-guide.md
 planning/planning-workflow-current.md
+planning/planning-doc-responsibility-map.md
+planning/replacement-file-generation-guide.md
 planning/scenario-specification-principles.md
 planning/slices/l1-slice-drafting-guide.md
 ```
@@ -22,7 +23,57 @@ Do not continue implementation planning through a question that may change requi
 
 If ambiguity affects scenario behavior, DATA, validation/security, API contract, user-visible outcome or cross-layer responsibility, stop and ask.
 
-## 3. Scenario Question Loop
+## 3. Relevant Questions Rule
+
+The agent should not ask questions just because questions are possible.
+
+The agent must ask questions when the answer can affect the current step.
+
+A question is relevant to the current step if the answer can change:
+
+```text
+- required behavior;
+- DATA;
+- validation/security;
+- API contract;
+- file responsibility / placement;
+- slice boundary;
+- client/server responsibility;
+- test expectations;
+- next action ordering;
+- archive contents.
+```
+
+If a question is not relevant to the current step:
+
+```text
+- do not interrupt the current work with it;
+- record it in the appropriate register if it should not be lost;
+- mention it only as future/non-blocking when useful.
+```
+
+## 4. Assumptions With Questions Rule
+
+When the agent asks a question, it should include its current assumption or preferred answer.
+
+Format:
+
+```text
+Question:
+...
+
+Assumption / preferred answer:
+...
+
+Why it matters for this step:
+...
+```
+
+This keeps planning moving and helps the user answer quickly.
+
+If the user accepts the assumption, use it as the current direction.
+
+## 5. Scenario Question Loop
 
 When a scenario-level question appears during domain drafting, slice drafting, client sidecar planning or implementation planning:
 
@@ -50,7 +101,7 @@ Implementation-only questions belong in the parent slice file, `.client.md` side
 planning/slices/slice-implementation-notes-register.md
 ```
 
-## 4. Slice Intake Rule
+## 6. Slice Intake Rule
 
 Before starting a new slice or `.client.md` sidecar:
 
@@ -67,7 +118,7 @@ Before starting a new slice or `.client.md` sidecar:
 10. Only then create/refine the slice file or .client.md.
 ```
 
-## 5. Client Sidecar Rule
+## 7. Client Sidecar Rule
 
 Do not create `.client.md` files in advance.
 
@@ -103,7 +154,7 @@ Client sidecar owns:
 
 The client sidecar must use the API contract from the parent slice file.
 
-## 6. Behavior Items Rule
+## 8. Behavior Items Rule
 
 Behavior items are derived from:
 
@@ -121,7 +172,7 @@ planning/tables/pre-domain-variants-input.md
 
 Do not introduce new categories without an explicit decision.
 
-## 7. Implementation Notes Register Rule
+## 9. Implementation Notes Register Rule
 
 Before starting any new slice/client sidecar, check:
 
@@ -131,7 +182,63 @@ planning/slices/slice-implementation-notes-register.md
 
 Each relevant note must be promoted, resolved or explicitly marked as not relevant before implementation planning continues.
 
-## 8. Archive Rule
+## 10. File Responsibility Rule
+
+Use:
+
+```text
+planning/planning-doc-responsibility-map.md
+```
+
+to decide where content belongs.
+
+If content is a global workflow/common rule, do not bury it in a local scenario, DATA, behavior item, slice or client sidecar file.
+
+Local coverage tables, local questions, local decisions and local implementation notes are allowed to stay local.
+
+## 11. Next Step Protocol
+
+Every planning response, archive summary and implementation prompt should explicitly state the next step.
+
+Use this structure when useful:
+
+```text
+Current state:
+...
+
+Relevant questions for this step:
+...
+
+Assumptions used:
+...
+
+Blocking questions:
+...
+
+Next action:
+...
+
+Files to read:
+...
+
+Files to create/update:
+...
+
+Do not do:
+...
+
+Success criteria:
+...
+
+Stop and ask if:
+...
+```
+
+The agent must not move to the next slice or implementation step by itself.
+
+The agent may propose the next step, but execution requires a user request.
+
+## 12. Archive Rule
 
 When asked to create a replacement package, follow:
 
@@ -141,10 +248,33 @@ planning/replacement-file-generation-guide.md
 
 Generate complete replacement files, not patches.
 
-## 9. Workflow Centralization Principle
+Before generating an archive:
+
+```text
+1. Check current repository docs when possible.
+2. Ask relevant blocking questions for this archive.
+3. Include assumptions with questions.
+4. Keep archive scope focused.
+5. Include MANIFEST.md and APPLY.md.
+6. State what is deliberately out of scope.
+```
+
+## 13. Workflow Centralization Principle
 
 General workflow rules should live in central workflow/common files.
 
 Local files may keep local coverage tables, local questions, local decisions and local implementation notes.
 
 A future workflow centralization audit should find and move global workflow rules out of local files.
+
+## 14. Do Not
+
+```text
+- Do not create .client.md before concrete client work starts.
+- Do not continue planning through scenario-level ambiguity.
+- Do not ask irrelevant future questions during a focused step.
+- Do not ask a question without giving the current assumption/preferred answer.
+- Do not invent behavior item categories casually.
+- Do not bury global workflow rules in local files.
+- Do not auto-continue to the next slice without a user request.
+```

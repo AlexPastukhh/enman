@@ -3,34 +3,32 @@
 Archive:
 
 ```text
-enman-scenario-behavior-items-migration-v1.zip
+enman-planning-doc-responsibility-map-v1.zip
 ```
 
 Apply from repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-scenario-behavior-items-migration-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-planning-doc-responsibility-map-v1.zip" -DestinationPath . -Force
 git status
 ```
 
-## Add / replace if missing
+## Add
 
 ```text
-planning/diagrams/scenario-behavior-items/README.md
-planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
-planning/diagrams/scenario-behavior-items/SC-*.md
-planning/diagrams/scenario-questions-register.md
+planning/planning-doc-responsibility-map.md
 ```
 
 ## Replace
 
 ```text
-planning/README.md
+planning/planning-agent-protocol.md
 planning/planning-workflow-current.md
+planning/README.md
 planning/diagrams/README.md
-planning/diagrams/scenario-text-specs/README.md
-planning/diagrams/scenario-data/README.md
+planning/slices/README.md
 planning/tables/README.md
+planning/replacement-file-generation-guide.md
 ```
 
 ## Delete
@@ -41,13 +39,16 @@ nothing
 
 ## Notes
 
-This package migrates existing behavior items into per-scenario files and updates navigation.
+This package adds document responsibility / workflow leakage rules and strengthens agent protocol.
 
-It does not create `.client.md` sidecars.
+It adds:
+- Relevant Questions Rule;
+- Assumptions With Questions Rule;
+- Next Step Protocol;
+- File Responsibility Rule.
 
-It does not change code, API contracts, domain model or tests.
-
-Known corrections are marked in migrated item notes:
-- InReview is preserved as current request creation status.
-- Agreement replacement wording is flagged away from legacy Rejected wording.
-- Rejection feedback is optional in current domain direction; UI warning is separate.
+It does not:
+- create `.client.md`;
+- change behavior items content;
+- change domain/API/code/tests;
+- perform the full workflow centralization audit.

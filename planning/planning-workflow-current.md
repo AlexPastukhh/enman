@@ -7,8 +7,13 @@ Status: current workflow
 The current active workflow step is:
 
 ```text
-scenario behavior items have been migrated into per-scenario files;
-next implementation planning should use those files for slice/client coverage.
+planning document responsibility map and agent next-step/relevant-question protocol are being introduced.
+```
+
+Previously completed planning step:
+
+```text
+scenario behavior items migrated into per-scenario files.
 ```
 
 ## 2. Main Workflow
@@ -27,7 +32,21 @@ scenario text specs
 -> update coverage / questions / ADR candidates
 ```
 
-## 3. Scenario Question Loop
+## 3. Central Workflow Files
+
+Read central workflow/common files first:
+
+```text
+planning/README.md
+planning/planning-workflow-current.md
+planning/planning-agent-protocol.md
+planning/planning-doc-responsibility-map.md
+planning/scenario-specification-principles.md
+planning/slices/l1-slice-drafting-guide.md
+planning/slices/implementation-principles.md
+```
+
+## 4. Scenario Question Loop
 
 When planning discovers a question that affects scenario behavior, DATA, validation/security or visible outcome:
 
@@ -42,7 +61,15 @@ question
 -> continue implementation planning
 ```
 
-## 4. Slice / Client Intake Checklist
+## 5. Relevant Questions Rule
+
+Before a planning/archive/implementation step, ask only questions that can affect that step.
+
+For each question, include the current assumption/preferred answer.
+
+If a possible question is future-only and not relevant to the current step, record it in the appropriate register instead of interrupting the current work.
+
+## 6. Slice / Client Intake Checklist
 
 Before starting any parent slice or `.client.md` sidecar:
 
@@ -58,7 +85,19 @@ Before starting any parent slice or `.client.md` sidecar:
 9. If scenario-level ambiguity exists, stop and resolve it first.
 ```
 
-## 5. Behavior Items Position
+## 7. File Responsibility Gate
+
+Before adding or moving planning content, check:
+
+```text
+planning/planning-doc-responsibility-map.md
+```
+
+If the content is global workflow/common content, place it in a central workflow/common file.
+
+If the content is local coverage/question/decision/test detail, keep it in the local scenario/slice/client file.
+
+## 8. Behavior Items Position
 
 Primary scenario-specific behavior item source:
 
@@ -73,7 +112,7 @@ planning/tables/pre-domain-variants-input.md
 planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 ```
 
-## 6. Current Slice Status
+## 9. Current Slice Status
 
 Resolved issue:
 
@@ -89,31 +128,51 @@ Approved
 Rejected
 ```
 
-## 7. Current Next Steps
+## 10. Current Next Steps
 
 Recommended next steps:
 
 ```text
-1. Review migrated behavior item files for target scenario.
-2. Resolve any blocking scenario questions.
-3. Get/prepare concrete UI plan for the next client layer.
-4. Create the relevant .client.md sidecar only when concrete client work starts.
-5. Implement the client layer and tests.
+1. Apply responsibility-map/protocol archive.
+2. Use responsibility map for future doc updates.
+3. Review migrated behavior item files for target scenario.
+4. Resolve any blocking scenario questions.
+5. Get/prepare concrete UI plan for the next client layer.
+6. Create the relevant .client.md sidecar only when concrete client work starts.
+7. Implement the client layer and tests.
 ```
 
-Likely target:
+Likely implementation target after planning cleanup:
 
 ```text
 Request creation Client/UI for already implemented SL-REQ-001 server-side behavior.
 ```
 
-## 8. Future Cleanup Steps
+## 11. Future Cleanup Steps
 
 Track separately:
 
 ```text
-1. Workflow centralization audit.
-2. Planning document responsibility map.
+1. Workflow centralization audit:
+   scan planning docs and move global workflow rules from local files into central files.
+
+2. Planning docs responsibility cleanup:
+   apply responsibility map where files currently mix local and global concerns.
 ```
 
 Local coverage tables and local questions are allowed to remain local.
+
+## 12. Next Step Protocol
+
+Every archive summary / implementation prompt should include:
+
+```text
+Current state
+Relevant questions for this step
+Assumptions used
+Blocking questions
+Next action
+Do not do
+Success criteria
+Stop and ask if
+```
