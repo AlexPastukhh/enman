@@ -50,25 +50,35 @@ A file should contain only content that belongs to its responsibility zone.
 
 | File / folder | Responsibility |
 |---|---|
+| `planning/diagrams/` | Scenario/specification source index and diagram-generation workflow docs |
+| `planning/diagrams/README.md` | Scenario/diagram planning index, source read order and diagram workflow navigation |
 | `planning/diagrams/scenario-text-specs/` | Scenario text specs and cross-scenario addenda |
 | `scenario-browser-security-addendum.md` | Cross-cutting browser security requirements, including CSRF/antiforgery |
 | `planning/diagrams/scenario-clarifications/` | Temporary scenario clarifications and diagram guardrails |
 
-## 7. Behavior Items Responsibility
+## 7. Diagram Generation Responsibility
+
+| File / folder | Responsibility |
+|---|---|
+| `planning/diagrams/diagram-prompt-generation-workflow.md` | How to prepare a repo-grounded prompt for a separate diagram-generation chat; includes preflight, batching, source checks, conflict checks and status markers |
+| `planning/diagrams/drawio-diagram-generation-workflow.md` | Draw.io XML target format, multi-page diagram book structure, page naming, VKR-clean text rules and diagram archive rules |
+| `planning/diagrams/vkr-clean-drafts/` | Optional fallback location for draft `.drawio` diagram books and companion diagram planning files before `vkr-clean/` is active |
+
+## 8. Behavior Items Responsibility
 
 | File / folder | Responsibility |
 |---|---|
 | `planning/diagrams/scenario-behavior-items/` | Scenario-derived and concern-derived behavior items |
 | `CC-CSRF-001-antiforgery-behavior-items.md` | Security-derived behavior items for CSRF cross-cutting slice |
 
-## 8. Testing Responsibility
+## 9. Testing Responsibility
 
 ```text
 planning/testing/
 = cross-slice testing principles, E2E workflow, test object patterns, Playwright cleanup plan.
 ```
 
-## 9. Responsibility Decision Heuristic
+## 10. Responsibility Decision Heuristic
 
 ```text
 1. documentation-only workflow/status reconciliation -> planning/documentation/
@@ -81,11 +91,14 @@ planning/testing/
 8. browser security requirement / CSRF requirement -> scenario-browser-security-addendum.md
 9. CSRF behavior items -> CC-CSRF-001-antiforgery-behavior-items.md
 10. CSRF implementation flow/tests -> CC-CSRF-001-antiforgery-token-session-context.md
-11. test layer boundaries / E2E workflow -> planning/testing/
-12. client-wide UI convention -> planning/client/cross-cutting/
-13. accepted/current architecture decision -> architecture-decision-notes.md
-14. possible future full ADR -> adr-candidates.md
-15. one vertical business slice -> parent slice file
-16. detailed frontend implementation for one business slice -> `.client.md`
-17. reusable note without full behavior/test flow -> planning/slices/shared/
+11. diagram prompt-generation workflow -> planning/diagrams/diagram-prompt-generation-workflow.md
+12. draw.io XML / diagram book artifact workflow -> planning/diagrams/drawio-diagram-generation-workflow.md
+13. diagram scenario terminology conflicts -> planning/diagrams/scenario-clarifications/
+14. test layer boundaries / E2E workflow -> planning/testing/
+15. client-wide UI convention -> planning/client/cross-cutting/
+16. accepted/current architecture decision -> architecture-decision-notes.md
+17. possible future full ADR -> adr-candidates.md
+18. one vertical business slice -> parent slice file
+19. detailed frontend implementation for one business slice -> `.client.md`
+20. reusable note without full behavior/test flow -> planning/slices/shared/
 ```

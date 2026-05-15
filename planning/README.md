@@ -17,6 +17,8 @@ Do not create full numbered ADRs unless explicitly requested.
 
 Do not write directly to GitHub from documentation-only work unless explicitly requested.
 
+For diagram generation, use repo-grounded preflight first and target draw.io XML diagram-book artifacts.
+
 ## 2. Current Read Order
 
 ```text
@@ -50,33 +52,42 @@ Do not write directly to GitHub from documentation-only work unless explicitly r
 24. planning/api/fluentvalidation-error-code-policy-note.md
 
 25. planning/diagrams/README.md
-26. planning/diagrams/scenario-text-specs/README.md
-27. planning/diagrams/scenario-text-specs/scenario-browser-security-addendum.md
-28. planning/diagrams/scenario-behavior-items/README.md
-29. planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
-30. planning/diagrams/scenario-behavior-items/CC-CSRF-001-antiforgery-behavior-items.md
-31. planning/diagrams/scenario-clarifications/README.md
+26. planning/diagrams/diagram-prompt-generation-workflow.md
+27. planning/diagrams/drawio-diagram-generation-workflow.md
+28. planning/diagrams/scenario-text-specs/README.md
+29. planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
+30. planning/diagrams/scenario-text-specs/scenario-browser-security-addendum.md
+31. planning/diagrams/scenario-data/README.md
+32. planning/diagrams/scenario-data/00-scenario-data-index.md
+33. planning/diagrams/scenario-ui-specs/README.md
+34. planning/diagrams/scenario-behavior-items/README.md
+35. planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
+36. planning/diagrams/scenario-behavior-items/CC-CSRF-001-antiforgery-behavior-items.md
+37. planning/diagrams/scenario-clarifications/README.md
+38. planning/diagrams/scenario-clarifications/AGR-001-agreement-proposal-replacement-terminology.md
+39. planning/diagrams/scenario-clarifications/diagram-generation-readiness-guardrails.md
+40. planning/diagrams/scenario-questions-register.md
 
-32. planning/scenario-specification-principles.md
-33. planning/scenario-domain-validation-principles.md
-34. planning/client/README.md
-35. planning/client/cross-cutting/README.md
+41. planning/scenario-specification-principles.md
+42. planning/scenario-domain-validation-principles.md
+43. planning/client/README.md
+44. planning/client/cross-cutting/README.md
 
-36. planning/slices/README.md
-37. planning/slices/draft-driven-discovery-principles.md
-38. planning/slices/cross-cutting/README.md
-39. planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
-40. planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
-41. planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
-42. planning/slices/shared/README.md
-43. planning/slices/shared/antiforgery-token-session-context.md
-44. planning/slices/l1-slice-drafting-guide.md
-45. planning/slices/implementation-principles.md
-46. planning/slices/client-architecture-principles.md
-47. planning/slices/client-component-discovery-guide.md
-48. planning/slices/change-extension-points-principles.md
-49. planning/slices/slice-extension-points-register.md
-50. planning/replacement-file-generation-guide.md
+45. planning/slices/README.md
+46. planning/slices/draft-driven-discovery-principles.md
+47. planning/slices/cross-cutting/README.md
+48. planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
+49. planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
+50. planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
+51. planning/slices/shared/README.md
+52. planning/slices/shared/antiforgery-token-session-context.md
+53. planning/slices/l1-slice-drafting-guide.md
+54. planning/slices/implementation-principles.md
+55. planning/slices/client-architecture-principles.md
+56. planning/slices/client-component-discovery-guide.md
+57. planning/slices/change-extension-points-principles.md
+58. planning/slices/slice-extension-points-register.md
+59. planning/replacement-file-generation-guide.md
 ```
 
 ## 3. Documentation Update Direction
@@ -114,6 +125,7 @@ client sidecar drafts
 cross-cutting/helper slice drafts
 testing/support drafts
 documentation/status reconciliation drafts
+diagram planning drafts
 ```
 
 ## 5. Client / Server Contract Direction
@@ -143,7 +155,38 @@ OpenAPI = endpoints / methods / DTOs / response schemas / statuses.
 Generated constants JSON = error codes / ProblemDetails extension names / ServerError fields.
 ```
 
-## 6. CSRF / Antiforgery Direction
+## 6. Diagram Generation Direction
+
+Diagram-related planning uses:
+
+```text
+planning/diagrams/diagram-prompt-generation-workflow.md
+planning/diagrams/drawio-diagram-generation-workflow.md
+```
+
+Current diagram artifact direction:
+
+```text
+- prompt-generation chat prepares a repo-grounded prompt;
+- diagram-generation chat runs preflight before drawing;
+- target format is draw.io XML;
+- preferred output is one multi-page `.drawio` diagram book;
+- diagram generation should not overclaim implementation status;
+- final VKR-clean diagrams must not mention AI/internal workflow wording.
+```
+
+Required diagram markers:
+
+```text
+[CORE]
+[IMPLEMENTED]
+[DESIGNED]
+[PLANNED]
+[DEFERRED]
+[QUESTION]
+```
+
+## 7. CSRF / Antiforgery Direction
 
 Security requirements:
 
@@ -163,11 +206,12 @@ Implementation-ready cross-cutting slice:
 planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```
 
-## 7. Current Next Step
+## 8. Current Next Step
 
 ```text
 1. Keep docs reconciled with current implementation status.
 2. Do not redo already implemented OpenAPI/constants/E2E infrastructure.
 3. Use draft-driven discovery for L1 consolidation and client sidecar work.
 4. Client work should proceed from confirmed backend-backed slices and generated contract artifacts.
+5. For diagrams, create a diagram-generation prompt first, then run diagram chat Phase 1 preflight before generating `.drawio` XML.
 ```

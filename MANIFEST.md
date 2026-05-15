@@ -1,24 +1,14 @@
-# Manifest — enman-documentation-update-workflow-and-draft-driven-discovery-v1
+# Manifest — enman-diagram-prompt-and-drawio-workflow-docs-v1.zip
 
 ## Add
-
-- planning/documentation/README.md
-- planning/documentation/documentation-update-workflow.md
-- planning/documentation/status-reconciliation-workflow.md
-- planning/documentation/documentation-update-agent-prompt.md
-- planning/slices/draft-driven-discovery-principles.md
+- planning/diagrams/diagram-prompt-generation-workflow.md
+- planning/diagrams/drawio-diagram-generation-workflow.md
 
 ## Replace
-
-- planning/README.md
-- planning/planning-agent-protocol.md
+- planning/diagrams/README.md
 - planning/planning-doc-responsibility-map.md
-- planning/replacement-file-generation-guide.md
-- planning/slices/README.md
-- planning/slices/l1-slice-drafting-guide.md
-- planning/slices/implementation-principles.md
-- planning/slices/client-architecture-principles.md
+- planning/planning-agent-protocol.md
+- planning/README.md
 
 ## Delete
-
-- nothing
+- none

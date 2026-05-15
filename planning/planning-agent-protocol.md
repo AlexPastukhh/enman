@@ -4,7 +4,7 @@ Status: current collaboration protocol
 
 ## 1. Core Rule
 
-Do not continue implementation planning through a question that may change required behavior, API contract, security requirement, client-facing constants, testing responsibility, E2E scope, or cross-layer responsibility.
+Do not continue implementation planning through a question that may change required behavior, API contract, security requirement, client-facing constants, testing responsibility, E2E scope, cross-layer responsibility, scenario meaning or diagram interpretation.
 
 ## 2. Documentation Update Agent Rule
 
@@ -27,7 +27,41 @@ Documentation-only agents must:
 - not write directly to GitHub unless explicitly asked.
 ```
 
-## 3. Draft-Driven Discovery Rule
+## 3. Diagram Generation Workflow Rule
+
+Diagram-related planning must use:
+
+```text
+planning/diagrams/diagram-prompt-generation-workflow.md
+planning/diagrams/drawio-diagram-generation-workflow.md
+```
+
+Rules:
+
+```text
+- a documentation/prompt chat prepares a repo-grounded prompt; it does not draw diagrams itself;
+- a diagram-generation chat must run Phase 1 preflight before generating diagrams;
+- target diagram format is draw.io XML;
+- preferred artifact is one multi-page `.drawio` diagram book;
+- do not ask for all diagrams at once by default;
+- generate only the selected batch after preflight;
+- do not overclaim implementation status;
+- use status markers: [CORE], [IMPLEMENTED], [DESIGNED], [PLANNED], [DEFERRED], [QUESTION];
+- inspect scenario text specs, DATA, UI specs, behavior items, API/security addenda, scenario clarifications and current implementation evidence before drawing.
+```
+
+Final VKR-clean diagrams must not mention:
+
+```text
+AI
+ChatGPT
+prompt
+agent
+internal workflow
+planning chat
+```
+
+## 4. Draft-Driven Discovery Rule
 
 All slice-related planning uses draft-driven discovery:
 
@@ -56,9 +90,10 @@ client sidecar slices
 cross-cutting/helper slices
 testing/support slices
 documentation/status reconciliation drafts
+diagram planning drafts
 ```
 
-## 4. Client / Server Contract Rule
+## 5. Client / Server Contract Rule
 
 Before planning missing client slices, check:
 
@@ -81,7 +116,7 @@ error code strings
 
 Use generated OpenAPI types for structure and generated constants for semantics.
 
-## 5. OpenAPI / Constants Split Rule
+## 6. OpenAPI / Constants Split Rule
 
 ```text
 OpenAPI = structural contract:
@@ -94,13 +129,13 @@ Generated constants JSON = semantic contract:
 
 Do not collapse these into one artifact.
 
-## 6. Generated Artifact Rule
+## 7. Generated Artifact Rule
 
 Generated artifacts are produced by explicit commands/checks.
 
 Do not write generated client artifacts during normal server startup.
 
-## 7. Endpoint Classification Rule
+## 8. Endpoint Classification Rule
 
 Before generating client API types/wrappers for a slice, classify endpoint as:
 
@@ -113,7 +148,7 @@ internal/not client-facing
 
 If current endpoint status is unclear, ask or document assumption before implementation.
 
-## 8. Cross-Cutting / Helper Slice Rule
+## 9. Cross-Cutting / Helper Slice Rule
 
 When work is cross-cutting or helper-like, do not bury it only in workflow docs or shared notes.
 
@@ -133,7 +168,7 @@ Use:
 planning/slices/cross-cutting/
 ```
 
-## 9. Same Format Rule
+## 10. Same Format Rule
 
 Cross-cutting/helper slices must follow the same planning shape as business slices:
 
@@ -146,7 +181,7 @@ source requirements
 -> coverage/questions/ADR impact
 ```
 
-## 10. CSRF / Antiforgery Rule
+## 11. CSRF / Antiforgery Rule
 
 When planning browser unsafe API request security, use:
 
@@ -154,7 +189,7 @@ When planning browser unsafe API request security, use:
 planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```
 
-## 11. Testing Responsibility Rule
+## 12. Testing Responsibility Rule
 
 When planning slice/client/API work, classify tests as:
 
@@ -171,7 +206,7 @@ Use:
 planning/testing/testing-principles.md
 ```
 
-## 12. Implementation Flow Detail Filter
+## 13. Implementation Flow Detail Filter
 
 Slice flow may include involved classes, methods and short code snippets.
 
@@ -183,7 +218,7 @@ If class/method details make the flow noisy, suggest a sibling `.impl.md` file.
 
 Do not create `.impl.md` in advance.
 
-## 13. Do Not
+## 14. Do Not
 
 ```text
 - Do not implement client slices by manually guessing API contract.
@@ -194,5 +229,8 @@ Do not create `.impl.md` in advance.
 - Do not skip behavior items for technical concerns when traceability is needed.
 - Do not label antiforgery failure by generic HTTP 400.
 - Do not blindly replay unsafe requests after token refresh.
+- Do not generate diagrams without repo-grounded preflight.
+- Do not use PlantUML as the primary diagram deliverable unless explicitly asked.
+- Do not overclaim diagram implementation status.
 - Do not use GitHub mutation tools during documentation-only archive work unless explicitly requested.
 ```
