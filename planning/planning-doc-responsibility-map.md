@@ -34,6 +34,7 @@ Local files must not become hidden sources of global workflow rules.
 | `planning/l1-domain-testing-rules.md` | L1 testing rules | Unit/integration testing principles and local examples | Scenario behavior source rules |
 | `planning/slices/l1-slice-drafting-guide.md` | Slice/client sidecar drafting rules | Slice discovery, parent slice structure, `.client.md` structure, test sections, sidecar intake | Concrete slice implementation decisions |
 | `planning/slices/implementation-principles.md` | Common implementation principles | Parent/API ownership, Client/UI flow, FormValues vs DTO, CSRF, error mapping, tests | Future concrete notes for specific slices |
+| `planning/slices/client-architecture-principles.md` | Client architecture mapping for sidecars | app/pages/entities/features/widgets/shared responsibilities, read-vs-command mapping, entity query hook rules, component placement rules | Concrete slice-specific client plan |
 | `planning/slices/slice-implementation-notes-register.md` | Future concrete implementation notes | Notes that must be checked before starting slices/sidecars | Stable general rules; move those to principles |
 
 ## 4. Scenario File Responsibility
@@ -46,29 +47,7 @@ Pattern:
 planning/diagrams/scenario-text-specs/SC-XX-*.md
 ```
 
-Own:
-
-```text
-- concrete scenario behavior;
-- actors;
-- goal;
-- entry conditions;
-- main flow;
-- branches;
-- observable outcome;
-- scenario-local questions;
-- mandatory user-visible requirements;
-- validation references.
-```
-
-Allowed:
-
-```text
-- local scenario questions;
-- local behavior clarifications;
-- local links to DATA/behavior items;
-- local observable UI requirements.
-```
+Own concrete scenario behavior, actors, goal, entry conditions, main flow, branches, observable outcome, scenario-local questions, mandatory user-visible requirements and validation references.
 
 Not allowed:
 
@@ -120,19 +99,7 @@ Pattern:
 planning/diagrams/scenario-behavior-items/SC-XX-*.md
 ```
 
-Own:
-
-```text
-- behavior items owned by one scenario;
-- item registry;
-- command cards;
-- lifecycle/state matrices;
-- impossible business states;
-- value integrity items;
-- use-case coordination items;
-- read/integration/future/no-write items;
-- questions raised by item migration.
-```
+Own behavior items owned by one scenario, item registry, command cards, lifecycle/state matrices, impossible business states, value integrity items, use-case coordination items, read/integration/future/no-write items and questions raised by item migration.
 
 Not allowed:
 
@@ -150,15 +117,7 @@ File:
 planning/diagrams/scenario-questions-register.md
 ```
 
-Own:
-
-```text
-- questions that affect scenario behavior;
-- DATA;
-- validation/security;
-- visible outcome;
-- scenario semantics.
-```
+Own questions that affect scenario behavior, DATA, validation/security, visible outcome and scenario semantics.
 
 Not allowed:
 
@@ -178,16 +137,7 @@ File:
 planning/slices/l1-slice-boundary-draft-01.md
 ```
 
-Own:
-
-```text
-- slice discovery;
-- slice boundary reasoning;
-- Scenario Slice Flow;
-- dependency/extension/read/client/plugin/shared-support-assisted slice identification;
-- boundary decisions and questions;
-- ADR candidates.
-```
+Owns slice discovery, boundary reasoning, Scenario Slice Flow, dependency/extension/read/client/plugin/shared-support-assisted identification, boundary decisions/questions and ADR candidates.
 
 Not allowed:
 
@@ -205,19 +155,7 @@ Pattern:
 planning/slices/SL-XXX.md
 ```
 
-Own:
-
-```text
-- vertical slice behavior;
-- Scenario Slice Flow;
-- behavior item coverage summary;
-- API contract;
-- cross-layer implementation flow in summary;
-- application/domain/persistence responsibilities;
-- server/integration test plan;
-- local decisions/questions;
-- link to `.client.md` when client work starts.
-```
+Owns vertical slice behavior, Scenario Slice Flow, behavior item coverage, API contract, cross-layer implementation flow summary, application/domain/persistence responsibilities, server/integration test plan, local decisions/questions and link to `.client.md` when client work starts.
 
 Not allowed:
 
@@ -237,15 +175,19 @@ planning/slices/SL-XXX.client.md
 
 Created only when concrete client work starts.
 
-Own:
+Owns:
 
 ```text
 - Client Behavior Coverage;
 - Client Implementation Questions Register;
 - Scenario / DATA Coverage;
+- Client Architecture Mapping;
 - API Contract Used By Client;
 - routes;
-- views;
+- pages;
+- entity read modules;
+- widgets if needed;
+- features;
 - components;
 - query functions;
 - mutation functions;
@@ -264,6 +206,7 @@ Not allowed:
 ```text
 - inventing a backend API contract that differs from parent slice;
 - global client sidecar workflow;
+- global client architecture rules that belong in client-architecture-principles.md;
 - domain aggregate design unrelated to client behavior.
 ```
 
@@ -275,7 +218,9 @@ Pattern:
 planning/slices/shared/*.md
 ```
 
-Own reusable support mechanisms used by multiple slices:
+Own reusable support mechanisms used by multiple slices.
+
+Examples:
 
 ```text
 - deferred validation;
@@ -302,16 +247,7 @@ Pattern:
 planning/adr/*.md
 ```
 
-Own:
-
-```text
-- architecture decisions;
-- decision context;
-- alternatives;
-- chosen direction;
-- consequences;
-- related slices/scenarios.
-```
+Own architecture decisions, decision context, alternatives, chosen direction, consequences and related slices/scenarios.
 
 Not allowed:
 
@@ -387,10 +323,13 @@ When unsure where content belongs, ask:
 9. Does this define detailed frontend implementation for one slice?
    -> .client.md sidecar
 
-10. Does this define reusable support used by many slices?
+10. Does this define client architecture mapping for all sidecars?
+   -> client-architecture-principles.md
+
+11. Does this define reusable support used by many slices?
    -> planning/slices/shared/
 
-11. Does this define future implementation thought not yet assigned?
+12. Does this define future implementation thought not yet assigned?
    -> slice-implementation-notes-register.md
 ```
 
@@ -412,15 +351,5 @@ A future audit should:
 Before moving or rewriting responsibility-related content, ask only questions that affect the current responsibility decision.
 
 For each relevant question, include the agent’s assumption/preferred answer.
-
-Example:
-
-```text
-Question:
-Should replacement archive rules be included in the responsibility map?
-
-Assumption:
-Yes. They have a distinct file owner: replacement-file-generation-guide.md.
-```
 
 Do not ask future implementation questions while doing responsibility-map work.

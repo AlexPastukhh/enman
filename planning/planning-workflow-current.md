@@ -7,13 +7,14 @@ Status: current workflow
 The current active workflow step is:
 
 ```text
-planning document responsibility map and agent next-step/relevant-question protocol are being introduced.
+client architecture mapping rules for .client.md sidecars have been introduced.
 ```
 
-Previously completed planning step:
+Previously completed planning steps:
 
 ```text
-scenario behavior items migrated into per-scenario files.
+scenario behavior items migrated into per-scenario files;
+planning document responsibility map introduced.
 ```
 
 ## 2. Main Workflow
@@ -44,6 +45,7 @@ planning/planning-doc-responsibility-map.md
 planning/scenario-specification-principles.md
 planning/slices/l1-slice-drafting-guide.md
 planning/slices/implementation-principles.md
+planning/slices/client-architecture-principles.md
 ```
 
 ## 4. Scenario Question Loop
@@ -81,11 +83,36 @@ Before starting any parent slice or `.client.md` sidecar:
 5. Check planning/diagrams/scenario-questions-register.md.
 6. Check planning/slices/slice-implementation-notes-register.md.
 7. Check relevant shared support docs under planning/slices/shared/.
-8. Promote relevant notes/questions.
-9. If scenario-level ambiguity exists, stop and resolve it first.
+8. If client work is involved, check planning/slices/client-architecture-principles.md.
+9. Promote relevant notes/questions.
+10. If scenario-level ambiguity exists, stop and resolve it first.
 ```
 
-## 7. File Responsibility Gate
+## 7. Client Architecture Mapping
+
+Use:
+
+```text
+planning/slices/client-architecture-principles.md
+```
+
+Core rule:
+
+```text
+Planning slice and frontend feature are not 1:1.
+```
+
+Default mapping:
+
+```text
+Read slice    -> pages + entities (+ widgets if reused)
+Command slice -> pages + features + entities
+Shared concern -> app / shared
+```
+
+A `.client.md` sidecar must explain which client architecture part covers which behavior item.
+
+## 8. File Responsibility Gate
 
 Before adding or moving planning content, check:
 
@@ -97,7 +124,7 @@ If the content is global workflow/common content, place it in a central workflow
 
 If the content is local coverage/question/decision/test detail, keep it in the local scenario/slice/client file.
 
-## 8. Behavior Items Position
+## 9. Behavior Items Position
 
 Primary scenario-specific behavior item source:
 
@@ -112,7 +139,7 @@ planning/tables/pre-domain-variants-input.md
 planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 ```
 
-## 9. Current Slice Status
+## 10. Current Slice Status
 
 Resolved issue:
 
@@ -128,13 +155,13 @@ Approved
 Rejected
 ```
 
-## 10. Current Next Steps
+## 11. Current Next Steps
 
 Recommended next steps:
 
 ```text
-1. Apply responsibility-map/protocol archive.
-2. Use responsibility map for future doc updates.
+1. Apply client-architecture mapping archive.
+2. Use client architecture principles for future .client.md files.
 3. Review migrated behavior item files for target scenario.
 4. Resolve any blocking scenario questions.
 5. Get/prepare concrete UI plan for the next client layer.
@@ -148,7 +175,7 @@ Likely implementation target after planning cleanup:
 Request creation Client/UI for already implemented SL-REQ-001 server-side behavior.
 ```
 
-## 11. Future Cleanup Steps
+## 12. Future Cleanup Steps
 
 Track separately:
 
@@ -162,7 +189,7 @@ Track separately:
 
 Local coverage tables and local questions are allowed to remain local.
 
-## 12. Next Step Protocol
+## 13. Next Step Protocol
 
 Every archive summary / implementation prompt should include:
 

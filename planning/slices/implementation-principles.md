@@ -19,6 +19,12 @@ Reusable mechanisms belong in:
 planning/slices/shared/
 ```
 
+Client architecture mapping belongs in:
+
+```text
+planning/slices/client-architecture-principles.md
+```
+
 ## 2. Parent Slice And Client Sidecar
 
 Parent slice file owns:
@@ -36,14 +42,19 @@ Parent slice file owns:
 Client sidecar owns detailed frontend/client implementation when client work starts:
 
 ```text
-- route constants;
+- Client Behavior Coverage;
+- Client Implementation Questions Register;
+- Scenario / DATA Coverage;
+- Client Architecture Mapping;
+- API Contract Used By Client;
 - routes;
-- views;
+- pages;
+- entity read modules;
+- command features;
+- widgets if needed;
 - components;
-- query functions;
-- mutation functions;
-- hooks;
-- client state;
+- query hooks;
+- mutation hooks;
 - form state;
 - DTO mapping;
 - cache invalidation;
@@ -67,12 +78,33 @@ A `.client.md` file starts with fast-access planning tables:
 1. Client Behavior Coverage
 2. Client Implementation Questions Register
 3. Scenario / DATA Coverage
-4. API Contract Used By Client
+4. Client Architecture Mapping
+5. API Contract Used By Client
 ```
 
-Only then it describes routes, views, components, query functions, mutations, hooks, DTO mapping, action availability, success/failure handling, cache and tests.
+Only then it describes routes, pages, entities, features, widgets, components, query functions, mutations, hooks, DTO mapping, action availability, success/failure handling, cache and tests.
 
-## 5. Form Values vs API DTO
+## 5. Client Architecture Mapping
+
+Planning slice and frontend feature are not 1:1.
+
+Use:
+
+```text
+planning/slices/client-architecture-principles.md
+```
+
+Default mapping:
+
+```text
+Read slice    -> pages + entities (+ widgets if reused)
+Command slice -> pages + features + entities
+Shared concern -> app / shared
+```
+
+Command slice client implementation may use pages and entities, but command behavior should live in features.
+
+## 6. Form Values vs API DTO
 
 Client form values may differ from API DTOs.
 
@@ -96,7 +128,7 @@ Detailed reusable note:
 planning/slices/shared/client-form-values-to-api-dto-mapping.md
 ```
 
-## 6. Deferred Validation
+## 7. Deferred Validation
 
 Deferred validation is current client-side behavior and may be tested.
 
@@ -106,7 +138,7 @@ Detailed reusable note:
 planning/slices/shared/client-deferred-validation.md
 ```
 
-## 7. Server Errors To Client Errors
+## 8. Server Errors To Client Errors
 
 Server validation/problem responses should map to client-readable field/global errors.
 
@@ -116,7 +148,7 @@ Detailed reusable note:
 planning/slices/shared/client-server-validation-error-mapping.md
 ```
 
-## 8. CSRF / Antiforgery With Cookie Auth
+## 9. CSRF / Antiforgery With Cookie Auth
 
 Unsafe requests using ASP.NET Core cookie auth need antiforgery support.
 
@@ -128,7 +160,7 @@ Detailed reusable note:
 planning/slices/shared/antiforgery-token-session-context.md
 ```
 
-## 9. Applicant Data Prefill
+## 10. Applicant Data Prefill
 
 Applicant data may be prefilled into request forms.
 
@@ -140,7 +172,7 @@ Detailed reusable note:
 planning/slices/shared/client-applicant-data-prefill-notes.md
 ```
 
-## 10. Tests
+## 11. Tests
 
 Separate tests from implementation narrative:
 

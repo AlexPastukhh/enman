@@ -15,6 +15,7 @@ planning/planning-doc-responsibility-map.md
 planning/replacement-file-generation-guide.md
 planning/scenario-specification-principles.md
 planning/slices/l1-slice-drafting-guide.md
+planning/slices/client-architecture-principles.md
 ```
 
 ## 2. Core Rule
@@ -39,6 +40,7 @@ A question is relevant to the current step if the answer can change:
 - file responsibility / placement;
 - slice boundary;
 - client/server responsibility;
+- client architecture mapping;
 - test expectations;
 - next action ordering;
 - archive contents.
@@ -68,8 +70,6 @@ Assumption / preferred answer:
 Why it matters for this step:
 ...
 ```
-
-This keeps planning moving and helps the user answer quickly.
 
 If the user accepts the assumption, use it as the current direction.
 
@@ -114,8 +114,9 @@ Before starting a new slice or `.client.md` sidecar:
 6. Check planning/diagrams/scenario-questions-register.md.
 7. Check planning/slices/slice-implementation-notes-register.md.
 8. Check relevant shared support docs under planning/slices/shared/.
-9. Promote relevant notes/questions.
-10. Only then create/refine the slice file or .client.md.
+9. If client work is involved, check planning/slices/client-architecture-principles.md.
+10. Promote relevant notes/questions.
+11. Only then create/refine the slice file or .client.md.
 ```
 
 ## 7. Client Sidecar Rule
@@ -141,8 +142,13 @@ Client sidecar owns:
 - Client Behavior Coverage;
 - Client Implementation Questions Register;
 - Scenario / DATA Coverage;
+- Client Architecture Mapping;
+- API Contract Used By Client;
 - routes;
-- views;
+- pages;
+- entity read modules;
+- widgets if needed;
+- command features;
 - components;
 - query functions;
 - mutation functions;
@@ -154,7 +160,31 @@ Client sidecar owns:
 
 The client sidecar must use the API contract from the parent slice file.
 
-## 8. Behavior Items Rule
+## 8. Client Architecture Mapping Rule
+
+Use:
+
+```text
+planning/slices/client-architecture-principles.md
+```
+
+Core rule:
+
+```text
+Planning slice and frontend feature are not 1:1.
+```
+
+Default mapping:
+
+```text
+Read slice    -> pages + entities (+ widgets if reused)
+Command slice -> pages + features + entities
+Shared concern -> app / shared
+```
+
+When planning a `.client.md`, the agent must explain which client architecture part covers which behavior item.
+
+## 9. Behavior Items Rule
 
 Behavior items are derived from:
 
@@ -172,7 +202,7 @@ planning/tables/pre-domain-variants-input.md
 
 Do not introduce new categories without an explicit decision.
 
-## 9. Implementation Notes Register Rule
+## 10. Implementation Notes Register Rule
 
 Before starting any new slice/client sidecar, check:
 
@@ -182,7 +212,7 @@ planning/slices/slice-implementation-notes-register.md
 
 Each relevant note must be promoted, resolved or explicitly marked as not relevant before implementation planning continues.
 
-## 10. File Responsibility Rule
+## 11. File Responsibility Rule
 
 Use:
 
@@ -196,7 +226,7 @@ If content is a global workflow/common rule, do not bury it in a local scenario,
 
 Local coverage tables, local questions, local decisions and local implementation notes are allowed to stay local.
 
-## 11. Next Step Protocol
+## 12. Next Step Protocol
 
 Every planning response, archive summary and implementation prompt should explicitly state the next step.
 
@@ -238,7 +268,7 @@ The agent must not move to the next slice or implementation step by itself.
 
 The agent may propose the next step, but execution requires a user request.
 
-## 12. Archive Rule
+## 13. Archive Rule
 
 When asked to create a replacement package, follow:
 
@@ -259,7 +289,7 @@ Before generating an archive:
 6. State what is deliberately out of scope.
 ```
 
-## 13. Workflow Centralization Principle
+## 14. Workflow Centralization Principle
 
 General workflow rules should live in central workflow/common files.
 
@@ -267,7 +297,7 @@ Local files may keep local coverage tables, local questions, local decisions and
 
 A future workflow centralization audit should find and move global workflow rules out of local files.
 
-## 14. Do Not
+## 15. Do Not
 
 ```text
 - Do not create .client.md before concrete client work starts.

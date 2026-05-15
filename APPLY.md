@@ -3,32 +3,32 @@
 Archive:
 
 ```text
-enman-planning-doc-responsibility-map-v1.zip
+enman-client-sidecar-architecture-mapping-v1.zip
 ```
 
 Apply from repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-planning-doc-responsibility-map-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-client-sidecar-architecture-mapping-v1.zip" -DestinationPath . -Force
 git status
 ```
 
 ## Add
 
 ```text
-planning/planning-doc-responsibility-map.md
+planning/slices/client-architecture-principles.md
 ```
 
 ## Replace
 
 ```text
-planning/planning-agent-protocol.md
-planning/planning-workflow-current.md
-planning/README.md
-planning/diagrams/README.md
+planning/slices/l1-slice-drafting-guide.md
+planning/slices/implementation-principles.md
 planning/slices/README.md
-planning/tables/README.md
-planning/replacement-file-generation-guide.md
+planning/planning-workflow-current.md
+planning/planning-agent-protocol.md
+planning/README.md
+planning/planning-doc-responsibility-map.md
 ```
 
 ## Delete
@@ -39,16 +39,21 @@ nothing
 
 ## Notes
 
-This package adds document responsibility / workflow leakage rules and strengthens agent protocol.
+This package adds client architecture mapping rules for `.client.md` sidecars.
 
-It adds:
-- Relevant Questions Rule;
-- Assumptions With Questions Rule;
-- Next Step Protocol;
-- File Responsibility Rule.
+It records:
+- planning slice and frontend feature are not 1:1;
+- read slice -> pages + entities (+ widgets if reused);
+- command slice -> pages + features + entities;
+- entity query hook rules;
+- component placement rules;
+- filtering as read query state unless persisted;
+- review page as read context unless entering review creates server-side state;
+- mandatory `Client Architecture Mapping` section in `.client.md`.
 
 It does not:
-- create `.client.md`;
-- change behavior items content;
-- change domain/API/code/tests;
-- perform the full workflow centralization audit.
+- create a concrete `.client.md`;
+- change code;
+- change behavior items;
+- change API/domain/tests;
+- introduce widgets as mandatory structure.

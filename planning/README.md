@@ -24,13 +24,14 @@ scenario text specs
 Current focus:
 
 ```text
-document responsibility map + agent next-step/relevant-question protocol
+client architecture mapping rules for .client.md sidecars
 ```
 
-Already completed recent planning step:
+Already completed recent planning steps:
 
 ```text
-scenario behavior items migrated into per-scenario files
+scenario behavior items migrated into per-scenario files;
+planning document responsibility map introduced.
 ```
 
 Do not create `.client.md` files in advance.
@@ -65,13 +66,14 @@ Do not create `.client.md` files in advance.
 21. planning/slices/README.md
 22. planning/slices/l1-slice-drafting-guide.md
 23. planning/slices/implementation-principles.md
-24. planning/slices/slice-implementation-notes-register.md
-25. planning/slices/shared/README.md
-26. planning/slices/l1-slice-boundary-draft-01.md
+24. planning/slices/client-architecture-principles.md
+25. planning/slices/slice-implementation-notes-register.md
+26. planning/slices/shared/README.md
+27. planning/slices/l1-slice-boundary-draft-01.md
 
-27. planning/replacement-file-generation-guide.md
-28. planning/adr/README.md
-29. planning/adr/adr-candidates.md
+28. planning/replacement-file-generation-guide.md
+29. planning/adr/README.md
+30. planning/adr/adr-candidates.md
 ```
 
 ## 4. Responsibility Map
@@ -131,6 +133,18 @@ Parent slice file owns vertical behavior and API/server responsibilities.
 
 `.client.md` sidecar owns detailed client implementation when client work starts.
 
+Client architecture mapping rules live in:
+
+```text
+planning/slices/client-architecture-principles.md
+```
+
+Core rule:
+
+```text
+Planning slice and frontend feature are not 1:1.
+```
+
 ## 8. Scenario Question Loop
 
 If a scenario-level question appears during planning:
@@ -155,10 +169,10 @@ Generate complete files, package them with repository-relative paths, and includ
 
 ## 10. Current Next Step
 
-After applying the responsibility-map package:
+After applying the client-architecture mapping package:
 
 ```text
-1. use responsibility map for future doc updates;
+1. use client architecture principles for future .client.md files;
 2. review migrated behavior items for the next target scenario;
 3. get/prepare UI plan;
 4. create concrete .client.md only when client work starts.
