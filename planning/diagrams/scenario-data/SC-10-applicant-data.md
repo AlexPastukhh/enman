@@ -2,7 +2,9 @@
 
 ## Purpose
 
-Define applicant DATA for the three applicant types used by request creation and later agreement processing.
+Define applicant DATA for the applicant types used by request creation and later agreement processing.
+
+Applicant DATA is account-level. One L1 account has one current active ApplicantParty at a time.
 
 ## DATA Blocks
 
@@ -18,6 +20,13 @@ Selection DATA:
 - physical person;
 - individual entrepreneur;
 - legal entity.
+```
+
+Notes:
+
+```text
+Applicant types are alternative data shapes for the account-level applicant profile.
+They are not separate simultaneously-active applicant contexts for the same account.
 ```
 
 ### SC-10-DATA-02 — Physical person applicant DATA
@@ -57,6 +66,7 @@ Notes:
 ```text
 Current implemented L1 already includes FullName, Email and PhoneNumber.
 PassportData and ActualAddress are richer target/future applicant DATA relative to current narrow implementation.
+Applicant contact email can differ from account email.
 ```
 
 ### SC-10-DATA-03 — Individual entrepreneur applicant DATA
@@ -98,6 +108,7 @@ Notes:
 ```text
 Use ОГРНИП in DATA.
 UI may show “ОГРН/ОГРНИП” if we want wording close to real-world forms.
+Applicant contact email can differ from account email.
 ```
 
 ### SC-10-DATA-04 — Legal entity applicant DATA
@@ -136,28 +147,47 @@ Target / Future DATA:
 - representative authority basis.
 ```
 
+Notes:
+
+```text
+Applicant contact email can differ from account email.
+```
+
 ### SC-10-DATA-05 — Saved applicant visible DATA
 
-Type: Visible DATA  
+Type: Visible DATA / Reference DATA  
 Actor: Client  
-Used by: Applicant Data page, Request Creation applicant selection/reuse
+Used by: Applicant Data page, Request Creation applicant context/reuse
 
 Visible DATA:
 
 ```text
+- current active applicant marker/summary;
 - applicant type;
 - applicant display name;
 - applicant contact summary;
 - applicant identifiers relevant for selected type.
 ```
 
+Reference DATA for request creation:
+
+```text
+- current active ApplicantParty for the account.
+```
+
 Open questions:
 
 ```text
 Q: Should physical person actual/residential address become current target scenario DATA or stay future?
-Q: Is applicant contact email always account email, or can it differ?
 Q: Is phone required for all applicant types in current implementation?
-Q: Should request creation store applicant snapshot later?
+Q: Should historical request creation store applicant snapshot later?
+```
+
+Accepted direction:
+
+```text
+Current active ApplicantParty is unique per account.
+Applicant contact email can differ from account email.
 ```
 
 Scenario spec references:

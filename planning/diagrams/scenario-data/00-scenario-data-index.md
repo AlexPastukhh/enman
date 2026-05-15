@@ -83,23 +83,33 @@ Request object location means:
 object address
 ```
 
-Applicant DATA in request creation may be:
+Request creation input DATA includes:
 
 ```text
-- copied/prefilled from previously provided matching applicant DATA;
-- entered inline if no matching applicant DATA exists;
-- edited for this specific request if client wants different data.
+- requested service / request subject information;
+- request details/description;
+- object address.
 ```
+
+Applicant DATA in request creation is Reference / Visible DATA:
+
+```text
+- current active ApplicantParty summary for the account;
+- applicant type;
+- applicant display name;
+- applicant contact summary.
+```
+
+Applicant data changes are handled through SC-10 Applicant Data / future replacement flow.
 
 Future UX:
 
 ```text
 [VAR:EXPAND]
-- clear prefilled applicant DATA action;
-- restore prefilled applicant DATA action.
+- inline shortcut to update applicant data before submit;
+- return-to-request flow after applicant data update;
+- clear/restore rejected-request prefill data when rejected-request retry is implemented.
 ```
-
-Clearing or editing request-local applicant fields does not delete saved applicant DATA.
 
 ## Applicant DATA Summary
 
@@ -109,6 +119,14 @@ Applicant types:
 physical person
 individual entrepreneur
 legal entity
+```
+
+Current active ApplicantParty policy:
+
+```text
+One L1 account has one current active ApplicantParty at a time.
+Applicant types are alternative data shapes for the account-level applicant profile,
+not separate simultaneously-active applicant contexts per type.
 ```
 
 Current implemented L1 already has narrow physical-person applicant data:

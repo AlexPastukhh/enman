@@ -89,6 +89,32 @@ Request object location means:
 object address
 ```
 
+ApplicantParty current-active policy:
+
+```text
+One L1 account has one current active ApplicantParty at a time.
+
+Applicant types are alternative forms of the account-level applicant profile,
+not independent simultaneously-active applicant contexts per type.
+
+When a future replacement/edit flow accepts new applicant data,
+it should make the newly accepted ApplicantParty current active
+and make the previously current ApplicantParty no longer current.
+```
+
+Request creation applicant context:
+
+```text
+Request creation uses the account's current active ApplicantParty.
+
+The request creation command should not silently create a separate
+request-local applicant identity and should not let the client spoof
+ApplicantPartyId.
+
+If current active applicant data is missing or wrong, the user goes through
+SC-10 Applicant Data / future replacement flow before request submission.
+```
+
 Agreement Proposal:
 
 ```text

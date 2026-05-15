@@ -1,6 +1,6 @@
 # Slice Implementation Notes Register
 
-Status: active  
+Status: active / synchronized with applicant current-active scenario decision  
 Scope: concrete implementation notes for future slices/client sidecars/shared support
 
 ## 1. Purpose
@@ -46,7 +46,7 @@ Before starting work on a slice/client sidecar:
 
 | ID | Related slice / future slice | Scenario | Layer | Tags | Note | Why it matters | Promote to | Status |
 |---|---|---|---|---|---|---|---|---|
-| NOTE-REQ-UI-001 | SL-REQ-001 / request creation client | SC-04 | Client/UI | applicant-prefill, form | Request creation form may prefill applicant data from selected ApplicantParty. Editing request-local fields must not mutate saved ApplicantParty. | Affects request form behavior, DTO mapping and user understanding. | `.client.md` + maybe behavior items + slice question register if still open | open |
+| NOTE-REQ-UI-001 | SL-REQ-001 / request creation client | SC-04 | Client/UI | applicant-context, current-active, form | Request creation UI should show/reference the account's current active ApplicantParty summary. If applicant data is missing or wrong, the user should go through SC-10 Applicant Data / future replacement flow before submit. The request creation form should not create a separate request-local applicant identity in the current core direction. | Keeps UI, DTO mapping and scenario wording aligned with the one-current-active-ApplicantParty-per-account decision. Prevents accidental request-local applicant override behavior. | `.client.md` + behavior items when request creation client work starts | open |
 | NOTE-REQ-UI-002 | SL-REQ-001 / request creation client | SC-04 | Client/UI | command-success, navigation | For command flows where the client does not need created entity data to continue, HTTP success without required body is enough. Client shows a success message and navigates to the next read-context screen. | Prevents client code from depending on command response fields that are not needed for the user flow. | `.client.md` | open |
 | NOTE-CLIENT-AUTH-001 | multiple client slices | cross-scenario | Client/Server shared support | csrf, auth, cookie | Unsafe requests with ASP.NET Core cookie auth need antiforgery token fetch/store/attach/refetch on auth/session changes. | Affects all unsafe client mutations and diploma security explanation. | shared support + ADR candidate + extension register if broad security decision changes | open |
 | NOTE-CLIENT-VALID-001 | multiple form slices | cross-scenario | Client/UI | deferred-validation | Deferred validation after input is current tested client behavior and should be described in client sidecars. | Affects client tests and form UX. | shared support + client files | open |
@@ -54,9 +54,15 @@ Before starting work on a slice/client sidecar:
 | NOTE-FORM-DTO-001 | multiple client slices | cross-scenario | Client/UI | form-values, dto | FormValues and API DTO may differ; use mapping when trim/null normalization, confirmation, checkbox, select string->number, nested object, File/FormData or UI-only state exists. | Prevents accidental coupling between UI forms and API contracts. | shared support + client files | open |
 | NOTE-REVIEW-REJECT-001 | SL-REVIEW-002 | SC-07B | Client/UI | rejection-feedback | Empty rejection feedback should be UI warning/confirmation, not hard domain invariant. Empty string should likely trim to null before DTO. | Affects reject form behavior and DTO mapping. | `.client.md` + maybe scenario question + slice question register | open |
 | NOTE-REVIEW-STALE-001 | SL-REVIEW-001 / SL-REVIEW-002 | SC-07B | Client/UI | stale-state, refetch | Review page should refetch details after domain/server rejection because request status may be stale. | Affects error handling and cache invalidation. | `.client.md` | open |
-| NOTE-REQ-UI-TEST-001 | SL-REQ-001 / request creation client | SC-04 | Testing | client-tests, e2e | Request creation Client/UI should have tests for deferred validation, server error mapping, DTO building, antiforgery helper use and success navigation; E2E comes after client+server flow is stable. | Prevents under-tested client layer. | `.client.md` | open |
+| NOTE-REQ-UI-TEST-001 | SL-REQ-001 / request creation client | SC-04 | Testing | client-tests, e2e | Request creation Client/UI should have tests for deferred validation, server error mapping, current-active applicant context display/redirect/update path, DTO building, antiforgery helper use and success navigation; E2E comes after client+server flow is stable. | Prevents under-tested client layer and keeps tests aligned with current active applicant scenario decision. | `.client.md` | open |
 
-## 4. Status Values
+## 4. Superseded Notes
+
+| ID | Status | Reason |
+|---|---|---|
+| Previous wording of `NOTE-REQ-UI-001` | superseded | Earlier wording allowed request-local applicant prefill/editing without mutating saved ApplicantParty. Scenario direction now says request creation references the account's current active ApplicantParty; applicant changes go through SC-10 / replacement flow before submit. |
+
+## 5. Status Values
 
 ```text
 open

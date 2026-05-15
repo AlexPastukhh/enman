@@ -1,50 +1,59 @@
-# MANIFEST
+# MANIFEST — Applicant Current Active Scenario Sync
 
-Archive: `enman-slice-questions-register-sync.zip`
+Archive: `enman-scenario-applicant-current-active-sync.zip`
 
-Purpose: synchronize the shared slice questions register with the current implemented backend L1 slice documentation.
+Purpose:
 
-## Replace
+Synchronize scenario/source documentation after the accepted decision:
 
 ```text
-planning/slices/slice-questions-register.md
+One L1 account has one current active ApplicantParty at a time.
+Applicant types are alternative shapes of the account-level applicant profile,
+not independent simultaneously-active current applicant contexts per type.
 ```
 
 ## Add
 
 ```text
-MANIFEST.md
-APPLY.md
+(none)
+```
+
+## Replace
+
+```text
+planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
+planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
+planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+planning/diagrams/scenario-data/00-scenario-data-index.md
+planning/diagrams/scenario-data/SC-10-applicant-data.md
+planning/diagrams/scenario-data/SC-04-request-creation-data.md
+planning/diagrams/scenario-questions-register.md
+planning/slices/slice-questions-register.md
+planning/slices/slice-implementation-notes-register.md
 ```
 
 ## Delete
 
 ```text
-None
+(none)
 ```
 
 ## Scope
 
-This archive updates documentation only.
+This is a documentation-only archive.
 
-It does not include:
+It updates scenario text, DATA summaries, scenario questions and shared slice registers so downstream slice/client planning uses the accepted one-current-active-ApplicantParty-per-account direction.
 
-```text
-- production code
-- generated artifacts
-- runtime behavior changes
-- GitHub branch/commit/PR changes
-- client sidecars
-- backend implementation changes
-- UI pages
-- CSRF implementation
-- DB uniqueness constraints
-```
-
-## Source slice files used for sync
+## Non-goals
 
 ```text
-planning/slices/SL-ACC-001-register-client-account.md
-planning/slices/SL-APPL-001-create-individual-applicant-party.md
-planning/slices/SL-REQ-001-create-connection-request.md
+- no production code changes;
+- no runtime behavior changes;
+- no generated artifact changes;
+- no DB constraints or migrations;
+- no client sidecars;
+- no request creation UI;
+- no My Requests UI/read implementation;
+- no CSRF implementation;
+- no GitHub writes, branch, commit or PR.
 ```
