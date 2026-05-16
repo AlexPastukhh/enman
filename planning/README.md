@@ -14,6 +14,7 @@ L1 backend/API/persistence/session baseline is implemented for:
 - create individual applicant party;
 - create connection request.
 - My Requests list read.
+- own request details read.
 
 Generated OpenAPI TypeScript types and semantic constants support are available.
 
@@ -30,7 +31,7 @@ First-stage L1 client implementation now exists for:
 Remaining L1 client/read work:
 - request creation form UI;
 - My Requests client UI;
-- own request details read/client flow;
+- own request details client UI;
 - client/component tests for implemented client flows;
 - browser E2E happy paths after UI/read flows are stable.
 ```
@@ -129,22 +130,23 @@ Important open questions should appear first in local `Questions / Decisions` se
 62. planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
 63. planning/slices/SL-REQ-001-create-connection-request.md
 64. planning/slices/SL-REQ-002-my-requests-list.md
-65. planning/slices/examples/README.md
-66. planning/slices/examples/L1-APPLICANT-PARTY-READ-CURRENT-early-short-draft-example.md
-67. planning/slices/examples/L1-CONNECTION-REQUEST-CREATE-early-short-draft-example.md
-68. planning/slices/examples/SL-ACC-001-register-client-account-full-slice-example.md
-69. planning/slices/cross-cutting/README.md
-70. planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
-71. planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
-72. planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
-73. planning/slices/shared/README.md
-74. planning/slices/shared/antiforgery-token-session-context.md
-75. planning/slices/shared/maybe-for-optional-results.md
-76. planning/slices/implementation-principles.md
-77. planning/slices/client-architecture-principles.md
-78. planning/slices/client-component-discovery-guide.md
-79. planning/slices/change-extension-points-principles.md
-80. planning/replacement-file-generation-guide.md
+65. planning/slices/SL-REQ-003-own-request-details.md
+66. planning/slices/examples/README.md
+67. planning/slices/examples/L1-APPLICANT-PARTY-READ-CURRENT-early-short-draft-example.md
+68. planning/slices/examples/L1-CONNECTION-REQUEST-CREATE-early-short-draft-example.md
+69. planning/slices/examples/SL-ACC-001-register-client-account-full-slice-example.md
+70. planning/slices/cross-cutting/README.md
+71. planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
+72. planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
+73. planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
+74. planning/slices/shared/README.md
+75. planning/slices/shared/antiforgery-token-session-context.md
+76. planning/slices/shared/maybe-for-optional-results.md
+77. planning/slices/implementation-principles.md
+78. planning/slices/client-architecture-principles.md
+79. planning/slices/client-component-discovery-guide.md
+80. planning/slices/change-extension-points-principles.md
+81. planning/replacement-file-generation-guide.md
 ```
 
 ## 3. Documentation Update Direction
@@ -241,6 +243,7 @@ planning/slices/slice-implementation-notes-register.md
 | Current applicant party read | protected `GET /api/l1/applicant-parties/current-individual`, returns `exists` + applicant data/null, includes `verificationStatus` | Account page reads current applicant state on open; shows read-only applicant data when present and create form when missing | Use `L1-APPLICANT-PARTY-READ-CURRENT` and `.client` sidecar |
 | Create connection request | protected `POST /api/l1/requests`, DTO `details + address`, server-selected current active applicant, no required response body | request creation UI, My Requests read screens and E2E are future work | Use `SL-REQ-001` and `CL-COMMAND-001`; do not create request `.client.md` until work starts |
 | My Requests list | protected `GET /api/l1/requests`, optional `status`, current-account summaries, newest first, empty `[]` | My Requests UI remains future work | Use `SL-REQ-002`; details remain future `SL-REQ-003` |
+| Own request details | protected `GET /api/l1/requests/{requestId}`, current-account scoped details, missing/not-owned -> 404, review result when available | request details UI remains future work | Use `SL-REQ-003`; list remains `SL-REQ-002` |
 | Generated contracts | `openapi-types.ts` includes L1 paths/types; client package can generate API types | generated types are used by shared API wrappers/support and must be consumed by client sidecars | Client slices should consume generated types and generated constants |
 
 ## 6. Local Questions / Shared Registers Direction

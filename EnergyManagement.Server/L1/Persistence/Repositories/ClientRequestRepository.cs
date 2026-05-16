@@ -65,4 +65,59 @@ public sealed class ClientRequestRepository : IClientRequestRepository
                     : null))
             .ToList();
     }
+
+    public async Task<ClientRequestDetailsReadModel?> GetDetailsByIdAndClientAccountIdAsync(
+        long requestId,
+        long clientAccountId,
+        CancellationToken cancellationToken)
+    {
+        var row = await (
+                from clientRequest in _context.ClientRequests.AsNoTracking()
+                join applicantParty in _context.ApplicantParties.AsNoTracking()
+                    on clientRequest.ApplicantPartyId equals applicantParty.Id
+                where clientRequest.Id == requestId
+                    && applicantParty.ClientAccountId == clientAccountId
+                select new
+                {
+                    Request = clientRequest,
+                    ReviewDecision = EF.Property<string?>(clientRequest, "ReviewDecision"),
+                    ReviewDecidedAt = EF.Property<DateTimeOffset?>(clientRequest, "ReviewDecidedAt"),
+                    RejectionReason = EF.Property<string?>(clientRequest, "ReviewRejectionReason")
+                })
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (row is null)
+        {
+            return null;
+        }
+
+        var request = row.Request;
+        var reviewDecision = Enum.TryParse<ReviewDecision>(
+            row.ReviewDecision,
+            ignoreCase: false,
+            out var parsedDecision)
+                ? parsedDecision
+                : (ReviewDecision?)null;
+
+        return new ClientRequestDetailsReadModel(
+            request.Id,
+            request.RequestType,
+            request.Status,
+            request.CreatedAt,
+            request.Details,
+            request.ObjectAddress.PostalCode,
+            request.ObjectAddress.Region,
+            request.ObjectAddress.City,
+            request.ObjectAddress.Street,
+            request.ObjectAddress.House,
+            request.ObjectAddress.Building.HasValue
+                ? request.ObjectAddress.Building.Value
+                : null,
+            request.ObjectAddress.Apartment.HasValue
+                ? request.ObjectAddress.Apartment.Value
+                : null,
+            reviewDecision,
+            row.ReviewDecidedAt,
+            row.RejectionReason);
+    }
 }

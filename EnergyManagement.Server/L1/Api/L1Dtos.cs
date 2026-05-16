@@ -49,6 +49,26 @@ public sealed record L1MyRequestSummaryDto(
     [property: JsonPropertyName("summary")] string Summary,
     [property: JsonPropertyName("objectAddress")] L1AddressDto ObjectAddress);
 
+public sealed record L1MyRequestDetailsDto(
+    [property: JsonPropertyName("requestId")] long RequestId,
+    [property: JsonPropertyName("requestType")] string RequestType,
+    [property: JsonPropertyName("status")] string Status,
+    [property: JsonPropertyName("createdAt")] DateTimeOffset CreatedAt,
+    [property: JsonPropertyName("submittedRequest")] L1SubmittedRequestDto SubmittedRequest,
+    [property: JsonPropertyName("reviewResult")] L1MyRequestReviewResultDto? ReviewResult);
+
+public sealed record L1SubmittedRequestDto(
+    [property: JsonPropertyName("details")] string Details,
+    [property: JsonPropertyName("objectAddress")] L1AddressDto ObjectAddress);
+
+public sealed record L1MyRequestReviewResultDto(
+    [property: JsonPropertyName("decision")] string Decision,
+    [property: JsonPropertyName("decidedAt")] DateTimeOffset DecidedAt,
+    [property: JsonPropertyName("rejection")] L1MyRequestRejectionDto? Rejection);
+
+public sealed record L1MyRequestRejectionDto(
+    [property: JsonPropertyName("reason")] string Reason);
+
 public sealed record L1AddressDto(
     [property: JsonPropertyName("postalCode")] string PostalCode,
     [property: JsonPropertyName("region")] string Region,

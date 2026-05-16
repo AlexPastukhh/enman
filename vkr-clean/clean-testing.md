@@ -1,49 +1,115 @@
 # Clean Testing
 
-Status: draft
+Status: draft  
+Scope: testing strategy and verification material for VKR chapter 3
 
-## Цель тестирования
+## 1. Testing Goal
 
-Цель тестирования — подтвердить корректную работу базового клиентского сценария и проверку ограничений, связанных с аккаунтом, заявителем и заявкой.
+Testing confirms that the web application correctly handles business rules, API behavior, persistence, client-visible behavior and cross-layer user flows.
 
-## Интеграционные тесты
+The project separates test responsibility by layer:
 
-[IMPLEMENTED] Интеграционные тесты L1-среза проверяют совместную работу API, обработчиков команд и базы данных.
+```text
+Domain unit tests
+Server integration/API tests
+Client/component tests
+E2E tests
+Contract artifact checks
+```
 
-Проверенные сценарии:
+## 2. Domain Unit Tests
 
-- регистрация клиентского аккаунта;
-- создание заявителя-физического лица;
-- создание заявки;
-- сохранение ссылок между аккаунтом, заявителем и заявкой;
-- ошибка при повторной регистрации email;
-- ошибка при создании заявителя для отсутствующего аккаунта;
-- ошибка при создании заявки с отсутствующим заявителем;
-- ошибка при создании заявки с пустым описанием.
+Domain unit tests verify:
 
-## Проверка целостности данных
+```text
+- domain invariants;
+- state transitions;
+- invalid command no-write behavior;
+- request creation rules;
+- request review decisions such as approve/reject;
+- account and applicant entity rules.
+```
 
-Тесты подтверждают, что:
+## 3. Server Integration / API Tests
 
-- идентификаторы создаются базой данных;
-- заявитель связан с клиентским аккаунтом;
-- заявка связана с заявителем;
-- некорректные данные не приводят к успешному созданию сущности.
+Server integration/API tests verify:
 
-## Тестирование полной версии
+```text
+- application handlers;
+- endpoint behavior;
+- validation;
+- ProblemDetails / ServerError responses;
+- persistence effects;
+- session/auth behavior;
+- API contract behavior visible to frontend.
+```
 
-Для полной версии системы дополнительно нужно проверить:
+For L1 this includes scenarios such as:
 
-- вход сотрудника;
-- список заявок сотрудника;
-- взятие заявки в обработку;
-- одобрение заявки;
-- отклонение заявки;
-- запрет повторной обработки заявки;
-- создание проекта договора только после одобрения;
-- отправку email-уведомления после успешного события;
-- запрет доступа клиента к чужим заявкам и документам.
+```text
+- register client account;
+- login client account;
+- current user;
+- logout;
+- create individual applicant party;
+- create connection request;
+- validation and unauthorized cases.
+```
 
-## Вывод
+## 4. Client / Component Tests
 
-Текущие тесты подтверждают работоспособность реализованного базового среза. Для финальной версии ВКР необходимо дополнить тестирование сценариями сотрудника и документооборота, если они будут реализованы в коде.
+Client/component tests should verify detailed UI behavior:
+
+```text
+- labels and accessible controls;
+- form state;
+- deferred validation timing;
+- field errors;
+- disabled/enabled states;
+- DTO mapping;
+- ProblemDetails parsing;
+- error-code to message mapping.
+```
+
+## 5. E2E Tests
+
+E2E tests should verify critical cross-layer flows:
+
+```text
+browser
+-> React client
+-> HTTP API
+-> server/application/domain/persistence/session
+-> response
+-> visible result
+```
+
+E2E is useful for registration, login, applicant creation and request creation happy paths after corresponding UI is stable.
+
+## 6. Contract Artifact Checks
+
+The project also has contract-related checks:
+
+```text
+- OpenAPI artifact generation/check;
+- TypeScript API type generation/check;
+- generated semantic constants check;
+- Tools tests for artifact serialization/writer/checker;
+- API tests consuming generated contract artifacts where appropriate.
+```
+
+## 7. Testing Table For VKR
+
+| Test group | Purpose | Example checks | Result source |
+|---|---|---|---|
+| Domain unit | Domain invariants and transitions | approve/reject, no-write on invalid action | domain test files |
+| API integration | Endpoints, validation, persistence | register/login/applicant/request | integration test files |
+| Contract artifacts | OpenAPI/constants freshness | generate/check API and constants | Tools/tests/scripts |
+| Client/component | UI form behavior | validation, error mapping | future/current client tests |
+| E2E | Browser-to-server wiring | happy paths | Playwright tests |
+
+## 8. Diploma-Safe Formulation
+
+```text
+Тестирование строится по слоям. Доменный уровень проверяет бизнес-правила и переходы состояний, серверные интеграционные тесты проверяют API, валидацию и сохранение данных, клиентские тесты предназначены для проверки поведения форм и отображения ошибок, а E2E-тесты подтверждают прохождение критичных сценариев через браузер, frontend, HTTP API и серверную часть.
+```

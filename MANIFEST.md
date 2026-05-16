@@ -1,25 +1,48 @@
-# Manifest — enman-scenario-feedback-logout-sync-v1
+# MANIFEST
 
-## Add
-- planning/client/cross-cutting/CL-FEEDBACK-001-client-feedback-messages.md
-- planning/diagrams/scenario-ui-specs/SC-04-request-creation-ui.md
-- planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
-- planning/slices/SL-AUTH-003-logout.client.md
-- planning/slices/slice-scenario-flow-behavior-register.md
+Archive: `enman-vkr-sync-after-l1-client-baseline-v1.zip`
+
+Purpose: synchronize VKR documentation with the current L1 backend/client planning baseline.
+
+## Add / replace if missing
+
+```text
+planning/vkr-work-context-current.md
+vkr-clean/api-contract-and-client-server-sync.md
+vkr-clean/functional-specification.md
+vkr-clean/use-case-diagrams-plan.md
+vkr-clean/visuals-and-diagrams-plan.md
+vkr-clean/planning-to-vkr-extraction-map.md
+```
 
 ## Replace
-- planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
-- planning/diagrams/scenario-data/SC-04-request-creation-data.md
-- planning/diagrams/scenario-ui-specs/README.md
-- planning/diagrams/scenario-behavior-items/README.md
-- planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
-- planning/client/README.md
-- planning/client/cross-cutting/README.md
-- planning/slices/README.md
-- planning/slices/l1-slice-drafting-guide.md
-- planning/slices/slice-questions-register.md
-- planning/slices/slice-implementation-notes-register.md
-- planning/planning-doc-responsibility-map.md
+
+```text
+vkr-clean/README.md
+vkr-clean/vkr-materials-index.md
+vkr-clean/vkr-outline.md
+vkr-clean/clean-requirements.md
+vkr-clean/clean-architecture.md
+vkr-clean/clean-ui-description.md
+vkr-clean/clean-testing.md
+```
 
 ## Delete
-- none
+
+```text
+None.
+```
+
+## Deliberately not changed
+
+```text
+Source code
+planning/README.md
+planning/planning-workflow-current.md
+chapter-*.md
+presentation/*
+evidence-map.md
+clean-domain-model.md
+clean-database-design.md
+clean-results-and-future-work.md
+```

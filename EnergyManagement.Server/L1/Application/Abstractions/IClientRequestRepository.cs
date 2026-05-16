@@ -12,6 +12,11 @@ public interface IClientRequestRepository
         long clientAccountId,
         RequestStatus? status,
         CancellationToken cancellationToken);
+
+    Task<ClientRequestDetailsReadModel?> GetDetailsByIdAndClientAccountIdAsync(
+        long requestId,
+        long clientAccountId,
+        CancellationToken cancellationToken);
 }
 
 public sealed record ClientRequestSummaryReadModel(
@@ -27,3 +32,20 @@ public sealed record ClientRequestSummaryReadModel(
     string House,
     string? Building,
     string? Apartment);
+
+public sealed record ClientRequestDetailsReadModel(
+    long RequestId,
+    ClientRequestType RequestType,
+    RequestStatus Status,
+    DateTimeOffset CreatedAt,
+    string Details,
+    string PostalCode,
+    string Region,
+    string City,
+    string Street,
+    string House,
+    string? Building,
+    string? Apartment,
+    ReviewDecision? ReviewDecision,
+    DateTimeOffset? ReviewDecidedAt,
+    string? RejectionReason);

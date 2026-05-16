@@ -1,31 +1,71 @@
 # VKR Materials Index
 
-Status: draft
+Status: draft  
+Scope: navigation for clean VKR materials
 
-| Файл | Назначение | Статус | Комментарий |
-|---|---|---|---|
-| `README.md` | Назначение папки и границы чистых материалов | draft | Привязано к теме ООО «ЗСК» |
-| `vkr-materials-index.md` | Индекс материалов ВКР | draft | Обновлять при добавлении новых разделов |
-| `evidence-map.md` | Карта соответствия источников и чистых материалов | draft | Использовать для контроля происхождения формулировок |
-| `vkr-outline.md` | Структура будущей ВКР | draft | Можно адаптировать под методичку кафедры |
-| `terminology.md` | Термины предметной области и проекта | draft | Уже учитывает сетевую компанию и документооборот |
-| `chapter-1-problem-domain.md` | Предметная область, актуальность, проблема, цель и задачи | draft | Готово как основа главы 1 |
-| `chapter-2-requirements-and-design.md` | Требования и проектирование | draft | Разделяет реализованные и проектируемые функции |
-| `chapter-3-implementation.md` | Реализация, архитектура, БД, тестирование | draft | Основано на подтвержденном коде и текущей идее проекта |
-| `chapter-4-lifecycle-and-deployment.md` | Эксплуатация, внедрение, безопасность, развитие | draft | Готово как черновик главы 4 |
-| `clean-requirements.md` | Функциональные и нефункциональные требования | draft | Можно использовать для главы 2 |
-| `clean-use-cases.md` | Пользовательские сценарии | draft | Клиентские и сотруднические сценарии собраны отдельно |
-| `clean-data-requirements.md` | Входные, видимые и хранимые данные | draft | Подходит для описания данных и БД |
-| `clean-domain-model.md` | Доменная модель и жизненные циклы | draft | Учитывает заявки и договорные документы |
-| `clean-architecture.md` | Архитектура системы | draft | ASP.NET Core + React/TypeScript |
-| `clean-database-design.md` | Проектирование базы данных | draft | Описан реализованный L1 и целевое расширение |
-| `clean-ui-description.md` | Описание пользовательского интерфейса | draft | Подходит для главы 3 и слайдов |
-| `clean-testing.md` | Тестирование | draft | Есть материал по интеграционным тестам |
-| `clean-results-and-future-work.md` | Результаты и развитие | draft | Можно использовать в заключении |
+## 1. Entry Points
 
-## Что можно делать дальше
+| File | Purpose |
+|---|---|
+| `README.md` | Purpose and boundaries of `vkr-clean/` |
+| `vkr-materials-index.md` | Navigation index for VKR materials |
+| `vkr-outline.md` | Working structure of the VKR |
+| `evidence-map.md` | Source/evidence mapping for text claims |
+| `terminology.md` | Domain and technical terminology |
 
-1. Развернуть главы 1–4 в полноценный текст ВКР.
-2. Подготовить диаграммы: архитектура, модель данных, жизненный цикл заявки, жизненный цикл договорного документа.
-3. Подготовить финальную презентацию на 15–20 слайдов.
-4. Привести статусы `[IMPLEMENTED]`, `[DESIGNED]`, `[PLANNED]` в соответствие с фактическим кодом перед сдачей.
+## 2. Chapter Drafts
+
+| File | Purpose |
+|---|---|
+| `chapter-1-problem-domain.md` | Subject domain, problem, relevance, goal and tasks |
+| `chapter-2-requirements-and-design.md` | Requirements, scenarios, design and architecture draft |
+| `chapter-3-implementation.md` | Implementation, API, database, UI and testing draft |
+| `chapter-4-lifecycle-and-deployment.md` | Deployment, operation, limitations and future work draft |
+
+Chapter files are not the only source of truth. Update clean source files first, then expand chapters.
+
+## 3. Clean Source Files
+
+| File | Purpose |
+|---|---|
+| `clean-requirements.md` | Short functional and non-functional requirement summary |
+| `functional-specification.md` | Textual behavior specification: actors, preconditions, main flow, alternatives, postconditions |
+| `clean-use-cases.md` | Earlier use-case/scenario summary |
+| `use-case-diagrams-plan.md` | Use Case diagrams and explanatory text plan |
+| `clean-data-requirements.md` | Input, visible and stored data requirements |
+| `clean-domain-model.md` | Domain model and lifecycle explanations |
+| `clean-architecture.md` | Client-server architecture and design approach |
+| `api-contract-and-client-server-sync.md` | API contract, OpenAPI, generated constants and frontend/backend synchronization |
+| `clean-database-design.md` | Database design and persistence description |
+| `clean-ui-description.md` | User interface description |
+| `clean-testing.md` | Testing strategy and verification |
+| `clean-results-and-future-work.md` | Results and further development |
+
+## 4. Diagram And Planning Extraction Files
+
+| File | Purpose |
+|---|---|
+| `visuals-and-diagrams-plan.md` | Diagram list, placement and content plan |
+| `planning-to-vkr-extraction-map.md` | Mapping from planning/slices/API/testing docs to VKR sections |
+
+## 5. Related Working Files Outside `vkr-clean/`
+
+| File | Purpose |
+|---|---|
+| `planning/vkr-formulation-guide.md` | Internal wording guide |
+| `planning/vkr-work-context-current.md` | Current VKR context, implementation baseline and next steps |
+| `presentation/README.md` | Defense materials overview |
+| `presentation/slide-outline.md` | Slide structure |
+| `presentation/speech-draft.md` | Speech draft |
+| `presentation/demo-script.md` | Demo plan |
+| `presentation/visuals-needed.md` | Visuals needed for defense |
+
+## 6. Current Next Steps
+
+```text
+1. Use this index and planning/vkr-work-context-current.md as entry points.
+2. Build diagrams from visuals-and-diagrams-plan.md and use-case-diagrams-plan.md.
+3. Expand chapter 2 from functional-specification.md, clean-architecture.md and api-contract-and-client-server-sync.md.
+4. Expand chapter 3 from clean-ui-description.md, clean-testing.md and repo evidence.
+5. Before final chapter text, recheck repo evidence for each implemented claim.
+```

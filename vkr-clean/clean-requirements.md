@@ -1,66 +1,83 @@
 # Clean Requirements
 
-Status: draft
+Status: draft  
+Scope: short requirement summary for VKR chapter 2
 
-## Функциональные требования
+This file is a summary. Detailed behavior is described in:
 
-### Клиент
+```text
+vkr-clean/functional-specification.md
+```
 
-[IMPLEMENTED] Клиент может зарегистрироваться в системе.
+## 1. Functional Areas
 
-[IMPLEMENTED] Клиент может войти в систему.
+The system is designed around:
 
-[IMPLEMENTED] Клиент может создать данные заявителя-физического лица.
+```text
+client account
+applicant party
+connection request
+employee review
+document/agreement preparation
+notification and further document workflow
+```
 
-[IMPLEMENTED] Клиент может подать заявку, указав заявителя, описание и адрес объекта.
+## 2. Client Capabilities
 
-[DESIGNED] Клиент может просматривать список собственных заявок и их статусы.
+```text
+- registration of a client account;
+- login to the system;
+- current user/session loading;
+- logout;
+- creation of an individual applicant party;
+- creation of a connection request;
+- later viewing of own requests, statuses and details;
+- later viewing of related documents and notifications.
+```
 
-[DESIGNED] Клиент может открыть детали собственной заявки.
+The final diploma text should describe only the implemented screens as implemented and leave remaining screens as designed or planned until repo evidence confirms them.
 
-[PLANNED] Клиент получает email-уведомление после изменения статуса заявки или создания проекта договора.
+## 3. Employee Capabilities
 
-[PLANNED] Клиент может просматривать подготовленные документы и договорные предложения.
+```text
+- viewing incoming client requests;
+- opening request details;
+- checking request and applicant data;
+- approving a request;
+- rejecting a request with feedback when needed;
+- preparing an agreement/document after approval;
+- triggering or observing client notifications.
+```
 
-### Сотрудник
+Important design rule:
 
-[DESIGNED] Сотрудник может просматривать список клиентских заявок.
+```text
+approval of a request and creation of an agreement/document should remain separate actions unless the final implementation intentionally couples them.
+```
 
-[DESIGNED] Сотрудник может взять заявку в обработку.
+## 4. Non-Functional Requirements
 
-[DESIGNED] Сотрудник может вручную проверить заявку.
+```text
+- web access through browser;
+- client-server architecture;
+- separation of frontend and backend responsibilities;
+- typed API communication between frontend and backend;
+- stable handling of API errors;
+- storage in relational database;
+- role-based access direction for client and employee operations;
+- protection of client data from unauthorized access;
+- maintainability through layered architecture;
+- testability through separated domain, API, client and E2E testing layers.
+```
 
-[DESIGNED] Сотрудник может одобрить заявку.
+## 5. Data And Behavior Constraints
 
-[DESIGNED] Сотрудник может отклонить заявку с указанием причины.
-
-[DESIGNED] Сотрудник может создать проект договора или документа после одобрения заявки.
-
-[PLANNED] Сотрудник может отправить клиенту уведомление о подготовленном документе.
-
-## Нефункциональные требования
-
-[DESIGNED] Система должна быть web-приложением с клиент-серверной архитектурой.
-
-[IMPLEMENTED] Backend реализуется на ASP.NET Core.
-
-[IMPLEMENTED] Frontend реализуется на React и TypeScript.
-
-[IMPLEMENTED] Для хранения данных используется база данных SQL Server через Entity Framework Core.
-
-[DESIGNED] Система должна разграничивать действия клиента и сотрудника.
-
-[DESIGNED] Клиент должен иметь доступ только к собственным данным.
-
-[DESIGNED] Пароли должны храниться не в открытом виде.
-
-[PLANNED] Для уведомлений должен быть предусмотрен сервис отправки email.
-
-## Ограничения поведения
-
-- Заявка не может быть создана без заявителя.
-- Заявитель должен принадлежать клиенту, который подает заявку.
-- Одобренная или отклоненная заявка не должна повторно обрабатываться в базовой версии.
-- Проект договора или документа должен создаваться только после одобрения заявки.
-- Отклонение заявки должно сопровождаться причиной или комментарием, если это требуется регламентом.
-- Email-уведомление не должно отправляться до успешного сохранения результата обработки.
+```text
+- a request must be connected with an applicant party;
+- applicant data should not be accidentally mutated by editing request-local form data;
+- a client should not access another client's requests;
+- an already processed request should not be processed again;
+- rejection feedback is a behavior/policy point and should be clarified by the final business rule;
+- document/agreement preparation starts from an approved request context;
+- notification should not be sent before the relevant server-side operation is successfully saved.
+```

@@ -225,6 +225,24 @@ public class L1DbContext : DbContext
                 .HasColumnName("CreatedAt")
                 .IsRequired();
 
+            clientRequest.Property<string?>("ReviewDecision")
+                .HasColumnName("ReviewDecision")
+                .HasMaxLength(50)
+                .IsRequired(false);
+
+            clientRequest.Property<DateTimeOffset?>("ReviewDecidedAt")
+                .HasColumnName("ReviewDecidedAt")
+                .IsRequired(false);
+
+            clientRequest.Property<long?>("ReviewReviewerId")
+                .HasColumnName("ReviewReviewerId")
+                .IsRequired(false);
+
+            clientRequest.Property<string?>("ReviewRejectionReason")
+                .HasColumnName("ReviewRejectionReason")
+                .HasMaxLength(RejectionFeedback.MaxLength)
+                .IsRequired(false);
+
             clientRequest.HasOne<ApplicantParty>()
                 .WithMany()
                 .HasForeignKey(x => x.ApplicantPartyId)

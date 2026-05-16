@@ -226,6 +226,41 @@ public sealed class L1Controller : ProjectController
     }
 
     [Authorize]
+    [HttpGet("requests/{requestId:long}", Name = "L1GetMyRequestDetails")]
+    [ProducesResponseType(typeof(L1MyRequestDetailsDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetMyRequestDetails(
+        long requestId,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (!TryGetCurrentL1AccountId(out var accountId))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _sender.Send(
+                new L1GetMyRequestDetailsQuery(accountId, requestId),
+                cancellationToken);
+
+            if (result.HasNoValue)
+            {
+                return NotFound();
+            }
+
+            return Ok(ToMyRequestDetailsDto(result.Value));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "L1 get my request details failed.");
+            return ProblemDetailsWithExceptionDev(ex);
+        }
+    }
+
+    [Authorize]
     [HttpPost("requests", Name = "L1CreateConnectionRequest")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
@@ -355,6 +390,35 @@ public sealed class L1Controller : ProjectController
                 request.ObjectAddress.House,
                 request.ObjectAddress.Building,
                 request.ObjectAddress.Apartment));
+    }
+
+    private static L1MyRequestDetailsDto ToMyRequestDetailsDto(
+        L1MyRequestDetailsResponse request)
+    {
+        return new L1MyRequestDetailsDto(
+            request.RequestId,
+            request.RequestType.ToString(),
+            request.Status.ToString(),
+            request.CreatedAt,
+            new L1SubmittedRequestDto(
+                request.SubmittedRequest.Details,
+                new L1AddressDto(
+                    request.SubmittedRequest.ObjectAddress.PostalCode,
+                    request.SubmittedRequest.ObjectAddress.Region,
+                    request.SubmittedRequest.ObjectAddress.City,
+                    request.SubmittedRequest.ObjectAddress.Street,
+                    request.SubmittedRequest.ObjectAddress.House,
+                    request.SubmittedRequest.ObjectAddress.Building,
+                    request.SubmittedRequest.ObjectAddress.Apartment)),
+            request.ReviewResult is null
+                ? null
+                : new L1MyRequestReviewResultDto(
+                    request.ReviewResult.Decision.ToString(),
+                    request.ReviewResult.DecidedAt,
+                    request.ReviewResult.Rejection is null
+                        ? null
+                        : new L1MyRequestRejectionDto(
+                            request.ReviewResult.Rejection.Reason)));
     }
 
     private ActionResult ToActionResult<TValue>(

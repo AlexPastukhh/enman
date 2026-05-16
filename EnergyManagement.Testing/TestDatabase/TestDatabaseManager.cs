@@ -105,12 +105,57 @@ public sealed class TestDatabaseManager
         {
             await EnsureL1ApplicantPartyCurrentVersionColumnAsync(cancellationToken);
             await EnsureL1ApplicantPartyVerificationStatusColumnAsync(cancellationToken);
+            await EnsureL1ClientRequestReviewColumnsAsync(cancellationToken);
             return;
         }
 
         await using var context = new L1DbContext(_connectionString);
         var databaseCreator = context.GetService<IRelationalDatabaseCreator>();
         await databaseCreator.CreateTablesAsync(cancellationToken);
+        await EnsureL1ClientRequestReviewColumnsAsync(cancellationToken);
+    }
+
+    private async Task EnsureL1ClientRequestReviewColumnsAsync(CancellationToken cancellationToken)
+    {
+        const string query = """
+            IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL
+               AND COL_LENGTH(N'dbo.L1ClientRequests', N'ReviewDecision') IS NULL
+            BEGIN
+                ALTER TABLE dbo.L1ClientRequests
+                ADD ReviewDecision nvarchar(50) NULL;
+            END
+
+            IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL
+               AND COL_LENGTH(N'dbo.L1ClientRequests', N'ReviewDecidedAt') IS NULL
+            BEGIN
+                ALTER TABLE dbo.L1ClientRequests
+                ADD ReviewDecidedAt datetimeoffset NULL;
+            END
+
+            IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL
+               AND COL_LENGTH(N'dbo.L1ClientRequests', N'ReviewReviewerId') IS NULL
+            BEGIN
+                ALTER TABLE dbo.L1ClientRequests
+                ADD ReviewReviewerId bigint NULL;
+            END
+
+            IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL
+               AND COL_LENGTH(N'dbo.L1ClientRequests', N'ReviewRejectionReason') IS NULL
+            BEGIN
+                ALTER TABLE dbo.L1ClientRequests
+                ADD ReviewRejectionReason nvarchar(1000) NULL;
+            END
+            """;
+
+        await using var connection = new SqlConnection(_connectionString);
+        await connection.OpenAsync(cancellationToken);
+
+        await using var command = new SqlCommand(query, connection)
+        {
+            CommandType = CommandType.Text
+        };
+
+        await command.ExecuteNonQueryAsync(cancellationToken);
     }
 
     private async Task EnsureL1ApplicantPartyCurrentVersionColumnAsync(CancellationToken cancellationToken)

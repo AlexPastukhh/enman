@@ -266,6 +266,119 @@ public sealed class L1SliceIntegrationTests
     }
 
     [Fact]
+    public async Task GetMyRequestDetails_WithoutAuth_ReturnsUnauthorized()
+    {
+        var response = await _factory.CreateClient().GetAsync("/api/l1/requests/1");
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode((int)HttpStatusCode.Unauthorized);
+    }
+
+    [Fact]
+    public async Task GetMyRequestDetails_ForOwnInReviewRequest_ReturnsSubmittedRequestData()
+    {
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+        await CreateConnectionRequestAsync(account.AccountId);
+        var row = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
+
+        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var details = await GetMyRequestDetailsAsync(client, row!.Id);
+
+        details.RequestId.Should().Be(row.Id);
+        details.RequestType.Should().Be("Connection");
+        details.Status.Should().Be("InReview");
+        details.CreatedAt.Should().NotBe(default);
+        details.SubmittedRequest.Details.Should().Be(RequestDetails);
+        details.SubmittedRequest.ObjectAddress.City.Should().Be(City);
+        details.SubmittedRequest.ObjectAddress.Street.Should().Be(Street);
+        details.ReviewResult.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task GetMyRequestDetails_ForMissingRequest_ReturnsNotFound()
+    {
+        var account = await RegisterAccountAsync();
+        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+
+        var response = await client.GetAsync("/api/l1/requests/987654");
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode((int)HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public async Task GetMyRequestDetails_ForAnotherAccountRequest_ReturnsNotFound()
+    {
+        var accountWithRequest = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(accountWithRequest.AccountId);
+        await CreateConnectionRequestAsync(accountWithRequest.AccountId);
+        var row = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
+
+        var anotherAccount = await RegisterAccountAsync();
+        var client = AuthenticatedL1Client(anotherAccount.AccountId, anotherAccount.Email);
+
+        var response = await client.GetAsync($"/api/l1/requests/{row!.Id}");
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode((int)HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public async Task GetMyRequestDetails_ForRejectedRequest_ReturnsFeedbackAndSubmittedData()
+    {
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+        await CreateConnectionRequestAsync(account.AccountId);
+        var row = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
+        var decidedAt = DateTimeOffset.UtcNow.AddMinutes(-5);
+        const string rejectionReason = "Need more object address details.";
+        await UpdateRequestReviewAsync(
+            row!.Id,
+            status: "Rejected",
+            decision: "Rejected",
+            decidedAt,
+            rejectionReason);
+
+        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var details = await GetMyRequestDetailsAsync(client, row.Id);
+
+        details.Status.Should().Be("Rejected");
+        details.SubmittedRequest.Details.Should().Be(RequestDetails);
+        details.SubmittedRequest.ObjectAddress.City.Should().Be(City);
+        details.ReviewResult.Should().NotBeNull();
+        details.ReviewResult!.Decision.Should().Be("Rejected");
+        details.ReviewResult.DecidedAt.Should().BeCloseTo(decidedAt, TimeSpan.FromSeconds(1));
+        details.ReviewResult.Rejection.Should().NotBeNull();
+        details.ReviewResult.Rejection!.Reason.Should().Be(rejectionReason);
+    }
+
+    [Fact]
+    public async Task GetMyRequestDetails_ForApprovedRequest_ReturnsApprovedDecision()
+    {
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+        await CreateConnectionRequestAsync(account.AccountId);
+        var row = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
+        var decidedAt = DateTimeOffset.UtcNow.AddMinutes(-3);
+        await UpdateRequestReviewAsync(
+            row!.Id,
+            status: "Approved",
+            decision: "Approved",
+            decidedAt,
+            rejectionReason: null);
+
+        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var details = await GetMyRequestDetailsAsync(client, row.Id);
+
+        details.Status.Should().Be("Approved");
+        details.ReviewResult.Should().NotBeNull();
+        details.ReviewResult!.Decision.Should().Be("Approved");
+        details.ReviewResult.DecidedAt.Should().BeCloseTo(decidedAt, TimeSpan.FromSeconds(1));
+        details.ReviewResult.Rejection.Should().BeNull();
+    }
+
+    [Fact]
     public async Task L1Login_WithInvalidPassword_ReturnsValidationProblem()
     {
         var email = UniqueEmail();
@@ -572,6 +685,18 @@ public sealed class L1SliceIntegrationTests
             ?? throw new InvalidOperationException("L1 my requests response body was empty.");
     }
 
+    private async Task<L1MyRequestDetailsDto> GetMyRequestDetailsAsync(
+        HttpClient client,
+        long requestId)
+    {
+        var response = await client.GetAsync($"/api/l1/requests/{requestId}");
+
+        await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
+
+        return await response.Content.ReadFromJsonAsync<L1MyRequestDetailsDto>()
+            ?? throw new InvalidOperationException("L1 my request details response body was empty.");
+    }
+
     private async Task<L1CreateIndividualApplicantPartyResponse> CreateApplicantPartyAsync(long accountId)
     {
         var response = await AuthenticatedL1Client(accountId).PostAsJsonAsync(
@@ -782,6 +907,43 @@ public sealed class L1SliceIntegrationTests
             """,
             requestId,
             createdAt);
+    }
+
+    private async Task UpdateRequestReviewAsync(
+        long requestId,
+        string status,
+        string decision,
+        DateTimeOffset decidedAt,
+        string? rejectionReason)
+    {
+        await using var connection = new SqlConnection(_fixture.ConnectionString);
+        await connection.OpenAsync();
+
+        await using var command = new SqlCommand(
+            """
+            UPDATE dbo.L1ClientRequests
+            SET Status = @status,
+                ReviewDecision = @decision,
+                ReviewDecidedAt = @decidedAt,
+                ReviewReviewerId = @reviewerId,
+                ReviewRejectionReason = @rejectionReason
+            WHERE Id = @id
+            """,
+            connection)
+        {
+            CommandType = CommandType.Text
+        };
+
+        command.Parameters.AddWithValue("@id", requestId);
+        command.Parameters.AddWithValue("@status", status);
+        command.Parameters.AddWithValue("@decision", decision);
+        command.Parameters.AddWithValue("@decidedAt", decidedAt);
+        command.Parameters.AddWithValue("@reviewerId", 5);
+        command.Parameters.AddWithValue(
+            "@rejectionReason",
+            rejectionReason is null ? DBNull.Value : rejectionReason);
+
+        await command.ExecuteNonQueryAsync();
     }
 
     private async Task<SqlDataReader> ExecuteReaderAsync(string query, long id)

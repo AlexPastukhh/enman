@@ -28,6 +28,7 @@ Current repo evidence says:
 ```text
 - L1 backend/API/session/persistence flows are implemented for register/login/current-user/logout/applicant/request.
 - My Requests list server read is implemented for current-account summaries with optional status filter.
+- Own request details server read is implemented for current-account scoped request details and review result.
 - Generated OpenAPI TypeScript types include L1 paths/types.
 - Shared L1 API wrappers exist for register/login/current-user/logout/applicant create.
 - Shared fetch/ProblemDetails/form error mapping exists.
@@ -42,7 +43,7 @@ Current repo evidence says:
 Current applicant read after refresh
 -> Request Creation UI with applicant fields/prefill/clear behavior
 -> My Requests client UI
--> Own Request Details read/client flow
+-> Own Request Details client UI
 -> Browser E2E happy paths
 ```
 
@@ -57,6 +58,7 @@ Current applicant read after refresh
 | NOTE-REQ-UI-002 | future `SL-REQ-001.client` | SC-04 | Client/UI | applicant-context, current-active | Request submit should not send ApplicantPartyId or create request-local applicant identity. It uses server/current active applicant after applicant data is accepted. | Prevents spoofing and keeps server-selected applicant context. | future request `.client.md` | open |
 | NOTE-REQ-UI-003 | future `SL-REQ-001.client` | SC-04 | Client/UI | command-success, navigation | For command flows where returned entity data is not needed, HTTP success is enough; client shows success outcome and moves to read context. | Prevents client depending on unnecessary response body. | future request `.client.md` | open |
 | NOTE-REQ-LIST-001 | `SL-REQ-002` / future My Requests client sidecar | SC-05 | Server/API + Client/UI | list, status, summaries | `GET /api/l1/requests` returns current-account request summaries, optional status filter and newest-first ordering. Client UI should consume list data and leave selected request details to `SL-REQ-003`. | Keeps My Requests list and own request details split cleanly. | future My Requests `.client.md` | open |
+| NOTE-REQ-DETAILS-001 | `SL-REQ-003` / future request details client sidecar | SC-05 | Server/API + Client/UI | details, review-result, feedback | `GET /api/l1/requests/{requestId}` returns current-account scoped submitted request details and review result when available; missing and not-owned both return 404. | Gives the future details UI stable read data without leaking other clients' request existence. | future request details `.client.md` | open |
 | NOTE-APPL-CLIENT-002 | future `SL-APPL-002` | SC-10 | Client/UI | read-current, refresh | Current applicant UI uses local post-submit state only. Stable Account page after refresh needs current applicant read endpoint/client query/read model. | Required before claiming full persisted Account page applicant state. | future `L1-APPLICANT-PARTY-READ-CURRENT` | open |
 | NOTE-CLIENT-AUTH-001 | multiple client slices | cross-scenario | Client/Server shared support | csrf, auth, cookie | Unsafe requests with cookie auth need antiforgery token fetch/store/attach/refetch on auth/session changes. | Affects all unsafe client mutations. | CC-CSRF-001 / future implementation | open |
 | NOTE-CLIENT-ERRORS-001 | multiple client slices | cross-scenario | Client/UI | error-mapping | Server validation/problem responses are mapped to field-level and global/form-level client messages through shared helpers. | Affects user feedback and client tests. | shared support + client files | open |

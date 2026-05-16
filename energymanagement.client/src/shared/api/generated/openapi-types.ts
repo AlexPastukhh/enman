@@ -282,6 +282,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/l1/requests/{requestId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["L1GetMyRequestDetails"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -355,6 +371,25 @@ export interface components {
             email?: string | null;
             password?: string | null;
         };
+        L1MyRequestDetailsDto: {
+            /** Format: int64 */
+            requestId?: number;
+            requestType?: string | null;
+            status?: string | null;
+            /** Format: date-time */
+            createdAt?: string;
+            submittedRequest?: components["schemas"]["L1SubmittedRequestDto"];
+            reviewResult?: components["schemas"]["L1MyRequestReviewResultDto"];
+        };
+        L1MyRequestRejectionDto: {
+            reason?: string | null;
+        };
+        L1MyRequestReviewResultDto: {
+            decision?: string | null;
+            /** Format: date-time */
+            decidedAt?: string;
+            rejection?: components["schemas"]["L1MyRequestRejectionDto"];
+        };
         L1MyRequestSummaryDto: {
             /** Format: int64 */
             requestId?: number;
@@ -373,6 +408,10 @@ export interface components {
             /** Format: int64 */
             accountId?: number;
             email?: string | null;
+        };
+        L1SubmittedRequestDto: {
+            details?: string | null;
+            objectAddress?: components["schemas"]["L1AddressDto"];
         };
         LoginDto: {
             email?: string | null;
@@ -822,6 +861,63 @@ export interface operations {
             };
             /** @description Client Error */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    L1GetMyRequestDetails: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                requestId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["L1MyRequestDetailsDto"];
+                    "application/json": components["schemas"]["L1MyRequestDetailsDto"];
+                    "text/json": components["schemas"]["L1MyRequestDetailsDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            /** @description Not Found */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
