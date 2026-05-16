@@ -1,6 +1,6 @@
 # Planning Document Responsibility Map
 
-Status: current responsibility map / GitHub line-link workflow synchronized
+Status: current responsibility map / architecture boundary and ApplicantParty one-page direction synchronized
 
 ## 1. Core Rule
 
@@ -20,7 +20,16 @@ When a local file contains information that affects future work, synchronize it 
 | `planning/planning-doc-responsibility-map.md` | Ownership map for planning documentation |
 | `planning/replacement-file-generation-guide.md` | Archive/package generation rules for manual repo application |
 
-## 3. Scenario Source Responsibility
+## 3. Architecture Responsibility
+
+| File / folder | Responsibility |
+|---|---|
+| `planning/architecture/` | Architecture-level boundary maps and transition notes that are broader than one slice/API/test workflow |
+| `planning/architecture/backend-legacy-and-l1-boundaries.md` | Backend legacy/L1 boundary map for cleanup, test classification, handler validation boundary and thesis/diploma architecture explanation |
+
+Architecture docs do not replace slice docs, scenario sources, API contract docs, testing docs or ADRs.
+
+## 4. Scenario Source Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -33,7 +42,7 @@ When a local file contains information that affects future work, synchronize it 
 | `planning/diagrams/scenario-behavior-items/` | Scenario-derived, UI-scenario-derived and concern-derived behavior items |
 | `planning/diagrams/scenario-questions-register.md` | Scenario/domain questions that can change scenario behavior, DATA, UI requirements or diagrams |
 
-## 4. Slice Discovery Responsibility
+## 5. Slice Discovery Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -53,7 +62,7 @@ Scenario Flow and Behavior Items for slices come from `slice-scenario-flow-behav
 
 Questions/extension/implementation registers do not replace scenario source files.
 
-## 5. Client Planning Responsibility
+## 6. Client Planning Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -62,7 +71,7 @@ Questions/extension/implementation registers do not replace scenario source file
 
 Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 
-## 6. API / Testing / ADR Responsibility
+## 7. API / Testing / ADR Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -71,7 +80,7 @@ Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 | `planning/testing/` | Cross-slice testing principles, E2E workflow, test object patterns |
 | `planning/adr/` | ADR workflow, architecture decision notes and ADR candidates |
 
-## 7. Evidence Link Responsibility
+## 8. Evidence Link Responsibility
 
 Repo-grounded line-link rules belong in:
 
@@ -81,7 +90,7 @@ planning/repo-grounded-github-line-links-workflow.md
 
 Other workflow docs may link to that file, but should not duplicate detailed line-link mechanics unless needed for a local role checklist.
 
-## 8. Responsibility Decision Heuristic
+## 9. Responsibility Decision Heuristic
 
 ```text
 1. scenario text/DATA/UI/behavior source -> planning/diagrams/scenario-*/
@@ -91,11 +100,12 @@ Other workflow docs may link to that file, but should not duplicate detailed lin
 5. slice-wide question overview -> planning/slices/slice-questions-register.md
 6. extension/change pressure -> planning/slices/slice-extension-points-register.md
 7. future implementation/client/testing note -> planning/slices/slice-implementation-notes-register.md
-8. agent scope/prompt safety rule -> planning/agent-scope-boundaries-and-prompt-safety.md
-9. repo-grounded evidence line links -> planning/repo-grounded-github-line-links-workflow.md
-10. client-wide UI/client convention -> planning/client/cross-cutting/
-11. client/server contract split -> planning/api/client-server-contract-principles.md
-12. test layer boundaries / E2E workflow -> planning/testing/
-13. accepted/current architecture decision -> architecture-decision-notes.md
-14. possible future full ADR -> adr-candidates.md
+8. architecture-level cleanup / legacy-current boundary -> planning/architecture/
+9. agent scope/prompt safety rule -> planning/agent-scope-boundaries-and-prompt-safety.md
+10. repo-grounded evidence line links -> planning/repo-grounded-github-line-links-workflow.md
+11. client-wide UI/client convention -> planning/client/cross-cutting/
+12. client/server contract split -> planning/api/client-server-contract-principles.md
+13. test layer boundaries / E2E workflow -> planning/testing/
+14. accepted/current architecture decision -> architecture-decision-notes.md
+15. possible future full ADR -> adr-candidates.md
 ```

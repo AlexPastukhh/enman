@@ -1,6 +1,6 @@
 # Slice Planning Index
 
-Status: current slice-planning navigation index / validation and My Requests filters synchronized
+Status: current slice-planning navigation index / validation, My Requests filters and ApplicantParty one-page direction synchronized
 
 ## 1. Core Rule
 
@@ -48,13 +48,21 @@ planning/slices/l1/README.md
 ## 4. ApplicantParty Target Direction
 
 ```text
-- many saved ApplicantParties;
-- one current/default template per applicant type;
-- current/default = prefill/default selection;
-- first of type may initialize default;
-- additional same-type create does not switch default;
-- explicit default switch is separate slice;
+- one Applicant Parties page / section is the planning model;
+- do not split current docs into separate "Account page applicant section" and "My Applicant Parties page" user scenarios;
+- top page area shows current/default ApplicantParty templates by applicant type;
+- current/default templates are visually outlined/highlighted;
+- below, the page shows other saved ApplicantParties that are not selected as current/default;
+- the same page owns add ApplicantParty action/form;
+- the same page will later own explicit make default/current action;
+- many saved ApplicantParties can exist over time;
+- one current/default template may exist per applicant type;
+- current/default = prefill/default selection, not replacement;
+- first of type may initialize default/current;
+- additional same-type create does not switch default/current silently;
+- explicit default switch is separate future slice;
 - ApplicantParty creation is additive;
+- existing requests are not changed by ApplicantParty create or default/current changes;
 - request creation target uses Existing/New applicant context.
 ```
 

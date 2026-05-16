@@ -1,6 +1,6 @@
 # Planning Index
 
-Status: current / validation and My Requests filters synchronized
+Status: current / validation, My Requests filters, ApplicantParty one-page direction and backend cleanup boundary synchronized
 
 ## 1. Start Here
 
@@ -37,25 +37,45 @@ planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
 ```
 
+For backend cleanup / legacy-to-L1 boundary work also read:
+
+```text
+planning/architecture/README.md
+planning/architecture/backend-legacy-and-l1-boundaries.md
+planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
+planning/api/api-error-contract.md
+```
+
 ## 2. Current Applicant/Request Target Direction
 
 ```text
 ApplicantParty:
-- many saved ApplicantParties over time;
-- one current/default template per applicant type;
+- one Applicant Parties page / section is the planning model;
+- do not split current docs into two user scenarios such as "Account page applicant section" and "My Applicant Parties page";
+- top page area shows current/default ApplicantParty templates by applicant type;
+- current/default templates are visually outlined/highlighted;
+- below the default/current area, the page shows other saved ApplicantParties that are not selected as default/current;
+- the same page owns add ApplicantParty action/form;
+- the same page will later own explicit make default/current action;
+- many saved ApplicantParties can exist over time;
+- one current/default template may exist per applicant type;
 - default/current is prefill/default selection only;
-- first of type may initialize default;
-- additional same-type create does not switch default silently;
-- create is additive, not replacement.
+- first of type may initialize default/current;
+- additional same-type create does not switch default/current silently;
+- create is additive, not replacement;
+- existing requests do not change when ApplicantParty is created or default/current changes.
+```
+
+Current implementation may still contain narrow/current-active names. When docs describe target planning, use the target direction above. When docs describe existing code, label it as current implementation evidence.
 
 Request creation target:
+
+```text
 - explicit applicant context: Existing ApplicantPartyId or New applicant data;
 - Existing can use any owned saved ApplicantParty;
 - New creates ApplicantParty + ConnectionRequest atomically;
 - command success has no required body for first cut.
 ```
-
-Current implementation may still contain narrow/current-active names. When docs describe target planning, use the target direction above. When docs describe existing code, label it as current implementation evidence.
 
 ## 3. Current My Requests Direction
 
@@ -97,7 +117,28 @@ Application handlers own ownership/account/transaction behavior.
 Domain owns invariants as final guard.
 ```
 
-## 5. Agent Scope Rule
+## 5. Backend Cleanup Boundary
+
+Use:
+
+```text
+planning/architecture/backend-legacy-and-l1-boundaries.md
+```
+
+before backend cleanup, legacy removal/isolation, post-FluentValidation handler cleanup, test classification or thesis/diploma architecture writing.
+
+This file explains:
+
+```text
+- current L1 runtime surface;
+- legacy runtime surface;
+- shared/current/future domain primitives;
+- PasswordHash vs Password boundary;
+- handler value-object creation after FluentValidation;
+- current vs legacy test classification.
+```
+
+## 6. Agent Scope Rule
 
 Prompts for implementation chats must not allow changing docs, domain code or generated artifacts unless the user explicitly asked for that scope.
 
@@ -109,10 +150,11 @@ planning/agent-scope-boundaries-and-prompt-safety.md
 
 Reading docs is required. Mutating docs is not allowed unless the task says so.
 
-## 6. Key Navigation
+## 7. Key Navigation
 
 ```text
 planning/api/README.md
+planning/architecture/README.md
 planning/client/README.md
 planning/slices/README.md
 planning/testing/README.md
