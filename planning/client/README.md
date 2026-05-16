@@ -1,14 +1,43 @@
 # Client Planning Index
 
-Status: current client planning navigation / My Requests sidecars synchronized
+Status: current client planning navigation / My Requests filters synchronized  
+Scope: client-wide UI/client conventions, cross-cutting client behavior and current L1 client implementation state
 
 ## 1. Purpose
 
 This folder contains client-wide planning docs that are broader than a single slice sidecar.
 
-Concrete client feature flow/status belongs in the matching `.client.md` slice sidecar.
+It complements:
 
-## 2. Current Files
+```text
+planning/slices/client-architecture-principles.md
+planning/slices/client-component-discovery-guide.md
+planning/slices/l1-slice-drafting-guide.md
+planning/diagrams/scenario-ui-specs/
+planning/slices/*.client.md
+planning/slices/l1/*.client.md
+```
+
+## 2. Responsibility
+
+This folder owns:
+
+```text
+- client-wide UI conventions;
+- client-wide accessibility conventions;
+- client-wide styling conventions;
+- client-wide form validation conventions;
+- client-wide error mapping conventions;
+- client-wide feedback/message conventions;
+- client-wide command success conventions;
+- client behavior conventions reused by multiple `.client.md` sidecars.
+```
+
+It does not own concrete scenario behavior, concrete slice implementation flow, backend API contracts or domain rules.
+
+Concrete client feature flow and status belongs in the matching `.client.md` slice sidecar.
+
+## 3. Current Files
 
 ```text
 planning/client/cross-cutting/README.md
@@ -20,16 +49,19 @@ planning/client/cross-cutting/CL-STYLING-001-css-modules-tokens.md
 planning/client/cross-cutting/CL-A11Y-001-accessibility-and-aria.md
 ```
 
-## 3. Current L1 Client State
+## 4. Current L1 Client State
 
 Current repo/planning state:
 
 ```text
+- L1 backend/API/persistence/session flows are implemented for register/login/current-user/logout/applicant/request commands.
 - Generated OpenAPI TypeScript support exists.
+- Shared L1 API wrappers exist for auth/current-user/logout, applicant create and My Requests list.
 - Shared fetch/ProblemDetails/form-error mapping exists.
-- First-stage client feature flows exist for registration, login, current-user session bootstrap, applicant create and My Requests list.
-- My Requests details and filters are planned/implementation-ready sidecars.
-- Request creation UI remains future work.
+- First-stage client feature flows exist for registration, login, current-user session bootstrap, applicant create on Account page and My Requests list.
+- My Requests filters are implementation-ready planning; status is the first supported filter.
+- My Request Details is implementation-ready planning; details route/API wrapper are not confirmed implemented in current client code.
+- Request creation UI is future work and must consume SC-04 UI/behavior sources.
 ```
 
 Implemented first-stage client sidecars:
@@ -52,23 +84,54 @@ planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md
 future planning/slices/SL-REQ-001-create-connection-request.client.md
 ```
 
-## 4. My Requests Client Architecture Direction
+## 5. Current Remaining Client Work
 
 ```text
-My Requests list page owns URL query params.
-Filter feature owns filter controls and parse/serialize helpers.
-Entity query accepts MyRequestsFilters.
-Shared API maps supported filters to query string.
-Details route owns requestId route param.
+1. Logout UI/cache/navigation.
+2. Current applicant read after refresh / target applicant template model reconciliation.
+3. Request creation form UI with applicant fields/prefill/clear behavior from SC-04.
+4. My Requests filters: status first, URL state on page, filter UI controlled by page.
+5. My Request Details page.
+6. Client/component tests for implemented feature flows.
+7. Browser E2E happy paths after UI/read flows are stable.
+8. CSRF/antiforgery handling for unsafe browser commands when that cross-cutting slice is implemented.
 ```
 
-Status is the first filter. Future request type/date/search filters should extend the filter model without moving URL ownership out of the page.
+## 6. Relationship To `planning/slices/*.client.md`
 
-## 5. Relationship To Scenario UI Specs
+Client-wide conventions live here.
+
+Concrete feature flow and status live in sidecars:
+
+```text
+planning/slices/*.client.md
+planning/slices/l1/*.client.md
+```
+
+A `.client.md` file should state:
+
+```text
+- feature UI behavior from scenario/UI sources;
+- architecture/folder-based Visual Client Implementation Flow;
+- generated OpenAPI types used;
+- generated constants/error codes used;
+- form value -> API DTO mapping;
+- ProblemDetails field/root error mapping;
+- feedback/message convention, if used;
+- command success convention, if used;
+- local questions/assumptions;
+- behavior coverage with source behavior IDs;
+- client/component/E2E verification plan;
+- follow-up slices.
+```
+
+## 7. Relationship To Scenario UI Specs
 
 Scenario UI specs describe what the user must see, understand, enter, confirm, correct or be prevented from doing.
 
 Client-wide conventions describe reusable implementation choices for realizing those UI outcomes.
+
+Do not convert a client implementation convention into a domain/API requirement unless a scenario explicitly needs that behavior.
 
 Use:
 
@@ -78,7 +141,7 @@ planning/slices/slice-scenario-flow-behavior-register.md
 
 before drafting a `.client.md` Behavior Coverage table.
 
-## 6. Concrete Client Sidecar Rule
+## 8. Concrete Client Sidecar Rule
 
 Do not create `.client.md` files in advance.
 
@@ -87,7 +150,6 @@ Create/update a `.client.md` only when concrete client work starts or when imple
 When concrete client work starts, read:
 
 ```text
-planning/agent-scope-boundaries-and-prompt-safety.md
 planning/slices/l1-slice-drafting-guide.md
 planning/slices/slice-scenario-flow-behavior-register.md
 planning/slices/client-architecture-principles.md

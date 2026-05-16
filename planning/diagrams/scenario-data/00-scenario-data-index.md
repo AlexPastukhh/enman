@@ -1,6 +1,6 @@
 # Scenario DATA Index
 
-Status: current / applicant-template-per-type and My Requests synchronized
+Status: current / applicant-template and My Requests synchronized
 
 Current relevant DATA files:
 
@@ -11,9 +11,9 @@ SC-10-applicant-data.md
 SC-10B-my-applicant-parties-data.md
 ```
 
-Rules:
+Key notes:
 
 ```text
-DATA files describe entered/seen/selected/filtered/referenced data.
-They do not define React component structure or backend implementation mechanics.
+SC-05-DATA-02 status is the first My Requests filter data item.
+Future request type/date/search filters must be added to SC-05 DATA before client sidecars implement them.
 ```

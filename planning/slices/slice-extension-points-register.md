@@ -1,6 +1,6 @@
 # Slice Extension Points Register
 
-Status: active / My Requests sidecars synchronized
+Status: active / validation and My Requests filters synchronized
 
 | ID | Area | Current direction | Status |
 |---|---|---|---|
@@ -15,5 +15,10 @@ Status: active / My Requests sidecars synchronized
 | `CP-APPL-DELETE-001` | management | delete/archive/hide semantics unresolved. | future review |
 | `CP-MYREQ-FILTER-001` | My Requests filters | status is first filter in extensible filter model. | accepted |
 | `CP-MYREQ-FILTER-002` | My Requests URL state | page owns URL query params; filter UI does not read location directly. | accepted |
-| `CP-MYREQ-FILTER-003` | future filters | requestType/date/search remain future until backend/source support exists. | future review |
+| `CP-MYREQ-FILTER-003` | My Requests query/cache | query key includes filter object, so no manual refetch is needed for normal filter changes. | accepted |
+| `CP-MYREQ-FILTER-004` | future filters | requestType/date/search remain future until backend/source support exists. | future review |
 | `CP-MYREQ-DETAIL-001` | request details | create-new-from-feedback is future details/request creation behavior. | future review |
+| `CP-VALIDATION-001` | L1 validation mechanism | first pass uses manual controller-level validators matching legacy pattern. | accepted |
+| `CP-VALIDATION-002` | future validation mechanism | shared validation pipeline/filter may replace manual pattern after first pass stabilizes. | future review / possible ADR |
+| `CP-VALIDATION-003` | ProblemDetails field/code semantics | field names should be API JSON names; stable codes remain future hardening per policy note. | accepted/future hardening |
+| `CP-VALIDATION-004` | handler cleanup | remove handler DTO-shape duplication after FluentValidation covers it. | target direction |

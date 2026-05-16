@@ -1,71 +1,133 @@
 # SC-05 — My Requests UI Spec
 
-Status: current `[UI-SCENARIO]` source
+Status: current UI scenario source / list-filter-details split  
+Scenario: `SC-05 — My Requests / Own Request Details`  
+Scope: visible UI behavior for My Requests list, filters, empty states and details entry.
 
-## 1. My Requests List UI
+## 1. Purpose
 
-The authenticated client can open My Requests and see either:
+The My Requests UI lets an authenticated client view their own requests, filter the list by supported criteria and open one request details page.
 
-```text
-- loading state;
-- own requests list;
-- empty state;
-- error state.
-```
+This file describes visible outcomes and accepted UI behavior. It does not define React component placement, query keys or HTTP wrapper implementation.
 
-Each visible request summary should make the request identifiable and show current status.
+## 2. List UI
 
-## 2. Filter UI
-
-The list has a filter area.
-
-Current first supported filter:
+When the authenticated client opens My Requests:
 
 ```text
-status
+[Authenticated Client]
+opens My Requests page
+        ↓
+[Client UI]
+loads own requests
+        ↓
+ ┌──────────────────────────────┬──────────────────────────────┐
+ │ own requests exist           │ no own requests              │
+ ▼                              ▼
+request list visible            regular empty state visible
 ```
 
-Status filter UI supports:
-
-```text
-All / no status filter
-InReview
-Approved
-Rejected
-Reset filters
-```
-
-Invalid URL status values should not crash the page. The UI should either ignore the invalid value or normalize it to an unfiltered state and keep the behavior understandable.
-
-Future filters may be added later without changing the page ownership rule.
-
-## 3. Own Request Details UI
-
-When the client opens a request details page, the page shows:
+Each list item should show enough information to identify the request:
 
 ```text
 - request status;
 - request type;
 - created date;
-- submitted request details;
-- submitted object address;
-- review result when present.
+- summary;
+- object address / address summary when available.
 ```
 
-If `reviewResult = null`, the UI shows submitted request data and current status without fake feedback.
+## 3. Filter UI
 
-If approved, the UI shows approved decision and decision date.
+Status is the first supported filter.
 
-If rejected, the UI shows rejected decision, decision date and rejection reason.
-
-If the request is missing or not owned by the client, the UI shows a not-found state and a link back to My Requests.
-
-## 4. UI Ownership Rules
+Visible filter behavior:
 
 ```text
-Page owns URL query params.
-Page owns route params.
-Filter feature owns controls.
-Details feature owns details rendering.
-Shared API does not own filter state or route state.
+Client sees status filter controls
+        ↓
+Client selects a supported status
+        ↓
+List updates to show matching own requests
+        ↓
+URL/page state reflects selected filter
+        ↓
+Client can reset filters
+        ↓
+List returns to unfiltered state
+```
+
+Supported first-cut statuses:
+
+```text
+InReview
+Approved
+Rejected
+```
+
+Future filters such as request type, date range or search are out of current scope until backend contract and scenario sources support them.
+
+## 4. Filtered Empty State
+
+Regular empty state:
+
+```text
+У вас пока нет заявок.
+```
+
+Filtered empty state:
+
+```text
+Заявок с выбранным фильтром не найдено.
+```
+
+Filtered empty state should offer a reset filters action.
+
+## 5. Invalid Filter URL State
+
+If the page is opened with an unsupported status value, the UI must not crash or show a misleading selected filter.
+
+Example:
+
+```text
+/requests?status=Done
+```
+
+Accepted first-cut behavior:
+
+```text
+- show a safe invalid-filter state with reset action;
+- or normalize to unfiltered state without crashing.
+```
+
+The final choice belongs to `L1-MY-REQUESTS-LIST-FILTERS.client.md`.
+
+## 6. Details Entry
+
+List items may provide an action/link to open the request details page:
+
+```text
+My Requests list item
+        ↓
+Client selects/open details
+        ↓
+/requests/:requestId
+```
+
+Details rendering is owned by:
+
+```text
+planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md
+```
+
+## 7. Out Of Scope
+
+```text
+- React component placement;
+- query key mechanics;
+- shared API wrapper implementation;
+- backend filter implementation;
+- request details page internals;
+- request creation UI;
+- employee review UI.
 ```

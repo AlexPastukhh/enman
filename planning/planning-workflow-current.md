@@ -1,6 +1,6 @@
 # Current Planning Workflow
 
-Status: current / GitHub line-link workflow synchronized
+Status: current / validation and My Requests filters synchronized
 
 Always separate current implementation from target scenario direction.
 
@@ -19,6 +19,10 @@ Request creation:
 My Requests:
   list, filters and details are separate slices/sidecars;
   status is the first filter entry in an extensible filter model.
+
+Server validation:
+  FluentValidation should become the request-boundary layer for L1 DTO/query shape;
+  application/domain validation still owns ownership, transactions and invariants.
 ```
 
 ## 2. Current Implementation Baseline
@@ -38,27 +42,9 @@ Known current repo evidence includes:
 
 Client details and filters are still planned/implementation-ready sidecars unless current repo code proves otherwise.
 
-## 3. Repo Evidence Link Rule
+L1 FluentValidation adoption is a planned/implementation-ready cross-cutting transition. Legacy controllers use manual FluentValidation, but L1 request DTO validation must be introduced deliberately.
 
-When explaining current code/docs, implementation status, test coverage or a concrete consistency problem, provide GitHub Markdown links to exact lines or ranges.
-
-Read:
-
-```text
-planning/repo-grounded-github-line-links-workflow.md
-```
-
-Required behavior:
-
-```text
-- read the current file before linking;
-- use #Lx or #Lx-Ly anchors;
-- prefer commit SHA links;
-- use branch links only as fallback;
-- do not use whole-file links for specific implementation claims.
-```
-
-## 4. Slice Drafting Rules
+## 3. Slice Drafting Rules
 
 ```text
 Behavior Coverage is not Test Coverage.
@@ -68,7 +54,7 @@ E2E asserts visible state/outcome, not refetch mechanics or backend internals.
 Server API slices must consider request-level FluentValidation separately from application/domain validation.
 ```
 
-## 5. Agent Scope Rules
+## 4. Agent Scope Rules
 
 Implementation prompts must include explicit scope boundaries:
 

@@ -1,6 +1,6 @@
 # Slice Implementation Notes Register
 
-Status: active / My Requests sidecars synchronized
+Status: active / validation and My Requests filters synchronized
 
 | ID | Related slice | Layer | Note | Status |
 |---|---|---|---|---|
@@ -15,6 +15,13 @@ Status: active / My Requests sidecars synchronized
 | `NOTE-MYREQ-LIST-001` | `L1-MY-REQUESTS-READ-LIST.client` | client | First-stage list client exists without filters/details. | current |
 | `NOTE-MYREQ-FILTER-001` | `L1-MY-REQUESTS-LIST-FILTERS.client` | client architecture | Introduce `MyRequestsFilters` model; status is first supported filter. | implementation-ready |
 | `NOTE-MYREQ-FILTER-002` | `L1-MY-REQUESTS-LIST-FILTERS.client` | URL/query | Page owns URL query params and passes filters/callbacks down. | implementation-ready |
+| `NOTE-MYREQ-FILTER-003` | `L1-MY-REQUESTS-LIST-FILTERS.client` | query/cache | Query key includes filters; filter changes should naturally fetch without manual refetch. | implementation-ready |
+| `NOTE-MYREQ-FILTER-004` | `L1-MY-REQUESTS-LIST-FILTERS.client` | invalid URL | Invalid URL status should be handled safely before calling the list API, while backend remains safe with 422 if reached. | assumption |
 | `NOTE-MYREQ-DETAIL-001` | `L1-MY-REQUEST-DETAILS.client` | client | Details route/page and API wrapper are planned; current client route/API wrapper does not include details yet. | implementation-ready |
 | `NOTE-AGENT-SCOPE-001` | implementation prompts | workflow | Implementation prompts must not grant docs/domain/generated-artifact mutation permission unless explicitly requested. | accepted |
-| `NOTE-VALIDATION-001` | server API slices | validation | Add request-level FluentValidation planning for API input/query shape, separate from application/domain validation. | accepted |
+| `NOTE-VALIDATION-001` | `CC-VALIDATION-001` | validation | Add request-level FluentValidation for API input/query shape, separate from application/domain validation. | accepted |
+| `NOTE-VALIDATION-002` | `CC-VALIDATION-001` | controller safety | Validate before nested DTO dereference so malformed nested payloads return 422 instead of controller exceptions. | accepted |
+| `NOTE-VALIDATION-003` | `CC-VALIDATION-001` | request create | `L1CreateConnectionRequestDtoValidator` should cover Existing/New branch rules and allow handler cleanup. | implementation-ready |
+| `NOTE-VALIDATION-004` | `CC-VALIDATION-001` | applicant create | `L1CreateIndividualApplicantPartyDtoValidator` should cover fullName/email/phone input before controller mapping. | implementation-ready |
+| `NOTE-VALIDATION-005` | `CC-VALIDATION-001` | My Requests status query | Status query validation should move out of handler or be reduced after endpoint/query validation exists. | implementation-ready |
+| `NOTE-VALIDATION-006` | `CC-VALIDATION-001` | tests | Primary proof should be API integration invalid-input tests; validator unit tests are optional for reusable helpers. | accepted |

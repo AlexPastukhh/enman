@@ -1,77 +1,90 @@
 # SC-05 — My Requests Behavior Items
 
-Status: current behavior item source
+Status: current behavior item source / list-filter-details split  
+Scenario: `SC-05 — My Requests / Own Request Details`
 
-## List behavior
+## 1. List Behavior Items
 
 ### SC-05-BI-001 — Client can view own requests list
 
-The authenticated client can open My Requests and see the list of requests belonging to the current account.
+The authenticated client can open My Requests and see requests belonging to the current account.
 
 ### SC-05-BI-002 — Empty own requests list is a normal state
 
-If the authenticated client has no requests, the UI can show an empty state based on an empty successful response.
+If the authenticated client has no requests, the page can show an empty state instead of an error.
 
-### SC-05-BI-003 — Request summary identifies a request
+### SC-05-BI-003 — Request summary is visible
 
-Each list item shows enough information to identify the request.
+Each list item shows enough visible summary data to identify the request, including status.
 
-### SC-05-BI-004 — Request status is visible in list
+### SC-05-BI-004 — Client can open request details
 
-Each list item shows request status: InReview, Approved or Rejected.
+The client can select a request from My Requests and open details for that request.
 
-## Filter behavior
+## 2. Filter Behavior Items
 
 ### SC-05-BI-005 — Client can filter My Requests by status
 
-The client can filter the list by supported status values.
+The authenticated client can filter the My Requests list by a supported request status.
 
 ### SC-05-BI-006 — Status is the first filter in an extensible filter model
 
-The status filter is not a one-off control. It is the first supported filter in a list filter architecture that can later add request type, date range or search.
+Status is the first implemented filter entry. Future filters may add request type, date range or search when source behavior and backend support exist.
 
 ### SC-05-BI-007 — Client can reset filters
 
-The client can return to an unfiltered My Requests list.
+The client can clear selected filters and return to the unfiltered My Requests list.
 
-### SC-05-BI-008 — Invalid status URL value is safe
+### SC-05-BI-008 — Invalid status URL value is handled safely
 
-If a URL contains an unsupported status value, the page does not crash and does not silently show misleading filtered data.
+Unsupported status values in the URL do not crash the page and do not produce misleading filter state.
 
-## Details behavior
+## 3. Details Behavior Items
 
-### SC-05-BI-009 — Client can open own request details
+### SC-05-BI-009 — Client can view own request details
 
-The authenticated client can open details for a selected request.
+The authenticated client can open details for a request that belongs to the current account.
 
-### SC-05-BI-010 — Client sees only own request details
+### SC-05-BI-010 — Missing or not-owned request shows not-found state
 
-The client sees details only if the request belongs to the authenticated account.
+If the request does not exist or belongs to another account, the details page shows a not-found state instead of request data.
 
-### SC-05-BI-011 — Missing or not-owned request shows not-found state
+### SC-05-BI-011 — Submitted request data is visible in details
 
-If the request does not exist or belongs to another account, the UI shows a not-found state instead of request data.
+The details page shows the submitted request details and object address.
 
-### SC-05-BI-012 — Client sees submitted request data
+### SC-05-BI-012 — Request metadata is visible in details
 
-The details page shows submitted request details and submitted object address.
+The details page shows status, request type and created date.
 
-### SC-05-BI-013 — Client sees request metadata
+### SC-05-BI-013 — In-review request has no fake review result
 
-The details page shows request status, request type and created date.
+If the request has no review result yet, the page shows submitted data and current status without inventing feedback.
 
-### SC-05-BI-014 — In-review request has no fake review result
+### SC-05-BI-014 — Approved request shows approval result when available
 
-If there is no review result yet, the details page shows submitted data and current status without fake feedback.
+If the request is approved and review result exists, the page shows the approved decision and decision date.
 
-### SC-05-BI-015 — Approved request shows approval result
+### SC-05-BI-015 — Rejected request shows rejection reason
 
-If the request is approved, the details page shows the approval decision and decision date.
+If the request is rejected, the page shows rejection decision, decision date and rejection reason/feedback.
 
-### SC-05-BI-016 — Rejected request shows rejection reason
+### SC-05-BI-016 — Client can return from details to My Requests
 
-If the request is rejected, the details page shows the rejection decision, decision date and rejection reason.
+The details page provides navigation back to My Requests.
 
-### SC-05-BI-017 — Client can return to My Requests
+## 4. Source Boundary
 
-The details page and not-found state provide navigation back to My Requests.
+These behavior items describe user/system-visible behavior.
+
+Do not add implementation mechanics here:
+
+```text
+- React Query key names;
+- route helper names;
+- API wrapper function names;
+- cache invalidation mechanics;
+- repository joins.
+```
+
+Those belong to slice sidecars and implementation notes.

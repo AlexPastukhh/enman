@@ -1,6 +1,6 @@
 # Scenario Behavior Items
 
-Status: current behavior item source area
+Status: current behavior item source area / My Requests synchronized
 
 Current files:
 
@@ -16,5 +16,5 @@ Rules:
 ```text
 ApplicantPartyId is API/implementation support, not behavior item.
 Refetch/invalidation is implementation convention, not E2E behavior.
-Behavior items describe source behavior; client architecture placement belongs in sidecars.
+Behavior items describe user/system-visible behavior or explicitly accepted cross-cutting concern behavior.
 ```

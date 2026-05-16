@@ -1,6 +1,6 @@
 # SC-05 — My Requests DATA
 
-Status: current DATA source
+Status: current DATA source / list-filter-details split
 
 ## SC-05-DATA-01 — My Requests list visible DATA
 
@@ -9,70 +9,61 @@ Status: current DATA source
 - request status: InReview / Approved / Rejected.
 ```
 
-Current summary direction:
+Current list summary may include:
 
 ```text
-requestId
-requestType
-status
-createdAt
-summary
-objectAddress
+- request id;
+- request type;
+- status;
+- created date;
+- summary;
+- object address / address summary.
 ```
 
 ## SC-05-DATA-02 — Request filter DATA
 
-Current first filter:
+Current supported filter:
 
 ```text
-status
+- status.
 ```
 
-Allowed status values:
+Status is the first entry in an extensible My Requests filter model.
+
+Future filters are not current DATA until explicitly added:
 
 ```text
-InReview
-Approved
-Rejected
+- request type;
+- text/search;
+- date/period.
 ```
-
-Future filter candidates:
-
-```text
-requestType
-createdFrom
-createdTo
-search
-```
-
-These are future only until backend and UI support are planned.
 
 ## SC-05-DATA-03 — Own Request Details visible DATA
 
 ```text
-- request id for route/read identity;
 - request status;
 - request type;
 - created date;
-- submitted request details;
-- submitted object address;
+- submitted request data visible to the client;
+- object address;
 - status-specific review result/feedback.
 ```
 
-Status-specific:
+Status-specific details:
 
 ```text
 InReview:
 - under-review state;
-- reviewResult can be null.
+- no fake review result.
 
 Approved:
-- approved decision;
-- decision date.
+- approval result/message if available;
+- decision date when available;
+- agreement-related status/action only when future slices add it.
 
 Rejected:
-- rejected decision;
-- decision date;
-- rejection reason/feedback;
-- original submitted request content stays visible.
+- rejection explanation/details;
+- rejection decision date when available;
+- original submitted request content remains visible;
+- feedback context for creating a new request.
 ```

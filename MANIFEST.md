@@ -1,44 +1,27 @@
-# MANIFEST
-
-Archive: enman-vkr-section-drafting-workflow-v2.zip
+# Manifest — enman-validation-transition-and-my-requests-filters-docs-v1
 
 ## Add
-
-```text
-vkr-clean/section-drafts/vkr-section-drafting-workflow.md
-vkr-clean/section-drafts/short-draft-template.md
-vkr-clean/section-drafts/full-draft-template.md
-vkr-clean/section-drafts/full-draft-review-checklist.md
-vkr-clean/section-drafts/fragment-bank.md
-vkr-clean/section-drafts/section-draft-register.md
-```
+- planning/diagrams/scenario-ui-specs/SC-05-my-requests-ui.md
+- planning/diagrams/scenario-behavior-items/SC-05-my-requests-behavior-items.md
 
 ## Replace
-
-```text
-vkr-clean/section-drafts/README.md
-vkr-clean/vkr-materials-index.md
-```
+- planning/README.md
+- planning/planning-workflow-current.md
+- planning/client/README.md
+- planning/diagrams/scenario-data/00-scenario-data-index.md
+- planning/diagrams/scenario-data/SC-05-my-requests-data.md
+- planning/diagrams/scenario-ui-specs/README.md
+- planning/diagrams/scenario-behavior-items/README.md
+- planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
+- planning/slices/README.md
+- planning/slices/l1/README.md
+- planning/slices/l1/L1-MY-REQUESTS-LIST-FILTERS.client.md
+- planning/slices/cross-cutting/README.md
+- planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
+- planning/slices/slice-scenario-flow-behavior-register.md
+- planning/slices/slice-questions-register.md
+- planning/slices/slice-extension-points-register.md
+- planning/slices/slice-implementation-notes-register.md
 
 ## Delete
-
-```text
-None
-```
-
-## Scope
-
-This archive updates the VKR section drafting workflow.
-
-It defines:
-
-```text
-- chat-first short drafts;
-- file-based full draft attempts;
-- review and fragment harvesting;
-- fragment bank;
-- draft register;
-- navigation updates.
-```
-
-It does not change code, planning source-of-truth files, diagrams, research reports or chapter text.
+- none

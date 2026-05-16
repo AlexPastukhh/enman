@@ -1,277 +1,601 @@
-# CC-VALIDATION-001 — Server Request Validation And FluentValidation
+# CC-VALIDATION-001 — L1 Server Request Validation With FluentValidation
 
-Status: implementation-ready cross-cutting principles / L1 adoption planned  
-Slice type: cross-cutting concern slice  
-Layers: API DTO boundary, FluentValidation, ProblemDetails mapping, application/domain validation, tests  
-Depends on:
+Status: final transition draft / implementation-planning / composite transition example
+Slice type: cross-cutting backend maintenance
+Primary purpose: introduce consistent request-level FluentValidation for L1 endpoints and remove DTO-shape validation duplication from handlers/services/controllers.
+
+Navigation: this is the authoritative cross-cutting planning file for L1 FluentValidation adoption. Business slice drafts should reference this file instead of re-explaining the validation boundary locally.
+
+## 1. Why this slice exists
+
+Current L1 backend already works, but request validation boundaries are blurred.
+
+Some validation currently happens in:
 
 ```text
-planning/api/api-error-contract.md
-planning/api/fluentvalidation-error-code-policy-note.md
-planning/api/client-server-contract-principles.md
-planning/slices/l1-slice-drafting-guide.md
+- controller mapping;
+- application handlers;
+- application services;
+- domain/value-object factories;
+- domain aggregate creation.
 ```
 
-Used by:
+This caused a concrete problem during `POST /api/l1/requests`: the handler had to manually validate `details`, `applicantContextType`, mutually exclusive fields, and address shape before it could safely execute the New applicant transaction.
+
+Example of current handler-side DTO/request-shape validation:
+
+[L1CreateConnectionRequestHandler.cs — request input precheck before branch flow](https://github.com/AlexPastukhh/enman/blob/my-changes/EnergyManagement.Server/L1/Application/Commands/L1CreateConnectionRequestHandler.cs#L36-L72)
+
+[L1CreateConnectionRequestHandler.cs — `ValidateApplicantContext` / `ValidateRequestInput`](https://github.com/AlexPastukhh/enman/blob/my-changes/EnergyManagement.Server/L1/Application/Commands/L1CreateConnectionRequestHandler.cs#L146-L228)
+
+The same `details` invariant is still checked in domain:
+
+[ClientRequest.cs — domain request validation](https://github.com/AlexPastukhh/enman/blob/my-changes/Domain.EnergyManagement/L1/Requests/ClientRequest.cs#L38-L66)
+
+This is a good transition example for the diploma:
 
 ```text
-L1 command/read endpoints
-business slice drafts with server API input
-client sidecars that map ProblemDetails to form/UI errors
-OpenAPI/generated contract work
-API error-code/constants work
+The project initially relied on handler/domain validation for L1 inputs.
+As API contracts became more complex, this caused duplicated checks and unsafe controller mapping.
+FluentValidation is introduced as a request-boundary layer to keep controllers safe,
+keep handlers focused on application behavior, and keep domain validation as final invariant guard.
 ```
 
-## 1. Purpose
+## 2. Repo evidence
 
-This file defines how server-side request validation should be planned for future L1 slices.
+FluentValidation already exists in the project and is used by older controllers.
 
-The project already has FluentValidation packages and legacy controller usage, but current L1 endpoints mostly validate through handlers and domain/value-object factories. Future L1 slice drafts must explicitly plan a request-level FluentValidation step when server API input has required fields, branch/discriminator rules, mutually exclusive fields, query validation or DTO shape rules.
+Validators are registered manually in `Program.cs`:
 
-## 2. Current Repo Evidence
+[Program.cs — legacy validator registrations](https://github.com/AlexPastukhh/enman/blob/my-changes/EnergyManagement.Server/Program.cs#L48-L51)
 
-Current implementation facts:
+Legacy controller pattern:
+
+[AuthController.cs — manual validation before command dispatch](https://github.com/AlexPastukhh/enman/blob/my-changes/EnergyManagement.Server/Controllers/AuthController.cs#L46-L54)
+
+ProblemDetails mapping already exists:
+
+[ProjectController.cs — `ProblemDetailsFromValidation`](https://github.com/AlexPastukhh/enman/blob/my-changes/EnergyManagement.Server/Controllers/ProjectController.cs#L14-L29)
+
+Legacy validators already reuse value-object factories:
+
+[Validation.cs — `Email.Create`, `Password.Create`, `Address.Create` inside validators](https://github.com/AlexPastukhh/enman/blob/my-changes/EnergyManagement.Server/Data/Validation.cs#L17-L167)
+
+The cross-cutting planning doc already states the same direction:
+
+[CC-VALIDATION-001 — current gap and purpose](https://github.com/AlexPastukhh/enman/blob/my-changes/planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md#L24-L68)
+
+[CC-VALIDATION-001 — request creation validation rules](https://github.com/AlexPastukhh/enman/blob/my-changes/planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md#L160-L197)
+
+## 3. Core decision
 
 ```text
-EnergyManagement.Server/EnergyManagement.Server.csproj
-- references FluentValidation and FluentValidation.AspNetCore.
-
-EnergyManagement.Server/Program.cs
-- registers legacy validators manually:
-  IValidator<RegisterClientDto>
-  IValidator<LoginDto>
-  IValidator<ProvideIndividualClientsDataDto>
-  IValidator<CreateIndividualRequestDto>
-
-EnergyManagement.Server/Controllers/AuthController.cs
-- injects legacy validators;
-- calls ValidateAsync manually;
-- maps FluentValidation failures through ProblemDetailsFromValidation(validationResult.Errors).
-
-EnergyManagement.Server/L1/Controllers/L1Controller.cs
-- does not inject IValidator<L1...Dto>;
-- dispatches L1 DTO values directly to commands/queries.
-
-EnergyManagement.Server/L1/Api/L1Dtos.cs
-- L1 DTOs are records with JSON names;
-- no DTO validators are attached there.
-
-L1 application handlers
-- currently validate via domain/value object factories and application rules.
+Use FluentValidation as the L1 API request-boundary validation layer.
 ```
 
-Conclusion:
+FluentValidation owns:
 
 ```text
-FluentValidation exists and legacy manual usage exists.
-L1 request DTO FluentValidation is not implemented as a consistent layer yet.
-Future L1 slices should plan it explicitly instead of relying only on handler/domain validation.
+- request DTO shape;
+- query DTO shape;
+- required fields;
+- null nested DTOs;
+- branch/discriminator rules;
+- mutually exclusive fields;
+- basic value-object-shaped input;
+- API field-name mapping for 422 ProblemDetails.
 ```
 
-## 3. Why This Is Cross-Cutting
-
-Server request validation affects multiple slices:
+Application handlers own:
 
 ```text
-- register/login command DTOs;
-- applicant-party create/read/default selection DTOs;
-- request creation with Existing/New applicant context;
-- My Requests query filters;
-- future edit/delete/archive commands;
-- client ProblemDetails field mapping;
-- generated error constants and API error contract.
+- authenticated account context;
+- account existence;
+- ownership;
+- selected entity belongs to account;
+- command orchestration;
+- transaction boundary;
+- no partial write / atomicity.
 ```
 
-It has an independent concern flow and test responsibility, but concrete validators are implemented per endpoint/slice.
-
-## 4. Concern-Derived Behavior Items
-
-| ID | Concern behavior item | Source / reason | Status |
-|---|---|---|---|
-| `VAL-FV-001` | Server validates API request DTO shape before application/domain behavior depends on it. | API boundary concern | planned for L1 adoption |
-| `VAL-FV-002` | Branch/discriminator rules are validated at request boundary. | Existing/New applicant context needs mutually exclusive fields | planned |
-| `VAL-FV-003` | Query parameter values are validated and mapped to documented ProblemDetails status. | My Requests status filter pattern | partially implemented through handler; FV adoption planned |
-| `VAL-FV-004` | Domain/application validation remains separate from DTO/request-shape validation. | Avoid duplicating ownership/domain invariants in DTO validators | accepted direction |
-| `VAL-FV-005` | Validation errors use API DTO field names, not React form names. | API error contract / client form mapping | accepted direction |
-| `VAL-FV-006` | Stable client-facing error codes should use the project error-code policy once migration is confirmed. | FluentValidation error-code policy note | future hardening |
-| `VAL-FV-007` | Tests should distinguish request validation, domain/application validation and no-write/atomicity where relevant. | Slice verification clarity | accepted direction |
-
-## 5. Coverage Overview
-
-| Area | Current state | Target direction | Status |
-|---|---|---|---|
-| Legacy controllers | Manual FluentValidation validators are used. | Keep as evidence/pattern, do not blindly copy old error-code handling. | implemented legacy |
-| L1 request DTOs | No consistent L1 FluentValidation layer found. | Add per-endpoint validators or a consistent validation pipeline when implementing new/changed L1 API contracts. | planned |
-| L1 handlers/domain | Domain/value-object/application validation exists. | Keep for business invariants and persistence/ownership/state rules. | implemented baseline |
-| ProblemDetails | Validation ProblemDetails use `errors` extension and status `422`. | Keep status/envelope; harden FieldName/ErrorCode semantics. | partially implemented |
-| Error codes | Policy note says migration needs inspection/tests. | Use stable `ErrorCode` with `WithErrorCode(...)` only after mapper/tests are updated. | future hardening |
-
-## 6. Concern Slice Flow
+Domain owns:
 
 ```text
-[API request arrives]
+- value object invariants as final guard;
+- aggregate invariants;
+- state transitions;
+- impossible-state protection.
+```
+
+## 4. Controller Safety Rule
+
+For endpoints with body/query validation:
+
+```text
+1. Controller receives DTO/query.
+2. Controller runs FluentValidation before reading nested DTO properties.
+3. If validation fails, controller returns 422 ProblemDetails.
+4. If validation succeeds, controller maps DTO to command without manual defensive null checks.
+5. Handler does not repeat request-shape rules already guaranteed by FluentValidation.
+6. Handler still handles application/business outcomes.
+7. Domain remains final invariant guard.
+```
+
+This matters because current `L1Controller` dereferences nested DTOs directly.
+
+Applicant creation:
+
+[L1Controller.cs — `dto.FullName.FirstName` mapping](https://github.com/AlexPastukhh/enman/blob/my-changes/EnergyManagement.Server/L1/Controllers/L1Controller.cs#L120-L160)
+
+Request creation:
+
+[L1Controller.cs — `dto.NewApplicantParty.FullName` and `dto.Address` mapping](https://github.com/AlexPastukhh/enman/blob/my-changes/EnergyManagement.Server/L1/Controllers/L1Controller.cs#L250-L305)
+
+After FluentValidation passes, that mapping is safe. Before FluentValidation, malformed nested payloads can turn into controller exceptions instead of clean `422 ProblemDetails`.
+
+## 5. Visual Scenario Flow
+
+```text
+User submits API request
         ↓
-[ASP.NET model binding creates DTO]
+Server receives DTO/query
         ↓
-[Request-level FluentValidation]
-Checks:
-  required DTO fields
-  basic DTO shape
-  branch/discriminator validity
-  mutually exclusive fields
-  query parameter allowed values
+Server validates request input
         ↓
  ┌──────────────────────────────┬──────────────────────────────┐
- │ request DTO valid            │ request DTO invalid          │
+ │ input accepted               │ input rejected               │
  ▼                              ▼
-[Application command/query]     [422 ProblemDetails]
-uses validated shape             errors use API DTO field names
+Request is handled              User/client receives
+by application behavior          422 validation ProblemDetails
         ↓
-[Application/domain validation]
-Checks:
-  account exists
-  ownership
-  selected ApplicantParty belongs to account
-  domain value object invariants
-  state transitions
-  no-write / atomicity
+Application/domain checks
+business rules and invariants
         ↓
  ┌──────────────────────────────┬──────────────────────────────┐
- │ application/domain valid     │ application/domain invalid   │
+ │ behavior accepted            │ behavior rejected            │
  ▼                              ▼
-[Persistence / response]        [422 ProblemDetails or other documented status]
+Command/query completes          User/client receives documented
+                                  business/domain error response
 ```
 
-## 7. Implementation Flow For Future L1 Slices
-
-When a slice introduces or changes a server API input contract, its Visual Implementation Flow should include a validation boundary:
+Scenario meaning:
 
 ```text
-[API Controller]
-receives DTO / query
+Users should get predictable validation feedback for invalid input.
+Invalid request shape should not leak into application handlers as normal flow.
+Application/domain errors remain meaningful business outcomes, not DTO-shape cleanup.
+```
+
+## 6. Visual Implementation Flow — General
+
+```text
+[HTTP request]
+        ↓
+[ASP.NET model binding]
         ↓
 [FluentValidation]
-validates request-shape and branch rules
+Validates request/query shape:
+  required fields
+  null nested DTOs
+  branch/discriminator rules
+  mutually exclusive fields
+  allowed query values
+  value-object-shaped input
         ↓
  ┌──────────────────────────────┬──────────────────────────────┐
- │ valid                        │ invalid                      │
+ │ validation passes            │ validation fails             │
  ▼                              ▼
-[Application Handler]           [ProblemDetails 422]
+[Controller maps DTO]            [422 ProblemDetails]
+        ↓                         field names = API JSON fields
+[Application Handler]
+Checks:
+  account
+  ownership
+  application state
+  transactions
         ↓
-[Domain / Application Rules]
+[Domain]
+Checks:
+  invariants
+  aggregate creation
+  state transitions
         ↓
-[Persistence]
+[Persistence / response]
 ```
 
-For request creation with explicit applicant context, FluentValidation should cover:
+## 7. Visual Implementation Flow — `POST /api/l1/requests`
 
 ```text
-applicantContextType is Existing or New
+[POST /api/l1/requests]
+        ↓
+[L1CreateConnectionRequestDtoValidator]
+        ↓
+Validates:
+  applicantContextType is Existing or New
 
+  Existing:
+    existingApplicantPartyId is required
+    newApplicantParty is absent
+
+  New:
+    newApplicantParty is required
+    existingApplicantPartyId is absent
+
+  Always:
+    details is required / not blank / within max length
+    address is present
+    address fields are valid through Address.Create
+    nested applicant fields are valid when New branch is used
+        ↓
+ ┌──────────────────────────────┬──────────────────────────────┐
+ │ DTO valid                    │ DTO invalid                  │
+ ▼                              ▼
+[L1Controller maps command]      [422 ProblemDetails]
+        ↓
+[L1CreateConnectionRequestHandler]
+        ↓
 Existing:
-- existingApplicantPartyId is required;
-- newApplicantParty is absent/null.
-
+  load selected owned ApplicantParty
+  verify ownership/application behavior
+  create request
+  save
+        ↓
 New:
-- newApplicantParty is required;
-- existingApplicantPartyId is absent/null.
-
-Always:
-- details is required/not blank;
-- address is present;
-- required address fields are present;
-- nested applicant data fields are present when New branch is used.
+  create applicant through service
+  transaction
+  save applicant
+  create request with persisted applicant
+  save request
+  commit
+        ↓
+[200 OK]
 ```
 
-Application/domain validation should cover:
+Cleanup target for this endpoint:
 
 ```text
-- current authenticated account exists and is allowed;
-- selected existing ApplicantParty exists;
-- selected existing ApplicantParty belongs to current account;
-- new ApplicantParty can be created;
-- request can be created;
-- new ApplicantParty + request are committed atomically;
-- no partial write on failure;
-- domain value object invariants.
+Remove handler-level request-shape validation after FluentValidation covers it:
+- ValidateApplicantContext
+- ValidateRequestInput
+- branch null/mutual-exclusion checks
+- DTO-level details checks
 ```
 
-## 8. Target Types / Components
+Current duplicated handler logic:
 
-Concrete implementation may use either explicit controller injection or a common pipeline, but the slice draft must identify the chosen path.
+[L1CreateConnectionRequestHandler.cs — `ValidateApplicantContext` / `ValidateRequestInput`](https://github.com/AlexPastukhh/enman/blob/my-changes/EnergyManagement.Server/L1/Application/Commands/L1CreateConnectionRequestHandler.cs#L146-L228)
 
-Acceptable implementation directions:
+## 8. Visual Implementation Flow — `POST /api/l1/applicant-parties/individual`
 
 ```text
-Option A — manual per-controller/per-endpoint validation
-- inject IValidator<TDto> into controller or endpoint service;
-- call ValidateAsync before command dispatch;
-- map failures to ProblemDetails.
-
-Option B — common validation behavior/filter/pipeline
-- register validators consistently;
-- run validation before application handler;
-- keep a documented bypass rule for endpoints without body/query validation.
+[POST /api/l1/applicant-parties/individual]
+        ↓
+[L1CreateIndividualApplicantPartyDtoValidator]
+        ↓
+Validates:
+  fullName object is present
+  fullName values pass FullName.Create
+  email passes Email.Create
+  phoneNumber passes PhoneNumber.Create
+        ↓
+ ┌──────────────────────────────┬──────────────────────────────┐
+ │ DTO valid                    │ DTO invalid                  │
+ ▼                              ▼
+[L1Controller maps command]      [422 ProblemDetails]
+        ↓
+[ApplicantPartyCreationService]
+Checks:
+  ClientAccount exists
+  domain factory still succeeds as final guard
+        ↓
+[Handler adds applicant + SaveChanges]
+        ↓
+[200 OK with ApplicantPartyId]
 ```
 
-Do not silently mix both patterns without documenting why.
+Current service validates value objects:
 
-## 9. Test / Check Plan
+[ApplicantPartyCreationService.cs — `FullName.Create`, `Email.Create`, `PhoneNumber.Create`](https://github.com/AlexPastukhh/enman/blob/my-changes/EnergyManagement.Server/L1/Application/Services/ApplicantPartyCreationService.cs#L22-L55)
 
-| Test / check | Verifies | Layer | Status |
-|---|---|---|---|
-| Validator unit tests for complex DTOs | Required/mutually exclusive/discriminator rules are stable. | validator/unit | planned per slice |
-| API integration invalid DTO test | Invalid request-shape returns documented `422 ProblemDetails`. | API integration | planned per slice |
-| API integration valid DTO reaches handler behavior | Valid request-shape does not block legitimate command/query. | API integration | planned per slice |
-| Domain/application invalid test | Ownership/state/domain errors remain handled outside DTO validator. | API/application/domain | planned per slice |
-| No-write/atomicity test | Failed validation/application path does not persist partial state. | API + persistence | planned per command slice |
-| Error field/code contract test | ProblemDetails errors expose expected field names and stable codes when client depends on them. | contract/API | future hardening |
-
-E2E should not assert FluentValidation mechanics. E2E asserts user-visible validation feedback/outcome. Component/model tests may assert client mapping from ProblemDetails to form fields.
-
-## 10. Consumer Rule For Business Slices
-
-Any server/API slice draft must state whether request-level FluentValidation is:
+Target after validation cleanup:
 
 ```text
-implemented
-planned
-not needed because endpoint has no body/query validation responsibility
-legacy/manual only
-future hardening
+- validator owns client-facing field validation;
+- service may keep value-object/domain validation as final guard;
+- service failure for pure DTO-shape input after validator passed indicates a validator coverage gap or mapping bug.
 ```
 
-Business slice API Contract sections should include:
+## 9. Visual Implementation Flow — `GET /api/l1/requests?status=...`
 
 ```text
-| Validation boundary | Rules | Error status | ProblemDetails fields/codes | Status |
+[GET /api/l1/requests?status=...]
+        ↓
+[L1ListMyRequestsQueryValidator / endpoint query validator]
+        ↓
+Validates:
+  status is empty
+  OR status is a known RequestStatus value
+        ↓
+ ┌──────────────────────────────┬──────────────────────────────┐
+ │ query valid                  │ query invalid                │
+ ▼                              ▼
+[L1Controller maps query]        [422 ProblemDetails]
+        ↓
+[L1ListMyRequestsHandler]
+Checks:
+  account exists
+  list owned requests
+        ↓
+[200 OK]
 ```
 
-Business slice Visual Implementation Flow should include `[FluentValidation]` before `[Application Handler]` when DTO/request rules exist.
+Current query parsing/validation is in handler:
 
-## 11. Local Questions
+[L1ListMyRequestsHandler.cs — `ParseStatus`](https://github.com/AlexPastukhh/enman/blob/my-changes/EnergyManagement.Server/L1/Application/Queries/L1ListMyRequestsHandler.cs#L58-L76)
 
-| ID | Status | Question | Assumption / current direction | Impact |
-|---|---|---|---|---|
-| `CC-VALIDATION-Q-001` | open | Should L1 use manual per-controller validators or a shared validation pipeline/filter? | Start explicit per-slice planning; choose implementation style when first L1 validator is implemented. | L1 consistency, test setup, controller shape |
-| `CC-VALIDATION-Q-002` | future review | Should old FluentValidation `ErrorMessage` usage migrate to `ErrorCode` with `WithErrorCode(...)`? | Do not migrate blindly; follow `fluentvalidation-error-code-policy-note.md`. | Stable client error-code contract |
-| `CC-VALIDATION-Q-003` | assumption | Should handler/domain validation remain even if FluentValidation checks DTO shape? | Yes. FluentValidation handles request-shape; handlers/domain still own business invariants. | Prevents anemic/duplicated validation |
-
-Shared register:
+Target:
 
 ```text
-planning/slices/slice-questions-register.md
-planning/slices/slice-implementation-notes-register.md
+Move query-shape validation to FluentValidation.
+Handler may parse/use already-validated value or receive a typed filter later.
 ```
 
-## 12. ADR Impact
+## 10. Endpoint Coverage Map
 
-No full ADR is required yet.
+| Endpoint                                           | Current risk / duplication                                               | FluentValidation target                                                                         | Handler/application remains responsible for                                      |
+| -------------------------------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `POST /api/l1/requests`                            | Controller derefs nested DTOs; handler validates branch/details/address. | Full request DTO validation, Existing/New branch rules, details, address, nested new applicant. | Ownership, applicant exists, transaction, request creation, no orphan applicant. |
+| `POST /api/l1/applicant-parties/individual`        | Controller derefs `FullName`; service validates client input.            | FullName/email/phone input and field mapping.                                                   | Account exists, domain creation final guard, persistence.                        |
+| `GET /api/l1/requests?status`                      | Handler parses invalid query status.                                     | Query param allowed values.                                                                     | Account exists, read owned requests.                                             |
+| `POST /api/l1/auth/register`                       | Handler validates email/password; legacy pattern exists elsewhere.       | Email/password request input.                                                                   | Duplicate email, account creation, persistence.                                  |
+| `POST /api/l1/auth/login`                          | Handler parses email before credential lookup.                           | Email/password request input.                                                                   | Account lookup, activation, password verification.                               |
+| `GET /api/l1/auth/current-user`                    | No body/query.                                                           | Not needed.                                                                                     | Auth claim/account lookup.                                                       |
+| `POST /api/l1/auth/logout`                         | No body/query.                                                           | Not needed.                                                                                     | Session clearing.                                                                |
+| `GET /api/l1/applicant-parties/current-individual` | No body/query.                                                           | Not needed.                                                                                     | Auth/account/current lookup.                                                     |
+| `GET /api/l1/requests/{requestId}`                 | Route constraint already enforces long.                                  | Optional route/query validation not needed initially.                                           | Ownership/not found.                                                             |
 
-Potential future ADR candidate:
+## 11. Validation Ownership Rules
+
+### Request DTO / FluentValidation owns
 
 ```text
-Adopt a standard L1 request validation mechanism: controller-level validators vs pipeline/filter.
+- missing body/nested object;
+- missing required fields;
+- blank string where input requires non-blank;
+- too-long string where max is request-shape contract;
+- invalid enum/discriminator strings;
+- mutually exclusive branch payloads;
+- allowed query values;
+- field-level mapping to API JSON names.
 ```
 
-Create a full ADR only if the implementation choice becomes architecture-wide and contentious.
+### Application owns
+
+```text
+- authenticated account exists;
+- selected applicant exists;
+- selected applicant belongs to account;
+- account can perform operation;
+- operation orchestration;
+- transaction/no partial writes;
+- race-sensitive checks.
+```
+
+### Domain owns
+
+```text
+- value-object invariants as final guard;
+- aggregate construction invariants;
+- state transitions;
+- persisted applicant requirement;
+- impossible state prevention.
+```
+
+## 12. About using value objects in validators
+
+Use pure value-object factories inside validators where practical:
+
+```text
+Good:
+- Email.Create(dto.Email)
+- PhoneNumber.Create(dto.PhoneNumber)
+- FullName.Create(...)
+- Address.Create(...)
+```
+
+Do not put side effects in validators:
+
+```text
+Bad:
+- repository writes;
+- transactions;
+- command dispatch;
+- request creation;
+- applicant creation;
+- ownership checks with mutation.
+```
+
+Repository reads in validators should not be copied blindly from legacy code. The old `RegisterClientDtoValidator` checks duplicate email through repository:
+
+[Validation.cs — duplicate email check in legacy validator](https://github.com/AlexPastukhh/enman/blob/my-changes/EnergyManagement.Server/Data/Validation.cs#L17-L38)
+
+For L1, duplicate email can remain application-level unless the team explicitly accepts repo-backed validators as standard.
+
+## 13. ProblemDetails / Field Names
+
+Validators should return existing `422 ProblemDetails` envelope through current mapping:
+
+[ProjectController.cs — FluentValidation failure mapping](https://github.com/AlexPastukhh/enman/blob/my-changes/EnergyManagement.Server/Controllers/ProjectController.cs#L14-L29)
+
+Field names should be API JSON field names, not React form state names and not necessarily C# property names.
+
+Existing helper:
+
+[JsonField.cs — read `JsonPropertyName`](https://github.com/AlexPastukhh/enman/blob/my-changes/EnergyManagement.Server/Api/Contracts/Common/JsonField.cs#L7-L17)
+
+Existing pattern:
+
+[RequestFieldNames.cs — field names from DTO JSON names](https://github.com/AlexPastukhh/enman/blob/my-changes/EnergyManagement.Server/Api/Contracts/Requests/RequestFieldNames.cs#L5-L18)
+
+Suggested L1 equivalent:
+
+```text
+L1FieldNames.CreateConnectionRequest.ApplicantContextType
+L1FieldNames.CreateConnectionRequest.ExistingApplicantPartyId
+L1FieldNames.CreateConnectionRequest.NewApplicantParty
+L1FieldNames.CreateConnectionRequest.Details
+L1FieldNames.CreateConnectionRequest.Address
+L1FieldNames.CreateConnectionRequest.Address.PostalCode
+L1FieldNames.CreateConnectionRequest.NewApplicantParty.Email
+...
+```
+
+## 14. Test / Verification Plan
+
+Primary verification should be **API integration tests**, not validator unit tests by default.
+
+Reason:
+
+```text
+The important behavior is the HTTP boundary:
+invalid input -> 422 ProblemDetails
+controller does not throw
+handler side effects do not happen
+field mapping is usable by client
+```
+
+### Integration test groups
+
+For `POST /api/l1/requests`:
+
+```text
+- missing applicantContextType -> 422
+- unknown applicantContextType -> 422
+- Existing without existingApplicantPartyId -> 422
+- Existing with newApplicantParty -> 422
+- New without newApplicantParty -> 422
+- New with existingApplicantPartyId -> 422
+- missing address -> 422, not 500
+- invalid address field -> 422
+- blank details -> 422
+- too-long details -> 422
+- New with missing fullName -> 422, not 500
+- New with invalid email/phone/fullName -> 422
+- invalid New branch creates no applicant/request
+```
+
+For `POST /api/l1/applicant-parties/individual`:
+
+```text
+- missing fullName -> 422, not 500
+- invalid fullName -> 422
+- invalid email -> 422
+- invalid phoneNumber -> 422
+- invalid input creates no applicant
+```
+
+For `GET /api/l1/requests?status=`:
+
+```text
+- empty status accepted
+- known status accepted
+- unknown status -> 422
+```
+
+Regression:
+
+```text
+- existing request Existing branch still works
+- request New branch still works atomically
+- applicant create still works
+- auth endpoints still work
+- My Requests list/details still work
+```
+
+Validator unit tests:
+
+```text
+Optional only for complex reusable helper logic.
+Not default for each rule.
+```
+
+## 15. Questions / Decisions
+
+| ID             | Status                  | Question                                                           | Decision / Direction                                                             |
+| -------------- | ----------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| `CC-VAL-Q-001` | accepted for first pass | Manual validators or shared pipeline?                              | Start with manual controller-level validation, matching existing legacy pattern. |
+| `CC-VAL-Q-002` | accepted                | Do validators make controller mapping safe?                        | Yes. Validate before nested DTO dereference.                                     |
+| `CC-VAL-Q-003` | accepted                | Should handlers repeat rules already checked by FluentValidation?  | No, not as normal architecture.                                                  |
+| `CC-VAL-Q-004` | accepted                | Should value objects be used in validators?                        | Yes, for pure input validation.                                                  |
+| `CC-VAL-Q-005` | accepted                | Should domain validation remain?                                   | Yes, as final invariant guard.                                                   |
+| `CC-VAL-Q-006` | accepted                | Should validator tests be default?                                 | No. Prefer API integration invalid variants.                                     |
+| `CC-VAL-Q-007` | future                  | Global exception handling for unexpected post-validation failures? | Separate cross-cutting concern.                                                  |
+| `CC-VAL-Q-008` | open                    | Should L1 eventually use validation pipeline/filter?               | Future ADR after manual pattern stabilizes.                                      |
+
+## 16. Implementation Checklist
+
+```text
+[ ] Add L1 FluentValidation validators.
+[ ] Register validators in Program.cs.
+[ ] Inject relevant validators into L1Controller.
+[ ] Validate before nested DTO dereference.
+[ ] Map FluentValidation failures through existing ProblemDetailsFromValidation.
+[ ] Add L1 field-name constants using JsonPropertyName pattern.
+[ ] Add L1CreateConnectionRequestDtoValidator.
+[ ] Add L1CreateIndividualApplicantPartyDtoValidator.
+[ ] Add L1 request status query validator or endpoint-specific query validation.
+[ ] Optionally add L1 auth DTO validators.
+[ ] Remove ValidateApplicantContext from L1CreateConnectionRequestHandler.
+[ ] Remove ValidateRequestInput from L1CreateConnectionRequestHandler.
+[ ] Move status query validation out of L1ListMyRequestsHandler or reduce handler to typed/validated parse.
+[ ] Keep ownership/account/transaction/domain checks in handlers/domain.
+[ ] Add API integration tests for invalid input variants.
+[ ] Verify no invalid nested DTO causes 500.
+[ ] Keep generated artifacts only if contract changes require regeneration.
+```
+
+## 17. Non-goals
+
+```text
+- Do not change domain model.
+- Do not weaken domain invariants.
+- Do not move ownership checks into validators.
+- Do not open transactions in validators.
+- Do not create request/applicant in validators.
+- Do not change client UI.
+- Do not redesign business behavior.
+- Do not use validator unit tests as primary proof.
+- Do not introduce global validation pipeline in first pass unless explicitly chosen.
+```
+
+## 18. Next Implementation Prompt Shape
+
+```text
+Implement CC-VALIDATION-001 first pass for L1 API validation.
+
+Use manual controller-level FluentValidation, matching existing legacy pattern.
+
+Start with:
+1. L1CreateConnectionRequestDtoValidator;
+2. L1CreateIndividualApplicantPartyDtoValidator;
+3. L1ListMyRequests status query validation.
+
+Validators must make controller mapping safe before nested DTO dereference.
+
+Use value-object factories inside validators for pure input validation.
+Do not perform writes, transactions, command dispatch or ownership checks in validators.
+
+After validators cover request-shape rules:
+- remove ValidateApplicantContext from L1CreateConnectionRequestHandler;
+- remove ValidateRequestInput from L1CreateConnectionRequestHandler;
+- keep application/domain checks for ownership, account existence, transaction and domain invariants.
+
+Verify primarily with API integration tests covering many invalid input variants.
+Do not add validator unit tests unless a reusable validator helper becomes complex.
+
+Do not change domain.
+Do not change client UI.
+Do not change planning docs unless explicitly requested.
+```
+
+This is the transition draft I would use as the “why FluentValidation this way” example: it shows the actual duplication problem, the safety issue in controllers, and the clean boundary between API input validation, application behavior and domain invariants.

@@ -1,6 +1,6 @@
 # Slice Planning Index
 
-Status: current slice-planning navigation index / My Requests sidecars synchronized
+Status: current slice-planning navigation index / validation and My Requests filters synchronized
 
 ## 1. Core Rule
 
@@ -68,7 +68,32 @@ planning/slices/l1/README.md
 - list/details/filter responsibilities should not be collapsed into one client file.
 ```
 
-## 6. Registers
+## 6. Server Validation Direction
+
+Server/API slices with request body or query input must distinguish:
+
+```text
+FluentValidation request-boundary validation:
+- DTO/query shape;
+- required/nested fields;
+- branch/discriminator rules;
+- mutually exclusive fields;
+- allowed query values.
+
+Application/domain validation:
+- account existence;
+- ownership;
+- transactions/no-write;
+- domain invariants and state transitions.
+```
+
+Use:
+
+```text
+planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
+```
+
+## 7. Registers
 
 ```text
 planning/slices/slice-scenario-flow-behavior-register.md
@@ -77,7 +102,7 @@ planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
 ```
 
-## 7. Cross-Cutting / Helper Slices
+## 8. Cross-Cutting / Helper Slices
 
 ```text
 planning/slices/cross-cutting/README.md

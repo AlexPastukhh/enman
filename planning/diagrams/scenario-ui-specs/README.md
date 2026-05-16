@@ -1,6 +1,6 @@
 # Scenario UI Specs
 
-Status: current UI-spec source area
+Status: current UI-spec source area / My Requests synchronized
 
 Current files:
 
@@ -16,5 +16,5 @@ Rules:
 ```text
 UI specs define visible outcomes, not React implementation details.
 E2E asserts visible user outcome, not cache/refetch mechanics.
-URL/query ownership, component placement and API wrapper details belong in client sidecars, not UI specs.
+Client-side route/query ownership belongs to client sidecars unless it is needed to describe visible URL behavior.
 ```
