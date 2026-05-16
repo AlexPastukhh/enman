@@ -1,6 +1,6 @@
 # Agent Scope Boundaries And Prompt Safety
 
-Status: current agent-scope rule / GitHub line-link workflow synchronized  
+Status: current agent-scope rule / scope-boundary and GitHub line-link workflow synchronized  
 Scope: implementation prompts, slice prompts, documentation prompts and any chat that prepares work for another agent
 
 ## 1. Purpose
@@ -74,6 +74,7 @@ Implementation agents must receive:
 - current slice docs and sidecars;
 - planned implementation direction that is already known;
 - explicit out-of-scope list;
+- explicit related-slice / future-slice ownership for excluded responsibilities;
 - explicit docs/domain/generated-artifact mutation rules;
 - repo-grounded GitHub line-link rule for explanations and handoff notes.
 ```
@@ -92,7 +93,34 @@ Evidence links:
 - [short path, lines X-Y](...#LX-LY)
 ```
 
-## 6. Documentation Agent Rule
+## 6. Slice Scope Preservation Rule
+
+When a prompt is generated from a slice draft, preserve the slice boundary sections:
+
+```text
+Scope
+Out of scope
+Related slices / owners
+Future extension points
+```
+
+Do not let an implementation prompt expand a read slice into:
+
+```text
+- command implementation;
+- client UI;
+- default/current switching;
+- delete/archive lifecycle;
+- domain field rename cleanup;
+- generated artifact changes beyond explicitly requested contract checks;
+- unrelated scenario/source cleanup.
+```
+
+If the implementation task intentionally crosses one of those boundaries, state that the user explicitly expanded the scope.
+
+If the implementation discovers a need outside the slice scope, use a handoff note instead of silently implementing it.
+
+## 7. Documentation Agent Rule
 
 Documentation agents may update planning/docs only within the requested documentation scope.
 
@@ -100,7 +128,7 @@ They must not implement code, change generated artifacts or modify runtime behav
 
 If a documentation task reveals code/domain work, the agent should record it as planned/future or hand it off to the implementation role.
 
-## 7. Domain Mutation Rule
+## 8. Domain Mutation Rule
 
 Domain code is high-impact.
 
@@ -118,7 +146,7 @@ Examples that are not enough by themselves:
 
 These do not permit changing domain code.
 
-## 8. Documentation Mutation Rule
+## 9. Documentation Mutation Rule
 
 Planning docs should be changed only by:
 
@@ -131,7 +159,7 @@ Planning docs should be changed only by:
 
 Implementation chats may propose documentation follow-ups but should not edit docs unless asked.
 
-## 9. Handoff Instead Of Scope Creep
+## 10. Handoff Instead Of Scope Creep
 
 When a chat discovers needed work outside its scope, it should stop at a handoff note.
 
@@ -150,7 +178,7 @@ Recommended next action:
 
 `Evidence links` should use GitHub line links when the evidence is in repo files.
 
-## 10. Read Context Checklist For Prompt Creators
+## 11. Read Context Checklist For Prompt Creators
 
 When writing a prompt for a slice implementation chat, include the docs the agent must read:
 

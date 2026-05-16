@@ -1,6 +1,6 @@
 # Slice Questions Register
 
-Status: active / validation, My Requests filters and ApplicantParty one-page direction synchronized
+Status: active / ApplicantParty flat-list read model, validation and My Requests filters synchronized
 
 ## 1. Questions / Decisions
 
@@ -9,6 +9,9 @@ Status: active / validation, My Requests filters and ApplicantParty one-page dir
 | `SL-APPL-Q-002` | `SL-APPL-001` / `SL-APPL-003` | default/current | future review | What happens to default/current on create? | First-of-type may initialize default/current; additional same-type create does not switch silently; explicit same-page default/current action remains future. | ApplicantParty page read model, future default/current command, request creation prefill. |
 | `SL-APPL-Q-006` | `SC-10` / `SC-10B` / `SL-APPL-001` / `SL-APPL-001.client` / `SL-APPL-002` / `SL-APPL-003` | page model | accepted direction | Is ApplicantParty management split into Account page section and separate My Applicant Parties page? | No. Use one Applicant Parties page / section; SC-10B is same-page future management addendum, not a separate current user page. | Scenario wording, UI sidecar placement, backend read slice scope, future same-page actions. |
 | `SL-APPL-Q-007` | `SC-10` / `SC-10B` / `slice-extension-points-register` | lifecycle | future review | Should delete/archive/hide be current L1 behavior? | No. Keep delete/archive lifecycle as future extension/change pressure until a dedicated lifecycle slice exists. | Prevents current behavior/test pollution and protects future contract/process design. |
+| `SL-APPL-Q-008` | `SL-APPL-002` / `planning/api/client-server-contract-principles.md` | API read contract | accepted direction | Should `GET /api/l1/applicant-parties` return grouped arrays? | No. Return one flat `applicantParties[]` list. | API DTO shape, generated types and client grouping responsibility. |
+| `SL-APPL-Q-009` | `SL-APPL-002` / future client sidecar | client grouping | accepted direction | Who groups current/default templates vs other saved ApplicantParties? | Client groups the flat list by `isCurrentDefault`. | Keeps API as read-model facts, not page layout structure. |
+| `SL-APPL-Q-010` | `SL-APPL-002` | default marker naming | future review | Should `IsCurrentActiveVersion` be renamed? | Later cleanup/default-template naming task; API exposes `isCurrentDefault` now. | Domain/persistence naming cleanup; not part of read slice implementation. |
 | `SL-REQ-Q-APPL-004` | `SL-REQ-001` | response | open | Return request id? | Not required unless direct detail navigation appears. | Request creation command response and future client navigation. |
 | `SL-REQ-Q-APPL-005` | `SL-REQ-001` | history | future review | Snapshot or reference? | Future read/history decision. | Request history/details and ApplicantParty snapshot/reference model. |
 | `SL-MYREQ-FILTER-Q-005` | `L1-MY-REQUESTS-LIST-FILTERS.client` | invalid URL | assumption | What happens for invalid status URL value? | Prefer safe invalid state with reset action or safe normalization; do not crash or mislead. | Client URL parsing, safe UI state and API call prevention. |
@@ -41,6 +44,7 @@ Status: active / validation, My Requests filters and ApplicantParty one-page dir
 ```text
 - one current active ApplicantParty per account;
 - separate current scenario split between "Account page applicant section" and "My Applicant Parties page";
+- backend API response for SL-APPL-002 as currentDefaults + otherApplicantParties grouped arrays;
 - treating the one-page-vs-two-page documentation correction as a user-visible behavior item;
 - request creation uses server-selected single current active ApplicantParty as target;
 - ApplicantPartyId as behavior item;

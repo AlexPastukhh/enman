@@ -1,6 +1,6 @@
 # Client / Server Contract Principles
 
-Status: applicant-context and My Requests contract synchronized
+Status: ApplicantParty account list, applicant-context and My Requests contract synchronized
 
 ## 1. Core Rule
 
@@ -28,6 +28,7 @@ GET  /api/l1/auth/current-user
 POST /api/l1/auth/logout
 POST /api/l1/applicant-parties/individual
 GET  /api/l1/applicant-parties/current-individual
+GET  /api/l1/applicant-parties
 POST /api/l1/requests
 GET  /api/l1/requests
 GET  /api/l1/requests/{requestId}
@@ -35,13 +36,67 @@ GET  /api/l1/requests/{requestId}
 
 When current implementation differs from target planning, the relevant slice must say so explicitly.
 
+`GET /api/l1/applicant-parties/current-individual` is old/narrow current implementation support. New Applicant Parties page work should target `GET /api/l1/applicant-parties`.
+
 ## 3. ApplicantParty
 
 Standalone create ApplicantParty returns `ApplicantPartyId` for stable identity/cache/future actions.
 
 This is API support, not scenario behavior.
 
-## 4. Request Creation Target
+## 4. Applicant Parties Account List Contract
+
+Target read endpoint for the one Applicant Parties page / section:
+
+```text
+GET /api/l1/applicant-parties
+```
+
+Response:
+
+```ts
+type L1AccountApplicantPartiesResponse = {
+  applicantParties: L1ApplicantPartySummaryDto[];
+};
+```
+
+Summary DTO direction:
+
+```ts
+type L1ApplicantPartySummaryDto = {
+  applicantPartyId: number;
+  applicantPartyType: "Individual" | "IndividualEntrepreneur" | "LegalEntity";
+  displayName: string;
+  fullName?: L1FullNameDto | null;
+  email?: string | null;
+  phoneNumber?: string | null;
+  verificationStatus: string;
+  isCurrentDefault: boolean;
+  createdAt?: string | null;
+};
+```
+
+Rules:
+
+```text
+- client does not submit accountId/clientAccountId;
+- endpoint returns all owned ApplicantParties in one flat list;
+- endpoint does not split currentDefaults and other saved parties in the API response;
+- client groups current/default vs other saved parties by isCurrentDefault;
+- empty account returns 200 with applicantParties = [];
+- response does not expose clientAccountId;
+- isCurrentDefault is the API-facing target name;
+- current implementation marker IsCurrentActiveVersion may be used behind the API until naming cleanup happens;
+- no 422 request-shape validation is expected because this read endpoint has no body/query input.
+```
+
+Primary slice:
+
+```text
+planning/slices/SL-APPL-002-account-applicant-parties-read.md
+```
+
+## 5. Request Creation Target
 
 Target direction for future request creation with applicant context:
 
@@ -71,7 +126,7 @@ Server request validation must follow:
 planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
 ```
 
-## 5. My Requests List Contract
+## 6. My Requests List Contract
 
 Current backend:
 
@@ -96,7 +151,7 @@ The entity query accepts a filter object.
 The shared API maps supported filters to query string.
 ```
 
-## 6. Own Request Details Contract
+## 7. Own Request Details Contract
 
 Current backend:
 
@@ -120,7 +175,7 @@ Rules:
 - client details sidecar owns UI/not-found behavior.
 ```
 
-## 7. ProblemDetails And Validation
+## 8. ProblemDetails And Validation
 
 Server validation errors use API DTO field names, not React form field names.
 

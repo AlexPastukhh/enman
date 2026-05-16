@@ -1,6 +1,6 @@
 # Planning Index
 
-Status: current / validation, My Requests filters, ApplicantParty one-page direction and backend cleanup boundary synchronized
+Status: current / ApplicantParty flat-list read model, validation, My Requests filters and backend cleanup boundary synchronized
 
 ## 1. Start Here
 
@@ -54,7 +54,7 @@ ApplicantParty:
 - do not split current docs into two user scenarios such as "Account page applicant section" and "My Applicant Parties page";
 - top page area shows current/default ApplicantParty templates by applicant type;
 - current/default templates are visually outlined/highlighted;
-- below the default/current area, the page shows other saved ApplicantParties that are not selected as default/current;
+- below the default/current area, the page shows other saved ApplicantParties that are not selected as current/default;
 - the same page owns add ApplicantParty action/form;
 - the same page will later own explicit make default/current action;
 - many saved ApplicantParties can exist over time;
@@ -67,6 +67,16 @@ ApplicantParty:
 ```
 
 Current implementation may still contain narrow/current-active names. When docs describe target planning, use the target direction above. When docs describe existing code, label it as current implementation evidence.
+
+ApplicantParty account read model target:
+
+```text
+GET /api/l1/applicant-parties
+returns one flat applicantParties[] list.
+Each item has isCurrentDefault.
+Client groups current/default vs other saved cards by isCurrentDefault.
+API does not return currentDefaults / otherApplicantParties layout arrays.
+```
 
 Request creation target:
 
@@ -149,6 +159,8 @@ planning/agent-scope-boundaries-and-prompt-safety.md
 ```
 
 Reading docs is required. Mutating docs is not allowed unless the task says so.
+
+Implementation prompts generated from slice drafts must preserve the slice `Scope`, `Out of scope`, `Related slices` and `Future extension points`.
 
 ## 7. Key Navigation
 

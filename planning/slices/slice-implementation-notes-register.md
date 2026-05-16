@@ -1,12 +1,13 @@
 # Slice Implementation Notes Register
 
-Status: active / validation, My Requests filters and ApplicantParty one-page direction synchronized
+Status: active / ApplicantParty flat-list read model, validation and My Requests filters synchronized
 
 | ID | Related slice | Layer | Note | Status |
 |---|---|---|---|---|
 | `NOTE-APPL-PAGE-001` | `SL-APPL-001.client` / `SL-APPL-002` / `SL-APPL-003` | client/page | ApplicantParty management uses one Applicant Parties page / section, not separate Account-page and My-Applicant-Parties-page scenarios. | accepted |
-| `NOTE-APPL-PAGE-002` | `SL-APPL-002` | API/client | Read model should support `currentDefaults` plus `otherApplicantParties` with verification/display data for one page. | implementation-ready |
+| `NOTE-APPL-PAGE-002` | `SL-APPL-002` | API/client | Read model should return one flat `applicantParties[]` list with `isCurrentDefault`; client groups current/default and other saved cards. | implementation-ready |
 | `NOTE-APPL-PAGE-003` | `SL-APPL-003` | client/API | Make default/current is explicit future same-page action; create does not silently switch default/current after first-of-type initialization. | accepted |
+| `NOTE-APPL-PAGE-004` | `SL-APPL-002` | API/naming | Current implementation marker `IsCurrentActiveVersion` maps to API `isCurrentDefault`; domain/persistence rename is later cleanup, not this slice. | accepted |
 | `NOTE-APPL-CREATE-001` | `SL-APPL-001` | API/client | Standalone create returns ApplicantPartyId for identity/cache/future actions. | accepted |
 | `NOTE-APPL-CREATE-002` | `SL-APPL-001` | behavior | Creating ApplicantParty is additive; integration coverage verifies second create does not delete/deactivate first. | implemented for standalone create |
 | `NOTE-APPL-CREATE-003` | `SL-APPL-003` | default | Explicit per-type default-template persistence remains future; current standalone create does not implement silent default switching. | future review |
@@ -16,6 +17,7 @@ Status: active / validation, My Requests filters and ApplicantParty one-page dir
 | `NOTE-REQ-APPL-003` | future request `.client.md` | client UX | Future UI can choose any owned saved ApplicantParty; default/current is only initial prefill. | future review |
 | `NOTE-REQ-APPL-004` | `SL-REQ-001` / future read/history | request history | Existing requests are not changed by ApplicantParty create or default/current changes. | accepted |
 | `NOTE-APPL-CLIENT-001` | `SL-APPL-001.client` | testing | E2E asserts visible state, not refetch mechanics. | accepted |
+| `NOTE-DRAFT-SCOPE-001` | slice drafts / implementation prompts | workflow | Every non-trivial slice draft must include Scope, Out of scope, Related slices / owners and Future extension points; implementation prompts must preserve these boundaries. | accepted |
 | `NOTE-MYREQ-LIST-001` | `L1-MY-REQUESTS-READ-LIST.client` | client | First-stage list client exists without filters/details. | current |
 | `NOTE-MYREQ-FILTER-001` | `L1-MY-REQUESTS-LIST-FILTERS.client` | client architecture | Introduce `MyRequestsFilters` model; status is first supported filter. | implementation-ready |
 | `NOTE-MYREQ-FILTER-002` | `L1-MY-REQUESTS-LIST-FILTERS.client` | URL/query | Page owns URL query params and passes filters/callbacks down. | implementation-ready |

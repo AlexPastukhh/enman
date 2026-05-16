@@ -1,6 +1,6 @@
 # Client Planning Index
 
-Status: current client planning navigation / ApplicantParty one-page direction and My Requests filters synchronized  
+Status: current client planning navigation / ApplicantParty flat-list read model and My Requests filters synchronized  
 Scope: client-wide UI/client conventions, cross-cutting client behavior and current L1 client implementation state
 
 ## 1. Purpose
@@ -58,9 +58,8 @@ Current repo/planning state:
 - Generated OpenAPI TypeScript support exists.
 - Shared L1 API wrappers exist for auth/current-user/logout, applicant create and My Requests list.
 - Shared fetch/ProblemDetails/form-error mapping exists.
-- First-stage client feature flows exist for registration, login, current-user session bootstrap, Applicant Parties add flow and My Requests list.
-- ApplicantParty target planning is one Applicant Parties page / section, not separate Account page vs My Applicant Parties current scenarios.
-- Applicant Parties page read/default/list UI is target/planned and depends on SL-APPL-002.
+- First-stage client feature flows exist for registration, login, current-user session bootstrap, ApplicantParty create on Applicant Parties page / section and My Requests list.
+- Applicant Parties page target read model uses flat GET /api/l1/applicant-parties applicantParties[]; client groups by isCurrentDefault.
 - My Requests filters are implementation-ready planning; status is the first supported filter.
 - My Request Details is implementation-ready planning; details route/API wrapper are not confirmed implemented in current client code.
 - Request creation UI is future work and must consume SC-04 UI/behavior sources.
@@ -84,32 +83,21 @@ planning/slices/SL-APPL-002-read-current-individual-applicant-party.client.md
 planning/slices/l1/L1-MY-REQUESTS-LIST-FILTERS.client.md
 planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md
 future planning/slices/SL-REQ-001-create-connection-request.client.md
+future Applicant Parties page read sidecar when concrete client read work starts
 ```
-
-Historical note:
-
-```text
-planning/slices/SL-APPL-002-read-current-individual-applicant-party.client.md
-```
-
-is superseded by the one Applicant Parties page / section direction unless a future reconciliation pass keeps it as a compatibility/current-implementation note.
 
 ## 5. Current Remaining Client Work
 
 ```text
 1. Logout UI/cache/navigation.
-2. Applicant Parties page / section read model: default/current templates, other saved parties, verification/display data.
-3. Applicant Parties add flow reconciliation from old single-current/current-applicant UI to one-page model.
-4. Future explicit make default/current action on the same Applicant Parties page.
-5. Request creation form UI with applicant fields/prefill/clear behavior from SC-04.
-6. My Requests filters: status first, URL state on page, filter UI controlled by page.
-7. My Request Details page.
-8. Client/component tests for implemented feature flows.
-9. Browser E2E happy paths after UI/read flows are stable.
-10. CSRF/antiforgery handling for unsafe browser commands when that cross-cutting slice is implemented.
+2. Applicant Parties page read model: use flat applicantParties[] and group by isCurrentDefault.
+3. Request creation form UI with applicant fields/prefill/clear behavior from SC-04.
+4. My Requests filters: status first, URL state on page, filter UI controlled by page.
+5. My Request Details page.
+6. Client/component tests for implemented feature flows.
+7. Browser E2E happy paths after UI/read flows are stable.
+8. CSRF/antiforgery handling for unsafe browser commands when that cross-cutting slice is implemented.
 ```
-
-Delete/archive ApplicantParty lifecycle remains future extension pressure and should not be added to current L1 client behavior until a dedicated lifecycle slice exists.
 
 ## 6. Relationship To `planning/slices/*.client.md`
 
@@ -177,3 +165,12 @@ planning/slices/slice-implementation-notes-register.md
 ```
 
 Then use generated OpenAPI types and generated semantic constants rather than inventing client contracts.
+
+For Applicant Parties page read work:
+
+```text
+GET /api/l1/applicant-parties returns applicantParties[].
+Client groups by isCurrentDefault:
+  top highlighted area = true
+  other saved list = false
+```

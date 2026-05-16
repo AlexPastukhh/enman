@@ -1,6 +1,6 @@
 # Slice Planning Index
 
-Status: current slice-planning navigation index / validation, My Requests filters and ApplicantParty one-page direction synchronized
+Status: current slice-planning navigation index / ApplicantParty flat-list read model, validation and My Requests filters synchronized
 
 ## 1. Core Rule
 
@@ -17,6 +17,17 @@ Implementation prompts must respect:
 ```text
 planning/agent-scope-boundaries-and-prompt-safety.md
 ```
+
+Every non-trivial slice draft must include:
+
+```text
+Scope
+Out of scope
+Related slices / owners
+Future extension points
+```
+
+Out-of-scope responsibilities should point to an existing slice, future slice, cleanup task, client sidecar, cross-cutting slice or explicit `not planned`.
 
 ## 2. Current / Active Backend Slice Files
 
@@ -64,6 +75,16 @@ planning/slices/l1/README.md
 - ApplicantParty creation is additive;
 - existing requests are not changed by ApplicantParty create or default/current changes;
 - request creation target uses Existing/New applicant context.
+```
+
+SL-APPL-002 read-model direction:
+
+```text
+GET /api/l1/applicant-parties
+returns one flat applicantParties[] list.
+Each item includes isCurrentDefault.
+Client groups default/current and other saved parties by isCurrentDefault.
+Backend does not return page layout sections as currentDefaults / otherApplicantParties arrays.
 ```
 
 ## 5. My Requests Target Direction
