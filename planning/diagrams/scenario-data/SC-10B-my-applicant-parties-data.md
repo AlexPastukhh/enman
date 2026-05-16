@@ -1,90 +1,59 @@
 # SC-10B — My Applicant Parties DATA
 
-## Purpose
-
-Define future visible/input/reference DATA for managing saved ApplicantParty profiles.
+Status: future DATA spec  
+Scope: saved ApplicantParty management DATA
 
 ## DATA Blocks
 
 ### SC-10B-DATA-01 — ApplicantParty list DATA
 
-Type: Visible DATA / Filter DATA  
-Actor: Client  
-Used by: future My Applicant Parties list
-
-Visible DATA:
-
-```text
-- applicant type;
-- applicant display name;
-- contact summary;
-- identifiers relevant for type;
-- verification status;
-- current/default marker for its applicant type;
-- usage indicator when available, for example used by requests / approved requests.
-```
-
-Filter / grouping DATA:
-
-```text
-- applicant type;
-- verification status;
-- current/default marker.
-```
-
-### SC-10B-DATA-02 — ApplicantParty details DATA
-
 Type: Visible DATA / Reference DATA  
-Actor: Client  
-Used by: future ApplicantParty details
+Actor: Client
 
 Visible DATA:
 
 ```text
+- ApplicantParty display name;
 - applicant type;
-- full applicant data for the type;
-- verification status;
-- current/default marker;
-- created/updated dates, if exposed;
-- usage/history summary, if exposed.
+- contact summary;
+- verification state;
+- current/default marker for applicant type;
+- created/updated summary when available;
+- safe/risky action availability when policy exists.
 ```
 
-### SC-10B-DATA-03 — ApplicantParty management action DATA
+### SC-10B-DATA-02 — ApplicantParty management actions
 
-Type: Action DATA / Confirmation DATA  
-Actor: Client  
-Used by: future add/edit/delete/archive/set-default actions
+Type: Selection DATA / Action DATA  
+Actor: Client
 
-Action DATA:
+Actions:
 
 ```text
 - add ApplicantParty;
-- edit ApplicantParty;
-- delete/archive/hide ApplicantParty;
-- set as current/default template for applicant type.
+- view details inline or in future details view;
+- edit ApplicantParty when policy allows;
+- delete/archive/hide ApplicantParty when policy allows;
+- set as current/default template for its applicant type.
 ```
 
-Warning / confirmation DATA:
+### SC-10B-DATA-03 — Delete/archive warning DATA
+
+Type: Visible DATA / Confirmation DATA  
+Actor: Client
+
+Warning DATA:
 
 ```text
-- deletion risk level;
-- whether ApplicantParty is current/default;
-- whether ApplicantParty is used by existing requests;
-- whether ApplicantParty is used by approved requests;
-- consequence of delete/archive/hide.
+- whether ApplicantParty is used by requests;
+- whether ApplicantParty is used by approved/reviewed requests;
+- whether ApplicantParty is current/default for its type;
+- consequence of deletion/archive/hide.
 ```
 
 ## Notes
 
 ```text
-This DATA is future planning.
-Do not claim current client implementation already has My Applicant Parties management.
-```
-
-## Scenario References
-
-```text
-planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
-planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
-planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+Hard delete is not accepted by default.
+Use delete/archive/hide wording until policy is decided.
 ```

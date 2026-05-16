@@ -1,48 +1,19 @@
-# Behavior Items Master Index
+# Scenario Behavior Items Index
 
-Status: current behavior items master index  
-Scope: scenario-derived, UI-scenario-derived and concern-derived behavior item files
+Status: current behavior item index / ApplicantParty model synchronized
 
-## 1. Scenario-Derived / UI-Scenario-Derived Behavior Items
+## Active Files
 
-Scenario-derived files are created per scenario when scenario behavior is prepared for domain/slice/client planning.
-
-| File | Scenario | Source type | Primary downstream use |
-|---|---|---|---|
-| `SC-04-request-creation-behavior-items.md` | SC-04 Request Creation | scenario-derived + UI-scenario-derived | request creation backend/client slices, applicant template/prefill/new ApplicantParty behavior, My Requests/read flow |
-| `SC-05-my-requests-behavior-items.md` | SC-05 My Requests / Own Request Details | scenario-derived + UI-scenario-derived | My Requests list/detail slices and client sidecars |
-| `SC-10-applicant-data-behavior-items.md` | SC-10 Applicant Data | scenario-derived + UI-scenario-derived | applicant data backend/client slices, current/default template per type, request applicant prefill |
-| `SC-10B-my-applicant-parties-behavior-items.md` | SC-10B My Applicant Parties | scenario-derived + UI-scenario-derived | future all-saved ApplicantParty management slices |
-
-## 2. Cross-Cutting / Concern-Derived Behavior Items
-
-| File | Source type | Primary slice |
+| File | Scenario / concern | Notes |
 |---|---|---|
-| `CC-CSRF-001-antiforgery-behavior-items.md` | security-derived cross-cutting | `planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md` |
+| `SC-04-request-creation-behavior-items.md` | SC-04 Request Creation | Includes applicant default/prefill/clear/new-applicant path and request submit behavior |
+| `SC-05-my-requests-behavior-items.md` | SC-05 My Requests / Own Request Details | List/detail behavior source |
+| `SC-10-applicant-data-behavior-items.md` | SC-10 Applicant Data | Saved ApplicantParties and current/default template per type |
+| `SC-10B-my-applicant-parties-behavior-items.md` | SC-10B My Applicant Parties | Future management behavior |
+| `CC-CSRF-001-antiforgery-behavior-items.md` | Browser unsafe command concern | Cross-cutting security behavior |
 
-## 3. Rule
+## Rule
 
-Every behavior item file must identify whether its source is:
+Use these IDs in slice `Behavior Coverage`.
 
-```text
-scenario-derived
-UI-scenario-derived
-security-derived
-API-contract-derived
-tooling-derived
-testing-derived
-client-cross-cutting-derived
-infrastructure-derived
-```
-
-Cross-cutting behavior items must be reflected in the corresponding cross-cutting/helper slice Concern Flow before Implementation Flow.
-
-Scenario-derived and UI-scenario-derived behavior items must trace back to scenario text, DATA, UI specs or validation/security addenda.
-
-Slice/client chats must not use `slice-questions-register.md` as the source for Scenario Flow or Behavior Items.
-
-Use:
-
-```text
-planning/slices/slice-scenario-flow-behavior-register.md
-```
+Do not invent final behavior IDs inside slice drafts when a source file exists.

@@ -1,9 +1,7 @@
 # Scenario DATA Index
 
-Status: current per-scenario DATA catalog  
+Status: current per-scenario DATA catalog / ApplicantParty template-per-type model synchronized  
 Scope: scenario DATA specs used by corrected scenario text specifications
-
-This folder contains scenario DATA specs.
 
 DATA means only what actor:
 
@@ -16,46 +14,7 @@ DATA means only what actor:
 - references as visible/selectable business item.
 ```
 
-DATA files must not contain:
-
-```text
-- validation/rules sections;
-- testable behavior sections;
-- invariants;
-- preconditions;
-- branches;
-- access rules;
-- security policy.
-```
-
-Those belong to:
-
-```text
-planning/scenario-domain-validation-principles.md
-planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-planning/tables/pre-domain-variants-input.md
-```
-
-## DATA Types
-
-```text
-Input DATA       = what actor enters.
-Visible DATA     = what actor sees.
-Selection DATA   = what actor selects from list/set.
-Filter DATA      = what actor filters/searches by.
-Attachment DATA  = what actor uploads/attaches/sends as file/document.
-Reference DATA   = visible/selectable relation to another business item, only when useful.
-Action DATA      = user-visible action choice, only when useful in UI/DATA specs.
-Confirmation DATA = text/consequence data shown before dangerous action.
-```
-
-Do not use:
-
-```text
-Decision DATA
-Response DATA
-Policy DATA
-```
+DATA files must not contain validation rules, invariants, access rules or implementation mechanics.
 
 ## Active DATA Files
 
@@ -80,49 +39,24 @@ SC-14-client-data-verification-data.md
 
 ## Request Creation DATA Summary
 
-Request object location means:
-
-```text
-object address
-```
-
 Request creation input DATA includes:
 
 ```text
 - requested service / request subject information;
 - request details/description;
-- object address.
+- object address;
+- applicant context data: existing default/selected ApplicantParty or new applicant data.
 ```
 
-Applicant DATA in request creation includes:
+Applicant DATA in request creation:
 
 ```text
-- selected applicant type;
-- current/default ApplicantParty template for that type, when available;
-- prefilled applicant fields from current/default template;
-- clear action when fields are prefilled;
-- empty applicant fields when no current/default template exists;
-- new applicant data entered by client;
-- offer to make newly created ApplicantParty current/default template for that type;
-- future dropdown/list of all saved ApplicantParties.
-```
-
-Accepted direction:
-
-```text
-If user keeps prefilled data, request uses the existing saved ApplicantParty.
-If user enters new applicant data, system creates a new ApplicantParty and uses it for the request.
-New ApplicantParty is offered as current/default template for its type.
-Existing ApplicantParties remain stored and unchanged.
-```
-
-Future UX:
-
-```text
-[VAR:EXPAND]
-- dropdown/list to select from all saved ApplicantParties;
-- return-to-request flow after applicant management;
-- clear/restore rejected-request prefill data when rejected-request retry is implemented.
+- current/default ApplicantParty for selected type, when available;
+- prefilled applicant fields;
+- empty applicant fields when no default exists;
+- clear/reset action for prefilled fields;
+- new applicant data entered after clearing or when default is missing;
+- future saved ApplicantParty dropdown/list.
 ```
 
 ## Applicant DATA Summary
@@ -135,15 +69,17 @@ individual entrepreneur
 legal entity
 ```
 
-ApplicantParty profile policy:
+Target ApplicantParty model:
 
 ```text
-Account may have multiple saved ApplicantParty profiles over time.
-At most one ApplicantParty per applicant type may be current/default template for future prefill.
-Current/default template is not historical request mutation.
+A client account may store many ApplicantParties.
+One current/default template may exist per applicant type.
+Creating new ApplicantParty does not replace existing ApplicantParties.
+Creating the first ApplicantParty of a type may initialize the default for that type.
+Creating another same-type ApplicantParty leaves existing default unchanged.
 ```
 
-Current implemented L1 already has narrow physical-person applicant data:
+Current implemented L1 still has narrower physical-person data:
 
 ```text
 FullName
@@ -151,96 +87,13 @@ Email
 PhoneNumber
 ```
 
-Target scenario DATA also includes richer physical-person data needed for agreement realism:
+Target scenario DATA may later include richer fields:
 
 ```text
 СНИЛС
 паспортные данные
-actual/residential address as target/future expansion
-```
-
-New ApplicantParty starts as:
-
-```text
-NotVerified
-```
-
-Applicant verification happens in request/review context.
-
-## My Applicant Parties DATA Summary
-
-Future My Applicant Parties management DATA includes:
-
-```text
-- saved ApplicantParty list;
-- applicant type;
-- applicant display/contact/identifier summary;
-- verification status;
-- current/default marker;
-- details view;
-- add/edit/delete/archive/set-default actions;
-- warning/confirmation data for destructive actions.
-```
-
-Delete/archive is future and must preserve request history.
-
-## Agreement Proposal DATA Summary
-
-Agreement Proposal means:
-
-```text
-a concrete agreement document/version sent by one side to another side in the context of an Approved request.
-```
-
-Diagram-safe agreement proposal status terms:
-
-```text
-AwaitingClientConfirmation
-SentByClient
-SupersededByCounterProposal
-Accepted
-Rejected
-```
-
-Status meaning:
-
-```text
-Rejected
-= explicit rejection/decline of a proposal.
-
-SupersededByCounterProposal
-= proposal is no longer current because another party sent a replacing counterproposal.
-```
-
-Core agreement proposal DATA:
-
-```text
-- related Approved request;
-- sender: employee or client;
-- status / lifecycle term;
-- attached agreement document/file;
-- text details/comment;
-- visible summary/name.
-```
-
-Replacement / counterproposal rule:
-
-```text
-A previous client-sent proposal replaced by an employee counterproposal is superseded/replaced by counterproposal.
-
-It must not be modeled as ordinary Rejected unless there is an explicit rejection/decline action.
-```
-
-Future statuses / behaviors:
-
-```text
-[VAR:EXPAND]
-Signed
-Expired
-Cancelled
-comment-only discussion
-return to older proposal version
-close/reject approved request if agreement cannot be reached
+actual/residential address
+entrepreneur/legal-entity fields
 ```
 
 ## Deferred / Removed
@@ -254,13 +107,6 @@ SC-18 is deferred.
 
 ## Domain Variant Use
 
-DATA specs feed:
-
-```text
-planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-planning/tables/pre-domain-variants-input.md
-domain model variants
-diagram-generation Phase 1 preflight and agreement batch generation
-```
+DATA specs feed scenario behavior items, domain model variants, slice planning and diagram-generation preflight.
 
 Do not use DATA files as DB schema or DTO contract.

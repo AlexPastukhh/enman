@@ -1,77 +1,44 @@
-# Scenario Behavior Items Index
+# Scenario Behavior Items
 
-Status: current behavior items index  
-Scope: per-scenario behavior items, UI-scenario behavior items and cross-cutting concern-derived behavior items
+Status: current behavior-item source area / ApplicantParty template-per-type model synchronized  
+Scope: source behavior items for scenarios, UI specs and cross-cutting concerns
 
-## 1. Purpose
+## Purpose
 
-Behavior items make requirements traceable into domain drafts, slice drafts, implementation flows and tests.
+Behavior item files provide stable source behavior IDs for slice drafts, client sidecars and tests.
 
-They are source behavior items.
+Slice/client chats must not invent behavior items from local questions or implementation notes.
 
-Slice/client chats should consume them, not invent replacements.
-
-## 2. Behavior Item Source Types
-
-Behavior items may be:
-
-```text
-scenario-derived
-UI-scenario-derived
-security-derived cross-cutting
-API-contract-derived cross-cutting
-tooling-derived cross-cutting
-testing-derived cross-cutting
-client-cross-cutting-derived
-infrastructure-derived
-```
-
-Business slices primarily consume scenario-derived behavior items.
-
-Client sidecars consume scenario-derived and `[UI-SCENARIO]` behavior items.
-
-Cross-cutting/helper slices consume concern-derived behavior items.
-
-## 3. Current Scenario-Derived Behavior Item Files
-
-| File | Scenario | Scope |
-|---|---|---|
-| `SC-04-request-creation-behavior-items.md` | SC-04 Request Creation | request creation scenario/UI behavior, per-type applicant template prefill, missing-template empty fields, new ApplicantParty creation and set-current/default offer |
-| `SC-05-my-requests-behavior-items.md` | SC-05 My Requests / Own Request Details | My Requests list/detail behavior sources |
-| `SC-10-applicant-data-behavior-items.md` | SC-10 Applicant Data | applicant data behavior, saved ApplicantParty profiles and current/default template per type |
-| `SC-10B-my-applicant-parties-behavior-items.md` | SC-10B My Applicant Parties | future all-saved ApplicantParty management behavior |
-
-## 4. Source Register
-
-Slice-facing source mapping lives in:
+Use with:
 
 ```text
 planning/slices/slice-scenario-flow-behavior-register.md
 ```
 
-Before writing Behavior Coverage, a slice/client chat must read that register and then read the linked behavior item files.
-
-## 5. Cross-Cutting Behavior Item Rule
-
-Cross-cutting behavior items are first-class behavior items.
-
-They must:
+## Current Behavior Item Files
 
 ```text
-- state their source;
-- be reflected in the cross-cutting/helper slice Concern Flow;
-- be covered by implementation flow and tests or marked as not covered yet.
-```
-
-## 6. Current Cross-Cutting Behavior Item Files
-
-```text
+SC-04-request-creation-behavior-items.md
+SC-05-my-requests-behavior-items.md
+SC-10-applicant-data-behavior-items.md
+SC-10B-my-applicant-parties-behavior-items.md
 CC-CSRF-001-antiforgery-behavior-items.md
 ```
 
-## 7. Related Cross-Cutting Slices
+## ApplicantParty Direction
+
+Current behavior sources use:
 
 ```text
-planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
-planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
+many saved ApplicantParties
++ one current/default template per applicant type
++ no hidden replacement on create
++ explicit future default selection
+```
+
+Superseded wording:
+
+```text
+one current active ApplicantParty per account
+replacement makes previous current inactive
 ```

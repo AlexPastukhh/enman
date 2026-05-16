@@ -1,6 +1,6 @@
 # Scenario Text Specifications Index
 
-Status: current textual scenario specification package index
+Status: current textual scenario specification package index / ApplicantParty template-per-type model synchronized
 
 ## 1. Source Of Truth
 
@@ -11,8 +11,8 @@ planning/scenario-specification-principles.md
 planning/scenario-domain-validation-principles.md
 planning/diagrams/scenario-data/00-scenario-data-index.md
 planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-planning/diagrams/scenario-diagram-consistency-report.md
-planning/tables/pre-domain-variants-input.md
+planning/diagrams/scenario-questions-register.md
+planning/slices/slice-scenario-flow-behavior-register.md
 ```
 
 ## 2. Corrected Scenario Set
@@ -34,168 +34,78 @@ SC-07B Employee Request Review
 Extension / corrected:
 
 ```text
-SC-10  Applicant Data / Applicant Templates
-SC-10B My Applicant Parties — future saved ApplicantParty management
+SC-10  Applicant Data
+SC-10B My Applicant Parties
 SC-11  Request Documents
 SC-13A My Agreements
 SC-13B Agreement Proposal Details / Response
 SC-13C Employee Agreements
 SC-13D Employee Agreement Proposal Create / Send Version
-SC-14  Client Data Verification — future employee-started action, not triggered-by
+SC-14  Client Data Verification — future employee-started action
 SC-15  Security Text Specification
 SC-17  Anonymous Request
 ```
 
-Merged / removed / deferred:
+## 3. Key Current Decisions
+
+ApplicantParty target model:
 
 ```text
-SC-08  Approved Result — merged into SC-07B + SC-05 + SC-13A/SC-13B/SC-13C/SC-13D
-SC-09  Rejected Result — merged into SC-07B + SC-05
-SC-12  Review Feedback / Correction Navigation — merged into SC-05 + SC-04
-SC-16  Removed: Notification Navigation is part of SC-05 / SC-13 / review-result flows
-SC-18  Archive / Audit — deferred / low priority
-```
+A client account may store many ApplicantParty profiles over time.
 
-## 3. Validation Companion
-
-Use:
-
-```text
-scenario-server-domain-validation-addendum.md
-```
-
-It adds for each scenario:
-
-```text
-- client-side validation;
-- server-side/domain validation;
-- value object / domain candidates.
-```
-
-Validation rules do not belong in DATA files.
-
-## 4. Key Current Decisions
-
-Request statuses:
-
-```text
-InReview
-Approved
-Rejected
-```
-
-Request object location means:
-
-```text
-object address
-```
-
-ApplicantParty saved profile / current-default policy:
-
-```text
-A client account can store multiple saved ApplicantParty profiles over time.
-
-For convenience, the account may have one current/default ApplicantParty template per applicant type:
+For convenience, one current/default ApplicantParty template may exist per applicant type:
 - physical person;
 - individual entrepreneur;
 - legal entity.
 
-Current/default means initial prefill/default selection for future request creation.
+Current/default template controls initial prefill/default selection for future request creation.
 
-Adding a new ApplicantParty does not overwrite, delete or deactivate older ApplicantParties.
+Creating a new ApplicantParty does not delete, overwrite, deactivate or replace existing ApplicantParties.
 
-Changing current/default affects future prefill only.
-Existing requests keep the applicant context they were created with.
+Creating the first ApplicantParty of a type may initialize the current/default template for that type.
+
+Creating an additional ApplicantParty of the same type does not silently change the existing current/default template.
+
+Changing current/default when one already exists is a separate explicit behavior.
 ```
 
 Request creation applicant context:
 
 ```text
-Request creation uses one account-owned ApplicantParty context.
+Request creation uses one accepted applicant context.
 
-If current/default template exists for the selected applicant type, fields are prefilled.
+If current/default ApplicantParty exists for selected type, fields may be prefilled.
 
-The user may keep prefilled data, or clear it and enter new applicant data.
+If current/default is missing, fields are empty and ready for input.
 
-If no current/default template exists, fields are empty and the same new-applicant-data path is used without clear action.
+If user clears prefilled fields or starts with missing default, new applicant data path is used.
 
-Accepted new applicant data creates a new ApplicantParty, uses it for this request and offers to make it current/default template for that applicant type.
+Accepted new applicant data creates a new ApplicantParty and uses it for the request.
 
-Future request creation may allow selecting from all saved ApplicantParties using a dropdown/list, while current/default remains the initial prefill/default selection.
+Request creation with new applicant data should be atomic in one server call, not two client calls.
 ```
 
-Applicant verification:
+Superseded applicant wording:
 
 ```text
-New ApplicantParty starts as NotVerified.
-ApplicantParty verification happens in request/review context.
-Standalone applicant data entry does not verify ApplicantParty.
+- one current active ApplicantParty per account;
+- replacement makes previous current inactive/non-current;
+- request creation always uses server-selected single current active applicant.
 ```
 
-Agreement Proposal:
+Use the target model above for new scenario and slice planning.
+
+## 4. Current Downstream Use
 
 ```text
-concrete agreement document/version sent by one side to the other side
-in the context of an Approved request.
-```
-
-Diagram-safe agreement proposal lifecycle terms:
-
-```text
-AwaitingClientConfirmation
-SentByClient
-SupersededByCounterProposal
-Accepted
-Rejected
-```
-
-Agreement proposal status meaning:
-
-```text
-Rejected
-= explicit rejection/decline of a proposal.
-
-SupersededByCounterProposal
-= proposal is no longer current because the opposite party sent a replacing counterproposal.
-```
-
-Core agreement proposal rules:
-
-```text
-- exchange starts only by employee action on an Approved request;
-- approval does not automatically create agreement proposal;
-- employee and client proposal submissions include attached agreement document/file and text details/comment;
-- client can send only one own proposal version in response to an employee-sent proposal in core;
-- client cannot start exchange without employee-sent proposal;
-- employee responds to client-sent proposal by sending a new employee version;
-- previous client-sent proposal is superseded/replaced by the employee counterproposal;
-- previous client-sent proposal must not be described or drawn as ordinary Rejected merely because it was replaced.
-```
-
-Diagram-generation guard:
-
-```text
-Do not draw replacement/counterproposal as Rejected.
-
-Use:
-- superseded/replaced by counterproposal;
-- SupersededByCounterProposal, if a domain state name is needed.
-
-Rejected is only for explicit rejection/decline.
-```
-
-## 5. Current Downstream Use
-
-```text
+planning/diagrams/scenario-data/
+planning/diagrams/scenario-ui-specs/
+planning/diagrams/scenario-behavior-items/
+planning/slices/slice-scenario-flow-behavior-register.md
 planning/tables/pre-domain-variants-input.md
 domain model variants
-later aggregate/slice planning after domain direction is chosen
-diagram-generation Phase 1 preflight and agreement batch generation
+slice/client planning
+diagram-generation preflight
 ```
 
-Do not route the current workflow through:
-
-```text
-planning/tables/scenario-domain-design-input-core.md
-planning/tables/domain-discovery-core.md
-```
+Do not let implementation planning silently decide scenario behavior.

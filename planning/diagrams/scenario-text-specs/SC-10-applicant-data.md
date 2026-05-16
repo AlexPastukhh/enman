@@ -1,317 +1,236 @@
 # SC-10 — Applicant Data
 
-## Status
+Status: target scenario specification / synchronized with ApplicantParty template-per-type model  
+Source family: scenario text + DATA + UI scenario + behavior items  
+Related scenarios: `SC-04 Client Request Creation`, `SC-10B My Applicant Parties`
 
-Corrected scenario specification draft / applicant template per type policy synchronized.
+## 1. Purpose
 
-## Purpose
+Client provides applicant data and creates saved ApplicantParty profiles for the account.
 
-Client provides applicant data that can be used as a saved ApplicantParty profile and later used in request creation.
-
-Target scenario direction:
+Target model:
 
 ```text
-A client account may store multiple ApplicantParty profiles over time.
+A client account may store many ApplicantParty profiles over time.
 
-For request creation convenience, the account may have one current/default ApplicantParty template per applicant type.
+For convenience, the account may have one current/default ApplicantParty template per applicant type:
+- physical person;
+- individual entrepreneur;
+- legal entity.
 
-Adding a new ApplicantParty does not overwrite, delete or deactivate older ApplicantParties.
+Current/default template means initial prefill/default selection for future request creation.
 
-Changing the current/default template affects future prefill behavior only.
-Existing requests keep the applicant context they were created with.
+Creating a new ApplicantParty does not delete, overwrite, deactivate or replace existing ApplicantParties.
+
+Changing current/default affects future prefill behavior only.
+Existing requests keep their submitted applicant context.
 ```
 
 Current implementation note:
 
 ```text
-Current L1 implementation is narrower than this target scenario direction.
-It currently supports individual applicant creation/current read behavior.
-Do not overclaim that multi-type templates, all applicant management or request-time applicant creation are already implemented.
+Current implemented L1 is narrower than the target scenario model.
+It supports individual applicant creation and still has older current-active implementation concepts.
+Do not describe the target multi-profile/template-per-type direction as already fully implemented.
 ```
 
-## Actor / Screen
+## 2. Actor / Screen
 
 Actor: Client  
-Screen: Account page / Applicant Data section  
-Future screen: My Applicant Parties management area  
-Goal: Provide, view or maintain applicant data used by request creation
+Screen: Account page / Applicant Parties section  
+Goal: Add and view applicant data used for future request creation
 
-## Entry Points
+## 3. Entry Points
 
-Entry A: Client opens Account page applicant section.
+Entry A: Client opens Account page and uses Applicant Parties section.
 
-Entry B: Client provides applicant data while preparing a request.
+Entry B: Client starts request creation and needs applicant data.
 
-Entry C [future]: Client opens My Applicant Parties to view, add, edit, delete/archive or set current/default ApplicantParty profiles.
+Entry C: Client enters new applicant data during request creation; the created ApplicantParty is used for that request.
 
-Entry D [future]: Registration may collect part of applicant data.
+Entry D [future]: Client opens a dedicated My Applicant Parties management area.
 
-## Preconditions
+## 4. Preconditions
 
 - Client is signed in.
-- Applicant data section or request creation applicant section is reachable.
+- Applicant Parties section is reachable from account context.
 
-## DATA
+## 5. DATA
 
-Applicant type selection DATA  
-`SC-10-DATA-01`
+Applicant type selection DATA: `SC-10-DATA-01`.
 
-Selection DATA:
+Physical person applicant DATA: `SC-10-DATA-02`.
 
-```text
-- physical person;
-- individual entrepreneur;
-- legal entity.
-```
+Individual entrepreneur applicant DATA: `SC-10-DATA-03`.
 
-Physical person applicant DATA  
-`SC-10-DATA-02`
+Legal entity applicant DATA: `SC-10-DATA-04`.
 
-Input DATA:
+Saved applicant visible DATA and template/default DATA: `SC-10-DATA-05`.
+
+See:
 
 ```text
-- ФИО;
-- СНИЛС;
-- паспортные данные;
-- phone;
-- email.
+planning/diagrams/scenario-data/SC-10-applicant-data.md
+planning/diagrams/scenario-data/SC-10B-my-applicant-parties-data.md
 ```
 
-Extension / Future DATA:
+## 6. Main Flow — Add ApplicantParty From Account Page
+
+1. Client opens Account page.
+2. System shows Applicant Parties section.
+3. Top area shows current/default templates grouped by applicant type when available.
+4. Lower area shows saved ApplicantParties, including non-default ApplicantParties.
+5. Client chooses to add applicant data.
+6. Client selects applicant type.
+7. Client enters applicant data for the selected type.
+8. Client-side validation runs for visible fields.
+9. Client corrects applicant data if validation fails.
+10. Client submits applicant data.
+11. System accepts or rejects applicant data.
+12. If accepted, system creates a new saved ApplicantParty linked to the account.
+13. New ApplicantParty starts as `NotVerified`.
+14. Existing ApplicantParties remain stored and unchanged.
+15. If there is no current/default ApplicantParty for that applicant type, the newly created ApplicantParty becomes the initial current/default template for that type.
+16. If a current/default ApplicantParty already exists for that type, the existing current/default template remains unchanged.
+17. UI shows the new ApplicantParty in the Applicant Parties section.
+18. UI highlights current/default templates when present.
+
+## 7. Branches
+
+### First ApplicantParty of a type
 
 ```text
-[VAR:EXPAND]
-- actual/residential address.
+-> no current/default ApplicantParty exists for selected type
+-> client enters applicant data
+-> applicant data is accepted
+-> new ApplicantParty is created
+-> new ApplicantParty starts NotVerified
+-> new ApplicantParty becomes initial current/default template for that type
+-> Account page shows it as default/current template and in saved list
 ```
 
-Individual entrepreneur applicant DATA  
-`SC-10-DATA-03`
-
-Input DATA:
+### Additional ApplicantParty of the same type
 
 ```text
-- ФИО ИП;
-- ИНН;
-- ОГРНИП;
-- phone;
-- email.
+-> current/default ApplicantParty already exists for selected type
+-> client enters applicant data
+-> applicant data is accepted
+-> new ApplicantParty is created
+-> old ApplicantParty remains stored and unchanged
+-> existing current/default template remains selected
+-> new ApplicantParty appears in saved list
+-> explicit future action can make the new ApplicantParty current/default
 ```
-
-Extension / Future DATA:
-
-```text
-[VAR:EXPAND]
-- registration address;
-- additional ЕГРИП record details if later needed.
-```
-
-Legal entity applicant DATA  
-`SC-10-DATA-04`
-
-Input DATA:
-
-```text
-- organization name;
-- ИНН;
-- ОГРН;
-- phone;
-- email.
-```
-
-Extension / Future DATA:
-
-```text
-[VAR:EXPAND]
-- КПП;
-- legal address;
-- representative / signer;
-- representative authority basis.
-```
-
-Saved applicant visible DATA  
-`SC-10-DATA-05`
-
-Visible DATA:
-
-```text
-- applicant type;
-- applicant display name;
-- applicant contact summary;
-- applicant identifiers relevant for selected type;
-- current/default marker for its applicant type, when set;
-- verification state, when available.
-```
-
-## Main Flow — Account Applicant Template
-
-1. Client opens Account page applicant section.
-2. System shows current/default ApplicantParty template per supported applicant type, when one exists.
-3. If a current/default template for a type is missing, the UI can show an empty form or an add action for that type.
-4. Client enters applicant data for a selected applicant type.
-5. Client saves applicant data.
-6. System creates a new ApplicantParty profile.
-7. New ApplicantParty starts as `NotVerified`.
-8. UI offers to make the new ApplicantParty the current/default template for that applicant type.
-9. Existing ApplicantParties remain stored and are not overwritten.
-
-## Branches
-
-### Physical person applicant
-
--> applicant type = physical person  
--> client enters physical person applicant data  
--> saved applicant display uses ФИО  
--> profile may become current/default physical person template
-
-### Individual entrepreneur applicant
-
--> applicant type = individual entrepreneur  
--> client enters ИП applicant data  
--> saved applicant display uses ФИО ИП  
--> profile may become current/default individual entrepreneur template
-
-### Legal entity applicant
-
--> applicant type = legal entity  
--> client enters legal entity applicant data  
--> saved applicant display uses organization name  
--> profile may become current/default legal entity template
 
 ### Applicant data invalid
 
--> validation errors are visible  
--> client corrects applicant data  
--> invalid applicant data is not saved
+```text
+-> validation errors are visible
+-> invalid ApplicantParty is not created
+-> existing ApplicantParties remain unchanged
+-> client can correct input and resubmit
+```
 
-### Applicant data saved
+### Request creation creates ApplicantParty
 
--> applicant data accepted  
--> new ApplicantParty profile is created  
--> status = NotVerified  
--> profile is visible as saved applicant data  
--> UI can offer to make it the current/default template for its applicant type
+```text
+-> request creation uses new applicant data
+-> system creates a new ApplicantParty
+-> new ApplicantParty is used for that request
+-> if no current/default exists for that type, it becomes initial current/default
+-> if current/default already exists, UI may offer to make the new ApplicantParty current/default for future requests
+-> existing ApplicantParties remain unchanged
+```
 
-### Current/default template changed
-
--> client chooses or confirms a saved ApplicantParty as current/default for its type  
--> future request creation prefill uses the selected current/default template  
--> older ApplicantParties remain stored  
--> existing requests keep their submitted applicant context
-
-### Future My Applicant Parties management
-
--> client opens My Applicant Parties  
--> client can view list/details of saved ApplicantParties  
--> client can add ApplicantParty of any supported type  
--> client can edit or delete/archive when allowed by safety rules  
--> client can choose current/default template per applicant type
-
-## Invariants
+## 8. Invariants
 
 Invalid applicant data is not saved.
 
-Adding a new ApplicantParty does not overwrite existing ApplicantParties.
+A client account may have many saved ApplicantParties.
 
-At most one ApplicantParty per applicant type can be current/default for future prefill.
+One current/default ApplicantParty may exist per applicant type.
 
-Current/default status is a template/prefill concept for future requests, not a historical rewrite of previous requests.
+Creating a new ApplicantParty does not automatically replace an existing current/default ApplicantParty of the same type.
 
-A request must preserve the applicant context used at submission time through stable reference or future snapshot/version policy.
+Changing current/default when a default already exists is a separate explicit behavior.
 
-Standalone applicant data creation does not verify ApplicantParty.
+ApplicantParty verification is separate from standalone applicant creation.
 
-Verification happens in request/review context.
+New ApplicantParty starts as `NotVerified`.
 
-## Step Postconditions
+Request review may verify the ApplicantParty used by the request.
 
-- Applicant data is saved only after accepted applicant data.
-- A saved ApplicantParty starts as `NotVerified`.
-- A saved ApplicantParty can be used by request creation.
-- A saved ApplicantParty may become current/default for its type when the user confirms or when target policy says it should be selected.
-- Existing ApplicantParties remain available for history/future management unless explicit delete/archive rules apply.
+Existing requests keep their submitted applicant context when later ApplicantParties are added or default templates change.
 
-## Outcomes
+## 9. Outcomes
 
-- Client can provide applicant data for physical person, individual entrepreneur or legal entity.
-- Client can have saved ApplicantParty profiles over time.
-- Client can have a current/default template per applicant type.
-- Request creation can prefill applicant data from the relevant current/default template.
-- Request creation can create a new ApplicantParty when new applicant data is entered.
-- Applicant verification remains tied to request/review context.
+- Client can add applicant data for physical person, individual entrepreneur or legal entity.
+- Client can see saved ApplicantParties on Account page.
+- Client can see which ApplicantParty is current/default template per type when available.
+- Adding ApplicantParty does not remove or overwrite older ApplicantParties.
+- First ApplicantParty of a type can initialize the current/default template for that type.
+- Additional ApplicantParties of the same type remain saved but do not silently change current/default.
+- ApplicantParty can later be used by request creation.
 
-## ADR / Policy Candidates
-
-ADR?: Request should preserve submitted applicant context through immutable ApplicantParty version, snapshot, or stable reference policy.
-
-ADR?: Physical person passport data and address are richer than current implemented L1. Current code may keep a narrower first implementation while specs describe target scenario DATA.
-
-ADR?: Verification/check is available only in request/review context, not from standalone applicant editing.
-
-ADR?: ApplicantParty deletion may be archive/hide rather than hard delete when requests or verification history exist.
-
-## Questions / Decisions
+## 10. Questions / Decisions
 
 Accepted direction:
 
 ```text
 Decision:
-An account can have multiple saved ApplicantParty profiles.
+A client account may store many ApplicantParty profiles.
 
 Reason:
-Requests must preserve the applicant context used at submission time, and users may later enter different applicant data without destroying historical context.
+Older requests and future review/verification history may need older applicant data to remain available.
+
+Consequence:
+Adding applicant data is not replacement by default.
 ```
 
 ```text
 Decision:
-Current/default ApplicantParty is scoped by applicant type.
+Current/default ApplicantParty is per applicant type.
 
 Reason:
-Physical person, individual entrepreneur and legal entity are different applicant data shapes.
-Each type may have its own prefill template for future request creation.
+Physical person, individual entrepreneur and legal entity are different applicant contexts.
+A single global current applicant does not fit the target model.
+
+Consequence:
+Future request creation should prefill from the current/default template for the selected applicant type.
 ```
 
 ```text
 Decision:
-Adding new ApplicantParty data does not replace/delete existing ApplicantParties.
+Creating the first ApplicantParty of a type may initialize the current/default template for that type.
 
 Reason:
-Existing requests and verification history can depend on older applicant data.
+If there is no default yet, the first saved ApplicantParty is the natural future prefill.
 ```
 
 ```text
 Decision:
-New ApplicantParty starts as NotVerified.
+Creating an additional ApplicantParty of the same type does not silently change current/default.
 
 Reason:
-Applicant verification happens during request/review context, not during standalone applicant data entry.
+Changing the user's default template affects future request creation and should be explicit.
+
+Consequence:
+A future Select Current/Default ApplicantParty slice owns explicit default changes.
 ```
 
-Open / future-review questions:
+Future review questions:
 
 ```text
-Q: Should new ApplicantParty become current/default automatically when there is no current/default template for that type, or should the UI still ask?
-Q: Should editing an ApplicantParty mutate it in place or create a new version when it has already been used by requests?
-Q: Should deleting ApplicantParty mean hard delete, archive, hide, or deactivate?
-Q: What warning should be shown when deleting an ApplicantParty that is used by requests or approved requests?
-Q: Should request details show ApplicantParty snapshot, current stored profile data, or both?
-Q: When should physical person actual/residential address become current target scenario DATA?
+Q: Should delete be hard delete, archive, deactivate or hide?
+Q: Can a used ApplicantParty be edited in place, or does edit create a new version/profile?
+Q: Should request store ApplicantParty reference, applicant snapshot, or both?
+Q: When should a dedicated My Applicant Parties page be introduced instead of Account page inline cards?
 ```
 
-Superseded direction:
+## 11. Diagram Notes
 
-```text
-Superseded:
-One current active ApplicantParty per account.
-
-Superseded:
-Future applicant replacement makes the newly accepted ApplicantParty current active and the previous ApplicantParty non-current globally.
-```
-
-## Diagram Notes
-
-- Do not label this only as Create ApplicantParty.
-- Use user-facing wording: Provide applicant data / Applicant templates / Saved applicant profiles.
-- Show applicant type as a selection/branch.
-- Show current/default as one per applicant type, not one global account profile.
-- Show older ApplicantParties as stored/history-preserving, not overwritten.
-- Use DATA side blocks for type-specific fields.
+- Use user-facing wording: Add applicant data / Applicant Parties.
+- Do not draw adding ApplicantParty as replacement/deactivation.
+- Show current/default as a template marker per applicant type, not as the only saved ApplicantParty.
+- Show existing saved ApplicantParties staying visible and unchanged.
+- Mark verification as future/review-context behavior, not standalone create behavior.

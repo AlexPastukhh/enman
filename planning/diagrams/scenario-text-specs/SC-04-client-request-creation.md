@@ -1,33 +1,35 @@
 # SC-04 — Client Request Creation
 
-Status: corrected scenario specification draft / synchronized with per-type ApplicantParty template direction  
+Status: target scenario specification draft / synchronized with ApplicantParty template-per-type model  
 Source family: scenario text + DATA + UI scenario + behavior items  
 Related scenarios: `SC-10 Applicant Data`, `SC-10B My Applicant Parties`, `SC-05 My Requests / Own Request Details`
 
 ## 1. Purpose
 
-Client creates and submits a connection/request for review.
+Client creates and submits a connection request for review.
 
-Request creation uses one ApplicantParty context for the request.
+Request creation uses one applicant context for the request.
 
-Target scenario direction for applicant data in request creation:
+Target applicant-context model:
 
 ```text
-- if a current/default ApplicantParty template exists for the relevant applicant type, applicant fields are prefilled from it;
-- client may keep the prefilled data and use that existing ApplicantParty for the request;
-- client may clear the prefilled fields and enter new applicant data;
-- if no current/default ApplicantParty exists, applicant fields are empty and the same new-applicant-data path is used without needing a clear action;
-- accepted new applicant data creates a new ApplicantParty, adds it to saved applicant profiles and uses it for this request;
-- after creating the new ApplicantParty, UI should offer to make it current/default template for that applicant type;
-- existing ApplicantParties remain stored and unchanged;
-- request submission must not let the client spoof an arbitrary ApplicantParty outside the account.
+- the account may have saved ApplicantParties;
+- one current/default ApplicantParty may exist per applicant type;
+- current/default is the initial prefill/default selection for request creation;
+- client may keep the prefilled applicant data;
+- client may clear fields and enter new applicant data;
+- if new applicant data is entered, the system creates a new ApplicantParty and uses it for this request;
+- creating new ApplicantParty does not overwrite existing ApplicantParties;
+- if no current/default exists for the type, the newly created ApplicantParty becomes initial current/default;
+- if current/default already exists, UI may offer to make the new ApplicantParty current/default for future requests.
 ```
 
 Current implementation note:
 
 ```text
-Current implemented L1 backend still follows the narrower current-active individual ApplicantParty direction.
-This scenario describes target/future request creation UX and should not be overclaimed as implemented.
+Current implemented L1 request creation is narrower: it creates a request from server-selected current active individual ApplicantParty.
+Target scenario direction requires future request applicant-context redesign.
+Do not overclaim the target model as already implemented.
 ```
 
 ## 2. Actor / Screen
@@ -42,139 +44,146 @@ Entry A: Client opens request creation page.
 
 Entry B: Client starts a new request after rejected request feedback.
 
-Entry C: Client opens request creation with existing current/default applicant template available.
+Entry C: Client opens request creation page with a current/default ApplicantParty template available for the selected applicant type.
 
-Entry D: Client opens request creation when no current/default applicant template exists.
+Entry D: Client opens request creation page when no current/default ApplicantParty exists for the selected applicant type.
 
-Entry E [future]: Client selects a saved ApplicantParty from all ApplicantParties using a dropdown/list.
+Entry E [future]: Client chooses an ApplicantParty from a dropdown/list of all saved ApplicantParties.
 
 ## 4. Preconditions
 
 - Client is signed in.
 - Client can access request creation page.
-- Current/default ApplicantParty for the selected/relevant applicant type may or may not exist.
+- Current/default ApplicantParty may exist for the selected applicant type, but is not required.
+- Request creation must have an accepted applicant context before submit can complete.
 
 ## 5. DATA
 
 Request creation DATA: `SC-04-DATA-01`.
 
-Input DATA:
+Applicant DATA in request creation journey: `SC-04-DATA-02`.
+
+Related applicant DATA:
 
 ```text
-- requested service / request subject information;
-- request details/description;
-- object address.
-```
-
-Applicant DATA in the request journey: `SC-04-DATA-02`.
-
-```text
-- applicant type;
-- prefilled applicant data from current/default ApplicantParty, when available;
-- empty applicant fields when no current/default template is available;
-- clear action when fields are prefilled;
-- new applicant data entered by client;
-- option/offer to make newly created ApplicantParty current/default template for its type;
-- future selection from all saved ApplicantParties.
-```
-
-Visible DATA after accepted submit:
-
-```text
-- request status = InReview;
-- request appears in My Requests;
-- request appears in employee review queue.
-```
-
-Extension / Future DATA:
-
-```text
-[VAR:EXPAND]
-- requested maximum power, kW;
-- data prefilled from rejected request feedback;
-- document references if document flow becomes part of request creation;
-- richer applicant data fields for entrepreneur/legal-entity applicant types;
-- dropdown/list of all saved ApplicantParties.
+planning/diagrams/scenario-data/SC-10-applicant-data.md
+planning/diagrams/scenario-data/SC-10B-my-applicant-parties-data.md
 ```
 
 ## 6. Main Flow
 
 1. Client opens request creation page.
-2. Client selects or is given a relevant applicant type for request applicant data.
-3. System checks whether current/default ApplicantParty exists for that applicant type.
+2. Client selects or arrives with an applicant type context.
+3. System checks whether a current/default ApplicantParty exists for that applicant type.
 4. System shows request creation fields.
 5. System shows applicant data fields/section.
-6. If current/default ApplicantParty exists, applicant fields are prefilled.
+6. If current/default ApplicantParty exists, applicant fields are prefilled from it.
 7. If current/default ApplicantParty is missing, applicant fields are empty and ready for input.
 8. Client either keeps prefilled applicant data or enters new applicant data.
 9. Client enters request creation data: request details and object address.
 10. Client-side validation runs for visible request/applicant fields.
 11. Client corrects visible data if validation fails.
-12. If existing saved ApplicantParty is kept, request uses that ApplicantParty.
-13. If new applicant data is entered, system creates a new ApplicantParty and uses it for this request.
-14. After new ApplicantParty creation, UI offers to make it current/default template for that applicant type.
-15. Client submits request.
-16. System checks whether request is accepted.
-17. If accepted, request is created for the selected/new ApplicantParty context.
-18. Request status becomes InReview.
-19. Request appears in client's My Requests list.
+12. If existing ApplicantParty is kept, request uses that ApplicantParty.
+13. If new applicant data is entered and accepted, system creates a new ApplicantParty and uses it for this request.
+14. If no current/default existed for the type, the newly created ApplicantParty becomes the initial current/default template for that type.
+15. If current/default already existed, UI may offer to make the new ApplicantParty current/default for future requests.
+16. Client submits request.
+17. System accepts or rejects request creation.
+18. If accepted, request status becomes InReview.
+19. Request appears in My Requests.
 20. Request appears in employee review queue.
 
-## 7. Branches
-
-### Current/default ApplicantParty for type exists
+## 7. Visual Scenario Flow
 
 ```text
--> applicant fields are prefilled from current/default applicant template
--> client can keep the data
--> request creation proceeds with request details/object address
--> accepted submit creates request for that existing ApplicantParty context
+┌──────────────────────────────────────────────┐
+│ Signed-in Client                             │
+│ opens request creation page                  │
+└──────────────┬───────────────────────────────┘
+               ▼
+┌──────────────────────────────────────────────┐
+│ System checks current/default ApplicantParty │
+│ for selected applicant type                  │
+└──────────────┬───────────────────────────────┘
+               │
+       ┌───────┴────────┐
+       │                │
+ default exists     default missing
+       │                │
+       ▼                ▼
+┌──────────────────────┐   ┌──────────────────────────────┐
+│ Applicant fields      │   │ Applicant fields are empty    │
+│ are prefilled         │   │ and ready for input           │
+└──────────┬───────────┘   └──────────────┬───────────────┘
+           │                              │
+           ▼                              ▼
+┌──────────────────────┐        ┌──────────────────────────┐
+│ Client keeps default  │        │ Client enters new        │
+│ or clears fields      │        │ applicant data           │
+└──────────┬───────────┘        └──────────────┬───────────┘
+           │                                   │
+    ┌──────┴──────┐                            │
+    │             │                            │
+ keep existing   clear + new data              │
+    │             │                            │
+    ▼             ▼                            ▼
+┌──────────────┐  ┌────────────────────────────────────────┐
+│ Request uses │  │ System creates new ApplicantParty      │
+│ existing     │  │ and uses it for this request           │
+│ ApplicantParty│ │ New party starts NotVerified           │
+└──────┬───────┘  └───────────────────┬────────────────────┘
+       │                              │
+       ▼                              ▼
+┌──────────────────────────────────────────────┐
+│ Request submit continues with request data   │
+│ and accepted applicant context               │
+└──────────────────────────────────────────────┘
 ```
 
-### Client clears prefilled applicant data
+## 8. Branches
+
+### Current/default ApplicantParty exists and is kept
 
 ```text
--> applicant fields become editable/empty
+-> applicant fields are prefilled from current/default template
+-> client keeps the data
+-> request uses that saved ApplicantParty
+-> existing ApplicantParties remain unchanged
+```
+
+### Current/default ApplicantParty exists but client clears fields
+
+```text
+-> client clears prefilled applicant fields
 -> client enters new applicant data
 -> accepted applicant data creates a new ApplicantParty
 -> new ApplicantParty is used for this request
--> UI offers to make new ApplicantParty current/default template for this applicant type
--> previous ApplicantParties remain stored and unchanged
+-> existing current/default remains unchanged unless explicit future action changes it
+-> UI may offer to make new ApplicantParty current/default for future requests
 ```
 
-### No current/default ApplicantParty exists for type
+### Current/default ApplicantParty missing
 
 ```text
 -> applicant fields are empty by default
--> no clear action is needed
 -> client enters new applicant data
 -> accepted applicant data creates a new ApplicantParty
 -> new ApplicantParty is used for this request
--> UI offers to make new ApplicantParty current/default template for this applicant type
+-> new ApplicantParty becomes initial current/default template for that type
 ```
 
-### Future dropdown/list of all saved ApplicantParties
+### Future saved ApplicantParty dropdown/list
 
 ```text
--> request creation may show all saved ApplicantParties that can be used for the selected applicant type/context
--> current/default ApplicantParty remains the initial prefill/default selection
--> client can choose another saved ApplicantParty deliberately
-```
-
-### Client-side validation errors
-
-```text
--> request/applicant form has basic validation issues
--> validation errors are visible
--> client corrects visible data
--> flow returns to entering request/applicant data
+-> UI may let client choose from all saved ApplicantParties
+-> current/default template remains the initial prefill/default selection
+-> selected existing ApplicantParty is used for the request
 ```
 
 ### Request accepted
 
 ```text
--> request is accepted
--> request is created for selected/new ApplicantParty context
+-> request is created for the accepted applicant context
 -> status becomes InReview
 -> request appears in My Requests
 -> request appears in employee review queue
@@ -186,96 +195,85 @@ Extension / Future DATA:
 -> request is not accepted
 -> validation/business errors are visible
 -> client corrects request data or applicant data as needed
--> flow returns to entering request/applicant data
 ```
 
-## 8. Invariants
+## 9. Invariants
 
 Invalid request is not accepted.
 
-Request creation uses one ApplicantParty context selected/created for that request.
+Request creation uses one accepted applicant context.
 
-The client does not spoof ApplicantPartyId outside of allowed account-owned ApplicantParties.
+Request creation must not let the client spoof ApplicantParty ownership.
 
-If new applicant data is entered during request creation, accepted data creates a new ApplicantParty and uses it for the request.
+Creating a new ApplicantParty inside request creation is atomic with request creation in the target implementation direction.
 
-Creating a new ApplicantParty does not delete, overwrite or deactivate existing ApplicantParties.
+Do not use two separate client calls for the single user intent “create request with new applicant data”.
 
-Current/default template per applicant type affects future prefill behavior only.
+Existing ApplicantParties remain stored and unchanged when a new ApplicantParty is created.
 
-Existing requests keep their submitted applicant context.
+Current/default changes affect future prefill only, not existing requests.
 
-ApplicantParty verification happens during employee request review.
+## 10. Outcomes
 
-## 9. Outcomes
-
-- Client can create request when acceptable applicant data and request data are available.
-- Existing current/default applicant data can be reused through prefilled applicant fields.
-- Client can clear prefilled applicant fields and enter new applicant data before request submission.
-- If there is no current/default applicant template, client enters new applicant data directly.
-- New applicant data creates a new ApplicantParty and uses it for the request.
-- Newly created ApplicantParty is offered as current/default template for its applicant type.
+- Client can create request when acceptable request data and applicant context are available.
+- Existing current/default ApplicantParty can be reused through prefilled fields.
+- Missing current/default and cleared fields both lead to the same new-applicant-data path.
+- New applicant data creates a new ApplicantParty and uses it for this request.
 - Created request appears in My Requests and employee review queue.
-- Initial status is InReview.
+- Initial request status is InReview.
 
-## 10. Questions / Decisions
-
-Open / future-review questions:
-
-```text
-Q: Is requested service type a fixed list or free description?
-Q: When should RequestedPowerKw become core scenario DATA?
-Q: Should historical requests store applicant snapshot in addition to ApplicantParty reference/version?
-Q: Should new ApplicantParty become current/default automatically when no template exists for the type, or should the UI still ask?
-Q: What exact dropdown/list behavior should future request creation use for selecting from all saved ApplicantParties?
-Q: Can an existing saved ApplicantParty be edited in place if it is already used by requests?
-```
+## 11. Questions / Decisions
 
 Accepted direction:
 
 ```text
 Decision:
-Request creation uses one account-owned ApplicantParty context.
+Request creation with new applicant data should be one server call.
 
 Reason:
-Applicant identity is a saved account-owned profile, not ad hoc hidden request-local data.
+Two client calls can leave a partial state: ApplicantParty created but request creation failed.
 
 Consequence:
-If new applicant data is entered, it creates a new ApplicantParty and uses it for the request.
+Request creation target contract should support explicit applicant context: existing ApplicantParty or new ApplicantParty data.
 ```
 
 ```text
 Decision:
-Current/default ApplicantParty per type is used as prefill/default selection, not as global single active applicant.
+Shared ApplicantParty creation logic should live in an application service.
 
 Reason:
-Users may have different applicant profiles over time, and historical requests must keep their submitted applicant context.
+Standalone create ApplicantParty and request creation with new applicant data share validation/domain creation logic, but own different use-case transaction boundaries.
+
+Consequence:
+The service does not call SaveChanges by itself. Outer command handler owns commit/transaction.
 ```
 
 ```text
 Decision:
-New applicant data entered during request creation creates a new ApplicantParty and does not replace old profiles.
+Creating new ApplicantParty in request creation uses the new ApplicantParty for that request.
 
 Reason:
-Existing ApplicantParties and old requests remain meaningful.
+The new data is part of the user's request creation intent.
 ```
 
 ```text
 Decision:
-After creating a new ApplicantParty from request flow, UI should offer to make it the current/default template for that applicant type.
+If an existing default for the type already exists, creating new ApplicantParty does not silently change it.
 
 Reason:
-The current/default template remains useful for future prefill, but changing it should be visible to the user.
+Changing future prefill behavior should be visible/explicit.
 ```
 
-Superseded direction:
+Future review:
 
 ```text
-Superseded:
-Accepted applicant data replaces the account-level current active ApplicantParty and makes the previous ApplicantParty non-current globally.
+Q: Should request store ApplicantParty reference, applicant snapshot, or both?
+Q: What exact applicantContextType shape should the API use?
+Q: How should UI ask whether to make a newly created ApplicantParty current/default?
+Q: When should saved ApplicantParty dropdown/list be introduced?
 ```
 
-## 11. Source Links
+## 12. Source Links
 
 ```text
 planning/diagrams/scenario-data/SC-04-request-creation-data.md

@@ -1,6 +1,6 @@
 # Slice Implementation Notes Register
 
-Status: active / synchronized with current implemented backend, first-stage L1 client sidecars and new request/logout/feedback planning  
+Status: active / ApplicantParty template-per-type model synchronized  
 Scope: concrete implementation notes for future slices/client sidecars/shared support
 
 ## 1. Purpose
@@ -17,73 +17,43 @@ planning/slices/slice-questions-register.md
 planning/slices/slice-extension-points-register.md
 ```
 
-If a note contains a question that remains relevant for future work, mirror the question to `slice-questions-register.md`.
+## 2. Current ApplicantParty Direction
 
-If a note describes extension/change pressure, mirror or link it to `slice-extension-points-register.md`.
-
-## 2. Current Backend / Client Implementation Boundary
-
-Current repo evidence says:
+Target scenario direction:
 
 ```text
-- L1 backend/API/session/persistence flows are implemented for register/login/current-user/logout/applicant/request.
-- My Requests list server read is implemented for current-account summaries with optional status filter.
-- Own request details server read is implemented for current-account scoped request details and review result.
-- Generated OpenAPI TypeScript types include L1 paths/types.
-- Shared L1 API wrappers exist for register/login/current-user/logout/applicant create.
-- Shared fetch/ProblemDetails/form error mapping exists.
-- First-stage client flows exist for registration, login, current-user session bootstrap, logout and Account page applicant create.
-- Logout header UI/cache/navigation is implemented.
-- Request creation UI is not implemented.
+many saved ApplicantParties
++ one current/default template per applicant type
++ first item of type initializes default
++ additional item of same type does not silently switch default
++ request creation with new applicant data is one atomic server use case
 ```
 
-## 3. Current Remaining Client Work Order
+Current implementation may still contain older current-active concepts. Implementation tasks must separate current implementation evidence from target scenario direction.
 
-```text
-Current applicant read after refresh
--> Request Creation UI with applicant fields/prefill/clear behavior
--> My Requests client UI
--> Own Request Details client UI
--> Browser E2E happy paths
-```
-
-## 4. Notes Register
+## 3. Notes Register
 
 | ID | Related slice / future slice | Scenario | Layer | Tags | Note | Why it matters | Promote to | Status |
 |---|---|---|---|---|---|---|---|---|
-| NOTE-LOGOUT-CLIENT-001 | `SL-AUTH-003.client` | auth/session | Client/UI | logout, cache, navigation | Header logout action is implemented through `LogoutButton` / `useLogoutAction`; it clears session state, removes the current applicant-party query and navigates Home on 204 or stale-session 401. | Records concrete logout UI/cache/navigation behavior for future shell/cache work. | `SL-AUTH-003-logout.client.md` | resolved |
-| NOTE-LOGOUT-CLIENT-002 | `SL-AUTH-003.client` / `CL-FEEDBACK-001` | auth/session | Client/UI | feedback, error | Unexpected logout failure shows local action feedback and does not show false success; logout success message is not required. | Keeps current logout feedback local while preserving future shared feedback direction. | `CL-FEEDBACK-001` + logout sidecar | resolved for current UI |
-| NOTE-FEEDBACK-001 | `CL-FEEDBACK-001` | cross-scenario | Client/UI | success, info, warning, error | Add client-wide feedback/message surface convention for success/info/warning/error outcomes. | Login/register/applicant/request/logout should share feedback vocabulary and not duplicate one-off mechanics. | `planning/client/cross-cutting/CL-FEEDBACK-001-client-feedback-messages.md` | promoted-to-shared-support |
-| NOTE-REQ-UI-001 | future `SL-REQ-001.client` | SC-04 | Client/UI | applicant-data, prefill, clear | Request creation UI should contain applicant data fields/section. If current active applicant data exists, fields are prefilled; user can clear and enter new applicant data before submit. | Aligns request journey with user expectation while keeping accepted applicant changes in account-level ApplicantParty flow. | future request `.client.md` + SC-04 UI/behavior docs | open |
-| NOTE-REQ-UI-002 | future `SL-REQ-001.client` | SC-04 | Client/UI | applicant-context, current-active | Request submit should not send ApplicantPartyId or create request-local applicant identity. It uses server/current active applicant after applicant data is accepted. | Prevents spoofing and keeps server-selected applicant context. | future request `.client.md` | open |
-| NOTE-REQ-UI-003 | future `SL-REQ-001.client` | SC-04 | Client/UI | command-success, navigation | For command flows where returned entity data is not needed, HTTP success is enough; client shows success outcome and moves to read context. | Prevents client depending on unnecessary response body. | future request `.client.md` | open |
-| NOTE-REQ-LIST-001 | `SL-REQ-002` / future My Requests client sidecar | SC-05 | Server/API + Client/UI | list, status, summaries | `GET /api/l1/requests` returns current-account request summaries, optional status filter and newest-first ordering. Client UI should consume list data and leave selected request details to `SL-REQ-003`. | Keeps My Requests list and own request details split cleanly. | future My Requests `.client.md` | open |
-| NOTE-REQ-DETAILS-001 | `SL-REQ-003` / future request details client sidecar | SC-05 | Server/API + Client/UI | details, review-result, feedback | `GET /api/l1/requests/{requestId}` returns current-account scoped submitted request details and review result when available; missing and not-owned both return 404. | Gives the future details UI stable read data without leaking other clients' request existence. | future request details `.client.md` | open |
-| NOTE-APPL-CLIENT-002 | future `SL-APPL-002` | SC-10 | Client/UI | read-current, refresh | Current applicant UI uses local post-submit state only. Stable Account page after refresh needs current applicant read endpoint/client query/read model. | Required before claiming full persisted Account page applicant state. | future `L1-APPLICANT-PARTY-READ-CURRENT` | open |
-| NOTE-CLIENT-AUTH-001 | multiple client slices | cross-scenario | Client/Server shared support | csrf, auth, cookie | Unsafe requests with cookie auth need antiforgery token fetch/store/attach/refetch on auth/session changes. | Affects all unsafe client mutations. | CC-CSRF-001 / future implementation | open |
-| NOTE-CLIENT-ERRORS-001 | multiple client slices | cross-scenario | Client/UI | error-mapping | Server validation/problem responses are mapped to field-level and global/form-level client messages through shared helpers. | Affects user feedback and client tests. | shared support + client files | open |
-| NOTE-FORM-DTO-001 | multiple client slices | cross-scenario | Client/UI | form-values, dto | FormValues and API DTO may differ; use mapping for UI-only fields, confirmation fields, null/trim normalization and nested objects. | Prevents coupling UI forms to API contracts. | shared support + client files | open |
-| NOTE-REPO-MAYBE-001 | repository/query APIs / future read slices | cross-slice | Server/Application/Persistence | maybe, repositories, optional-result | New or refactored repository/query APIs should return `Maybe<T>` when absence of the resulting object is a normal outcome. Current L1 repositories still use nullable returns. | Keeps absence handling explicit. | `planning/slices/shared/maybe-for-optional-results.md` | open |
+| NOTE-APPL-CREATE-001 | `SL-APPL-001` | SC-10 | Server/API | applicant-create, id | Keep standalone create ApplicantParty returning ApplicantPartyId. | Stable identity supports cache/refetch, list updates, future selection/edit/archive/default actions. | `SL-APPL-001` | promoted-to-slice |
+| NOTE-APPL-CREATE-002 | `SL-APPL-001` | SC-10 | Server/domain | no-replacement | Creating ApplicantParty must not delete/overwrite/deactivate existing ApplicantParties. | Aligns with multi-profile target model and historical request safety. | `SL-APPL-001` | promoted-to-slice |
+| NOTE-APPL-DEFAULT-001 | `SL-APPL-001` / `SL-APPL-003` | SC-10 | Server/domain | default-template | If no current/default exists for applicant type, first created ApplicantParty may initialize default. | Natural prefill behavior. | `SL-APPL-001`, `SL-APPL-003` | promoted-to-slice |
+| NOTE-APPL-DEFAULT-002 | `SL-APPL-001` / `SL-APPL-003` | SC-10 | Server/domain | default-template | If default already exists for same type, creating another ApplicantParty leaves default unchanged. | Prevents hidden future prefill changes. | `SL-APPL-003` | promoted-to-slice |
+| NOTE-APPL-READ-001 | `SL-APPL-002` | SC-10 | Server/API + Client | account-page-read | Account page read model should return saved ApplicantParties plus defaults per type, not only current individual applicant. | Required for correct Account page state after create/refresh. | `SL-APPL-002` | promoted-to-slice |
+| NOTE-APPL-CLIENT-REFETCH-001 | `SL-APPL-001.client` / future Account page | SC-10 | Client/UI | react-query, refetch | After create, client may optimistically add the item, but must refetch ApplicantParties for server-truth list/default/verification state. | Prevents stale/incorrect default display. | future client sidecar | open |
+| NOTE-APPL-SERVICE-001 | `SL-APPL-004` | SC-10 / SC-04 | Server/Application | shared-service | Extract ApplicantParty creation logic into application service with no SaveChanges. | Reuse creation logic without nested command handler/transaction confusion. | `SL-APPL-004` | promoted-to-slice |
+| NOTE-REQ-APPLCTX-001 | `SL-REQ-004` | SC-04 | Server/API | applicant-context | Request creation target should accept Existing ApplicantParty or New ApplicantParty data. | Supports many applicant profiles and new applicant creation in request flow. | `SL-REQ-004` | promoted-to-slice |
+| NOTE-REQ-APPLCTX-002 | `SL-REQ-004` | SC-04 | Server/API | atomicity | Request creation with new applicant data must create ApplicantParty + Request atomically in one server call. | Avoids orphan ApplicantParty after request failure. | `SL-REQ-004` | promoted-to-slice |
+| NOTE-REQ-UI-001 | future `SL-REQ-001.client` | SC-04 | Client/UI | prefill, clear | Request creation UI pre-fills from current/default; missing default and cleared prefill both enter new applicant data path. | Keeps scenario flow clear. | future request client sidecar | open |
+| NOTE-REQ-UI-002 | future `SL-REQ-001.client` | SC-04 | Client/UI | dropdown | Future UI may allow dropdown/list selection from all saved ApplicantParties; current/default remains initial selection. | Future UX extension. | future request client sidecar | future review |
+| NOTE-LOGOUT-CLIENT-001 | `SL-AUTH-003.client` | auth/session | Client/UI | logout, cache, navigation | Header logout action clears known user-scoped state and navigates Home on success/stale-session 401. | Records current logout UI/cache behavior. | logout sidecar | resolved |
+| NOTE-REPO-MAYBE-001 | repository/query APIs | cross-slice | Server/Application/Persistence | maybe | New/refactored repository/query APIs should return `Maybe<T>` when absence is normal. Current L1 repositories may still use nullable returns. | Keeps absence handling explicit. | shared maybe convention | open |
 
-## 5. Superseded Notes
+## 4. Superseded Notes
 
-| ID | Status | Reason |
+| Previous note | Status | Reason |
 |---|---|---|
-| Earlier blanket “concrete L1 client feature UI not completed” note | superseded | Current repo evidence shows first-stage client flows for registration, login, session bootstrap and applicant create. Remaining gaps are narrower and tracked here. |
-| Earlier SC-04 applicant summary-only request UI note | superseded | SC-04 now requires applicant fields/section, prefilled from current applicant data when available, with clear/re-enter behavior before submit. |
-
-## 6. Status Values
-
-```text
-open
-promoted-to-slice
-promoted-to-client-sidecar
-promoted-to-shared-support
-promoted-to-slice-question
-promoted-to-extension-register
-promoted-to-scenario-question
-promoted-to-ADR
-resolved
-superseded
-not-relevant
-```
+| Current applicant read only / current active individual as Account page state | superseded for target scenario | Account page target needs saved ApplicantParties plus defaults per applicant type. |
+| Applicant replacement/versioning on create | superseded | Creating ApplicantParty is addition; explicit default selection is separate. |
+| Request creation uses server-selected single current active applicant | superseded for target scenario | Target request creation uses explicit applicantContext Existing/New. |
+| Two client calls for new applicant then request | rejected | Breaks atomicity and can leave orphan ApplicantParty. |
