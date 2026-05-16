@@ -36,8 +36,10 @@ Cross-cutting/helper slices consume concern-derived behavior items.
 
 | File | Scenario | Scope |
 |---|---|---|
-| `SC-04-request-creation-behavior-items.md` | SC-04 Request Creation | request creation scenario/UI behavior, applicant data fields/prefill/clear behavior and request submit outcome |
-| `SC-10-applicant-data-behavior-items.md` | SC-10 Applicant Data | Account page / applicant data behavior items, saved/read-only UI outcome and current-applicant read future work |
+| `SC-04-request-creation-behavior-items.md` | SC-04 Request Creation | request creation scenario/UI behavior, per-type applicant template prefill, missing-template empty fields, new ApplicantParty creation and set-current/default offer |
+| `SC-05-my-requests-behavior-items.md` | SC-05 My Requests / Own Request Details | My Requests list/detail behavior sources |
+| `SC-10-applicant-data-behavior-items.md` | SC-10 Applicant Data | applicant data behavior, saved ApplicantParty profiles and current/default template per type |
+| `SC-10B-my-applicant-parties-behavior-items.md` | SC-10B My Applicant Parties | future all-saved ApplicantParty management behavior |
 
 ## 4. Source Register
 

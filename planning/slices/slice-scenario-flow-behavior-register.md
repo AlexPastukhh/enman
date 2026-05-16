@@ -83,12 +83,18 @@ the chat must:
 | `SL-APPL-001-create-individual-applicant-party.client.md` | `[DATA]` | `planning/diagrams/scenario-data/SC-10-applicant-data.md` | form/read-only DATA | current |
 | `SL-APPL-001-create-individual-applicant-party.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-10-applicant-data-ui.md` | client visible flow/tests | current |
 | `SL-APPL-001-create-individual-applicant-party.client.md` | `[BEHAVIOR]` | `planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md` | behavior coverage | current |
-| `SL-APPL-002-read-current-individual-applicant-party.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-10-applicant-data.md` | current applicant read backend draft | planned |
-| `SL-APPL-002-read-current-individual-applicant-party.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-10-applicant-data-ui.md` | Account page exists/missing states | planned |
-| `SL-APPL-002-read-current-individual-applicant-party.md` | `[BEHAVIOR]` | `planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md` | behavior coverage | planned |
-| `SL-APPL-002-read-current-individual-applicant-party.client.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-10-applicant-data.md` | current applicant read client sidecar | planned |
-| `SL-APPL-002-read-current-individual-applicant-party.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-10-applicant-data-ui.md` | Account page load/read state | planned |
-| `SL-APPL-002-read-current-individual-applicant-party.client.md` | `[BEHAVIOR]` | `planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md` | behavior coverage | planned |
+| future `SL-APPL-003-my-applicant-parties-list.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md` | future all-saved ApplicantParty list | planned |
+| future `SL-APPL-003-my-applicant-parties-list.md` | `[DATA]` | `planning/diagrams/scenario-data/SC-10B-my-applicant-parties-data.md` | future list/details DATA | planned |
+| future `SL-APPL-003-my-applicant-parties-list.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-10B-my-applicant-parties-ui.md` | future management UI | planned |
+| future `SL-APPL-003-my-applicant-parties-list.client.md` | `[BEHAVIOR]` | `planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md` | future behavior coverage | planned |
+| future applicant current/default template slices | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-10-applicant-data.md` | per-type current/default template behavior | planned |
+| future applicant current/default template slices | `[BEHAVIOR]` | `planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md` | behavior coverage | planned |
+| `SL-APPL-002-read-current-individual-applicant-party.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-10-applicant-data.md` | current implementation/narrow read; future target should be reconciled | planned / needs reconciliation |
+| `SL-APPL-002-read-current-individual-applicant-party.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-10-applicant-data-ui.md` | Account page template/read states | planned / needs reconciliation |
+| `SL-APPL-002-read-current-individual-applicant-party.md` | `[BEHAVIOR]` | `planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md` | behavior coverage | planned / needs reconciliation |
+| `SL-APPL-002-read-current-individual-applicant-party.client.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-10-applicant-data.md` | current applicant read client sidecar | planned / needs reconciliation |
+| `SL-APPL-002-read-current-individual-applicant-party.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-10-applicant-data-ui.md` | Account page load/read state | planned / needs reconciliation |
+| `SL-APPL-002-read-current-individual-applicant-party.client.md` | `[BEHAVIOR]` | `planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md` | behavior coverage | planned / needs reconciliation |
 | `SL-AUTH-003-logout.md` | `[SOURCE-GAP]` | Source behavior IDs not yet attached | backend logout behavior coverage currently uses temporary Source BI TBD | gap |
 | `SL-AUTH-003-logout.client.md` | `[SOURCE-GAP]` | Dedicated logout UI behavior IDs not yet attached | client logout behavior coverage currently uses temporary Source/UI BI TBD | gap |
 | `SL-ACC-001-register-client-account.md` | `[SOURCE-GAP]` | Dedicated SC-01 behavior items not attached in current source register | registration behavior coverage should be source-linked later | gap |
@@ -112,6 +118,7 @@ When adding or changing a scenario, UI scenario, behavior item file, slice, or `
 ```text
 current
 planned
+planned / needs reconciliation
 gap
 superseded
 ```

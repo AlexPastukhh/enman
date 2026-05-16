@@ -34,7 +34,8 @@ SC-07B Employee Request Review
 Extension / corrected:
 
 ```text
-SC-10  Applicant Data
+SC-10  Applicant Data / Applicant Templates
+SC-10B My Applicant Parties — future saved ApplicantParty management
 SC-11  Request Documents
 SC-13A My Agreements
 SC-13B Agreement Proposal Details / Response
@@ -89,30 +90,46 @@ Request object location means:
 object address
 ```
 
-ApplicantParty current-active policy:
+ApplicantParty saved profile / current-default policy:
 
 ```text
-One L1 account has one current active ApplicantParty at a time.
+A client account can store multiple saved ApplicantParty profiles over time.
 
-Applicant types are alternative forms of the account-level applicant profile,
-not independent simultaneously-active applicant contexts per type.
+For convenience, the account may have one current/default ApplicantParty template per applicant type:
+- physical person;
+- individual entrepreneur;
+- legal entity.
 
-When a future replacement/edit flow accepts new applicant data,
-it should make the newly accepted ApplicantParty current active
-and make the previously current ApplicantParty no longer current.
+Current/default means initial prefill/default selection for future request creation.
+
+Adding a new ApplicantParty does not overwrite, delete or deactivate older ApplicantParties.
+
+Changing current/default affects future prefill only.
+Existing requests keep the applicant context they were created with.
 ```
 
 Request creation applicant context:
 
 ```text
-Request creation uses the account's current active ApplicantParty.
+Request creation uses one account-owned ApplicantParty context.
 
-The request creation command should not silently create a separate
-request-local applicant identity and should not let the client spoof
-ApplicantPartyId.
+If current/default template exists for the selected applicant type, fields are prefilled.
 
-If current active applicant data is missing or wrong, the user goes through
-SC-10 Applicant Data / future replacement flow before request submission.
+The user may keep prefilled data, or clear it and enter new applicant data.
+
+If no current/default template exists, fields are empty and the same new-applicant-data path is used without clear action.
+
+Accepted new applicant data creates a new ApplicantParty, uses it for this request and offers to make it current/default template for that applicant type.
+
+Future request creation may allow selecting from all saved ApplicantParties using a dropdown/list, while current/default remains the initial prefill/default selection.
+```
+
+Applicant verification:
+
+```text
+New ApplicantParty starts as NotVerified.
+ApplicantParty verification happens in request/review context.
+Standalone applicant data entry does not verify ApplicantParty.
 ```
 
 Agreement Proposal:

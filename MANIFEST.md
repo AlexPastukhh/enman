@@ -1,37 +1,29 @@
-# MANIFEST
-
-Archive: `enman-vkr-methodical-and-intro-pack-v1.zip`
-
-Scope: methodical and introductory VKR materials that can be prepared while implementation continues.
+# Manifest — enman-applicant-template-per-type-scenario-sync-v1
 
 ## Add
-
-```text
-vkr-clean/format-and-methodical-requirements.md
-vkr-clean/definitions-abbreviations.md
-vkr-clean/introduction-draft.md
-vkr-clean/existing-solutions-analysis.md
-vkr-clean/literature-plan.md
-```
+- planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
+- planning/diagrams/scenario-data/SC-10B-my-applicant-parties-data.md
+- planning/diagrams/scenario-ui-specs/SC-10B-my-applicant-parties-ui.md
+- planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md
 
 ## Replace
-
-```text
-vkr-clean/vkr-materials-index.md
-```
+- planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
+- planning/diagrams/scenario-data/SC-10-applicant-data.md
+- planning/diagrams/scenario-ui-specs/SC-10-applicant-data-ui.md
+- planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
+- planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+- planning/diagrams/scenario-data/SC-04-request-creation-data.md
+- planning/diagrams/scenario-ui-specs/SC-04-request-creation-ui.md
+- planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
+- planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
+- planning/diagrams/scenario-data/00-scenario-data-index.md
+- planning/diagrams/scenario-ui-specs/README.md
+- planning/diagrams/scenario-behavior-items/README.md
+- planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
+- planning/diagrams/scenario-questions-register.md
+- planning/slices/slice-scenario-flow-behavior-register.md
+- planning/slices/slice-questions-register.md
+- planning/slices/slice-extension-points-register.md
 
 ## Delete
-
-```text
-None
-```
-
-## Does Not Change
-
-```text
-Code
-planning/
-presentation/
-chapter-*.md
-existing implementation status
-```
+- none

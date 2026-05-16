@@ -3,14 +3,16 @@
 Status: current behavior items master index  
 Scope: scenario-derived, UI-scenario-derived and concern-derived behavior item files
 
-## 1. Scenario-Derived / UI-S-Scenario-Derived Behavior Items
+## 1. Scenario-Derived / UI-Scenario-Derived Behavior Items
 
 Scenario-derived files are created per scenario when scenario behavior is prepared for domain/slice/client planning.
 
 | File | Scenario | Source type | Primary downstream use |
 |---|---|---|---|
-| `SC-04-request-creation-behavior-items.md` | SC-04 Request Creation | scenario-derived + UI-scenario-derived | request creation backend/client slices, applicant replacement/edit flow, My Requests/read flow |
-| `SC-10-applicant-data-behavior-items.md` | SC-10 Applicant Data | scenario-derived + UI-scenario-derived | applicant data backend/client slices, current-applicant read slice, applicant replacement/edit slice |
+| `SC-04-request-creation-behavior-items.md` | SC-04 Request Creation | scenario-derived + UI-scenario-derived | request creation backend/client slices, applicant template/prefill/new ApplicantParty behavior, My Requests/read flow |
+| `SC-05-my-requests-behavior-items.md` | SC-05 My Requests / Own Request Details | scenario-derived + UI-scenario-derived | My Requests list/detail slices and client sidecars |
+| `SC-10-applicant-data-behavior-items.md` | SC-10 Applicant Data | scenario-derived + UI-scenario-derived | applicant data backend/client slices, current/default template per type, request applicant prefill |
+| `SC-10B-my-applicant-parties-behavior-items.md` | SC-10B My Applicant Parties | scenario-derived + UI-scenario-derived | future all-saved ApplicantParty management slices |
 
 ## 2. Cross-Cutting / Concern-Derived Behavior Items
 

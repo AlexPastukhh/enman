@@ -1,6 +1,6 @@
 # SC-04 — Client Request Creation DATA
 
-Status: current DATA spec / synchronized with applicant-data-in-request-journey UI direction  
+Status: current DATA spec / synchronized with per-type ApplicantParty template direction  
 Scope: data entered/seen/referenced during request creation
 
 DATA means what the actor enters, sees, selects, filters, attaches or references.
@@ -26,10 +26,11 @@ Input DATA:
 Visible DATA during request creation:
 
 ```text
-- applicant data section/fields;
-- current active ApplicantParty data, when it exists;
 - request form state and validation feedback;
-- request submit availability.
+- request submit availability;
+- applicant data section/fields;
+- current/default ApplicantParty template for selected applicant type, when it exists;
+- future selectable saved ApplicantParty list/dropdown.
 ```
 
 Visible DATA after accepted submit:
@@ -51,25 +52,28 @@ Target / Future DATA for connection/agreement realism:
 
 ### SC-04-DATA-02 — Applicant DATA in request creation journey
 
-Type: Input DATA / Visible DATA / Reference DATA  
+Type: Input DATA / Visible DATA / Selection DATA / Reference DATA  
 Actor: Client  
 Used by: applicant section of request creation form before request submit
 
 Reference DATA:
 
 ```text
-- current active ApplicantParty for the account, if it exists.
+- current/default ApplicantParty template for selected applicant type, if it exists;
+- saved ApplicantParty selected for this request;
+- future all-saved ApplicantParty dropdown/list.
 ```
 
 Visible / Input DATA:
 
 ```text
-- applicant type, when visible/applicable;
+- applicant type;
 - applicant display/full name;
 - applicant contact email;
 - applicant contact phone;
 - clear/reset action for prefilled applicant data;
-- applicant data entered after clearing or when no current applicant exists.
+- applicant data entered after clearing or when no current/default template exists;
+- offer/choice to make newly created ApplicantParty current/default template for its type.
 ```
 
 Current narrow implemented L1 applicant fields:
@@ -80,22 +84,26 @@ Current narrow implemented L1 applicant fields:
 - phone number.
 ```
 
-Prefill / clear behavior:
+Prefill / clear / missing behavior:
 
 ```text
-- if current active applicant data exists, applicant fields are prefilled from it;
-- client can clear the fields and enter new applicant data;
-- accepted new applicant data becomes the account-level current active ApplicantParty through SC-10 / applicant replacement behavior;
-- request submission uses the current active ApplicantParty at submit time.
+- if current/default applicant template exists for selected applicant type, applicant fields are prefilled from it;
+- client can keep prefilled data and use that existing ApplicantParty for the request;
+- client can clear fields and enter new applicant data;
+- if current/default applicant template is missing, fields are empty and no clear action is needed;
+- accepted new applicant data creates a new ApplicantParty and uses it for the request;
+- after creating a new ApplicantParty, UI offers to make it current/default template for that type;
+- creating new ApplicantParty does not overwrite old ApplicantParties.
 ```
 
 Future DATA / UX:
 
 ```text
 [VAR:EXPAND]
-- inline shortcut to full applicant edit/replacement flow;
-- return-to-request flow after accepted applicant data update;
-- applicant snapshot indicator if historical request snapshot policy is introduced;
+- dropdown/list of all saved ApplicantParties;
+- inline shortcut to full applicant edit/manage flow;
+- return-to-request flow after applicant management;
+- applicant snapshot/version indicator if historical request snapshot policy is introduced;
 - richer applicant type-specific data for entrepreneur/legal entity.
 ```
 
@@ -105,7 +113,8 @@ Future DATA / UX:
 ObjectAddress is already part of the current request model.
 Request object location means object address.
 RequestedPowerKw is agreement/connection-relevant, but currently planned as expansion rather than current implemented L1.
-Request creation references current active applicant data instead of defining separate request-local applicant identity.
+Request creation uses one selected/new ApplicantParty context.
+Current/default ApplicantParty is a prefill/template concept for future request creation.
 ```
 
 ## 3. Questions
@@ -114,16 +123,19 @@ Request creation references current active applicant data instead of defining se
 Q: Is requested service type a fixed list or free description?
 Q: When should RequestedPowerKw become core scenario DATA?
 Q: Should historical requests store applicant snapshot later?
-Q: Does inline applicant data replacement reuse SC-10 save behavior or need a dedicated replacement endpoint?
+Q: Should new ApplicantParty become current/default automatically when no current/default exists for its type?
+Q: What exact future dropdown/list behavior should be used for selecting from all ApplicantParties?
 ```
 
 ## 4. Accepted Direction
 
 ```text
-Request creation uses the account's current active ApplicantParty.
-Applicant data fields may be visible/editable in the request journey.
-Prefilled applicant data can be cleared and replaced before submit.
-Accepted applicant data changes belong to SC-10 Applicant Data / future replacement flow, not hidden request-local mutation.
+Request creation uses one account-owned ApplicantParty context.
+Current/default ApplicantParty per type provides initial prefill/default selection.
+If no current/default ApplicantParty exists, applicant fields start empty.
+If user clears prefilled fields or enters new applicant data, accepted data creates a new ApplicantParty.
+The newly created ApplicantParty is used for the request and offered as current/default template for its type.
+Existing ApplicantParties remain stored and unchanged.
 ```
 
 ## 5. Scenario Spec References
@@ -132,4 +144,6 @@ Accepted applicant data changes belong to SC-10 Applicant Data / future replacem
 planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
 planning/diagrams/scenario-ui-specs/SC-04-request-creation-ui.md
 planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
+planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
+planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
 ```

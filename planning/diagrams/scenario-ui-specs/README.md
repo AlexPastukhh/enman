@@ -54,8 +54,9 @@ Those belong in `.client.md` sidecars or client implementation docs.
 
 | File | Scenario | Use |
 |---|---|---|
-| `SC-04-request-creation-ui.md` | SC-04 Request Creation | Request creation UI-visible behavior, applicant data fields/prefill/clear behavior, success/error outcomes |
-| `SC-10-applicant-data-ui.md` | SC-10 Applicant Data | Account page / applicant data UI-visible behavior for applicant create/read-only/read-current states |
+| `SC-04-request-creation-ui.md` | SC-04 Request Creation | Request creation UI-visible behavior, applicant template prefill, missing-template empty fields, new ApplicantParty creation and set-current/default offer |
+| `SC-10-applicant-data-ui.md` | SC-10 Applicant Data | Account page applicant data UI-visible behavior, per-type current/default templates and saved ApplicantParty creation |
+| `SC-10B-my-applicant-parties-ui.md` | SC-10B My Applicant Parties | Future management of all saved ApplicantParty profiles |
 
 ## 6. UI Specs Vs Client Implementation Conventions
 
@@ -112,6 +113,7 @@ project decision
 open question
 deferred
 superseded
+future direction
 ```
 
 In this project, an accepted convention is binding until explicitly changed.

@@ -2,9 +2,22 @@
 
 ## Purpose
 
-Define applicant DATA for the applicant types used by request creation and later agreement processing.
+Define applicant DATA for applicant profiles used by request creation and later agreement processing.
 
-Applicant DATA is account-level. One L1 account has one current active ApplicantParty at a time.
+Target scenario direction:
+
+```text
+A client account can store multiple ApplicantParty profiles over time.
+For convenience, the account may have one current/default ApplicantParty template per applicant type.
+Adding new applicant data creates a new ApplicantParty profile and does not overwrite existing profiles.
+```
+
+Current implementation note:
+
+```text
+Current L1 implementation is narrower and supports individual applicant create/read behavior.
+The multi-type, per-type current/default template model is target scenario planning, not fully implemented code.
+```
 
 ## DATA Blocks
 
@@ -12,7 +25,7 @@ Applicant DATA is account-level. One L1 account has one current active Applicant
 
 Type: Selection DATA  
 Actor: Client  
-Used by: Applicant Data page / applicant section
+Used by: Applicant Data page / applicant section / future My Applicant Parties
 
 Selection DATA:
 
@@ -25,8 +38,9 @@ Selection DATA:
 Notes:
 
 ```text
-Applicant types are alternative data shapes for the account-level applicant profile.
-They are not separate simultaneously-active applicant contexts for the same account.
+Applicant types are alternative data shapes.
+Each applicant type may have one current/default template for future prefill.
+The account may still store many ApplicantParty profiles over time.
 ```
 
 ### SC-10-DATA-02 — Physical person applicant DATA
@@ -51,7 +65,9 @@ Visible DATA:
 - applicant type = physical person;
 - applicant display name = ФИО;
 - СНИЛС;
-- phone/email contact summary.
+- phone/email contact summary;
+- current/default physical person template marker, when set;
+- verification status, when available.
 ```
 
 Current narrow L1 implemented DATA:
@@ -72,9 +88,8 @@ Target / Future DATA:
 Notes:
 
 ```text
-Current implemented L1 already includes FullName, Email and PhoneNumber.
-PassportData and ActualAddress are richer target/future applicant DATA relative to current narrow implementation.
 Applicant contact email can differ from account email.
+New saved ApplicantParty starts as NotVerified.
 ```
 
 ### SC-10-DATA-03 — Individual entrepreneur applicant DATA
@@ -100,7 +115,9 @@ Visible DATA:
 - applicant display name = ФИО ИП;
 - ИНН;
 - ОГРНИП;
-- phone/email contact summary.
+- phone/email contact summary;
+- current/default individual entrepreneur template marker, when set;
+- verification status, when available.
 ```
 
 Target / Future DATA:
@@ -142,7 +159,9 @@ Visible DATA:
 - applicant display name = organization name;
 - ИНН;
 - ОГРН;
-- phone/email contact summary.
+- phone/email contact summary;
+- current/default legal entity template marker, when set;
+- verification status, when available.
 ```
 
 Target / Future DATA:
@@ -161,21 +180,21 @@ Notes:
 Applicant contact email can differ from account email.
 ```
 
-### SC-10-DATA-05 — Saved / current applicant visible DATA
+### SC-10-DATA-05 — Saved applicant profile visible DATA
 
 Type: Visible DATA / Reference DATA  
 Actor: Client  
-Used by: Account page applicant section, Applicant Data page, Request Creation applicant context/reuse
+Used by: Account page applicant section, Request Creation applicant context/reuse, future My Applicant Parties
 
 Visible DATA:
 
 ```text
-- current active applicant marker/summary;
 - applicant type;
 - applicant display name;
 - applicant contact summary;
 - applicant identifiers relevant for selected type;
-- saved applicant data shown as read-only when current applicant data exists.
+- verification state, for example NotVerified / UnderReview / Verified / Rejected or RequiresUpdate;
+- current/default marker for the applicant type, when set.
 ```
 
 Current narrow L1 visible DATA after successful individual applicant creation:
@@ -183,54 +202,72 @@ Current narrow L1 visible DATA after successful individual applicant creation:
 ```text
 - full name;
 - email;
-- phone number.
-```
-
-Future visible DATA when read/verification model exists:
-
-```text
-[VAR:EXPAND]
-- applicant verification state, for example:
-  - Not verified;
-  - Under review / pending verification;
-  - Verified;
-  - Rejected / requires update.
+- phone number;
+- verificationStatus, when read model exposes it.
 ```
 
 Reference DATA for request creation:
 
 ```text
-- current active ApplicantParty for the account.
+- selected/suggested ApplicantParty used by the request;
+- current/default ApplicantParty template for the selected applicant type;
+- future selectable list of all saved ApplicantParty profiles.
 ```
 
-Notes:
+### SC-10-DATA-06 — Current/default template DATA
+
+Type: Visible DATA / Reference DATA  
+Actor: Client  
+Used by: Account page and request creation prefill
+
+Visible DATA:
 
 ```text
-The applicant create UI does not introduce the create-request entry point.
-The exact request-creation entry location is a future client-slice decision.
+- applicant type;
+- currently selected/default ApplicantParty for that type;
+- action or marker to make another ApplicantParty current/default for that type.
+```
+
+Meaning:
+
+```text
+Current/default is a prefill/template marker for future request creation.
+It does not rewrite previous requests.
+It does not delete older ApplicantParties.
+```
+
+## Notes
+
+```text
+Do not treat applicant DATA changes as hidden request-local mutation.
+New applicant data creates a saved ApplicantParty when accepted.
+Future request creation may allow selecting from all saved ApplicantParties using a dropdown, while current/default template remains the initial prefill.
 ```
 
 Open questions:
 
 ```text
-Q: Should physical person actual/residential address become current target scenario DATA or stay future?
-Q: Is phone required for all applicant types in current implementation?
-Q: Should historical request creation store applicant snapshot later?
-Q: What exact current-applicant read model should the Account page use after refresh?
-Q: When should applicant verification state be shown on the Account page?
+Q: Should new ApplicantParty become current/default automatically when there is no current/default profile for that type?
+Q: Should edit mutate an unused ApplicantParty in place, or always create a new version?
+Q: What deletion/archive rules apply when ApplicantParty is used by requests or approved requests?
+Q: Should historical requests show applicant snapshot, stored ApplicantParty version, or both?
+Q: When should applicant verification state be shown on Account page and request creation page?
 ```
 
 Accepted direction:
 
 ```text
-Current active ApplicantParty is unique per account.
-Applicant contact email can differ from account email.
-Applicant creation success can make submitted applicant data visible as read-only local UI state until a current-applicant read model exists.
+Account may have many ApplicantParty profiles.
+At most one ApplicantParty per type is current/default for future prefill.
+New ApplicantParty starts as NotVerified.
+Request review verifies applicant data.
+Existing ApplicantParties remain stored when a new one is created.
 ```
 
 Scenario spec references:
 
 ```text
 planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
+planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
 planning/diagrams/scenario-ui-specs/SC-10-applicant-data-ui.md
 ```

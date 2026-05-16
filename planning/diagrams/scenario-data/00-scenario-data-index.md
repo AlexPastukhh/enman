@@ -45,6 +45,8 @@ Selection DATA   = what actor selects from list/set.
 Filter DATA      = what actor filters/searches by.
 Attachment DATA  = what actor uploads/attaches/sends as file/document.
 Reference DATA   = visible/selectable relation to another business item, only when useful.
+Action DATA      = user-visible action choice, only when useful in UI/DATA specs.
+Confirmation DATA = text/consequence data shown before dangerous action.
 ```
 
 Do not use:
@@ -68,6 +70,7 @@ SC-06-employee-dashboard-data.md
 SC-07A-employee-request-details-data.md
 SC-07B-employee-request-review-data.md
 SC-10-applicant-data.md
+SC-10B-my-applicant-parties-data.md
 SC-13A-my-agreements-data.md
 SC-13B-agreement-proposal-details-response-data.md
 SC-13C-employee-agreements-data.md
@@ -91,23 +94,34 @@ Request creation input DATA includes:
 - object address.
 ```
 
-Applicant DATA in request creation is Reference / Visible DATA:
+Applicant DATA in request creation includes:
 
 ```text
-- current active ApplicantParty summary for the account;
-- applicant type;
-- applicant display name;
-- applicant contact summary.
+- selected applicant type;
+- current/default ApplicantParty template for that type, when available;
+- prefilled applicant fields from current/default template;
+- clear action when fields are prefilled;
+- empty applicant fields when no current/default template exists;
+- new applicant data entered by client;
+- offer to make newly created ApplicantParty current/default template for that type;
+- future dropdown/list of all saved ApplicantParties.
 ```
 
-Applicant data changes are handled through SC-10 Applicant Data / future replacement flow.
+Accepted direction:
+
+```text
+If user keeps prefilled data, request uses the existing saved ApplicantParty.
+If user enters new applicant data, system creates a new ApplicantParty and uses it for the request.
+New ApplicantParty is offered as current/default template for its type.
+Existing ApplicantParties remain stored and unchanged.
+```
 
 Future UX:
 
 ```text
 [VAR:EXPAND]
-- inline shortcut to update applicant data before submit;
-- return-to-request flow after applicant data update;
+- dropdown/list to select from all saved ApplicantParties;
+- return-to-request flow after applicant management;
 - clear/restore rejected-request prefill data when rejected-request retry is implemented.
 ```
 
@@ -121,12 +135,12 @@ individual entrepreneur
 legal entity
 ```
 
-Current active ApplicantParty policy:
+ApplicantParty profile policy:
 
 ```text
-One L1 account has one current active ApplicantParty at a time.
-Applicant types are alternative data shapes for the account-level applicant profile,
-not separate simultaneously-active applicant contexts per type.
+Account may have multiple saved ApplicantParty profiles over time.
+At most one ApplicantParty per applicant type may be current/default template for future prefill.
+Current/default template is not historical request mutation.
 ```
 
 Current implemented L1 already has narrow physical-person applicant data:
@@ -144,6 +158,31 @@ Target scenario DATA also includes richer physical-person data needed for agreem
 паспортные данные
 actual/residential address as target/future expansion
 ```
+
+New ApplicantParty starts as:
+
+```text
+NotVerified
+```
+
+Applicant verification happens in request/review context.
+
+## My Applicant Parties DATA Summary
+
+Future My Applicant Parties management DATA includes:
+
+```text
+- saved ApplicantParty list;
+- applicant type;
+- applicant display/contact/identifier summary;
+- verification status;
+- current/default marker;
+- details view;
+- add/edit/delete/archive/set-default actions;
+- warning/confirmation data for destructive actions.
+```
+
+Delete/archive is future and must preserve request history.
 
 ## Agreement Proposal DATA Summary
 

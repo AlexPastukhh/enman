@@ -1,29 +1,33 @@
 # SC-04 — Client Request Creation
 
-Status: corrected scenario specification draft / synchronized with applicant-data-in-request-journey UI direction  
+Status: corrected scenario specification draft / synchronized with per-type ApplicantParty template direction  
 Source family: scenario text + DATA + UI scenario + behavior items  
-Related scenarios: `SC-10 Applicant Data`, `SC-05 My Requests / Own Request Details`
+Related scenarios: `SC-10 Applicant Data`, `SC-10B My Applicant Parties`, `SC-05 My Requests / Own Request Details`
 
 ## 1. Purpose
 
 Client creates and submits a connection/request for review.
 
-Request creation uses the account-level current active ApplicantParty as the applicant context.
+Request creation uses one ApplicantParty context for the request.
 
-The request creation journey also contains an applicant data section:
+Target scenario direction for applicant data in request creation:
 
 ```text
-- if current applicant data already exists, applicant fields are prefilled;
-- the client can clear the prefilled applicant fields and enter new applicant data before request submission;
-- accepted new applicant data becomes the account-level current active ApplicantParty through SC-10 / applicant replacement behavior;
-- request submission must not let the client spoof ApplicantPartyId.
+- if a current/default ApplicantParty template exists for the relevant applicant type, applicant fields are prefilled from it;
+- client may keep the prefilled data and use that existing ApplicantParty for the request;
+- client may clear the prefilled fields and enter new applicant data;
+- if no current/default ApplicantParty exists, applicant fields are empty and the same new-applicant-data path is used without needing a clear action;
+- accepted new applicant data creates a new ApplicantParty, adds it to saved applicant profiles and uses it for this request;
+- after creating the new ApplicantParty, UI should offer to make it current/default template for that applicant type;
+- existing ApplicantParties remain stored and unchanged;
+- request submission must not let the client spoof an arbitrary ApplicantParty outside the account.
 ```
 
-This keeps the user journey simple while preserving the domain/API boundary:
+Current implementation note:
 
 ```text
-UI journey may collect or refresh applicant data before submit.
-Request creation command uses the current active ApplicantParty selected by the server.
+Current implemented L1 backend still follows the narrower current-active individual ApplicantParty direction.
+This scenario describes target/future request creation UX and should not be overclaimed as implemented.
 ```
 
 ## 2. Actor / Screen
@@ -38,16 +42,17 @@ Entry A: Client opens request creation page.
 
 Entry B: Client starts a new request after rejected request feedback.
 
-Entry C: Client returns from Applicant Data flow after creating or updating current active applicant data.
+Entry C: Client opens request creation with existing current/default applicant template available.
 
-Entry D: Client opens request creation page with existing applicant data that can be reused, cleared, or replaced before submission.
+Entry D: Client opens request creation when no current/default applicant template exists.
+
+Entry E [future]: Client selects a saved ApplicantParty from all ApplicantParties using a dropdown/list.
 
 ## 4. Preconditions
 
 - Client is signed in.
 - Client can access request creation page.
-- Current active applicant data may already exist.
-- If applicant data is missing or the client clears/replaces applicant data, the request journey must collect acceptable applicant data before request submission can complete.
+- Current/default ApplicantParty for the selected/relevant applicant type may or may not exist.
 
 ## 5. DATA
 
@@ -61,23 +66,16 @@ Input DATA:
 - object address.
 ```
 
-Applicant DATA in the request journey:
+Applicant DATA in the request journey: `SC-04-DATA-02`.
 
 ```text
-- applicant type, for the current supported applicant flow;
-- applicant display/full name;
-- applicant contact email;
-- applicant contact phone;
-- future applicant type-specific fields when those applicant types enter the scenario.
-```
-
-Applicant data behavior:
-
-```text
-- if current active applicant data exists, the applicant fields are prefilled;
-- the client can clear the applicant fields to enter new applicant data;
-- accepted new applicant data replaces or updates the account-level current active ApplicantParty through SC-10 / applicant replacement flow;
-- request creation itself does not create a request-local applicant identity.
+- applicant type;
+- prefilled applicant data from current/default ApplicantParty, when available;
+- empty applicant fields when no current/default template is available;
+- clear action when fields are prefilled;
+- new applicant data entered by client;
+- option/offer to make newly created ApplicantParty current/default template for its type;
+- future selection from all saved ApplicantParties.
 ```
 
 Visible DATA after accepted submit:
@@ -95,37 +93,42 @@ Extension / Future DATA:
 - requested maximum power, kW;
 - data prefilled from rejected request feedback;
 - document references if document flow becomes part of request creation;
-- richer applicant data fields for entrepreneur/legal-entity applicant types.
+- richer applicant data fields for entrepreneur/legal-entity applicant types;
+- dropdown/list of all saved ApplicantParties.
 ```
 
 ## 6. Main Flow
 
 1. Client opens request creation page.
-2. System loads the current active ApplicantParty state for the account, when available.
-3. System shows request creation fields.
-4. System shows applicant data fields/section.
-5. If current active applicant data exists, applicant fields are prefilled from it.
-6. Client may keep the prefilled applicant data or clear the applicant fields and enter new applicant data.
-7. Client enters request creation data: request details and object address.
-8. Client-side validation runs for visible request/applicant fields.
-9. Client corrects visible data if validation fails.
-10. Before request submission is accepted, applicant data must be available as account-level current active ApplicantParty.
-11. Client submits request.
-12. System checks whether request is accepted.
-13. If accepted, request is created for the current active ApplicantParty.
-14. Request status becomes InReview.
-15. Request appears in client's My Requests list.
-16. Request appears in employee review queue.
+2. Client selects or is given a relevant applicant type for request applicant data.
+3. System checks whether current/default ApplicantParty exists for that applicant type.
+4. System shows request creation fields.
+5. System shows applicant data fields/section.
+6. If current/default ApplicantParty exists, applicant fields are prefilled.
+7. If current/default ApplicantParty is missing, applicant fields are empty and ready for input.
+8. Client either keeps prefilled applicant data or enters new applicant data.
+9. Client enters request creation data: request details and object address.
+10. Client-side validation runs for visible request/applicant fields.
+11. Client corrects visible data if validation fails.
+12. If existing saved ApplicantParty is kept, request uses that ApplicantParty.
+13. If new applicant data is entered, system creates a new ApplicantParty and uses it for this request.
+14. After new ApplicantParty creation, UI offers to make it current/default template for that applicant type.
+15. Client submits request.
+16. System checks whether request is accepted.
+17. If accepted, request is created for the selected/new ApplicantParty context.
+18. Request status becomes InReview.
+19. Request appears in client's My Requests list.
+20. Request appears in employee review queue.
 
 ## 7. Branches
 
-### Current active ApplicantParty exists
+### Current/default ApplicantParty for type exists
 
 ```text
--> applicant fields are prefilled from current active applicant data
+-> applicant fields are prefilled from current/default applicant template
 -> client can keep the data
--> request creation can proceed with request details/object address
--> accepted submit creates request for that applicant context
+-> request creation proceeds with request details/object address
+-> accepted submit creates request for that existing ApplicantParty context
 ```
 
 ### Client clears prefilled applicant data
@@ -133,25 +136,29 @@ Extension / Future DATA:
 ```text
 -> applicant fields become editable/empty
 -> client enters new applicant data
--> new applicant data must be accepted through SC-10 / applicant replacement behavior
--> accepted applicant data becomes current active for the account
--> request creation uses the new current active applicant context
+-> accepted applicant data creates a new ApplicantParty
+-> new ApplicantParty is used for this request
+-> UI offers to make new ApplicantParty current/default template for this applicant type
+-> previous ApplicantParties remain stored and unchanged
 ```
 
-### No current active ApplicantParty exists
+### No current/default ApplicantParty exists for type
 
 ```text
--> applicant context is missing
--> request journey guides client to provide applicant data before submit
--> after accepted applicant data, request creation can continue
+-> applicant fields are empty by default
+-> no clear action is needed
+-> client enters new applicant data
+-> accepted applicant data creates a new ApplicantParty
+-> new ApplicantParty is used for this request
+-> UI offers to make new ApplicantParty current/default template for this applicant type
 ```
 
-### Client wants different applicant data before submit
+### Future dropdown/list of all saved ApplicantParties
 
 ```text
--> client clears or updates applicant data fields in the request journey
--> accepted applicant data becomes current active for the account
--> request creation uses the new current active applicant context
+-> request creation may show all saved ApplicantParties that can be used for the selected applicant type/context
+-> current/default ApplicantParty remains the initial prefill/default selection
+-> client can choose another saved ApplicantParty deliberately
 ```
 
 ### Client-side validation errors
@@ -167,7 +174,7 @@ Extension / Future DATA:
 
 ```text
 -> request is accepted
--> request is created for current active ApplicantParty
+-> request is created for selected/new ApplicantParty context
 -> status becomes InReview
 -> request appears in My Requests
 -> request appears in employee review queue
@@ -186,66 +193,86 @@ Extension / Future DATA:
 
 Invalid request is not accepted.
 
-Request creation uses the account's current active ApplicantParty at submit time.
+Request creation uses one ApplicantParty context selected/created for that request.
 
-The client does not select or spoof ApplicantPartyId during request creation.
+The client does not spoof ApplicantPartyId outside of allowed account-owned ApplicantParties.
 
-Applicant data fields in the request journey are not a separate request-local applicant identity.
+If new applicant data is entered during request creation, accepted data creates a new ApplicantParty and uses it for the request.
 
-Accepted applicant data changes update/replace the account-level current active ApplicantParty through SC-10 / applicant replacement behavior.
+Creating a new ApplicantParty does not delete, overwrite or deactivate existing ApplicantParties.
 
-If applicant data changes after a request is created, historical request behavior depends on the stable applicant reference/snapshot policy chosen in future domain planning.
+Current/default template per applicant type affects future prefill behavior only.
+
+Existing requests keep their submitted applicant context.
+
+ApplicantParty verification happens during employee request review.
 
 ## 9. Outcomes
 
 - Client can create request when acceptable applicant data and request data are available.
-- Existing applicant data can be reused through prefilled applicant fields.
+- Existing current/default applicant data can be reused through prefilled applicant fields.
 - Client can clear prefilled applicant fields and enter new applicant data before request submission.
+- If there is no current/default applicant template, client enters new applicant data directly.
+- New applicant data creates a new ApplicantParty and uses it for the request.
+- Newly created ApplicantParty is offered as current/default template for its applicant type.
 - Created request appears in My Requests and employee review queue.
 - Initial status is InReview.
-- Current active applicant data is reused as the request applicant context.
 
 ## 10. Questions / Decisions
 
-Open questions:
+Open / future-review questions:
 
 ```text
 Q: Is requested service type a fixed list or free description?
 Q: When should RequestedPowerKw become core scenario DATA?
-Q: Should historical requests store applicant snapshot in addition to applicant reference?
-Q: Does inline applicant data editing in request creation use the same SC-10 endpoint or a dedicated replacement endpoint?
+Q: Should historical requests store applicant snapshot in addition to ApplicantParty reference/version?
+Q: Should new ApplicantParty become current/default automatically when no template exists for the type, or should the UI still ask?
+Q: What exact dropdown/list behavior should future request creation use for selecting from all saved ApplicantParties?
+Q: Can an existing saved ApplicantParty be edited in place if it is already used by requests?
 ```
 
 Accepted direction:
 
 ```text
 Decision:
-Request creation uses one account-level current active ApplicantParty.
+Request creation uses one account-owned ApplicantParty context.
 
 Reason:
-Applicant identity is account-level scenario data, not per-request ad hoc applicant data.
+Applicant identity is a saved account-owned profile, not ad hoc hidden request-local data.
 
 Consequence:
-If applicant data is missing or wrong, the user provides/replaces applicant data before request submit.
+If new applicant data is entered, it creates a new ApplicantParty and uses it for the request.
 ```
 
 ```text
 Decision:
-Request creation may show applicant data fields as part of the request journey.
+Current/default ApplicantParty per type is used as prefill/default selection, not as global single active applicant.
 
 Reason:
-The user needs to see and correct applicant data before submission.
-
-Consequence:
-Prefilled applicant fields may be cleared and replaced, but accepted applicant changes update the account-level applicant profile before the request is created.
+Users may have different applicant profiles over time, and historical requests must keep their submitted applicant context.
 ```
 
 ```text
 Decision:
-Request creation does not mutate saved ApplicantParty data as a hidden side effect of request submit.
+New applicant data entered during request creation creates a new ApplicantParty and does not replace old profiles.
 
 Reason:
-Applicant data editing/replacement must be explicit and traceable to SC-10 / applicant replacement behavior.
+Existing ApplicantParties and old requests remain meaningful.
+```
+
+```text
+Decision:
+After creating a new ApplicantParty from request flow, UI should offer to make it the current/default template for that applicant type.
+
+Reason:
+The current/default template remains useful for future prefill, but changing it should be visible to the user.
+```
+
+Superseded direction:
+
+```text
+Superseded:
+Accepted applicant data replaces the account-level current active ApplicantParty and makes the previous ApplicantParty non-current globally.
 ```
 
 ## 11. Source Links
@@ -255,4 +282,5 @@ planning/diagrams/scenario-data/SC-04-request-creation-data.md
 planning/diagrams/scenario-ui-specs/SC-04-request-creation-ui.md
 planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
 planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
+planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
 ```

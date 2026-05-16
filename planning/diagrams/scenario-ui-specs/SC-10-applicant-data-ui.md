@@ -1,80 +1,73 @@
 # SC-10 — Applicant Data UI Spec
 
-Status: current UI scenario spec draft / extracted from applicant client-slice planning notes  
+Status: current UI scenario spec draft / applicant template per type policy synchronized  
 Source scenario: `planning/diagrams/scenario-text-specs/SC-10-applicant-data.md`  
 Source DATA: `planning/diagrams/scenario-data/SC-10-applicant-data.md`  
-Behavior item sources: `planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md`
+Behavior item sources: `planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md`  
+Marker: `[UI-SCENARIO]`
 
 ## 1. Purpose
 
-This UI spec captures UI-visible behavior for the Applicant Data / Account page flow.
+This UI spec captures UI-visible behavior for Account page / Applicant Data flow.
 
 It is intentionally not a client implementation sidecar.
 
-It records what the user should see and how the UI should behave around current applicant data, successful applicant data creation, and future request-creation entry decisions.
+It records what the user should see around saved ApplicantParty profiles, current/default templates per applicant type, successful applicant data save and future request-creation prefill behavior.
 
 ## 2. UI Source Summary
 
-Current L1 client planning direction:
+Target UI direction:
 
 ```text
 Authenticated Client
 opens Account page / applicant section
         ↓
-UI determines whether current applicant party exists
+UI shows current/default applicant template per supported applicant type, when available
         ↓
-if current applicant exists:
-  show applicant data as read-only
-else:
-  show applicant data creation form
+Client can enter applicant data for a type
+        ↓
+Accepted applicant data creates a new saved ApplicantParty
+        ↓
+New ApplicantParty starts as NotVerified
+        ↓
+UI offers to make it the current/default template for that applicant type
 ```
 
-For the current applicant-party create client work, the UI may start with a command-only flow:
+Current L1 client implementation is narrower:
 
 ```text
-no current applicant read endpoint yet
-        ↓
-show create applicant form
-        ↓
-submit fullName/email/phoneNumber
-        ↓
-HTTP success
-        ↓
-show submitted applicant data as read-only local state
-        ↓
-show Edit action
-        ↓
-show self-dismissing success notification
+current implementation covers first-stage individual applicant create/read behavior;
+multi-type templates and all saved ApplicantParty management are future scenario direction.
 ```
-
-Stable Account page refresh requires a future current-applicant read slice.
 
 ## 3. UI Behavior Items
 
 | UI behavior item | Requirement | Status |
 |---|---|---|
 | `SC-10-UI-001` | Authenticated client can reach an Account page / applicant section that owns applicant data presentation. | accepted direction |
-| `SC-10-UI-002` | If current applicant data is missing, the UI shows an editable applicant data form. | accepted direction |
-| `SC-10-UI-003` | For the current narrow L1 individual applicant flow, the form collects full name, email and phone number. | current implementation alignment |
-| `SC-10-UI-004` | After successful save, the UI shows applicant data as filled/read-only. | accepted direction |
-| `SC-10-UI-005` | After successful save, the UI shows a self-dismissing success notification. | accepted direction |
-| `SC-10-UI-006` | After successful save, the UI shows an Edit action, but the actual edit/replacement flow is separate. | accepted direction / future slice |
-| `SC-10-UI-007` | The applicant data create UI does not introduce a create-request entry point. | accepted direction |
-| `SC-10-UI-008` | The exact global create-request entry location remains a future request-creation client decision. | open downstream question |
-| `SC-10-UI-009` | After refresh, the Account page should eventually load current applicant data from a read model rather than relying on local post-submit state. | future read slice |
-| `SC-10-UI-010` | Future Account page may show applicant verification state when the read model exposes it. | future review |
+| `SC-10-UI-002` | Account page can show current/default ApplicantParty template for supported applicant type. | target direction |
+| `SC-10-UI-003` | If no current/default template exists for a supported type, the UI can show an empty applicant form or add action for that type. | target direction |
+| `SC-10-UI-004` | For current narrow L1 individual applicant flow, the form collects full name, email and phone number. | current implementation alignment |
+| `SC-10-UI-005` | Accepted applicant data creates a new saved ApplicantParty. | target direction |
+| `SC-10-UI-006` | New ApplicantParty is shown as NotVerified until request/review verification changes it. | target direction |
+| `SC-10-UI-007` | After successful save, UI can show applicant data as filled/read-only saved data. | accepted direction |
+| `SC-10-UI-008` | UI offers to make the newly saved ApplicantParty current/default template for its applicant type. | target direction |
+| `SC-10-UI-009` | Adding new ApplicantParty does not visually remove or overwrite older ApplicantParties. | target direction |
+| `SC-10-UI-010` | Applicant data create UI does not introduce a create-request entry point. | accepted direction |
+| `SC-10-UI-011` | Future My Applicant Parties management can list all saved ApplicantParties and support details/add/edit/delete/archive/set-default actions. | future scenario |
+| `SC-10-UI-012` | Future request creation may select from all saved ApplicantParties, but the current/default template remains the initial prefill. | future request client direction |
 
 ## 4. UI State / Feedback Matrix
 
 | UI state | Visible outcome | User action | Notes |
 |---|---|---|---|
-| Account page loading current applicant state | Loading or pending state for applicant section. | Wait / retry if failed. | Requires future current-applicant read slice for stable refresh behavior. |
-| No current applicant known | Editable applicant form is visible. | Fill and submit applicant data. | Current create client work may start here. |
-| Submit pending | Form prevents duplicate submit and shows pending feedback. | Wait. | Concrete pending UI belongs to `.client.md`. |
-| Save succeeds | Submitted applicant data is shown read-only, success notification appears, Edit action appears. | Continue account work later / edit later. | No create-request entry is introduced by this slice. |
+| Account page loading applicant templates | Loading or pending state for applicant section. | Wait / retry if failed. | Concrete display belongs to `.client.md`. |
+| Current/default template exists for type | Saved applicant data is visible as current/default for that type. | Keep, edit later, or add another ApplicantParty. | Current/default means future prefill only. |
+| No current/default template exists for type | Empty applicant form or add action is visible. | Enter applicant data. | Not an error; it is setup state. |
+| Save succeeds | New ApplicantParty is saved, visible and NotVerified. | Optionally set as current/default template for its type. | Existing ApplicantParties remain stored. |
 | Save fails validation | Field/root errors are visible and form remains editable. | Correct input and resubmit. | Server remains source of truth. |
-| Current applicant exists on page load | Applicant data summary is shown read-only. | Edit action may be visible. | Needs future current-applicant read endpoint/model. |
-| Future verification state available | Verification state is visible near applicant summary. | Follow verification/update flow if required. | Verification workflow is not part of the create command. |
+| Set current/default confirmed | The selected ApplicantParty becomes the template for future prefill for that type. | Continue account work/request creation later. | Does not affect old requests. |
+| Future delete/archive requested | UI warns depending on verification/use by requests. | Confirm/cancel. | Exact delete/archive semantics are future. |
 
 ## 5. Validation / Error Feedback
 
@@ -100,30 +93,28 @@ For current narrow individual applicant data, client-side checks may include:
 Create-request entry rule for this UI spec:
 
 ```text
-Do not show or introduce a create-request entry from the applicant-party create UI slice.
+Do not show or introduce a create-request entry from the applicant data create UI slice.
 ```
 
 Reason:
 
 ```text
-The exact global entry point for request creation is not decided yet.
-It may later live in the header, Account page, My Requests page or another navigation area.
+The exact global entry point for request creation belongs to request creation client planning.
+Applicant templates provide prefill/reference data; they do not own request creation navigation.
 ```
 
-Current applicant data availability after save should be described carefully:
+Set-current/default rule:
 
 ```text
-Applicant party data is now available for future request creation flow.
-The UI does not introduce create request entry in this slice.
+When new ApplicantParty is created, UI should offer to make it current/default for its applicant type.
 ```
 
-Do not use the stronger wording:
+Future select-from-all rule:
 
 ```text
-Can continue toward request creation.
+Request creation may later show a dropdown of all saved ApplicantParties.
+The current/default template for the selected applicant type remains the initial prefill/default selection.
 ```
-
-unless the request-creation entry point is explicitly introduced by a later client slice.
 
 ## 7. Accessibility Notes
 
@@ -132,19 +123,21 @@ Concrete accessibility implementation belongs to the client sidecar, but UI-visi
 ```text
 - form errors are perceivable;
 - success notification is announced or otherwise visible long enough to understand;
-- read-only applicant fields are distinguishable from editable fields;
-- Edit action has accessible name and clear scope.
+- current/default marker is understandable;
+- NotVerified status is visible when shown;
+- set-current/default action has clear accessible name and scope;
+- delete/archive warnings are clear and confirmable.
 ```
 
 ## 8. UI Questions
 
 | ID | Question status | Question | Assumption / current direction | Impact |
 |---|---|---|---|---|
-| `Q-SC-10-UI-001` | open | What read endpoint/model should the Account page use to load current applicant data after refresh? | Draft assumes a future `L1-APPLICANT-PARTY-READ-CURRENT` slice with auth-derived current account context. | Needed before Account page can be stable after refresh. |
-| `Q-SC-10-UI-002` | accepted direction | Should applicant-party create UI show create-request entry before current applicant exists? | No. Do not show create-request entry in this slice. | Request creation entry location remains future request-creation client decision. |
-| `Q-SC-10-UI-003` | future review | Should Account page show applicant verification status? | Yes when the current applicant read model exposes it; not required for the first create command. | Affects future read/verification UI. |
-| `Q-SC-10-UI-004` | accepted direction | Should applicant creation refetch current-user/session? | No. Session/current-user is account auth state. Applicant state belongs to applicant read model unless current-user contract changes. | Prevents accidental coupling of applicant data with auth session. |
-| `Q-SC-10-UI-005` | future review | What does Edit action do? | Edit action is visible after save, but edit/replacement behavior is a future slice. | Future applicant replacement/versioning slice. |
+| `Q-SC-10-UI-001` | future review | Should newly created ApplicantParty become current/default automatically when no current/default exists for its type? | Current direction: UI should at least offer setting it as current/default; exact default state can be decided per client slice. | Affects Account page and request creation prefill. |
+| `Q-SC-10-UI-002` | accepted direction | Should applicant data create UI show create-request entry? | No. Request entry belongs to request creation client sidecar. | Keeps applicant templates separate from request navigation. |
+| `Q-SC-10-UI-003` | future review | Should Account page show verification status? | Yes when the read model exposes it; NotVerified is important for newly saved profiles. | Affects read model and visible status labels. |
+| `Q-SC-10-UI-004` | future review | How should delete/archive warnings differ by ApplicantParty use? | Safer profiles may be deletable; profiles used by requests/approved requests need warning or archive-only behavior. | Affects My Applicant Parties future management. |
+| `Q-SC-10-UI-005` | future review | Should edit mutate profile in place or create a new version? | Prefer not to break historical request context; decide when edit slice starts. | Affects request detail accuracy and audit. |
 
 ## 9. Downstream Use
 
@@ -152,9 +145,10 @@ Use this UI spec for:
 
 ```text
 - `SL-APPL-001-create-individual-applicant-party.client.md`, when concrete client sidecar work is created/updated;
-- future `L1-APPLICANT-PARTY-READ-CURRENT` slice planning;
-- future applicant edit/replacement slice planning;
-- future request creation client entry-point planning;
+- future current/default applicant template read planning;
+- future My Applicant Parties planning;
+- future request creation client applicant selection/prefill planning;
+- future applicant edit/delete/archive planning;
 - scenario diagram prompt preparation for Account page / applicant data flow.
 ```
 
