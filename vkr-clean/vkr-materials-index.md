@@ -1,6 +1,6 @@
 # VKR Materials Index
 
-Status: draft  
+Status: draft / section-drafting and reviewer workflow synchronized  
 Scope: navigation for clean VKR materials
 
 ## 1. Entry Points
@@ -44,17 +44,29 @@ Use this section before expanding chapter drafts. It helps keep each paragraph t
 | File / material | Purpose |
 |---|---|
 | `section-drafts/README.md` | Entry point for subsection draft workflow |
-| `section-drafts/vkr-section-drafting-workflow.md` | Current short/full draft workflow |
+| `section-drafts/vkr-section-drafting-workflow.md` | Current short/full draft workflow and coordinator loop |
+| `section-drafts/reviewer-workflow.md` | Reviewer process, reviewer roles and feedback consolidation |
+| `section-drafts/reviewer-prompts.md` | Reusable prompts for content, structure and style/originality reviewer chats |
 | `section-drafts/short-draft-template.md` | Chat-first short draft template |
 | `section-drafts/full-draft-template.md` | Full draft attempt template |
 | `section-drafts/full-draft-review-checklist.md` | Checklist for reviewing full draft attempts |
-| `section-drafts/fragment-bank.md` | Bank of successful fragments, transitions and conclusions |
-| `section-drafts/section-draft-register.md` | Register of subsection draft statuses |
+| `section-drafts/fragment-bank.md` | Bank of successful fragments, transitions, conclusions and reusable formulations |
+| `section-drafts/section-draft-register.md` | Register of subsection draft statuses and review state |
 
-Short drafts are normally written in chat first.  
-Full draft attempts, review results and reusable fragments are stored as files.
+Short drafts are normally written in chat first and are not saved as files by default.  
+Full draft attempts, reviewer outputs, consolidation notes and reusable fragments are stored as files.
 
-## 5. Chapter Drafts
+## 5. VKR Drafting Roles
+
+| Role | Responsibility |
+|---|---|
+| VKR Coordinator & Drafter | Owns high-level VKR planning, prepares short drafts, creates full draft archive attempts, consolidates reviewer feedback and maintains fragment/status docs |
+| VKR Content Reviewer | Checks whether a draft answers the project question and preserves core VKR lines: client requests, document flow, contracts/documents and notifications |
+| VKR Structure Reviewer | Checks form, subsection placement, intro/body/conclusion, chapter boundaries and visual/table/application placement |
+| VKR Style & Originality Reviewer | Checks style, generic theory, template phrases, AI-like wording, citation needs and project-specific rewriting opportunities |
+| Documentation Keeper | Keeps navigation/workflow/register docs synchronized; does not write VKR section text unless explicitly asked |
+
+## 6. Chapter Drafts
 
 | File | Purpose |
 |---|---|
@@ -63,9 +75,9 @@ Full draft attempts, review results and reusable fragments are stored as files.
 | `chapter-3-implementation.md` | Implementation, API, database, UI and testing draft |
 | `chapter-4-lifecycle-and-deployment.md` | Deployment, operation, limitations and future work draft |
 
-Chapter files are not the only source of truth. Update clean source files first, then expand chapters.
+Chapter files are not the only source of truth. Update clean source files and section-drafts workflow files first, then expand chapters.
 
-## 6. Clean Source Files
+## 7. Clean Source Files
 
 | File | Purpose |
 |---|---|
@@ -82,7 +94,7 @@ Chapter files are not the only source of truth. Update clean source files first,
 | `clean-testing.md` | Testing strategy and verification |
 | `clean-results-and-future-work.md` | Results and further development |
 
-## 7. Literature And Research Support
+## 8. Literature And Research Support
 
 | Material | Purpose |
 |---|---|
@@ -93,7 +105,7 @@ Chapter files are not the only source of truth. Update clean source files first,
 
 Research materials should support the project text, not replace it.
 
-## 8. Diagram And Planning Extraction Files
+## 9. Diagram And Planning Extraction Files
 
 | File | Purpose |
 |---|---|
@@ -102,7 +114,7 @@ Research materials should support the project text, not replace it.
 
 Final diagram generation should follow `planning/diagrams/diagram-prompt-generation-workflow.md` and `planning/diagrams/drawio-diagram-generation-workflow.md`.
 
-## 9. Expanded Drafts
+## 10. Expanded Drafts
 
 | Material | Purpose |
 |---|---|
@@ -113,7 +125,7 @@ Final diagram generation should follow `planning/diagrams/diagram-prompt-generat
 
 Expanded drafts are working material. They should be cleaned and source-checked before final VKR text.
 
-## 10. Related Working Files Outside `vkr-clean/`
+## 11. Related Working Files Outside `vkr-clean/`
 
 | File | Purpose |
 |---|---|
@@ -126,16 +138,16 @@ Expanded drafts are working material. They should be cleaned and source-checked 
 | `presentation/visuals-needed.md` | Visuals needed for defense |
 | `presentation/predefense-expanded-draft.md` | Expanded pre-defense text draft |
 
-## 11. Current Next Steps
+## 12. Current Next Steps
 
 ```text
 1. Write short drafts in chat before creating full draft files.
 2. Use section-drafts/vkr-section-drafting-workflow.md to move from short draft to full draft attempt.
-3. Use full-draft-review-checklist.md after each full draft attempt.
-4. Move successful fragments to fragment-bank.md.
-5. Use section-draft-register.md to track draft statuses.
-6. Expand chapter 1 from short/full section drafts, introduction draft and existing-solutions analysis.
-7. Expand chapter 2 from functional-specification.md, clean-architecture.md and api-contract-and-client-server-sync.md.
-8. Expand chapter 3 from clean-ui-description.md, clean-testing.md and repo evidence.
+3. Use reviewer-workflow.md after full draft v1.
+4. Send full draft v1 to Content / Structure / Style & Originality reviewer chats when useful.
+5. Consolidate reviewer feedback in the Coordinator/Drafter chat.
+6. Move successful fragments to fragment-bank.md.
+7. Use section-draft-register.md to track draft/review/status.
+8. Prepare full draft v2 from consolidated feedback.
 9. Before final chapter text, recheck repo evidence for each implemented claim.
 ```

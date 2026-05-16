@@ -1,7 +1,7 @@
 # Clean VKR Materials
 
-Status: draft  
-Scope: clean materials for VKR text, defense materials and diagram planning
+Status: draft / section-drafting workflow synchronized  
+Scope: clean materials for VKR text, defense materials, section drafts and diagram planning
 
 ## Тема ВКР
 
@@ -24,7 +24,8 @@ Scope: clean materials for VKR text, defense materials and diagram planning
 - пользовательский интерфейс;
 - тестирование;
 - результаты и дальнейшее развитие;
-- планы диаграмм и приложений.
+- планы диаграмм и приложений;
+- workflow подготовки subsection drafts и reviewer feedback.
 ```
 
 ## Граница между planning и clean VKR
@@ -36,9 +37,9 @@ Scope: clean materials for VKR text, defense materials and diagram planning
 ```text
 - академично;
 - конкретно по ООО «ЗСК»;
-- без внутренних слов вроде agent, prompt, chat;
+- без внутренних слов вроде agent, prompt, chat в итоговом тексте ВКР;
 - без длинных технических трекеров в основном тексте;
-- с аккуратными TODO там, где раздел зависит от будущей реализации.
+- с аккуратными TODO там, где раздел зависит от будущей реализации, источника, визуального материала или repo-check.
 ```
 
 ## Статусы реализации
@@ -77,5 +78,33 @@ vkr-clean/evidence-map.md
 - typed client API wrappers;
 - ProblemDetails / form error mapping;
 - тестирование по слоям;
-- диаграммы и визуальные материалы.
+- диаграммы и визуальные материалы;
+- reviewer workflow для проверки subsection drafts.
+```
+
+## Section Draft Workflow
+
+Для подготовки подразделов ВКР используется отдельная зона:
+
+```text
+vkr-clean/section-drafts/
+```
+
+Она отвечает за:
+
+```text
+- short drafts, которые сначала обсуждаются в чате и обычно не сохраняются как файлы;
+- full draft attempts, которые сохраняются как файлы и могут иметь версии v1/v2/v3;
+- reviewer workflow для content / structure / style-originality review;
+- fragment bank для удачных формулировок;
+- section draft register для статусов подразделов.
+```
+
+Начинать работу с подразделом нужно с:
+
+```text
+vkr-clean/vkr-materials-index.md
+vkr-clean/section-drafts/README.md
+vkr-clean/section-drafts/vkr-section-drafting-workflow.md
+vkr-clean/section-drafts/reviewer-workflow.md
 ```
