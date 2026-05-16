@@ -48,15 +48,19 @@ Visual flow sections should be diagram-like maps, not only linear arrow lists.
 
 Client implementation file for a concrete business slice.
 
-Client sidecars are not created in advance. They are created or updated when concrete client work starts and then used as draft/discovery files.
+Client sidecars are not created in advance. They are created or updated when concrete client work starts and then used as draft/discovery/status files.
 
-Current active client sidecar draft:
+Full client sidecars should include architecture/folder-based visual implementation flow, for example:
 
 ```text
-planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
+[Route: app/router/router.tsx]
+-> [Page: pages/...]
+-> [Feature UI: features/.../ui]
+-> [Feature Model: features/.../model]
+-> [Feature API Mapper: features/.../api]
+-> [Shared API: shared/api/...]
+-> [Generated Contracts: shared/api/generated/openapi-types.ts]
 ```
-
-This sidecar is a planning draft for Applicant Data UI. It does not mean the client implementation already exists.
 
 ### Cross-cutting slice
 
@@ -93,18 +97,23 @@ Status summary:
 
 | Slice | Backend/API status | Client/UI status |
 |---|---|---|
-| `SL-ACC-001` | implemented register endpoint, persistence and tests | registration UI/password confirmation/auto-login decision are future client/auth work |
-| `SL-AUTH-001` | implemented login endpoint, L1 cookie session and tests | login client form/session state is future client work |
-| `SL-AUTH-002` | implemented current-user endpoint/query/session validation and tests | current-user bootstrap/route guard is future client work |
-| `SL-AUTH-003` | implemented logout endpoint/session clearing and tests | logout UI/cache/navigation/CSRF handling is future client work |
-| `SL-APPL-001` | implemented applicant create endpoint, persistence and tests | client sidecar draft exists: `SL-APPL-001-create-individual-applicant-party.client.md`; implementation not completed |
+| `SL-ACC-001` | implemented register endpoint, persistence and tests | first-stage registration UI implemented; tests pending |
+| `SL-AUTH-001` | implemented login endpoint, L1 cookie session and tests | first-stage login UI implemented; tests pending |
+| `SL-AUTH-002` | implemented current-user endpoint/query/session validation and tests | first-stage session bootstrap implemented; route guard/global error policy pending |
+| `SL-AUTH-003` | implemented logout endpoint/session clearing and tests | shared logout API wrapper exists; concrete logout UI/cache/navigation flow not confirmed |
+| `SL-APPL-001` | implemented applicant create endpoint, persistence and tests | first-stage Account page applicant create UI implemented; read-current slice missing; tests pending |
 | `SL-REQ-001` | implemented request create endpoint, server-selected applicant, no required body and tests | request form UI, My Requests read screens and E2E are future client/read work |
 
 These files are current backend/API/persistence/session slice docs and should follow the full backend slice flow rule.
 
 ## 5. Current Client Sidecar Files
 
+Current implemented/first-stage client sidecars:
+
 ```text
+planning/slices/SL-ACC-001-register-client-account.client.md
+planning/slices/SL-AUTH-001-login-client-account.client.md
+planning/slices/SL-AUTH-002-current-user.client.md
 planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
 ```
 
@@ -112,7 +121,18 @@ Current sidecar status:
 
 | Sidecar | Parent slice | Status | Notes |
 |---|---|---|---|
-| `SL-APPL-001-create-individual-applicant-party.client.md` | `SL-APPL-001` | implementation-ready client draft / not implemented | Account page applicant create UI; stable refresh depends on future `L1-APPLICANT-PARTY-READ-CURRENT` |
+| `SL-ACC-001-register-client-account.client.md` | `SL-ACC-001` | implemented first-stage client feature flow / tests pending | `/register`, password confirmation, DTO mapping to email/password, success -> `/login` |
+| `SL-AUTH-001-login-client-account.client.md` | `SL-AUTH-001` | implemented first-stage client feature flow / tests pending | `/login`, login mutation, ProblemDetails mapping, session query invalidation, success -> home |
+| `SL-AUTH-002-current-user.client.md` | `SL-AUTH-002` | first-stage implemented session bootstrap / route guard pending | `SessionProvider`, current-user query, 401 -> null session, `useSession` consumers |
+| `SL-APPL-001-create-individual-applicant-party.client.md` | `SL-APPL-001` | first-stage implemented client feature flow / current applicant read missing / tests pending | Account page form, local read-only success state, Edit action, self-dismissing notification |
+
+Client-support-only implementation that does not yet get an implemented full sidecar:
+
+| Support | Current status | Why no implemented sidecar yet |
+|---|---|---|
+| `logoutClientAccount()` shared API wrapper | shared API support implemented | concrete logout UI/cache/navigation flow not confirmed |
+| request creation generated path/type support | generated contract support exists | request creation feature UI is not implemented |
+| current applicant read | not implemented | future read-current endpoint/client slice needed |
 
 ## 6. Slice Support Files
 
@@ -264,7 +284,9 @@ Tests.EnergyManagement/Integration/L1/L1SliceIntegrationTests.cs
 Tests.EnergyManagement/Domain/**
 ```
 
-Browser E2E for applicant/request flows should wait until concrete client/read UI exists.
+Client/component/E2E test evidence for current L1 client sidecars was not found during this documentation reconciliation; mark those checks as planned/gap until tests are added or located.
+
+Browser E2E for applicant/request flows should wait until the corresponding client/read UI exists.
 
 ## 14. Parent Business Slice Files
 
@@ -292,26 +314,18 @@ Parent business slice files own:
 
 A `.client.md` file is created only when concrete client work starts.
 
-It owns detailed client implementation planning and client/component tests.
+It owns detailed client implementation planning, current client implementation status and client/component tests.
 
 It should include E2E coverage only for cross-layer behavior that truly needs browser-client-server wiring.
 
 Client sidecars also follow the local/global question sync rule.
 
-Recommended next client order:
+Current remaining client order:
 
 ```text
-L1 auth/session client baseline
--> Applicant Data UI
+Logout UI/cache/navigation, if needed before protected flows
+-> Current applicant read after refresh
 -> Request Creation UI
 -> My Requests read/list/detail
 -> Browser E2E happy paths
-```
-
-Current exception / active draft:
-
-```text
-SL-APPL-001-create-individual-applicant-party.client.md is being drafted now
-because concrete Applicant Data UI planning has started.
-It should still consume or coordinate with the future auth/session client baseline.
 ```

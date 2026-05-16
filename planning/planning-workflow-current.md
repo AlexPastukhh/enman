@@ -8,7 +8,7 @@ Scope: current implementation baseline, planning gates and next work direction
 ```text
 OpenAPI structural contract + generated semantic constants are first-stage/baseline support.
 
-L1 backend/API/persistence flow is implemented for the current core backend slices:
+L1 backend/API/persistence/session flow is implemented for the current core backend slices:
 - register client account;
 - login client account;
 - current user;
@@ -16,7 +16,16 @@ L1 backend/API/persistence flow is implemented for the current core backend slic
 - create individual applicant party;
 - create connection request.
 
-The next work should consume these implemented backend contracts through draft-driven client sidecar planning, not reimplement backend/API infrastructure.
+First-stage L1 client flows are implemented for:
+- app shell/routing/providers;
+- shared typed L1 API wrappers;
+- shared fetch/ProblemDetails/form error mapping;
+- current-user session bootstrap;
+- register client account UI;
+- login client account UI;
+- create individual applicant party UI on Account page.
+
+The next work should consume implemented backend contracts and implemented first-stage client baseline, not re-plan them as missing.
 ```
 
 ## 2. Current Contract Artifact Baseline
@@ -28,20 +37,20 @@ Repo-grounded baseline:
 | OpenAPI artifact | `EnergyManagement.Tools generate-openapi`, `Shared/openapi.json`, `energymanagement.client/src/shared/api/generated/openapi-types.ts`, root `generate/check:api` scripts | first-stage implemented | Use and check existing artifacts; do not redo infrastructure unless explicitly in scope |
 | Generated constants | `EnergyManagement.Tools generate-client-constants`, `Shared/constants.json`, `Shared/errorcodes.json`, Tools checker/tests | implemented baseline | Use generated semantic constants; add new constants through the existing generator/check flow |
 | L1 endpoint metadata | `EnergyManagement.Server/L1/Controllers/L1Controller.cs` exposes L1 request/response DTOs and ProblemDetails statuses | first-stage implemented | Keep metadata updated when API changes |
-| L1 generated TS types | `energymanagement.client/src/shared/api/generated/openapi-types.ts` includes L1 auth/applicant/request paths and DTOs | support baseline available | Client slices should consume generated types when concrete client work starts |
-| Client API wrappers | Thin handwritten wrappers are still the expected first-stage strategy, but migration is per client slice | planned per slice | Use generated OpenAPI types when concrete client work starts |
-| E2E auth baseline | Root Playwright config and `tests/e2e/auth` register/login coverage | implemented baseline | Protect current legacy-auth E2E unless L1 auth consolidation is explicitly in scope |
+| L1 generated TS types | `energymanagement.client/src/shared/api/generated/openapi-types.ts` includes L1 auth/applicant/request paths and DTOs | support baseline available | Client slices should consume generated types |
+| Client API wrappers | Thin handwritten wrappers use generated OpenAPI schema types and typed path constants for L1 auth/applicant support | first-stage implemented for current L1 auth/applicant endpoints | Extend per client slice when new endpoint is consumed |
+| E2E auth baseline | Root Playwright config and `tests/e2e/auth` register/login coverage | implemented legacy-auth baseline | Protect current legacy-auth E2E unless L1 auth consolidation is explicitly in scope |
 
-## 3. Current L1 Backend Baseline
+## 3. Current L1 Backend / Client Baseline
 
-| Backend area | Current evidence | Status | Client/UI status | Next planning action |
-|---|---|---|---|---|
-| Register client account | `POST /api/l1/auth/register`; `L1RegisterClientAccountDto(email,password)`; `L1RegisterClientAccountResponse(AccountId,Email)`; integration tests for creation/duplicate email | implemented backend/API/persistence | Registration page, password confirmation UI and auto-login decision are not completed client flows | Use `SL-ACC-001`; plan registration/auth client sidecar when concrete client work starts |
-| Login client account | `POST /api/l1/auth/login`; command handler validates credentials/activation, signs L1 cookie, returns current-user shape; tests cover success and safe invalid failures | implemented backend/API/session | Login form/session state integration is not completed client flow | Use `SL-AUTH-001`; start auth/session client baseline before protected UI flows |
-| Current user | `GET /api/l1/auth/current-user`; L1 marker/current account lookup; tests cover unauth, non-existing account, legacy-shaped cookie rejection and valid marker | implemented backend/API/session query | Client bootstrapping/route guard/current user cache is not completed client flow | Use `SL-AUTH-002`; plan client auth bootstrap with login/logout |
-| Logout | `POST /api/l1/auth/logout`; clears cookie and returns 204; test confirms current-user becomes 401 | implemented backend/API/session | Logout UI/session invalidation is not completed client flow | Use `SL-AUTH-003`; treat as unsafe browser command for future CSRF planning |
-| Create individual applicant party | protected `POST /api/l1/applicant-parties/individual`; account id derived from L1 cookie; response ids; integration tests | implemented backend/API/persistence | Applicant form UI and field-level ProblemDetails mapping are not completed client flows | Use `SL-APPL-001`; plan after auth/session baseline |
-| Create connection request | protected `POST /api/l1/requests`; DTO `details + address`; server-selected current active applicant; no required response body; integration/domain tests | implemented backend/API/persistence | Request creation UI, My Requests read context and E2E browser flow are not completed client flows | Use `SL-REQ-001`; plan after applicant data UI |
+| Area | Backend/API state | Client/UI state | Next planning action |
+|---|---|---|---|
+| Register client account | implemented endpoint, DTO `email/password`, response ids/email, persistence and tests | first-stage `/register` UI implemented with password confirmation, API submit, ProblemDetails mapping and success -> `/login` | Document/use `SL-ACC-001.client`; decide auto-login only if UX scope asks |
+| Login client account | implemented endpoint, credential validation, L1 cookie sign-in, current-user response and tests | first-stage `/login` UI implemented with validation, API submit, session query invalidation and success -> home | Document/use `SL-AUTH-001.client`; route target remains future-review if UX changes |
+| Current user | implemented protected current-user endpoint/query/session validation and tests | first-stage session bootstrap implemented through `SessionProvider`, current-user query and `useSession`; protected route policy pending | Document/use `SL-AUTH-002.client`; plan route guard/global failure policy separately |
+| Logout | implemented protected logout endpoint/session clearing and tests | shared logout API wrapper exists; concrete logout UI/cache/navigation flow not confirmed | Do not mark logout client UI implemented; create `.client.md` only when UI starts |
+| Create individual applicant party | implemented protected applicant create endpoint, server-derived account id, persistence and tests | first-stage Account page applicant create UI implemented; local read-only success state, Edit action and notification; read-current after refresh missing | Document/use `SL-APPL-001.client`; plan current applicant read next |
+| Create connection request | implemented protected request create endpoint, server-selected applicant, no required response body and tests | request creation UI and My Requests read context not implemented | Plan request `.client.md` only after current applicant/read direction is clear |
 
 ## 4. Contract Artifact Gate For New Work
 
@@ -82,9 +91,9 @@ For any API endpoint used by client:
 - generated client type is available when client consumes it.
 ```
 
-Do not treat missing client wrapper migration as missing OpenAPI infrastructure.
-
 Do not treat generated TypeScript types as implemented feature UI.
+
+Do not treat implemented feature UI as a reason to stop checking the generated contract.
 
 ## 6. Constants Gate
 
@@ -104,7 +113,24 @@ When a slice introduces client-facing constants/error codes:
 8. Run generate-client-constants --check.
 ```
 
-## 7. Cross-Cutting / Helper Slice Workflow
+## 7. Client Sidecar Gate
+
+When documenting or implementing a client sidecar:
+
+```text
+1. Read the parent backend slice.
+2. Read generated contract/API docs.
+3. Read client-wide conventions.
+4. Inspect current client code before assigning status.
+5. Use architecture/folder-based Visual Client Implementation Flow.
+6. Separate current implementation from future/read/route-guard/test gaps.
+7. Keep Behavior Coverage separate from Test / Verification Plan.
+8. Mark component/E2E tests as planned/gap unless repo evidence shows them.
+9. Sync relevant questions to slice-questions-register.md.
+10. Sync future implementation notes to slice-implementation-notes-register.md.
+```
+
+## 8. Cross-Cutting / Helper Slice Workflow
 
 Cross-cutting/helper slices follow the same planning shape as business slices:
 
@@ -119,7 +145,7 @@ source requirements
 
 If current repo evidence shows a cross-cutting slice is now implemented, update its status table rather than leaving all coverage as planned.
 
-## 8. CSRF Gate
+## 9. CSRF Gate
 
 When planning browser unsafe API requests or auth/session flow:
 
@@ -133,7 +159,7 @@ When planning browser unsafe API requests or auth/session flow:
 
 Current known status remains docs/planning/future hardening unless repo evidence later shows antiforgery implementation.
 
-## 9. Testing Workflow Gate
+## 10. Testing Workflow Gate
 
 When planning or implementing a slice, classify test coverage by layer:
 
@@ -155,36 +181,28 @@ Do not migrate the existing auth E2E from legacy AuthController endpoints to L1 
 
 For L1 applicant/request browser E2E, wait until the corresponding client feature UI/read flow exists.
 
-## 10. Current Client Work Order
+## 11. Current Remaining Client Work Order
 
-Recommended order for the next concrete client work:
+Recommended order for remaining concrete client work:
 
 ```text
-1. Auth/session client baseline:
-   - login;
-   - current-user bootstrapping;
-   - logout;
-   - session state/route guard direction.
-
-2. Applicant Data UI:
-   - individual applicant form;
-   - ProblemDetails field/global mapping;
-   - success handling.
-
+1. Logout UI/cache/navigation, if needed for the auth baseline.
+2. Current applicant read after refresh:
+   - current applicant read endpoint/read model;
+   - Account page load state;
+   - verification status direction.
 3. Request Creation UI:
    - current active applicant context display;
    - request details/address form;
    - command success convention;
    - ProblemDetails display.
-
 4. My Requests read/list/detail:
    - target read model;
    - route/navigation target for request creation success.
-
 5. Browser E2E happy paths after client and read flows exist.
 ```
 
-## 11. Implementation Flow Detail Rule
+## 12. Implementation Flow Detail Rule
 
 Implementation flow must not become a full code listing.
 
