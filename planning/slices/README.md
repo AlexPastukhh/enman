@@ -27,6 +27,8 @@ testing/support slices
 documentation/status reconciliation drafts
 ```
 
+Shortened drafts should also capture extension/change points when future behavior can affect current design.
+
 ## 3. Slice Types
 
 ### Business slice
@@ -40,6 +42,7 @@ Visual Scenario Flow
 -> Scenario Slice Flow
 -> Visual Implementation Flow
 -> Implementation Flow
+-> Extension / Change Points, when relevant
 ```
 
 Visual flow sections should be diagram-like maps, not only linear arrow lists.
@@ -48,19 +51,9 @@ Visual flow sections should be diagram-like maps, not only linear arrow lists.
 
 Client implementation file for a concrete business slice.
 
-Client sidecars are not created in advance. They are created or updated when concrete client work starts and then used as draft/discovery/status files.
+Client sidecars are not created in advance. They are created or updated when concrete client work starts and then used as draft/discovery files.
 
-Full client sidecars should include architecture/folder-based visual implementation flow, for example:
-
-```text
-[Route: app/router/router.tsx]
--> [Page: pages/...]
--> [Feature UI: features/.../ui]
--> [Feature Model: features/.../model]
--> [Feature API Mapper: features/.../api]
--> [Shared API: shared/api/...]
--> [Generated Contracts: shared/api/generated/openapi-types.ts]
-```
+Client sidecars should include architecture/folder-based Visual Client Implementation Flow.
 
 ### Cross-cutting slice
 
@@ -93,22 +86,9 @@ planning/slices/SL-APPL-001-create-individual-applicant-party.md
 planning/slices/SL-REQ-001-create-connection-request.md
 ```
 
-Status summary:
-
-| Slice | Backend/API status | Client/UI status |
-|---|---|---|
-| `SL-ACC-001` | implemented register endpoint, persistence and tests | first-stage registration UI implemented; tests pending |
-| `SL-AUTH-001` | implemented login endpoint, L1 cookie session and tests | first-stage login UI implemented; tests pending |
-| `SL-AUTH-002` | implemented current-user endpoint/query/session validation and tests | first-stage session bootstrap implemented; route guard/global error policy pending |
-| `SL-AUTH-003` | implemented logout endpoint/session clearing and tests | shared logout API wrapper exists; concrete logout UI/cache/navigation flow not confirmed |
-| `SL-APPL-001` | implemented applicant create endpoint, persistence and tests | first-stage Account page applicant create UI implemented; read-current slice missing; tests pending |
-| `SL-REQ-001` | implemented request create endpoint, server-selected applicant, no required body and tests | request form UI, My Requests read screens and E2E are future client/read work |
-
-These files are current backend/API/persistence/session slice docs and should follow the full backend slice flow rule.
-
 ## 5. Current Client Sidecar Files
 
-Current implemented/first-stage client sidecars:
+Implemented/first-stage client sidecars currently documented:
 
 ```text
 planning/slices/SL-ACC-001-register-client-account.client.md
@@ -117,22 +97,7 @@ planning/slices/SL-AUTH-002-current-user.client.md
 planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
 ```
 
-Current sidecar status:
-
-| Sidecar | Parent slice | Status | Notes |
-|---|---|---|---|
-| `SL-ACC-001-register-client-account.client.md` | `SL-ACC-001` | implemented first-stage client feature flow / tests pending | `/register`, password confirmation, DTO mapping to email/password, success -> `/login` |
-| `SL-AUTH-001-login-client-account.client.md` | `SL-AUTH-001` | implemented first-stage client feature flow / tests pending | `/login`, login mutation, ProblemDetails mapping, session query invalidation, success -> home |
-| `SL-AUTH-002-current-user.client.md` | `SL-AUTH-002` | first-stage implemented session bootstrap / route guard pending | `SessionProvider`, current-user query, 401 -> null session, `useSession` consumers |
-| `SL-APPL-001-create-individual-applicant-party.client.md` | `SL-APPL-001` | first-stage implemented client feature flow / current applicant read missing / tests pending | Account page form, local read-only success state, Edit action, self-dismissing notification |
-
-Client-support-only implementation that does not yet get an implemented full sidecar:
-
-| Support | Current status | Why no implemented sidecar yet |
-|---|---|---|
-| `logoutClientAccount()` shared API wrapper | shared API support implemented | concrete logout UI/cache/navigation flow not confirmed |
-| request creation generated path/type support | generated contract support exists | request creation feature UI is not implemented |
-| current applicant read | not implemented | future read-current endpoint/client slice needed |
+Do not create new `.client.md` files before concrete client work starts or implemented client logic must be reconciled.
 
 ## 6. Slice Support Files
 
@@ -147,7 +112,6 @@ planning/slices/slice-questions-register.md
 planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
 planning/slices/shared/README.md
-planning/slices/shared/maybe-for-optional-results.md
 planning/slices/cross-cutting/README.md
 planning/slices/examples/README.md
 ```
@@ -172,13 +136,13 @@ The register makes important local questions discoverable from one place.
 
 ### Extension points register
 
-`slice-extension-points-register.md` owns extension points, change pressure, anti-coupling decisions and extension-related questions.
+`slice-extension-points-register.md` owns extension points, change pressure, anti-coupling decisions and extension/change questions.
 
 ### Implementation notes register
 
 `slice-implementation-notes-register.md` owns concrete future implementation/client/testing notes that are not yet assigned to an active slice or sidecar.
 
-## 8. Question Sync Rule
+## 8. Question / Extension Sync Rule
 
 When a local slice/client/cross-cutting file has a question that remains relevant after the local draft, mirror it into:
 
@@ -209,11 +173,14 @@ planning/slices/examples/
 Current examples:
 
 ```text
+planning/slices/examples/L1-APPLICANT-PARTY-READ-CURRENT-early-short-draft-example.md
 planning/slices/examples/L1-CONNECTION-REQUEST-CREATE-early-short-draft-example.md
 planning/slices/examples/SL-ACC-001-register-client-account-full-slice-example.md
 ```
 
-The early short example shows the valid shortened working format.
+The read-current early short example is the primary shortened draft example for visual flows, assumptions, extension/change points and shared register sync.
+
+The connection-request example is kept as a compact command-flow example.
 
 The full backend slice example shows visual maps before detailed scenario/implementation flows.
 
@@ -270,37 +237,7 @@ planning/slices/shared/
 
 for reusable notes/helpers that do not have a full slice behavior/test flow.
 
-Current shared notes:
-
-```text
-planning/slices/shared/maybe-for-optional-results.md
-planning/slices/shared/antiforgery-token-session-context.md
-```
-
-`maybe-for-optional-results.md` is the target convention for repository/query APIs where no resulting object is a normal outcome. It is especially relevant for future read slices and repository refactors.
-
-## 13. Repository / Optional Result Convention
-
-For new/refactored repository and query APIs, use:
-
-```text
-planning/slices/shared/maybe-for-optional-results.md
-```
-
-Core rule:
-
-```text
-If absence of the resulting object is normal, return `Maybe<T>` from repository/query APIs and let the application handler map `Maybe.None` to the use-case result.
-```
-
-Current implementation note:
-
-```text
-Existing L1 repositories still use nullable returns in several places.
-That is current repo evidence, not the target convention for new/refactored repository APIs.
-```
-
-## 14. Testing Support
+## 13. Testing Support
 
 Testing workflow lives in:
 
@@ -315,11 +252,9 @@ Tests.EnergyManagement/Integration/L1/L1SliceIntegrationTests.cs
 Tests.EnergyManagement/Domain/**
 ```
 
-Client/component/E2E test evidence for current L1 client sidecars was not found during this documentation reconciliation; mark those checks as planned/gap until tests are added or located.
+Browser E2E for applicant/request flows should wait until concrete client/read UI exists.
 
-Browser E2E for applicant/request flows should wait until the corresponding client/read UI exists.
-
-## 15. Parent Business Slice Files
+## 14. Parent Business Slice Files
 
 Parent business slice files own:
 
@@ -341,20 +276,20 @@ Parent business slice files own:
 - link to `.client.md` sidecar when client work starts.
 ```
 
-## 16. Client Sidecar Files
+## 15. Client Sidecar Files
 
-A `.client.md` file is created only when concrete client work starts.
+A `.client.md` file is created only when concrete client work starts or implemented client logic must be documented and reconciled.
 
-It owns detailed client implementation planning, current client implementation status and client/component tests.
+It owns detailed client implementation planning and client/component tests.
 
 It should include E2E coverage only for cross-layer behavior that truly needs browser-client-server wiring.
 
-Client sidecars also follow the local/global question sync rule.
+Client sidecars also follow the local/global question sync rule and extension/change point review rule.
 
-Current remaining client order:
+Recommended remaining client order:
 
 ```text
-Logout UI/cache/navigation, if needed before protected flows
+Logout UI/cache/navigation, if needed
 -> Current applicant read after refresh
 -> Request Creation UI
 -> My Requests read/list/detail

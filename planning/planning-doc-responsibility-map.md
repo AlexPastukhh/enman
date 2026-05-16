@@ -12,7 +12,7 @@ When a local file contains information that affects future work, synchronize it 
 
 | File / folder | Responsibility |
 |---|---|
-| `planning/agent-roles-and-required-actions.md` | Cross-project role map: documentation keeper, scenario draft, domain draft, slice draft, diagram prompt, diagram generation, implementation handoff and API/testing gates |
+| `planning/agent-roles-and-required-actions.md` | Cross-project role map: documentation keeper, scenario draft, domain draft, slice draft, diagram chat, implementation handoff and API/testing gates |
 | `planning/planning-agent-protocol.md` | Shared collaboration protocol, role boundary rules, question/assumption rules and cross-cutting planning rules |
 | `planning/planning-workflow-current.md` | Current planning baseline and active workflow gates |
 
@@ -57,13 +57,16 @@ Scenario Draft Chat may prepare a diagram request/prompt using `diagram-prompt-g
 
 | File / folder | Responsibility |
 |---|---|
-| `planning/slices/README.md` | Slice-planning navigation, current backend slice files, examples, registers and support docs |
+| `planning/slices/README.md` | Slice-planning navigation, current backend/client slice files, examples, registers and support docs |
 | `planning/slices/draft-driven-discovery-principles.md` | Draft-driven discovery for domain/business/client/cross-cutting/testing/documentation drafts |
 | `planning/slices/l1-slice-drafting-guide.md` | Practical L1 slice drafting workflow, shortened/full draft templates and visual flow rules |
+| `planning/slices/change-extension-points-principles.md` | How to identify and document change points, extension points, extension pressure and anti-coupling decisions |
 | `planning/slices/SL-*.md` | Active parent backend/business slice docs; own vertical behavior, visual scenario/implementation maps, detailed flows, API contract, coverage, local questions and tests |
+| `planning/slices/*.client.md` | Client sidecar docs for concrete client work or implemented client logic reconciliation |
 | `planning/slices/examples/` | Example-only slice drafts used to demonstrate valid shortened/full slice formats |
 | `planning/slices/examples/README.md` | Slice examples index and example usage rules |
-| `planning/slices/examples/L1-CONNECTION-REQUEST-CREATE-early-short-draft-example.md` | Valid shortened slice draft example |
+| `planning/slices/examples/L1-APPLICANT-PARTY-READ-CURRENT-early-short-draft-example.md` | Primary valid shortened slice draft example with assumptions, extension/change points and shared register sync |
+| `planning/slices/examples/L1-CONNECTION-REQUEST-CREATE-early-short-draft-example.md` | Older compact shortened command-slice example |
 | `planning/slices/examples/SL-ACC-001-register-client-account-full-slice-example.md` | Valid full backend slice example with visual maps before detailed flows |
 | `planning/slices/client-architecture-principles.md` | Client sidecar architecture mapping and frontend layer decisions |
 
@@ -72,7 +75,7 @@ Scenario Draft Chat may prepare a diagram request/prompt using `diagram-prompt-g
 | File / folder | Responsibility |
 |---|---|
 | `planning/slices/slice-questions-register.md` | Shared overview of currently relevant local slice/client/cross-cutting questions; mirrors important local questions so future work can find them |
-| `planning/slices/slice-extension-points-register.md` | Cross-slice extension points, change pressure, anti-coupling decisions and extension-related questions |
+| `planning/slices/slice-extension-points-register.md` | Cross-slice extension points, change pressure, anti-coupling decisions and extension/change-related questions |
 | `planning/slices/slice-implementation-notes-register.md` | Concrete future implementation/client/testing notes not yet assigned to an active slice/client sidecar |
 
 The question register does not replace local `Questions / Decisions` sections.
@@ -148,22 +151,23 @@ planning/testing/
 8. draw.io XML / diagram book artifact workflow -> planning/diagrams/drawio-diagram-generation-workflow.md
 9. draft-driven discovery across slice families -> planning/slices/draft-driven-discovery-principles.md
 10. practical slice drafting workflow and templates -> planning/slices/l1-slice-drafting-guide.md
-11. active parent backend/business slice file -> planning/slices/SL-*.md
-12. slice-wide question overview -> planning/slices/slice-questions-register.md
-13. extension/change pressure -> planning/slices/slice-extension-points-register.md
-14. future implementation/client/testing note -> planning/slices/slice-implementation-notes-register.md
-15. domain draft/implementation cut -> domain draft files + l1-domain-implementation-cut.md
-16. client-wide UI/client convention -> planning/client/cross-cutting/
-17. client/server contract split -> planning/api/client-server-contract-principles.md
-18. OpenAPI artifact/type generation implementation flow -> CC-API-001
-19. generated semantic constants writer/checker/testing -> CC-CONST-001
-20. API error contract / ProblemDetails / ServerError / OpenAPI -> planning/api/
-21. browser security requirement / CSRF requirement -> scenario-browser-security-addendum.md
-22. CSRF behavior items -> CC-CSRF-001-antiforgery-behavior-items.md
-23. CSRF implementation flow/tests -> CC-CSRF-001-antiforgery-token-session-context.md
-24. test layer boundaries / E2E workflow -> planning/testing/
-25. accepted/current architecture decision -> architecture-decision-notes.md
-26. possible future full ADR -> adr-candidates.md
-27. detailed frontend implementation for one business slice -> `.client.md`
-28. reusable note without full behavior/test flow -> planning/slices/shared/
+11. extension/change point principles -> planning/slices/change-extension-points-principles.md
+12. active parent backend/business slice file -> planning/slices/SL-*.md
+13. client sidecar file -> planning/slices/*.client.md
+14. slice-wide question overview -> planning/slices/slice-questions-register.md
+15. extension/change pressure -> planning/slices/slice-extension-points-register.md
+16. future implementation/client/testing note -> planning/slices/slice-implementation-notes-register.md
+17. domain draft/implementation cut -> domain draft files + l1-domain-implementation-cut.md
+18. client-wide UI/client convention -> planning/client/cross-cutting/
+19. client/server contract split -> planning/api/client-server-contract-principles.md
+20. OpenAPI artifact/type generation implementation flow -> CC-API-001
+21. generated semantic constants writer/checker/testing -> CC-CONST-001
+22. API error contract / ProblemDetails / ServerError / OpenAPI -> planning/api/
+23. browser security requirement / CSRF requirement -> scenario-browser-security-addendum.md
+24. CSRF behavior items -> CC-CSRF-001-antiforgery-behavior-items.md
+25. CSRF implementation flow/tests -> CC-CSRF-001-antiforgery-token-session-context.md
+26. test layer boundaries / E2E workflow -> planning/testing/
+27. accepted/current architecture decision -> architecture-decision-notes.md
+28. possible future full ADR -> adr-candidates.md
+29. reusable note without full behavior/test flow -> planning/slices/shared/
 ```

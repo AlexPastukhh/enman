@@ -27,7 +27,8 @@ Before starting work on a slice/client sidecar:
 ```text
 1. Search this register by slice id, scenario id, layer and tags.
 2. Search `slice-questions-register.md` for related questions.
-3. Decide where each relevant note goes:
+3. Search `slice-extension-points-register.md` for related extension/change pressure.
+4. Decide where each relevant note goes:
    - parent slice file;
    - .client.md sidecar;
    - shared support doc;
@@ -37,9 +38,9 @@ Before starting work on a slice/client sidecar:
    - extension points register;
    - ADR candidate;
    - irrelevant/superseded.
-4. Promote or resolve the note.
-5. Update note status.
-6. If the note reveals scenario/DATA/validation ambiguity, stop and use the scenario question loop.
+5. Promote or resolve the note.
+6. Update note status.
+7. If the note reveals scenario/DATA/validation ambiguity, stop and use the scenario question loop.
 ```
 
 ## 3. Current Backend / Client Implementation Boundary
@@ -55,7 +56,7 @@ Current repo evidence says:
 - Client/component/E2E tests for those first-stage flows were not confirmed during this documentation pass.
 ```
 
-Current remaining client work order:
+Current remaining client/read work order:
 
 ```text
 Logout UI/cache/navigation, if needed
@@ -69,6 +70,9 @@ Logout UI/cache/navigation, if needed
 
 | ID | Related slice / future slice | Scenario | Layer | Tags | Note | Why it matters | Promote to | Status |
 |---|---|---|---|---|---|---|---|---|
+| NOTE-APPL-READ-001 | `L1-APPLICANT-PARTY-READ-CURRENT` | SC-10 | Server/API/Client | read-current, account-page, normal-empty-state | Current applicant read should return normal Account page state when missing: `200 exists=false`, not exception-like `404`, unless user later changes target behavior. | Keeps Account page able to show create form as normal empty state. | future slice + slice questions register | open |
+| NOTE-APPL-READ-002 | `L1-APPLICANT-PARTY-READ-CURRENT` | SC-10 | Persistence | read-current, performance, tracking | The first implementation can reuse existing current-active individual applicant lookup. If read performance/tracking matters later, add a read-specific `AsNoTracking` query without changing behavior. | Prevents performance optimization from becoming a behavior decision. | future slice / optional implementation detail | open |
+| NOTE-APPL-READ-003 | `L1-APPLICANT-PARTY-READ-CURRENT` | SC-10 | Server/API | verification-status, read-model | Read response can include `verificationStatus` to support Account page status display, but verification workflow/labels remain future UI/domain work. | Makes verification read model visible without coupling to provider workflow. | slice-extension-points-register.md | open |
 | NOTE-REG-CLIENT-001 | `SL-ACC-001.client` | registration | Client/UI | implemented, registration | First-stage registration UI is implemented: `/register`, `RegisterForm`, zod validation, password confirmation, ProblemDetails mapping, API DTO mapping and success navigation to `/login`. | Prevents future docs from treating registration UI as missing. | `SL-ACC-001-register-client-account.client.md` | promoted-to-client-sidecar |
 | NOTE-REG-CLIENT-002 | `SL-ACC-001.client` / future auth UX | registration | Client/UI | auto-login, navigation | Registration currently routes to `/login`; auto-login/success page remains an open UX decision. | Prevents accidental assumption that backend registration creates a session. | slice questions register | open |
 | NOTE-LOGIN-CLIENT-001 | `SL-AUTH-001.client` | auth/session | Client/UI | implemented, login | First-stage login UI is implemented: `/login`, `LoginForm`, validation, ProblemDetails mapping, API mapping, session query invalidation and navigation home. | Prevents future docs from treating login UI as missing. | `SL-AUTH-001-login-client-account.client.md` | promoted-to-client-sidecar |

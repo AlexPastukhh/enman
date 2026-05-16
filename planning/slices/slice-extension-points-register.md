@@ -39,6 +39,8 @@ Before starting a slice/client sidecar:
 
 | ID | Parent slice | Future extension slice | Layer | Current seam | Certainty | Time horizon | Covered locally? | Status |
 |---|---|---|---|---|---|---|---|---|
+| EP-APPL-VERIFY-READ-001 | L1-APPLICANT-PARTY-READ-CURRENT | Applicant verification UI / verification workflow | Server + Client | current applicant read response includes `verificationStatus` | medium/high | near future UI/read | example draft | accepted direction |
+| EP-APPL-EDIT-001 | L1-APPLICANT-PARTY-READ-CURRENT / SL-APPL-001.client | Applicant edit/details/replacement | Server + Client | read response can add `applicantPartyId` later if edit/details needs it | medium | later | example draft | future review |
 | EP-REQ-APPROVED-001 | SL-REVIEW-001 | Agreement proposal creation | Server + Client | Approved request status / approved request details | high | next layer / near future | to confirm in slice | planned |
 | EP-REQ-DOCS-001 | SL-REQ-001 | Request documents | Server + Client | RequestId / request context | medium | later | to confirm in slice | planned |
 | EP-APPL-VERIFY-001 | SL-REVIEW-001 | External ApplicantParty verification provider | Server | ApplicantParty + request review context | medium | later / plugin | to confirm in slice | planned |
@@ -50,6 +52,8 @@ Before starting a slice/client sidecar:
 
 | ID | Related extension point | Affected current slice | Layer | Pressure importance | Probability | Time horizon | Discussed? | Decision | Anti-coupling constraint | Trade-off | Revisit when |
 |---|---|---|---|---|---|---|---|---|---|---|---|
+| EPRESS-APPL-READ-VERIFY-001 | EP-APPL-VERIFY-READ-001 | L1-APPLICANT-PARTY-READ-CURRENT | Server + Client | medium | medium/high | near future UI | yes | Include verification status as read-model field, not workflow coupling | Read endpoint may expose `verificationStatus`, but must not implement verification workflow or external-provider coupling | Future verification workflow may refine labels/states | before verification UI/domain slice |
+| EPRESS-APPL-EDIT-ID-001 | EP-APPL-EDIT-001 | L1-APPLICANT-PARTY-READ-CURRENT | Server + Client | medium | medium | later | yes | Anti-coupling only now | Do not expose/use `applicantPartyId` unless edit/details slice needs it; create request must not depend on client-supplied applicant id | Future edit/details may add identity deliberately | before edit/replacement slice |
 | EPRESS-APPROVAL-001 | EP-REQ-APPROVED-001 | SL-REVIEW-001 | Server + Client | high | high | next layer / near future | yes | Anti-coupling only now | Approval must not auto-create agreement proposal; approve client must not import/couple to agreement proposal feature | User will need separate future action; current flow stays simpler and clearer | before agreement proposal slice |
 | EPRESS-REQ-DOCS-001 | EP-REQ-DOCS-001 | SL-REQ-001 | Server + Client | medium | medium | later | yes | Anti-coupling only now | Request creation must not require documents in L1 and should leave request context usable for later documents slice | Later document workflow may need extra UI/API | before documents slice |
 | EPRESS-APPL-VERIFY-001 | EP-APPL-VERIFY-001 | SL-REVIEW-001 | Server | medium | medium | later / plugin | yes | Avoid provider coupling | Current applicant verification should not hard-code assumptions that block external provider later | Provider abstraction may still wait until provider slice | before external verification slice |
@@ -60,6 +64,8 @@ Before starting a slice/client sidecar:
 
 | ID | Affected slice | Layer | Behavior aspect | Change point owner | Current decision | Configurable now? | Tests affected | Status |
 |---|---|---|---|---|---|---|---|---|
+| CP-APPL-READ-MISSING-001 | L1-APPLICANT-PARTY-READ-CURRENT | Server + Client | Missing applicant response shape | API/read contract | `200 OK` with `exists=false` and `applicantParty=null` as Account page state | no | API integration + client state tests | assumption |
+| CP-APPL-CURRENT-ACTIVE-001 | L1-APPLICANT-PARTY-READ-CURRENT / SL-APPL-001 | Server/Persistence | Exactly one current active individual applicant per account | data policy / repository invariant | read uses current lookup; enforcement belongs to separate invariant/data-policy slice | no | create/edit/read tests later | future review |
 | CP-REJECT-FEEDBACK-001 | SL-REVIEW-002 | Server + Client | Rejection feedback required/optional | domain/app/client policy | optional in domain; UI warning/confirmation for empty | no, documented decision | reject domain/client tests | active |
 | CP-REVIEW-ENTRY-001 | Review read/client slices | Server + Client | Review page entry vs startReview command | page routing / possible application command | navigation/read context only | no | route/read tests | active |
 | CP-ERROR-MAPPING-001 | multiple slices | Server + Client | Domain/application error to HTTP/client display | response mapper + client error mapper | stable problem/error mapping | later | integration/client error tests | active |
@@ -79,6 +85,9 @@ planning/slices/slice-questions-register.md
 
 | ID | Related slice(s) | Related EP/CP | Question | Assumption | Why it matters | Blocks current work? | Status |
 |---|---|---|---|---|---|---|---|
+| Q-EP-APPL-READ-001 | L1-APPLICANT-PARTY-READ-CURRENT, Account page client | CP-APPL-READ-MISSING-001 | Should missing current applicant be 404 or normal page state? | Normal page state: `200 exists=false`. | Keeps Account page flow simple and avoids exception-like control flow for expected empty state. | no for draft; yes for API contract before implementation | assumption |
+| Q-EP-APPL-READ-002 | L1-APPLICANT-PARTY-READ-CURRENT, verification UI | EP-APPL-VERIFY-READ-001 | Should current applicant read response include verification status? | Yes, include `verificationStatus`; labels/workflow later. | Enables Account page status display without coupling to verification provider. | no | accepted direction |
+| Q-EP-APPL-READ-003 | L1-APPLICANT-PARTY-READ-CURRENT, applicant edit/replacement | EP-APPL-EDIT-001 | Should current applicant read expose applicantPartyId? | No initially; add deliberately when edit/details needs identity. | Prevents premature identity plumbing and keeps request creation server-selected. | no | future review |
 | Q-EP-001 | SL-REVIEW-001, agreement proposal slice | EP-REQ-APPROVED-001 / EPRESS-APPROVAL-001 | Should approval create agreement proposal automatically? | No. Agreement proposal starts by separate employee action on Approved request. | Prevents coupling approval to agreement proposal. | no for current docs; yes if agreement behavior changes | accepted direction |
 | Q-EP-002 | Review read/client slices | EP-REVIEW-START-001 / CP-REVIEW-ENTRY-001 | Does entering review create server-side lock/session/assignment? | No for now; review page is navigation/read context. | Determines whether start-review command/feature exists. | no | open for future |
 | Q-EP-003 | Dashboard read/client slices | EP-DASH-FILTER-001 | Are filters persisted user preferences? | No for now; filters are read query state. | Determines whether filtering is read state or command feature. | no | open for future |
@@ -91,6 +100,8 @@ planned
 candidate
 active
 accepted direction
+assumption
+future review
 open for future
 resolved
 superseded

@@ -50,6 +50,8 @@ Full backend slice docs should include diagram-like Visual Scenario Flow and Vis
 
 Full client sidecar docs should include architecture/folder-based Visual Client Implementation Flow before detailed client implementation flow.
 
+Shortened slice drafts should capture extension/change points when future behavior affects current design.
+
 Important open questions should appear first in local `Questions / Decisions` sections and should also be mirrored into the relevant shared register when they remain relevant beyond the local file.
 
 ## 2. Current Read Order
@@ -111,34 +113,36 @@ Important open questions should appear first in local `Questions / Decisions` se
 47. planning/slices/README.md
 48. planning/slices/draft-driven-discovery-principles.md
 49. planning/slices/l1-slice-drafting-guide.md
-50. planning/slices/slice-questions-register.md
-51. planning/slices/slice-extension-points-register.md
-52. planning/slices/slice-implementation-notes-register.md
-53. planning/slices/SL-ACC-001-register-client-account.md
-54. planning/slices/SL-ACC-001-register-client-account.client.md
-55. planning/slices/SL-AUTH-001-login-client-account.md
-56. planning/slices/SL-AUTH-001-login-client-account.client.md
-57. planning/slices/SL-AUTH-002-current-user.md
-58. planning/slices/SL-AUTH-002-current-user.client.md
-59. planning/slices/SL-AUTH-003-logout.md
-60. planning/slices/SL-APPL-001-create-individual-applicant-party.md
-61. planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
-62. planning/slices/SL-REQ-001-create-connection-request.md
-63. planning/slices/examples/README.md
-64. planning/slices/examples/L1-CONNECTION-REQUEST-CREATE-early-short-draft-example.md
-65. planning/slices/examples/SL-ACC-001-register-client-account-full-slice-example.md
-66. planning/slices/cross-cutting/README.md
-67. planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
-68. planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
-69. planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
-70. planning/slices/shared/README.md
-71. planning/slices/shared/maybe-for-optional-results.md
-72. planning/slices/shared/antiforgery-token-session-context.md
-73. planning/slices/implementation-principles.md
-74. planning/slices/client-architecture-principles.md
-75. planning/slices/client-component-discovery-guide.md
-76. planning/slices/change-extension-points-principles.md
-77. planning/replacement-file-generation-guide.md
+50. planning/slices/change-extension-points-principles.md
+51. planning/slices/slice-questions-register.md
+52. planning/slices/slice-extension-points-register.md
+53. planning/slices/slice-implementation-notes-register.md
+54. planning/slices/SL-ACC-001-register-client-account.md
+55. planning/slices/SL-ACC-001-register-client-account.client.md
+56. planning/slices/SL-AUTH-001-login-client-account.md
+57. planning/slices/SL-AUTH-001-login-client-account.client.md
+58. planning/slices/SL-AUTH-002-current-user.md
+59. planning/slices/SL-AUTH-002-current-user.client.md
+60. planning/slices/SL-AUTH-003-logout.md
+61. planning/slices/SL-APPL-001-create-individual-applicant-party.md
+62. planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
+63. planning/slices/SL-REQ-001-create-connection-request.md
+64. planning/slices/examples/README.md
+65. planning/slices/examples/L1-APPLICANT-PARTY-READ-CURRENT-early-short-draft-example.md
+66. planning/slices/examples/L1-CONNECTION-REQUEST-CREATE-early-short-draft-example.md
+67. planning/slices/examples/SL-ACC-001-register-client-account-full-slice-example.md
+68. planning/slices/cross-cutting/README.md
+69. planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
+70. planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
+71. planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
+72. planning/slices/shared/README.md
+73. planning/slices/shared/antiforgery-token-session-context.md
+74. planning/slices/shared/maybe-for-optional-results.md
+75. planning/slices/implementation-principles.md
+76. planning/slices/client-architecture-principles.md
+77. planning/slices/client-component-discovery-guide.md
+78. planning/slices/change-extension-points-principles.md
+79. planning/replacement-file-generation-guide.md
 ```
 
 ## 3. Documentation Update Direction
@@ -194,11 +198,26 @@ Practical slice workflow:
 planning/slices/l1-slice-drafting-guide.md
 ```
 
+Extension/change point workflow:
+
+```text
+planning/slices/change-extension-points-principles.md
+planning/slices/slice-extension-points-register.md
+```
+
 Slice examples:
 
 ```text
 planning/slices/examples/
 ```
+
+Primary shortened example:
+
+```text
+planning/slices/examples/L1-APPLICANT-PARTY-READ-CURRENT-early-short-draft-example.md
+```
+
+Use it for short drafts with assumptions, extension/change points and shared register sync.
 
 Slice shared registers:
 
@@ -207,14 +226,6 @@ planning/slices/slice-questions-register.md
 planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
 ```
-
-Shared implementation conventions:
-
-```text
-planning/slices/shared/maybe-for-optional-results.md
-```
-
-For repository/query APIs where absence of the resulting object is a normal outcome, use the Maybe convention when planning new/refactored server code. Current nullable repository APIs remain current implementation evidence until refactored.
 
 ## 5. Current L1 Backend / Client State
 
@@ -225,6 +236,7 @@ For repository/query APIs where absence of the resulting object is a normal outc
 | Current user | `GET /api/l1/auth/current-user`, protected, L1 marker/account lookup | first-stage session bootstrap implemented: `SessionProvider`, `useSessionQuery`, 401 -> null session | Use `SL-AUTH-002` and `SL-AUTH-002.client`; protected-route policy remains open |
 | Logout | `POST /api/l1/auth/logout`, protected, clears cookie and returns 204 | shared API wrapper exists; concrete logout UI/cache/navigation flow not confirmed | Use `SL-AUTH-003`; create `.client.md` only when logout UI work starts |
 | Create individual applicant party | protected `POST /api/l1/applicant-parties/individual`, server-derived account id | first-stage Account page applicant form implemented; success local read-only state + Edit + notification; current applicant read after refresh missing | Use `SL-APPL-001` and `SL-APPL-001.client` |
+| Current applicant party read | not implemented yet | needed for stable Account page after refresh | Use new short example as draft format: `L1-APPLICANT-PARTY-READ-CURRENT-early-short-draft-example.md` |
 | Create connection request | protected `POST /api/l1/requests`, DTO `details + address`, server-selected current active applicant, no required response body | request creation UI, My Requests read screens and E2E are future work | Use `SL-REQ-001` and `CL-COMMAND-001`; do not create request `.client.md` until work starts |
 | Generated contracts | `openapi-types.ts` includes L1 paths/types; client package can generate API types | generated types are used by shared API wrappers/support and must be consumed by client sidecars | Client slices should consume generated types and generated constants |
 
@@ -343,13 +355,11 @@ Current known status remains planning/future hardening unless repo evidence late
 ```text
 1. Keep docs reconciled with current implementation status.
 2. Do not redo already implemented OpenAPI/constants/E2E infrastructure.
-3. Do not redo implemented L1 backend/API/persistence/session flows.
-4. Do not re-plan already implemented first-stage registration/login/session/applicant-create client flows as missing.
-5. Use `.client.md` sidecars for implemented client flows and future client discovery.
-6. For new/refactored repository/query APIs, use `Maybe<T>` when absence of the resulting object is a normal outcome.
-7. Remaining client order: logout UI if needed -> current applicant read -> request creation UI -> My Requests read/list/detail -> E2E happy paths.
-8. Keep local slice questions synchronized with the shared slice question register.
-9. For full backend slice docs, keep visual maps before detailed scenario/implementation flows.
-10. For full client slice docs, keep folder-based visual implementation maps before detailed implementation flow.
-11. For diagrams, run Diagram Chat Phase 1 preflight before generating `.drawio` XML.
+3. Do not redo implemented L1 backend/API/persistence flows.
+4. Use draft-driven discovery for remaining L1 client sidecars and read flows.
+5. Use the read-current early short example when drafting the next Account page read slice.
+6. Keep local slice questions synchronized with the shared slice question register.
+7. Keep extension/change pressure synchronized with the extension register.
+8. For full backend slice docs, keep visual maps before detailed scenario/implementation flows.
+9. For diagrams, run Diagram Chat Phase 1 preflight before generating `.drawio` XML.
 ```
