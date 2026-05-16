@@ -1,7 +1,7 @@
 # API Contract Planning Index
 
-Status: current API contract planning index  
-Scope: client/server API contract, OpenAPI structural contract, generated semantic constants, API errors
+Status: current API contract planning index / server validation principles added  
+Scope: client/server API contract, OpenAPI structural contract, generated semantic constants, API errors, server request validation policy
 
 ## 1. Purpose
 
@@ -14,6 +14,7 @@ OpenAPI structural contract
 generated semantic constants
 API error contract
 FluentValidation/API error-code migration notes
+server request validation responsibility
 ```
 
 Cross-cutting implementation/status slices live under:
@@ -33,6 +34,12 @@ planning/api/client-constants-generation.md
 planning/api/fluentvalidation-error-code-policy-note.md
 ```
 
+Related cross-cutting validation consumer rule:
+
+```text
+planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
+```
+
 ## 3. Core Split
 
 ```text
@@ -47,6 +54,16 @@ Generated constants JSON
   ServerError / ServerValidationError field names,
   temporary legacy route constants while OpenAPI migration is incomplete.
 
+FluentValidation
+= server request DTO/query validation:
+  required fields, branch/discriminator rules, mutually exclusive fields,
+  allowed query values, basic API DTO shape.
+
+Application/domain validation
+= business invariants:
+  ownership, account/entity existence, selected entity belongs to account,
+  domain value objects, state transitions, no-write/atomicity.
+
 Client local code
 = presentation and behavior:
   ErrorCode -> UI message, stale/refetch behavior, DTO field -> form field mapping.
@@ -59,6 +76,7 @@ Client local code
 | `planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md` | OpenAPI artifact and generated TypeScript type workflow | first-stage implemented; wrapper migration/hardening remains |
 | `planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md` | Generated semantic constants and constants testing workflow | implemented baseline; client-consumer usage remains per slice |
 | `planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md` | Antiforgery token/session context support and API security error normalization | implementation-ready draft |
+| `planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md` | FluentValidation server request DTO/query validation principles and business-slice consumer rules | implementation-ready principles; L1 adoption planned |
 
 ## 5. Current Baseline Before Client Slices
 
@@ -70,6 +88,7 @@ The API artifact baseline exists and should be used by new client/server work:
 3. Semantic constants are generated through Shared/constants.json and Shared/errorcodes.json.
 4. Artifact generation is explicit command/tooling work, not server startup side effects.
 5. Root scripts provide generate/check API workflow.
+6. Request-level FluentValidation for L1 is a planned validation layer, not a fully implemented baseline.
 ```
 
 Current commands:
@@ -80,9 +99,9 @@ npm run check:api
 dotnet run --project EnergyManagement.Tools -- generate-client-constants --out Shared --check
 ```
 
-## 6. Current Direction For New Client Work
+## 6. Current Direction For New Client/Server Work
 
-Before implementing missing client slices:
+Before implementing missing client/server slices:
 
 ```text
 1. Do not redo OpenAPI/constants infrastructure.
@@ -91,6 +110,7 @@ Before implementing missing client slices:
 4. Use generated constants for semantic error/field/extension names.
 5. Keep thin handwritten client API wrappers unless a later ADR/slice explicitly changes that.
 6. Record any per-slice contract gaps in the parent slice or `.client.md` once concrete client work starts.
+7. For server input changes, plan FluentValidation request DTO/query validation before application/domain handler logic.
 ```
 
 ## 7. Remaining API Future Review Items
@@ -101,3 +121,4 @@ Before implementing missing client slices:
 | API-FR-002 | Endpoint inventory | Should a formal endpoint classification inventory be generated or maintained? | Keep local classification in slice/API docs first | future review |
 | API-FR-003 | OpenAPI hardening | Should `check:api` become a CI-required gate? | Use current command locally; revisit under CI hardening | future review |
 | API-FR-004 | Full generated client | Should the project move beyond generated types to a generated client? | Not in first stage; handwritten wrappers remain | future review |
+| API-FR-005 | L1 validation mechanism | Should L1 standardize manual validators or a pipeline/filter? | Use CC-VALIDATION-001; decide when first L1 validator is implemented | open |

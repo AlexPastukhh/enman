@@ -1,6 +1,6 @@
 # Planning Document Responsibility Map
 
-Status: current responsibility map
+Status: current responsibility map / server validation responsibility added
 
 ## 1. Core Rule
 
@@ -28,7 +28,7 @@ When a local file contains information that affects future work, synchronize it 
 |---|---|
 | `planning/slices/README.md` | Slice-planning navigation, current backend/client slice files, source register, examples and shared registers |
 | `planning/slices/draft-driven-discovery-principles.md` | Draft-driven discovery for domain/business/client/cross-cutting/testing/documentation drafts |
-| `planning/slices/l1-slice-drafting-guide.md` | Practical L1 slice drafting workflow, shortened/full draft templates, source intake and visual flow rules |
+| `planning/slices/l1-slice-drafting-guide.md` | Practical L1 slice drafting workflow, shortened/full draft templates, source intake, server validation intake and visual flow rules |
 | `planning/slices/slice-scenario-flow-behavior-register.md` | Maps slices/client sidecars to scenario text, DATA, UI scenario and behavior item source files |
 | `planning/slices/slice-questions-register.md` | Shared overview of currently relevant local questions, including questions from implemented slices |
 | `planning/slices/slice-extension-points-register.md` | Cross-slice extension points, change pressure, anti-coupling decisions and extension/change-related questions |
@@ -36,6 +36,8 @@ When a local file contains information that affects future work, synchronize it 
 | `planning/slices/SL-*.md` | Active parent backend/business slice docs |
 | `planning/slices/*.client.md` | Client sidecar docs for concrete client work or implemented client logic reconciliation |
 | `planning/slices/examples/` | Example-only slice drafts used to demonstrate valid shortened/full slice formats |
+| `planning/slices/cross-cutting/` | Cross-cutting/helper slice docs for reusable API/tooling/security/validation/client-support concerns |
+| `planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md` | Server request DTO/query validation principles and consumer rules for FluentValidation-based API boundary validation |
 
 Scenario Flow and Behavior Items for slices come from `slice-scenario-flow-behavior-register.md` and the source files it points to.
 
@@ -65,9 +67,13 @@ Questions/extension/implementation registers do not replace scenario source file
 
 | File / folder | Responsibility |
 |---|---|
-| `planning/api/` | API contract principles, OpenAPI structural contract, API error contract, constants relationship |
+| `planning/api/` | API contract principles, OpenAPI structural contract, API error contract, constants relationship and FluentValidation error-code policy |
 | `planning/testing/` | Cross-slice testing principles, E2E workflow, test object patterns, Playwright cleanup plan |
 | `planning/adr/` | ADR workflow, architecture decision notes and ADR candidates |
+
+API error contract docs own external error shape and error-code semantics.
+
+`CC-VALIDATION-001` owns the practical slice-consumer rule for where FluentValidation belongs in server implementation flow.
 
 ## 7. Responsibility Decision Heuristic
 
@@ -79,9 +85,11 @@ Questions/extension/implementation registers do not replace scenario source file
 5. slice-wide question overview -> planning/slices/slice-questions-register.md
 6. extension/change pressure -> planning/slices/slice-extension-points-register.md
 7. future implementation/client/testing note -> planning/slices/slice-implementation-notes-register.md
-8. client-wide UI/client convention -> planning/client/cross-cutting/
-9. client/server contract split -> planning/api/client-server-contract-principles.md
-10. test layer boundaries / E2E workflow -> planning/testing/
-11. accepted/current architecture decision -> architecture-decision-notes.md
-12. possible future full ADR -> adr-candidates.md
+8. server request validation concern -> planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
+9. client-wide UI/client convention -> planning/client/cross-cutting/
+10. client/server contract split -> planning/api/client-server-contract-principles.md
+11. API error envelope / error-code semantics -> planning/api/api-error-contract.md and related API notes
+12. test layer boundaries / E2E workflow -> planning/testing/
+13. accepted/current architecture decision -> architecture-decision-notes.md
+14. possible future full ADR -> adr-candidates.md
 ```

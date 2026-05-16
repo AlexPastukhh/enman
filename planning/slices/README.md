@@ -1,6 +1,6 @@
 # Slice Planning Index
 
-Status: current slice-planning navigation index / applicant-template-per-type synchronized
+Status: current slice-planning navigation index / applicant-template-per-type synchronized / server validation principles added
 
 ## 1. Core Rule
 
@@ -25,7 +25,17 @@ planning/slices/SL-REQ-002-my-requests-list.md
 planning/slices/SL-REQ-003-own-request-details.md
 ```
 
-## 3. ApplicantParty Target Direction
+## 3. Cross-Cutting / Helper Slices
+
+```text
+planning/slices/cross-cutting/README.md
+planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
+planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
+planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
+planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
+```
+
+## 4. ApplicantParty Target Direction
 
 ```text
 - many saved ApplicantParties;
@@ -38,7 +48,35 @@ planning/slices/SL-REQ-003-own-request-details.md
 - request creation target uses Existing/New applicant context.
 ```
 
-## 4. Registers
+## 5. Server Validation Direction For Slice Drafts
+
+When a backend/API slice has request body or query validation responsibility, read:
+
+```text
+planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
+```
+
+Slice drafts should include request-level FluentValidation in implementation flow for:
+
+```text
+- required DTO/query fields;
+- discriminator/branch rules;
+- mutually exclusive fields;
+- basic DTO/query shape;
+- allowed query values.
+```
+
+Do not confuse request validation with application/domain validation:
+
+```text
+- ownership;
+- selected entity belongs to account;
+- account/entity existence;
+- domain invariants;
+- no-write/atomicity.
+```
+
+## 6. Registers
 
 ```text
 planning/slices/slice-scenario-flow-behavior-register.md

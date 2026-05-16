@@ -1,6 +1,6 @@
 # Cross-Cutting And Helper Slices
 
-Status: current cross-cutting/helper slice index  
+Status: current cross-cutting/helper slice index / server validation principles added  
 Scope: independently testable technical/support behavior used by multiple business slices
 
 ## 1. Purpose
@@ -29,6 +29,7 @@ Examples:
 CC-API-001-openapi-contract-artifacts-and-type-generation.md
 CC-CONST-001-client-constants-generation-and-contract-testing.md
 CC-CSRF-001-antiforgery-token-session-context.md
+CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
 ```
 
 ### Helper slice
@@ -54,6 +55,7 @@ planning/slices/shared/*.md
 | `CC-API-001-openapi-contract-artifacts-and-type-generation.md` | Generates/checks structural OpenAPI contract artifacts and client TypeScript types | first-stage implemented; client wrapper migration and hardening planned |
 | `CC-CONST-001-client-constants-generation-and-contract-testing.md` | Generates/checks client-facing semantic constants and testing strategy | implemented baseline; client-consumer usage remains per slice |
 | `CC-CSRF-001-antiforgery-token-session-context.md` | Antiforgery token/session context behavior, failure normalization and tests | implementation-ready draft |
+| `CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md` | Server request DTO/query validation principles using FluentValidation, separated from application/domain validation | implementation-ready principles; L1 adoption planned |
 
 ## 4. When To Create A Cross-Cutting Or Helper Slice
 
@@ -127,6 +129,7 @@ Security Concern Flow
 API Contract Concern Flow
 Tooling Concern Flow
 Testing Concern Flow
+Validation Concern Flow
 ```
 
 ## 8. Cross-Cutting / Helper Slice Template

@@ -1,7 +1,7 @@
 # API Error Contract
 
-Status: current API error contract direction  
-Scope: ProblemDetails, ServerError / ServerValidationError, client-facing error codes, DTO field names, security errors
+Status: current API error contract direction / server validation boundary added  
+Scope: ProblemDetails, ServerError / ServerValidationError, client-facing error codes, DTO field names, security errors, FluentValidation mapping
 
 ## 1. Default Error Envelope
 
@@ -34,7 +34,51 @@ Server validation errors use API DTO field names, not React form field names.
 
 Client sidecar maps DTO field names to form fields when needed.
 
-## 5. Client-Facing vs Internal Errors
+## 5. FluentValidation Boundary
+
+FluentValidation should be used for request DTO/query validation when a server API input has:
+
+```text
+- required fields;
+- discriminator/branch rules;
+- mutually exclusive fields;
+- nested DTO presence;
+- allowed query values;
+- simple API DTO shape checks.
+```
+
+FluentValidation failures should be mapped to `ProblemDetails` with status `422` and the shared `errors` extension.
+
+For current code, legacy manual validators are mapped through `ProblemDetailsFromValidation(IEnumerable<ValidationFailure>)`. That mapper currently needs inspection before any ErrorMessage/ErrorCode migration.
+
+Do not blindly assume `ValidationFailure.ErrorCode` is already used as the stable client-facing code.
+
+Use:
+
+```text
+planning/api/fluentvalidation-error-code-policy-note.md
+planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
+```
+
+## 6. Application / Domain Validation Boundary
+
+Application/domain validation remains separate from FluentValidation.
+
+Application/domain validation owns:
+
+```text
+- ownership;
+- account/entity existence;
+- selected entity belongs to current account;
+- business state transitions;
+- domain value object invariants;
+- no-write/atomicity;
+- persistence consistency.
+```
+
+These failures may still return `422 ProblemDetails` when they are client-correctable validation/business errors, but they are not DTO-shape validation failures.
+
+## 7. Client-Facing vs Internal Errors
 
 Client-facing errors:
 
@@ -53,7 +97,7 @@ Internal/server-only errors:
 - should become generic client errors if exposed.
 ```
 
-## 6. OpenAPI Error Contract
+## 8. OpenAPI Error Contract
 
 OpenAPI should expose/document response schemas and statuses:
 
@@ -68,7 +112,7 @@ ProblemDetails + errors extension shape when client depends on it
 
 Runtime may use native ASP.NET `ProblemDetails`, but the documented/OpenAPI-visible shape must be usable by generated TypeScript types and client parser.
 
-## 7. Client-Facing Error Code Constants
+## 9. Client-Facing Error Code Constants
 
 OpenAPI documents shape, not the full semantic list of domain/client-facing error codes.
 
@@ -78,7 +122,7 @@ Stable client-facing error codes live in generated constants artifact:
 Shared/errorcodes.json
 ```
 
-## 8. Antiforgery Failure
+## 10. Antiforgery Failure
 
 Antiforgery validation failure is a client-facing security/API error when a browser unsafe request fails token validation.
 
@@ -109,7 +153,7 @@ Primary slice:
 planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```
 
-## 9. Constants Testing Link
+## 11. Constants Testing Link
 
 Use:
 

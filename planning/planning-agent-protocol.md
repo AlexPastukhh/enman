@@ -1,10 +1,10 @@
 # Planning Agent Protocol
 
-Status: current collaboration protocol
+Status: current collaboration protocol / server validation rule added
 
 ## 1. Core Rule
 
-Do not continue implementation planning through a question that may change required behavior, API contract, security requirement, client-facing constants, testing responsibility, E2E scope, cross-layer responsibility, scenario meaning or diagram interpretation.
+Do not continue implementation planning through a question that may change required behavior, API contract, validation responsibility, security requirement, client-facing constants, testing responsibility, E2E scope, cross-layer responsibility, scenario meaning or diagram interpretation.
 
 If the question is not blocking the current task, record it with a status and assumption/current direction, then sync it to the relevant shared register when it can affect future work.
 
@@ -214,6 +214,7 @@ source requirements
 -> visual flow maps
 -> detailed flow
 -> behavior coverage
+-> validation boundary review
 -> implementation direction
 -> test / verification planning
 -> status reconciliation
@@ -262,7 +263,41 @@ error code strings
 
 Use generated OpenAPI types for structure and generated constants for semantics.
 
-## 10. OpenAPI / Constants Split Rule
+## 10. Server Request Validation Rule
+
+Before planning or implementing a server/API slice with request body or query validation responsibility, read:
+
+```text
+planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
+planning/api/api-error-contract.md
+planning/api/fluentvalidation-error-code-policy-note.md
+```
+
+Slice drafts must distinguish:
+
+```text
+FluentValidation request DTO/query validation:
+- required fields;
+- discriminator/branch rules;
+- mutually exclusive fields;
+- basic DTO/query shape;
+- allowed query parameter values;
+- nested DTO presence.
+
+Application/domain validation:
+- account existence;
+- ownership;
+- selected entity belongs to current account;
+- domain value object invariants;
+- state transitions;
+- no-write/atomicity.
+```
+
+Backend Visual Implementation Flow should include `[FluentValidation]` before `[Application Handler]` when DTO/request rules exist.
+
+Do not put FluentValidation mechanics into Visual Scenario Flow.
+
+## 11. OpenAPI / Constants Split Rule
 
 ```text
 OpenAPI = structural contract:
@@ -275,13 +310,13 @@ Generated constants JSON = semantic contract:
 
 Do not collapse these into one artifact.
 
-## 11. Generated Artifact Rule
+## 12. Generated Artifact Rule
 
 Generated artifacts are produced by explicit commands/checks.
 
 Do not write generated client artifacts during normal server startup.
 
-## 12. Endpoint Classification Rule
+## 13. Endpoint Classification Rule
 
 Before generating client API types/wrappers for a slice, classify endpoint as:
 
@@ -294,7 +329,7 @@ internal/not client-facing
 
 If current endpoint status is unclear, ask or document assumption before implementation.
 
-## 13. Cross-Cutting / Helper Slice Rule
+## 14. Cross-Cutting / Helper Slice Rule
 
 When work is cross-cutting or helper-like, do not bury it only in workflow docs or shared notes.
 
@@ -305,7 +340,7 @@ Create or update a cross-cutting/helper slice if the work has:
 - concrete implementation flow;
 - independent tests/checks;
 - multiple consumers;
-- contract/helper/tooling/security responsibility.
+- contract/helper/tooling/security/validation responsibility.
 ```
 
 Use:
@@ -314,7 +349,7 @@ Use:
 planning/slices/cross-cutting/
 ```
 
-## 14. Same Format Rule
+## 15. Same Format Rule
 
 Cross-cutting/helper slices must follow the same planning shape as business slices:
 
@@ -330,7 +365,7 @@ source requirements
 -> coverage/questions/ADR impact
 ```
 
-## 15. CSRF / Antiforgery Rule
+## 16. CSRF / Antiforgery Rule
 
 When planning browser unsafe API request security, use:
 
@@ -338,11 +373,12 @@ When planning browser unsafe API request security, use:
 planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```
 
-## 16. Testing Responsibility Rule
+## 17. Testing Responsibility Rule
 
 When planning slice/client/API work, classify tests as:
 
 ```text
+Validator/unit tests
 Domain unit tests
 Server integration/API tests
 Client/component tests
@@ -355,7 +391,7 @@ Use:
 planning/testing/testing-principles.md
 ```
 
-## 17. Implementation Flow Detail Filter
+## 18. Implementation Flow Detail Filter
 
 Slice flow may include involved classes, methods and short code snippets.
 
@@ -367,7 +403,7 @@ If class/method details make the flow noisy, suggest a sibling `.impl.md` file.
 
 Do not create `.impl.md` in advance.
 
-## 18. Do Not
+## 19. Do Not
 
 ```text
 - Do not implement client slices by manually guessing API contract.
@@ -376,6 +412,8 @@ Do not create `.impl.md` in advance.
 - Do not write generated artifacts during normal server startup.
 - Do not implement cross-cutting security from loose notes only.
 - Do not skip behavior items for technical concerns when traceability is needed.
+- Do not skip request-level FluentValidation planning for new/changed server API input.
+- Do not mix DTO/request validation with domain/application invariants without saying which layer owns what.
 - Do not label antiforgery failure by generic HTTP 400.
 - Do not blindly replay unsafe requests after token refresh.
 - Do not generate diagrams without repo-grounded preflight.
