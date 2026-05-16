@@ -58,11 +58,9 @@ test("filtered empty state can be reset", async ({ page, request }) => {
 
   await page.goto("/requests?status=Approved");
 
-  const filteredEmptyState = page.locator("section").filter({
-    has: page.getByRole("heading", {
-      name: "Заявок с выбранным фильтром не найдено.",
-    }),
-  });
+  const filteredEmptyState = page.getByRole("region", {
+  name: "Заявок с выбранным фильтром не найдено",
+});
 
   await expect(filteredEmptyState).toBeVisible();
 
@@ -72,8 +70,9 @@ test("filtered empty state can be reset", async ({ page, request }) => {
     "/api/l1/requests",
   );
   await filteredEmptyState
-    .getByRole("button", { name: "Сбросить фильтры" })
-    .click();
+  .getByRole("button", { name: "Сбросить фильтры" })
+  .click();
+  
   const unfilteredResponse = await unfilteredResponsePromise;
   expect(unfilteredResponse.ok()).toBeTruthy();
 
