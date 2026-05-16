@@ -27,6 +27,7 @@ This folder owns:
 - client-wide styling conventions;
 - client-wide form validation conventions;
 - client-wide error mapping conventions;
+- client-wide feedback/message conventions;
 - client-wide command success conventions;
 - client behavior conventions reused by multiple `.client.md` sidecars.
 ```
@@ -42,21 +43,23 @@ planning/client/cross-cutting/README.md
 planning/client/cross-cutting/CL-FORM-VALIDATION-001-deferred-validation.md
 planning/client/cross-cutting/CL-ERROR-HANDLING-001-client-server-errors.md
 planning/client/cross-cutting/CL-COMMAND-001-command-success-without-required-response-body.md
+planning/client/cross-cutting/CL-FEEDBACK-001-client-feedback-messages.md
 planning/client/cross-cutting/CL-STYLING-001-css-modules-tokens.md
 planning/client/cross-cutting/CL-A11Y-001-accessibility-and-aria.md
 ```
 
 ## 4. Current L1 Client State
 
-Current repo state:
+Current repo/planning state:
 
 ```text
 - L1 backend/API/persistence/session flows are implemented for register/login/current-user/logout/applicant/request commands.
-- Generated OpenAPI TypeScript support exists in `energymanagement.client/src/shared/api/generated/openapi-types.ts`.
-- `energymanagement.client/package.json` has `generate:api-types` using `../Shared/openapi.json`.
+- Generated OpenAPI TypeScript support exists.
 - Shared L1 API wrappers exist for auth/current-user/logout and applicant create.
 - Shared fetch/ProblemDetails/form-error mapping exists.
 - First-stage client feature flows exist for registration, login, current-user session bootstrap and applicant create on Account page.
+- Logout `.client.md` is now implementation-ready planning, but concrete UI/cache/navigation implementation is not confirmed.
+- Request creation UI is future work and must consume SC-04 UI/behavior sources.
 ```
 
 Implemented first-stage client sidecars:
@@ -68,34 +71,27 @@ planning/slices/SL-AUTH-002-current-user.client.md
 planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
 ```
 
-Current implemented client feature/support summary:
-
-| Area | Client implementation state | Sidecar/status |
-|---|---|---|
-| App shell/routing/providers | `main.tsx`, `App`, `AppProviders`, router and routes are implemented | support baseline |
-| Shared L1 API | typed wrappers for register/login/current-user/logout/applicant create use generated OpenAPI schema types | support baseline |
-| Shared fetch/error mapping | `fetchJson`, `ApiError`, ProblemDetails parsing and form error mapping implemented | support baseline |
-| Session bootstrap | `SessionProvider`, `useSessionQuery`, `getCurrentSession`, `useSession` implemented | `SL-AUTH-002.client` first-stage implemented |
-| Register | `/register` page and form implemented; success navigates to login | `SL-ACC-001.client` first-stage implemented |
-| Login | `/login` page and form implemented; success invalidates session and navigates home | `SL-AUTH-001.client` first-stage implemented |
-| Applicant create | `/account` renders applicant create form for authenticated session; success shows read-only local state and notification | `SL-APPL-001.client` first-stage implemented / read-current missing |
-| Logout | shared API wrapper exists | concrete logout UI/cache/navigation flow not confirmed |
-| Request create | generated contract support exists | feature UI not implemented |
-| My Requests | no read/list/detail UI confirmed | planned |
-
-Current remaining client work:
+Implementation-ready/planned client sidecars:
 
 ```text
-1. Logout UI/cache/navigation, if needed before protected flows.
+planning/slices/SL-AUTH-003-logout.client.md
+planning/slices/SL-APPL-002-read-current-individual-applicant-party.client.md
+future planning/slices/SL-REQ-001-create-connection-request.client.md
+```
+
+## 5. Current Remaining Client Work
+
+```text
+1. Logout UI/cache/navigation.
 2. Current applicant read after refresh.
-3. Request creation form UI.
+3. Request creation form UI with applicant fields/prefill/clear behavior from SC-04.
 4. My Requests read/list/detail UI.
 5. Client/component tests for implemented feature flows.
 6. Browser E2E happy paths after UI/read flows are stable.
 7. CSRF/antiforgery handling for unsafe browser commands when that cross-cutting slice is implemented.
 ```
 
-## 5. Relationship To `planning/slices/*.client.md`
+## 6. Relationship To `planning/slices/*.client.md`
 
 Client-wide conventions live here.
 
@@ -108,20 +104,21 @@ planning/slices/*.client.md
 A `.client.md` file should state:
 
 ```text
-- feature UI behavior;
+- feature UI behavior from scenario/UI sources;
 - architecture/folder-based Visual Client Implementation Flow;
 - generated OpenAPI types used;
 - generated constants/error codes used;
 - form value -> API DTO mapping;
 - ProblemDetails field/root error mapping;
+- feedback/message convention, if used;
 - command success convention, if used;
 - local questions/assumptions;
-- behavior coverage;
+- behavior coverage with source behavior IDs;
 - client/component/E2E verification plan;
 - follow-up slices.
 ```
 
-## 6. Relationship To Scenario UI Specs
+## 7. Relationship To Scenario UI Specs
 
 Scenario UI specs describe what the user must see, understand, enter, confirm, correct or be prevented from doing.
 
@@ -129,17 +126,15 @@ Client-wide conventions describe reusable implementation choices for realizing t
 
 Do not convert a client implementation convention into a domain/API requirement unless a scenario explicitly needs that behavior.
 
-Example:
+Use:
 
 ```text
-A scenario may require visible success outcome after command submit.
-
-CL-COMMAND-001 says the client can treat HTTP success as confirmation when no returned entity data is needed.
-
-That does not mean the domain must return requestId/status by default.
+planning/slices/slice-scenario-flow-behavior-register.md
 ```
 
-## 7. Concrete Client Sidecar Rule
+before drafting a `.client.md` Behavior Coverage table.
+
+## 8. Concrete Client Sidecar Rule
 
 Do not create `.client.md` files in advance.
 
@@ -149,6 +144,7 @@ When concrete client work starts, read:
 
 ```text
 planning/slices/l1-slice-drafting-guide.md
+planning/slices/slice-scenario-flow-behavior-register.md
 planning/slices/client-architecture-principles.md
 planning/slices/client-component-discovery-guide.md
 planning/client/cross-cutting/README.md

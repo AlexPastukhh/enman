@@ -1,6 +1,6 @@
 # Slice Questions Register
 
-Status: active register / synchronized with current implemented backend and first-stage client sidecars  
+Status: active register / synchronized with current implemented backend, first-stage client sidecars and planned request/applicant UI sources  
 Scope: shared overview of currently relevant local slice, client sidecar and cross-cutting/helper questions, future-review items and important accepted directions
 
 ## 1. Purpose
@@ -9,79 +9,27 @@ This register makes important local slice questions visible from one place.
 
 Local `Questions / Decisions` sections keep detailed context.
 
-This register answers:
+Implemented slices can still have open questions.
+
+Implementation status does not close future UX/security/cache/API/domain questions.
+
+If a question remains relevant after local implementation, mirror it here.
+
+## 2. What This Register Is Not
+
+This register is not the source for Scenario Flow or Behavior Items.
+
+Use:
 
 ```text
-Where are the still-open, assumption-based, future-review, deferred or otherwise important questions discovered by local slice/client/cross-cutting docs?
+planning/slices/slice-scenario-flow-behavior-register.md
 ```
 
-It should be checked before starting or reviewing a parent slice, `.client.md` sidecar or cross-cutting/helper slice.
+for scenario text/DATA/UI/behavior item sources.
 
-This file is synchronized with:
+## 3. Required Fields
 
-```text
-planning/slices/SL-ACC-001-register-client-account.md
-planning/slices/SL-ACC-001-register-client-account.client.md
-planning/slices/SL-AUTH-001-login-client-account.md
-planning/slices/SL-AUTH-001-login-client-account.client.md
-planning/slices/SL-AUTH-002-current-user.md
-planning/slices/SL-AUTH-002-current-user.client.md
-planning/slices/SL-AUTH-003-logout.md
-planning/slices/SL-APPL-001-create-individual-applicant-party.md
-planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
-planning/slices/SL-REQ-001-create-connection-request.md
-planning/diagrams/scenario-questions-register.md
-```
-
-## 2. Relationship To Local Files
-
-Local files are still required to contain their own `Questions / Decisions` section.
-
-This register does not replace local questions.
-
-Instead:
-
-```text
-local slice/client/cross-cutting question or important accepted direction
-        ↓
-keep detailed context in the local file
-        ↓
-mirror currently relevant question or accepted direction here
-        ↓
-use the local file as the source of detailed scope/status
-```
-
-The goal is not to duplicate every paragraph from local docs.
-
-The goal is to make unresolved, future-review, deferred and important accepted-direction items discoverable from one shared place.
-
-## 3. What Belongs Here
-
-Mirror a local item here when it is:
-
-```text
-- open;
-- blocked;
-- an assumption waiting for confirmation;
-- future review;
-- deferred;
-- accepted direction but important for future work;
-- unresolved risk;
-- cross-slice relevant;
-- client sidecar relevant;
-- API/security/testing/architecture relevant;
-- likely to affect another slice or later implementation.
-```
-
-Tiny resolved local drafting questions do not need to remain here forever.
-
-If a question remains local only, the local file should say why.
-
-## 4. Question Status And Assumption Rule
-
-Every row must make the question state explicit.
-
-Required fields:
+Every row must make the question state explicit:
 
 ```text
 ID
@@ -96,114 +44,61 @@ Blocks current work?
 
 Status values:
 
-| Status | Meaning |
-|---|---|
-| `open` | Needs an answer before related behavior/contract/design can be finalized. |
-| `blocked` | Cannot be answered until another decision/source/implementation is available. |
-| `assumption` | A working answer is being used so draft work can continue; user confirmation/refinement is expected. |
-| `accepted direction` | Direction is accepted enough for planning and should be remembered by future work. |
-| `future review` | Not a current blocker; revisit when the related future slice/hardening/client work starts. |
-| `deferred` | Intentionally outside the current implemented slice; belongs to a later slice or planning pass. |
-| `resolved` | Answered and no longer open. Keep only if useful for traceability. |
-| `superseded` | Replaced by a newer question/decision/source. |
-| `local only` | Intentionally not mirrored globally; local file must say why. |
-
-Assumptions must be explicit.
-
-For draft work, use:
-
 ```text
-Draft assumes ... until user confirms/refines.
+open
+blocked
+assumption
+accepted direction
+future review
+deferred
+resolved
+superseded
+local only
 ```
 
-For implemented slices, use:
-
-```text
-Current implementation evidence says ...
-```
+Do not leave an open question without an assumption/current direction.
 
 Do not mark an assumption as resolved.
 
-## 5. Relationship To Other Registers
-
-| Register | Use for |
-|---|---|
-| `slice-questions-register.md` | Shared overview of currently relevant local slice questions and important accepted directions |
-| `slice-extension-points-register.md` | Extension points, change pressure, anti-coupling decisions and extension-related cross-slice questions |
-| `slice-implementation-notes-register.md` | Concrete future implementation/client/testing notes not yet assigned to an active file |
-| `planning/diagrams/scenario-questions-register.md` | Scenario/domain questions that can change source scenario behavior or diagrams |
-| `planning/adr/adr-candidates.md` | Possible future architecture decisions needing full ADR |
-
-A question can appear here and also have a related EP/NOTE/ADR entry when appropriate.
-
-## 6. Intake Rule
-
-Before starting or updating a slice/client sidecar:
-
-```text
-1. Search this register by slice id, scenario id, area and status.
-2. Check whether any question affects the current draft.
-3. Keep or update local question context in the slice/client file.
-4. Update this register when the local status or assumption changes.
-5. If the question is extension/change pressure, also update `slice-extension-points-register.md`.
-6. If the question is a concrete future implementation/client/testing note, also update `slice-implementation-notes-register.md`.
-7. If the question changes scenario meaning, use the scenario question/clarification workflow.
-```
-
-## 7. Questions Register
+## 4. Questions Register
 
 | ID | Local file(s) | Area | Question status | Question / decision question | Assumption / current direction | Impact / shared target | Blocks current work? |
 |---|---|---|---|---|---|---|---|
-| SL-ACC-Q-001 | `SL-ACC-001-register-client-account.md` | DB hardening | accepted direction | Should duplicate email also be enforced by a DB unique constraint? | User decision: yes. Current implementation evidence says duplicate email is rejected by application precheck. DB unique constraint is accepted future hardening and is not implemented by documentation-only work. | future persistence hardening / DB constraint implementation | no for current docs; yes before claiming DB-level uniqueness |
-| SL-ACC-Q-002 | `SL-ACC-001-register-client-account.md` | Activation lifecycle | deferred | Should PendingActivation/email confirmation be introduced? | Current L1 registration creates an Active ClientAccount. Draft assumes PendingActivation/email confirmation is a separate L2 extension slice. | auth lifecycle extension | no |
-| SL-ACC-Q-003 | `SL-ACC-001-register-client-account.md` / `SL-AUTH-001-login-client-account.md` | Auth UX | open | Should registration automatically sign the user in? | Current backend registration returns `AccountId` + `Email` and does not issue a session. Current client registration navigates to `/login`. Draft assumes explicit login unless user confirms auto-login flow. | dependent auth/client UI flow | no for current implemented client flow; yes before final registration UX if auto-login is desired |
-| SL-ACC-D-001 | `SL-ACC-001-register-client-account.md` / `SL-ACC-001-register-client-account.client.md` | API/client contract | accepted direction | Does the current backend registration API accept `passwordConfirm`? | Current backend DTO contains `email` + `password` only. Current client validates password confirmation locally and sends only `email/password`. | API/client contract and registration UI sidecar | no |
-| SL-ACC-CLIENT-Q-001 | `SL-ACC-001-register-client-account.client.md` | Registration UX | open | Should successful registration auto-login, stay on a success screen, or route to login? | Current client implementation routes to `/login`; auto-login/success page remains a UX decision. | registration/client auth flow and E2E | no for current implementation docs; yes before changing UX |
-| SL-ACC-CLIENT-D-002 | `SL-ACC-001-register-client-account.client.md` | Registration navigation | accepted direction | What is the current implemented registration success route? | Current client implementation navigates to `/login`. | client tests/E2E expectations | no |
-| SL-AUTH-Q-001 | `SL-AUTH-001-login-client-account.md` / `SL-AUTH-002-current-user.client.md` | Client auth baseline | accepted direction | What concrete client state/store/query shape owns L1 current-user after login? | Current client implementation uses React Query `sessionQueryKey`, `SessionProvider`, `useSessionQuery` and `useSession`; login invalidates the session query after success. | auth/session client baseline | no for first-stage; revisit if route-guard architecture changes |
-| SL-AUTH-Q-002 | `SL-AUTH-001-login-client-account.md` / `SL-ACC-001-register-client-account.md` | Auth UX | open | Should registration automatically login or require explicit login? | Current backend register does not issue a session; current client routes to login. Draft assumes explicit login unless user confirms auto-login flow. | registration/login client flow | yes before changing final registration UX |
-| SL-AUTH-Q-003 | `SL-AUTH-001-login-client-account.md` | Auth hardening | future review | When should lockout/rate limiting be introduced? | Not part of current implemented backend/client flow. | auth/security hardening | no |
-| SL-AUTH-LOGIN-CLIENT-Q-001 | `SL-AUTH-001-login-client-account.client.md` | Login navigation | future review | Should successful login navigate home or account page? | Current client implementation navigates to `clientRoutes.home`. | auth UX and E2E | no unless UX changes |
-| SL-AUTH-LOGIN-CLIENT-D-001 | `SL-AUTH-001-login-client-account.client.md` | Session refresh | accepted direction | Should login store current-user response directly or invalidate the current-user query? | Current client invalidates `sessionQueryKey` after successful login. | session consistency with current-user bootstrap | no |
-| SL-AUTH-Q-004 | `SL-AUTH-002-current-user.md` / `SL-AUTH-002-current-user.client.md` | Client bootstrap | accepted direction | Should client call current-user on app bootstrap, protected route entry, or both? | Current client calls current-user through `SessionProvider`/React Query on app provider mount. Protected route-specific policy remains open. | auth provider / route guard / query cache | no for first-stage bootstrap; yes before protected route policy |
-| SL-AUTH-Q-005 | `SL-AUTH-002-current-user.md` / `SL-AUTH-002-current-user.client.md` | Error UX | open | How should client distinguish unauthenticated from server failure during current-user bootstrap? | Current client maps 401 to `null` session and rethrows non-401 failures. Final global error UX is not settled. | client error handling and route UX | yes before final bootstrap UX |
-| SL-AUTH-CURRENT-CLIENT-Q-001 | `SL-AUTH-002-current-user.client.md` | Route guard | open | What is the protected route policy? | Current implementation exposes session context; consumers branch locally. A shared redirect/guard policy is future work. | account/request/My Requests client routing | yes before protected route design |
-| SL-AUTH-CURRENT-CLIENT-D-001 | `SL-AUTH-002-current-user.client.md` | Guest state | accepted direction | How does client represent unauthenticated current-user? | Current implementation maps current-user 401 to `null` session. | consumer branching and tests | no |
-| SL-AUTH-Q-006 | `SL-AUTH-003-logout.md` | Client logout UX | open | Where should the client navigate after logout? | Shared logout API wrapper exists, but concrete logout UI/navigation flow is not confirmed. | logout UI/navigation | yes before logout UI implementation |
-| SL-AUTH-Q-007 | `SL-AUTH-003-logout.md` | CSRF/security | open | When should logout require antiforgery token handling? | Draft assumes CC-CSRF-001 governs concrete unsafe-browser command handling. Current logout backend/client API wrapper does not prove CSRF implementation. | CSRF cross-cutting slice and logout client work | no for current docs; yes before claiming CSRF implementation |
-| SL-AUTH-Q-008 | `SL-AUTH-003-logout.md` | Client cache | open | Should logout clear only auth state or also invalidate all user-scoped query caches? | Concrete logout UI/cache behavior is not confirmed; future logout `.client.md` should decide. | client auth/cache design | yes before logout UI implementation |
-| SL-APPL-Q-001 | `SL-APPL-001-create-individual-applicant-party.md` / `SC-10` | Replacement/versioning | accepted direction | Is current active ApplicantParty unique per account or per applicant type? | User/scenario decision: one current active ApplicantParty per account. Applicant types are alternative data shapes for the account-level applicant profile. Future replacement flow should make the new accepted ApplicantParty current and the previous one non-current. | applicant replacement/current-active policy; request creation context | no for current implemented save slice; yes for future replacement/applicant type work |
-| SL-APPL-Q-002 | `SL-APPL-001-create-individual-applicant-party.md` | Missing account semantics | future review | Should a missing account under authenticated claim return validation, unauthorized, forbidden or not found? | Current implementation evidence says missing account returns validation ProblemDetails after authenticated context. Keep this unless API/security policy changes. | API/security semantics | no |
-| SL-APPL-Q-003 | `SL-APPL-001-create-individual-applicant-party.md` | Applicant verification | deferred | When is external verification required before request creation/review? | Current save command creates applicant data as Unverified and does not require external provider integration. Draft assumes verification/provider behavior is a separate slice/policy. | verification/provider slice and review/request policy | no |
-| SL-APPL-Q-004 | `SL-APPL-001-create-individual-applicant-party.md` | Non-individual applicants | deferred | When do entrepreneur/legal-entity applicant shapes enter L1? | Current implemented slice covers IndividualApplicantParty only. Draft assumes entrepreneur/legal entity shapes are separate applicant-type extension slices. | future applicant type slices | no |
-| SL-APPL-D-001 | `SL-APPL-001-create-individual-applicant-party.md` / `SC-10` | Data semantics | accepted direction | Should applicant contact email duplicate account email? | Applicant contact email may differ from account email. Keep them separate unless scenario/DATA changes. | scenario/DATA consistency and client form mapping | no |
-| SL-APPL-CLIENT-Q-001 | `SL-APPL-001-create-individual-applicant-party.client.md` / `L1-APPLICANT-PARTY-READ-CURRENT.client.md` | Current applicant read | resolved | How does Account page load an existing applicant after refresh? | Current implementation uses `GET /api/l1/applicant-parties/current-individual`, an applicant-party entity query and Account page branch on `exists`. Create success invalidates/refetches the current applicant query. | Account page stability, verification status, request UI readiness | no |
-| SL-APPL-CLIENT-D-001 | `SL-APPL-001-create-individual-applicant-party.client.md` | Request creation dependency | accepted direction | Should applicant create client store returned applicantPartyId for request creation? | No. Current client ignores response body for downstream request creation. Request creation should rely on server-selected current active applicant. | request creation client sidecar and API mapping | no |
-| SL-APPL-CLIENT-D-002 | `SL-APPL-001-create-individual-applicant-party.client.md` | Create request entry | accepted direction | Should applicant create sidecar introduce a create request entry? | No. Create request entry location belongs to future request creation client sidecar. Do not test absence as a behavior; keep as scope boundary. | request creation client planning | no |
-| SL-APPL-CLIENT-Q-002 | `SL-APPL-001-create-individual-applicant-party.client.md` | Edit behavior | future review | What does the current Edit action mean after local saved applicant state? | Current implementation returns to editable local form only. Persisted edit/replacement is a future slice. | applicant replacement/versioning and UI tests | no for current first-stage client flow |
-| SL-APPL-CLIENT-Q-003 | `SL-APPL-001-create-individual-applicant-party.client.md` | Verification UI | future review | Should Account page show applicant verification status? | Not part of current create command; belongs to future read/verification slice. | read model, UI states, behavior items | no |
-| SL-REQ-Q-001 | `SL-REQ-001-create-connection-request.md` | My Requests read model | open | What exact My Requests list/detail response does the client need after navigation? | Draft assumes request creation command does not need returned request data; the read/list/detail slice defines My Requests shape later. | future read/client slice | no for current backend docs; yes before request creation client completion |
-| SL-REQ-Q-002 | `SL-REQ-001-create-connection-request.md` / `SC-10` | Applicant versions | accepted direction | How are older applicant party versions made inactive when replacement/edit flow exists? | Scenario direction says one current active ApplicantParty per account. The future replacement flow should make older applicant versions non-current when a replacement is accepted. Exact implementation remains future work. | applicant replacement slice | no for current implemented request slice; yes for replacement/versioning work |
-| SL-REQ-Q-003 | `SL-REQ-001-create-connection-request.md` | Client UI | open | What concrete page/form implements request creation? | No request `.client.md` should be created until concrete client work starts. | request creation client sidecar | yes before request UI implementation |
-| SL-REQ-Q-004 | `SL-REQ-001-create-connection-request.md` | Security | open | When should unsafe browser commands enforce CSRF? | Draft assumes CC-CSRF-001 governs concrete unsafe browser request handling. Current backend/client docs do not implement CSRF. | CSRF cross-cutting slice and future client/security work | no for current docs |
-| SL-REQ-Q-005 | `SL-REQ-001-create-connection-request.md` | Verification | future review | Must applicant party be verified before request creation? | Current backend implementation does not require applicant verification before request creation. Draft assumes verification requirement is a separate future policy/slice if adopted. | verification/provider policy and request creation rules | no |
-| SL-REQ-D-001 | `SL-REQ-001-create-connection-request.md` | Command response | accepted direction | Does create request command require returned request data? | Current implementation returns HTTP success without required response body. Client success handling can show a success message and navigate to My Requests without request id/status/body. | request creation client sidecar and API contract | no |
-| SL-REQ-D-002 | `SL-REQ-001-create-connection-request.md` / `SC-04` | Applicant context | accepted direction | Does request creation use request-local applicant data or the account's current active ApplicantParty? | Scenario direction says request creation uses the account's current active ApplicantParty. Request-local fields are request details and object address. Applicant changes go through SC-10 / future replacement flow before submit. | request creation client sidecar, API DTO mapping and scenario behavior | no for current backend docs; yes for request creation UI planning |
+| SL-ACC-Q-001 | `SL-ACC-001-register-client-account.md` | DB hardening | accepted direction | Should duplicate email also be enforced by a DB unique constraint? | Yes as future persistence hardening. Current implementation uses application precheck. | DB constraint implementation | no for current docs |
+| SL-ACC-Q-003 | `SL-ACC-001-register-client-account.md` / `.client.md` | Auth UX | open | Should registration automatically sign the user in? | Current client routes to `/login`; explicit login remains current direction. | registration/client auth flow | yes before changing UX |
+| SL-AUTH-Q-001 | `SL-AUTH-001-login-client-account.md` / `.client.md` | Client auth baseline | accepted direction | What owns L1 current-user after login? | React Query session query + SessionProvider; login invalidates session query. | auth/session client baseline | no |
+| SL-AUTH-Q-005 | `SL-AUTH-002-current-user.client.md` | Error UX | open | How should client distinguish unauthenticated from server failure during current-user bootstrap? | Current implementation maps 401 to null session and rethrows non-401 failures. | global error / route UX | yes before final protected route UX |
+| SL-AUTH-CURRENT-CLIENT-Q-001 | `SL-AUTH-002-current-user.client.md` | Route guard | open | What is the protected route policy? | Current implementation exposes session context; consumers branch locally. Shared redirect/guard policy is future work. | account/request/My Requests routing | yes before route-guard design |
+| SL-AUTH-Q-006 | `SL-AUTH-003-logout.md` / `SL-AUTH-003-logout.client.md` | Client logout UX | accepted direction | Where should client navigate after logout? | Navigate to Home / public home. | logout sidecar/router/tests | no for draft; yes for implementation |
+| SL-AUTH-Q-007 | `SL-AUTH-003-logout.md` / `.client.md` | CSRF/security | open / future security | When should logout require antiforgery token handling? | Defer to CC-CSRF-001; do not implement custom CSRF inside logout sidecar. | unsafe command security | yes before claiming CSRF |
+| SL-AUTH-Q-008 | `SL-AUTH-003-logout.md` / `.client.md` | Client cache | assumption | Should logout clear only auth state or all user-scoped query caches? | Minimum current-user/session invalidation; prefer invalidating known user-scoped queries where available. | stale user data prevention | yes before logout implementation |
+| SL-AUTH-CLIENT-Q-001 | `SL-AUTH-003-logout.client.md` | Stale session | accepted direction | How should client handle 401 from logout? | Treat as already unauthenticated/stale session; clear local state and navigate Home. | stale session recovery | no |
+| SL-AUTH-CLIENT-Q-002 | `SL-AUTH-003-logout.client.md` | Feedback | accepted direction | Should logout show a success notification? | No required success message; Home + guest/public state is visible success outcome. | UI copy/tests | no |
+| SL-AUTH-CLIENT-Q-003 | `SL-AUTH-003-logout.client.md` / `CL-FEEDBACK-001` | Feedback | assumption | How should unexpected logout failure be shown? | Use shared feedback direction: action/global error; do not show false success. | feedback concern / tests | yes before implementation |
+| SL-AUTH-CLIENT-Q-004 | `SL-AUTH-003-logout.client.md` | Pending state | open | Should logout show a visible pending/loading state? | Only if chosen UI placement has a natural visible pending state. | component behavior/tests | no until placement chosen |
+| SL-APPL-Q-001 | `SL-APPL-001-create-individual-applicant-party.md` / `SC-10` | Replacement/versioning | accepted direction | Is current active ApplicantParty unique per account or per applicant type? | One current active ApplicantParty per account; future replacement makes new accepted data current and previous data non-current. | applicant replacement/current-active policy | yes for replacement work |
+| SL-APPL-CLIENT-Q-001 | `SL-APPL-001-create-individual-applicant-party.client.md` | Current applicant read | open | How does Account page load an existing applicant after refresh? | Stable refresh requires current applicant read endpoint/client slice. | Account page stability / read model | yes before claiming persisted Account page state |
+| SL-APPL-CLIENT-D-002 | `SL-APPL-001-create-individual-applicant-party.client.md` | Create request entry | accepted direction | Should applicant create sidecar introduce a create request entry? | No. Create request entry/location belongs to request creation client sidecar. | request creation planning | no |
+| SL-APPL-READ-Q-001 | `SL-APPL-002-read-current-individual-applicant-party.md` | Missing applicant state | assumption | Should missing current applicant return 404 or successful empty state? | Use `200 exists=false applicantParty=null` as normal Account page state. | read endpoint / client flow | yes before implementation |
+| SL-REQ-Q-001 | `SL-REQ-001-create-connection-request.md` / future `.client.md` | My Requests read model | open | What exact My Requests list/detail response does the client need after request success? | Request creation command does not need returned request data; read/list/detail slice defines My Requests shape later. | future read/client slice | yes before request UI completion |
+| SL-REQ-Q-003 | `SL-REQ-001-create-connection-request.md` / future `.client.md` | Client UI | open | What concrete page/form implements request creation? | Future request `.client.md` should use SC-04 UI/behavior sources. | request creation client sidecar | yes before request UI implementation |
+| SL-REQ-Q-006 | `SC-04` / future `SL-REQ-001.client` | Applicant data in request journey | assumption | Does request creation UI include applicant fields and allow clearing prefilled data? | Yes. Applicant fields are part of request journey; prefilled values can be cleared and replaced before submit. Accepted changes update account-level ApplicantParty. | SC-04 UI/source behavior and request client sidecar | yes before request UI implementation |
+| SL-REQ-Q-007 | `SC-04` / `SC-10` / future applicant replacement | Applicant replacement boundary | open | Does inline applicant replacement reuse SC-10 save behavior or need a dedicated replacement endpoint? | Draft assumes SC-10 / applicant replacement behavior owns accepted applicant changes before request submit. | backend/client API design | yes before implementing inline replacement |
+| CL-FEEDBACK-Q-001 | `CL-FEEDBACK-001-client-feedback-messages.md` | Feedback infrastructure | assumption | Should feedback start local or global? | Use local action/form/page alerts first; add global host when multiple features need shell-level messages. | client cross-cutting implementation | no until shared host work starts |
+| CL-FEEDBACK-Q-002 | `CL-FEEDBACK-001-client-feedback-messages.md` | Success messages | future review | Should success messages auto-dismiss by default? | Feature decides. Applicant create uses self-dismissing notification; logout success needs no message. | UI consistency | no |
+| CL-FEEDBACK-Q-003 | `CL-FEEDBACK-001-client-feedback-messages.md` | Error feedback | accepted direction | Should failures ever display success outcome? | No. Unexpected failure must show failure feedback or preserve prior state. | logout/request/applicant tests | no |
 
-## 8. Superseded / Removed During Syncs
+## 5. Superseded / Removed During Syncs
 
 | Previous register item | Status | Reason |
 |---|---|---|
-| `Q-SL-ACC-003` — active-account guard placement | superseded / removed from active register | The current local `SL-ACC-001` `Questions / Decisions` section no longer contains this question. The current local `SL-ACC-Q-003` is the auth UX auto-login question. Reintroduce active-account guard placement as a local question in an auth/security slice if future protected-slice planning needs it. |
-| Earlier request-local applicant prefill assumption | superseded | Scenario direction now says request creation references the account's current active ApplicantParty. Applicant data changes go through SC-10 / replacement flow before submit. |
-| Earlier blanket “L1 client missing” status | superseded | Current repo evidence now shows first-stage client flows for registration, login, session bootstrap and applicant create. Remaining gaps are narrower and are tracked in sidecar docs. |
+| Earlier blanket “L1 client missing” status | superseded | Repo evidence now shows first-stage registration, login, session bootstrap and applicant create client flows. Remaining gaps are tracked per sidecar. |
+| Earlier request creation statement “applicant data only referenced as summary” | superseded | SC-04 now says request creation journey includes applicant fields; existing data is prefilled and can be cleared/replaced before submit. |
 
-## 9. Closed / Resolved Question Policy
+## 6. Closed / Resolved Question Policy
 
 Resolved questions may be removed from the active table when they are no longer useful for future work.
 
-If keeping a resolved row, set `Question status = resolved` and make the answer explicit in `Assumption / current direction`.
+If keeping a resolved row, set `Question status = resolved` and make the answer explicit.
 
 Do not leave a resolved question with status `open`.
-
-Do not leave an open question without an assumption/current direction.

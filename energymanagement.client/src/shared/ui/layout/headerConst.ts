@@ -4,6 +4,8 @@ export const headerConst = {
   homeLinkSloganText: "Мы делаем жизнь светлее",
   loginLinkText: "Login",
   registerLinkText: "Register",
+  logoutButtonText: "Logout",
+  logoutPendingButtonText: "Logging out...",
   accountLinkText: "Личный кабинет",
   internetReceptionLinkText: "Интернет-приемная",
   hotlinePhoneNumberText: "8-800-100-70-00",

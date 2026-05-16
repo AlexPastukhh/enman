@@ -69,6 +69,21 @@ flex-direction: column;
     font-size: var(--header-nav-btn-fs);
     
 }
+
+.header__logout{
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.header__logout-error{
+    color: #990000;
+    font-size: 1.2rem;
+    max-width: var(--nav-button-width);
+    margin: 0;
+    text-align: center;
+}
  
 .header__contact{
     display: flex;

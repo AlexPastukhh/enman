@@ -5,6 +5,7 @@ import {
   PhoneIcon,
 } from "../../../assets/icons/svgr_barrel";
 import { useSession } from "../../../entities/session/model/useSession";
+import { LogoutButton } from "../../../features/auth/logout/ui/LogoutButton";
 import { clientRoutes } from "../../config/clientRoutes";
 import { HeaderNavLink } from "./HeaderNavLink";
 import { headerConst } from "./headerConst";
@@ -39,6 +40,20 @@ export const Header = () => {
               <EnterIcon />
               {headerConst.accountLinkText}
             </NavButtonPrimary>
+          )}
+
+          {session && (
+            <HeaderNavLink to={clientRoutes.account}>
+              {headerConst.accountLinkText}
+            </HeaderNavLink>
+          )}
+
+          {session && (
+            <LogoutButton
+              className="header__nav-button"
+              label={headerConst.logoutButtonText}
+              pendingLabel={headerConst.logoutPendingButtonText}
+            />
           )}
         </div>
 

@@ -1,7 +1,7 @@
 # Scenario UI Specs
 
-Status: workflow scaffold / current UI-spec source area  
-Scope: per-scenario UI-visible requirements, UI behavior items and UI questions
+Status: current UI-spec source area  
+Scope: per-scenario UI-visible requirements, UI behavior items, accepted UI conventions and UI questions
 
 ## 1. Purpose
 
@@ -13,7 +13,15 @@ Scenario UI spec   = UI-visible requirements and accepted UI decisions.
 .client.md         = implementation planning for one concrete client slice.
 ```
 
-## 2. What Belongs Here
+## 2. Source Marker
+
+Use `[UI-SCENARIO]` for UI-visible scenario sources consumed by client sidecars.
+
+A `[UI-SCENARIO]` source is binding source behavior until changed through scenario drafting.
+
+It is not React implementation detail.
+
+## 3. What Belongs Here
 
 ```text
 - UI-visible requirements;
@@ -28,7 +36,7 @@ Scenario UI spec   = UI-visible requirements and accepted UI decisions.
 - questions that may affect scenario/client planning.
 ```
 
-## 3. What Does Not Belong Here
+## 4. What Does Not Belong Here
 
 ```text
 - React component tree;
@@ -42,15 +50,14 @@ Scenario UI spec   = UI-visible requirements and accepted UI decisions.
 
 Those belong in `.client.md` sidecars or client implementation docs.
 
-## 4. Current UI Spec Files
+## 5. Current UI Spec Files
 
-```text
-SC-10-applicant-data-ui.md
-```
+| File | Scenario | Use |
+|---|---|---|
+| `SC-04-request-creation-ui.md` | SC-04 Request Creation | Request creation UI-visible behavior, applicant data fields/prefill/clear behavior, success/error outcomes |
+| `SC-10-applicant-data-ui.md` | SC-10 Applicant Data | Account page / applicant data UI-visible behavior for applicant create/read-only/read-current states |
 
-`SC-10-applicant-data-ui.md` records Account page / applicant data UI-visible behavior for current-applicant state, applicant creation success outcome, no create-request entry in the applicant create slice, and future current-applicant read behavior.
-
-## 5. UI Specs Vs Client Implementation Conventions
+## 6. UI Specs Vs Client Implementation Conventions
 
 Scenario UI specs define UI-visible outcomes.
 
@@ -77,13 +84,7 @@ Use client-wide conventions from:
 planning/client/cross-cutting/
 ```
 
-For command success flows without required response body, use:
-
-```text
-planning/client/cross-cutting/CL-COMMAND-001-command-success-without-required-response-body.md
-```
-
-## 6. UI Behavior Items
+## 7. UI Behavior Items
 
 UI behavior items answer:
 
@@ -94,17 +95,15 @@ or be unable to do in the UI?
 
 They complement domain/scenario behavior items.
 
-Example:
+Scenario UI behavior items should also be mirrored into:
 
 ```text
-SC-07B-UI-001 — Show request data before review decision.
-SC-07B-UI-002 — Show applicant data before review decision.
-SC-07B-UI-003 — Make approve/reject unavailable for non-InReview request.
-SC-07B-UI-004 — Warn before rejecting with empty feedback.
-SC-07B-UI-005 — Do not show auto-created agreement proposal after approval.
+planning/diagrams/scenario-behavior-items/
 ```
 
-## 7. Status Values
+so slice/client chats can reference stable IDs.
+
+## 8. Status Values
 
 ```text
 requirement
@@ -117,13 +116,13 @@ superseded
 
 In this project, an accepted convention is binding until explicitly changed.
 
-## 8. Creation Rule
+## 9. Creation Rule
 
 Do not create every scenario UI spec in advance.
 
 Create a concrete `SC-XX-...-ui.md` file when UI planning starts for that scenario or when a UI-visible decision must not be lost.
 
-## 9. Template
+## 10. Template
 
 ```text
 # SC-XX — Scenario Name UI Spec
@@ -132,6 +131,7 @@ Status:
 Source scenario:
 Source DATA:
 Behavior item sources:
+Marker: [UI-SCENARIO]
 
 ## 1. Purpose
 ## 2. UI Source Summary
@@ -144,7 +144,7 @@ Behavior item sources:
 ## 9. Downstream Use
 ```
 
-## 10. Downstream Use
+## 11. Downstream Use
 
 Scenario UI specs feed `.client.md` UI Behavior Coverage, Scenario / DATA / UI Spec Coverage, component discovery, accessibility contract, client tests, E2E and UI-related scenario questions.
 

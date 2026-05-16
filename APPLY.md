@@ -1,20 +1,17 @@
-# Apply — enman-short-draft-example-extension-change-points-v1
-
-From repository root:
+# Apply — enman-scenario-feedback-logout-sync-v1
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-short-draft-example-extension-change-points-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-scenario-feedback-logout-sync-v1.zip" -DestinationPath . -Force
 git status
 ```
 
-Then review:
+Review especially:
 
 ```powershell
-git diff -- planning/slices/examples/L1-APPLICANT-PARTY-READ-CURRENT-early-short-draft-example.md
-git diff -- planning/slices/examples/README.md
-git diff -- planning/slices/l1-slice-drafting-guide.md
-git diff -- planning/slices/draft-driven-discovery-principles.md
-git diff -- planning/slices/change-extension-points-principles.md
-git diff -- planning/slices/slice-extension-points-register.md
-git diff -- planning/slices/slice-implementation-notes-register.md
+git diff -- planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+git diff -- planning/diagrams/scenario-ui-specs/SC-04-request-creation-ui.md
+git diff -- planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
+git diff -- planning/client/cross-cutting/CL-FEEDBACK-001-client-feedback-messages.md
+git diff -- planning/slices/SL-AUTH-003-logout.client.md
+git diff -- planning/slices/slice-scenario-flow-behavior-register.md
 ```

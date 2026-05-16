@@ -1,7 +1,7 @@
 # L1 Slice Drafting Guide
 
 Status: current slice drafting workflow  
-Scope: business slices, cross-cutting/helper slices, client sidecars, implementation flow, extension/change points, questions, registers and tests
+Scope: business slices, cross-cutting/helper slices, client sidecars, scenario source intake, implementation flow, extension/change points, questions, registers and tests
 
 ## 1. Draft-Driven Discovery Gate
 
@@ -9,6 +9,7 @@ Before drafting any slice, read:
 
 ```text
 planning/slices/draft-driven-discovery-principles.md
+planning/slices/slice-scenario-flow-behavior-register.md
 planning/slices/slice-questions-register.md
 planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
@@ -19,6 +20,7 @@ All slice work uses draft-driven discovery:
 
 ```text
 source requirements
+-> source flow / behavior item intake
 -> draft
 -> open questions/assumptions
 -> visual flow maps
@@ -30,23 +32,43 @@ source requirements
 -> next draft or implementation
 ```
 
-This applies to:
+## 2. Scenario Flow / Behavior Item Source Rule
+
+Before writing:
 
 ```text
-business slices
-client sidecars
-cross-cutting/helper slices
-testing/support slices
-documentation/status reconciliation drafts
+Visual Scenario Flow
+Scenario Slice Flow
+Visual UI / Scenario Flow
+Behavior Coverage
+Covered Scenario / UI Behavior Items
 ```
 
-## 2. Default Shortened Slice Draft
+read:
 
-By default, slice drafts are created in a shortened working format.
+```text
+planning/slices/slice-scenario-flow-behavior-register.md
+```
 
-A shortened draft is not the full final slice file.
+Then read the linked sources:
 
-It is an early working format for discussion, scenario logic checks, slice boundary checks, implementation direction, extension/change pressure, questions and coverage.
+```text
+[SCENARIO]      scenario text spec
+[DATA]          scenario DATA spec
+[UI-SCENARIO]   scenario UI spec
+[BEHAVIOR]      scenario behavior items file
+[SECURITY]      scenario security/validation addendum
+[CONCERN]       cross-cutting concern behavior items
+[CLARIFICATION] scenario clarification
+```
+
+Do not invent behavior items inside slice drafts.
+
+Do not use `slice-questions-register.md`, `slice-extension-points-register.md` or `slice-implementation-notes-register.md` as the source for Scenario Flow or Behavior Items.
+
+If source behavior IDs are missing, mark `[SOURCE-GAP]` and use temporary `Source BI TBD` only in early drafts.
+
+## 3. Default Shortened Slice Draft
 
 The default shortened draft includes:
 
@@ -58,77 +80,21 @@ The default shortened draft includes:
 5. Behavior Coverage
 6. Test / Verification Plan, when useful
 7. Next Step
-8. Scenario Flow / Behavior Items, when source behavior IDs are not attached yet
+8. Scenario Flow / Behavior Items, only when source IDs are not attached yet
 ```
 
-Generate a full draft file only on explicit request or when the work needs:
-
-```text
-- final documentation pass;
-- detailed review;
-- debugging complex logic;
-- transfer into planning docs;
-- preparation for implementation by another agent.
-```
-
-A shortened draft may use temporary source behavior labels such as:
-
-```text
-Source BI TBD
-```
-
-only when source behavior item IDs have not been attached yet.
-
-That marker is temporary and must be replaced with real scenario behavior IDs before finalizing the slice draft.
-
-Primary shortened example:
+Primary shortened examples:
 
 ```text
 planning/slices/examples/L1-APPLICANT-PARTY-READ-CURRENT-early-short-draft-example.md
-```
-
-This example shows how to write an early short draft that includes:
-
-```text
-- visual scenario flow;
-- visual implementation flow;
-- question statuses and assumptions;
-- extension/change point table;
-- behavior coverage separate from test plan;
-- shared register sync;
-- next implementation direction.
-```
-
-Older compact command example:
-
-```text
-planning/slices/examples/L1-CONNECTION-REQUEST-CREATE-early-short-draft-example.md
-```
-
-Use it only as a simple command-flow example. Prefer the read-current example when extension/change points matter.
-
-## 3. Visual Flow Rule
-
-Visual flow means a diagram-like text map, not only a linear arrow list.
-
-A linear list can be enough for a very early shortened draft, but full slice files should use visual maps when branching, responsibility boundaries or out-of-scope/dependent slices matter.
-
-Visual maps should make it easy to see:
-
-```text
-- who acts;
-- what the system decides;
-- where success and failure branches split;
-- what is inside current slice scope;
-- what is delegated to dependent slices;
-- where the implementation crosses API/application/domain/persistence/client-contract boundaries.
+planning/slices/examples/L1-APPLICANT-PARTY-READ-CURRENT-client-early-short-draft-example.md
 ```
 
 ## 4. Visual Scenario Flow Rule
 
-Visual Scenario Flow shows the real scenario flow, or the part of the scenario flow, covered by the slice.
+Visual Scenario Flow shows user/system behavior, not controller/handler/repository mechanics.
 
-It must describe user/system behavior, not controller, handler, repository, mapper or DTO mechanics.
+It must be sourced from scenario text, DATA, UI spec and behavior item files.
 
 A good Visual Scenario Flow usually includes:
 
@@ -154,15 +120,13 @@ Loads entity
 Saves entity
 ```
 
-That is implementation flow, not scenario flow.
+That is implementation flow.
 
 ## 5. Visual Implementation Flow Rule
 
-Visual Implementation Flow shows how the slice implements the scenario behavior technically.
+Visual Implementation Flow shows how the slice implements scenario behavior technically.
 
-It should mark layers, folders or boundaries clearly.
-
-For backend slices, include relevant technical boundaries:
+For backend slices, include:
 
 ```text
 API Controller
@@ -171,8 +135,6 @@ Domain
 Persistence
 API Contract / ProblemDetails / Cookie Session
 ```
-
-When the slice has failure/no-write behavior, show that branch explicitly.
 
 For client sidecars, include architecture/folder placement boundaries:
 
@@ -183,108 +145,43 @@ Feature Model / Hook
 Feature API Mapper
 Shared API
 Generated Contracts
+Feedback/Error surface when relevant
 ```
 
-Code, DTO shapes and method names belong in the implementation flow only when they clarify:
+## 6. Scenario Behavior Items Rule
+
+Behavior items are selected from source files:
 
 ```text
-- contract boundary;
-- disputed behavior;
-- non-obvious implementation direction;
-- API/client mapping;
-- error handling;
-- no-write/no-side-effect guarantee;
-- testability/checkability.
+planning/diagrams/scenario-behavior-items/
 ```
 
-Routine mechanics stay high-level.
-
-## 6. Full Backend Slice File Rule
-
-Full backend slice files must include visual flow maps before detailed flow sections.
-
-Required order for backend parent slice files:
+Client sidecars should also consume `[UI-SCENARIO]` behavior items from:
 
 ```text
-## Visual Scenario Flow
-diagram-like scenario map
-
-## Scenario Slice Flow
-detailed scenario/source behavior flow
-
-## Visual Implementation Flow
-diagram-like technical flow map
-
-## Implementation Flow
-detailed layer/API/application/domain/persistence flow
+planning/diagrams/scenario-ui-specs/
 ```
-
-The visual sections do not replace the detailed sections.
-
-They provide a quick review map before the detailed flow.
-
-Full slice files should also include:
-
-```text
-- source scenario / source behavior items;
-- API contract;
-- questions and decisions;
-- extension/change point sections when relevant;
-- behavior coverage;
-- test / verification plan;
-- dependent or follow-up slices;
-- shared register back-references when local questions are mirrored.
-```
-
-Reference example:
-
-```text
-planning/slices/examples/SL-ACC-001-register-client-account-full-slice-example.md
-```
-
-## 7. Scenario Behavior Items Rule
-
-Behavior items are not invented inside the slice draft.
-
-The slice must select behavior items from scenario specs, scenario behavior registers, DATA/UI specs, validation/security addenda or other accepted source files.
 
 Correct chain:
 
 ```text
-Scenario specs / source behavior items
+scenario text / DATA / UI source
+        ↓
+scenario behavior item file
         ↓
 slice selects relevant behavior items
         ↓
-draft describes how slice covers them
-        ↓
-behavior coverage links required behavior to draft sections
-```
-
-If source behavior item IDs are not found yet, an early shortened draft may use:
-
-```text
-Source BI TBD
-```
-
-Rules for `Source BI TBD`:
-
-```text
-- mark it as temporary;
-- describe the source behavior in plain language;
-- do not treat it as a final ID;
-- replace it with real scenario behavior item IDs before finalizing the slice.
+Behavior Coverage links required behavior to draft sections
 ```
 
 Client architecture placement is not a behavior item.
 
-For example, choosing `features/create-request` vs `shared/api` belongs to Visual Implementation Flow or component discovery, not to Scenario Behavior Items.
-
-## 8. Behavior Coverage Is Not Test Coverage
+## 7. Behavior Coverage Is Not Test Coverage
 
 Behavior Coverage answers:
 
 ```text
-Does the draft implementation description cover the required scenario behavior?
+Does the draft implementation description cover the required source behavior?
 ```
 
 Test / Verification Plan answers:
@@ -295,23 +192,15 @@ How will implemented code be verified later?
 
 Do not mix these tables.
 
-Behavior Coverage format:
+## 8. Questions / Decisions Rule
 
-| Scenario behavior item | How draft covers it | Draft location | Status |
-|---|---|---|---|
+Implemented slices can still have open questions.
 
-Test / Verification Plan format:
+Implementation status does not remove the need to synchronize local questions.
 
-| Test / check | Verifies | Layer | Status |
-|---|---|---|---|
+If an implemented slice has open, assumption, future-review, deferred or important accepted-direction questions, keep them locally and mirror them to the relevant shared register.
 
-## 9. Questions / Decisions Rule
-
-Questions are not just a local note dump.
-
-They are a review mechanism for unresolved behavior, API, implementation, client, test, security, extension/change and architecture decisions.
-
-In every `Questions / Decisions` section, list items in this order:
+Question order:
 
 ```text
 1. open questions;
@@ -332,39 +221,22 @@ Impact
 Shared register / local-only reason
 ```
 
-Use these question status values:
-
-| Status | Meaning |
-|---|---|
-| `open` | Needs an answer before related behavior/contract/design can be finalized. |
-| `blocked` | Cannot be answered until another decision/source/implementation is available. |
-| `assumption` | A working answer is being used so draft work can continue; user confirmation/refinement is expected. |
-| `accepted direction` | Direction is accepted enough for planning and should be remembered by future work. |
-| `future review` | Not a current blocker; revisit when the related future slice/hardening/client work starts. |
-| `resolved` | Answered and no longer open. Keep only if useful for traceability. |
-| `superseded` | Replaced by a newer question/decision/source. |
-| `local only` | Intentionally not mirrored globally; local file must say why. |
-
-Assumption rule:
+Use statuses:
 
 ```text
-If a draft can proceed without a final answer, write a reasonable assumption/current direction.
-The assumption must be explicit enough for the user to confirm, reject or refine.
-Do not hide assumptions in prose.
-Do not mark an assumption as resolved.
+open
+blocked
+assumption
+accepted direction
+future review
+resolved
+superseded
+local only
 ```
 
-For already implemented slices, the assumption can be current repo evidence.
+## 9. Extension / Change Point Rule
 
-For early drafts, the assumption should be a proposed working answer:
-
-```text
-Draft assumes ... until user confirms/refines.
-```
-
-## 10. Extension / Change Point Rule
-
-Early shortened drafts should include a compact extension/change point section when future behavior can affect current design.
+Early shortened drafts and full slice files should include extension/change point sections when future behavior can affect current design.
 
 Use:
 
@@ -374,53 +246,12 @@ planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
 ```
 
-Short draft extension/change point format:
-
-| ID | Type | Area | Current direction | Register sync | Status |
-|---|---|---|---|---|---|
-
-Use the section for:
-
-```text
-- response-shape choices that may affect future clients;
-- read model fields likely needed by future UI;
-- identity exposure decisions;
-- extension seams that should not be coupled now;
-- invariant/data-policy questions that affect several slices;
-- performance/tracking notes that should not drive current behavior.
-```
-
-Common handling decisions:
-
-```text
-explicit seam now
-anti-coupling only
-convention-first
-ignore for now
-revisit when future slice starts
-```
-
-The section must not overengineer the current slice.
-
-It should make the current trade-off discoverable and point to the correct register.
-
-Primary example:
-
-```text
-planning/slices/examples/L1-APPLICANT-PARTY-READ-CURRENT-early-short-draft-example.md
-```
-
-## 11. Shared Question/Register Rule
-
-Local `Questions / Decisions` sections are required.
-
-They keep local context.
-
-Shared registers keep future work from losing important local discoveries.
+## 10. Shared Register Sync Rule
 
 Use:
 
 ```text
+planning/slices/slice-scenario-flow-behavior-register.md
 planning/slices/slice-questions-register.md
 planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
@@ -429,32 +260,15 @@ planning/slices/slice-implementation-notes-register.md
 Rules:
 
 ```text
-- Mirror currently relevant local questions to `slice-questions-register.md`.
-- Each mirrored question must have a clear question status.
-- Each unresolved/non-final mirrored question must have an assumption/current direction.
+- Update source-flow/behavior register when new scenarios, UI specs, behavior items, slices or sidecars are added.
+- Mirror currently relevant local questions to `slice-questions-register.md`, including questions from implemented slices.
 - Mirror extension/change pressure to `slice-extension-points-register.md`.
 - Mirror concrete future implementation/client/testing notes to `slice-implementation-notes-register.md`.
 - If a question remains local only, state why.
 - If a shared register row becomes stale, update or supersede it.
 ```
 
-Local question format should include:
-
-```text
-Shared register:
-- none, local only because ...
-```
-
-or:
-
-```text
-Shared register:
-- planning/slices/slice-questions-register.md / Q-...
-```
-
-## 12. Client Sidecar Shortened Draft Rule
-
-Client sidecars follow the same default shortened draft rule.
+## 11. Client Sidecar Shortened Draft Rule
 
 A client shortened draft contains:
 
@@ -465,74 +279,15 @@ A client shortened draft contains:
 4. Client Extension / Change Points, when relevant
 5. Behavior Coverage
 6. Client/component/E2E verification plan
-7. Covered Scenario/UI Behavior Items
+7. Covered Scenario / UI Behavior Items
 8. Next Step
-```
-
-Client sidecar drafts must still follow generated contract rules:
-
-```text
-- use generated OpenAPI types for structure;
-- use generated constants for semantic error/field/extension names;
-- do not guess routes, DTOs, response shapes or error-code strings;
-- record temporary contract gaps explicitly.
 ```
 
 Do not create `.client.md` in advance.
 
 Create or update it when concrete client work starts or when implemented client logic must be documented and reconciled.
 
-## 13. Shortened Draft Template
-
-Use this template for early backend, business, helper or cross-cutting slice drafts:
-
-```text
-# SLICE-ID — Title — Early Short Draft
-
-Status:
-Slice type:
-Scope:
-Contract direction:
-Response direction:
-Source behavior items:
-Related client integration / downstream consumer, if any:
-
-## 1. Visual Scenario Flow
-## 2. Visual Implementation Flow
-## 3. Questions / Decisions
-## 4. Extension / Change Points, when relevant
-## 5. Behavior Coverage
-## 6. Test / Verification Plan
-## 7. Next Step
-## 8. Scenario Flow / Behavior Items, when source IDs are not attached yet
-```
-
-The shortened draft `Questions / Decisions` section must still include question status and assumptions/current directions.
-
-Use this template for early client sidecar drafts:
-
-```text
-# SLICE-ID.client — Title Client Sidecar — Early Short Draft
-
-Status:
-Slice type: client sidecar
-Scope:
-Source scenario/UI behavior items:
-Contract sources:
-
-## 1. Visual UI / Scenario Flow
-## 2. Visual Client Implementation Flow
-## 3. Questions / Decisions
-## 4. Client Extension / Change Points, when relevant
-## 5. Behavior Coverage
-## 6. Client / Component / E2E Verification Plan
-## 7. Covered Scenario / UI Behavior Items
-## 8. Next Step
-```
-
-## 14. Full Backend Slice Template
-
-Use this template for full backend/API/persistence slice files:
+## 12. Full Backend Slice Template
 
 ```text
 # SLICE-ID — Title
@@ -558,212 +313,46 @@ Current implementation status:
 ## 13. Implementation Checklist
 ```
 
-The full draft `Questions / Decisions` section must include question status, assumptions/current directions and shared register back-references when practical.
-
-## 15. Business Slice Intake Checklist
+## 13. Full Client Sidecar Template
 
 ```text
-1. Read architecture decision notes and ADR candidates.
-2. Read draft-driven discovery principles.
-3. Read slice questions, extension points and implementation notes registers.
-4. Read change-extension-points-principles.md.
-5. Read planning/testing/ if tests/E2E/client test responsibilities are involved.
-6. Read planning/api/ if API/client contract work is involved.
-7. Read target scenario text spec and DATA file.
-8. Read relevant behavior items and scenario UI spec if client-visible behavior is involved.
-9. Check scenario questions register.
-10. Check planning/slices/cross-cutting/ if the slice uses cross-cutting support.
-11. Check planning/client/ and client architecture docs if client work is involved.
-12. If scenario/API/constants/testing/security/extension ambiguity exists, stop and resolve or record it first.
-13. When a draft proceeds on an assumption, write the assumption explicitly.
-```
-
-## 16. API Contract Section
-
-Parent slice API section should include:
-
-| Endpoint | Method | Request DTO | Response DTO | Statuses | Contract status | OpenAPI exposed? |
-|---|---|---|---|---|---|---|
-
-Contract status values:
-
-```text
-target L1
-legacy/current support
-temporary compatibility
-internal/not client-facing
-```
-
-Also include:
-
-```text
-- ProblemDetails response statuses;
-- client-facing error codes;
-- generated constants used;
-- OpenAPI generated types used by client;
-- whether route is temporary legacy constants route or OpenAPI structural route.
-```
-
-## 17. Client Sidecar API Section
-
-`.client.md` should include:
-
-| Client API function | Endpoint | Generated OpenAPI type(s) used | Error constants used | Status |
-|---|---|---|---|---|
-
-## 18. Cross-Cutting / Helper Slice Intake Checklist
-
-```text
-1. Identify source requirement type:
-   security / API contract / tooling / testing / infrastructure / client-cross-cutting.
-2. Check whether a specification/addendum/source note already exists.
-3. Create or update concern-derived behavior items.
-4. Ensure every behavior item appears in Concern Slice Flow.
-5. Only after the concern flow, write Implementation Flow.
-6. Add coverage, test/check plan, consumer rule, local questions and ADR impact.
-7. Sync relevant local questions/notes to shared registers.
-8. Update cross-cutting index and relevant navigation.
-```
-
-## 19. Test Coverage Sections
-
-Parent slice and `.client.md` should separate:
-
-```text
-Client/component tests
-Server integration/API tests
-End-to-end tests
-```
-
-Use:
-
-```text
-planning/testing/testing-principles.md
-planning/testing/e2e-testing-workflow.md
-```
-
-## 20. E2E Coverage Table
-
-If E2E is relevant, include:
-
-| E2E test | Scenario/UI items | Cross-layer purpose | Setup | User path | Server communication checked | Expected result | Status |
-|---|---|---|---|---|---|---|---|
-
-E2E is relevant when the behavior requires proof of:
-
-```text
-browser -> client -> HTTP API -> server/application/domain/persistence/session -> visible outcome
-```
-
-Do not use E2E to exhaustively test client-visible UI behavior.
-
-## 21. Client Test Coverage Table
-
-If client-visible UI behavior is involved, include:
-
-| Client/component test | Behavior/UI items | Client behavior covered | Locator/accessibility focus | Status |
-|---|---|---|---|---|
-
-Detailed UI validation belongs here, not in happy-path E2E.
-
-## 22. Business Slice Flow Rule
-
-Business slices use:
-
-```text
-Scenario-derived behavior items
--> Visual Scenario Flow
--> Scenario Slice Flow
--> Visual Implementation Flow
--> Implementation Flow
-```
-
-## 23. Cross-Cutting / Helper Slice Flow Rule
-
-Cross-cutting/helper slices use:
-
-```text
-Concern-derived behavior items
--> Concern Slice Flow
--> Implementation Flow
-```
-
-Concern-derived behavior item source can be:
-
-```text
-security-derived
-API-contract-derived
-tooling-derived
-testing-derived
-client-cross-cutting-derived
-infrastructure-derived
-```
-
-These items are first-class behavior items and must be covered by the concern flow.
-
-For early shortened drafts, Concern Slice Flow may be represented as a visual concern/scenario flow when that is clearer.
-
-## 24. Cross-Cutting / Helper Slice Template
-
-```text
-# CC-XXX — Title
+# SLICE-ID.client — Title
 
 Status:
-Slice type: cross-cutting slice / helper slice
-Layers:
-Depends on:
-Used by:
+Parent slice:
+Slice type: client sidecar
+Source scenario/UI sources:
+Current implementation status:
 
-## 1. Purpose
-## 2. Why This Is A Cross-Cutting/Helper Slice
-## 3. Inputs / Sources
-## 4. Concern-Derived Behavior Items
-## 5. Coverage Overview
-## 6. Concern Slice Flow
-## 7. Implementation Flow
-## 8. Target Types / Components
-## 9. Test / Check Plan
-## 10. Consumer Rule For Business Slices
-## 11. Local Questions
-## 12. ADR Impact
+## 1. Sidecar Overview
+## 2. Sources / Source Behavior Items
+## 3. Visual UI / Scenario Flow
+## 4. UI Slice Flow
+## 5. Visual Client Implementation Flow
+## 6. Client Implementation Flow
+## 7. Client API / Generated Contract
+## 8. Questions / Decisions
+## 9. Client Extension / Change Points, when relevant
+## 10. Behavior Coverage
+## 11. Client / Component / E2E Verification Plan
+## 12. Covered Scenario / UI Behavior Items
+## 13. Dependent / Follow-up Slices
+## 14. Implementation Checklist
 ```
 
-For early cross-cutting/helper discovery, use the shortened draft format first unless the user explicitly asks for the full template.
-
-## 25. Implementation Flow Detail Rule
-
-Implementation flow may include involved classes, methods and short code snippets.
-
-Include them when they explain:
+## 14. Business Slice Intake Checklist
 
 ```text
-- contract boundary;
-- non-obvious behavior;
-- behavior that was discussed/questioned;
-- important trade-off;
-- extension/change point;
-- error handling;
-- testability/checkability;
-- no-write/no-side-effect guarantee;
-- generated artifact shape;
-- API/client boundary.
+1. Read planning/README.md.
+2. Read scenario source files through `slice-scenario-flow-behavior-register.md`.
+3. Read draft-driven discovery and this guide.
+4. Read slice questions, extension points and implementation notes registers.
+5. Read planning/testing/ if tests/E2E/client test responsibilities are involved.
+6. Read planning/api/ if API/client contract work is involved.
+7. If scenario/API/constants/testing/security/extension ambiguity exists, record questions and assumptions first.
 ```
 
-Keep routine mechanics high-level.
-
-If details make the flow noisy, extract them into a sibling `.impl.md` file.
-
-Do not create `.impl.md` in advance.
-
-## 26. Constants Consumer Rule
-
-If a business slice introduces client-facing error codes, read:
-
-```text
-planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
-```
-
-## 27. OpenAPI Consumer Rule
+## 15. Consumer Rules
 
 If a business/client slice uses server API, read:
 
@@ -772,16 +361,14 @@ planning/api/client-server-contract-principles.md
 planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
 ```
 
-## 28. CSRF Consumer Rule
+If a client slice needs feedback/messages, read:
+
+```text
+planning/client/cross-cutting/CL-FEEDBACK-001-client-feedback-messages.md
+```
 
 If a business slice introduces browser unsafe API command, read:
 
 ```text
 planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
-```
-
-Parent slice API/security note:
-
-```text
-Unsafe browser API requests are protected by CC-CSRF-001.
 ```

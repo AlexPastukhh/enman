@@ -1,7 +1,7 @@
 # Slice Planning Index
 
 Status: current slice-planning navigation index  
-Scope: business slices, client sidecars, cross-cutting/helper slices, examples, shared registers, test planning, API contract artifacts, client architecture, extension/change points and implementation notes
+Scope: business slices, client sidecars, cross-cutting/helper slices, source-flow/behavior register, examples, shared registers, test planning, API contract artifacts, client architecture, extension/change points and implementation notes
 
 ## 1. Purpose
 
@@ -17,61 +17,32 @@ All slice families use draft-driven discovery:
 planning/slices/draft-driven-discovery-principles.md
 ```
 
-This applies to:
+Practical workflow:
 
 ```text
-business slices
-client sidecars
-cross-cutting/helper slices
-testing/support slices
-documentation/status reconciliation drafts
+planning/slices/l1-slice-drafting-guide.md
 ```
 
-Shortened drafts should also capture extension/change points when future behavior can affect current design.
+## 3. Scenario Flow / Behavior Source Rule
 
-## 3. Slice Types
-
-### Business slice
-
-Scenario-derived business behavior slice.
-
-Full backend/API/persistence business slice files should include:
+Before writing Scenario Flow, Visual Scenario Flow, Behavior Coverage or Covered Behavior Items, read:
 
 ```text
-Visual Scenario Flow
--> Scenario Slice Flow
--> Visual Implementation Flow
--> Implementation Flow
--> Extension / Change Points, when relevant
+planning/slices/slice-scenario-flow-behavior-register.md
 ```
 
-Visual flow sections should be diagram-like maps, not only linear arrow lists.
-
-### Client sidecar
-
-Client implementation file for a concrete business slice.
-
-Client sidecars are not created in advance. They are created or updated when concrete client work starts and then used as draft/discovery files.
-
-Client sidecars should include architecture/folder-based Visual Client Implementation Flow.
-
-### Cross-cutting slice
-
-Technical/support slice with observable behavior, concern-derived behavior items, concern flow, implementation flow and tests/checks, used by multiple business slices.
-
-### Helper slice
-
-Smaller reusable helper/support behavior with implementation and tests.
-
-### Example slice draft
-
-Example files live in:
+That register points to actual source artifacts:
 
 ```text
-planning/slices/examples/
+planning/diagrams/scenario-text-specs/
+planning/diagrams/scenario-data/
+planning/diagrams/scenario-ui-specs/
+planning/diagrams/scenario-behavior-items/
 ```
 
-They are examples only and are not current implementation evidence unless copied into an active slice and reconciled with current repo state.
+Do not use `slice-questions-register.md`, `slice-extension-points-register.md` or `slice-implementation-notes-register.md` as the source for scenario flow or behavior items.
+
+They are for questions, extension pressure and implementation notes.
 
 ## 4. Current Backend Slice Files
 
@@ -86,15 +57,30 @@ planning/slices/SL-APPL-001-create-individual-applicant-party.md
 planning/slices/SL-REQ-001-create-connection-request.md
 ```
 
+Implementation-ready/planned read slice docs:
+
+```text
+planning/slices/SL-APPL-002-read-current-individual-applicant-party.md
+```
+
 ## 5. Current Client Sidecar Files
 
-Implemented/first-stage client sidecars currently documented:
+Implemented/first-stage or implementation-ready client sidecars currently documented:
 
 ```text
 planning/slices/SL-ACC-001-register-client-account.client.md
 planning/slices/SL-AUTH-001-login-client-account.client.md
 planning/slices/SL-AUTH-002-current-user.client.md
+planning/slices/SL-AUTH-003-logout.client.md
 planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
+planning/slices/SL-APPL-002-read-current-individual-applicant-party.client.md
+```
+
+Status notes:
+
+```text
+SL-AUTH-003.client = implementation-ready client draft; UI not confirmed implemented.
+SL-APPL-002.client = planned / blocked by backend read endpoint.
 ```
 
 Do not create new `.client.md` files before concrete client work starts or implemented client logic must be reconciled.
@@ -108,6 +94,7 @@ planning/slices/implementation-principles.md
 planning/slices/client-architecture-principles.md
 planning/slices/client-component-discovery-guide.md
 planning/slices/change-extension-points-principles.md
+planning/slices/slice-scenario-flow-behavior-register.md
 planning/slices/slice-questions-register.md
 planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
@@ -118,51 +105,18 @@ planning/slices/examples/README.md
 
 ## 7. Slice Registers
 
-Use shared registers to keep local slice discoveries visible across time and chats.
+| Register | Responsibility |
+|---|---|
+| `slice-scenario-flow-behavior-register.md` | maps slices/client sidecars to scenario flow, DATA, UI scenario and behavior item source files |
+| `slice-questions-register.md` | shared overview of currently relevant local questions, including questions from implemented slices |
+| `slice-extension-points-register.md` | extension points, change pressure, anti-coupling decisions and extension/change questions |
+| `slice-implementation-notes-register.md` | future implementation/client/testing notes not yet assigned or already promoted |
 
-```text
-planning/slices/slice-questions-register.md
-planning/slices/slice-extension-points-register.md
-planning/slices/slice-implementation-notes-register.md
-```
+Implemented slices can still have open/future/assumption questions.
 
-### Slice questions register
+Those questions must remain in local `Questions / Decisions` sections and be mirrored to the shared registers when relevant.
 
-`slice-questions-register.md` is the shared overview of currently relevant local slice/client/cross-cutting questions.
-
-Local `Questions / Decisions` sections remain the source of detailed context.
-
-The register makes important local questions discoverable from one place.
-
-### Extension points register
-
-`slice-extension-points-register.md` owns extension points, change pressure, anti-coupling decisions and extension/change questions.
-
-### Implementation notes register
-
-`slice-implementation-notes-register.md` owns concrete future implementation/client/testing notes that are not yet assigned to an active slice or sidecar.
-
-## 8. Question / Extension Sync Rule
-
-When a local slice/client/cross-cutting file has a question that remains relevant after the local draft, mirror it into:
-
-```text
-planning/slices/slice-questions-register.md
-```
-
-Also update specialized registers when needed:
-
-```text
-extension/change pressure -> slice-extension-points-register.md
-future implementation/client/testing note -> slice-implementation-notes-register.md
-scenario/domain ambiguity -> planning/diagrams/scenario-questions-register.md
-```
-
-Open questions and unresolved risks should appear before accepted decisions in local files and registers.
-
-If a question remains local only, state why.
-
-## 9. Examples
+## 8. Examples
 
 Use:
 
@@ -174,17 +128,14 @@ Current examples:
 
 ```text
 planning/slices/examples/L1-APPLICANT-PARTY-READ-CURRENT-early-short-draft-example.md
+planning/slices/examples/L1-APPLICANT-PARTY-READ-CURRENT-client-early-short-draft-example.md
 planning/slices/examples/L1-CONNECTION-REQUEST-CREATE-early-short-draft-example.md
 planning/slices/examples/SL-ACC-001-register-client-account-full-slice-example.md
 ```
 
-The read-current early short example is the primary shortened draft example for visual flows, assumptions, extension/change points and shared register sync.
+Example files are examples only and are not current implementation evidence unless copied into an active slice and reconciled with current repo state.
 
-The connection-request example is kept as a compact command-flow example.
-
-The full backend slice example shows visual maps before detailed scenario/implementation flows.
-
-## 10. Cross-Cutting / Helper Slices
+## 9. Cross-Cutting / Helper Slices
 
 Use:
 
@@ -200,20 +151,13 @@ planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contr
 planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```
 
-Cross-cutting/helper slices must have:
+Client-wide cross-cutting conventions live in:
 
 ```text
-- observable/support behavior;
-- concern-derived behavior items;
-- concern slice flow;
-- implementation flow;
-- tests/checks;
-- consumers / used-by slices;
-- local questions;
-- ADR impact.
+planning/client/cross-cutting/
 ```
 
-## 11. API Contract Support
+## 10. API Contract Support
 
 API contract docs live in:
 
@@ -223,21 +167,9 @@ planning/api/
 
 Use them before client slice implementation.
 
-For current L1 client work, generated OpenAPI TypeScript types already include L1 auth/applicant/request paths and DTOs.
+Generated OpenAPI TypeScript types are support artifacts, not completed feature UI.
 
-Generated types are support artifacts, not completed feature UI.
-
-## 12. Shared Notes
-
-Use:
-
-```text
-planning/slices/shared/
-```
-
-for reusable notes/helpers that do not have a full slice behavior/test flow.
-
-## 13. Testing Support
+## 11. Testing Support
 
 Testing workflow lives in:
 
@@ -245,51 +177,38 @@ Testing workflow lives in:
 planning/testing/
 ```
 
-Current L1 backend slices are covered primarily by:
+Browser E2E should wait until concrete client/read UI exists and the cross-layer behavior is stable.
 
-```text
-Tests.EnergyManagement/Integration/L1/L1SliceIntegrationTests.cs
-Tests.EnergyManagement/Domain/**
-```
-
-Browser E2E for applicant/request flows should wait until concrete client/read UI exists.
-
-## 14. Parent Business Slice Files
+## 12. Parent Business Slice Files
 
 Parent business slice files own:
 
 ```text
 - vertical behavior;
-- Visual Scenario Flow;
-- Scenario Slice Flow;
-- behavior item coverage summary;
+- Visual Scenario Flow sourced from scenario artifacts;
+- Scenario Slice Flow sourced from scenario artifacts;
+- behavior item coverage summary using source behavior item IDs;
 - Visual Implementation Flow;
-- cross-layer Implementation Flow;
 - API contract;
 - local Questions / Decisions;
 - links/back-references to shared registers when questions are mirrored;
 - extension/change/pressure decisions;
-- application/domain/persistence responsibilities;
 - server/integration tests;
-- end-to-end test coverage summary when relevant;
-- links to cross-cutting/helper slices when used;
 - link to `.client.md` sidecar when client work starts.
 ```
 
-## 15. Client Sidecar Files
+## 13. Client Sidecar Files
 
 A `.client.md` file is created only when concrete client work starts or implemented client logic must be documented and reconciled.
 
 It owns detailed client implementation planning and client/component tests.
 
-It should include E2E coverage only for cross-layer behavior that truly needs browser-client-server wiring.
+It must consume `[UI-SCENARIO]` sources and scenario behavior items through `slice-scenario-flow-behavior-register.md`.
 
-Client sidecars also follow the local/global question sync rule and extension/change point review rule.
-
-Recommended remaining client order:
+## 14. Recommended Remaining Client Order
 
 ```text
-Logout UI/cache/navigation, if needed
+Logout UI/cache/navigation
 -> Current applicant read after refresh
 -> Request Creation UI
 -> My Requests read/list/detail
