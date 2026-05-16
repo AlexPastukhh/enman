@@ -29,30 +29,17 @@ public sealed class ApplicantPartyCreationService : IApplicantPartyCreationServi
         string phoneNumber,
         CancellationToken cancellationToken)
     {
-        var errors = new List<Error>();
+        var fullName = ValidatedInput.ValueOrThrow(
+            FullName.Create(firstName, middleName, lastName),
+            "FullName was validated by FluentValidation but FullName.Create failed.");
 
-        var fullNameResult = FullName.Create(firstName, middleName, lastName);
-        if (fullNameResult.IsFailure)
-        {
-            errors.AddRange(fullNameResult.Error);
-        }
+        var applicantEmail = ValidatedInput.ValueOrThrow(
+            Email.Create(email),
+            "Applicant email was validated by FluentValidation but Email.Create failed.");
 
-        var emailResult = Email.Create(email);
-        if (emailResult.IsFailure)
-        {
-            errors.AddRange(emailResult.Error);
-        }
-
-        var phoneResult = PhoneNumber.Create(phoneNumber);
-        if (phoneResult.IsFailure)
-        {
-            errors.AddRange(phoneResult.Error);
-        }
-
-        if (errors.Count > 0)
-        {
-            return Result.Failure<IndividualApplicantParty, IReadOnlyList<Error>>(errors);
-        }
+        var applicantPhoneNumber = ValidatedInput.ValueOrThrow(
+            PhoneNumber.Create(phoneNumber),
+            "PhoneNumber was validated by FluentValidation but PhoneNumber.Create failed.");
 
         var account = await _accounts.GetByIdAsync(clientAccountId, cancellationToken);
         if (account is not ClientAccount clientAccount)
@@ -63,9 +50,9 @@ public sealed class ApplicantPartyCreationService : IApplicantPartyCreationServi
 
         var applicantPartyResult = IndividualApplicantParty.Create(
             clientAccount,
-            fullNameResult.Value,
-            emailResult.Value,
-            phoneResult.Value);
+            fullName,
+            applicantEmail,
+            applicantPhoneNumber);
 
         if (applicantPartyResult.IsFailure)
         {
