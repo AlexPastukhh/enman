@@ -30,16 +30,15 @@ Current repo evidence says:
 - Generated OpenAPI TypeScript types include L1 paths/types.
 - Shared L1 API wrappers exist for register/login/current-user/logout/applicant create.
 - Shared fetch/ProblemDetails/form error mapping exists.
-- First-stage client flows exist for registration, login, current-user session bootstrap and Account page applicant create.
-- Logout shared API wrapper exists, but concrete logout UI/cache/navigation is not confirmed.
+- First-stage client flows exist for registration, login, current-user session bootstrap, logout and Account page applicant create.
+- Logout header UI/cache/navigation is implemented.
 - Request creation UI is not implemented.
 ```
 
 ## 3. Current Remaining Client Work Order
 
 ```text
-Logout UI/cache/navigation
--> Current applicant read after refresh
+Current applicant read after refresh
 -> Request Creation UI with applicant fields/prefill/clear behavior
 -> My Requests read/list/detail
 -> Browser E2E happy paths
@@ -49,8 +48,8 @@ Logout UI/cache/navigation
 
 | ID | Related slice / future slice | Scenario | Layer | Tags | Note | Why it matters | Promote to | Status |
 |---|---|---|---|---|---|---|---|---|
-| NOTE-LOGOUT-CLIENT-001 | `SL-AUTH-003.client` | auth/session | Client/UI | logout, cache, navigation | Shared `logoutClientAccount()` API wrapper exists; concrete logout UI/cache/navigation is planned in `SL-AUTH-003-logout.client.md`. | Avoids overclaiming logout UI as implemented while preserving implementation-ready sidecar. | `SL-AUTH-003-logout.client.md` | promoted-to-client-sidecar |
-| NOTE-LOGOUT-CLIENT-002 | `SL-AUTH-003.client` / `CL-FEEDBACK-001` | auth/session | Client/UI | feedback, error | Unexpected logout failure should use action/global feedback and must not show false success. Logout success message is not required. | Prevents one-off logout error UI and ties feedback to client-wide convention. | `CL-FEEDBACK-001` + logout sidecar | open |
+| NOTE-LOGOUT-CLIENT-001 | `SL-AUTH-003.client` | auth/session | Client/UI | logout, cache, navigation | Header logout action is implemented through `LogoutButton` / `useLogoutAction`; it clears session state, removes the current applicant-party query and navigates Home on 204 or stale-session 401. | Records concrete logout UI/cache/navigation behavior for future shell/cache work. | `SL-AUTH-003-logout.client.md` | resolved |
+| NOTE-LOGOUT-CLIENT-002 | `SL-AUTH-003.client` / `CL-FEEDBACK-001` | auth/session | Client/UI | feedback, error | Unexpected logout failure shows local action feedback and does not show false success; logout success message is not required. | Keeps current logout feedback local while preserving future shared feedback direction. | `CL-FEEDBACK-001` + logout sidecar | resolved for current UI |
 | NOTE-FEEDBACK-001 | `CL-FEEDBACK-001` | cross-scenario | Client/UI | success, info, warning, error | Add client-wide feedback/message surface convention for success/info/warning/error outcomes. | Login/register/applicant/request/logout should share feedback vocabulary and not duplicate one-off mechanics. | `planning/client/cross-cutting/CL-FEEDBACK-001-client-feedback-messages.md` | promoted-to-shared-support |
 | NOTE-REQ-UI-001 | future `SL-REQ-001.client` | SC-04 | Client/UI | applicant-data, prefill, clear | Request creation UI should contain applicant data fields/section. If current active applicant data exists, fields are prefilled; user can clear and enter new applicant data before submit. | Aligns request journey with user expectation while keeping accepted applicant changes in account-level ApplicantParty flow. | future request `.client.md` + SC-04 UI/behavior docs | open |
 | NOTE-REQ-UI-002 | future `SL-REQ-001.client` | SC-04 | Client/UI | applicant-context, current-active | Request submit should not send ApplicantPartyId or create request-local applicant identity. It uses server/current active applicant after applicant data is accepted. | Prevents spoofing and keeps server-selected applicant context. | future request `.client.md` | open |

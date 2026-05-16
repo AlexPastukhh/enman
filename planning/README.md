@@ -24,9 +24,9 @@ First-stage L1 client implementation now exists for:
 - registration UI;
 - login UI;
 - Account page applicant create UI.
+- logout UI/cache/navigation flow.
 
 Remaining L1 client/read work:
-- logout UI/cache/navigation flow, if needed before protected flows;
 - request creation form UI;
 - My Requests read/list/detail UI;
 - client/component tests for implemented client flows;
@@ -233,7 +233,7 @@ planning/slices/slice-implementation-notes-register.md
 | Register client account | `POST /api/l1/auth/register`, DTO `email + password`, response `AccountId + Email`, persisted active ClientAccount | first-stage `/register` UI implemented: email/password/confirmation, API submit, ProblemDetails mapping, success -> `/login` | Use `SL-ACC-001` and `SL-ACC-001.client`; password confirmation is client-only unless backend contract changes |
 | Login client account | `POST /api/l1/auth/login`, returns current-user shape and issues L1 cookie | first-stage `/login` UI implemented: validation, API submit, session query invalidation, success -> home | Use `SL-AUTH-001` and `SL-AUTH-001.client` |
 | Current user | `GET /api/l1/auth/current-user`, protected, L1 marker/account lookup | first-stage session bootstrap implemented: `SessionProvider`, `useSessionQuery`, 401 -> null session | Use `SL-AUTH-002` and `SL-AUTH-002.client`; protected-route policy remains open |
-| Logout | `POST /api/l1/auth/logout`, protected, clears cookie and returns 204 | shared API wrapper exists; concrete logout UI/cache/navigation flow not confirmed | Use `SL-AUTH-003`; create `.client.md` only when logout UI work starts |
+| Logout | `POST /api/l1/auth/logout`, protected, clears cookie and returns 204 | authenticated header logout action implemented; clears session state, removes known applicant-party read query, navigates Home, shows visible failure feedback | Use `SL-AUTH-003` and `SL-AUTH-003-logout.client.md`; CSRF remains deferred |
 | Create individual applicant party | protected `POST /api/l1/applicant-parties/individual`, server-derived account id | first-stage Account page applicant form implemented; success invalidates/refetches current applicant read state | Use `SL-APPL-001` and `SL-APPL-001.client` |
 | Current applicant party read | protected `GET /api/l1/applicant-parties/current-individual`, returns `exists` + applicant data/null, includes `verificationStatus` | Account page reads current applicant state on open; shows read-only applicant data when present and create form when missing | Use `L1-APPLICANT-PARTY-READ-CURRENT` and `.client` sidecar |
 | Create connection request | protected `POST /api/l1/requests`, DTO `details + address`, server-selected current active applicant, no required response body | request creation UI, My Requests read screens and E2E are future work | Use `SL-REQ-001` and `CL-COMMAND-001`; do not create request `.client.md` until work starts |
