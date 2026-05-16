@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Moq;
 using Tests.EnergyManagement.TestHelpers;
+using Tests.EnergyManagement.Legacy.TestHelpers;
 using Tests.EnergyManagement.Integration;
 using Xunit.Abstractions;
 
@@ -345,4 +346,5 @@ namespace Tests.EnergyManagement.Legacy.Integration
         
     }
 }
+
 

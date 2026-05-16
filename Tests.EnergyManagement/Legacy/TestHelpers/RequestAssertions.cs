@@ -3,7 +3,7 @@ using Domain.EnergyManagement.DocumentManaging;
 using EnergyManagement.Server.Data;
 using Xunit.Sdk;
 
-namespace Tests.EnergyManagement.TestHelpers;
+namespace Tests.EnergyManagement.Legacy.TestHelpers;
 
 public static class RequestAssertions
 {
@@ -59,3 +59,4 @@ public static class RequestAssertions
             : UnitResult.Failure<string>(string.Join("; ", diffs));
     }
 }
+

@@ -3,7 +3,7 @@ using EnergyManagement.Server.Api.Contracts.Requests;
 using EnergyManagement.Server.Data;
 using static Domain.EnergyManagement.Common.Error;
 
-namespace Tests.EnergyManagement.TestHelpers
+namespace Tests.EnergyManagement.Legacy.TestHelpers
 {
     public static class ExpectedValidationErrors
     {
@@ -102,3 +102,4 @@ namespace Tests.EnergyManagement.TestHelpers
         }
     }
 }
+

@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using EnergyManagement.Server.Data;
 using Tests.EnergyManagement.TestHelpers;
+using Tests.EnergyManagement.Legacy.TestHelpers;
 using Tests.EnergyManagement.Integration;
 using Xunit.Abstractions;
-using static Tests.EnergyManagement.TestHelpers.ExpectedValidationErrors;
+using static Tests.EnergyManagement.Legacy.TestHelpers.ExpectedValidationErrors;
 namespace Tests.EnergyManagement.Legacy.Integration
 {
     
-    public abstract class AuthTestsBase:IntegrationTest
+    public abstract class AuthTestsBase:LegacyIntegrationTest
     {
 
         public AuthTestsBase(WebAppFactory factory, ITestOutputHelper output) : base(factory, output)
@@ -248,4 +249,5 @@ namespace Tests.EnergyManagement.Legacy.Integration
             
         }
 }
+
 

@@ -1,15 +1,16 @@
 using EnergyManagement.Server;
+using Tests.EnergyManagement.Integration;
 using Xunit.Abstractions;
 
-namespace Tests.EnergyManagement.Integration
+namespace Tests.EnergyManagement.Legacy.Integration
 {
-    public abstract class IntegrationTest
+    public abstract class LegacyIntegrationTest
     {
         protected readonly WebAppFactory _factory;
         protected ITestOutputHelper _output;
 
 
-        public IntegrationTest(WebAppFactory factory, ITestOutputHelper output)
+        public LegacyIntegrationTest(WebAppFactory factory, ITestOutputHelper output)
         {
             _factory = factory;
             _output = output;
@@ -18,3 +19,4 @@ namespace Tests.EnergyManagement.Integration
     }
     
 }
+
