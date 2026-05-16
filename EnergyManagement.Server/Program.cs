@@ -4,6 +4,7 @@ using EnergyManagement.Server.Contracts;
 using EnergyManagement.Server.Data;
 using EnergyManagement.Server.Infrastructure;
 using EnergyManagement.Server.L1.Application.Abstractions;
+using EnergyManagement.Server.L1.Application.Services;
 using EnergyManagement.Server.L1.Persistence;
 using EnergyManagement.Server.L1.Persistence.Repositories;
 using EnergyManagement.Server.Repositories;
@@ -40,6 +41,7 @@ builder.Services.AddScoped(
 builder.Services.AddTransient<IClientRepository,ClientRepository>();
 builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 builder.Services.AddTransient<IApplicantPartyRepository, ApplicantPartyRepository>();
+builder.Services.AddTransient<IApplicantPartyCreationService, ApplicantPartyCreationService>();
 builder.Services.AddTransient<IClientRequestRepository, ClientRequestRepository>();
 
 // builder.Services.AddSingleton(_=>ConstantsToWrite.Create());

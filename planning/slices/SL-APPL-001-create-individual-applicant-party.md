@@ -4,7 +4,7 @@ Status: implemented narrow endpoint / target behavior reconciliation draft
 Package: `[L1]`  
 Source scenario: `SC-10 Applicant Data`  
 Slice type: backend/API + scenario/UI alignment slice  
-Current implementation status: create endpoint exists and returns ApplicantPartyId; old current-active/replacement wording is stale for target model
+Current implementation status: create endpoint exists, returns ApplicantPartyId, uses shared creation service without SaveChanges, and preserves existing ApplicantParties; default-template selection remains future work
 
 ## 1. Slice Overview
 
@@ -84,8 +84,8 @@ Scenario flow intentionally does not mention ApplicantPartyId, SaveChanges, serv
 | F03 | Client | Enters individual applicant data. | SC-10-BI-001 | covered |
 | F04 | System | Creates saved ApplicantParty when accepted. | SC-10-BI-001 | covered/current narrow |
 | F05 | System | Starts ApplicantParty as Unverified. | SC-10-BI-002 | covered |
-| F06 | System | Leaves existing parties unchanged. | SC-10-BI-003 | target |
-| F07 | System | Applies default initialization only when none exists for type. | SC-10-BI-006/007 | target |
+| F06 | System | Leaves existing parties unchanged. | SC-10-BI-003 | covered/current standalone create |
+| F07 | System | Applies default initialization only when none exists for type. | SC-10-BI-006/007 | future default-template slice |
 
 ## 5. Visual Implementation Flow
 
@@ -96,11 +96,11 @@ POST /api/l1/applicant-parties/individual
 [Application Handler]
 standalone create ApplicantParty use case
         ↓
-[ApplicantPartyCreationService target]
+[ApplicantPartyCreationService]
 validate/create/add entity; no SaveChanges
         ↓
-[Default rule target]
-initialize default only when none exists for type
+[Default rule future]
+explicit per-type default-template persistence remains separate
         ↓
 [Handler]
 SaveChanges for standalone create
@@ -129,10 +129,10 @@ It is not a user-visible scenario behavior item.
 | ID | Status | Question | Current direction |
 |---|---|---|---|
 | `SL-APPL-Q-001` | accepted | Does create replace existing ApplicantParties? | No. Create is additive. |
-| `SL-APPL-Q-002` | accepted | What happens to default/current on create? | First of type may initialize default; additional same-type does not switch. |
+| `SL-APPL-Q-002` | future default-template slice | What happens to default/current on create? | Current code keeps legacy current-active field true on new records; explicit per-type default-template persistence remains future. |
 | `SL-APPL-Q-003` | accepted | Is a details page required? | No. Details can be inline. |
 | `SL-APPL-Q-004` | accepted | Should create return ApplicantPartyId? | Yes, as API/implementation support. |
-| `SL-APPL-Q-005` | accepted | Should shared creation logic be extracted? | Yes. Service no SaveChanges; outer handler commits. |
+| `SL-APPL-Q-005` | implemented | Should shared creation logic be extracted? | Yes. `ApplicantPartyCreationService` validates/creates/adds; it does not call SaveChanges; outer handler commits. |
 
 ## 8. Behavior Coverage
 
@@ -140,9 +140,9 @@ It is not a user-visible scenario behavior item.
 |---|---|---|
 | `SC-10-BI-001` | create endpoint creates saved ApplicantParty. | covered/current narrow |
 | `SC-10-BI-002` | new party starts Unverified. | covered/current |
-| `SC-10-BI-003` | target says create is additive. | target |
-| `SC-10-BI-006` | default initialization rule. | target |
-| `SC-10-BI-007` | no implicit default switch. | target |
+| `SC-10-BI-003` | integration test verifies second create keeps first stored/current flag unchanged. | covered/current standalone create |
+| `SC-10-BI-006` | default initialization rule. | future default-template slice |
+| `SC-10-BI-007` | no implicit default switch. | future default-template slice |
 | ApplicantPartyId response | API contract note only. | not behavior |
 
 ## 9. Test / Verification Plan
@@ -151,14 +151,14 @@ It is not a user-visible scenario behavior item.
 |---|---|---|---|
 | authenticated create succeeds | valid signed-in create. | API integration | keep/current |
 | unauthenticated create fails | auth boundary. | API integration | keep/current |
-| invalid data rejects and writes nothing | validation/no-write. | API/domain | keep/current |
+| invalid data rejects and writes nothing | validation/no-write. | API/domain | implemented/current |
 | response includes ApplicantPartyId | stable identity support. | API integration | keep/current |
 | created party belongs to authenticated account | ownership from auth. | API integration | keep/current |
 | created party starts Unverified | verification default. | domain/API | keep/current |
-| creating another party does not replace first | additive model. | API/domain | new important |
-| first of type initializes default | default rule. | API/domain | target planned |
-| second same-type does not switch default | no implicit replacement. | API/domain | target planned |
-| standalone create commits only applicant | transaction boundary. | API integration | keep/update |
+| creating another party does not replace first | additive model. | API/domain | implemented/current |
+| first of type initializes default | default rule. | API/domain | future default-template slice |
+| second same-type does not switch default | no implicit replacement. | API/domain | future default-template slice |
+| standalone create commits only applicant | transaction boundary. | API integration | implemented via handler-owned SaveChanges |
 | request-create with New applicant is atomic | applicant + request together. | API integration | future SL-REQ-001 |
 
 Do not test exact service method/repository call/SaveChanges location here.
@@ -179,9 +179,9 @@ SL-REQ-001 — Create Connection Request With Applicant Context
 [x] response includes ApplicantPartyId
 [x] server derives account from auth context
 [x] applicant starts Unverified
-[ ] remove current-active/replacement wording from implementation docs
-[ ] extract reusable creation service
-[ ] create is additive
+[x] remove current-active/replacement wording from implementation docs for standalone create
+[x] extract reusable creation service
+[x] create is additive
 [ ] first-of-type initializes default
-[ ] second same-type does not switch default
+[ ] second same-type does not switch default through explicit default-template model
 ```

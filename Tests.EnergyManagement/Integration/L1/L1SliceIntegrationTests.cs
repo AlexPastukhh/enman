@@ -524,6 +524,63 @@ public sealed class L1SliceIntegrationTests
         row.LastName.Should().Be(LastName);
         row.Email.Should().Be(ApplicantEmail);
         row.PhoneNumber.Should().Be(PhoneNumber);
+        row.VerificationStatus.Should().Be("Unverified");
+        row.IsCurrentActiveVersion.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task CreateIndividualApplicantParty_WithInvalidData_ReturnsValidationProblemAndCreatesNoApplicant()
+    {
+        var account = await RegisterAccountAsync();
+        var client = AuthenticatedL1Client(account.AccountId);
+        var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
+
+        var response = await client.PostAsJsonAsync(
+            "/api/l1/applicant-parties/individual",
+            new L1CreateIndividualApplicantPartyDto(
+                new L1FullNameDto("", MiddleName, LastName),
+                "not-an-email",
+                ""));
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+
+        var applicantCountAfter = await GetApplicantPartyCountAsync(account.AccountId);
+        applicantCountAfter.Should().Be(applicantCountBefore);
+    }
+
+    [Fact]
+    public async Task CreateIndividualApplicantParty_CreatingSecondApplicantDoesNotDeactivateOrDeleteFirst()
+    {
+        var account = await RegisterAccountAsync();
+        var first = await CreateApplicantPartyAsync(account.AccountId);
+
+        var secondResponse = await AuthenticatedL1Client(account.AccountId).PostAsJsonAsync(
+            "/api/l1/applicant-parties/individual",
+            ValidApplicantPartyDto(
+                firstName: "Jane",
+                middleName: "Anne",
+                lastName: "Smith",
+                email: "second.applicant.l1@example.com",
+                phoneNumber: "79237554727"));
+        await HttpResponseAssertions.For(secondResponse, _output).ShouldBeSuccess();
+        var second = await secondResponse.Content.ReadFromJsonAsync<L1CreateIndividualApplicantPartyResponse>()
+            ?? throw new InvalidOperationException("L1 applicant party response body was empty.");
+
+        var firstRow = await GetApplicantPartyRowAsync(first.ApplicantPartyId);
+        var secondRow = await GetApplicantPartyRowAsync(second.ApplicantPartyId);
+        var applicantCount = await GetApplicantPartyCountAsync(account.AccountId);
+
+        applicantCount.Should().Be(2);
+        firstRow.Should().NotBeNull();
+        secondRow.Should().NotBeNull();
+        firstRow!.IsCurrentActiveVersion.Should().BeTrue();
+        firstRow.VerificationStatus.Should().Be("Unverified");
+        firstRow.FirstName.Should().Be(FirstName);
+        secondRow!.ClientAccountId.Should().Be(account.AccountId);
+        secondRow.FirstName.Should().Be("Jane");
+        secondRow.VerificationStatus.Should().Be("Unverified");
+        secondRow.IsCurrentActiveVersion.Should().BeTrue();
     }
 
     [Fact]
@@ -743,12 +800,17 @@ public sealed class L1SliceIntegrationTests
             .CreateClient();
     }
 
-    private static L1CreateIndividualApplicantPartyDto ValidApplicantPartyDto()
+    private static L1CreateIndividualApplicantPartyDto ValidApplicantPartyDto(
+        string firstName = FirstName,
+        string middleName = MiddleName,
+        string lastName = LastName,
+        string email = ApplicantEmail,
+        string phoneNumber = PhoneNumber)
     {
         return new L1CreateIndividualApplicantPartyDto(
-            new L1FullNameDto(FirstName, MiddleName, LastName),
-            ApplicantEmail,
-            PhoneNumber);
+            new L1FullNameDto(firstName, middleName, lastName),
+            email,
+            phoneNumber);
     }
 
     private static L1CreateConnectionRequestDto ValidConnectionRequestDto(
@@ -794,7 +856,7 @@ public sealed class L1SliceIntegrationTests
     {
         await using var reader = await ExecuteReaderAsync(
             """
-            SELECT Id, ClientAccountId, Email, PhoneNumber,
+            SELECT Id, ClientAccountId, Email, PhoneNumber, VerificationStatus, IsCurrentActiveVersion,
                    FullName_FirstName, FullName_MiddleName, FullName_LastName
             FROM dbo.L1ApplicantParties
             WHERE Id = @id
@@ -813,7 +875,28 @@ public sealed class L1SliceIntegrationTests
             reader.GetString("PhoneNumber"),
             reader.GetString("FullName_FirstName"),
             reader.GetString("FullName_MiddleName"),
-            reader.GetString("FullName_LastName"));
+            reader.GetString("FullName_LastName"),
+            reader.GetString("VerificationStatus"),
+            reader.GetBoolean("IsCurrentActiveVersion"));
+    }
+
+    private async Task<int> GetApplicantPartyCountAsync(long accountId)
+    {
+        await using var connection = new SqlConnection(_fixture.ConnectionString);
+        await connection.OpenAsync();
+
+        await using var command = new SqlCommand(
+            "SELECT COUNT(*) FROM dbo.L1ApplicantParties WHERE ClientAccountId = @id",
+            connection)
+        {
+            CommandType = CommandType.Text
+        };
+        command.Parameters.AddWithValue("@id", accountId);
+
+        var scalar = await command.ExecuteScalarAsync()
+            ?? throw new InvalidOperationException("Could not read L1ApplicantParties count.");
+
+        return (int)scalar;
     }
 
     private async Task<RequestRow?> GetRequestRowAsync(long id)
@@ -1010,7 +1093,9 @@ public sealed class L1SliceIntegrationTests
         string PhoneNumber,
         string FirstName,
         string MiddleName,
-        string LastName);
+        string LastName,
+        string VerificationStatus,
+        bool IsCurrentActiveVersion);
 
     private sealed record RequestRow(
         long Id,
