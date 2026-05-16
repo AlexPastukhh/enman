@@ -4,7 +4,7 @@ using Domain.EnergyManagement.DocumentManaging;
 using FluentAssertions;
 using static Domain.EnergyManagement.Common.Error;
 
-namespace Tests.EnergyManagement.Unit
+namespace Tests.EnergyManagement.Domain.Shared
 {
     public class PassportTests
     {
