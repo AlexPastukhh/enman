@@ -3,7 +3,6 @@ using Domain.EnergyManagement.Common;
 using Domain.EnergyManagement.DocumentManaging;
 using Domain.EnergyManagement.L1;
 using EnergyManagement.Server.L1.Application.Abstractions;
-using EnergyManagement.Server.L1.Application.Security;
 using EnergyManagement.Server.L1.Persistence;
 using MediatR;
 using static Domain.EnergyManagement.Common.Error;
@@ -40,7 +39,7 @@ public sealed class L1RegisterClientAccountHandler
                 [Errors.Account.EmailIsRegisteredAlready]);
         }
 
-        var passwordHashResult = L1PasswordHasher.HashPassword(command.Password);
+        var passwordHashResult = PasswordHash.CreateFromPlainTextPassword(command.Password);
         if (passwordHashResult.IsFailure)
         {
             return Result.Failure<L1RegisterClientAccountResponse, IReadOnlyList<Error>>(passwordHashResult.Error);

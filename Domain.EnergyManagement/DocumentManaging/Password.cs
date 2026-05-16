@@ -65,7 +65,7 @@ namespace Domain.EnergyManagement.DocumentManaging
         {
             var errors = new List<Error>();
 
-            var hashResult = PasswordHash.HashPassword(password);
+            var hashResult = PasswordHash.CreateFromPlainTextPassword(password);
             if (hashResult.IsFailure)
             {
                 errors.AddRange(hashResult.Error);
@@ -87,7 +87,7 @@ namespace Domain.EnergyManagement.DocumentManaging
         /// <returns>Результат <see cref="UnitResult{Error}"/>, указывающий на успех или возвращающий ошибку.</returns>
         public UnitResult<Error> VerifyPassword(string password)
         {
-            var result = PasswordHash.VerifyPassword(_hash!, password);
+            var result = PasswordHash.VerifyPlainTextPassword(_hash!, password);
 
             return result;
         }
@@ -152,11 +152,11 @@ namespace Domain.EnergyManagement.DocumentManaging
         {
         }
 
-        internal static Result<PasswordHash, IReadOnlyList<Error>> HashPassword(string password)
+        public static Result<PasswordHash, IReadOnlyList<Error>> CreateFromPlainTextPassword(string? password)
         {
             var errors = new List<Error>();
 
-            var validate = ValidatePassword(password);
+            var validate = ValidatePlainTextPassword(password);
             if (validate.IsFailure)
             {
                 errors.AddRange(validate.Error);
@@ -165,7 +165,7 @@ namespace Domain.EnergyManagement.DocumentManaging
 
             byte[] salt = RandomNumberGenerator.GetBytes(SaltSize);
             byte[] hash = Rfc2898DeriveBytes.Pbkdf2(
-                password,
+                password!,
                 salt,
                 Iterations,
                 AlgorithmName,
@@ -176,7 +176,7 @@ namespace Domain.EnergyManagement.DocumentManaging
             return Result.Success<PasswordHash, IReadOnlyList<Error>>(passwordHash);
         }
 
-        internal static UnitResult<IReadOnlyList<Error>> ValidatePassword(string password)
+        public static UnitResult<IReadOnlyList<Error>> ValidatePlainTextPassword(string? password)
         {
             var errors = new List<Error>();
 
@@ -209,7 +209,7 @@ namespace Domain.EnergyManagement.DocumentManaging
             return Result.Success<IReadOnlyList<Error>>();
         }
 
-        internal static UnitResult<Error> VerifyPassword(PasswordHash passwordHash, string password)
+        public static UnitResult<Error> VerifyPlainTextPassword(PasswordHash passwordHash, string? password)
         {
             string[] valueParts = passwordHash.Value.Split("-");
             byte[] hash = Convert.FromHexString(valueParts[0]);

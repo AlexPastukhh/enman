@@ -1,5 +1,4 @@
 using Domain.EnergyManagement.DocumentManaging;
-using EnergyManagement.Server.L1.Application.Security;
 using FluentValidation;
 
 namespace EnergyManagement.Server.L1.Api.Validation;
@@ -25,7 +24,7 @@ public sealed class L1RegisterClientAccountDtoValidator
         RuleFor(dto => dto.Password)
             .Custom((password, context) =>
             {
-                var result = L1PasswordHasher.HashPassword(password ?? string.Empty);
+                var result = PasswordHash.ValidatePlainTextPassword(password);
                 if (result.IsFailure)
                 {
                     foreach (var error in result.Error)

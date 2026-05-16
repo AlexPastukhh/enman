@@ -3,7 +3,6 @@ using Domain.EnergyManagement.Common;
 using Domain.EnergyManagement.DocumentManaging;
 using Domain.EnergyManagement.L1;
 using EnergyManagement.Server.L1.Application.Abstractions;
-using EnergyManagement.Server.L1.Application.Security;
 using MediatR;
 using static Domain.EnergyManagement.Common.Error;
 
@@ -42,7 +41,7 @@ public sealed class L1LoginClientAccountHandler
                 activationResult.Error);
         }
 
-        if (!L1PasswordHasher.VerifyPassword(clientAccount.PasswordHash, command.Password))
+        if (PasswordHash.VerifyPlainTextPassword(clientAccount.PasswordHash, command.Password).IsFailure)
         {
             return InvalidCredentials();
         }
