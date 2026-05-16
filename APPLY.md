@@ -1,31 +1,29 @@
-# Apply SL-APPL-002.client archive
+# APPLY — Client Draft + OpenAPI Workflow Rules Docs Sync v2
 
-Run from repository root.
-
-## Apply
+Run from repository root after downloading the archive:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\sl-appl-002-client-applicant-parties-read.zip" -DestinationPath "." -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\client-draft-openapi-rules-docs-sync-v2.zip" -DestinationPath . -Force
+git status
+git diff -- planning
 ```
 
-This archive has repo-relative paths at zip root. It does not contain a wrapper folder.
-
-## Verification commands
+If the diff is correct:
 
 ```powershell
-npm install
-npm --prefix .\energymanagement.client install
+git add planning
+git status
+```
+
+This is a docs-only archive. It intentionally does not include backend/client/runtime code, tests or generated artifacts.
+
+Do not run OpenAPI generation for this docs-only archive.
+
+The OpenAPI generated-artifact workflow documented here is for future code/API-contract archives:
+
+```powershell
+npm run generate:openapi
+npm run generate:api-types
+git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
 npm run check:api
-npm --prefix .\energymanagement.client run lint
-npm --prefix .\energymanagement.client run build
-npm --prefix .\energymanagement.client run test -- --run
-npm run test:e2e
-```
-
-Notes:
-
-```text
-- check:api requires dotnet and git in the target repo.
-- test:e2e requires the repo's local test DB environment.
-- If lint still fails on react-refresh/only-export-components in unchanged files, handle that as a separate cleanup.
 ```

@@ -1,7 +1,7 @@
 # API Contract Planning Index
 
-Status: current API contract planning index / server validation principles added  
-Scope: client/server API contract, OpenAPI structural contract, generated semantic constants, API errors, server request validation policy
+Status: current API contract planning index / generated-artifact check workflow, server validation and client wrapper principles synchronized  
+Scope: client/server API contract, OpenAPI structural contract, generated semantic constants, API errors, server request validation policy, generated artifact check workflow
 
 ## 1. Purpose
 
@@ -15,6 +15,7 @@ generated semantic constants
 API error contract
 FluentValidation/API error-code migration notes
 server request validation responsibility
+generated artifact generation/check workflow
 ```
 
 Cross-cutting implementation/status slices live under:
@@ -30,13 +31,15 @@ planning/api/client-server-contract-principles.md
 planning/api/api-error-contract.md
 planning/api/api-error-mapping-boundary.md
 planning/api/openapi-contract-generation.md
+planning/api/generated-artifact-check-workflow.md
 planning/api/client-constants-generation.md
 planning/api/fluentvalidation-error-code-policy-note.md
 ```
 
-Related cross-cutting validation consumer rule:
+Related cross-cutting docs:
 
 ```text
+planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
 planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
 ```
 
@@ -67,13 +70,17 @@ Application/domain validation
 Client local code
 = presentation and behavior:
   ErrorCode -> UI message, stale/refetch behavior, DTO field -> form field mapping.
+
+Shared API wrappers
+= low-level handwritten client/server boundary:
+  stable path constants, fetchJson calls, generated DTO aliases.
 ```
 
 ## 4. Primary Cross-Cutting Slices
 
 | Slice | Responsibility | Current status |
 |---|---|---|
-| `planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md` | OpenAPI artifact and generated TypeScript type workflow | first-stage implemented; wrapper migration/hardening remains |
+| `planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md` | OpenAPI artifact and generated TypeScript type workflow | first-stage implemented; generated artifact check workflow clarified |
 | `planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md` | Generated semantic constants and constants testing workflow | implemented baseline; client-consumer usage remains per slice |
 | `planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md` | Antiforgery token/session context support and API security error normalization | implementation-ready draft |
 | `planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md` | FluentValidation server request DTO/query validation principles and business-slice consumer rules | implementation-ready principles; L1 adoption planned |
@@ -94,12 +101,53 @@ The API artifact baseline exists and should be used by new client/server work:
 Current commands:
 
 ```bash
-npm run generate:api
+npm run generate:openapi
+npm run generate:api-types
 npm run check:api
 dotnet run --project EnergyManagement.Tools -- generate-client-constants --out Shared --check
 ```
 
-## 6. Current Direction For New Client/Server Work
+## 6. Generated Artifact Check Workflow
+
+Use this workflow after backend API contract changes:
+
+```powershell
+npm run generate:openapi
+npm run generate:api-types
+
+git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
+
+npm run check:api
+```
+
+Why staging is needed in archive/manual workflows:
+
+```text
+check:api runs check:openapi, regenerates TypeScript API types,
+and then ends with git diff --exit-code against:
+  Shared/openapi.json
+  energymanagement.client/src/shared/api/generated/openapi-types.ts
+
+In an uncommitted archive workflow, generated files are expected changes.
+If they are correct but unstaged, git diff can still fail because the working tree differs from the index.
+Staging generated artifacts before check:api lets the command verify that rerunning generation causes no additional working-tree diff.
+```
+
+Do not manually edit generated artifacts.
+
+If generated artifacts are wrong, regenerate them from the repo commands.
+
+If the task is docs-only, do not include generated artifacts.
+
+Detailed workflow:
+
+```text
+planning/api/generated-artifact-check-workflow.md
+planning/api/openapi-contract-generation.md
+planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
+```
+
+## 7. Current Direction For New Client/Server Work
 
 Before implementing missing client/server slices:
 
@@ -111,9 +159,36 @@ Before implementing missing client/server slices:
 5. Keep thin handwritten client API wrappers unless a later ADR/slice explicitly changes that.
 6. Record any per-slice contract gaps in the parent slice or `.client.md` once concrete client work starts.
 7. For server input changes, plan FluentValidation request DTO/query validation before application/domain handler logic.
+8. For client drafts, do not invent generated operation ids before OpenAPI generation exists; use the exact generated names after generation.
 ```
 
-## 7. Remaining API Future Review Items
+## 8. Shared API Wrapper Rule
+
+Keep low-level API fetch wrappers in `shared/api` even when the folder contains wrappers for different entities.
+
+Reason:
+
+```text
+shared/api is not the entity domain layer.
+It is the project-wide client/server boundary for low-level HTTP calls, path constants and generated DTO aliases.
+Entity-level API files wrap these low-level functions with domain-facing operation names.
+```
+
+Example:
+
+```text
+shared/api/l1RequestApi.ts
+  owns low-level GET /api/l1/requests call.
+
+entities/request/api/listMyRequests.ts
+  owns request-entity read operation name and query integration.
+```
+
+Do not move read wrappers into `features` only because a page uses them.
+
+Read UI belongs under `entities/<entity>/ui` when it is display-only. Features remain for command/user-action flows.
+
+## 9. Remaining API Future Review Items
 
 | ID | Area | Question / review item | Current direction | Status |
 |---|---|---|---|---|

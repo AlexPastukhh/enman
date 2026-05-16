@@ -1,7 +1,7 @@
 # OpenAPI Contract Generation
 
-Status: current first-stage implemented workflow
-Scope: OpenAPI as structural API contract, Shared/openapi.json and generated TypeScript DTO/types
+Status: current first-stage implemented workflow / generated artifact check workflow clarified  
+Scope: OpenAPI as structural API contract, `Shared/openapi.json`, generated TypeScript DTO/types and local generated-artifact verification
 
 ## 1. Purpose
 
@@ -59,26 +59,26 @@ For client-facing endpoints:
 
 ## 5. Public Contract Endpoint Classification
 
-Current classification:
+Client slices must know whether an endpoint is:
 
 ```text
-target L1 contract:
-  POST /api/l1/auth/register
-  POST /api/l1/applicant-parties/individual
-  POST /api/l1/requests
-
-legacy/current auth support:
-  AuthController endpoints under /api/auth
-
-temporary compatibility:
-  existing route constants in Shared/constants.json while the client migration is incomplete
+- target L1 contract;
+- legacy/current compatibility;
+- temporary compatibility;
+- internal / not for client consumption.
 ```
 
-Do not remove legacy routes from client constants until the client has moved away from them.
+Do not remove legacy route constants until the client has moved away from them.
 
 ## 6. Shared/openapi.json Generation
 
-Current command:
+Write/update artifact:
+
+```bash
+npm run generate:openapi
+```
+
+Equivalent command:
 
 ```bash
 dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
@@ -87,35 +87,23 @@ dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/ope
 Check mode:
 
 ```bash
-dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check
+npm run check:openapi
 ```
 
-The tool:
+Equivalent command:
 
-```text
-- starts the backend with --no-launch-profile;
-- does not start frontend/Vite;
-- uses the shared TestEnergyManagement LocalDB connection string;
-- fetches /swagger/v1/swagger.json over development HTTPS;
-- parses and re-serializes deterministic indented JSON;
-- writes Shared/openapi.json only in write mode;
-- compares without writing in --check mode.
+```bash
+dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check
 ```
 
 Normal server startup must not write generated OpenAPI artifacts.
 
-Swashbuckle CLI remains a possible future alternative:
-
-```bash
-dotnet swagger tofile --output Shared/openapi.json EnergyManagement.Server/bin/Debug/net8.0/EnergyManagement.Server.dll v1
-```
-
 ## 7. Generated TypeScript Types
 
-First stage:
+Generate TypeScript DTO/types from `Shared/openapi.json`:
 
 ```bash
-npm --prefix energymanagement.client run generate:api-types
+npm run generate:api-types
 ```
 
 Output:
@@ -139,7 +127,7 @@ Reason:
 - avoids risky full generated client migration.
 ```
 
-## 8. Check Mode / Generated Artifact Verification
+## 8. Generated Artifact Verification
 
 Current check strategy:
 
@@ -147,21 +135,31 @@ Current check strategy:
 npm run check:api
 ```
 
-Root scripts:
+`check:api` does three things:
 
 ```text
+1. check OpenAPI artifact against server metadata;
+2. regenerate TypeScript API types;
+3. fail if generated artifacts differ from the git index.
+```
+
+Because the final step is `git diff --exit-code`, generated artifacts should be staged before using `check:api` as a no-extra-drift check in local archive/commit workflow.
+
+Recommended workflow after API source changes:
+
+```powershell
 npm run generate:openapi
-npm run check:openapi
 npm run generate:api-types
-npm run generate:api
+
+git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
+
 npm run check:api
 ```
 
-`check:api` verifies:
+Detailed workflow:
 
 ```text
-Shared/openapi.json is up to date with server metadata.
-generated openapi-types.ts is up to date with Shared/openapi.json.
+planning/api/generated-artifact-check-workflow.md
 ```
 
 ## 9. Relationship To CC-API-001
@@ -174,4 +172,4 @@ planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-gen
 
 This file owns API-level principles and generation direction.
 
-CC-API-001 owns the cross-cutting implementation status, remaining hardening questions and consumer rules.
+CC-API-001 owns cross-cutting implementation status, remaining hardening questions and consumer rules.

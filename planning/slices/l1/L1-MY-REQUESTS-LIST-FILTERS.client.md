@@ -1,49 +1,68 @@
 # L1-MY-REQUESTS-LIST-FILTERS.client — My Requests List Filters Client Sidecar
 
-Status: early client draft  
+Status: implemented first-stage client sidecar / normalized to canonical draft style  
 Slice type: client read/filter sidecar  
-Scope: introduce filter architecture for My Requests list; first implemented filter is `status`  
-Depends on: `L1-MY-REQUESTS-READ-LIST.client`  
-Backend capability: `GET /api/l1/requests?status=...`  
-Out of scope: request details page, request creation, employee review filters, non-status filters until backend supports them
+Parent slice: `SL-REQ-002 — My Requests List`  
+Architecture direction: page owns URL/filter state; entity owns filter model/query; feature UI owns controls; shared API owns query-string HTTP mapping.
 
-Current My Requests list sidecar intentionally excludes filtering UI. This slice adds filter state, filter UI, query-key integration and API query mapping without changing request list ownership rules.
+## 1. Scope
 
-## 1. Core Idea
-
-Filters are page state.
-
-URL query params are the storage/sync mechanism for that page state.
-
-Entity query fetches the list with the current filters.
+This sidecar owns:
 
 ```text
-/requests
-        ↓
-filters = {}
-        ↓
-GET /api/l1/requests
-
-/requests?status=Approved
-        ↓
-filters = { status: "Approved" }
-        ↓
-GET /api/l1/requests?status=Approved
+- My Requests list filter architecture;
+- status as the first implemented filter;
+- page-owned URL query state for filters;
+- invalid URL filter handling and reset action;
+- controlled filter UI;
+- entity filter model;
+- entity query key including filters;
+- shared API query-string mapping for supported filters;
+- filtered empty state and reset behavior.
 ```
 
-This means:
+## 2. Out of Scope
 
 ```text
-Page owns filter state.
-
-Feature filter UI lets user change it.
-
-Entity query fetches data with it.
-
-List feature renders whatever data came back.
+- My Requests list card rendering -> L1-MY-REQUESTS-READ-LIST.client;
+- Own Request Details page -> L1-MY-REQUEST-DETAILS.client;
+- request creation -> future SL-REQ-001.client;
+- employee review filters -> future employee-side slice;
+- non-status filters until backend/source docs support them -> future filter extension;
+- backend list endpoint implementation -> SL-REQ-002;
+- OpenAPI generation work -> API generation/check workflow;
+- manual refetch as filter mechanism -> not needed when query key includes filters.
 ```
 
-## 2. Visual UI / Scenario Flow
+## 3. Related Slices / Owners
+
+```text
+L1-MY-REQUESTS-READ-LIST.client
+  owns base My Requests page/list read state and list/card rendering.
+
+L1-MY-REQUESTS-LIST-FILTERS.client
+  owns filter state, URL sync, filter controls and filtered query behavior.
+
+L1-MY-REQUEST-DETAILS.client
+  owns /requests/:requestId details read context.
+
+SL-REQ-002 backend
+  owns GET /api/l1/requests and status query support.
+
+Future request creation sidecar
+  owns create-new/from-feedback actions if introduced later.
+```
+
+## 4. Visual UI / Scenario Flow
+
+Source UI model:
+
+```text
+Client opens My Requests page.
+Client can filter own requests by status.
+Filtered list or filtered empty state is visible.
+Client can reset filters.
+```
 
 ```text
 [Authenticated Client]
@@ -53,18 +72,13 @@ opens My Requests page
 shows own request list
         ↓
 [Client]
-uses filters UI
+uses filter UI
         ↓
 [Client]
 selects request status
         ↓
 [Page]
-updates filter state
-and syncs it to URL query params:
-  /requests?status=Approved
-        ↓
-[Entity Query]
-fetches My Requests with filters
+updates filter state and URL query params
         ↓
 [System]
 returns own requests matching selected status
@@ -77,133 +91,227 @@ or filtered empty state
 can reset filters
         ↓
 [Page]
-clears filter state and URL query:
-  /requests
+clears filter state and URL query params
         ↓
-[Entity Query]
-fetches unfiltered list
+[Client UI]
+shows unfiltered list state
 ```
 
-## 3. Visual Client Implementation Flow
+Scenario flow table:
+
+| Step | UI / Scenario layer | User-visible responsibility |
+|---|---|---|
+| S01 | Authenticated client | Opens My Requests page. |
+| S02 | Page/list area | Shows own request list. |
+| S03 | Filter controls | Client selects request status. |
+| S04 | Filtered result | Client sees only own requests matching selected status. |
+| S05 | Filtered empty state | Client sees that no requests match selected filter. |
+| S06 | Reset action | Client can clear selected filters. |
+| S07 | URL state | Filter selection can survive reload/direct URL. |
+
+## 5. Visual Client Implementation Flow
 
 ```text
-[Route]
-/requests
-/requests?status=InReview
-/requests?status=Approved
-/requests?status=Rejected
-        ↓
-[Page Layer]
+[Route / Page Layer]
 pages/requests/my/MyRequestsPage.tsx
-owns filter state through URL search params
+
+Lives here:
+  MyRequestsPage
+  page-level branch logic:
+    loading / error / invalid filters / empty / filtered empty / success
+  URL search-param ownership
+  composition of filters + list
+
+Uses:
+  useSearchParams()
+  parseMyRequestsFilters()
+  serializeMyRequestsFilters()
+  useMyRequestsQuery({ filters })
+  MyRequestsFilters
+  MyRequestsList
+
+Owns:
+  filter state through URL search params
+  invalid URL filter branch
+  reset filters action
+  passing controlled filters/callbacks to filter UI
+  passing returned request data to list UI
+
+Does not own:
+  allowed status constants internals
+  low-level HTTP path string
+  request card rendering internals
+  shared API query-string mapping
         ↓
+
 [Page URL Model]
 pages/requests/my/model/myRequestsUrlFilters.ts
-parses URLSearchParams into typed MyRequestsFilters
-validates URL values
-serializes MyRequestsFilters back to URLSearchParams
+
+Lives here:
+  parseMyRequestsFilters()
+  serializeMyRequestsFilters()
+  invalid filter detection
+
+Uses:
+  URLSearchParams
+  allowed status values from entity model
+
+Owns:
+  URL <-> MyRequestsFilters mapping
+  safe invalid URL handling
+
+Does not own:
+  React Query hook
+  HTTP mapping
+  visible controls
         ↓
-[Entity Model]
+
+[Entity Model Layer]
 entities/request/model/myRequestsFilters.ts
-defines:
+
+Lives here:
   MyRequestsFilters
   MyRequestStatus
+  allowedMyRequestStatuses
+
+Owns:
+  request filter type shape
   allowed status values
+  future extension point for additional supported filters
+
+Does not own:
+  URLSearchParams
+  UI controls
+  HTTP query string construction
         ↓
-[Entity Query]
+
+[Entity Query Layer]
 entities/request/model/useMyRequestsQuery.ts
-receives filters as input
-builds query key with filters
-calls listMyRequests(filters)
+
+Lives here:
+  useMyRequestsQuery({ filters })
+  myRequestsQueryKeys.list(filters)
+
+Uses:
+  useQuery()
+  listMyRequests(filters)
+
+Owns:
+  query key including filters
+  query function binding
+  read hook state
+
+Does not own:
+  URL parsing
+  visible filter controls
+  HTTP path string
         ↓
-[Shared API]
+
+[Entity API Layer]
+entities/request/api/listMyRequests.ts
+
+Lives here:
+  listMyRequests(filters?)
+
+Uses:
+  shared API listMyRequests wrapper
+
+Owns:
+  entity-level read operation name
+  delegating shared API response into request entity read flow
+
+Does not own:
+  React Query hook
+  URL storage
+  component rendering
+        ↓
+
+[Shared API Layer]
 shared/api/l1RequestApi.ts
-maps filters to backend query string:
-  status -> ?status=Approved
-        ↓
-[Feature Filter UI]
-features/request/my-requests-filters/ui/*
-renders controls
-receives filters + callbacks
-does not read URL directly
-        ↓
-[Feature List UI]
-features/request/my-requests-list/ui/*
-renders request list / empty state
-does not know where filters came from
-```
 
-## 4. Architecture Rules
+Lives here:
+  listMyRequests(filters?) low-level wrapper
+  mapping supported filters to query string
 
-| Layer | Owns | Does not own |
-|---|---|---|
-| `pages/requests/my` | filter state, URL sync, invalid URL state, passing filters to query | request card rendering, low-level HTTP |
-| `entities/request` | filter types, allowed values, query keys, query hook | route params, `useSearchParams`, UI controls |
-| `features/request/my-requests-filters` | visible filter controls, `onChange`, `onReset` events | URL, fetch, React Query |
-| `features/request/my-requests-list` | list/card/empty rendering | filters parsing, backend query params |
-| `shared/api` | HTTP query string mapping | current selected filter state |
+Uses:
+  fetchJson()
+  generated OpenAPI types where available
 
-Correct mental model:
-
-```text
-Filter UI = controlled feature component.
-
-Filter state = page state.
-
-Filter type = request entity model.
-
-Filtered fetch = request entity query.
-
-HTTP mapping = shared API.
-```
-
-## 5. State Flow
-
-When user selects `Approved`:
-
-```text
-1. MyRequestsFilters UI receives current filters:
-   {}
-
-2. User selects Approved.
-
-3. MyRequestsFilters calls:
-   onChange({ status: "Approved" })
-
-4. MyRequestsPage handles change:
-   setSearchParams({ status: "Approved" })
-
-5. URL becomes:
-   /requests?status=Approved
-
-6. MyRequestsPage rerenders.
-
-7. Page parses URL:
-   filters = { status: "Approved" }
-
-8. Page calls:
-   useMyRequestsQuery({ filters })
-
-9. Query key changes:
-   ["requests", "my", { status: "Approved" }]
-
-10. React Query automatically fetches:
+Owns:
+  low-level HTTP call:
+    GET /api/l1/requests
     GET /api/l1/requests?status=Approved
+  stable path constant
+  query-string construction
 
-11. MyRequestsList receives returned data and renders it.
+Does not own:
+  current selected filter state
+  React Query
+  visible controls
+  page branch decisions
+        ↓
+
+[Feature Filter UI Layer]
+features/request/my-requests-filters/ui/*
+
+Lives here:
+  MyRequestsFilters component
+  status select/control
+  reset filters button
+
+Props:
+  filters: MyRequestsFilters
+  onChange(nextFilters)
+  onReset()
+
+Owns:
+  visible filter controls
+  controlled UI rendering
+  user events for filter changes/reset
+
+Does not own:
+  URL state
+  fetch/query logic
+  query keys
+  backend query params
+        ↓
+
+[Feature List UI Layer]
+features/request/my-requests-list/ui/*
+
+Lives here:
+  MyRequestsList
+  request cards/list
+  list empty state
+
+Owns:
+  rendering request summaries returned by query
+  regular/filtered empty display when passed by page
+
+Does not own:
+  parsing filters
+  filter controls
+  backend query params
 ```
 
-No manual `refetch()` is needed if the query key includes filters.
+In ordinary words:
 
-## 6. Questions / Decisions
+```text
+The page owns the selected filters because the page owns the URL. The filter feature is controlled by the page and only emits user events. The request entity model owns the filter type and allowed status values. The entity query includes filters in its query key, so changing filters naturally triggers the correct read. The shared API wrapper is the low-level client/server boundary that maps supported filters to a query string.
+```
 
-### Q-MYREQ-FILTER-001 — Is this status-only or filter foundation?
+## 6. Client API / Server Contract
 
-Status: decided.
+Backend capability:
 
-This slice introduces the My Requests filter architecture. The first implemented filter is `status`.
+```text
+GET /api/l1/requests
+GET /api/l1/requests?status=InReview
+GET /api/l1/requests?status=Approved
+GET /api/l1/requests?status=Rejected
+```
 
-Current shape:
+Current filter shape:
 
 ```ts
 type MyRequestsFilters = {
@@ -211,7 +319,7 @@ type MyRequestsFilters = {
 };
 ```
 
-Future shape:
+Future possible shape, only when backend/source docs support it:
 
 ```ts
 type MyRequestsFilters = {
@@ -223,310 +331,120 @@ type MyRequestsFilters = {
 };
 ```
 
-### Q-MYREQ-FILTER-002 — Where does filter state live?
-
-Status: decided.
-
-Filter state lives on the page.
-
-The page stores/syncs it through URL query params:
+Rules:
 
 ```text
-/requests
-/requests?status=InReview
-/requests?status=Approved
-/requests?status=Rejected
+Page owns filter state.
+URL query params are storage/sync for page state.
+Filter UI is controlled by page.
+Entity query accepts filters and includes them in query key.
+Shared API maps supported filters to query string.
+No manual refetch is needed if query key includes filters.
+Future filters are out of scope until backend/source docs support them.
 ```
 
-`MyRequestsFilters` does not own filter state. It only displays current filters and emits change events.
+## 7. Questions / Decisions
 
-### Q-MYREQ-FILTER-003 — Why does `MyRequestsFilters` receive filters?
+| ID | Status | Question | Assumption / current direction | Impact | Shared register / local-only reason |
+|---|---|---|---|---|---|
+| `Q-MYREQ-FILTER-001` | implemented / accepted | Is this status-only or filter foundation? | Filter architecture with status as first implemented filter. | Future filters can extend same model. | Mirrored as `SL-MYREQ-FILTER-Q-001`. |
+| `Q-MYREQ-FILTER-002` | implemented / accepted | Where does filter state live? | Page owns filter state and syncs it through URL query params. | Page/feature/entity boundary. | Mirrored as `SL-MYREQ-FILTER-Q-002`. |
+| `Q-MYREQ-FILTER-003` | implemented / accepted | Why does filter UI receive filters? | It is a controlled component and must reflect URL/current state. | Reload/direct URL behavior. | Mirrored as `SL-MYREQ-FILTER-Q-003`. |
+| `Q-MYREQ-FILTER-004` | implemented / accepted | Should API helper accept a filter object? | Yes, `listMyRequests(filters?: MyRequestsFilters)`. | Shared API/entity query contract. | Mirrored as `SL-MYREQ-FILTER-Q-004`. |
+| `Q-MYREQ-FILTER-005` | implemented / assumption | What happens for invalid status URL value? | Page detects invalid value, avoids misleading request, shows reset action. Backend remains safe if reached. | Safe URL parsing. | Mirrored as `SL-MYREQ-FILTER-Q-005`. |
+| `Q-MYREQ-FILTER-006` | implemented / accepted | Should filtered empty state differ from regular empty state? | Yes, show filtered empty state and reset action. | User feedback. | Mirrored as `SL-MYREQ-FILTER-Q-006`. |
 
-Status: decided.
-
-Because it is a controlled component.
-
-It receives:
-
-```tsx
-<MyRequestsFilters
-  filters={filters}
-  onChange={handleFiltersChange}
-  onReset={handleResetFilters}
-/>
-```
-
-Meaning:
+## 8. Extension / Change Points
 
 ```text
-Page tells filter UI:
-  current status is Approved
-
-Filter UI renders:
-  select value = Approved
-
-User changes selection
-
-Filter UI tells page:
-  user selected Rejected
-
-Page updates filter state / URL.
+- non-status filters -> future filter extension when backend/source docs support them;
+- saved filter presets -> future UX slice, not current;
+- employee-side filters -> separate employee-side slice;
+- request creation from filtered empty state -> future request creation/client flow;
+- server-side paging/sorting -> future API/list slice if introduced.
 ```
 
-The component needs `filters` to show the current selected value, especially after reload or direct open of `/requests?status=Approved`.
-
-### Q-MYREQ-FILTER-004 — Should API helper accept a filter object?
-
-Status: decided.
-
-Yes.
-
-```ts
-listMyRequests(filters?: MyRequestsFilters)
-```
-
-For this slice it maps only `status`.
-
-Later filters can be added without changing the page-to-query calling pattern.
-
-### Q-MYREQ-FILTER-005 — What happens for invalid status in URL?
-
-Status: assumption.
-
-Preferred first implementation:
-
-```text
-/requests?status=Done
-        ↓
-page detects invalid filter value
-        ↓
-does not call list endpoint with invalid status
-        ↓
-shows visible invalid filter state
-        ↓
-offers reset filters action
-```
-
-Backend remains safe if a bad value reaches it, because the backend returns validation problem for invalid status.
-
-### Q-MYREQ-FILTER-006 — Should filtered empty state differ from regular empty state?
-
-Status: accepted direction.
-
-Regular empty state:
-
-```text
-У вас пока нет заявок.
-```
-
-Filtered empty state:
-
-```text
-Заявок с выбранным фильтром не найдено.
-```
-
-Filtered empty state should offer reset filters action.
-
-## 7. Behavior Coverage
+## 9. Behavior Coverage
 
 Behavior Coverage is not Test Coverage.
 
-| Behavior item | How draft covers it | Status |
+| Behavior item | How sidecar covers it | Status |
 |---|---|---|
-| Client can use filters on My Requests page | Adds filter UI to `/requests` | covered |
-| Status is the first supported filter | Status control maps to backend `?status=` | covered |
-| Filter state survives reload | State is stored in URL query params | covered |
-| Filter state supports browser back/forward | URL query is source of page state | covered |
-| Filtered list shows matching requests | Filters are passed into entity query and API call | covered |
-| Filtered empty state is understandable | Separate empty message for active filters | covered |
-| Client can reset filters | Reset clears URL query params | covered |
-| Invalid filter value is handled safely | Page shows invalid filter state and reset action | covered |
-| Future filters can be added | Uses extensible `MyRequestsFilters` model | covered as architecture |
+| Client can use filters on My Requests page | Adds controlled filter UI to `/requests`. | covered / implemented |
+| Status is the first supported filter | Status control maps to backend `?status=`. | covered / implemented |
+| Filter state survives reload/direct URL | State is stored in URL query params and parsed by page model. | covered / implemented |
+| Filter state supports browser back/forward | URL query is source of page state. | covered / implemented |
+| Filtered list shows matching requests | Filters are passed into entity query and API call. | covered / implemented |
+| Filtered empty state is visible | Page/list renders filtered empty state and reset action. | covered / implemented |
+| Invalid URL value is handled safely | Page detects invalid filter state and can offer reset. | covered / implemented |
+| Future non-status filters | Explicitly out of scope until source/backend support exists. | future |
 
-## 8. Test / Verification Plan
+## 10. Client / Component / E2E Verification Plan
 
-### Component/client tests
-
-| Test / check | Verifies |
-|---|---|
-| Filters UI renders on My Requests page | Filter entry is visible |
-| Status filter options render | Supported statuses are selectable |
-| URL query initializes selected status | `/requests?status=Approved` shows Approved selected |
-| Selecting status updates URL query | Page owns filter state and URL sync |
-| `useMyRequestsQuery` receives filters | Page passes filters to entity query |
-| Query key includes filters | Filtered/unfiltered lists do not share cache key |
-| API helper maps status to `?status=` | Shared API builds correct request URL |
-| Reset filters clears URL query | User returns to unfiltered list |
-| Filtered empty state renders | Empty filtered result is understandable |
-| Invalid URL status shows safe state | Bad URL does not crash and can be reset |
-
-### Shared API tests
+Component/client tests:
 
 | Test / check | Verifies |
 |---|---|
-| `listMyRequests()` calls `/api/l1/requests` | Unfiltered call unchanged |
-| `listMyRequests({ status: "Approved" })` calls `/api/l1/requests?status=Approved` | Status mapping |
-| API uses generated response type | No duplicated DTO |
+| filter UI receives selected status and renders it | controlled component behavior |
+| changing status calls onChange with new filter object | feature emits event, does not own state |
+| reset button calls onReset | reset event boundary |
+| URL parser maps valid status to filter object | page URL model |
+| URL parser detects invalid status | safe invalid URL handling |
+| serializer writes/clears status query param | URL sync |
+| query key changes when filters change | filtered query identity |
+| filtered empty state differs from regular empty state | user feedback |
 
-### E2E happy path
+Shared API/entity tests:
+
+| Test / check | Verifies |
+|---|---|
+| listMyRequests({ status: Approved }) calls `/api/l1/requests?status=Approved` | query-string mapping |
+| listMyRequests({}) calls `/api/l1/requests` | unfiltered API call |
+| useMyRequestsQuery includes filters in key | automatic refetch by query key |
+
+E2E visible outcomes:
 
 ```text
-register/login client
-create applicant party
-create multiple requests
-set one request to Approved through backend/test setup
+login client
         ↓
 open /requests
         ↓
-unfiltered list is visible
+select status filter
         ↓
-select status = Approved
+assert URL query updates
         ↓
-URL becomes /requests?status=Approved
+assert only matching visible request statuses are shown
         ↓
-approved request is visible
+clear/reset filters
         ↓
-in-review request is not visible in filtered list
-        ↓
-reset filters
-        ↓
-URL becomes /requests
-        ↓
-unfiltered list is visible again
+assert unfiltered list state is visible
 ```
 
-E2E should assert visible filtered behavior, not query key internals.
+Do not assert React Query internals or manual refetch calls in E2E.
 
-## 9. Suggested File Placement
+## 11. Implementation Checklist
 
 ```text
-src/pages/requests/my/
-  MyRequestsPage.tsx
-  myRequestsPage.css
-  model/myRequestsUrlFilters.ts
-  model/myRequestsUrlFilters.test.ts
-
-src/entities/request/model/
-  myRequestsFilters.ts
-  requestQueryKeys.ts
-  useMyRequestsQuery.ts
-
-src/entities/request/api/
-  listMyRequests.ts
-
-src/features/request/my-requests-filters/ui/
-  MyRequestsFilters.tsx
-  MyRequestsStatusFilter.tsx
-  myRequestsFiltersConst.ts
-  myRequestsFilters.css
-
-src/features/request/my-requests-list/ui/
-  MyRequestsList.tsx
-  MyRequestsEmptyState.tsx
-
-src/shared/api/
-  l1RequestApi.ts
-
-tests/e2e/requests/
-  my-requests-filters.spec.ts
-
-planning/slices/l1/
-  L1-MY-REQUESTS-LIST-FILTERS.client.md
+[x] Define MyRequestsFilters / MyRequestStatus.
+[x] Parse filters from URL.
+[x] Serialize filters to URL.
+[x] Render controlled filter UI.
+[x] Pass filters to useMyRequestsQuery.
+[x] Include filters in query key.
+[x] Map status to API query string.
+[x] Render filtered empty state/reset action.
+[x] Handle invalid URL status safely.
+[ ] Extend with future filters only when backend/source docs support them.
 ```
 
-## 10. Next Step
+## 12. Next Step
 
-Implementation direction:
+No new implementation is required for first-stage status filters if current code evidence confirms the above behavior.
+
+Next docs/status work:
 
 ```text
-Add MyRequestsFilters type/model
-        ↓
-Add page URL parse/serialize helpers
-        ↓
-Update MyRequestsPage:
-  read search params
-  parse filters
-  handle invalid URL filters
-  pass filters to query
-  pass filters/onChange/onReset to filter UI
-        ↓
-Update useMyRequestsQuery(filters)
-        ↓
-Update requestQueryKeys.myRequests(filters)
-        ↓
-Update listMyRequests(filters)
-        ↓
-Add MyRequestsFilters UI
-        ↓
-Add filtered empty state
-        ↓
-Add component tests
-        ↓
-Add E2E happy path
+- keep this sidecar status synchronized with current code;
+- update shared registers when future filters are introduced;
+- keep E2E assertions focused on visible filtered outcomes, not refetch mechanics.
 ```
-
-## 11. Scenario Flow
-
-```text
-Authenticated client opens My Requests page
-        ↓
-Client sees own request list
-        ↓
-Client selects a status filter
-        ↓
-Page updates filter state
-        ↓
-Page syncs filter state to URL query params
-        ↓
-Client UI loads own requests matching selected status
-        ↓
-Filtered results are displayed
-        ↓
-If no matching requests exist, filtered empty state is displayed
-        ↓
-Client can reset filters
-        ↓
-Page clears filter state and returns to unfiltered My Requests list
-```
-
-## 12. Behavior Items
-
-### Client can use My Requests filters
-
-The authenticated client can filter the My Requests list.
-
-### Status is the first supported filter
-
-The first available filter is request status.
-
-### Filter state is stored in URL
-
-Selected filters are represented in page query params.
-
-### Filter UI shows current selected filter
-
-The filter controls display the current filter state from the page.
-
-### Filter UI reports user changes to the page
-
-When the user changes a filter, the filter UI emits the new filter state to the page.
-
-### Filtered list uses backend query
-
-The client requests filtered data from `GET /api/l1/requests?status=...`.
-
-### Filtered empty state is visible
-
-If no requests match the selected filter, the page shows a filtered empty state.
-
-### Client can reset filters
-
-The client can clear filters and return to the unfiltered list.
-
-### Invalid filter value is handled safely
-
-Invalid URL filter values do not crash the page and can be reset.
-
-### Future filters can be added
-
-The filter model is extensible for future filters such as request type, date range, or search.

@@ -1,24 +1,29 @@
 # Client Planning Index
 
-Status: current client planning navigation / ApplicantParty flat-list read model and My Requests filters synchronized  
+Status: current client planning navigation / read-vs-command layering and short-draft rules synchronized  
 Scope: client-wide UI/client conventions, cross-cutting client behavior and current L1 client implementation state
 
 ## 1. Purpose
 
 This folder contains client-wide planning docs that are broader than a single slice sidecar.
 
-It complements:
+## 2. Required Read Order For Client Work
 
 ```text
+planning/client/README.md
+planning/client/client-layering-for-read-and-command-slices.md
+planning/client/cross-cutting/README.md
 planning/slices/client-architecture-principles.md
 planning/slices/client-component-discovery-guide.md
+planning/slices/client-slice-short-draft-rules-and-example.md
 planning/slices/l1-slice-drafting-guide.md
-planning/diagrams/scenario-ui-specs/
-planning/slices/*.client.md
-planning/slices/l1/*.client.md
+planning/slices/slice-scenario-flow-behavior-register.md
+planning/api/client-server-contract-principles.md
+planning/api/openapi-contract-generation.md
+planning/api/generated-artifact-check-workflow.md
 ```
 
-## 2. Responsibility
+## 3. Responsibility
 
 This folder owns:
 
@@ -30,147 +35,67 @@ This folder owns:
 - client-wide error mapping conventions;
 - client-wide feedback/message conventions;
 - client-wide command success conventions;
-- client behavior conventions reused by multiple `.client.md` sidecars.
+- client layering conventions reused by multiple `.client.md` sidecars.
 ```
 
-It does not own concrete scenario behavior, concrete slice implementation flow, backend API contracts or domain rules.
+Concrete feature flow and status belongs in the matching `.client.md` slice sidecar.
 
-Concrete client feature flow and status belongs in the matching `.client.md` slice sidecar.
+## 4. Read vs Command Placement
 
-## 3. Current Files
+Read slices use:
 
 ```text
-planning/client/cross-cutting/README.md
-planning/client/cross-cutting/CL-FORM-VALIDATION-001-deferred-validation.md
-planning/client/cross-cutting/CL-ERROR-HANDLING-001-client-server-errors.md
-planning/client/cross-cutting/CL-COMMAND-001-command-success-without-required-response-body.md
-planning/client/cross-cutting/CL-FEEDBACK-001-client-feedback-messages.md
-planning/client/cross-cutting/CL-STYLING-001-css-modules-tokens.md
-planning/client/cross-cutting/CL-A11Y-001-accessibility-and-aria.md
+pages + entities + shared/api + generated contracts
 ```
 
-## 4. Current L1 Client State
-
-Current repo/planning state:
+Command/user-action slices use:
 
 ```text
-- L1 backend/API/persistence/session flows are implemented for register/login/current-user/logout/applicant/request commands.
-- Generated OpenAPI TypeScript support exists.
-- Shared L1 API wrappers exist for auth/current-user/logout, applicant create and My Requests list.
-- Shared fetch/ProblemDetails/form-error mapping exists.
-- First-stage client feature flows exist for registration, login, current-user session bootstrap, ApplicantParty create on Applicant Parties page / section and My Requests list.
-- Applicant Parties page target read model uses flat GET /api/l1/applicant-parties applicantParties[]; client groups by isCurrentDefault.
-- My Requests filters are implementation-ready planning; status is the first supported filter.
-- My Request Details is implementation-ready planning; details route/API wrapper are not confirmed implemented in current client code.
-- Request creation UI is future work and must consume SC-04 UI/behavior sources.
+pages + features + entities + shared/api + generated contracts
 ```
 
-Implemented first-stage client sidecars:
+Read-only UI belongs in:
 
 ```text
-planning/slices/SL-ACC-001-register-client-account.client.md
-planning/slices/SL-AUTH-001-login-client-account.client.md
-planning/slices/SL-AUTH-002-current-user.client.md
-planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
-planning/slices/l1/L1-MY-REQUESTS-READ-LIST.client.md
+entities/<entity>/ui
 ```
 
-Implementation-ready/planned client sidecars:
+Command/action UI belongs in:
 
 ```text
-planning/slices/SL-AUTH-003-logout.client.md
-planning/slices/SL-APPL-002-read-current-individual-applicant-party.client.md
-planning/slices/l1/L1-MY-REQUESTS-LIST-FILTERS.client.md
-planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md
-future planning/slices/SL-REQ-001-create-connection-request.client.md
-future Applicant Parties page read sidecar when concrete client read work starts
+features/<action>/ui
 ```
 
-## 5. Current Remaining Client Work
+Shared API wrappers live in `shared/api` even when they call endpoints for different entities, because `shared/api` is the low-level client/server contract boundary.
+
+Detailed rule:
 
 ```text
-1. Logout UI/cache/navigation.
-2. Applicant Parties page read model: use flat applicantParties[] and group by isCurrentDefault.
-3. Request creation form UI with applicant fields/prefill/clear behavior from SC-04.
-4. My Requests filters: status first, URL state on page, filter UI controlled by page.
-5. My Request Details page.
-6. Client/component tests for implemented feature flows.
-7. Browser E2E happy paths after UI/read flows are stable.
-8. CSRF/antiforgery handling for unsafe browser commands when that cross-cutting slice is implemented.
+planning/client/client-layering-for-read-and-command-slices.md
 ```
 
-## 6. Relationship To `planning/slices/*.client.md`
-
-Client-wide conventions live here.
-
-Concrete feature flow and status live in sidecars:
+## 5. Current L1 Client State Reminders
 
 ```text
-planning/slices/*.client.md
-planning/slices/l1/*.client.md
+- Register/login/current-user/logout client flows exist.
+- My Requests list exists.
+- My Requests filters and details may already be implemented in code; verify current repo before calling them planned.
+- ApplicantParty client still needs migration from old current-individual model to flat Applicant Parties read model.
+- Request creation UI is future unless current repo code proves otherwise.
 ```
 
-A `.client.md` file should state:
+## 6. Concrete Client Sidecar Rule
+
+Do not create `.client.md` files in advance unless a concrete client slice is being drafted or implemented.
+
+When drafting, use the canonical short-draft shape:
 
 ```text
-- feature UI behavior from scenario/UI sources;
-- architecture/folder-based Visual Client Implementation Flow;
-- generated OpenAPI types used;
-- generated constants/error codes used;
-- form value -> API DTO mapping;
-- ProblemDetails field/root error mapping;
-- feedback/message convention, if used;
-- command success convention, if used;
-- local questions/assumptions;
-- behavior coverage with source behavior IDs;
-- client/component/E2E verification plan;
-- follow-up slices.
+planning/slices/client-slice-short-draft-rules-and-example.md
 ```
 
-## 7. Relationship To Scenario UI Specs
-
-Scenario UI specs describe what the user must see, understand, enter, confirm, correct or be prevented from doing.
-
-Client-wide conventions describe reusable implementation choices for realizing those UI outcomes.
-
-Do not convert a client implementation convention into a domain/API requirement unless a scenario explicitly needs that behavior.
-
-Use:
+Canonical current example:
 
 ```text
-planning/slices/slice-scenario-flow-behavior-register.md
-```
-
-before drafting a `.client.md` Behavior Coverage table.
-
-## 8. Concrete Client Sidecar Rule
-
-Do not create `.client.md` files in advance.
-
-Create/update a `.client.md` only when concrete client work starts or when implemented client logic must be documented/reconciled.
-
-When concrete client work starts, read:
-
-```text
-planning/slices/l1-slice-drafting-guide.md
-planning/slices/slice-scenario-flow-behavior-register.md
-planning/slices/client-architecture-principles.md
-planning/slices/client-component-discovery-guide.md
-planning/client/cross-cutting/README.md
-planning/api/client-server-contract-principles.md
-planning/api/openapi-contract-generation.md
-planning/api/client-constants-generation.md
-planning/slices/slice-questions-register.md
-planning/slices/slice-implementation-notes-register.md
-```
-
-Then use generated OpenAPI types and generated semantic constants rather than inventing client contracts.
-
-For Applicant Parties page read work:
-
-```text
-GET /api/l1/applicant-parties returns applicantParties[].
-Client groups by isCurrentDefault:
-  top highlighted area = true
-  other saved list = false
+planning/slices/SL-APPL-002-account-applicant-parties-read.client.md
 ```

@@ -1,144 +1,145 @@
-# L1-MY-REQUESTS-READ-LIST.client — My Requests List Client Sidecar
+# L1-MY-REQUESTS-READ-LIST.client — My Requests Read List
 
-Status: first-stage implemented client sidecar  
+Status: implemented first-stage client / layering normalization note  
+Parent slice: `SL-REQ-002 — My Requests List`  
 Slice type: client read sidecar  
-Parent backend slice: `SL-REQ-002 — My Requests List`  
-Source scenario/UI sources:
+Architecture direction: read slice maps to pages + entities; features are reserved for command/user-action behavior.
+
+## 1. Scope
+
+This sidecar owns:
 
 ```text
-planning/diagrams/scenario-text-specs/SC-05-my-requests-own-request-details.md
-planning/diagrams/scenario-data/SC-05-my-requests-data.md
-planning/diagrams/scenario-ui-specs/SC-05-my-requests-ui.md
-planning/diagrams/scenario-behavior-items/SC-05-my-requests-behavior-items.md
+- My Requests list read state for signed-in client;
+- list loading/error/empty/success states;
+- rendering own request summaries;
+- linking to request details where available;
+- using entity query/API model for list reads.
 ```
 
-Current implementation status: first-stage client list page implemented; filters and details are separate sidecars.
-
-## 1. Sidecar Overview
-
-Observable client behavior:
+## 2. Out of Scope
 
 ```text
-Authenticated client opens My Requests page
-        ↓
-Client UI fetches own requests
-        ↓
-System derives current account from L1 auth session
-        ↓
-System returns requests owned by this account
-        ↓
-Client sees list, empty state, loading state, sign-in-required state or error state
+- status filter controls -> L1-MY-REQUESTS-LIST-FILTERS.client;
+- request details page -> L1-MY-REQUEST-DETAILS.client;
+- create request UI -> future SL-REQ-001.client;
+- backend list endpoint -> SL-REQ-002;
+- review/approve/reject employee flows -> future slices.
 ```
 
-Each request summary shows enough data to identify the request and see current status.
+## 3. Layering Correction
 
-## 2. Visual UI / Scenario Flow
+The request list is read/display UI.
+
+Target placement for new or normalized code:
 
 ```text
-[Client]
-opens /requests
+entities/request/ui/MyRequestsList.tsx
+entities/request/ui/MyRequestSummaryCard.tsx
+entities/request/ui/MyRequestsEmptyState.tsx
+entities/request/model/useMyRequestsQuery.ts
+entities/request/api/listMyRequests.ts
+shared/api/l1RequestApi.ts
+```
+
+Do not treat read-only list rendering as a feature command component.
+
+Filter controls remain a feature/user-action sidecar.
+
+## 4. Visual UI / Scenario Flow
+
+```text
+[Signed-in Client]
+opens My Requests page
         ↓
 [Page]
-checks session state
+shows own request list read area
         ↓
  ┌──────────────────────────────┬──────────────────────────────┐
- │ session exists               │ no session                   │
+ │ requests exist               │ no requests exist            │
  ▼                              ▼
-[Page]                         [Sign-in required state]
-fetches My Requests             link to login
-        ↓
- ┌──────────────┬───────────────┬──────────────┐
- │ loading      │ success       │ error        │
- ▼              ▼               ▼
-Loading text    List/empty      Page error
+Client sees own request         Client sees empty list state
+summary cards
 ```
 
-## 3. Visual Client Implementation Flow
+## 5. Visual Client Implementation Flow
 
 ```text
-[Route]
-clientRoutes.requests -> /requests
-        ↓
-[Page]
+[Route / Page Layer]
 pages/requests/my/MyRequestsPage.tsx
-owns session branch and page layout
+
+Lives here:
+  MyRequestsPage
+  page-level read branch composition
+
+Uses:
+  useMyRequestsQuery(filters)
+  MyRequestsList
+  MyRequestsFilters when filter sidecar is enabled
+
+Owns:
+  page layout
+  read state composition
+
+Does not own:
+  fetchJson
+  shared API path constants
+  request summary card internals
         ↓
-[Entity Query]
+
+[Entity Query Layer]
 entities/request/model/useMyRequestsQuery.ts
-loads current account request summaries
+
+Lives here:
+  useMyRequestsQuery()
+  myRequestsQueryKeys
+
+Uses:
+  listMyRequests(filters)
+
+Owns:
+  React Query read hook
+  query key including filters
+
+Does not own:
+  filter UI controls
+  route params
         ↓
-[Shared API]
-shared/api/l1RequestApi.ts
-GET /api/l1/requests
-        ↓
-[Feature UI]
-features/request/my-requests-list/ui/MyRequestsList.tsx
-renders list or empty state
+
+[Entity Display UI Layer]
+entities/request/ui/*
+
+Lives here:
+  MyRequestsList
+  MyRequestSummaryCard
+  MyRequestsEmptyState
+
+Owns:
+  read-only list display
+  empty state display
+
+Does not own:
+  filter state
+  backend query params
 ```
 
-## 4. Client Implementation Flow
+## 6. Behavior Coverage
 
-| Step | Layer | Responsibility | Current status |
-|---|---|---|---|
-| I01 | Route/page | `/requests` route renders `MyRequestsPage`. | implemented |
-| I02 | Page | Page checks session and renders sign-in-required branch. | implemented |
-| I03 | Entity query | Query loads current account My Requests summaries. | implemented |
-| I04 | Shared API | Wrapper calls `GET /api/l1/requests`. | implemented |
-| I05 | Feature UI | List/empty/loading/error state rendered. | implemented |
-| I06 | Filter UI | Status filter controls and URL query state. | separate sidecar |
-| I07 | Details link | Link from request card to details page. | details sidecar |
-
-## 5. Client API / Generated Contract
-
-Current shared API wrapper uses generated OpenAPI DTO type for `L1MyRequestSummaryDto`.
-
-Current first-stage wrapper calls unfiltered:
-
-```text
-GET /api/l1/requests
-```
-
-Filter support belongs to:
-
-```text
-planning/slices/l1/L1-MY-REQUESTS-LIST-FILTERS.client.md
-```
-
-## 6. Questions / Decisions
-
-| ID | Status | Question | Current direction |
-|---|---|---|---|
-| `Q-MYREQ-LIST-CLIENT-001` | accepted | Should list sidecar include filtering? | No. Filter architecture/status filter is a separate sidecar. |
-| `Q-MYREQ-LIST-CLIENT-002` | accepted | Should list sidecar include details page? | No. Details page is a separate sidecar. |
-| `Q-MYREQ-LIST-CLIENT-003` | future review | Should request card summary change? | Keep current summary until UI/source behavior needs a different identification format. |
-
-## 7. Behavior Coverage
-
-| Source behavior item | How sidecar covers it | Status |
+| Source behavior | How sidecar covers it | Status |
 |---|---|---|
-| `SC-05-BI-001` Client can view own requests list | `/requests` page loads My Requests list. | covered |
-| `SC-05-BI-002` Empty own requests list is normal | UI renders empty state from empty response. | covered |
-| `SC-05-BI-003` Request summary identifies a request | Summary card/list renders backend summary data. | covered |
-| `SC-05-BI-004` Request status is visible in list | UI renders request status. | covered |
-| `SC-05-BI-005` Client can filter by status | Delegated to filter sidecar. | separate |
-| `SC-05-BI-009` Client can open own request details | Delegated to details sidecar. | separate |
+| client sees own requests | renders own request summary list | covered |
+| empty list state | renders empty state when no requests | covered |
+| request status visible | summary card displays status | covered |
+| status filter | owned by filter sidecar | related/out of scope |
+| request details | owned by details sidecar | related/out of scope |
 
-## 8. Client / Component / E2E Verification Plan
-
-| Test / check | Verifies | Layer | Status |
-|---|---|---|---|
-| My Requests page renders loading/list/empty/error branches | Read UI states | component/client | implemented/planned per current test state |
-| API wrapper calls `/api/l1/requests` | Correct endpoint | shared API | implemented |
-| E2E create request -> My Requests shows created request | Cross-layer visible outcome | E2E | implemented/planned depending on current test state |
-| Status filter behavior | URL/filter/query mapping | client/component/E2E | separate sidecar |
-| Details navigation | Card link to detail route | client/component/E2E | details sidecar |
-
-E2E should assert visible list outcome, not internal query/cache mechanics.
-
-## 9. Dependent / Follow-up Slices
+## 7. Verification Plan
 
 ```text
-L1-MY-REQUESTS-LIST-FILTERS.client
-L1-MY-REQUEST-DETAILS.client
-future request creation client sidecar
+- page renders loading/error/empty/success states;
+- list renders request summaries;
+- empty state appears for empty response;
+- list component is read-only display;
+- filter controls are not owned by list display component;
+- E2E asserts visible list/empty state, not React Query internals.
 ```
