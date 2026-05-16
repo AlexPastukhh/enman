@@ -7,10 +7,11 @@ using EnergyManagement.Server.Api.Routes;
 using EnergyManagement.Server.Data;
 using FluentAssertions;
 using Tests.EnergyManagement.TestHelpers;
+using Tests.EnergyManagement.Integration;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace Tests.EnergyManagement.Integration
+namespace Tests.EnergyManagement.Legacy.Integration
 {
     [Collection("IntegrationTestCollection")]
     public class ClientRequestsTests :  ClientRequestsTestsBase
@@ -123,3 +124,4 @@ namespace Tests.EnergyManagement.Integration
         
     }
 }
+

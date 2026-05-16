@@ -1,5 +1,3 @@
-namespace Tests.EnergyManagement.Unit;
-
 using FluentAssertions;
 using CSharpFunctionalExtensions;
 using Domain.EnergyManagement.Common;
@@ -7,6 +5,8 @@ using static Domain.EnergyManagement.Common.Error.Errors.Account;
 using System.Collections.Generic;
 using Tests.EnergyManagement.TestHelpers;
 using Domain.EnergyManagement.DocumentManaging;
+
+namespace Tests.EnergyManagement.Legacy.Domain;
 
 
 public static class IndividualClientNullCases
@@ -269,3 +269,5 @@ public class UserTests
         create.Error.Count.Should().Be(errorsCount);
     }
 }
+
+

@@ -3,7 +3,7 @@ using Tests.EnergyManagement.TestHelpers;
 using Domain.EnergyManagement.DocumentManaging;
 using static Domain.EnergyManagement.Common.Error.Errors.ClientRequestErrors;
 
-namespace Tests.EnergyManagement.Unit
+namespace Tests.EnergyManagement.Legacy.Domain
 {
     public class ClientRequestTests:ClientRequestUnitBase
     {
@@ -72,3 +72,4 @@ namespace Tests.EnergyManagement.Unit
         }
     }
 }
+

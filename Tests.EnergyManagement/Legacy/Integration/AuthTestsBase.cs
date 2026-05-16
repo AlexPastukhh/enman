@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using EnergyManagement.Server.Data;
 using Tests.EnergyManagement.TestHelpers;
+using Tests.EnergyManagement.Integration;
 using Xunit.Abstractions;
 using static Tests.EnergyManagement.TestHelpers.ExpectedValidationErrors;
-namespace Tests.EnergyManagement.Integration
+namespace Tests.EnergyManagement.Legacy.Integration
 {
     
     public abstract class AuthTestsBase:IntegrationTest
@@ -247,3 +248,4 @@ namespace Tests.EnergyManagement.Integration
             
         }
 }
+

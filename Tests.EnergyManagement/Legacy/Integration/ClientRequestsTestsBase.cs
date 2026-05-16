@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using EnergyManagement.Server.Data;
 using Tests.EnergyManagement.TestHelpers;
+using Tests.EnergyManagement.Integration;
 using Xunit.Abstractions;
 
-namespace Tests.EnergyManagement.Integration
+namespace Tests.EnergyManagement.Legacy.Integration
 {
     public abstract class ClientRequestsTestsBase : IntegrationTest
     {
@@ -281,3 +282,4 @@ namespace Tests.EnergyManagement.Integration
 
     }
 }
+

@@ -16,9 +16,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Moq;
 using Tests.EnergyManagement.TestHelpers;
+using Tests.EnergyManagement.Integration;
 using Xunit.Abstractions;
 
-namespace Tests.EnergyManagement.Integration
+namespace Tests.EnergyManagement.Legacy.Integration
 {
     
     [Collection("IntegrationTestCollection")]
@@ -344,3 +345,4 @@ namespace Tests.EnergyManagement.Integration
         
     }
 }
+

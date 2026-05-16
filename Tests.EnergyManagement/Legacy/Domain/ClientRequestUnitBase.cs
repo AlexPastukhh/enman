@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Tests.EnergyManagement.TestHelpers;
 
-namespace Tests.EnergyManagement.Unit
+namespace Tests.EnergyManagement.Legacy.Domain
 {
     public class ClientRequestUnitBase
     {
@@ -26,3 +26,4 @@ namespace Tests.EnergyManagement.Unit
         }
     }
 }
+
