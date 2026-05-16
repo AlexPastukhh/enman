@@ -132,12 +132,13 @@ Important open questions should appear first in local `Questions / Decisions` se
 68. planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
 69. planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 70. planning/slices/shared/README.md
-71. planning/slices/shared/antiforgery-token-session-context.md
-72. planning/slices/implementation-principles.md
-73. planning/slices/client-architecture-principles.md
-74. planning/slices/client-component-discovery-guide.md
-75. planning/slices/change-extension-points-principles.md
-76. planning/replacement-file-generation-guide.md
+71. planning/slices/shared/maybe-for-optional-results.md
+72. planning/slices/shared/antiforgery-token-session-context.md
+73. planning/slices/implementation-principles.md
+74. planning/slices/client-architecture-principles.md
+75. planning/slices/client-component-discovery-guide.md
+76. planning/slices/change-extension-points-principles.md
+77. planning/replacement-file-generation-guide.md
 ```
 
 ## 3. Documentation Update Direction
@@ -206,6 +207,14 @@ planning/slices/slice-questions-register.md
 planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
 ```
+
+Shared implementation conventions:
+
+```text
+planning/slices/shared/maybe-for-optional-results.md
+```
+
+For repository/query APIs where absence of the resulting object is a normal outcome, use the Maybe convention when planning new/refactored server code. Current nullable repository APIs remain current implementation evidence until refactored.
 
 ## 5. Current L1 Backend / Client State
 
@@ -337,9 +346,10 @@ Current known status remains planning/future hardening unless repo evidence late
 3. Do not redo implemented L1 backend/API/persistence/session flows.
 4. Do not re-plan already implemented first-stage registration/login/session/applicant-create client flows as missing.
 5. Use `.client.md` sidecars for implemented client flows and future client discovery.
-6. Remaining client order: logout UI if needed -> current applicant read -> request creation UI -> My Requests read/list/detail -> E2E happy paths.
-7. Keep local slice questions synchronized with the shared slice question register.
-8. For full backend slice docs, keep visual maps before detailed scenario/implementation flows.
-9. For full client slice docs, keep folder-based visual implementation maps before detailed implementation flow.
-10. For diagrams, run Diagram Chat Phase 1 preflight before generating `.drawio` XML.
+6. For new/refactored repository/query APIs, use `Maybe<T>` when absence of the resulting object is a normal outcome.
+7. Remaining client order: logout UI if needed -> current applicant read -> request creation UI -> My Requests read/list/detail -> E2E happy paths.
+8. Keep local slice questions synchronized with the shared slice question register.
+9. For full backend slice docs, keep visual maps before detailed scenario/implementation flows.
+10. For full client slice docs, keep folder-based visual implementation maps before detailed implementation flow.
+11. For diagrams, run Diagram Chat Phase 1 preflight before generating `.drawio` XML.
 ```

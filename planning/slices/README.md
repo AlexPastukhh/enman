@@ -147,6 +147,7 @@ planning/slices/slice-questions-register.md
 planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
 planning/slices/shared/README.md
+planning/slices/shared/maybe-for-optional-results.md
 planning/slices/cross-cutting/README.md
 planning/slices/examples/README.md
 ```
@@ -269,7 +270,37 @@ planning/slices/shared/
 
 for reusable notes/helpers that do not have a full slice behavior/test flow.
 
-## 13. Testing Support
+Current shared notes:
+
+```text
+planning/slices/shared/maybe-for-optional-results.md
+planning/slices/shared/antiforgery-token-session-context.md
+```
+
+`maybe-for-optional-results.md` is the target convention for repository/query APIs where no resulting object is a normal outcome. It is especially relevant for future read slices and repository refactors.
+
+## 13. Repository / Optional Result Convention
+
+For new/refactored repository and query APIs, use:
+
+```text
+planning/slices/shared/maybe-for-optional-results.md
+```
+
+Core rule:
+
+```text
+If absence of the resulting object is normal, return `Maybe<T>` from repository/query APIs and let the application handler map `Maybe.None` to the use-case result.
+```
+
+Current implementation note:
+
+```text
+Existing L1 repositories still use nullable returns in several places.
+That is current repo evidence, not the target convention for new/refactored repository APIs.
+```
+
+## 14. Testing Support
 
 Testing workflow lives in:
 
@@ -288,7 +319,7 @@ Client/component/E2E test evidence for current L1 client sidecars was not found 
 
 Browser E2E for applicant/request flows should wait until the corresponding client/read UI exists.
 
-## 14. Parent Business Slice Files
+## 15. Parent Business Slice Files
 
 Parent business slice files own:
 
@@ -310,7 +341,7 @@ Parent business slice files own:
 - link to `.client.md` sidecar when client work starts.
 ```
 
-## 15. Client Sidecar Files
+## 16. Client Sidecar Files
 
 A `.client.md` file is created only when concrete client work starts.
 

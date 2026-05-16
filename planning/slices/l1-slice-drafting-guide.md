@@ -574,7 +574,50 @@ Also include:
 | Client API function | Endpoint | Generated OpenAPI type(s) used | Error constants used | Status |
 |---|---|---|---|---|
 
-## 18. Cross-Cutting / Helper Slice Intake Checklist
+## 18. Maybe / Optional Repository Result Rule
+
+When a slice uses repository/query reads where absence is a normal possible outcome, read:
+
+```text
+planning/slices/shared/maybe-for-optional-results.md
+```
+
+Target rule:
+
+```text
+Repository/query API returns Maybe<T>.
+Application handler maps Maybe.None to the use-case meaning.
+```
+
+Use this especially for:
+
+```text
+GetByIdAsync
+GetByEmailAsync
+GetCurrentActive...Async
+Find...Async
+```
+
+Slice implementation flow should say both parts:
+
+```text
+[Repository]
+returns Maybe<T> for optional lookup
+        ↓
+[Application Handler]
+maps Maybe.None to invalid credentials / not found / validation error / empty state
+```
+
+If the current implementation still uses nullable returns, document it honestly:
+
+```text
+Current implementation returns nullable `T?`.
+Target convention for new/refactored repository APIs: `Maybe<T>`.
+```
+
+Do not overclaim Maybe usage before code has been refactored.
+
+## 19. Cross-Cutting / Helper Slice Intake Checklist
 
 ```text
 1. Identify source requirement type:
@@ -588,7 +631,7 @@ Also include:
 8. Update cross-cutting index and relevant navigation.
 ```
 
-## 19. Test Coverage Sections
+## 20. Test Coverage Sections
 
 Parent slice and `.client.md` should separate:
 
@@ -605,7 +648,7 @@ planning/testing/testing-principles.md
 planning/testing/e2e-testing-workflow.md
 ```
 
-## 20. E2E Coverage Table
+## 21. E2E Coverage Table
 
 If E2E is relevant, include:
 
@@ -620,7 +663,7 @@ browser -> client -> HTTP API -> server/application/domain/persistence/session -
 
 Do not use E2E to exhaustively test client-visible UI behavior.
 
-## 21. Client Test Coverage Table
+## 22. Client Test Coverage Table
 
 If client-visible UI behavior is involved, include:
 
@@ -629,7 +672,7 @@ If client-visible UI behavior is involved, include:
 
 Detailed UI validation belongs here, not in happy-path E2E.
 
-## 22. Business Slice Flow Rule
+## 23. Business Slice Flow Rule
 
 Business slices use:
 
@@ -641,7 +684,7 @@ Scenario-derived behavior items
 -> Implementation Flow
 ```
 
-## 23. Cross-Cutting / Helper Slice Flow Rule
+## 24. Cross-Cutting / Helper Slice Flow Rule
 
 Cross-cutting/helper slices use:
 
@@ -666,7 +709,7 @@ These items are first-class behavior items and must be covered by the concern fl
 
 For early shortened drafts, Concern Slice Flow may be represented as a visual concern/scenario flow when that is clearer.
 
-## 24. Cross-Cutting / Helper Slice Template
+## 25. Cross-Cutting / Helper Slice Template
 
 ```text
 # CC-XXX — Title
@@ -693,7 +736,7 @@ Used by:
 
 For early cross-cutting/helper discovery, use the shortened draft format first unless the user explicitly asks for the full template.
 
-## 25. Implementation Flow Detail Rule
+## 26. Implementation Flow Detail Rule
 
 Implementation flow may include involved classes, methods and short code snippets.
 
@@ -718,7 +761,7 @@ If details make the flow noisy, extract them into a sibling `.impl.md` file.
 
 Do not create `.impl.md` in advance.
 
-## 26. Constants Consumer Rule
+## 27. Constants Consumer Rule
 
 If a business slice introduces client-facing error codes, read:
 
@@ -726,7 +769,7 @@ If a business slice introduces client-facing error codes, read:
 planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
 ```
 
-## 27. OpenAPI Consumer Rule
+## 28. OpenAPI Consumer Rule
 
 If a business/client slice uses server API, read:
 
@@ -735,7 +778,7 @@ planning/api/client-server-contract-principles.md
 planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
 ```
 
-## 28. CSRF Consumer Rule
+## 29. CSRF Consumer Rule
 
 If a business slice introduces browser unsafe API command, read:
 

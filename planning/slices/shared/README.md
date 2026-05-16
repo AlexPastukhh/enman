@@ -19,9 +19,28 @@ planning/slices/cross-cutting/
 
 ```text
 antiforgery-token-session-context.md
+maybe-for-optional-results.md
 ```
 
-## 3. Antiforgery Note
+## 3. Maybe For Optional Results
+
+Use:
+
+```text
+planning/slices/shared/maybe-for-optional-results.md
+```
+
+for the target server/application convention that repository/query APIs should use `Maybe<T>` when absence of the resulting object is a normal possible outcome.
+
+Current note:
+
+```text
+- current L1 repositories still use nullable returns in several places;
+- the Maybe note is a target convention for new/refactored repository APIs;
+- application handlers own mapping from Maybe.None to use-case meaning.
+```
+
+## 4. Antiforgery Note
 
 The antiforgery shared note is now a source/support note.
 

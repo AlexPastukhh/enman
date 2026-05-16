@@ -130,7 +130,44 @@ When documenting or implementing a client sidecar:
 10. Sync future implementation notes to slice-implementation-notes-register.md.
 ```
 
-## 8. Cross-Cutting / Helper Slice Workflow
+## 8. Optional Result / Maybe Gate
+
+When planning or refactoring server-side repository/query APIs, read:
+
+```text
+planning/slices/shared/maybe-for-optional-results.md
+```
+
+Use `Maybe<T>` when absence of the resulting object is a normal possible outcome.
+
+Especially for repositories:
+
+```text
+GetByIdAsync(id) -> Maybe<Entity>
+GetByEmailAsync(email) -> Maybe<Account>
+GetCurrentActive...Async(...) -> Maybe<T>
+Find...Async(...) -> Maybe<T>
+```
+
+Application handlers unwrap `Maybe<T>` and map absence to the correct use-case result:
+
+```text
+invalid credentials
+not found
+validation/domain error
+successful empty state
+```
+
+Do not make repositories decide API/use-case meaning.
+
+Current repo status:
+
+```text
+Current L1 repositories still use nullable returns such as `Task<Account?>` and `Task<ApplicantParty?>`.
+The Maybe convention is a target for new/refactored repository APIs; do not claim it is already implemented until code changes prove it.
+```
+
+## 9. Cross-Cutting / Helper Slice Workflow
 
 Cross-cutting/helper slices follow the same planning shape as business slices:
 
@@ -145,7 +182,7 @@ source requirements
 
 If current repo evidence shows a cross-cutting slice is now implemented, update its status table rather than leaving all coverage as planned.
 
-## 9. CSRF Gate
+## 10. CSRF Gate
 
 When planning browser unsafe API requests or auth/session flow:
 
@@ -159,7 +196,7 @@ When planning browser unsafe API requests or auth/session flow:
 
 Current known status remains docs/planning/future hardening unless repo evidence later shows antiforgery implementation.
 
-## 10. Testing Workflow Gate
+## 11. Testing Workflow Gate
 
 When planning or implementing a slice, classify test coverage by layer:
 
@@ -181,7 +218,7 @@ Do not migrate the existing auth E2E from legacy AuthController endpoints to L1 
 
 For L1 applicant/request browser E2E, wait until the corresponding client feature UI/read flow exists.
 
-## 11. Current Remaining Client Work Order
+## 12. Current Remaining Client Work Order
 
 Recommended order for remaining concrete client work:
 
@@ -202,7 +239,7 @@ Recommended order for remaining concrete client work:
 5. Browser E2E happy paths after client and read flows exist.
 ```
 
-## 12. Implementation Flow Detail Rule
+## 13. Implementation Flow Detail Rule
 
 Implementation flow must not become a full code listing.
 

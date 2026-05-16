@@ -73,7 +73,65 @@ Generated shared constants JSON = semantic constants:
 
 Do not use one artifact to replace the other.
 
-## 5. Testing Responsibility
+## 5. Optional Result / Maybe Principle
+
+Use:
+
+```text
+planning/slices/shared/maybe-for-optional-results.md
+```
+
+Core rule:
+
+```text
+If the absence of a resulting object is a normal possible outcome, model that outcome with `Maybe<T>`.
+```
+
+This especially applies to repository/query methods such as:
+
+```text
+GetByIdAsync
+GetByEmailAsync
+GetCurrentActive...Async
+Find...Async
+```
+
+Repository methods should not decide whether absence means:
+
+```text
+not found
+invalid credentials
+validation error
+unauthorized
+forbidden
+```
+
+They should return `Maybe<T>` when the row/object may normally be missing.
+
+Application handlers unwrap `Maybe<T>` and map absence to the correct use-case result:
+
+```text
+Maybe.None -> InvalidCredentials
+Maybe.None -> NotFound
+Maybe.None -> validation/domain error
+Maybe.None -> no optional related data
+```
+
+Use `bool` only for true existence checks where no object is needed.
+
+Use `Result<T, Error>` or `UnitResult<Error>` when the operation can fail with a meaningful domain/application error.
+
+Do not use nullable repository return types for new repository APIs where absence is a normal result.
+
+Current implementation note:
+
+```text
+Some current L1 repositories still return nullable entities such as `Task<Account?>`.
+The Maybe convention is the target for new/refactored repository APIs.
+Do not claim the nullable-to-Maybe refactor is already implemented unless repo evidence shows it.
+```
+
+## 6. Testing Responsibility
 
 Use:
 
@@ -98,7 +156,7 @@ E2E tests
 
 Do not make E2E duplicate the full client/component test matrix.
 
-## 6. Cross-Cutting And Helper Slices
+## 7. Cross-Cutting And Helper Slices
 
 Cross-cutting/helper slices are allowed.
 
@@ -122,7 +180,7 @@ Use:
 planning/slices/cross-cutting/
 ```
 
-## 7. Implementation Flow Detail Filter
+## 8. Implementation Flow Detail Filter
 
 Implementation flow is behavior-first.
 
@@ -134,7 +192,7 @@ If flow becomes too noisy, extract detailed class/method reference into a siblin
 
 Do not create `.impl.md` files in advance.
 
-## 8. Constants Generation / Testing
+## 9. Constants Generation / Testing
 
 Primary source:
 
@@ -153,7 +211,7 @@ Core rules:
 - Route constants are temporary during OpenAPI migration.
 ```
 
-## 9. OpenAPI Contract Artifacts
+## 10. OpenAPI Contract Artifacts
 
 Primary source:
 
@@ -172,7 +230,7 @@ Core rules:
 - no generated artifacts are written during normal server startup.
 ```
 
-## 10. Antiforgery / CSRF
+## 11. Antiforgery / CSRF
 
 Primary source:
 
