@@ -1,18 +1,23 @@
-# Apply — enman-validation-transition-and-my-requests-filters-docs-v1
+# APPLY — enman-vkr-section-1-1-full-draft-v1.zip
 
-From repository root:
+Apply from repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-validation-transition-and-my-requests-filters-docs-v1.zip" -DestinationPath . -Force
+cd "C:\enman\enman"
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-section-1-1-full-draft-v1.zip" -DestinationPath . -Force
 git status
+git diff
 ```
 
-Recommended review:
+If the diff looks correct:
 
 ```powershell
-git diff -- planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
-git diff -- planning/slices/l1/L1-MY-REQUESTS-LIST-FILTERS.client.md
-git diff -- planning/slices/slice-scenario-flow-behavior-register.md
-git diff -- planning/slices/slice-questions-register.md
-git diff -- planning/diagrams/scenario-behavior-items/SC-05-my-requests-behavior-items.md
+git add vkr-clean/section-drafts/README.md `
+        vkr-clean/section-drafts/chapter-1/01-01-problem-domain.full-v1.md `
+        vkr-clean/section-drafts/chapter-1/01-01-problem-domain.fragment-candidates.md `
+        vkr-clean/section-drafts/chapter-1/01-01-problem-domain.full-v1-review-notes.md `
+        MANIFEST.md `
+        APPLY.md
+
+git commit -m "Add VKR problem domain full draft v1"
 ```

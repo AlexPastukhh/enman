@@ -1,27 +1,23 @@
-# Manifest — enman-validation-transition-and-my-requests-filters-docs-v1
+# MANIFEST — enman-vkr-section-1-1-full-draft-v1.zip
 
-## Add
-- planning/diagrams/scenario-ui-specs/SC-05-my-requests-ui.md
-- planning/diagrams/scenario-behavior-items/SC-05-my-requests-behavior-items.md
+Purpose: add a test full draft v1 for VKR section 1.1 and preserve successful fragment candidates.
 
-## Replace
-- planning/README.md
-- planning/planning-workflow-current.md
-- planning/client/README.md
-- planning/diagrams/scenario-data/00-scenario-data-index.md
-- planning/diagrams/scenario-data/SC-05-my-requests-data.md
-- planning/diagrams/scenario-ui-specs/README.md
-- planning/diagrams/scenario-behavior-items/README.md
-- planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
-- planning/slices/README.md
-- planning/slices/l1/README.md
-- planning/slices/l1/L1-MY-REQUESTS-LIST-FILTERS.client.md
-- planning/slices/cross-cutting/README.md
-- planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
-- planning/slices/slice-scenario-flow-behavior-register.md
-- planning/slices/slice-questions-register.md
-- planning/slices/slice-extension-points-register.md
-- planning/slices/slice-implementation-notes-register.md
+Files:
 
-## Delete
-- none
+```text
+vkr-clean/section-drafts/README.md
+vkr-clean/section-drafts/chapter-1/01-01-problem-domain.full-v1.md
+vkr-clean/section-drafts/chapter-1/01-01-problem-domain.fragment-candidates.md
+vkr-clean/section-drafts/chapter-1/01-01-problem-domain.full-v1-review-notes.md
+MANIFEST.md
+APPLY.md
+```
+
+Notes:
+
+```text
+- This archive does not modify main chapter files.
+- The full draft is an intermediate text attempt, not final VKR text.
+- The draft intentionally contains TODO SOURCE / TODO INSERT / TODO CHECK markers.
+- Fragment candidates preserve successful parts before future rewrites.
+```

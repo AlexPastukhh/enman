@@ -37,12 +37,6 @@ public sealed class L1CreateConnectionRequestHandler
         L1CreateConnectionRequestCommand command,
         CancellationToken cancellationToken)
     {
-        var branchErrors = ValidateApplicantContext(command);
-        if (branchErrors.Count > 0)
-        {
-            return UnitResult.Failure<IReadOnlyList<Error>>(branchErrors);
-        }
-
         var addressResult = Address.Create(
             command.PostalCode,
             command.Region,
@@ -56,12 +50,6 @@ public sealed class L1CreateConnectionRequestHandler
         {
             return UnitResult.Failure<IReadOnlyList<Error>>(
                 addressResult.Error);
-        }
-
-        var requestInputErrors = ValidateRequestInput(command.Details);
-        if (requestInputErrors.Count > 0)
-        {
-            return UnitResult.Failure<IReadOnlyList<Error>>(requestInputErrors);
         }
 
         if (string.Equals(command.ApplicantContextType, ExistingApplicantContext, StringComparison.Ordinal))
@@ -146,84 +134,5 @@ public sealed class L1CreateConnectionRequestHandler
         await transaction.CommitAsync(cancellationToken);
 
         return UnitResult.Success<IReadOnlyList<Error>>();
-    }
-
-    private static IReadOnlyList<Error> ValidateApplicantContext(
-        L1CreateConnectionRequestCommand command)
-    {
-        var errors = new List<Error>();
-
-        if (string.IsNullOrWhiteSpace(command.ApplicantContextType))
-        {
-            errors.Add(Errors.General.ValueIsRequired);
-            return errors;
-        }
-
-        if (!string.Equals(command.ApplicantContextType, ExistingApplicantContext, StringComparison.Ordinal)
-            && !string.Equals(command.ApplicantContextType, NewApplicantContext, StringComparison.Ordinal))
-        {
-            errors.Add(Errors.General.ValueIsInvalid);
-            return errors;
-        }
-
-        var hasExistingApplicantPartyId = command.ExistingApplicantPartyId.HasValue;
-        var hasNewApplicantParty = command.NewApplicantParty is not null;
-
-        if (hasExistingApplicantPartyId && hasNewApplicantParty)
-        {
-            errors.Add(Errors.General.ValueIsInvalid);
-            return errors;
-        }
-
-        if (!hasExistingApplicantPartyId && !hasNewApplicantParty)
-        {
-            errors.Add(Errors.General.ValueIsRequired);
-            return errors;
-        }
-
-        if (string.Equals(command.ApplicantContextType, ExistingApplicantContext, StringComparison.Ordinal))
-        {
-            if (!hasExistingApplicantPartyId)
-            {
-                errors.Add(Errors.L1Domain.ApplicantPartyIsRequired);
-            }
-
-            if (hasNewApplicantParty)
-            {
-                errors.Add(Errors.General.ValueIsInvalid);
-            }
-        }
-
-        if (string.Equals(command.ApplicantContextType, NewApplicantContext, StringComparison.Ordinal))
-        {
-            if (!hasNewApplicantParty)
-            {
-                errors.Add(Errors.L1Domain.ApplicantPartyIsRequired);
-            }
-
-            if (hasExistingApplicantPartyId)
-            {
-                errors.Add(Errors.General.ValueIsInvalid);
-            }
-        }
-
-        return errors;
-    }
-
-    private static IReadOnlyList<Error> ValidateRequestInput(string details)
-    {
-        var errors = new List<Error>();
-
-        if (string.IsNullOrWhiteSpace(details))
-        {
-            errors.Add(Errors.ClientRequestErrors.ClientRequestTextIsRequired);
-        }
-
-        if (details is not null && details.Length > 3000)
-        {
-            errors.Add(Errors.ClientRequestErrors.ClientRequestTextIsTooLong);
-        }
-
-        return errors;
     }
 }

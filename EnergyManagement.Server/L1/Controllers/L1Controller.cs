@@ -3,9 +3,12 @@ using CSharpFunctionalExtensions;
 using Domain.EnergyManagement.Common;
 using EnergyManagement.Server.Controllers;
 using EnergyManagement.Server.L1.Api;
+using EnergyManagement.Server.L1.Api.Validation;
 using EnergyManagement.Server.L1.Application.Commands;
 using EnergyManagement.Server.L1.Application.Queries;
 using EnergyManagement.Server.L1.Application.Security;
+using FluentValidation;
+using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -20,13 +23,28 @@ public sealed class L1Controller : ProjectController
 {
     private readonly ISender _sender;
     private readonly ILogger<L1Controller> _logger;
+    private readonly IValidator<L1RegisterClientAccountDto> _registerValidator;
+    private readonly IValidator<L1LoginRequest> _loginValidator;
+    private readonly IValidator<L1CreateIndividualApplicantPartyDto> _createIndividualApplicantPartyValidator;
+    private readonly IValidator<L1CreateConnectionRequestDto> _createConnectionRequestValidator;
+    private readonly IValidator<L1ListMyRequestsQueryDto> _listMyRequestsQueryValidator;
 
     public L1Controller(
         ISender sender,
-        ILogger<L1Controller> logger)
+        ILogger<L1Controller> logger,
+        IValidator<L1RegisterClientAccountDto> registerValidator,
+        IValidator<L1LoginRequest> loginValidator,
+        IValidator<L1CreateIndividualApplicantPartyDto> createIndividualApplicantPartyValidator,
+        IValidator<L1CreateConnectionRequestDto> createConnectionRequestValidator,
+        IValidator<L1ListMyRequestsQueryDto> listMyRequestsQueryValidator)
     {
         _sender = sender;
         _logger = logger;
+        _registerValidator = registerValidator;
+        _loginValidator = loginValidator;
+        _createIndividualApplicantPartyValidator = createIndividualApplicantPartyValidator;
+        _createConnectionRequestValidator = createConnectionRequestValidator;
+        _listMyRequestsQueryValidator = listMyRequestsQueryValidator;
     }
 
     [HttpPost("auth/register", Name = "L1RegisterClientAccount")]
@@ -34,13 +52,19 @@ public sealed class L1Controller : ProjectController
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Register(
-        [FromBody] L1RegisterClientAccountDto dto,
+        [FromBody] L1RegisterClientAccountDto? dto,
         CancellationToken cancellationToken)
     {
         try
         {
+            var validationProblem = await ValidateBodyAsync(dto, _registerValidator, cancellationToken);
+            if (validationProblem is not null)
+            {
+                return validationProblem;
+            }
+
             var result = await _sender.Send(
-                new L1RegisterClientAccountCommand(dto.Email, dto.Password),
+                new L1RegisterClientAccountCommand(dto!.Email!, dto.Password!),
                 cancellationToken);
 
             return ToActionResult(result);
@@ -57,13 +81,19 @@ public sealed class L1Controller : ProjectController
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Login(
-        [FromBody] L1LoginRequest dto,
+        [FromBody] L1LoginRequest? dto,
         CancellationToken cancellationToken)
     {
         try
         {
+            var validationProblem = await ValidateBodyAsync(dto, _loginValidator, cancellationToken);
+            if (validationProblem is not null)
+            {
+                return validationProblem;
+            }
+
             var result = await _sender.Send(
-                new L1LoginClientAccountCommand(dto.Email, dto.Password),
+                new L1LoginClientAccountCommand(dto!.Email!, dto.Password!),
                 cancellationToken);
 
             if (result.IsFailure)
@@ -129,11 +159,20 @@ public sealed class L1Controller : ProjectController
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateIndividualApplicantParty(
-        [FromBody] L1CreateIndividualApplicantPartyDto dto,
+        [FromBody] L1CreateIndividualApplicantPartyDto? dto,
         CancellationToken cancellationToken)
     {
         try
         {
+            var validationProblem = await ValidateBodyAsync(
+                dto,
+                _createIndividualApplicantPartyValidator,
+                cancellationToken);
+            if (validationProblem is not null)
+            {
+                return validationProblem;
+            }
+
             if (!TryGetCurrentL1AccountId(out var accountId))
             {
                 return Unauthorized();
@@ -142,11 +181,11 @@ public sealed class L1Controller : ProjectController
             var result = await _sender.Send(
                 new L1CreateIndividualApplicantPartyCommand(
                     accountId,
-                    dto.FullName.FirstName,
-                    dto.FullName.MiddleName,
-                    dto.FullName.LastName,
-                    dto.Email,
-                    dto.PhoneNumber),
+                    dto!.FullName!.FirstName!,
+                    dto.FullName.MiddleName!,
+                    dto.FullName.LastName!,
+                    dto.Email!,
+                    dto.PhoneNumber!),
                 cancellationToken);
 
             return ToActionResult(result);
@@ -202,6 +241,15 @@ public sealed class L1Controller : ProjectController
     {
         try
         {
+            var validationProblem = await ValidateAsync(
+                new L1ListMyRequestsQueryDto(status),
+                _listMyRequestsQueryValidator,
+                cancellationToken);
+            if (validationProblem is not null)
+            {
+                return validationProblem;
+            }
+
             if (!TryGetCurrentL1AccountId(out var accountId))
             {
                 return Unauthorized();
@@ -268,11 +316,20 @@ public sealed class L1Controller : ProjectController
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateConnectionRequest(
-        [FromBody] L1CreateConnectionRequestDto dto,
+        [FromBody] L1CreateConnectionRequestDto? dto,
         CancellationToken cancellationToken)
     {
         try
         {
+            var validationProblem = await ValidateBodyAsync(
+                dto,
+                _createConnectionRequestValidator,
+                cancellationToken);
+            if (validationProblem is not null)
+            {
+                return validationProblem;
+            }
+
             if (!TryGetCurrentL1AccountId(out var accountId))
             {
                 return Unauthorized();
@@ -281,22 +338,22 @@ public sealed class L1Controller : ProjectController
             var result = await _sender.Send(
                 new L1CreateConnectionRequestCommand(
                     accountId,
-                    dto.ApplicantContextType,
+                    dto!.ApplicantContextType!,
                     dto.ExistingApplicantPartyId,
                     dto.NewApplicantParty is null
                         ? null
                         : new L1CreateConnectionRequestNewApplicant(
-                            dto.NewApplicantParty.FullName.FirstName,
-                            dto.NewApplicantParty.FullName.MiddleName,
-                            dto.NewApplicantParty.FullName.LastName,
-                            dto.NewApplicantParty.Email,
-                            dto.NewApplicantParty.PhoneNumber),
-                    dto.Details,
-                    dto.Address.PostalCode,
-                    dto.Address.Region,
-                    dto.Address.City,
-                    dto.Address.Street,
-                    dto.Address.House,
+                            dto.NewApplicantParty.FullName!.FirstName!,
+                            dto.NewApplicantParty.FullName!.MiddleName!,
+                            dto.NewApplicantParty.FullName.LastName!,
+                            dto.NewApplicantParty.Email!,
+                            dto.NewApplicantParty.PhoneNumber!),
+                    dto.Details!,
+                    dto.Address!.PostalCode!,
+                    dto.Address.Region!,
+                    dto.Address.City!,
+                    dto.Address.Street!,
+                    dto.Address.House!,
                     dto.Address.Building,
                     dto.Address.Apartment),
                 cancellationToken);
@@ -322,6 +379,40 @@ public sealed class L1Controller : ProjectController
 
         var claimValue = User.FindFirstValue(ClaimTypes.NameIdentifier);
         return long.TryParse(claimValue, out accountId);
+    }
+
+    private async Task<ActionResult?> ValidateBodyAsync<TDto>(
+        TDto? dto,
+        IValidator<TDto> validator,
+        CancellationToken cancellationToken)
+        where TDto : class
+    {
+        if (dto is null)
+        {
+            return ProblemDetailsFromValidation(
+                new[]
+                {
+                    new ValidationFailure(
+                        "body",
+                        Error.Errors.General.RequestBodyIsNull.Code)
+                });
+        }
+
+        return await ValidateAsync(dto, validator, cancellationToken);
+    }
+
+    private async Task<ActionResult?> ValidateAsync<TDto>(
+        TDto dto,
+        IValidator<TDto> validator,
+        CancellationToken cancellationToken)
+    {
+        var validationResult = await validator.ValidateAsync(dto, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            return ProblemDetailsFromValidation(validationResult.Errors);
+        }
+
+        return null;
     }
 
     private async Task SignInL1AccountAsync(L1LoginClientAccountResponse account)

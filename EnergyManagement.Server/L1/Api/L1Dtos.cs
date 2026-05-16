@@ -3,12 +3,12 @@ using System.Text.Json.Serialization;
 namespace EnergyManagement.Server.L1.Api;
 
 public sealed record L1RegisterClientAccountDto(
-    [property: JsonPropertyName("email")] string Email,
-    [property: JsonPropertyName("password")] string Password);
+    [property: JsonPropertyName("email")] string? Email,
+    [property: JsonPropertyName("password")] string? Password);
 
 public sealed record L1LoginRequest(
-    [property: JsonPropertyName("email")] string Email,
-    [property: JsonPropertyName("password")] string Password);
+    [property: JsonPropertyName("email")] string? Email,
+    [property: JsonPropertyName("password")] string? Password);
 
 public sealed record L1CurrentUserResponse(
     [property: JsonPropertyName("accountId")] long AccountId,
@@ -18,9 +18,9 @@ public sealed record L1CurrentUserResponse(
     [property: JsonPropertyName("isAuthenticated")] bool IsAuthenticated);
 
 public sealed record L1CreateIndividualApplicantPartyDto(
-    [property: JsonPropertyName("fullName")] L1FullNameDto FullName,
-    [property: JsonPropertyName("email")] string Email,
-    [property: JsonPropertyName("phoneNumber")] string PhoneNumber);
+    [property: JsonPropertyName("fullName")] L1FullNameDto? FullName,
+    [property: JsonPropertyName("email")] string? Email,
+    [property: JsonPropertyName("phoneNumber")] string? PhoneNumber);
 
 public sealed record L1CurrentIndividualApplicantPartyResponse(
     [property: JsonPropertyName("exists")] bool Exists,
@@ -33,16 +33,16 @@ public sealed record L1IndividualApplicantPartyDto(
     [property: JsonPropertyName("verificationStatus")] string VerificationStatus);
 
 public sealed record L1FullNameDto(
-    [property: JsonPropertyName("firstName")] string FirstName,
-    [property: JsonPropertyName("middleName")] string MiddleName,
-    [property: JsonPropertyName("lastName")] string LastName);
+    [property: JsonPropertyName("firstName")] string? FirstName,
+    [property: JsonPropertyName("middleName")] string? MiddleName,
+    [property: JsonPropertyName("lastName")] string? LastName);
 
 public sealed record L1CreateConnectionRequestDto(
     [property: JsonPropertyName("applicantContextType")] string? ApplicantContextType,
     [property: JsonPropertyName("existingApplicantPartyId")] long? ExistingApplicantPartyId,
     [property: JsonPropertyName("newApplicantParty")] L1CreateIndividualApplicantPartyDto? NewApplicantParty,
-    [property: JsonPropertyName("details")] string Details,
-    [property: JsonPropertyName("address")] L1AddressDto Address);
+    [property: JsonPropertyName("details")] string? Details,
+    [property: JsonPropertyName("address")] L1AddressDto? Address);
 
 public sealed record L1MyRequestSummaryDto(
     [property: JsonPropertyName("requestId")] long RequestId,
@@ -73,10 +73,10 @@ public sealed record L1MyRequestRejectionDto(
     [property: JsonPropertyName("reason")] string Reason);
 
 public sealed record L1AddressDto(
-    [property: JsonPropertyName("postalCode")] string PostalCode,
-    [property: JsonPropertyName("region")] string Region,
-    [property: JsonPropertyName("city")] string City,
-    [property: JsonPropertyName("street")] string Street,
-    [property: JsonPropertyName("house")] string House,
+    [property: JsonPropertyName("postalCode")] string? PostalCode,
+    [property: JsonPropertyName("region")] string? Region,
+    [property: JsonPropertyName("city")] string? City,
+    [property: JsonPropertyName("street")] string? Street,
+    [property: JsonPropertyName("house")] string? House,
     [property: JsonPropertyName("building")] string? Building,
     [property: JsonPropertyName("apartment")] string? Apartment);

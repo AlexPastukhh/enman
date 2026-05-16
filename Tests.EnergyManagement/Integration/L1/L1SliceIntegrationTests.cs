@@ -244,6 +244,17 @@ public sealed class L1SliceIntegrationTests
     }
 
     [Fact]
+    public async Task ListMyRequests_WithEmptyStatusFilter_ReturnsSuccess()
+    {
+        var account = await RegisterAccountAsync();
+        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+
+        var response = await client.GetAsync("/api/l1/requests?status=");
+
+        await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
+    }
+
+    [Fact]
     public async Task ListMyRequests_ReturnsNewestFirst()
     {
         var account = await RegisterAccountAsync();
@@ -661,6 +672,28 @@ public sealed class L1SliceIntegrationTests
     }
 
     [Fact]
+    public async Task RegisterClientAccount_WithInvalidEmailAndPassword_ReturnsValidationProblem()
+    {
+        var response = await _factory.CreateClient().PostAsJsonAsync(
+            "/api/l1/auth/register",
+            new L1RegisterClientAccountDto("not-an-email", "short"));
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+    }
+
+    [Fact]
+    public async Task Login_WithInvalidEmailAndBlankPassword_ReturnsValidationProblem()
+    {
+        var response = await _factory.CreateClient().PostAsJsonAsync(
+            "/api/l1/auth/login",
+            new L1LoginRequest("not-an-email", " "));
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+    }
+
+    [Fact]
     public async Task CreateIndividualApplicantParty_ForMissingAccount_ReturnsValidationProblem()
     {
         var client = AuthenticatedL1Client(989_898);
@@ -671,6 +704,26 @@ public sealed class L1SliceIntegrationTests
 
         await HttpResponseAssertions.For(response, _output)
             .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+    }
+
+    [Fact]
+    public async Task CreateIndividualApplicantParty_WithMissingFullName_ReturnsValidationProblemAndCreatesNoApplicant()
+    {
+        var account = await RegisterAccountAsync();
+        var client = AuthenticatedL1Client(account.AccountId);
+        var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
+
+        var response = await client.PostAsJsonAsync(
+            "/api/l1/applicant-parties/individual",
+            new L1CreateIndividualApplicantPartyDto(
+                null!,
+                ApplicantEmail,
+                PhoneNumber));
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+
+        (await GetApplicantPartyCountAsync(account.AccountId)).Should().Be(applicantCountBefore);
     }
 
     [Fact]
@@ -705,6 +758,70 @@ public sealed class L1SliceIntegrationTests
             ValidConnectionRequestDto(
                 details: " ",
                 existingApplicantPartyId: applicantParty.ApplicantPartyId));
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+    }
+
+    [Fact]
+    public async Task CreateConnectionRequest_WithTooLongDetails_ReturnsValidationProblem()
+    {
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+        var client = AuthenticatedL1Client(account.AccountId);
+
+        var response = await client.PostAsJsonAsync(
+            "/api/l1/requests",
+            ValidConnectionRequestDto(
+                details: new string('x', 3001),
+                existingApplicantPartyId: applicantParty.ApplicantPartyId));
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+    }
+
+    [Fact]
+    public async Task CreateConnectionRequest_WithMissingAddress_ReturnsValidationProblem()
+    {
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+        var client = AuthenticatedL1Client(account.AccountId);
+
+        var response = await client.PostAsJsonAsync(
+            "/api/l1/requests",
+            new L1CreateConnectionRequestDto(
+                "Existing",
+                applicantParty.ApplicantPartyId,
+                null,
+                RequestDetails,
+                null!));
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+    }
+
+    [Fact]
+    public async Task CreateConnectionRequest_WithInvalidAddress_ReturnsValidationProblem()
+    {
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+        var client = AuthenticatedL1Client(account.AccountId);
+
+        var response = await client.PostAsJsonAsync(
+            "/api/l1/requests",
+            new L1CreateConnectionRequestDto(
+                "Existing",
+                applicantParty.ApplicantPartyId,
+                null,
+                RequestDetails,
+                new L1AddressDto(
+                    "12",
+                    Region,
+                    City,
+                    Street,
+                    House,
+                    Building,
+                    Apartment)));
 
         await HttpResponseAssertions.For(response, _output)
             .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
@@ -752,6 +869,29 @@ public sealed class L1SliceIntegrationTests
                     new L1FullNameDto("", MiddleName, LastName),
                     "not-an-email",
                     "")));
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+
+        (await GetApplicantPartyCountAsync(account.AccountId)).Should().Be(applicantCountBefore);
+        (await GetRequestCountAsync()).Should().Be(requestCountBefore);
+    }
+
+    [Fact]
+    public async Task CreateConnectionRequest_NewBranchWithMissingFullName_ReturnsValidationProblemAndCreatesNoApplicantOrRequest()
+    {
+        var account = await RegisterAccountAsync();
+        var client = AuthenticatedL1Client(account.AccountId);
+        var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
+        var requestCountBefore = await GetRequestCountAsync();
+
+        var response = await client.PostAsJsonAsync(
+            "/api/l1/requests",
+            ValidConnectionRequestWithNewApplicantDto(
+                newApplicantParty: new L1CreateIndividualApplicantPartyDto(
+                    null!,
+                    ApplicantEmail,
+                    PhoneNumber)));
 
         await HttpResponseAssertions.For(response, _output)
             .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);

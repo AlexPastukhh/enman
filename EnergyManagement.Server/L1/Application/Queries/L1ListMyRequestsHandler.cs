@@ -32,16 +32,11 @@ public sealed class L1ListMyRequestsHandler
                 [Errors.General.NotFound]);
         }
 
-        var statusResult = ParseStatus(query.Status);
-        if (statusResult.IsFailure)
-        {
-            return Result.Failure<IReadOnlyList<L1MyRequestSummaryResponse>, IReadOnlyList<Error>>(
-                statusResult.Error);
-        }
+        var status = ParseStatus(query.Status);
 
         var requests = await _clientRequests.ListByClientAccountIdAsync(
             query.ClientAccountId,
-            statusResult.Value,
+            status,
             cancellationToken);
 
         return Result.Success<IReadOnlyList<L1MyRequestSummaryResponse>, IReadOnlyList<Error>>(
@@ -63,20 +58,13 @@ public sealed class L1ListMyRequestsHandler
                 .ToList());
     }
 
-    private static Result<RequestStatus?, IReadOnlyList<Error>> ParseStatus(string? status)
+    private static RequestStatus? ParseStatus(string? status)
     {
         if (string.IsNullOrWhiteSpace(status))
         {
-            return Result.Success<RequestStatus?, IReadOnlyList<Error>>(null);
+            return null;
         }
 
-        if (Enum.TryParse<RequestStatus>(status, ignoreCase: false, out var parsed)
-            && Enum.IsDefined(parsed))
-        {
-            return Result.Success<RequestStatus?, IReadOnlyList<Error>>(parsed);
-        }
-
-        return Result.Failure<RequestStatus?, IReadOnlyList<Error>>(
-            [Errors.General.ValueIsInvalid]);
+        return Enum.Parse<RequestStatus>(status, ignoreCase: false);
     }
 }

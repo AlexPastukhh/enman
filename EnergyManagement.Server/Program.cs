@@ -3,6 +3,8 @@ using EnergyManagement.Server.Configuration;
 using EnergyManagement.Server.Contracts;
 using EnergyManagement.Server.Data;
 using EnergyManagement.Server.Infrastructure;
+using EnergyManagement.Server.L1.Api;
+using EnergyManagement.Server.L1.Api.Validation;
 using EnergyManagement.Server.L1.Application.Abstractions;
 using EnergyManagement.Server.L1.Application.Services;
 using EnergyManagement.Server.L1.Persistence;
@@ -54,6 +56,11 @@ builder.Services.AddTransient<IValidator<RegisterClientDto>,RegisterClientDtoVal
 builder.Services.AddTransient<IValidator<LoginDto>,LoginClientDtoValidator>();
 builder.Services.AddTransient<IValidator<ProvideIndividualClientsDataDto>,ProvideIndividualClientsDataDtoValidator>();
 builder.Services.AddTransient<IValidator<CreateIndividualRequestDto>,CreateIndividualRequestDtoValidator>();
+builder.Services.AddTransient<IValidator<L1RegisterClientAccountDto>, L1RegisterClientAccountDtoValidator>();
+builder.Services.AddTransient<IValidator<L1LoginRequest>, L1LoginRequestValidator>();
+builder.Services.AddTransient<IValidator<L1CreateIndividualApplicantPartyDto>, L1CreateIndividualApplicantPartyDtoValidator>();
+builder.Services.AddTransient<IValidator<L1CreateConnectionRequestDto>, L1CreateConnectionRequestDtoValidator>();
+builder.Services.AddTransient<IValidator<L1ListMyRequestsQueryDto>, L1ListMyRequestsQueryDtoValidator>();
 
 // 1️⃣ Register your config (it's already loaded by SharedFileService)
 // builder.Services.AddSingleton<ConstantsConfig>(_ => 
