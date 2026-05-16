@@ -41,6 +41,14 @@ public sealed record L1CreateConnectionRequestDto(
     [property: JsonPropertyName("details")] string Details,
     [property: JsonPropertyName("address")] L1AddressDto Address);
 
+public sealed record L1MyRequestSummaryDto(
+    [property: JsonPropertyName("requestId")] long RequestId,
+    [property: JsonPropertyName("requestType")] string RequestType,
+    [property: JsonPropertyName("status")] string Status,
+    [property: JsonPropertyName("createdAt")] DateTimeOffset CreatedAt,
+    [property: JsonPropertyName("summary")] string Summary,
+    [property: JsonPropertyName("objectAddress")] L1AddressDto ObjectAddress);
+
 public sealed record L1AddressDto(
     [property: JsonPropertyName("postalCode")] string PostalCode,
     [property: JsonPropertyName("region")] string Region,

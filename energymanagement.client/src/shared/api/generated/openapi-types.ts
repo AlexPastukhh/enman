@@ -273,7 +273,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        get: operations["L1ListMyRequests"];
         put?: never;
         post: operations["L1CreateConnectionRequest"];
         delete?: never;
@@ -354,6 +354,16 @@ export interface components {
         L1LoginRequest: {
             email?: string | null;
             password?: string | null;
+        };
+        L1MyRequestSummaryDto: {
+            /** Format: int64 */
+            requestId?: number;
+            requestType?: string | null;
+            status?: string | null;
+            /** Format: date-time */
+            createdAt?: string;
+            summary?: string | null;
+            objectAddress?: components["schemas"]["L1AddressDto"];
         };
         L1RegisterClientAccountDto: {
             email?: string | null;
@@ -687,6 +697,63 @@ export interface operations {
             };
             /** @description Unauthorized */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    L1ListMyRequests: {
+        parameters: {
+            query?: {
+                status?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["L1MyRequestSummaryDto"][];
+                    "application/json": components["schemas"]["L1MyRequestSummaryDto"][];
+                    "text/json": components["schemas"]["L1MyRequestSummaryDto"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            /** @description Client Error */
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };

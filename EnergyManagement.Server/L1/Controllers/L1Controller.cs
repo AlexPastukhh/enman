@@ -191,6 +191,41 @@ public sealed class L1Controller : ProjectController
     }
 
     [Authorize]
+    [HttpGet("requests", Name = "L1ListMyRequests")]
+    [ProducesResponseType(typeof(IReadOnlyList<L1MyRequestSummaryDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> ListMyRequests(
+        [FromQuery] string? status,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (!TryGetCurrentL1AccountId(out var accountId))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _sender.Send(
+                new L1ListMyRequestsQuery(accountId, status),
+                cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return ProblemDetailsFromValidation(result.Error);
+            }
+
+            return Ok(result.Value.Select(ToMyRequestSummaryDto).ToList());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "L1 list my requests failed.");
+            return ProblemDetailsWithExceptionDev(ex);
+        }
+    }
+
+    [Authorize]
     [HttpPost("requests", Name = "L1CreateConnectionRequest")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
@@ -301,6 +336,25 @@ public sealed class L1Controller : ProjectController
                 response.ApplicantParty.Email,
                 response.ApplicantParty.PhoneNumber,
                 response.ApplicantParty.VerificationStatus));
+    }
+
+    private static L1MyRequestSummaryDto ToMyRequestSummaryDto(
+        L1MyRequestSummaryResponse request)
+    {
+        return new L1MyRequestSummaryDto(
+            request.RequestId,
+            request.RequestType.ToString(),
+            request.Status.ToString(),
+            request.CreatedAt,
+            request.Summary,
+            new L1AddressDto(
+                request.ObjectAddress.PostalCode,
+                request.ObjectAddress.Region,
+                request.ObjectAddress.City,
+                request.ObjectAddress.Street,
+                request.ObjectAddress.House,
+                request.ObjectAddress.Building,
+                request.ObjectAddress.Apartment));
     }
 
     private ActionResult ToActionResult<TValue>(

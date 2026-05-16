@@ -152,6 +152,120 @@ public sealed class L1SliceIntegrationTests
     }
 
     [Fact]
+    public async Task ListMyRequests_WithoutAuth_ReturnsUnauthorized()
+    {
+        var response = await _factory.CreateClient().GetAsync("/api/l1/requests");
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode((int)HttpStatusCode.Unauthorized);
+    }
+
+    [Fact]
+    public async Task ListMyRequests_WithNoRequests_ReturnsEmptyArray()
+    {
+        var account = await RegisterAccountAsync();
+        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+
+        var requests = await GetMyRequestsAsync(client);
+
+        requests.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task ListMyRequests_ReturnsCurrentAccountRequestSummaries()
+    {
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+        await CreateConnectionRequestAsync(account.AccountId);
+
+        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var requests = await GetMyRequestsAsync(client);
+        var persisted = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
+
+        requests.Should().ContainSingle();
+        var request = requests.Single();
+        request.RequestId.Should().Be(persisted!.Id);
+        request.RequestType.Should().Be("Connection");
+        request.Status.Should().Be("InReview");
+        request.Summary.Should().Be(RequestDetails);
+        request.ObjectAddress.City.Should().Be(City);
+        request.ObjectAddress.Street.Should().Be(Street);
+    }
+
+    [Fact]
+    public async Task ListMyRequests_DoesNotReturnAnotherAccountRequests()
+    {
+        var accountWithRequest = await RegisterAccountAsync();
+        await CreateApplicantPartyAsync(accountWithRequest.AccountId);
+        await CreateConnectionRequestAsync(accountWithRequest.AccountId);
+
+        var accountWithoutRequest = await RegisterAccountAsync();
+        var client = AuthenticatedL1Client(
+            accountWithoutRequest.AccountId,
+            accountWithoutRequest.Email);
+
+        var requests = await GetMyRequestsAsync(client);
+
+        requests.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task ListMyRequests_WithStatusFilter_ReturnsMatchingRequests()
+    {
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+
+        await CreateConnectionRequestAsync(account.AccountId, "First in-review request.");
+        var inReview = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
+
+        await CreateConnectionRequestAsync(account.AccountId, "Second approved request.");
+        var approved = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
+        await UpdateRequestStatusAsync(approved!.Id, "Approved");
+
+        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var requests = await GetMyRequestsAsync(client, status: "Approved");
+
+        requests.Should().ContainSingle();
+        requests.Single().RequestId.Should().Be(approved.Id);
+        requests.Single().Status.Should().Be("Approved");
+        requests.Single().RequestId.Should().NotBe(inReview!.Id);
+    }
+
+    [Fact]
+    public async Task ListMyRequests_WithInvalidStatusFilter_ReturnsValidationProblem()
+    {
+        var account = await RegisterAccountAsync();
+        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+
+        var response = await client.GetAsync("/api/l1/requests?status=Done");
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+    }
+
+    [Fact]
+    public async Task ListMyRequests_ReturnsNewestFirst()
+    {
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+
+        await CreateConnectionRequestAsync(account.AccountId, "Older request.");
+        var older = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
+        await UpdateRequestCreatedAtAsync(older!.Id, DateTimeOffset.UtcNow.AddDays(-1));
+
+        await CreateConnectionRequestAsync(account.AccountId, "Newer request.");
+        var newer = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
+        await UpdateRequestCreatedAtAsync(newer!.Id, DateTimeOffset.UtcNow);
+
+        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var requests = await GetMyRequestsAsync(client);
+
+        requests.Should().HaveCount(2);
+        requests[0].RequestId.Should().Be(newer.Id);
+        requests[1].RequestId.Should().Be(older.Id);
+    }
+
+    [Fact]
     public async Task L1Login_WithInvalidPassword_ReturnsValidationProblem()
     {
         var email = UniqueEmail();
@@ -443,6 +557,21 @@ public sealed class L1SliceIntegrationTests
             ?? throw new InvalidOperationException("L1 current applicant party response body was empty.");
     }
 
+    private async Task<IReadOnlyList<L1MyRequestSummaryDto>> GetMyRequestsAsync(
+        HttpClient client,
+        string? status = null)
+    {
+        var path = status is null
+            ? "/api/l1/requests"
+            : $"/api/l1/requests?status={Uri.EscapeDataString(status)}";
+        var response = await client.GetAsync(path);
+
+        await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
+
+        return await response.Content.ReadFromJsonAsync<IReadOnlyList<L1MyRequestSummaryDto>>()
+            ?? throw new InvalidOperationException("L1 my requests response body was empty.");
+    }
+
     private async Task<L1CreateIndividualApplicantPartyResponse> CreateApplicantPartyAsync(long accountId)
     {
         var response = await AuthenticatedL1Client(accountId).PostAsJsonAsync(
@@ -631,6 +760,30 @@ public sealed class L1SliceIntegrationTests
         return (int)scalar;
     }
 
+    private async Task UpdateRequestStatusAsync(long requestId, string status)
+    {
+        await ExecuteNonQueryAsync(
+            """
+            UPDATE dbo.L1ClientRequests
+            SET Status = @value
+            WHERE Id = @id
+            """,
+            requestId,
+            status);
+    }
+
+    private async Task UpdateRequestCreatedAtAsync(long requestId, DateTimeOffset createdAt)
+    {
+        await ExecuteNonQueryAsync(
+            """
+            UPDATE dbo.L1ClientRequests
+            SET CreatedAt = @value
+            WHERE Id = @id
+            """,
+            requestId,
+            createdAt);
+    }
+
     private async Task<SqlDataReader> ExecuteReaderAsync(string query, long id)
     {
         var connection = new SqlConnection(_fixture.ConnectionString);
@@ -643,6 +796,21 @@ public sealed class L1SliceIntegrationTests
         command.Parameters.AddWithValue("@id", id);
 
         return await command.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+    }
+
+    private async Task ExecuteNonQueryAsync<TValue>(string query, long id, TValue value)
+    {
+        await using var connection = new SqlConnection(_fixture.ConnectionString);
+        await connection.OpenAsync();
+
+        await using var command = new SqlCommand(query, connection)
+        {
+            CommandType = CommandType.Text
+        };
+        command.Parameters.AddWithValue("@id", id);
+        command.Parameters.AddWithValue("@value", value ?? throw new ArgumentNullException(nameof(value)));
+
+        await command.ExecuteNonQueryAsync();
     }
 
     private static string UniqueEmail()

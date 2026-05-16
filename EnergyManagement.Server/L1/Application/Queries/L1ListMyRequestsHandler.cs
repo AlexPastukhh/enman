@@ -1,0 +1,82 @@
+using CSharpFunctionalExtensions;
+using Domain.EnergyManagement.Common;
+using Domain.EnergyManagement.L1;
+using EnergyManagement.Server.L1.Application.Abstractions;
+using MediatR;
+using static Domain.EnergyManagement.Common.Error;
+
+namespace EnergyManagement.Server.L1.Application.Queries;
+
+public sealed class L1ListMyRequestsHandler
+    : IRequestHandler<L1ListMyRequestsQuery, Result<IReadOnlyList<L1MyRequestSummaryResponse>, IReadOnlyList<Error>>>
+{
+    private readonly IAccountRepository _accounts;
+    private readonly IClientRequestRepository _clientRequests;
+
+    public L1ListMyRequestsHandler(
+        IAccountRepository accounts,
+        IClientRequestRepository clientRequests)
+    {
+        _accounts = accounts;
+        _clientRequests = clientRequests;
+    }
+
+    public async Task<Result<IReadOnlyList<L1MyRequestSummaryResponse>, IReadOnlyList<Error>>> Handle(
+        L1ListMyRequestsQuery query,
+        CancellationToken cancellationToken)
+    {
+        var account = await _accounts.GetByIdAsync(query.ClientAccountId, cancellationToken);
+        if (account is not ClientAccount)
+        {
+            return Result.Failure<IReadOnlyList<L1MyRequestSummaryResponse>, IReadOnlyList<Error>>(
+                [Errors.General.NotFound]);
+        }
+
+        var statusResult = ParseStatus(query.Status);
+        if (statusResult.IsFailure)
+        {
+            return Result.Failure<IReadOnlyList<L1MyRequestSummaryResponse>, IReadOnlyList<Error>>(
+                statusResult.Error);
+        }
+
+        var requests = await _clientRequests.ListByClientAccountIdAsync(
+            query.ClientAccountId,
+            statusResult.Value,
+            cancellationToken);
+
+        return Result.Success<IReadOnlyList<L1MyRequestSummaryResponse>, IReadOnlyList<Error>>(
+            requests
+                .Select(request => new L1MyRequestSummaryResponse(
+                    request.RequestId,
+                    request.RequestType,
+                    request.Status,
+                    request.CreatedAt,
+                    request.Details,
+                    new L1MyRequestAddressResponse(
+                        request.PostalCode,
+                        request.Region,
+                        request.City,
+                        request.Street,
+                        request.House,
+                        request.Building,
+                        request.Apartment)))
+                .ToList());
+    }
+
+    private static Result<RequestStatus?, IReadOnlyList<Error>> ParseStatus(string? status)
+    {
+        if (string.IsNullOrWhiteSpace(status))
+        {
+            return Result.Success<RequestStatus?, IReadOnlyList<Error>>(null);
+        }
+
+        if (Enum.TryParse<RequestStatus>(status, ignoreCase: false, out var parsed)
+            && Enum.IsDefined(parsed))
+        {
+            return Result.Success<RequestStatus?, IReadOnlyList<Error>>(parsed);
+        }
+
+        return Result.Failure<RequestStatus?, IReadOnlyList<Error>>(
+            [Errors.General.ValueIsInvalid]);
+    }
+}
