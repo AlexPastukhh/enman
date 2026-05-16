@@ -5,10 +5,12 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import AccountPage from "./AccountPage";
 
-const { mockedUseSession, mockedUseCurrentApplicantQuery } = vi.hoisted(() => ({
-  mockedUseSession: vi.fn(),
-  mockedUseCurrentApplicantQuery: vi.fn(),
-}));
+const { mockedUseSession, mockedUseAccountApplicantPartiesQuery } = vi.hoisted(
+  () => ({
+    mockedUseSession: vi.fn(),
+    mockedUseAccountApplicantPartiesQuery: vi.fn(),
+  }),
+);
 
 vi.mock("../../entities/session/model/useSession", () => ({
   useSession: mockedUseSession,
@@ -16,9 +18,9 @@ vi.mock("../../entities/session/model/useSession", () => ({
 }));
 
 vi.mock(
-  "../../entities/applicant-party/model/useCurrentIndividualApplicantPartyQuery",
+  "../../entities/applicant-party/model/useAccountApplicantPartiesQuery",
   () => ({
-    useCurrentIndividualApplicantPartyQuery: mockedUseCurrentApplicantQuery,
+    useAccountApplicantPartiesQuery: mockedUseAccountApplicantPartiesQuery,
     __esModule: true,
   }),
 );
@@ -61,55 +63,88 @@ describe("AccountPage", () => {
   afterEach(() => {
     cleanup();
     mockedUseSession.mockReset();
-    mockedUseCurrentApplicantQuery.mockReset();
+    mockedUseAccountApplicantPartiesQuery.mockReset();
   });
 
-  it("shows create applicant form when current applicant is missing", () => {
-    mockedUseCurrentApplicantQuery.mockReturnValue({
+  it("shows register form when client is not signed in", () => {
+    mockedUseSession.mockReturnValue(null);
+    mockedUseAccountApplicantPartiesQuery.mockReturnValue({
       isPending: false,
       isError: false,
-      data: {
-        exists: false,
-        applicantParty: null,
-      },
+      data: undefined,
+      refetch: vi.fn(),
     });
 
     render(<AccountPage />);
 
+    expect(screen.getByRole("form", { name: "Register" })).toBeInTheDocument();
+  });
+
+  it("shows empty applicant parties state for signed-in client without saved parties", () => {
+    mockedUseAccountApplicantPartiesQuery.mockReturnValue({
+      isPending: false,
+      isError: false,
+      data: {
+        applicantParties: [],
+      },
+      refetch: vi.fn(),
+    });
+
+    render(<AccountPage />);
+
+    expect(screen.getByText("No saved Applicant Parties yet.")).toBeVisible();
     expect(
       screen.getByRole("form", { name: "Create applicant party" }),
     ).toBeInTheDocument();
   });
 
-  it("shows read-only applicant data when current applicant exists", () => {
-    mockedUseCurrentApplicantQuery.mockReturnValue({
+  it("shows account applicant parties grouped by current/default state", () => {
+    mockedUseAccountApplicantPartiesQuery.mockReturnValue({
       isPending: false,
       isError: false,
       data: {
-        exists: true,
-        applicantParty: {
-          fullName: {
-            firstName: "John",
-            middleName: "Michael",
-            lastName: "Doe",
+        applicantParties: [
+          {
+            applicantPartyId: 1,
+            applicantPartyType: "Individual",
+            displayName: "John Doe",
+            fullName: {
+              firstName: "John",
+              middleName: "Michael",
+              lastName: "Doe",
+            },
+            email: "applicant.l1@example.com",
+            phoneNumber: "79237554726",
+            verificationStatus: "Unverified",
+            isCurrentDefault: true,
+            createdAt: "2026-01-02T10:30:00Z",
           },
-          email: "applicant.l1@example.com",
-          phoneNumber: "79237554726",
-          verificationStatus: "Unverified",
-        },
+          {
+            applicantPartyId: 2,
+            applicantPartyType: "Individual",
+            displayName: "Jane Doe",
+            fullName: {
+              firstName: "Jane",
+              middleName: "Maria",
+              lastName: "Doe",
+            },
+            email: "applicant.two@example.com",
+            phoneNumber: "79237554727",
+            verificationStatus: "Unverified",
+            isCurrentDefault: false,
+            createdAt: "2026-01-03T10:30:00Z",
+          },
+        ],
       },
+      refetch: vi.fn(),
     });
 
     render(<AccountPage />);
 
-    expect(screen.getByText("John")).toBeInTheDocument();
-    expect(screen.getByText("Michael")).toBeInTheDocument();
-    expect(screen.getByText("Doe")).toBeInTheDocument();
-    expect(screen.getByText("applicant.l1@example.com")).toBeInTheDocument();
-    expect(screen.getByText("79237554726")).toBeInTheDocument();
-    expect(screen.getByText("Unverified")).toBeInTheDocument();
-    expect(
-      screen.queryByRole("form", { name: "Create applicant party" }),
-    ).not.toBeInTheDocument();
+    expect(screen.getByText("John Doe")).toBeVisible();
+    expect(screen.getByText("Jane Doe")).toBeVisible();
+    expect(screen.getByText("Current/default")).toBeVisible();
+    expect(screen.getByText("applicant.l1@example.com")).toBeVisible();
+    expect(screen.getByText("applicant.two@example.com")).toBeVisible();
   });
 });

@@ -1,52 +1,31 @@
-# APPLY — SL-APPL-002 Account Applicant Parties Read / Templates
+# Apply SL-APPL-002.client archive
 
-This archive is merge-ready: it contains repo-relative paths directly and has no wrapper directory.
+Run from repository root.
 
-## Apply from repo root
-
-PowerShell:
+## Apply
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\sl-appl-002-account-applicant-parties-read-v4.zip" -DestinationPath "." -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\sl-appl-002-client-applicant-parties-read.zip" -DestinationPath "." -Force
 ```
 
-If a previous temporary incoming folder exists, remove it:
+This archive has repo-relative paths at zip root. It does not contain a wrapper folder.
+
+## Verification commands
 
 ```powershell
-Remove-Item -Path ".\_incoming_sl_appl_002" -Recurse -Force
+npm install
+npm --prefix .\energymanagement.client install
+npm run check:api
+npm --prefix .\energymanagement.client run lint
+npm --prefix .\energymanagement.client run build
+npm --prefix .\energymanagement.client run test -- --run
+npm run test:e2e
 ```
 
-## Verify
-
-Run from repo root:
-
-```powershell
-dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
-dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
-
-dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out .\Shared\openapi.json --check
-npm --prefix .\energymanagement.client run generate:api-types
-```
-
-## About `npm run check:api`
-
-The project script runs:
+Notes:
 
 ```text
-npm run check:openapi && npm run generate:api-types && git diff --exit-code Shared/openapi.json energymanagement.client/src/shared/api/generated/openapi-types.ts
+- check:api requires dotnet and git in the target repo.
+- test:e2e requires the repo's local test DB environment.
+- If lint still fails on react-refresh/only-export-components in unchanged files, handle that as a separate cleanup.
 ```
-
-Since this slice intentionally changes generated artifacts, `git diff --exit-code` can fail on unstaged generated files even when OpenAPI is up to date.
-
-To use that script as a no-extra-drift check, stage the generated files first:
-
-```powershell
-git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
-npm run check:api
-```
-
-If it still prints a diff after staging, regenerate the artifacts and inspect the new diff.
-
-## No GitHub write
-
-No branch, commit, push or PR is performed by this archive.

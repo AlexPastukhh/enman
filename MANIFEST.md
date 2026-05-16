@@ -1,90 +1,132 @@
-# MANIFEST — SL-APPL-002 Account Applicant Parties Read / Templates
+# SL-APPL-002.client — Account Applicant Parties Read / Templates
 
-Archive: `sl-appl-002-account-applicant-parties-read-v4.zip`
+Archive type: client/non-server runtime-code archive  
+Repository: AlexPastukhh/enman  
+Target branch: my-changes  
+Scope: L1 client read sidecar for account Applicant Parties flat-list read
+
+## Summary
+
+Implements the client read path for `GET /api/l1/applicant-parties`:
+
+- adds shared API path/wrapper for account Applicant Parties read;
+- adds ApplicantParty entity API/query/model helpers;
+- adds read-only ApplicantParty display UI under `entities/applicant-party/ui`;
+- updates Account page to render account Applicant Parties from the flat list read model;
+- updates/adds component, shared API/entity and E2E tests for the read path.
+
+The archive is merge-ready and contains repo-relative files directly, without a wrapper folder.
 
 ## Added files
 
-- `EnergyManagement.Server/L1/Application/Queries/L1GetAccountApplicantPartiesQuery.cs`
-- `EnergyManagement.Server/L1/Application/Queries/L1GetAccountApplicantPartiesHandler.cs`
+```text
+energymanagement.client/src/entities/applicant-party/api/listAccountApplicantParties.ts
+energymanagement.client/src/entities/applicant-party/api/listAccountApplicantParties.test.ts
+energymanagement.client/src/entities/applicant-party/model/groupAccountApplicantParties.ts
+energymanagement.client/src/entities/applicant-party/model/groupAccountApplicantParties.test.ts
+energymanagement.client/src/entities/applicant-party/model/useAccountApplicantPartiesQuery.ts
+energymanagement.client/src/entities/applicant-party/ui/ApplicantPartiesEmptyState.tsx
+energymanagement.client/src/entities/applicant-party/ui/ApplicantPartiesList.tsx
+energymanagement.client/src/entities/applicant-party/ui/ApplicantPartiesList.test.tsx
+energymanagement.client/src/entities/applicant-party/ui/ApplicantPartySummaryCard.tsx
+energymanagement.client/src/entities/applicant-party/ui/applicantPartiesList.css
+energymanagement.client/src/entities/applicant-party/ui/applicantPartiesListConst.ts
+energymanagement.client/src/entities/applicant-party/ui/formatApplicantParty.ts
+tests/e2e/applicant-parties/applicant-parties-read.spec.ts
+energymanagement.client/src/shared/api/l1ApplicantPartyApi.test.ts
+```
 
 ## Replaced files
 
-- `EnergyManagement.Server/L1/Api/L1Dtos.cs`
-- `EnergyManagement.Server/L1/Controllers/L1Controller.cs`
-- `EnergyManagement.Server/L1/Application/Abstractions/IApplicantPartyRepository.cs`
-- `EnergyManagement.Server/L1/Persistence/Repositories/ApplicantPartyRepository.cs`
-- `Tests.EnergyManagement/Integration/L1/L1SliceIntegrationTests.cs`
-
-## Generated artifacts included
-
-- `Shared/openapi.json`
-- `energymanagement.client/src/shared/api/generated/openapi-types.ts`
-
-These generated artifacts include:
-
-- `GET /api/l1/applicant-parties`
-- `L1AccountApplicantPartiesResponse`
-- `L1ApplicantPartySummaryDto`
-- `L1ListAccountApplicantParties`
-
-`v4` also fixes the generated-file drift observed locally:
-- OpenAPI media type keys use the local generator output form `application/*\u002Bjson`.
-- TypeScript generated types include the `L1ApplicantPartySummaryDto` schema block.
-
-## Tests changed
-
-- `Tests.EnergyManagement/Integration/L1/L1SliceIntegrationTests.cs`
-
-Added integration coverage for:
-
-- unauthenticated `GET /api/l1/applicant-parties` returns `401`;
-- authenticated account with no ApplicantParties returns `200` and `applicantParties: []`;
-- authenticated account with one ApplicantParty returns a flat summary list;
-- response does not expose `clientAccountId`;
-- multiple same-type ApplicantParties are all returned with first default `true` and second default `false`;
-- another account's ApplicantParties are excluded.
-
-## Commands run here
-
-The local sandbox used to create this archive still has no .NET SDK, so I could not execute project build/test/generation locally.
-
-## User-provided local verification evidence
-
-The user's local run showed:
-
-- `dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check` reports OpenAPI up to date after local generation.
-- `openapi-typescript` runs successfully.
-- Remaining `git diff` was generated-artifact drift only.
-
-## Commands to run after applying
-
-From repo root:
-
-```powershell
-dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
-dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
-
-dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out .\Shared\openapi.json --check
-npm --prefix .\energymanagement.client run generate:api-types
+```text
+energymanagement.client/src/shared/api/l1ApiPaths.ts
+energymanagement.client/src/shared/api/l1ApplicantPartyApi.ts
+energymanagement.client/src/entities/applicant-party/model/applicantPartyQueryKeys.ts
+energymanagement.client/src/entities/applicant-party/model/applicantPartyTypes.ts
+energymanagement.client/src/pages/account/AccountPage.tsx
+energymanagement.client/src/pages/account/AccountPage.test.tsx
+tests/e2e/applicant-party/create-individual.spec.ts
 ```
 
-Because `npm run check:api` ends with `git diff --exit-code Shared/openapi.json energymanagement.client/src/shared/api/generated/openapi-types.ts`, it checks for **unstaged generated-file drift**. If the generated artifacts are intentionally changed by this slice, stage them before running the script:
+## Deleted files
 
-```powershell
-git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
+```text
+None.
+```
+
+## Generated artifacts
+
+```text
+No generated artifacts changed.
+Shared/openapi.json was not included.
+energymanagement.client/src/shared/api/generated/openapi-types.ts was not included.
+No manual generated artifact edits were made.
+```
+
+## Tests changed/added
+
+```text
+Added:
+- ApplicantPartiesList component tests
+- groupAccountApplicantParties model tests
+- listAccountApplicantParties entity API test
+- l1ApplicantPartyApi account-list shared API test
+- applicant-parties read E2E spec
+
+Updated:
+- AccountPage component tests for flat account Applicant Parties read model
+- create-individual E2E synchronization from current-individual read to account Applicant Parties list read
+```
+
+## Commands run and results
+
+```text
+npm install
+Result: success.
+
+npm install (inside energymanagement.client)
+Result: success; npm reported 8 audit vulnerabilities in existing dependency tree.
+
+npm --prefix ./energymanagement.client run lint
+Result: failed on pre-existing react-refresh/only-export-components errors in files not changed by this archive:
+- energymanagement.client/src/Tests/ComponentTest/TestClasses/TestSetup.tsx
+- energymanagement.client/src/app/router/router.tsx
+- energymanagement.client/src/entities/session/model/SessionProvider.tsx
+- energymanagement.client/src/shared/errors/pageErrorContext.tsx
+
+npm --prefix ./energymanagement.client run build
+Result: success; Vite emitted existing large chunk warning.
+
+npm --prefix ./energymanagement.client run test -- --run
+Result: success; 12 test files passed, 81 tests passed.
+
 npm run check:api
-```
+Result: failed before API check because sandbox has no dotnet executable: `sh: 1: dotnet: not found`.
 
-If `npm run check:api` still prints a diff after staging generated artifacts, the generated files are still stale and should be regenerated again.
+npm run test:e2e
+Result: not run in sandbox because root E2E script requires dotnet/local test DB tooling.
+```
 
 ## Non-goals respected
 
-- No domain changes.
-- No planning docs changes.
-- No client UI implementation.
-- No make-default/current command.
-- No delete/archive lifecycle.
-- No request creation changes.
-- No legacy cleanup.
-- No unrelated cleanup.
-- No GitHub write.
+```text
+- no server/backend code changes;
+- no Domain.EnergyManagement changes;
+- no planning docs changes;
+- no database/migration changes;
+- no manual OpenAPI/generated TypeScript edits;
+- no GitHub write;
+- no branch/commit/PR;
+- no make-default/delete/archive/request-creation behavior;
+- no unrelated cleanup.
+```
+
+## Risks / handoff notes
+
+```text
+- AccountPage now reads Applicant Parties through the flat account list model and still composes the existing create form as a neighboring existing behavior.
+- The create-individual E2E was updated to synchronize on GET /api/l1/applicant-parties because the page read model no longer needs GET /api/l1/applicant-parties/current-individual.
+- Full E2E should be run on the target Windows/localdb environment after applying the archive.
+- check:api should be re-run in the target repo where dotnet and git are available.
+- Lint failure observed in sandbox is from pre-existing files outside this archive's changed files.
+```

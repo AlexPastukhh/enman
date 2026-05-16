@@ -1,0 +1,20 @@
+export const applicantPartiesListConst = {
+  title: "Applicant Parties",
+  currentDefaultsTitle: "Current/default templates",
+  otherSavedTitle: "Other saved Applicant Parties",
+  emptyTitle: "No saved Applicant Parties yet.",
+  emptyDescription:
+    "Saved Applicant Parties will appear here after they are added to the account.",
+  currentDefaultBadge: "Current/default",
+  applicantPartyTitlePrefix: "Applicant Party",
+  applicantPartyTypeLabel: "Applicant type",
+  displayNameLabel: "Display name",
+  firstNameLabel: "First name",
+  middleNameLabel: "Middle name",
+  lastNameLabel: "Last name",
+  emailLabel: "Applicant email",
+  phoneNumberLabel: "Phone number",
+  verificationStatusLabel: "Verification status",
+  createdAtLabel: "Created",
+  unknownValue: "—",
+} as const;

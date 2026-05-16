@@ -1,0 +1,66 @@
+.applicantPartiesList,
+.applicantPartiesEmpty {
+  display: grid;
+  gap: 1rem;
+  margin: 0 0 2rem;
+  max-width: 56rem;
+}
+
+.applicantPartiesList__section {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.applicantPartiesList__cards {
+  display: grid;
+  gap: 1rem;
+}
+
+.applicantPartyCard {
+  border: 1px solid currentColor;
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.applicantPartyCard--currentDefault {
+  border-width: 2px;
+}
+
+.applicantPartyCard__header {
+  align-items: start;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.applicantPartyCard__header h3 {
+  margin: 0;
+}
+
+.applicantPartyCard__badge {
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 0.25rem 0.5rem;
+  white-space: nowrap;
+}
+
+.applicantPartyCard__summary {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.applicantPartyCard__row {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.applicantPartyCard__row dt {
+  font-weight: 600;
+}
+
+.applicantPartyCard__row dd {
+  margin: 0;
+}

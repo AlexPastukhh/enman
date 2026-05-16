@@ -35,16 +35,17 @@ test("user creates individual applicant party through real client-server flow", 
   const loginResponse = await loginResponsePromise;
   expect(loginResponse.ok()).toBeTruthy();
 
-  const initialCurrentApplicantPromise = waitForApiResponse(
+  const initialApplicantPartiesPromise = waitForApiResponse(
     page,
     "GET",
-    "/api/l1/applicant-parties/current-individual",
+    "/api/l1/applicant-parties",
   );
 
   await page.goto("/account");
-  const initialCurrentApplicantResponse = await initialCurrentApplicantPromise;
-  expect(initialCurrentApplicantResponse.ok()).toBeTruthy();
+  const initialApplicantPartiesResponse = await initialApplicantPartiesPromise;
+  expect(initialApplicantPartiesResponse.ok()).toBeTruthy();
 
+  await expect(page.getByText("No saved Applicant Parties yet.")).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "Applicant data", exact: true }),
   ).toBeVisible();
@@ -54,10 +55,10 @@ test("user creates individual applicant party through real client-server flow", 
     "POST",
     "/api/l1/applicant-parties/individual",
   );
-  const currentApplicantAfterCreatePromise = waitForApiResponse(
+  const applicantPartiesAfterCreatePromise = waitForApiResponse(
     page,
     "GET",
-    "/api/l1/applicant-parties/current-individual",
+    "/api/l1/applicant-parties",
   );
 
   await page.getByLabel("First name").fill("Ivan");
@@ -69,25 +70,24 @@ test("user creates individual applicant party through real client-server flow", 
 
   const applicantPartyResponse = await applicantPartyResponsePromise;
   expect(applicantPartyResponse.ok()).toBeTruthy();
-  const currentApplicantAfterCreate =
-    await currentApplicantAfterCreatePromise;
-  expect(currentApplicantAfterCreate.ok()).toBeTruthy();
+  const applicantPartiesAfterCreate = await applicantPartiesAfterCreatePromise;
+  expect(applicantPartiesAfterCreate.ok()).toBeTruthy();
 
   await expect(page.getByText("Applicant data saved.")).toBeVisible();
   await expect(page.getByText("Ivan", { exact: true })).toBeVisible();
   await expect(page.getByText("Ivanovich", { exact: true })).toBeVisible();
   await expect(page.getByText("Ivanov", { exact: true })).toBeVisible();
   await expect(page.getByText("Unverified", { exact: true })).toBeVisible();
+  await expect(page.getByText("Current/default", { exact: true })).toBeVisible();
 
-  const currentApplicantAfterReloadPromise = waitForApiResponse(
+  const applicantPartiesAfterReloadPromise = waitForApiResponse(
     page,
     "GET",
-    "/api/l1/applicant-parties/current-individual",
+    "/api/l1/applicant-parties",
   );
   await page.reload();
-  const currentApplicantAfterReload =
-    await currentApplicantAfterReloadPromise;
-  expect(currentApplicantAfterReload.ok()).toBeTruthy();
+  const applicantPartiesAfterReload = await applicantPartiesAfterReloadPromise;
+  expect(applicantPartiesAfterReload.ok()).toBeTruthy();
 
   await expect(page.getByText("Ivan", { exact: true })).toBeVisible();
   await expect(page.getByText("Ivanovich", { exact: true })).toBeVisible();
