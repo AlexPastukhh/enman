@@ -37,7 +37,10 @@ test("user filters My Requests by status", async ({ page, request }) => {
     "GET",
     "/api/l1/requests",
   );
-  await page.getByRole("button", { name: "Сбросить фильтры" }).click();
+  await page
+    .getByLabel("Фильтры")
+    .getByRole("button", { name: "Сбросить фильтры" })
+    .click();
   const unfilteredResponse = await unfilteredResponsePromise;
   expect(unfilteredResponse.ok()).toBeTruthy();
 
@@ -55,10 +58,24 @@ test("filtered empty state can be reset", async ({ page, request }) => {
 
   await page.goto("/requests?status=Approved");
 
-  await expect(
-    page.getByText("Заявок с выбранным фильтром не найдено."),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("button", { name: "Сбросить фильтры" }),
-  ).toBeVisible();
+  const filteredEmptyState = page.locator("section").filter({
+    has: page.getByRole("heading", {
+      name: "Заявок с выбранным фильтром не найдено.",
+    }),
+  });
+
+  await expect(filteredEmptyState).toBeVisible();
+
+  const unfilteredResponsePromise = waitForApiResponse(
+    page,
+    "GET",
+    "/api/l1/requests",
+  );
+  await filteredEmptyState
+    .getByRole("button", { name: "Сбросить фильтры" })
+    .click();
+  const unfilteredResponse = await unfilteredResponsePromise;
+  expect(unfilteredResponse.ok()).toBeTruthy();
+
+  await expect(page).toHaveURL(/\/requests$/);
 });

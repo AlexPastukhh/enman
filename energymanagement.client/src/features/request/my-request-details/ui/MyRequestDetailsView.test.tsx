@@ -46,7 +46,11 @@ describe("MyRequestDetailsView", () => {
     renderWithRouter(<MyRequestDetailsView request={request} />);
 
     expect(screen.getByRole("heading", { name: "Заявка #14" })).toBeVisible();
-    expect(screen.getAllByText("Rejected")).toHaveLength(2);
+
+    const rejectedValues = screen.getAllByText("Rejected");
+    expect(rejectedValues).toHaveLength(2);
+    rejectedValues.forEach((value) => expect(value).toBeVisible());
+
     expect(screen.getByText("Connection")).toBeVisible();
     expect(screen.getByText("Подключение объекта")).toBeVisible();
     expect(screen.getByText(/Алтайский край/)).toBeVisible();

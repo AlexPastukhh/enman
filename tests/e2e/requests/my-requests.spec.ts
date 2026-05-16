@@ -6,6 +6,8 @@ import {
 } from "../support/l1ClientSetup";
 import { waitForApiResponse } from "../support/apiResponse";
 
+const objectAddressText = "658480, Алтайский край, Заринск, Ленина, 10";
+
 test("user sees created request in My Requests", async ({ page, request }) => {
   const { email } = await registerAndLoginL1Client(page, request, "my-requests");
   const applicantPartyId = await createIndividualApplicantParty(page, email);
@@ -28,8 +30,7 @@ test("user sees created request in My Requests", async ({ page, request }) => {
   await expect(
     page.getByText("Подключение объекта к электрическим сетям"),
   ).toBeVisible();
-  await expect(page.getByText(/Алтайский край/)).toBeVisible();
-  await expect(page.getByText(/Заринск/)).toBeVisible();
+  await expect(page.getByText(objectAddressText, { exact: true })).toBeVisible();
   await expect(
     page.getByRole("link", { name: /Открыть детали Заявка/ }),
   ).toBeVisible();
