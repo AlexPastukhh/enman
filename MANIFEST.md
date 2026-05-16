@@ -1,23 +1,35 @@
-# Manifest — enman-fv-validation-docs-v1
+# Manifest — enman-vkr-writing-protocol-and-pilot-section-v1
+
+Archive type: replacement/add package  
+Scope: VKR writing protocol and pilot subsection draft  
+Generated: 2026-05-16
 
 ## Add
-- `planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md`
+
+```text
+vkr-clean/writing-protocol/README.md
+vkr-clean/writing-protocol/source-provenance-protocol.md
+vkr-clean/writing-protocol/section-card-template.md
+vkr-clean/writing-protocol/research-usage-rules.md
+vkr-clean/writing-protocol/chapter-section-question-map.md
+vkr-clean/writing-protocol/page-fragment-checklist.md
+vkr-clean/writing-protocol/pilot-section-existing-solutions.md
+```
 
 ## Replace
-- `planning/README.md`
-- `planning/planning-workflow-current.md`
-- `planning/planning-agent-protocol.md`
-- `planning/planning-doc-responsibility-map.md`
-- `planning/api/README.md`
-- `planning/api/client-server-contract-principles.md`
-- `planning/api/api-error-contract.md`
-- `planning/api/fluentvalidation-error-code-policy-note.md`
-- `planning/slices/README.md`
-- `planning/slices/draft-driven-discovery-principles.md`
-- `planning/slices/l1-slice-drafting-guide.md`
-- `planning/slices/slice-questions-register.md`
-- `planning/slices/slice-implementation-notes-register.md`
-- `planning/slices/cross-cutting/README.md`
+
+```text
+vkr-clean/vkr-materials-index.md
+```
 
 ## Delete
-- none
+
+```text
+None
+```
+
+## Notes
+
+This package does not change implementation code, planning workflow files, diagram artifacts or presentation files.
+
+It adds a controlled writing protocol for transforming project artifacts, implementation evidence and external research into VKR text.

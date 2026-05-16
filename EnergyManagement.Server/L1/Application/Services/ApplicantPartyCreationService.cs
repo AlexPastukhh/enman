@@ -10,14 +10,10 @@ namespace EnergyManagement.Server.L1.Application.Services;
 public sealed class ApplicantPartyCreationService : IApplicantPartyCreationService
 {
     private readonly IAccountRepository _accounts;
-    private readonly IApplicantPartyRepository _applicantParties;
 
-    public ApplicantPartyCreationService(
-        IAccountRepository accounts,
-        IApplicantPartyRepository applicantParties)
+    public ApplicantPartyCreationService(IAccountRepository accounts)
     {
         _accounts = accounts;
-        _applicantParties = applicantParties;
     }
 
     public async Task<Result<IndividualApplicantParty, IReadOnlyList<Error>>> CreateIndividualAsync(
@@ -72,8 +68,6 @@ public sealed class ApplicantPartyCreationService : IApplicantPartyCreationServi
             return Result.Failure<IndividualApplicantParty, IReadOnlyList<Error>>(
                 applicantPartyResult.Error);
         }
-
-        _applicantParties.Add(applicantPartyResult.Value);
 
         return applicantPartyResult;
     }

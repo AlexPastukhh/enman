@@ -25,7 +25,21 @@ Scope: navigation for clean VKR materials
 
 These files are relatively stable and can be developed while implementation work continues.
 
-## 3. Chapter Drafts
+## 3. Writing Protocol
+
+| File | Purpose |
+|---|---|
+| `writing-protocol/README.md` | Entry point for controlled VKR text assembly |
+| `writing-protocol/source-provenance-protocol.md` | Rules for using project artifacts, implementation evidence, research and author analysis |
+| `writing-protocol/section-card-template.md` | Template for preparing each subsection before drafting |
+| `writing-protocol/research-usage-rules.md` | Rules for using Deep Research and external sources without turning text into compilation |
+| `writing-protocol/chapter-section-question-map.md` | Project-centered questions for future VKR subsections |
+| `writing-protocol/page-fragment-checklist.md` | Quick paragraph/table/figure checklist |
+| `writing-protocol/pilot-section-existing-solutions.md` | Pilot draft for the “Анализ существующих решений” subsection |
+
+Use this section before expanding chapter drafts. It helps keep each paragraph tied to the ООО «ЗСК» project, not to generic theory.
+
+## 4. Chapter Drafts
 
 | File | Purpose |
 |---|---|
@@ -36,7 +50,7 @@ These files are relatively stable and can be developed while implementation work
 
 Chapter files are not the only source of truth. Update clean source files first, then expand chapters.
 
-## 4. Clean Source Files
+## 5. Clean Source Files
 
 | File | Purpose |
 |---|---|
@@ -53,14 +67,38 @@ Chapter files are not the only source of truth. Update clean source files first,
 | `clean-testing.md` | Testing strategy and verification |
 | `clean-results-and-future-work.md` | Results and further development |
 
-## 5. Diagram And Planning Extraction Files
+## 6. Literature And Research Support
+
+| Material | Purpose |
+|---|---|
+| Literature candidates | Candidate sources for VKR bibliography |
+| Recommended source selection | Working 45-source selection for methodical requirement |
+| Source-to-section mapping | Shows which sources support which VKR section |
+| Reference status notes | Separates core, official, reference-only and caution sources |
+
+Research materials should support the project text, not replace it.
+
+## 7. Diagram And Planning Extraction Files
 
 | File | Purpose |
 |---|---|
 | `visuals-and-diagrams-plan.md` | Diagram list, placement and content plan |
 | `planning-to-vkr-extraction-map.md` | Mapping from planning/slices/API/testing docs to VKR sections |
 
-## 6. Related Working Files Outside `vkr-clean/`
+Final diagram generation should follow `planning/diagrams/diagram-prompt-generation-workflow.md` and `planning/diagrams/drawio-diagram-generation-workflow.md`.
+
+## 8. Expanded Drafts
+
+| Material | Purpose |
+|---|---|
+| Chapter 1 expanded draft | Longer working text for analysis/problem domain |
+| Chapter 2 expanded draft | Longer working text for requirements/design |
+| Chapter 3 expanded draft | Longer working text for implementation/testing |
+| Missing materials checklist | INSERT/TODO list for screenshots, diagrams, tables, sources and repo checks |
+
+Expanded drafts are working material. They should be cleaned and source-checked before final VKR text.
+
+## 9. Related Working Files Outside `vkr-clean/`
 
 | File | Purpose |
 |---|---|
@@ -71,15 +109,16 @@ Chapter files are not the only source of truth. Update clean source files first,
 | `presentation/speech-draft.md` | Speech draft |
 | `presentation/demo-script.md` | Demo plan |
 | `presentation/visuals-needed.md` | Visuals needed for defense |
+| `presentation/predefense-expanded-draft.md` | Expanded pre-defense text draft |
 
-## 7. Current Next Steps
+## 10. Current Next Steps
 
 ```text
-1. Use format-and-methodical-requirements.md to keep chapter structure and defense materials aligned with methodical expectations.
-2. Use definitions-abbreviations.md as the base for the "Определения, обозначения и сокращения" section.
-3. Expand introduction-draft.md after the final implementation status is known.
-4. Use existing-solutions-analysis.md as the base for Chapter 1 comparison/justification.
-5. Build diagrams from visuals-and-diagrams-plan.md and use-case-diagrams-plan.md.
+1. Use writing-protocol/ before expanding chapter drafts.
+2. Use source-provenance-protocol.md to decide whether a paragraph comes from project artifacts, implementation evidence, research or author analysis.
+3. Use pilot-section-existing-solutions.md as the first test subsection.
+4. Build final comparison table for existing solutions from research materials.
+5. Expand chapter 1 from the pilot section, introduction draft and existing-solutions analysis.
 6. Expand chapter 2 from functional-specification.md, clean-architecture.md and api-contract-and-client-server-sync.md.
 7. Expand chapter 3 from clean-ui-description.md, clean-testing.md and repo evidence.
 8. Before final chapter text, recheck repo evidence for each implemented claim.

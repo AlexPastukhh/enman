@@ -1,19 +1,34 @@
-# Apply — enman-fv-validation-docs-v1
+# Apply — enman-vkr-writing-protocol-and-pilot-section-v1
 
 From repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-fv-validation-docs-v1.zip" -DestinationPath . -Force
+cd "C:\enman\enman"
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-writing-protocol-and-pilot-section-v1.zip" -DestinationPath . -Force
 git status
+git diff
 ```
 
-Review:
+Recommended add/commit command:
 
 ```powershell
-git diff -- planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
-git diff -- planning/slices/l1-slice-drafting-guide.md
-git diff -- planning/planning-agent-protocol.md
-git diff -- planning/api/client-server-contract-principles.md
-git diff -- planning/api/api-error-contract.md
-git diff -- planning/slices/slice-questions-register.md
+git add vkr-clean/vkr-materials-index.md `
+        vkr-clean/writing-protocol/README.md `
+        vkr-clean/writing-protocol/source-provenance-protocol.md `
+        vkr-clean/writing-protocol/section-card-template.md `
+        vkr-clean/writing-protocol/research-usage-rules.md `
+        vkr-clean/writing-protocol/chapter-section-question-map.md `
+        vkr-clean/writing-protocol/page-fragment-checklist.md `
+        vkr-clean/writing-protocol/pilot-section-existing-solutions.md `
+        MANIFEST.md `
+        APPLY.md
+
+git commit -m "Add VKR writing protocol and pilot section draft"
 ```
+
+## After Applying
+
+1. Open `vkr-clean/writing-protocol/README.md`.
+2. Review `pilot-section-existing-solutions.md`.
+3. Use the pilot section to create a cleaner final subsection for chapter 1.
+4. Add sources from the literature/research package where `TODO SOURCE` markers appear.

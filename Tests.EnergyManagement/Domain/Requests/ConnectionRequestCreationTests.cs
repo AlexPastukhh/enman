@@ -52,7 +52,7 @@ public class ConnectionRequestCreationTests
     }
 
     [Fact]
-    public void Create_allows_transient_applicant_party_for_atomic_create()
+    public void Create_guards_transient_applicant_party()
     {
         var applicant = CreateApplicant();
 
@@ -61,9 +61,8 @@ public class ConnectionRequestCreationTests
             L1ValidTestData.RequestDetails,
             L1ValidTestData.Address);
 
-        result.IsSuccess.Should().BeTrue();
-        result.Value.ApplicantParty.Should().BeSameAs(applicant);
-        result.Value.ApplicantPartyId.Should().Be(0);
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Contain(Errors.L1Domain.ApplicantPartyMustBePersisted);
     }
 
     private static IndividualApplicantParty CreatePersistedApplicant()

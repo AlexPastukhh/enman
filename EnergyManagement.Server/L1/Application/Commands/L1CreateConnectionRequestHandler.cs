@@ -5,6 +5,7 @@ using Domain.EnergyManagement.L1;
 using EnergyManagement.Server.L1.Application.Abstractions;
 using EnergyManagement.Server.L1.Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using static Domain.EnergyManagement.Common.Error;
 
 namespace EnergyManagement.Server.L1.Application.Commands;
@@ -36,11 +37,10 @@ public sealed class L1CreateConnectionRequestHandler
         L1CreateConnectionRequestCommand command,
         CancellationToken cancellationToken)
     {
-        var applicantPartyResult = await ResolveApplicantPartyAsync(command, cancellationToken);
-        if (applicantPartyResult.IsFailure)
+        var branchErrors = ValidateApplicantContext(command);
+        if (branchErrors.Count > 0)
         {
-            return UnitResult.Failure<IReadOnlyList<Error>>(
-                applicantPartyResult.Error);
+            return UnitResult.Failure<IReadOnlyList<Error>>(branchErrors);
         }
 
         var addressResult = Address.Create(
@@ -58,10 +58,40 @@ public sealed class L1CreateConnectionRequestHandler
                 addressResult.Error);
         }
 
+        var requestInputErrors = ValidateRequestInput(command.Details);
+        if (requestInputErrors.Count > 0)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(requestInputErrors);
+        }
+
+        if (string.Equals(command.ApplicantContextType, ExistingApplicantContext, StringComparison.Ordinal))
+        {
+            return await HandleExistingApplicantAsync(command, addressResult.Value, cancellationToken);
+        }
+
+        return await HandleNewApplicantAsync(command, addressResult.Value, cancellationToken);
+    }
+
+    private async Task<UnitResult<IReadOnlyList<Error>>> HandleExistingApplicantAsync(
+        L1CreateConnectionRequestCommand command,
+        Address objectAddress,
+        CancellationToken cancellationToken)
+    {
+        var applicantParty = await _applicantParties.GetOwnedByIdAsync(
+            command.ExistingApplicantPartyId!.Value,
+            command.ClientAccountId,
+            cancellationToken);
+
+        if (applicantParty is null)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.ApplicantPartyIsRequired]);
+        }
+
         var requestResult = ConnectionRequest.Create(
-            applicantPartyResult.Value,
+            applicantParty,
             command.Details,
-            addressResult.Value);
+            objectAddress);
 
         if (requestResult.IsFailure)
         {
@@ -75,32 +105,11 @@ public sealed class L1CreateConnectionRequestHandler
         return UnitResult.Success<IReadOnlyList<Error>>();
     }
 
-    private async Task<Result<ApplicantParty, IReadOnlyList<Error>>> ResolveApplicantPartyAsync(
+    private async Task<UnitResult<IReadOnlyList<Error>>> HandleNewApplicantAsync(
         L1CreateConnectionRequestCommand command,
+        Address objectAddress,
         CancellationToken cancellationToken)
     {
-        var branchErrors = ValidateApplicantContext(command);
-        if (branchErrors.Count > 0)
-        {
-            return Result.Failure<ApplicantParty, IReadOnlyList<Error>>(branchErrors);
-        }
-
-        if (string.Equals(command.ApplicantContextType, ExistingApplicantContext, StringComparison.Ordinal))
-        {
-            var applicantParty = await _applicantParties.GetOwnedByIdAsync(
-                command.ExistingApplicantPartyId!.Value,
-                command.ClientAccountId,
-                cancellationToken);
-
-            if (applicantParty is null)
-            {
-                return Result.Failure<ApplicantParty, IReadOnlyList<Error>>(
-                    [Errors.L1Domain.ApplicantPartyIsRequired]);
-            }
-
-            return Result.Success<ApplicantParty, IReadOnlyList<Error>>(applicantParty);
-        }
-
         var newApplicant = command.NewApplicantParty!;
         var createdApplicant = await _applicantPartyCreation.CreateIndividualAsync(
             command.ClientAccountId,
@@ -113,10 +122,30 @@ public sealed class L1CreateConnectionRequestHandler
 
         if (createdApplicant.IsFailure)
         {
-            return Result.Failure<ApplicantParty, IReadOnlyList<Error>>(createdApplicant.Error);
+            return UnitResult.Failure<IReadOnlyList<Error>>(createdApplicant.Error);
         }
 
-        return Result.Success<ApplicantParty, IReadOnlyList<Error>>(createdApplicant.Value);
+        await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+
+        _applicantParties.Add(createdApplicant.Value);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        var requestResult = ConnectionRequest.Create(
+            createdApplicant.Value,
+            command.Details,
+            objectAddress);
+
+        if (requestResult.IsFailure)
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            return UnitResult.Failure<IReadOnlyList<Error>>(requestResult.Error);
+        }
+
+        _clientRequests.Add(requestResult.Value);
+        await _context.SaveChangesAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+
+        return UnitResult.Success<IReadOnlyList<Error>>();
     }
 
     private static IReadOnlyList<Error> ValidateApplicantContext(
@@ -176,6 +205,23 @@ public sealed class L1CreateConnectionRequestHandler
             {
                 errors.Add(Errors.General.ValueIsInvalid);
             }
+        }
+
+        return errors;
+    }
+
+    private static IReadOnlyList<Error> ValidateRequestInput(string details)
+    {
+        var errors = new List<Error>();
+
+        if (string.IsNullOrWhiteSpace(details))
+        {
+            errors.Add(Errors.ClientRequestErrors.ClientRequestTextIsRequired);
+        }
+
+        if (details is not null && details.Length > 3000)
+        {
+            errors.Add(Errors.ClientRequestErrors.ClientRequestTextIsTooLong);
         }
 
         return errors;

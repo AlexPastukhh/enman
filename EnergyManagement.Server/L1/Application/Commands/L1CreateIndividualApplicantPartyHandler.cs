@@ -10,13 +10,16 @@ public sealed class L1CreateIndividualApplicantPartyHandler
     : IRequestHandler<L1CreateIndividualApplicantPartyCommand, Result<L1CreateIndividualApplicantPartyResponse, IReadOnlyList<Error>>>
 {
     private readonly IApplicantPartyCreationService _applicantPartyCreation;
+    private readonly IApplicantPartyRepository _applicantParties;
     private readonly L1DbContext _context;
 
     public L1CreateIndividualApplicantPartyHandler(
         IApplicantPartyCreationService applicantPartyCreation,
+        IApplicantPartyRepository applicantParties,
         L1DbContext context)
     {
         _applicantPartyCreation = applicantPartyCreation;
+        _applicantParties = applicantParties;
         _context = context;
     }
 
@@ -39,6 +42,7 @@ public sealed class L1CreateIndividualApplicantPartyHandler
                 applicantPartyResult.Error);
         }
 
+        _applicantParties.Add(applicantPartyResult.Value);
         await _context.SaveChangesAsync(cancellationToken);
 
         return Result.Success<L1CreateIndividualApplicantPartyResponse, IReadOnlyList<Error>>(
