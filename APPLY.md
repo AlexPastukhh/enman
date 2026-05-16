@@ -1,34 +1,33 @@
-# Apply — enman-vkr-writing-protocol-and-pilot-section-v1
+# APPLY
 
-From repository root:
+Apply from repository root.
 
 ```powershell
 cd "C:\enman\enman"
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-writing-protocol-and-pilot-section-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-section-draft-existing-solutions-v1.zip" -DestinationPath . -Force
 git status
 git diff
 ```
 
-Recommended add/commit command:
+Suggested add/commit:
 
 ```powershell
-git add vkr-clean/vkr-materials-index.md `
-        vkr-clean/writing-protocol/README.md `
-        vkr-clean/writing-protocol/source-provenance-protocol.md `
-        vkr-clean/writing-protocol/section-card-template.md `
-        vkr-clean/writing-protocol/research-usage-rules.md `
-        vkr-clean/writing-protocol/chapter-section-question-map.md `
-        vkr-clean/writing-protocol/page-fragment-checklist.md `
-        vkr-clean/writing-protocol/pilot-section-existing-solutions.md `
+git add vkr-clean/section-drafts/README.md `
+        vkr-clean/section-drafts/section-draft-workflow.md `
+        vkr-clean/section-drafts/chapter-1/README.md `
+        vkr-clean/section-drafts/chapter-1/01-02-existing-solutions-and-own-development.md `
         MANIFEST.md `
         APPLY.md
 
-git commit -m "Add VKR writing protocol and pilot section draft"
+git commit -m "Add VKR existing solutions section draft"
 ```
 
-## After Applying
+## After applying
 
-1. Open `vkr-clean/writing-protocol/README.md`.
-2. Review `pilot-section-existing-solutions.md`.
-3. Use the pilot section to create a cleaner final subsection for chapter 1.
-4. Add sources from the literature/research package where `TODO SOURCE` markers appear.
+Review:
+
+```text
+vkr-clean/section-drafts/chapter-1/01-02-existing-solutions-and-own-development.md
+```
+
+Then replace `TODO SOURCE` markers with concrete references from the literature/research materials.

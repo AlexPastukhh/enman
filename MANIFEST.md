@@ -1,25 +1,20 @@
-# Manifest — enman-vkr-writing-protocol-and-pilot-section-v1
+# MANIFEST
 
-Archive type: replacement/add package  
-Scope: VKR writing protocol and pilot subsection draft  
-Generated: 2026-05-16
+Archive: enman-vkr-section-draft-existing-solutions-v1.zip
 
 ## Add
 
 ```text
-vkr-clean/writing-protocol/README.md
-vkr-clean/writing-protocol/source-provenance-protocol.md
-vkr-clean/writing-protocol/section-card-template.md
-vkr-clean/writing-protocol/research-usage-rules.md
-vkr-clean/writing-protocol/chapter-section-question-map.md
-vkr-clean/writing-protocol/page-fragment-checklist.md
-vkr-clean/writing-protocol/pilot-section-existing-solutions.md
+vkr-clean/section-drafts/README.md
+vkr-clean/section-drafts/section-draft-workflow.md
+vkr-clean/section-drafts/chapter-1/README.md
+vkr-clean/section-drafts/chapter-1/01-02-existing-solutions-and-own-development.md
 ```
 
 ## Replace
 
 ```text
-vkr-clean/vkr-materials-index.md
+None
 ```
 
 ## Delete
@@ -28,8 +23,8 @@ vkr-clean/vkr-materials-index.md
 None
 ```
 
-## Notes
+## Scope
 
-This package does not change implementation code, planning workflow files, diagram artifacts or presentation files.
+This archive adds an iterative clean subsection draft for Chapter 1: existing solutions analysis and justification of custom development.
 
-It adds a controlled writing protocol for transforming project artifacts, implementation evidence and external research into VKR text.
+It does not change code, planning workflow files, generated artifacts, presentation files or existing chapter drafts.
