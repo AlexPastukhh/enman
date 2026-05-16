@@ -1,4 +1,4 @@
-# Manifest — enman-applicant-party-template-model-and-slices-v1
+# Manifest — enman-applicant-request-slice-model-reconciliation-v1
 
 ## Add
 - planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
@@ -8,10 +8,11 @@
 - planning/slices/SL-APPL-002-account-applicant-parties-read.md
 - planning/slices/SL-APPL-003-select-current-default-applicant-party-template.md
 - planning/slices/SL-APPL-004-applicant-party-creation-application-service.md
-- planning/slices/SL-REQ-004-create-request-with-applicant-context.md
 
 ## Replace
 - planning/README.md
+- planning/planning-workflow-current.md
+- planning/api/client-server-contract-principles.md
 - planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
 - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
 - planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
@@ -28,6 +29,8 @@
 - planning/diagrams/scenario-questions-register.md
 - planning/slices/README.md
 - planning/slices/SL-APPL-001-create-individual-applicant-party.md
+- planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
+- planning/slices/SL-REQ-001-create-connection-request.md
 - planning/slices/slice-scenario-flow-behavior-register.md
 - planning/slices/slice-questions-register.md
 - planning/slices/slice-extension-points-register.md
