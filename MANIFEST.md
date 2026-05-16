@@ -1,15 +1,44 @@
-# Manifest — enman-github-line-links-workflow-docs-v1
+# MANIFEST
+
+Archive: enman-vkr-section-drafting-workflow-v2.zip
 
 ## Add
-- planning/repo-grounded-github-line-links-workflow.md
+
+```text
+vkr-clean/section-drafts/vkr-section-drafting-workflow.md
+vkr-clean/section-drafts/short-draft-template.md
+vkr-clean/section-drafts/full-draft-template.md
+vkr-clean/section-drafts/full-draft-review-checklist.md
+vkr-clean/section-drafts/fragment-bank.md
+vkr-clean/section-drafts/section-draft-register.md
+```
 
 ## Replace
-- planning/README.md
-- planning/planning-workflow-current.md
-- planning/planning-agent-protocol.md
-- planning/agent-scope-boundaries-and-prompt-safety.md
-- planning/planning-doc-responsibility-map.md
-- planning/agent-roles-and-required-actions.md
+
+```text
+vkr-clean/section-drafts/README.md
+vkr-clean/vkr-materials-index.md
+```
 
 ## Delete
-- none
+
+```text
+None
+```
+
+## Scope
+
+This archive updates the VKR section drafting workflow.
+
+It defines:
+
+```text
+- chat-first short drafts;
+- file-based full draft attempts;
+- review and fragment harvesting;
+- fragment bank;
+- draft register;
+- navigation updates.
+```
+
+It does not change code, planning source-of-truth files, diagrams, research reports or chapter text.

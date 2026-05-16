@@ -39,7 +39,22 @@ These files are relatively stable and can be developed while implementation work
 
 Use this section before expanding chapter drafts. It helps keep each paragraph tied to the ООО «ЗСК» project, not to generic theory.
 
-## 4. Chapter Drafts
+## 4. Section Draft Workflow
+
+| File / material | Purpose |
+|---|---|
+| `section-drafts/README.md` | Entry point for subsection draft workflow |
+| `section-drafts/vkr-section-drafting-workflow.md` | Current short/full draft workflow |
+| `section-drafts/short-draft-template.md` | Chat-first short draft template |
+| `section-drafts/full-draft-template.md` | Full draft attempt template |
+| `section-drafts/full-draft-review-checklist.md` | Checklist for reviewing full draft attempts |
+| `section-drafts/fragment-bank.md` | Bank of successful fragments, transitions and conclusions |
+| `section-drafts/section-draft-register.md` | Register of subsection draft statuses |
+
+Short drafts are normally written in chat first.  
+Full draft attempts, review results and reusable fragments are stored as files.
+
+## 5. Chapter Drafts
 
 | File | Purpose |
 |---|---|
@@ -50,7 +65,7 @@ Use this section before expanding chapter drafts. It helps keep each paragraph t
 
 Chapter files are not the only source of truth. Update clean source files first, then expand chapters.
 
-## 5. Clean Source Files
+## 6. Clean Source Files
 
 | File | Purpose |
 |---|---|
@@ -67,7 +82,7 @@ Chapter files are not the only source of truth. Update clean source files first,
 | `clean-testing.md` | Testing strategy and verification |
 | `clean-results-and-future-work.md` | Results and further development |
 
-## 6. Literature And Research Support
+## 7. Literature And Research Support
 
 | Material | Purpose |
 |---|---|
@@ -78,7 +93,7 @@ Chapter files are not the only source of truth. Update clean source files first,
 
 Research materials should support the project text, not replace it.
 
-## 7. Diagram And Planning Extraction Files
+## 8. Diagram And Planning Extraction Files
 
 | File | Purpose |
 |---|---|
@@ -87,7 +102,7 @@ Research materials should support the project text, not replace it.
 
 Final diagram generation should follow `planning/diagrams/diagram-prompt-generation-workflow.md` and `planning/diagrams/drawio-diagram-generation-workflow.md`.
 
-## 8. Expanded Drafts
+## 9. Expanded Drafts
 
 | Material | Purpose |
 |---|---|
@@ -98,7 +113,7 @@ Final diagram generation should follow `planning/diagrams/diagram-prompt-generat
 
 Expanded drafts are working material. They should be cleaned and source-checked before final VKR text.
 
-## 9. Related Working Files Outside `vkr-clean/`
+## 10. Related Working Files Outside `vkr-clean/`
 
 | File | Purpose |
 |---|---|
@@ -111,15 +126,16 @@ Expanded drafts are working material. They should be cleaned and source-checked 
 | `presentation/visuals-needed.md` | Visuals needed for defense |
 | `presentation/predefense-expanded-draft.md` | Expanded pre-defense text draft |
 
-## 10. Current Next Steps
+## 11. Current Next Steps
 
 ```text
-1. Use writing-protocol/ before expanding chapter drafts.
-2. Use source-provenance-protocol.md to decide whether a paragraph comes from project artifacts, implementation evidence, research or author analysis.
-3. Use pilot-section-existing-solutions.md as the first test subsection.
-4. Build final comparison table for existing solutions from research materials.
-5. Expand chapter 1 from the pilot section, introduction draft and existing-solutions analysis.
-6. Expand chapter 2 from functional-specification.md, clean-architecture.md and api-contract-and-client-server-sync.md.
-7. Expand chapter 3 from clean-ui-description.md, clean-testing.md and repo evidence.
-8. Before final chapter text, recheck repo evidence for each implemented claim.
+1. Write short drafts in chat before creating full draft files.
+2. Use section-drafts/vkr-section-drafting-workflow.md to move from short draft to full draft attempt.
+3. Use full-draft-review-checklist.md after each full draft attempt.
+4. Move successful fragments to fragment-bank.md.
+5. Use section-draft-register.md to track draft statuses.
+6. Expand chapter 1 from short/full section drafts, introduction draft and existing-solutions analysis.
+7. Expand chapter 2 from functional-specification.md, clean-architecture.md and api-contract-and-client-server-sync.md.
+8. Expand chapter 3 from clean-ui-description.md, clean-testing.md and repo evidence.
+9. Before final chapter text, recheck repo evidence for each implemented claim.
 ```
