@@ -2,6 +2,7 @@ using CSharpFunctionalExtensions;
 using Domain.EnergyManagement.Common;
 using Domain.EnergyManagement.DocumentManaging;
 using Domain.EnergyManagement.L1;
+using EnergyManagement.Server.L1.Application;
 using EnergyManagement.Server.L1.Application.Abstractions;
 using EnergyManagement.Server.L1.Persistence;
 using MediatR;
@@ -27,25 +28,21 @@ public sealed class L1RegisterClientAccountHandler
         L1RegisterClientAccountCommand command,
         CancellationToken cancellationToken)
     {
-        var emailResult = Email.Create(command.Email);
-        if (emailResult.IsFailure)
-        {
-            return Result.Failure<L1RegisterClientAccountResponse, IReadOnlyList<Error>>(emailResult.Error);
-        }
+        var email = ValidatedInput.ValueOrThrow(
+            Email.Create(command.Email),
+            "Email was validated by FluentValidation but Email.Create failed.");
 
-        if (await _accounts.ExistsByEmailAsync(emailResult.Value, cancellationToken))
+        if (await _accounts.ExistsByEmailAsync(email, cancellationToken))
         {
             return Result.Failure<L1RegisterClientAccountResponse, IReadOnlyList<Error>>(
                 [Errors.Account.EmailIsRegisteredAlready]);
         }
 
-        var passwordHashResult = PasswordHash.CreateFromPlainTextPassword(command.Password);
-        if (passwordHashResult.IsFailure)
-        {
-            return Result.Failure<L1RegisterClientAccountResponse, IReadOnlyList<Error>>(passwordHashResult.Error);
-        }
+        var passwordHash = ValidatedInput.ValueOrThrow(
+            PasswordHash.CreateFromPlainTextPassword(command.Password),
+            "Password was validated by FluentValidation but PasswordHash.CreateFromPlainTextPassword failed.");
 
-        var accountResult = ClientAccount.Create(emailResult.Value, passwordHashResult.Value);
+        var accountResult = ClientAccount.Create(email, passwordHash);
         if (accountResult.IsFailure)
         {
             return Result.Failure<L1RegisterClientAccountResponse, IReadOnlyList<Error>>(accountResult.Error);

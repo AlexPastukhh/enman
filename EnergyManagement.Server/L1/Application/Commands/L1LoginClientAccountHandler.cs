@@ -2,6 +2,7 @@ using CSharpFunctionalExtensions;
 using Domain.EnergyManagement.Common;
 using Domain.EnergyManagement.DocumentManaging;
 using Domain.EnergyManagement.L1;
+using EnergyManagement.Server.L1.Application;
 using EnergyManagement.Server.L1.Application.Abstractions;
 using MediatR;
 using static Domain.EnergyManagement.Common.Error;
@@ -22,13 +23,11 @@ public sealed class L1LoginClientAccountHandler
         L1LoginClientAccountCommand command,
         CancellationToken cancellationToken)
     {
-        var emailResult = Email.Create(command.Email);
-        if (emailResult.IsFailure)
-        {
-            return InvalidCredentials();
-        }
+        var email = ValidatedInput.ValueOrThrow(
+            Email.Create(command.Email),
+            "Email was validated by FluentValidation but Email.Create failed.");
 
-        var account = await _accounts.GetByEmailAsync(emailResult.Value, cancellationToken);
+        var account = await _accounts.GetByEmailAsync(email, cancellationToken);
         if (account is not ClientAccount clientAccount)
         {
             return InvalidCredentials();
