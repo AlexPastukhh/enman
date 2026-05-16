@@ -71,10 +71,23 @@ test("user sees current default and other saved Applicant Parties", async ({
     name: "Other saved Applicant Parties",
   });
 
-  await expect(currentDefaults.getByText("Ivan", { exact: true })).toBeVisible();
-  await expect(currentDefaults.getByText("Current/default")).toBeVisible();
-  await expect(otherSaved.getByText("Petr", { exact: true })).toBeVisible();
-  await expect(otherSaved.getByText("Current/default")).not.toBeVisible();
+  const currentDefaultCard = currentDefaults.locator("article").filter({
+  hasText: "Ivan",
+});
+
+const otherSavedCard = otherSaved.locator("article").filter({
+  hasText: "Petr",
+});
+
+await expect(currentDefaultCard).toBeVisible();
+await expect(
+  currentDefaultCard.getByText("Current/default", { exact: true }),
+).toBeVisible();
+
+await expect(otherSavedCard).toBeVisible();
+await expect(
+  otherSavedCard.getByText("Current/default", { exact: true }),
+).toHaveCount(0);
 });
 
 test("user sees empty Applicant Parties read state", async ({ page, request }) => {
