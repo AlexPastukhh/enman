@@ -1,10 +1,10 @@
 # SL-APPL-001.client — Create Individual ApplicantParty
 
-Status: first-stage implemented client feature flow / current applicant read slice missing / tests pending  
+Status: first-stage implemented client feature flow / current applicant read integrated / tests added  
 Parent slice: `planning/slices/SL-APPL-001-create-individual-applicant-party.md`  
 Source scenario: `SC-10 Applicant Data`  
 Slice type: client sidecar / Account page applicant command flow  
-Current implementation status: implemented local create flow; stable server-backed current applicant read after refresh is not implemented
+Current implementation status: implemented create flow; Account page now uses server-backed current applicant read state after refresh
 
 ## 1. Sidecar Overview
 
@@ -51,8 +51,6 @@ energymanagement.client/src/shared/api/generated/openapi-types.ts
 Out of scope / not implemented here:
 
 ```text
-- stable current applicant read after page refresh;
-- applicant verification status display;
 - persisted edit/replacement flow;
 - create request entry point;
 - request creation form;
@@ -132,7 +130,6 @@ Note: when SC-10 UI behavior item IDs are applied, replace temporary source labe
 Out of scope in this sidecar:
 - create request entry;
 - request creation form;
-- current applicant read after refresh;
 - persisted edit/replacement.
 ```
 
@@ -144,16 +141,15 @@ Out of scope in this sidecar:
 | F02 | Account page reads current session. | `pages/account/AccountPage.tsx`, `useSession` | implemented |
 | F03 | No-session branch renders registration fallback. | `AccountPage.tsx` | implemented-current; future UX may change |
 | F04 | Authenticated branch shows account heading/email. | `AccountPage.tsx` | implemented |
-| F05 | Authenticated branch renders applicant create form. | `AccountPage.tsx` | implemented |
+| F05 | Authenticated branch fetches current applicant state and renders create form only when missing. | `AccountPage.tsx`, `entities/applicant-party` | implemented |
 | F06 | Form renders first/middle/last name, email, phone. | `CreateIndividualApplicantPartyForm.tsx`, const file | implemented |
 | F07 | Client validates requiredness, length, email and phone shape. | `createIndividualApplicantPartySchema.ts` | implemented |
 | F08 | Submit maps form values to DTO `fullName/email/phoneNumber`. | `createIndividualApplicantParty.ts` | implemented |
 | F09 | API errors are mapped to form field/root errors. | `useCreateIndividualApplicantPartyForm.ts`, `applyApiErrorToForm.ts` | implemented |
-| F10 | Success stores submitted values as local saved state. | `useCreateIndividualApplicantPartyForm.ts` | implemented |
-| F11 | Success shows read-only summary and Edit action. | `CreateIndividualApplicantPartyForm.tsx`, `ApplicantPartyReadOnlyView.tsx` | implemented |
+| F10 | Success invalidates/refetches current applicant state. | `useCreateIndividualApplicantPartyForm.ts`, `applicantPartyQueryKeys.ts` | implemented |
+| F11 | Success shows server-backed read-only summary. | `AccountPage.tsx`, `ApplicantPartyReadOnlyView.tsx` | implemented |
 | F12 | Success notification appears and self-dismisses. | `useCreateIndividualApplicantPartyForm.ts`, `CreateIndividualApplicantPartyForm.tsx` | implemented |
-| F13 | Edit action returns to editable local form. | `ApplicantPartyReadOnlyView.tsx`, hook | implemented first-stage local edit |
-| F14 | Stable existing applicant load after refresh. | no read-current client query in inspected files | planned/gap |
+| F13 | Stable existing applicant load after refresh. | `useCurrentIndividualApplicantPartyQuery.ts` | implemented |
 
 ## 5. Visual Client Implementation Flow
 
@@ -252,13 +248,14 @@ Success/local-state branch:
 | Feature validation | Validate full name/email/phone. | `createIndividualApplicantPartySchema`. | implemented |
 | Feature API mapper | Convert form values to generated request DTO. | `createIndividualApplicantParty.ts`. | implemented |
 | Shared API | Post to L1 applicant endpoint. | `l1ApplicantPartyApi.createIndividualApplicantParty`. | implemented |
-| Current applicant read | Load already saved applicant after refresh. | not present in inspected files. | planned/gap |
+| Current applicant read | Load already saved applicant after refresh. | `entities/applicant-party`, `l1ApplicantPartyApi.getCurrentIndividualApplicantParty`. | implemented |
 
 ## 7. Client API / Generated Contract
 
 | Client API function | Endpoint | Generated OpenAPI type(s) used | Response used? | Error constants used | Status |
 |---|---|---|---|---|---|
-| `features/applicant-party/create-individual/api/createIndividualApplicantParty(values)` | `POST /api/l1/applicant-parties/individual` | `L1CreateIndividualApplicantPartyDto`, `L1CreateIndividualApplicantPartyResponse` | Feature ignores response body and uses submitted values for local read-only state. | generated applicant/email/phone constants where available; local messages for name length/requiredness | implemented |
+| `features/applicant-party/create-individual/api/createIndividualApplicantParty(values)` | `POST /api/l1/applicant-parties/individual` | `L1CreateIndividualApplicantPartyDto`, `L1CreateIndividualApplicantPartyResponse` | Feature ignores response body and invalidates current applicant read state. | generated applicant/email/phone constants where available; local messages for name length/requiredness | implemented |
+| `shared/api/l1ApplicantPartyApi.getCurrentIndividualApplicantParty()` | `GET /api/l1/applicant-parties/current-individual` | `L1CurrentIndividualApplicantPartyResponse` | Account page branches on `exists`. | none for normal missing state | implemented |
 
 Contract notes:
 
@@ -273,9 +270,9 @@ Contract notes:
 
 ### Q-APPL-CLIENT-001 — How does Account page load existing applicant after refresh?
 
-Question status: open  
+Question status: resolved  
 Question: What server endpoint/read model should Account page use to show current applicant after reload?  
-Assumption / current direction: Current feature uses local post-submit state only; stable refresh requires future `L1-APPLICANT-PARTY-READ-CURRENT`.  
+Assumption / current direction: Account page uses `GET /api/l1/applicant-parties/current-individual`, applicant-party entity query state and `exists` branching. Create success invalidates/refetches that query.  
 Impact: Affects Account page state, read-only display, verification status and E2E.  
 Shared register: `planning/slices/slice-questions-register.md / SL-APPL-CLIENT-Q-001`
 
@@ -361,11 +358,11 @@ My Requests read/list/detail client slices
 [x] DTO maps to fullName/email/phoneNumber
 [x] shared API function exists
 [x] ProblemDetails form mapping used
-[x] success local read-only state exists
-[x] Edit action exists
+[x] success invalidates/refetches current applicant state
+[x] server-backed read-only state exists
 [x] self-dismissing notification exists
-[ ] current applicant read after refresh
+[x] current applicant read after refresh
 [ ] persisted edit/replacement
-[ ] component tests found/confirmed
+[x] component tests found/confirmed
 [ ] E2E found/confirmed
 ```

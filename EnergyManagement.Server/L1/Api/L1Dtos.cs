@@ -22,6 +22,16 @@ public sealed record L1CreateIndividualApplicantPartyDto(
     [property: JsonPropertyName("email")] string Email,
     [property: JsonPropertyName("phoneNumber")] string PhoneNumber);
 
+public sealed record L1CurrentIndividualApplicantPartyResponse(
+    [property: JsonPropertyName("exists")] bool Exists,
+    [property: JsonPropertyName("applicantParty")] L1IndividualApplicantPartyDto? ApplicantParty);
+
+public sealed record L1IndividualApplicantPartyDto(
+    [property: JsonPropertyName("fullName")] L1FullNameDto FullName,
+    [property: JsonPropertyName("email")] string Email,
+    [property: JsonPropertyName("phoneNumber")] string PhoneNumber,
+    [property: JsonPropertyName("verificationStatus")] string VerificationStatus);
+
 public sealed record L1FullNameDto(
     [property: JsonPropertyName("firstName")] string FirstName,
     [property: JsonPropertyName("middleName")] string MiddleName,

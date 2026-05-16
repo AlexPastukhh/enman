@@ -1,7 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
+import { applicantPartyQueryKeys } from "../../../../entities/applicant-party/model/applicantPartyQueryKeys";
 import { applyApiErrorToForm } from "../../../../shared/api/applyApiErrorToForm";
 import { useFormRegisterDebounce } from "../../../../shared/form/useFormRegisterDebounce";
 import { useFormWrapper } from "../../../../shared/form/useFormWrapper";
@@ -15,7 +16,13 @@ import {
 
 const successNotificationTimeoutMs = 3_500;
 
-export const useCreateIndividualApplicantPartyForm = () => {
+type UseCreateIndividualApplicantPartyFormOptions = {
+  onSuccess?: () => void;
+};
+
+export const useCreateIndividualApplicantPartyForm = (
+  options: UseCreateIndividualApplicantPartyFormOptions = {},
+) => {
   const {
     errors,
     isSubmitting,
@@ -29,8 +36,7 @@ export const useCreateIndividualApplicantPartyForm = () => {
   );
 
   const { register } = useFormRegisterDebounce(originalRegister, trigger);
-  const [savedApplicantParty, setSavedApplicantParty] =
-    useState<CreateIndividualApplicantPartyFormValues | null>(null);
+  const queryClient = useQueryClient();
   const [isSuccessNotificationVisible, setIsSuccessNotificationVisible] =
     useState(false);
   const notificationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
@@ -68,10 +74,13 @@ export const useCreateIndividualApplicantPartyForm = () => {
         createIndividualApplicantPartyServerFieldMap,
       );
     },
-    onSuccess: (_data, values) => {
-      setSavedApplicantParty(values);
+    onSuccess: async (_data, values) => {
+      await queryClient.invalidateQueries({
+        queryKey: applicantPartyQueryKeys.currentIndividual,
+      });
       reset(values);
       showSuccessNotification();
+      options.onSuccess?.();
     },
   });
 
@@ -80,24 +89,12 @@ export const useCreateIndividualApplicantPartyForm = () => {
       await submitMutation.mutateAsync(values);
     };
 
-  const startEditingSavedApplicantParty = () => {
-    if (savedApplicantParty) {
-      reset(savedApplicantParty);
-    }
-
-    setSavedApplicantParty(null);
-    setIsSuccessNotificationVisible(false);
-    clearNotificationTimeout();
-  };
-
   return {
     register,
     handleSubmit: originalHandleSubmit(onSubmit),
     errors,
     isSubmitting,
     fieldNames: createIndividualApplicantPartyFieldNames,
-    savedApplicantParty,
     isSuccessNotificationVisible,
-    startEditingSavedApplicantParty,
   };
 };

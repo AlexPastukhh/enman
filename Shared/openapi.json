@@ -552,6 +552,76 @@
         }
       }
     },
+    "/api/l1/applicant-parties/current-individual": {
+      "get": {
+        "tags": [
+          "L1"
+        ],
+        "operationId": "L1GetCurrentIndividualApplicantParty",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/L1CurrentIndividualApplicantPartyResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/L1CurrentIndividualApplicantPartyResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/L1CurrentIndividualApplicantPartyResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/l1/requests": {
       "post": {
         "tags": [
@@ -810,6 +880,18 @@
         },
         "additionalProperties": false
       },
+      "L1CurrentIndividualApplicantPartyResponse": {
+        "type": "object",
+        "properties": {
+          "exists": {
+            "type": "boolean"
+          },
+          "applicantParty": {
+            "$ref": "#/components/schemas/L1IndividualApplicantPartyDto"
+          }
+        },
+        "additionalProperties": false
+      },
       "L1CurrentUserResponse": {
         "type": "object",
         "properties": {
@@ -846,6 +928,27 @@
             "nullable": true
           },
           "lastName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "L1IndividualApplicantPartyDto": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "$ref": "#/components/schemas/L1FullNameDto"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "verificationStatus": {
             "type": "string",
             "nullable": true
           }

@@ -1,6 +1,6 @@
 # L1-APPLICANT-PARTY-READ-CURRENT.client — Account Page Current Applicant Read Sidecar
 
-Status: draft / ready for client integration after backend endpoint exists  
+Status: implemented first-stage client integration  
 Slice type: client sidecar  
 Scope: Account page reads current individual applicant party state and chooses read-only view vs create form  
 Source scenario/UI behavior items: readable working behavior items are used until authoritative scenario/UI IDs are attached  
@@ -116,7 +116,7 @@ ApplicantPartyReadOnlyView      CreateIndividualApplicantPartyForm
 Displays stable server-backed applicant state
 ```
 
-Suggested placement:
+Implemented placement:
 
 ```text
 src/entities/applicant-party/
@@ -184,7 +184,7 @@ Question:
 After create success, should UI use submitted values or refetch server state?
 
 Assumption / current direction:  
-After backend read endpoint exists, invalidate/refetch current applicant party query.
+Current implementation invalidates/refetches current applicant party query.
 
 Impact:  
 Account page displays server-backed read state and can include verificationStatus.
@@ -266,11 +266,11 @@ Behavior Coverage is not Test Coverage.
 
 | Client/component test | Behavior/UI items | Client behavior covered | Locator/accessibility focus | Status |
 |---|---|---|---|---|
-| Account page shows create form for `exists=false` | Missing applicant state | Query result selects create form branch. | labels/heading | planned |
-| Account page shows read-only view for `exists=true` | Existing applicant state | Query result selects read-only branch. | text/readonly fields | planned |
-| Applicant read-only view shows full name and contact data | Existing applicant state | Returned data is visible. | text/labels | planned |
-| Applicant read-only view shows verification status | Verification display | Status is visible. | text/status label | planned |
-| Create success invalidates current applicant query | Create/read integration | Account page moves to server-backed read state after create. | visible read-only values | planned |
+| Account page shows create form for `exists=false` | Missing applicant state | Query result selects create form branch. | labels/heading | implemented |
+| Account page shows read-only view for `exists=true` | Existing applicant state | Query result selects read-only branch. | text/readonly fields | implemented |
+| Applicant read-only view shows full name and contact data | Existing applicant state | Returned data is visible. | text/labels | implemented |
+| Applicant read-only view shows verification status | Verification display | Status is visible. | text/status label | implemented |
+| Create success invalidates current applicant query | Create/read integration | Account page moves to server-backed read state after create. | visible read-only values | implemented |
 | Missing applicant response is not treated as error | Normal empty page state | `exists=false` branch does not show root API error. | positive branch behavior | planned |
 
 Do not add standalone tests whose main purpose is proving unrelated UI does not exist.
@@ -314,20 +314,20 @@ When returned by the read endpoint, verification status can be shown on Account 
 
 ## 9. Next Step
 
-Implementation direction after backend endpoint exists:
+Implemented direction:
 
 ```text
-Add generated OpenAPI type for read response
+Generated OpenAPI type for read response
         ↓
-Add `getCurrentIndividualApplicantParty` to shared applicant party API
+`getCurrentIndividualApplicantParty` in shared applicant party API
         ↓
-Add `entities/applicant-party` query + query key
+`entities/applicant-party` query + query key
         ↓
-Update AccountPage to branch on `exists`
+AccountPage branches on `exists`
         ↓
-Update create applicant party success handler to invalidate applicant query
+Create applicant party success handler invalidates applicant query
         ↓
-Add component/client tests
+Component/client tests added
         ↓
 Add E2E coverage for Account page read branch
 ```

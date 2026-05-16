@@ -1,50 +1,54 @@
-import type { CreateIndividualApplicantPartyFormValues } from "../model/createIndividualApplicantPartySchema";
+import type { IndividualApplicantParty } from "../../../../entities/applicant-party/model/applicantPartyTypes";
 import { createIndividualApplicantPartyConst } from "./createIndividualApplicantPartyConst";
-import { createIndividualApplicantPartyFieldNames } from "../model/createIndividualApplicantPartySchema";
 
 type ApplicantPartyReadOnlyViewProps = {
-  values: CreateIndividualApplicantPartyFormValues;
-  onEdit: () => void;
+  applicantParty: IndividualApplicantParty;
+  showSuccessNotification?: boolean;
 };
 
 export const ApplicantPartyReadOnlyView = ({
-  values,
-  onEdit,
+  applicantParty,
+  showSuccessNotification = false,
 }: ApplicantPartyReadOnlyViewProps) => {
-  const fieldNames = createIndividualApplicantPartyFieldNames;
-
   return (
-    <div className="applicantPartyReadOnlyView">
+    <section
+      className="applicantPartySection"
+      aria-labelledby="applicant-party-heading"
+    >
+      <h2 id="applicant-party-heading">
+        {createIndividualApplicantPartyConst.readOnlyTitle}
+      </h2>
+      {showSuccessNotification && (
+        <p className="formSuccessNotification" role="status">
+          {createIndividualApplicantPartyConst.successMessage}
+        </p>
+      )}
       <dl className="applicantPartySummary">
         <div className="applicantPartySummary__row">
           <dt>{createIndividualApplicantPartyConst.firstNameLabel}</dt>
-          <dd>{values[fieldNames.firstName]}</dd>
+          <dd>{applicantParty.fullName?.firstName}</dd>
         </div>
         <div className="applicantPartySummary__row">
           <dt>{createIndividualApplicantPartyConst.middleNameLabel}</dt>
-          <dd>{values[fieldNames.middleName]}</dd>
+          <dd>{applicantParty.fullName?.middleName}</dd>
         </div>
         <div className="applicantPartySummary__row">
           <dt>{createIndividualApplicantPartyConst.lastNameLabel}</dt>
-          <dd>{values[fieldNames.lastName]}</dd>
+          <dd>{applicantParty.fullName?.lastName}</dd>
         </div>
         <div className="applicantPartySummary__row">
           <dt>{createIndividualApplicantPartyConst.emailLabel}</dt>
-          <dd>{values[fieldNames.email]}</dd>
+          <dd>{applicantParty.email}</dd>
         </div>
         <div className="applicantPartySummary__row">
           <dt>{createIndividualApplicantPartyConst.phoneNumberLabel}</dt>
-          <dd>{values[fieldNames.phoneNumber]}</dd>
+          <dd>{applicantParty.phoneNumber}</dd>
+        </div>
+        <div className="applicantPartySummary__row">
+          <dt>{createIndividualApplicantPartyConst.verificationStatusLabel}</dt>
+          <dd>{applicantParty.verificationStatus}</dd>
         </div>
       </dl>
-
-      <button
-        className="formButton applicantPartyEditButton"
-        type="button"
-        onClick={onEdit}
-      >
-        {createIndividualApplicantPartyConst.editButtonText}
-      </button>
-    </div>
+    </section>
   );
 };

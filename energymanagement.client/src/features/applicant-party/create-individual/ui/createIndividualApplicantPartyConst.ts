@@ -28,7 +28,8 @@ export const createIndividualApplicantPartyConst = {
   phoneNumberInputId: "applicantPhoneNumberInput",
   phoneNumberErrorsId: "applicantPhoneNumberErrors",
 
+  verificationStatusLabel: "Verification status",
+
   submitButtonText: "Save applicant data",
   submittingButtonText: "Saving...",
-  editButtonText: "Edit applicant data",
 } as const;

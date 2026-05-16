@@ -92,6 +92,13 @@ public class L1DbContext : DbContext
                 .HasMaxLength(50)
                 .IsRequired();
 
+            applicantParty.Property(x => x.VerificationStatus)
+                .HasField("_verificationStatus")
+                .HasColumnName("VerificationStatus")
+                .HasConversion<string>()
+                .HasMaxLength(50)
+                .IsRequired();
+
             applicantParty.Property(x => x.IsCurrentActiveVersion)
                 .HasField("_isCurrentActiveVersion")
                 .HasColumnName("IsCurrentActiveVersion")

@@ -250,6 +250,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/l1/applicant-parties/current-individual": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["L1GetCurrentIndividualApplicantParty"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/l1/requests": {
         parameters: {
             query?: never;
@@ -312,6 +328,10 @@ export interface components {
             /** Format: int64 */
             clientAccountId?: number;
         };
+        L1CurrentIndividualApplicantPartyResponse: {
+            exists?: boolean;
+            applicantParty?: components["schemas"]["L1IndividualApplicantPartyDto"];
+        };
         L1CurrentUserResponse: {
             /** Format: int64 */
             accountId?: number;
@@ -324,6 +344,12 @@ export interface components {
             firstName?: string | null;
             middleName?: string | null;
             lastName?: string | null;
+        };
+        L1IndividualApplicantPartyDto: {
+            fullName?: components["schemas"]["L1FullNameDto"];
+            email?: string | null;
+            phoneNumber?: string | null;
+            verificationStatus?: string | null;
         };
         L1LoginRequest: {
             email?: string | null;
@@ -617,6 +643,50 @@ export interface operations {
             };
             /** @description Client Error */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    L1GetCurrentIndividualApplicantParty: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["L1CurrentIndividualApplicantPartyResponse"];
+                    "application/json": components["schemas"]["L1CurrentIndividualApplicantPartyResponse"];
+                    "text/json": components["schemas"]["L1CurrentIndividualApplicantPartyResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };

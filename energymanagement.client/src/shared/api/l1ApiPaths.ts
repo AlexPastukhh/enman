@@ -8,4 +8,6 @@ export const l1ApiPaths = {
   currentUser: "/api/l1/auth/current-user",
   logout: "/api/l1/auth/logout",
   createIndividualApplicantParty: "/api/l1/applicant-parties/individual",
+  currentIndividualApplicantParty:
+    "/api/l1/applicant-parties/current-individual",
 } as const satisfies Record<string, OpenApiPath>;

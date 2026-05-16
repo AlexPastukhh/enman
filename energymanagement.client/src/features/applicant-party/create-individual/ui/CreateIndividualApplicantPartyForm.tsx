@@ -3,43 +3,24 @@ import { FormField } from "../../../../shared/ui/form/FormField";
 import { FormGroup } from "../../../../shared/ui/form/FormGroup";
 import { FormTitle } from "../../../../shared/ui/form/FormTitle";
 import { useCreateIndividualApplicantPartyForm } from "../model/useCreateIndividualApplicantPartyForm";
-import { ApplicantPartyReadOnlyView } from "./ApplicantPartyReadOnlyView";
 import { createIndividualApplicantPartyConst } from "./createIndividualApplicantPartyConst";
 import "./createIndividualApplicantParty.css";
 
-export const CreateIndividualApplicantPartyForm = () => {
+type CreateIndividualApplicantPartyFormProps = {
+  onSuccess?: () => void;
+};
+
+export const CreateIndividualApplicantPartyForm = ({
+  onSuccess,
+}: CreateIndividualApplicantPartyFormProps) => {
   const {
     register,
     handleSubmit,
     errors,
     isSubmitting,
     fieldNames,
-    savedApplicantParty,
     isSuccessNotificationVisible,
-    startEditingSavedApplicantParty,
-  } = useCreateIndividualApplicantPartyForm();
-
-  if (savedApplicantParty) {
-    return (
-      <section
-        className="applicantPartySection"
-        aria-labelledby="applicant-party-heading"
-      >
-        <FormTitle id="applicant-party-heading">
-          {createIndividualApplicantPartyConst.readOnlyTitle}
-        </FormTitle>
-        {isSuccessNotificationVisible && (
-          <p className="formSuccessNotification" role="status">
-            {createIndividualApplicantPartyConst.successMessage}
-          </p>
-        )}
-        <ApplicantPartyReadOnlyView
-          values={savedApplicantParty}
-          onEdit={startEditingSavedApplicantParty}
-        />
-      </section>
-    );
-  }
+  } = useCreateIndividualApplicantPartyForm({ onSuccess });
 
   return (
     <form
@@ -50,6 +31,12 @@ export const CreateIndividualApplicantPartyForm = () => {
       <FormTitle id="applicant-party-heading">
         {createIndividualApplicantPartyConst.formTitle}
       </FormTitle>
+
+      {isSuccessNotificationVisible && (
+        <p className="formSuccessNotification" role="status">
+          {createIndividualApplicantPartyConst.successMessage}
+        </p>
+      )}
 
       {errors.root?.message && (
         <p className="formRootError" role="alert">

@@ -7,6 +7,10 @@ export type L1CreateIndividualApplicantPartyRequest =
 
 export type L1CreateIndividualApplicantPartyResponse =
   components["schemas"]["L1CreateIndividualApplicantPartyResponse"];
+export type L1CurrentIndividualApplicantPartyResponse =
+  components["schemas"]["L1CurrentIndividualApplicantPartyResponse"];
+export type L1IndividualApplicantParty =
+  components["schemas"]["L1IndividualApplicantPartyDto"];
 
 export const createIndividualApplicantParty = (
   request: L1CreateIndividualApplicantPartyRequest,
@@ -18,3 +22,12 @@ export const createIndividualApplicantParty = (
       body: JSON.stringify(request),
     },
   );
+
+export const getCurrentIndividualApplicantParty =
+  (): Promise<L1CurrentIndividualApplicantPartyResponse> =>
+    fetchJson<L1CurrentIndividualApplicantPartyResponse>(
+      l1ApiPaths.currentIndividualApplicantParty,
+      {
+        method: "GET",
+      },
+    );

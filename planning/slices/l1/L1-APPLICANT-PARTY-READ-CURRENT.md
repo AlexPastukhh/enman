@@ -1,10 +1,10 @@
 # L1-APPLICANT-PARTY-READ-CURRENT — Read Current Individual Applicant Party
 
-Status: draft / ready for backend implementation review  
+Status: implemented backend/API read slice  
 Package: L1 backend/API slice + generated contract  
 Source scenario: Account page current applicant party state  
 Slice type: backend read/API/persistence slice  
-Current implementation status: not implemented in backend; repository lookup exists; client integration depends on this endpoint
+Current implementation status: implemented in backend; OpenAPI/generated types updated; client integration is documented in the `.client` sidecar
 
 ## 1. Slice Overview
 
@@ -567,34 +567,34 @@ Uses current active applicant party server-side; create request entry location r
 Backend/API:
 
 ```text
-[ ] Add `L1CurrentIndividualApplicantPartyResponse` DTO.
-[ ] Add `L1IndividualApplicantPartyDto` DTO.
-[ ] Decide DTO property names and JSON names.
-[ ] Add `L1GetCurrentIndividualApplicantPartyQuery`.
-[ ] Add `L1GetCurrentIndividualApplicantPartyHandler`.
-[ ] Use existing current-active individual applicant repository lookup.
-[ ] Map found applicant party to read DTO.
-[ ] Map missing applicant party to `exists=false`.
-[ ] Add protected GET endpoint to `L1Controller`.
-[ ] Return 401 when L1 auth context is invalid/missing.
+[x] Add `L1CurrentIndividualApplicantPartyResponse` DTO.
+[x] Add `L1IndividualApplicantPartyDto` DTO.
+[x] Decide DTO property names and JSON names.
+[x] Add `L1GetCurrentIndividualApplicantPartyQuery`.
+[x] Add `L1GetCurrentIndividualApplicantPartyHandler`.
+[x] Use existing current-active individual applicant repository lookup.
+[x] Map found applicant party to read DTO.
+[x] Map missing applicant party to `exists=false`.
+[x] Add protected GET endpoint to `L1Controller`.
+[x] Return 401 when L1 auth context is invalid/missing.
 ```
 
 Tests:
 
 ```text
-[ ] Add authenticated happy path integration test.
-[ ] Add missing applicant integration test.
-[ ] Add unauthenticated integration test.
-[ ] Add other-account scoping integration test.
-[ ] Assert verificationStatus is returned.
+[x] Add authenticated happy path integration test.
+[x] Add missing applicant integration test.
+[x] Add unauthenticated integration test.
+[x] Add other-account scoping integration test.
+[x] Assert verificationStatus is returned.
 ```
 
 Generated contracts:
 
 ```text
-[ ] Regenerate `Shared/openapi.json`.
-[ ] Regenerate `energymanagement.client/src/shared/api/generated/openapi-types.ts`.
-[ ] Run OpenAPI/check API commands.
+[x] Regenerate `Shared/openapi.json`.
+[x] Regenerate `energymanagement.client/src/shared/api/generated/openapi-types.ts`.
+[x] Run OpenAPI/check API commands.
 ```
 
 Shared register sync:

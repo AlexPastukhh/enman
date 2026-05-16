@@ -159,6 +159,38 @@ public sealed class L1Controller : ProjectController
     }
 
     [Authorize]
+    [HttpGet("applicant-parties/current-individual", Name = "L1GetCurrentIndividualApplicantParty")]
+    [ProducesResponseType(typeof(L1CurrentIndividualApplicantPartyResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetCurrentIndividualApplicantParty(CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (!TryGetCurrentL1AccountId(out var accountId))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _sender.Send(
+                new L1GetCurrentIndividualApplicantPartyQuery(accountId),
+                cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(ToCurrentIndividualApplicantPartyResponse(result.Value));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "L1 get current individual applicant party failed.");
+            return ProblemDetailsWithExceptionDev(ex);
+        }
+    }
+
+    [Authorize]
     [HttpPost("requests", Name = "L1CreateConnectionRequest")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
@@ -249,6 +281,26 @@ public sealed class L1Controller : ProjectController
             account.Role,
             account.IsActive,
             IsAuthenticated: true);
+    }
+
+    private static L1CurrentIndividualApplicantPartyResponse ToCurrentIndividualApplicantPartyResponse(
+        L1GetCurrentIndividualApplicantPartyResponse response)
+    {
+        if (!response.Exists || response.ApplicantParty is null)
+        {
+            return new L1CurrentIndividualApplicantPartyResponse(false, null);
+        }
+
+        return new L1CurrentIndividualApplicantPartyResponse(
+            true,
+            new L1IndividualApplicantPartyDto(
+                new L1FullNameDto(
+                    response.ApplicantParty.FirstName,
+                    response.ApplicantParty.MiddleName,
+                    response.ApplicantParty.LastName),
+                response.ApplicantParty.Email,
+                response.ApplicantParty.PhoneNumber,
+                response.ApplicantParty.VerificationStatus));
     }
 
     private ActionResult ToActionResult<TValue>(

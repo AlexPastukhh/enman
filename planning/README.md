@@ -27,7 +27,6 @@ First-stage L1 client implementation now exists for:
 
 Remaining L1 client/read work:
 - logout UI/cache/navigation flow, if needed before protected flows;
-- current applicant read after refresh;
 - request creation form UI;
 - My Requests read/list/detail UI;
 - client/component tests for implemented client flows;
@@ -235,8 +234,8 @@ planning/slices/slice-implementation-notes-register.md
 | Login client account | `POST /api/l1/auth/login`, returns current-user shape and issues L1 cookie | first-stage `/login` UI implemented: validation, API submit, session query invalidation, success -> home | Use `SL-AUTH-001` and `SL-AUTH-001.client` |
 | Current user | `GET /api/l1/auth/current-user`, protected, L1 marker/account lookup | first-stage session bootstrap implemented: `SessionProvider`, `useSessionQuery`, 401 -> null session | Use `SL-AUTH-002` and `SL-AUTH-002.client`; protected-route policy remains open |
 | Logout | `POST /api/l1/auth/logout`, protected, clears cookie and returns 204 | shared API wrapper exists; concrete logout UI/cache/navigation flow not confirmed | Use `SL-AUTH-003`; create `.client.md` only when logout UI work starts |
-| Create individual applicant party | protected `POST /api/l1/applicant-parties/individual`, server-derived account id | first-stage Account page applicant form implemented; success local read-only state + Edit + notification; current applicant read after refresh missing | Use `SL-APPL-001` and `SL-APPL-001.client` |
-| Current applicant party read | not implemented yet | needed for stable Account page after refresh | Use new short example as draft format: `L1-APPLICANT-PARTY-READ-CURRENT-early-short-draft-example.md` |
+| Create individual applicant party | protected `POST /api/l1/applicant-parties/individual`, server-derived account id | first-stage Account page applicant form implemented; success invalidates/refetches current applicant read state | Use `SL-APPL-001` and `SL-APPL-001.client` |
+| Current applicant party read | protected `GET /api/l1/applicant-parties/current-individual`, returns `exists` + applicant data/null, includes `verificationStatus` | Account page reads current applicant state on open; shows read-only applicant data when present and create form when missing | Use `L1-APPLICANT-PARTY-READ-CURRENT` and `.client` sidecar |
 | Create connection request | protected `POST /api/l1/requests`, DTO `details + address`, server-selected current active applicant, no required response body | request creation UI, My Requests read screens and E2E are future work | Use `SL-REQ-001` and `CL-COMMAND-001`; do not create request `.client.md` until work starts |
 | Generated contracts | `openapi-types.ts` includes L1 paths/types; client package can generate API types | generated types are used by shared API wrappers/support and must be consumed by client sidecars | Client slices should consume generated types and generated constants |
 
