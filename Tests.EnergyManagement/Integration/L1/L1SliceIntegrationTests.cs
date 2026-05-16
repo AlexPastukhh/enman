@@ -561,7 +561,7 @@ public sealed class L1SliceIntegrationTests
     }
 
     [Fact]
-    public async Task CreateIndividualApplicantParty_CreatingSecondApplicantDoesNotDeactivateOrDeleteFirst()
+    public async Task CreateIndividualApplicantParty_CreatingSecondApplicantDoesNotReplaceFirstDefault()
     {
         var account = await RegisterAccountAsync();
         var first = await CreateApplicantPartyAsync(account.AccountId);
@@ -591,7 +591,7 @@ public sealed class L1SliceIntegrationTests
         secondRow!.ClientAccountId.Should().Be(account.AccountId);
         secondRow.FirstName.Should().Be("Jane");
         secondRow.VerificationStatus.Should().Be("Unverified");
-        secondRow.IsCurrentActiveVersion.Should().BeTrue();
+        secondRow.IsCurrentActiveVersion.Should().BeFalse();
     }
 
     [Fact]

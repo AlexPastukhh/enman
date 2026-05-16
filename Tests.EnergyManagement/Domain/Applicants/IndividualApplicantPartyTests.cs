@@ -8,7 +8,7 @@ namespace Tests.EnergyManagement.L1Domain.Applicants;
 public class IndividualApplicantPartyTests
 {
     [Fact]
-    public void Create_creates_unverified_current_active_applicant()
+    public void Create_creates_unverified_non_default_applicant()
     {
         var createdAt = DateTimeOffset.UtcNow;
 
@@ -24,7 +24,7 @@ public class IndividualApplicantPartyTests
         result.Value.ApplicantPartyType.Should().Be(ApplicantPartyType.Individual);
         result.Value.Type.Should().Be(ApplicantPartyType.Individual);
         result.Value.VerificationStatus.Should().Be(ApplicantPartyVerificationStatus.Unverified);
-        result.Value.IsCurrentActiveVersion.Should().BeTrue();
+        result.Value.IsCurrentActiveVersion.Should().BeFalse();
         result.Value.Email.Should().Be(L1ValidTestData.Email);
         result.Value.PhoneNumber.Should().Be(L1ValidTestData.PhoneNumber);
         result.Value.FullName.Should().Be(L1ValidTestData.FullName);
@@ -63,11 +63,23 @@ public class IndividualApplicantPartyTests
     public void MarkInactiveVersion_marks_current_flag_false()
     {
         var applicant = CreateApplicant();
+        applicant.MarkAsCurrentDefaultTemplate();
 
         var result = applicant.MarkInactiveVersion();
 
         result.IsSuccess.Should().BeTrue();
         applicant.IsCurrentActiveVersion.Should().BeFalse();
+    }
+
+    [Fact]
+    public void MarkAsCurrentDefaultTemplate_marks_current_flag_true()
+    {
+        var applicant = CreateApplicant();
+
+        var result = applicant.MarkAsCurrentDefaultTemplate();
+
+        result.IsSuccess.Should().BeTrue();
+        applicant.IsCurrentActiveVersion.Should().BeTrue();
     }
 
     private static IndividualApplicantParty CreateApplicant()

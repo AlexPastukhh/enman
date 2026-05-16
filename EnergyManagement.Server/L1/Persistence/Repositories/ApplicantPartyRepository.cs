@@ -41,6 +41,17 @@ public sealed class ApplicantPartyRepository : IApplicantPartyRepository
             cancellationToken);
     }
 
+    public Task<bool> ExistsByClientAccountIdAndTypeAsync(
+        long clientAccountId,
+        ApplicantPartyType applicantPartyType,
+        CancellationToken cancellationToken)
+    {
+        return _context.ApplicantParties.AnyAsync(
+            x => x.ClientAccountId == clientAccountId
+                && x.ApplicantPartyType == applicantPartyType,
+            cancellationToken);
+    }
+
     public Task<IndividualApplicantParty?> GetCurrentActiveIndividualByClientAccountIdAsync(
         long clientAccountId,
         CancellationToken cancellationToken)

@@ -35,7 +35,7 @@ public abstract class ApplicantParty : L1Entity
         _verificationStatus = ApplicantPartyVerificationStatus.Unverified;
         Email = email;
         PhoneNumber = phoneNumber;
-        _isCurrentActiveVersion = true;
+        _isCurrentActiveVersion = false;
         CreatedAt = createdAt;
     }
 
@@ -79,6 +79,13 @@ public abstract class ApplicantParty : L1Entity
     public UnitResult<IReadOnlyList<Error>> MarkInactiveVersion()
     {
         _isCurrentActiveVersion = false;
+
+        return UnitResult.Success<IReadOnlyList<Error>>();
+    }
+
+    public UnitResult<IReadOnlyList<Error>> MarkAsCurrentDefaultTemplate()
+    {
+        _isCurrentActiveVersion = true;
 
         return UnitResult.Success<IReadOnlyList<Error>>();
     }

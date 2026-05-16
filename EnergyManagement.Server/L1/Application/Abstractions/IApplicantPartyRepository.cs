@@ -15,6 +15,11 @@ public interface IApplicantPartyRepository
         long clientAccountId,
         CancellationToken cancellationToken);
 
+    Task<bool> ExistsByClientAccountIdAndTypeAsync(
+        long clientAccountId,
+        ApplicantPartyType applicantPartyType,
+        CancellationToken cancellationToken);
+
     Task<IndividualApplicantParty?> GetCurrentActiveIndividualByClientAccountIdAsync(
         long clientAccountId,
         CancellationToken cancellationToken);
