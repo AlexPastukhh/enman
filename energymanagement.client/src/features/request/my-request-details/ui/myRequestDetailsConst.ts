@@ -1,0 +1,27 @@
+export const myRequestDetailsConst = {
+  pageTitle: "Детали заявки",
+  loadingText: "Загружаем детали заявки...",
+  errorText: "Не удалось загрузить детали заявки.",
+  signInRequiredTitle: "Войдите, чтобы увидеть детали заявки",
+  signInRequiredDescription:
+    "Детали заявки доступны только авторизованному клиенту.",
+  signInLinkText: "Войти",
+  notFoundTitle: "Заявка не найдена.",
+  notFoundDescription:
+    "Заявка не существует или недоступна для текущего пользователя.",
+  backToRequestsText: "Вернуться к моим заявкам",
+  requestTitlePrefix: "Заявка",
+  metadataTitle: "Сведения о заявке",
+  submittedDataTitle: "Поданные данные",
+  reviewResultTitle: "Результат рассмотрения",
+  noReviewResultText: "Решение по заявке пока не вынесено.",
+  requestTypeLabel: "Тип заявки",
+  statusLabel: "Статус",
+  createdAtLabel: "Дата создания",
+  detailsLabel: "Описание",
+  objectAddressLabel: "Адрес объекта",
+  decisionLabel: "Решение",
+  decidedAtLabel: "Дата решения",
+  rejectionReasonLabel: "Причина отклонения",
+  unknownValue: "—",
+} as const;

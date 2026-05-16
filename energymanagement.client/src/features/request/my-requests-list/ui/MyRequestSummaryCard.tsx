@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import type { MyRequestSummary } from "../../../../entities/request/model/requestTypes";
+import { clientRoutes } from "../../../../shared/config/clientRoutes";
 import { myRequestsConst } from "./myRequestsConst";
 
 type MyRequestSummaryCardProps = {
@@ -44,12 +46,16 @@ const valueOrUnknown = (value?: string | null) =>
   value?.trim() ? value : myRequestsConst.unknownValue;
 
 export const MyRequestSummaryCard = ({ request }: MyRequestSummaryCardProps) => {
-  const titleId = `my-request-${request.requestId ?? "unknown"}-title`;
+  const requestId = request.requestId;
+  const titleId = `my-request-${requestId ?? "unknown"}-title`;
+  const title = `${myRequestsConst.requestTitlePrefix} #${
+    requestId ?? myRequestsConst.unknownValue
+  }`;
 
   return (
     <article className="myRequestCard" aria-labelledby={titleId}>
       <h2 id={titleId} className="myRequestCard__title">
-        {myRequestsConst.requestTitlePrefix} #{request.requestId ?? myRequestsConst.unknownValue}
+        {title}
       </h2>
       <dl className="myRequestCard__summary">
         <div className="myRequestCard__row">
@@ -73,6 +79,15 @@ export const MyRequestSummaryCard = ({ request }: MyRequestSummaryCardProps) => 
           <dd>{formatAddress(request)}</dd>
         </div>
       </dl>
+      {requestId && (
+        <Link
+          className="myRequestCard__detailsLink"
+          to={clientRoutes.requestDetails(requestId)}
+          aria-label={`${myRequestsConst.detailsLinkText} ${title}`}
+        >
+          {myRequestsConst.detailsLinkText}
+        </Link>
+      )}
     </article>
   );
 };

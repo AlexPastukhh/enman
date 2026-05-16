@@ -20,6 +20,8 @@
 
 .myRequestCard,
 .myRequestsEmpty {
+  display: grid;
+  gap: 12px;
   padding: 18px;
   border: 1px solid #d8d8d8;
   border-radius: 12px;
@@ -27,7 +29,7 @@
 }
 
 .myRequestCard__title {
-  margin: 0 0 12px;
+  margin: 0;
 }
 
 .myRequestCard__summary {
@@ -48,4 +50,8 @@
 
 .myRequestCard__row dd {
   margin: 0;
+}
+
+.myRequestCard__detailsLink {
+  justify-self: start;
 }

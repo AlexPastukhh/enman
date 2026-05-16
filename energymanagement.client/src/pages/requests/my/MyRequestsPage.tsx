@@ -1,16 +1,42 @@
-import { Link } from "react-router-dom";
-import { useSession } from "../../../entities/session/model/useSession";
+import { Link, useSearchParams } from "react-router-dom";
+import {
+  hasActiveMyRequestsFilters,
+  type MyRequestsFilters as MyRequestsFiltersState,
+} from "../../../entities/request/model/myRequestsFilters";
 import { useMyRequestsQuery } from "../../../entities/request/model/useMyRequestsQuery";
+import { useSession } from "../../../entities/session/model/useSession";
+import { MyRequestsFilters } from "../../../features/request/my-requests-filters/ui/MyRequestsFilters";
 import { MyRequestsList } from "../../../features/request/my-requests-list/ui/MyRequestsList";
 import { myRequestsConst } from "../../../features/request/my-requests-list/ui/myRequestsConst";
 import { clientRoutes } from "../../../shared/config/clientRoutes";
 import { Footer } from "../../../shared/ui/layout/Footer";
 import { Header } from "../../../shared/ui/layout/Header";
+import {
+  parseMyRequestsUrlFilters,
+  serializeMyRequestsUrlFilters,
+} from "./model/myRequestsUrlFilters";
 import "./myRequestsPage.css";
 
 const MyRequestsPage = () => {
   const session = useSession();
-  const myRequestsQuery = useMyRequestsQuery(Boolean(session));
+  const [searchParams, setSearchParams] = useSearchParams();
+  const parsedFilters = parseMyRequestsUrlFilters(searchParams);
+  const filters = parsedFilters.filters;
+  const hasInvalidFilters = Boolean(parsedFilters.invalidFilterReason);
+  const hasActiveFilters = hasActiveMyRequestsFilters(filters);
+
+  const myRequestsQuery = useMyRequestsQuery({
+    filters,
+    enabled: Boolean(session) && !hasInvalidFilters,
+  });
+
+  const handleFiltersChange = (nextFilters: MyRequestsFiltersState) => {
+    setSearchParams(serializeMyRequestsUrlFilters(nextFilters));
+  };
+
+  const handleResetFilters = () => {
+    setSearchParams(new URLSearchParams());
+  };
 
   return (
     <>
@@ -27,18 +53,39 @@ const MyRequestsPage = () => {
             </div>
           )}
 
-          {session && myRequestsQuery.isPending && (
+          {session && (
+            <MyRequestsFilters
+              filters={filters}
+              onChange={handleFiltersChange}
+              onReset={handleResetFilters}
+            />
+          )}
+
+          {session && hasInvalidFilters && (
+            <div className="myRequestsPage__state" role="alert">
+              <p>{parsedFilters.invalidFilterReason}</p>
+              <button type="button" onClick={handleResetFilters}>
+                {myRequestsConst.invalidFiltersResetText}
+              </button>
+            </div>
+          )}
+
+          {session && !hasInvalidFilters && myRequestsQuery.isPending && (
             <p className="myRequestsPage__state">{myRequestsConst.loadingText}</p>
           )}
 
-          {session && myRequestsQuery.isError && (
+          {session && !hasInvalidFilters && myRequestsQuery.isError && (
             <p className="myRequestsPage__state" role="alert">
               {myRequestsConst.errorText}
             </p>
           )}
 
-          {session && myRequestsQuery.data && (
-            <MyRequestsList requests={myRequestsQuery.data} />
+          {session && !hasInvalidFilters && myRequestsQuery.data && (
+            <MyRequestsList
+              requests={myRequestsQuery.data}
+              emptyStateVariant={hasActiveFilters ? "filtered" : "default"}
+              onResetFilters={handleResetFilters}
+            />
           )}
         </section>
       </main>

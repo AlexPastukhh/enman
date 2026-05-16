@@ -1,0 +1,35 @@
+.myRequestsFilters {
+  display: grid;
+  gap: 12px;
+  max-width: 960px;
+  padding: 18px;
+  border: 1px solid #d8d8d8;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.myRequestsFilters h2 {
+  margin: 0;
+}
+
+.myRequestsFilters__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: end;
+}
+
+.myRequestsFilters__field {
+  display: grid;
+  gap: 6px;
+  min-width: 220px;
+}
+
+.myRequestsFilters__field label {
+  font-weight: 600;
+}
+
+.myRequestsFilters__field select {
+  min-height: 38px;
+  padding: 6px 10px;
+}

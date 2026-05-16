@@ -1,0 +1,54 @@
+.myRequestDetailsPage {
+  display: grid;
+  gap: 24px;
+  padding: 24px 0;
+}
+
+.myRequestDetailsState,
+.myRequestDetailsView,
+.myRequestDetailsSection {
+  max-width: 960px;
+  padding: 18px;
+  border: 1px solid #d8d8d8;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.myRequestDetailsView {
+  display: grid;
+  gap: 18px;
+}
+
+.myRequestDetailsView__header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.myRequestDetailsView__header h2,
+.myRequestDetailsSection h2,
+.myRequestDetailsSection h3 {
+  margin: 0;
+}
+
+.myRequestDetailsDefinitionList {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 0;
+}
+
+.myRequestDetailsDefinitionList__row {
+  display: grid;
+  grid-template-columns: minmax(140px, 220px) 1fr;
+  gap: 12px;
+}
+
+.myRequestDetailsDefinitionList__row dt {
+  font-weight: 600;
+}
+
+.myRequestDetailsDefinitionList__row dd {
+  margin: 0;
+}

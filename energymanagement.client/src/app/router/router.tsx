@@ -2,6 +2,7 @@ import { createBrowserRouter, useRouteError } from "react-router-dom";
 import AccountPage from "../../pages/account/AccountPage";
 import HomePage from "../../pages/home/HomePage";
 import { LoginPage } from "../../pages/login/LoginPage";
+import MyRequestDetailsPage from "../../pages/requests/details/MyRequestDetailsPage";
 import MyRequestsPage from "../../pages/requests/my/MyRequestsPage";
 import RegisterPage from "../../pages/register/RegisterPage";
 import { clientRoutes } from "../../shared/config/clientRoutes";
@@ -44,6 +45,11 @@ export const router = createBrowserRouter([
   {
     path: clientRoutes.requests,
     element: <MyRequestsPage />,
+    errorElement: <RouteError />,
+  },
+  {
+    path: clientRoutes.requestDetailsPath,
+    element: <MyRequestDetailsPage />,
     errorElement: <RouteError />,
   },
   {
