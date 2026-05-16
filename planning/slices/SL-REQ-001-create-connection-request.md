@@ -1,6 +1,6 @@
 # SL-REQ-001 — Create Connection Request With Applicant Context
 
-Status: current implementation implemented in old/narrow model / target behavior redesign draft  
+Status: implemented backend/API/persistence with explicit applicant context  
 Package: `[L1]`  
 Source scenario: `SC-04 Client Request Creation`  
 Slice type: backend / API / persistence slice
@@ -25,11 +25,11 @@ New branch:
 Created request enters InReview.
 ```
 
-Current implementation warning:
+Current implementation note:
 
 ```text
-Current backend may still select current active individual ApplicantParty by account.
-That is current implementation evidence, not the target model.
+Backend no longer selects one current active individual ApplicantParty implicitly for request creation.
+POST /api/l1/requests uses explicit applicant context: Existing selected ApplicantParty or New applicant data.
 ```
 
 ## 2. Sources
@@ -164,14 +164,14 @@ Create request New branch commits ApplicantParty + ConnectionRequest together.
 | Behavior item | How draft covers it | Status |
 |---|---|---|
 | `SC-04-BI-001` | protected request creation. | covered/current |
-| `SC-04-BI-003` | explicit applicant context. | target |
-| `SC-04-BI-004` | Existing branch. | target |
-| `SC-04-BI-005` | non-default saved applicant allowed. | target/future UI |
-| `SC-04-BI-006` | New branch. | target |
-| `SC-04-BI-007` | creates new ApplicantParty for request. | target |
-| `SC-04-BI-008` | atomic applicant + request. | target |
-| `SC-04-BI-009` | no replacement. | target |
-| `SC-04-BI-010` | request InReview. | current/target |
+| `SC-04-BI-003` | explicit applicant context in request DTO. | implemented |
+| `SC-04-BI-004` | Existing branch loads selected owned ApplicantParty. | implemented |
+| `SC-04-BI-005` | non-default saved applicant allowed by owned-id lookup. | implemented backend / future UI |
+| `SC-04-BI-006` | New branch accepts applicant payload. | implemented |
+| `SC-04-BI-007` | New branch creates ApplicantParty for request. | implemented |
+| `SC-04-BI-008` | New branch commits applicant + request through one handler SaveChanges. | implemented |
+| `SC-04-BI-009` | New branch uses additive creation service and does not replace existing ApplicantParties. | implemented |
+| `SC-04-BI-010` | request InReview. | implemented |
 
 ## 9. Test / Verification Plan
 
@@ -206,14 +206,14 @@ future SL-REQ-001.client — request creation UI with Existing/New paths
 ## 11. Implementation Checklist
 
 ```text
-[ ] add explicit applicant context marker
-[ ] add Existing branch validation
-[ ] add New branch validation
-[ ] verify selected ApplicantParty ownership
-[ ] extract ApplicantParty creation service
-[ ] reuse service in New branch
-[ ] SaveChanges once
-[ ] rollback/no orphan applicant on failure
-[ ] keep command success no required body
-[ ] update OpenAPI/types
+[x] add explicit applicant context marker
+[x] add Existing branch validation
+[x] add New branch validation
+[x] verify selected ApplicantParty ownership
+[x] extract ApplicantParty creation service
+[x] reuse service in New branch
+[x] SaveChanges once
+[x] rollback/no orphan applicant on failure
+[x] keep command success no required body
+[x] update OpenAPI/types
 ```

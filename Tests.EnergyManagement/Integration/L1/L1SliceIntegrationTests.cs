@@ -142,7 +142,7 @@ public sealed class L1SliceIntegrationTests
 
         var requestResponse = await client.PostAsJsonAsync(
             "/api/l1/requests",
-            ValidConnectionRequestDto());
+            ValidConnectionRequestDto(existingApplicantPartyId: applicantParty.ApplicantPartyId));
         await HttpResponseAssertions.For(requestResponse, _output).ShouldBeSuccess();
 
         var row = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
@@ -215,10 +215,10 @@ public sealed class L1SliceIntegrationTests
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
 
-        await CreateConnectionRequestAsync(account.AccountId, "First in-review request.");
+        await CreateConnectionRequestAsync(account.AccountId, details: "First in-review request.");
         var inReview = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
 
-        await CreateConnectionRequestAsync(account.AccountId, "Second approved request.");
+        await CreateConnectionRequestAsync(account.AccountId, details: "Second approved request.");
         var approved = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
         await UpdateRequestStatusAsync(approved!.Id, "Approved");
 
@@ -249,11 +249,11 @@ public sealed class L1SliceIntegrationTests
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
 
-        await CreateConnectionRequestAsync(account.AccountId, "Older request.");
+        await CreateConnectionRequestAsync(account.AccountId, details: "Older request.");
         var older = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
         await UpdateRequestCreatedAtAsync(older!.Id, DateTimeOffset.UtcNow.AddDays(-1));
 
-        await CreateConnectionRequestAsync(account.AccountId, "Newer request.");
+        await CreateConnectionRequestAsync(account.AccountId, details: "Newer request.");
         var newer = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
         await UpdateRequestCreatedAtAsync(newer!.Id, DateTimeOffset.UtcNow);
 
@@ -584,14 +584,16 @@ public sealed class L1SliceIntegrationTests
     }
 
     [Fact]
-    public async Task CreateConnectionRequest_StoresServerSelectedCurrentActiveApplicantPartyReference()
+    public async Task CreateConnectionRequest_WithExistingOwnedApplicantParty_Succeeds()
     {
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+        var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
 
-        await CreateConnectionRequestAsync(account.AccountId);
+        await CreateConnectionRequestAsync(account.AccountId, applicantParty.ApplicantPartyId);
 
         var row = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
+        var applicantCountAfter = await GetApplicantPartyCountAsync(account.AccountId);
 
         row.Should().NotBeNull();
         row!.Id.Should().BeGreaterThan(0);
@@ -600,6 +602,31 @@ public sealed class L1SliceIntegrationTests
         row.Details.Should().Be(RequestDetails);
         row.City.Should().Be(City);
         row.Street.Should().Be(Street);
+        applicantCountAfter.Should().Be(applicantCountBefore);
+    }
+
+    [Fact]
+    public async Task CreateConnectionRequest_WithExistingNonCurrentApplicantParty_Succeeds()
+    {
+        var account = await RegisterAccountAsync();
+        var first = await CreateApplicantPartyAsync(account.AccountId);
+        var second = await AuthenticatedL1Client(account.AccountId).PostAsJsonAsync(
+            "/api/l1/applicant-parties/individual",
+            ValidApplicantPartyDto(
+                firstName: "Second",
+                middleName: "Applicant",
+                lastName: "Profile",
+                email: "second.profile@example.com",
+                phoneNumber: "79237554729"));
+        await HttpResponseAssertions.For(second, _output).ShouldBeSuccess();
+        await SetApplicantCurrentFlagAsync(first.ApplicantPartyId, isCurrent: false);
+
+        await CreateConnectionRequestAsync(account.AccountId, first.ApplicantPartyId);
+
+        var row = await GetLatestRequestRowForApplicantPartyAsync(first.ApplicantPartyId);
+        row.Should().NotBeNull();
+        row!.ApplicantPartyId.Should().Be(first.ApplicantPartyId);
+        row.Status.Should().Be("InReview");
     }
 
     [Fact]
@@ -647,15 +674,17 @@ public sealed class L1SliceIntegrationTests
     }
 
     [Fact]
-    public async Task CreateConnectionRequest_WithoutCurrentActiveApplicantParty_ReturnsValidationProblem()
+    public async Task CreateConnectionRequest_WithExistingApplicantPartyOwnedByAnotherAccount_ReturnsValidationProblem()
     {
-        var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId);
+        var owner = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(owner.AccountId);
+        var other = await RegisterAccountAsync();
+        var client = AuthenticatedL1Client(other.AccountId);
         var requestCountBefore = await GetRequestCountAsync();
 
         var response = await client.PostAsJsonAsync(
             "/api/l1/requests",
-            ValidConnectionRequestDto());
+            ValidConnectionRequestDto(existingApplicantPartyId: applicantParty.ApplicantPartyId));
 
         await HttpResponseAssertions.For(response, _output)
             .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
@@ -673,7 +702,157 @@ public sealed class L1SliceIntegrationTests
 
         var response = await client.PostAsJsonAsync(
             "/api/l1/requests",
-            ValidConnectionRequestDto(details: " "));
+            ValidConnectionRequestDto(
+                details: " ",
+                existingApplicantPartyId: applicantParty.ApplicantPartyId));
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+    }
+
+    [Fact]
+    public async Task CreateConnectionRequest_WithNewApplicantData_CreatesApplicantAndRequestAtomically()
+    {
+        var account = await RegisterAccountAsync();
+        await CreateApplicantPartyAsync(account.AccountId);
+        var client = AuthenticatedL1Client(account.AccountId);
+        var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
+
+        var response = await client.PostAsJsonAsync(
+            "/api/l1/requests",
+            ValidConnectionRequestWithNewApplicantDto());
+
+        await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
+
+        var applicantCountAfter = await GetApplicantPartyCountAsync(account.AccountId);
+        var newApplicantId = await GetLatestApplicantPartyIdForAccountAsync(account.AccountId);
+        var newApplicant = await GetApplicantPartyRowAsync(newApplicantId!.Value);
+        var request = await GetLatestRequestRowForApplicantPartyAsync(newApplicantId.Value);
+
+        applicantCountAfter.Should().Be(applicantCountBefore + 1);
+        newApplicant!.VerificationStatus.Should().Be("Unverified");
+        newApplicant.FirstName.Should().Be("Request");
+        request.Should().NotBeNull();
+        request!.ApplicantPartyId.Should().Be(newApplicantId.Value);
+        request.Status.Should().Be("InReview");
+    }
+
+    [Fact]
+    public async Task CreateConnectionRequest_WithInvalidNewApplicantData_CreatesNoApplicantAndNoRequest()
+    {
+        var account = await RegisterAccountAsync();
+        var client = AuthenticatedL1Client(account.AccountId);
+        var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
+        var requestCountBefore = await GetRequestCountAsync();
+
+        var response = await client.PostAsJsonAsync(
+            "/api/l1/requests",
+            ValidConnectionRequestWithNewApplicantDto(
+                newApplicantParty: new L1CreateIndividualApplicantPartyDto(
+                    new L1FullNameDto("", MiddleName, LastName),
+                    "not-an-email",
+                    "")));
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+
+        (await GetApplicantPartyCountAsync(account.AccountId)).Should().Be(applicantCountBefore);
+        (await GetRequestCountAsync()).Should().Be(requestCountBefore);
+    }
+
+    [Fact]
+    public async Task CreateConnectionRequest_WithInvalidRequestDataInNewBranch_CreatesNoApplicantAndNoRequest()
+    {
+        var account = await RegisterAccountAsync();
+        var client = AuthenticatedL1Client(account.AccountId);
+        var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
+        var requestCountBefore = await GetRequestCountAsync();
+
+        var response = await client.PostAsJsonAsync(
+            "/api/l1/requests",
+            ValidConnectionRequestWithNewApplicantDto(details: " "));
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+
+        (await GetApplicantPartyCountAsync(account.AccountId)).Should().Be(applicantCountBefore);
+        (await GetRequestCountAsync()).Should().Be(requestCountBefore);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("Unsupported")]
+    public async Task CreateConnectionRequest_WithMissingOrUnknownApplicantContextType_ReturnsValidationProblem(
+        string? applicantContextType)
+    {
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+
+        var response = await AuthenticatedL1Client(account.AccountId).PostAsJsonAsync(
+            "/api/l1/requests",
+            ValidConnectionRequestDto(
+                applicantContextType: applicantContextType,
+                existingApplicantPartyId: applicantParty.ApplicantPartyId));
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+    }
+
+    [Fact]
+    public async Task CreateConnectionRequest_ExistingBranchRequiresExistingApplicantPartyId()
+    {
+        var account = await RegisterAccountAsync();
+
+        var response = await AuthenticatedL1Client(account.AccountId).PostAsJsonAsync(
+            "/api/l1/requests",
+            ValidConnectionRequestDto(existingApplicantPartyId: null));
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+    }
+
+    [Fact]
+    public async Task CreateConnectionRequest_ExistingBranchRejectsExtraNewApplicantPayload()
+    {
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+
+        var response = await AuthenticatedL1Client(account.AccountId).PostAsJsonAsync(
+            "/api/l1/requests",
+            ValidConnectionRequestDto(
+                existingApplicantPartyId: applicantParty.ApplicantPartyId,
+                newApplicantParty: ValidApplicantPartyDto()));
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+    }
+
+    [Fact]
+    public async Task CreateConnectionRequest_NewBranchRequiresNewApplicantPayload()
+    {
+        var account = await RegisterAccountAsync();
+
+        var response = await AuthenticatedL1Client(account.AccountId).PostAsJsonAsync(
+            "/api/l1/requests",
+            ValidConnectionRequestDto(
+                applicantContextType: "New",
+                existingApplicantPartyId: null,
+                newApplicantParty: null));
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+    }
+
+    [Fact]
+    public async Task CreateConnectionRequest_NewBranchRejectsExtraExistingApplicantPartyId()
+    {
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+
+        var response = await AuthenticatedL1Client(account.AccountId).PostAsJsonAsync(
+            "/api/l1/requests",
+            ValidConnectionRequestWithNewApplicantDto(
+                existingApplicantPartyId: applicantParty.ApplicantPartyId));
 
         await HttpResponseAssertions.For(response, _output)
             .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
@@ -768,11 +947,17 @@ public sealed class L1SliceIntegrationTests
 
     private async Task<HttpResponseMessage> CreateConnectionRequestAsync(
         long accountId,
+        long? existingApplicantPartyId = null,
         string details = RequestDetails)
     {
+        existingApplicantPartyId ??= await GetLatestApplicantPartyIdForAccountAsync(accountId)
+            ?? throw new InvalidOperationException("Could not find applicant party for request helper.");
+
         var response = await AuthenticatedL1Client(accountId).PostAsJsonAsync(
             "/api/l1/requests",
-            ValidConnectionRequestDto(details));
+            ValidConnectionRequestDto(
+                details: details,
+                existingApplicantPartyId: existingApplicantPartyId));
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
@@ -814,9 +999,15 @@ public sealed class L1SliceIntegrationTests
     }
 
     private static L1CreateConnectionRequestDto ValidConnectionRequestDto(
-        string details = RequestDetails)
+        string details = RequestDetails,
+        string? applicantContextType = "Existing",
+        long? existingApplicantPartyId = 1,
+        L1CreateIndividualApplicantPartyDto? newApplicantParty = null)
     {
         return new L1CreateConnectionRequestDto(
+            applicantContextType,
+            existingApplicantPartyId,
+            newApplicantParty,
             details,
             new L1AddressDto(
                 PostalCode,
@@ -826,6 +1017,23 @@ public sealed class L1SliceIntegrationTests
                 House,
                 Building,
                 Apartment));
+    }
+
+    private static L1CreateConnectionRequestDto ValidConnectionRequestWithNewApplicantDto(
+        string details = RequestDetails,
+        L1CreateIndividualApplicantPartyDto? newApplicantParty = null,
+        long? existingApplicantPartyId = null)
+    {
+        return ValidConnectionRequestDto(
+            details,
+            applicantContextType: "New",
+            existingApplicantPartyId,
+            newApplicantParty ?? ValidApplicantPartyDto(
+                firstName: "Request",
+                middleName: "New",
+                lastName: "Applicant",
+                email: "request.new.applicant@example.com",
+                phoneNumber: "79237554728"));
     }
 
     private async Task<AccountRow?> GetAccountRowAsync(long id)
@@ -878,6 +1086,25 @@ public sealed class L1SliceIntegrationTests
             reader.GetString("FullName_LastName"),
             reader.GetString("VerificationStatus"),
             reader.GetBoolean("IsCurrentActiveVersion"));
+    }
+
+    private async Task<long?> GetLatestApplicantPartyIdForAccountAsync(long accountId)
+    {
+        await using var reader = await ExecuteReaderAsync(
+            """
+            SELECT TOP (1) Id
+            FROM dbo.L1ApplicantParties
+            WHERE ClientAccountId = @id
+            ORDER BY Id DESC
+            """,
+            accountId);
+
+        if (!await reader.ReadAsync())
+        {
+            return null;
+        }
+
+        return reader.GetInt64("Id");
     }
 
     private async Task<int> GetApplicantPartyCountAsync(long accountId)
@@ -978,6 +1205,18 @@ public sealed class L1SliceIntegrationTests
             """,
             requestId,
             status);
+    }
+
+    private async Task SetApplicantCurrentFlagAsync(long applicantPartyId, bool isCurrent)
+    {
+        await ExecuteNonQueryAsync(
+            """
+            UPDATE dbo.L1ApplicantParties
+            SET IsCurrentActiveVersion = @value
+            WHERE Id = @id
+            """,
+            applicantPartyId,
+            isCurrent);
     }
 
     private async Task UpdateRequestCreatedAtAsync(long requestId, DateTimeOffset createdAt)

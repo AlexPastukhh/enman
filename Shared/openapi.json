@@ -1046,6 +1046,18 @@
       "L1CreateConnectionRequestDto": {
         "type": "object",
         "properties": {
+          "applicantContextType": {
+            "type": "string",
+            "nullable": true
+          },
+          "existingApplicantPartyId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "newApplicantParty": {
+            "$ref": "#/components/schemas/L1CreateIndividualApplicantPartyDto"
+          },
           "details": {
             "type": "string",
             "nullable": true

@@ -11,9 +11,9 @@ Status: active / applicant-template-per-type synchronized
 | `SL-APPL-Q-003` | `SL-APPL-001` | API identity | accepted | Should standalone create return ApplicantPartyId? | Yes; API support, not behavior item. |
 | `SL-APPL-Q-004` | `SL-APPL-001.client` | UI details | accepted | Separate details page required? | No. Details inline. |
 | `SL-APPL-Q-005` | `SL-APPL-001` / `SL-APPL-004` | service | implemented | Shared creation service? | Yes; service validates/creates/adds and has no SaveChanges; outer handler commits. |
-| `SL-REQ-Q-APPL-001` | `SL-REQ-001` | applicant context | accepted | Current active only? | No. Explicit Existing/New context. |
-| `SL-REQ-Q-APPL-002` | `SL-REQ-001` | Existing branch | accepted | Can selected existing be non-default? | Yes, any owned saved ApplicantParty. |
-| `SL-REQ-Q-APPL-003` | `SL-REQ-001` | New branch | accepted | Two client calls? | No, one atomic server operation. |
+| `SL-REQ-Q-APPL-001` | `SL-REQ-001` | applicant context | implemented | Current active only? | No. POST `/api/l1/requests` uses explicit Existing/New context. |
+| `SL-REQ-Q-APPL-002` | `SL-REQ-001` | Existing branch | implemented | Can selected existing be non-default? | Yes, any owned saved ApplicantParty. |
+| `SL-REQ-Q-APPL-003` | `SL-REQ-001` | New branch | implemented | Two client calls? | No, one atomic server operation. |
 | `SL-REQ-Q-APPL-004` | `SL-REQ-001` | response | open | Return request id? | Not required unless direct detail navigation appears. |
 | `SL-REQ-Q-APPL-005` | `SL-REQ-001` | history | future | Snapshot or reference? | Future read/history decision. |
 

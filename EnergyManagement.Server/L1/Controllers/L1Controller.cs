@@ -281,6 +281,16 @@ public sealed class L1Controller : ProjectController
             var result = await _sender.Send(
                 new L1CreateConnectionRequestCommand(
                     accountId,
+                    dto.ApplicantContextType,
+                    dto.ExistingApplicantPartyId,
+                    dto.NewApplicantParty is null
+                        ? null
+                        : new L1CreateConnectionRequestNewApplicant(
+                            dto.NewApplicantParty.FullName.FirstName,
+                            dto.NewApplicantParty.FullName.MiddleName,
+                            dto.NewApplicantParty.FullName.LastName,
+                            dto.NewApplicantParty.Email,
+                            dto.NewApplicantParty.PhoneNumber),
                     dto.Details,
                     dto.Address.PostalCode,
                     dto.Address.Region,

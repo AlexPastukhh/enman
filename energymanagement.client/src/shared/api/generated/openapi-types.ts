@@ -330,6 +330,10 @@ export interface components {
             apartment?: string | null;
         };
         L1CreateConnectionRequestDto: {
+            applicantContextType?: string | null;
+            /** Format: int64 */
+            existingApplicantPartyId?: number | null;
+            newApplicantParty?: components["schemas"]["L1CreateIndividualApplicantPartyDto"];
             details?: string | null;
             address?: components["schemas"]["L1AddressDto"];
         };

@@ -10,6 +10,11 @@ public interface IApplicantPartyRepository
 
     Task<ApplicantParty?> GetByAccountIdAsync(long accountId, CancellationToken cancellationToken);
 
+    Task<ApplicantParty?> GetOwnedByIdAsync(
+        long applicantPartyId,
+        long clientAccountId,
+        CancellationToken cancellationToken);
+
     Task<IndividualApplicantParty?> GetCurrentActiveIndividualByClientAccountIdAsync(
         long clientAccountId,
         CancellationToken cancellationToken);

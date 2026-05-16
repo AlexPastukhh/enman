@@ -30,6 +30,17 @@ public sealed class ApplicantPartyRepository : IApplicantPartyRepository
             cancellationToken);
     }
 
+    public Task<ApplicantParty?> GetOwnedByIdAsync(
+        long applicantPartyId,
+        long clientAccountId,
+        CancellationToken cancellationToken)
+    {
+        return _context.ApplicantParties.FirstOrDefaultAsync(
+            x => x.Id == applicantPartyId
+                && x.ClientAccountId == clientAccountId,
+            cancellationToken);
+    }
+
     public Task<IndividualApplicantParty?> GetCurrentActiveIndividualByClientAccountIdAsync(
         long clientAccountId,
         CancellationToken cancellationToken)

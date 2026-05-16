@@ -243,7 +243,7 @@ public class L1DbContext : DbContext
                 .HasMaxLength(RejectionFeedback.MaxLength)
                 .IsRequired(false);
 
-            clientRequest.HasOne<ApplicantParty>()
+            clientRequest.HasOne(x => x.ApplicantParty)
                 .WithMany()
                 .HasForeignKey(x => x.ApplicantPartyId)
                 .OnDelete(DeleteBehavior.Restrict);

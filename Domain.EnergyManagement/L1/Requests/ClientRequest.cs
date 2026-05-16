@@ -8,6 +8,7 @@ namespace Domain.EnergyManagement.L1;
 public abstract class ClientRequest : L1Entity
 {
     public long ApplicantPartyId { get; private set; }
+    public ApplicantParty ApplicantParty { get; private set; }
     public ClientRequestType RequestType { get; private set; }
     public RequestStatus Status { get; protected set; }
     public string Details { get; private set; }
@@ -21,9 +22,8 @@ public abstract class ClientRequest : L1Entity
         Address objectAddress,
         DateTimeOffset createdAt)
     {
-        ApplicantPartyId = GuardPersistedReferenceId(
-            applicantParty,
-            nameof(applicantParty));
+        ApplicantParty = applicantParty;
+        ApplicantPartyId = applicantParty.Id > 0 ? applicantParty.Id : default;
         RequestType = requestType;
         Status = RequestStatus.InReview;
         Details = details;
@@ -33,6 +33,7 @@ public abstract class ClientRequest : L1Entity
 
     protected ClientRequest()
     {
+        ApplicantParty = null!;
         Details = null!;
         ObjectAddress = null!;
     }

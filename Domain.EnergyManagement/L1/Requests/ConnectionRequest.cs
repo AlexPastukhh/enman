@@ -40,11 +40,6 @@ public sealed class ConnectionRequest : ClientRequest
             return Result.Failure<ConnectionRequest, IReadOnlyList<Error>>(errors);
         }
 
-        if (applicantParty.Id <= 0)
-        {
-            throw new InvalidOperationException("ApplicantParty must be persisted.");
-        }
-
         return Result.Success<ConnectionRequest, IReadOnlyList<Error>>(
             new ConnectionRequest(
                 applicantParty,
