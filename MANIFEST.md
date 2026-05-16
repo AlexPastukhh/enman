@@ -1,48 +1,37 @@
 # MANIFEST
 
-Archive: `enman-vkr-sync-after-l1-client-baseline-v1.zip`
+Archive: `enman-vkr-methodical-and-intro-pack-v1.zip`
 
-Purpose: synchronize VKR documentation with the current L1 backend/client planning baseline.
+Scope: methodical and introductory VKR materials that can be prepared while implementation continues.
 
-## Add / replace if missing
+## Add
 
 ```text
-planning/vkr-work-context-current.md
-vkr-clean/api-contract-and-client-server-sync.md
-vkr-clean/functional-specification.md
-vkr-clean/use-case-diagrams-plan.md
-vkr-clean/visuals-and-diagrams-plan.md
-vkr-clean/planning-to-vkr-extraction-map.md
+vkr-clean/format-and-methodical-requirements.md
+vkr-clean/definitions-abbreviations.md
+vkr-clean/introduction-draft.md
+vkr-clean/existing-solutions-analysis.md
+vkr-clean/literature-plan.md
 ```
 
 ## Replace
 
 ```text
-vkr-clean/README.md
 vkr-clean/vkr-materials-index.md
-vkr-clean/vkr-outline.md
-vkr-clean/clean-requirements.md
-vkr-clean/clean-architecture.md
-vkr-clean/clean-ui-description.md
-vkr-clean/clean-testing.md
 ```
 
 ## Delete
 
 ```text
-None.
+None
 ```
 
-## Deliberately not changed
+## Does Not Change
 
 ```text
-Source code
-planning/README.md
-planning/planning-workflow-current.md
+Code
+planning/
+presentation/
 chapter-*.md
-presentation/*
-evidence-map.md
-clean-domain-model.md
-clean-database-design.md
-clean-results-and-future-work.md
+existing implementation status
 ```
