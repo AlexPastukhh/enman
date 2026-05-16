@@ -1,4 +1,4 @@
-# MANIFEST — SL-APPL-002 Account Applicant Parties Read / Templates
+# MANIFEST — SL-APPL-002 Account Applicant Parties Read / Templates v3
 
 ## Package
 
@@ -7,6 +7,8 @@ Replacement archive for manual application to repository root.
 Repository: `AlexPastukhh/enman`  
 Branch target: `my-changes`  
 Slice: `SL-APPL-002 — Account Applicant Parties Read / Templates`
+
+This v3 package supersedes v2 by including generated artifacts produced by the repository workflow after the new endpoint was added.
 
 ## Added files
 
@@ -27,24 +29,18 @@ Slice: `SL-APPL-002 — Account Applicant Parties Read / Templates`
 
 ## Generated artifacts
 
-- None included.
-
-Reason: this sandbox has no .NET SDK (`dotnet: command not found`), so the OpenAPI generation commands could not be executed. Generated artifacts were not manually edited.
-
-After applying this archive in a local environment with the project toolchain, run the repository generation/check commands and include generated diffs if they appear:
-
-```bash
-dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
-dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check
-dotnet run --project EnergyManagement.Tools -- generate-client-constants --out Shared --check
-npm.cmd run check:api
-```
-
-Expected generated artifacts if the workflow updates them:
+Included:
 
 - `Shared/openapi.json`
 - `energymanagement.client/src/shared/api/generated/openapi-types.ts`
-- any generated route/constants files changed by the repo workflow
+
+Reason:
+
+- `GET /api/l1/applicant-parties` adds a new OpenAPI path.
+- New schemas are generated for `L1AccountApplicantPartiesResponse` and `L1ApplicantPartySummaryDto`.
+- `openapi-typescript` generates the matching TypeScript path, schemas and operation.
+
+Generated files were not manually authored from scratch; they reflect the generated diff reported by the local repo workflow after applying the backend changes.
 
 ## Tests changed
 
@@ -95,39 +91,37 @@ Notes:
 
 ## Commands run and results
 
-The required commands were attempted from repository root.
+In this sandbox, these commands could not be executed because `dotnet`/`npm.cmd` are unavailable:
 
 ```text
-$ dotnet build EnergyManagement.Server/EnergyManagement.Server.csproj
-bash: dotnet: command not found
-exit=127
-
-$ dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj
-bash: dotnet: command not found
-exit=127
-
-$ dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
-bash: dotnet: command not found
-exit=127
-
-$ dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check
-bash: dotnet: command not found
-exit=127
-
-$ dotnet run --project EnergyManagement.Tools -- generate-client-constants --out Shared --check
-bash: dotnet: command not found
-exit=127
-
-$ npm.cmd run check:api
-bash: npm.cmd: command not found
-exit=127
+dotnet build EnergyManagement.Server/EnergyManagement.Server.csproj -> dotnet: command not found
+dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj -> dotnet: command not found
+dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json -> dotnet: command not found
+dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check -> dotnet: command not found
+dotnet run --project EnergyManagement.Tools -- generate-client-constants --out Shared --check -> dotnet: command not found
+npm.cmd run check:api -> npm.cmd: command not found
 ```
 
-Additional local checks:
+Local user workflow evidence after applying v2:
 
-- Confirmed no `planning/**` files changed.
-- Confirmed no `Domain.EnergyManagement/**` files changed.
-- Confirmed package contains complete replacement files, not snippets/patches.
+```text
+npm run check:api
+  check:openapi -> OpenAPI artifact is up to date
+  generate:api-types -> generated TypeScript types
+  git diff showed expected changes in Shared/openapi.json and generated openapi-types.ts
+```
+
+Those generated changes are now included in this v3 archive.
+
+Recommended local verification after applying v3:
+
+```powershell
+dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
+dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
+npm run check:api
+```
+
+Expected: after v3 is applied, `npm run check:api` should no longer show the generated OpenAPI/type diffs that v2 missed. If it still changes files, keep the new generated diff and report it.
 
 ## Non-goals respected
 
@@ -150,6 +144,6 @@ Additional local checks:
 
 ## Handoff notes / risks
 
-- OpenAPI/client generated artifacts are expected to need regeneration after applying this archive, but were not generated here because `dotnet` is unavailable in the sandbox.
 - The uploaded repository archive already contained the prerequisite default/current behavior: new ApplicantParty starts non-current by default, and `ApplicantPartyCreationService` marks first-of-type as current/default. This package only reads the persisted marker.
-- If local generation changes `Shared/openapi.json` or generated TypeScript/constants, include those generated files in a follow-up commit/package generated by the repo tooling.
+- Generated constants were not observed changing from the user-provided `check:api` output. If `generate-client-constants --check` changes additional files locally, include those generated files as generated artifacts.
+- This package is merge-ready: paths are repo-relative directly, with no wrapper folder.

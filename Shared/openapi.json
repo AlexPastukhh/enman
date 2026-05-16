@@ -23,7 +23,7 @@
                 "$ref": "#/components/schemas/RegisterClientDto"
               }
             },
-            "application/*\u002Bjson": {
+            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/RegisterClientDto"
               }
@@ -54,7 +54,7 @@
                 "$ref": "#/components/schemas/ProvideIndividualClientsDataDto"
               }
             },
-            "application/*\u002Bjson": {
+            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ProvideIndividualClientsDataDto"
               }
@@ -85,7 +85,7 @@
                 "$ref": "#/components/schemas/LoginDto"
               }
             },
-            "application/*\u002Bjson": {
+            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/LoginDto"
               }
@@ -128,7 +128,7 @@
                 "$ref": "#/components/schemas/CreateIndividualRequestDto"
               }
             },
-            "application/*\u002Bjson": {
+            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateIndividualRequestDto"
               }
@@ -160,7 +160,7 @@
                 "$ref": "#/components/schemas/L1RegisterClientAccountDto"
               }
             },
-            "application/*\u002Bjson": {
+            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/L1RegisterClientAccountDto"
               }
@@ -249,7 +249,7 @@
                 "$ref": "#/components/schemas/L1LoginRequest"
               }
             },
-            "application/*\u002Bjson": {
+            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/L1LoginRequest"
               }
@@ -441,7 +441,7 @@
                 "$ref": "#/components/schemas/L1CreateIndividualApplicantPartyDto"
               }
             },
-            "application/*\u002Bjson": {
+            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/L1CreateIndividualApplicantPartyDto"
               }
@@ -511,6 +511,76 @@
           },
           "422": {
             "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/l1/applicant-parties": {
+      "get": {
+        "tags": [
+          "L1"
+        ],
+        "operationId": "L1ListAccountApplicantParties",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/L1AccountApplicantPartiesResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/L1AccountApplicantPartiesResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/L1AccountApplicantPartiesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
             "content": {
               "text/plain": {
                 "schema": {
@@ -746,7 +816,7 @@
                 "$ref": "#/components/schemas/L1CreateConnectionRequestDto"
               }
             },
-            "application/*\u002Bjson": {
+            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/L1CreateConnectionRequestDto"
               }
@@ -1009,6 +1079,19 @@
         },
         "additionalProperties": false
       },
+      "L1AccountApplicantPartiesResponse": {
+        "type": "object",
+        "properties": {
+          "applicantParties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/L1ApplicantPartySummaryDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "L1AddressDto": {
         "type": "object",
         "properties": {
@@ -1038,6 +1121,47 @@
           },
           "apartment": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "L1ApplicantPartySummaryDto": {
+        "type": "object",
+        "properties": {
+          "applicantPartyId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "applicantPartyType": {
+            "type": "string",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullName": {
+            "$ref": "#/components/schemas/L1FullNameDto"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "verificationStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "isCurrentDefault": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           }
         },
