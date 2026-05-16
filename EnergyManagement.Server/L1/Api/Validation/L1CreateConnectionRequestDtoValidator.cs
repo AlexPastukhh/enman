@@ -105,7 +105,7 @@ public sealed class L1CreateConnectionRequestDtoValidator
     }
 
     private static void ValidateDetails(
-        string details,
+        string? details,
         ValidationContext<L1CreateConnectionRequestDto> context)
     {
         if (string.IsNullOrWhiteSpace(details))
@@ -136,11 +136,11 @@ public sealed class L1CreateConnectionRequestDtoValidator
         }
 
         var addressResult = Address.Create(
-            address.PostalCode,
-            address.Region,
-            address.City,
-            address.Street,
-            address.House,
+            address.PostalCode ?? string.Empty,
+            address.Region ?? string.Empty,
+            address.City ?? string.Empty,
+            address.Street ?? string.Empty,
+            address.House ?? string.Empty,
             address.Building,
             address.Apartment);
 

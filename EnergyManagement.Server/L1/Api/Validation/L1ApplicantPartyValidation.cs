@@ -21,13 +21,13 @@ internal static class L1ApplicantPartyValidation
 
         ValidateFullName(dto.FullName, context, Join(prefix, L1FieldNames.ApplicantParty.FullName));
 
-        var emailResult = Email.Create(dto.Email);
+        var emailResult = Email.Create(dto.Email ?? string.Empty);
         if (emailResult.IsFailure)
         {
             AddFailures(context, Join(prefix, L1FieldNames.ApplicantParty.Email), emailResult.Error);
         }
 
-        var phoneResult = PhoneNumber.Create(dto.PhoneNumber);
+        var phoneResult = PhoneNumber.Create(dto.PhoneNumber ?? string.Empty);
         if (phoneResult.IsFailure)
         {
             AddFailures(context, Join(prefix, L1FieldNames.ApplicantParty.PhoneNumber), phoneResult.Error);
@@ -46,9 +46,9 @@ internal static class L1ApplicantPartyValidation
         }
 
         var fullNameResult = FullName.Create(
-            fullName.FirstName,
-            fullName.MiddleName,
-            fullName.LastName);
+            fullName.FirstName ?? string.Empty,
+            fullName.MiddleName ?? string.Empty,
+            fullName.LastName ?? string.Empty);
 
         if (fullNameResult.IsFailure)
         {

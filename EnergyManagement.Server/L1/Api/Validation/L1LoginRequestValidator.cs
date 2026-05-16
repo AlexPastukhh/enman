@@ -11,7 +11,7 @@ public sealed class L1LoginRequestValidator : AbstractValidator<L1LoginRequest>
         RuleFor(dto => dto.Email)
             .Custom((email, context) =>
             {
-                var result = Email.Create(email);
+                var result = Email.Create(email ?? string.Empty);
                 if (result.IsFailure)
                 {
                     foreach (var error in result.Error)

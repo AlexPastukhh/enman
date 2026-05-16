@@ -12,7 +12,7 @@ public sealed class L1RegisterClientAccountDtoValidator
         RuleFor(dto => dto.Email)
             .Custom((email, context) =>
             {
-                var result = Email.Create(email);
+                var result = Email.Create(email ?? string.Empty);
                 if (result.IsFailure)
                 {
                     foreach (var error in result.Error)
@@ -25,7 +25,7 @@ public sealed class L1RegisterClientAccountDtoValidator
         RuleFor(dto => dto.Password)
             .Custom((password, context) =>
             {
-                var result = L1PasswordHasher.HashPassword(password);
+                var result = L1PasswordHasher.HashPassword(password ?? string.Empty);
                 if (result.IsFailure)
                 {
                     foreach (var error in result.Error)
