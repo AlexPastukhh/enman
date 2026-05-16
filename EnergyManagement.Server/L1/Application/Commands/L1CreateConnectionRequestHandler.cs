@@ -2,6 +2,7 @@ using CSharpFunctionalExtensions;
 using Domain.EnergyManagement.Common;
 using Domain.EnergyManagement.DocumentManaging;
 using Domain.EnergyManagement.L1;
+using EnergyManagement.Server.L1.Application;
 using EnergyManagement.Server.L1.Application.Abstractions;
 using EnergyManagement.Server.L1.Persistence;
 using MediatR;
@@ -37,27 +38,23 @@ public sealed class L1CreateConnectionRequestHandler
         L1CreateConnectionRequestCommand command,
         CancellationToken cancellationToken)
     {
-        var addressResult = Address.Create(
-            command.PostalCode,
-            command.Region,
-            command.City,
-            command.Street,
-            command.House,
-            command.Building,
-            command.Apartment);
-
-        if (addressResult.IsFailure)
-        {
-            return UnitResult.Failure<IReadOnlyList<Error>>(
-                addressResult.Error);
-        }
+        var objectAddress = ValidatedInput.ValueOrThrow(
+            Address.Create(
+                command.PostalCode,
+                command.Region,
+                command.City,
+                command.Street,
+                command.House,
+                command.Building,
+                command.Apartment),
+            "Address was validated by FluentValidation but Address.Create failed.");
 
         if (string.Equals(command.ApplicantContextType, ExistingApplicantContext, StringComparison.Ordinal))
         {
-            return await HandleExistingApplicantAsync(command, addressResult.Value, cancellationToken);
+            return await HandleExistingApplicantAsync(command, objectAddress, cancellationToken);
         }
 
-        return await HandleNewApplicantAsync(command, addressResult.Value, cancellationToken);
+        return await HandleNewApplicantAsync(command, objectAddress, cancellationToken);
     }
 
     private async Task<UnitResult<IReadOnlyList<Error>>> HandleExistingApplicantAsync(

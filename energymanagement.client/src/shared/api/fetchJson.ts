@@ -29,6 +29,7 @@ const tryReadProblemDetails = async (
   return isProblemDetails(body) ? body : null;
 };
 
+
 export const fetchJson = async <TResponse>(
   path: string,
   init: RequestInit,
