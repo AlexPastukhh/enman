@@ -1,0 +1,51 @@
+.myRequestsPage {
+  display: grid;
+  gap: 24px;
+  padding: 24px 0;
+}
+
+.myRequestsPage__state {
+  max-width: 760px;
+  padding: 18px;
+  border: 1px solid #d8d8d8;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.myRequestsList {
+  display: grid;
+  gap: 16px;
+  max-width: 960px;
+}
+
+.myRequestCard,
+.myRequestsEmpty {
+  padding: 18px;
+  border: 1px solid #d8d8d8;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.myRequestCard__title {
+  margin: 0 0 12px;
+}
+
+.myRequestCard__summary {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.myRequestCard__row {
+  display: grid;
+  grid-template-columns: minmax(140px, 220px) 1fr;
+  gap: 12px;
+}
+
+.myRequestCard__row dt {
+  font-weight: 600;
+}
+
+.myRequestCard__row dd {
+  margin: 0;
+}

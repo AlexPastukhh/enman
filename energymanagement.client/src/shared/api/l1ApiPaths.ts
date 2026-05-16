@@ -10,4 +10,5 @@ export const l1ApiPaths = {
   createIndividualApplicantParty: "/api/l1/applicant-parties/individual",
   currentIndividualApplicantParty:
     "/api/l1/applicant-parties/current-individual",
+  requests: "/api/l1/requests",
 } as const satisfies Record<string, OpenApiPath>;

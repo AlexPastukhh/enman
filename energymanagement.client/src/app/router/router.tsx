@@ -2,6 +2,7 @@ import { createBrowserRouter, useRouteError } from "react-router-dom";
 import AccountPage from "../../pages/account/AccountPage";
 import HomePage from "../../pages/home/HomePage";
 import { LoginPage } from "../../pages/login/LoginPage";
+import MyRequestsPage from "../../pages/requests/my/MyRequestsPage";
 import RegisterPage from "../../pages/register/RegisterPage";
 import { clientRoutes } from "../../shared/config/clientRoutes";
 import TestSiteMockup from "../../test-site-mockup/TestSiteMockup";
@@ -41,9 +42,13 @@ export const router = createBrowserRouter([
     errorElement: <RouteError />,
   },
   {
+    path: clientRoutes.requests,
+    element: <MyRequestsPage />,
+    errorElement: <RouteError />,
+  },
+  {
     path: clientRoutes.testUi,
     element: <TestSiteMockup />,
     errorElement: <RouteError />,
   },
 ]);
-

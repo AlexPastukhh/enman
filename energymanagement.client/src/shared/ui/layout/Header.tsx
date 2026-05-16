@@ -49,6 +49,12 @@ export const Header = () => {
           )}
 
           {session && (
+            <HeaderNavLink to={clientRoutes.requests}>
+              {headerConst.myRequestsLinkText}
+            </HeaderNavLink>
+          )}
+
+          {session && (
             <LogoutButton
               className="header__nav-button"
               label={headerConst.logoutButtonText}
