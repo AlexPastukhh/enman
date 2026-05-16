@@ -1,14 +1,6 @@
-# MANIFEST — SL-APPL-002 Account Applicant Parties Read / Templates v3
+# MANIFEST — SL-APPL-002 Account Applicant Parties Read / Templates
 
-## Package
-
-Replacement archive for manual application to repository root.
-
-Repository: `AlexPastukhh/enman`  
-Branch target: `my-changes`  
-Slice: `SL-APPL-002 — Account Applicant Parties Read / Templates`
-
-This v3 package supersedes v2 by including generated artifacts produced by the repository workflow after the new endpoint was added.
+Archive: `sl-appl-002-account-applicant-parties-read-v4.zip`
 
 ## Added files
 
@@ -23,24 +15,21 @@ This v3 package supersedes v2 by including generated artifacts produced by the r
 - `EnergyManagement.Server/L1/Persistence/Repositories/ApplicantPartyRepository.cs`
 - `Tests.EnergyManagement/Integration/L1/L1SliceIntegrationTests.cs`
 
-## Deleted files
-
-- None.
-
-## Generated artifacts
-
-Included:
+## Generated artifacts included
 
 - `Shared/openapi.json`
 - `energymanagement.client/src/shared/api/generated/openapi-types.ts`
 
-Reason:
+These generated artifacts include:
 
-- `GET /api/l1/applicant-parties` adds a new OpenAPI path.
-- New schemas are generated for `L1AccountApplicantPartiesResponse` and `L1ApplicantPartySummaryDto`.
-- `openapi-typescript` generates the matching TypeScript path, schemas and operation.
+- `GET /api/l1/applicant-parties`
+- `L1AccountApplicantPartiesResponse`
+- `L1ApplicantPartySummaryDto`
+- `L1ListAccountApplicantParties`
 
-Generated files were not manually authored from scratch; they reflect the generated diff reported by the local repo workflow after applying the backend changes.
+`v4` also fixes the generated-file drift observed locally:
+- OpenAPI media type keys use the local generator output form `application/*\u002Bjson`.
+- TypeScript generated types include the `L1ApplicantPartySummaryDto` schema block.
 
 ## Tests changed
 
@@ -49,101 +38,53 @@ Generated files were not manually authored from scratch; they reflect the genera
 Added integration coverage for:
 
 - unauthenticated `GET /api/l1/applicant-parties` returns `401`;
-- authenticated account with no ApplicantParties returns `200` and empty `applicantParties`;
-- first Individual ApplicantParty returns summary/card fields and `isCurrentDefault=true`;
-- response JSON does not expose `clientAccountId`;
-- multiple same-type ApplicantParties are all returned with only the first current/default;
-- another account's ApplicantParties are not returned.
+- authenticated account with no ApplicantParties returns `200` and `applicantParties: []`;
+- authenticated account with one ApplicantParty returns a flat summary list;
+- response does not expose `clientAccountId`;
+- multiple same-type ApplicantParties are all returned with first default `true` and second default `false`;
+- another account's ApplicantParties are excluded.
 
-## API shape implemented
+## Commands run here
 
-```http
-GET /api/l1/applicant-parties
-```
+The local sandbox used to create this archive still has no .NET SDK, so I could not execute project build/test/generation locally.
 
-Response:
+## User-provided local verification evidence
 
-```ts
-type L1AccountApplicantPartiesResponse = {
-  applicantParties: L1ApplicantPartySummaryDto[];
-};
+The user's local run showed:
 
-type L1ApplicantPartySummaryDto = {
-  applicantPartyId: number;
-  applicantPartyType: string;
-  displayName: string;
-  fullName?: L1FullNameDto | null;
-  email: string;
-  phoneNumber: string;
-  verificationStatus: string;
-  isCurrentDefault: boolean;
-  createdAt?: string | null;
-};
-```
+- `dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check` reports OpenAPI up to date after local generation.
+- `openapi-typescript` runs successfully.
+- Remaining `git diff` was generated-artifact drift only.
 
-Notes:
+## Commands to run after applying
 
-- API returns one flat `applicantParties` list.
-- API does not return grouped `currentDefaults` / `otherApplicantParties` arrays.
-- Client groups by `isCurrentDefault`.
-- `isCurrentDefault` maps from persisted `ApplicantParty.IsCurrentActiveVersion`.
-- Endpoint has no body/query input; no `422` request-shape validation is expected.
-
-## Commands run and results
-
-In this sandbox, these commands could not be executed because `dotnet`/`npm.cmd` are unavailable:
-
-```text
-dotnet build EnergyManagement.Server/EnergyManagement.Server.csproj -> dotnet: command not found
-dotnet test Tests.EnergyManagement/Tests.EnergyManagement.csproj -> dotnet: command not found
-dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json -> dotnet: command not found
-dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check -> dotnet: command not found
-dotnet run --project EnergyManagement.Tools -- generate-client-constants --out Shared --check -> dotnet: command not found
-npm.cmd run check:api -> npm.cmd: command not found
-```
-
-Local user workflow evidence after applying v2:
-
-```text
-npm run check:api
-  check:openapi -> OpenAPI artifact is up to date
-  generate:api-types -> generated TypeScript types
-  git diff showed expected changes in Shared/openapi.json and generated openapi-types.ts
-```
-
-Those generated changes are now included in this v3 archive.
-
-Recommended local verification after applying v3:
+From repo root:
 
 ```powershell
 dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
 dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
+
+dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out .\Shared\openapi.json --check
+npm --prefix .\energymanagement.client run generate:api-types
+```
+
+Because `npm run check:api` ends with `git diff --exit-code Shared/openapi.json energymanagement.client/src/shared/api/generated/openapi-types.ts`, it checks for **unstaged generated-file drift**. If the generated artifacts are intentionally changed by this slice, stage them before running the script:
+
+```powershell
+git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
 npm run check:api
 ```
 
-Expected: after v3 is applied, `npm run check:api` should no longer show the generated OpenAPI/type diffs that v2 missed. If it still changes files, keep the new generated diff and report it.
+If `npm run check:api` still prints a diff after staging generated artifacts, the generated files are still stale and should be regenerated again.
 
 ## Non-goals respected
 
-- No GitHub push.
-- No branch created.
-- No commit created.
-- No PR created.
-- No planning docs changed.
-- No domain files changed.
-- No client UI changed.
-- No make-default/current command implemented.
-- No delete/archive behavior implemented.
-- No edit ApplicantParty behavior implemented.
-- No request creation changes made.
-- No legacy cleanup performed.
-- No FluentValidation cleanup performed.
-- No handler/value-object cleanup performed.
-- No `IsCurrentActiveVersion` rename performed.
-- No separate My Applicant Parties page work performed.
-
-## Handoff notes / risks
-
-- The uploaded repository archive already contained the prerequisite default/current behavior: new ApplicantParty starts non-current by default, and `ApplicantPartyCreationService` marks first-of-type as current/default. This package only reads the persisted marker.
-- Generated constants were not observed changing from the user-provided `check:api` output. If `generate-client-constants --check` changes additional files locally, include those generated files as generated artifacts.
-- This package is merge-ready: paths are repo-relative directly, with no wrapper folder.
+- No domain changes.
+- No planning docs changes.
+- No client UI implementation.
+- No make-default/current command.
+- No delete/archive lifecycle.
+- No request creation changes.
+- No legacy cleanup.
+- No unrelated cleanup.
+- No GitHub write.

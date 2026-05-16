@@ -23,7 +23,7 @@
                 "$ref": "#/components/schemas/RegisterClientDto"
               }
             },
-            "application/*+json": {
+            "application/*\u002Bjson": {
               "schema": {
                 "$ref": "#/components/schemas/RegisterClientDto"
               }
@@ -54,7 +54,7 @@
                 "$ref": "#/components/schemas/ProvideIndividualClientsDataDto"
               }
             },
-            "application/*+json": {
+            "application/*\u002Bjson": {
               "schema": {
                 "$ref": "#/components/schemas/ProvideIndividualClientsDataDto"
               }
@@ -85,7 +85,7 @@
                 "$ref": "#/components/schemas/LoginDto"
               }
             },
-            "application/*+json": {
+            "application/*\u002Bjson": {
               "schema": {
                 "$ref": "#/components/schemas/LoginDto"
               }
@@ -128,7 +128,7 @@
                 "$ref": "#/components/schemas/CreateIndividualRequestDto"
               }
             },
-            "application/*+json": {
+            "application/*\u002Bjson": {
               "schema": {
                 "$ref": "#/components/schemas/CreateIndividualRequestDto"
               }
@@ -160,7 +160,7 @@
                 "$ref": "#/components/schemas/L1RegisterClientAccountDto"
               }
             },
-            "application/*+json": {
+            "application/*\u002Bjson": {
               "schema": {
                 "$ref": "#/components/schemas/L1RegisterClientAccountDto"
               }
@@ -249,7 +249,7 @@
                 "$ref": "#/components/schemas/L1LoginRequest"
               }
             },
-            "application/*+json": {
+            "application/*\u002Bjson": {
               "schema": {
                 "$ref": "#/components/schemas/L1LoginRequest"
               }
@@ -441,7 +441,7 @@
                 "$ref": "#/components/schemas/L1CreateIndividualApplicantPartyDto"
               }
             },
-            "application/*+json": {
+            "application/*\u002Bjson": {
               "schema": {
                 "$ref": "#/components/schemas/L1CreateIndividualApplicantPartyDto"
               }
@@ -816,7 +816,7 @@
                 "$ref": "#/components/schemas/L1CreateConnectionRequestDto"
               }
             },
-            "application/*+json": {
+            "application/*\u002Bjson": {
               "schema": {
                 "$ref": "#/components/schemas/L1CreateConnectionRequestDto"
               }

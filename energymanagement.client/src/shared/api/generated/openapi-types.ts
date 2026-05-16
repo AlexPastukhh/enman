@@ -348,6 +348,19 @@ export interface components {
             building?: string | null;
             apartment?: string | null;
         };
+        L1ApplicantPartySummaryDto: {
+            /** Format: int64 */
+            applicantPartyId?: number;
+            applicantPartyType?: string | null;
+            displayName?: string | null;
+            fullName?: components["schemas"]["L1FullNameDto"];
+            email?: string | null;
+            phoneNumber?: string | null;
+            verificationStatus?: string | null;
+            isCurrentDefault?: boolean;
+            /** Format: date-time */
+            createdAt?: string | null;
+        };
         L1CreateConnectionRequestDto: {
             applicantContextType?: string | null;
             /** Format: int64 */

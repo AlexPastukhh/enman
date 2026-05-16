@@ -1,59 +1,52 @@
-# APPLY — SL-APPL-002 Account Applicant Parties Read / Templates v3
+# APPLY — SL-APPL-002 Account Applicant Parties Read / Templates
 
-This archive is merge-ready: it contains repo-relative paths directly.
-There is no wrapper folder inside the zip.
+This archive is merge-ready: it contains repo-relative paths directly and has no wrapper directory.
 
-## Remove old temporary folder if present
+## Apply from repo root
 
-If you previously extracted v2 into `_incoming_sl_appl_002`, remove it from repository root:
+PowerShell:
+
+```powershell
+Expand-Archive -Path "C:\Users\alexa\Downloads\sl-appl-002-account-applicant-parties-read-v4.zip" -DestinationPath "." -Force
+```
+
+If a previous temporary incoming folder exists, remove it:
 
 ```powershell
 Remove-Item -Path ".\_incoming_sl_appl_002" -Recurse -Force
 ```
 
-## Apply from repository root
+## Verify
 
-Run PowerShell from the repository root, for example `C:\enman\enman`:
-
-```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\sl-appl-002-account-applicant-parties-read-v3.zip" -DestinationPath "." -Force
-```
-
-This extracts files directly into their target paths, for example:
-
-```text
-EnergyManagement.Server\L1\Api\L1Dtos.cs
-EnergyManagement.Server\L1\Controllers\L1Controller.cs
-Shared\openapi.json
-energymanagement.client\src\shared\api\generated\openapi-types.ts
-Tests.EnergyManagement\Integration\L1\L1SliceIntegrationTests.cs
-```
-
-## Recommended checks after applying
+Run from repo root:
 
 ```powershell
 dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
 dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
 
-npm run check:api
+dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out .\Shared\openapi.json --check
+npm --prefix .\energymanagement.client run generate:api-types
 ```
 
-Optional explicit generation/check workflow:
+## About `npm run check:api`
+
+The project script runs:
+
+```text
+npm run check:openapi && npm run generate:api-types && git diff --exit-code Shared/openapi.json energymanagement.client/src/shared/api/generated/openapi-types.ts
+```
+
+Since this slice intentionally changes generated artifacts, `git diff --exit-code` can fail on unstaged generated files even when OpenAPI is up to date.
+
+To use that script as a no-extra-drift check, stage the generated files first:
 
 ```powershell
-dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out .\Shared\openapi.json
-dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out .\Shared\openapi.json --check
-dotnet run --project .\EnergyManagement.Tools -- generate-client-constants --out .\Shared --check
+git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
 npm run check:api
 ```
 
-Expected after v3: the generated OpenAPI/type diffs from v2 should already be present in the applied files. If `npm run check:api` still reports diffs, keep the generated diffs and report the exact output.
+If it still prints a diff after staging, regenerate the artifacts and inspect the new diff.
 
-## Scope confirmations
+## No GitHub write
 
-- No GitHub write was performed.
-- No branch/commit/PR was created.
-- No planning docs are included.
-- No domain files are included.
-- No client UI files are included.
-- Generated OpenAPI/type artifacts are included because the API contract changed.
+No branch, commit, push or PR is performed by this archive.
