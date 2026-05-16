@@ -52,6 +52,17 @@ public sealed class ApplicantPartyRepository : IApplicantPartyRepository
             cancellationToken);
     }
 
+    public async Task<IReadOnlyList<ApplicantParty>> ListOwnedByAccountIdAsync(
+        long clientAccountId,
+        CancellationToken cancellationToken)
+    {
+        return await _context.ApplicantParties
+            .Where(x => x.ClientAccountId == clientAccountId)
+            .OrderBy(x => x.CreatedAt)
+            .ThenBy(x => x.Id)
+            .ToListAsync(cancellationToken);
+    }
+
     public Task<IndividualApplicantParty?> GetCurrentActiveIndividualByClientAccountIdAsync(
         long clientAccountId,
         CancellationToken cancellationToken)

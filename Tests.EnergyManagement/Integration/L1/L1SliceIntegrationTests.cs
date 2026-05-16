@@ -125,6 +125,104 @@ public sealed class L1SliceIntegrationTests
     }
 
     [Fact]
+    public async Task ListAccountApplicantParties_WithoutAuth_ReturnsUnauthorized()
+    {
+        var response = await _factory.CreateClient().GetAsync("/api/l1/applicant-parties");
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode((int)HttpStatusCode.Unauthorized);
+    }
+
+    [Fact]
+    public async Task ListAccountApplicantParties_WithNoApplicantParties_ReturnsEmptyList()
+    {
+        var account = await RegisterAccountAsync();
+        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+
+        var response = await GetAccountApplicantPartiesAsync(client);
+
+        response.ApplicantParties.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task ListAccountApplicantParties_WithFirstApplicantParty_ReturnsSummaryAndNoClientAccountId()
+    {
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+
+        var httpResponse = await client.GetAsync("/api/l1/applicant-parties");
+        await HttpResponseAssertions.For(httpResponse, _output).ShouldBeSuccess();
+        var responseBody = await httpResponse.Content.ReadAsStringAsync();
+        var response = System.Text.Json.JsonSerializer.Deserialize<L1AccountApplicantPartiesResponse>(
+                responseBody,
+                new System.Text.Json.JsonSerializerOptions(System.Text.Json.JsonSerializerDefaults.Web))
+            ?? throw new InvalidOperationException("L1 account applicant parties response body was empty.");
+
+        response.ApplicantParties.Should().ContainSingle();
+        var summary = response.ApplicantParties.Single();
+        summary.ApplicantPartyId.Should().Be(applicantParty.ApplicantPartyId);
+        summary.ApplicantPartyType.Should().Be("Individual");
+        summary.DisplayName.Should().Be($"{LastName} {FirstName} {MiddleName}");
+        summary.FullName.Should().NotBeNull();
+        summary.FullName!.FirstName.Should().Be(FirstName);
+        summary.FullName.MiddleName.Should().Be(MiddleName);
+        summary.FullName.LastName.Should().Be(LastName);
+        summary.Email.Should().Be(ApplicantEmail);
+        summary.PhoneNumber.Should().Be(PhoneNumber);
+        summary.VerificationStatus.Should().Be("Unverified");
+        summary.IsCurrentDefault.Should().BeTrue();
+        summary.CreatedAt.Should().NotBeNull();
+        responseBody.Should().NotContain("clientAccountId");
+    }
+
+    [Fact]
+    public async Task ListAccountApplicantParties_WithMultipleSameTypeApplicantParties_ReturnsAllWithOnlyFirstCurrentDefault()
+    {
+        var account = await RegisterAccountAsync();
+        var first = await CreateApplicantPartyAsync(account.AccountId);
+
+        var secondResponse = await AuthenticatedL1Client(account.AccountId).PostAsJsonAsync(
+            "/api/l1/applicant-parties/individual",
+            ValidApplicantPartyDto(
+                firstName: "Jane",
+                middleName: "Anne",
+                lastName: "Smith",
+                email: UniqueEmail(),
+                phoneNumber: "79237554727"));
+        await HttpResponseAssertions.For(secondResponse, _output).ShouldBeSuccess();
+        var second = await secondResponse.Content.ReadFromJsonAsync<L1CreateIndividualApplicantPartyResponse>()
+            ?? throw new InvalidOperationException("L1 applicant party response body was empty.");
+
+        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var response = await GetAccountApplicantPartiesAsync(client);
+
+        response.ApplicantParties.Should().HaveCount(2);
+        var firstSummary = response.ApplicantParties.Single(x => x.ApplicantPartyId == first.ApplicantPartyId);
+        var secondSummary = response.ApplicantParties.Single(x => x.ApplicantPartyId == second.ApplicantPartyId);
+        firstSummary.IsCurrentDefault.Should().BeTrue();
+        secondSummary.IsCurrentDefault.Should().BeFalse();
+        response.ApplicantParties.Should().OnlyContain(x => x.ApplicantPartyType == "Individual");
+    }
+
+    [Fact]
+    public async Task ListAccountApplicantParties_DoesNotReturnAnotherAccountApplicantParties()
+    {
+        var owner = await RegisterAccountAsync();
+        var ownerApplicantParty = await CreateApplicantPartyAsync(owner.AccountId);
+
+        var other = await RegisterAccountAsync();
+        var otherApplicantParty = await CreateApplicantPartyAsync(other.AccountId);
+        var client = AuthenticatedL1Client(other.AccountId, other.Email);
+
+        var response = await GetAccountApplicantPartiesAsync(client);
+
+        response.ApplicantParties.Should().ContainSingle();
+        response.ApplicantParties.Single().ApplicantPartyId.Should().Be(otherApplicantParty.ApplicantPartyId);
+        response.ApplicantParties.Should().NotContain(x => x.ApplicantPartyId == ownerApplicantParty.ApplicantPartyId);
+    }
+
+    [Fact]
     public async Task L1LoginCookie_CreateConnectionRequest_Succeeds()
     {
         var email = UniqueEmail();
@@ -1044,6 +1142,17 @@ public sealed class L1SliceIntegrationTests
 
         return await response.Content.ReadFromJsonAsync<L1CurrentIndividualApplicantPartyResponse>()
             ?? throw new InvalidOperationException("L1 current applicant party response body was empty.");
+    }
+
+    private async Task<L1AccountApplicantPartiesResponse> GetAccountApplicantPartiesAsync(
+        HttpClient client)
+    {
+        var response = await client.GetAsync("/api/l1/applicant-parties");
+
+        await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
+
+        return await response.Content.ReadFromJsonAsync<L1AccountApplicantPartiesResponse>()
+            ?? throw new InvalidOperationException("L1 account applicant parties response body was empty.");
     }
 
     private async Task<IReadOnlyList<L1MyRequestSummaryDto>> GetMyRequestsAsync(

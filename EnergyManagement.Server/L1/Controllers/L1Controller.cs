@@ -197,6 +197,39 @@ public sealed class L1Controller : ProjectController
         }
     }
 
+
+    [Authorize]
+    [HttpGet("applicant-parties", Name = "L1ListAccountApplicantParties")]
+    [ProducesResponseType(typeof(L1AccountApplicantPartiesResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> ListAccountApplicantParties(CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (!TryGetCurrentL1AccountId(out var accountId))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _sender.Send(
+                new L1GetAccountApplicantPartiesQuery(accountId),
+                cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(ToAccountApplicantPartiesResponse(result.Value));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "L1 list account applicant parties failed.");
+            return ProblemDetailsWithExceptionDev(ex);
+        }
+    }
+
     [Authorize]
     [HttpGet("applicant-parties/current-individual", Name = "L1GetCurrentIndividualApplicantParty")]
     [ProducesResponseType(typeof(L1CurrentIndividualApplicantPartyResponse), StatusCodes.Status200OK)]
@@ -452,6 +485,34 @@ public sealed class L1Controller : ProjectController
             account.Role,
             account.IsActive,
             IsAuthenticated: true);
+    }
+
+
+    private static L1AccountApplicantPartiesResponse ToAccountApplicantPartiesResponse(
+        L1GetAccountApplicantPartiesResponse response)
+    {
+        return new L1AccountApplicantPartiesResponse(
+            response.ApplicantParties.Select(ToApplicantPartySummaryDto).ToList());
+    }
+
+    private static L1ApplicantPartySummaryDto ToApplicantPartySummaryDto(
+        L1ApplicantPartySummaryResponse applicantParty)
+    {
+        return new L1ApplicantPartySummaryDto(
+            applicantParty.ApplicantPartyId,
+            applicantParty.ApplicantPartyType.ToString(),
+            applicantParty.DisplayName,
+            applicantParty.FullName is null
+                ? null
+                : new L1FullNameDto(
+                    applicantParty.FullName.FirstName,
+                    applicantParty.FullName.MiddleName,
+                    applicantParty.FullName.LastName),
+            applicantParty.Email,
+            applicantParty.PhoneNumber,
+            applicantParty.VerificationStatus.ToString(),
+            applicantParty.IsCurrentDefault,
+            applicantParty.CreatedAt);
     }
 
     private static L1CurrentIndividualApplicantPartyResponse ToCurrentIndividualApplicantPartyResponse(

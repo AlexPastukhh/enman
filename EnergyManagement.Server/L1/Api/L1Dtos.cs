@@ -32,6 +32,20 @@ public sealed record L1IndividualApplicantPartyDto(
     [property: JsonPropertyName("phoneNumber")] string PhoneNumber,
     [property: JsonPropertyName("verificationStatus")] string VerificationStatus);
 
+public sealed record L1AccountApplicantPartiesResponse(
+    [property: JsonPropertyName("applicantParties")] IReadOnlyList<L1ApplicantPartySummaryDto> ApplicantParties);
+
+public sealed record L1ApplicantPartySummaryDto(
+    [property: JsonPropertyName("applicantPartyId")] long ApplicantPartyId,
+    [property: JsonPropertyName("applicantPartyType")] string ApplicantPartyType,
+    [property: JsonPropertyName("displayName")] string DisplayName,
+    [property: JsonPropertyName("fullName")] L1FullNameDto? FullName,
+    [property: JsonPropertyName("email")] string Email,
+    [property: JsonPropertyName("phoneNumber")] string PhoneNumber,
+    [property: JsonPropertyName("verificationStatus")] string VerificationStatus,
+    [property: JsonPropertyName("isCurrentDefault")] bool IsCurrentDefault,
+    [property: JsonPropertyName("createdAt")] DateTimeOffset? CreatedAt);
+
 public sealed record L1FullNameDto(
     [property: JsonPropertyName("firstName")] string? FirstName,
     [property: JsonPropertyName("middleName")] string? MiddleName,

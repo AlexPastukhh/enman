@@ -20,6 +20,10 @@ public interface IApplicantPartyRepository
         ApplicantPartyType applicantPartyType,
         CancellationToken cancellationToken);
 
+    Task<IReadOnlyList<ApplicantParty>> ListOwnedByAccountIdAsync(
+        long clientAccountId,
+        CancellationToken cancellationToken);
+
     Task<IndividualApplicantParty?> GetCurrentActiveIndividualByClientAccountIdAsync(
         long clientAccountId,
         CancellationToken cancellationToken);
