@@ -1,6 +1,6 @@
 # Current Planning Workflow
 
-Status: current / My Requests client-slice and agent-scope synchronized
+Status: current / GitHub line-link workflow synchronized
 
 Always separate current implementation from target scenario direction.
 
@@ -38,7 +38,27 @@ Known current repo evidence includes:
 
 Client details and filters are still planned/implementation-ready sidecars unless current repo code proves otherwise.
 
-## 3. Slice Drafting Rules
+## 3. Repo Evidence Link Rule
+
+When explaining current code/docs, implementation status, test coverage or a concrete consistency problem, provide GitHub Markdown links to exact lines or ranges.
+
+Read:
+
+```text
+planning/repo-grounded-github-line-links-workflow.md
+```
+
+Required behavior:
+
+```text
+- read the current file before linking;
+- use #Lx or #Lx-Ly anchors;
+- prefer commit SHA links;
+- use branch links only as fallback;
+- do not use whole-file links for specific implementation claims.
+```
+
+## 4. Slice Drafting Rules
 
 ```text
 Behavior Coverage is not Test Coverage.
@@ -48,7 +68,7 @@ E2E asserts visible state/outcome, not refetch mechanics or backend internals.
 Server API slices must consider request-level FluentValidation separately from application/domain validation.
 ```
 
-## 4. Agent Scope Rules
+## 5. Agent Scope Rules
 
 Implementation prompts must include explicit scope boundaries:
 

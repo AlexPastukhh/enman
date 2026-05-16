@@ -1,6 +1,6 @@
 # Planning Document Responsibility Map
 
-Status: current responsibility map / agent-scope and My Requests sidecars synchronized
+Status: current responsibility map / GitHub line-link workflow synchronized
 
 ## 1. Core Rule
 
@@ -16,6 +16,7 @@ When a local file contains information that affects future work, synchronize it 
 | `planning/planning-workflow-current.md` | Current workflow/status baseline and cross-cutting reminders |
 | `planning/planning-agent-protocol.md` | Role-level protocol, read rules, handoff rules and global do-not rules |
 | `planning/agent-scope-boundaries-and-prompt-safety.md` | Rules for prompt creators and implementation agents: read broadly, change only explicit scope |
+| `planning/repo-grounded-github-line-links-workflow.md` | User-facing GitHub line-link rules for repo-grounded code/docs/status explanations |
 | `planning/planning-doc-responsibility-map.md` | Ownership map for planning documentation |
 | `planning/replacement-file-generation-guide.md` | Archive/package generation rules for manual repo application |
 
@@ -70,7 +71,17 @@ Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 | `planning/testing/` | Cross-slice testing principles, E2E workflow, test object patterns |
 | `planning/adr/` | ADR workflow, architecture decision notes and ADR candidates |
 
-## 7. Responsibility Decision Heuristic
+## 7. Evidence Link Responsibility
+
+Repo-grounded line-link rules belong in:
+
+```text
+planning/repo-grounded-github-line-links-workflow.md
+```
+
+Other workflow docs may link to that file, but should not duplicate detailed line-link mechanics unless needed for a local role checklist.
+
+## 8. Responsibility Decision Heuristic
 
 ```text
 1. scenario text/DATA/UI/behavior source -> planning/diagrams/scenario-*/
@@ -81,9 +92,10 @@ Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 6. extension/change pressure -> planning/slices/slice-extension-points-register.md
 7. future implementation/client/testing note -> planning/slices/slice-implementation-notes-register.md
 8. agent scope/prompt safety rule -> planning/agent-scope-boundaries-and-prompt-safety.md
-9. client-wide UI/client convention -> planning/client/cross-cutting/
-10. client/server contract split -> planning/api/client-server-contract-principles.md
-11. test layer boundaries / E2E workflow -> planning/testing/
-12. accepted/current architecture decision -> architecture-decision-notes.md
-13. possible future full ADR -> adr-candidates.md
+9. repo-grounded evidence line links -> planning/repo-grounded-github-line-links-workflow.md
+10. client-wide UI/client convention -> planning/client/cross-cutting/
+11. client/server contract split -> planning/api/client-server-contract-principles.md
+12. test layer boundaries / E2E workflow -> planning/testing/
+13. accepted/current architecture decision -> architecture-decision-notes.md
+14. possible future full ADR -> adr-candidates.md
 ```

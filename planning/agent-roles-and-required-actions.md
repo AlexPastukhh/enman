@@ -1,6 +1,6 @@
 # Agent Roles And Required Actions
 
-Status: current role map  
+Status: current role map / GitHub line-link workflow synchronized  
 Scope: reusable chat roles, required read order, mandatory actions, shared register updates and handoff boundaries
 
 ## 1. Purpose
@@ -35,15 +35,17 @@ Every planning role must:
 ```text
 1. Start from planning/README.md.
 2. Read planning/planning-agent-protocol.md.
-3. Read planning/planning-doc-responsibility-map.md.
-4. Read the role-specific workflow docs listed below.
-5. Work from current repo state, not memory.
-6. Identify local files and shared registers that may need synchronization.
-7. Keep important open questions and unresolved risks first.
-8. Record an assumption/current direction when continuing without a final answer.
-9. Give each important question a clear status.
-10. Update navigation/responsibility maps when adding, moving or superseding docs.
-11. Avoid direct GitHub writes unless explicitly requested.
+3. Read planning/repo-grounded-github-line-links-workflow.md.
+4. Read planning/planning-doc-responsibility-map.md.
+5. Read the role-specific workflow docs listed below.
+6. Work from current repo state, not memory.
+7. Identify local files and shared registers that may need synchronization.
+8. Keep important open questions and unresolved risks first.
+9. Record an assumption/current direction when continuing without a final answer.
+10. Give each important question a clear status.
+11. Update navigation/responsibility maps when adding, moving or superseding docs.
+12. Avoid direct GitHub writes unless explicitly requested.
+13. When describing repo code/docs/status, provide exact GitHub line links.
 ```
 
 Question fields used across roles:
@@ -75,6 +77,12 @@ Assumption rule:
 If work continues without a final answer, write the assumption clearly so the user can confirm, reject or refine it.
 ```
 
+Evidence link rule:
+
+```text
+If the answer explains current implementation, tests, generated artifacts, docs status or a concrete problem, provide Markdown GitHub links to exact lines/ranges. Prefer commit SHA links. Use branch links only as fallback and note they may drift.
+```
+
 ## 3. Documentation Keeper / Status Reconciliation Chat
 
 ### Role
@@ -86,6 +94,7 @@ Keeps planning documentation synchronized with current repo implementation, curr
 ```text
 planning/README.md
 planning/planning-agent-protocol.md
+planning/repo-grounded-github-line-links-workflow.md
 planning/planning-doc-responsibility-map.md
 planning/documentation/README.md
 planning/documentation/documentation-update-workflow.md
@@ -101,12 +110,13 @@ planning/replacement-file-generation-guide.md
 2. Read docs for the requested area.
 3. Inspect current repo evidence only enough to reconcile status.
 4. Identify stale docs, missing navigation, stale shared registers and orphan files.
-5. Decide Add / Replace / Delete scope.
-6. Ask only blocking questions that can change the archive.
-7. If no blocking questions, create a zip archive with complete repo-relative files.
-8. Include MANIFEST.md and APPLY.md in the archive.
-9. Do not change code or generated artifacts.
-10. Do not write directly to GitHub unless explicitly requested.
+5. Link specific repo evidence with GitHub line links when reporting status/drift.
+6. Decide Add / Replace / Delete scope.
+7. Ask only blocking questions that can change the archive.
+8. If no blocking questions, create a zip archive with complete repo-relative files.
+9. Include MANIFEST.md and APPLY.md in the archive.
+10. Do not change code or generated artifacts.
+11. Do not write directly to GitHub unless explicitly requested.
 ```
 
 ### Owns
@@ -143,6 +153,7 @@ This is not a separate diagram-prompt role; it is a handoff/request prepared by 
 ```text
 planning/README.md
 planning/planning-agent-protocol.md
+planning/repo-grounded-github-line-links-workflow.md
 planning/scenario-specification-principles.md
 planning/scenario-domain-validation-principles.md
 planning/diagrams/README.md
@@ -210,6 +221,7 @@ Creates and reconciles domain drafts, aggregate boundaries, value objects, invar
 ```text
 planning/README.md
 planning/planning-agent-protocol.md
+planning/repo-grounded-github-line-links-workflow.md
 planning/scenario-specification-principles.md
 planning/scenario-domain-validation-principles.md
 planning/domain-model.md
@@ -261,6 +273,7 @@ Creates, reviews and updates backend parent slice files, client sidecars and cro
 ```text
 planning/README.md
 planning/planning-agent-protocol.md
+planning/repo-grounded-github-line-links-workflow.md
 planning/slices/README.md
 planning/slices/draft-driven-discovery-principles.md
 planning/slices/l1-slice-drafting-guide.md
@@ -305,6 +318,7 @@ planning/slices/client-component-discovery-guide.md
 12. Mirror extension/change pressure to slice-extension-points-register.md.
 13. Mirror concrete future implementation/client/testing notes to slice-implementation-notes-register.md.
 14. Do not create .client.md before concrete client work starts.
+15. When reviewing implemented slices, link exact implementation/test lines that support status.
 ```
 
 ### Owns
@@ -349,6 +363,7 @@ It must not generate diagrams before preflight unless the user explicitly reques
 ```text
 planning/README.md
 planning/planning-agent-protocol.md
+planning/repo-grounded-github-line-links-workflow.md
 planning/diagrams/README.md
 planning/diagrams/diagram-prompt-generation-workflow.md
 planning/diagrams/drawio-diagram-generation-workflow.md
@@ -372,12 +387,13 @@ all sources required by the selected diagram batch
 4. Inspect scenario text specs, DATA, UI specs, behavior items, API/security addenda, clarifications and questions relevant to the selected batch.
 5. Inspect implementation evidence enough to avoid overclaiming `[IMPLEMENTED]` status.
 6. Identify conflicts, stale wording and open questions before drawing.
-7. Propose diagram batches and generate only the selected batch.
-8. Use status markers: [CORE], [IMPLEMENTED], [DESIGNED], [PLANNED], [DEFERRED], [QUESTION].
-9. Target draw.io XML and prefer one multi-page `.drawio` diagram book.
-10. Keep VKR-clean diagrams free of AI/internal workflow wording.
-11. Package complete repo-relative files with MANIFEST.md and APPLY.md.
-12. Do not write directly to GitHub unless explicitly requested.
+7. Provide exact GitHub line links for repo evidence used in preflight/status explanations.
+8. Propose diagram batches and generate only the selected batch.
+9. Use status markers: [CORE], [IMPLEMENTED], [DESIGNED], [PLANNED], [DEFERRED], [QUESTION].
+10. Target draw.io XML and prefer one multi-page `.drawio` diagram book.
+11. Keep VKR-clean diagrams free of AI/internal workflow wording.
+12. Package complete repo-relative files with MANIFEST.md and APPLY.md.
+13. Do not write directly to GitHub unless explicitly requested.
 ```
 
 ### Owns
@@ -429,6 +445,7 @@ It can help when a coding agent is token-limited or unavailable, but it must not
 ```text
 planning/README.md
 planning/planning-agent-protocol.md
+planning/repo-grounded-github-line-links-workflow.md
 planning/planning-workflow-current.md
 relevant scenario/domain/slice/API/testing docs
 current implementation files in scope
@@ -442,9 +459,10 @@ current implementation files in scope
 3. Separate current implementation from target direction.
 4. Respect generated artifact gates.
 5. List files to change and tests/checks to run.
-6. If code is generated, do not silently change planning meaning.
-7. After implementation, report docs/status/register updates needed.
-8. If context/tokens are ending, produce handoff summary with files, assumptions, open questions and next exact actions.
+6. Use exact GitHub line links when explaining current code/status/problems.
+7. If code is generated, do not silently change planning meaning.
+8. After implementation, report docs/status/register updates needed.
+9. If context/tokens are ending, produce handoff summary with files, assumptions, open questions and next exact actions.
 ```
 
 ### Owns
@@ -489,6 +507,7 @@ planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contr
 4. Check Shared/constants.json and Shared/errorcodes.json when semantic errors/constants matter.
 5. Do not let client work guess route/DTO/status/error shapes.
 6. Record contract status: target L1 / legacy-current / temporary compatibility / internal.
+7. Link exact OpenAPI/source/type lines when explaining current contract facts.
 ```
 
 ## 10. Testing / E2E Keeper Gate
@@ -513,6 +532,7 @@ planning/testing/playwright-e2e-cleanup-plan.md
 3. Do not use E2E for exhaustive field/client validation.
 4. Keep Behavior Coverage separate from Test / Verification Plan.
 5. Protect existing auth E2E baseline unless L1 auth consolidation is explicitly in scope.
+6. Link exact test lines when claiming test coverage.
 ```
 
 ## 11. Role Handoff Rule
@@ -526,6 +546,7 @@ Boundary reached:
 Target role:
 Reason:
 Current facts:
+Evidence links:
 Open questions:
 Assumption / current direction:
 Recommended next action:

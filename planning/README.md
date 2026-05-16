@@ -1,6 +1,6 @@
 # Planning Index
 
-Status: current / My Requests client-slice and agent-scope synchronized
+Status: current / GitHub line-link workflow synchronized
 
 ## 1. Start Here
 
@@ -13,6 +13,7 @@ planning/README.md
 planning/planning-workflow-current.md
 planning/planning-agent-protocol.md
 planning/agent-scope-boundaries-and-prompt-safety.md
+planning/repo-grounded-github-line-links-workflow.md
 planning/planning-doc-responsibility-map.md
 ```
 
@@ -37,7 +38,37 @@ planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
 ```
 
-## 2. Current Applicant/Request Target Direction
+## 2. Repo-Grounded Link Rule
+
+When a chat explains code, implementation, tests, docs status or a concrete problem, it should provide GitHub Markdown links to exact lines or ranges.
+
+Use:
+
+```text
+planning/repo-grounded-github-line-links-workflow.md
+```
+
+Default rule:
+
+```text
+- read the current file first;
+- use precise #Lx or #Lx-Ly anchors;
+- prefer commit SHA links over branch links;
+- use branch links only as fallback and note they may drift;
+- do not use whole-file links for specific implementation claims.
+```
+
+This rule applies especially when the user asks:
+
+```text
+дай ссылку
+where is this
+show me the implementation
+what proves this
+what file/line says this
+```
+
+## 3. Current Applicant/Request Target Direction
 
 ```text
 ApplicantParty:
@@ -57,7 +88,7 @@ Request creation target:
 
 Current implementation may still contain narrow/current-active names. When docs describe target planning, use the target direction above. When docs describe existing code, label it as current implementation evidence.
 
-## 3. Current My Requests Direction
+## 4. Current My Requests Direction
 
 Backend has implemented L1 read endpoints for:
 
@@ -81,7 +112,7 @@ Status filter is the first implemented entry in an extensible My Requests filter
 It is not a one-off button.
 ```
 
-## 4. Agent Scope Rule
+## 5. Agent Scope Rule
 
 Prompts for implementation chats must not allow changing docs, domain code or generated artifacts unless the user explicitly asked for that scope.
 
@@ -93,7 +124,7 @@ planning/agent-scope-boundaries-and-prompt-safety.md
 
 Reading docs is required. Mutating docs is not allowed unless the task says so.
 
-## 5. Key Navigation
+## 6. Key Navigation
 
 ```text
 planning/api/README.md

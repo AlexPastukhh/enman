@@ -1,6 +1,6 @@
 # Agent Scope Boundaries And Prompt Safety
 
-Status: current agent-scope rule  
+Status: current agent-scope rule / GitHub line-link workflow synchronized  
 Scope: implementation prompts, slice prompts, documentation prompts and any chat that prepares work for another agent
 
 ## 1. Purpose
@@ -47,7 +47,23 @@ A prompt must not say or imply:
 
 unless that is the explicit assignment.
 
-## 4. Implementation Agent Rule
+## 4. Repo Evidence Link Rule For Prompts
+
+When creating a prompt for another chat, include this rule whenever the task involves code, docs, status reconciliation, implementation review or problem analysis:
+
+```text
+When explaining current repo code/docs or reporting problems, provide GitHub Markdown links to exact lines/ranges. Prefer commit SHA links. If commit SHA is unavailable, use branch links and say they may drift.
+```
+
+Read:
+
+```text
+planning/repo-grounded-github-line-links-workflow.md
+```
+
+The prompt should not instruct the next chat to use whole-file links as evidence for specific implementation claims.
+
+## 5. Implementation Agent Rule
 
 Implementation agents must receive:
 
@@ -58,22 +74,25 @@ Implementation agents must receive:
 - current slice docs and sidecars;
 - planned implementation direction that is already known;
 - explicit out-of-scope list;
-- explicit docs/domain/generated-artifact mutation rules.
+- explicit docs/domain/generated-artifact mutation rules;
+- repo-grounded GitHub line-link rule for explanations and handoff notes.
 ```
 
 Implementation agents may read planning docs, but must not change planning docs unless the prompt explicitly says documentation update is part of the task.
 
 Implementation agents must not change domain model code unless the prompt explicitly includes domain implementation in scope.
 
-If implementation exposes doc drift, the agent should report it as a handoff note:
+If implementation exposes doc drift, the agent should report it as a handoff note and include exact GitHub line links where practical:
 
 ```text
 Docs drift found:
 - ...
 Recommended target role: Documentation Keeper / Status Reconciliation Chat
+Evidence links:
+- [short path, lines X-Y](...#LX-LY)
 ```
 
-## 5. Documentation Agent Rule
+## 6. Documentation Agent Rule
 
 Documentation agents may update planning/docs only within the requested documentation scope.
 
@@ -81,7 +100,7 @@ They must not implement code, change generated artifacts or modify runtime behav
 
 If a documentation task reveals code/domain work, the agent should record it as planned/future or hand it off to the implementation role.
 
-## 6. Domain Mutation Rule
+## 7. Domain Mutation Rule
 
 Domain code is high-impact.
 
@@ -99,7 +118,7 @@ Examples that are not enough by themselves:
 
 These do not permit changing domain code.
 
-## 7. Documentation Mutation Rule
+## 8. Documentation Mutation Rule
 
 Planning docs should be changed only by:
 
@@ -112,7 +131,7 @@ Planning docs should be changed only by:
 
 Implementation chats may propose documentation follow-ups but should not edit docs unless asked.
 
-## 8. Handoff Instead Of Scope Creep
+## 9. Handoff Instead Of Scope Creep
 
 When a chat discovers needed work outside its scope, it should stop at a handoff note.
 
@@ -123,12 +142,15 @@ Boundary reached:
 Target role:
 Reason:
 Current evidence:
+Evidence links:
 Out-of-scope files:
 Open questions:
 Recommended next action:
 ```
 
-## 9. Read Context Checklist For Prompt Creators
+`Evidence links` should use GitHub line links when the evidence is in repo files.
+
+## 10. Read Context Checklist For Prompt Creators
 
 When writing a prompt for a slice implementation chat, include the docs the agent must read:
 
@@ -136,6 +158,7 @@ When writing a prompt for a slice implementation chat, include the docs the agen
 planning/README.md
 planning/planning-agent-protocol.md
 planning/agent-scope-boundaries-and-prompt-safety.md
+planning/repo-grounded-github-line-links-workflow.md
 planning/slices/README.md
 planning/slices/l1-slice-drafting-guide.md
 planning/slices/slice-scenario-flow-behavior-register.md

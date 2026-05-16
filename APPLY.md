@@ -1,12 +1,19 @@
-# Apply — enman-my-requests-client-slices-agent-scope-docs-v1
+# Apply — enman-github-line-links-workflow-docs-v1
 
 From repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-my-requests-client-slices-agent-scope-docs-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-github-line-links-workflow-docs-v1.zip" -DestinationPath . -Force
 git status
 ```
 
-This archive contains documentation/planning files only.
+Review suggested diffs:
 
-Do not commit `APPLY.md` or `MANIFEST.md` unless you intentionally want archive metadata in the repository.
+```powershell
+git diff -- planning/repo-grounded-github-line-links-workflow.md
+git diff -- planning/planning-agent-protocol.md
+git diff -- planning/agent-scope-boundaries-and-prompt-safety.md
+git diff -- planning/agent-roles-and-required-actions.md
+git diff -- planning/README.md
+git diff -- planning/planning-doc-responsibility-map.md
+```

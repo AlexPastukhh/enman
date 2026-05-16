@@ -1,6 +1,6 @@
 # Planning Agent Protocol
 
-Status: current collaboration protocol / scope-safe prompt generation
+Status: current collaboration protocol / GitHub line-link workflow synchronized
 
 ## 1. Core Rule
 
@@ -31,7 +31,25 @@ Testing / E2E Keeper Gate
 
 If a task crosses role boundaries, write a handoff note instead of silently changing responsibility.
 
-## 3. Agent Scope Boundary Rule
+## 3. Repo-Grounded GitHub Line Link Rule
+
+Before explaining current repo code/docs, implementation status, tests, generated artifacts or a concrete consistency problem, read:
+
+```text
+planning/repo-grounded-github-line-links-workflow.md
+```
+
+When the user asks for a link, says `дай ссылку`, or when the answer describes a concrete repo fact, provide clickable Markdown GitHub links to exact lines or ranges:
+
+```markdown
+[short path, lines 10-25](https://github.com/AlexPastukhh/enman/blob/<commit-sha>/path/to/file.ext#L10-L25)
+```
+
+Use commit SHA links when possible. If the current commit SHA is unavailable, use `blob/my-changes` as a fallback and state that the branch link may drift.
+
+Do not use whole-file links for specific implementation/code/test/status claims.
+
+## 4. Agent Scope Boundary Rule
 
 Before writing a prompt for another chat, read:
 
@@ -60,7 +78,7 @@ Forbidden by default unless explicitly requested:
 - create branch/commit/PR.
 ```
 
-## 4. Documentation Update Agent Rule
+## 5. Documentation Update Agent Rule
 
 Documentation-only agents must read:
 
@@ -83,7 +101,7 @@ Documentation-only agents must:
 - not write directly to GitHub unless explicitly asked.
 ```
 
-## 5. Questions First And Assumption Rule
+## 6. Questions First And Assumption Rule
 
 In any `Questions / Decisions` section, list:
 
@@ -106,7 +124,7 @@ Impact:
 Shared register / local-only reason:
 ```
 
-## 6. Scenario Drafting Rule
+## 7. Scenario Drafting Rule
 
 Scenario drafting uses:
 
@@ -128,7 +146,7 @@ scenario questions register
 scenario clarifications
 ```
 
-## 7. Draft-Driven Slice Rule
+## 8. Draft-Driven Slice Rule
 
 All slice-related planning uses:
 
@@ -140,7 +158,7 @@ planning/slices/slice-scenario-flow-behavior-register.md
 
 Slice drafts must include visual scenario/UI flow, visual implementation flow, behavior coverage and test/verification planning.
 
-## 8. Server Request Validation Rule
+## 9. Server Request Validation Rule
 
 When planning or implementing server API input, read:
 
@@ -154,7 +172,7 @@ Request-level FluentValidation handles DTO/query shape, required fields, discrim
 
 Application/domain validation still owns ownership, account existence, state transitions, domain invariants, no-write and atomicity.
 
-## 9. Client / Server Contract Rule
+## 10. Client / Server Contract Rule
 
 Before planning missing client slices, check:
 
@@ -166,7 +184,7 @@ planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contr
 
 The agent must not let client code guess routes, DTOs, statuses, ProblemDetails extension names or error code strings.
 
-## 10. Do Not
+## 11. Do Not
 
 ```text
 - Do not implement client slices by manually guessing API contract.
@@ -178,4 +196,5 @@ The agent must not let client code guess routes, DTOs, statuses, ProblemDetails 
 - Do not leave important local questions only in local files when they affect future work.
 - Do not hide assumptions in prose.
 - Do not give another chat permission to edit docs/domain/generated artifacts unless the user explicitly asked for that scope.
+- Do not provide whole-file GitHub links when the answer needs a concrete line/range.
 ```
