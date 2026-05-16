@@ -1,6 +1,6 @@
 # Slice Planning Index
 
-Status: current slice-planning navigation index / applicant-template-per-type synchronized / server validation principles added
+Status: current slice-planning navigation index / My Requests sidecars synchronized
 
 ## 1. Core Rule
 
@@ -12,11 +12,16 @@ planning/slices/slice-scenario-flow-behavior-register.md
 
 Do not use questions/extension/implementation registers as behavior source.
 
-## 2. Current / Active Slice Files
+Implementation prompts must respect:
+
+```text
+planning/agent-scope-boundaries-and-prompt-safety.md
+```
+
+## 2. Current / Active Backend Slice Files
 
 ```text
 planning/slices/SL-APPL-001-create-individual-applicant-party.md
-planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
 planning/slices/SL-APPL-002-account-applicant-parties-read.md
 planning/slices/SL-APPL-003-select-current-default-applicant-party-template.md
 planning/slices/SL-APPL-004-applicant-party-creation-application-service.md
@@ -25,14 +30,19 @@ planning/slices/SL-REQ-002-my-requests-list.md
 planning/slices/SL-REQ-003-own-request-details.md
 ```
 
-## 3. Cross-Cutting / Helper Slices
+## 3. Current / Active Client Sidecars
 
 ```text
-planning/slices/cross-cutting/README.md
-planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
-planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
-planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
-planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
+planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
+planning/slices/l1/L1-MY-REQUESTS-READ-LIST.client.md
+planning/slices/l1/L1-MY-REQUESTS-LIST-FILTERS.client.md
+planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md
+```
+
+L1 sidecar navigation:
+
+```text
+planning/slices/l1/README.md
 ```
 
 ## 4. ApplicantParty Target Direction
@@ -48,32 +58,14 @@ planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fl
 - request creation target uses Existing/New applicant context.
 ```
 
-## 5. Server Validation Direction For Slice Drafts
-
-When a backend/API slice has request body or query validation responsibility, read:
+## 5. My Requests Target Direction
 
 ```text
-planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
-```
-
-Slice drafts should include request-level FluentValidation in implementation flow for:
-
-```text
-- required DTO/query fields;
-- discriminator/branch rules;
-- mutually exclusive fields;
-- basic DTO/query shape;
-- allowed query values.
-```
-
-Do not confuse request validation with application/domain validation:
-
-```text
-- ownership;
-- selected entity belongs to account;
-- account/entity existence;
-- domain invariants;
-- no-write/atomicity.
+- backend list and details read endpoints are implemented;
+- client list UI is first-stage implemented;
+- filters are a separate client sidecar with status as first filter;
+- details page is a separate client sidecar;
+- list/details/filter responsibilities should not be collapsed into one client file.
 ```
 
 ## 6. Registers
@@ -83,4 +75,11 @@ planning/slices/slice-scenario-flow-behavior-register.md
 planning/slices/slice-questions-register.md
 planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
+```
+
+## 7. Cross-Cutting / Helper Slices
+
+```text
+planning/slices/cross-cutting/README.md
+planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
 ```

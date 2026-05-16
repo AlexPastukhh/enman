@@ -1,33 +1,12 @@
-# APPLY
+# Apply — enman-my-requests-client-slices-agent-scope-docs-v1
 
-Apply from repository root.
+From repository root:
 
 ```powershell
-cd "C:\enman\enman"
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-section-draft-existing-solutions-v1.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-my-requests-client-slices-agent-scope-docs-v1.zip" -DestinationPath . -Force
 git status
-git diff
 ```
 
-Suggested add/commit:
+This archive contains documentation/planning files only.
 
-```powershell
-git add vkr-clean/section-drafts/README.md `
-        vkr-clean/section-drafts/section-draft-workflow.md `
-        vkr-clean/section-drafts/chapter-1/README.md `
-        vkr-clean/section-drafts/chapter-1/01-02-existing-solutions-and-own-development.md `
-        MANIFEST.md `
-        APPLY.md
-
-git commit -m "Add VKR existing solutions section draft"
-```
-
-## After applying
-
-Review:
-
-```text
-vkr-clean/section-drafts/chapter-1/01-02-existing-solutions-and-own-development.md
-```
-
-Then replace `TODO SOURCE` markers with concrete references from the literature/research materials.
+Do not commit `APPLY.md` or `MANIFEST.md` unless you intentionally want archive metadata in the repository.

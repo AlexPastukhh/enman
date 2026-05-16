@@ -1,13 +1,14 @@
 # L1 Slice Drafting Guide
 
-Status: current slice drafting workflow / server validation boundary added  
-Scope: business slices, cross-cutting/helper slices, client sidecars, scenario source intake, server validation, implementation flow, extension/change points, questions, registers and tests
+Status: current slice drafting workflow / validation and client sidecar synchronized  
+Scope: business slices, cross-cutting/helper slices, client sidecars, scenario source intake, implementation flow, extension/change points, questions, registers and tests
 
 ## 1. Draft-Driven Discovery Gate
 
 Before drafting any slice, read:
 
 ```text
+planning/agent-scope-boundaries-and-prompt-safety.md
 planning/slices/draft-driven-discovery-principles.md
 planning/slices/slice-scenario-flow-behavior-register.md
 planning/slices/slice-questions-register.md
@@ -68,49 +69,7 @@ Do not use `slice-questions-register.md`, `slice-extension-points-register.md` o
 
 If source behavior IDs are missing, mark `[SOURCE-GAP]` and use temporary `Source BI TBD` only in early drafts.
 
-## 3. Server Request Validation Intake Rule
-
-If a slice introduces or changes server API input, read:
-
-```text
-planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
-planning/api/api-error-contract.md
-planning/api/fluentvalidation-error-code-policy-note.md
-```
-
-Then explicitly classify validation responsibilities:
-
-```text
-Request DTO/query validation through FluentValidation:
-- required request/query fields;
-- discriminator/branch rules;
-- mutually exclusive fields;
-- basic DTO shape;
-- allowed query parameter values;
-- nested DTO presence/shape.
-
-Application/domain validation:
-- account existence and type;
-- ownership;
-- selected entity belongs to current account;
-- domain value-object invariants;
-- state transitions;
-- no-write/atomicity;
-- persistence consistency.
-```
-
-A backend slice that has request DTO/query validation responsibility should include `[FluentValidation]` in Visual Implementation Flow before `[Application Handler]`.
-
-If FluentValidation is not needed, say why:
-
-```text
-no request body/query validation responsibility
-read-only endpoint with only route id and auth/ownership handled by application
-legacy/current support only
-future hardening
-```
-
-## 4. Default Shortened Slice Draft
+## 3. Default Shortened Slice Draft
 
 The default shortened draft includes:
 
@@ -125,46 +84,13 @@ The default shortened draft includes:
 8. Scenario Flow / Behavior Items, only when source IDs are not attached yet
 ```
 
-Primary shortened examples:
-
-```text
-planning/slices/examples/L1-APPLICANT-PARTY-READ-CURRENT-early-short-draft-example.md
-planning/slices/examples/L1-APPLICANT-PARTY-READ-CURRENT-client-early-short-draft-example.md
-```
-
-## 5. Visual Scenario Flow Rule
+## 4. Visual Scenario Flow Rule
 
 Visual Scenario Flow shows user/system behavior, not controller/handler/repository mechanics.
 
 It must be sourced from scenario text, DATA, UI spec and behavior item files.
 
-A good Visual Scenario Flow usually includes:
-
-```text
-- actor box;
-- system boundary box;
-- happy path;
-- important failure/no-write branches;
-- success outcome;
-- dependent/out-of-scope slice notes.
-```
-
-Bad scenario flow:
-
-```text
-[Controller]
-Extracts claim
-        ↓
-[Repository]
-Loads entity
-        ↓
-[DbContext]
-Saves entity
-```
-
-That is implementation flow.
-
-## 6. Visual Implementation Flow Rule
+## 5. Visual Implementation Flow Rule
 
 Visual Implementation Flow shows how the slice implements scenario behavior technically.
 
@@ -172,7 +98,7 @@ For backend slices, include:
 
 ```text
 API Controller
-FluentValidation request DTO/query validation, when API input rules exist
+Request-level validation / FluentValidation, when API input/query validation exists
 Application Handler / Query Handler
 Domain
 Persistence
@@ -191,26 +117,46 @@ Generated Contracts
 Feedback/Error surface when relevant
 ```
 
-Backend validation example:
+## 6. Server Request Validation Rule
+
+If a backend/API slice introduces or changes request body/query input, read:
 
 ```text
-[API Controller]
-receives DTO / query
-        ↓
-[FluentValidation]
-validates request-shape / discriminator / mutually exclusive fields
-        ↓
- ┌──────────────────────────────┬──────────────────────────────┐
- │ valid                        │ invalid                      │
- ▼                              ▼
-[Application Handler]           [422 ProblemDetails]
-        ↓
-[Domain/Application Rules]
-        ↓
-[Persistence]
+planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
+planning/api/api-error-contract.md
+planning/api/fluentvalidation-error-code-policy-note.md
 ```
 
-Do not put FluentValidation into Visual Scenario Flow; it is implementation flow.
+Slice API Contract sections should separate:
+
+```text
+FluentValidation / request-shape validation
+Application/domain validation
+```
+
+Use FluentValidation for:
+
+```text
+- required DTO fields;
+- basic request/query shape;
+- branch/discriminator validity;
+- mutually exclusive fields;
+- allowed query values;
+- nested DTO required structure.
+```
+
+Keep in handlers/domain:
+
+```text
+- account existence;
+- ownership;
+- selected entity belongs to current account;
+- domain value object invariants;
+- state transitions;
+- no-write/atomicity.
+```
+
+Visual Implementation Flow should show `[FluentValidation]` before `[Application Handler]` when request-shape rules exist.
 
 ## 7. Scenario Behavior Items Rule
 
@@ -226,21 +172,7 @@ Client sidecars should also consume `[UI-SCENARIO]` behavior items from:
 planning/diagrams/scenario-ui-specs/
 ```
 
-Correct chain:
-
-```text
-scenario text / DATA / UI source
-        ↓
-scenario behavior item file
-        ↓
-slice selects relevant behavior items
-        ↓
-Behavior Coverage links required behavior to draft sections
-```
-
 Client architecture placement is not a behavior item.
-
-Request validation mechanics are also not scenario behavior items by default. They are implementation/contract responsibility unless a cross-cutting concern behavior item explicitly requires them.
 
 ## 8. Behavior Coverage Is Not Test Coverage
 
@@ -261,10 +193,6 @@ Do not mix these tables.
 ## 9. Questions / Decisions Rule
 
 Implemented slices can still have open questions.
-
-Implementation status does not remove the need to synchronize local questions.
-
-If an implemented slice has open, assumption, future-review, deferred or important accepted-direction questions, keep them locally and mirror them to the relevant shared register.
 
 Question order:
 
@@ -287,32 +215,7 @@ Impact
 Shared register / local-only reason
 ```
 
-Use statuses:
-
-```text
-open
-blocked
-assumption
-accepted direction
-future review
-resolved
-superseded
-local only
-```
-
-## 10. Extension / Change Point Rule
-
-Early shortened drafts and full slice files should include extension/change point sections when future behavior can affect current design.
-
-Use:
-
-```text
-planning/slices/change-extension-points-principles.md
-planning/slices/slice-extension-points-register.md
-planning/slices/slice-implementation-notes-register.md
-```
-
-## 11. Shared Register Sync Rule
+## 10. Shared Register Sync Rule
 
 Use:
 
@@ -334,24 +237,45 @@ Rules:
 - If a shared register row becomes stale, update or supersede it.
 ```
 
-## 12. Client Sidecar Shortened Draft Rule
+## 11. Client Sidecar Rules
 
-A client shortened draft contains:
+A client sidecar contains:
 
 ```text
-1. Visual UI / Scenario Flow
-2. Visual Client Implementation Flow with layers/folders
-3. Questions / Decisions
-4. Client Extension / Change Points, when relevant
-5. Behavior Coverage
-6. Client/component/E2E verification plan
-7. Covered Scenario / UI Behavior Items
-8. Next Step
+1. Sidecar Overview
+2. Sources / Source Behavior Items
+3. Visual UI / Scenario Flow
+4. UI Slice Flow
+5. Visual Client Implementation Flow
+6. Client Implementation Flow
+7. Client API / Generated Contract
+8. Questions / Decisions
+9. Client Extension / Change Points, when relevant
+10. Behavior Coverage
+11. Client / Component / E2E Verification Plan
+12. Covered Scenario / UI Behavior Items
+13. Dependent / Follow-up Slices
+14. Implementation Checklist
 ```
 
 Do not create `.client.md` in advance.
 
 Create or update it when concrete client work starts or when implemented client logic must be documented and reconciled.
+
+## 12. My Requests Filter Sidecar Rule
+
+List filters are not one-off controls.
+
+For My Requests:
+
+```text
+Page owns URL query params.
+Filter feature owns controls and parse/serialize helpers.
+Entity query accepts a filter object.
+Shared API maps supported filters to query string.
+```
+
+Status is the first supported filter. Future filters extend the filter object only when backend and source behavior support them.
 
 ## 13. Full Backend Slice Template
 
@@ -371,16 +295,13 @@ Current implementation status:
 ## 5. Visual Implementation Flow
 ## 6. Implementation Flow
 ## 7. API Contract
-## 8. Server Request Validation
-## 9. Questions / Decisions
-## 10. Extension / Change Points, when relevant
-## 11. Behavior Coverage
-## 12. Test / Verification Plan
-## 13. Dependent / Follow-up Slices
-## 14. Implementation Checklist
+## 8. Questions / Decisions
+## 9. Extension / Change Points, when relevant
+## 10. Behavior Coverage
+## 11. Test / Verification Plan
+## 12. Dependent / Follow-up Slices
+## 13. Implementation Checklist
 ```
-
-If the slice has no server API input validation responsibility, section 8 should say so explicitly instead of being omitted silently.
 
 ## 14. Full Client Sidecar Template
 
@@ -413,13 +334,14 @@ Current implementation status:
 
 ```text
 1. Read planning/README.md.
-2. Read scenario source files through `slice-scenario-flow-behavior-register.md`.
-3. Read draft-driven discovery and this guide.
-4. Read slice questions, extension points and implementation notes registers.
-5. Read planning/testing/ if tests/E2E/client test responsibilities are involved.
-6. Read planning/api/ if API/client contract work is involved.
-7. Read CC-VALIDATION-001 when the slice has server API input validation.
-8. If scenario/API/constants/testing/security/validation/extension ambiguity exists, record questions and assumptions first.
+2. Read planning/agent-scope-boundaries-and-prompt-safety.md.
+3. Read scenario source files through `slice-scenario-flow-behavior-register.md`.
+4. Read draft-driven discovery and this guide.
+5. Read slice questions, extension points and implementation notes registers.
+6. Read planning/testing/ if tests/E2E/client test responsibilities are involved.
+7. Read planning/api/ if API/client contract work is involved.
+8. If server API input validation is involved, read CC-VALIDATION-001.
+9. If scenario/API/constants/testing/security/extension ambiguity exists, record questions and assumptions first.
 ```
 
 ## 16. Consumer Rules
@@ -431,7 +353,7 @@ planning/api/client-server-contract-principles.md
 planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
 ```
 
-If a business slice introduces or changes server request body/query validation, read:
+If a business slice has request body/query validation, read:
 
 ```text
 planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md

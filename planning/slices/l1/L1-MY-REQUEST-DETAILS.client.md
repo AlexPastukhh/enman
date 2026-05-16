@@ -1,34 +1,43 @@
 # L1-MY-REQUEST-DETAILS.client — My Request Details Client Sidecar
 
-Status: early client draft  
+Status: implementation-ready client sidecar  
+Parent slice: `SL-REQ-003 — Own Request Details`  
 Slice type: client read sidecar  
-Scope: authenticated client opens one **My Request Details** page and sees submitted request data + review outcome when available  
-Backend source: `GET /api/l1/requests/{requestId}`  
-Depends on: `L1-MY-REQUESTS-READ-LIST.client` for entry/link from list  
-Out of scope: status filtering, request creation, employee review UI, editing/resubmission
-
-## 1. Sidecar Overview
-
-Observable client behavior:
+Source scenario/UI sources:
 
 ```text
-Authenticated client opens My Requests
-        ↓
-selects one request
-        ↓
-client opens request details page
-        ↓
-client fetches own request details
-        ↓
-request belongs to current account?
-        ↓
- ┌──────────────────────────────┬──────────────────────────────┐
- │ yes                          │ no / missing                 │
- ▼                              ▼
-Details page shows               Not-found state
-submitted request data           + link back to My Requests
-and review state
+planning/diagrams/scenario-text-specs/SC-05-my-requests-own-request-details.md
+planning/diagrams/scenario-data/SC-05-my-requests-data.md
+planning/diagrams/scenario-ui-specs/SC-05-my-requests-ui.md
+planning/diagrams/scenario-behavior-items/SC-05-my-requests-behavior-items.md
 ```
+
+Backend already exists:
+
+```text
+GET /api/l1/requests/{requestId}
+```
+
+Current client implementation status: not implemented in current client code at time of this documentation pass. Current router has `/requests` but no `/requests/:requestId` route, and shared request API has `listMyRequests` but no `getMyRequestDetails` wrapper.
+
+Depends on:
+
+```text
+L1-MY-REQUESTS-READ-LIST.client
+```
+
+Out of scope:
+
+```text
+status filtering
+request creation
+employee review UI
+editing/resubmission
+agreement/documents/notifications
+backend implementation
+```
+
+## 1. Sidecar Overview
 
 The details page is a read context for one request owned by the authenticated client.
 
@@ -36,7 +45,23 @@ Client does not submit or choose `accountId`.
 
 Client does not verify ownership locally. Backend scopes details by current account and returns `404` when the request is missing or not owned by the current account.
 
-## 2. Visual UI / Scenario Flow
+## 2. Sources / Source Behavior Items
+
+Relevant source items:
+
+```text
+SC-05-BI-009 — Client can open own request details.
+SC-05-BI-010 — Client sees only own request details.
+SC-05-BI-011 — Missing or not-owned request shows not-found state.
+SC-05-BI-012 — Client sees submitted request data.
+SC-05-BI-013 — Client sees request metadata.
+SC-05-BI-014 — In-review request has no fake review result.
+SC-05-BI-015 — Approved request shows approval result.
+SC-05-BI-016 — Rejected request shows rejection reason.
+SC-05-BI-017 — Client can return to My Requests.
+```
+
+## 3. Visual UI / Scenario Flow
 
 ```text
 [Authenticated Client]
@@ -73,7 +98,21 @@ shows:
   review result when present
 ```
 
-## 3. Visual Client Implementation Flow
+## 4. UI Slice Flow
+
+| Step | UI/system | Behavior | Source item | Scope status |
+|---|---|---|---|---|
+| F01 | Client | Opens details from My Requests list. | `SC-05-BI-009` | in scope |
+| F02 | Page | Reads and parses `requestId` route param. | route state | in scope |
+| F03 | Client/API | Fetches details for current account. | `SC-05-BI-010` | in scope |
+| F04 | Details view | Shows metadata and submitted request data. | `SC-05-BI-012` / `SC-05-BI-013` | in scope |
+| F05 | Details view | Handles `reviewResult = null`. | `SC-05-BI-014` | in scope |
+| F06 | Details view | Shows approved decision/date. | `SC-05-BI-015` | in scope |
+| F07 | Details view | Shows rejected reason/date. | `SC-05-BI-016` | in scope |
+| F08 | Not-found view | Shows not-found state for 404. | `SC-05-BI-011` | in scope |
+| F09 | Navigation | Provides link back to My Requests. | `SC-05-BI-017` | in scope |
+
+## 5. Visual Client Implementation Flow
 
 ```text
 [Route/Page]
@@ -132,61 +171,107 @@ MyRequestSummaryCard
   → link to clientRoutes.requestDetails(request.requestId)
 ```
 
-## 4. Questions / Decisions
+## 6. Client Implementation Flow
 
-| ID | Status | Question | Current direction |
+| Step | Layer | Responsibility | Status |
 |---|---|---|---|
-| `Q-REQ-DETAILS-CLIENT-001` | decided | Is this details-only or details + list update? | Implement details page and add details link from My Requests list. Do not change filters/create behavior here. |
-| `Q-REQ-DETAILS-CLIENT-002` | decided | Where does `requestId` live? | Route state belongs to the page. Page parses route param and passes id into entity query. |
-| `Q-REQ-DETAILS-CLIENT-003` | accepted | What happens for request not found or another account request? | Show not-found state, not generic crash/error. |
-| `Q-REQ-DETAILS-CLIENT-004` | accepted | What review states should UI support? | `reviewResult = null`, approved, rejected with reason. |
-| `Q-REQ-DETAILS-CLIENT-005` | decided | Should details page expose applicant/account ids? | No. Details DTO is enough for this client read context. |
+| I01 | Shared config | Add `clientRoutes.requestDetails(requestId)` helper or equivalent route builder. | planned |
+| I02 | Router | Add `/requests/:requestId` route. | planned |
+| I03 | Page | Parse route param and handle invalid param safely. | planned |
+| I04 | Shared API | Add `getMyRequestDetails(requestId)`. | planned |
+| I05 | Entity query | Add query key and `useMyRequestDetailsQuery`. | planned |
+| I06 | Feature UI | Render details view/submitted data/review result/not-found. | planned |
+| I07 | List UI | Add link from summary card to details page. | planned |
+| I08 | Tests | Add component/API/E2E tests. | planned |
 
-## 5. Behavior Coverage
+## 7. Client API / Generated Contract
 
-Behavior Coverage is not Test Coverage.
+Backend DTO shape:
 
-| Behavior item | How draft covers it | Status |
-|---|---|---|
-| Authenticated client can open request details | Adds `/requests/:requestId` route/page | covered |
-| Client sees only own request details | Backend scopes by current account; another account returns 404 | covered |
-| Client sees request status | Details view renders `status` | covered |
-| Client sees request type | Details view renders `requestType` | covered |
-| Client sees created date | Details view renders `createdAt` | covered |
-| Client sees submitted request details | Details view renders `submittedRequest.details` | covered |
-| Client sees object address | Details view renders `submittedRequest.objectAddress` | covered |
-| In-review request has no review result | UI handles `reviewResult = null` | covered |
-| Approved request shows approval decision | UI renders approved review result | covered |
-| Rejected request shows rejection reason | UI renders rejection reason | covered |
-| Missing/not-owned request is not shown | UI renders not-found state on 404 | covered |
-| Client can return to My Requests | Not-found/details page links back to `/requests` | covered |
+```text
+requestId
+requestType
+status
+createdAt
+submittedRequest:
+  details
+  objectAddress
+reviewResult:
+  decision
+  decidedAt
+  rejection:
+    reason
+```
 
-## 6. Test / Verification Plan
+Target shared API:
+
+```ts
+getMyRequestDetails(requestId: number): Promise<L1MyRequestDetails>
+```
+
+Use generated OpenAPI response type. Do not duplicate handwritten DTO shapes except as aliases to generated types.
+
+404 must be surfaced so page state can render not-found.
+
+## 8. Questions / Decisions
+
+| ID | Status | Question | Current direction | Impact |
+|---|---|---|---|---|
+| `Q-REQ-DETAILS-CLIENT-001` | accepted | Is this details-only or details + list update? | Implement details page and add details link from My Requests list. Do not change filters/create behavior here. | slice boundary |
+| `Q-REQ-DETAILS-CLIENT-002` | accepted | Where does `requestId` live? | Route state belongs to the page. Page parses route param and passes id into entity query. | routing/query boundary |
+| `Q-REQ-DETAILS-CLIENT-003` | accepted | What happens for request not found or another account request? | Show not-found state, not generic crash/error. | UX/security semantics |
+| `Q-REQ-DETAILS-CLIENT-004` | accepted | What review states should UI support? | `reviewResult = null`, approved, rejected with reason. | rendering branches |
+| `Q-REQ-DETAILS-CLIENT-005` | accepted | Should details page expose applicant/account ids? | No. Details DTO is enough for this client read context. | API/UI minimization |
+| `Q-REQ-DETAILS-CLIENT-006` | future review | Should details page offer create-new-from-feedback? | Not in this first details sidecar; add later when request creation flow supports it. | future rejected flow |
+
+## 9. Client Extension / Change Points
+
+| ID | Type | Area | Current direction | Status |
+|---|---|---|---|---|
+| `CP-REQ-DETAILS-CLIENT-001` | extension | rejected feedback action | Render reason now; create-new-from-feedback is future. | future review |
+| `CP-REQ-DETAILS-CLIENT-002` | extension | agreement/documents | Do not render missing future payloads. | deferred |
+| `CP-REQ-DETAILS-CLIENT-003` | ownership boundary | not-owned/missing | Treat both as not-found UI via backend 404. | accepted |
+
+## 10. Behavior Coverage
+
+| Source behavior item | How sidecar covers it | Draft location | Status |
+|---|---|---|---|
+| `SC-05-BI-009` Client can open own request details | Adds details route/page and list entry link. | UI / Implementation Flow | covered as draft |
+| `SC-05-BI-010` Client sees only own request details | Uses backend scoped endpoint; UI does not do ownership checks. | API / Questions | covered |
+| `SC-05-BI-011` Missing or not-owned request shows not-found state | 404 renders not-found state. | UI Flow / Tests | covered |
+| `SC-05-BI-012` Client sees submitted request data | Details view renders `submittedRequest`. | UI Flow / API Contract | covered |
+| `SC-05-BI-013` Client sees request metadata | Details view renders status/type/created date. | UI Flow | covered |
+| `SC-05-BI-014` In-review request has no fake review result | UI handles `reviewResult = null`. | UI Flow / Tests | covered |
+| `SC-05-BI-015` Approved request shows approval result | UI renders approved decision/date. | UI Flow / Tests | covered |
+| `SC-05-BI-016` Rejected request shows rejection reason | UI renders rejection reason/date. | UI Flow / Tests | covered |
+| `SC-05-BI-017` Client can return to My Requests | Details/not-found view links back. | UI Flow / Tests | covered |
+
+## 11. Client / Component / E2E Verification Plan
 
 ### Component/client tests
 
-| Test / check | Verifies |
-|---|---|
-| Details page shows loading state | Query pending state visible |
-| Details view renders request status/type/date | Header metadata visible |
-| Details view renders submitted details | Request details text visible |
-| Details view renders object address | Address visible |
-| InReview details renders no review result block | `reviewResult = null` handled |
-| Approved details renders decision | Approved review result visible |
-| Rejected details renders rejection reason | Rejection feedback visible |
-| 404 renders not-found state | Missing/not-owned request UI |
-| Invalid route param renders not-found or safe error | Bad URL does not crash |
-| Back link navigates to My Requests | User can return to list |
+| Test / check | Verifies | Status |
+|---|---|---|
+| Details page shows loading state | Query pending state visible | planned |
+| Details view renders request status/type/date | Header metadata visible | planned |
+| Details view renders submitted details | Request details text visible | planned |
+| Details view renders object address | Address visible | planned |
+| InReview details renders no review result block | `reviewResult = null` handled | planned |
+| Approved details renders decision | Approved review result visible | planned |
+| Rejected details renders rejection reason | Rejection feedback visible | planned |
+| 404 renders not-found state | Missing/not-owned request UI | planned |
+| Invalid route param renders not-found or safe error | Bad URL does not crash | planned |
+| Back link navigates to My Requests | User can return to list | planned |
 
 Do not add client tests for ownership isolation beyond 404 handling. Ownership is backend behavior.
 
 ### Shared API tests
 
-| Test / check | Verifies |
-|---|---|
-| `getMyRequestDetails(id)` calls `/api/l1/requests/{id}` | Correct endpoint |
-| API uses generated response type | No duplicated handwritten DTO |
-| 404 is surfaced for page state handling | Not-found branch can be rendered |
+| Test / check | Verifies | Status |
+|---|---|---|
+| `getMyRequestDetails(id)` calls `/api/l1/requests/{id}` | Correct endpoint | planned |
+| API uses generated response type | No duplicated handwritten DTO | planned |
+| 404 is surfaced for page state handling | Not-found branch can be rendered | planned |
 
 ### E2E happy path
 
@@ -200,8 +285,6 @@ create connection request via setup
 open /requests
         ↓
 click created request card/details link
-        ↓
-wait for GET /api/l1/requests/{requestId}
         ↓
 assert details page heading/status visible
         ↓
@@ -224,129 +307,40 @@ assert link back to My Requests visible
 
 No E2E should assert “backend checked ownership” internally. It should assert visible behavior: own request details appear; missing request shows not-found.
 
-## 7. Next Step
-
-Implementation direction:
+## 12. Covered Scenario / UI Behavior Items
 
 ```text
-Add route helper:
-  clientRoutes.requestDetails(requestId)
-
-Add route:
-  /requests/:requestId
-
-Extend shared/api/l1RequestApi:
-  getMyRequestDetails(requestId)
-
-Extend entities/request:
-  getMyRequestDetails.ts
-  useMyRequestDetailsQuery.ts
-  requestQueryKeys.myRequestDetails(requestId)
-
-Add details feature UI:
-  MyRequestDetailsView
-  MyRequestSubmittedData
-  MyRequestReviewResult
-  MyRequestDetailsNotFound
-
-Update MyRequestSummaryCard:
-  link to details page
-
-Add tests:
-  component tests
-  E2E happy path
-  E2E not-found path
+SC-05-BI-009
+SC-05-BI-010
+SC-05-BI-011
+SC-05-BI-012
+SC-05-BI-013
+SC-05-BI-014
+SC-05-BI-015
+SC-05-BI-016
+SC-05-BI-017
 ```
 
-Likely changed files:
+## 13. Dependent / Follow-up Slices
 
 ```text
-energymanagement.client/src/shared/config/clientRoutes.ts
-energymanagement.client/src/shared/api/l1RequestApi.ts
-
-energymanagement.client/src/entities/request/api/getMyRequestDetails.ts
-energymanagement.client/src/entities/request/model/useMyRequestDetailsQuery.ts
-energymanagement.client/src/entities/request/model/requestQueryKeys.ts
-energymanagement.client/src/entities/request/model/requestTypes.ts
-
-energymanagement.client/src/features/request/my-request-details/ui/*
-energymanagement.client/src/features/request/my-requests-list/ui/MyRequestSummaryCard.tsx
-
-energymanagement.client/src/pages/requests/details/MyRequestDetailsPage.tsx
-
-tests/e2e/requests/my-request-details.spec.ts
-planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md
+L1-MY-REQUESTS-READ-LIST.client
+future create-new-from-feedback client behavior
+future request creation client sidecar
+future agreement/documents details extensions
 ```
 
-## 8. Scenario Flow
+## 14. Implementation Checklist
 
 ```text
-Authenticated client opens My Requests
-        ↓
-Client selects a request
-        ↓
-Client opens request details page
-        ↓
-System loads request details for current account
-        ↓
-If request belongs to current account,
-client sees submitted request data
-        ↓
-Client sees request status, type, created date, details and object address
-        ↓
-If review result exists,
-client sees decision and rejection reason when rejected
-        ↓
-If request does not exist or belongs to another account,
-client sees not-found state
-        ↓
-Client can return to My Requests
-```
-
-## 9. Behavior Items
-
-### Client opens request details
-
-The authenticated client opens details page for a request.
-
-### Client sees own request details
-
-The client sees details only for a request that belongs to the authenticated account.
-
-### Client sees submitted request data
-
-The page shows submitted request details and object address.
-
-### Client sees request metadata
-
-The page shows request status, request type and created date.
-
-### In-review request shows no review result
-
-If the request has no review result yet, the page shows submitted data and current status without fake feedback.
-
-### Approved request shows approval result
-
-If the request is approved, the page shows approved decision and decision date.
-
-### Rejected request shows rejection reason
-
-If the request is rejected, the page shows rejected decision, decision date and rejection reason.
-
-### Missing or not-owned request shows not-found state
-
-If the request is missing or not owned by the current client, the page shows a not-found state instead of request data.
-
-### Client can return to My Requests
-
-The details page provides navigation back to My Requests.
-
-## 10. Verification Commands
-
-```powershell
-npm.cmd --prefix energymanagement.client run build
-npm.cmd --prefix energymanagement.client run test
-npm.cmd run check:api
-npm.cmd run test:e2e -- --list
-npm.cmd run test:e2e
+[ ] Add route helper: clientRoutes.requestDetails(requestId).
+[ ] Add route: /requests/:requestId.
+[ ] Extend shared/api/l1RequestApi: getMyRequestDetails(requestId).
+[ ] Extend entities/request: getMyRequestDetails / useMyRequestDetailsQuery / requestQueryKeys.myRequestDetails(requestId).
+[ ] Add details feature UI components.
+[ ] Update MyRequestSummaryCard with details link.
+[ ] Add component tests.
+[ ] Add shared API tests.
+[ ] Add E2E happy path.
+[ ] Add E2E not-found path.
 ```
