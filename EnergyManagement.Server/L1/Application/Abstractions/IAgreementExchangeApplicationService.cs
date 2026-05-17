@@ -23,6 +23,12 @@ public interface IAgreementExchangeApplicationService
         long clientAccountId,
         long exchangeId,
         CancellationToken cancellationToken);
+
+    Task<UnitResult<IReadOnlyList<Error>>> EmployeeFinalRefuseAgreementExchangeAsync(
+        long employeeId,
+        long exchangeId,
+        string? reason,
+        CancellationToken cancellationToken);
 }
 
 public sealed record AgreementDocumentRefInput(

@@ -22,6 +22,7 @@ public sealed class AgreementExchangesController : ProjectController
     private readonly IAgreementExchangeApplicationService _applicationService;
     private readonly IValidator<AgreementExchangeListQueryDto> _listQueryValidator;
     private readonly IValidator<SendAgreementProposalVersionDto> _sendProposalValidator;
+    private readonly IValidator<FinalRefuseAgreementExchangeDto> _finalRefuseValidator;
     private readonly ILogger<AgreementExchangesController> _logger;
 
     public AgreementExchangesController(
@@ -30,6 +31,7 @@ public sealed class AgreementExchangesController : ProjectController
         IAgreementExchangeApplicationService applicationService,
         IValidator<AgreementExchangeListQueryDto> listQueryValidator,
         IValidator<SendAgreementProposalVersionDto> sendProposalValidator,
+        IValidator<FinalRefuseAgreementExchangeDto> finalRefuseValidator,
         ILogger<AgreementExchangesController> logger)
     {
         _sender = sender;
@@ -37,6 +39,7 @@ public sealed class AgreementExchangesController : ProjectController
         _applicationService = applicationService;
         _listQueryValidator = listQueryValidator;
         _sendProposalValidator = sendProposalValidator;
+        _finalRefuseValidator = finalRefuseValidator;
         _logger = logger;
     }
 
@@ -194,6 +197,57 @@ public sealed class AgreementExchangesController : ProjectController
         catch (Exception ex)
         {
             _logger.LogError(ex, "Agreement proposal accept failed for exchange {ExchangeId}.", exchangeId);
+            return ProblemDetailsWithExceptionDev(ex);
+        }
+    }
+
+    [Authorize(Roles = "Employee")]
+    [RequireAntiforgeryToken]
+    [HttpPost("{exchangeId:long:min(1)}/final-refuse", Name = "EmployeeFinalRefuseAgreementExchange")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> FinalRefuse(
+        long exchangeId,
+        [FromBody] FinalRefuseAgreementExchangeDto? dto,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (dto is not null)
+            {
+                var validationResult = await _finalRefuseValidator.ValidateAsync(dto, cancellationToken);
+                if (!validationResult.IsValid)
+                {
+                    return ProblemDetailsFromValidation(validationResult.Errors);
+                }
+            }
+
+            if (!TryGetCurrentL1AccountId(out var accountId))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _applicationService.EmployeeFinalRefuseAgreementExchangeAsync(
+                accountId,
+                exchangeId,
+                dto?.Reason,
+                cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return ProblemDetailsFromValidation(result.Error);
+            }
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Agreement exchange final refusal failed for exchange {ExchangeId}.", exchangeId);
             return ProblemDetailsWithExceptionDev(ex);
         }
     }

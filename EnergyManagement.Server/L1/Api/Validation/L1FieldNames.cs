@@ -75,4 +75,9 @@ public static class L1FieldNames
         public static string Comment => JsonField.Of<SendAgreementProposalVersionDto>(x => x.Comment);
     }
 
+    public static class FinalRefuseAgreementExchange
+    {
+        public static string Reason => JsonField.Of<FinalRefuseAgreementExchangeDto>(x => x.Reason);
+    }
+
 }

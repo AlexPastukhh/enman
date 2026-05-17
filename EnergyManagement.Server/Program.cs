@@ -69,6 +69,7 @@ builder.Services.AddTransient<IValidator<EmployeeRequestListQueryDto>, EmployeeR
 builder.Services.AddTransient<IValidator<EmployeeRejectRequestReviewDto>, EmployeeRejectRequestReviewDtoValidator>();
 builder.Services.AddTransient<IValidator<AgreementExchangeListQueryDto>, AgreementExchangeListQueryDtoValidator>();
 builder.Services.AddTransient<IValidator<SendAgreementProposalVersionDto>, SendAgreementProposalVersionDtoValidator>();
+builder.Services.AddTransient<IValidator<FinalRefuseAgreementExchangeDto>, FinalRefuseAgreementExchangeDtoValidator>();
 
 // 1️⃣ Register your config (it's already loaded by SharedFileService)
 // builder.Services.AddSingleton<ConstantsConfig>(_ => 

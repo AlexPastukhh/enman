@@ -11,17 +11,20 @@ public sealed class AgreementExchangeApplicationService : IAgreementExchangeAppl
     private readonly IAccountRepository _accounts;
     private readonly IEmployeeRepository _employees;
     private readonly IAgreementProposalExchangeRepository _agreementExchanges;
+    private readonly IClientRequestRepository _clientRequests;
     private readonly L1DbContext _context;
 
     public AgreementExchangeApplicationService(
         IAccountRepository accounts,
         IEmployeeRepository employees,
         IAgreementProposalExchangeRepository agreementExchanges,
+        IClientRequestRepository clientRequests,
         L1DbContext context)
     {
         _accounts = accounts;
         _employees = employees;
         _agreementExchanges = agreementExchanges;
+        _clientRequests = clientRequests;
         _context = context;
     }
 
@@ -156,6 +159,62 @@ public sealed class AgreementExchangeApplicationService : IAgreementExchangeAppl
         return UnitResult.Success<IReadOnlyList<Error>>();
     }
 
+    public async Task<UnitResult<IReadOnlyList<Error>>> EmployeeFinalRefuseAgreementExchangeAsync(
+        long employeeId,
+        long exchangeId,
+        string? reason,
+        CancellationToken cancellationToken)
+    {
+        var employee = await _employees.GetByIdAsync(employeeId, cancellationToken);
+        if (employee is null)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Error.Errors.L1Domain.EmployeeIsRequired]);
+        }
+
+        var exchange = await _agreementExchanges.GetByIdAsync(exchangeId, cancellationToken);
+        if (exchange is null)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Error.Errors.L1Domain.AgreementProposalExchangeIsRequired]);
+        }
+
+        var request = await _clientRequests.GetByIdAsync(exchange.RequestId, cancellationToken);
+        if (request is not ConnectionRequest connectionRequest)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Error.Errors.L1Domain.RequestIsRequired]);
+        }
+
+        var finalRefusalReason = CreateOptionalFinalRefusalReason(reason);
+        if (finalRefusalReason.IsFailure)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(finalRefusalReason.Error);
+        }
+
+        var now = DateTimeOffset.UtcNow;
+
+        var refuse = exchange.FinalRefuseProposal(
+            employee,
+            finalRefusalReason.Value,
+            now);
+
+        if (refuse.IsFailure)
+        {
+            return refuse;
+        }
+
+        var markRequestFailed = connectionRequest.MarkAgreementExchangeFailed(exchange.Id, now);
+        if (markRequestFailed.IsFailure)
+        {
+            return markRequestFailed;
+        }
+
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return UnitResult.Success<IReadOnlyList<Error>>();
+    }
+
     private static Result<AgreementDocumentRef, IReadOnlyList<Error>> CreateDocumentRef(
         AgreementDocumentRefInput document)
     {
@@ -181,4 +240,21 @@ public sealed class AgreementExchangeApplicationService : IAgreementExchangeAppl
 
         return Result.Success<ProposalComment?, IReadOnlyList<Error>>(proposalComment.Value);
     }
+
+    private static Result<FinalRefusalReason?, IReadOnlyList<Error>> CreateOptionalFinalRefusalReason(string? reason)
+    {
+        if (reason is null)
+        {
+            return Result.Success<FinalRefusalReason?, IReadOnlyList<Error>>(null);
+        }
+
+        var finalRefusalReason = FinalRefusalReason.Create(reason);
+        if (finalRefusalReason.IsFailure)
+        {
+            return Result.Failure<FinalRefusalReason?, IReadOnlyList<Error>>(finalRefusalReason.Error);
+        }
+
+        return Result.Success<FinalRefusalReason?, IReadOnlyList<Error>>(finalRefusalReason.Value);
+    }
+
 }

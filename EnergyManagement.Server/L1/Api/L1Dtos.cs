@@ -174,6 +174,9 @@ public sealed record SendAgreementProposalVersionDto(
     [property: JsonPropertyName("document")] AgreementDocumentRefDto? Document,
     [property: JsonPropertyName("comment")] string? Comment);
 
+public sealed record FinalRefuseAgreementExchangeDto(
+    [property: JsonPropertyName("reason")] string? Reason);
+
 public sealed record EmployeeRejectRequestReviewDto(
     [property: JsonPropertyName("feedback")] string? Feedback);
 
