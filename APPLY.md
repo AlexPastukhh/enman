@@ -1,29 +1,31 @@
-# APPLY — Client Draft + OpenAPI Workflow Rules Docs Sync v2
+# APPLY — SL-REQ-001.client Create Connection Request UI Archive
 
-Run from repository root after downloading the archive:
+Run from repo root.
+
+## 1. Confirm repo root
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\client-draft-openapi-rules-docs-sync-v2.zip" -DestinationPath . -Force
-git status
-git diff -- planning
+Get-ChildItem .\EnergyManagement.sln, .\energymanagement.client\package.json, .\package.json
 ```
 
-If the diff is correct:
+## 2. Apply archive
 
 ```powershell
-git add planning
-git status
+Expand-Archive -Path "C:\Users\alexa\Downloads\sl-req-001-client-create-connection-request.zip" -DestinationPath "." -Force
 ```
 
-This is a docs-only archive. It intentionally does not include backend/client/runtime code, tests or generated artifacts.
+This archive is merge-ready and has no wrapper folder.
 
-Do not run OpenAPI generation for this docs-only archive.
-
-The OpenAPI generated-artifact workflow documented here is for future code/API-contract archives:
+## 3. Verification commands
 
 ```powershell
-npm run generate:openapi
-npm run generate:api-types
-git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
+npm install
+npm --prefix .\energymanagement.client install
 npm run check:api
+npm --prefix .\energymanagement.client run lint
+npm --prefix .\energymanagement.client run build
+npm --prefix .\energymanagement.client run test -- --run
+npm run test:e2e
 ```
+
+Known handoff note: lint may still fail on existing `react-refresh/only-export-components` issues outside this slice until that cross-cutting lint cleanup is addressed.

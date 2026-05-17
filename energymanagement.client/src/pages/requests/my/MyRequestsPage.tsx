@@ -45,6 +45,12 @@ const MyRequestsPage = () => {
         <section className="myRequestsPage" aria-labelledby="my-requests-heading">
           <h1 id="my-requests-heading">{myRequestsConst.pageTitle}</h1>
 
+          {session && (
+            <Link to={clientRoutes.createRequest}>
+              {myRequestsConst.createRequestLinkText}
+            </Link>
+          )}
+
           {!session && (
             <div className="myRequestsPage__state">
               <h2>{myRequestsConst.signInRequiredTitle}</h2>

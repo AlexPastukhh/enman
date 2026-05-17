@@ -5,6 +5,8 @@ import { l1ApiPaths } from "./l1ApiPaths";
 export type L1MyRequestSummary = components["schemas"]["L1MyRequestSummaryDto"];
 export type L1ListMyRequestsResponse = L1MyRequestSummary[];
 export type L1MyRequestDetails = components["schemas"]["L1MyRequestDetailsDto"];
+export type L1CreateConnectionRequestRequest =
+  components["schemas"]["L1CreateConnectionRequestDto"];
 
 export type L1ListMyRequestsParams = {
   status?: string;
@@ -41,3 +43,12 @@ export const getMyRequestDetails = (
       method: "GET",
     },
   );
+
+
+export const createConnectionRequest = (
+  request: L1CreateConnectionRequestRequest,
+): Promise<void> =>
+  fetchJson<void>(l1ApiPaths.requests, {
+    method: "POST",
+    body: JSON.stringify(request),
+  });

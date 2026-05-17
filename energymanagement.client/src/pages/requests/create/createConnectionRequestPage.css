@@ -1,0 +1,9 @@
+.createConnectionRequestPage {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.createConnectionRequestPage__state {
+  margin: 1rem 0;
+  font-size: 1.4rem;
+}

@@ -4,6 +4,7 @@ export const clientRoutes = {
   login: "/login",
   account: "/account",
   requests: "/requests",
+  createRequest: "/requests/create",
   requestDetailsPath: "/requests/:requestId",
   requestDetails: (requestId: number | string) =>
     `/requests/${encodeURIComponent(String(requestId))}`,

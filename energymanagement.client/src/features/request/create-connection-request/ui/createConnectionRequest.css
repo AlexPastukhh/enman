@@ -1,0 +1,35 @@
+.createConnectionRequestForm {
+  margin-top: 2rem;
+  max-width: 72rem;
+}
+
+.createConnectionRequestForm__section {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border: 0.1rem solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--btn-b-radius);
+}
+
+.createConnectionRequestForm__section legend,
+.createConnectionRequestForm__section h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.createConnectionRequestForm__field {
+  max-width: 56rem;
+}
+
+.createConnectionRequestForm__textarea {
+  min-height: 10rem;
+  resize: vertical;
+}
+
+.createConnectionRequestForm__radio {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  font-size: 1.4rem;
+}

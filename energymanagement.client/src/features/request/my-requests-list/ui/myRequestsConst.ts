@@ -1,5 +1,6 @@
 export const myRequestsConst = {
   pageTitle: "Мои заявки",
+  createRequestLinkText: "Создать заявку",
   loadingText: "Загружаем заявки...",
   errorText: "Не удалось загрузить заявки.",
   invalidFiltersResetText: "Сбросить фильтры",

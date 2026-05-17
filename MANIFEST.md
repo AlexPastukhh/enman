@@ -1,83 +1,138 @@
-# MANIFEST — Client Draft + OpenAPI Workflow Rules Docs Sync v2
+# MANIFEST — SL-REQ-001.client Create Connection Request UI Archive
 
-Archive: `client-draft-openapi-rules-docs-sync-v2.zip`  
-Scope: documentation-only planning update for OpenAPI generated-artifact check workflow, client short-draft rules, client layering, and SL-APPL-002 client read sidecar example.
+Archive type: runtime-code client/non-server implementation archive  
+Slice: `SL-REQ-001.client — Create Connection Request UI with Applicant Context`
 
-## Add
+## Summary
+
+Implements client-only request creation UI with explicit applicant context:
+
+- `/requests/create` route and page.
+- Existing/New applicant context form.
+- Saved ApplicantParty selector for Existing branch.
+- Current/default ApplicantParty is initially selected when available.
+- Non-default saved ApplicantParty can be selected.
+- New applicant data branch is submitted as part of the request journey.
+- One client command posts to `POST /api/l1/requests`.
+- Success hands off to My Requests.
+- Read dependencies use existing ApplicantParty entity query from `SL-APPL-002.client`.
+
+## Added files
 
 ```text
-planning/api/generated-artifact-check-workflow.md
-planning/client/client-layering-for-read-and-command-slices.md
-planning/slices/client-slice-short-draft-rules-and-example.md
-planning/slices/SL-APPL-002-account-applicant-parties-read.client.md
+energymanagement.client/src/features/request/create-connection-request/api/createConnectionRequest.ts
+energymanagement.client/src/features/request/create-connection-request/model/buildCreateConnectionRequestDto.test.ts
+energymanagement.client/src/features/request/create-connection-request/model/buildCreateConnectionRequestDto.ts
+energymanagement.client/src/features/request/create-connection-request/model/createConnectionRequestFieldMap.ts
+energymanagement.client/src/features/request/create-connection-request/model/createConnectionRequestTypes.ts
+energymanagement.client/src/features/request/create-connection-request/model/useCreateConnectionRequestForm.ts
+energymanagement.client/src/features/request/create-connection-request/ui/ApplicantContextSection.tsx
+energymanagement.client/src/features/request/create-connection-request/ui/CreateConnectionRequestForm.test.tsx
+energymanagement.client/src/features/request/create-connection-request/ui/CreateConnectionRequestForm.tsx
+energymanagement.client/src/features/request/create-connection-request/ui/ExistingApplicantSelector.tsx
+energymanagement.client/src/features/request/create-connection-request/ui/FormErrorMessage.tsx
+energymanagement.client/src/features/request/create-connection-request/ui/NewApplicantFields.tsx
+energymanagement.client/src/features/request/create-connection-request/ui/ObjectAddressFields.tsx
+energymanagement.client/src/features/request/create-connection-request/ui/RequestDetailsFields.tsx
+energymanagement.client/src/features/request/create-connection-request/ui/TextAreaField.tsx
+energymanagement.client/src/features/request/create-connection-request/ui/TextInputField.tsx
+energymanagement.client/src/features/request/create-connection-request/ui/createConnectionRequest.css
+energymanagement.client/src/features/request/create-connection-request/ui/createConnectionRequestConst.ts
+energymanagement.client/src/pages/requests/create/CreateConnectionRequestPage.tsx
+energymanagement.client/src/pages/requests/create/createConnectionRequestPage.css
+energymanagement.client/src/shared/api/l1RequestApi.test.ts
+tests/e2e/requests/create-connection-request.spec.ts
 ```
 
-## Replace
+## Replaced files
 
 ```text
-planning/api/README.md
-planning/api/openapi-contract-generation.md
-planning/client/README.md
-planning/slices/README.md
-planning/slices/l1/README.md
-planning/slices/l1-slice-drafting-guide.md
-planning/slices/l1/L1-MY-REQUESTS-READ-LIST.client.md
-planning/slices/l1/L1-MY-REQUESTS-LIST-FILTERS.client.md
-planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md
-planning/slices/slice-scenario-flow-behavior-register.md
-planning/slices/slice-questions-register.md
-planning/slices/slice-implementation-notes-register.md
-planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
+energymanagement.client/src/app/router/router.tsx
+energymanagement.client/src/features/request/my-requests-list/ui/myRequestsConst.ts
+energymanagement.client/src/pages/requests/my/MyRequestsPage.tsx
+energymanagement.client/src/shared/api/l1RequestApi.ts
+energymanagement.client/src/shared/config/clientRoutes.ts
 ```
 
-## Delete
+## Deleted files
 
 ```text
-none
+None.
 ```
 
-## What v2 fixes relative to v1
+## Generated artifacts
 
 ```text
-- Adds planning/api/README.md so the new generated-artifact workflow is discoverable from API navigation.
-- Adds planning/slices/l1/README.md so L1 client sidecar navigation reflects normalized filters/details/read-list status.
-- Adds/normalizes L1-MY-REQUESTS-LIST-FILTERS.client.md using the same Scenario Flow vs Implementation Flow discipline.
-- Adjusts SL-APPL-002.client status: target backend contract accepted, but blocked until backend endpoint and generated types exist.
-- Removes invented/overconfident generated operation-id assumptions from SL-APPL-002.client.
-- Adds a copyable canonical short-draft example directly into client-slice-short-draft-rules-and-example.md.
+None changed.
 ```
 
-## Main rules captured
+No manual edits were made to:
 
 ```text
-OpenAPI / generated artifacts:
-- do not manually edit Shared/openapi.json or generated openapi-types.ts;
-- after backend API contract changes, run generate:openapi and generate:api-types;
-- stage generated artifacts before check:api in manual/archive workflow;
-- check:api then verifies rerunning generation causes no additional working-tree diff.
-
-Client drafting:
-- drafters must copy existing/canonical examples, without inventing a new shape;
-- Scenario Flow comes from slice-scenario-flow-behavior-register.md and the source scenario/UI/behavior files it points to;
-- Scenario Flow is only the part of the scenario that belongs to this slice;
-- Implementation Flow is page/entity/feature/shared/generated layering with files/functions/classes/types;
-- implementation details are not behavior items;
-- extension slices are named as related/out-of-scope/future owners, not implemented inside the current draft.
-
-Client architecture:
-- read/display UI belongs in entities/<entity>/ui;
-- command/user-action UI belongs in features;
-- shared/api is the low-level client/server boundary even when it contains wrappers for different entities;
-- entity API/model layers expose domain-facing read operation names, query keys and query hooks.
+Shared/openapi.json
+energymanagement.client/src/shared/api/generated/openapi-types.ts
+Shared/constants.json
+Shared/errorcodes.json
 ```
 
-## Not included
+## Tests changed / added
 
 ```text
-- no runtime code;
-- no tests;
-- no generated artifacts;
-- no GitHub write/branch/commit/PR;
-- no backend implementation;
-- no manual generated OpenAPI edits.
+energymanagement.client/src/features/request/create-connection-request/model/buildCreateConnectionRequestDto.test.ts
+energymanagement.client/src/features/request/create-connection-request/ui/CreateConnectionRequestForm.test.tsx
+energymanagement.client/src/shared/api/l1RequestApi.test.ts
+tests/e2e/requests/create-connection-request.spec.ts
+```
+
+## Commands run and results
+
+```text
+npm install
+Result: success
+
+npm --prefix ./energymanagement.client install
+Result: success
+
+npm --prefix ./energymanagement.client run build
+Result: success
+
+npm --prefix ./energymanagement.client run test -- --run --reporter=dot
+Result: success — 15 test files passed, 89 tests passed
+
+npm --prefix ./energymanagement.client run lint
+Result: failed on pre-existing react-refresh/only-export-components errors in existing files:
+- energymanagement.client/src/Tests/ComponentTest/TestClasses/TestSetup.tsx
+- energymanagement.client/src/app/router/router.tsx
+- energymanagement.client/src/entities/session/model/SessionProvider.tsx
+- energymanagement.client/src/shared/errors/pageErrorContext.tsx
+
+npm run check:api
+Result: not runnable in sandbox — dotnet executable is unavailable (sh: 1: dotnet: not found)
+
+npm run test:e2e
+Result: not run in sandbox — requires dotnet/localdb test environment
+```
+
+## Non-goals respected
+
+```text
+- no server/backend changes;
+- no Domain.EnergyManagement changes;
+- no planning docs changes;
+- no generated artifact changes;
+- no database/migration changes;
+- no make-default/current behavior;
+- no ApplicantParty delete/archive/edit behavior;
+- no ApplicantParty management page behavior;
+- no direct request-details navigation requiring requestId response;
+- no GitHub branch/commit/PR/write.
+```
+
+## Risks / handoff notes
+
+```text
+- This archive assumes SL-APPL-002.client read foundation is already applied because request creation page uses useAccountApplicantPartiesQuery().
+- E2E was added but not executed in the sandbox because dotnet/localdb tooling is unavailable here.
+- Lint still fails on existing react-refresh export-rule issues outside this slice; this archive does not fix cross-cutting lint cleanup.
+- The Existing branch sends no newApplicantParty property because generated TypeScript type does not allow null for that property. Server validation should accept omitted branch payload for Existing according to generated contract and backend behavior.
 ```
