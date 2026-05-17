@@ -194,6 +194,163 @@ public sealed class L1ApplicantPartiesIntegrationTests : L1IntegrationTestBase
     }
 
     [Fact]
+    public async Task MakeApplicantPartyCurrentDefault_WithoutAuth_ReturnsUnauthorized()
+    {
+        var response = await _factory.CreateClient().PostAsync(
+            "/api/l1/applicant-parties/1/make-current-default",
+            content: null);
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode((int)HttpStatusCode.Unauthorized);
+    }
+
+    [Fact]
+    public async Task MakeApplicantPartyCurrentDefault_WithMissingApplicantParty_ReturnsValidationProblemAndDoesNotChangeDefaults()
+    {
+        var account = await RegisterAccountAsync();
+        var first = await CreateApplicantPartyAsync(account.AccountId);
+        var firstBefore = await GetApplicantPartyRowAsync(first.ApplicantPartyId);
+        var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
+
+        var response = await MakeApplicantPartyCurrentDefaultRequestAsync(
+            account.AccountId,
+            first.ApplicantPartyId + 999_999);
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+
+        var firstAfter = await GetApplicantPartyRowAsync(first.ApplicantPartyId);
+        var applicantCountAfter = await GetApplicantPartyCountAsync(account.AccountId);
+
+        firstBefore.Should().NotBeNull();
+        firstAfter.Should().Be(firstBefore);
+        applicantCountAfter.Should().Be(applicantCountBefore);
+    }
+
+    [Fact]
+    public async Task MakeApplicantPartyCurrentDefault_WithNotOwnedApplicantParty_ReturnsValidationProblemAndDoesNotChangeDefaults()
+    {
+        var owner = await RegisterAccountAsync();
+        var ownerApplicantParty = await CreateApplicantPartyAsync(owner.AccountId);
+        var ownerApplicantBefore = await GetApplicantPartyRowAsync(ownerApplicantParty.ApplicantPartyId);
+
+        var other = await RegisterAccountAsync();
+        var otherApplicantParty = await CreateApplicantPartyAsync(other.AccountId);
+        var otherApplicantBefore = await GetApplicantPartyRowAsync(otherApplicantParty.ApplicantPartyId);
+
+        var response = await MakeApplicantPartyCurrentDefaultRequestAsync(
+            other.AccountId,
+            ownerApplicantParty.ApplicantPartyId);
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+
+        var ownerApplicantAfter = await GetApplicantPartyRowAsync(ownerApplicantParty.ApplicantPartyId);
+        var otherApplicantAfter = await GetApplicantPartyRowAsync(otherApplicantParty.ApplicantPartyId);
+
+        ownerApplicantBefore.Should().NotBeNull();
+        otherApplicantBefore.Should().NotBeNull();
+        ownerApplicantAfter.Should().Be(ownerApplicantBefore);
+        otherApplicantAfter.Should().Be(otherApplicantBefore);
+    }
+
+    [Fact]
+    public async Task MakeApplicantPartyCurrentDefault_WithOwnedNonDefaultApplicantParty_SwitchesPersistedDefault()
+    {
+        var account = await RegisterAccountAsync();
+        var first = await CreateApplicantPartyAsync(account.AccountId);
+        var second = await CreateApplicantPartyAsync(
+            account.AccountId,
+            ValidApplicantPartyDto(
+                firstName: "Jane",
+                middleName: "Anne",
+                lastName: "Smith",
+                email: UniqueEmail(),
+                phoneNumber: "79237554727"));
+
+        var firstBefore = await GetApplicantPartyRowAsync(first.ApplicantPartyId);
+        var secondBefore = await GetApplicantPartyRowAsync(second.ApplicantPartyId);
+        firstBefore!.IsCurrentActiveVersion.Should().BeTrue();
+        secondBefore!.IsCurrentActiveVersion.Should().BeFalse();
+
+        await MakeApplicantPartyCurrentDefaultAsync(account.AccountId, second.ApplicantPartyId);
+
+        var firstAfter = await GetApplicantPartyRowAsync(first.ApplicantPartyId);
+        var secondAfter = await GetApplicantPartyRowAsync(second.ApplicantPartyId);
+        var applicantCount = await GetApplicantPartyCountAsync(account.AccountId);
+
+        applicantCount.Should().Be(2);
+        firstAfter.Should().NotBeNull();
+        secondAfter.Should().NotBeNull();
+
+        firstAfter!.IsCurrentActiveVersion.Should().BeFalse();
+        firstAfter.ClientAccountId.Should().Be(firstBefore.ClientAccountId);
+        firstAfter.Email.Should().Be(firstBefore.Email);
+        firstAfter.PhoneNumber.Should().Be(firstBefore.PhoneNumber);
+        firstAfter.FirstName.Should().Be(firstBefore.FirstName);
+        firstAfter.MiddleName.Should().Be(firstBefore.MiddleName);
+        firstAfter.LastName.Should().Be(firstBefore.LastName);
+        firstAfter.VerificationStatus.Should().Be(firstBefore.VerificationStatus);
+
+        secondAfter!.IsCurrentActiveVersion.Should().BeTrue();
+        secondAfter.ClientAccountId.Should().Be(secondBefore.ClientAccountId);
+        secondAfter.Email.Should().Be(secondBefore.Email);
+        secondAfter.PhoneNumber.Should().Be(secondBefore.PhoneNumber);
+        secondAfter.FirstName.Should().Be(secondBefore.FirstName);
+        secondAfter.MiddleName.Should().Be(secondBefore.MiddleName);
+        secondAfter.LastName.Should().Be(secondBefore.LastName);
+        secondAfter.VerificationStatus.Should().Be(secondBefore.VerificationStatus);
+    }
+
+    [Fact]
+    public async Task MakeApplicantPartyCurrentDefault_WithAlreadyCurrentDefaultApplicantParty_IsIdempotent()
+    {
+        var account = await RegisterAccountAsync();
+        var first = await CreateApplicantPartyAsync(account.AccountId);
+        var rowBefore = await GetApplicantPartyRowAsync(first.ApplicantPartyId);
+        var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
+
+        await MakeApplicantPartyCurrentDefaultAsync(account.AccountId, first.ApplicantPartyId);
+
+        var rowAfter = await GetApplicantPartyRowAsync(first.ApplicantPartyId);
+        var applicantCountAfter = await GetApplicantPartyCountAsync(account.AccountId);
+
+        rowBefore.Should().NotBeNull();
+        rowBefore!.IsCurrentActiveVersion.Should().BeTrue();
+        rowAfter.Should().Be(rowBefore);
+        applicantCountAfter.Should().Be(applicantCountBefore);
+    }
+
+    [Fact]
+    public async Task MakeApplicantPartyCurrentDefault_DoesNotChangeExistingRequests()
+    {
+        var account = await RegisterAccountAsync();
+        var first = await CreateApplicantPartyAsync(account.AccountId);
+        await CreateConnectionRequestAsync(account.AccountId, first.ApplicantPartyId);
+        var requestBefore = await GetLatestRequestRowForApplicantPartyAsync(first.ApplicantPartyId);
+        requestBefore.Should().NotBeNull();
+
+        var second = await CreateApplicantPartyAsync(
+            account.AccountId,
+            ValidApplicantPartyDto(
+                firstName: "Request",
+                middleName: "Safe",
+                lastName: "Default",
+                email: UniqueEmail(),
+                phoneNumber: "79237554728"));
+
+        await MakeApplicantPartyCurrentDefaultAsync(account.AccountId, second.ApplicantPartyId);
+
+        var requestAfter = await GetRequestRowAsync(requestBefore!.Id);
+        var firstAfter = await GetApplicantPartyRowAsync(first.ApplicantPartyId);
+        var secondAfter = await GetApplicantPartyRowAsync(second.ApplicantPartyId);
+
+        requestAfter.Should().Be(requestBefore);
+        firstAfter!.IsCurrentActiveVersion.Should().BeFalse();
+        secondAfter!.IsCurrentActiveVersion.Should().BeTrue();
+    }
+
+    [Fact]
     public async Task CreateIndividualApplicantParty_StoresGeneratedAccountReference()
     {
         var account = await RegisterAccountAsync();

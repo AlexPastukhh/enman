@@ -112,14 +112,39 @@ public abstract class L1IntegrationTestBase
 
     protected async Task<L1CreateIndividualApplicantPartyResponse> CreateApplicantPartyAsync(long accountId)
     {
+        return await CreateApplicantPartyAsync(accountId, ValidApplicantPartyDto());
+    }
+
+    protected async Task<L1CreateIndividualApplicantPartyResponse> CreateApplicantPartyAsync(
+        long accountId,
+        L1CreateIndividualApplicantPartyDto dto)
+    {
         var response = await AuthenticatedL1Client(accountId).PostAsJsonAsync(
             "/api/l1/applicant-parties/individual",
-            ValidApplicantPartyDto());
+            dto);
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
         return await response.Content.ReadFromJsonAsync<L1CreateIndividualApplicantPartyResponse>()
             ?? throw new InvalidOperationException("L1 applicant party response body was empty.");
+    }
+
+    protected Task<HttpResponseMessage> MakeApplicantPartyCurrentDefaultRequestAsync(
+        long accountId,
+        long applicantPartyId)
+    {
+        return AuthenticatedL1Client(accountId).PostAsync(
+            $"/api/l1/applicant-parties/{applicantPartyId}/make-current-default",
+            content: null);
+    }
+
+    protected async Task MakeApplicantPartyCurrentDefaultAsync(
+        long accountId,
+        long applicantPartyId)
+    {
+        var response = await MakeApplicantPartyCurrentDefaultRequestAsync(accountId, applicantPartyId);
+
+        await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
     }
 
     protected async Task<HttpResponseMessage> CreateConnectionRequestAsync(

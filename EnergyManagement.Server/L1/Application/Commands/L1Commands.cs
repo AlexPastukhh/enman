@@ -58,3 +58,8 @@ public sealed record L1CreateConnectionRequestNewApplicant(
     string LastName,
     string Email,
     string PhoneNumber);
+
+public sealed record L1MakeApplicantPartyCurrentDefaultCommand(
+    long ClientAccountId,
+    long ApplicantPartyId)
+    : IRequest<UnitResult<IReadOnlyList<Error>>>;

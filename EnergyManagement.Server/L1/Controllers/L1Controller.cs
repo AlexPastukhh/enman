@@ -231,6 +231,36 @@ public sealed class L1Controller : ProjectController
     }
 
     [Authorize]
+    [HttpPost("applicant-parties/{applicantPartyId:long}/make-current-default", Name = "L1MakeApplicantPartyCurrentDefault")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> MakeApplicantPartyCurrentDefault(
+        long applicantPartyId,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (!TryGetCurrentL1AccountId(out var accountId))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _sender.Send(
+                new L1MakeApplicantPartyCurrentDefaultCommand(accountId, applicantPartyId),
+                cancellationToken);
+
+            return ToActionResult(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "L1 make applicant party current/default failed.");
+            return ProblemDetailsWithExceptionDev(ex);
+        }
+    }
+
+    [Authorize]
     [HttpGet("applicant-parties/current-individual", Name = "L1GetCurrentIndividualApplicantParty")]
     [ProducesResponseType(typeof(L1CurrentIndividualApplicantPartyResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
