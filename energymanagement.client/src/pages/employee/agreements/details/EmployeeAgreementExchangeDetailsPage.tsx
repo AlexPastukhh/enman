@@ -1,6 +1,8 @@
 import { Link, useParams } from "react-router-dom";
 import { useAgreementExchangeDetailsQuery } from "../../../../entities/agreement-exchange/model/useAgreementExchangeDetailsQuery";
 import { useSession } from "../../../../entities/session/model/useSession";
+import { getSendAgreementProposalAvailability } from "../../../../features/agreement-exchange/send-proposal/model/sendAgreementProposalAvailability";
+import { SendAgreementProposalForm } from "../../../../features/agreement-exchange/send-proposal/ui/SendAgreementProposalForm";
 import { ApiError } from "../../../../shared/api/fetchJson";
 import { clientRoutes } from "../../../../shared/config/clientRoutes";
 import { Footer } from "../../../../shared/ui/layout/Footer";
@@ -94,6 +96,21 @@ const EmployeeAgreementExchangeDetailsPage = () => {
             <AgreementExchangeDetailsView
               details={detailsQuery.data}
               viewerRole="Employee"
+              renderActions={(details) => {
+                const availability = getSendAgreementProposalAvailability(
+                  details,
+                  "Employee",
+                );
+
+                return (
+                  <SendAgreementProposalForm
+                    exchangeId={details.exchangeId}
+                    viewerRole="Employee"
+                    disabled={!availability.canSendProposal}
+                    unavailableReason={availability.reason}
+                  />
+                );
+              }}
             />
           )}
         </section>

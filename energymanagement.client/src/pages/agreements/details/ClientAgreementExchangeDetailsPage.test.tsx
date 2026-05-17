@@ -36,6 +36,15 @@ vi.mock("../../../shared/ui/layout/Footer", () => ({
   __esModule: true,
 }));
 
+vi.mock("../../../features/agreement-exchange/send-proposal/ui/SendAgreementProposalForm", () => ({
+  SendAgreementProposalForm: ({ disabled }: { disabled?: boolean }) => (
+    <div data-testid="send-proposal-form">
+      Send proposal form {disabled ? "disabled" : "enabled"}
+    </div>
+  ),
+  __esModule: true,
+}));
+
 const details = {
   exchangeId: 20,
   requestId: 10,
@@ -102,6 +111,7 @@ describe("ClientAgreementExchangeDetailsPage", () => {
       "href",
       "/agreements",
     );
+    expect(screen.getByTestId("send-proposal-form")).toBeVisible();
   });
 
   it("blocks non-client sessions from client details page", () => {

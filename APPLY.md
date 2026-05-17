@@ -1,26 +1,23 @@
-# Apply
+# Apply L2-AGR-EXCH-SEND-PROPOSAL-001.client
 
-From repository root:
+From repo root:
 
 ```powershell
-cd "C:\enman\enman"
-Expand-Archive -Path "C:\Users\alexa\Downloads\sl-agr-exch-004-agreement-exchange-details-read-v23.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agr-exch-send-proposal-001-client.zip" -DestinationPath "." -Force
 ```
 
-Recommended checks:
+Then verify:
 
 ```powershell
-dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
-dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
+npm install
+npm --prefix .\energymanagement.client install
+npm run check:api
+npm --prefix .\energymanagement.client run build
+npm --prefix .\energymanagement.client run test -- --run
 ```
 
-API contract changed. Generate and check API artifacts through repo workflow:
+Targeted tests:
 
 ```powershell
-npm.cmd run generate:openapi
-npm.cmd run generate:api-types
-
-git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
-
-npm.cmd run check:api
+npm --prefix .\energymanagement.client run test -- --run --reporter=verbose src/features/agreement-exchange/send-proposal/api/sendAgreementProposal.test.ts src/features/agreement-exchange/send-proposal/model/sendAgreementProposalAvailability.test.ts src/features/agreement-exchange/send-proposal/ui/SendAgreementProposalForm.test.tsx src/pages/agreements/details/ClientAgreementExchangeDetailsPage.test.tsx src/pages/employee/agreements/details/EmployeeAgreementExchangeDetailsPage.test.tsx
 ```

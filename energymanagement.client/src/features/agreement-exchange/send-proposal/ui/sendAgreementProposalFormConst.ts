@@ -1,0 +1,15 @@
+export const sendAgreementProposalFormConst = {
+  actionLabel: "Send proposal version",
+  pendingLabel: "Sending proposal...",
+  clientTitle: "Send counter-proposal",
+  employeeTitle: "Send proposal version",
+  documentSectionTitle: "Proposal document reference",
+  storageKeyLabel: "Storage key",
+  originalFileNameLabel: "Original file name",
+  contentTypeLabel: "Content type",
+  sizeBytesLabel: "Size bytes",
+  commentLabel: "Comment",
+  commentPlaceholder: "Optional proposal comment",
+  defaultErrorMessage: "Could not send proposal version.",
+  validationErrorMessage: "Fill in document storage key, file name, content type and positive size.",
+} as const;

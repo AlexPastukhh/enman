@@ -1,0 +1,73 @@
+.sendAgreementProposalAction {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.sendAgreementProposalAction__title {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.sendAgreementProposalAction__grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.sendAgreementProposalAction__field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.sendAgreementProposalAction__label {
+  font-weight: 700;
+}
+
+.sendAgreementProposalAction__input,
+.sendAgreementProposalAction__textarea {
+  border: 1px solid #ccd5e1;
+  border-radius: 0.6rem;
+  font: inherit;
+  padding: 0.65rem 0.75rem;
+}
+
+.sendAgreementProposalAction__textarea {
+  min-height: 5rem;
+  resize: vertical;
+}
+
+.sendAgreementProposalAction__button,
+.sendAgreementProposalAction__secondaryButton {
+  border: 0;
+  border-radius: 0.65rem;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+}
+
+.sendAgreementProposalAction__button {
+  background: #1f2937;
+  color: #ffffff;
+}
+
+.sendAgreementProposalAction__button:disabled,
+.sendAgreementProposalAction__secondaryButton:disabled,
+.sendAgreementProposalAction__input:disabled,
+.sendAgreementProposalAction__textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.sendAgreementProposalAction__hint,
+.sendAgreementProposalAction__error {
+  margin: 0;
+}
+
+.sendAgreementProposalAction__hint {
+  color: #475569;
+}
+
+.sendAgreementProposalAction__error {
+  color: #9f1239;
+  font-weight: 700;
+}
