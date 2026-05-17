@@ -111,3 +111,50 @@ public enum EmployeeStartRequestReviewCommandStatus
     Forbidden = 3,
     Invalid = 4
 }
+
+public sealed record EmployeeApproveRequestReviewCommand(
+    long EmployeeId,
+    long RequestId)
+    : IRequest<EmployeeApproveRequestReviewCommandResult>;
+
+public sealed record EmployeeApproveRequestReviewCommandResult(
+    EmployeeApproveRequestReviewCommandStatus Status,
+    IReadOnlyList<Error> Errors)
+{
+    public static EmployeeApproveRequestReviewCommandResult Approved()
+    {
+        return new EmployeeApproveRequestReviewCommandResult(
+            EmployeeApproveRequestReviewCommandStatus.Approved,
+            []);
+    }
+
+    public static EmployeeApproveRequestReviewCommandResult NotFound()
+    {
+        return new EmployeeApproveRequestReviewCommandResult(
+            EmployeeApproveRequestReviewCommandStatus.NotFound,
+            []);
+    }
+
+    public static EmployeeApproveRequestReviewCommandResult Forbidden()
+    {
+        return new EmployeeApproveRequestReviewCommandResult(
+            EmployeeApproveRequestReviewCommandStatus.Forbidden,
+            []);
+    }
+
+    public static EmployeeApproveRequestReviewCommandResult Invalid(IReadOnlyList<Error> errors)
+    {
+        return new EmployeeApproveRequestReviewCommandResult(
+            EmployeeApproveRequestReviewCommandStatus.Invalid,
+            errors);
+    }
+}
+
+public enum EmployeeApproveRequestReviewCommandStatus
+{
+    Approved = 1,
+    NotFound = 2,
+    Forbidden = 3,
+    Invalid = 4
+}
+

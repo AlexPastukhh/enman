@@ -106,6 +106,12 @@ public sealed class RequestReview
                 [Errors.L1Domain.EmployeeIsRequired]);
         }
 
+        var canReview = employee.EnsureCanReview();
+        if (canReview.IsFailure)
+        {
+            return canReview;
+        }
+
         if (Status != RequestReviewStatus.Started)
         {
             return UnitResult.Failure<IReadOnlyList<Error>>(

@@ -1,24 +1,34 @@
-# Apply L2-REVIEW-START-001.client archive
+# APPLY — SL-EMP-REQ-004 Approve Request Review
 
-From repository root:
+Apply from repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l2-review-start-001-client-start-request-review.zip" -DestinationPath "." -Force
+cd "C:\enman\enman"
+Expand-Archive -Path "C:\Users\alexa\Downloads\sl-emp-req-004-approve-request-review-v18.zip" -DestinationPath . -Force
 ```
 
-## Verify
+Verify server/domain/tests:
 
 ```powershell
-npm install
-npm --prefix .\energymanagement.client install
-npm run check:api
-npm --prefix .\energymanagement.client run build
-npm --prefix .\energymanagement.client run test -- --run
-npm --prefix .\energymanagement.client run lint
+dotnet build .\Domain.EnergyManagement\Domain.EnergyManagement.csproj
+dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
+dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
 ```
 
-Targeted changed tests:
+Because this adds an API endpoint, regenerate and check API artifacts through repo commands:
 
 ```powershell
-npm --prefix .\energymanagement.client run test -- --run --reporter=verbose src/features/employee-request/start-review/api/startRequestReview.test.ts src/features/employee-request/start-review/ui/StartReviewButton.test.tsx src/entities/employee-request/ui/EmployeeRequestDashboardList.test.tsx src/pages/employee/requests/dashboard/EmployeeDashboardPage.test.tsx src/pages/employee/requests/details/EmployeeRequestDetailsPage.test.tsx
+npm.cmd run generate:openapi
+npm.cmd run generate:api-types
+
+git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
+
+npm.cmd run check:api
+```
+
+Expected endpoint:
+
+```http
+POST /api/employee/requests/{requestId}/review/approve
+204 No Content
 ```

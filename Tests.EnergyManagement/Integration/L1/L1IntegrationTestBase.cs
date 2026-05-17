@@ -161,6 +161,23 @@ public abstract class L1IntegrationTestBase
         await HttpResponseAssertions.For(response, _output).ShouldBeStatusCode((int)System.Net.HttpStatusCode.NoContent);
     }
 
+
+    protected Task<HttpResponseMessage> ApproveEmployeeRequestReviewRequestAsync(
+        HttpClient client,
+        long requestId)
+    {
+        return PostWithCsrfAsync(client, $"/api/employee/requests/{requestId}/review/approve");
+    }
+
+    protected async Task ApproveEmployeeRequestReviewAsync(
+        HttpClient client,
+        long requestId)
+    {
+        var response = await ApproveEmployeeRequestReviewRequestAsync(client, requestId);
+
+        await HttpResponseAssertions.For(response, _output).ShouldBeStatusCode((int)System.Net.HttpStatusCode.NoContent);
+    }
+
     protected async Task<L1MyRequestDetailsDto> GetMyRequestDetailsAsync(
         HttpClient client,
         long requestId)
