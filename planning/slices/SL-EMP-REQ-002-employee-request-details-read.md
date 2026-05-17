@@ -1,33 +1,15 @@
 # SL-EMP-REQ-002 — Employee Request Details Read
 
-Status: full backend/API read slice draft  
+Status: full backend/API read slice draft / not implemented  
 Package: `[Employee] [Requests]`  
 Slice type: backend/API read slice  
 Primary purpose: employee request details by id  
 Parent slice: `SL-EMP-REQ-001 — Employee Request List Read`  
 Implementation direction: Dapper/read projection, not aggregate repository / EF DTO shaping
 
-## 1. Slice Overview
+## 1. Scope
 
-This slice adds an employee-side request details read endpoint.
-
-Endpoint direction:
-
-```http
-GET /api/employee/requests/{requestId}
-```
-
-It returns one employee-visible request details payload by id.
-
-This slice is only:
-
-```text
-GET by id + details projection + compact review state
-```
-
-It does not include filters, commands, action DTOs or client UI.
-
-## 2. Scope
+This slice owns:
 
 ```text
 - add employee request details read endpoint;
@@ -43,7 +25,13 @@ It does not include filters, commands, action DTOs or client UI.
 - do not mutate request/review state.
 ```
 
-## 3. Out of Scope
+Endpoint:
+
+```http
+GET /api/employee/requests/{requestId}
+```
+
+## 2. Out of Scope
 
 | Out of scope | Owner |
 |---|---|
@@ -58,7 +46,7 @@ It does not include filters, commands, action DTOs or client UI.
 | Review domain mutation | domain/command slices |
 | Query filters / paging / sorting | not this slice |
 
-## 4. Related Slices / Owners
+## 3. Related Slices / Owners
 
 ```text
 SL-EMP-REQ-001
@@ -70,13 +58,12 @@ SL-EMP-REQ-002
 SL-EMP-REQ-003 / 004 / 005
   Own StartReview / ApproveReview / RejectReview commands.
 
-L2 Domain Draft
-  Owns target domain concepts:
-  Employee,
-  Request-owned Review,
-  Start/Started terminology,
-  no EmployeeRef,
-  no ReviewDecisionRecord.
+L2 domain draft
+  Domain-design input for Employee, request-owned Review, Start/Started terminology,
+  no EmployeeRef and no ReviewDecisionRecord.
+
+Scenario sources
+  Source of truth for Scenario Flow and Behavior Coverage.
 
 CC-VALIDATION-001
   Owns request/query validation boundary.
@@ -86,35 +73,7 @@ CC-API-001
   Owns OpenAPI/generated artifact workflow if API contract changes.
 ```
 
-## 5. Sources / Source Behavior Items
-
-Scenario Flow and Behavior Coverage must come from scenario source files, not from this slice locally.
-
-Primary scenario sources after L2 scenario sync:
-
-```text
-planning/diagrams/scenario-text-specs/SC-07A-employee-request-details.md
-planning/diagrams/scenario-text-specs/SC-07B-employee-request-review.md
-planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
-```
-
-Domain-design input:
-
-```text
-planning/tables/domain-drafts/domain-draft-02.md
-```
-
-Important distinction:
-
-```text
-The domain draft informs domain terminology, review state and read-model semantics.
-Scenario text/DATA/UI/behavior files remain source of truth for Scenario Flow and Behavior Coverage.
-```
-
-Stable behavior item IDs for this details slice may still need final mapping in the behavior source file.
-Until then, use `Source BI TBD` and do not invent final IDs inside this slice.
-
-## 6. Visual Scenario Flow
+## 4. Visual Scenario Flow
 
 ```text
 [Signed-in Employee]
@@ -135,7 +94,7 @@ Details include:
 - compact review state.
 ```
 
-## 7. Visual Implementation Flow
+## 5. Visual Implementation Flow
 
 ```text
 [HTTP GET]
@@ -181,9 +140,9 @@ Aggregate repositories:
 
 Read/query convenience should not change write aggregate shape.
 
-## 8. API Contract Draft
+## 6. API Contract Draft
 
-### 8.1 Endpoint
+### Endpoint
 
 ```http
 GET /api/employee/requests/{requestId}
@@ -195,7 +154,7 @@ Route:
 requestId: long
 ```
 
-### 8.2 Response
+### Response
 
 ```ts
 type EmployeeRequestDetailsDto = {
@@ -223,7 +182,7 @@ type EmployeeRequestDetailsDto = {
 };
 ```
 
-### 8.3 Applicant summary
+### Applicant summary
 
 ```ts
 type EmployeeRequestApplicantSummaryDto = {
@@ -246,7 +205,7 @@ No extra DTOs in this slice:
 - no AgreementProposalExchange DTO.
 ```
 
-## 9. Validation / ProblemDetails
+## 7. Validation / ProblemDetails
 
 No request body.
 
@@ -273,7 +232,7 @@ Do not put these into validators:
 - mutations.
 ```
 
-## 10. Cross-Cutting Concerns / Considerations
+## 8. Cross-Cutting Concerns / Considerations
 
 | Concern | Applies? | Consideration / owner |
 |---|---:|---|
@@ -289,7 +248,7 @@ Do not put these into validators:
 | Privacy / cross-employee exposure | yes | Do not expose Employee auth/private data. |
 | Testing responsibility split | yes | API/read integration tests; no command/UI tests; no unit tests by default. |
 
-## 11. Questions / Decisions
+## 9. Questions / Decisions
 
 ### Accepted
 
@@ -310,7 +269,7 @@ Do not put these into validators:
 | `SL-EMP-REQ-002-Q-008` | assumption | Does details need Employee display name for started-by-other? | No in first pass. Only state. | Avoids Employee profile scope. |
 | `SL-EMP-REQ-002-Q-009` | assumption | Should route use `{requestId:long}`? | Yes. | No FluentValidation needed for route. |
 
-## 12. Extension / Change Points
+## 10. Extension / Change Points
 
 | ID | Area | Current direction | Future owner |
 |---|---|---|---|
@@ -321,7 +280,7 @@ Do not put these into validators:
 | `CP-EMP-REQ-DETAILS-005` | Agreement proposal state | Not first pass. | Agreement proposal read slice |
 | `CP-EMP-REQ-DETAILS-006` | Shared Dapper projection helper | Only if list/details duplication becomes non-trivial. | Helper/read-model cleanup |
 
-## 13. Behavior Coverage
+## 11. Behavior Coverage
 
 | Source / draft behavior | Status | Covered by this slice |
 |---|---|---|
@@ -336,15 +295,13 @@ Do not put these into validators:
 | List/filter behavior | out of scope | `SL-EMP-REQ-001`. |
 | Start/approve/reject behavior | out of scope | Future command slices. |
 
-## 14. Test / Verification Plan
+## 12. Test / Verification Plan
 
 Primary verification: **API/read integration tests**.
 
 Do not add unit tests by default.
 
-Unit tests are allowed only if this slice introduces reusable helper logic with non-trivial branching.
-
-Even then, keep unit tests focused on that helper only.
+Unit tests are allowed only if this slice introduces reusable helper logic with non-trivial branching. Even then, keep unit tests focused on that helper only.
 
 ### API boundary / access tests
 
@@ -413,7 +370,7 @@ Optional smoke only if cheap:
 - no generated TypeScript as behavior proof.
 ```
 
-## 15. Implementation Checklist
+## 13. Implementation Checklist
 
 ```text
 [ ] Verify Employee auth/account dependency.
@@ -432,7 +389,7 @@ Optional smoke only if cheap:
 [ ] Do not add unit tests unless reusable helper logic requires them.
 ```
 
-## 16. Next Step
+## 14. Next Step
 
 Before implementation, verify blockers:
 

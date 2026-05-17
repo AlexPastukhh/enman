@@ -1,15 +1,27 @@
-# Apply archive
+# APPLY — Employee Request Read Slice Docs Sync
 
-From repository root:
-
-```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l2-domain-classes-implementation.zip" -DestinationPath "." -Force
-```
-
-Then verify locally:
+Run from repository root:
 
 ```powershell
-dotnet build .\Domain.EnergyManagement\Domain.EnergyManagement.csproj
+Expand-Archive -Path "C:\Users\alexa\Downloads\employee-request-read-docs-sync.zip" -DestinationPath . -Force
+git status
+git diff -- planning
 ```
 
-If the full solution/server is built, also run the relevant tests. This archive does not include persistence mappings/migrations for the new L2 classes.
+If the diff is correct:
+
+```powershell
+git add planning
+git status
+```
+
+This archive is documentation-only.
+
+It must not change:
+
+```text
+- backend runtime code;
+- client runtime code;
+- tests;
+- generated OpenAPI/constants/TypeScript artifacts.
+```

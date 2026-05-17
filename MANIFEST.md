@@ -1,40 +1,49 @@
-# L2 Domain Classes Implementation Archive
+# MANIFEST — Employee Request Read Slice Docs Sync
 
-Merge-ready archive with repo-relative paths. It implements target L2 domain classes from `planning/tables/domain-drafts/domain-draft-02.md` without changing planning docs or server API/client code.
+Archive: `employee-request-read-docs-sync.zip`  
+Scope: documentation-only synchronization for L2 Employee request read slices and server read-slice test-plan rules  
+Repo branch baseline: `my-changes`
 
-## Included files
+## Add
 
-Added:
+| File | Purpose |
+|---|---|
+| `planning/slices/SL-EMP-REQ-001-employee-request-list-read.md` | Full backend/API read slice draft for employee request list + status/reviewState filters. |
+| `planning/slices/SL-EMP-REQ-002-employee-request-details-read.md` | Full backend/API read slice draft for employee request details by id with Dapper/read projection direction. |
+| `planning/slices/l2/README.md` | L2 slice navigation for Employee/Review/AgreementProposalExchange draft progression. |
+
+## Replace
+
+| File | Purpose |
+|---|---|
+| `planning/slices/README.md` | Adds L2 slice navigation and links to the new Employee request read slices. |
+| `planning/slices/slice-scenario-flow-behavior-register.md` | Adds/clarifies L2 source mapping and explicitly keeps scenario sources as source of truth for Scenario Flow/Behavior Coverage. |
+| `planning/testing/server-slice-test-plan-rules.md` | Adds read-slice test-plan rules: API/read integration tests as primary proof; no unit tests by default. |
+| `planning/testing/README.md` | Updates testing index to mention both read-slice and state-changing command test-plan rules. |
+| `planning/slices/l1-slice-drafting-guide.md` | Adds mandatory reference to read-slice test plan rules and no-unit-tests-by-default guidance. |
+
+## Source inputs
+
+This archive is based on the two provided working drafts:
 
 ```text
-Domain.EnergyManagement/L1/Employees/Employee.cs
-Domain.EnergyManagement/L1/Requests/RequestReview.cs
-Domain.EnergyManagement/L1/Requests/RequestReviewStatus.cs
-Domain.EnergyManagement/L1/AgreementProposals/AgreementExchangeStatus.cs
-Domain.EnergyManagement/L1/AgreementProposals/AgreementProposal.cs
-Domain.EnergyManagement/L1/AgreementProposals/AgreementProposalAuthor.cs
-Domain.EnergyManagement/L1/AgreementProposals/AgreementProposalExchange.cs
-Domain.EnergyManagement/L1/AgreementProposals/AgreementProposalSender.cs
-Domain.EnergyManagement/L1/AgreementProposals/AgreementProposalState.cs
-Domain.EnergyManagement/L1/AgreementProposals/AgreementProposalVersion.cs
-Domain.EnergyManagement/L1/AgreementProposals/AgreementDocumentRef.cs
-Domain.EnergyManagement/L1/AgreementProposals/ProposalComment.cs
-Domain.EnergyManagement/L1/AgreementProposals/FinalRefusalReason.cs
+SL-EMP-REQ-001 — Employee Request List Read
+SL-EMP-REQ-002 — Employee Request Details Read
 ```
 
-Replaced:
+The important test-plan correction from the conversation is preserved:
 
 ```text
-Domain.EnergyManagement/Common/Error.cs
-Domain.EnergyManagement/L1/Accounts/AccountRole.cs
-Domain.EnergyManagement/L1/Requests/ConnectionRequest.cs
-Domain.EnergyManagement/L1/Requests/RequestStatus.cs
+Primary verification: API/read integration tests.
+Do not add unit tests by default.
+Unit tests are allowed only for reusable helper logic with non-trivial branching.
 ```
 
-## Compatibility notes
+## Guardrails
 
-- Existing `EmployeeRef` and `ReviewDecisionRecord` files are not removed.
-- Existing `ConnectionRequest.Approve(EmployeeRef)` / `Reject(EmployeeRef, ...)` methods are kept for current L1 behavior compatibility.
-- New L2 review API is additive: `StartReview(Employee, ...)`, `ApproveReview(Employee, ...)`, `RejectReview(Employee, ...)`.
-- `ConnectionRequest.Review` is marked `[NotMapped]` to avoid accidentally changing current EF persistence mapping in this domain-only package.
-- No server DbContext mapping, migrations, API endpoints, OpenAPI artifacts, client code, docs, or tests are included.
+```text
+- Scenario files are the source of truth for Scenario Flow and Behavior Coverage.
+- Domain draft is domain-design input, not a replacement for scenario sources.
+- Registers are navigation/sync docs, not primary behavior sources.
+- No code, tests or generated artifacts are included.
+```

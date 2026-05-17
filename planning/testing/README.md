@@ -1,6 +1,6 @@
 # Testing Planning Index
 
-Status: current testing planning index / server slice DB-state test-plan rules synchronized  
+Status: current testing planning index / server read-slice and command test-plan rules synchronized  
 Scope: testing responsibilities, server slice test-plan separation, E2E/Playwright workflow, test object patterns, Playwright cleanup plan
 
 ## 1. Purpose
@@ -38,13 +38,24 @@ Detailed UI behavior belongs to client/component tests.
 Detailed server/API behavior belongs to server integration/API tests.
 ```
 
-For backend/server slice drafts that change persisted state, use:
+For backend/server slice drafts, use:
 
 ```text
 planning/testing/server-slice-test-plan-rules.md
 ```
 
-Primary proof for L1 backend command behavior should be API/integration tests with direct DB state assertions, not mocks.
+Current rule split:
+
+```text
+Read/query slices:
+  primary proof = API/read integration tests;
+  no unit tests by default;
+  unit tests only for reusable helper logic with non-trivial branching.
+
+State-changing command slices:
+  primary proof = API/integration tests with direct DB state assertions;
+  no repository/handler mocks as primary behavior proof.
+```
 
 ## 4. Current Playwright Direction
 

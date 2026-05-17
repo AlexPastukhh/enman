@@ -1,18 +1,20 @@
 # Slice Planning Index
 
-Status: current slice-planning navigation index / L2 Employee request read drafts added
+Status: current slice-planning navigation index / L2 Employee request read slices synchronized
 
 ## 1. Core Rule
 
-Scenario Flow and Behavior Items come from:
+Scenario Flow and Behavior Items come from scenario source artifacts:
 
 ```text
 planning/slices/slice-scenario-flow-behavior-register.md
 ```
 
-Do not use questions/extension/implementation registers as behavior source.
+Scenario text/DATA/UI/behavior files are the source of truth for scenario behavior.
 
-Domain drafts are domain-design input; they do not replace scenario sources for Scenario Flow or Behavior Coverage.
+Domain drafts are domain-design input. They do not replace scenario sources.
+
+Do not use questions/extension/implementation registers as behavior source.
 
 Implementation prompts must respect:
 
@@ -26,17 +28,17 @@ Client drafters must use the canonical short-draft shape:
 planning/slices/client-slice-short-draft-rules-and-example.md
 ```
 
-Server/backend state-changing slice drafts must separate API boundary tests, DB state transition tests, no-mutation tests, regression guards and what-not-to-test.
-
-Server/backend read slice drafts must use API/read integration tests as primary proof and avoid unit tests by default.
-
-Use:
+Server/backend drafts must use:
 
 ```text
 planning/testing/server-slice-test-plan-rules.md
 ```
 
-## 2. Current / Active Backend Slice Files
+For read slices, primary proof is API/read integration tests and unit tests are not added by default.
+
+For state-changing command slices, separate API boundary tests, DB state transition tests, no-mutation tests, regression guards and what-not-to-test.
+
+## 2. Current / Active L1 Backend Slice Files
 
 ```text
 planning/slices/SL-ACC-001-register-client-account.md
@@ -52,7 +54,7 @@ planning/slices/SL-REQ-002-my-requests-list.md
 planning/slices/SL-REQ-003-own-request-details.md
 ```
 
-## 3. Current / Active Client Sidecars
+## 3. Current / Active L1 Client Sidecars
 
 ```text
 planning/slices/SL-ACC-001-register-client-account.client.md
@@ -68,7 +70,7 @@ planning/slices/l1/L1-MY-REQUESTS-LIST-FILTERS.client.md
 planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md
 ```
 
-## 4. Current / Draft L2 Slice Files
+## 4. L2 Slice Navigation
 
 ```text
 planning/slices/l2/README.md
@@ -76,16 +78,13 @@ planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
 planning/slices/SL-EMP-REQ-002-employee-request-details-read.md
 ```
 
-Recommended next L2 drafts:
+Next likely L2 drafts:
 
 ```text
 SL-EMP-REQ-003 — Start Request Review
 SL-EMP-REQ-004 — Approve Request Review
 SL-EMP-REQ-005 — Reject Request Review
-SL-AGR-001 — Employee Starts AgreementProposalExchange / Sends First Proposal
-SL-AGR-002 — Client Agreement Proposal Details + Response
-SL-AGR-003 — Employee Agreement Proposal Details + Send New Version
-SL-AGR-004 — Final Refusal
+SL-AGR-001..004 — AgreementProposalExchange flow
 SL-DOC-001 — AgreementDocumentRef / Proposal Document Reference
 ```
 
@@ -106,7 +105,7 @@ SL-DOC-001 — AgreementDocumentRef / Proposal Document Reference
 - Scenario Flow is user/system behavior from scenario sources.
 - Implementation Flow is code/layer responsibility.
 - Behavior items are not implementation details.
-- Cross-cutting concerns belong in a separate concerns/considerations section.
+- Cross-cutting concerns go in Cross-Cutting Concerns / Considerations, not Scenario Flow.
 - Read-only UI belongs in entities.
 - Command/user-action UI belongs in features.
 - One draft covers one slice; extension slices are named but not implemented.

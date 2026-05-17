@@ -1,32 +1,14 @@
 # SL-EMP-REQ-001 — Employee Request List Read
 
-Status: full backend/API read slice draft  
+Status: full backend/API read slice draft / not implemented  
 Package: `[Employee] [Requests]`  
 Slice type: backend/API read slice  
 Primary purpose: employee-visible request list with filters and compact review state  
 Architecture direction: read slice before employee request commands
 
-## 1. Slice Overview
+## 1. Scope
 
-This slice adds an employee-side request list read endpoint.
-
-It returns compact request rows visible to the current authenticated Employee and supports first-pass filters.
-
-Endpoint direction:
-
-```http
-GET /api/employee/requests
-```
-
-This slice is only:
-
-```text
-employee request list + filters + compact review state projection
-```
-
-It is not the full employee dashboard/details/review-command scenario.
-
-## 2. Scope
+This slice owns:
 
 ```text
 - add employee request list read endpoint;
@@ -38,20 +20,21 @@ It is not the full employee dashboard/details/review-command scenario.
 - do not mutate request/review state.
 ```
 
-First-pass filters:
+Endpoint:
 
-```text
-status
-reviewState
+```http
+GET /api/employee/requests
 ```
 
-First-pass non-goal:
+This slice is only:
 
 ```text
-pagination/sorting unless existing repo pattern requires it during implementation.
+list + filters
 ```
 
-## 3. Out of Scope
+It is not the full employee dashboard/details scenario and it is not a review command slice.
+
+## 2. Out of Scope
 
 | Out of scope | Owner |
 |---|---|
@@ -66,7 +49,7 @@ pagination/sorting unless existing repo pattern requires it during implementatio
 | ApplicantParty lifecycle/default/edit/delete | ApplicantParty slices |
 | Pagination/sorting | extension point unless existing repo pattern requires it |
 
-## 4. Related Slices / Owners
+## 3. Related Slices / Owners
 
 ```text
 SL-EMP-REQ-001
@@ -78,13 +61,12 @@ SL-EMP-REQ-002
 SL-EMP-REQ-003 / 004 / 005
   Own StartReview / ApproveReview / RejectReview commands.
 
-L2 Domain Draft
-  Owns target domain concepts:
-  Employee,
-  Request-owned Review,
-  Start/Started terminology,
-  no EmployeeRef,
-  no ReviewDecisionRecord.
+L2 domain draft
+  Domain-design input for Employee, request-owned Review, Start/Started terminology,
+  no EmployeeRef and no ReviewDecisionRecord.
+
+Scenario sources
+  Source of truth for Scenario Flow and Behavior Coverage.
 
 CC-VALIDATION-001
   Owns FluentValidation boundary for query filters.
@@ -93,35 +75,7 @@ CC-API-001
   Owns OpenAPI/generated artifact workflow if API contract changes.
 ```
 
-## 5. Sources / Source Behavior Items
-
-Scenario Flow and Behavior Coverage must come from scenario source files, not from this slice locally.
-
-Primary scenario sources after L2 scenario sync:
-
-```text
-planning/diagrams/scenario-text-specs/SC-06-employee-request-dashboard.md
-planning/diagrams/scenario-text-specs/SC-07A-employee-request-details.md
-planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
-```
-
-Domain-design input:
-
-```text
-planning/tables/domain-drafts/domain-draft-02.md
-```
-
-Important distinction:
-
-```text
-The domain draft informs domain terminology and boundaries.
-Scenario text/DATA/UI/behavior files remain source of truth for Scenario Flow and Behavior Coverage.
-```
-
-Stable behavior item IDs for this list slice may still need final mapping in the behavior source file.
-Until then, use `Source BI TBD` and do not invent final IDs inside this slice.
-
-## 6. Visual Scenario Flow
+## 4. Visual Scenario Flow
 
 ```text
 [Signed-in Employee]
@@ -148,7 +102,7 @@ The list makes started-review state visible before command buttons exist.
 Employee can see whether a request is free to start or already being reviewed by another Employee.
 ```
 
-## 7. Visual Implementation Flow
+## 5. Visual Implementation Flow
 
 ```text
 [HTTP GET]
@@ -196,14 +150,19 @@ Client:
   future rendering.
 ```
 
-## 8. API / Query Contract Draft
+## 6. API / Query Contract Draft
 
-### 8.1 Query
+### 6.1 Query
 
 ```ts
 type EmployeeRequestListQuery = {
   status?: "InReview" | "Approved" | "Rejected" | "AgreementExchangeFailed";
-  reviewState?: "NotStarted" | "StartedByCurrentEmployee" | "StartedByAnotherEmployee" | "Approved" | "Rejected";
+  reviewState?:
+    | "NotStarted"
+    | "StartedByCurrentEmployee"
+    | "StartedByAnotherEmployee"
+    | "Approved"
+    | "Rejected";
 };
 ```
 
@@ -214,7 +173,7 @@ No pagination in this slice unless existing project read-list pattern requires i
 Pagination can be added as an extension point.
 ```
 
-### 8.2 Response
+### 6.2 Response
 
 ```ts
 type EmployeeRequestListResponseDto = {
@@ -222,7 +181,7 @@ type EmployeeRequestListResponseDto = {
 };
 ```
 
-### 8.3 List item
+### 6.3 List item
 
 ```ts
 type EmployeeRequestListItemDto = {
@@ -258,7 +217,7 @@ No extra DTOs in this slice:
 - no command affordance DTO.
 ```
 
-## 9. Query Validation / FluentValidation
+## 7. Query Validation / FluentValidation
 
 If filters are present, add query DTO validator:
 
@@ -300,7 +259,7 @@ public static class EmployeeRequestListFieldNames
 }
 ```
 
-## 10. Cross-Cutting Concerns / Considerations
+## 8. Cross-Cutting Concerns / Considerations
 
 | Concern | Applies? | Consideration / owner |
 |---|---:|---|
@@ -319,7 +278,7 @@ public static class EmployeeRequestListFieldNames
 | Privacy / cross-employee exposure | yes | Show started-by-other state without leaking employee private/auth data. |
 | Testing responsibility split | yes | API/read integration tests; no command/UI tests; no unit tests by default. |
 
-## 11. Questions / Decisions
+## 9. Questions / Decisions
 
 ### Accepted
 
@@ -340,7 +299,7 @@ public static class EmployeeRequestListFieldNames
 | `SL-EMP-REQ-001-Q-008` | assumption | Include pagination? | No in first pass unless existing repo pattern requires it. | Pagination can be extension. |
 | `SL-EMP-REQ-001-Q-009` | assumption | What review states are filterable? | Same compact states returned by list item. | Keeps filter/result vocabulary aligned. |
 
-## 12. Extension / Change Points
+## 10. Extension / Change Points
 
 | ID | Area | Current direction | Future owner |
 |---|---|---|---|
@@ -351,7 +310,7 @@ public static class EmployeeRequestListFieldNames
 | `CP-EMP-REQ-LIST-005` | Assignment/queue semantics | Not first pass. | Future employee assignment slice |
 | `CP-EMP-REQ-LIST-006` | Reusable review-state derivation helper | Only if projection logic becomes duplicated/non-trivial. | Helper slice or local helper |
 
-## 13. Behavior Coverage
+## 11. Behavior Coverage
 
 | Source / draft behavior | Status | Covered by this slice |
 |---|---|---|
@@ -372,7 +331,7 @@ Stable scenario behavior IDs for Employee request list are not yet referenced he
 If scenario/register IDs are added or found, map this table to those IDs.
 ```
 
-## 14. Test / Verification Plan
+## 12. Test / Verification Plan
 
 Primary verification: **API/read integration tests**.
 
@@ -386,60 +345,53 @@ Unit tests are allowed only if this slice introduces reusable helper logic with 
 - field-name mapping helper.
 ```
 
-Even then, keep unit tests focused on that helper only.
+Even then, keep unit tests focused on that helper only. Endpoint behavior, auth, validation, visibility, filtering and response shape are verified through integration tests.
 
-Endpoint behavior, auth, validation, visibility, filtering and response shape are verified through integration tests.
-
-### API boundary / access tests
+### API boundary / access
 
 ```text
-- unauthenticated request list returns 401;
-- non-Employee/client account returns documented rejection;
-- authenticated Employee gets 200.
+- unauthenticated -> 401;
+- non-Employee/client -> documented rejection;
+- authenticated Employee -> 200.
 ```
 
-### Query validation tests
+### Query validation
 
 Keep the set small:
 
 ```text
-- unknown status -> 422 ProblemDetails;
-- unknown reviewState -> 422 ProblemDetails;
-- valid status + reviewState filters -> 200.
+- unknown status -> 422;
+- unknown reviewState -> 422;
+- one positive filter test with valid status/reviewState -> 200.
 ```
 
 Do not create one tiny test per DTO property unless a real boundary risk exists.
 
-### List read correctness tests
+### List read correctness
 
 Prefer one mixed dataset test:
 
 ```text
 Arrange:
-- request with no Review;
-- request with Review started by current Employee;
-- request with Review started by another Employee;
-- approved reviewed request;
-- rejected reviewed request.
+- request with no Review -> NotStarted;
+- request started by current Employee -> StartedByCurrentEmployee;
+- request started by another Employee -> StartedByAnotherEmployee;
+- approved reviewed request -> Approved;
+- rejected reviewed request -> Rejected.
 
-Assert list rows contain:
-- NotStarted;
-- StartedByCurrentEmployee;
-- StartedByAnotherEmployee;
-- Approved;
-- Rejected.
+Assert list rows contain all compact review states above.
 ```
 
 This proves the review-state projection without a large matrix of separate tests.
 
-### Filtering tests
+### Filtering
 
 ```text
-- one status filter test narrows rows;
-- one reviewState filter test narrows rows.
+- one status filter test;
+- one reviewState filter test.
 ```
 
-### No-mutation safety tests
+### No-mutation safety
 
 Optional single smoke test only if cheap with existing helpers:
 
@@ -455,7 +407,8 @@ Optional single smoke test only if cheap with existing helpers:
 - no unit tests by default;
 - no validator unit tests by default;
 - no query-handler unit tests with mocks as primary proof;
-- no helper unit tests unless reusable helper has meaningful branching;
+- no helper unit tests unless a reusable helper with meaningful branching is introduced;
+- do not create many tiny tests for every DTO property if integration tests already cover the boundary;
 - no request details endpoint;
 - no StartReview command;
 - no ApproveReview command;
@@ -464,11 +417,10 @@ Optional single smoke test only if cheap with existing helpers:
 - no client UI;
 - no React Query/cache behavior;
 - no repository mock call-order as primary proof;
-- no generated TypeScript as behavior proof;
-- do not create many tiny tests for every DTO property if integration tests already cover the boundary.
+- no generated TypeScript as behavior proof.
 ```
 
-## 15. Implementation Checklist
+## 13. Implementation Checklist
 
 ```text
 [ ] Verify Employee auth/account dependency.
@@ -490,7 +442,7 @@ Optional single smoke test only if cheap with existing helpers:
 [ ] Do not add unit tests unless reusable helper logic requires them.
 ```
 
-## 16. Next Step
+## 14. Next Step
 
 Before implementation, verify blockers:
 
