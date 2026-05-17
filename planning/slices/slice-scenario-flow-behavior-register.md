@@ -49,6 +49,14 @@ Scenario/domain clarification source:
 planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
 ```
 
+Temporary Employee visibility policy note:
+
+```text
+planning/slices/l2/L2-employee-temporary-visibility-policy.md
+```
+
+This policy note clarifies first-pass backend authorization/read filtering for employee dashboard/list/details reads. It does not replace scenario sources.
+
 Behavior source family:
 
 ```text

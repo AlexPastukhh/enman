@@ -49,6 +49,7 @@ This slice does not add employee UI.
 - resolve current authenticated Employee;
 - load request by requestId;
 - verify request is visible/reviewable by current Employee;
+- use the current temporary Employee visibility policy unless a stricter assignment policy is introduced;
 - verify request-owned Review can be started;
 - call Request.StartReview(currentEmployee);
 - persist Review started state;
@@ -473,6 +474,7 @@ This slice should not duplicate the full CSRF matrix. Generic CSRF behavior is o
 | `SL-EMP-REQ-003-Q-009` | assumption | Should Request.Status change?                     | Prefer Review state as source for NotStarted/Started; Request.Status remains high-level lifecycle unless domain draft says otherwise. | Avoids overloading Request.Status.       |
 | `SL-EMP-REQ-003-Q-010` | assumption | Same Employee starts twice?                       | Prefer idempotent no-op success if already started by same Employee.                                                                  | Reduces double-click issues.             |
 | `SL-EMP-REQ-003-Q-011` | assumption | Different Employee starts already-started Review? | Reject as lifecycle/conflict error.                                                                                                   | Prevents silent reassignment.            |
+| `SL-EMP-REQ-003-Q-016` | accepted | Does first pass require department/assignment visibility? | No. Use temporary policy: all active Employees can see review-relevant requests. StartReview still enforces lifecycle/reviewability. | Keeps first command slice unblocked. |
 
 ### Open / implementation blockers
 

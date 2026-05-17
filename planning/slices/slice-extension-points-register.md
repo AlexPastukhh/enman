@@ -7,6 +7,8 @@ Status: active / L2 Employee Review client command extension points synchronized
 | ID | Area | Current direction | Status |
 |---|---|---|---|
 | `CP-L2-EMP-REQ-READ-001` | Employee request reads | List/dashboard read is owned by `SL-EMP-REQ-001`; details read is owned by `SL-EMP-REQ-002`; client read UI belongs to `L2-EMP-DASH-001.client` and `L2-EMP-DETAILS-001.client`. | drafted |
+| `CP-L2-EMP-VIS-001` | temporary Employee visibility | First pass: all active Employees can see all review-relevant requests. EmployeeId is used for current-vs-another review labels, not list filtering. | accepted temporary policy |
+| `CP-L2-EMP-VIS-002` | future Employee visibility | Department/region/assignment/personal-queue visibility can narrow read endpoints later. | future slice |
 | `CP-L2-REVIEW-START-001` | StartReview client action | `L2-REVIEW-START-001.client` owns only Start Review button/action/mutation, composed through Employee details action slot. | full sidecar draft |
 | `CP-L2-REVIEW-START-002` | StartReview response | `StartReviewResponseDto` is compact command result and must not be used as Employee request details DTO. | accepted |
 | `CP-L2-REVIEW-START-003` | Details refresh | StartReview success refreshes details read state and dashboard/list state if present. | accepted |

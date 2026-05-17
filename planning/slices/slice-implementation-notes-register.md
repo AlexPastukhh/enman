@@ -26,6 +26,33 @@ Do not invent final generated operation/type names.
 Use exact names from generated OpenAPI after SL-EMP-REQ-003 backend implementation/generation.
 ```
 
+## L2 Temporary Employee Visibility Policy
+
+Source note:
+
+```text
+planning/slices/l2/L2-employee-temporary-visibility-policy.md
+```
+
+Current accepted first-pass rule:
+
+```text
+All active Employees can see all review-relevant requests.
+```
+
+Implementation implication:
+
+```text
+- Employee auth/active status is required;
+- list/details read may return all review-relevant requests;
+- current Employee id derives StartedByCurrentEmployee vs StartedByAnotherEmployee;
+- current Employee id does not yet filter by department, region, assignment or queue.
+```
+
+This is backend authorization/read filtering, not UI visibility.
+
+Future department/region/assignment visibility must update scenario sources, read slices, client sidecars and tests before implementation.
+
 
 ## SL-EMP-REQ-001 Implementation Verification / Packaging Note
 

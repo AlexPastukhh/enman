@@ -1,5 +1,6 @@
 using System.Net;
 using EnergyManagement.Server.Api.Contracts.Common;
+using EnergyManagement.Testing.TestDatabase;
 using FluentAssertions;
 using Tests.EnergyManagement.TestHelpers;
 using Xunit.Abstractions;
@@ -41,6 +42,7 @@ public sealed class EmployeeRequestListIntegrationTests : L1IntegrationTestBase
     [Fact]
     public async Task ListEmployeeRequests_WithNoRequests_ReturnsEmptyList()
     {
+        await ResetDatabaseAsync();
         var client = AuthenticatedEmployeeClient();
 
         var response = await GetEmployeeRequestsAsync(client);
@@ -51,6 +53,7 @@ public sealed class EmployeeRequestListIntegrationTests : L1IntegrationTestBase
     [Fact]
     public async Task ListEmployeeRequests_ReturnsCompactRowsWithReviewStates()
     {
+        await ResetDatabaseAsync();
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
 
@@ -119,6 +122,7 @@ public sealed class EmployeeRequestListIntegrationTests : L1IntegrationTestBase
     [Fact]
     public async Task ListEmployeeRequests_WithStatusFilter_ReturnsMatchingRows()
     {
+        await ResetDatabaseAsync();
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
 
@@ -147,6 +151,7 @@ public sealed class EmployeeRequestListIntegrationTests : L1IntegrationTestBase
     [Fact]
     public async Task ListEmployeeRequests_WithReviewStateFilter_ReturnsMatchingRows()
     {
+        await ResetDatabaseAsync();
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
 
@@ -205,5 +210,10 @@ public sealed class EmployeeRequestListIntegrationTests : L1IntegrationTestBase
             CurrentEmployeeId,
             email: "employee@example.com",
             role: "Employee");
+    }
+
+    private Task ResetDatabaseAsync()
+    {
+        return new TestDatabaseManager(_fixture.ConnectionString).ResetAsync();
     }
 }

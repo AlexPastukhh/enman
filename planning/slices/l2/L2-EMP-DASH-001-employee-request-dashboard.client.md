@@ -30,7 +30,7 @@ This client sidecar owns:
 ```text
 - Employee request dashboard route/page;
 - signed-in Employee dashboard read state;
-- list of employee-accessible / review-relevant requests;
+- list of employee-accessible / review-relevant requests under the temporary Employee visibility policy;
 - dashboard row visible data:
   request id / display number,
   request type,
@@ -51,6 +51,16 @@ Source scenario meaning:
 
 ```text
 Employee opens dashboard, sees review-relevant requests, sees review-state marker, and opens request details.
+```
+
+Temporary visibility policy consumed by this sidecar:
+
+```text
+All active Employees can see all review-relevant requests.
+
+This is backend authorization/read filtering, not client UI visibility.
+The client renders rows returned by the server and does not locally implement
+department/region/assignment filtering.
 ```
 
 ## 3. Out of Scope
@@ -78,7 +88,7 @@ SC-06 Employee Request Dashboard
   owns dashboard read scenario and review-state visibility.
 
 SL-EMP-REQ-001 — Employee Request List Read
-  owns server list endpoint and filters consumed by this dashboard.
+  owns server list endpoint, filters and temporary employee visibility policy consumed by this dashboard.
 
 SC-07A Employee Request Details
   owns details page read scenario and review action visibility.
@@ -346,7 +356,7 @@ Implementation flow table:
 |---|---|---|
 | I01 | Route/page | Employee dashboard page renders dashboard read context. |
 | I02 | Page | Page checks Employee session and renders loading/error/empty/success branches. |
-| I03 | Entity query | Query loads employee-accessible dashboard request summaries. |
+| I03 | Entity query | Query loads dashboard summaries returned by server under temporary visibility policy. |
 | I04 | Entity API | Entity read operation delegates to shared API wrapper. |
 | I05 | Shared API | Wrapper calls server dashboard read endpoint. |
 | I06 | Entity display UI | Dashboard list/row renders visible request data and review state marker. |
@@ -421,6 +431,8 @@ Contract rules:
 - Client must not send employeeId.
 - Server derives Employee context from auth/session.
 - Server enforces Employee access.
+- Temporary first pass: all active Employees can see all review-relevant requests.
+- Client must not implement local department/region/assignment filtering.
 - Client uses generated OpenAPI types.
 - Client must not handwrite DTO shape once generated types exist.
 ```
@@ -446,7 +458,7 @@ current-Employee context to avoid guessing.
 | Concern | Applies? | Consideration / owner |
 |---|---:|---|
 | Auth/session/account context | yes | Employee dashboard requires Employee-authenticated context. |
-| Authorization/visibility | yes | Server owns employee-visible request filtering; client only renders returned data. |
+| Authorization/visibility | yes | Server owns backend read visibility. Temporary policy is broad: all active Employees can see all review-relevant requests. Client only renders returned data and does not locally narrow by department/region/assignment. |
 | Antiforgery / unsafe requests | no | Dashboard read is safe GET by default and should not require local CSRF logic. |
 | Request validation / ProblemDetails | maybe | Status filter validation is server-owned if filter exists. |
 | OpenAPI / generated artifacts | yes | Use generated OpenAPI types after server contract exists. |
@@ -480,6 +492,7 @@ Future review commands are unsafe and consume shared antiforgery behavior.
 | `Q-L2-EMP-DASH-CLIENT-006` | accepted | Which filter is in first pass? | Status only, if server supports it. Other filters future. | UI scope. |
 | `Q-L2-EMP-DASH-CLIENT-007` | accepted | Row navigation target? | Employee request details page, future `SC-07A.client`. | Link/handoff. |
 | `Q-L2-EMP-DASH-CLIENT-008` | assumption | Should client derive reviewState from raw review fields? | Prefer server returns dashboard-ready `reviewState`; client should not guess employee-relative state unless contract explicitly provides required fields. | DTO design, UI mapping, tests. |
+| `Q-L2-EMP-DASH-CLIENT-009` | accepted | What is first-pass Employee visibility? | All active Employees can see all review-relevant requests. This is server read filtering, not UI hiding. | Prevents client-side filtering/authorization logic from creeping in. |
 
 ## 11. Extension / Change Points
 
@@ -487,7 +500,7 @@ Future review commands are unsafe and consume shared antiforgery behavior.
 - Employee request details page -> SC-07A.client;
 - Start review action -> SC-07B start-review command sidecar;
 - Approve/reject actions -> SC-07B decision command sidecars;
-- assignment/queue policy -> future employee queue slice;
+- temporary visibility policy is broad; department/region/assignment visibility -> future employee queue/visibility slice;
 - department/permission model -> future auth/authorization slice;
 - richer filters/search/priority/date -> future dashboard refinement;
 - agreement proposal exchange -> SC-13*.
@@ -500,7 +513,7 @@ Future review commands are unsafe and consume shared antiforgery behavior.
 | `L2-EMP-DASH-001` | Dashboard page lists employee-accessible / review-relevant requests returned by server. | covered by read UI + server contract |
 | `L2-EMP-DASH-002` | Row badge distinguishes not-started, started-by-current-Employee, started-by-another-Employee. | covered after DTO contract |
 | `L2-EMP-DASH-003` | UI labels use Employee terminology, not Worker. | covered |
-| `EMP-READ-001` | Dashboard renders employee-accessible request rows; server owns access enforcement. | covered at UI boundary / server-dependent |
+| `EMP-READ-001` | Dashboard renders employee-accessible request rows; server owns access enforcement. Temporary broad visibility is server policy. | covered at UI boundary / server-dependent |
 | Unauthorized employee context cannot access protected data/actions | Client shows auth/access state; server owns enforcement. | server-dependent |
 
 Not behavior coverage:
@@ -551,6 +564,8 @@ setup review-relevant requests:
   no review started
   review started by current Employee
   review started by another Employee
+
+Under temporary visibility policy, all three rows are visible to the active Employee.
         ↓
 open Employee dashboard
         ↓

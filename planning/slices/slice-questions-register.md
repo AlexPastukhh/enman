@@ -17,7 +17,16 @@ Status: active / L2 Employee Review client command questions synchronized
 | `Q-L2-REVIEW-START-CLIENT-009` | same | composition | accepted | Where does action appear? | In Employee request details page action slot when details read model says available. | Page/entity/feature composition. |
 | `Q-L2-REVIEW-START-CLIENT-010` | same | scope | accepted | Should dashboard show StartReview directly? | Not first pass. Start action belongs to details action area. | Dashboard remains read sidecar. |
 
-## 2. Current ApplicantParty / L1 Questions Still Relevant
+
+## 2. L2 Employee Visibility Questions
+
+| ID | Local file(s) | Area | Status | Question | Assumption / current direction | Impact |
+|---|---|---|---|---|---|---|
+| `Q-L2-EMP-VIS-001` | `SL-EMP-REQ-001`, `SL-EMP-REQ-002`, `L2-EMP-DASH-001.client` | employee visibility | accepted | What does employee-visible mean in the first Employee dashboard/read pass? | All active Employees can see all review-relevant requests. | Makes broad first-pass read behavior intentional. |
+| `Q-L2-EMP-VIS-002` | same | label derivation | accepted | Does current Employee id narrow the list in first pass? | No. It derives `StartedByCurrentEmployee` vs `StartedByAnotherEmployee`. | Avoids accidental department/assignment filtering. |
+| `Q-L2-EMP-VIS-003` | same | future policy | future review | Should visibility later depend on department, region, assignment or queue? | Future extension point, not current slice scope. | Later authorization/read-filtering change. |
+
+## 3. Current ApplicantParty / L1 Questions Still Relevant
 
 | ID | Local file(s) | Area | Status | Question | Assumption / current direction | Impact |
 |---|---|---|---|---|---|---|
@@ -32,7 +41,7 @@ Status: active / L2 Employee Review client command questions synchronized
 | `Q-SL-APPL-003-CLIENT-009` | same | generated artifacts | implementation check | Are generated artifacts already exposing endpoint? | Verify before client code. If missing, run generation workflow. | Prevents manual generated edits. |
 | `Q-SL-APPL-003-CLIENT-010` | same | page placement | implementation check | Is target Applicant Parties page already replacing old AccountPage? | Verify current UI. The action may be wired into existing AccountPage or future Applicant Parties page. | Placement and route/page scope. |
 
-## 3. Existing Accepted Directions Still Relevant
+## 4. Existing Accepted Directions Still Relevant
 
 | ID | Area | Status | Current direction |
 |---|---|---|---|

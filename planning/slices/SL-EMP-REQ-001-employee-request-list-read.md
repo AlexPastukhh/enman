@@ -75,7 +75,43 @@ CC-API-001
   Owns OpenAPI/generated artifact workflow if API contract changes.
 ```
 
-## 4. Visual Scenario Flow
+## 4. Temporary Employee Visibility Policy
+
+Temporary first-pass policy:
+
+```text
+All active Employees can see all review-relevant requests.
+```
+
+This is backend authorization/read filtering, not UI visibility.
+
+For this slice, `employee-visible requests` means:
+
+```text
+- the caller is an authenticated active Employee;
+- the endpoint returns all review-relevant requests included by this read model;
+- current Employee id is used to derive employee-relative review labels;
+- current Employee id does not yet narrow the list by department, region, assignment or personal queue.
+```
+
+Current label derivation remains important:
+
+```text
+StartedByCurrentEmployee
+StartedByAnotherEmployee
+```
+
+So a row started by another Employee is still visible in the first pass; it is labeled as started by another Employee rather than filtered out.
+
+Future visibility models such as department/region/assignment-based filtering are extension points, not current scope.
+
+Source note:
+
+```text
+planning/slices/l2/L2-employee-temporary-visibility-policy.md
+```
+
+## 5. Visual Scenario Flow
 
 ```text
 [Signed-in Employee]
@@ -102,7 +138,7 @@ The list makes started-review state visible before command buttons exist.
 Employee can see whether a request is free to start or already being reviewed by another Employee.
 ```
 
-## 5. Visual Implementation Flow
+## 6. Visual Implementation Flow
 
 ```text
 [HTTP GET]
@@ -115,7 +151,7 @@ resolve current Employee id
 validate query filter shape and allowed values
         ↓
 [Query handler]
-load employee-visible request rows
+load review-relevant request rows under temporary visibility policy
         ↓
 [Projection]
 derive compact review state using:
@@ -138,7 +174,9 @@ Validator:
   query shape only.
 
 Query handler:
-  employee visibility and projection.
+  temporary employee visibility policy and projection.
+  First pass returns all review-relevant requests for active Employees;
+  EmployeeId is used for reviewState label derivation, not department/assignment filtering.
 
 Domain model:
   source semantics:
@@ -150,7 +188,7 @@ Client:
   future rendering.
 ```
 
-## 6. API / Query Contract Draft
+## 7. API / Query Contract Draft
 
 ### 6.1 Query
 
@@ -217,7 +255,7 @@ No extra DTOs in this slice:
 - no command affordance DTO.
 ```
 
-## 7. Query Validation / FluentValidation
+## 8. Query Validation / FluentValidation
 
 If filters are present, add query DTO validator:
 
@@ -259,12 +297,12 @@ public static class EmployeeRequestListFieldNames
 }
 ```
 
-## 8. Cross-Cutting Concerns / Considerations
+## 9. Cross-Cutting Concerns / Considerations
 
 | Concern | Applies? | Consideration / owner |
 |---|---:|---|
 | Auth/session/account context | yes | Must resolve current authenticated Employee. Employee auth/account may be dependency/blocker. |
-| Authorization/visibility | yes | Query handler owns employee-visible request filtering. |
+| Authorization/visibility | yes | Temporary policy: all active Employees can see all review-relevant requests. Query handler uses EmployeeId for review-state label derivation, not department/region/assignment filtering in first pass. |
 | Antiforgery / unsafe requests | no | Read-only GET. |
 | Request validation / ProblemDetails | yes | Query filters validated with FluentValidation. Unknown filter values return 422. |
 | OpenAPI / generated artifacts | yes | New endpoint/DTOs change API contract; generated artifacts must come from repo commands. |
@@ -278,7 +316,7 @@ public static class EmployeeRequestListFieldNames
 | Privacy / cross-employee exposure | yes | Show started-by-other state without leaking employee private/auth data. |
 | Testing responsibility split | yes | API/read integration tests; no command/UI tests; no unit tests by default. |
 
-## 9. Questions / Decisions
+## 10. Questions / Decisions
 
 ### Accepted
 
@@ -290,6 +328,7 @@ public static class EmployeeRequestListFieldNames
 | `SL-EMP-REQ-001-Q-004` | accepted | Include full applicant/contact details? | No. Compact row only. | Details slice owns full data. |
 | `SL-EMP-REQ-001-Q-005` | accepted | Validate filters with FluentValidation? | Yes, if filters are present. | Unknown filter values return 422. |
 | `SL-EMP-REQ-001-Q-006` | accepted | Add unit tests by default? | No. Use integration/API tests unless reusable helper logic is introduced. | Prevents test bloat. |
+| `SL-EMP-REQ-001-Q-010` | accepted | What is the first-pass employee visibility policy? | All active Employees can see all review-relevant requests. EmployeeId only derives StartedByCurrentEmployee vs StartedByAnotherEmployee labels. | Makes current broad read behavior intentional, not a bug. |
 
 ### Assumptions / current direction
 
@@ -299,7 +338,7 @@ public static class EmployeeRequestListFieldNames
 | `SL-EMP-REQ-001-Q-008` | assumption | Include pagination? | No in first pass unless existing repo pattern requires it. | Pagination can be extension. |
 | `SL-EMP-REQ-001-Q-009` | assumption | What review states are filterable? | Same compact states returned by list item. | Keeps filter/result vocabulary aligned. |
 
-## 10. Extension / Change Points
+## 11. Extension / Change Points
 
 | ID | Area | Current direction | Future owner |
 |---|---|---|---|
@@ -308,13 +347,15 @@ public static class EmployeeRequestListFieldNames
 | `CP-EMP-REQ-LIST-003` | Employee display name | Not first pass. | Employee profile/read slice |
 | `CP-EMP-REQ-LIST-004` | Action flags | Not first pass. | Details/client/command sidecars |
 | `CP-EMP-REQ-LIST-005` | Assignment/queue semantics | Not first pass. | Future employee assignment slice |
+| `CP-EMP-REQ-LIST-007` | Employee visibility policy | First pass is broad: all active Employees see all review-relevant requests. Department/region/assignment filtering is future. | Future employee visibility/assignment slice |
 | `CP-EMP-REQ-LIST-006` | Reusable review-state derivation helper | Only if projection logic becomes duplicated/non-trivial. | Helper slice or local helper |
 
-## 11. Behavior Coverage
+## 12. Behavior Coverage
 
 | Source / draft behavior | Status | Covered by this slice |
 |---|---|---|
 | Employee can see request list | covered | `GET /api/employee/requests`. |
+| Temporary visibility policy: active Employee sees review-relevant requests | covered | first-pass query returns all review-relevant rows for active Employees. |
 | Employee can filter request list | covered | `status`, `reviewState` query filters. |
 | List row shows compact request summary | covered | list item DTO. |
 | List row shows review not started | covered | `reviewState = NotStarted`. |
@@ -331,7 +372,7 @@ Stable scenario behavior IDs for Employee request list are not yet referenced he
 If scenario/register IDs are added or found, map this table to those IDs.
 ```
 
-## 12. Test / Verification Plan
+## 13. Test / Verification Plan
 
 Primary verification: **API/read integration tests**.
 
@@ -352,7 +393,7 @@ Even then, keep unit tests focused on that helper only. Endpoint behavior, auth,
 ```text
 - unauthenticated -> 401;
 - non-Employee/client -> documented rejection;
-- authenticated Employee -> 200.
+- authenticated active Employee -> 200.
 ```
 
 ### Query validation
@@ -380,6 +421,8 @@ Arrange:
 - rejected reviewed request -> Rejected.
 
 Assert list rows contain all compact review states above.
+
+Also assert the row started by another Employee is still visible as `StartedByAnotherEmployee`; do not filter it out under the temporary visibility policy.
 ```
 
 This proves the review-state projection without a large matrix of separate tests.
@@ -417,10 +460,11 @@ Optional single smoke test only if cheap with existing helpers:
 - no client UI;
 - no React Query/cache behavior;
 - no repository mock call-order as primary proof;
-- no generated TypeScript as behavior proof.
+- no generated TypeScript as behavior proof;
+- no department/region/assignment visibility tests until that policy exists.
 ```
 
-## 13. Implementation Checklist
+## 14. Implementation Checklist
 
 ```text
 [ ] Verify Employee auth/account dependency.
@@ -431,7 +475,8 @@ Optional single smoke test only if cheap with existing helpers:
 [ ] Add field-name constants for query filters.
 [ ] Add response DTO with requests array.
 [ ] Add compact list item DTO.
-[ ] Implement employee-visible request projection.
+[ ] Implement temporary employee visibility policy: all active Employees see all review-relevant requests.
+[ ] Use EmployeeId for StartedByCurrentEmployee vs StartedByAnotherEmployee label derivation.
 [ ] Derive reviewState from request/review state and currentEmployeeId.
 [ ] Keep response compact; no details/contact/action DTOs.
 [ ] Add focused API/read integration tests.
@@ -442,7 +487,7 @@ Optional single smoke test only if cheap with existing helpers:
 [ ] Do not add unit tests unless reusable helper logic requires them.
 ```
 
-## 14. Next Step
+## 15. Next Step
 
 Before implementation, verify blockers:
 
