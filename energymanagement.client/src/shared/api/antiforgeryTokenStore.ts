@@ -24,17 +24,23 @@ export const ensureAntiforgeryToken = async (): Promise<string> => {
     inFlightTokenRequest = fetchAntiforgeryToken();
   }
 
-  requestToken = await inFlightTokenRequest;
-  inFlightTokenRequest = null;
-  return requestToken;
+  try {
+    requestToken = await inFlightTokenRequest;
+    return requestToken;
+  } finally {
+    inFlightTokenRequest = null;
+  }
 };
 
 export const refreshAntiforgeryToken = async (): Promise<string> => {
   requestToken = null;
   inFlightTokenRequest = fetchAntiforgeryToken();
-  requestToken = await inFlightTokenRequest;
-  inFlightTokenRequest = null;
-  return requestToken;
+  try {
+    requestToken = await inFlightTokenRequest;
+    return requestToken;
+  } finally {
+    inFlightTokenRequest = null;
+  }
 };
 
 const fetchAntiforgeryToken = async (): Promise<string> => {

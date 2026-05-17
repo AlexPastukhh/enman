@@ -1,45 +1,40 @@
-# MANIFEST — Employee Request Read Slice Full Drafts Sync
+# L2 Domain Classes Implementation Archive
 
-Archive: `employee-request-read-slices-full-drafts-sync.zip`  
-Scope: docs-only slice planning update for L2 Employee request read drafts and read-slice test-plan rules
+Merge-ready archive with repo-relative paths. It implements target L2 domain classes from `planning/tables/domain-drafts/domain-draft-02.md` without changing planning docs or server API/client code.
 
-## Add
+## Included files
 
-| File | Why |
-|---|---|
-| `planning/slices/SL-EMP-REQ-001-employee-request-list-read.md` | Full backend/API read slice draft for employee request list + filters. |
-| `planning/slices/SL-EMP-REQ-002-employee-request-details-read.md` | Full backend/API read slice draft for employee request details by id. |
-| `planning/slices/l2/README.md` | L2 slice drafting navigation for Employee request/review/agreement sequence. |
-
-## Replace
-
-| File | Why |
-|---|---|
-| `planning/slices/README.md` | Add L2 Employee request read drafts to slice navigation. |
-| `planning/slices/slice-scenario-flow-behavior-register.md` | Clarify scenario sources vs domain draft input and map SL-EMP-REQ-001/002 to scenario files. |
-| `planning/testing/server-slice-test-plan-rules.md` | Add server read-slice test-plan rules: API/read integration primary, no unit tests by default. |
-
-## Source inputs
-
-Current user-provided drafts:
+Added:
 
 ```text
-SL-EMP-REQ-001 — Employee Request List Read
-SL-EMP-REQ-002 — Employee Request Details Read
+Domain.EnergyManagement/L1/Employees/Employee.cs
+Domain.EnergyManagement/L1/Requests/RequestReview.cs
+Domain.EnergyManagement/L1/Requests/RequestReviewStatus.cs
+Domain.EnergyManagement/L1/AgreementProposals/AgreementExchangeStatus.cs
+Domain.EnergyManagement/L1/AgreementProposals/AgreementProposal.cs
+Domain.EnergyManagement/L1/AgreementProposals/AgreementProposalAuthor.cs
+Domain.EnergyManagement/L1/AgreementProposals/AgreementProposalExchange.cs
+Domain.EnergyManagement/L1/AgreementProposals/AgreementProposalSender.cs
+Domain.EnergyManagement/L1/AgreementProposals/AgreementProposalState.cs
+Domain.EnergyManagement/L1/AgreementProposals/AgreementProposalVersion.cs
+Domain.EnergyManagement/L1/AgreementProposals/AgreementDocumentRef.cs
+Domain.EnergyManagement/L1/AgreementProposals/ProposalComment.cs
+Domain.EnergyManagement/L1/AgreementProposals/FinalRefusalReason.cs
 ```
 
-Scenario/domain input relationship:
+Replaced:
 
 ```text
-Scenario text/DATA/UI/behavior files remain source of truth for Scenario Flow and Behavior Coverage.
-planning/tables/domain-drafts/domain-draft-02.md is domain-design input, not a replacement for scenario sources.
+Domain.EnergyManagement/Common/Error.cs
+Domain.EnergyManagement/L1/Accounts/AccountRole.cs
+Domain.EnergyManagement/L1/Requests/ConnectionRequest.cs
+Domain.EnergyManagement/L1/Requests/RequestStatus.cs
 ```
 
-## Not included
+## Compatibility notes
 
-```text
-- no runtime code;
-- no tests;
-- no generated artifacts;
-- no GitHub branch/commit/PR.
-```
+- Existing `EmployeeRef` and `ReviewDecisionRecord` files are not removed.
+- Existing `ConnectionRequest.Approve(EmployeeRef)` / `Reject(EmployeeRef, ...)` methods are kept for current L1 behavior compatibility.
+- New L2 review API is additive: `StartReview(Employee, ...)`, `ApproveReview(Employee, ...)`, `RejectReview(Employee, ...)`.
+- `ConnectionRequest.Review` is marked `[NotMapped]` to avoid accidentally changing current EF persistence mapping in this domain-only package.
+- No server DbContext mapping, migrations, API endpoints, OpenAPI artifacts, client code, docs, or tests are included.

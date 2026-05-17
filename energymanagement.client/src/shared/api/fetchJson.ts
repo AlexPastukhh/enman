@@ -60,7 +60,9 @@ export const fetchJson = async <TResponse>(
 ): Promise<TResponse> => {
   const { skipCsrf = false, headers: initHeaders, ...requestInit } = init;
   const headers = new Headers(initHeaders);
-  headers.set("Content-Type", "application/json");
+  if (requestInit.body !== undefined && !headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
+  }
 
   if (isUnsafeMethod(requestInit.method) && !skipCsrf) {
     headers.set(antiforgeryHeaderName, await ensureAntiforgeryToken());

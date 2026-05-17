@@ -30,9 +30,10 @@ describe("fetchJson", () => {
     );
     const headers = fetchMock.mock.calls[0]?.[1]?.headers as Headers;
     expect(headers.has("X-CSRF-TOKEN")).toBe(false);
+    expect(headers.has("Content-Type")).toBe(false);
   });
 
-  it("fetches and sends an antiforgery token for POST requests", async () => {
+  it("sets JSON content type and sends an antiforgery token for POST requests with JSON body", async () => {
     const fetchMock = vi
       .fn()
       .mockResolvedValueOnce(tokenResponse("token-1"))
@@ -49,6 +50,29 @@ describe("fetchJson", () => {
     expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(fetchMock.mock.calls[0]?.[0]).toBe("/api/antiforgery/token");
     const headers = fetchMock.mock.calls[1]?.[1]?.headers as Headers;
+    expect(headers.get("X-CSRF-TOKEN")).toBe("token-1");
+    expect(headers.get("Content-Type")).toBe("application/json");
+  });
+
+  it("preserves caller-provided content type for unsafe requests", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(tokenResponse("token-1"))
+      .mockResolvedValueOnce(new Response(null, { status: 204 }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(
+      fetchJson<void>("/api/example", {
+        method: "POST",
+        body: "raw-payload",
+        headers: {
+          "Content-Type": "text/plain",
+        },
+      }),
+    ).resolves.toBeUndefined();
+
+    const headers = fetchMock.mock.calls[1]?.[1]?.headers as Headers;
+    expect(headers.get("Content-Type")).toBe("text/plain");
     expect(headers.get("X-CSRF-TOKEN")).toBe("token-1");
   });
 

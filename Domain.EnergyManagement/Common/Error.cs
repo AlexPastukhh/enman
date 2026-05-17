@@ -149,6 +149,46 @@ public class Error : ValueObject
             public static readonly Error OnlyInReviewRequestCanBeApproved = Create("l1.request.only.in.review.can.be.approved", 400);
             public static readonly Error OnlyInReviewRequestCanBeRejected = Create("l1.request.only.in.review.can.be.rejected", 400);
             public static readonly Error RejectionFeedbackIsTooLong = Create("l1.request.rejection.feedback.is.too.long", 400);
+
+            public static readonly Error EmployeeIsRequired = Create("l1.employee.is.required", 400);
+            public static readonly Error EmployeeAccountIsRequired = Create("l1.employee.account.is.required", 400);
+            public static readonly Error EmployeeFullNameIsRequired = Create("l1.employee.full.name.is.required", 400);
+            public static readonly Error EmployeeIsNotActive = Create("l1.employee.is.not.active", 400);
+
+            public static readonly Error OnlyInReviewRequestCanStartReview = Create("l1.request.only.in.review.can.start.review", 400);
+            public static readonly Error RequestReviewAlreadyStarted = Create("l1.request.review.already.started", 400);
+            public static readonly Error RequestReviewMustBeStarted = Create("l1.request.review.must.be.started", 400);
+            public static readonly Error OnlyStartedReviewCanBeCompleted = Create("l1.request.review.only.started.can.be.completed", 400);
+            public static readonly Error RequestReviewStartedByAnotherEmployee = Create("l1.request.review.started.by.another.employee", 400);
+
+            public static readonly Error AgreementProposalExchangeIsRequired = Create("l1.agreement.proposal.exchange.is.required", 400);
+            public static readonly Error OnlyApprovedRequestCanBeMarkedAgreementExchangeFailed = Create("l1.request.only.approved.can.be.marked.agreement.exchange.failed", 400);
+            public static readonly Error RequestIsRequired = Create("l1.request.is.required", 400);
+            public static readonly Error AgreementExchangeRequiresApprovedRequest = Create("l1.agreement.exchange.requires.approved.request", 400);
+            public static readonly Error AgreementDocumentIsRequired = Create("l1.agreement.document.is.required", 400);
+            public static readonly Error OnlyAwaitingClientConfirmationCanBeAccepted = Create("l1.agreement.exchange.only.awaiting.client.confirmation.can.be.accepted", 400);
+            public static readonly Error ClientVersionCanBeSentOnlyWhenAwaitingClientConfirmation = Create("l1.agreement.exchange.client.version.only.awaiting.client.confirmation", 400);
+            public static readonly Error ClientCanRespondOnlyToEmployeeProposal = Create("l1.agreement.exchange.client.can.respond.only.to.employee.proposal", 400);
+            public static readonly Error EmployeeCanRespondOnlyWhenAwaitingEmployeeResponse = Create("l1.agreement.exchange.employee.can.respond.only.awaiting.employee.response", 400);
+            public static readonly Error EmployeeCanSupersedeOnlyClientProposal = Create("l1.agreement.exchange.employee.can.supersede.only.client.proposal", 400);
+            public static readonly Error AcceptedAgreementExchangeCannotBeRefused = Create("l1.agreement.exchange.accepted.cannot.be.refused", 400);
+            public static readonly Error AgreementExchangeAlreadyFinallyRefused = Create("l1.agreement.exchange.already.finally.refused", 400);
+            public static readonly Error AgreementExchangeCannotBeFinallyRefusedNow = Create("l1.agreement.exchange.cannot.be.finally.refused.now", 400);
+
+            public static readonly Error OnlyEmployeeProposalCanBeAccepted = Create("l1.agreement.proposal.only.employee.can.be.accepted", 400);
+            public static readonly Error OnlyAwaitingClientConfirmationProposalCanBeAccepted = Create("l1.agreement.proposal.only.awaiting.client.confirmation.can.be.accepted", 400);
+            public static readonly Error AcceptedProposalCannotBeSuperseded = Create("l1.agreement.proposal.accepted.cannot.be.superseded", 400);
+            public static readonly Error ProposalAlreadySuperseded = Create("l1.agreement.proposal.already.superseded", 400);
+
+            public static readonly Error AgreementDocumentStorageKeyIsRequired = Create("l1.agreement.document.storage.key.is.required", 400);
+            public static readonly Error AgreementDocumentFileNameIsRequired = Create("l1.agreement.document.file.name.is.required", 400);
+            public static readonly Error AgreementDocumentContentTypeIsRequired = Create("l1.agreement.document.content.type.is.required", 400);
+            public static readonly Error AgreementDocumentSizeIsRequired = Create("l1.agreement.document.size.is.required", 400);
+
+            public static readonly Error ProposalCommentIsRequired = Create("l1.agreement.proposal.comment.is.required", 400);
+            public static readonly Error ProposalCommentIsTooLong = Create("l1.agreement.proposal.comment.is.too.long", 400);
+            public static readonly Error FinalRefusalReasonIsRequired = Create("l1.agreement.final.refusal.reason.is.required", 400);
+            public static readonly Error FinalRefusalReasonIsTooLong = Create("l1.agreement.final.refusal.reason.is.too.long", 400);
         }
     }
 }

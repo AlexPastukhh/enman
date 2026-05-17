@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using CSharpFunctionalExtensions;
 using Domain.EnergyManagement.Common;
 using Domain.EnergyManagement.DocumentManaging;
@@ -9,7 +10,12 @@ public sealed class ConnectionRequest : ClientRequest
 {
     private ReviewDecisionRecord? _reviewDecision;
 
+    private RequestReview? _review;
+
     public ReviewDecisionRecord? ReviewDecision => _reviewDecision;
+
+    [NotMapped]
+    public RequestReview? Review => _review;
 
     private ConnectionRequest(
         ApplicantParty applicantParty,
@@ -48,6 +54,123 @@ public sealed class ConnectionRequest : ClientRequest
                 DateTimeOffset.UtcNow));
     }
 
+    public UnitResult<IReadOnlyList<Error>> StartReview(
+        Employee employee,
+        DateTimeOffset startedAt)
+    {
+        if (employee is null)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.EmployeeIsRequired]);
+        }
+
+        var canReview = employee.EnsureCanReview();
+        if (canReview.IsFailure)
+        {
+            return canReview;
+        }
+
+        if (Status != RequestStatus.InReview)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.OnlyInReviewRequestCanStartReview]);
+        }
+
+        if (_review is not null && _review.Status == RequestReviewStatus.Started)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.RequestReviewAlreadyStarted]);
+        }
+
+        _review = RequestReview.StartForRequest(
+            Id,
+            employee,
+            startedAt);
+
+        return UnitResult.Success<IReadOnlyList<Error>>();
+    }
+
+    public UnitResult<IReadOnlyList<Error>> ApproveReview(
+        Employee employee,
+        DateTimeOffset decidedAt)
+    {
+        if (_review is null)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.RequestReviewMustBeStarted]);
+        }
+
+        if (Status != RequestStatus.InReview)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.OnlyInReviewRequestCanBeApproved]);
+        }
+
+        var approve = _review.Approve(employee, decidedAt);
+        if (approve.IsFailure)
+        {
+            return approve;
+        }
+
+        Status = RequestStatus.Approved;
+
+        return UnitResult.Success<IReadOnlyList<Error>>();
+    }
+
+    public UnitResult<IReadOnlyList<Error>> RejectReview(
+        Employee employee,
+        RejectionFeedback? feedback,
+        DateTimeOffset decidedAt)
+    {
+        if (_review is null)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.RequestReviewMustBeStarted]);
+        }
+
+        if (Status != RequestStatus.InReview)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.OnlyInReviewRequestCanBeRejected]);
+        }
+
+        var reject = _review.Reject(
+            employee,
+            feedback,
+            decidedAt);
+
+        if (reject.IsFailure)
+        {
+            return reject;
+        }
+
+        Status = RequestStatus.Rejected;
+
+        return UnitResult.Success<IReadOnlyList<Error>>();
+    }
+
+    public UnitResult<IReadOnlyList<Error>> MarkAgreementExchangeFailed(
+        long agreementProposalExchangeId,
+        DateTimeOffset failedAt)
+    {
+        if (agreementProposalExchangeId <= 0)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.AgreementProposalExchangeIsRequired]);
+        }
+
+        if (Status != RequestStatus.Approved)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.OnlyApprovedRequestCanBeMarkedAgreementExchangeFailed]);
+        }
+
+        Status = RequestStatus.AgreementExchangeFailed;
+
+        return UnitResult.Success<IReadOnlyList<Error>>();
+    }
+
+    // Existing L1 review API is intentionally kept for current implemented behavior compatibility.
     public UnitResult<IReadOnlyList<Error>> CanApprove(EmployeeRef reviewer)
     {
         if (reviewer is null)
