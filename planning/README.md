@@ -1,6 +1,6 @@
 # Planning Index
 
-Status: current / L1 implementation status, ApplicantParty read/default command, request creation UI and remaining L1 gaps synchronized
+Status: current / L1 baseline and near-final L2 Employee Review + Agreement Exchange planning synchronized
 
 ## 1. Start Here
 
@@ -11,6 +11,7 @@ Core read order:
 ```text
 planning/README.md
 planning/l1-current-implementation-status.md
+planning/l2-current-planning-status.md
 planning/planning-workflow-current.md
 planning/planning-agent-protocol.md
 planning/agent-scope-boundaries-and-prompt-safety.md
@@ -27,10 +28,23 @@ planning/documentation/local-global-documentation-sync-workflow.md
 planning/replacement-file-generation-guide.md
 ```
 
-For slice/client work read:
+For scenario/diagram work read:
+
+```text
+planning/diagrams/README.md
+planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
+planning/diagrams/scenario-data/00-scenario-data-index.md
+planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
+planning/diagrams/scenario-clarifications/README.md
+planning/diagrams/diagram-prompt-generation-workflow.md
+planning/diagrams/drawio-diagram-generation-workflow.md
+```
+
+For slice/client/server work read:
 
 ```text
 planning/slices/README.md
+planning/slices/l2/README.md
 planning/slices/l1-slice-drafting-guide.md
 planning/slices/slice-scenario-flow-behavior-register.md
 planning/slices/slice-questions-register.md
@@ -38,7 +52,7 @@ planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
 ```
 
-For backend cleanup / legacy-to-L1 boundary work also read:
+For backend cleanup / legacy-to-L1/L2 boundary work also read:
 
 ```text
 planning/architecture/README.md
@@ -47,7 +61,28 @@ planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fl
 planning/api/api-error-contract.md
 ```
 
-## 2. Current L1 Snapshot
+For non-canonical thesis/diploma recovery notes:
+
+```text
+planning/dirty-drafts/README.md
+```
+
+Dirty drafts are not source of truth. Use them only to recover explanations or thesis wording after canonical docs are checked.
+
+## 2. Source-of-Truth Rules
+
+```text
+Scenario specs are source of truth for scenario behavior.
+Slice docs map a scenario portion to one implementation slice.
+Domain drafts are domain-design input, not a replacement for scenario specs.
+GitHub/current branch is source of truth for current implementation state.
+Archives are handoff artifacts, not current-state truth.
+Dirty drafts are non-canonical scratch/recovery/thesis notes.
+```
+
+When the user asks about what is implemented now, inspect GitHub/current branch directly.
+
+## 3. Current L1 Snapshot
 
 Implemented/current:
 
@@ -83,7 +118,7 @@ Use:
 planning/l1-current-implementation-status.md
 ```
 
-## 3. Current Applicant/Request Target Direction
+## 4. Current Applicant/Request Target Direction
 
 ```text
 ApplicantParty:
@@ -119,7 +154,68 @@ Request creation current state:
 - command success hands off to My Requests.
 ```
 
-## 4. Server Validation Direction
+## 5. Current L2 Snapshot
+
+L2 planning is almost complete for the Employee Review and Agreement Exchange cut.
+
+Use:
+
+```text
+planning/l2-current-planning-status.md
+planning/slices/l2/README.md
+planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
+```
+
+Canonical L2 server slice set:
+
+```text
+SL-EMP-REQ-001 — Employee Request List Read
+SL-EMP-REQ-002 — Employee Request Details Read
+SL-EMP-REQ-003 — Start Request Review
+SL-EMP-REQ-004 — Approve Request Review
+SL-EMP-REQ-005 — Reject Request Review
+
+SL-AGR-EXCH-001 — Start Agreement Exchange With Initial Employee Proposal
+SL-AGR-EXCH-002 — Send Agreement Counter-Proposal Version
+SL-AGR-EXCH-003 — Agreement Exchange List Page / Read List
+SL-AGR-EXCH-004 — Agreement Exchange Details / Read Details
+SL-AGR-EXCH-005 — Client Accept Active Agreement Proposal
+SL-AGR-EXCH-006 — Final Refuse Agreement Exchange
+```
+
+Canonical L2 client sidecar set:
+
+```text
+L2-EMP-DASH-001.client
+L2-EMP-DETAILS-001.client
+L2-REVIEW-START-001.client
+L2-REVIEW-APPROVE-001.client
+L2-REVIEW-REJECT-001.client
+
+L2-AGR-EXCH-START-001.client
+L2-AGR-EXCH-LIST-001.client
+L2-AGR-EXCH-DETAILS-001.client
+L2-AGR-EXCH-SEND-PROPOSAL-001.client
+L2-AGR-EXCH-ACCEPT-001.client
+L2-AGR-EXCH-FINAL-REFUSE-001.client
+```
+
+Key L2 guardrails:
+
+```text
+Employee : Account / TPH target.
+No EmployeeRef.
+Review is owned by Request.
+RejectReview feedback is optional.
+ApproveReview does not create AgreementProposalExchange.
+AgreementProposalExchange stores ClientAccountId.
+No ResponsibleEmployeeId guard first pass.
+Counter-proposal replacement is SupersededByCounterProposal.
+AgreementDocumentRef is metadata reference, not bytes/storage adapter.
+No per-command status enums.
+```
+
+## 6. Server Validation Direction
 
 Use:
 
@@ -130,12 +226,14 @@ planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fl
 Current direction:
 
 ```text
-FluentValidation owns L1 API request/query shape validation.
-Application handlers own ownership/account/transaction behavior.
-Domain owns invariants as final guard.
+FluentValidation owns API request/query shape validation.
+Application handlers/services own orchestration, loading, ownership and transaction behavior.
+Domain owns lifecycle, participant and invariant checks as final guard.
 ```
 
-## 5. Backend Cleanup Boundary
+Do not put ownership, lifecycle, current turn, active proposal author or exchange status rules into FluentValidation.
+
+## 7. Backend Cleanup Boundary
 
 Use:
 
@@ -145,7 +243,7 @@ planning/architecture/backend-legacy-and-l1-boundaries.md
 
 before backend cleanup, legacy removal/isolation, post-FluentValidation handler cleanup, test classification or thesis/diploma architecture writing.
 
-## 6. Agent Scope Rule
+## 8. Agent Scope Rule
 
 Prompts for implementation chats must not allow changing docs, domain code or generated artifacts unless the user explicitly asked for that scope.
 
@@ -157,14 +255,16 @@ planning/agent-scope-boundaries-and-prompt-safety.md
 
 Implementation prompts generated from slice drafts must preserve the slice `Scope`, `Out of scope`, `Related slices` and `Future extension points`.
 
-## 7. Key Navigation
+## 9. Key Navigation
 
 ```text
 planning/api/README.md
 planning/architecture/README.md
 planning/client/README.md
 planning/slices/README.md
+planning/slices/l2/README.md
 planning/testing/README.md
 planning/diagrams/README.md
 planning/adr/README.md
+planning/dirty-drafts/README.md
 ```

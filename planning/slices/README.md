@@ -1,6 +1,6 @@
 # Slice Planning Index
 
-Status: current slice-planning navigation index / L2 review and AgreementProposalExchange canonical numbering synchronized
+Status: current / near-final L2 Employee Review and Agreement Exchange slice navigation synchronized
 
 ## 1. Core Rule
 
@@ -18,7 +18,12 @@ planning/client/client-api-placement-decision.md
 planning/client/client-layering-for-read-and-command-slices.md
 ```
 
-Current-state answers must inspect GitHub/current branch. Uploaded archives are handoff inputs, not current implementation evidence.
+For the current L2 state also read:
+
+```text
+planning/l2-current-planning-status.md
+planning/slices/l2/README.md
+```
 
 ## 2. Current Client API Placement Rule
 
@@ -37,12 +42,12 @@ Shared API:
   generic transport helpers
 ```
 
-Existing business-specific wrappers in `shared/api` are transitional compatibility. New drafts must not copy that shape.
+Existing business-specific wrappers in `shared/api` are transitional compatibility. New drafts should not copy that shape.
 
 ## 3. Drafting Rules
 
 ```text
-- Draft by existing examples, not by improvisation.
+- Draft by examples, not by improvisation.
 - Scenario Flow is user/system behavior from scenario sources.
 - Implementation Flow is code/layer responsibility.
 - Behavior items are not implementation details.
@@ -53,59 +58,71 @@ Existing business-specific wrappers in `shared/api` are transitional compatibili
 - shared/api is only transport/generated infrastructure.
 - Generated OpenAPI types remain shared generated artifacts, but entity/feature API files may import them directly and define local business aliases.
 - One draft covers one slice; extension slices are named but not implemented.
-- Full server/client drafts keep Questions/Decisions and Behavior Coverage near the beginning and Implementation Checklist near the end.
+- Questions / Decisions and Behavior Coverage should appear early enough to guide implementation.
+- Full server/client drafts must include Implementation Checklist near the end.
 ```
 
 ## 4. Current L2 Review Drafts
 
-```text
-SL-EMP-REQ-001 — Employee Request List Read
-SL-EMP-REQ-002 — Employee Request Details Read
-SL-EMP-REQ-003 — Start Request Review
-SL-EMP-REQ-004 — Approve Request Review
-SL-EMP-REQ-005 — Reject Request Review
+Server/API slices:
 
-L2-EMP-DASH-001.client — Employee Request Dashboard
-L2-EMP-DETAILS-001.client — Employee Request Details
-L2-REVIEW-START-001.client — Start Request Review client action
+```text
+planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
+planning/slices/SL-EMP-REQ-002-employee-request-details-read.md
+planning/slices/SL-EMP-REQ-003-start-request-review.md
+planning/slices/SL-EMP-REQ-004-approve-request-review.md
+planning/slices/SL-EMP-REQ-005-reject-request-review.md
 ```
 
-Current remaining review client sidecar gaps:
+Client sidecars:
 
 ```text
-L2-REVIEW-APPROVE-001.client — Approve Request Review client action
-L2-REVIEW-REJECT-001.client — Reject Request Review client action/form
+planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
+planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md
+planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md
+planning/slices/l2/L2-REVIEW-APPROVE-001-approve-request-review.client.md
+planning/slices/l2/L2-REVIEW-REJECT-001-reject-request-review.client.md
 ```
 
-RejectReview feedback direction:
+Review command chain:
 
 ```text
-Feedback/body is optional unless current server/OpenAPI intentionally changes it.
-Empty feedback must not block submit by default.
+StartReview:
+  two UI entry points: dashboard/list row + details action area;
+  one feature sidecar.
+
+ApproveReview:
+  details-only first pass;
+  no AgreementProposalExchange creation.
+
+RejectReview:
+  details-only first pass;
+  feedback optional;
+  no AgreementProposalExchange creation.
 ```
 
-## 5. AgreementProposalExchange Canonical Slice Family
+## 5. AgreementProposalExchange Slice Family
 
-Canonical server/backend/API slice set:
+Canonical server/backend/API slices:
 
 ```text
-SL-AGR-EXCH-001 — Start Agreement Exchange With Initial Employee Proposal
-SL-AGR-EXCH-002 — Send Agreement Counter-Proposal Version
-SL-AGR-EXCH-003 — Agreement Exchange List Page / Read List
-SL-AGR-EXCH-004 — Agreement Exchange Details / Read Details
-SL-AGR-EXCH-005 — Client Accept Active Agreement Proposal
-SL-AGR-EXCH-006 — Final Refuse Agreement Exchange
+planning/slices/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.md
+planning/slices/SL-AGR-EXCH-002-send-agreement-counter-proposal-version.md
+planning/slices/SL-AGR-EXCH-003-agreement-exchange-list-read.md
+planning/slices/SL-AGR-EXCH-004-agreement-exchange-details-read.md
+planning/slices/SL-AGR-EXCH-005-client-accept-active-agreement-proposal.md
+planning/slices/SL-AGR-EXCH-006-final-refuse-agreement-exchange.md
 ```
 
 Canonical client sidecars:
 
 ```text
-L2-AGR-EXCH-START-001.client — Start Agreement Exchange With Initial Employee Proposal
-L2-AGR-EXCH-LIST-001.client — Agreement Exchange List Pages
-L2-AGR-EXCH-DETAILS-001.client — Agreement Exchange Details Pages
-L2-AGR-EXCH-SEND-PROPOSAL-001.client — Send Agreement Proposal Version
-L2-AGR-EXCH-ACCEPT-001.client — Client Accept Active Agreement Proposal
-L2-AGR-EXCH-FINAL-REFUSE-001.client — Employee Final Refuse Agreement Exchange
+planning/slices/l2/L2-AGR-EXCH-START-001-start-agreement-exchange-with-initial-employee-proposal.client.md
+planning/slices/l2/L2-AGR-EXCH-LIST-001-agreement-exchange-list.client.md
+planning/slices/l2/L2-AGR-EXCH-DETAILS-001-agreement-exchange-details.client.md
+planning/slices/l2/L2-AGR-EXCH-SEND-PROPOSAL-001-send-agreement-proposal-version.client.md
+planning/slices/l2/L2-AGR-EXCH-ACCEPT-001-client-accept-active-agreement-proposal.client.md
+planning/slices/l2/L2-AGR-EXCH-FINAL-REFUSE-001-employee-final-refuse-agreement-exchange.client.md
 ```
 
 Decision summary:
@@ -113,25 +130,33 @@ Decision summary:
 ```text
 Start initial exchange — separate slice because it creates the exchange and version 1.
 Client send / Employee send counter-proposal — one slice with two actor branches.
-List read — separate slice.
-Details read — separate slice.
-Accept — separate Client-only command slice.
-Final refusal — separate Employee-only command slice.
+List read — separate read slice.
+Details read — separate read slice.
+Client accept — separate Client-only command slice.
+Employee final refusal — separate Employee-only command slice.
 ```
 
-Do not use the older numbering:
-
-```text
-003 Read Agreement Exchange
-004 Accept Active Agreement Proposal
-005 Final Refuse Agreement Exchange
-```
-
-Use the canonical list/details split above.
+Do not split client and employee counter-proposal sends unless UI, permissions, document handling or validation diverge materially.
 
 `SL-DOC-*` remains the future document/reference family for AgreementDocumentRef/document metadata/storage follow-up work.
 
-## 6. StartReview Entry Point Rule
+## 6. Agreement Exchange Guardrails
+
+```text
+AgreementProposalExchange and Request are separate aggregates.
+ApproveReview does not create AgreementProposalExchange.
+Initial exchange creation requires initial Employee proposal document.
+AgreementProposalExchange stores ClientAccountId from approved request owner.
+Client actions are protected by client.Id == exchange.ClientAccountId.
+Do not add ResponsibleEmployeeId as first-pass authorization guard.
+Any active Employee can service agreement exchanges first pass.
+Proposal author is stored per proposal version through Sender and SenderId.
+Counter-proposal replacement is SupersededByCounterProposal, not ordinary Rejected.
+AgreementDocumentRef is document metadata reference, not bytes/storage adapter.
+Do not use per-command status enums.
+```
+
+## 7. StartReview Entry Point Rule
 
 StartReview client has one command sidecar and two entry points:
 
@@ -142,17 +167,36 @@ details action area
 
 Dashboard/details read pages host feature actions; they do not own command mutations.
 
-## 7. Agreement Exchange Guardrails
+## 8. Current L2 Client Sidecar Reminder
+
+For read sidecars:
 
 ```text
-- AgreementProposalExchange stores ClientAccountId.
-- Client actions are protected by client.Id == exchange.ClientAccountId.
-- Do not add ResponsibleEmployeeId as authorization guard first pass.
-- Any active Employee can service the exchange first pass.
-- Proposal authors are tracked per proposal version with Sender and SenderId.
-- Counter-proposal replacement is SupersededByCounterProposal, not ordinary Rejected.
-- Do not add per-command status enums.
-- AgreementExchangeStatus is persisted domain state, not command execution result.
-- Start exchange happens from Employee request details before exchange exists.
-- After exchange exists, proposal negotiation happens from Agreement Exchange details.
+Do:
+  entities/<entity>/api/<readWrapper>.ts
+  entities/<entity>/api/<entity>ApiTypes.ts
+
+Do not:
+  shared/api/<businessEntity>Api.ts
 ```
+
+For command sidecars:
+
+```text
+Do:
+  features/<business-area>/<action>/api/<commandWrapper>.ts
+  features/<business-area>/<action>/model/<mutation>.ts
+  features/<business-area>/<action>/ui/<ActionFormOrButton>.tsx
+
+Do not:
+  entities/*/api for command wrappers
+  shared/api business wrappers
+```
+
+Agreement exchange reads/commands follow the same ownership rule: reads in entities, commands in features.
+
+## 9. Current-State Rule
+
+When asked what exists or is implemented now, inspect GitHub/current branch.
+
+Do not answer current implementation status from uploaded archives or slice drafts alone.

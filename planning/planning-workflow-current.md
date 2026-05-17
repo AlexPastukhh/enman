@@ -1,12 +1,12 @@
 # Current Planning Workflow
 
-Status: current / L1 implementation status and remaining L1 gaps synchronized
+Status: current / L1 baseline and near-final L2 Employee Review + Agreement Exchange planning synchronized
 
 Always separate current implementation from target scenario direction.
 
 ## 1. Current Implementation Baseline
 
-Known current repo evidence includes:
+Known L1 current repo evidence includes:
 
 ```text
 - L1 backend register/login/current-user/logout;
@@ -28,6 +28,8 @@ Use:
 planning/l1-current-implementation-status.md
 ```
 
+For L2 implementation status, inspect GitHub/current branch directly. Do not infer implementation status from slice drafts or archives.
+
 ## 2. Current Target Direction
 
 ```text
@@ -48,14 +50,15 @@ Request creation:
 My Requests:
   list, filters and details are implemented first-stage client/server flows.
 
-Server validation:
-  FluentValidation owns L1 API request/query shape validation;
-  application/domain validation still owns ownership, transactions and invariants.
+L2 Employee/Review/Agreement:
+  planning is nearly complete for the current L2 cut;
+  current source navigation is in planning/l2-current-planning-status.md;
+  implementation status must be checked from GitHub/current branch.
 ```
 
 ## 3. Remaining L1 Finish Items
 
-Before moving fully to a new domain draft, finish or explicitly defer:
+Before moving fully to the next domain cut, finish or explicitly defer:
 
 ```text
 1. SL-APPL-003.client make default/current button/action.
@@ -72,18 +75,43 @@ Future but not current L1 finish:
 - larger new domain scenario/draft.
 ```
 
-## 4. Slice Drafting Rules
+## 4. L2 Planning Status
+
+The current L2 planning cut is nearly complete for:
+
+```text
+- Employee request dashboard/details reads;
+- StartReview / ApproveReview / RejectReview;
+- AgreementProposalExchange start/counter-proposal/list/details/accept/final-refuse;
+- AgreementDocumentRef metadata references;
+- client sidecars for Employee Review and Agreement Exchange;
+- diagram prompt workflow and three-part diagram generation plan.
+```
+
+Use the canonical L2 files:
+
+```text
+planning/l2-current-planning-status.md
+planning/slices/l2/README.md
+planning/slices/slice-scenario-flow-behavior-register.md
+planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
+planning/diagrams/scenario-clarifications/README.md
+```
+
+## 5. Slice Drafting Rules
 
 ```text
 Behavior Coverage is not Test Coverage.
 Scenario Flow and Behavior Items come from source files via slice-scenario-flow-behavior-register.md.
 Implementation details are not behavior items.
+Scenario Flow is not Implementation Flow.
 E2E asserts visible state/outcome, not refetch mechanics or backend internals.
 Server API slices must consider request-level FluentValidation separately from application/domain validation.
 Every non-trivial slice draft must include Scope, Out of scope, Related slices / owners and Future extension points.
+Every full server/client draft must include Implementation Checklist near the end.
 ```
 
-## 5. Agent Scope Rules
+## 6. Agent Scope Rules
 
 Implementation prompts must include explicit scope boundaries:
 
@@ -95,3 +123,5 @@ Implementation prompts must include explicit scope boundaries:
 - may read docs freely for context;
 - must preserve Scope / Out of scope / Related slices / Future extension points from the slice draft.
 ```
+
+Current-state prompts must instruct agents to inspect GitHub/current branch, not archives.
