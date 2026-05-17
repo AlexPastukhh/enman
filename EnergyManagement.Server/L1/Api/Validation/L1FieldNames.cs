@@ -49,6 +49,12 @@ public static class L1FieldNames
         public const string Status = "status";
     }
 
+
+    public static class EmployeeRejectRequestReview
+    {
+        public static string Feedback => JsonField.Of<EmployeeRejectRequestReviewDto>(x => x.Feedback);
+    }
+
     public static class EmployeeRequestList
     {
         public const string Status = "status";

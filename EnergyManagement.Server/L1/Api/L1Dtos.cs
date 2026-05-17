@@ -116,6 +116,10 @@ public sealed record EmployeeRequestApplicantSummaryDto(
     [property: JsonPropertyName("email")] string? Email,
     [property: JsonPropertyName("phoneNumber")] string? PhoneNumber);
 
+
+public sealed record EmployeeRejectRequestReviewDto(
+    [property: JsonPropertyName("feedback")] string? Feedback);
+
 public sealed record L1AddressDto(
     [property: JsonPropertyName("postalCode")] string? PostalCode,
     [property: JsonPropertyName("region")] string? Region,

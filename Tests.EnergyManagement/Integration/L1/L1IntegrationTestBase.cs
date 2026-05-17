@@ -162,18 +162,23 @@ public abstract class L1IntegrationTestBase
     }
 
 
-    protected Task<HttpResponseMessage> ApproveEmployeeRequestReviewRequestAsync(
+    protected Task<HttpResponseMessage> RejectEmployeeRequestReviewRequestAsync(
         HttpClient client,
-        long requestId)
+        long requestId,
+        string? feedback = "Request rejected by employee.")
     {
-        return PostWithCsrfAsync(client, $"/api/employee/requests/{requestId}/review/approve");
+        return PostAsJsonWithCsrfAsync(
+            client,
+            $"/api/employee/requests/{requestId}/review/reject",
+            new EmployeeRejectRequestReviewDto(feedback));
     }
 
-    protected async Task ApproveEmployeeRequestReviewAsync(
+    protected async Task RejectEmployeeRequestReviewAsync(
         HttpClient client,
-        long requestId)
+        long requestId,
+        string? feedback = "Request rejected by employee.")
     {
-        var response = await ApproveEmployeeRequestReviewRequestAsync(client, requestId);
+        var response = await RejectEmployeeRequestReviewRequestAsync(client, requestId, feedback);
 
         await HttpResponseAssertions.For(response, _output).ShouldBeStatusCode((int)System.Net.HttpStatusCode.NoContent);
     }

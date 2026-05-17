@@ -98,6 +98,18 @@ public sealed class ConnectionRequest : ClientRequest
         Employee employee,
         DateTimeOffset decidedAt)
     {
+        if (employee is null)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.EmployeeIsRequired]);
+        }
+
+        var canReview = employee.EnsureCanReview();
+        if (canReview.IsFailure)
+        {
+            return canReview;
+        }
+
         if (Review is null)
         {
             return UnitResult.Failure<IReadOnlyList<Error>>(
@@ -126,6 +138,18 @@ public sealed class ConnectionRequest : ClientRequest
         RejectionFeedback? feedback,
         DateTimeOffset decidedAt)
     {
+        if (employee is null)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.EmployeeIsRequired]);
+        }
+
+        var canReview = employee.EnsureCanReview();
+        if (canReview.IsFailure)
+        {
+            return canReview;
+        }
+
         if (Review is null)
         {
             return UnitResult.Failure<IReadOnlyList<Error>>(

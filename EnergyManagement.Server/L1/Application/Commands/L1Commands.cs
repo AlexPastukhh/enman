@@ -112,49 +112,49 @@ public enum EmployeeStartRequestReviewCommandStatus
     Invalid = 4
 }
 
-public sealed record EmployeeApproveRequestReviewCommand(
+public sealed record EmployeeRejectRequestReviewCommand(
     long EmployeeId,
-    long RequestId)
-    : IRequest<EmployeeApproveRequestReviewCommandResult>;
+    long RequestId,
+    string Feedback)
+    : IRequest<EmployeeRejectRequestReviewCommandResult>;
 
-public sealed record EmployeeApproveRequestReviewCommandResult(
-    EmployeeApproveRequestReviewCommandStatus Status,
+public sealed record EmployeeRejectRequestReviewCommandResult(
+    EmployeeRejectRequestReviewCommandStatus Status,
     IReadOnlyList<Error> Errors)
 {
-    public static EmployeeApproveRequestReviewCommandResult Approved()
+    public static EmployeeRejectRequestReviewCommandResult Rejected()
     {
-        return new EmployeeApproveRequestReviewCommandResult(
-            EmployeeApproveRequestReviewCommandStatus.Approved,
+        return new EmployeeRejectRequestReviewCommandResult(
+            EmployeeRejectRequestReviewCommandStatus.Rejected,
             []);
     }
 
-    public static EmployeeApproveRequestReviewCommandResult NotFound()
+    public static EmployeeRejectRequestReviewCommandResult NotFound()
     {
-        return new EmployeeApproveRequestReviewCommandResult(
-            EmployeeApproveRequestReviewCommandStatus.NotFound,
+        return new EmployeeRejectRequestReviewCommandResult(
+            EmployeeRejectRequestReviewCommandStatus.NotFound,
             []);
     }
 
-    public static EmployeeApproveRequestReviewCommandResult Forbidden()
+    public static EmployeeRejectRequestReviewCommandResult Forbidden()
     {
-        return new EmployeeApproveRequestReviewCommandResult(
-            EmployeeApproveRequestReviewCommandStatus.Forbidden,
+        return new EmployeeRejectRequestReviewCommandResult(
+            EmployeeRejectRequestReviewCommandStatus.Forbidden,
             []);
     }
 
-    public static EmployeeApproveRequestReviewCommandResult Invalid(IReadOnlyList<Error> errors)
+    public static EmployeeRejectRequestReviewCommandResult Invalid(IReadOnlyList<Error> errors)
     {
-        return new EmployeeApproveRequestReviewCommandResult(
-            EmployeeApproveRequestReviewCommandStatus.Invalid,
+        return new EmployeeRejectRequestReviewCommandResult(
+            EmployeeRejectRequestReviewCommandStatus.Invalid,
             errors);
     }
 }
 
-public enum EmployeeApproveRequestReviewCommandStatus
+public enum EmployeeRejectRequestReviewCommandStatus
 {
-    Approved = 1,
+    Rejected = 1,
     NotFound = 2,
     Forbidden = 3,
     Invalid = 4
 }
-

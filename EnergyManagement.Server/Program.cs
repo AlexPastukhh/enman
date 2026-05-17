@@ -62,6 +62,7 @@ builder.Services.AddTransient<IValidator<L1CreateIndividualApplicantPartyDto>, L
 builder.Services.AddTransient<IValidator<L1CreateConnectionRequestDto>, L1CreateConnectionRequestDtoValidator>();
 builder.Services.AddTransient<IValidator<L1ListMyRequestsQueryDto>, L1ListMyRequestsQueryDtoValidator>();
 builder.Services.AddTransient<IValidator<EmployeeRequestListQueryDto>, EmployeeRequestListQueryDtoValidator>();
+builder.Services.AddTransient<IValidator<EmployeeRejectRequestReviewDto>, EmployeeRejectRequestReviewDtoValidator>();
 
 // 1️⃣ Register your config (it's already loaded by SharedFileService)
 // builder.Services.AddSingleton<ConstantsConfig>(_ => 

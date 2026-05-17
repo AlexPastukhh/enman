@@ -20,15 +20,18 @@ public sealed class EmployeeRequestsController : ProjectController
     private readonly ISender _sender;
     private readonly ILogger<EmployeeRequestsController> _logger;
     private readonly IValidator<EmployeeRequestListQueryDto> _listQueryValidator;
+    private readonly IValidator<EmployeeRejectRequestReviewDto> _rejectReviewValidator;
 
     public EmployeeRequestsController(
         ISender sender,
         ILogger<EmployeeRequestsController> logger,
-        IValidator<EmployeeRequestListQueryDto> listQueryValidator)
+        IValidator<EmployeeRequestListQueryDto> listQueryValidator,
+        IValidator<EmployeeRejectRequestReviewDto> rejectReviewValidator)
     {
         _sender = sender;
         _logger = logger;
         _listQueryValidator = listQueryValidator;
+        _rejectReviewValidator = rejectReviewValidator;
     }
 
     [Authorize(Roles = "Employee")]
@@ -155,9 +158,10 @@ public sealed class EmployeeRequestsController : ProjectController
     }
 
 
+
     [Authorize(Roles = "Employee")]
     [RequireAntiforgeryToken]
-    [HttpPost("{requestId:long:min(1)}/review/approve", Name = "EmployeeApproveRequestReview")]
+    [HttpPost("{requestId:long:min(1)}/review/reject", Name = "EmployeeRejectRequestReview")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
@@ -165,33 +169,40 @@ public sealed class EmployeeRequestsController : ProjectController
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> ApproveReview(
+    public async Task<IActionResult> RejectReview(
         long requestId,
+        [FromBody] EmployeeRejectRequestReviewDto dto,
         CancellationToken cancellationToken)
     {
         try
         {
+            var validationResult = await _rejectReviewValidator.ValidateAsync(dto, cancellationToken);
+            if (!validationResult.IsValid)
+            {
+                return ProblemDetailsFromValidation(validationResult.Errors);
+            }
+
             if (!TryGetCurrentEmployeeId(out var employeeId))
             {
                 return Unauthorized();
             }
 
             var result = await _sender.Send(
-                new EmployeeApproveRequestReviewCommand(employeeId, requestId),
+                new EmployeeRejectRequestReviewCommand(employeeId, requestId, dto.Feedback ?? string.Empty),
                 cancellationToken);
 
             return result.Status switch
             {
-                EmployeeApproveRequestReviewCommandStatus.Approved => NoContent(),
-                EmployeeApproveRequestReviewCommandStatus.NotFound => NotFound(),
-                EmployeeApproveRequestReviewCommandStatus.Forbidden => Forbid(),
-                EmployeeApproveRequestReviewCommandStatus.Invalid => ProblemDetailsFromValidation(result.Errors),
+                EmployeeRejectRequestReviewCommandStatus.Rejected => NoContent(),
+                EmployeeRejectRequestReviewCommandStatus.NotFound => NotFound(),
+                EmployeeRejectRequestReviewCommandStatus.Forbidden => Forbid(),
+                EmployeeRejectRequestReviewCommandStatus.Invalid => ProblemDetailsFromValidation(result.Errors),
                 _ => ProblemDetailsFromInternalServerError(Domain.EnergyManagement.Common.Error.Errors.General.InternalServerError)
             };
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Employee approve request review failed for request {RequestId}.", requestId);
+            _logger.LogError(ex, "Employee reject request review failed for request {RequestId}.", requestId);
             return ProblemDetailsWithExceptionDev(ex);
         }
     }
