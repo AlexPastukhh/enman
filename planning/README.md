@@ -1,6 +1,6 @@
 # Planning Index
 
-Status: current / ApplicantParty flat-list read model, validation, My Requests filters and backend cleanup boundary synchronized
+Status: current / L1 implementation status, ApplicantParty read/default command, request creation UI and remaining L1 gaps synchronized
 
 ## 1. Start Here
 
@@ -10,6 +10,7 @@ Core read order:
 
 ```text
 planning/README.md
+planning/l1-current-implementation-status.md
 planning/planning-workflow-current.md
 planning/planning-agent-protocol.md
 planning/agent-scope-boundaries-and-prompt-safety.md
@@ -46,29 +47,59 @@ planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fl
 planning/api/api-error-contract.md
 ```
 
-## 2. Current Applicant/Request Target Direction
+## 2. Current L1 Snapshot
+
+Implemented/current:
+
+```text
+Backend:
+- auth register/login/current-user/logout;
+- create individual ApplicantParty;
+- GET /api/l1/applicant-parties flat account ApplicantParties read;
+- POST /api/l1/applicant-parties/{applicantPartyId}/make-current-default;
+- create connection request with Existing/New applicant context;
+- My Requests list/filter/details.
+
+Client:
+- auth/register/login/current-user/logout flows;
+- My Requests list/filter/details;
+- request creation page /requests/create;
+- Existing/New applicant context request creation form;
+- account ApplicantParties read used by request creation.
+```
+
+Remaining L1 finish items:
+
+```text
+- SL-APPL-003.client make default/current button/action;
+- replace old AccountPage single-current/current-individual UI with target flat Applicant Parties page/section;
+- confirm/add make-current-default API integration tests;
+- later compatibility decision for old current-individual endpoint.
+```
+
+Use:
+
+```text
+planning/l1-current-implementation-status.md
+```
+
+## 3. Current Applicant/Request Target Direction
 
 ```text
 ApplicantParty:
 - one Applicant Parties page / section is the planning model;
-- do not split current docs into two user scenarios such as "Account page applicant section" and "My Applicant Parties page";
 - top page area shows current/default ApplicantParty templates by applicant type;
 - current/default templates are visually outlined/highlighted;
-- below the default/current area, the page shows other saved ApplicantParties that are not selected as current/default;
-- the same page owns add ApplicantParty action/form;
-- the same page will later own explicit make default/current action;
-- many saved ApplicantParties can exist over time;
-- one current/default template may exist per applicant type;
-- default/current is prefill/default selection only;
-- first of type may initialize default/current;
-- additional same-type create does not switch default/current silently;
+- below the default/current area, the page shows other saved ApplicantParties;
 - create is additive, not replacement;
+- first account+ApplicantPartyType initializes current/default;
+- additional same-type create does not switch default/current silently;
+- explicit make default/current backend command is implemented;
+- client make default/current action is still remaining;
 - existing requests do not change when ApplicantParty is created or default/current changes.
 ```
 
-Current implementation may still contain narrow/current-active names. When docs describe target planning, use the target direction above. When docs describe existing code, label it as current implementation evidence.
-
-ApplicantParty account read model target:
+ApplicantParty account read model:
 
 ```text
 GET /api/l1/applicant-parties
@@ -78,37 +109,14 @@ Client groups current/default vs other saved cards by isCurrentDefault.
 API does not return currentDefaults / otherApplicantParties layout arrays.
 ```
 
-Request creation target:
+Request creation current state:
 
 ```text
 - explicit applicant context: Existing ApplicantPartyId or New applicant data;
 - Existing can use any owned saved ApplicantParty;
 - New creates ApplicantParty + ConnectionRequest atomically;
-- command success has no required body for first cut.
-```
-
-## 3. Current My Requests Direction
-
-Backend has implemented L1 read endpoints for:
-
-```text
-GET /api/l1/requests
-GET /api/l1/requests/{requestId}
-```
-
-Client planning is split into sidecars:
-
-```text
-planning/slices/l1/L1-MY-REQUESTS-READ-LIST.client.md
-planning/slices/l1/L1-MY-REQUESTS-LIST-FILTERS.client.md
-planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md
-```
-
-Important boundary:
-
-```text
-Status filter is the first implemented entry in an extensible My Requests filter architecture.
-It is not a one-off button.
+- client /requests/create route and form exist;
+- command success hands off to My Requests.
 ```
 
 ## 4. Server Validation Direction
@@ -137,17 +145,6 @@ planning/architecture/backend-legacy-and-l1-boundaries.md
 
 before backend cleanup, legacy removal/isolation, post-FluentValidation handler cleanup, test classification or thesis/diploma architecture writing.
 
-This file explains:
-
-```text
-- current L1 runtime surface;
-- legacy runtime surface;
-- shared/current/future domain primitives;
-- PasswordHash vs Password boundary;
-- handler value-object creation after FluentValidation;
-- current vs legacy test classification.
-```
-
 ## 6. Agent Scope Rule
 
 Prompts for implementation chats must not allow changing docs, domain code or generated artifacts unless the user explicitly asked for that scope.
@@ -157,8 +154,6 @@ Use:
 ```text
 planning/agent-scope-boundaries-and-prompt-safety.md
 ```
-
-Reading docs is required. Mutating docs is not allowed unless the task says so.
 
 Implementation prompts generated from slice drafts must preserve the slice `Scope`, `Out of scope`, `Related slices` and `Future extension points`.
 

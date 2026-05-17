@@ -1,52 +1,18 @@
-# Apply SL-APPL-003 archive
+# APPLY — L1 Current Status Documentation Sync
 
-Run from the repository root.
-
-The archive is merge-ready and has repo-relative paths. It does not contain a wrapper folder.
-
-## Apply
+Run from repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\sl-appl-003-make-current-default-server.zip" -DestinationPath "." -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\l1-current-status-docs-sync.zip" -DestinationPath . -Force
+git status
+git diff -- planning
 ```
 
-If a temporary folder from a previous apply attempt exists, remove it:
+If the diff is correct:
 
 ```powershell
-Remove-Item -Path ".\_incoming_sl_appl_003" -Recurse -Force
+git add planning
+git status
 ```
 
-## Verify source and tests
-
-```powershell
-dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
-dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
-```
-
-## Regenerate API artifacts
-
-Do not manually edit generated artifacts.
-
-```powershell
-npm run generate:openapi
-npm run generate:api-types
-```
-
-Stage generated artifacts before `check:api`, because `check:api` ends with `git diff --exit-code` against the working tree:
-
-```powershell
-git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
-npm run check:api
-```
-
-## Expected generated files after local generation
-
-- `Shared/openapi.json`
-- `energymanagement.client/src/shared/api/generated/openapi-types.ts`
-
-## Notes
-
-- No GitHub write was performed.
-- No domain files are included.
-- No planning docs are included.
-- No client UI files are included.
+This archive is docs-only. It must not change backend/client/runtime code, tests or generated artifacts.

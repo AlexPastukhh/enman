@@ -1,33 +1,32 @@
 # Slice Questions Register
 
-Status: active / client short-draft rules, OpenAPI workflow and ApplicantParty read sidecar synchronized
+Status: active / L1 current implementation status and remaining gaps synchronized
 
-| ID | Local file(s) | Area | Status | Question | Assumption / current direction | Impact |
+## 1. Current Accepted / Implemented Decisions
+
+| ID | Local file(s) | Area | Status | Question | Current direction | Impact |
 |---|---|---|---|---|---|---|
-| `CC-API-Q-001` | `CC-API-001` / `planning/api/generated-artifact-check-workflow.md` | generated artifacts | accepted | Can generated artifacts be manually edited or reconstructed? | No. Use repo generation commands only. | Prevents fake/stale OpenAPI and TS artifacts. |
-| `CC-API-Q-002` | `CC-API-001` / `planning/api/generated-artifact-check-workflow.md` | check workflow | accepted | Why can `check:api` fail after generation? | Final `git diff --exit-code` compares working tree to index; stage generated artifacts before no-extra-drift check. | Local workflow stability. |
-| `CL-DRAFT-Q-001` | `client-slice-short-draft-rules-and-example.md` | drafting | accepted | Should new client drafters invent new draft forms? | No. Follow canonical examples and keep form identical unless user asks otherwise. | Prevents inconsistent sidecars. |
-| `CL-DRAFT-Q-002` | `client-slice-short-draft-rules-and-example.md` | flows | accepted | Is Scenario Flow allowed to contain implementation details? | No. Scenario Flow is scenario-sourced user/system behavior for this slice only. | Prevents false behavior coverage. |
-| `CL-DRAFT-Q-003` | `client-slice-short-draft-rules-and-example.md` | behavior | accepted | Are implementation details behavior items? | No. Query keys, wrappers, generated types and cache invalidation are implementation notes or tests, not behavior items. | Prevents invented behavior IDs. |
-| `CL-LAYER-Q-001` | `client-layering-for-read-and-command-slices.md` | client architecture | accepted | Why are multiple entity API fetch wrappers in shared/api? | `shared/api` is the low-level client/server boundary, grouped by layer rather than entity. | Prevents unnecessary architecture churn. |
-| `CL-LAYER-Q-002` | `client-layering-for-read-and-command-slices.md` | placement | accepted | Where should read-only UI live? | `entities/<entity>/ui`; features are for command/user-action behavior. | Normalizes sidecar drafts. |
-| `SL-APPL-002-CLIENT-Q-001` | `SL-APPL-002-account-applicant-parties-read.client.md` | client read | accepted direction | Flat response or grouped response? | Flat `applicantParties[]`; client groups by `isCurrentDefault`. | API/UI mapping. |
-| `SL-APPL-002-CLIENT-Q-002` | `SL-APPL-002-account-applicant-parties-read.client.md` | layering | accepted direction | Where does ApplicantParty read list UI live? | `entities/applicant-party/ui/*`, because this is read/display UI. | Avoids feature-read placement. |
-| `SL-APPL-Q-006` | `SC-10` / `SC-10B` / `SL-APPL-*` | page model | accepted direction | Is ApplicantParty management split into two current pages? | No. One Applicant Parties page / section; SC-10B is future same-page management addendum. | Scenario wording and client sidecar placement. |
+| `SL-APPL-Q-006` | `SC-10` / `SC-10B` / `SL-APPL-*` | page model | accepted direction | Is ApplicantParty management split into two current pages? | No. One Applicant Parties page/section; SC-10B is same-page future management addendum. | Scenario wording and client placement. |
+| `SL-APPL-002-Q-IMPL` | `SL-APPL-002` | backend read | implemented | Is account ApplicantParties flat read implemented? | Yes. `GET /api/l1/applicant-parties` returns flat `applicantParties[]`. | Backend status/current docs. |
+| `SL-APPL-003-Q-IMPL` | `SL-APPL-003` | backend command | implemented | Is explicit make current/default implemented on backend? | Yes. `POST /api/l1/applicant-parties/{applicantPartyId}/make-current-default`. | Backend status/current docs. |
+| `SL-REQ-001-CLIENT-Q-IMPL` | `SL-REQ-001.client` | client command | implemented | Is request creation UI implemented? | Yes. `/requests/create` route/page/form exists with Existing/New applicant context. | Client status/current docs. |
+| `SL-REQ-Q-APPL-001` | `SL-REQ-001` | request applicant context | implemented | Does request creation rely on one current active ApplicantParty? | No. Explicit Existing/New context. | Request creation API/client behavior. |
+| `SL-REQ-Q-APPL-004` | `SL-REQ-001.client` | existing applicant | implemented | Can selected Existing applicant be non-default? | Yes. Any owned saved ApplicantParty. | Selector/DTO behavior. |
+| `CL-LAYER-Q-001` | client sidecars | shared API | accepted | Why are multiple entity API fetch wrappers in shared/api? | `shared/api` is the low-level client/server boundary layer. | Prevents unnecessary architecture churn. |
 
-## SL-REQ-001.client Additions
+## 2. Remaining L1 Questions / Gaps
 
-| ID | Local file(s) | Area | Status | Question | Assumption / current direction | Impact |
+| ID | Local file(s) | Area | Status | Question | Current direction | Impact |
 |---|---|---|---|---|---|---|
-| `Q-SL-REQ-001-CLIENT-001` | `SL-REQ-001-create-connection-request.client.md` | architecture | accepted | Is this read or command sidecar? | Command/user action sidecar; form/mutation lives in `features/request/create-connection-request`. | Client placement. |
-| `Q-SL-REQ-001-CLIENT-004` | `SL-REQ-001-create-connection-request.client.md` | applicant selector | accepted | Existing branch can use only current/default? | No. Existing branch shows saved ApplicantParty selector and allows any owned saved ApplicantParty. | DTO mapping, UI behavior, E2E. |
-| `Q-SL-REQ-001-CLIENT-006` | `SL-REQ-001-create-connection-request.client.md` | success UX | accepted | After success, navigate to details or My Requests? | My Requests handoff/list is preferred because command success has no required requestId body. | Success UX and E2E. |
+| `SL-APPL-003-CLIENT-Q-001` | future `SL-APPL-003.client` | client action | open / next L1 gap | How should make default/current button/action be implemented on client? | Add client action on Applicant Parties page/section using backend endpoint. | Remaining L1 client work. |
+| `SL-APPL-002-CLIENT-Q-STATUS` | `SL-APPL-002.client` / AccountPage | client page replacement | open / implementation gap | Has old AccountPage current-individual flow been replaced by target flat page/section? | Not confirmed. Treat as remaining gap until code proves target replacement. | L1 finish before new domain draft. |
+| `SL-APPL-003-TEST-Q-001` | `SL-APPL-003` | tests | needs verification | Are make-current-default API integration tests present? | Not confirmed. Verify/add tests for ownership, same-type switching, idempotency and no request mutation. | Test confidence. |
+| `SL-APPL-COMPAT-Q-001` | current-individual endpoint | compatibility | future review | What happens to old current-individual endpoint? | Keep until target page replacement is stable; cleanup decision later. | Compatibility cleanup. |
 
-## SL-APPL-003 Server Additions
+## 3. Future / Not Current L1
 
-| ID | Local file(s) | Area | Status | Question | Assumption / current direction | Impact |
-|---|---|---|---|---|---|---|
-| `SL-APPL-003-Q-005` | `SL-APPL-003-select-current-default-applicant-party-template.md` | response | implementation decision | Success response body? | Prefer no required body unless client implementation needs updated summary. | Client cache/update strategy. |
-| `SL-APPL-003-Q-007` | `SL-APPL-003-select-current-default-applicant-party-template.md` | idempotency | accepted direction | What happens when selected is already current/default? | Idempotent success is acceptable. | Safe retries/repeated clicks. |
-| `SL-APPL-003-Q-009` | `SL-APPL-003-select-current-default-applicant-party-template.md` | type scope | accepted direction | Should command be limited to selected ApplicantPartyType? | Yes. Only selected type changes; other types unchanged. | Per-type default model. |
-
+| ID | Area | Status | Direction |
+|---|---|---|---|
+| `SL-APPL-LIFECYCLE-Q-001` | delete/archive/edit | future review | Future lifecycle slices only. |
+| `SL-APPL-TYPES-Q-001` | LegalEntity / IndividualEntrepreneur | future review | Future type-specific create/read/UI slices. |
+| `NEW-DOMAIN-Q-001` | next domain draft | future after L1 finish | Move after remaining L1 gaps are closed or explicitly deferred. |
