@@ -595,9 +595,9 @@ public abstract class L1IntegrationTestBase
             reader.GetInt64("RequestId"),
             reader.GetString("Status"),
             reader.GetInt64("StartedByEmployeeId"),
-            reader.GetDateTimeOffset("StartedAt"),
+            reader.GetDateTimeOffset(reader.GetOrdinal("StartedAt")),
             reader.IsDBNull("CompletedByEmployeeId") ? null : reader.GetInt64("CompletedByEmployeeId"),
-            reader.IsDBNull("CompletedAt") ? null : reader.GetDateTimeOffset("CompletedAt"),
+            reader.IsDBNull("CompletedAt") ? null : reader.GetDateTimeOffset(reader.GetOrdinal("CompletedAt")),
             reader.IsDBNull("RejectionReason") ? null : reader.GetString("RejectionReason"));
     }
 
