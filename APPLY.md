@@ -1,23 +1,19 @@
-# Apply L2-REVIEW-REJECT-001.client archive
+# Apply — L2 Agreement Exchange Draft / Rules / Naming Sync
 
 From repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l2-review-reject-001-client-reject-request-review.zip" -DestinationPath "." -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agr-exch-001-draft-rules-and-naming-sync.zip" -DestinationPath . -Force
+.\APPLY-l2-agr-exch-001-rules-and-naming-sync.ps1
+git status
+git diff -- planning
 ```
 
-Then verify:
+If the diff is correct:
 
 ```powershell
-npm install
-npm --prefix .\energymanagement.client install
-npm run check:api
-npm --prefix .\energymanagement.client run build
-npm --prefix .\energymanagement.client run test -- --run
+git add planning
+git status
 ```
 
-Targeted tests:
-
-```powershell
-npm --prefix .\energymanagement.client run test -- --run --reporter=verbose src/features/employee-request/reject-review/api/rejectRequestReview.test.ts src/features/employee-request/reject-review/ui/RejectReviewForm.test.tsx src/pages/employee/requests/details/EmployeeRequestDetailsPage.test.tsx
-```
+This is a docs-only archive. It does not include runtime code, tests or generated artifacts.

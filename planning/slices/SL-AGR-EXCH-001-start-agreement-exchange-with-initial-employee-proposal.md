@@ -1,38 +1,51 @@
 # SL-AGR-EXCH-001 — Start Agreement Exchange With Initial Employee Proposal
 
-Status: planned slice boundary / full implementation draft pending  
-Package: `[AgreementProposalExchange]`  
-Slice type: backend/API command slice + future client command sidecar  
-Primary purpose: Employee creates AgreementProposalExchange by sending the initial proposal document for an Approved request
+Status: draft / server implementation-ready  
+Package: `[L2] Agreement Proposal Exchange`  
+Source scenario: approved request moves from review decision to agreement proposal exchange  
+Slice type: server command slice  
+Depends on: `SL-EMP-REQ-004 — Approve Request Review`, Employee auth/session, CSRF, L2 domain agreement proposal model  
+Current implementation status: domain model exists; API endpoint/application command/persistence repository are planned in this slice.
 
-## 1. Scope Boundary
+## 1. Slice Overview
 
-```text
-Approved request
-  -> Employee sends initial agreement document + optional comment
-  -> AgreementProposalExchange is created
-  -> proposal version 1 is created by Employee
-  -> exchange status = AwaitingClientConfirmation
-```
-
-This slice is separate because it creates the exchange aggregate and first proposal version.
-
-## 2. Preconditions
+Target behavior:
 
 ```text
-- request exists;
-- request is Approved;
-- current actor is Employee;
-- request has no existing AgreementProposalExchange;
-- agreement document reference is valid metadata reference;
-- optional ProposalComment is valid if present.
+Employee opens approved connection request.
+
+Request review has already been approved.
+
+Employee starts agreement proposal exchange by sending the first agreement proposal document.
+
+System creates AgreementProposalExchange.
+
+System creates proposal version 1 authored by Employee.
+
+Exchange waits for client confirmation.
+
+Command returns 204 No Content.
 ```
 
-## 3. Domain Direction
+Command endpoint direction:
 
-Target domain entry:
+```text
+POST /api/employee/requests/{requestId}/agreement-exchange/start
+→ 204 No Content
+```
 
-```csharp
+No response DTO.
+
+Reason:
+
+```text
+This is a command.
+Created exchange/proposal state should be read through future agreement exchange read endpoint/details refresh.
+```
+
+Current domain direction:
+
+```text
 AgreementProposalExchange.StartByEmployee(
     approvedRequest,
     document,
@@ -41,24 +54,629 @@ AgreementProposalExchange.StartByEmployee(
     startedAt)
 ```
 
-There is no standalone “start exchange without document” behavior in the current domain direction.
+This method creates the exchange and the first employee proposal version, and sets exchange status to `AwaitingClientConfirmation`.
 
-## 4. Out of Scope
+## 2. Questions / Decisions
+
+| ID | Status | Question | Decision / current direction | Impact |
+|---|---|---|---|---|
+| `SL-AGR-EXCH-001-Q001` | accepted | Does approve automatically start exchange? | No. Exchange starts by explicit employee command. | Keeps review and agreement lifecycle separated. |
+| `SL-AGR-EXCH-001-Q002` | accepted | Is this “empty start” or “start with first proposal”? | Start with initial employee proposal. | Body requires document ref. |
+| `SL-AGR-EXCH-001-Q003` | accepted | Who can start exchange? | Employee with app cookie role Employee. | Auth boundary. |
+| `SL-AGR-EXCH-001-Q004` | accepted | Request precondition? | ConnectionRequest must be `Approved`. | Domain rule. |
+| `SL-AGR-EXCH-001-Q005` | accepted | First proposal version? | Version `1`. | Domain already uses `AgreementProposalVersion.First`. |
+| `SL-AGR-EXCH-001-Q006` | accepted | Initial exchange status? | `AwaitingClientConfirmation`. | Client can respond later. |
+| `SL-AGR-EXCH-001-Q007` | accepted | Duplicate exchange for same request? | Reject through existing Error/ProblemDetails mapping. Prefer conflict semantics, but error mapping cleanup can be separate. | Repository/application guard. |
+| `SL-AGR-EXCH-001-Q008` | accepted | Does this command change request status? | No first pass. Request remains `Approved`; exchange has own status. | Avoids new request status decision. |
+| `SL-AGR-EXCH-001-Q009` | accepted | File upload? | Out of scope. Store document reference only. | No binary storage. |
+| `SL-AGR-EXCH-001-Q010` | accepted | Success response? | `204 No Content`. | Read state comes later from read endpoint. |
+| `SL-AGR-EXCH-001-Q011` | accepted | CSRF? | Required. Unsafe browser command. | Server tests. |
+| `SL-AGR-EXCH-001-Q012` | accepted | Command status enum? | Do not introduce per-command status enum. Use Result/UnitResult + existing Error mapping. | Avoids application status enum noise. |
+| `SL-AGR-EXCH-001-Q013` | accepted | Controller placement? | Use separate `EmployeeAgreementExchangeController`. | Prevents `EmployeeRequestsController` from growing after Start/Approve/Reject. |
+| `SL-AGR-EXCH-001-Q014` | accepted | Endpoint route shape? | `POST /api/employee/requests/{requestId}/agreement-exchange/start`. | Keeps exchange scoped under employee request. |
+| `SL-AGR-EXCH-001-Q015` | accepted | Comment behavior? | `comment` is optional; null/blank means no comment. | Create `ProposalComment` only for meaningful text. |
+| `SL-AGR-EXCH-001-Q016` | accepted | Document input? | First pass stores `AgreementDocumentRef` only. | No binary upload/document generation. |
+| `SL-AGR-EXCH-001-Q017` | accepted | Repository shape? | Add agreement exchange repository with `GetByRequestIdAsync` and `Add`. | Supports duplicate guard and aggregate persistence. |
+| `SL-AGR-EXCH-001-Q018` | accepted | DB uniqueness? | Prefer unique exchange per `RequestId` if practical. | Prevents duplicate exchanges under race conditions. |
+| `SL-AGR-EXCH-001-Q019` | accepted | Failure HTTP mapping? | Use existing Error/ProblemDetails mapper. Do not add command statuses for HTTP mapping. | Error mapping cleanup remains separate. |
+| `SL-AGR-EXCH-001-Q020` | accepted | 409 vs 422 for duplicate? | Do not block this slice on mapping cleanup. Use current mapper; prefer future `409 Conflict` if/when mapping supports it. | Keeps slice implementable now. |
+
+## 3. Behavior Coverage
+
+Behavior Coverage is not Test Coverage.
+
+| Behavior item | How slice covers it | Status |
+|---|---|---|
+| Employee starts exchange for approved request | command calls `AgreementProposalExchange.StartByEmployee(...)` | target/current domain |
+| Initial proposal document is required | DTO + `AgreementDocumentRef` validation | target |
+| Comment is optional | only creates `ProposalComment` when non-blank | target |
+| First proposal version is 1 | domain uses `AgreementProposalVersion.First` | current domain |
+| First proposal is authored by Employee | domain creates Employee-authored proposal | current domain |
+| Exchange waits for client confirmation | domain sets `AwaitingClientConfirmation` | current domain |
+| Not approved request cannot start exchange | domain rejects non-Approved request | current domain |
+| Duplicate exchange cannot be started | repository/application duplicate guard | target |
+| Approve does not create exchange | separate command boundary | target/current implementation |
+| No binary file upload | document reference only | target |
+
+## 4. Scope
+
+Implemented scope:
 
 ```text
-- client/employee counter-proposal after exchange exists -> SL-AGR-EXCH-002;
-- exchange read model -> SL-AGR-EXCH-003;
-- accept active proposal -> SL-AGR-EXCH-004;
-- final refusal -> SL-AGR-EXCH-005;
-- document bytes/storage adapter -> future document/storage slice;
-- Request approval -> SL-EMP-REQ-004.
+- protected Employee command endpoint;
+- CSRF-protected unsafe request;
+- current Employee derived from app cookie identity;
+- approved ConnectionRequest loaded by requestId;
+- agreement document reference accepted from request body;
+- optional proposal comment accepted from request body;
+- AgreementProposalExchange aggregate created;
+- first AgreementProposal version created by Employee;
+- exchange status becomes AwaitingClientConfirmation;
+- active proposal version becomes 1;
+- command returns 204 No Content;
+- duplicate exchange for same request is rejected through existing Error/ProblemDetails mapping.
 ```
 
-## 5. Notes For Full Draft
+## 5. Out of Scope
+
+| Out-of-scope item | Owner / destination |
+|---|---|
+| Approve review | `SL-EMP-REQ-004` |
+| Automatic exchange creation during approve | explicitly not this slice |
+| Client read exchange | `SL-AGR-EXCH-003` |
+| Client accept proposal | `SL-AGR-EXCH-004` |
+| Client counter-proposal | `SL-AGR-EXCH-002` |
+| Employee revised proposal | `SL-AGR-EXCH-002` |
+| Final refusal | `SL-AGR-EXCH-005` |
+| Binary file upload/storage | future file/document slice |
+| Real document generation | future document generation slice |
+| Client UI | client exchange slice |
+| Employee dashboard redesign | employee page slice |
+| Error mapping cleanup | separate cleanup if existing errors are not expressive enough |
+
+Important boundary:
 
 ```text
-- success response should not be used as long-lived read source if exchange read endpoint exists;
-- API/client must not choose proposal version;
-- first version is always domain version 1;
-- command must not create duplicate exchanges for the same approved request.
+ApproveReview does not start agreement exchange.
+
+ApproveReview only completes review decision and sets request status to Approved.
+
+Agreement exchange starts only through this explicit command.
+```
+
+## 6. Visual Scenario Flow
+
+```text
+Employee opens approved request details
+        ↓
+Request is shown as Approved
+        ↓
+Employee chooses Start agreement exchange
+        ↓
+Employee provides agreement document reference
+        ↓
+Employee optionally provides proposal comment
+        ↓
+Employee submits
+        ↓
+ ┌────────────────────────────────┬────────────────────────────────┐
+ │ accepted                       │ not accepted                   │
+ ▼                                ▼
+Agreement exchange is created      Employee sees validation/error
+Proposal version 1 is created      feedback and can correct input
+        ↓
+Exchange waits for client confirmation
+        ↓
+No client decision is made yet
+```
+
+Scenario flow intentionally does not mention controller, handler, repository, EF, OpenAPI, CSRF token or database columns.
+
+## 7. Scenario Slice Flow
+
+| Step | Actor/system | Behavior | Status |
+|---|---|---|---|
+| F01 | Employee | Opens approved request details. | existing/future read side |
+| F02 | System | Shows request as `Approved`. | existing after approve |
+| F03 | Employee | Chooses start agreement exchange action. | target |
+| F04 | Employee | Provides agreement document reference. | target |
+| F05 | Employee | Optionally provides proposal comment. | target |
+| F06 | System | Validates command can start exchange for approved request. | target |
+| F07 | System | Creates agreement exchange. | target |
+| F08 | System | Creates first employee proposal version. | target |
+| F09 | System | Marks exchange as waiting for client confirmation. | target |
+| F10 | System | Rejects duplicate exchange start for same request. | target |
+| F11 | System | Does not change request status in this slice unless later explicitly decided. | target |
+
+## 8. API Contract
+
+| Endpoint | Method | Request body | Response | Statuses |
+|---|---|---|---|---|
+| `/api/employee/requests/{requestId}/agreement-exchange/start` | POST | `{ documentRef: string, comment?: string }` | `204 No Content` | 204, 400, 401, 403, 404, 409/422, 500 |
+
+Route:
+
+```text
+requestId: long, min(1)
+```
+
+Route shape:
+
+```csharp
+[ApiController]
+[Route("api/employee/requests/{requestId:long:min(1)}/agreement-exchange")]
+public sealed class EmployeeAgreementExchangeController : ProjectController
+{
+    [Authorize(Roles = "Employee")]
+    [RequireAntiforgeryToken]
+    [HttpPost("start", Name = "EmployeeStartAgreementExchange")]
+    public async Task<IActionResult> Start(...)
+}
+```
+
+Request DTO:
+
+```csharp
+public sealed record EmployeeStartAgreementExchangeDto(
+    string? DocumentRef,
+    string? Comment);
+```
+
+DTO validation:
+
+```text
+documentRef required
+documentRef not whitespace
+documentRef max length = AgreementDocumentRef.MaxLength, if exposed
+comment optional
+comment max length = ProposalComment.MaxLength, if provided
+```
+
+Domain validation:
+
+```text
+AgreementDocumentRef.Create(documentRef)
+ProposalComment.Create(comment), only if comment is not blank/null
+AgreementProposalExchange.StartByEmployee(...)
+```
+
+Decision on blank comment:
+
+```text
+Blank/null comment should be treated as no comment.
+
+If ProposalComment.Create rejects blank values, call it only when comment has meaningful text.
+```
+
+## 9. Domain Behavior
+
+Current domain behavior:
+
+```text
+AgreementProposalExchange.StartByEmployee:
+- requires approvedRequest not null;
+- requires approvedRequest.Id > 0;
+- requires approvedRequest.Status = Approved;
+- requires document;
+- requires employee;
+- requires employee.Id > 0;
+- checks employee.EnsureCanStartAgreementExchange();
+- creates exchange;
+- sets RequestId;
+- sets Status = AwaitingClientConfirmation;
+- sets ActiveProposalVersion = First;
+- creates employee proposal version 1;
+- stores document/comment/employee author/createdAt.
+```
+
+Connection request approve behavior is separate:
+
+```text
+ConnectionRequest.ApproveReview:
+- requires review exists;
+- requires request Status = InReview;
+- completes review as approved;
+- sets request Status = Approved;
+- does not create agreement exchange.
+```
+
+## 10. Application Result Model
+
+Use existing `Result` / `UnitResult` + `Error` model.
+
+Do **not** add:
+
+```csharp
+EmployeeStartAgreementExchangeCommandStatus
+```
+
+Do **not** use `AgreementExchangeStatus` as command execution result.
+
+Why:
+
+```text
+AgreementExchangeStatus is persisted domain state.
+
+It answers: what state is the exchange in?
+
+Command execution result answers: did this HTTP command succeed or fail, and why?
+
+Failures should be represented by existing domain/application Error codes and mapped through existing ProblemDetails/error mapping.
+```
+
+Preferred command shape:
+
+```csharp
+public sealed record EmployeeStartAgreementExchangeCommand(
+    long EmployeeId,
+    long RequestId,
+    string DocumentRef,
+    string? Comment)
+    : IRequest<UnitResult<IReadOnlyList<Error>>>;
+```
+
+Controller mapping direction:
+
+```text
+Success:
+  UnitResult.Success -> 204 No Content
+
+Failure:
+  existing ProblemDetails/error mapper decides response from Error codes
+```
+
+Expected failure categories:
+
+```text
+not found -> 404, if current mapper supports it
+forbidden/current employee error -> 403, if current mapper supports it
+duplicate exchange -> 409 or 422, according to current/future mapping
+domain validation/lifecycle errors -> 422
+```
+
+Important:
+
+```text
+If current Error mapping cannot distinguish not found / forbidden / duplicate conflict cleanly,
+do not add per-command status enum as a workaround in this slice.
+
+Improve Error codes / ProblemDetails mapping separately.
+```
+
+## 11. Visual Implementation Flow
+
+```text
+[HTTP]
+POST /api/employee/requests/{requestId}/agreement-exchange/start
+        ↓
+[Auth]
+Employee app cookie required
+        ↓
+[CSRF]
+valid antiforgery token required
+        ↓
+[DTO validation]
+documentRef required / comment max length
+        ↓
+[Controller]
+derive current Employee id from app session
+        ↓
+[Command]
+EmployeeStartAgreementExchangeCommand(employeeId, requestId, documentRef, comment)
+        ↓
+[Handler]
+load Employee
+load ConnectionRequest aggregate
+ensure no AgreementProposalExchange exists for request
+create AgreementDocumentRef
+create optional ProposalComment
+call AgreementProposalExchange.StartByEmployee(...)
+        ↓
+[Persistence]
+add AgreementProposalExchange
+SaveChanges
+        ↓
+[Response]
+204 No Content
+```
+
+## 12. Backend Implementation Notes
+
+Handler rules:
+
+```text
+1. Load Employee by EmployeeId.
+2. If Employee not found -> return existing forbidden/current employee error.
+3. Load request by RequestId.
+4. If request not found -> return existing request not found/request required error.
+5. If request is not ConnectionRequest -> return existing not-found or lifecycle error.
+6. Check whether exchange already exists for RequestId.
+7. If exchange exists -> return agreement-exchange-already-exists error.
+8. Create AgreementDocumentRef from command.DocumentRef.
+9. If document invalid -> return domain errors.
+10. Create ProposalComment only if command.Comment is not null/whitespace.
+11. If comment invalid -> return domain errors.
+12. Call AgreementProposalExchange.StartByEmployee(connectionRequest, document, comment, employee, now).
+13. If domain failure -> return domain errors.
+14. Add exchange aggregate to context/repository.
+15. SaveChangesAsync.
+16. Return success.
+```
+
+No partial mutation:
+
+```text
+If document/comment validation or domain lifecycle validation fails,
+no exchange/proposal should be persisted.
+```
+
+## 13. Persistence / Repository Notes
+
+Repository decision:
+
+```csharp
+public interface IAgreementProposalExchangeRepository
+{
+    Task<AgreementProposalExchange?> GetByRequestIdAsync(
+        long requestId,
+        CancellationToken cancellationToken);
+
+    void Add(AgreementProposalExchange exchange);
+}
+```
+
+Uniqueness decision:
+
+```text
+Enforce one exchange per request in application handler.
+Add database uniqueness on RequestId if EF mapping allows it without disrupting current persistence.
+```
+
+EF persistence needs to support:
+
+```text
+AgreementProposalExchange:
+  Id
+  RequestId
+  Status
+  ActiveProposalVersion
+  CreatedAt
+  FinalRefusedByEmployeeId nullable
+  FinalRefusedAt nullable
+  FinalRefusalReason nullable
+
+AgreementProposal:
+  Id
+  AgreementProposalExchangeId
+  Version
+  Author sender/id
+  State
+  Document ref
+  Comment nullable
+  CreatedAt
+```
+
+First pass may map proposals as owned collection or separate table. Pick whichever is consistent with current L1 persistence style.
+
+## 14. Server API Notes
+
+Use separate controller:
+
+```csharp
+[ApiController]
+[Route("api/employee/requests/{requestId:long:min(1)}/agreement-exchange")]
+public sealed class EmployeeAgreementExchangeController : ProjectController
+{
+}
+```
+
+Endpoint:
+
+```csharp
+[Authorize(Roles = "Employee")]
+[RequireAntiforgeryToken]
+[HttpPost("start", Name = "EmployeeStartAgreementExchange")]
+[ProducesResponseType(StatusCodes.Status204NoContent)]
+[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
+[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+public async Task<IActionResult> Start(
+    long requestId,
+    [FromBody] EmployeeStartAgreementExchangeDto dto,
+    CancellationToken cancellationToken)
+```
+
+Reason:
+
+```text
+EmployeeRequestsController already owns request list/details and review commands.
+Agreement exchange will grow into its own package, so use a dedicated controller from the first slice.
+```
+
+Controller direction:
+
+```text
+Validate DTO.
+
+Build command.
+
+Send command.
+
+If success -> 204 No Content.
+
+If failure -> existing ProblemDetails/error mapper.
+
+Do not switch over per-command status enum.
+```
+
+If current mapper does not emit `409` yet:
+
+```text
+Keep duplicate exchange as existing lifecycle/validation ProblemDetails for now.
+Track 409 mapping as separate error-mapping cleanup.
+```
+
+## 15. DTO Validation
+
+Validator:
+
+```csharp
+public sealed class EmployeeStartAgreementExchangeDtoValidator
+    : AbstractValidator<EmployeeStartAgreementExchangeDto>
+{
+    public EmployeeStartAgreementExchangeDtoValidator()
+    {
+        RuleFor(x => x.DocumentRef)
+            .NotEmpty()
+            .MaximumLength(AgreementDocumentRef.MaxLength);
+
+        RuleFor(x => x.Comment)
+            .MaximumLength(ProposalComment.MaxLength)
+            .When(x => !string.IsNullOrWhiteSpace(x.Comment));
+    }
+}
+```
+
+If `AgreementDocumentRef.MaxLength` or `ProposalComment.MaxLength` are not public yet:
+
+```text
+Either expose domain constants
+or duplicate numeric limits temporarily only if existing validation style already does this.
+Prefer exposing constants from domain value objects.
+```
+
+Do not rely only on DTO validation:
+
+```text
+Domain value objects remain authoritative.
+```
+
+## 16. Test / Verification Plan
+
+| Test / check | Verifies | Layer | Status |
+|---|---|---|---|
+| unauthenticated start -> 401 | auth boundary | integration | target |
+| Client role start -> 403 | role boundary | integration | target |
+| missing CSRF -> 400 antiforgery ProblemDetails | CSRF boundary | integration | target |
+| request not found -> mapped ProblemDetails | command lookup | integration | target |
+| not ConnectionRequest -> mapped ProblemDetails | request type guard | integration | target |
+| request not approved -> mapped lifecycle ProblemDetails | lifecycle | integration/domain | target |
+| missing documentRef -> 422 | DTO/API validation | integration | target |
+| blank documentRef -> 422 | DTO/API validation | integration | target |
+| too long documentRef -> 422 | DTO/domain validation | integration/domain | target |
+| too long comment -> 422 | DTO/domain validation | integration/domain | target |
+| approved request + valid document -> 204 | success contract | integration | target |
+| success creates exchange row | persistence | integration | target |
+| success creates proposal version 1 | persistence/domain | integration/domain | target |
+| success sets active version 1 | domain/persistence | integration/domain | target |
+| success sets exchange AwaitingClientConfirmation | domain/persistence | integration/domain | target |
+| success stores employee author | identity | integration/domain | target |
+| success stores document ref | persistence | integration/domain | target |
+| success stores optional comment | persistence | integration/domain | target |
+| duplicate start -> mapped conflict/lifecycle ProblemDetails | duplicate guard | integration | target |
+| approve command alone does not create exchange | boundary between review and exchange | integration | target |
+
+## 17. OpenAPI / Generated Artifacts
+
+Expected OpenAPI addition:
+
+```text
+POST /api/employee/requests/{requestId}/agreement-exchange/start
+request body: EmployeeStartAgreementExchangeDto
+responses:
+  204
+  400
+  401
+  403
+  404
+  409
+  422
+  500
+```
+
+Generated artifacts must be updated through tools only:
+
+```powershell
+dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
+npm.cmd run check:api
+```
+
+If duplicate exchange still maps to `422` for now, keep OpenAPI aligned with actual implementation and add `409` only after error mapping cleanup.
+
+## 18. Dependent / Follow-up Slices
+
+```text
+SL-AGR-EXCH-002 — Send Agreement Counter-Proposal Version
+SL-AGR-EXCH-003 — Read Agreement Exchange
+SL-AGR-EXCH-004 — Accept Active Agreement Proposal
+SL-AGR-EXCH-005 — Final Refuse Agreement Exchange
+```
+
+## 19. Implementation Checklist
+
+```text
+[ ] add EmployeeStartAgreementExchangeDto
+[ ] add EmployeeStartAgreementExchangeDtoValidator
+[ ] add EmployeeStartAgreementExchangeCommand returning UnitResult<IReadOnlyList<Error>>
+[ ] do not add per-command status enum
+[ ] add EmployeeStartAgreementExchangeHandler
+[ ] add agreement exchange repository abstraction
+[ ] add agreement exchange EF repository
+[ ] add L1DbContext DbSet/mapping if missing
+[ ] enforce unique exchange per request
+[ ] add separate EmployeeAgreementExchangeController
+[ ] require Employee role
+[ ] require CSRF token
+[ ] validate documentRef/comment
+[ ] create AgreementDocumentRef
+[ ] create optional ProposalComment
+[ ] call AgreementProposalExchange.StartByEmployee
+[ ] persist exchange aggregate
+[ ] return 204 No Content on success
+[ ] map failures through existing Error/ProblemDetails mapping
+[ ] add domain tests if missing
+[ ] add integration tests for auth/CSRF/validation/lifecycle/success/duplicate
+[ ] regenerate OpenAPI/types
+```
+
+## 20. Guardrail Summary
+
+```text
+Start initial exchange is a server command slice.
+
+This is not empty exchange start.
+
+It starts exchange with first Employee proposal version.
+
+ApproveReview does not create AgreementProposalExchange.
+
+Request must already be Approved.
+
+Document reference is required.
+
+Comment is optional.
+
+Success response is 204 No Content.
+
+Use separate EmployeeAgreementExchangeController.
+
+Do not add per-command status enum.
+
+Do not use AgreementExchangeStatus as command execution result.
+
+Domain/application Error codes drive HTTP failure mapping.
+
+If error mapping is weak, improve it separately.
+
+Do not upload binary files in this slice.
+
+Do not implement client accept/counter-proposal/final refusal in this slice.
+
+Do not change employee auth in this slice.
+
+Do not mix this into ApproveReview handler.
 ```
