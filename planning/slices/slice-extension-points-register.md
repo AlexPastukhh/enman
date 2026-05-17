@@ -47,3 +47,15 @@ Marker: AGR-EXCH-READ-SLICE-DECISIONS-2026-05
 | CP-AGR-EXCH-READ-003 | actions in read DTO | AvailableActions may be added later if client derivation becomes too complex. | future |
 | CP-AGR-EXCH-READ-004 | document bytes/download | List/details return document references only; download/storage remains future document slice. | future |
 
+
+<!-- L2-AGR-EXCH-COMMAND-SLICES-SYNC -->
+## Agreement Exchange Command Extension Points
+
+| ID | Area | Current direction | Status |
+|---|---|---|---|
+| CP-L2-AGR-CMD-001 | route shape | Counter-proposal uses request-scoped route first pass; generated OpenAPI remains source during implementation. | accepted |
+| CP-L2-AGR-CMD-002 | actor abstraction | AgreementExchangeActor may be introduced later if role branching repeats or grows. | future cleanup |
+| CP-L2-AGR-CMD-003 | employee ownership | ResponsibleEmployeeId is not a guard; assignment/ownership can be a future visibility slice. | future |
+| CP-L2-AGR-CMD-004 | accept | Employee accept is out of scope unless future scenario/domain explicitly adds it. | future |
+| CP-L2-AGR-CMD-005 | final refusal | Final refusal remains canonical SL-AGR-EXCH-006; full draft still pending. | planned |
+

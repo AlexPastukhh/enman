@@ -57,3 +57,16 @@ Marker: AGR-EXCH-READ-SLICE-DECISIONS-2026-05
 | AGR-EXCH-READ-Q-004 | SL-AGR-EXCH-004 | read implementation | accepted | Use application service for details read? | No. Use query handler + read repository / Dapper projection. | Keeps read slice projection-only. |
 | AGR-EXCH-READ-Q-005 | L2-AGR-EXCH-LIST-001.client, L2-AGR-EXCH-DETAILS-001.client | frontend ownership | accepted | Actor-specific wrappers first pass? | No while response shape is common. Use shared entity API/query/model and actor page shells. | Avoids duplicated client wrappers. |
 
+
+<!-- L2-AGR-EXCH-COMMAND-SLICES-SYNC -->
+## Agreement Exchange Command Questions
+
+| ID | Local file(s) | Area | Status | Question | Assumption / current direction | Impact |
+|---|---|---|---|---|---|---|
+| Q-L2-AGR-CMD-001 | SL-AGR-EXCH-002 | endpoint | accepted | One shared endpoint or separate Client/Employee endpoints for counter-proposal? | One shared endpoint first pass: POST /api/requests/{requestId}/agreement-exchange/proposals. | Shared server/client wrapper. |
+| Q-L2-AGR-CMD-002 | SL-AGR-EXCH-002 | actor model | accepted | Introduce AgreementExchangeActor now? | No first pass. Controller resolves role/account id; service branches explicitly; domain owns invariants. | Simpler implementation. |
+| Q-L2-AGR-CMD-003 | SL-AGR-EXCH-002, SL-AGR-EXCH-005 | ownership | accepted | How are client actions protected? | AgreementProposalExchange.ClientAccountId; client domain methods guard client.Id == ClientAccountId. | Participant security. |
+| Q-L2-AGR-CMD-004 | exchange command slices | employee ownership | accepted | Is there ResponsibleEmployeeId guard? | No first pass. Any active Employee can service exchange; proposal sender is tracked per version. | Avoids false employee ownership. |
+| Q-L2-AGR-CMD-005 | SL-AGR-EXCH-005 | accept | accepted | Is accept Client-only? | Yes first pass. Employee accept out of scope. | Client-only endpoint/sidecar. |
+| Q-L2-AGR-CMD-006 | SL-AGR-EXCH-005 | accept state | accepted | Does accept create a new version? | No. Exchange becomes Accepted; active proposal becomes Accepted; proposal count unchanged. | Test assertions. |
+

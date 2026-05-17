@@ -61,3 +61,16 @@ Marker: AGR-EXCH-READ-SLICE-DECISIONS-2026-05
 | IMPL-AGR-EXCH-READ-004 | client sidecars | Use shared entity wrappers under entities/agreement-exchange/api; do not add shared/api/agreementExchangeApi.ts. | accepted |
 | IMPL-AGR-EXCH-READ-005 | client sidecars | Page shells may differ by actor; query/model/widgets stay shared while response shape is common. | accepted |
 
+
+<!-- L2-AGR-EXCH-COMMAND-SLICES-SYNC -->
+## Agreement Exchange Command Implementation Notes
+
+| ID | Applies to | Note | Status |
+|---|---|---|---|
+| IMPL-L2-AGR-CMD-001 | current-state answers | Inspect GitHub/current branch for actual implementation state. Uploaded drafts and archives are planning input only. | accepted |
+| IMPL-L2-AGR-CMD-002 | server/client full drafts | Keep Implementation Checklist near the end of every full server or client draft. | accepted |
+| IMPL-L2-AGR-CMD-003 | counter-proposal server | Controller may branch by role only to call service method; it must not contain lifecycle/turn/ownership logic. | accepted |
+| IMPL-L2-AGR-CMD-004 | counter-proposal domain | Domain validates client ownership, active proposal sender, turn and lifecycle invariants. | accepted |
+| IMPL-L2-AGR-CMD-005 | accept server | Use Client-only endpoint, no body, 204 success, no new proposal version. | accepted |
+| IMPL-L2-AGR-CMD-006 | client wrappers | Command wrappers live in eatures/agreement-exchange/<action>/api, not shared/api. | accepted |
+

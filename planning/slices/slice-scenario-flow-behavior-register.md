@@ -107,3 +107,15 @@ When a future L2 implementation slice is drafted, point it to the relevant scena
 
 
 
+
+<!-- L2-AGR-EXCH-COMMAND-SLICES-SYNC -->
+## Agreement Exchange Command Slices
+
+| Slice / sidecar | Marker | Source files | Applies to | Status |
+|---|---|---|---|---|
+| SL-AGR-EXCH-002-send-agreement-counter-proposal-version.md | [SCENARIO] / [BEHAVIOR] / [CONCERN] | Agreement exchange scenarios, CC-CSRF-001 | Shared Client/Employee counter-proposal command; request-scoped route; actor branch in service; domain owns participant/turn/lifecycle invariants | drafted |
+| L2-AGR-EXCH-SEND-PROPOSAL-001-send-agreement-proposal-version.client.md | [SCENARIO] / [BEHAVIOR] / [CONCERN] | Agreement exchange details/read sidecar, CC-CSRF-001 | Shared Client/Employee send proposal feature from details action slot | drafted |
+| SL-AGR-EXCH-005-client-accept-active-agreement-proposal.md | [SCENARIO] / [BEHAVIOR] / [CONCERN] | Agreement exchange scenarios, CC-CSRF-001 | Client-only accept active Employee proposal command; no new version; accepted state through refetch | drafted |
+| L2-AGR-EXCH-ACCEPT-001-client-accept-active-agreement-proposal.client.md | [SCENARIO] / [BEHAVIOR] / [CONCERN] | Agreement exchange details/read sidecar, CC-CSRF-001 | Client-only Accept action in Client agreement exchange details action area | drafted |
+| SL-AGR-EXCH-006-final-refuse-agreement-exchange.md | [SCENARIO] / [BEHAVIOR] / [CONCERN] | Agreement exchange scenarios, CC-CSRF-001 | Employee final refusal; full draft pending | planned |
+

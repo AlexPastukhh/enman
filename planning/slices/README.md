@@ -126,3 +126,33 @@ Do not:
 
 Future review commands use `features/employee-request/<action>/api`.
 Agreement exchange reads/commands follow the same ownership rule: reads in entities, commands in features.
+
+<!-- L2-AGR-EXCH-COMMAND-SLICES-SYNC -->
+## Agreement Exchange Command Slice Sync
+
+Canonical agreement exchange command/read slice set:
+
+`	ext
+SL-AGR-EXCH-001 вЂ” Start Agreement Exchange With Initial Employee Proposal
+SL-AGR-EXCH-002 вЂ” Send Agreement Counter-Proposal Version
+SL-AGR-EXCH-003 вЂ” Agreement Exchange List Page / Read List
+SL-AGR-EXCH-004 вЂ” Agreement Exchange Details / Read Details
+SL-AGR-EXCH-005 вЂ” Client Accept Active Agreement Proposal
+SL-AGR-EXCH-006 вЂ” Final Refuse Agreement Exchange
+`
+
+Client sidecars added for command/read continuation:
+
+`	ext
+L2-AGR-EXCH-LIST-001.client
+L2-AGR-EXCH-DETAILS-001.client
+L2-AGR-EXCH-SEND-PROPOSAL-001.client
+L2-AGR-EXCH-ACCEPT-001.client
+`
+
+Rules:
+- current project state questions require GitHub/current branch inspection, not archives;
+- server/client full drafts must keep Implementation Checklist near the end;
+- server/backend/API slice drafts live in planning/slices/;
+- client sidecar drafts live in planning/slices/l2/.
+
