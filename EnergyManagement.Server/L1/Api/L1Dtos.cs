@@ -177,6 +177,10 @@ public sealed record AgreementDocumentRefDto(
     [property: JsonPropertyName("contentType")] string? ContentType,
     [property: JsonPropertyName("sizeBytes")] long SizeBytes);
 
+public sealed record StartAgreementExchangeDto(
+    [property: JsonPropertyName("document")] AgreementDocumentRefDto? Document,
+    [property: JsonPropertyName("comment")] string? Comment);
+
 public sealed record SendAgreementProposalVersionDto(
     [property: JsonPropertyName("document")] AgreementDocumentRefDto? Document,
     [property: JsonPropertyName("comment")] string? Comment);
