@@ -36,6 +36,7 @@ public sealed class TestDatabaseManager
             IF OBJECT_ID(N'dbo.L1RequestReviews', N'U') IS NOT NULL DELETE FROM dbo.L1RequestReviews;
             IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL DELETE FROM dbo.L1ClientRequests;
             IF OBJECT_ID(N'dbo.L1ApplicantParties', N'U') IS NOT NULL DELETE FROM dbo.L1ApplicantParties;
+            IF OBJECT_ID(N'dbo.L1Employees', N'U') IS NOT NULL DELETE FROM dbo.L1Employees;
             IF OBJECT_ID(N'dbo.L1Accounts', N'U') IS NOT NULL DELETE FROM dbo.L1Accounts;
             IF OBJECT_ID(N'dbo.RequestReviews', N'U') IS NOT NULL DELETE FROM dbo.RequestReviews;
             IF OBJECT_ID(N'dbo.Requests', N'U') IS NOT NULL DELETE FROM dbo.Requests;
@@ -108,6 +109,7 @@ public sealed class TestDatabaseManager
             await EnsureL1ApplicantPartyVerificationStatusColumnAsync(cancellationToken);
             await EnsureL1ClientRequestReviewColumnsAsync(cancellationToken);
             await EnsureL1RequestReviewsTableAsync(cancellationToken);
+            await EnsureL1EmployeesTableAsync(cancellationToken);
             return;
         }
 
@@ -116,6 +118,7 @@ public sealed class TestDatabaseManager
         await databaseCreator.CreateTablesAsync(cancellationToken);
         await EnsureL1ClientRequestReviewColumnsAsync(cancellationToken);
         await EnsureL1RequestReviewsTableAsync(cancellationToken);
+        await EnsureL1EmployeesTableAsync(cancellationToken);
     }
 
     private async Task EnsureL1ClientRequestReviewColumnsAsync(CancellationToken cancellationToken)
@@ -189,6 +192,37 @@ public sealed class TestDatabaseManager
             BEGIN
                 ALTER TABLE dbo.L1RequestReviews
                 ADD RejectionReason nvarchar(1000) NULL;
+            END
+            """;
+
+        await using var connection = new SqlConnection(_connectionString);
+        await connection.OpenAsync(cancellationToken);
+
+        await using var command = new SqlCommand(query, connection)
+        {
+            CommandType = CommandType.Text
+        };
+
+        await command.ExecuteNonQueryAsync(cancellationToken);
+    }
+
+
+    private async Task EnsureL1EmployeesTableAsync(CancellationToken cancellationToken)
+    {
+        const string query = """
+            IF OBJECT_ID(N'dbo.L1Employees', N'U') IS NULL
+            BEGIN
+                CREATE TABLE dbo.L1Employees
+                (
+                    Id bigint IDENTITY(1,1) NOT NULL,
+                    AccountId bigint NOT NULL,
+                    FullName_FirstName nvarchar(100) NOT NULL,
+                    FullName_MiddleName nvarchar(100) NOT NULL,
+                    FullName_LastName nvarchar(100) NOT NULL,
+                    IsActive bit NOT NULL,
+                    CreatedAt datetimeoffset NOT NULL,
+                    CONSTRAINT PK_L1Employees PRIMARY KEY (Id)
+                );
             END
             """;
 

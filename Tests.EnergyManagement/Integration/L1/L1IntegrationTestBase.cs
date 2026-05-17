@@ -144,6 +144,22 @@ public abstract class L1IntegrationTestBase
             ?? throw new InvalidOperationException("Employee request details response body was empty.");
     }
 
+    protected Task<HttpResponseMessage> StartEmployeeRequestReviewRequestAsync(
+        HttpClient client,
+        long requestId)
+    {
+        return PostWithCsrfAsync(client, $"/api/employee/requests/{requestId}/review/start");
+    }
+
+    protected async Task StartEmployeeRequestReviewAsync(
+        HttpClient client,
+        long requestId)
+    {
+        var response = await StartEmployeeRequestReviewRequestAsync(client, requestId);
+
+        await HttpResponseAssertions.For(response, _output).ShouldBeStatusCode((int)System.Net.HttpStatusCode.NoContent);
+    }
+
     protected async Task<L1MyRequestDetailsDto> GetMyRequestDetailsAsync(
         HttpClient client,
         long requestId)
@@ -519,6 +535,72 @@ public abstract class L1IntegrationTestBase
             createdAt);
     }
 
+    protected async Task InsertEmployeeAsync(
+        long employeeId,
+        long accountId = 1,
+        string firstName = "Employee",
+        string middleName = "Review",
+        string lastName = "User",
+        bool isActive = true)
+    {
+        await using var connection = new SqlConnection(_fixture.ConnectionString);
+        await connection.OpenAsync();
+
+        await using var command = new SqlCommand(
+            """
+            IF NOT EXISTS (SELECT 1 FROM dbo.L1Employees WHERE Id = @employeeId)
+            BEGIN
+                SET IDENTITY_INSERT dbo.L1Employees ON;
+
+                INSERT INTO dbo.L1Employees
+                    (Id, AccountId, FullName_FirstName, FullName_MiddleName, FullName_LastName, IsActive, CreatedAt)
+                VALUES
+                    (@employeeId, @accountId, @firstName, @middleName, @lastName, @isActive, @createdAt);
+
+                SET IDENTITY_INSERT dbo.L1Employees OFF;
+            END
+            """,
+            connection)
+        {
+            CommandType = CommandType.Text
+        };
+
+        command.Parameters.AddWithValue("@employeeId", employeeId);
+        command.Parameters.AddWithValue("@accountId", accountId);
+        command.Parameters.AddWithValue("@firstName", firstName);
+        command.Parameters.AddWithValue("@middleName", middleName);
+        command.Parameters.AddWithValue("@lastName", lastName);
+        command.Parameters.AddWithValue("@isActive", isActive);
+        command.Parameters.AddWithValue("@createdAt", DateTimeOffset.UtcNow);
+
+        await command.ExecuteNonQueryAsync();
+    }
+
+    protected async Task<RequestReviewRow?> GetRequestReviewRowAsync(long requestId)
+    {
+        await using var reader = await ExecuteReaderAsync(
+            """
+            SELECT RequestId, Status, StartedByEmployeeId, StartedAt, CompletedByEmployeeId, CompletedAt, RejectionReason
+            FROM dbo.L1RequestReviews
+            WHERE RequestId = @id
+            """,
+            requestId);
+
+        if (!await reader.ReadAsync())
+        {
+            return null;
+        }
+
+        return new RequestReviewRow(
+            reader.GetInt64("RequestId"),
+            reader.GetString("Status"),
+            reader.GetInt64("StartedByEmployeeId"),
+            reader.GetDateTimeOffset("StartedAt"),
+            reader.IsDBNull("CompletedByEmployeeId") ? null : reader.GetInt64("CompletedByEmployeeId"),
+            reader.IsDBNull("CompletedAt") ? null : reader.GetDateTimeOffset("CompletedAt"),
+            reader.IsDBNull("RejectionReason") ? null : reader.GetString("RejectionReason"));
+    }
+
     protected async Task InsertRequestReviewAsync(
         long requestId,
         string reviewStatus,
@@ -651,6 +733,15 @@ public abstract class L1IntegrationTestBase
     protected const string House = "12";
     protected const string Building = "1";
     protected const string Apartment = "34";
+
+    protected sealed record RequestReviewRow(
+        long RequestId,
+        string Status,
+        long StartedByEmployeeId,
+        DateTimeOffset StartedAt,
+        long? CompletedByEmployeeId,
+        DateTimeOffset? CompletedAt,
+        string? RejectionReason);
 
     protected sealed record AccountRow(
         long Id,

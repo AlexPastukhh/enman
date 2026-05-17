@@ -1,7 +1,9 @@
 using System.Security.Claims;
+using EnergyManagement.Server.Api.Security;
 using EnergyManagement.Server.Controllers;
 using EnergyManagement.Server.L1.Api;
 using EnergyManagement.Server.L1.Api.Validation;
+using EnergyManagement.Server.L1.Application.Commands;
 using EnergyManagement.Server.L1.Application.Queries;
 using EnergyManagement.Server.L1.Application.Security;
 using FluentValidation;
@@ -106,6 +108,48 @@ public sealed class EmployeeRequestsController : ProjectController
         catch (Exception ex)
         {
             _logger.LogError(ex, "Employee request details failed for request {RequestId}.", requestId);
+            return ProblemDetailsWithExceptionDev(ex);
+        }
+    }
+
+
+    [Authorize(Roles = "Employee")]
+    [RequireAntiforgeryToken]
+    [HttpPost("{requestId:long:min(1)}/review/start", Name = "EmployeeStartRequestReview")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> StartReview(
+        long requestId,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (!TryGetCurrentEmployeeId(out var employeeId))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _sender.Send(
+                new EmployeeStartRequestReviewCommand(employeeId, requestId),
+                cancellationToken);
+
+            return result.Status switch
+            {
+                EmployeeStartRequestReviewCommandStatus.Started => NoContent(),
+                EmployeeStartRequestReviewCommandStatus.NotFound => NotFound(),
+                EmployeeStartRequestReviewCommandStatus.Forbidden => Forbid(),
+                EmployeeStartRequestReviewCommandStatus.Invalid => ProblemDetailsFromValidation(result.Errors),
+                _ => ProblemDetailsFromInternalServerError(Domain.EnergyManagement.Common.Error.Errors.General.InternalServerError)
+            };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Employee start request review failed for request {RequestId}.", requestId);
             return ProblemDetailsWithExceptionDev(ex);
         }
     }

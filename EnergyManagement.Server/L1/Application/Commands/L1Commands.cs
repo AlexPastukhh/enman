@@ -63,3 +63,49 @@ public sealed record L1MakeApplicantPartyCurrentDefaultCommand(
     long ClientAccountId,
     long ApplicantPartyId)
     : IRequest<UnitResult<IReadOnlyList<Error>>>;
+
+public sealed record EmployeeStartRequestReviewCommand(
+    long EmployeeId,
+    long RequestId)
+    : IRequest<EmployeeStartRequestReviewCommandResult>;
+
+public sealed record EmployeeStartRequestReviewCommandResult(
+    EmployeeStartRequestReviewCommandStatus Status,
+    IReadOnlyList<Error> Errors)
+{
+    public static EmployeeStartRequestReviewCommandResult Started()
+    {
+        return new EmployeeStartRequestReviewCommandResult(
+            EmployeeStartRequestReviewCommandStatus.Started,
+            []);
+    }
+
+    public static EmployeeStartRequestReviewCommandResult NotFound()
+    {
+        return new EmployeeStartRequestReviewCommandResult(
+            EmployeeStartRequestReviewCommandStatus.NotFound,
+            []);
+    }
+
+    public static EmployeeStartRequestReviewCommandResult Forbidden()
+    {
+        return new EmployeeStartRequestReviewCommandResult(
+            EmployeeStartRequestReviewCommandStatus.Forbidden,
+            []);
+    }
+
+    public static EmployeeStartRequestReviewCommandResult Invalid(IReadOnlyList<Error> errors)
+    {
+        return new EmployeeStartRequestReviewCommandResult(
+            EmployeeStartRequestReviewCommandStatus.Invalid,
+            errors);
+    }
+}
+
+public enum EmployeeStartRequestReviewCommandStatus
+{
+    Started = 1,
+    NotFound = 2,
+    Forbidden = 3,
+    Invalid = 4
+}

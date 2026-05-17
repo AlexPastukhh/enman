@@ -16,6 +16,7 @@ public class L1DbContext : DbContext
     public DbSet<Account> Accounts => Set<Account>();
     public DbSet<ApplicantParty> ApplicantParties => Set<ApplicantParty>();
     public DbSet<ClientRequest> ClientRequests => Set<ClientRequest>();
+    public DbSet<Employee> Employees => Set<Employee>();
     public DbSet<AgreementProposalExchange> AgreementProposalExchanges => Set<AgreementProposalExchange>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -29,6 +30,7 @@ public class L1DbContext : DbContext
         ConfigureAccounts(modelBuilder);
         ConfigureApplicantParties(modelBuilder);
         ConfigureClientRequests(modelBuilder);
+        ConfigureEmployees(modelBuilder);
         ConfigureAgreementProposalExchanges(modelBuilder);
     }
 
@@ -275,6 +277,46 @@ public class L1DbContext : DbContext
                         .IsRequired(false);
                 });
             });
+        });
+    }
+
+
+    private static void ConfigureEmployees(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Employee>(employee =>
+        {
+            employee.ToTable("L1Employees");
+            employee.HasKey(x => x.Id);
+
+            employee.Property(x => x.AccountId)
+                .HasColumnName("AccountId")
+                .IsRequired();
+
+            employee.OwnsOne(x => x.FullName, fullName =>
+            {
+                fullName.Property(x => x.FirstName)
+                    .HasColumnName("FullName_FirstName")
+                    .HasMaxLength(100)
+                    .IsRequired();
+
+                fullName.Property(x => x.MiddleName)
+                    .HasColumnName("FullName_MiddleName")
+                    .HasMaxLength(100)
+                    .IsRequired();
+
+                fullName.Property(x => x.LastName)
+                    .HasColumnName("FullName_LastName")
+                    .HasMaxLength(100)
+                    .IsRequired();
+            });
+
+            employee.Property(x => x.IsActive)
+                .HasColumnName("IsActive")
+                .IsRequired();
+
+            employee.Property(x => x.CreatedAt)
+                .HasColumnName("CreatedAt")
+                .IsRequired();
         });
     }
 
