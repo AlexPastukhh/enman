@@ -1,6 +1,6 @@
 # L2 Slice Planning Index
 
-Status: current / Employee request read/review drafts, StartReview entry points, review command drafts and AgreementProposalExchange slice boundaries synchronized  
+Status: current / Employee request review and AgreementProposalExchange canonical slice navigation synchronized
 Scope: L2 Employee, Request Review, AgreementProposalExchange and document-reference slice navigation
 
 ## 1. Source Rule
@@ -8,6 +8,8 @@ Scope: L2 Employee, Request Review, AgreementProposalExchange and document-refer
 Scenario sources are the source of truth for Scenario Flow and Behavior Coverage.
 
 Domain draft is domain-design input for aggregates, naming, invariants and target code sketches.
+
+Current-state questions require GitHub/current branch inspection, not uploaded archives.
 
 ## 1A. Account / Employee Identity Rule
 
@@ -47,7 +49,7 @@ Employee review commands:
   features/employee-request/<action>/api
 
 Agreement exchange reads:
-  entities/agreement-exchange/api, unless a more specific entity name is chosen in the full draft
+  entities/agreement-exchange/api
 
 Agreement exchange commands:
   features/agreement-exchange/<action>/api
@@ -55,18 +57,6 @@ Agreement exchange commands:
 shared/api:
   fetchJson, ProblemDetails/ApiError, CSRF helpers,
   generated OpenAPI types and generic transport helpers only
-```
-
-Examples:
-
-```text
-entities/employee-request/api/listEmployeeDashboardRequests.ts
-entities/employee-request/api/getEmployeeRequestDetails.ts
-entities/employee-request/api/employeeRequestApiTypes.ts
-
-features/employee-request/start-review/api/startRequestReview.ts
-features/employee-request/approve-review/api/approveRequestReview.ts
-features/employee-request/reject-review/api/rejectRequestReview.ts
 ```
 
 Do not add new business-specific wrappers such as:
@@ -93,7 +83,7 @@ Do not place dashboard under:
 pages/employee/dashboard
 ```
 
-## 4. Current L2 Drafted Slices
+## 4. Current L2 Review Slices
 
 ```text
 planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
@@ -114,16 +104,28 @@ L2-REVIEW-APPROVE-001.client — Approve Request Review client action
 L2-REVIEW-REJECT-001.client — Reject Request Review client action/form
 ```
 
-## 5. AgreementProposalExchange Slice Family
+## 5. AgreementProposalExchange Canonical Slice Family
 
-The previous loose `SL-AGR-*` placeholder is now fixed as five planned slice boundaries:
+Server/backend/API slice files:
 
 ```text
 planning/slices/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.md
 planning/slices/SL-AGR-EXCH-002-send-agreement-counter-proposal-version.md
-planning/slices/SL-AGR-EXCH-003-read-agreement-exchange.md
-planning/slices/SL-AGR-EXCH-004-accept-active-agreement-proposal.md
-planning/slices/SL-AGR-EXCH-005-final-refuse-agreement-exchange.md
+planning/slices/SL-AGR-EXCH-003-agreement-exchange-list-read.md
+planning/slices/SL-AGR-EXCH-004-agreement-exchange-details-read.md
+planning/slices/SL-AGR-EXCH-005-client-accept-active-agreement-proposal.md
+planning/slices/SL-AGR-EXCH-006-final-refuse-agreement-exchange.md
+```
+
+Client sidecar files:
+
+```text
+planning/slices/l2/L2-AGR-EXCH-START-001-start-agreement-exchange-with-initial-employee-proposal.client.md
+planning/slices/l2/L2-AGR-EXCH-LIST-001-agreement-exchange-list.client.md
+planning/slices/l2/L2-AGR-EXCH-DETAILS-001-agreement-exchange-details.client.md
+planning/slices/l2/L2-AGR-EXCH-SEND-PROPOSAL-001-send-agreement-proposal-version.client.md
+planning/slices/l2/L2-AGR-EXCH-ACCEPT-001-client-accept-active-agreement-proposal.client.md
+planning/slices/l2/L2-AGR-EXCH-FINAL-REFUSE-001-employee-final-refuse-agreement-exchange.client.md
 ```
 
 Decision:
@@ -131,9 +133,10 @@ Decision:
 ```text
 Start initial exchange — separate slice.
 Client send / Employee send counter-proposal — one slice with two actor branches.
-Read — separate slice.
-Accept — separate slice.
-Final refusal — separate slice.
+List read — separate slice.
+Details read — separate slice.
+Accept — separate Client-only slice.
+Final refusal — separate Employee-only slice.
 ```
 
 Do not split client and employee counter-proposal sends yet unless UI, permissions, document handling or validation diverge materially.
@@ -153,7 +156,7 @@ SL-EMP-REQ-004 — Approve Request Review
 
 SL-EMP-REQ-005 — Reject Request Review
   POST /api/employee/requests/{requestId}/review/reject
-  body: rejection feedback
+  body: optional rejection feedback/body
   success: 204 No Content
   no agreement proposal flow starts
 ```
@@ -169,7 +172,31 @@ SL-EMP-REQ-005 — Reject Request Review
 
 This does not create two StartReview slices. Dashboard and details host the same feature-owned command action.
 
-## 8. Current Guardrails
+## 8. Agreement Exchange Client Placement Rules
+
+```text
+Start exchange:
+  host page: pages/employee/requests/details
+  feature: features/agreement-exchange/start-exchange
+  reason: exchange does not exist yet.
+
+After exchange exists:
+  Client details page: pages/agreements/details, or current project equivalent
+  Employee details page: pages/employee/agreements/details
+  shared read entity: entities/agreement-exchange
+  shared read widget: widgets/agreement-exchange-details
+
+Send proposal:
+  feature: features/agreement-exchange/send-proposal
+
+Client accept:
+  feature: features/agreement-exchange/accept-proposal
+
+Employee final refuse:
+  feature: features/agreement-exchange/final-refuse
+```
+
+## 9. Current Guardrails
 
 ```text
 - Use Employee, not Worker.
@@ -180,67 +207,11 @@ This does not create two StartReview slices. Dashboard and details host the same
 - No EmployeeRef in L2 target.
 - Temporary employee visibility policy: all active Employees can see all review-relevant requests.
 - Employee visibility is backend authorization/read filtering, not UI visibility.
-- Command success responses use 204 No Content when read state should be refreshed from read endpoints.
+- Command success responses use 204 No Content when read state should be refreshed from read endpoints unless server/OpenAPI intentionally returns a command result such as exchangeId.
 - AgreementProposalExchange and Request are separate aggregates.
 - Initial agreement exchange creation requires initial Employee proposal document.
 - Counter-proposal versioning is one lifecycle pattern with client and employee actor branches.
+- AgreementProposalExchange stores ClientAccountId.
+- Do not add ResponsibleEmployeeId as first-pass authorization guard.
+- Counter-proposal replacement is SupersededByCounterProposal, not Rejected.
 ```
-
-<!-- L2-AGR-EXCH-COMMAND-SLICES-SYNC -->
-## Agreement Exchange Command Slice Sync
-
-Canonical agreement exchange command/read slice set:
-
-`	ext
-SL-AGR-EXCH-001 вЂ” Start Agreement Exchange With Initial Employee Proposal
-SL-AGR-EXCH-002 вЂ” Send Agreement Counter-Proposal Version
-SL-AGR-EXCH-003 вЂ” Agreement Exchange List Page / Read List
-SL-AGR-EXCH-004 вЂ” Agreement Exchange Details / Read Details
-SL-AGR-EXCH-005 вЂ” Client Accept Active Agreement Proposal
-SL-AGR-EXCH-006 вЂ” Final Refuse Agreement Exchange
-`
-
-Client sidecars added for command/read continuation:
-
-`	ext
-L2-AGR-EXCH-LIST-001.client
-L2-AGR-EXCH-DETAILS-001.client
-L2-AGR-EXCH-SEND-PROPOSAL-001.client
-L2-AGR-EXCH-ACCEPT-001.client
-`
-
-Rules:
-- current project state questions require GitHub/current branch inspection, not archives;
-- server/client full drafts must keep Implementation Checklist near the end;
-- server/backend/API slice drafts live in planning/slices/;
-- client sidecar drafts live in planning/slices/l2/.
-
-
-<!-- AGR-EXCH-FINAL-REFUSE-SYNC -->
-## Agreement exchange final refusal sync
-
-Canonical final refusal drafts:
-
-```text
-planning/slices/SL-AGR-EXCH-006-final-refuse-agreement-exchange.md
-planning/slices/l2/L2-AGR-EXCH-FINAL-REFUSE-001-employee-final-refuse-agreement-exchange.client.md
-```
-
-`SL-AGR-EXCH-006` is Employee-only backend/API command:
-
-```text
-POST /api/agreement-exchanges/{exchangeId}/final-refuse
-success: 204 No Content
-body: nullable FinalRefuseAgreementExchangeDto? with optional reason
-```
-
-The command orchestrates two aggregates through domain methods:
-
-```text
-exchange.FinalRefuseProposal(...)
-request.MarkAgreementExchangeFailed(...)
-```
-
-Client sidecar is Employee details-only first pass. Do not add Client final refusal.
-<!-- /AGR-EXCH-FINAL-REFUSE-SYNC -->
-

@@ -1,10 +1,10 @@
-# SL-AGR-EXCH-001 — Start Agreement Exchange With Initial Employee Proposal
+﻿# SL-AGR-EXCH-001 вЂ” Start Agreement Exchange With Initial Employee Proposal
 
 Status: draft / server implementation-ready  
 Package: `[L2] Agreement Proposal Exchange`  
 Source scenario: approved request moves from review decision to agreement proposal exchange  
 Slice type: server command slice  
-Depends on: `SL-EMP-REQ-004 — Approve Request Review`, Employee auth/session, CSRF, L2 domain agreement proposal model  
+Depends on: `SL-EMP-REQ-004 вЂ” Approve Request Review`, Employee auth/session, CSRF, L2 domain agreement proposal model  
 Current implementation status: domain model exists; API endpoint/application command/persistence repository are planned in this slice.
 
 ## 1. Slice Overview
@@ -26,7 +26,7 @@ Command endpoint direction:
 
 ```text
 POST /api/employee/requests/{requestId}/agreement-exchange/start
-→ 204 No Content
+в†’ 204 No Content
 ```
 
 No response DTO.
@@ -56,7 +56,7 @@ This method creates the exchange, stores the exchange client-side participant, c
 | ID | Status | Question | Decision / current direction | Impact |
 |---|---|---|---|---|
 | `SL-AGR-EXCH-001-Q001` | accepted | Does approve automatically start exchange? | No. Exchange starts by explicit employee command. | Keeps review and agreement lifecycle separated. |
-| `SL-AGR-EXCH-001-Q002` | accepted | Is this “empty start” or “start with first proposal”? | Start with initial employee proposal. | Body requires document ref. |
+| `SL-AGR-EXCH-001-Q002` | accepted | Is this вЂњempty startвЂќ or вЂњstart with first proposalвЂќ? | Start with initial employee proposal. | Body requires document ref. |
 | `SL-AGR-EXCH-001-Q003` | accepted | Who can start exchange? | Employee with app cookie role Employee. | Auth boundary. |
 | `SL-AGR-EXCH-001-Q004` | accepted | Request precondition? | ConnectionRequest must be `Approved`. | Domain rule. |
 | `SL-AGR-EXCH-001-Q005` | accepted | First proposal version? | Version `1`. | Domain uses `AgreementProposalVersion.First`. |
@@ -125,11 +125,11 @@ Implemented scope:
 |---|---|
 | Approve review | `SL-EMP-REQ-004` |
 | Automatic exchange creation during approve | explicitly not this slice |
-| Client read exchange | `SL-AGR-EXCH-003` |
-| Client accept proposal | `SL-AGR-EXCH-004` |
+| Agreement exchange list/details reads | `SL-AGR-EXCH-003` / `SL-AGR-EXCH-004` |
+| Client accept proposal | `SL-AGR-EXCH-005` |
 | Client counter-proposal | `SL-AGR-EXCH-002` |
 | Employee revised proposal | `SL-AGR-EXCH-002` |
-| Final refusal | `SL-AGR-EXCH-005` |
+| Final refusal | `SL-AGR-EXCH-006` |
 | Responsible employee assignment / ownership lock | future assignment/queue slice, if ever needed |
 | Department/region employee visibility | future permission slice |
 | Binary file upload/storage | future file/document slice |
@@ -150,26 +150,26 @@ Agreement exchange starts only through this explicit command.
 
 ```text
 Employee opens approved request details
-        ↓
+        в†“
 Request is shown as Approved
-        ↓
+        в†“
 Employee chooses Start agreement exchange
-        ↓
+        в†“
 Employee provides agreement document reference
-        ↓
+        в†“
 Employee optionally provides proposal comment
-        ↓
+        в†“
 Employee submits
-        ↓
- ┌────────────────────────────────┬────────────────────────────────┐
- │ accepted                       │ not accepted                   │
- ▼                                ▼
+        в†“
+ в”Њв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”¬в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”ђ
+ в”‚ accepted                       в”‚ not accepted                   в”‚
+ в–ј                                в–ј
 Agreement exchange is created      Employee sees validation/error
 ClientAccountId is stored          feedback and can correct input
 Proposal version 1 is created
-        ↓
+        в†“
 Exchange waits for client confirmation
-        ↓
+        в†“
 No client decision is made yet
 ```
 
@@ -344,22 +344,22 @@ If current Error mapping cannot distinguish not found / forbidden / duplicate co
 ```text
 [HTTP]
 POST /api/employee/requests/{requestId}/agreement-exchange/start
-        ↓
+        в†“
 [Auth]
 Employee app cookie required
-        ↓
+        в†“
 [CSRF]
 valid antiforgery token required
-        ↓
+        в†“
 [DTO validation]
 documentRef required / comment max length
-        ↓
+        в†“
 [Controller]
 derive current Employee id from app session
-        ↓
+        в†“
 [Command]
 EmployeeStartAgreementExchangeCommand(employeeId, requestId, documentRef, comment)
-        ↓
+        в†“
 [Handler]
 load Employee
 load ConnectionRequest aggregate
@@ -367,15 +367,15 @@ ensure no AgreementProposalExchange exists for request
 create AgreementDocumentRef
 create optional ProposalComment
 call AgreementProposalExchange.StartByEmployee(...)
-        ↓
+        в†“
 [Domain]
 exchange stores RequestId and ClientAccountId
 exchange creates Employee proposal version 1
-        ↓
+        в†“
 [Persistence]
 add AgreementProposalExchange
 SaveChanges
-        ↓
+        в†“
 [Response]
 204 No Content
 ```
@@ -577,10 +577,10 @@ If duplicate exchange still maps to `422` for now, keep OpenAPI aligned with act
 ## 18. Dependent / Follow-up Slices
 
 ```text
-SL-AGR-EXCH-002 — Send Agreement Counter-Proposal Version
-SL-AGR-EXCH-003 — Read Agreement Exchange
-SL-AGR-EXCH-004 — Accept Active Agreement Proposal
-SL-AGR-EXCH-005 — Final Refuse Agreement Exchange
+SL-AGR-EXCH-002 вЂ” Send Agreement Counter-Proposal Version
+SL-AGR-EXCH-003 вЂ” Agreement Exchange List Page / Read List`nSL-AGR-EXCH-004 вЂ” Agreement Exchange Details / Read Details
+SL-AGR-EXCH-005 вЂ” Client Accept Active Agreement Proposal
+SL-AGR-EXCH-006 вЂ” Final Refuse Agreement Exchange
 ```
 
 ## 19. Implementation Checklist
@@ -638,3 +638,4 @@ Do not implement client accept/counter-proposal/final refusal in this slice.
 Do not change employee auth in this slice.
 Do not mix this into ApproveReview handler.
 ```
+

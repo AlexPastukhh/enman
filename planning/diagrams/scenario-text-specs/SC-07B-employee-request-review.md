@@ -1,6 +1,6 @@
 # SC-07B — Employee Request Review
 
-Status: L2 scenario draft / StartReview two entry points and optional RejectReview feedback synchronized  
+Status: L2 scenario draft / StartReview two entry points and RejectReview optional feedback synchronized  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
 
 ## 1. Purpose
@@ -44,33 +44,31 @@ RequestReview becomes Approved
         ↓
 Request status becomes Approved
         ↓
-AgreementProposalExchange can be started later by Employee proposal workflow
+AgreementProposalExchange can be started later by explicit Employee proposal workflow
 ```
+
+ApproveReview does not create AgreementProposalExchange.
 
 ## 4. Reject Review Flow
 
 ```text
 Employee opens request with Review Started by same Employee
         ↓
-Employee rejects review with optional RejectionFeedback
+Employee rejects review, optionally providing RejectionFeedback
         ↓
-System calls Request.RejectReview(Employee, feedback?, decidedAt)
+System calls Request.RejectReview(Employee, feedback, decidedAt)
         ↓
 RequestReview becomes Rejected
         ↓
 Request status becomes Rejected
 ```
 
-Reject feedback rule:
+Feedback/body direction:
 
 ```text
-RejectReview feedback is optional in the current accepted direction.
-
-Missing, null or blank feedback must not silently become a separate required scenario step
-unless the endpoint/domain is intentionally changed later.
-
-Client UI may show a non-blocking warning/reminder, but it must not make feedback required
-without a scenario/API decision.
+RejectionFeedback is optional in current direction.
+Missing/blank feedback is allowed unless current server/OpenAPI intentionally changes the contract.
+Client may show a non-blocking warning in the future, but must not block submit only because feedback is empty by default.
 ```
 
 ## 5. Blocked Flows
@@ -102,8 +100,9 @@ L2-REVIEW-START-002 — Starting review stores StartedByEmployeeId and StartedAt
 L2-REVIEW-START-003 — StartReview can be initiated from dashboard row or request details action area through the same command behavior.
 L2-REVIEW-APPROVE-001 — Employee who started review can approve it.
 L2-REVIEW-APPROVE-002 — ApproveReview changes Request status to Approved.
+L2-REVIEW-APPROVE-003 — ApproveReview does not create AgreementProposalExchange.
 L2-REVIEW-REJECT-001 — Employee who started review can reject it.
-L2-REVIEW-REJECT-002 — RejectReview changes Request status to Rejected and stores optional feedback when provided.
+L2-REVIEW-REJECT-002 — RejectReview changes Request status to Rejected and may store optional feedback.
 L2-REVIEW-BLOCK-001 — Approve/reject without started review is blocked.
 L2-REVIEW-BLOCK-002 — Another Employee cannot start/approve/reject review already started by someone else.
 L2-REVIEW-NW-001 — Failed review command does not change request/review state.

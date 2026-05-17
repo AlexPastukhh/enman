@@ -1,11 +1,15 @@
 # SC-14 — Agreement Documents
 
-Status: L2 scenario draft / derived from Domain Draft 02  
+Status: L2 scenario draft / AgreementDocumentRef naming conflict guard synchronized  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
 
 ## 1. Purpose
 
 Agreement proposal versions reference accepted/stored agreement document metadata through `AgreementDocumentRef`.
+
+Current SC-14 meaning is Agreement Documents / AgreementDocumentRef.
+
+Older “SC-14 Client Data Verification” wording, if found in archived/security/validation addenda, is stale for current agreement-document diagrams and must be renamed, deferred or deprecated rather than reused as current SC-14.
 
 ## 2. Scenario Direction
 
@@ -35,7 +39,9 @@ It is not:
 file bytes;
 storage adapter;
 file upload service;
-read/delete storage workflow.
+read/delete storage workflow;
+DocumentFileRef;
+ProposalAttachment.
 ```
 
 Fields:
@@ -52,13 +58,34 @@ SizeBytes
 ```text
 ProposalComment is optional.
 If present, it must be non-empty and max-length constrained.
-Empty string means no comment.
+Empty string means no comment unless a concrete command intentionally treats blank as validation error.
 ```
 
-## 5. Behavior Items
+## 5. Validation / Scenario-Local Guardrails
+
+DTO/request-shape validation examples:
+
+```text
+storageKey required;
+originalFileName required;
+contentType required;
+sizeBytes > 0;
+comment max length if provided.
+```
+
+Domain validation/invariants:
+
+```text
+AgreementDocumentRef value object remains authoritative.
+ProposalComment value object remains authoritative.
+No binary file upload/storage adapter belongs to these agreement exchange command slices unless a document/storage slice explicitly adds it.
+```
+
+## 6. Behavior Items
 
 ```text
 L2-AGR-DOC-001 — Agreement proposal version requires AgreementDocumentRef.
 L2-AGR-DOC-002 — AgreementDocumentRef stores metadata reference only, not bytes/storage adapter.
 L2-AGR-COMMENT-001 — ProposalComment is optional; non-empty if provided.
+L2-AGR-DOC-NAMING-001 — Use AgreementDocumentRef, not DocumentFileRef or ProposalAttachment, in current L2 docs/diagrams.
 ```

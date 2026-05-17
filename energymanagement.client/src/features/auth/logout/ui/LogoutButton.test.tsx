@@ -122,7 +122,7 @@ describe("LogoutButton", () => {
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/");
     });
-    expect(screen.getByText("Home public")).toBeVisible();
+    expect(await screen.findByText("Home public")).toBeVisible();
     expect(
       screen.queryByRole("button", { name: "Logout" }),
     ).not.toBeInTheDocument();
@@ -138,7 +138,7 @@ describe("LogoutButton", () => {
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/");
     });
-    expect(screen.getByText("Home public")).toBeVisible();
+    expect(await screen.findByText("Home public")).toBeVisible();
     expect(
       screen.queryByRole("button", { name: "Logout" }),
     ).not.toBeInTheDocument();
