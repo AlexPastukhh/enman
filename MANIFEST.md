@@ -1,44 +1,27 @@
-# MANIFEST — L2 Account / Employee TPH Domain Sync
+# MANIFEST — Employee TPH Runtime/Test Database Fix
 
-Status: docs-only replacement archive  
-Scope: domain decision addendum + L2 Employee request/review slice docs/register sync
+Archive: `employee-tph-runtime-fix-v15.zip`
 
-## Files
+Scope:
+- finish runtime/test-database cleanup after Employee was modeled as Account TPH subtype;
+- keep Employee identity as `Account.Id == Employee.Id`;
+- remove legacy test DB review-column provisioning;
+- make test DB reset safe when AgreementProposal tables exist.
 
-```text
-planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
-planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
-planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
-planning/slices/SL-EMP-REQ-002-employee-request-details-read.md
-planning/slices/SL-EMP-REQ-003-start-request-review.md
-planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
-planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md
-planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md
-planning/slices/l2/README.md
-planning/slices/slice-extension-points-register.md
-planning/slices/slice-implementation-notes-register.md
-planning/slices/slice-questions-register.md
-planning/slices/slice-scenario-flow-behavior-register.md
-```
+Changed files:
+- `EnergyManagement.Testing/TestDatabase/TestDatabaseManager.cs`
 
-## Main decision
+Changes:
+- `ClearAsync` now deletes `L1AgreementProposals` and `L1AgreementProposalExchanges` before request/account tables.
+- Removed legacy provisioning of `ReviewDecision`, `ReviewDecidedAt`, `ReviewReviewerId`, `ReviewRejectionReason` columns on `L1ClientRequests`.
+- Existing test databases now ensure `L1AgreementProposalExchanges` and `L1AgreementProposals` tables exist when `L1Accounts` already exists.
+- Existing test databases still ensure `L1RequestReviews` and Employee TPH full-name columns exist.
 
-```text
-Account
-  -> ClientAccount
-  -> Employee
-```
-
-```text
-Persistence: L1Accounts TPH with AccountType / Role discriminator.
-Identity: ClaimTypes.NameIdentifier = Account.Id.
-For Employee sessions: Account.Id == Employee.Id.
-```
-
-Do not model target Employee as `EmployeeProfile(AccountId)`.
-Do not use `EmployeeRef` in L2 target review/agreement drafts.
-
-## Runtime scope
-
-No runtime code, no tests, no generated artifacts.
-```
+Not changed:
+- no docs/planning changes;
+- no client UI changes;
+- no OpenAPI/generated artifacts;
+- no API contract changes;
+- no StartReview response contract changes;
+- no approve/reject implementation;
+- no migrations.

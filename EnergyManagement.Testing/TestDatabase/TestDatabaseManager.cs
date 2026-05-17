@@ -31,6 +31,8 @@ public sealed class TestDatabaseManager
     {
         const string query = """
             BEGIN TRANSACTION;
+            IF OBJECT_ID(N'dbo.L1AgreementProposals', N'U') IS NOT NULL DELETE FROM dbo.L1AgreementProposals;
+            IF OBJECT_ID(N'dbo.L1AgreementProposalExchanges', N'U') IS NOT NULL DELETE FROM dbo.L1AgreementProposalExchanges;
             IF OBJECT_ID(N'dbo.L1RequestReviews', N'U') IS NOT NULL DELETE FROM dbo.L1RequestReviews;
             IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL DELETE FROM dbo.L1ClientRequests;
             IF OBJECT_ID(N'dbo.L1ApplicantParties', N'U') IS NOT NULL DELETE FROM dbo.L1ApplicantParties;
@@ -78,8 +80,8 @@ public sealed class TestDatabaseManager
         {
             await EnsureL1ApplicantPartyCurrentVersionColumnAsync(cancellationToken);
             await EnsureL1ApplicantPartyVerificationStatusColumnAsync(cancellationToken);
-            await EnsureL1ClientRequestReviewColumnsAsync(cancellationToken);
             await EnsureL1RequestReviewsTableAsync(cancellationToken);
+            await EnsureL1AgreementProposalTablesAsync(cancellationToken);
             await EnsureL1AccountEmployeeColumnsAsync(cancellationToken);
             return;
         }
@@ -87,54 +89,10 @@ public sealed class TestDatabaseManager
         await using var context = new L1DbContext(_connectionString);
         var databaseCreator = context.GetService<IRelationalDatabaseCreator>();
         await databaseCreator.CreateTablesAsync(cancellationToken);
-        await EnsureL1ClientRequestReviewColumnsAsync(cancellationToken);
         await EnsureL1RequestReviewsTableAsync(cancellationToken);
+        await EnsureL1AgreementProposalTablesAsync(cancellationToken);
         await EnsureL1AccountEmployeeColumnsAsync(cancellationToken);
     }
-
-    private async Task EnsureL1ClientRequestReviewColumnsAsync(CancellationToken cancellationToken)
-    {
-        const string query = """
-            IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL
-               AND COL_LENGTH(N'dbo.L1ClientRequests', N'ReviewDecision') IS NULL
-            BEGIN
-                ALTER TABLE dbo.L1ClientRequests
-                ADD ReviewDecision nvarchar(50) NULL;
-            END
-
-            IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL
-               AND COL_LENGTH(N'dbo.L1ClientRequests', N'ReviewDecidedAt') IS NULL
-            BEGIN
-                ALTER TABLE dbo.L1ClientRequests
-                ADD ReviewDecidedAt datetimeoffset NULL;
-            END
-
-            IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL
-               AND COL_LENGTH(N'dbo.L1ClientRequests', N'ReviewReviewerId') IS NULL
-            BEGIN
-                ALTER TABLE dbo.L1ClientRequests
-                ADD ReviewReviewerId bigint NULL;
-            END
-
-            IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL
-               AND COL_LENGTH(N'dbo.L1ClientRequests', N'ReviewRejectionReason') IS NULL
-            BEGIN
-                ALTER TABLE dbo.L1ClientRequests
-                ADD ReviewRejectionReason nvarchar(1000) NULL;
-            END
-            """;
-
-        await using var connection = new SqlConnection(_connectionString);
-        await connection.OpenAsync(cancellationToken);
-
-        await using var command = new SqlCommand(query, connection)
-        {
-            CommandType = CommandType.Text
-        };
-
-        await command.ExecuteNonQueryAsync(cancellationToken);
-    }
-
 
     private async Task EnsureL1RequestReviewsTableAsync(CancellationToken cancellationToken)
     {
@@ -177,6 +135,71 @@ public sealed class TestDatabaseManager
         await command.ExecuteNonQueryAsync(cancellationToken);
     }
 
+
+    private async Task EnsureL1AgreementProposalTablesAsync(CancellationToken cancellationToken)
+    {
+        const string query = """
+            IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL
+               AND OBJECT_ID(N'dbo.L1AgreementProposalExchanges', N'U') IS NULL
+            BEGIN
+                CREATE TABLE dbo.L1AgreementProposalExchanges
+                (
+                    Id bigint IDENTITY(1,1) NOT NULL,
+                    RequestId bigint NOT NULL,
+                    Status nvarchar(50) NOT NULL,
+                    ActiveProposalVersion int NOT NULL,
+                    FinalRefusedByEmployeeId bigint NULL,
+                    FinalRefusedAt datetimeoffset NULL,
+                    FinalRefusalReason nvarchar(2000) NULL,
+                    CreatedAt datetimeoffset NOT NULL,
+                    CONSTRAINT PK_L1AgreementProposalExchanges PRIMARY KEY (Id),
+                    CONSTRAINT FK_L1AgreementProposalExchanges_L1ClientRequests_RequestId
+                        FOREIGN KEY (RequestId) REFERENCES dbo.L1ClientRequests(Id)
+                        ON DELETE NO ACTION
+                );
+
+                CREATE INDEX IX_L1AgreementProposalExchanges_RequestId
+                    ON dbo.L1AgreementProposalExchanges(RequestId);
+            END
+
+            IF OBJECT_ID(N'dbo.L1AgreementProposalExchanges', N'U') IS NOT NULL
+               AND OBJECT_ID(N'dbo.L1AgreementProposals', N'U') IS NULL
+            BEGIN
+                CREATE TABLE dbo.L1AgreementProposals
+                (
+                    Id bigint IDENTITY(1,1) NOT NULL,
+                    AgreementProposalExchangeId bigint NOT NULL,
+                    Version int NOT NULL,
+                    Sender nvarchar(50) NOT NULL,
+                    SenderId bigint NOT NULL,
+                    State nvarchar(50) NOT NULL,
+                    DocumentStorageKey nvarchar(500) NOT NULL,
+                    DocumentOriginalFileName nvarchar(255) NOT NULL,
+                    DocumentContentType nvarchar(100) NOT NULL,
+                    DocumentSizeBytes bigint NOT NULL,
+                    Comment nvarchar(2000) NULL,
+                    CreatedAt datetimeoffset NOT NULL,
+                    CONSTRAINT PK_L1AgreementProposals PRIMARY KEY (Id),
+                    CONSTRAINT FK_L1AgreementProposals_L1AgreementProposalExchanges_AgreementProposalExchangeId
+                        FOREIGN KEY (AgreementProposalExchangeId) REFERENCES dbo.L1AgreementProposalExchanges(Id)
+                        ON DELETE CASCADE
+                );
+
+                CREATE INDEX IX_L1AgreementProposals_AgreementProposalExchangeId
+                    ON dbo.L1AgreementProposals(AgreementProposalExchangeId);
+            END
+            """;
+
+        await using var connection = new SqlConnection(_connectionString);
+        await connection.OpenAsync(cancellationToken);
+
+        await using var command = new SqlCommand(query, connection)
+        {
+            CommandType = CommandType.Text
+        };
+
+        await command.ExecuteNonQueryAsync(cancellationToken);
+    }
 
     private async Task EnsureL1AccountEmployeeColumnsAsync(CancellationToken cancellationToken)
     {

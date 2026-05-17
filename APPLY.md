@@ -1,20 +1,24 @@
-# APPLY — L2 Account / Employee TPH Domain Sync
+# APPLY — Employee TPH Runtime/Test Database Fix
 
-From repo root:
-
-```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l2-account-employee-tph-domain-sync.zip" -DestinationPath . -Force
-git status
-git diff -- planning
-```
-
-If diff is OK:
+Apply from repository root:
 
 ```powershell
-git add planning
-git status
+cd "C:\enman\enman"
+Expand-Archive -Path "C:\Users\alexa\Downloads\employee-tph-runtime-fix-v15.zip" -DestinationPath . -Force
 ```
 
-This is a docs-only package.
+Recommended checks:
 
-It does not include runtime source files, tests, OpenAPI or generated TypeScript artifacts.
+```powershell
+dotnet build .\Domain.EnergyManagement\Domain.EnergyManagement.csproj
+dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
+dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
+
+dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check
+dotnet run --project .\EnergyManagement.Tools -- generate-client-constants --out Shared --check
+npm.cmd run check:api
+```
+
+Expected notes:
+- This archive does not change API shape, so OpenAPI/types should not change.
+- This archive does not include migrations because it only fixes test database provisioning/reset behavior.
