@@ -5,6 +5,7 @@ using EnergyManagement.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Tests.EnergyManagement.Integration;
+using Tests.EnergyManagement.Legacy.TestHelpers;
 
 namespace Tests.EnergyManagement.TestHelpers
 {
@@ -61,7 +62,7 @@ namespace Tests.EnergyManagement.TestHelpers
                 addedIndividual.Value.Id,
                 addedIndividual.Value.Email.Value,
                 password,
-                IntegrationTestHelper.GetClaimsForIndividual(addedIndividual.Value));
+                LegacyClaimsTestHelper.GetClaimsForIndividual(addedIndividual.Value));
         }
 
         public static Task<TestIndividualActor> CreateRegisteredIndividualAsync(WebAppFactory factory)

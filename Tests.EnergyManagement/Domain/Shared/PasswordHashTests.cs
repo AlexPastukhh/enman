@@ -2,7 +2,7 @@ using Domain.EnergyManagement.Common;
 using Domain.EnergyManagement.DocumentManaging;
 using FluentAssertions;
 using static Domain.EnergyManagement.Common.Error.Errors;
-using Tests.EnergyManagement.TestHelpers;
+using Tests.EnergyManagement.TestHelpers.Shared;
 using Xunit;
 
 namespace Tests.EnergyManagement.Domain.Shared;
@@ -25,36 +25,36 @@ public class PasswordHashTests
     public void PasswordHashCreateFromPlainTextPassword_ReturnsHashForValidPassword()
     {
         // Act
-        var result = PasswordHash.CreateFromPlainTextPassword(ValidTestData.ValidPassword);
+        var result = PasswordHash.CreateFromPlainTextPassword(SharedPasswordTestData.ValidPassword);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.Value.Should().Contain("-");
-        result.Value.Value.Should().NotBe(ValidTestData.ValidPassword);
+        result.Value.Value.Should().NotBe(SharedPasswordTestData.ValidPassword);
     }
 
     [Fact]
     public void PasswordHashVerifyPlainTextPassword_SucceedsForCorrectPassword()
     {
         // Arrange
-        var hash = PasswordHash.CreateFromPlainTextPassword(ValidTestData.ValidPassword).Value;
+        var hash = PasswordHash.CreateFromPlainTextPassword(SharedPasswordTestData.ValidPassword).Value;
 
         // Act
-        var result = PasswordHash.VerifyPlainTextPassword(hash, ValidTestData.ValidPassword);
+        var result = PasswordHash.VerifyPlainTextPassword(hash, SharedPasswordTestData.ValidPassword);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
     }
 
     [Theory]
-    [InlineData(ValidTestData.DifferentValidPassword)]
+    [InlineData(SharedPasswordTestData.DifferentValidPassword)]
     [InlineData("")]
     [InlineData(" ")]
     [InlineData(null)]
     public void PasswordHashVerifyPlainTextPassword_FailsForWrongOrBlankPassword(string differentPassword)
     {
         // Arrange
-        var hash = PasswordHash.CreateFromPlainTextPassword(ValidTestData.ValidPassword).Value;
+        var hash = PasswordHash.CreateFromPlainTextPassword(SharedPasswordTestData.ValidPassword).Value;
 
         // Act
         var result = PasswordHash.VerifyPlainTextPassword(hash, differentPassword);
@@ -68,7 +68,7 @@ public class PasswordHashTests
     public void PasswordHashConvertFromString_RestoresExistingHash()
     {
         // Arrange
-        var hash = PasswordHash.CreateFromPlainTextPassword(ValidTestData.ValidPassword).Value;
+        var hash = PasswordHash.CreateFromPlainTextPassword(SharedPasswordTestData.ValidPassword).Value;
 
         // Act
         var restored = PasswordHash.ConvertFromString(hash.Value);

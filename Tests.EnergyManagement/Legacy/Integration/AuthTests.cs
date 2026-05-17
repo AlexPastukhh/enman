@@ -80,10 +80,10 @@ namespace Tests.EnergyManagement.Legacy.Integration
             var problemDetails=await register.Content.ReadFromJsonAsync<ProblemDetails>();
             problemDetails.Should().NotBeNull();
             
-            var errors =IntegrationTestHelper.GetValidationErrors(problemDetails);
+            var errors =ProblemDetailsTestHelper.GetValidationErrors(problemDetails);
             errors.Should().NotBeNullOrEmpty();
             
-            IntegrationTestHelper.ShouldHaveValidationErrorsEquivalentTo(errors, expectedErrors);
+            ProblemDetailsTestHelper.ShouldHaveValidationErrorsEquivalentTo(errors, expectedErrors);
             
             authServiceMock
                 .Verify(AnySignIn,Times.Never);
@@ -121,10 +121,10 @@ namespace Tests.EnergyManagement.Legacy.Integration
             var problemDetails=await register.Content.ReadFromJsonAsync<ProblemDetails>();
             problemDetails.Should().NotBeNull();
             
-            var errors =IntegrationTestHelper.GetValidationErrors(problemDetails);
+            var errors =ProblemDetailsTestHelper.GetValidationErrors(problemDetails);
             errors.Should().NotBeNullOrEmpty();
             
-            IntegrationTestHelper.ShouldHaveValidationErrorsEquivalentTo(errors, expectedErrors);
+            ProblemDetailsTestHelper.ShouldHaveValidationErrorsEquivalentTo(errors, expectedErrors);
         }
           
         [Fact]
@@ -322,11 +322,11 @@ namespace Tests.EnergyManagement.Legacy.Integration
             var problemDetails=await register.Content.ReadFromJsonAsync<ProblemDetails>();
             problemDetails.Should().NotBeNull();
             
-            var errors = IntegrationTestHelper.GetValidationErrors(problemDetails);
+            var errors = ProblemDetailsTestHelper.GetValidationErrors(problemDetails);
             errors.Should().NotBeNullOrEmpty();
 
                 
-            IntegrationTestHelper.ShouldHaveValidationErrorsEquivalentTo(
+            ProblemDetailsTestHelper.ShouldHaveValidationErrorsEquivalentTo(
                 errors,
                 [ExpectedValidationErrors.EmailIsRegisteredAlready]);
             
@@ -346,5 +346,3 @@ namespace Tests.EnergyManagement.Legacy.Integration
         
     }
 }
-
-

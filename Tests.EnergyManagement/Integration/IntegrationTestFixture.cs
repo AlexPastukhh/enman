@@ -1,4 +1,5 @@
 using EnergyManagement.Testing.TestDatabase;
+using Tests.EnergyManagement.Legacy.TestHelpers;
 using Tests.EnergyManagement.TestHelpers;
 
 namespace Tests.EnergyManagement.Integration;

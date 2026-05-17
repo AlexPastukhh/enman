@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Tests.EnergyManagement.TestHelpers;
+using Tests.EnergyManagement.Legacy.TestHelpers;
 
 namespace Tests.EnergyManagement.Legacy.Domain
 {

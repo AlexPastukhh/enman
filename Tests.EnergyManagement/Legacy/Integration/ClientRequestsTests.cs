@@ -62,9 +62,9 @@ namespace Tests.EnergyManagement.Legacy.Integration
                 // Assert
                 await HttpResponseAssertions.For(response).ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
                 
-                var problemDetails = await IntegrationTestHelper.GetProblemDetailsAsync(response);
-                var actualErrors = IntegrationTestHelper.GetValidationErrors(problemDetails);
-                IntegrationTestHelper.ShouldHaveValidationErrorsEquivalentTo(actualErrors, expectedErrors);
+                var problemDetails = await ProblemDetailsTestHelper.GetProblemDetailsAsync(response);
+                var actualErrors = ProblemDetailsTestHelper.GetValidationErrors(problemDetails);
+                ProblemDetailsTestHelper.ShouldHaveValidationErrorsEquivalentTo(actualErrors, expectedErrors);
                 
                 var getIndividual = await DatabaseHelpers.GetIndividualByEmailAsync(_factory,testClient.Email);
                 var updatedIndividual = getIndividual.Value;
@@ -125,5 +125,3 @@ namespace Tests.EnergyManagement.Legacy.Integration
         
     }
 }
-
-

@@ -2,6 +2,7 @@ using Domain.EnergyManagement.Common;
 using Domain.EnergyManagement.DocumentManaging;
 using FluentAssertions;
 using static Domain.EnergyManagement.Common.Error.Errors;
+using Tests.EnergyManagement.Legacy.TestHelpers;
 using Tests.EnergyManagement.TestHelpers;
 using Xunit;
 using Xunit.Abstractions;

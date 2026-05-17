@@ -1,7 +1,7 @@
 using Domain.EnergyManagement.DocumentManaging;
 using EnergyManagement.Server.Data;
 
-namespace Tests.EnergyManagement.TestHelpers
+namespace Tests.EnergyManagement.Legacy.TestHelpers
 {
     public static class ValidTestData
     {
@@ -35,31 +35,36 @@ namespace Tests.EnergyManagement.TestHelpers
         {
             return Address.Create(PostalCode, Region, City, Street, House, null, Apartment).Value;
         }
+
         public static Address GetAddressWithApartmentAndBuilding()
         {
             return Address.Create(PostalCode, Region, City, Street, House, Building, Apartment).Value;
         }
+
         public static Address GetAddressWithOutApartmentAndBuilding()
         {
             return Address.Create(PostalCode, Region, City, Street, House, null, null).Value;
         }
+
         public static Address GetAddressWithBuilding()
         {
             return Address.Create(PostalCode, Region, City, Street, House, Building, null).Value;
         }
+
         public static AddressDto GetAddressDtoWithAllProps()
         {
             return new AddressDto
-                    (
-                        ValidTestData.PostalCode,
-                        ValidTestData.Region,
-                        ValidTestData.City,
-                        ValidTestData.Street,
-                        ValidTestData.House,
-                        ValidTestData.Building,
-                        ValidTestData.Apartment
-                    );
+            (
+                PostalCode,
+                Region,
+                City,
+                Street,
+                House,
+                Building,
+                Apartment
+            );
         }
+
         public static (FullName, Email, PhoneNumber, Password) GetAllIndividualsValues()
         {
             var (email, password) = GetBaseDataForIndividual();
@@ -72,11 +77,13 @@ namespace Tests.EnergyManagement.TestHelpers
             var (email, password, passwordStr) = GetBaseDataForIndividualAndPassword();
             return (IndividualClient.Create(email, password).Value, passwordStr);
         }
+
         public static IndividualClient GetIndividualWithoutFullData()
         {
             var (individual, _) = GetIndividualWithOutFullDataAndHisPassword();
             return individual;
         }
+
         public static IndividualClient GetIndividualWithAllData()
         {
             var (individual, _) = GetBaseIndividualAndPasswordStr();
@@ -84,6 +91,7 @@ namespace Tests.EnergyManagement.TestHelpers
             individual.ProvideDataOrThrow(phone, fullName);
             return individual;
         }
+
         public static (IndividualClient, string) GetIndividualWithAllDataAndPassword()
         {
             var (individual, password) = GetBaseIndividualAndPasswordStr();
@@ -91,7 +99,6 @@ namespace Tests.EnergyManagement.TestHelpers
             individual.ProvideDataOrThrow(phone, fullName);
             return (individual, password);
         }
-
 
         private static (IndividualClient, string) GetIndividualWithOutFullDataAndHisPassword()
         {
@@ -107,11 +114,13 @@ namespace Tests.EnergyManagement.TestHelpers
             var password = Password.Create(passwordStr).Value;
             return (email, password, passwordStr);
         }
+
         private static (Email, Password) GetBaseDataForIndividual()
         {
             var (email, password, _) = GetBaseDataForIndividualAndPassword();
             return (email, password);
         }
+
         public static (FullName, PhoneNumber) GetDataForIndividualToProvide()
         {
             var fullName = FullName.Create(FirstName, MiddleName, LastName).Value;
@@ -125,6 +134,7 @@ namespace Tests.EnergyManagement.TestHelpers
         public const string LongPassword = "ThisIsAVeryLongPasswordThatExceedsOneHundredCharactersToTestTheMaximumLengthValidationRule1234567890!@#$%^&*()";
         public const string LongPasswordWithoutSpecialChars = "ThisIsAVeryLongPasswordThatExceedsOneHundredCharactersToTestTheMaximumLengthValidationRuleWithoutAnySpecialChars1234567890111111";
         public const string PasswordWithoutSpecialChars = "PasswordWithoutSpecialChars1234567890";
+
         // Invalid Phone Numbers
         public const string InvalidPhoneString = "InValidPhoneNumber";
         public const string EmptyPhone = "";
@@ -143,6 +153,5 @@ namespace Tests.EnergyManagement.TestHelpers
 
         // Invalid Request Data
         public const int InvalidRequestLength = 3001;
-
     }
 }
