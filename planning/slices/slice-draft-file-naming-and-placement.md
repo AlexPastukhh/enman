@@ -1,9 +1,8 @@
-# Slice Draft File Naming and Placement
+# Slice Draft File Naming And Placement
 
-Status: active convention  
-Scope: predictable storage for slice planning drafts
+Status: current / predictable slice draft storage rule
 
-## Canonical storage
+## 1. Server / Backend / API Slice Drafts
 
 Server/backend/API slice drafts live directly under:
 
@@ -11,57 +10,72 @@ Server/backend/API slice drafts live directly under:
 planning/slices/
 ```
 
+Filename pattern:
+
+```text
+SL-<AREA>-<SUBAREA>-<NNN>-<kebab-title>.md
+```
+
+Examples:
+
+```text
+planning/slices/SL-EMP-REQ-004-approve-request-review.md
+planning/slices/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.md
+```
+
+## 2. Client Sidecar Drafts
+
 Client sidecar drafts live under:
 
 ```text
 planning/slices/l2/
 ```
 
-Shared slice-family notes and indexes may live under:
+Filename pattern:
+
+```text
+L2-<AREA>-<ACTION>-<NNN>-<kebab-title>.client.md
+```
+
+Examples:
+
+```text
+planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md
+planning/slices/l2/L2-REVIEW-REJECT-001-reject-request-review.client.md
+```
+
+## 3. Family / Index Notes
+
+Family/index notes live under:
 
 ```text
 planning/slices/l2/
 ```
 
-only when they are navigation/context notes, not implementation slice drafts.
-
-## Naming pattern
-
-Server/backend/API slices:
+when they explain L2 family planning, for example:
 
 ```text
-planning/slices/SL-<AREA>-<SUBAREA>-<NNN>-<kebab-title>.md
+planning/slices/l2/L2-agreement-exchange-slice-family.md
+planning/slices/l2/L2-agreement-exchange-domain-invariants-and-actor-access.md
 ```
 
-Client sidecars:
+They are not implementation slices and should not be named with `SL-*`.
+
+## 4. Cross-Cutting Concerns
+
+Cross-cutting concern docs live under:
 
 ```text
-planning/slices/l2/L2-<AREA>-<ACTION>-<NNN>-<kebab-title>.client.md
+planning/slices/cross-cutting/
 ```
 
-Cross-cutting concerns:
+Filename pattern:
 
 ```text
-planning/slices/cross-cutting/CC-<AREA>-<NNN>-<kebab-title>.md
+CC-<AREA>-<NNN>-<kebab-title>.md
 ```
 
-## Current L2 review slice naming
-
-```text
-planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
-planning/slices/SL-EMP-REQ-002-employee-request-details-read.md
-planning/slices/SL-EMP-REQ-003-start-request-review.md
-planning/slices/SL-EMP-REQ-004-approve-request-review.md
-planning/slices/SL-EMP-REQ-005-reject-request-review.md
-
-planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
-planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md
-planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md
-planning/slices/l2/L2-REVIEW-APPROVE-001-approve-request-review.client.md
-planning/slices/l2/L2-REVIEW-REJECT-001-reject-request-review.client.md
-```
-
-## Current AgreementProposalExchange slice naming
+## 5. Agreement Exchange Canonical Server Draft Names
 
 ```text
 planning/slices/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.md
@@ -71,22 +85,8 @@ planning/slices/SL-AGR-EXCH-004-accept-active-agreement-proposal.md
 planning/slices/SL-AGR-EXCH-005-final-refuse-agreement-exchange.md
 ```
 
-## Rules
+## 6. Rule
 
-```text
-- Do not create server slice drafts under planning/slices/l2.
-- Do not put client sidecar drafts directly under planning/slices unless there is a deliberate migration decision.
-- Do not create duplicate names such as SL-AGR-001 and SL-AGR-EXCH-001 for the same behavior.
-- Keep file names stable once implementation prompts start referencing them.
-- If a file is renamed, update README, source register, questions register, extension points and implementation notes in the same archive.
-```
+Do not create duplicate slice drafts with alternate names or mixed placement.
 
-## Existing transitional notes
-
-A family note such as:
-
-```text
-planning/slices/l2/L2-agreement-exchange-slice-family.md
-```
-
-is navigation/context only. The implementation slice drafts are the `SL-AGR-EXCH-001..005` files under `planning/slices/`.
+If a slice changes scope, update the existing canonical file and registers rather than creating a new near-duplicate.

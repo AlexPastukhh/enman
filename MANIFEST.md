@@ -1,22 +1,20 @@
-# Manifest — L2 Agreement Exchange Draft / Rules / Naming Sync
+# Manifest — L2 Agreement Exchange Invariants / Draft Rules Sync
 
 ## New / replacement files
 
 ```text
+planning/slices/l2/L2-agreement-exchange-domain-invariants-and-actor-access.md
 planning/slices/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.md
+planning/slices/SL-AGR-EXCH-002-send-agreement-counter-proposal-version.md
+planning/slices/SL-AGR-EXCH-003-read-agreement-exchange.md
+planning/slices/SL-AGR-EXCH-004-accept-active-agreement-proposal.md
+planning/slices/SL-AGR-EXCH-005-final-refuse-agreement-exchange.md
 planning/slices/drafting-current-state-source-rule.md
 planning/slices/drafting-implementation-checklist-rule.md
 planning/slices/slice-draft-file-naming-and-placement.md
 ```
 
-## Apply script
-
-```text
-APPLY-l2-agr-exch-001-rules-and-naming-sync.ps1
-tools/sync_l2_agr_exch_001_docs.py
-```
-
-## Existing docs updated by apply script
+## Apply script updates navigation/registers
 
 ```text
 planning/README.md
@@ -30,14 +28,18 @@ planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
 ```
 
-## Scope
+## Key decisions
 
 ```text
-- current-state source rule: use GitHub/current branch, not archives;
-- implementation checklist rule for full server/client drafts;
-- canonical slice draft naming and placement;
-- full SL-AGR-EXCH-001 server command draft;
-- navigation/register sync for AgreementProposalExchange slice family.
+- Current-state questions use GitHub/current repo, not handoff archives.
+- Full server/client drafts require near-end Implementation Checklist.
+- SL-AGR-EXCH-001 has concrete implementation checklist with UnitResult, no per-command enum, separate controller, repository, CSRF and OpenAPI generation.
+- AgreementProposalExchange stores ClientAccountId.
+- Client actions check client.Id == ClientAccountId.
+- No ResponsibleEmployeeId guard first pass.
+- Any active Employee can service exchange first pass.
+- Proposal authors are tracked per proposal version.
+- Handler/controller stay thin.
+- Application service branches by actor and calls actor-specific domain methods.
+- Read services use actor-specific access filters.
 ```
-
-No runtime code, no tests, no generated artifacts.

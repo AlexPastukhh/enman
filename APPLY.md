@@ -1,19 +1,19 @@
-# Apply — L2 Agreement Exchange Draft / Rules / Naming Sync
+# Apply L2 Agreement Exchange Invariants / Draft Rules Sync
 
-From repository root:
+From repo root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agr-exch-001-draft-rules-and-naming-sync.zip" -DestinationPath . -Force
-.\APPLY-l2-agr-exch-001-rules-and-naming-sync.ps1
+Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agreement-exchange-invariants-and-draft-rules-sync.zip" -DestinationPath . -Force
+.\APPLY-l2-agreement-exchange-invariants-sync.ps1
 git status
 git diff -- planning
 ```
 
-If the diff is correct:
+If the diff is OK:
 
 ```powershell
 git add planning
 git status
 ```
 
-This is a docs-only archive. It does not include runtime code, tests or generated artifacts.
+No runtime code, tests or generated artifacts are included.

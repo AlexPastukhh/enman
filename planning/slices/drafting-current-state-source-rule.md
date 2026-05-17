@@ -1,47 +1,40 @@
-# Drafting Rule — Current Project State Source
+# Drafting Current-State Source Rule
 
-Status: active drafting/documentation rule  
-Applies to: all status/inventory answers and all docs that reconcile implementation state
+Status: current / mandatory for project-state answers and implementation readiness checks
 
 ## Rule
 
-When asked about the current project state, implementation status, existing code, endpoints, routes, generated contracts or tests, the answer must be based on the current repository state in GitHub.
+When the user asks about the current state of the project, implementation status, existing code, generated contracts, tests, or files, use the current GitHub branch/repository state as the source of truth.
+
+Do not infer current project state from zip archives, previous handoff archives, pasted drafts, or generated documentation packages.
+
+Archives are handoff candidates. They may be unapplied, partially applied, superseded, or inconsistent with the current branch.
+
+## Practical Procedure
 
 ```text
-Use GitHub/repo connector as source of truth for current project state.
+If asked:
+- what is implemented;
+- what is missing;
+- whether endpoint/type/file exists;
+- what slice is next;
+- whether docs are synchronized with code;
 
-Do not infer current implementation status from handoff archives,
-draft archives, pasted patches or old generated zip files.
+then:
+1. inspect GitHub/current branch;
+2. inspect generated OpenAPI/types when API shape matters;
+3. inspect runtime source/tests when implementation status matters;
+4. use uploaded archives only as proposed changes/context, not as current state.
 ```
 
-Archives and uploaded handoff packages are useful as input for proposed changes, but they are not proof that the repo currently contains those changes.
+## Wording
 
-## Practical meaning
+Use:
 
 ```text
-If the user asks:
-  "что сейчас имплементировано?"
-  "какие слайсы не имплементированы?"
-  "есть ли endpoint?"
-  "какие files сейчас есть?"
-  "какой текущий diff/status?"
-
-Then:
-  inspect GitHub/current branch first.
+"According to the current GitHub branch..."
+"Current repo evidence shows..."
+"The archive says X, but current branch evidence is Y."
 ```
 
-Use archives only to understand proposed updates or to create a new handoff archive.
-
-## Reason
-
-Handoff archives can be:
-
-```text
-- not applied;
-- partially applied;
-- superseded by later archives;
-- generated from earlier docs;
-- locally modified outside the repo connector state.
-```
-
-Therefore, they must not be treated as the current project state.
+Do not say `Implemented` only because a previous archive or draft said so.

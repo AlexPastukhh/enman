@@ -1,75 +1,72 @@
-# Drafting Rule — Implementation Checklist Section
+# Drafting Implementation Checklist Rule
 
-Status: active drafting rule  
-Applies to: full server slice drafts and full client sidecar drafts
+Status: current / applies to server and client full slice drafts
 
 ## Rule
 
-Every full implementation draft must include an explicit implementation checklist near the end.
+Every full server/backend/API draft and every full client sidecar draft must include an `Implementation Checklist` section near the end.
 
-Preferred placement:
+The checklist must be concrete and slice-specific.
 
-```text
-## N. Implementation Checklist
-```
+It must not be a generic placeholder.
 
-near the end, before `Guardrail Summary`, `Next Step` or appendix sections.
+## Placement
 
-## Required qualities
-
-The checklist must be:
+Use near-final placement:
 
 ```text
-- slice-specific, not generic filler;
-- concrete enough for an implementation chat to follow;
-- aligned with existing project examples and conventions;
-- explicit about generated artifacts when API shape changes;
-- explicit about tests at the correct layer;
-- explicit about out-of-scope work to avoid accidental scope creep.
+## 18. Dependent / Follow-up Slices
+## 19. Implementation Checklist
+## 20. Guardrail Summary
 ```
 
-For state-changing server command slices, the checklist must include the API boundary, auth/CSRF, command/application shape, domain call, persistence, error mapping, tests and OpenAPI/type regeneration when relevant.
+Exact numbering can change if the draft has more sections, but `Implementation Checklist` must stay near the end and before final guardrails/next step.
 
-For client command sidecars, the checklist must include feature API wrapper placement, generated type aliases, mutation, UI wiring, query invalidation/refetch, error feedback, tests and the rule to avoid business wrappers in `shared/api`.
+## Server Checklist Content
 
-## Server command result convention
-
-For new command slices that use the project `Result` / `UnitResult` + `Error` model:
+Server command/read checklists should include concrete items for:
 
 ```text
-Do not add per-command status enum by default.
-Use UnitResult<IReadOnlyList<Error>> or the current project result type.
-Map failures through existing Error/ProblemDetails mapping.
+- DTO/query/route contract;
+- validator when applicable;
+- command/query object;
+- application handler/service;
+- repository/persistence changes;
+- controller endpoint;
+- auth/role boundary;
+- CSRF for unsafe commands;
+- domain value object creation;
+- domain method call;
+- persistence/transaction;
+- response contract;
+- ProblemDetails/Error mapping;
+- domain tests if missing;
+- integration tests;
+- OpenAPI/types regeneration when API shape changes.
 ```
 
-Do not create a status enum just to drive HTTP status mapping unless a current project example explicitly requires it.
+## Client Checklist Content
 
-## Example checklist shape for server command slices
+Client sidecar checklists should include concrete items for:
 
 ```text
-[ ] add request DTO
-[ ] add DTO validator
-[ ] add command returning UnitResult<IReadOnlyList<Error>>
-[ ] do not add per-command status enum
-[ ] add command handler
-[ ] add repository abstraction if the aggregate needs one
-[ ] add EF repository if persistence is needed
-[ ] add DbSet/mapping if missing
-[ ] enforce uniqueness/lifecycle guard if required
-[ ] add dedicated controller when the area will grow
-[ ] require correct role
-[ ] require CSRF token for unsafe request
-[ ] validate DTO/value objects
-[ ] call the domain method
-[ ] persist aggregate changes
-[ ] return 204 No Content on success when read state is obtained through refetch
-[ ] map failures through existing Error/ProblemDetails mapping
-[ ] add domain tests if missing
-[ ] add integration tests for auth/CSRF/validation/lifecycle/success
-[ ] regenerate OpenAPI/types if API contract changes
+- generated contract confirmation;
+- entity/feature API wrapper placement;
+- generated DTO aliases;
+- feature model/mutation/query hook;
+- UI component/form/action;
+- page/slot wiring;
+- auth/session assumptions;
+- CSRF-aware shared transport usage for unsafe commands;
+- query invalidation/refetch;
+- pending/error/success feedback;
+- component/model/E2E tests when appropriate;
+- no business wrapper in shared/api.
 ```
 
-## Example checklist for `SL-AGR-EXCH-001`
+## SL-AGR-EXCH-001 Required Checklist
+
+For `SL-AGR-EXCH-001 — Start Agreement Exchange With Initial Employee Proposal`, use this checklist and keep it updated if the slice changes:
 
 ```text
 [ ] add EmployeeStartAgreementExchangeDto
@@ -80,6 +77,9 @@ Do not create a status enum just to drive HTTP status mapping unless a current p
 [ ] add agreement exchange repository abstraction
 [ ] add agreement exchange EF repository
 [ ] add L1DbContext DbSet/mapping if missing
+[ ] add AgreementProposalExchange.ClientAccountId
+[ ] populate ClientAccountId from approved request owner in StartByEmployee
+[ ] add ClientAccountId EF mapping/index
 [ ] enforce unique exchange per request
 [ ] add separate EmployeeAgreementExchangeController
 [ ] require Employee role
