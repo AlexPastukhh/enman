@@ -59,3 +59,15 @@ Marker: AGR-EXCH-READ-SLICE-DECISIONS-2026-05
 | CP-L2-AGR-CMD-004 | accept | Employee accept is out of scope unless future scenario/domain explicitly adds it. | future |
 | CP-L2-AGR-CMD-005 | final refusal | Final refusal remains canonical SL-AGR-EXCH-006; full draft still pending. | planned |
 
+
+<!-- AGR-EXCH-FINAL-REFUSE-SYNC -->
+## Agreement exchange final refusal extension points
+
+```text
+- Client-side final refusal: future slice only if explicitly required by scenario/domain direction.
+- Final refusal audit fields beyond current exchange fields: future enhancement if DTO/persistence exposes them.
+- Request failure timestamp/id fields: only assert/add if domain/persistence explicitly introduces them.
+- Rich refusal reason UX/shared confirmation: future client refinement.
+```
+<!-- /AGR-EXCH-FINAL-REFUSE-SYNC -->
+

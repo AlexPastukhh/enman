@@ -156,3 +156,32 @@ Rules:
 - server/backend/API slice drafts live in planning/slices/;
 - client sidecar drafts live in planning/slices/l2/.
 
+
+<!-- AGR-EXCH-FINAL-REFUSE-SYNC -->
+## Agreement exchange final refusal sync
+
+Canonical final refusal drafts:
+
+```text
+planning/slices/SL-AGR-EXCH-006-final-refuse-agreement-exchange.md
+planning/slices/l2/L2-AGR-EXCH-FINAL-REFUSE-001-employee-final-refuse-agreement-exchange.client.md
+```
+
+`SL-AGR-EXCH-006` is Employee-only backend/API command:
+
+```text
+POST /api/agreement-exchanges/{exchangeId}/final-refuse
+success: 204 No Content
+body: nullable FinalRefuseAgreementExchangeDto? with optional reason
+```
+
+The command orchestrates two aggregates through domain methods:
+
+```text
+exchange.FinalRefuseProposal(...)
+request.MarkAgreementExchangeFailed(...)
+```
+
+Client sidecar is Employee details-only first pass. Do not add Client final refusal.
+<!-- /AGR-EXCH-FINAL-REFUSE-SYNC -->
+

@@ -74,3 +74,21 @@ Marker: AGR-EXCH-READ-SLICE-DECISIONS-2026-05
 | IMPL-L2-AGR-CMD-005 | accept server | Use Client-only endpoint, no body, 204 success, no new proposal version. | accepted |
 | IMPL-L2-AGR-CMD-006 | client wrappers | Command wrappers live in eatures/agreement-exchange/<action>/api, not shared/api. | accepted |
 
+
+<!-- AGR-EXCH-FINAL-REFUSE-SYNC -->
+## Agreement exchange final refusal implementation notes
+
+```text
+Use domain methods, not manual state assignment:
+  exchange.FinalRefuseProposal(employee, reason, now)
+  request.MarkAgreementExchangeFailed(exchange.Id, now)
+
+Use one unit-of-work/transaction. If request marking fails, do not persist partial exchange refusal.
+
+Do not add:
+  ResponsibleEmployeeId guard
+  per-command status enum
+  Client final refusal UI/API
+```
+<!-- /AGR-EXCH-FINAL-REFUSE-SYNC -->
+

@@ -1,23 +1,19 @@
-# APPLY
+# Apply — L2 Agreement Exchange Final Refuse Slices Sync
 
 From repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-agreement-exchange-send-proposal-impl.zip" -DestinationPath "." -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agr-exch-final-refuse-slices-sync.zip" -DestinationPath . -Force
+.\APPLY-l2-agr-exch-final-refuse-slices-sync.ps1
+git status
+git diff -- planning
 ```
 
-Then verify:
+If diff is OK:
 
 ```powershell
-dotnet build .\Domain.EnergyManagement\Domain.EnergyManagement.csproj
-dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
-dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
+git add planning
+git status
 ```
 
-Regenerate API artifacts after green server/tests:
-
-```powershell
-dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
-dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check
-npm.cmd run check:api
-```
+Docs-only archive. No runtime code, tests, or generated artifacts.

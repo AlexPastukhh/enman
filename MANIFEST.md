@@ -1,21 +1,9 @@
-# MANIFEST
+# Manifest
 
-Archive: enman-agreement-exchange-send-proposal-impl.zip
-Scope: SL-AGR-EXCH-002 — shared agreement counter-proposal command endpoint.
-
-Included repo-relative files:
-- EnergyManagement.Server/L1/Api/L1Dtos.cs
-- EnergyManagement.Server/L1/Api/Validation/L1FieldNames.cs
-- EnergyManagement.Server/L1/Api/Validation/SendAgreementProposalVersionDtoValidator.cs
-- EnergyManagement.Server/L1/Application/Abstractions/IAgreementExchangeApplicationService.cs
-- EnergyManagement.Server/L1/Application/Services/AgreementExchangeApplicationService.cs
-- EnergyManagement.Server/L1/Controllers/AgreementExchangesController.cs
-- EnergyManagement.Server/L1/Persistence/Repositories/AgreementProposalExchangeRepository.cs
-- EnergyManagement.Server/Program.cs
-- Tests.EnergyManagement/Integration/L1/AgreementExchanges/AgreementProposalVersionSendIntegrationTests.cs
-
-Not included:
-- generated OpenAPI/types
-- EF migrations
-- binary document upload/storage
-- client UI/API wrappers
+```text
+APPLY.md
+APPLY-l2-agr-exch-final-refuse-slices-sync.ps1
+planning/slices/SL-AGR-EXCH-006-final-refuse-agreement-exchange.md
+planning/slices/l2/L2-AGR-EXCH-FINAL-REFUSE-001-employee-final-refuse-agreement-exchange.client.md
+planning/slices/l2/L2-agreement-exchange-final-refuse-slices-sync.md
+```

@@ -70,3 +70,22 @@ Marker: AGR-EXCH-READ-SLICE-DECISIONS-2026-05
 | Q-L2-AGR-CMD-005 | SL-AGR-EXCH-005 | accept | accepted | Is accept Client-only? | Yes first pass. Employee accept out of scope. | Client-only endpoint/sidecar. |
 | Q-L2-AGR-CMD-006 | SL-AGR-EXCH-005 | accept state | accepted | Does accept create a new version? | No. Exchange becomes Accepted; active proposal becomes Accepted; proposal count unchanged. | Test assertions. |
 
+
+<!-- AGR-EXCH-FINAL-REFUSE-SYNC -->
+## Agreement exchange final refusal decisions
+
+```text
+SL-AGR-EXCH-006:
+- Employee-only first pass;
+- Client final refusal is out of scope;
+- nullable body is allowed;
+- missing/null reason is allowed;
+- blank/whitespace-only reason is invalid;
+- no ResponsibleEmployeeId guard;
+- no command status enum;
+- final refusal affects AgreementProposalExchange and related ConnectionRequest;
+- application orchestrates both aggregate domain methods;
+- success returns 204 No Content.
+```
+<!-- /AGR-EXCH-FINAL-REFUSE-SYNC -->
+

@@ -119,3 +119,13 @@ When a future L2 implementation slice is drafted, point it to the relevant scena
 | L2-AGR-EXCH-ACCEPT-001-client-accept-active-agreement-proposal.client.md | [SCENARIO] / [BEHAVIOR] / [CONCERN] | Agreement exchange details/read sidecar, CC-CSRF-001 | Client-only Accept action in Client agreement exchange details action area | drafted |
 | SL-AGR-EXCH-006-final-refuse-agreement-exchange.md | [SCENARIO] / [BEHAVIOR] / [CONCERN] | Agreement exchange scenarios, CC-CSRF-001 | Employee final refusal; full draft pending | planned |
 
+
+<!-- AGR-EXCH-FINAL-REFUSE-SYNC -->
+## Agreement exchange final refusal source-map sync
+
+| Slice / sidecar | Marker | Source files | Applies to | Status |
+|---|---|---|---|---|
+| `SL-AGR-EXCH-006-final-refuse-agreement-exchange.md` | `[SCENARIO]` / `[BEHAVIOR]` / `[CONCERN]` | Agreement exchange final refusal scenario/domain direction, `CC-CSRF-001` | Employee final-refuse backend command; exchange becomes `FinallyRefused`, related request becomes `AgreementExchangeFailed` | drafted |
+| `L2-AGR-EXCH-FINAL-REFUSE-001-employee-final-refuse-agreement-exchange.client.md` | `[SCENARIO]` / `[BEHAVIOR]` / `[CONCERN]` | Agreement exchange details/action-slot direction, `CC-CSRF-001` | Employee final-refuse client command sidecar; Employee details action area only | drafted |
+<!-- /AGR-EXCH-FINAL-REFUSE-SYNC -->
+
