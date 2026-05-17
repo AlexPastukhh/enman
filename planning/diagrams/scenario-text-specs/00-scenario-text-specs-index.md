@@ -58,3 +58,31 @@ EmployeeSendNewVersion, AwaitingEmployeeResponse.
 Do not use Worker, Open/Opened, EmployeeRef, WorkerRef,
 StartByWorker or AwaitingWorkerResponse.
 ```
+
+## L2 validation / cleanup guardrail
+
+```text
+Use scenario-local validation sections, scenario clarifications and concrete slice docs.
+
+Do not use old global validation addendum wording as active L2 source of truth
+when it contains stale terms such as DocumentFileRef, ReviewerRef, ProposalAttachment or EmployeeRef.
+```
+
+Read before L2 review/agreement diagram work:
+
+```text
+planning/diagrams/scenario-clarifications/L2-validation-and-agreement-exchange-source-cleanup.md
+planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
+planning/slices/README.md
+planning/slices/l2/README.md
+```
+
+## SC-14 numbering guardrail
+
+```text
+Current agreement context:
+  SC-14 — Agreement Documents / AgreementDocumentRef.
+
+Old “SC-14 Client Data Verification” wording is stale/deferred unless explicitly reintroduced under another scenario id.
+Do not use one SC number for two different stories in diagrams or scenario indexes.
+```

@@ -1,6 +1,6 @@
 # Diagram Request / Prompt And Preflight Workflow
 
-Status: current workflow  
+Status: current workflow / L2 validation cleanup synchronized  
 Scope: how scenario/documentation/planning work prepares a repo-grounded diagram request, and how the single Diagram Chat runs preflight/generation
 
 ## 1. Purpose
@@ -86,9 +86,12 @@ planning/diagrams/scenario-drafting-workflow.md
 planning/diagrams/diagram-prompt-generation-workflow.md
 planning/diagrams/drawio-diagram-generation-workflow.md
 planning/diagrams/scenario-text-specs/README.md
+planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md, if exists
 planning/diagrams/scenario-data/README.md
+planning/diagrams/scenario-data/00-scenario-data-index.md, if exists
 planning/diagrams/scenario-ui-specs/README.md, if exists
 planning/diagrams/scenario-behavior-items/README.md
+planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md, if exists
 planning/diagrams/scenario-clarifications/README.md, if exists
 planning/diagrams/scenario-questions-register.md, if exists
 ```
@@ -127,6 +130,16 @@ scenario clarifications
 scenario questions register
 ```
 
+L2 validation cleanup rule:
+
+```text
+Do not treat old global validation addenda as active L2 source of truth when they conflict with
+scenario-local validation sections, scenario clarifications, slice docs or current L2 domain direction.
+
+For L2 review/agreement diagrams, read:
+planning/diagrams/scenario-clarifications/L2-validation-and-agreement-exchange-source-cleanup.md
+```
+
 For domain/API/context diagrams, also require checking:
 
 ```text
@@ -134,6 +147,7 @@ planning/domain-model.md, if exists
 planning/l1-domain-implementation-cut.md, if exists
 planning/l1-domain-testing-rules.md, if exists
 planning/slices/README.md
+planning/slices/l2/README.md, if exists
 planning/api/README.md
 planning/api/client-server-contract-principles.md
 planning/api/openapi-contract-generation.md
@@ -144,8 +158,10 @@ For implementation-aware status markers, require checking current repository evi
 
 ```text
 EnergyManagement.Server/L1/**
+EnergyManagement.Server/**
 Domain.EnergyManagement/L1/**
-Tests.EnergyManagement/Integration/L1/**
+Domain.EnergyManagement/**
+Tests.EnergyManagement/Integration/**
 Shared/openapi.json
 Shared/constants.json
 Shared/errorcodes.json
@@ -196,11 +212,18 @@ Submitted
 InReview
 AgreementProposalExchange
 AgreementProposalVersion
+AgreementDocumentRef
+DocumentFileRef
+ProposalAttachment
+ReviewerRef
+EmployeeRef
 DocumentDraft
 notification
 email
 verification
 anonymous
+SC-14
+Client Data Verification
 ```
 
 Special agreement rule:
@@ -215,6 +238,13 @@ Use:
 Rejected is only for explicit rejection/decline.
 ```
 
+L2 stale term rule:
+
+```text
+Do not use DocumentFileRef, ReviewerRef, ProposalAttachment or EmployeeRef in current L2 diagrams
+unless the current repo explicitly reintroduces them.
+```
+
 If source files conflict:
 
 ```text
@@ -224,10 +254,11 @@ If source files conflict:
 4. do not silently freeze stale wording into the diagram.
 ```
 
-Primary clarification source:
+Primary clarification sources:
 
 ```text
 planning/diagrams/scenario-clarifications/AGR-001-agreement-proposal-replacement-terminology.md
+planning/diagrams/scenario-clarifications/L2-validation-and-agreement-exchange-source-cleanup.md
 ```
 
 ## 7. VKR-Clean Diagram Language Rule
@@ -385,6 +416,8 @@ First perform Phase 1 preflight only. Do not generate diagrams until I select a 
 
 Read current repo docs and implementation evidence. Discover actual scenario/spec folders and index files. Inspect scenario text specs, DATA, UI specs, behavior items, API/security addenda, scenario clarifications and scenario questions.
 
+For L2 review/agreement diagrams, read L2 validation cleanup clarification and do not use stale global validation addendum wording as source of truth.
+
 Use status markers: [CORE], [IMPLEMENTED], [DESIGNED], [PLANNED], [DEFERRED], [QUESTION]. Do not overclaim implementation status.
 
 Target format: draw.io XML. Preferred artifact: one multi-page `.drawio` diagram book.
@@ -405,4 +438,5 @@ Final VKR-clean diagrams must not mention AI, ChatGPT, prompt, agent, internal w
 - Do not overclaim implementation status.
 - Do not use PlantUML as the primary deliverable unless explicitly asked.
 - Do not put AI/internal workflow wording into VKR-clean diagrams.
+- Do not use stale L2 validation terms such as DocumentFileRef, ReviewerRef, ProposalAttachment or EmployeeRef in current diagrams.
 ```

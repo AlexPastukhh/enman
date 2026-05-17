@@ -1,6 +1,6 @@
 # SC-07B — Employee Request Review
 
-Status: L2 scenario draft / StartReview two entry points synchronized  
+Status: L2 scenario draft / StartReview two entry points and optional RejectReview feedback synchronized  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
 
 ## 1. Purpose
@@ -52,13 +52,25 @@ AgreementProposalExchange can be started later by Employee proposal workflow
 ```text
 Employee opens request with Review Started by same Employee
         ↓
-Employee rejects review with RejectionFeedback required by the API endpoint
+Employee rejects review with optional RejectionFeedback
         ↓
-System calls Request.RejectReview(Employee, feedback, decidedAt)
+System calls Request.RejectReview(Employee, feedback?, decidedAt)
         ↓
 RequestReview becomes Rejected
         ↓
 Request status becomes Rejected
+```
+
+Reject feedback rule:
+
+```text
+RejectReview feedback is optional in the current accepted direction.
+
+Missing, null or blank feedback must not silently become a separate required scenario step
+unless the endpoint/domain is intentionally changed later.
+
+Client UI may show a non-blocking warning/reminder, but it must not make feedback required
+without a scenario/API decision.
 ```
 
 ## 5. Blocked Flows
@@ -91,7 +103,7 @@ L2-REVIEW-START-003 — StartReview can be initiated from dashboard row or reque
 L2-REVIEW-APPROVE-001 — Employee who started review can approve it.
 L2-REVIEW-APPROVE-002 — ApproveReview changes Request status to Approved.
 L2-REVIEW-REJECT-001 — Employee who started review can reject it.
-L2-REVIEW-REJECT-002 — RejectReview changes Request status to Rejected and stores feedback required by the API.
+L2-REVIEW-REJECT-002 — RejectReview changes Request status to Rejected and stores optional feedback when provided.
 L2-REVIEW-BLOCK-001 — Approve/reject without started review is blocked.
 L2-REVIEW-BLOCK-002 — Another Employee cannot start/approve/reject review already started by someone else.
 L2-REVIEW-NW-001 — Failed review command does not change request/review state.

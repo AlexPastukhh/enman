@@ -1,3 +1,19 @@
+﻿# Deprecated вЂ” Scenario Server Domain Validation Addendum
+
+Status: deprecated / archived from active L2 source-of-truth path
+
+This file is retained only for historical context.
+
+Do not use it as active L2 guidance when it conflicts with:
+- scenario-local validation sections;
+- scenario clarifications;
+- concrete slice docs;
+- current L2 domain direction.
+
+See:
+- planning/diagrams/scenario-clarifications/L2-validation-and-agreement-exchange-source-cleanup.md
+
+---
 # Scenario Server / Domain Validation Addendum
 
 Status: draft companion to scenario text specifications  
@@ -40,7 +56,7 @@ Server response errors should be derived from domain/value-object validation res
 
 ## 3. Scenario Validation Catalog
 
-### SC-01 — Guest Registration
+### SC-01 вЂ” Guest Registration
 
 Client-side validation:
 
@@ -69,7 +85,7 @@ Credentials
 ClientAccount / Account
 ```
 
-### SC-02 — Login
+### SC-02 вЂ” Login
 
 Client-side validation:
 
@@ -96,7 +112,7 @@ Session / AuthSession
 AccountSecurityPolicy
 ```
 
-### SC-03A — Password Recovery Request
+### SC-03A вЂ” Password Recovery Request
 
 Client-side validation:
 
@@ -122,7 +138,7 @@ RecoveryToken
 AccountRecoveryPolicy
 ```
 
-### SC-03B — Account Owner Verified / Password Reset Choice
+### SC-03B вЂ” Account Owner Verified / Password Reset Choice
 
 Client-side validation:
 
@@ -152,7 +168,7 @@ Credentials
 Account
 ```
 
-### SC-04 — Client Request Creation
+### SC-04 вЂ” Client Request Creation
 
 Client-side validation:
 
@@ -188,7 +204,7 @@ RequestApplicantData
 RequestedPowerKw [future]
 ```
 
-### SC-05 — My Requests / Own Request Details
+### SC-05 вЂ” My Requests / Own Request Details
 
 Client-side validation:
 
@@ -215,7 +231,7 @@ ReviewDecision
 RejectionFeedback
 ```
 
-### SC-06 — Employee Request Dashboard
+### SC-06 вЂ” Employee Request Dashboard
 
 Client-side validation:
 
@@ -240,7 +256,7 @@ ReviewEligibility
 EmployeePermission
 ```
 
-### SC-07A — Employee Request Details
+### SC-07A вЂ” Employee Request Details
 
 Client-side validation:
 
@@ -265,7 +281,7 @@ ReviewEligibility
 EmployeePermission
 ```
 
-### SC-07B — Employee Request Review
+### SC-07B вЂ” Employee Request Review
 
 Client-side validation:
 
@@ -297,7 +313,7 @@ ApprovalMessage [optional/future]
 EmployeeId / ReviewerRef
 ```
 
-### SC-10 — Applicant Data
+### SC-10 вЂ” Applicant Data
 
 Client-side validation:
 
@@ -337,7 +353,7 @@ LegalAddress [future]
 RegistrationAddress [future]
 ```
 
-### SC-11 — Request Documents
+### SC-11 вЂ” Request Documents
 
 Client-side validation:
 
@@ -367,7 +383,7 @@ DocumentType [future]
 Request
 ```
 
-### SC-13A — My Agreements
+### SC-13A вЂ” My Agreements
 
 Client-side validation:
 
@@ -394,7 +410,7 @@ AgreementProposalOwner
 RequestRef
 ```
 
-### SC-13B — Agreement Proposal Details / Response
+### SC-13B вЂ” Agreement Proposal Details / Response
 
 Client-side validation:
 
@@ -429,7 +445,7 @@ ProposalComment / TextDetails
 RequestRef
 ```
 
-### SC-13C — Employee Agreements
+### SC-13C вЂ” Employee Agreements
 
 Client-side validation:
 
@@ -457,7 +473,7 @@ EmployeePermission
 RequestRef
 ```
 
-### SC-13D — Employee Agreement Proposal Create / Send Version
+### SC-13D вЂ” Employee Agreement Proposal Create / Send Version
 
 Client-side validation:
 
@@ -494,7 +510,7 @@ RequestRef
 EmployeePermission
 ```
 
-### SC-14 — Client Data Verification
+### SC-14 вЂ” Client Data Verification
 
 Client-side validation:
 
@@ -522,7 +538,7 @@ RequestRef
 VerificationPolicy
 ```
 
-### SC-15 — Security Text Specification
+### SC-15 вЂ” Security Text Specification
 
 Client-side validation:
 
@@ -548,7 +564,7 @@ AccountSecurityPolicy
 RecoveryPolicy
 ```
 
-### SC-17 — Anonymous Request
+### SC-17 вЂ” Anonymous Request
 
 Client-side validation:
 
@@ -580,11 +596,11 @@ RequestSubject / RequestDetails
 ## 4. Deferred / Merged Scenarios
 
 ```text
-SC-08 Approved Result — merged into SC-07B + SC-05 + SC-13A/B/C/D.
-SC-09 Rejected Result — merged into SC-07B + SC-05 + SC-04.
-SC-12 Review Feedback / Correction Navigation — merged into SC-05 + SC-04.
-SC-16 Notification Navigation — removed as standalone scenario.
-SC-18 Archive / Audit — deferred.
+SC-08 Approved Result вЂ” merged into SC-07B + SC-05 + SC-13A/B/C/D.
+SC-09 Rejected Result вЂ” merged into SC-07B + SC-05 + SC-04.
+SC-12 Review Feedback / Correction Navigation вЂ” merged into SC-05 + SC-04.
+SC-16 Notification Navigation вЂ” removed as standalone scenario.
+SC-18 Archive / Audit вЂ” deferred.
 ```
 
 ## 5. How To Use This File
@@ -608,3 +624,4 @@ value object creation / domain method result
 ```
 
 over duplicated manual validation scattered across controllers or UI.
+

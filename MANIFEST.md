@@ -1,27 +1,44 @@
-# MANIFEST — L2 Agreement Exchange Start Client Sidecar Sync
+# l2-validation-scenario-cleanup-sync
 
-## New files
+Docs-only sync archive.
 
-```text
-planning/slices/l2/L2-AGR-EXCH-START-001-start-agreement-exchange-with-initial-employee-proposal.client.md
-planning/slices/l2/L2-agreement-exchange-start-sidecar-sync.md
-planning/slices/implementation-prompts/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.prompt.md
-```
-
-## Apply script updates
+## Adds
 
 ```text
-planning/slices/README.md
-planning/slices/l2/README.md
-planning/slices/slice-scenario-flow-behavior-register.md
-planning/slices/slice-questions-register.md
-planning/slices/slice-implementation-notes-register.md
+planning/diagrams/scenario-clarifications/L2-validation-and-agreement-exchange-source-cleanup.md
+APPLY-l2-validation-cleanup-sync.ps1
 ```
+
+## Replaces / updates
+
+```text
+planning/diagrams/README.md
+planning/diagrams/diagram-prompt-generation-workflow.md
+planning/diagrams/scenario-clarifications/README.md
+planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
+planning/diagrams/scenario-text-specs/SC-07B-employee-request-review.md
+planning/diagrams/scenario-behavior-items/SC-07B-employee-request-review-behavior-items.md
+planning/diagrams/scenario-questions-register.md
+```
+
+## Optional cleanup performed by script
+
+If present, moves:
+
+```text
+planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+```
+
+to:
+
+```text
+planning/diagrams/scenario-text-specs/deprecated/scenario-server-domain-validation-addendum.deprecated.md
+```
+
+and removes it from active path.
 
 ## Scope
 
-Docs only.
-
-No runtime code.
-No tests.
+No runtime code.  
+No tests.  
 No generated artifacts.

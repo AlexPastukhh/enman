@@ -1,6 +1,6 @@
 # SC-07B — Employee Request Review Behavior Items
 
-Status: migrated v1  
+Status: current / optional RejectReview feedback synchronized  
 Source scenario: `SC-07B`  
 Source baselines: `pre-domain-variants-input.md`, `scenario-behavior-baseline-account-activation-addendum.md` where applicable
 
@@ -17,25 +17,32 @@ Behavior items do not invent new behavior. If an item reveals missing scenario/D
 ```text
 planning/diagrams/scenario-text-specs/SC-07B-...
 planning/diagrams/scenario-data/SC-07B-...
-planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
 planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md, when applicable
 planning/tables/pre-domain-variants-input.md
 planning/tables/scenario-behavior-baseline-account-activation-addendum.md, when applicable
 ```
 
+Deprecated source note:
+
+```text
+Do not use old global `scenario-server-domain-validation-addendum.md` as the active L2 source of truth.
+For L2 review/agreement validation and domain constraints, use scenario-local sections,
+scenario clarifications, slice docs and current L2 domain direction instead.
+```
+
 ## 3. Coverage Items Registry
 
 | ID | Category | Short name | Source | Migration note |
-|---|---|---|---|---|
+|---|---|---|---|
 | REQ-CMD-APPROVE-001 | CMD | Approve request | SC-07B | Migrated from pre-domain baseline 5.6. |
-| REQ-CMD-REJECT-001 | CMD | Reject request | SC-07B | Migrated from pre-domain baseline 5.7. |
+| REQ-CMD-REJECT-001 | CMD | Reject request | SC-07B | Migrated from pre-domain baseline 5.7; feedback optional in current accepted direction. |
 | REQ-LC-002 | LC | InReview request can be approved | SC-07B | Migrated from pre-domain baseline 6.1. |
-| REQ-LC-003 | LC | InReview request can be rejected | SC-07B | Migrated from pre-domain baseline 6.1; feedback optional in current domain direction. |
+| REQ-LC-003 | LC | InReview request can be rejected | SC-07B | Migrated from pre-domain baseline 6.1; feedback optional in current accepted direction. |
 | REQ-LC-004 | LC | Approved request cannot be reviewed again | SC-07A / SC-07B | Owning scenario set to SC-07B because review commands live there; related SC-07A for details/action availability. |
 | REQ-LC-005 | LC | Rejected request cannot be approved in core | SC-07B | Migrated from pre-domain baseline 6.1. |
 | REQ-LC-006 | LC | Rejected request cannot be rejected again in core | SC-07B | Migrated from pre-domain baseline 6.1. |
 | REQ-IBS-001 | IBS | Approved request has review decision | SC-07B | Migrated from pre-domain baseline 7.1. |
-| REQ-IBS-002 | IBS | Rejected request feedback policy | SC-07B / SC-05 | Migrated from pre-domain baseline 7.1; current decision: optional feedback in domain. |
+| REQ-IBS-002 | IBS | Rejected request feedback policy | SC-07B / SC-05 | Migrated from pre-domain baseline 7.1; current decision: optional feedback in domain/API direction. |
 | AGR-UCQ-002 | UCQ | Approval enables but does not create proposal | SC-07B / SC-13D | Owning scenario SC-07B; related SC-13D. |
 
 ## 4. Grouped Behavior Items
@@ -71,7 +78,16 @@ Source: `SC-07B`
 Required behavior / guarantee:
 
 ```text
-Successful employee rejection records a negative review result and makes the request Rejected.
+Successful employee rejection records a negative review result, makes the request Rejected,
+and stores rejection feedback only when feedback is provided.
+```
+
+Feedback policy:
+
+```text
+RejectReview feedback is optional in the current accepted direction.
+Missing/null/blank feedback must not block RejectReview unless the endpoint/domain
+is intentionally changed later.
 ```
 
 Failure / no-write / preservation guarantee:
@@ -83,7 +99,7 @@ Failed rejection does not change request status and does not record a new review
 Migration note:
 
 ```text
-Migrated from pre-domain baseline 5.7.
+Migrated from pre-domain baseline 5.7; feedback optional in current accepted direction.
 ```
 
 ### 4.LC — Scenario State / Condition Matrices
@@ -117,7 +133,8 @@ Source: `SC-07B`
 Required behavior / guarantee:
 
 ```text
-Rejection changes status to Rejected and records rejection decision/feedback if provided.
+Rejection changes status to Rejected and records rejection decision.
+Rejection feedback may be absent; if feedback is provided, it is stored according to the command/domain contract.
 ```
 
 Failure / no-write / preservation guarantee:
@@ -129,7 +146,7 @@ If rejection fails, status and decision/feedback remain unchanged.
 Migration note:
 
 ```text
-Migrated from pre-domain baseline 6.1; feedback optional in current domain direction.
+Migrated from pre-domain baseline 6.1; feedback optional in current accepted direction.
 ```
 
 #### REQ-LC-004 — Approved request cannot be reviewed again
@@ -229,7 +246,8 @@ Source: `SC-07B / SC-05`
 Required behavior / guarantee:
 
 ```text
-Rejected request may have rejection feedback; current domain direction treats feedback as optional, with empty-feedback warning in Client/UI.
+Rejected request may have rejection feedback; current domain/API direction treats feedback as optional.
+Client/UI may show a non-blocking empty-feedback warning, but feedback is not required by default.
 ```
 
 Failure / no-write / preservation guarantee:
@@ -241,7 +259,7 @@ Failed rejection must not write status/feedback.
 Migration note:
 
 ```text
-Migrated from pre-domain baseline 7.1; current decision: optional feedback in domain.
+Migrated from pre-domain baseline 7.1; current decision: optional feedback in domain/API direction.
 ```
 
 ### 4.UCQ — Use-Case Coordination Items
@@ -271,14 +289,14 @@ Owning scenario SC-07B; related SC-13D.
 ## 5. Cross-Scenario / Related Items
 
 | Item ID | Owning scenario | Category | Short name | Why related |
-|---|---|---|---|---|
+|---|---|---|---|
 | AGR-UCQ-001 | SC-13D | UCQ | Proposal creation requires Approved request | Source mentions `SC-13D / SC-07B` |
 
 ## 6. Scenario Questions Raised
 
 | Question ID | Affected item(s) | Question | Status |
 |---|---|---|---|
-| Q-SC-07B-001 | REQ-IBS-002 / REQ-CMD-REJECT-001 | Is rejection explanation required or optional? | open |
+| Q-SC-07B-001 | REQ-IBS-002 / REQ-CMD-REJECT-001 | Is rejection explanation required or optional? | accepted: optional in current direction |
 
 See `planning/diagrams/scenario-questions-register.md` for full details.
 
