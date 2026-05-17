@@ -84,22 +84,6 @@ namespace Tests.EnergyManagement.Legacy.TestHelpers
             return individual;
         }
 
-        public static IndividualClient GetIndividualWithAllData()
-        {
-            var (individual, _) = GetBaseIndividualAndPasswordStr();
-            var (fullName, phone) = GetDataForIndividualToProvide();
-            individual.ProvideDataOrThrow(phone, fullName);
-            return individual;
-        }
-
-        public static (IndividualClient, string) GetIndividualWithAllDataAndPassword()
-        {
-            var (individual, password) = GetBaseIndividualAndPasswordStr();
-            var (fullName, phone) = GetDataForIndividualToProvide();
-            individual.ProvideDataOrThrow(phone, fullName);
-            return (individual, password);
-        }
-
         private static (IndividualClient, string) GetIndividualWithOutFullDataAndHisPassword()
         {
             var (email, password, passwordStr) = GetBaseDataForIndividualAndPassword();
@@ -150,8 +134,5 @@ namespace Tests.EnergyManagement.Legacy.TestHelpers
         public const string EmptyString = "";
         public const string InvalidPostalCode = "ABC";
         public const int LongAddressDataLength = 301;
-
-        // Invalid Request Data
-        public const int InvalidRequestLength = 3001;
     }
 }

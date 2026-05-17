@@ -1,33 +1,55 @@
-# Domain Draft 01 — ApplicantParty-Centric Domain Model
+Ниже обновлённый draft в формате восстановленного документа: единый **Domain Draft 02**, с narrative, code sketches, state machines, coverage и cross-layer notes. Я сохранил структуру из восстановленного draft-а и вернул code sketches как обязательную часть `## 5. Class-By-Class Model`.  
 
-Status: draft 01  
-Workflow: gradual domain discovery  
-Purpose: first saved domain discovery draft after scenario behavior coverage baseline
-
----
+# Domain Draft 02 — L1 Domain Model With ApplicantParty Default/Edit Refinement
 
 ## 1. Draft Goal
 
-This draft is the first saved domain discovery snapshot.
+Этот draft фиксирует второй рабочий снимок доменной модели после сценариев, DATA, validation addenda, behavior baseline и ApplicantParty slice discovery.
 
-It is not a final domain model.
-
-It is not a competing alternative.
-
-It captures the current domain direction and records how scenario-derived behavior items are covered by domain classes, value objects, application orchestration, read/query placement, infrastructure placement, or deferred decisions.
-
-Important L1 readiness note:
+Цель draft-а:
 
 ```text
-This draft is broader than the first implementation cut.
-Use planning/l1-domain-implementation-cut.md before asking an implementation agent to code.
+- сохранить единую L1 domain model, а не отдельный ApplicantParty-only документ;
+- обновить ApplicantParty direction после SL-APPL-001 / SL-APPL-002 / SL-APPL-003;
+- зафиксировать current/default template semantics;
+- отделить доменную логику от application orchestration;
+- сохранить code sketches как часть domain draft;
+- показать state machines для lifecycle-сущностей;
+- обозначить impossible states;
+- показать, какие scenario behavior items покрыты доменом, application layer, read/query, infrastructure или future/deferred решениями.
+```
+
+Это не финальная модель и не competing variant.
+
+Это второй полный снимок текущего направления домена.
+
+Важная граница:
+
+```text
+Draft шире, чем implementation cut.
+
+Для coding agent нужен отдельный L1 implementation cut или slice implementation prompt,
+чтобы не пытаться реализовать весь draft сразу.
 ```
 
 Key decisions captured in this draft:
 
 ```text
 - ApplicantParty inheritance is accepted.
-- ApplicantParty editing creates a new version-like ApplicantParty record.
+- ApplicantParty represents reusable applicant/contact/template data.
+- ApplicantParty creation is additive.
+- New ApplicantParty starts non-current/default.
+- First-of-type current/default initialization is application/use-case coordination.
+- Explicit make current/default is separate user action.
+- Current/default is one per ApplicantPartyType.
+- Current/default is client-side template/prefill choice.
+- Current/default can be Verified or Unverified.
+- IsCurrentActiveVersion should be renamed later, but not in current behavior slices.
+- One-current/default-per-type DB filtered unique constraint is a separate persistence/ADR decision.
+- Unverified ApplicantParty can be edited in place.
+- Verified ApplicantParty edit is blocked for now.
+- Delete/archive policy is hard delete for simplicity.
+- Existing requests remain unchanged when ApplicantParty current/default changes.
 - ApplicantPartyVerificationStatus is only Unverified / Verified in current core.
 - Request approval verifies ApplicantParty in current implementation.
 - RejectionFeedback is optional in domain; UI should warn if empty.
@@ -39,6 +61,18 @@ Key decisions captured in this draft:
 - Final agreement refusal is not modeled in current core.
 - SupersededByCounterProposal is used for replacement, not Rejected.
 ```
+
+Current implementation note:
+
+```text
+Current code already starts ApplicantParty as non-current/default.
+First-of-type default/current initialization is handled by ApplicantPartyCreationService.
+```
+
+Evidence links may drift because they point to branch `my-changes`:
+
+[ApplicantParty.cs, lines 23-39](https://github.com/AlexPastukhh/enman/blob/my-changes/Domain.EnergyManagement/L1/Applicants/ApplicantParty.cs#L23-L39)
+[ApplicantPartyCreationService.cs, lines 63-70](https://github.com/AlexPastukhh/enman/blob/my-changes/EnergyManagement.Server/L1/Application/Services/ApplicantPartyCreationService.cs#L63-L70)
 
 ---
 
@@ -61,13 +95,24 @@ Background / implementation compatibility:
 ```text
 planning/current-state.md
 planning/domain-model.md
+planning/l1-domain-implementation-cut.md
+planning/l1-domain-testing-rules.md
 ```
 
-Important boundary:
+Slice discovery inputs:
+
+```text
+planning/slices/SL-APPL-001-create-individual-applicant-party.md
+planning/slices/SL-APPL-002-account-applicant-parties-read.md
+planning/slices/SL-APPL-003-select-current-default-applicant-party-template.md
+planning/slices/SL-REQ-001-create-connection-request.md
+```
+
+Boundary:
 
 ```text
 current-state.md and domain-model.md are implementation/background context.
-They do not override corrected scenario behavior or coverage baseline.
+They do not override corrected scenario behavior, DATA specs, behavior baseline, or accepted newer slice decisions.
 ```
 
 ---
@@ -81,7 +126,7 @@ ClientAccount
   account/auth identity and activation marker
 
 ApplicantParty
-  persisted applicant domain object owned by ClientAccount
+  persisted reusable applicant/contact/template data owned by ClientAccount
 
 ConnectionRequest
   request created from ApplicantParty
@@ -100,29 +145,50 @@ Key decisions:
 
 ```text
 - Account email and applicant email are different concepts.
-- ClientAccount.Email is auth/login/recovery email.
-- ApplicantParty.Email is applicant contact email.
+- ClientAccount.Email = auth/login/recovery email.
+- ApplicantParty.Email = applicant contact email.
+
 - Current core registration creates Active account.
 - Protected use cases require activated account.
 - Business aggregates should not duplicate account activation logic internally.
+
 - Applicant DATA from scenarios is represented as ApplicantParty.
 - No separate ApplicantData aggregate in this draft.
 - No ApplicantSnapshot in this draft.
-- ApplicantParty changes create new version-like ApplicantParty records.
+
+- ApplicantParty is reusable applicant/contact/template data.
+- ApplicantParty creation is additive.
+- Multiple ApplicantParties of the same type for one account are allowed.
+- Current/default ApplicantParty is selected per ApplicantPartyType.
+- Current/default is client preference / default template / prefill choice.
+- Current/default is not verification status.
+- Verified and Unverified ApplicantParties can both be current/default.
+
+- Unverified ApplicantParty can be edited in place.
+- Verified ApplicantParty edit is blocked for now.
+- ApplicantParty delete is hard delete for simplicity.
+
 - ConnectionRequest stores ApplicantPartyId.
 - ConnectionRequest does not store ClientAccountId.
+- Existing requests remain linked to the ApplicantParty selected/used at request creation time.
+- Changing current/default ApplicantParty does not relink or rewrite existing requests.
+
 - Read use cases use Dapper/read projections.
+
 - Submitted is not target lifecycle status.
 - Target request lifecycle starts with InReview.
+
 - Request approval verifies ApplicantParty in current implementation through application service.
+
 - Agreement proposal final refusal is not current core.
+- SupersededByCounterProposal is used for replacement, not Rejected.
 ```
 
 ---
 
 ## 4. Aggregate / Class Candidates
 
-Current aggregate candidates:
+### Current aggregate candidates
 
 ```text
 ClientAccount
@@ -131,14 +197,24 @@ ConnectionRequest
 AgreementProposalExchange
 ```
 
-Supporting concepts:
+### Supporting concepts
 
 ```text
 VerificationResult
 AnonymousSubmission
 ```
 
-Not current aggregate candidates:
+### ApplicantParty-related policy / coordination candidates
+
+```text
+ApplicantPartyDefaultSelectionPolicy
+ApplicantPartyEditPolicy
+ApplicantPartyDeletionPolicy
+```
+
+These may remain application/use-case coordination until domain pressure justifies separate domain services.
+
+### Not aggregate candidates
 
 ```text
 Email sender
@@ -147,15 +223,24 @@ File/blob storage
 Verification provider
 Dapper read projections
 Session/auth framework
+OpenAPI contract artifacts
+Generated client constants
+Generated TypeScript API types
+React Query cache
+Route constants
 ```
 
 ---
 
-## 5. Class-By-Class Model
+# 5. Class-By-Class Model
 
-## 5.1 Aggregate: ClientAccount
+## 5.1 ClientAccount
 
-`ClientAccount` owns account identity and account activation marker.
+### Purpose
+
+`ClientAccount` owns account/auth identity and account activation marker.
+
+It represents the account used for login, recovery and protected access.
 
 Important distinction:
 
@@ -164,22 +249,87 @@ ClientAccount.Email = auth/login/recovery email.
 ApplicantParty.Email = applicant contact email.
 ```
 
-For current core:
+### State owned
 
 ```text
-Register(...) creates Active account.
-EnsureActivated(...) guards protected use cases.
+Id
+Email
+PasswordHash
+ActivationState
+CreatedAt
+```
+
+### Methods / commands
+
+```text
+Register(email, passwordHash, createdAt)
+EnsureActivated()
+```
+
+### Invariants protected
+
+```text
+- Account cannot be registered without auth email.
+- Account cannot be registered without password hash.
+- Current core registration creates Active account.
+- Non-active account cannot pass protected-use-case guard.
+```
+
+### Value objects used
+
+```text
+EmailAddress
+PasswordHash
+AccountActivationState
+```
+
+### Lifecycle / status
+
+```text
+Register -> Active
 ```
 
 Future:
 
 ```text
 PendingActivation -> Active
-Email confirmation
-AccountActivatedPolicy / account_activated claim
+Suspended
+Deactivated
 ```
 
-### Aggregate root sketch
+### Impossible states prevented
+
+```text
+Registered ClientAccount without auth email.
+Registered ClientAccount without password hash.
+Protected use case executed without active account, if application guard is used correctly.
+```
+
+### Baseline item IDs covered
+
+```text
+ACC-CMD-REGISTER-001
+ACC-CMD-LOGIN-001, partly / outside auth boundary
+ACC-LC-001
+ACC-LC-002
+ACC-SEC-001
+ACC-UCQ-001
+```
+
+### Open questions
+
+```text
+ACC-SQ-001:
+If user created account but did not activate it and then tries to log in, what should happen?
+
+ACC-SQ-002:
+If account_activated claim is used, how is stale claim refreshed?
+
+ACC-SQ-003:
+Does account activation apply identically to employee accounts and client accounts?
+```
+
+### Code sketch
 
 ```csharp
 public sealed class ClientAccount : Account
@@ -229,8 +379,6 @@ public sealed class ClientAccount : Account
 }
 ```
 
-### Value objects
-
 ```csharp
 public enum AccountActivationState
 {
@@ -241,13 +389,7 @@ public enum AccountActivationState
 }
 ```
 
-`EmailAddress` is used as auth/login/recovery email in `ClientAccount`.
-
-`PasswordHash` is stored credential state. Raw password belongs to DTO/application/auth boundary.
-
-### Cross-layer notes
-
-Protected use-case guard:
+Application-layer usage:
 
 ```csharp
 var account = await accounts.GetById(currentAccountId);
@@ -259,20 +401,19 @@ if (activated.IsFailure)
 // then execute protected use case
 ```
 
-Business aggregates should not duplicate this check internally.
+Important draft rule:
+
+```text
+Business aggregates should not duplicate Account.EnsureActivated internally.
+```
 
 ---
 
-## 5.2 Aggregate: ApplicantParty
+## 5.2 ApplicantParty
 
-`ApplicantParty` is the persisted applicant domain object.
+### Purpose
 
-Important distinction:
-
-```text
-ClientAccount.Email = auth email.
-ApplicantParty.Email = applicant contact email.
-```
+`ApplicantParty` is the persisted reusable applicant/contact/template domain object.
 
 Scenario term:
 
@@ -280,7 +421,7 @@ Scenario term:
 Applicant DATA
 ```
 
-Domain model term:
+Domain term:
 
 ```text
 ApplicantParty
@@ -290,7 +431,7 @@ No separate `ApplicantData` aggregate.
 
 No `ApplicantSnapshot` by default.
 
-Applicant type modeling uses inheritance:
+### Class hierarchy
 
 ```text
 ApplicantParty
@@ -299,23 +440,157 @@ ApplicantParty
   -> LegalEntityApplicantParty [VAR:EXPAND]
 ```
 
-### Applicant editing / version-like persistence policy
-
-Changing applicant data creates a new version-like ApplicantParty record.
-
-Preserve:
+### State owned
 
 ```text
-- verified ApplicantParty records;
-- ApplicantParty records referenced by requests;
-- current active ApplicantParty record selected/entered by user.
+Id
+ClientAccountId
+Type
+VerificationStatus
+Email
+PhoneNumber
+IsCurrentActiveVersion
+CreatedAt
 ```
 
-May remove/archive:
+For `IndividualApplicantParty`:
 
 ```text
-irrelevant inactive unverified ApplicantParty records.
+FullName
 ```
+
+### Methods / commands
+
+```text
+Create(...)
+GetDisplayName()
+CanMarkVerified()
+MarkVerified()
+MarkInactiveVersion()
+MarkAsCurrentDefaultTemplate()
+CanEdit()
+Edit(...)
+HasMinimumDataForVerification()
+```
+
+### Invariants protected locally
+
+```text
+- ApplicantParty belongs to ClientAccountId.
+- IndividualApplicantParty requires FullName.
+- IndividualApplicantParty requires applicant contact EmailAddress.
+- IndividualApplicantParty requires PhoneNumber.
+- New IndividualApplicantParty starts Unverified.
+- New IndividualApplicantParty starts non-current/default.
+- ApplicantParty contact email is not the same concept as account auth email.
+- Verified ApplicantParty cannot be edited in current core.
+```
+
+### Current/default template policy
+
+Current persisted marker:
+
+```text
+IsCurrentActiveVersion
+```
+
+Refined domain meaning:
+
+```text
+current/default template marker
+```
+
+Target docs/API wording:
+
+```text
+isCurrentDefault
+current/default template
+```
+
+Rename decision:
+
+```text
+IsCurrentActiveVersion should be renamed later.
+Do not rename it inside current behavior slices.
+Create a dedicated cleanup/migration task if/when renaming is needed.
+```
+
+Current/default rules:
+
+```text
+- Current/default is per ApplicantPartyType.
+- Current/default is client preference / prefill marker.
+- Current/default can be Verified or Unverified.
+- New ApplicantParty starts non-current/default.
+- First-of-type current/default initialization is application/use-case coordination.
+- Additional same-type create does not switch current/default implicitly.
+- Explicit make current/default is separate user action.
+- Existing requests remain unchanged when current/default changes.
+```
+
+Cross-row invariant:
+
+```text
+For one ClientAccountId + ApplicantPartyType,
+there should be at most one current/default ApplicantParty.
+```
+
+Placement:
+
+```text
+Application/use-case transaction owns this rule for now.
+DB filtered unique constraint can be added later as a separate persistence/ADR decision.
+```
+
+### Applicant editing policy
+
+Current policy:
+
+```text
+Unverified ApplicantParty can be edited in place.
+```
+
+Verified policy:
+
+```text
+Verified ApplicantParty edit is blocked for now.
+```
+
+Future:
+
+```text
+A later flow may show warning and either:
+- create a new ApplicantParty record;
+- require explicit user confirmation;
+- preserve verified/request-referenced history.
+```
+
+This draft does not introduce verified edit/versioning behavior yet.
+
+### Applicant delete/archive policy
+
+Current policy:
+
+```text
+Hard delete for simplicity.
+```
+
+Current boundary:
+
+```text
+Do not introduce archive lifecycle state unless a future lifecycle slice explicitly requires it.
+```
+
+Future hard-delete safety decisions may still be needed:
+
+```text
+- whether request-referenced ApplicantParty can be deleted;
+- whether verified ApplicantParty can be deleted;
+- whether current/default ApplicantParty can be deleted;
+- whether deleting current/default should select another default or leave none.
+```
+
+Those are lifecycle-slice decisions, not current core domain decisions.
 
 ### Verification status decision
 
@@ -328,7 +603,131 @@ Verified
 
 Request approval verifies ApplicantParty in current implementation, through application service.
 
-### Aggregate root sketch
+Verification is independent from current/default selection.
+
+### Value objects used
+
+```text
+ApplicantPartyType
+ApplicantPartyVerificationStatus
+FullName
+EmailAddress
+PhoneNumber
+```
+
+Future:
+
+```text
+Snils
+PassportData
+Inn
+Ogrn
+Ogrnip
+OrganizationName
+LegalAddress
+ActualAddress
+RegistrationAddress
+```
+
+### Lifecycle / status
+
+```text
+Create -> Unverified
+MarkVerified -> Verified
+```
+
+Current/default marker lifecycle:
+
+```text
+Create -> non-current/default
+
+First-of-type application rule:
+  no same-type ApplicantParty exists
+    -> MarkAsCurrentDefaultTemplate
+    -> current/default
+
+Additional same-type create:
+  remains non-current/default
+
+Explicit make current/default:
+  selected ApplicantParty -> current/default
+  previous same-type current/default -> non-current/default
+```
+
+Edit lifecycle:
+
+```text
+Unverified -> Edit -> Unverified with changed fields
+Verified -> Edit -> blocked for now
+```
+
+Delete lifecycle:
+
+```text
+Hard delete, if allowed by future lifecycle rules.
+No archive state in current draft.
+```
+
+### Impossible states prevented
+
+```text
+IndividualApplicantParty without FullName.
+IndividualApplicantParty without contact EmailAddress.
+IndividualApplicantParty without PhoneNumber.
+Verified incomplete ApplicantParty, if HasMinimumDataForVerification is enforced.
+New ApplicantParty silently becoming current/default inside constructor/factory.
+Verified ApplicantParty edited in place in current core.
+```
+
+Cross-row impossible state candidate:
+
+```text
+More than one current/default ApplicantParty for the same ClientAccountId + ApplicantPartyType.
+```
+
+Status:
+
+```text
+Partial.
+```
+
+Draft answer:
+
+```text
+The rule is domain-significant but cannot be fully protected inside a single ApplicantParty aggregate instance.
+Current placement: application/use-case coordination.
+Future reinforcement: DB filtered unique constraint or transactional application command.
+```
+
+### Baseline item IDs covered
+
+```text
+APPL-CMD-SAVE-001
+APPL-VI-001
+REQ-UCQ-001, through request reference separation
+VER-UCQ-001, by separating standalone ApplicantParty save/edit from request-context verification
+```
+
+ApplicantParty slice behavior covered:
+
+```text
+SC-10-BI-005
+SC-10-BI-007
+SC-10-BI-008
+SC-10-BI-009
+```
+
+### Open questions
+
+```text
+- When do we introduce EntrepreneurApplicantParty and LegalEntityApplicantParty?
+- Which physical-person fields are L1 vs future: SNILS, passport, address?
+- Should one-current/default-per-type be reinforced by DB filtered unique constraint?
+- Can verified ApplicantParty ever be edited with warning/new-version policy?
+- What are hard-delete safety rules for verified/request-referenced/current-default ApplicantParty?
+```
+
+### Code sketch
 
 ```csharp
 public abstract class ApplicantParty
@@ -346,6 +745,9 @@ public abstract class ApplicantParty
 
     public PhoneNumber PhoneNumber { get; protected set; }
 
+    // Current persisted name.
+    // Refined domain meaning: current/default template marker.
+    // Future cleanup name candidate: IsCurrentDefaultTemplate.
     public bool IsCurrentActiveVersion { get; protected set; }
 
     public DateTime CreatedAt { get; protected set; }
@@ -378,7 +780,23 @@ public abstract class ApplicantParty
 
     public Result MarkInactiveVersion()
     {
+        // Current implementation name.
+        // Refined domain meaning: unset current/default template marker.
         IsCurrentActiveVersion = false;
+        return Result.Success();
+    }
+
+    public Result MarkAsCurrentDefaultTemplate()
+    {
+        IsCurrentActiveVersion = true;
+        return Result.Success();
+    }
+
+    public Result CanEdit()
+    {
+        if (VerificationStatus == ApplicantPartyVerificationStatus.Verified)
+            return Result.Failure(ApplicantErrors.VerifiedApplicantPartyCannotBeEdited);
+
         return Result.Success();
     }
 
@@ -386,7 +804,26 @@ public abstract class ApplicantParty
 }
 ```
 
-### Concrete root: IndividualApplicantParty
+```csharp
+public enum ApplicantPartyType
+{
+    Individual = 1,
+    Entrepreneur = 2, // [VAR:EXPAND]
+    LegalEntity = 3   // [VAR:EXPAND]
+}
+```
+
+```csharp
+public enum ApplicantPartyVerificationStatus
+{
+    Unverified = 1,
+    Verified = 2
+}
+```
+
+---
+
+## 5.2.1 IndividualApplicantParty
 
 ```csharp
 public sealed class IndividualApplicantParty : ApplicantParty
@@ -421,12 +858,38 @@ public sealed class IndividualApplicantParty : ApplicantParty
             ClientAccountId = clientAccountId,
             Type = ApplicantPartyType.Individual,
             VerificationStatus = ApplicantPartyVerificationStatus.Unverified,
-            IsCurrentActiveVersion = true,
+            IsCurrentActiveVersion = false,
             FullName = fullName,
             Email = contactEmail,
             PhoneNumber = phoneNumber,
             CreatedAt = createdAt
         };
+    }
+
+    public Result Edit(
+        FullName fullName,
+        EmailAddress contactEmail,
+        PhoneNumber phoneNumber)
+    {
+        var canEdit = CanEdit();
+
+        if (canEdit.IsFailure)
+            return canEdit;
+
+        if (fullName is null)
+            return Result.Failure(ApplicantErrors.FullNameRequired);
+
+        if (contactEmail is null)
+            return Result.Failure(ApplicantErrors.EmailRequired);
+
+        if (phoneNumber is null)
+            return Result.Failure(ApplicantErrors.PhoneRequired);
+
+        FullName = fullName;
+        Email = contactEmail;
+        PhoneNumber = phoneNumber;
+
+        return Result.Success();
     }
 
     public override string GetDisplayName()
@@ -443,28 +906,7 @@ public sealed class IndividualApplicantParty : ApplicantParty
 }
 ```
 
-### Value objects
-
-```csharp
-public enum ApplicantPartyType
-{
-    Individual = 1,
-    Entrepreneur = 2, // [VAR:EXPAND]
-    LegalEntity = 3   // [VAR:EXPAND]
-}
-```
-
-```csharp
-public enum ApplicantPartyVerificationStatus
-{
-    Unverified = 1,
-    Verified = 2
-}
-```
-
-### Cross-layer notes
-
-Replacing current active applicant version should be coordinated by application service:
+Application orchestration for first-of-type default initialization:
 
 ```csharp
 var account = await accounts.GetById(currentClientAccountId);
@@ -473,32 +915,98 @@ var activated = account.EnsureActivated();
 if (activated.IsFailure)
     return activated;
 
-var currentApplicant = await applicantParties.GetCurrentActiveForAccount(currentClientAccountId);
-
-if (currentApplicant is not null)
-    currentApplicant.MarkInactiveVersion();
-
-var newApplicant = IndividualApplicantParty.Create(
+var applicant = IndividualApplicantParty.Create(
     account.Id,
     fullName,
     applicantContactEmail,
     phoneNumber,
     clock.UtcNow);
+
+if (applicant.IsFailure)
+    return applicant;
+
+var hasSameTypeApplicantParty = await applicantParties.ExistsByClientAccountIdAndTypeAsync(
+    account.Id,
+    ApplicantPartyType.Individual,
+    cancellationToken);
+
+if (!hasSameTypeApplicantParty)
+    applicant.Value.MarkAsCurrentDefaultTemplate();
+
+applicantParties.Add(applicant.Value);
+```
+
+Application orchestration for explicit current/default selection:
+
+```csharp
+var selected = await applicantParties.GetOwnedByIdAsync(
+    applicantPartyId,
+    currentClientAccountId,
+    cancellationToken);
+
+if (selected is null)
+    return Result.Failure(ApplicantErrors.ApplicantPartyNotFoundOrNotOwned);
+
+var sameTypeApplicantParties = await applicantParties.ListOwnedByAccountIdAndTypeAsync(
+    currentClientAccountId,
+    selected.Type,
+    cancellationToken);
+
+foreach (var applicantParty in sameTypeApplicantParties)
+{
+    if (applicantParty.Id != selected.Id && applicantParty.IsCurrentActiveVersion)
+        applicantParty.MarkInactiveVersion();
+}
+
+selected.MarkAsCurrentDefaultTemplate();
+```
+
+Application orchestration for unverified edit:
+
+```csharp
+var applicant = await applicantParties.GetOwnedByIdAsync(
+    applicantPartyId,
+    currentClientAccountId,
+    cancellationToken);
+
+if (applicant is null)
+    return Result.Failure(ApplicantErrors.ApplicantPartyNotFoundOrNotOwned);
+
+if (applicant is not IndividualApplicantParty individual)
+    return Result.Failure(ApplicantErrors.UnsupportedApplicantPartyType);
+
+var edit = individual.Edit(
+    fullName,
+    applicantContactEmail,
+    phoneNumber);
+
+if (edit.IsFailure)
+    return edit;
 ```
 
 ---
 
-## 5.3 Aggregate: ConnectionRequest
+## 5.3 ConnectionRequest
+
+### Purpose
 
 `ConnectionRequest` owns request lifecycle and review result.
 
-`ConnectionRequest` stores:
+Request is created from persisted `ApplicantParty`.
+
+### State owned
 
 ```text
+Id
+Number [future/public]
 ApplicantPartyId
+Status
+Details
+ObjectAddress
+ReviewDecisionRecord?
 ```
 
-It does not store:
+### Does not store
 
 ```text
 ClientAccountId
@@ -509,10 +1017,116 @@ Reason:
 ```text
 Request is from ApplicantParty.
 Account ownership can be reached through ApplicantParty.ClientAccountId.
-Read use cases can use Dapper projections.
+Read use cases can use Dapper/read projections.
 ```
 
-### Aggregate root sketch
+### Methods / commands
+
+```text
+Create(applicantParty, details, objectAddress)
+CanApprove(reviewer)
+Approve(reviewer)
+CanReject(reviewer)
+Reject(reviewer, feedback)
+```
+
+### Invariants protected
+
+```text
+- Request must be created from persisted ApplicantParty.
+- Request must have RequestDetails.
+- Request must have ObjectAddress.
+- Created request starts InReview.
+- Only InReview request can be approved.
+- Only InReview request can be rejected.
+- Approved request cannot be reviewed again.
+- Rejected request cannot be approved in core.
+- Rejected request cannot be rejected again in core.
+- Approval records ReviewDecisionRecord.
+- Rejection records ReviewDecisionRecord.
+- Approval does not automatically create AgreementProposalExchange.
+```
+
+### Value objects / child entities used
+
+```text
+RequestStatus
+RequestNumber [future]
+RequestDetails
+ObjectAddress
+EmployeeRef
+ReviewDecisionRecord
+ReviewDecision
+RejectionFeedback
+```
+
+### Lifecycle / status
+
+```text
+Create -> InReview
+Approve -> Approved
+Reject -> Rejected
+```
+
+Invalid / blocked:
+
+```text
+Approved cannot be reviewed again.
+Rejected cannot be approved in core.
+Rejected cannot be rejected again in core.
+```
+
+### Impossible states prevented
+
+```text
+Request without object address.
+Approved request without review decision.
+Rejected request without review decision.
+```
+
+Not impossible:
+
+```text
+Rejected request without feedback.
+```
+
+Reason:
+
+```text
+RejectionFeedback is optional in domain.
+UI should warn if feedback is empty.
+```
+
+### Baseline item IDs covered
+
+```text
+REQ-CMD-CREATE-001
+REQ-CMD-APPROVE-001
+REQ-CMD-REJECT-001
+REQ-LC-001
+REQ-LC-002
+REQ-LC-003
+REQ-LC-004
+REQ-LC-005
+REQ-LC-006
+REQ-IBS-001
+REQ-IBS-003
+REQ-VI-001
+AGR-UCQ-002
+```
+
+### Open questions
+
+```text
+REQ-IBS-002:
+Is rejection feedback mandatory in core?
+
+Current draft answer:
+No, not mandatory in domain.
+UI should warn if empty.
+```
+
+### Code sketch
 
 ```csharp
 public sealed class ConnectionRequest
@@ -610,7 +1224,67 @@ public sealed class ConnectionRequest
 }
 ```
 
-### Child entity: ReviewDecisionRecord
+```csharp
+public enum RequestStatus
+{
+    InReview = 1,
+    Approved = 2,
+    Rejected = 3
+}
+```
+
+---
+
+## 5.3.1 ReviewDecisionRecord
+
+### Purpose
+
+Child entity/value-like record inside `ConnectionRequest`.
+
+Stores review decision made by employee.
+
+### State owned
+
+```text
+Decision
+Reviewer
+RejectionFeedback?
+```
+
+### Factory methods
+
+```text
+Approved(reviewer)
+Rejected(reviewer, feedback)
+```
+
+### Invariants protected
+
+```text
+- Review decision has reviewer.
+- Approved decision has Decision = Approved.
+- Rejected decision has Decision = Rejected.
+- RejectionFeedback may be null.
+```
+
+### Value objects used
+
+```text
+EmployeeRef
+ReviewDecision
+RejectionFeedback
+```
+
+### Baseline item IDs covered
+
+```text
+REQ-IBS-001
+REQ-IBS-002, with decision that feedback is optional
+REQ-CMD-APPROVE-001
+REQ-CMD-REJECT-001
+```
+
+### Code sketch
 
 ```csharp
 public sealed class ReviewDecisionRecord
@@ -648,32 +1322,48 @@ public sealed class ReviewDecisionRecord
 }
 ```
 
-### Value objects
-
-```csharp
-public enum RequestStatus
-{
-    InReview = 1,
-    Approved = 2,
-    Rejected = 3
-}
-```
-
-`RequestNumber` is future/public. `Id` remains DB technical identity.
-
-`Reject(...)` accepts nullable `RejectionFeedback`. Empty feedback means no `RejectionFeedback` object.
-
 ---
 
-## 5.4 Aggregate: AgreementProposalExchange
+## 5.4 AgreementProposalExchange
+
+### Purpose
 
 `AgreementProposalExchange` owns post-approval agreement proposal version exchange.
 
-This is a future/domain-draft aggregate proposal.
+This is future/domain-draft aggregate proposal.
 
-It is not part of the first L1 implementation cut unless explicitly requested.
+It is not first L1 implementation cut unless explicitly requested.
 
-Current decisions:
+### State owned
+
+```text
+Id
+RequestId / ConnectionRequestId
+ExchangeStatus
+ActiveProposalVersion
+ProposalVersions
+CreatedAt
+```
+
+Child:
+
+```text
+AgreementProposal
+```
+
+Proposal child state:
+
+```text
+Id
+Version
+Sender
+State
+DocumentFileRef
+ProposalComment / TextDetails
+CreatedAt
+```
+
+### Current decisions
 
 ```text
 AgreementProposalExchange has explicit AgreementExchangeStatus.
@@ -685,16 +1375,109 @@ Final agreement refusal is not current core.
 SupersededByCounterProposal is used for replacement, not Rejected.
 ```
 
-No final refusal in current core.
-
-Reason:
+### Methods / commands
 
 ```text
-Final agreement refusal is not just exchange-level behavior.
-It likely requires marking the related Approved request as agreement-not-concluded / failed agreement flow.
+StartByEmployee(approvedRequestRef, document, comment, employee)
+ClientAcceptActiveProposal(client)
+ClientSendOwnVersion(document, comment, client)
+EmployeeSendNewVersion(document, comment, employee)
 ```
 
-### Exchange status and proposal state
+### Invariants protected
+
+```text
+- Exchange starts only by employee action.
+- Initial exchange can start only from Approved request.
+- Approval does not automatically create exchange.
+- Client cannot start exchange without employee-sent proposal.
+- Employee proposal must include document/file.
+- Client proposal must include document/file.
+- Proposal contains sender.
+- Client can send only one own version in response to current employee proposal.
+- Accepted exchange has no response actions in current core.
+- Employee counter-proposal supersedes previous client-sent proposal.
+- SupersededByCounterProposal is not final refusal.
+```
+
+### Value objects / child entities used
+
+```text
+AgreementExchangeStatus
+AgreementProposalState
+AgreementProposalSender
+AgreementProposalVersion
+AgreementProposalNumber [future]
+DocumentFileRef
+DocumentType
+ProposalComment
+```
+
+### Lifecycle / status
+
+Exchange:
+
+```text
+StartByEmployee -> AwaitingClientConfirmation
+ClientAcceptActiveProposal -> Accepted
+ClientSendOwnVersion -> AwaitingEmployeeResponse
+EmployeeSendNewVersion -> AwaitingClientConfirmation
+```
+
+Proposal:
+
+```text
+Employee sends first version -> AwaitingClientConfirmation
+Client accepts -> Accepted
+Client sends own version -> SentByClient
+Employee sends counter-proposal -> previous client proposal SupersededByCounterProposal
+```
+
+No current final refusal state.
+
+### Impossible states prevented
+
+```text
+Agreement proposal without sender.
+Agreement proposal without document/file.
+Client-started agreement exchange without employee proposal.
+Client own version created twice for same employee proposal.
+Superseded proposal treated as active proposal.
+```
+
+### Baseline item IDs covered
+
+```text
+AGR-CMD-EMP-SEND-001
+AGR-CMD-CLIENT-ACCEPT-001
+AGR-CMD-CLIENT-SEND-001
+AGR-CMD-EMP-NEW-001
+AGR-LC-001
+AGR-LC-002
+AGR-LC-003
+AGR-LC-004
+AGR-LC-005
+AGR-LC-006
+AGR-LC-007 / replacement refinement
+AGR-IBS-001
+AGR-IBS-002
+AGR-IBS-003
+AGR-VI-001
+AGR-VI-002
+AGR-UCQ-001
+AGR-UCQ-002
+```
+
+### Open questions
+
+```text
+- Is final agreement refusal needed later?
+- If yes, is it exchange-level status or request-level post-approval outcome?
+- Should returning to older proposal version be supported later?
+- Should signed/final agreement become separate aggregate later?
+```
+
+### Code sketch
 
 ```csharp
 public enum AgreementExchangeStatus
@@ -724,137 +1507,486 @@ public readonly record struct AgreementProposalVersion(int Value)
 }
 ```
 
-Scenario clarification:
+```csharp
+public sealed class AgreementProposalExchange
+{
+    public long Id { get; private set; }
 
-```text
-Current agreement flow supports accept or counter-proposal loop.
-Current core does not support final refusal of the whole agreement exchange.
-Adding final refusal likely requires request-level post-approval outcome.
+    public long ConnectionRequestId { get; private set; }
+
+    public AgreementExchangeStatus Status { get; private set; }
+
+    public AgreementProposalVersion ActiveProposalVersion { get; private set; }
+
+    private readonly List<AgreementProposal> _proposals = new();
+
+    public IReadOnlyCollection<AgreementProposal> Proposals => _proposals.AsReadOnly();
+
+    private AgreementProposalExchange() { }
+
+    public static Result<AgreementProposalExchange> StartByEmployee(
+        long approvedRequestId,
+        DocumentFileRef document,
+        ProposalComment comment,
+        EmployeeRef employee,
+        DateTime createdAt)
+    {
+        if (approvedRequestId <= 0)
+            return Result.Failure(AgreementErrors.RequestRequired);
+
+        if (document is null)
+            return Result.Failure(AgreementErrors.DocumentRequired);
+
+        if (employee is null)
+            return Result.Failure(AgreementErrors.EmployeeRequired);
+
+        var exchange = new AgreementProposalExchange
+        {
+            ConnectionRequestId = approvedRequestId,
+            Status = AgreementExchangeStatus.AwaitingClientConfirmation,
+            ActiveProposalVersion = AgreementProposalVersion.First
+        };
+
+        var proposal = AgreementProposal.EmployeeProposal(
+            AgreementProposalVersion.First,
+            document,
+            comment,
+            employee,
+            createdAt);
+
+        exchange._proposals.Add(proposal);
+
+        return exchange;
+    }
+
+    public Result ClientAcceptActiveProposal(ClientRef client)
+    {
+        if (client is null)
+            return Result.Failure(AgreementErrors.ClientRequired);
+
+        if (Status != AgreementExchangeStatus.AwaitingClientConfirmation)
+            return Result.Failure(AgreementErrors.OnlyAwaitingClientConfirmationCanBeAccepted);
+
+        var activeProposal = GetActiveProposal();
+
+        if (activeProposal.Sender != AgreementProposalSender.Employee)
+            return Result.Failure(AgreementErrors.OnlyEmployeeProposalCanBeAccepted);
+
+        activeProposal.MarkAccepted();
+        Status = AgreementExchangeStatus.Accepted;
+
+        return Result.Success();
+    }
+
+    public Result ClientSendOwnVersion(
+        DocumentFileRef document,
+        ProposalComment comment,
+        ClientRef client,
+        DateTime createdAt)
+    {
+        if (client is null)
+            return Result.Failure(AgreementErrors.ClientRequired);
+
+        if (document is null)
+            return Result.Failure(AgreementErrors.DocumentRequired);
+
+        if (Status != AgreementExchangeStatus.AwaitingClientConfirmation)
+            return Result.Failure(AgreementErrors.ClientVersionCanBeSentOnlyWhenAwaitingClientConfirmation);
+
+        var activeProposal = GetActiveProposal();
+
+        if (activeProposal.Sender != AgreementProposalSender.Employee)
+            return Result.Failure(AgreementErrors.ClientCanRespondOnlyToEmployeeProposal);
+
+        var nextVersion = ActiveProposalVersion.Next();
+
+        var clientProposal = AgreementProposal.ClientProposal(
+            nextVersion,
+            document,
+            comment,
+            client,
+            createdAt);
+
+        _proposals.Add(clientProposal);
+
+        ActiveProposalVersion = nextVersion;
+        Status = AgreementExchangeStatus.AwaitingEmployeeResponse;
+
+        return Result.Success();
+    }
+
+    public Result EmployeeSendNewVersion(
+        DocumentFileRef document,
+        ProposalComment comment,
+        EmployeeRef employee,
+        DateTime createdAt)
+    {
+        if (employee is null)
+            return Result.Failure(AgreementErrors.EmployeeRequired);
+
+        if (document is null)
+            return Result.Failure(AgreementErrors.DocumentRequired);
+
+        if (Status != AgreementExchangeStatus.AwaitingEmployeeResponse)
+            return Result.Failure(AgreementErrors.EmployeeCanRespondOnlyWhenAwaitingEmployeeResponse);
+
+        var activeProposal = GetActiveProposal();
+
+        if (activeProposal.Sender != AgreementProposalSender.Client)
+            return Result.Failure(AgreementErrors.EmployeeCanSupersedeOnlyClientProposal);
+
+        activeProposal.MarkSupersededByCounterProposal();
+
+        var nextVersion = ActiveProposalVersion.Next();
+
+        var employeeProposal = AgreementProposal.EmployeeProposal(
+            nextVersion,
+            document,
+            comment,
+            employee,
+            createdAt);
+
+        _proposals.Add(employeeProposal);
+
+        ActiveProposalVersion = nextVersion;
+        Status = AgreementExchangeStatus.AwaitingClientConfirmation;
+
+        return Result.Success();
+    }
+
+    private AgreementProposal GetActiveProposal()
+    {
+        return _proposals.Single(x => x.Version == ActiveProposalVersion);
+    }
+}
 ```
 
 ---
 
-## 5.5 Supporting Concepts
+## 5.4.1 AgreementProposal
 
-`VerificationResult` is deferred and request-context-only.
+```csharp
+public sealed class AgreementProposal
+{
+    public long Id { get; private set; }
 
-`AnonymousSubmission` is deferred/open.
+    public AgreementProposalVersion Version { get; private set; }
+
+    public AgreementProposalSender Sender { get; private set; }
+
+    public AgreementProposalState State { get; private set; }
+
+    public DocumentFileRef Document { get; private set; }
+
+    public ProposalComment Comment { get; private set; }
+
+    public DateTime CreatedAt { get; private set; }
+
+    private AgreementProposal() { }
+
+    public static AgreementProposal EmployeeProposal(
+        AgreementProposalVersion version,
+        DocumentFileRef document,
+        ProposalComment comment,
+        EmployeeRef employee,
+        DateTime createdAt)
+    {
+        return new AgreementProposal
+        {
+            Version = version,
+            Sender = AgreementProposalSender.Employee,
+            State = AgreementProposalState.AwaitingClientConfirmation,
+            Document = document,
+            Comment = comment,
+            CreatedAt = createdAt
+        };
+    }
+
+    public static AgreementProposal ClientProposal(
+        AgreementProposalVersion version,
+        DocumentFileRef document,
+        ProposalComment comment,
+        ClientRef client,
+        DateTime createdAt)
+    {
+        return new AgreementProposal
+        {
+            Version = version,
+            Sender = AgreementProposalSender.Client,
+            State = AgreementProposalState.SentByClient,
+            Document = document,
+            Comment = comment,
+            CreatedAt = createdAt
+        };
+    }
+
+    public void MarkAccepted()
+    {
+        State = AgreementProposalState.Accepted;
+    }
+
+    public void MarkSupersededByCounterProposal()
+    {
+        State = AgreementProposalState.SupersededByCounterProposal;
+    }
+}
+```
+
+```csharp
+public enum AgreementProposalSender
+{
+    Employee = 1,
+    Client = 2
+}
+```
 
 ---
 
-## 6. State Machines
+## 5.5 VerificationResult
+
+### Purpose
+
+Deferred/future supporting concept.
+
+Verification is request-context-only.
+
+### Current decision
+
+```text
+Standalone ApplicantParty save/edit does not start verification.
+Verification may be started only from request context.
+```
+
+### Baseline item IDs
+
+```text
+VER-CMD-START-001
+VER-UCQ-001
+```
+
+### Status
+
+```text
+Deferred / future.
+```
+
+---
+
+## 5.6 AnonymousSubmission
+
+### Purpose
+
+Deferred/open concept for anonymous request/contact submission.
+
+### Baseline item IDs
+
+```text
+ANON-CMD-SUBMIT-001
+```
+
+### Status
+
+```text
+Deferred / open.
+```
+
+---
+
+# 6. Class / Aggregate State Machines
 
 ## 6.1 ClientAccount
 
 ```text
-Register -> Active
+[No account]
+  -> Register
+  -> Active
 ```
 
 Future:
 
 ```text
 PendingActivation
+  -> CompleteActivation
+  -> Active
+
+Active
+  -> Suspend
+  -> Suspended
+
 Suspended
-Deactivated
+  -> Restore
+  -> Active
+
+Active
+  -> Deactivate
+  -> Deactivated
 ```
+
+Current core:
+
+```text
+Register creates Active directly.
+```
+
+---
 
 ## 6.2 ApplicantParty
 
+Verification lifecycle:
+
 ```text
-Create -> Unverified
-MarkVerified -> Verified
-Create new version-like record -> current active version
-MarkInactiveVersion -> inactive historical/non-current version
+Create IndividualApplicantParty
+  -> Unverified
+
+Unverified
+  -> MarkVerified
+  -> Verified
 ```
+
+Current/default marker lifecycle:
+
+```text
+[New ApplicantParty]
+  -> non-current/default
+
+[First ApplicantParty for account + type]
+  -> application service calls MarkAsCurrentDefaultTemplate
+  -> current/default
+
+[Additional same-type ApplicantParty]
+  -> remains non-current/default
+
+[Explicit make current/default]
+  -> selected ApplicantParty becomes current/default
+  -> previous same-type current/default becomes non-current/default
+```
+
+Edit lifecycle:
+
+```text
+Unverified
+  -> Edit
+  -> Unverified with changed fields
+
+Verified
+  -> Edit
+  -> blocked for now
+```
+
+Delete lifecycle:
+
+```text
+ApplicantParty
+  -> HardDelete
+  -> removed
+
+No archive state in current draft.
+```
+
+Orthogonal states:
+
+```text
+Unverified + current/default
+Unverified + not current/default
+Verified + current/default
+Verified + not current/default
+```
+
+---
 
 ## 6.3 ConnectionRequest
 
 ```text
-Create -> InReview
-Approve -> Approved
-Reject -> Rejected
+[No request]
+  -> Create
+  -> InReview
+
+InReview
+  -> Approve
+  -> Approved
+
+InReview
+  -> Reject
+  -> Rejected
 ```
 
-Invalid / blocked:
+Blocked:
 
 ```text
-Approved cannot be reviewed again.
-Rejected cannot be approved in core.
-Rejected cannot be rejected again in core.
+Approved -> Approve/Reject again = forbidden
+Rejected -> Approve = forbidden
+Rejected -> Reject again = forbidden
 ```
+
+---
 
 ## 6.4 AgreementProposalExchange
 
 ```text
-StartByEmployee -> AwaitingClientConfirmation
-ClientAcceptActiveProposal -> Accepted
-ClientSendOwnVersion -> AwaitingEmployeeResponse
-EmployeeSendNewVersion -> AwaitingClientConfirmation
+[No exchange]
+  -> StartByEmployee
+  -> AwaitingClientConfirmation
+
+AwaitingClientConfirmation
+  -> ClientAcceptActiveProposal
+  -> Accepted
+
+AwaitingClientConfirmation
+  -> ClientSendOwnVersion
+  -> AwaitingEmployeeResponse
+
+AwaitingEmployeeResponse
+  -> EmployeeSendNewVersion
+  -> AwaitingClientConfirmation
 ```
 
 No current final refusal state.
 
 ---
 
-## 7. Impossible States Covered By Current Model
+# 7. Impossible States Covered By Current Model
 
-Covered:
-
-```text
-Approved request without review decision
-  Covered by ConnectionRequest.Approve(...) creating ReviewDecisionRecord.
-
-Request without object address
-  Covered by ObjectAddress and ConnectionRequest.Create(...).
-
-Rejected request without feedback
-  Not impossible in this draft. Feedback is optional in domain.
-
-Client own version created twice for same employee proposal in core
-  Covered by exchange lifecycle:
-  after ClientSendOwnVersion, exchange moves to AwaitingEmployeeResponse.
-```
-
-Open:
-
-```text
-Final refusal of agreement exchange is intentionally not modeled.
-It likely requires request-level post-approval outcome.
-```
+| Impossible state                                                                           | Covered by                                                                              | Status                                            |
+| ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| Approved request without review decision                                                   | `ConnectionRequest.Approve(...)` creates `ReviewDecisionRecord`                         | Covered                                           |
+| Request without object address                                                             | `ConnectionRequest.Create(...)` requires `ObjectAddress`                                | Covered                                           |
+| Rejected request without review decision                                                   | `ConnectionRequest.Reject(...)` creates `ReviewDecisionRecord`                          | Covered                                           |
+| Rejected request without feedback                                                          | Not impossible; feedback optional in domain                                             | Resolved as not impossible                        |
+| IndividualApplicantParty without FullName                                                  | `IndividualApplicantParty.Create(...)` requires FullName                                | Covered                                           |
+| IndividualApplicantParty without contact EmailAddress                                      | `IndividualApplicantParty.Create(...)` requires contact email                           | Covered                                           |
+| IndividualApplicantParty without PhoneNumber                                               | `IndividualApplicantParty.Create(...)` requires phone number                            | Covered                                           |
+| New ApplicantParty silently becoming current/default inside constructor/factory            | factory creates non-current/default; application service handles first-of-type          | Covered                                           |
+| Verified ApplicantParty edited in place                                                    | `CanEdit()` blocks Verified edit in current core                                        | Covered                                           |
+| More than one current/default ApplicantParty for same ClientAccountId + ApplicantPartyType | Application command/service coordination; possible future DB filtered unique constraint | Partial / cross-layer                             |
+| Agreement proposal without sender                                                          | `AgreementProposal` sender required                                                     | Covered in designed aggregate                     |
+| Agreement proposal without document/file                                                   | proposal creation requires `DocumentFileRef`                                            | Covered in designed aggregate                     |
+| Client-started exchange without employee proposal                                          | `StartByEmployee` is only exchange start                                                | Covered in designed aggregate                     |
+| Client sends own version twice for same employee proposal                                  | exchange moves to `AwaitingEmployeeResponse` after client own version                   | Covered in designed aggregate                     |
+| Superseded proposal is still active response target                                        | active proposal tracked by version; superseded proposal excluded                        | Covered conceptually / needs implementation later |
 
 ---
 
-## 8. Value Objects / Value Integrity Coverage
+# 8. Value Objects / Value Integrity Coverage
 
-Covered or partially covered:
+## Account
 
 ```text
 EmailAddress
 PasswordHash
 AccountActivationState
+```
+
+## ApplicantParty
+
+```text
 ApplicantPartyType
 ApplicantPartyVerificationStatus
 FullName
+EmailAddress
 PhoneNumber
-RequestStatus
-RequestNumber
-RequestDetails
-ObjectAddress
-RejectionFeedback
-EmployeeRef
-ReviewDecision
-DocumentFileRef
-DocumentType
-AgreementExchangeStatus
-AgreementProposalState
-AgreementProposalSender
-AgreementProposalVersion
-AgreementProposalNumber
-ProposalComment
-VerificationStatus
 ```
 
-Future / expansion value pressure:
+Future:
 
 ```text
 Snils
@@ -863,292 +1995,579 @@ Inn
 Ogrn
 Ogrnip
 OrganizationName
-RequestedPowerKw
-Address
+LegalAddress
+ActualAddress
+RegistrationAddress
+```
+
+ApplicantParty current/default is not a value-integrity rule.
+
+It is template/default selection state.
+
+## ConnectionRequest
+
+```text
+RequestStatus
+RequestNumber [future]
+RequestDetails
+ObjectAddress
+EmployeeRef
+ReviewDecision
+RejectionFeedback
+```
+
+## AgreementProposalExchange
+
+```text
+DocumentFileRef
+DocumentType
+AgreementExchangeStatus
+AgreementProposalState
+AgreementProposalSender
+AgreementProposalVersion
+AgreementProposalNumber [future]
+ProposalComment
+```
+
+## Verification
+
+```text
+VerificationStatus
+VerificationResult
+VerificationIssue [future]
 ```
 
 ---
 
-## 9. Use-Case Coordination Decisions
+# 9. Use-Case Coordination Decisions
 
-## 9.1 Request uses ApplicantParty without mutating saved applicant data
-
-Decision:
-
-```text
-Request stores ApplicantPartyId.
-ApplicantParty is persisted domain object.
-Changing applicant data creates a new version-like ApplicantParty record.
-```
-
-## 9.2 Approval verifies ApplicantParty
-
-Decision:
-
-```text
-Request approval verifies ApplicantParty in current implementation.
-```
-
-Placement:
-
-```text
-Application service coordinates ConnectionRequest and ApplicantParty.
-```
-
-## 9.3 Approval enables but does not create proposal
-
-Decision:
-
-```text
-ConnectionRequest.Approve(...) changes request only.
-AgreementProposalExchange.StartByEmployee(...) is a separate employee action.
-```
-
-## 9.4 Read visibility
-
-Decision:
-
-```text
-Use Dapper/read projections for My Requests and My Agreements.
-Do not add ClientAccountId to ConnectionRequest only for read convenience.
-```
-
-## 9.5 Account activation guard
+## 9.1 Account activation / protected use cases
 
 Decision:
 
 ```text
 Protected use cases require active account.
-Business aggregates may assume active actor context after application/auth guard.
+Current core registration creates Active account.
+Application service calls Account.EnsureActivated before protected command.
+Business aggregates assume active actor context.
+```
+
+Placement:
+
+```text
+Application service / auth policy boundary.
+```
+
+Not inside:
+
+```text
+ApplicantParty.Create
+ConnectionRequest.Create
+AgreementProposalExchange.StartByEmployee
 ```
 
 ---
 
-## 10. Coverage Against Scenario Behavior Baseline
+## 9.2 ApplicantParty create and first-of-type default
 
-## 10.1 Command behavior coverage
-
-| ID | Requirement / invariant | Status | Draft answer / placement | Covered by | Gap / next action |
-|---|---|---|---|---|---|
-| ACC-CMD-REGISTER-001 | Accepted registration creates account identity; invalid input creates no account. | Covered | Account boundary creates `ClientAccount`. | `ClientAccount.Register(...)` | Future email-confirmation flow deferred. |
-| ACC-CMD-LOGIN-001 | Valid credentials and activated account allow protected access. | Resolved outside current business aggregate | Auth/session boundary + activation guard. | Auth flow + `Account.EnsureActivated` / future policy | Decide inactive login UX if PendingActivation appears. |
-| APPL-CMD-SAVE-001 | Accepted applicant data is saved; invalid applicant data is not saved. | Covered | Applicant data represented as `ApplicantParty`. | `IndividualApplicantParty.Create(...)` | Future applicant types. |
-| REQ-CMD-CREATE-001 | Valid request creates persisted request with `InReview`; invalid data creates no request. | Covered | Request aggregate owns creation. | `ConnectionRequest.Create(...)` | Current implementation migration from `Submitted`. |
-| REQ-CMD-APPROVE-001 | Employee approval makes request `Approved` and records review decision. | Covered | Request lifecycle transition. | `CanApprove(...)`, `Approve(...)` | App service also verifies applicant. |
-| REQ-CMD-REJECT-001 | Employee rejection makes request `Rejected`; feedback optional in domain. | Covered | Request lifecycle transition. | `CanReject(...)`, `Reject(...)` | UI warning for empty feedback. |
-| DOC-CMD-ATTACH-001 | Accepted request document reference becomes attached to request context. | Partial | Request child entity stores file reference/metadata. | `RequestDocumentAttachment` | Physical file storage adapter later. |
-| AGR-CMD-EMP-SEND-001 | Employee starts exchange only for Approved request by sending first proposal version. | Covered as EXT | Agreement exchange aggregate. | `AgreementProposalExchange.StartByEmployee(...)` | Future implementation. |
-| AGR-CMD-CLIENT-ACCEPT-001 | Client accepts active employee proposal awaiting confirmation. | Covered as EXT | Exchange state machine. | `ClientAcceptActiveProposal(...)` | Future implementation. |
-| AGR-CMD-CLIENT-SEND-001 | Client sends own version in response to active employee proposal. | Covered as EXT | Active proposal is superseded; client version becomes active. | `ClientSendOwnVersion(...)` | Future implementation. |
-| AGR-CMD-EMP-NEW-001 | Employee sends new version in response to active client proposal. | Covered as EXT | Active client version is superseded; employee version becomes active. | `EmployeeSendNewVersion(...)` | Future implementation. |
-
-## 10.2 Request lifecycle coverage
-
-| ID | Requirement / invariant | Status | Draft answer / placement | Covered by | Gap / next action |
-|---|---|---|---|---|---|
-| REQ-LC-001 | Request creation creates status `InReview`. | Covered | Initial request status set in factory. | `ConnectionRequest.Create(...)` | Current implementation migration from `Submitted`. |
-| REQ-LC-002 | `InReview` request can be approved. | Covered | Lifecycle transition. | `CanApprove(...)`, `Approve(...)` | - |
-| REQ-LC-003 | `InReview` request can be rejected. | Covered | Lifecycle transition. | `CanReject(...)`, `Reject(...)` | - |
-| REQ-LC-004 | Approved request cannot be reviewed again. | Covered | Only `InReview` can transition. | `CanApprove(...)`, `CanReject(...)` | - |
-| REQ-LC-005 | Rejected request cannot be approved in core. | Covered | Only `InReview` can be approved. | `CanApprove(...)` | - |
-| REQ-LC-006 | Rejected request cannot be rejected again in core. | Covered | Only `InReview` can be rejected. | `CanReject(...)` | - |
-
-## 10.3 Agreement lifecycle coverage
-
-| ID | Requirement / invariant | Status | Draft answer / placement | Covered by | Gap / next action |
-|---|---|---|---|---|---|
-| AGR-LC-001 | Employee first proposal creates exchange awaiting client confirmation. | Covered as EXT | Exchange status becomes `AwaitingClientConfirmation`. | `StartByEmployee(...)` | Future implementation. |
-| AGR-LC-002 | Awaiting employee proposal can be accepted by client. | Covered as EXT | Active employee proposal becomes `Accepted`; exchange becomes `Accepted`. | `ClientAcceptActiveProposal(...)` | Future implementation. |
-| AGR-LC-003 | Awaiting employee proposal can receive client own version. | Covered as EXT | Active employee proposal becomes `SupersededByCounterProposal`; client version becomes active. | `ClientSendOwnVersion(...)` | Baseline may say Rejected; draft uses clearer replacement state. |
-| AGR-LC-006 | Client can send only one own version in response to active employee proposal. | Covered as EXT | After client sends own version, exchange moves to `AwaitingEmployeeResponse`; duplicate client response is naturally blocked. | `ClientSendOwnVersion(...)` | No duplicate collection search needed in core linear flow. |
-| AGR-LC-007 | Employee new version replaces previous client version. | Covered as EXT | Active client version becomes `SupersededByCounterProposal`; new employee version becomes active. | `EmployeeSendNewVersion(...)` | Baseline may say Rejected; draft uses clearer replacement state. |
-
-## 10.4 Impossible business state coverage
-
-| ID | Requirement / invariant | Status | Draft answer / placement | Covered by | Gap / next action |
-|---|---|---|---|---|---|
-| REQ-IBS-001 | Approved request must have review decision. | Covered | Approve creates `ReviewDecisionRecord`. | `ConnectionRequest.Approve(...)` | - |
-| REQ-IBS-002 | Rejected request has feedback if required. | Covered with domain decision | Feedback is optional in domain. | `ReviewDecisionRecord.Rejected(..., RejectionFeedback?)` | UI warning for empty feedback. |
-| REQ-IBS-003 | Request must have object address. | Covered | Object address required for creation. | `ObjectAddress`, `ConnectionRequest.Create(...)` | - |
-| AGR-IBS-004 | Exchange must not have ambiguous active actor. | Covered as EXT | Root has explicit `AgreementExchangeStatus`. | `AgreementExchangeStatus` | Draft-added coverage. |
-| AGR-IBS-005 | Exchange must not have multiple active proposal versions in core. | Covered as EXT | Root stores one `ActiveProposalVersion`. | `ActiveProposalVersion` | Future implementation. |
-
-## 10.5 Use-case coordination coverage
-
-| ID | Requirement / invariant | Status | Draft answer / placement | Covered by | Gap / next action |
-|---|---|---|---|---|---|
-| REQ-UCQ-001 | Request uses saved ApplicantData without implicitly mutating it. | Covered | Request stores `ApplicantPartyId`; applicant edits create version-like records. | `ConnectionRequest.ApplicantPartyId`, ApplicantParty policy | Cleanup/archive policy later. |
-| AGR-UCQ-001 | Proposal exchange starts only from Approved request. | Covered as EXT | Exchange creation receives approved request and checks status. | `StartByEmployee(...)` | Future implementation. |
-| AGR-UCQ-002 | Approval enables but does not create proposal automatically. | Covered | `Approve(...)` changes request only. | `ConnectionRequest.Approve(...)` | - |
-| VER-UCQ-001 | Verification is request-context-only and not triggered by standalone applicant save. | Deferred | Verification modeled as request-context support concept. | `VerificationResult` | Future. |
-| ACC-UCQ-001 | Protected use cases require activated account without polluting every aggregate. | Resolved outside current business aggregate | Application/auth guard before use case. | `Account.EnsureActivated` + future policy | Decide future auth policy. |
-
----
-
-## 11. Cross-Layer Placement Notes
-
-## 11.1 Application service: replace current applicant party
-
-```csharp
-var account = await accounts.GetById(currentClientAccountId);
-
-var activated = account.EnsureActivated();
-if (activated.IsFailure)
-    return activated;
-
-var currentApplicant = await applicantParties.GetCurrentActiveForAccount(currentClientAccountId);
-
-if (currentApplicant is not null)
-    currentApplicant.MarkInactiveVersion();
-
-var newApplicant = IndividualApplicantParty.Create(
-    account.Id,
-    fullName,
-    applicantContactEmail,
-    phoneNumber,
-    clock.UtcNow);
-```
-
-## 11.2 Application service: create request
-
-```csharp
-var applicantParty = await applicantParties.GetById(applicantPartyId);
-
-if (applicantParty.ClientAccountId != currentClientAccountId)
-    return Result.Failure(SecurityErrors.ApplicantPartyDoesNotBelongToCurrentClient);
-
-var request = ConnectionRequest.Create(
-    applicantParty,
-    details,
-    objectAddress);
-```
-
-## 11.3 Application service: approve request and verify applicant
-
-```csharp
-var request = await requests.GetById(requestId);
-var applicantParty = await applicantParties.GetById(request.ApplicantPartyId);
-
-var canApprove = request.CanApprove(reviewer);
-if (canApprove.IsFailure)
-    return canApprove;
-
-var canVerify = applicantParty.CanMarkVerified();
-if (canVerify.IsFailure)
-    return canVerify;
-
-var approve = request.Approve(reviewer);
-if (approve.IsFailure)
-    return approve;
-
-var verify = applicantParty.MarkVerified();
-if (verify.IsFailure)
-    return verify;
-
-await unitOfWork.SaveChanges();
-```
-
-## 11.4 UI note: rejection feedback warning
+Decision:
 
 ```text
-RejectionFeedback is optional in domain.
-If employee rejects request without feedback, UI should show warning/confirmation.
+ApplicantParty creation is additive.
+New ApplicantParty starts non-current/default.
+First ApplicantParty of a type may become current/default through application service.
+Additional same-type create does not switch current/default implicitly.
 ```
 
-## 11.5 Read models
-
-My Requests:
+Reason:
 
 ```text
-ConnectionRequest -> ApplicantParty -> ClientAccount
+Factory cannot know whether same-type ApplicantParty already exists.
 ```
 
-My Agreements:
+Placement:
 
 ```text
-AgreementProposalExchange -> ConnectionRequest -> ApplicantParty -> ClientAccount
-```
-
-Use Dapper projections.
-
----
-
-## 12. Scenario Questions / Gaps For Next Draft
-
-## 12.1 Scenario clarifications discovered
-
-```text
-1. Current core registration creates Active account.
-2. Protected use cases require active account.
-3. Account.Email and ApplicantParty.Email have different meanings.
-4. ApplicantParty.Email may differ from ClientAccount.Email.
-5. Rejection feedback is optional in domain; UI warning should be added.
-6. Final agreement refusal is not modeled in current core.
-7. Adding final agreement refusal likely requires request-level post-approval outcome, not only exchange status.
-8. Current agreement flow supports accept or counter-proposal loop.
-9. SupersededByCounterProposal means proposal version was replaced by counter-proposal, not finally rejected.
-```
-
-## 12.2 Fixed domain decisions
-
-```text
-- ApplicantParty inheritance is accepted.
-- ApplicantParty edits create a new version-like ApplicantParty record.
-- Verified / request-referenced / current active ApplicantParty records are preserved.
-- Irrelevant inactive unverified ApplicantParty records may be removed or archived.
-- Request approval verifies ApplicantParty in current implementation.
-- ApplicantPartyVerificationStatus is Unverified / Verified.
-- AgreementProposalExchange has no final refusal flow in current core.
-- AgreementProposalExchange stores ActiveProposalVersion, not ActiveProposalId.
-- AgreementProposal Id is DB-generated technical identity.
-- AgreementProposalVersion is aggregate-generated domain version.
-- AgreementProposalNumber is optional/future public number.
-- RequestNumber is useful but future.
-```
-
-## 12.3 Remaining questions
-
-```text
-1. Should there be exactly one current active ApplicantParty per account, or one per applicant role/type?
-2. Should inactive unverified ApplicantParty cleanup be hard delete or archive?
-3. Should notifications be sent to both Account.Email and ApplicantParty.Email if they differ?
-4. Should final agreement refusal be added later together with request-level agreement-not-concluded outcome?
-5. Should AgreementProposalNumber be assigned on proposal creation, send, or document finalization?
-6. What is the exact lifecycle of RequestNumber?
-7. If future PendingActivation account exists, can it log in or only activate?
-8. Does account activation apply equally to client and employee accounts?
-9. If account_activated claim is used, how is stale claim refreshed?
-```
-
-## 12.4 ADR / future architecture candidates
-
-```text
-1. ApplicantParty versioning / cleanup policy.
-2. Approval-implies-applicant-verification policy.
-3. Dapper read projections vs duplicated read fields in write aggregates.
-4. AgreementProposalExchange as separate aggregate.
-5. AgreementProposal Version vs DB Id vs public Number.
-6. Final agreement refusal and request post-approval outcome.
-7. Notification policy for account email vs applicant contact email.
-8. Account activation architecture.
-9. File/blob storage boundary.
-10. Verification provider replacement boundary.
+Application service checks same-type existence and calls MarkAsCurrentDefaultTemplate.
 ```
 
 ---
 
-## 13. What Changed Since Previous Draft
+## 9.3 ApplicantParty explicit make current/default
 
-This is still draft 01, refined for pre-L1 implementation readiness.
-
-Changes in this replacement:
+Decision:
 
 ```text
-- Account activation placement clarified:
-  application service / auth policy guards protected use cases;
-  ApplicantParty factory no longer calls ClientAccount.EnsureActivated internally.
-- IndividualApplicantParty.Create(...) now accepts clientAccountId instead of ClientAccount.
-- Added explicit note that domain-draft-01 is broader than the first implementation cut.
-- AgreementProposalExchange remains future/not first L1 cut unless explicitly requested.
-- Kept accepted decisions about ApplicantParty version-like records, ActiveProposalVersion, and SupersededByCounterProposal.
+Client explicitly selects saved ApplicantParty as current/default template.
+```
+
+Rules:
+
+```text
+- selected ApplicantParty must belong to current account;
+- selected ApplicantParty determines ApplicantPartyType;
+- only same-type current/default is affected;
+- previous same-type current/default is unset;
+- selected becomes current/default;
+- existing requests remain unchanged.
+```
+
+Placement:
+
+```text
+Application command/use case.
+```
+
+Reason:
+
+```text
+This requires ownership check, same-type list/load, and cross-row coordination.
+Single ApplicantParty aggregate cannot enforce the whole invariant alone.
+```
+
+---
+
+## 9.4 ApplicantParty edit
+
+Decision:
+
+```text
+Unverified ApplicantParty can be edited in place.
+Verified ApplicantParty edit is blocked for now.
+```
+
+Placement:
+
+```text
+ApplicantParty owns CanEdit.
+Concrete subtype owns field mutation.
+Application service owns ownership check and persistence.
+```
+
+Future:
+
+```text
+Verified edit may later become warning/new-version flow.
+```
+
+---
+
+## 9.5 ApplicantParty delete
+
+Decision:
+
+```text
+Delete/archive policy is hard delete for simplicity.
+```
+
+Placement:
+
+```text
+Application/lifecycle slice.
+```
+
+Current draft does not introduce archive state.
+
+Future hard-delete safety questions remain.
+
+---
+
+## 9.6 Request creation from ApplicantParty
+
+Decision:
+
+```text
+ConnectionRequest is created from persisted ApplicantParty.
+ConnectionRequest stores ApplicantPartyId.
+ConnectionRequest does not store ClientAccountId.
+```
+
+Ownership/access:
+
+```text
+Client ownership is resolved through ApplicantParty.ClientAccountId.
+Read/query use cases can use projections.
+```
+
+ApplicantParty default/current relation:
+
+```text
+Request creation may use current/default ApplicantParty as prefill/default source.
+After request creation, changing current/default does not relink or rewrite existing requests.
+```
+
+---
+
+## 9.7 Request approval verifies ApplicantParty
+
+Decision:
+
+```text
+ConnectionRequest.Approve(...) changes request state and records review decision.
+Application service additionally marks ApplicantParty as Verified.
+```
+
+Reason:
+
+```text
+This is cross-aggregate coordination.
+ConnectionRequest should not directly mutate ApplicantParty.
+```
+
+---
+
+## 9.8 Agreement proposal after approval
+
+Decision:
+
+```text
+Approval enables agreement proposal creation.
+Approval does not automatically create AgreementProposalExchange.
+Employee starts exchange separately from Approved request.
+```
+
+---
+
+# 10. Coverage Against Scenario Behavior Baseline
+
+| Item ID                   | Status                               | Draft answer / placement                                                                         | Covered by                                  | Gap / next action                   |
+| ------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------- | ----------------------------------- |
+| ACC-CMD-REGISTER-001      | Covered                              | Registration creates ClientAccount with Active state                                             | `ClientAccount.Register`                    | Future activation deferred          |
+| ACC-CMD-LOGIN-001         | Partial / outside domain             | Login is auth boundary; active account required for protected access                             | `EnsureActivated` + app/auth guard          | Exact inactive login UX open        |
+| ACC-LC-001                | Covered                              | Current registration creates Active account                                                      | `ClientAccount.Register`                    | -                                   |
+| ACC-LC-002                | Covered by placement                 | Non-active account cannot use protected functionality                                            | Application guard + `EnsureActivated`       | Future policy/claim design          |
+| ACC-SEC-001               | Resolved outside business aggregates | Protected use cases require active account                                                       | App service/auth policy                     | Claim refresh question              |
+| ACC-UCQ-001               | Covered                              | Business aggregates do not duplicate activation check                                            | Cross-layer placement                       | -                                   |
+| APPL-CMD-SAVE-001         | Covered / partial                    | Applicant DATA modeled as ApplicantParty; create is additive                                     | `IndividualApplicantParty.Create`           | Future types later                  |
+| APPL-VI-001               | Partial                              | Individual applicant values covered; richer ФЛ/ИП/ЮЛ future                                      | Value objects                               | Add SNILS/passport/INN later        |
+| APPL-DEFAULT-001          | Covered by newer slice behavior      | First-of-type default/current initialization is application coordination                         | ApplicantParty service/use case             | Keep out of factory                 |
+| APPL-DEFAULT-002          | Covered by newer slice behavior      | Additional same-type create does not switch default/current implicitly                           | ApplicantParty service/use case             | -                                   |
+| APPL-DEFAULT-003          | Covered by newer slice behavior      | Explicit make current/default is same-page user action                                           | Application command/use case                | API/client slices implement         |
+| APPL-EDIT-001             | Covered by draft decision            | Unverified ApplicantParty can be edited in place                                                 | `CanEdit` + subtype edit method             | Future implementation slice         |
+| APPL-EDIT-002             | Covered by draft decision            | Verified ApplicantParty edit is blocked for now                                                  | `CanEdit`                                   | Later warning/new-version decision  |
+| APPL-DELETE-001           | Partial / future lifecycle           | Delete/archive policy is hard delete for simplicity                                              | Lifecycle/application slice                 | Safety rules needed                 |
+| REQ-CMD-CREATE-001        | Covered                              | Request created from persisted ApplicantParty and starts InReview                                | `ConnectionRequest.Create`                  | -                                   |
+| REQ-CMD-APPROVE-001       | Covered                              | Approve only InReview and record decision                                                        | `ConnectionRequest.Approve`                 | App service verifies ApplicantParty |
+| REQ-CMD-REJECT-001        | Covered                              | Reject only InReview and record decision                                                         | `ConnectionRequest.Reject`                  | Feedback optional                   |
+| REQ-LC-001                | Covered                              | Create -> InReview                                                                               | `ConnectionRequest.Create`                  | -                                   |
+| REQ-LC-002                | Covered                              | InReview -> Approved                                                                             | `Approve`                                   | -                                   |
+| REQ-LC-003                | Covered                              | InReview -> Rejected                                                                             | `Reject`                                    | -                                   |
+| REQ-LC-004                | Covered                              | Approved cannot be reviewed again                                                                | `CanApprove` / `CanReject`                  | -                                   |
+| REQ-LC-005                | Covered                              | Rejected cannot be approved                                                                      | `CanApprove`                                | -                                   |
+| REQ-LC-006                | Covered                              | Rejected cannot be rejected again                                                                | `CanReject`                                 | -                                   |
+| REQ-IBS-001               | Covered                              | Approved request has review decision                                                             | `ReviewDecisionRecord.Approved`             | -                                   |
+| REQ-IBS-002               | Resolved as not impossible           | Feedback optional in domain                                                                      | nullable `RejectionFeedback`                | UI warning                          |
+| REQ-IBS-003               | Covered                              | Request requires ObjectAddress                                                                   | `ConnectionRequest.Create`                  | -                                   |
+| REQ-VI-001                | Covered / partial                    | ObjectAddress value object                                                                       | `ObjectAddress`                             | Exact fields may expand             |
+| REQ-UCQ-001               | Covered                              | Request references ApplicantPartyId; does not mutate or relink ApplicantParty on default changes | Application orchestration                   | -                                   |
+| AGR-CMD-EMP-SEND-001      | Designed / not L1                    | Employee starts exchange from Approved request                                                   | `AgreementProposalExchange.StartByEmployee` | Implement later                     |
+| AGR-CMD-CLIENT-ACCEPT-001 | Designed / not L1                    | Client accepts active employee proposal                                                          | `ClientAcceptActiveProposal`                | Implement later                     |
+| AGR-CMD-CLIENT-SEND-001   | Designed / not L1                    | Client sends one own version                                                                     | `ClientSendOwnVersion`                      | Implement later                     |
+| AGR-CMD-EMP-NEW-001       | Designed / not L1                    | Employee counter-proposal supersedes client version                                              | `EmployeeSendNewVersion`                    | Implement later                     |
+| AGR-LC-001                | Designed                             | StartByEmployee -> AwaitingClientConfirmation                                                    | Agreement exchange state machine            | Later                               |
+| AGR-LC-002                | Designed                             | AwaitingClientConfirmation -> Accepted                                                           | Agreement exchange state machine            | Later                               |
+| AGR-LC-003                | Designed                             | AwaitingClientConfirmation -> AwaitingEmployeeResponse                                           | Agreement exchange state machine            | Later                               |
+| AGR-LC-006                | Designed                             | client own version only once per active employee proposal                                        | exchange state                              | Later                               |
+| AGR-LC-007                | Designed with refinement             | previous client proposal becomes SupersededByCounterProposal                                     | proposal state                              | Sync scenario/index files           |
+| AGR-UCQ-001               | Designed                             | Exchange creation requires Approved request                                                      | Application service + exchange factory      | Later                               |
+| AGR-UCQ-002               | Covered by decision                  | Approval enables but does not create exchange                                                    | ConnectionRequest + app orchestration       | -                                   |
+| VER-CMD-START-001         | Deferred                             | Verification request-context-only                                                                | Future concept                              | Not L1                              |
+| VER-UCQ-001               | Deferred                             | Standalone ApplicantParty save/edit does not start verification                                  | Design decision                             | Not L1                              |
+| ANON-CMD-SUBMIT-001       | Deferred                             | AnonymousSubmission open                                                                         | Future concept                              | Not L1                              |
+
+Note:
+
+```text
+APPL-DEFAULT-* / APPL-EDIT-* / APPL-DELETE-* are draft-local tracking labels for newer ApplicantParty slice decisions.
+If stable scenario behavior IDs are later added to the shared baseline/register, replace these local labels with stable IDs.
+```
+
+---
+
+# 11. Cross-Layer Placement Notes
+
+## Account activation
+
+```text
+Behavior:
+Protected client/employee functionality requires activated account.
+
+Why not owned by business aggregates:
+It is a general access/use-case precondition, not invariant of each aggregate.
+
+Current placement:
+Application service guard + Account.EnsureActivated.
+
+Future placement:
+AccountActivated authorization policy, possibly account_activated claim.
+```
+
+## ApplicantParty first-of-type default
+
+```text
+Behavior:
+First ApplicantParty of a type becomes current/default.
+
+Why not owned by ApplicantParty factory:
+Factory cannot query existing same-type ApplicantParties.
+
+Current placement:
+Application service / use case checks same-type existence and calls MarkAsCurrentDefaultTemplate.
+```
+
+## ApplicantParty explicit current/default selection
+
+```text
+Behavior:
+Client explicitly chooses one saved ApplicantParty as current/default template.
+
+Why not owned by a single ApplicantParty:
+Requires ownership check and same-type cross-row coordination.
+
+Current placement:
+Application command/use case.
+
+Possible persistence reinforcement:
+DB filtered unique constraint on ClientAccountId + ApplicantPartyType where IsCurrentActiveVersion = true.
+Separate decision later.
+```
+
+## ApplicantParty edit
+
+```text
+Behavior:
+Unverified ApplicantParty can be edited in place.
+Verified ApplicantParty edit is blocked for now.
+
+Placement:
+Domain exposes CanEdit.
+Concrete ApplicantParty subtype mutates own fields.
+Application service handles ownership/persistence.
+
+Future:
+Verified edit warning/new-version flow may be added later.
+```
+
+## ApplicantParty delete
+
+```text
+Behavior:
+Delete/archive policy is hard delete for simplicity.
+
+Placement:
+Future lifecycle application slice.
+
+Not in current draft:
+Archive state.
+```
+
+## Request approval verifies ApplicantParty
+
+```text
+Behavior:
+Approval of request marks ApplicantParty as Verified.
+
+Placement:
+Application service coordinates:
+ConnectionRequest.Approve(...)
+ApplicantParty.MarkVerified(...)
+
+Reason:
+ConnectionRequest should not directly mutate ApplicantParty.
+```
+
+## Read/query ownership
+
+```text
+Behavior:
+Client sees only own requests/agreement proposals.
+
+Placement:
+Read/query/application access layer.
+
+Reason:
+ConnectionRequest stores ApplicantPartyId.
+Ownership can be resolved through ApplicantParty.ClientAccountId in projection/query.
+```
+
+## Read/query ApplicantParty list
+
+```text
+Behavior:
+Client sees own ApplicantParties and current/default marker.
+
+Placement:
+Read/query/API layer.
+
+Domain owns:
+IsCurrentActiveVersion meaning as current/default template marker.
+
+API/read wording:
+isCurrentDefault.
+```
+
+## Agreement proposal exchange
+
+```text
+Behavior:
+Employee starts agreement exchange after request approval.
+
+Placement:
+Application service checks Approved request and creates AgreementProposalExchange.
+
+Reason:
+Approval should not create proposal automatically.
+```
+
+## File/blob storage
+
+```text
+Behavior:
+Agreement proposal has document/file reference.
+
+Placement:
+Domain stores accepted DocumentFileRef metadata/reference.
+Physical file/blob storage is infrastructure.
+```
+
+---
+
+# 12. Scenario Questions / Gaps For Next Draft
+
+## Account
+
+```text
+ACC-SQ-001:
+If user created account but did not activate it and tries to log in, what happens?
+
+ACC-SQ-002:
+If account_activated claim is used, how is stale claim refreshed?
+
+ACC-SQ-003:
+Does activation apply equally to client and employee accounts?
+```
+
+## ApplicantParty
+
+Resolved since Draft 01:
+
+```text
+Current/default is per ApplicantPartyType.
+Current/default can be Verified or Unverified.
+Current/default is client template/prefill choice.
+New ApplicantParty starts non-current/default.
+First-of-type default is application coordination.
+Additional same-type create does not switch default implicitly.
+Explicit make current/default is separate action.
+Unverified ApplicantParty can be edited in place.
+Verified ApplicantParty edit is blocked for now.
+Delete/archive policy is hard delete for simplicity.
+```
+
+Still open:
+
+```text
+When do we introduce EntrepreneurApplicantParty and LegalEntityApplicantParty?
+
+Which physical-person fields are L1 vs future:
+SNILS, passport, address?
+
+Should one-current/default-per-type be reinforced with DB filtered unique constraint?
+
+What are exact hard-delete safety rules:
+- request-referenced ApplicantParty?
+- verified ApplicantParty?
+- current/default ApplicantParty?
+
+Should verified edit later become:
+- warning + new ApplicantParty version;
+- warning + explicit destructive edit;
+- always blocked?
+```
+
+## Request
+
+```text
+Should rejection feedback remain optional in domain,
+or should it become mandatory in a later scenario refinement?
+```
+
+## AgreementProposalExchange
+
+```text
+Should final refusal/rejection of agreement exchange exist?
+
+If yes:
+- exchange-level status?
+- request-level post-approval outcome?
+- separate AgreementConclusion concept?
+
+Should returning to older proposal version be supported?
+
+Should signed/final agreement become separate aggregate/entity?
+```
+
+## Implementation
+
+```text
+Should AgreementProposalExchange be included in L1 step 2 after request/review is stable?
+
+When should API/persistence/UI slices start relative to domain tests?
+
+When should IsCurrentActiveVersion be renamed?
+
+When should DB filtered unique constraint be introduced?
+```
+
+---
+
+# 13. What Changed Since Previous Draft
+
+From Draft 01 to Draft 02:
+
+```text
+- Preserved Domain Draft 01 structure and code-sketch style.
+- Kept one unified L1 domain model rather than an ApplicantParty-only draft.
+- ApplicantParty current marker reworded from "current active version" to "current/default template marker".
+- New ApplicantParty now starts non-current/default.
+- IndividualApplicantParty.Create sketch now sets IsCurrentActiveVersion = false.
+- Added MarkAsCurrentDefaultTemplate to ApplicantParty sketch.
+- First-of-type default/current initialization moved to application/use-case coordination.
+- Explicit make current/default selection documented as separate application command/use case.
+- One-current/default-per-type clarified as cross-row invariant.
+- DB filtered unique constraint marked as separate future persistence/ADR decision.
+- Current/default allowed for both Verified and Unverified ApplicantParties.
+- Unverified ApplicantParty edit-in-place accepted.
+- Verified ApplicantParty edit blocked for now.
+- Delete/archive policy simplified to hard delete.
+- Existing requests unchanged by ApplicantParty default/current changes.
+- Added ApplicantParty edit/delete/default cross-layer placement notes.
+- Kept ClientAccount activation placement unchanged.
+- Kept ConnectionRequest lifecycle unchanged.
+- Kept AgreementProposalExchange as designed/future aggregate.
+- Kept RejectionFeedback optional in domain.
+- Kept ActiveProposalVersion, generated AgreementProposalVersion and SupersededByCounterProposal decisions.
+```
+
+Core decisions retained from Draft 01:
+
+```text
+- ApplicantParty-centric model accepted.
+- Applicant DATA represented as ApplicantParty.
+- No separate ApplicantData aggregate.
+- No ApplicantSnapshot by default.
+- ClientAccount.Email and ApplicantParty.Email separated.
+- Account activation placed at application/auth guard boundary.
+- ConnectionRequest stores ApplicantPartyId, not ClientAccountId.
+- Request status starts at InReview.
+- Submitted removed from target lifecycle.
+- ReviewDecisionRecord retained.
+- RejectionFeedback optional in domain.
+- Request approval verifies ApplicantParty through application service.
+- AgreementProposalExchange retained as designed/future aggregate.
+- ActiveProposalVersion preferred over ActiveProposalId.
+- AgreementProposalVersion generated by aggregate.
+- AgreementProposal.Id remains DB technical identity.
+- SupersededByCounterProposal used for replacement, not Rejected.
+- Final agreement refusal intentionally not modeled in current core.
 ```
