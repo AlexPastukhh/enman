@@ -171,7 +171,11 @@ public class L1DbContext : DbContext
                 .HasColumnName("ApplicantPartyId")
                 .IsRequired();
 
-            clientRequest.Ignore(x => x.ClientAccountId);
+            clientRequest.Property(x => x.ClientAccountId)
+                .HasColumnName("ClientAccountId")
+                .IsRequired();
+
+            clientRequest.HasIndex(x => x.ClientAccountId);
 
             clientRequest.Property(x => x.RequestType)
                 .HasColumnName("RequestType")
@@ -231,6 +235,11 @@ public class L1DbContext : DbContext
             clientRequest.Property(x => x.CreatedAt)
                 .HasColumnName("CreatedAt")
                 .IsRequired();
+
+            clientRequest.HasOne<ClientAccount>()
+                .WithMany()
+                .HasForeignKey(x => x.ClientAccountId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             clientRequest.HasOne<ApplicantParty>()
                 .WithMany()

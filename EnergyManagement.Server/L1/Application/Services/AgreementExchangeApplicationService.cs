@@ -28,6 +28,64 @@ public sealed class AgreementExchangeApplicationService : IAgreementExchangeAppl
         _context = context;
     }
 
+    public async Task<UnitResult<IReadOnlyList<Error>>> StartAgreementExchangeByEmployeeAsync(
+        long employeeId,
+        long requestId,
+        AgreementDocumentRefInput document,
+        string? comment,
+        CancellationToken cancellationToken)
+    {
+        var employee = await _employees.GetByIdAsync(employeeId, cancellationToken);
+        if (employee is null)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Error.Errors.L1Domain.EmployeeIsRequired]);
+        }
+
+        var request = await _clientRequests.GetByIdAsync(requestId, cancellationToken);
+        if (request is not ConnectionRequest connectionRequest)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Error.Errors.L1Domain.RequestIsRequired]);
+        }
+
+        var existingExchange = await _agreementExchanges.GetByRequestIdAsync(requestId, cancellationToken);
+        if (existingExchange is not null)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Error.Errors.L1Domain.AgreementProposalExchangeAlreadyStarted]);
+        }
+
+        var documentRef = CreateDocumentRef(document);
+        if (documentRef.IsFailure)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(documentRef.Error);
+        }
+
+        var proposalComment = CreateOptionalComment(comment);
+        if (proposalComment.IsFailure)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(proposalComment.Error);
+        }
+
+        var exchange = AgreementProposalExchange.StartByEmployee(
+            connectionRequest,
+            documentRef.Value,
+            proposalComment.Value,
+            employee,
+            DateTimeOffset.UtcNow);
+
+        if (exchange.IsFailure)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(exchange.Error);
+        }
+
+        _agreementExchanges.Add(exchange.Value);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return UnitResult.Success<IReadOnlyList<Error>>();
+    }
+
     public async Task<UnitResult<IReadOnlyList<Error>>> SendClientProposalVersionAsync(
         long clientAccountId,
         long requestId,

@@ -1,23 +1,51 @@
-# Apply l2-validation-scenario-cleanup-sync
+# SL-AGR-EXCH-001 — Start Agreement Exchange With Initial Employee Proposal
 
-From repository root:
+This archive implements the server-side start agreement exchange slice.
+
+## Included
+
+- `POST /api/employee/requests/{requestId}/agreement-exchange/start`
+- Employee-only + CSRF-protected endpoint
+- `StartAgreementExchangeDto` + validator
+- `StartAgreementExchangeByEmployeeAsync(...)` application service method
+- Duplicate exchange guard by `requestId`
+- `AgreementProposalExchange.StartByEmployee(...)` persistence path through repository
+- `ClientRequest.ClientAccountId` persistence mapping and migration so loaded requests can provide owner client id to domain
+- Integration tests for auth/CSRF/validation/lifecycle/success/duplicate
+
+## Not included
+
+- Generated OpenAPI/types
+- Client UI
+- Counter-proposal/send/list/details/accept/final-refuse changes
+- ResponsibleEmployeeId guard
+- Per-command status enum
+
+## Apply
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l2-validation-scenario-cleanup-sync.zip" -DestinationPath . -Force
-.\APPLY-l2-validation-cleanup-sync.ps1
-git status
-git diff -- planning
+cd C:\enman\enman
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-start-agreement-exchange-impl.zip" -DestinationPath "." -Force
 ```
 
-If the diff is correct:
+## Checks
 
 ```powershell
-git add planning
-git status
+dotnet build .\Domain.EnergyManagement\Domain.EnergyManagement.csproj
+dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
+dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
 ```
 
-## Notes
+## Migration / generated API
 
-This is a docs-only scenario/planning cleanup.
+```powershell
+dotnet ef database update `
+  --project .\EnergyManagement.Server\EnergyManagement.Server.csproj `
+  --startup-project .\EnergyManagement.Server\EnergyManagement.Server.csproj `
+  --context L1DbContext
 
-It does not change runtime code, tests, OpenAPI or generated TypeScript types.
+dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
+dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check
+npm.cmd run generate:api
+npm.cmd run check:api
+```

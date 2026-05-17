@@ -162,6 +162,7 @@ public class Error : ValueObject
             public static readonly Error RequestReviewStartedByAnotherEmployee = Create("l1.request.review.started.by.another.employee", 400);
 
             public static readonly Error AgreementProposalExchangeIsRequired = Create("l1.agreement.proposal.exchange.is.required", 400);
+            public static readonly Error AgreementProposalExchangeAlreadyStarted = Create("l1.agreement.proposal.exchange.already.started", 400);
             public static readonly Error OnlyApprovedRequestCanBeMarkedAgreementExchangeFailed = Create("l1.request.only.approved.can.be.marked.agreement.exchange.failed", 400);
             public static readonly Error RequestIsRequired = Create("l1.request.is.required", 400);
             public static readonly Error AgreementExchangeRequiresApprovedRequest = Create("l1.agreement.exchange.requires.approved.request", 400);

@@ -176,6 +176,10 @@ namespace EnergyManagement.Server.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
 
+                    b.Property<long>("ClientAccountId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("ClientAccountId");
+
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset")
                         .HasColumnName("CreatedAt");
@@ -201,6 +205,8 @@ namespace EnergyManagement.Server.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicantPartyId");
+
+                    b.HasIndex("ClientAccountId");
 
                     b.ToTable("L1ClientRequests", (string)null);
 
@@ -472,6 +478,12 @@ namespace EnergyManagement.Server.Migrations
                     b.HasOne("Domain.EnergyManagement.L1.ApplicantParty", null)
                         .WithMany()
                         .HasForeignKey("ApplicantPartyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.EnergyManagement.L1.ClientAccount", null)
+                        .WithMany()
+                        .HasForeignKey("ClientAccountId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

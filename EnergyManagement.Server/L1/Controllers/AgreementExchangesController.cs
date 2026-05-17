@@ -22,6 +22,7 @@ public sealed class AgreementExchangesController : ProjectController
     private readonly IAgreementExchangeApplicationService _applicationService;
     private readonly IValidator<AgreementExchangeListQueryDto> _listQueryValidator;
     private readonly IValidator<SendAgreementProposalVersionDto> _sendProposalValidator;
+    private readonly IValidator<StartAgreementExchangeDto> _startExchangeValidator;
     private readonly IValidator<FinalRefuseAgreementExchangeDto> _finalRefuseValidator;
     private readonly ILogger<AgreementExchangesController> _logger;
 
@@ -31,6 +32,7 @@ public sealed class AgreementExchangesController : ProjectController
         IAgreementExchangeApplicationService applicationService,
         IValidator<AgreementExchangeListQueryDto> listQueryValidator,
         IValidator<SendAgreementProposalVersionDto> sendProposalValidator,
+        IValidator<StartAgreementExchangeDto> startExchangeValidator,
         IValidator<FinalRefuseAgreementExchangeDto> finalRefuseValidator,
         ILogger<AgreementExchangesController> logger)
     {
@@ -39,6 +41,7 @@ public sealed class AgreementExchangesController : ProjectController
         _applicationService = applicationService;
         _listQueryValidator = listQueryValidator;
         _sendProposalValidator = sendProposalValidator;
+        _startExchangeValidator = startExchangeValidator;
         _finalRefuseValidator = finalRefuseValidator;
         _logger = logger;
     }
@@ -251,6 +254,56 @@ public sealed class AgreementExchangesController : ProjectController
             return ProblemDetailsWithExceptionDev(ex);
         }
     }
+
+    [Authorize(Roles = "Employee")]
+    [RequireAntiforgeryToken]
+    [HttpPost("/api/employee/requests/{requestId:long:min(1)}/agreement-exchange/start", Name = "EmployeeStartAgreementExchange")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> StartExchange(
+        long requestId,
+        [FromBody] StartAgreementExchangeDto dto,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var validationResult = await _startExchangeValidator.ValidateAsync(dto, cancellationToken);
+            if (!validationResult.IsValid)
+            {
+                return ProblemDetailsFromValidation(validationResult.Errors);
+            }
+
+            if (!TryGetCurrentL1AccountId(out var accountId))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _applicationService.StartAgreementExchangeByEmployeeAsync(
+                accountId,
+                requestId,
+                ToInput(dto.Document!),
+                dto.Comment,
+                cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return ProblemDetailsFromValidation(result.Error);
+            }
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Agreement exchange start failed for request {RequestId}.", requestId);
+            return ProblemDetailsWithExceptionDev(ex);
+        }
+    }
+
 
     [Authorize(Roles = "Client,Employee")]
     [RequireAntiforgeryToken]

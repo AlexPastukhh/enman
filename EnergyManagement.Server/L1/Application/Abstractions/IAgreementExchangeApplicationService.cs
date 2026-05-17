@@ -5,6 +5,13 @@ namespace EnergyManagement.Server.L1.Application.Abstractions;
 
 public interface IAgreementExchangeApplicationService
 {
+    Task<UnitResult<IReadOnlyList<Error>>> StartAgreementExchangeByEmployeeAsync(
+        long employeeId,
+        long requestId,
+        AgreementDocumentRefInput document,
+        string? comment,
+        CancellationToken cancellationToken);
+
     Task<UnitResult<IReadOnlyList<Error>>> SendClientProposalVersionAsync(
         long clientAccountId,
         long requestId,
