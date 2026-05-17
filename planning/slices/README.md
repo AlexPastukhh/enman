@@ -1,6 +1,6 @@
 # Slice Planning Index
 
-Status: current slice-planning navigation index / cross-cutting concerns drafting checklist synchronized
+Status: current slice-planning navigation index / L2 Employee request read drafts added
 
 ## 1. Core Rule
 
@@ -10,24 +10,14 @@ Scenario Flow and Behavior Items come from:
 planning/slices/slice-scenario-flow-behavior-register.md
 ```
 
-Do not use questions/extension/implementation registers or domain drafts as direct behavior source.
+Do not use questions/extension/implementation registers as behavior source.
+
+Domain drafts are domain-design input; they do not replace scenario sources for Scenario Flow or Behavior Coverage.
 
 Implementation prompts must respect:
 
 ```text
 planning/agent-scope-boundaries-and-prompt-safety.md
-```
-
-All non-trivial slice drafts must include:
-
-```text
-Cross-Cutting Concerns / Considerations
-```
-
-Use:
-
-```text
-planning/slices/cross-cutting/cross-cutting-concerns-drafting-checklist.md
 ```
 
 Client drafters must use the canonical short-draft shape:
@@ -36,7 +26,11 @@ Client drafters must use the canonical short-draft shape:
 planning/slices/client-slice-short-draft-rules-and-example.md
 ```
 
-Server/backend state-changing slice drafts must separate API boundary tests, DB state transition tests, no-mutation tests, regression guards and what-not-to-test. Use:
+Server/backend state-changing slice drafts must separate API boundary tests, DB state transition tests, no-mutation tests, regression guards and what-not-to-test.
+
+Server/backend read slice drafts must use API/read integration tests as primary proof and avoid unit tests by default.
+
+Use:
 
 ```text
 planning/testing/server-slice-test-plan-rules.md
@@ -74,31 +68,51 @@ planning/slices/l1/L1-MY-REQUESTS-LIST-FILTERS.client.md
 planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md
 ```
 
-## 4. Cross-Cutting / Helper Slices
+## 4. Current / Draft L2 Slice Files
 
 ```text
-planning/slices/cross-cutting/README.md
-planning/slices/cross-cutting/cross-cutting-concerns-drafting-checklist.md
-planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
-planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
-planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
-planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
+planning/slices/l2/README.md
+planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
+planning/slices/SL-EMP-REQ-002-employee-request-details-read.md
 ```
 
-## 5. Drafting Rules
+Recommended next L2 drafts:
+
+```text
+SL-EMP-REQ-003 — Start Request Review
+SL-EMP-REQ-004 — Approve Request Review
+SL-EMP-REQ-005 — Reject Request Review
+SL-AGR-001 — Employee Starts AgreementProposalExchange / Sends First Proposal
+SL-AGR-002 — Client Agreement Proposal Details + Response
+SL-AGR-003 — Employee Agreement Proposal Details + Send New Version
+SL-AGR-004 — Final Refusal
+SL-DOC-001 — AgreementDocumentRef / Proposal Document Reference
+```
+
+## 5. Current L1 Remaining Gaps
+
+```text
+- SL-APPL-003.client runtime implementation if not already implemented.
+- Final Applicant Parties page/section replacement of old current-individual AccountPage model if not already completed.
+- Tests for make-current/default backend/client behavior should be verified.
+- Delete/archive/edit lifecycle remains future.
+- LegalEntity / IndividualEntrepreneur ApplicantParty creation remains future unless implementation proves otherwise.
+```
+
+## 6. Drafting Rules
 
 ```text
 - Draft by examples, not by improvisation.
 - Scenario Flow is user/system behavior from scenario sources.
 - Implementation Flow is code/layer responsibility.
 - Behavior items are not implementation details.
-- Cross-cutting concerns belong in their own considerations section unless source behavior says otherwise.
+- Cross-cutting concerns belong in a separate concerns/considerations section.
 - Read-only UI belongs in entities.
 - Command/user-action UI belongs in features.
 - One draft covers one slice; extension slices are named but not implemented.
 ```
 
-## 6. API / Generated Contract Rules
+## 7. API / Generated Contract Rules
 
 For API-changing slices, read:
 
@@ -110,7 +124,7 @@ planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-gen
 
 Generated artifacts must come from repo commands, not manual edits.
 
-## 7. Registers
+## 8. Registers
 
 ```text
 planning/slices/slice-scenario-flow-behavior-register.md

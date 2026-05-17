@@ -1,6 +1,6 @@
 # Slice Scenario Flow / Behavior Source Register
 
-Status: active source register / L1 + L2 Employee Review Agreement sources synchronized
+Status: active source register / L1 + L2 Employee request read drafts synchronized
 
 ## 1. Rule
 
@@ -11,9 +11,18 @@ Scenario Flow and Behavior Items come from scenario source artifacts:
 [DATA] planning/diagrams/scenario-data/
 [UI-SCENARIO] planning/diagrams/scenario-ui-specs/
 [BEHAVIOR] planning/diagrams/scenario-behavior-items/
-[DOMAIN-DRAFT] planning/tables/domain-drafts/
 [CONCERN] planning/slices/cross-cutting/
 ```
+
+Domain drafts are **domain-design input**, not scenario behavior source:
+
+```text
+[DOMAIN-INPUT] planning/tables/domain-drafts/
+```
+
+Use domain drafts for terminology, aggregate boundaries and invariants.
+
+Do not use domain drafts as a substitute for scenario text/DATA/UI/behavior sources when writing Scenario Flow or Behavior Coverage.
 
 Do not invent scenario flow or behavior items locally inside a slice when source artifacts exist.
 
@@ -30,7 +39,7 @@ Do not invent scenario flow or behavior items locally inside a slice when source
 
 ## 3. L2 Employee / Review / Agreement Source Map
 
-Primary domain source:
+Domain-design input:
 
 ```text
 planning/tables/domain-drafts/domain-draft-02.md
@@ -48,12 +57,13 @@ Behavior source:
 planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
 ```
 
-| Future slice family | Marker | Source files | Applies to | Status |
+| Slice family / slice | Scenario source files | Domain-design input | Applies to | Status |
 |---|---|---|---|---|
-| `SL-EMP-*` | `[SCENARIO]` / `[DOMAIN-DRAFT]` | `SC-06-employee-request-dashboard.md`, `SC-07A-employee-request-details.md`, `domain-draft-02.md` | employee dashboard/details read models | planned source |
-| `SL-REVIEW-*` | `[SCENARIO]` / `[DOMAIN-DRAFT]` | `SC-07B-employee-request-review.md`, `domain-draft-02.md` | StartReview / ApproveReview / RejectReview | planned source |
-| `SL-AGR-*` | `[SCENARIO]` / `[DOMAIN-DRAFT]` | `SC-13A..E`, `SC-14`, `domain-draft-02.md` | AgreementProposalExchange, proposal versions, final refusal, agreement documents | planned source |
-| `SL-DOC-*` | `[SCENARIO]` / `[DOMAIN-DRAFT]` | `SC-14-agreement-documents.md`, `domain-draft-02.md` | AgreementDocumentRef metadata references | planned source |
+| `SL-EMP-REQ-001-employee-request-list-read.md` | `SC-06-employee-request-dashboard.md`, `SC-07A-employee-request-details.md`, `L2-employee-review-agreement-behavior-items.md` | `domain-draft-02.md` | employee request list, filters and compact review state | full draft |
+| `SL-EMP-REQ-002-employee-request-details-read.md` | `SC-07A-employee-request-details.md`, `SC-07B-employee-request-review.md`, `L2-employee-review-agreement-behavior-items.md` | `domain-draft-02.md` | employee request details by id and compact review state | full draft |
+| `SL-EMP-REQ-003 / 004 / 005` | `SC-07B-employee-request-review.md`, `L2-employee-review-agreement-behavior-items.md` | `domain-draft-02.md` | StartReview / ApproveReview / RejectReview | planned source |
+| `SL-AGR-*` | `SC-13A..E`, `SC-14`, `L2-employee-review-agreement-behavior-items.md` | `domain-draft-02.md` | AgreementProposalExchange, proposal versions, final refusal, agreement documents | planned source |
+| `SL-DOC-*` | `SC-14-agreement-documents.md`, `L2-employee-review-agreement-behavior-items.md` | `domain-draft-02.md` | AgreementDocumentRef metadata references | planned source |
 
 ## 4. L2 Drafting Guardrails
 
@@ -64,10 +74,11 @@ planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-
 - Scenario Flow is the scenario portion relevant to that slice, not the full scenario family.
 - Implementation Flow must not be mistaken for Scenario Flow.
 - Implementation details are not behavior items.
+- Domain draft informs design, but behavior coverage maps to scenario behavior sources.
 ```
 
 ## 5. Update Rule
 
 Update this register when scenario files, behavior items, slices or sidecars are added/renamed.
 
-When a future L2 implementation slice is drafted, point it to the relevant SC-06/SC-07/SC-13/SC-14 files and to `domain-draft-02.md` for domain boundaries.
+When a future L2 implementation slice is drafted, point it to the relevant SC-06/SC-07/SC-13/SC-14 files and to `domain-draft-02.md` only as domain-design input.

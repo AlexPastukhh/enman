@@ -1,9 +1,9 @@
-# APPLY — Cross-Cutting Antiforgery Marker Sync
+# APPLY — Employee Request Read Slice Full Drafts Sync
 
 Run from repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\cross-cutting-antiforgery-marker-sync.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\employee-request-read-slices-full-drafts-sync.zip" -DestinationPath . -Force
 git status
 git diff -- planning
 ```
@@ -15,4 +15,4 @@ git add planning
 git status
 ```
 
-This is a docs-only replacement package.
+This is a docs-only package. It must not change runtime code, tests or generated artifacts.

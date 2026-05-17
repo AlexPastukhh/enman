@@ -1,29 +1,27 @@
 # Server Slice Test Plan Rules
 
-Status: current / DB-state oriented test plan separation for L1 backend slices  
-Scope: backend/server slice drafts, API integration tests, command/state-transition slices, regression guards
+Status: current / command DB-state and read integration test-plan separation synchronized  
+Scope: backend/server slice drafts, API integration tests, command/state-transition slices, read slices, regression guards, no-unit-by-default rule
 
 ## 1. Purpose
 
 Server slice drafts must make test responsibilities explicit.
 
-For backend commands that change persisted state, the primary proof is:
+The primary proof depends on slice type:
 
 ```text
-API/integration test
-        ↓
-state before command
-        ↓
-call endpoint/handler through public boundary
-        ↓
-state after command
-        ↓
-DB assertions
+State-changing command slice:
+  API/integration boundary + DB state before/after assertions.
+
+Read slice:
+  API/read integration boundary + response shape/filter/visibility assertions.
 ```
 
-Mocks are not the primary proof for L1 server behavior that persists state.
+Mocks are not the primary proof for L1/L2 server behavior.
 
-## 2. Required Test Plan Buckets
+Unit tests are not added by default.
+
+## 2. State-Changing Command Slice Buckets
 
 Use these buckets when a server slice changes state:
 
@@ -37,9 +35,7 @@ Use these buckets when a server slice changes state:
 7. What not to test
 ```
 
-## 3. API Boundary / Access Tests
-
-These tests verify endpoint access and rejection behavior:
+### API boundary / access tests
 
 ```text
 - unauthenticated -> 401;
@@ -50,11 +46,9 @@ These tests verify endpoint access and rejection behavior:
 
 If setup already creates persisted data, assert rejected commands leave DB state unchanged.
 
-## 4. Main DB State Transition Tests
+### Main DB state transition tests
 
-These tests prove the behavior that the slice owns.
-
-For state-changing commands, reload rows from DB after the command and assert persisted state:
+Reload rows from DB after the command and assert persisted state:
 
 ```text
 - selected row changed as expected;
@@ -65,68 +59,157 @@ For state-changing commands, reload rows from DB after the command and assert pe
 - status/marker fields are correct.
 ```
 
-For `SL-APPL-003`, this means:
-
-```text
-- selected ApplicantParty becomes IsCurrentActiveVersion == true;
-- previous same-type ApplicantParty becomes IsCurrentActiveVersion == false;
-- both ApplicantParties still exist;
-- ClientAccountId / VerificationStatus / identity/contact fields are unchanged.
-```
-
-## 5. Idempotency / No-op DB State Tests
+### Idempotency / no-op tests
 
 Use when repeated command is allowed:
 
 ```text
-- command on already-current/default ApplicantParty succeeds;
-- marker remains true;
-- no extra ApplicantParty is created;
-- stable fields unchanged.
+- repeated command succeeds or returns documented no-op;
+- no extra rows are created;
+- stable fields remain unchanged.
 ```
 
-## 6. No-mutation Tests
+### No-mutation tests
 
 Use these for data-safety rules:
 
 ```text
 - existing requests are not relinked;
-- request status/details/created-at remain unchanged;
-- unrelated ApplicantParty rows are unchanged;
-- rejected commands leave existing rows unchanged.
+- unrelated rows are unchanged;
+- rejected commands leave rows unchanged;
+- future/lifecycle behavior outside the slice is not triggered.
 ```
 
-No-mutation tests can be separate or combined with main transition tests, but the draft must explicitly say which safety rule is protected.
+## 3. Read Slice Test Plan Rule
 
-## 7. Same-type / Type-scope Tests
+For backend/API read slices, primary verification is:
 
-If the slice is type-aware, test current implemented type support now and mark future type coverage explicitly.
+```text
+API/read integration tests.
+```
 
-Do not expand domain/API only to satisfy a test for a future type.
+Do not add unit tests by default.
+
+Unit tests are allowed only if the slice introduces reusable helper logic with non-trivial branching, for example:
+
+```text
+- reviewState derivation helper;
+- filter parsing helper;
+- field-name mapping helper;
+- reusable Dapper row mapper with meaningful conditional logic.
+```
+
+Even then:
+
+```text
+- keep unit tests focused on that helper only;
+- do not unit-test every DTO property;
+- do not add query-handler mock tests as primary proof;
+- do not add validator unit tests by default.
+```
+
+Endpoint behavior, auth, validation, visibility, filtering and response shape are verified through integration tests.
+
+## 4. Read Slice Buckets
+
+Use these buckets for non-trivial server read slices:
+
+```text
+1. API boundary / access tests
+2. Query validation tests, when query filters exist
+3. Read correctness / response shape tests
+4. Filtering tests, when filters exist
+5. Visibility / privacy tests
+6. Optional no-mutation smoke test, only if cheap
+7. What not to test
+```
+
+### API boundary / access tests
+
+```text
+- unauthenticated -> 401;
+- wrong role/account type -> documented rejection;
+- authenticated allowed actor -> 200;
+- missing/not-visible resource -> documented not-found/visibility response.
+```
+
+### Query validation tests
+
+Keep these small.
+
+For a filtered list endpoint:
+
+```text
+- one unknown status -> 422;
+- one unknown reviewState -> 422;
+- one valid combined filter -> 200.
+```
+
+Do not create many tiny tests for every DTO property if integration tests already cover the boundary.
+
+### Read correctness tests
+
+Prefer mixed dataset tests when they prove projection behavior compactly.
+
+Example for employee request list:
+
+```text
+Arrange:
+- request with no Review;
+- request with Review started by current Employee;
+- request with Review started by another Employee;
+- approved reviewed request;
+- rejected reviewed request.
+
+Assert response contains:
+- NotStarted;
+- StartedByCurrentEmployee;
+- StartedByAnotherEmployee;
+- Approved;
+- Rejected.
+```
+
+### Filtering tests
+
+```text
+- one status filter test narrows rows;
+- one reviewState filter test narrows rows.
+```
+
+### Visibility / privacy tests
+
+```text
+- list/details returns only employee-visible request data;
+- started-by-other state does not leak private employee/auth data;
+- cross-account/private client data is not exposed beyond the DTO contract.
+```
+
+### Optional no-mutation smoke
+
+Only if cheap with existing helpers:
+
+```text
+- GET does not create Review;
+- GET does not change Request.Status;
+- GET does not change Review.Status.
+```
+
+Do not make no-mutation smoke test expensive for every read slice.
+
+## 5. Regression Guards
+
+Use regression guards when new behavior depends on a boundary owned by another slice.
 
 Example:
 
 ```text
-Current pass:
-  two Individual ApplicantParties prove same-type switching.
-
-Future pass:
-  when LegalEntity / IndividualEntrepreneur exists, verify switching Individual default does not affect other type default.
+SL-APPL-003 explicit make-default command may reference SL-APPL-001 regression:
+second same-type create still does not switch default implicitly.
 ```
 
-## 8. Regression Guards
+This may be referenced from owner slice tests if already covered.
 
-Use regression guards when new behavior depends on a boundary owned by another slice.
-
-For `SL-APPL-003`:
-
-```text
-second same-type create still does not switch default implicitly
-```
-
-This may be referenced from `SL-APPL-001` tests if already covered.
-
-## 9. What Not To Test
+## 6. What Not To Test
 
 Do not use these as primary behavior proof:
 
@@ -138,7 +221,12 @@ Do not use these as primary behavior proof:
 - generated TypeScript types;
 - React Query invalidation;
 - client button rendering;
+- validator unit tests by default;
+- query-handler unit tests with mocks as primary proof;
+- helper unit tests unless reusable helper has meaningful branching;
 - future lifecycle behavior outside current slice.
 ```
 
-These may appear in lower-level checks only when the project already has that pattern, but behavior proof must come from public boundary + DB state.
+Generated artifacts are checked through API generation/check workflow, not as behavior proof.
+
+Client behavior is verified in client sidecars, not server slice tests.

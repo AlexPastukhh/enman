@@ -1,20 +1,45 @@
-# MANIFEST — Cross-Cutting Antiforgery Marker Sync
+# MANIFEST — Employee Request Read Slice Full Drafts Sync
 
-Archive: `cross-cutting-antiforgery-marker-sync.zip`  
-Scope: docs-only addendum for antiforgery failure normalization and drafting concerns  
-Source input: latest user-provided antiforgery marker clarification
+Archive: `employee-request-read-slices-full-drafts-sync.zip`  
+Scope: docs-only slice planning update for L2 Employee request read drafts and read-slice test-plan rules
 
-## Replace / Add
+## Add
 
 | File | Why |
 |---|---|
-| `planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md` | Adds explicit internal server marker vs public client marker rule, result filter detection guidance, top-level ProblemDetails `code`, no generic 400 inference, no auto replay, and required tests. |
-| `planning/slices/cross-cutting/cross-cutting-concerns-drafting-checklist.md` | Adds antiforgery marker considerations to the cross-cutting concerns checklist used by slice drafters. |
-| `planning/slices/l1-slice-drafting-guide.md` | Adds a short pointer that cross-cutting concerns in drafts must distinguish internal framework markers from public API/client markers when relevant. |
+| `planning/slices/SL-EMP-REQ-001-employee-request-list-read.md` | Full backend/API read slice draft for employee request list + filters. |
+| `planning/slices/SL-EMP-REQ-002-employee-request-details-read.md` | Full backend/API read slice draft for employee request details by id. |
+| `planning/slices/l2/README.md` | L2 slice drafting navigation for Employee request/review/agreement sequence. |
+
+## Replace
+
+| File | Why |
+|---|---|
+| `planning/slices/README.md` | Add L2 Employee request read drafts to slice navigation. |
+| `planning/slices/slice-scenario-flow-behavior-register.md` | Clarify scenario sources vs domain draft input and map SL-EMP-REQ-001/002 to scenario files. |
+| `planning/testing/server-slice-test-plan-rules.md` | Add server read-slice test-plan rules: API/read integration primary, no unit tests by default. |
+
+## Source inputs
+
+Current user-provided drafts:
+
+```text
+SL-EMP-REQ-001 — Employee Request List Read
+SL-EMP-REQ-002 — Employee Request Details Read
+```
+
+Scenario/domain input relationship:
+
+```text
+Scenario text/DATA/UI/behavior files remain source of truth for Scenario Flow and Behavior Coverage.
+planning/tables/domain-drafts/domain-draft-02.md is domain-design input, not a replacement for scenario sources.
+```
 
 ## Not included
 
-- No runtime code.
-- No tests.
-- No generated artifacts.
-- No GitHub writes.
+```text
+- no runtime code;
+- no tests;
+- no generated artifacts;
+- no GitHub branch/commit/PR.
+```
