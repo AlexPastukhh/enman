@@ -25,7 +25,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
         var client = _factory.CreateClient();
         var login = await LoginAsync(client, email, ValidPassword);
 
-        var applicantResponse = await client.PostAsJsonAsync(
+        var applicantResponse = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/applicant-parties/individual",
             ValidApplicantPartyDto());
         await HttpResponseAssertions.For(applicantResponse, _output).ShouldBeSuccess();
@@ -33,7 +34,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
             .ReadFromJsonAsync<L1CreateIndividualApplicantPartyResponse>()
             ?? throw new InvalidOperationException("L1 applicant party response body was empty.");
 
-        var requestResponse = await client.PostAsJsonAsync(
+        var requestResponse = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/requests",
             ValidConnectionRequestDto(existingApplicantPartyId: applicantParty.ApplicantPartyId));
         await HttpResponseAssertions.For(requestResponse, _output).ShouldBeSuccess();
@@ -71,7 +73,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
     {
         var account = await RegisterAccountAsync();
         var first = await CreateApplicantPartyAsync(account.AccountId);
-        var second = await AuthenticatedL1Client(account.AccountId).PostAsJsonAsync(
+        var second = await PostAsJsonWithCsrfAsync(
+            AuthenticatedL1Client(account.AccountId),
             "/api/l1/applicant-parties/individual",
             ValidApplicantPartyDto(
                 firstName: "Second",
@@ -116,7 +119,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
         var client = AuthenticatedL1Client(other.AccountId);
         var requestCountBefore = await GetRequestCountAsync();
 
-        var response = await client.PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/requests",
             ValidConnectionRequestDto(existingApplicantPartyId: applicantParty.ApplicantPartyId));
 
@@ -134,7 +138,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
         var client = AuthenticatedL1Client(account.AccountId);
 
-        var response = await client.PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/requests",
             ValidConnectionRequestDto(
                 details: " ",
@@ -151,7 +156,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
         var client = AuthenticatedL1Client(account.AccountId);
 
-        var response = await client.PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/requests",
             ValidConnectionRequestDto(
                 details: new string('x', 3001),
@@ -168,7 +174,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
         var client = AuthenticatedL1Client(account.AccountId);
 
-        var response = await client.PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/requests",
             new L1CreateConnectionRequestDto(
                 "Existing",
@@ -188,7 +195,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
         var client = AuthenticatedL1Client(account.AccountId);
 
-        var response = await client.PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/requests",
             new L1CreateConnectionRequestDto(
                 "Existing",
@@ -216,7 +224,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
         var client = AuthenticatedL1Client(account.AccountId);
         var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
 
-        var response = await client.PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/requests",
             ValidConnectionRequestWithNewApplicantDto());
 
@@ -243,7 +252,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
         var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
         var requestCountBefore = await GetRequestCountAsync();
 
-        var response = await client.PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/requests",
             ValidConnectionRequestWithNewApplicantDto(
                 newApplicantParty: new L1CreateIndividualApplicantPartyDto(
@@ -266,7 +276,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
         var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
         var requestCountBefore = await GetRequestCountAsync();
 
-        var response = await client.PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/requests",
             ValidConnectionRequestWithNewApplicantDto(
                 newApplicantParty: new L1CreateIndividualApplicantPartyDto(
@@ -289,7 +300,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
         var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
         var requestCountBefore = await GetRequestCountAsync();
 
-        var response = await client.PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/requests",
             ValidConnectionRequestWithNewApplicantDto(details: " "));
 
@@ -309,7 +321,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
 
-        var response = await AuthenticatedL1Client(account.AccountId).PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            AuthenticatedL1Client(account.AccountId),
             "/api/l1/requests",
             ValidConnectionRequestDto(
                 applicantContextType: applicantContextType,
@@ -324,7 +337,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
     {
         var account = await RegisterAccountAsync();
 
-        var response = await AuthenticatedL1Client(account.AccountId).PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            AuthenticatedL1Client(account.AccountId),
             "/api/l1/requests",
             ValidConnectionRequestDto(existingApplicantPartyId: null));
 
@@ -338,7 +352,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
 
-        var response = await AuthenticatedL1Client(account.AccountId).PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            AuthenticatedL1Client(account.AccountId),
             "/api/l1/requests",
             ValidConnectionRequestDto(
                 existingApplicantPartyId: applicantParty.ApplicantPartyId,
@@ -353,7 +368,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
     {
         var account = await RegisterAccountAsync();
 
-        var response = await AuthenticatedL1Client(account.AccountId).PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            AuthenticatedL1Client(account.AccountId),
             "/api/l1/requests",
             ValidConnectionRequestDto(
                 applicantContextType: "New",
@@ -370,7 +386,8 @@ public sealed class L1CreateConnectionRequestIntegrationTests : L1IntegrationTes
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
 
-        var response = await AuthenticatedL1Client(account.AccountId).PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            AuthenticatedL1Client(account.AccountId),
             "/api/l1/requests",
             ValidConnectionRequestWithNewApplicantDto(
                 existingApplicantPartyId: applicantParty.ApplicantPartyId));

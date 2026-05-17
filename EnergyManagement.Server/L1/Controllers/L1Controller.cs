@@ -2,6 +2,7 @@ using System.Security.Claims;
 using CSharpFunctionalExtensions;
 using Domain.EnergyManagement.Common;
 using EnergyManagement.Server.Controllers;
+using EnergyManagement.Server.Api.Security;
 using EnergyManagement.Server.L1.Api;
 using EnergyManagement.Server.L1.Api.Validation;
 using EnergyManagement.Server.L1.Application.Commands;
@@ -48,6 +49,7 @@ public sealed class L1Controller : ProjectController
     }
 
     [HttpPost("auth/register", Name = "L1RegisterClientAccount")]
+    [RequireAntiforgeryToken]
     [ProducesResponseType(typeof(L1RegisterClientAccountResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -77,6 +79,7 @@ public sealed class L1Controller : ProjectController
     }
 
     [HttpPost("auth/login", Name = "L1LoginClientAccount")]
+    [RequireAntiforgeryToken]
     [ProducesResponseType(typeof(L1CurrentUserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -143,6 +146,7 @@ public sealed class L1Controller : ProjectController
 
     [Authorize]
     [HttpPost("auth/logout", Name = "L1Logout")]
+    [RequireAntiforgeryToken]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Logout()
@@ -153,6 +157,7 @@ public sealed class L1Controller : ProjectController
 
     [Authorize]
     [HttpPost("applicant-parties/individual", Name = "L1CreateIndividualApplicantParty")]
+    [RequireAntiforgeryToken]
     [ProducesResponseType(typeof(L1CreateIndividualApplicantPartyResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
@@ -232,6 +237,7 @@ public sealed class L1Controller : ProjectController
 
     [Authorize]
     [HttpPost("applicant-parties/{applicantPartyId:long}/make-current-default", Name = "L1MakeApplicantPartyCurrentDefault")]
+    [RequireAntiforgeryToken]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
@@ -373,6 +379,7 @@ public sealed class L1Controller : ProjectController
 
     [Authorize]
     [HttpPost("requests", Name = "L1CreateConnectionRequest")]
+    [RequireAntiforgeryToken]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]

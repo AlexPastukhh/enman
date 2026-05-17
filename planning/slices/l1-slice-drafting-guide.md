@@ -1,7 +1,7 @@
 # L1 Slice Drafting Guide
 
-Status: current / strict example-driven drafting, cross-cutting concerns checklist, client short-draft rules, server test-plan separation and flow separation synchronized  
-Scope: business slices, cross-cutting/helper slices, client sidecars, scenario source intake, implementation flow, extension/change points, questions, registers, cross-cutting concerns and tests
+Status: current / strict example-driven drafting, cross-cutting concerns and server test-plan separation synchronized  
+Scope: business slices, cross-cutting/helper slices, client sidecars, scenario source intake, implementation flow, extension/change points, questions, registers and tests
 
 ## 1. Draft-Driven Discovery Gate
 
@@ -29,6 +29,12 @@ planning/slices/client-component-discovery-guide.md
 planning/api/client-server-contract-principles.md
 ```
 
+Server/API drafts that introduce browser unsafe requests must also read:
+
+```text
+planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
+```
+
 ## 2. Example-Driven Drafting Rule
 
 New chats must draft by existing examples.
@@ -39,10 +45,9 @@ For client short drafts, copy the canonical shape from:
 
 ```text
 planning/slices/client-slice-short-draft-rules-and-example.md
-planning/slices/SL-APPL-002-account-applicant-parties-read.client.md
 ```
 
-This is intentional. Consistency is more important than creativity.
+Consistency is more important than creativity.
 
 ## 3. Scenario Flow Source Rule
 
@@ -59,8 +64,6 @@ Scenario Flow is the part of the scenario that belongs to the current slice.
 It is not necessarily the whole scenario.
 
 A scenario can be implemented by several slices and extension slices.
-
-Domain drafts can be domain-design input for scenario updates, but scenario files remain the source of truth for Scenario Flow and Behavior Coverage after synchronization.
 
 ## 4. Scenario Flow vs Implementation Flow
 
@@ -118,13 +121,12 @@ Do not treat these as behavior items:
 - cache invalidation happens;
 - ApplicantPartyId is returned;
 - repository method exists;
-- CSRF header exists;
-- ProblemDetails factory exists.
+- antiforgery filter class exists.
 ```
 
-They may be implementation notes, API contract notes, cross-cutting considerations or test plan items.
+They may be implementation notes, API contract notes or test plan items.
 
-Behavior items must come from scenario/UI/behavior sources or explicit cross-cutting concern behavior sources.
+Behavior items must come from scenario/UI/behavior sources or cross-cutting concern sources.
 
 If source IDs are missing, write `Source BI TBD` and mark it as a source gap.
 
@@ -152,61 +154,65 @@ Out-of-scope items must point to an owner:
 
 ## 7. Cross-Cutting Concerns / Considerations Rule
 
-Every non-trivial backend/client slice draft must include:
+Every non-trivial slice draft must include:
 
 ```text
 ## Cross-Cutting Concerns / Considerations
 ```
 
-Use:
+Use the checklist:
 
 ```text
 planning/slices/cross-cutting/cross-cutting-concerns-drafting-checklist.md
 ```
 
-This section must not replace Scenario Flow or Behavior Coverage.
-
-It should answer:
+Minimum concern scan:
 
 ```text
-- which shared concerns apply;
-- which are not applicable;
-- which related/cross-cutting slice owns the concern;
-- which considerations affect implementation or tests.
+- Auth/session/actor context
+- Authorization/ownership
+- Antiforgery / browser unsafe requests
+- Request validation / ProblemDetails
+- OpenAPI / generated artifacts
+- Generated constants / error codes
+- Transaction / atomicity / no partial write
+- No-mutation / existing data safety
+- Idempotency / retry / double-submit
+- Concurrency / stale state
+- File/document boundary
+- Clock/audit actor fields
+- Privacy / cross-account data exposure
+- Client feedback / accessibility
+- Testing responsibility split
 ```
 
-Minimum table shape:
-
-| Concern | Applies? | Consideration / owner |
-|---|---:|---|
-| Auth/session/account context | yes/no | ... |
-| Authorization/ownership | yes/no | ... |
-| Antiforgery / browser unsafe requests | yes/no | ... |
-| Request validation / ProblemDetails | yes/no | ... |
-| OpenAPI / generated artifacts | yes/no | ... |
-| Generated constants / error codes | yes/no | ... |
-| Transaction / atomicity / no partial write | yes/no | ... |
-| No-mutation / existing data safety | yes/no | ... |
-| Idempotency / double-submit / retry | yes/no | ... |
-| Concurrency / stale state | yes/no | ... |
-| File/document boundary | yes/no | ... |
-| Clock/audit actor fields | yes/no | ... |
-| Privacy / cross-account data exposure | yes/no | ... |
-| Client feedback / accessibility | yes/no | ... |
-| Testing responsibility split | yes/no | ... |
-
-Examples:
+Important:
 
 ```text
-Unsafe browser POST command:
-  Antiforgery applies -> CC-CSRF-001 owns token mechanics.
-
-Read-only GET endpoint:
-  Antiforgery does not apply by default, but auth/ownership may apply.
-
-Agreement proposal document command:
-  File/document boundary applies -> domain stores AgreementDocumentRef, storage adapter owns bytes.
+Cross-cutting concerns are not Scenario Flow.
+Cross-cutting concerns are not automatically Behavior Items.
 ```
+
+If a cross-cutting source defines behavior items, reference those items.
+
+Otherwise, write concerns as considerations/constraints and owners.
+
+### Antiforgery marker rule
+
+For browser unsafe request slices, distinguish:
+
+```text
+Internal server marker:
+  antiforgery-specific ASP.NET framework result marker/type,
+  preferably IAntiforgeryValidationFailedResult.
+
+Public client marker:
+  ProblemDetails.Extensions["code"] = "security.antiforgery.validation.failed".
+```
+
+Do not infer antiforgery failure from generic 400/BadRequest.
+
+Do not use FluentValidation, legacy ServerValidationError or `errors[]` as the CSRF public marker.
 
 ## 8. Client Sidecar Short Draft Template
 
@@ -227,10 +233,10 @@ Backend/API contract evidence, when relevant:
 ## 4. Visual UI / Scenario Flow
 ## 5. Visual Client Implementation Flow
 ## 6. Client API / Server Contract
-## 7. Cross-Cutting Concerns / Considerations
-## 8. Questions / Decisions
-## 9. Extension / Change Points
-## 10. Behavior Coverage
+## 7. Questions / Decisions
+## 8. Extension / Change Points
+## 9. Behavior Coverage
+## 10. Cross-Cutting Concerns / Considerations
 ## 11. Client / Component / E2E Verification Plan
 ## 12. Implementation Checklist
 ## 13. Next Step
@@ -343,6 +349,10 @@ Use these to verify the endpoint boundary:
 - invalid route/body/query input -> documented validation/problem response.
 ```
 
+For unsafe browser request slices, CSRF missing/invalid token behavior is owned by `CC-CSRF-001`.
+
+A business slice may reference CSRF coverage but should not duplicate the full cross-cutting matrix unless it has special security behavior.
+
 ### DB state transition tests
 
 Use these as the primary proof for backend command behavior.
@@ -363,10 +373,12 @@ Use these to protect important data-safety rules:
 
 ```text
 - existing requests remain linked to the same ApplicantParty;
-- unrelated rows are not deleted/hidden/replaced;
-- other types remain unchanged;
+- unrelated ApplicantParties are not deleted/hidden/replaced;
+- other rows/types remain unchanged;
 - rejected commands do not partially update state.
 ```
+
+When setup is expensive, no-mutation assertions may be combined with the main DB transition test, but the draft must name what safety rule is being protected.
 
 ### Regression guards
 
@@ -422,14 +434,10 @@ Primary verification: API integration tests with direct DB state assertions.
 - reload request row;
 - assert request ApplicantPartyId/status/details unchanged.
 
-### Cross-cutting concern checks
-- unsafe browser POST relies on CC-CSRF-001; do not duplicate all CSRF tests here;
-- route/body validation follows CC-VALIDATION-001;
-- API contract changes follow OpenAPI/generated artifacts workflow.
-
-### Regression guard
-- second same-type create still does not switch default implicitly;
-- keep or reference existing create-slice test if already present.
+### Cross-cutting concerns
+- unsafe command uses CC-CSRF-001;
+- generic CSRF failure branches are covered by cross-cutting tests;
+- no local CSRF domain/application logic.
 
 ### What not to test
 - no repository mock assertions;
@@ -446,3 +454,5 @@ Bad test-plan shape:
 - generated OpenAPI type exists;
 - React Query invalidates cache.
 ```
+
+Those are implementation details or client concerns, not proof of server slice behavior.

@@ -42,7 +42,9 @@ public sealed class L1AuthIntegrationTests : L1IntegrationTestBase
         var email = UniqueEmail();
         await RegisterAccountAsync(email);
 
-        var response = await _factory.CreateClient().PostAsJsonAsync(
+        var client = _factory.CreateClient();
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/auth/login",
             new L1LoginRequest(email, "WrongPassword!123"));
 
@@ -57,10 +59,12 @@ public sealed class L1AuthIntegrationTests : L1IntegrationTestBase
         await RegisterAccountAsync(email);
         var client = _factory.CreateClient();
 
-        var invalidPassword = await client.PostAsJsonAsync(
+        var invalidPassword = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/auth/login",
             new L1LoginRequest(email, "WrongPassword!123"));
-        var unknownEmail = await client.PostAsJsonAsync(
+        var unknownEmail = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/auth/login",
             new L1LoginRequest(UniqueEmail(), "WrongPassword!123"));
 
@@ -86,7 +90,9 @@ public sealed class L1AuthIntegrationTests : L1IntegrationTestBase
     [Fact]
     public async Task L1ProtectedEndpoint_WithoutAuth_ReturnsUnauthorized()
     {
-        var response = await _factory.CreateClient().PostAsJsonAsync(
+        var client = _factory.CreateClient();
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/applicant-parties/individual",
             ValidApplicantPartyDto());
 
@@ -110,7 +116,8 @@ public sealed class L1AuthIntegrationTests : L1IntegrationTestBase
         var client = LegacyShapedAuthenticatedClient(account.AccountId);
 
         var currentUser = await client.GetAsync("/api/l1/auth/current-user");
-        var applicantParty = await client.PostAsJsonAsync(
+        var applicantParty = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/applicant-parties/individual",
             ValidApplicantPartyDto());
 
@@ -139,7 +146,7 @@ public sealed class L1AuthIntegrationTests : L1IntegrationTestBase
         var client = _factory.CreateClient();
         await LoginAsync(client, email, ValidPassword);
 
-        var logout = await client.PostAsync("/api/l1/auth/logout", content: null);
+        var logout = await PostWithCsrfAsync(client, "/api/l1/auth/logout");
         logout.StatusCode.Should().Be(HttpStatusCode.NoContent);
 
         var currentUser = await client.GetAsync("/api/l1/auth/current-user");
@@ -171,7 +178,9 @@ public sealed class L1AuthIntegrationTests : L1IntegrationTestBase
         var email = UniqueEmail();
         await RegisterAccountAsync(email);
 
-        var response = await _factory.CreateClient().PostAsJsonAsync(
+        var client = _factory.CreateClient();
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/auth/register",
             new L1RegisterClientAccountDto(email, ValidPassword));
 
@@ -182,7 +191,9 @@ public sealed class L1AuthIntegrationTests : L1IntegrationTestBase
     [Fact]
     public async Task RegisterClientAccount_WithInvalidEmailAndPassword_ReturnsValidationProblem()
     {
-        var response = await _factory.CreateClient().PostAsJsonAsync(
+        var client = _factory.CreateClient();
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/auth/register",
             new L1RegisterClientAccountDto("not-an-email", "short"));
 
@@ -193,7 +204,9 @@ public sealed class L1AuthIntegrationTests : L1IntegrationTestBase
     [Fact]
     public async Task Login_WithInvalidEmailAndBlankPassword_ReturnsValidationProblem()
     {
-        var response = await _factory.CreateClient().PostAsJsonAsync(
+        var client = _factory.CreateClient();
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/auth/login",
             new L1LoginRequest("not-an-email", " "));
 

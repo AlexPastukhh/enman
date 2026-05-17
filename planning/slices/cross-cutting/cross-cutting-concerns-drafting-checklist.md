@@ -1,108 +1,74 @@
 # Cross-Cutting Concerns Drafting Checklist
 
-Status: current / mandatory drafting checklist  
-Scope: backend slices, client sidecars, cross-cutting/helper slices, L2 Employee/Review/Agreement/Document drafts
+Status: current / includes antiforgery internal-public marker distinction  
+Scope: required concern scan for server slices, client sidecars and cross-cutting/helper slices
 
 ## 1. Purpose
 
-Every non-trivial slice draft must include a section named:
+Every non-trivial slice draft should include:
 
 ```text
-Cross-Cutting Concerns / Considerations
+## Cross-Cutting Concerns / Considerations
 ```
 
-This checklist prevents new drafts from forgetting shared project concerns that are not owned by one business scenario.
+This section is not Scenario Flow.
 
-The section is a checklist, not a place to invent behavior.
+It is a concern checklist that prevents drafts from forgetting shared rules that affect many slices.
 
-## 2. Source Rule
-
-Cross-cutting concerns are not automatically scenario behavior items.
-
-Use this rule:
+Use it to write:
 
 ```text
-Scenario Flow:
-  only scenario/user/system behavior from scenario sources.
-
-Behavior Coverage:
-  source scenario behavior items + concern-derived behavior items from explicit cross-cutting sources.
-
-Cross-Cutting Concerns / Considerations:
-  applies / not applicable / future owner notes for shared concerns.
+Applies / not applicable / future owner / handled by cross-cutting slice.
 ```
 
-Do not put implementation details such as CSRF token headers, React Query invalidation, repository methods or generated files into Scenario Flow.
+Do not turn implementation mechanics into Behavior Items unless a cross-cutting behavior source explicitly defines them.
 
-## 3. Required Section Shape
+## 2. Concern Categories
 
-Use this table in slice drafts:
-
-| Concern | Applies? | Consideration / owner |
-|---|---:|---|
-| Auth/session/account context | yes/no | ... |
-| Authorization/ownership | yes/no | ... |
-| Antiforgery / browser unsafe requests | yes/no | ... |
-| Request validation / ProblemDetails | yes/no | ... |
-| OpenAPI / generated artifacts | yes/no | ... |
-| Generated constants / error codes | yes/no | ... |
-| Transaction / atomicity / no partial write | yes/no | ... |
-| No-mutation / existing data safety | yes/no | ... |
-| Idempotency / double-submit / retry | yes/no | ... |
-| Concurrency / stale state | yes/no | ... |
-| File/document boundary | yes/no | ... |
-| Clock/audit actor fields | yes/no | ... |
-| Privacy / cross-account data exposure | yes/no | ... |
-| Client feedback / accessibility | yes/no | ... |
-| Testing responsibility split | yes/no | ... |
-
-`no` is allowed, but it must be intentional.
-
-## 4. Concern Details
-
-### 4.1 Auth / Session / Account Context
+### Auth / session / actor context
 
 Consider:
 
 ```text
-- Does the server derive current account/employee from auth context?
-- Is the actor ClientAccount or Employee?
-- Does protected use case require active/activated account?
-- Does client page need unauthenticated/session loading branches?
-- Does login/logout/current-user affect cache/token/session state?
+- authenticated vs anonymous;
+- current account id;
+- current employee id;
+- session bootstrap;
+- login/logout context changes;
+- active account/employee requirement.
 ```
 
-Owner examples:
+Draft note shape:
 
 ```text
-SL-AUTH-* / current-user sidecar
-Employee auth/account slice, if L2 employee identity is introduced
-business slice only derives/uses current actor
+Auth/session:
+  Applies.
+  Uses current authenticated actor from session/claims.
+  Domain method receives loaded domain actor when behavior depends on actor capability.
 ```
 
-### 4.2 Authorization / Ownership
+### Authorization / ownership / data isolation
 
 Consider:
 
 ```text
-- Does selected entity belong to current account/employee scope?
-- What is not-owned behavior: 404, 403 or 422 by current L1 convention?
-- Are cross-account rows excluded from list/read models?
-- Does employee action require assignment/started-by/current employee ownership?
+- owned account resource;
+- not-owned resource handling;
+- cross-account data exposure;
+- employee access boundary;
+- request belongs to applicant/client context.
 ```
 
-Do not model ownership only in the UI. Server/domain/application remains source of truth.
+### Antiforgery / browser unsafe requests
 
-### 4.3 Antiforgery / Browser Unsafe Requests
-
-Applies to browser-origin unsafe API requests:
+Applies to browser unsafe methods:
 
 ```text
 POST
 PUT
 PATCH
 DELETE
-multipart/form-data command uploads
+multipart/document command upload
 ```
 
 Use:
@@ -111,254 +77,216 @@ Use:
 planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
 ```
 
-Draft note pattern:
+Draft note shape:
 
 ```text
-Unsafe browser command uses shared API helper protected by CC-CSRF-001.
-This slice does not implement local antiforgery mechanics.
+Antiforgery / browser unsafe request:
+  Applies.
+  Unsafe browser API request must use shared antiforgery helper.
+  Server normalization is owned by CC-CSRF-001.
+  Internal marker:
+    antiforgery-specific framework failed result, preferably IAntiforgeryValidationFailedResult.
+  Public client marker:
+    ProblemDetails.Extensions["code"] = security.antiforgery.validation.failed.
+  Do not infer CSRF from generic 400/BadRequest.
+  Do not use FluentValidation/ServerValidationError/errors[] for CSRF marker.
+  No blind unsafe auto-replay after token refresh.
 ```
 
-Safe/read GET endpoints do not require antiforgery token by default, but still require auth/authorization when protected.
-
-### 4.4 Request Validation / ProblemDetails
-
-Use:
+For read-only safe GET:
 
 ```text
-planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
-planning/api/api-error-contract.md
+Antiforgery / browser unsafe request:
+  Not applicable because this slice is safe/read-only GET.
 ```
+
+### Request validation / ProblemDetails
 
 Consider:
 
 ```text
 - DTO/body/query/route shape validation;
-- branch/discriminator rules;
-- mutually exclusive fields;
-- API field names in errors;
-- business/domain validation vs request-shape validation;
-- native ProblemDetails + shared errors extension.
+- FluentValidation ownership;
+- application/domain errors;
+- 422 validation ProblemDetails;
+- stable error codes.
 ```
 
-### 4.5 OpenAPI / Generated Artifacts
-
-Use:
+Important distinction:
 
 ```text
-planning/api/generated-artifact-check-workflow.md
-planning/api/openapi-contract-generation.md
-planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
+Antiforgery failure is 400 ProblemDetails with top-level code.
+DTO validation is 422 ProblemDetails and must not be mislabeled as CSRF.
 ```
+
+### OpenAPI / generated artifacts
 
 Consider:
 
 ```text
-- Does this slice add/change an endpoint or DTO?
-- Are generated TypeScript types needed before client implementation?
-- Do not invent generated operation ids before generation.
-- Do not manually edit Shared/openapi.json or generated TypeScript types.
+- endpoint/DTO/status changes;
+- generated OpenAPI;
+- generated TypeScript;
+- generated constants/error codes.
 ```
 
-### 4.6 Generated Constants / Error Codes
-
-Use:
+Rule:
 
 ```text
-planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
+Generated artifacts come from repo generation commands.
+Do not hand-edit generated files.
 ```
+
+### Transaction / atomicity / no partial write
 
 Consider:
 
 ```text
-- new stable error code?
-- status enum labels shared with client?
-- client-facing constants used for rendering or branching?
+- multiple aggregates;
+- multiple repositories;
+- request + exchange orchestration;
+- applicant + request creation;
+- no orphan rows;
+- SaveChanges boundary.
 ```
 
-### 4.7 Transaction / Atomicity / No Partial Write
+### No-mutation / existing data safety
 
 Consider:
 
 ```text
-- Does command write multiple aggregates/entities?
-- Is one SaveChanges enough or is explicit transaction needed?
-- What happens if second write fails?
-- Does command leave orphan rows on failure?
+- existing requests not relinked/recreated;
+- unrelated rows unchanged;
+- old default/current row not deleted;
+- proposal replacement is superseded, not rejected;
+- read endpoints do not mutate or repair state.
 ```
 
-Example:
-
-```text
-New ApplicantParty + Request creation is one user intent and must be atomic.
-Final refusal orchestration changes Exchange and Request through application service in one transaction.
-```
-
-### 4.8 No-Mutation / Existing Data Safety
+### Idempotency / retry / double-submit
 
 Consider:
 
 ```text
-- Existing requests must not be relinked/re-written by ApplicantParty default changes.
-- Read endpoints must not repair/mutate state.
-- Failed commands must leave persisted state unchanged.
-- Other types/rows must remain unchanged.
+- command safe if submitted twice;
+- already-current/default state;
+- already-started review;
+- already-accepted or finally-refused exchange;
+- no blind replay after token refresh.
 ```
 
-No-mutation is often a test-plan category, not a scenario behavior item unless scenario sources say so.
-
-### 4.9 Idempotency / Double Submit / Retry
+### Concurrency / stale state
 
 Consider:
 
 ```text
-- Is the command safe if user clicks twice?
-- Should selecting already-current/default be success/no-op?
-- Is a retry safe after network failure?
-- Does client prevent duplicate submit while pending?
-- Does shared CSRF helper avoid blind unsafe replay?
+- two employees attempt to start same review;
+- same review completed by another employee;
+- proposal version stale when client responds;
+- stale current/default view;
+- optimistic concurrency or domain precondition failure.
 ```
 
-Idempotency is not automatic. State it explicitly.
+Do not invent full locking strategy unless the slice owns it. Mark open/future if needed.
 
-### 4.10 Concurrency / Stale State
+### File / document boundary
 
 Consider:
 
 ```text
-- Another employee may start review before current employee clicks Start.
-- Another employee may complete/refuse/send proposal before stale page action.
-- ApplicantParty default may change after page load.
-- Version exchange state may move between AwaitingClientConfirmation and AwaitingEmployeeResponse.
+- uploaded bytes vs domain document reference;
+- metadata validation;
+- storage adapter outside domain;
+- AgreementDocumentRef stores reference metadata only;
+- file scanning/size/content-type policy.
 ```
 
-Server/domain remains source of truth. Client handles rejected/stale action with visible feedback.
-
-### 4.11 File / Document Boundary
-
-For agreement proposal documents use domain direction:
-
-```text
-AgreementDocumentRef = metadata reference to accepted file/document
-not bytes
-not storage adapter
-not upload service
-```
+### Clock / audit actor fields
 
 Consider:
 
 ```text
-- file upload/storage belongs to infrastructure/application;
-- domain stores AgreementDocumentRef;
-- upload commands may need antiforgery, size/content-type validation, ProblemDetails mapping;
-- do not place blob bytes in domain draft or scenario flow.
+- StartedAt;
+- CompletedAt;
+- FinalRefusedAt;
+- SenderId;
+- StartedByEmployeeId;
+- CompletedByEmployeeId;
+- current actor from auth context.
 ```
 
-### 4.12 Clock / Audit Actor Fields
+### Privacy / PII / display minimization
 
 Consider:
 
 ```text
-- CreatedAt / StartedAt / CompletedAt / RefusedAt from application clock;
-- StartedByEmployeeId / CompletedByEmployeeId / SenderId / FinalRefusedByEmployeeId from domain actor;
-- client does not choose authoritative server timestamps;
-- API/client may display these values but not author them unless explicitly part of input.
+- applicant contact data;
+- employee dashboard data;
+- file metadata;
+- cross-account leakage;
+- unnecessary ids in client response.
 ```
 
-### 4.13 Privacy / Cross-Account Data Exposure
+### Client feedback / accessibility
 
 Consider:
 
 ```text
-- Do not expose ClientAccountId when response does not need it.
-- List reads return only current account/employee scope.
-- Details endpoint hides not-owned resources.
-- Employee dashboards must not expose client/private data beyond scenario need.
-- Applicant/contact data is PII; response DTOs should be minimal.
+- visible pending/success/error state;
+- recoverable security/session failure;
+- explicit retry;
+- field vs root errors;
+- keyboard/button disabled state.
 ```
 
-### 4.14 Client Feedback / Accessibility
-
-Client sidecars consider:
-
-```text
-- loading/empty/error states;
-- disabled/pending state for commands;
-- field/root ProblemDetails mapping;
-- keyboard/button accessibility;
-- visible success/failure feedback;
-- not-found/unauthorized navigation behavior.
-```
-
-Use client cross-cutting docs for detailed UI conventions.
-
-### 4.15 Testing Responsibility Split
-
-Use:
-
-```text
-planning/testing/server-slice-test-plan-rules.md
-planning/testing/testing-principles.md
-planning/testing/e2e-testing-workflow.md
-```
+### Testing responsibility split
 
 Consider:
 
 ```text
-- API boundary/access tests;
+- API boundary tests;
 - DB state transition tests;
 - no-mutation tests;
-- regression guards;
 - client component tests;
 - shared API/helper tests;
-- E2E visible outcomes only;
-- what not to test.
+- E2E visible outcome only;
+- cross-cutting tests owned by cross-cutting slice.
 ```
 
-## 5. Drafting Examples
+## 3. Required Draft Section Template
 
-### Backend command example
+Use this in slice drafts:
 
 ```text
 ## Cross-Cutting Concerns / Considerations
 
-| Concern | Applies? | Consideration / owner |
-|---|---:|---|
-| Auth/session/account context | yes | Server derives current ClientAccountId from L1 auth claims. |
-| Authorization/ownership | yes | Selected ApplicantParty must belong to current account. |
-| Antiforgery / browser unsafe requests | yes | POST is protected by CC-CSRF-001 through shared browser unsafe request support. |
-| Request validation / ProblemDetails | yes | Route id must be valid; ownership/business failures map to L1 ProblemDetails convention. |
-| OpenAPI / generated artifacts | yes | Endpoint changes require OpenAPI + generated TS workflow. |
-| Transaction / atomicity | yes | Selected/default switch persists selected + previous same-type changes together. |
-| No-mutation / existing data safety | yes | Existing requests are not relinked. Other ApplicantParty types unchanged. |
-| Idempotency / double-submit | yes | Selected already current/default may be idempotent success/no-op. |
-| Testing responsibility split | yes | API + DB state assertions; no repository mock call-order proof. |
+| Concern | Applies? | Decision / owner |
+|---|---|---|
+| Auth/session/actor context | yes/no | ... |
+| Authorization/ownership | yes/no | ... |
+| Antiforgery / unsafe request | yes/no | ... |
+| Request validation / ProblemDetails | yes/no | ... |
+| OpenAPI / generated artifacts | yes/no | ... |
+| Transaction / atomicity | yes/no | ... |
+| No-mutation / existing data safety | yes/no | ... |
+| Idempotency / retry / double-submit | yes/no | ... |
+| Concurrency / stale state | yes/no | ... |
+| File/document boundary | yes/no | ... |
+| Clock/audit actor fields | yes/no | ... |
+| Privacy / data exposure | yes/no | ... |
+| Client feedback / accessibility | yes/no | ... |
+| Testing responsibility split | yes/no | ... |
 ```
 
-### Client command example
+Keep entries short. Put details in slice-specific sections only when the concern actually affects the slice design.
+
+## 4. Do Not
 
 ```text
-## Cross-Cutting Concerns / Considerations
-
-| Concern | Applies? | Consideration / owner |
-|---|---:|---|
-| Auth/session/account context | yes | Page uses current session branch and protected API behavior. |
-| Antiforgery / browser unsafe requests | yes | Feature uses shared API wrapper; no local token handling. |
-| OpenAPI / generated artifacts | yes | Exact operation/schema names come from generated types. |
-| Idempotency / double-submit | yes | Button disabled/pending while mutation runs. |
-| Client feedback / accessibility | yes | Pending/error feedback near action; current/default action hidden/disabled for current card. |
-| E2E | yes | Assert visible highlighted card changes, not query invalidation internals. |
-```
-
-## 6. Final Check
-
-Before finalizing a draft:
-
-```text
-[ ] Cross-Cutting Concerns / Considerations section exists.
-[ ] Each relevant concern says applies / not applicable / future owner.
-[ ] Scenario Flow is not polluted with implementation details.
-[ ] Behavior Coverage uses source items only.
-[ ] API/generated artifacts are not manually invented.
-[ ] Unsafe browser commands mention CC-CSRF-001.
-[ ] Tests are split by proof type.
+- Do not put this checklist into Scenario Flow.
+- Do not turn every concern into a behavior item.
+- Do not duplicate cross-cutting tests in every business slice.
+- Do not implement CSRF locally inside business handlers/domain.
+- Do not infer antiforgery failure from generic 400/BadRequest.
+- Do not confuse public client marker with internal framework marker.
+- Do not hand-edit generated artifacts.
 ```

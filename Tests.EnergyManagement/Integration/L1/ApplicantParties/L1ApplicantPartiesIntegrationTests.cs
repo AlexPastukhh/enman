@@ -25,7 +25,8 @@ public sealed class L1ApplicantPartiesIntegrationTests : L1IntegrationTestBase
         var client = _factory.CreateClient();
         await LoginAsync(client, email, ValidPassword);
 
-        var response = await client.PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/applicant-parties/individual",
             ValidApplicantPartyDto());
 
@@ -153,7 +154,8 @@ public sealed class L1ApplicantPartiesIntegrationTests : L1IntegrationTestBase
         var account = await RegisterAccountAsync();
         var first = await CreateApplicantPartyAsync(account.AccountId);
 
-        var secondResponse = await AuthenticatedL1Client(account.AccountId).PostAsJsonAsync(
+        var secondResponse = await PostAsJsonWithCsrfAsync(
+            AuthenticatedL1Client(account.AccountId),
             "/api/l1/applicant-parties/individual",
             ValidApplicantPartyDto(
                 firstName: "Jane",
@@ -196,9 +198,10 @@ public sealed class L1ApplicantPartiesIntegrationTests : L1IntegrationTestBase
     [Fact]
     public async Task MakeApplicantPartyCurrentDefault_WithoutAuth_ReturnsUnauthorized()
     {
-        var response = await _factory.CreateClient().PostAsync(
-            "/api/l1/applicant-parties/1/make-current-default",
-            content: null);
+        var client = _factory.CreateClient();
+        var response = await PostWithCsrfAsync(
+            client,
+            "/api/l1/applicant-parties/1/make-current-default");
 
         await HttpResponseAssertions.For(response, _output)
             .ShouldBeStatusCode((int)HttpStatusCode.Unauthorized);
@@ -378,7 +381,8 @@ public sealed class L1ApplicantPartiesIntegrationTests : L1IntegrationTestBase
         var client = AuthenticatedL1Client(account.AccountId);
         var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
 
-        var response = await client.PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/applicant-parties/individual",
             new L1CreateIndividualApplicantPartyDto(
                 new L1FullNameDto("", MiddleName, LastName),
@@ -398,7 +402,8 @@ public sealed class L1ApplicantPartiesIntegrationTests : L1IntegrationTestBase
         var account = await RegisterAccountAsync();
         var first = await CreateApplicantPartyAsync(account.AccountId);
 
-        var secondResponse = await AuthenticatedL1Client(account.AccountId).PostAsJsonAsync(
+        var secondResponse = await PostAsJsonWithCsrfAsync(
+            AuthenticatedL1Client(account.AccountId),
             "/api/l1/applicant-parties/individual",
             ValidApplicantPartyDto(
                 firstName: "Jane",
@@ -431,7 +436,8 @@ public sealed class L1ApplicantPartiesIntegrationTests : L1IntegrationTestBase
     {
         var client = AuthenticatedL1Client(989_898);
 
-        var response = await client.PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/applicant-parties/individual",
             ValidApplicantPartyDto());
 
@@ -446,7 +452,8 @@ public sealed class L1ApplicantPartiesIntegrationTests : L1IntegrationTestBase
         var client = AuthenticatedL1Client(account.AccountId);
         var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
 
-        var response = await client.PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/applicant-parties/individual",
             new L1CreateIndividualApplicantPartyDto(
                 null!,
@@ -460,4 +467,3 @@ public sealed class L1ApplicantPartiesIntegrationTests : L1IntegrationTestBase
     }
 
 }
-

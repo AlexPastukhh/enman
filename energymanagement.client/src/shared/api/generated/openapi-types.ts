@@ -4,6 +4,22 @@
  */
 
 export interface paths {
+    "/api/antiforgery/token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetAntiforgeryToken"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/auth/registerIndividual": {
         parameters: {
             query?: never;
@@ -343,6 +359,9 @@ export interface components {
             building?: string | null;
             apartment?: string | null;
         };
+        AntiforgeryTokenResponse: {
+            requestToken?: string | null;
+        };
         CreateIndividualRequestDto: {
             requestDetails?: string | null;
             address?: components["schemas"]["AddressDto"];
@@ -497,6 +516,39 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    GetAntiforgeryToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["AntiforgeryTokenResponse"];
+                    "application/json": components["schemas"]["AntiforgeryTokenResponse"];
+                    "text/json": components["schemas"]["AntiforgeryTokenResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
     registerIndividual: {
         parameters: {
             query?: never;

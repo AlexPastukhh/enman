@@ -1,6 +1,7 @@
 using System.Data;
 using System.Net.Http.Json;
 using System.Security.Claims;
+using EnergyManagement.Server.Api.Security;
 using EnergyManagement.Server.L1.Api;
 using EnergyManagement.Server.L1.Application.Commands;
 using EnergyManagement.Server.L1.Application.Security;
@@ -26,7 +27,9 @@ public abstract class L1IntegrationTestBase
 
     protected async Task<L1RegisterClientAccountResponse> RegisterAccountAsync(string? email = null)
     {
-        var response = await _factory.CreateClient().PostAsJsonAsync(
+        var client = _factory.CreateClient();
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/auth/register",
             new L1RegisterClientAccountDto(email ?? UniqueEmail(), ValidPassword));
 
@@ -41,7 +44,8 @@ public abstract class L1IntegrationTestBase
         string email,
         string password)
     {
-        var response = await client.PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
             "/api/l1/auth/login",
             new L1LoginRequest(email, password));
 
@@ -119,7 +123,8 @@ public abstract class L1IntegrationTestBase
         long accountId,
         L1CreateIndividualApplicantPartyDto dto)
     {
-        var response = await AuthenticatedL1Client(accountId).PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            AuthenticatedL1Client(accountId),
             "/api/l1/applicant-parties/individual",
             dto);
 
@@ -133,9 +138,9 @@ public abstract class L1IntegrationTestBase
         long accountId,
         long applicantPartyId)
     {
-        return AuthenticatedL1Client(accountId).PostAsync(
-            $"/api/l1/applicant-parties/{applicantPartyId}/make-current-default",
-            content: null);
+        return PostWithCsrfAsync(
+            AuthenticatedL1Client(accountId),
+            $"/api/l1/applicant-parties/{applicantPartyId}/make-current-default");
     }
 
     protected async Task MakeApplicantPartyCurrentDefaultAsync(
@@ -155,7 +160,8 @@ public abstract class L1IntegrationTestBase
         existingApplicantPartyId ??= await GetLatestApplicantPartyIdForAccountAsync(accountId)
             ?? throw new InvalidOperationException("Could not find applicant party for request helper.");
 
-        var response = await AuthenticatedL1Client(accountId).PostAsJsonAsync(
+        var response = await PostAsJsonWithCsrfAsync(
+            AuthenticatedL1Client(accountId),
             "/api/l1/requests",
             ValidConnectionRequestDto(
                 details: details,
@@ -164,6 +170,44 @@ public abstract class L1IntegrationTestBase
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
         return response;
+    }
+
+    protected async Task<HttpResponseMessage> PostAsJsonWithCsrfAsync<TValue>(
+        HttpClient client,
+        string requestUri,
+        TValue value)
+    {
+        var token = await GetAntiforgeryTokenAsync(client);
+        using var request = new HttpRequestMessage(HttpMethod.Post, requestUri)
+        {
+            Content = JsonContent.Create(value)
+        };
+        request.Headers.Add(AntiforgeryConstants.HeaderName, token);
+
+        return await client.SendAsync(request);
+    }
+
+    protected async Task<HttpResponseMessage> PostWithCsrfAsync(
+        HttpClient client,
+        string requestUri)
+    {
+        var token = await GetAntiforgeryTokenAsync(client);
+        using var request = new HttpRequestMessage(HttpMethod.Post, requestUri);
+        request.Headers.Add(AntiforgeryConstants.HeaderName, token);
+
+        return await client.SendAsync(request);
+    }
+
+    protected async Task<string> GetAntiforgeryTokenAsync(HttpClient client)
+    {
+        var response = await client.GetAsync("/api/antiforgery/token");
+        await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
+
+        var token = await response.Content.ReadFromJsonAsync<AntiforgeryTokenResponse>()
+            ?? throw new InvalidOperationException("Antiforgery token response body was empty.");
+
+        token.RequestToken.Should().NotBeNullOrWhiteSpace();
+        return token.RequestToken;
     }
 
     protected HttpClient AuthenticatedL1Client(
@@ -546,4 +590,3 @@ public abstract class L1IntegrationTestBase
         string City,
         string Street);
 }
-

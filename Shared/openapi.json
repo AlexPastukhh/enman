@@ -5,6 +5,56 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/antiforgery/token": {
+      "get": {
+        "tags": [
+          "Antiforgery"
+        ],
+        "operationId": "GetAntiforgeryToken",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AntiforgeryTokenResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AntiforgeryTokenResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AntiforgeryTokenResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/auth/registerIndividual": {
       "post": {
         "tags": [
@@ -1126,6 +1176,16 @@
             "nullable": true
           },
           "apartment": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AntiforgeryTokenResponse": {
+        "type": "object",
+        "properties": {
+          "requestToken": {
             "type": "string",
             "nullable": true
           }

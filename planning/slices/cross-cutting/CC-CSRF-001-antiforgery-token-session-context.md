@@ -1,14 +1,14 @@
 # CC-CSRF-001 — Antiforgery Token / Session Context
 
-Status: implementation-ready draft / consumer and drafting considerations synchronized  
-Slice type: cross-cutting security/support slice  
-Layers: Server API boundary + framework filters + client shared API/helper + auth/session integration + tests  
+Status: implementation-ready draft / antiforgery marker normalization clarified  
+Slice type: cross-cutting slice  
+Layers: Server API boundary + ASP.NET Core antiforgery + result filters + client shared API/helper + tests  
 Depends on: ASP.NET Core cookie authentication, API error contract, generated client constants, client request helper architecture  
-Used by: browser unsafe API requests, auth/session flows, protected command slices, file/document command uploads
+Used by: browser unsafe API requests, auth/session flows, protected command slices, multipart/document command flows
 
 ## 1. Purpose
 
-Provide antiforgery/CSRF protection for cookie-authenticated browser API commands and normalize framework-level antiforgery failures into the project API error contract.
+Provide antiforgery/CSRF protection for cookie-authenticated browser API commands and normalize framework-level antiforgery failures into project API error contract.
 
 This slice covers:
 
@@ -16,69 +16,68 @@ This slice covers:
 token issue
 token attach
 unsafe request validation
-session-context token refresh/reset
+session-context token refresh
 antiforgery failure ProblemDetails normalization
-client recovery behavior without blind unsafe replay
+client recovery behavior
 server/client tests
-consumer rules for business/client slices
 ```
 
-## 2. Why This Is Cross-Cutting
+This slice is cross-cutting. Business slices must consume the shared behavior and must not implement local CSRF mechanics in domain/application logic.
+
+## 2. Why This Is A Cross-Cutting Slice
 
 This is not an individual business scenario slice.
 
-It protects many browser-origin commands:
+It protects many browser command slices and auth/session flows.
+
+Observable/support behavior:
 
 ```text
-register/login/logout
-create/edit/delete commands
-make-default/current commands
-request review commands
-agreement proposal commands
-final refusal commands
-multipart/file/document command uploads
+- browser client can obtain antiforgery request token;
+- unsafe browser API requests without valid token are rejected;
+- safe requests do not require request token by default;
+- client helper attaches token to unsafe requests;
+- client refetches/resets token on session context changes;
+- antiforgery failure is distinguishable from ordinary DTO validation failures;
+- client can recover without blindly replaying unsafe command.
 ```
 
-Business slices must consume shared CSRF support instead of implementing local token mechanics.
-
-## 3. Scope And Non-Scope
-
-In scope:
+Implementation path:
 
 ```text
-- same-origin token issue path;
-- shared request-token storage/refetch behavior;
-- shared unsafe request helper attaching token;
-- server validation before business action logic;
-- distinguishable ProblemDetails for CSRF failures;
-- no blind replay of unsafe commands;
-- server/client tests for CSRF support behavior.
+- configure antiforgery services/options;
+- token issue endpoint;
+- global unsafe request validation;
+- always-run result filter for antiforgery failure normalization;
+- shared client antiforgery token helper;
+- shared unsafe request helper/header attach;
+- stable public client-facing ProblemDetails code;
+- server integration tests;
+- client helper tests;
+- later E2E smoke coverage.
 ```
 
-Out of scope:
+Independent testability:
 
 ```text
-- business command behavior;
-- aggregate/domain CSRF checks;
-- per-slice local CSRF token handling;
-- replacing auth/session model;
-- blob/file storage implementation;
-- exhaustive E2E coverage for every unsafe endpoint.
+- server integration tests can call unsafe endpoints with missing/invalid/valid token;
+- client tests can cover token fetch/store/attach/refetch behavior without business slice UI;
+- business slices rely on this cross-cutting support for generic missing/invalid token branches.
 ```
 
-## 4. Inputs / Sources
+## 3. Inputs / Sources
 
 | Source | Purpose |
 |---|---|
-| `planning/diagrams/scenario-text-specs/scenario-browser-security-addendum.md` | Cross-cutting browser security requirements. |
-| `planning/diagrams/scenario-behavior-items/CC-CSRF-001-antiforgery-behavior-items.md` | Security-derived behavior items. |
-| `planning/api/api-error-contract.md` | ProblemDetails / ServerError contract. |
-| `planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md` | Generated client-facing error code/constants strategy. |
-| `planning/slices/cross-cutting/cross-cutting-concerns-drafting-checklist.md` | Consumer concern checklist for business/client drafts. |
-| `planning/testing/testing-principles.md` | Test layer boundaries. |
-| `planning/testing/e2e-testing-workflow.md` | Later E2E coverage. |
+| `planning/diagrams/scenario-text-specs/scenario-browser-security-addendum.md` | Cross-cutting browser security requirements |
+| `planning/diagrams/scenario-behavior-items/CC-CSRF-001-antiforgery-behavior-items.md` | Security-derived behavior items |
+| `planning/slices/shared/antiforgery-token-session-context.md` | Existing shared support note, if present |
+| `planning/api/api-error-contract.md` | ProblemDetails / API error contract |
+| `planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md` | Generated client-facing error code/constants strategy |
+| `planning/testing/testing-principles.md` | Test layer boundaries |
+| `planning/testing/e2e-testing-workflow.md` | Later E2E coverage |
 
-## 5. Concern-Derived Behavior Items
+## 4. Concern-Derived Behavior Items
 
 | ID | Behavior | Concern flow step |
 |---|---|---|
@@ -86,10 +85,11 @@ Out of scope:
 | CC-CSRF-SRV-002 | Server validates unsafe browser API requests before business action logic. | F03 |
 | CC-CSRF-SRV-003 | Safe/read requests do not require request token by default. | F03 |
 | CC-CSRF-SRV-004 | Token endpoint must not become uncontrolled cross-site token bootstrap. | F01 |
+| CC-CSRF-SRV-005 | Server distinguishes antiforgery-specific framework failure from generic 400/BadRequest. | F04 |
 | CC-CSRF-CL-001 | Client fetches and stores antiforgery request token. | F01 |
 | CC-CSRF-CL-002 | Client attaches token to unsafe requests through shared helper. | F02 |
 | CC-CSRF-CL-003 | Client refetches/resets token after login/logout/session context change. | F05 |
-| CC-CSRF-ERR-001 | Antiforgery failure becomes distinguishable ProblemDetails with stable code. | F04 |
+| CC-CSRF-ERR-001 | Antiforgery failure becomes distinguishable ProblemDetails with stable public `code`. | F04 |
 | CC-CSRF-ERR-002 | Client treats antiforgery failure as recoverable security/session failure. | F06 |
 | CC-CSRF-NW-001 | Client does not blindly auto-replay unsafe command after token refresh. | F06 |
 | CC-CSRF-TEST-001 | Server tests cover missing token failure. | F07 |
@@ -98,97 +98,237 @@ Out of scope:
 | CC-CSRF-TEST-004 | Client tests cover token helper behavior. | F07 |
 | CC-CSRF-TEST-005 | Later E2E covers login/session plus unsafe command success. | F07 |
 
-## 6. Security Concern Flow
+## 5. Marker Model
+
+Antiforgery normalization uses two different markers.
+
+### 5.1 Internal server marker
+
+The result filter must detect the framework antiforgery failure marker/result.
+
+Preferred direction:
+
+```csharp
+context.Result is IAntiforgeryValidationFailedResult
+```
+
+or the exact ASP.NET Core framework antiforgery failed result type available in the project version.
+
+Critical rule:
+
+```text
+Do not infer antiforgery failure from generic 400.
+Do not infer antiforgery failure from BadRequestResult.
+Do not convert ordinary DTO validation failures into CSRF failures.
+```
+
+If `IAntiforgeryValidationFailedResult` is unavailable in the current ASP.NET Core namespace/version, the implementation agent must inspect the actual result produced by ASP.NET Core antiforgery validation and match the antiforgery-specific type/marker.
+
+It must not fall back to generic `BadRequestResult`.
+
+### 5.2 Public client marker
+
+The public API marker is a top-level ProblemDetails extension:
+
+```text
+ProblemDetails.Extensions["code"] = "security.antiforgery.validation.failed"
+```
+
+Target JSON shape:
+
+```json
+{
+  "type": "https://enman.local/problems/security/antiforgery-validation-failed",
+  "title": "Antiforgery validation failed",
+  "status": 400,
+  "detail": "Antiforgery token is missing, expired, or invalid.",
+  "code": "security.antiforgery.validation.failed"
+}
+```
+
+Do not use these for CSRF normalization:
+
+```text
+- FluentValidation ValidationFailure;
+- legacy ServerValidationError;
+- ProblemDetails errors[] as the primary marker;
+- generic BadRequest marker.
+```
+
+Reason:
+
+```text
+- client can distinguish CSRF failure from DTO validation/business failures with one stable predicate;
+- CSRF is not field-level DTO validation;
+- 422 validation ProblemDetails must remain separate;
+- ordinary 400/422 problems must not be mislabeled as security.antiforgery.validation.failed.
+```
+
+Client predicate direction:
+
+```ts
+if (
+  problem.status === 400
+  && problem.code === "security.antiforgery.validation.failed"
+) {
+  await refreshAntiforgeryToken();
+  throw new AntiforgeryTokenExpiredError();
+}
+```
+
+Important:
+
+```text
+refresh token: yes
+auto-replay unsafe request: no
+```
+
+The shared helper may refresh token and surface a recoverable error. The user/action layer must intentionally retry the unsafe command.
+
+## 6. Coverage Overview
+
+| Behavior item | Concern flow | Implementation flow | Test coverage | Status |
+|---|---|---|---|---|
+| CC-CSRF-SRV-001 | F01 | I02 | token endpoint integration test | planned |
+| CC-CSRF-SRV-002 | F03 | I03 | missing/invalid token integration tests | planned |
+| CC-CSRF-SRV-003 | F03 | I03 | safe GET no-token test | planned |
+| CC-CSRF-SRV-004 | F01 | I02 | config/security review + integration constraints | planned |
+| CC-CSRF-SRV-005 | F04 | I04 | generic 400/DTO validation is not mapped to CSRF | planned |
+| CC-CSRF-CL-001 | F01 | I05 | client helper tests | planned |
+| CC-CSRF-CL-002 | F02 | I06 | client request helper tests | planned |
+| CC-CSRF-CL-003 | F05 | I07 | login/logout/session helper tests | planned |
+| CC-CSRF-ERR-001 | F04 | I04 | ProblemDetails `code` integration tests | planned |
+| CC-CSRF-ERR-002 | F06 | I08 | client error handling tests | planned |
+| CC-CSRF-NW-001 | F06 | I08 | no blind replay client tests | planned |
+| CC-CSRF-TEST-001 | F07 | I09 | integration test | planned |
+| CC-CSRF-TEST-002 | F07 | I09 | integration test | planned |
+| CC-CSRF-TEST-003 | F07 | I09 | integration test | planned |
+| CC-CSRF-TEST-004 | F07 | I10 | client tests | planned |
+| CC-CSRF-TEST-005 | F07 | I11 | later E2E | planned later |
+
+## 7. Security Concern Flow
+
+This is the required behavior flow.
+
+Implementation details come after this section.
 
 ### F01 — Token is available to same-origin browser client
 
 The browser client must be able to obtain an antiforgery request token.
 
+Covers:
+
+```text
+CC-CSRF-SRV-001
+CC-CSRF-SRV-004
+CC-CSRF-CL-001
+```
+
 Requirements:
 
 ```text
-- token issue path is available to browser client;
+- token issue path is available to the browser client;
 - token issue does not create uncontrolled cross-site token bootstrap;
 - client stores token in runtime/session client state;
-- token can be fetched before anonymous unsafe auth commands such as register/login;
-- login success can refresh token for authenticated session context.
+- token can be fetched before anonymous unsafe auth commands such as register/login.
 ```
 
-### F02 — Unsafe browser request carries token
+### F02 — Unsafe request carries request token
 
-Unsafe browser API requests include the request token through shared request infrastructure.
+Unsafe browser API requests must include the antiforgery request token through shared client request infrastructure.
 
-Unsafe means:
+Covers:
 
 ```text
-POST
-PUT
-PATCH
-DELETE
-multipart/form-data command uploads
+CC-CSRF-CL-002
 ```
 
 Requirements:
 
 ```text
 - feature/business slices do not manually attach token;
-- shared API request helper attaches token to unsafe requests;
-- safe/read GET requests are not forced to attach token by default.
+- shared API request helper attaches token to POST/PUT/PATCH/DELETE;
+- safe/read requests are not forced to attach token unless a later decision requires it.
 ```
 
 ### F03 — Server validates unsafe request before business action
 
 Server rejects unsafe browser API requests without valid token before business command logic executes.
 
+Covers:
+
+```text
+CC-CSRF-SRV-002
+CC-CSRF-SRV-003
+```
+
 Requirements:
 
 ```text
 - unsafe methods require valid token;
-- safe/read methods do not require token by default;
-- failed antiforgery validation prevents action business logic from running;
-- business handlers/domain methods do not contain CSRF logic.
+- safe methods do not require token by default;
+- failed antiforgery validation prevents action business logic from running.
 ```
 
 ### F04 — Antiforgery failure is distinguishable API failure
 
-Antiforgery failure must not look like ordinary DTO/domain validation.
+Antiforgery failure must be distinguishable from ordinary DTO validation or domain errors.
+
+Covers:
+
+```text
+CC-CSRF-SRV-005
+CC-CSRF-ERR-001
+```
 
 Required response direction:
 
 ```text
-native ProblemDetails
-+ shared errors extension
-+ stable client-facing error code
+HTTP 400
+ProblemDetails
+Content-Type: application/problem+json
+top-level extension:
+  code = security.antiforgery.validation.failed
 ```
 
-Candidate error code:
+Internal/public distinction:
 
 ```text
-security.antiforgery.validation.failed
-```
+Internal server detection:
+  antiforgery-specific framework result marker/type.
 
-Critical rule:
-
-```text
-Do not infer CSRF failure from generic HTTP 400.
+Public client marker:
+  ProblemDetails.Extensions["code"].
 ```
 
 ### F05 — Session context change requires token refresh/reset
 
 Login/logout/session reset changes the effective security context.
 
+Covers:
+
+```text
+CC-CSRF-CL-003
+```
+
 Requirements:
 
 ```text
 - after login, client refetches token;
 - after logout/session reset, client clears or refetches token;
-- stale/mismatched token failure is recoverable;
-- register/login may need anonymous-session token before authentication.
+- stale/mismatched token failure is recoverable.
 ```
 
 ### F06 — Client recovers without blind unsafe replay
 
 Client can recover from antiforgery failure but does not automatically replay the unsafe command.
+
+Covers:
+
+```text
+CC-CSRF-ERR-002
+CC-CSRF-NW-001
+```
 
 Requirements:
 
@@ -196,27 +336,43 @@ Requirements:
 - client may refetch token;
 - client shows recoverable session/security message;
 - user intentionally retries unsafe command;
-- helper must not silently replay POST/PUT/PATCH/DELETE or multipart command uploads.
+- helper must not silently replay POST/PUT/PATCH/DELETE.
 ```
 
 ### F07 — Behavior is independently testable
 
-Cross-cutting CSRF support must be tested independently from individual business slices.
+Cross-cutting behavior must be tested independently from individual business slices.
+
+Covers:
+
+```text
+CC-CSRF-TEST-001
+CC-CSRF-TEST-002
+CC-CSRF-TEST-003
+CC-CSRF-TEST-004
+CC-CSRF-TEST-005
+```
 
 Requirements:
 
 ```text
 - server integration tests cover missing/invalid/valid token behavior;
 - client tests cover fetch/store/attach/refetch/no-replay helper behavior;
-- later E2E covers one real login/session + unsafe command flow;
-- business slices rely on CC-CSRF tests unless they have special security behavior.
+- later E2E covers one real login/session + unsafe command flow.
 ```
 
-## 7. Implementation Flow
+## 8. Implementation Flow
 
-Implementation flow explains how the concern flow is implemented. It must not be copied into business Scenario Flow.
+Implementation flow explains how the concern flow is implemented.
 
 ### I01 — Configure antiforgery services/options
+
+Concern flow:
+
+```text
+F02
+F03
+```
 
 Implementation direction:
 
@@ -229,10 +385,16 @@ make header/error-code names available through shared constants if client depend
 Open detail:
 
 ```text
-exact header name, assumed candidate `X-CSRF-TOKEN` until implementation decides.
+exact header name, currently assumed X-CSRF-TOKEN.
 ```
 
 ### I02 — Token issue endpoint
+
+Concern flow:
+
+```text
+F01
+```
 
 Implementation direction:
 
@@ -248,7 +410,21 @@ Server behavior:
 - returns request token to same-origin browser client.
 ```
 
+Important boundary:
+
+```text
+Token endpoint is support/security infrastructure,
+not business scenario endpoint.
+```
+
 ### I03 — Unsafe request validation
+
+Concern flow:
+
+```text
+F02
+F03
+```
 
 Implementation direction:
 
@@ -257,22 +433,88 @@ apply global antiforgery validation to browser unsafe API requests,
 for example through AutoValidateAntiforgeryToken or equivalent global validation.
 ```
 
-### I04 — Normalize antiforgery failure
+Important boundary:
+
+```text
+Validation runs before action business logic.
+Business slices should not manually validate antiforgery token.
+```
+
+### I04 — Normalize antiforgery failure through always-run result filter
+
+Concern flow:
+
+```text
+F04
+```
 
 Implementation direction:
 
 ```text
-IAlwaysRunResultFilter or equivalent detects antiforgery validation failure result/marker
+IAlwaysRunResultFilter detects antiforgery-specific validation failure result/marker
 and replaces the result with project ProblemDetails.
 ```
 
-Critical decision:
+Target conceptual filter:
+
+```csharp
+public sealed class AntiforgeryProblemDetailsResultFilter
+    : IAlwaysRunResultFilter
+{
+    public void OnResultExecuting(ResultExecutingContext context)
+    {
+        if (context.Result is not IAntiforgeryValidationFailedResult)
+        {
+            return;
+        }
+
+        var problemDetails = new ProblemDetails
+        {
+            Type = "https://enman.local/problems/security/antiforgery-validation-failed",
+            Title = "Antiforgery validation failed",
+            Status = StatusCodes.Status400BadRequest,
+            Detail = "Antiforgery token is missing, expired, or invalid."
+        };
+
+        problemDetails.Extensions["code"] =
+            "security.antiforgery.validation.failed";
+
+        context.Result = new ObjectResult(problemDetails)
+        {
+            StatusCode = StatusCodes.Status400BadRequest
+        };
+    }
+
+    public void OnResultExecuted(ResultExecutedContext context)
+    {
+    }
+}
+```
+
+Critical decisions:
 
 ```text
-Filter checks antiforgery failure marker/result, not generic HTTP 400.
+- Do not infer CSRF failure from generic HTTP 400.
+- Do not match generic BadRequestResult.
+- If IAntiforgeryValidationFailedResult is unavailable, inspect and match the exact antiforgery-specific framework result type.
+- Do not use FluentValidation, legacy ServerValidationError or errors[] as the CSRF public marker.
+```
+
+Expected output:
+
+```text
+HTTP 400 ProblemDetails
+ProblemDetails.Extensions["code"] = security.antiforgery.validation.failed
 ```
 
 ### I05 — Client token fetch/store helper
+
+Concern flow:
+
+```text
+F01
+F05
+```
 
 Implementation direction:
 
@@ -288,6 +530,12 @@ Do not store token in localStorage unless separately decided.
 
 ### I06 — Client unsafe request helper attaches token
 
+Concern flow:
+
+```text
+F02
+```
+
 Implementation direction:
 
 ```text
@@ -298,6 +546,12 @@ Business feature code should call shared request helper rather than manually man
 
 ### I07 — Login/logout/session refetch integration
 
+Concern flow:
+
+```text
+F05
+```
+
 Implementation direction:
 
 ```text
@@ -306,12 +560,25 @@ logout/session reset -> clear/refetch token;
 missing token before unsafe request -> fetch token.
 ```
 
+Important:
+
+```text
+register/login may require anonymous-session token before authentication,
+then login success refreshes token for authenticated session context.
+```
+
 ### I08 — Client failure handling without blind replay
+
+Concern flow:
+
+```text
+F06
+```
 
 Implementation direction:
 
 ```text
-client recognizes antiforgery failure code;
+client recognizes ProblemDetails.code == security.antiforgery.validation.failed;
 client may refetch token;
 client displays recoverable message;
 client requires explicit user retry.
@@ -323,74 +590,43 @@ No-write/no-replay guarantee:
 unsafe command is not automatically replayed by helper after refresh.
 ```
 
-## 8. File / Multipart Command Considerations
+### I09 — Server integration tests
 
-Agreement proposal/document flows may involve file upload or file reference creation.
-
-CSRF rule:
+Concern flow:
 
 ```text
-If browser sends a multipart/form-data or upload-related command through cookie auth,
-it is still an unsafe request and must use shared CSRF-protected request infrastructure.
+F07
 ```
 
-Domain boundary:
+Test cases:
 
 ```text
-AgreementDocumentRef is document metadata/reference.
-It is not bytes and not storage adapter.
-```
-
-Drafting rule:
-
-```text
-Do not add blob/file storage mechanics to CC-CSRF.
-Only note that upload commands must be protected like other unsafe commands.
-```
-
-## 9. Consumer Rule For Business / Client Slices
-
-If a slice introduces browser unsafe API command:
-
-```text
-1. Add Cross-Cutting Concerns / Considerations section.
-2. Mark Antiforgery / browser unsafe requests as applies = yes.
-3. Link to CC-CSRF-001.
-4. State that shared request infrastructure owns token attach/refresh.
-5. Do not put CSRF mechanics in domain/aggregate behavior.
-6. Do not add per-feature token handling in client feature code.
-7. Do not duplicate missing/invalid token tests unless special security behavior exists.
-```
-
-Standard note:
-
-```text
-Unsafe browser API requests are protected by CC-CSRF-001 through shared request infrastructure.
-This slice does not implement local antiforgery mechanics.
-```
-
-For read-only slices:
-
-```text
-Safe/read GET endpoints do not require antiforgery token by default.
-Authentication and authorization may still apply.
-```
-
-## 10. Test / Verification Plan
-
-### Server integration tests
-
-```text
-1. unsafe request without token -> ProblemDetails antiforgery code.
-2. unsafe request with invalid token -> ProblemDetails antiforgery code.
+1. unsafe request without token -> 400 ProblemDetails with top-level code.
+2. unsafe request with invalid token -> 400 ProblemDetails with top-level code.
 3. unsafe request with valid token -> reaches normal action/business/validation path.
-4. ordinary DTO validation failure -> not converted to antiforgery error.
-5. safe GET -> does not require token.
-6. token endpoint -> returns token and writes required cookie/context.
-7. multipart unsafe command, if implemented through browser helper -> token required.
+4. invalid DTO with valid token -> 422 validation ProblemDetails, not antiforgery.
+5. ordinary DTO validation failure -> not converted to antiforgery error.
+6. safe GET -> does not require token.
+7. token endpoint -> returns token and writes required cookie/context.
 ```
 
-### Client tests
+Required assertion for missing/invalid token:
+
+```text
+status: 400
+content-type: application/problem+json
+ProblemDetails.code == security.antiforgery.validation.failed
+```
+
+### I10 — Client tests
+
+Concern flow:
+
+```text
+F07
+```
+
+Test cases:
 
 ```text
 - helper fetches and stores token;
@@ -398,11 +634,20 @@ Authentication and authorization may still apply.
 - safe requests do not require token;
 - login success triggers token refetch;
 - logout/session reset clears/refetches token;
-- antiforgery failure handling does not blindly replay unsafe command;
-- multipart/upload command helper path attaches token if separate helper exists.
+- antiforgery failure predicate checks status 400 + top-level code;
+- antiforgery failure handling refetches token;
+- antiforgery failure handling does not blindly replay unsafe command.
 ```
 
-### Later E2E smoke coverage
+### I11 — Later E2E smoke coverage
+
+Concern flow:
+
+```text
+F07
+```
+
+Later E2E:
 
 ```text
 login through UI
@@ -412,19 +657,68 @@ login through UI
 
 E2E should not exhaustively test all CSRF branches.
 
-## 11. Target Types / Components
+## 9. Target Types / Components
 
 | Type / component | Responsibility |
 |---|---|
 | `AntiforgeryTokenController` or endpoint | Issues request token to browser client. |
-| `AntiforgeryFailureResultFilter` | Converts antiforgery failed result to project ProblemDetails. |
-| `IApiProblemDetailsFactory` / equivalent | Creates native ProblemDetails with errors extension. |
-| `ClientFacingErrorCodes.Security.AntiforgeryValidationFailed` | Stable client-facing error code, if constants generation is used. |
+| `AntiforgeryProblemDetailsResultFilter` | Converts antiforgery-specific failed result to project ProblemDetails. |
+| `IAntiforgeryValidationFailedResult` or exact antiforgery failure framework type | Internal server marker matched by result filter. |
+| `IApiProblemDetailsFactory` / equivalent | Creates native ProblemDetails with top-level `code` extension. |
+| `security.antiforgery.validation.failed` | Stable public client-facing marker. |
 | `antiforgeryTokenClient` / helper | Fetches and stores request token. |
 | `apiClient` / unsafe request helper | Attaches token header to unsafe requests. |
 | `auth/session client hooks` | Trigger token refetch after login/logout/session reset. |
 
 This table is not a full class reference.
+
+Keep implementation details in flow only where they clarify behavior.
+
+## 10. Consumer Rule For Business Slices
+
+If a business slice introduces browser unsafe API command:
+
+```text
+1. Link to CC-CSRF-001 in parent slice API/security section.
+2. Do not add local antiforgery mechanics to business aggregate/domain logic.
+3. Ensure client command path uses shared unsafe request helper.
+4. State that CSRF failure is handled by cross-cutting ProblemDetails code.
+5. Add E2E/API/client tests only for slice-specific behavior.
+6. Rely on CC-CSRF tests for generic missing/invalid token behavior unless the slice has special security behavior.
+```
+
+Parent slice API/security note:
+
+```text
+Unsafe browser API requests are protected by CC-CSRF-001.
+
+Antiforgery failures are normalized by the cross-cutting result filter:
+ProblemDetails.Extensions["code"] = "security.antiforgery.validation.failed".
+```
+
+Do not put local CSRF mechanics into the business slice Scenario Flow.
+
+## 11. Cross-Cutting Concerns / Drafting Considerations
+
+When a slice draft includes browser unsafe commands, write a Cross-Cutting Concerns section with:
+
+```text
+Antiforgery / browser unsafe request:
+  Applies.
+  Uses CC-CSRF-001.
+  Client must use shared unsafe request helper.
+  Failure marker:
+    ProblemDetails.code == security.antiforgery.validation.failed.
+  No local domain/application CSRF mechanics.
+  No blind unsafe auto-replay.
+```
+
+When not applicable:
+
+```text
+Antiforgery / browser unsafe request:
+  Not applicable because this slice is read-only safe GET.
+```
 
 ## 12. Local Questions
 
@@ -434,11 +728,11 @@ This table is not a full class reference.
 | Q-CC-CSRF-002 | Exact header name? | explicit shared constant, e.g. `X-CSRF-TOKEN` | open |
 | Q-CC-CSRF-003 | Does register/login require antiforgery? | yes for browser unsafe API requests; anonymous token before login/register | accepted direction |
 | Q-CC-CSRF-004 | Validation mechanism? | ASP.NET antiforgery + global validation policy/filter | open implementation detail |
-| Q-CC-CSRF-005 | How to normalize failure? | always-run result filter checks antiforgery failure marker/result, not HTTP 400 | accepted direction |
+| Q-CC-CSRF-005 | How to normalize failure? | always-run result filter checks antiforgery-specific failure marker/result, not HTTP 400 | accepted direction |
 | Q-CC-CSRF-006 | Auto-retry after token refetch? | no blind replay of unsafe commands | accepted direction |
 | Q-CC-CSRF-007 | Token endpoint cross-site bootstrap? | same-origin/controlled origin only | open production hardening |
 | Q-CC-CSRF-008 | Cross-tab/session mismatch? | recoverable failure + refetch + explicit user retry | future hardening |
-| Q-CC-CSRF-009 | Multipart upload helper path? | if a separate upload helper exists, it must attach token for unsafe browser upload commands | future implementation detail |
+| Q-CC-CSRF-009 | Which exact internal marker type exists in current ASP.NET Core version? | Prefer `IAntiforgeryValidationFailedResult`; otherwise inspect exact framework antiforgery failed result type. | implementation check |
 
 ## 13. ADR Impact
 
@@ -447,12 +741,14 @@ Decision notes / ADR candidates:
 ```text
 - CSRF/antiforgery is modeled as cross-cutting slice.
 - CSRF has security-derived behavior items even though it is not a business scenario.
-- Cross-cutting/helper slices follow same source-items-flow-implementation-tests format as business slices.
-- Antiforgery failure normalization uses always-run result filter or equivalent.
-- Filter checks antiforgery failure marker/result, not generic HTTP 400.
+- Cross-cutting/helper slices must follow same source-items-flow-implementation-tests format as business slices.
+- Antiforgery failure normalization uses always-run result filter.
+- Filter checks antiforgery-specific framework failure marker/result, not generic HTTP 400.
+- Public client marker is top-level ProblemDetails.Extensions["code"].
+- Public marker value is security.antiforgery.validation.failed.
+- CSRF failures are not FluentValidation/ServerValidationError/errors[] failures.
 - Client does not blindly replay unsafe commands after token refresh.
 - Session context change after login/logout requires token refetch/reset.
-- Browser file/multipart command uploads are unsafe requests and need the same CSRF protection.
 ```
 
 No full numbered ADR is created by this slice draft.

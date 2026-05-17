@@ -1,9 +1,9 @@
-# APPLY — Cross-Cutting Concerns / Antiforgery Drafting Rules Sync
+# APPLY — Cross-Cutting Antiforgery Marker Sync
 
-Run from repository root after downloading the archive:
+Run from repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\cross-cutting-concerns-drafting-rules-sync.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\cross-cutting-antiforgery-marker-sync.zip" -DestinationPath . -Force
 git status
 git diff -- planning
 ```
@@ -15,4 +15,4 @@ git add planning
 git status
 ```
 
-This is a docs-only archive. It does not include code, tests or generated artifacts.
+This is a docs-only replacement package.

@@ -10,6 +10,7 @@ using EnergyManagement.Server.L1.Application.Services;
 using EnergyManagement.Server.L1.Persistence;
 using EnergyManagement.Server.L1.Persistence.Repositories;
 using EnergyManagement.Server.Repositories;
+using EnergyManagement.Server.Api.Security;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -28,8 +29,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(new AntiforgeryProblemDetailsResultFilter());
+});
 builder.Services.AddProblemDetails();
+builder.Services.AddAntiforgery(options =>
+{
+    options.HeaderName = AntiforgeryConstants.HeaderName;
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

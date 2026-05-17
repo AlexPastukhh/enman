@@ -1,4 +1,10 @@
 import { fallbackErrorMessage } from "../errors/clientErrorMessages";
+import {
+  antiforgeryFailureCode,
+  antiforgeryHeaderName,
+  ensureAntiforgeryToken,
+  refreshAntiforgeryToken,
+} from "./antiforgeryTokenStore";
 import { isProblemDetails, type ProblemDetails } from "./problemDetails";
 
 export class ApiError extends Error {
@@ -11,6 +17,14 @@ export class ApiError extends Error {
     this.problemDetails = problemDetails;
   }
 }
+
+export class AntiforgeryApiError extends ApiError {
+  public readonly isRetryableSessionSecurityError = true;
+}
+
+type FetchJsonInit = RequestInit & {
+  skipCsrf?: boolean;
+};
 
 const tryReadProblemDetails = async (
   response: Response,
@@ -29,22 +43,43 @@ const tryReadProblemDetails = async (
   return isProblemDetails(body) ? body : null;
 };
 
+const unsafeMethods = new Set(["POST", "PUT", "PATCH", "DELETE"]);
+
+const isUnsafeMethod = (method: string | undefined): boolean =>
+  unsafeMethods.has((method ?? "GET").toUpperCase());
+
+const isAntiforgeryProblem = (
+  status: number,
+  problemDetails: ProblemDetails | null,
+): boolean =>
+  status === 400 && problemDetails?.code === antiforgeryFailureCode;
 
 export const fetchJson = async <TResponse>(
   path: string,
-  init: RequestInit,
+  init: FetchJsonInit,
 ): Promise<TResponse> => {
+  const { skipCsrf = false, headers: initHeaders, ...requestInit } = init;
+  const headers = new Headers(initHeaders);
+  headers.set("Content-Type", "application/json");
+
+  if (isUnsafeMethod(requestInit.method) && !skipCsrf) {
+    headers.set(antiforgeryHeaderName, await ensureAntiforgeryToken());
+  }
+
   const response = await fetch(path, {
     credentials: "include",
-    ...init,
-    headers: {
-      "Content-Type": "application/json",
-      ...init.headers,
-    },
+    ...requestInit,
+    headers,
   });
 
   if (!response.ok) {
-    throw new ApiError(response.status, await tryReadProblemDetails(response));
+    const problemDetails = await tryReadProblemDetails(response);
+    if (isAntiforgeryProblem(response.status, problemDetails)) {
+      await refreshAntiforgeryToken();
+      throw new AntiforgeryApiError(response.status, problemDetails);
+    }
+
+    throw new ApiError(response.status, problemDetails);
   }
 
   if (response.status === 204) {

@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { LoginPage } from "../pages/LoginPage";
 import { waitForApiResponse } from "../support/apiResponse";
+import { postWithCsrf } from "../support/l1ClientSetup";
 import { uniqueEmail, validPassword } from "../support/testData";
 
 test("user creates individual applicant party through real client-server flow", async ({
@@ -9,7 +10,7 @@ test("user creates individual applicant party through real client-server flow", 
 }) => {
   const email = uniqueEmail("applicant-party");
 
-  const setupResponse = await request.post("/api/l1/auth/register", {
+  const setupResponse = await postWithCsrf(request, "/api/l1/auth/register", {
     data: {
       email,
       password: validPassword,

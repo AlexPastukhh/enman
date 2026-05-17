@@ -1,4 +1,8 @@
 import type { components } from "./generated/openapi-types";
+import {
+  clearAntiforgeryToken,
+  refreshAntiforgeryToken,
+} from "./antiforgeryTokenStore";
 import { fetchJson } from "./fetchJson";
 import { l1ApiPaths } from "./l1ApiPaths";
 
@@ -24,6 +28,9 @@ export const loginClientAccount = (
   fetchJson<L1CurrentUserResponse>(l1ApiPaths.login, {
     method: "POST",
     body: JSON.stringify(request),
+  }).then(async (response) => {
+    await refreshAntiforgeryToken();
+    return response;
   });
 
 export const getCurrentUser = (): Promise<L1CurrentUserResponse> =>
@@ -34,5 +41,7 @@ export const getCurrentUser = (): Promise<L1CurrentUserResponse> =>
 export const logoutClientAccount = (): Promise<void> =>
   fetchJson<void>(l1ApiPaths.logout, {
     method: "POST",
+  }).then((response) => {
+    clearAntiforgeryToken();
+    return response;
   });
-

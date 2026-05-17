@@ -3,6 +3,8 @@ import { LoginPage } from "../pages/LoginPage";
 import { waitForApiResponse } from "./apiResponse";
 import { uniqueEmail, validPassword } from "./testData";
 
+type RequestPostOptions = Parameters<APIRequestContext["post"]>[1];
+
 export const validRequestAddress = {
   postalCode: "658480",
   region: "Алтайский край",
@@ -13,6 +15,30 @@ export const validRequestAddress = {
   apartment: null,
 } as const;
 
+export async function getAntiforgeryToken(request: APIRequestContext) {
+  const response = await request.get("/api/antiforgery/token");
+  expect(response.ok()).toBeTruthy();
+
+  const body = (await response.json()) as { requestToken?: string };
+  expect(body.requestToken).toBeTruthy();
+  return body.requestToken!;
+}
+
+export async function postWithCsrf(
+  request: APIRequestContext,
+  url: string,
+  options: RequestPostOptions = {},
+) {
+  const requestToken = await getAntiforgeryToken(request);
+  return request.post(url, {
+    ...options,
+    headers: {
+      ...options.headers,
+      "X-CSRF-TOKEN": requestToken,
+    },
+  });
+}
+
 export async function registerAndLoginL1Client(
   page: Page,
   request: APIRequestContext,
@@ -20,7 +46,7 @@ export async function registerAndLoginL1Client(
 ) {
   const email = uniqueEmail(emailPrefix);
 
-  const setupResponse = await request.post("/api/l1/auth/register", {
+  const setupResponse = await postWithCsrf(request, "/api/l1/auth/register", {
     data: {
       email,
       password: validPassword,
@@ -50,7 +76,8 @@ export async function registerAndLoginL1Client(
 }
 
 export async function createIndividualApplicantParty(page: Page, email: string) {
-  const applicantResponse = await page.request.post(
+  const applicantResponse = await postWithCsrf(
+    page.request,
     "/api/l1/applicant-parties/individual",
     {
       data: {
@@ -79,15 +106,19 @@ export async function createConnectionRequestForExistingApplicant(
   applicantPartyId: number,
   details = "Подключение объекта к электрическим сетям",
 ) {
-  const createRequestResponse = await page.request.post("/api/l1/requests", {
-    data: {
-      applicantContextType: "Existing",
-      existingApplicantPartyId: applicantPartyId,
-      newApplicantParty: null,
-      details,
-      address: validRequestAddress,
+  const createRequestResponse = await postWithCsrf(
+    page.request,
+    "/api/l1/requests",
+    {
+      data: {
+        applicantContextType: "Existing",
+        existingApplicantPartyId: applicantPartyId,
+        newApplicantParty: null,
+        details,
+        address: validRequestAddress,
+      },
     },
-  });
+  );
   expect(createRequestResponse.ok()).toBeTruthy();
 }
 

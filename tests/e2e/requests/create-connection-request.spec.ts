@@ -1,6 +1,9 @@
 import { expect, test, type Page } from "@playwright/test";
 import { waitForApiResponse } from "../support/apiResponse";
-import { registerAndLoginL1Client } from "../support/l1ClientSetup";
+import {
+  postWithCsrf,
+  registerAndLoginL1Client,
+} from "../support/l1ClientSetup";
 
 const validAddress = {
   postalCode: "658480",
@@ -20,7 +23,8 @@ async function createIndividualApplicantParty(
     phoneNumber: string;
   },
 ) {
-  const response = await page.request.post(
+  const response = await postWithCsrf(
+    page.request,
     "/api/l1/applicant-parties/individual",
     {
       data: {

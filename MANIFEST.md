@@ -1,40 +1,20 @@
-# MANIFEST — Cross-Cutting Concerns / Antiforgery Drafting Rules Sync
+# MANIFEST — Cross-Cutting Antiforgery Marker Sync
 
-Archive: `cross-cutting-concerns-drafting-rules-sync.zip`  
-Scope: documentation-only planning update  
-Purpose: strengthen antiforgery cross-cutting slice and add mandatory cross-cutting concerns checks to slice/client draft rules.
+Archive: `cross-cutting-antiforgery-marker-sync.zip`  
+Scope: docs-only addendum for antiforgery failure normalization and drafting concerns  
+Source input: latest user-provided antiforgery marker clarification
 
-## Add
-
-| File | Why |
-|---|---|
-| `planning/slices/cross-cutting/cross-cutting-concerns-drafting-checklist.md` | Canonical checklist for draft authors: auth/session, authorization/ownership, antiforgery, validation/ProblemDetails, OpenAPI/generated artifacts, transactions/no-mutation, concurrency/idempotency, file/document boundaries, clock/audit, privacy/security, testing and client feedback. |
-
-## Replace
+## Replace / Add
 
 | File | Why |
 |---|---|
-| `planning/slices/cross-cutting/README.md` | Adds the checklist to cross-cutting navigation and clarifies consumer rules for business/client slices. |
-| `planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md` | Updates antiforgery/CSRF slice with clearer consumer considerations, browser unsafe request scope, file/multipart considerations, generated-contract boundary and testing guidance. |
-| `planning/slices/l1-slice-drafting-guide.md` | Adds mandatory `Cross-Cutting Concerns / Considerations` section to draft rules/templates and explains not to pollute Scenario Flow or Behavior Items with implementation concerns. |
-| `planning/slices/client-slice-short-draft-rules-and-example.md` | Adds the cross-cutting concerns section to the canonical short client draft shape and example. |
-| `planning/slices/README.md` | Links the new checklist from slice planning navigation. |
+| `planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md` | Adds explicit internal server marker vs public client marker rule, result filter detection guidance, top-level ProblemDetails `code`, no generic 400 inference, no auto replay, and required tests. |
+| `planning/slices/cross-cutting/cross-cutting-concerns-drafting-checklist.md` | Adds antiforgery marker considerations to the cross-cutting concerns checklist used by slice drafters. |
+| `planning/slices/l1-slice-drafting-guide.md` | Adds a short pointer that cross-cutting concerns in drafts must distinguish internal framework markers from public API/client markers when relevant. |
 
-## Delete
+## Not included
 
-None.
-
-## Non-goals
-
-```text
-- no runtime/backend/client code changes;
-- no tests;
-- no generated artifacts;
-- no GitHub branch/commit/PR;
-- no implementation of antiforgery;
-- no changes to scenario behavior sources.
-```
-
-## Notes
-
-Cross-cutting concerns are drafting considerations and/or concern-derived behavior only when a cross-cutting source defines behavior items. They must not be inserted into Scenario Flow as if they were business scenario behavior.
+- No runtime code.
+- No tests.
+- No generated artifacts.
+- No GitHub writes.
