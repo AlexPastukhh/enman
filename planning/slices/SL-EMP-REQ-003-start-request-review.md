@@ -23,7 +23,7 @@ POST /api/employee/requests/{requestId}/review/start
 This slice is only:
 
 ```text
-start request-owned Review for current authenticated Employee
+start request-owned Review for current authenticated Employee account
 ```
 
 Target behavior:
@@ -46,7 +46,7 @@ This slice does not add employee UI.
 
 ```text
 - add employee start-review command endpoint;
-- resolve current authenticated Employee;
+- resolve current authenticated Employee account;
 - load request by requestId;
 - verify request is visible/reviewable by current Employee;
 - use the current temporary Employee visibility policy unless a stricter assignment policy is introduced;
@@ -77,6 +77,43 @@ This state is consumed by:
 SL-EMP-REQ-001 — Employee Request List Read
 SL-EMP-REQ-002 — Employee Request Details Read
 ```
+
+## 3A. Employee Account Identity Rule
+
+Accepted L2 target:
+
+```text
+Account
+  -> ClientAccount
+  -> Employee
+```
+
+Persistence direction:
+
+```text
+TPH in L1Accounts using AccountType / Role discriminator.
+```
+
+Auth/session identity rule:
+
+```text
+ClaimTypes.NameIdentifier = Account.Id.
+For Employee command endpoints, Account.Id == Employee.Id.
+```
+
+Handler direction:
+
+```text
+currentAccountId from auth claim
+        ↓
+load Employee by id = currentAccountId
+        ↓
+pass Employee domain object to Request.StartReview(employee, startedAt)
+        ↓
+RequestReview stores StartedByEmployeeId = employee.Id
+```
+
+Do not model this command as `EmployeeProfile(AccountId)` or pass `EmployeeRef`.
 
 ## 3. Out of Scope
 
@@ -420,7 +457,7 @@ Do not model lifecycle failures as CSRF.
 
 | Concern                               | Applies? | Consideration / owner                                                                                   |
 | ------------------------------------- | -------: | ------------------------------------------------------------------------------------------------------- |
-| Auth/session/account context          |      yes | Must resolve current authenticated Employee. Employee auth/account may be dependency/blocker.           |
+| Auth/session/account context          |      yes | Must resolve current authenticated Employee account. Employee auth/account may be dependency/blocker.           |
 | Authorization/visibility              |      yes | Only Employee actors can start review. Request must be visible/reviewable by Employee.                  |
 | Antiforgery / unsafe requests         |      yes | Unsafe POST. Must use `CC-CSRF-001` and `X-CSRF-TOKEN`.                                                 |
 | Request validation / ProblemDetails   |      yes | Route id shape only. Lifecycle checks are domain/application.                                           |
@@ -559,7 +596,7 @@ Act:
 
 Assert:
 - Review state is Started;
-- startedByEmployeeId = current Employee id;
+- startedByEmployeeId = current Employee id / Account.Id;
 - startedAt is not null;
 - final decision/result fields remain empty;
 - request details/address/applicantPartyId remain unchanged;

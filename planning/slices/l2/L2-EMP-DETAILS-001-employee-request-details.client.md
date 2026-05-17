@@ -436,12 +436,18 @@ features/employee-request/start-review/api/startReviewApiTypes.ts
 
 Not here.
 
-## 7. Cross-Cutting Concerns
+## 7. Cross-Cutting
+
+Employee account identity:
+  Target L2 model uses Employee : Account.
+  ClaimTypes.NameIdentifier stores Account.Id, which is Employee.Id for Employee sessions.
+  Client must never submit employeeId; server derives Employee actor from session.
+ Concerns
 
 ```text
 Auth/session:
   Employee details requires Employee-authenticated context.
-  Client account sessions must not see Employee request details.
+  Client account sessions must not see Employee request details. Employee sessions use Account.Id as Employee.Id.
 
 API/generated contract:
   Use generated OpenAPI types after SL-EMP-REQ-002 exists.

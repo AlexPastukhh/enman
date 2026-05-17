@@ -75,6 +75,34 @@ CC-API-001
   Owns OpenAPI/generated artifact workflow if API contract changes.
 ```
 
+## 4A. Employee Account Identity Rule
+
+Accepted L2 target:
+
+```text
+Account
+  -> ClientAccount
+  -> Employee
+```
+
+Persistence direction:
+
+```text
+TPH in L1Accounts using AccountType / Role discriminator.
+```
+
+Auth/session identity rule:
+
+```text
+ClaimTypes.NameIdentifier = Account.Id.
+For Employee endpoints, Account.Id == Employee.Id.
+```
+
+This slice must not assume a separate `Employee.AccountId` lookup in the target model.
+The current employee id used for read projection/review-state derivation is the authenticated Employee account id.
+
+If existing code has a separate Employee profile linked by AccountId, that is compatibility/drift and should be handled by a scoped domain/persistence cleanup, not copied into the target slice design.
+
 ## 4. Temporary Employee Visibility Policy
 
 Temporary first-pass policy:
@@ -90,8 +118,8 @@ For this slice, `employee-visible requests` means:
 ```text
 - the caller is an authenticated active Employee;
 - the endpoint returns all review-relevant requests included by this read model;
-- current Employee id is used to derive employee-relative review labels;
-- current Employee id does not yet narrow the list by department, region, assignment or personal queue.
+- current Employee id / Account.Id is used to derive employee-relative review labels;
+- current Employee id / Account.Id does not yet narrow the list by department, region, assignment or personal queue.
 ```
 
 Current label derivation remains important:
@@ -145,7 +173,7 @@ Employee can see whether a request is free to start or already being reviewed by
 GET /api/employee/requests?status=...&reviewState=...
         ↓
 [Auth / Employee context]
-resolve current Employee id
+resolve current Employee id / Account.Id from Account.Id / ClaimTypes.NameIdentifier
         ↓
 [FluentValidation]
 validate query filter shape and allowed values
@@ -301,7 +329,7 @@ public static class EmployeeRequestListFieldNames
 
 | Concern | Applies? | Consideration / owner |
 |---|---:|---|
-| Auth/session/account context | yes | Must resolve current authenticated Employee. Employee auth/account may be dependency/blocker. |
+| Auth/session/account context | yes | Must resolve current authenticated Employee account. Employee auth/account may be dependency/blocker. |
 | Authorization/visibility | yes | Temporary policy: all active Employees can see all review-relevant requests. Query handler uses EmployeeId for review-state label derivation, not department/region/assignment filtering in first pass. |
 | Antiforgery / unsafe requests | no | Read-only GET. |
 | Request validation / ProblemDetails | yes | Query filters validated with FluentValidation. Unknown filter values return 422. |

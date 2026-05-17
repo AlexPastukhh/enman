@@ -58,7 +58,13 @@ Business-specific shared API wrappers are transitional compatibility and should 
 
 ## 6. Cross-Cutting
 
-Unsafe POST; Employee session required; server owns visibility/reviewability; shared CSRF-aware transport; no auto-replay; stale state rejection refreshes/shows error.
+Employee account identity:
+  Target L2 model uses Employee : Account.
+  ClaimTypes.NameIdentifier stores Account.Id, which is Employee.Id for Employee sessions.
+  Client must never submit employeeId; server derives Employee actor from session.
+
+
+Unsafe POST; Employee session required; Employee : Account so auth claim Account.Id is Employee.Id; server owns visibility/reviewability; shared CSRF-aware transport; no auto-replay; stale state rejection refreshes/shows error.
 
 ## 7. Verification
 

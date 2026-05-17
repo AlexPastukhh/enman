@@ -23,3 +23,14 @@ Status: active / client API placement and L2 Employee Details sidecar synchroniz
 | `IMPL-L2-EMP-DETAILS-CLIENT-004` | same | Details read waits for `SL-EMP-REQ-002` server endpoint and generated DTOs. Current DTO sketch is scenario-derived only. | blocked by server contract |
 | `IMPL-L2-EMP-DETAILS-CLIENT-005` | same | `StartReviewResponseDto` is a compact command result from `SL-EMP-REQ-003` and must not be reused as details DTO. | accepted |
 | `IMPL-L2-EMP-DETAILS-CLIENT-006` | future review command sidecars | Start/approve/reject command wrappers live in `features/employee-request/<action>/api`, not in `entities` and not in `shared/api`. | accepted |
+
+
+## L2 Account / Employee Implementation Notes
+
+| ID | Applies to | Note | Status |
+|---|---|---|---|
+| `IMPL-L2-EMP-ACCOUNT-001` | Employee endpoints | Resolve current Employee from `ClaimTypes.NameIdentifier` as Account.Id; target model has `Employee.Id == Account.Id`. | accepted |
+| `IMPL-L2-EMP-ACCOUNT-002` | Review commands | Load `Employee` by id and pass the domain object into `Request.StartReview/ApproveReview/RejectReview`. | accepted |
+| `IMPL-L2-EMP-ACCOUNT-003` | Review state | Store scalar Employee ids in owned state: `StartedByEmployeeId`, `CompletedByEmployeeId`. | accepted |
+| `IMPL-L2-EMP-ACCOUNT-004` | Compatibility | Do not introduce new target code that requires `Employee.AccountId`; if current code has it, handle in compatibility/cleanup slice. | accepted |
+| `IMPL-L2-EMP-ACCOUNT-005` | Client | Client must not submit employeeId; server derives Employee actor from session. | accepted |

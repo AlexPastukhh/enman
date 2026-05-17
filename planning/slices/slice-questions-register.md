@@ -25,3 +25,13 @@ Status: active / client API placement and L2 Employee Details sidecar synchroniz
 | `Q-L2-EMP-DETAILS-CLIENT-008` | same | shared API | accepted | Can we add `shared/api/employeeRequestApi.ts` for details read? | No. `shared/api` is generic infrastructure only. | Prevents shared API dump. |
 | `Q-L2-EMP-DETAILS-CLIENT-009` | same | future data | accepted | Does details include documents/review history? | No, future refinement. | Scope boundary. |
 | `Q-L2-EMP-DETAILS-CLIENT-010` | same | DTO misuse | accepted | Can `StartReviewResponseDto` be used as details DTO? | No. It is compact command result only. | Prevents command/read contract coupling. |
+
+
+## L2 Account / Employee Identity Decisions
+
+| ID | Local file(s) | Area | Status | Question | Assumption / current direction | Impact |
+|---|---|---|---|---|---|---|
+| `L2-EMP-ACCOUNT-Q-001` | `domain-draft-02-account-employee-tph-decision.md`, L2 slices | domain identity | accepted | Should Employee be `Account`-derived or linked by `AccountId`? | `Employee : Account`; TPH in `L1Accounts`; `Employee.Id == Account.Id`. | Removes accountId vs employeeId ambiguity. |
+| `L2-EMP-ACCOUNT-Q-002` | same | auth/session | accepted | What does `ClaimTypes.NameIdentifier` mean for Employee endpoints? | It stores `Account.Id`; for Employee sessions that is also `Employee.Id`. | Handlers load Employee by id from claim. |
+| `L2-EMP-ACCOUNT-Q-003` | same | modeling | accepted | Is Employee a separate profile entity linked by AccountId? | No for L2 target. Treat that shape as compatibility/drift if present. | Prevents `EmployeeProfile(AccountId)` target design. |
+| `L2-EMP-ACCOUNT-Q-004` | review/agreement slices | domain actor | accepted | Should review/agreement methods receive `EmployeeRef`? | No. Methods receive `Employee`; owned state stores scalar `Employee.Id` fields. | Keeps new review model consistent. |

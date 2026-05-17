@@ -29,6 +29,37 @@ FinalRefusedByEmployeeId
 
 Do not use `EmployeeRef` in L2 target model.
 
+## 1A. Account / Employee identity
+
+Accepted L2 account hierarchy:
+
+```text
+Account
+  -> ClientAccount
+  -> Employee
+```
+
+Persistence direction:
+
+```text
+TPH in L1Accounts using AccountType / Role discriminator.
+```
+
+Identity rule:
+
+```text
+ClaimTypes.NameIdentifier stores Account.Id.
+For Employee sessions:
+  Account.Id == Employee.Id.
+```
+
+`Employee` is not a separate profile entity linked by `AccountId` in the L2 target model.
+Do not model the target as `EmployeeProfile(AccountId)`.
+
+Employee endpoints resolve the current Employee from the authenticated account id.
+Review/agreement methods receive `Employee` as the actor and owned state stores scalar `Employee.Id` fields.
+
+
 ## 2. Review ownership
 
 ```text

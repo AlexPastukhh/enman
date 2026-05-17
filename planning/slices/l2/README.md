@@ -9,6 +9,33 @@ Scenario sources are the source of truth for Scenario Flow and Behavior Coverage
 
 Domain draft is domain-design input for aggregates, naming, invariants and target code sketches.
 
+## 1A. Account / Employee Identity Rule
+
+Accepted L2 target:
+
+```text
+Account
+  -> ClientAccount
+  -> Employee
+```
+
+Persistence direction:
+
+```text
+L1Accounts TPH with AccountType / Role discriminator.
+```
+
+Identity rule:
+
+```text
+ClaimTypes.NameIdentifier = Account.Id.
+For Employee sessions, Account.Id == Employee.Id.
+```
+
+Do not model target `Employee` as a separate profile entity linked by `AccountId`.
+If current implementation has `Employee.AccountId`, treat it as compatibility/drift until a scoped persistence/domain slice resolves it.
+
+
 ## 2. Client API Placement Rule
 
 For L2 client sidecars:
@@ -88,6 +115,8 @@ features/employee-request/reject-review/api/rejectRequestReview.ts
 
 ```text
 - Use Employee, not Worker.
+- Employee inherits from Account in L2 target; Employee.Id is Account.Id.
+- Employee endpoints resolve current Employee from ClaimTypes.NameIdentifier as Account.Id.
 - Review is owned by Request; no Review repository.
 - Request public review API: StartReview / ApproveReview / RejectReview.
 - No EmployeeRef in L2 target.

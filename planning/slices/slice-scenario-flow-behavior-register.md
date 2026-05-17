@@ -14,7 +14,7 @@ Scenario Flow and Behavior Items come from scenario source artifacts:
 [CONCERN] planning/slices/cross-cutting/
 ```
 
-Domain drafts are domain-design input:
+Domain drafts are domain-design input. Account/Employee hierarchy decisions are domain-design input, not scenario behavior:
 
 ```text
 [DOMAIN-DRAFT] planning/tables/domain-drafts/
@@ -41,6 +41,7 @@ Domain-design input:
 
 ```text
 planning/tables/domain-drafts/domain-draft-02.md
+planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
 ```
 
 Scenario/domain clarification source:

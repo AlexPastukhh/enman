@@ -1,30 +1,20 @@
-# APPLY — Employee Details Client API Placement Full Sync
+# APPLY — L2 Account / Employee TPH Domain Sync
 
 From repo root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\employee-details-client-api-placement-full-sync.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\l2-account-employee-tph-domain-sync.zip" -DestinationPath . -Force
 git status
 git diff -- planning
 ```
 
-If the diff is correct:
+If diff is OK:
 
 ```powershell
 git add planning
 git status
 ```
 
-## Expected result
+This is a docs-only package.
 
-The Employee Request Details client sidecar is synchronized with the current API placement policy:
-
-```text
-- read endpoint wrapper lives in entities/employee-request/api;
-- DTO aliases live near the entity;
-- future review command wrappers live in features/employee-request/<action>/api;
-- shared/api remains generic transport/generated infrastructure only;
-- no shared/api/employeeRequestApi.ts is added by this read sidecar.
-```
-
-No code, tests or generated artifacts are included.
+It does not include runtime source files, tests, OpenAPI or generated TypeScript artifacts.

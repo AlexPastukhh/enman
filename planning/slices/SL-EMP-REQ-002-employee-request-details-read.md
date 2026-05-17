@@ -73,6 +73,34 @@ CC-API-001
   Owns OpenAPI/generated artifact workflow if API contract changes.
 ```
 
+## 4A. Employee Account Identity Rule
+
+Accepted L2 target:
+
+```text
+Account
+  -> ClientAccount
+  -> Employee
+```
+
+Persistence direction:
+
+```text
+TPH in L1Accounts using AccountType / Role discriminator.
+```
+
+Auth/session identity rule:
+
+```text
+ClaimTypes.NameIdentifier = Account.Id.
+For Employee endpoints, Account.Id == Employee.Id.
+```
+
+This slice must not assume a separate `Employee.AccountId` lookup in the target model.
+The current employee id used for read projection/review-state derivation is the authenticated Employee account id.
+
+If existing code has a separate Employee profile linked by AccountId, that is compatibility/drift and should be handled by a scoped domain/persistence cleanup, not copied into the target slice design.
+
 ## 4. Visual Scenario Flow
 
 ```text
@@ -101,7 +129,7 @@ Details include:
 GET /api/employee/requests/{requestId}
         ↓
 [Auth / Employee context]
-resolve current Employee id
+resolve current Employee id / Account.Id from Account.Id / ClaimTypes.NameIdentifier
         ↓
 [Route binding]
 requestId is long
@@ -236,7 +264,7 @@ Do not put these into validators:
 
 | Concern | Applies? | Consideration / owner |
 |---|---:|---|
-| Auth/session/account context | yes | Resolve current authenticated Employee. Employee auth/account may be dependency/blocker. |
+| Auth/session/account context | yes | Resolve current authenticated Employee account. Employee auth/account may be dependency/blocker. |
 | Authorization/visibility | yes | Query handler/Dapper projection must return only employee-visible request or documented not-found/visibility response. |
 | Antiforgery / unsafe requests | no | Read-only GET. |
 | Request validation / ProblemDetails | minimal | No body/query. Route id only. |

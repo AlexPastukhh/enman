@@ -14,3 +14,13 @@ Status: active / client API placement and L2 Employee Details sidecar synchroniz
 | `CP-L2-EMP-DETAILS-002` | details read API placement | Details read wrapper and DTO aliases live in `entities/employee-request/api`. | accepted |
 | `CP-L2-EMP-DETAILS-003` | review command API placement | Start/Approve/Reject wrappers live in `features/employee-request/<action>/api`. | accepted |
 | `CP-L2-EMP-DETAILS-004` | future details enrichment | documents, verification result, review history and assignment/lock stay future details refinements. | future |
+
+
+## L2 Account / Employee Extension Points
+
+| ID | Area | Current direction | Status |
+|---|---|---|---|
+| `CP-L2-EMP-ACCOUNT-001` | Employee identity | `Employee : Account`; Employee sessions use Account.Id as Employee.Id. | accepted |
+| `CP-L2-EMP-ACCOUNT-002` | persistence | TPH in `L1Accounts` with AccountType/Role discriminator. | accepted direction |
+| `CP-L2-EMP-ACCOUNT-003` | compatibility cleanup | If current code has separate Employee profile with AccountId, migrate/cleanup under a scoped persistence/domain slice. | future cleanup |
+| `CP-L2-EMP-ACCOUNT-004` | permissions | Department/region/assignment/permission model remains future; do not confuse it with Employee account identity. | future |
