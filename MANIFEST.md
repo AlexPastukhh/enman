@@ -1,31 +1,27 @@
-# L2-AGR-EXCH-START-001.client — Start Agreement Exchange With Initial Employee Proposal
+# MANIFEST — L2 Agreement Exchange Start Client Sidecar Sync
 
-Client-only implementation archive.
+## New files
 
-## Included files
+```text
+planning/slices/l2/L2-AGR-EXCH-START-001-start-agreement-exchange-with-initial-employee-proposal.client.md
+planning/slices/l2/L2-agreement-exchange-start-sidecar-sync.md
+planning/slices/implementation-prompts/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.prompt.md
+```
 
-- `energymanagement.client/src/features/agreement-exchange/start-exchange/api/startAgreementExchange.ts`
-- `energymanagement.client/src/features/agreement-exchange/start-exchange/api/startAgreementExchange.test.ts`
-- `energymanagement.client/src/features/agreement-exchange/start-exchange/api/startAgreementExchangeApiTypes.ts`
-- `energymanagement.client/src/features/agreement-exchange/start-exchange/model/startAgreementExchangeAvailability.ts`
-- `energymanagement.client/src/features/agreement-exchange/start-exchange/model/startAgreementExchangeAvailability.test.ts`
-- `energymanagement.client/src/features/agreement-exchange/start-exchange/model/useStartAgreementExchangeMutation.ts`
-- `energymanagement.client/src/features/agreement-exchange/start-exchange/ui/StartAgreementExchangeForm.tsx`
-- `energymanagement.client/src/features/agreement-exchange/start-exchange/ui/StartAgreementExchangeForm.test.tsx`
-- `energymanagement.client/src/features/agreement-exchange/start-exchange/ui/startAgreementExchangeForm.css`
-- `energymanagement.client/src/features/agreement-exchange/start-exchange/ui/startAgreementExchangeFormConst.ts`
-- `energymanagement.client/src/pages/employee/requests/details/EmployeeRequestDetailsPage.tsx`
-- `energymanagement.client/src/pages/employee/requests/details/EmployeeRequestDetailsPage.test.tsx`
+## Apply script updates
 
-## Scope confirmations
+```text
+planning/slices/README.md
+planning/slices/l2/README.md
+planning/slices/slice-scenario-flow-behavior-register.md
+planning/slices/slice-questions-register.md
+planning/slices/slice-implementation-notes-register.md
+```
 
-- Employee-only first pass.
-- Placement is Employee request details action area only.
-- Feature-owned command wrapper, no `shared/api` business wrapper.
-- Target endpoint direction: `POST /api/agreement-exchanges`.
-- Initial proposal DTO is local first pass until generated OpenAPI contract exists.
-- Request details and agreement exchange list are invalidated after success/error.
-- Navigates to `/employee/agreements/:exchangeId` when response contains `exchangeId`.
-- No Client start exchange.
-- No send-proposal/counter-proposal inside existing exchange.
-- No accept/final-refuse implementation.
+## Scope
+
+Docs only.
+
+No runtime code.
+No tests.
+No generated artifacts.

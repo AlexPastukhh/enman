@@ -1,32 +1,23 @@
-# Apply
+# APPLY
 
 From repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agr-exch-start-001-client.zip" -DestinationPath "." -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agr-exch-start-client-sidecar-sync.zip" -DestinationPath . -Force
+.\APPLY-l2-agr-exch-start-sidecar-sync.ps1
+git status
+git diff -- planning
 ```
 
-# Verify
+If the diff is correct:
 
 ```powershell
-npm install
-npm --prefix .\energymanagement.client install
-npm run check:api
-npm --prefix .\energymanagement.client run build
-npm --prefix .\energymanagement.client run test -- --run
+git add planning
+git status
 ```
 
-Targeted tests:
+## Notes
 
-```powershell
-npm --prefix .\energymanagement.client run test -- --run --reporter=verbose src/features/agreement-exchange/start-exchange/api/startAgreementExchange.test.ts src/features/agreement-exchange/start-exchange/model/startAgreementExchangeAvailability.test.ts src/features/agreement-exchange/start-exchange/ui/StartAgreementExchangeForm.test.tsx src/pages/employee/requests/details/EmployeeRequestDetailsPage.test.tsx
-```
+This archive intentionally does not change runtime code, tests, OpenAPI or generated TypeScript types.
 
-# OpenAPI note
-
-The uploaded snapshot does not expose `POST /api/agreement-exchanges` in generated OpenAPI yet. After `SL-AGR-EXCH-001` backend/OpenAPI is finalized, replace local first-pass DTOs in `startAgreementExchangeApiTypes.ts` with generated aliases and include generated artifacts if they change:
-
-```text
-Shared/openapi.json
-energymanagement.client/src/shared/api/generated/openapi-types.ts
-```
+It adds the missing client sidecar for starting an Agreement Exchange from Employee request details and keeps the current server/client contract mismatch visible as a blocked OpenAPI question.
