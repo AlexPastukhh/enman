@@ -1,48 +1,40 @@
-# MANIFEST — Employee Dashboard + Start Review Full Drafts
+# MANIFEST — Employee Request Details Client Full Draft Sync
 
-Archive: `employee-dashboard-start-review-full-drafts-sync.zip`  
-Scope: docs-only full slice draft package from the two uploaded draft inputs  
-Repo: `AlexPastukhh/enman`  
-Branch target: `my-changes`
+Archive: `employee-details-client-full-draft-sync.zip`  
+Scope: documentation-only planning update  
+Purpose: add full L2 Employee Request Details client sidecar derived from the uploaded short draft.
 
-## Add
-
-| File | Why |
-|---|---|
-| `planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md` | Converts uploaded Employee Dashboard client short draft into a full client read sidecar. |
-| `planning/slices/SL-EMP-REQ-003-start-request-review.md` | Adds uploaded Start Request Review full backend/API command slice draft as repo planning doc. |
-
-## Replace
+## Add / Replace
 
 | File | Why |
 |---|---|
-| `planning/slices/l2/README.md` | Adds dashboard client sidecar and StartReview backend command draft to L2 navigation. |
-| `planning/slices/README.md` | Adds new L2 drafts to central slice navigation. |
-| `planning/slices/slice-scenario-flow-behavior-register.md` | Adds explicit mappings for L2 dashboard client and StartReview command draft. |
+| `planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md` | Adds full client read sidecar for Employee Request Details. |
+| `planning/slices/l2/README.md` | Adds the new sidecar to L2 navigation. |
+| `planning/slices/README.md` | Adds the new L2 client sidecar to global slice navigation. |
+| `planning/slices/slice-scenario-flow-behavior-register.md` | Adds source mapping for the details client sidecar. |
+| `planning/slices/slice-implementation-notes-register.md` | Adds implementation notes for details read client contract/blockers and future command sidecars. |
 
-## Delete
+## Source Input
 
-None.
+The full sidecar is derived from the uploaded Employee Request Details client sidecar short draft.
 
-## Source Inputs
-
-The package is based on the current uploaded drafts:
+Important source decisions preserved:
 
 ```text
-- Employee dashboard client sidecar short draft.
-- SL-EMP-REQ-003 Start Request Review full backend/API command draft.
+- Details read sidecar waits for SL-EMP-REQ-002 server details endpoint and generated DTO.
+- StartReview contract is known as future command sidecar input, but StartReviewResponseDto is not the details DTO.
+- Details client sidecar is read-only and maps to pages + entities.
+- Start/approve/reject command actions stay in future features.
+- Details read uses safe GET; antiforgery belongs to future unsafe command sidecars.
+- Use Employee, not Worker.
 ```
-
-Scenario files remain the source of truth for Scenario Flow and Behavior Coverage.
-
-`planning/tables/domain-drafts/domain-draft-02.md` remains domain-design input for aggregate boundaries, naming, invariants and target code-sketch direction.
 
 ## Not Included
 
 ```text
 - no runtime code;
 - no tests;
-- no generated artifacts;
-- no branch/commit/PR;
-- no generated OpenAPI/types edits.
+- no generated OpenAPI artifacts;
+- no generated TypeScript;
+- no GitHub branch/commit/PR.
 ```

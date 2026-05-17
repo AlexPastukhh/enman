@@ -14,13 +14,15 @@ Scenario Flow and Behavior Items come from scenario source artifacts:
 [CONCERN] planning/slices/cross-cutting/
 ```
 
-Domain drafts are domain-design input, not scenario-flow source replacement:
+Domain drafts are domain-design input:
 
 ```text
 [DOMAIN-DRAFT] planning/tables/domain-drafts/
 ```
 
 Do not invent scenario flow or behavior items locally inside a slice when source artifacts exist.
+
+Do not use domain drafts as a replacement for scenario files.
 
 ## 2. L1 Source Map
 
@@ -47,22 +49,23 @@ Scenario/domain clarification source:
 planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
 ```
 
-Behavior source:
+Behavior source family:
 
 ```text
-planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+planning/diagrams/scenario-behavior-items/
 ```
 
 | Slice / sidecar | Marker | Source files | Applies to | Status |
 |---|---|---|---|---|
-| `SL-EMP-REQ-001-employee-request-list-read.md` | `[SCENARIO]` / `[BEHAVIOR]` / `[DOMAIN-DRAFT]` | `SC-06-employee-request-dashboard.md`, `L2-employee-review-agreement-behavior-items.md`, `domain-draft-02.md` | employee request list read, filters, compact review state | drafted |
-| `SL-EMP-REQ-002-employee-request-details-read.md` | `[SCENARIO]` / `[BEHAVIOR]` / `[DOMAIN-DRAFT]` | `SC-07A-employee-request-details.md`, `L2-employee-review-agreement-behavior-items.md`, `domain-draft-02.md` | employee request details by id, compact review state | drafted |
-| `L2-EMP-DASH-001-employee-request-dashboard.client.md` | `[SCENARIO]` / `[BEHAVIOR]` / `[DOMAIN-DRAFT]` | `SC-06-employee-request-dashboard.md`, `L2-employee-review-agreement-behavior-items.md`, `domain-draft-02.md` | employee dashboard client read UI and review-state markers | drafted |
-| `SL-EMP-REQ-003-start-request-review.md` | `[SCENARIO]` / `[BEHAVIOR]` / `[DOMAIN-DRAFT]` | `SC-07B-employee-request-review.md`, `L2-employee-review-agreement-behavior-items.md`, `domain-draft-02.md` | StartReview command | drafted |
-| `SL-EMP-REQ-004` | `[SCENARIO]` / `[DOMAIN-DRAFT]` | `SC-07B-employee-request-review.md`, `domain-draft-02.md` | ApproveReview command | planned source |
-| `SL-EMP-REQ-005` | `[SCENARIO]` / `[DOMAIN-DRAFT]` | `SC-07B-employee-request-review.md`, `domain-draft-02.md` | RejectReview command | planned source |
-| `SL-AGR-*` | `[SCENARIO]` / `[DOMAIN-DRAFT]` | `SC-13A..E`, `SC-14`, `domain-draft-02.md` | AgreementProposalExchange, proposal versions, final refusal, agreement documents | planned source |
-| `SL-DOC-*` | `[SCENARIO]` / `[DOMAIN-DRAFT]` | `SC-14-agreement-documents.md`, `domain-draft-02.md` | AgreementDocumentRef metadata references | planned source |
+| `SL-EMP-REQ-001-employee-request-list-read.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-06-employee-request-dashboard.md`, employee request DATA/behavior files | Employee request list/dashboard read endpoint + filters | drafted |
+| `L2-EMP-DASH-001-employee-request-dashboard.client.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-06-employee-request-dashboard.md`, employee request DATA/behavior files | Employee request dashboard client read UI | drafted |
+| `SL-EMP-REQ-002-employee-request-details-read.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-07A-employee-request-details.md`, details DATA/behavior files | Employee request details read endpoint | drafted |
+| `L2-EMP-DETAILS-001-employee-request-details.client.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-07A-employee-request-details.md`, details DATA/behavior files | Employee request details client read UI and action availability display | drafted |
+| `SL-EMP-REQ-003-start-request-review.md` | `[SCENARIO]` / `[BEHAVIOR]` | `SC-07B-employee-request-review.md`, review behavior files | StartReview command | drafted |
+| `SL-EMP-REQ-004` | `[SCENARIO]` / `[BEHAVIOR]` | `SC-07B-employee-request-review.md`, review behavior files | ApproveReview command | planned |
+| `SL-EMP-REQ-005` | `[SCENARIO]` / `[BEHAVIOR]` | `SC-07B-employee-request-review.md`, review behavior files | RejectReview command and feedback | planned |
+| `SL-AGR-*` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-13A..E`, `SC-14`, agreement behavior files | AgreementProposalExchange, proposal versions, final refusal, agreement documents | planned source |
+| `SL-DOC-*` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-14-agreement-documents.md`, agreement documents DATA/behavior files | AgreementDocumentRef metadata references | planned source |
 
 ## 4. L2 Drafting Guardrails
 
@@ -73,11 +76,11 @@ planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-
 - Scenario Flow is the scenario portion relevant to that slice, not the full scenario family.
 - Implementation Flow must not be mistaken for Scenario Flow.
 - Implementation details are not behavior items.
-- Domain draft informs domain boundaries; scenario sources remain behavior source.
+- Domain draft informs domain boundaries but does not replace scenario source files.
 ```
 
 ## 5. Update Rule
 
 Update this register when scenario files, behavior items, slices or sidecars are added/renamed.
 
-When a future L2 implementation slice is drafted, point it to the relevant SC-06/SC-07/SC-13/SC-14 files and to `domain-draft-02.md` for domain boundaries.
+When a future L2 implementation slice is drafted, point it to the relevant scenario files and to `domain-draft-02.md` only as domain-design input.

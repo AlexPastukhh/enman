@@ -1,9 +1,9 @@
-# APPLY — Employee Dashboard + Start Review Full Drafts
+# APPLY — Employee Request Details Client Full Draft Sync
 
 Run from repository root after downloading the archive:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\employee-dashboard-start-review-full-drafts-sync.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\employee-details-client-full-draft-sync.zip" -DestinationPath . -Force
 git status
 git diff -- planning
 ```
@@ -15,4 +15,4 @@ git add planning
 git status
 ```
 
-This is a docs-only package. It should not change backend/client runtime code, tests or generated artifacts.
+This archive is documentation-only. It should not change runtime code, tests or generated artifacts.

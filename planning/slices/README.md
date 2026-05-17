@@ -1,6 +1,6 @@
 # Slice Planning Index
 
-Status: current slice-planning navigation index / L2 Employee dashboard + StartReview drafts synchronized
+Status: current slice-planning navigation index / L2 Employee read and client sidecars synchronized
 
 ## 1. Core Rule
 
@@ -30,7 +30,13 @@ Server/backend state-changing slice drafts must separate API boundary tests, DB 
 planning/testing/server-slice-test-plan-rules.md
 ```
 
-## 2. Current / Active Backend Slice Files
+All slice drafts must include cross-cutting concerns / considerations:
+
+```text
+planning/slices/cross-cutting/cross-cutting-concerns-drafting-checklist.md
+```
+
+## 2. Current / Active L1 Backend Slice Files
 
 ```text
 planning/slices/SL-ACC-001-register-client-account.md
@@ -46,7 +52,7 @@ planning/slices/SL-REQ-002-my-requests-list.md
 planning/slices/SL-REQ-003-own-request-details.md
 ```
 
-## 3. Current / Active Client Sidecars
+## 3. Current / Active L1 Client Sidecars
 
 ```text
 planning/slices/SL-ACC-001-register-client-account.client.md
@@ -62,17 +68,28 @@ planning/slices/l1/L1-MY-REQUESTS-LIST-FILTERS.client.md
 planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md
 ```
 
-## 4. L2 Drafts
+## 4. Current L2 Drafted Backend Slices
 
 ```text
-planning/slices/l2/README.md
 planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
 planning/slices/SL-EMP-REQ-002-employee-request-details-read.md
 planning/slices/SL-EMP-REQ-003-start-request-review.md
-planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
 ```
 
-## 5. Current L1 Remaining Gaps
+## 5. Current L2 Drafted Client Sidecars
+
+```text
+planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
+planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md
+```
+
+## 6. L2 Navigation
+
+```text
+planning/slices/l2/README.md
+```
+
+## 7. Current L1 Remaining Gaps
 
 ```text
 - SL-APPL-003.client runtime implementation if not already implemented.
@@ -82,7 +99,7 @@ planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
 - LegalEntity / IndividualEntrepreneur ApplicantParty creation remains future unless implementation proves otherwise.
 ```
 
-## 6. Drafting Rules
+## 8. Drafting Rules
 
 ```text
 - Draft by examples, not by improvisation.
@@ -92,10 +109,10 @@ planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
 - Read-only UI belongs in entities.
 - Command/user-action UI belongs in features.
 - One draft covers one slice; extension slices are named but not implemented.
-- Every non-trivial draft must include Cross-Cutting Concerns / Considerations.
+- Cross-cutting concerns are considered in their own section; do not pollute Scenario Flow with implementation concerns.
 ```
 
-## 7. API / Generated Contract Rules
+## 9. API / Generated Contract Rules
 
 For API-changing slices, read:
 
@@ -107,7 +124,7 @@ planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-gen
 
 Generated artifacts must come from repo commands, not manual edits.
 
-## 8. Registers
+## 10. Registers
 
 ```text
 planning/slices/slice-scenario-flow-behavior-register.md

@@ -1,6 +1,6 @@
 # L2 Slice Planning Index
 
-Status: current / Employee request read, dashboard client and StartReview drafts synchronized  
+Status: current / Employee request read + dashboard/details client + start-review drafts synchronized  
 Scope: L2 Employee, Request Review, AgreementProposalExchange and document-reference slice navigation
 
 ## 1. Source Rule
@@ -20,7 +20,7 @@ planning/tables/domain-drafts/domain-draft-02.md
 
 Do not use the domain draft as a replacement for scenario files.
 
-## 2. Current L2 Drafted Backend / API Slices
+## 2. Current L2 Drafted Backend Slices
 
 ```text
 planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
@@ -32,17 +32,15 @@ planning/slices/SL-EMP-REQ-003-start-request-review.md
 
 ```text
 planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
+planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md
 ```
 
 ## 4. Recommended Next Drafts
 
 ```text
+SL-EMP-REQ-003.client — Start Request Review client action
 SL-EMP-REQ-004 — Approve Request Review
 SL-EMP-REQ-005 — Reject Request Review
-L2-EMP-DETAILS-001.client — Employee Request Details
-L2-REVIEW-START.client — Start Review Action
-L2-REVIEW-APPROVE.client — Approve Review Action
-L2-REVIEW-REJECT.client — Reject Review Action
 SL-AGR-001 — Employee Starts AgreementProposalExchange / Sends First Proposal
 SL-AGR-002 — Client Agreement Proposal Details + Response
 SL-AGR-003 — Employee Agreement Proposal Details + Send New Version
@@ -63,19 +61,12 @@ SL-DOC-001 — AgreementDocumentRef / Proposal Document Reference
 - AgreementDocumentRef is metadata reference, not bytes/storage adapter.
 ```
 
-## 6. Testing Guardrail
-
-For Employee read slices:
+## 6. Client Sidecar Placement Guardrails
 
 ```text
-Primary verification: API/read integration tests.
-No unit tests by default.
-Unit tests only for reusable helper logic with meaningful branching.
-```
-
-For Employee command slices:
-
-```text
-Primary verification: API integration tests with DB state assertions.
-Do not use repository mocks or handler call-order as primary proof.
+- Read/detail pages map to pages + entities.
+- Command actions map to pages + features + entities.
+- Employee Details read sidecar must not execute StartReview/Approve/Reject.
+- StartReviewResponseDto is not a details DTO.
+- Details read contract must come from SL-EMP-REQ-002 server read slice and generated OpenAPI.
 ```

@@ -1,21 +1,76 @@
 # Slice Implementation Notes Register
 
-Status: active / SL-APPL-003.client full sidecar synchronized
+Status: current / L2 Employee request details client notes synchronized  
+Scope: cross-slice implementation notes, client/server handoff notes, generated contract reminders and future implementation risks
 
-| ID | Related slice | Layer | Note | Status |
-|---|---|---|---|---|
-| `NOTE-APPL-003-CLIENT-001` | `SL-APPL-003.client` | client architecture | Make current/default is a command/user-action feature, not entity read UI. Place button/action/mutation under `features/applicant-party/make-current-default`. | full sidecar |
-| `NOTE-APPL-003-CLIENT-002` | `SL-APPL-003.client` | entity UI | ApplicantParty list/card remains read/display UI. Add an optional action slot/render prop instead of moving mutation logic into entity UI. | full sidecar |
-| `NOTE-APPL-003-CLIENT-003` | `SL-APPL-003.client` | shared API | Add low-level shared API wrapper/path after verifying generated contracts expose backend command. Do not manually edit generated artifacts. | implementation handoff |
-| `NOTE-APPL-003-CLIENT-004` | `SL-APPL-003.client` | state refresh | After success, refresh/update account ApplicantParties read state and rely on server truth for highlighted current/default state. | implementation handoff |
-| `NOTE-APPL-003-CLIENT-005` | `SL-APPL-003.client` | UX | Hide/disable action for already current/default cards; show pending/error near selected action/card when practical. | implementation handoff |
-| `NOTE-APPL-003-CLIENT-006` | `SL-APPL-003.client` | tests | Client tests assert visible state and wrapper behavior; backend DB transition is tested in server slice tests, not client tests. | implementation handoff |
-| `NOTE-API-GEN-001` | API-changing work | generated artifacts | After API source changes, run `npm run generate:openapi`, `npm run generate:api-types`, stage generated artifacts, then run `npm run check:api`. | accepted |
-| `NOTE-API-GEN-002` | API-changing work | generated artifacts | Generated artifacts must be command-produced, not manually reconstructed. | accepted |
-| `NOTE-CL-DRAFT-001` | client sidecars | drafting | Client short drafts must follow canonical shape and use `Lives here / Uses / Owns / Does not own` in implementation flow. | accepted |
-| `NOTE-CL-DRAFT-002` | client sidecars | scenario/source | Scenario Flow is scenario-sourced behavior for the slice, not implementation flow. | accepted |
-| `NOTE-CL-DRAFT-003` | client sidecars | behavior coverage | Implementation details are not behavior items. | accepted |
-| `NOTE-CL-LAYER-001` | client sidecars | architecture | Read-only UI belongs in `entities/<entity>/ui`; command/user-action UI belongs in `features`. | accepted |
-| `NOTE-CL-LAYER-002` | client sidecars | shared API | `shared/api` intentionally holds low-level wrappers for multiple API/entity areas because it is the client/server boundary layer. | accepted |
-| `NOTE-REQ-CLIENT-001` | `SL-REQ-001.client` | client architecture | Request creation UI is a command sidecar: page + features + entities + shared/api + generated contracts. | implemented/drafted |
-| `NOTE-SERVER-TEST-001` | server slice drafts | testing | State-changing backend command slices should use API integration tests with DB state assertions as primary proof, not mocks. | accepted |
+## 1. Rule
+
+Implementation notes are not behavior items.
+
+Use this register for practical implementation considerations that affect future work but do not belong as scenario behavior.
+
+## 2. Current L2 Employee Request Notes
+
+### L2-EMP-DETAILS-001.client — Details read contract dependency
+
+```text
+L2-EMP-DETAILS-001.client is blocked until SL-EMP-REQ-002 server details endpoint and generated OpenAPI DTO exist.
+```
+
+Important contract boundary:
+
+```text
+StartReviewResponseDto from SL-EMP-REQ-003 is not the Employee details DTO.
+
+Details read DTO must come from SL-EMP-REQ-002.
+```
+
+### Details read vs command sidecars
+
+```text
+Employee Request Details client sidecar:
+  pages + entities
+  read-only details UI
+  review state display
+  action availability display
+  optional action slots
+
+Future StartReview/Approve/Reject client sidecars:
+  pages + features + entities
+  mutation hooks
+  CSRF-aware unsafe request helpers
+  command feedback
+  query invalidation/refetch after success
+```
+
+### Safe GET vs unsafe command
+
+```text
+Employee details read:
+  safe GET;
+  no local CSRF mechanics.
+
+StartReview / ApproveReview / RejectReview:
+  unsafe POST;
+  must consume CC-CSRF-001 shared antiforgery behavior;
+  no blind auto-replay after token refresh.
+```
+
+### DTO generation
+
+```text
+Do not handwrite final DTOs once generated OpenAPI types exist.
+
+Until server contract exists, DTO sketches in client sidecars are target shape notes,
+not final generated contract names.
+```
+
+## 3. Future Implementation Notes
+
+```text
+- Employee session/auth model may block client implementation.
+- Employee request details route candidate: /employee/requests/:requestId.
+- Prefer server-provided reviewState and reviewActionAvailability; client should not guess employee-relative action availability unless the contract explicitly gives all required fields.
+- Details read should map 401/403/404/ProblemDetails to safe page states.
+- Future command features should plug into details page action slot without moving command behavior into the details read sidecar.
+```
