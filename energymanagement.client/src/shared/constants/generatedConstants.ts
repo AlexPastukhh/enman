@@ -6,29 +6,33 @@ export const errorCodes = errorCodesJson;
 
 export const authFieldNames = {
   register: {
-    email: constants.AuthConstants.RegisterIndividualClient.Email.FieldName,
-    password: constants.AuthConstants.RegisterIndividualClient.Password.FieldName,
-    passwordConfirmation:
-      constants.AuthConstants.RegisterIndividualClient.PasswordConfirmation
-        .FieldName,
+    email: constants.L1AuthConstants.RegisterClientAccount.Email.FieldName,
+    password: constants.L1AuthConstants.RegisterClientAccount.Password.FieldName,
+    passwordConfirmation: "passwordConfirmation",
   },
   login: {
-    email: constants.AuthConstants.Login.Email.FieldName,
-    password: constants.AuthConstants.Login.Password.FieldName,
+    email: constants.L1AuthConstants.Login.Email.FieldName,
+    password: constants.L1AuthConstants.Login.Password.FieldName,
   },
 } as const;
 
 export const applicantPartyFieldNames = {
   createIndividual: {
     firstName:
-      constants.AuthConstants.ProvideIndividualClientsData.FirstName.FieldName,
+      constants.L1ApplicantPartyConstants.CreateIndividualApplicantParty.FirstName
+        .FieldName,
     middleName:
-      constants.AuthConstants.ProvideIndividualClientsData.MiddleName.FieldName,
+      constants.L1ApplicantPartyConstants.CreateIndividualApplicantParty.MiddleName
+        .FieldName,
     lastName:
-      constants.AuthConstants.ProvideIndividualClientsData.LastName.FieldName,
-    email: constants.AuthConstants.RegisterIndividualClient.Email.FieldName,
+      constants.L1ApplicantPartyConstants.CreateIndividualApplicantParty.LastName
+        .FieldName,
+    email:
+      constants.L1ApplicantPartyConstants.CreateIndividualApplicantParty.Email
+        .FieldName,
     phoneNumber:
-      constants.AuthConstants.ProvideIndividualClientsData.PhoneNumber.FieldName,
+      constants.L1ApplicantPartyConstants.CreateIndividualApplicantParty
+        .PhoneNumber.FieldName,
   },
 } as const;
 
@@ -38,7 +42,7 @@ export const serverValidationFieldNames = {
 } as const;
 
 export const generalConstants = {
-  validationErrorStatusCode: constants.GeneralConstants.ValidationErrorStatusCode,
-  errorsCollectionName: constants.GeneralConstants.ErrorsCollectionName,
+  validationErrorStatusCode: constants.ProblemDetails.ValidationErrorStatusCode,
+  errorsCollectionName: constants.ProblemDetails.ErrorsCollectionName,
   rootErrorName: "root",
 } as const;

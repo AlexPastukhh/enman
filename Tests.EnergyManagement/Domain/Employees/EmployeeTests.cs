@@ -13,34 +13,52 @@ public class EmployeeTests
         var createdAt = DateTimeOffset.UtcNow;
 
         var result = Employee.Create(
-            accountId: 10,
+            L1ValidTestData.Email,
+            L1ValidTestData.PasswordHash,
             L1ValidTestData.FullName,
             createdAt);
 
         result.IsSuccess.Should().BeTrue();
-        result.Value.AccountId.Should().Be(10);
+        result.Value.Role.Should().Be(AccountRole.Employee);
+        result.Value.Email.Should().Be(L1ValidTestData.Email);
+        result.Value.PasswordHash.Should().Be(L1ValidTestData.PasswordHash);
         result.Value.FullName.Should().Be(L1ValidTestData.FullName);
         result.Value.IsActive.Should().BeTrue();
         result.Value.CreatedAt.Should().Be(createdAt);
     }
 
     [Fact]
-    public void Create_fails_when_account_id_is_missing()
+    public void Create_fails_when_email_is_missing()
     {
         var result = Employee.Create(
-            accountId: 0,
+            null!,
+            L1ValidTestData.PasswordHash,
             L1ValidTestData.FullName,
             DateTimeOffset.UtcNow);
 
         result.IsFailure.Should().BeTrue();
-        result.Error.Should().Contain(Errors.L1Domain.EmployeeAccountIsRequired);
+        result.Error.Should().Contain(Errors.Account.EmailIsRequired);
+    }
+
+    [Fact]
+    public void Create_fails_when_password_hash_is_missing()
+    {
+        var result = Employee.Create(
+            L1ValidTestData.Email,
+            null!,
+            L1ValidTestData.FullName,
+            DateTimeOffset.UtcNow);
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Contain(Errors.Account.PasswordIsRequired);
     }
 
     [Fact]
     public void Create_fails_when_full_name_is_missing()
     {
         var result = Employee.Create(
-            accountId: 10,
+            L1ValidTestData.Email,
+            L1ValidTestData.PasswordHash,
             null!,
             DateTimeOffset.UtcNow);
 
@@ -62,7 +80,8 @@ public class EmployeeTests
     private static Employee CreateEmployee()
     {
         return Employee.Create(
-            accountId: 10,
+            L1ValidTestData.Email,
+            L1ValidTestData.PasswordHash,
             L1ValidTestData.FullName,
             DateTimeOffset.UtcNow).Value;
     }

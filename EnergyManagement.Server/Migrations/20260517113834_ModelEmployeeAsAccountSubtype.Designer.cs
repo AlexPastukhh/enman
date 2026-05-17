@@ -4,16 +4,19 @@ using EnergyManagement.Server.L1.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace EnergyManagement.Server.Migrations
+namespace EnergyManagement.Server.Migrations.L1Db
 {
     [DbContext(typeof(L1DbContext))]
-    partial class L1DbContextModelSnapshot : ModelSnapshot
+    [Migration("20260517113834_ModelEmployeeAsAccountSubtype")]
+    partial class ModelEmployeeAsAccountSubtype
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

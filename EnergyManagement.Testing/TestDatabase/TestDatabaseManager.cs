@@ -1,5 +1,4 @@
 using System.Data;
-using EnergyManagement.Server;
 using EnergyManagement.Server.L1.Persistence;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -25,7 +24,6 @@ public sealed class TestDatabaseManager
     public async Task EnsureTablesCreatedAsync(CancellationToken cancellationToken = default)
     {
         await EnsureDatabaseCreatedAsync(cancellationToken);
-        await EnsureAppTablesCreatedAsync(cancellationToken);
         await EnsureL1TablesCreatedAsync(cancellationToken);
     }
 
@@ -36,13 +34,7 @@ public sealed class TestDatabaseManager
             IF OBJECT_ID(N'dbo.L1RequestReviews', N'U') IS NOT NULL DELETE FROM dbo.L1RequestReviews;
             IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL DELETE FROM dbo.L1ClientRequests;
             IF OBJECT_ID(N'dbo.L1ApplicantParties', N'U') IS NOT NULL DELETE FROM dbo.L1ApplicantParties;
-            IF OBJECT_ID(N'dbo.L1Employees', N'U') IS NOT NULL DELETE FROM dbo.L1Employees;
             IF OBJECT_ID(N'dbo.L1Accounts', N'U') IS NOT NULL DELETE FROM dbo.L1Accounts;
-            IF OBJECT_ID(N'dbo.RequestReviews', N'U') IS NOT NULL DELETE FROM dbo.RequestReviews;
-            IF OBJECT_ID(N'dbo.Requests', N'U') IS NOT NULL DELETE FROM dbo.Requests;
-            IF OBJECT_ID(N'dbo.IndividualClients', N'U') IS NOT NULL DELETE FROM dbo.IndividualClients;
-            IF OBJECT_ID(N'dbo.Clients', N'U') IS NOT NULL DELETE FROM dbo.Clients;
-            IF OBJECT_ID(N'dbo.Managers', N'U') IS NOT NULL DELETE FROM dbo.Managers;
             COMMIT TRANSACTION;
             """;
 
@@ -80,27 +72,6 @@ public sealed class TestDatabaseManager
         await command.ExecuteNonQueryAsync(cancellationToken);
     }
 
-    private async Task EnsureAppTablesCreatedAsync(CancellationToken cancellationToken)
-    {
-        var clientsExists = await TableExistsAsync("Clients", cancellationToken);
-        var individualClientsExists = await TableExistsAsync("IndividualClients", cancellationToken);
-
-        if (clientsExists && individualClientsExists)
-        {
-            return;
-        }
-
-        if (clientsExists || individualClientsExists)
-        {
-            throw new InvalidOperationException(
-                "The AppDbContext test schema is partial. Expected both Clients and IndividualClients to exist before reset.");
-        }
-
-        await using var context = new AppDbContext(_connectionString);
-        var databaseCreator = context.GetService<IRelationalDatabaseCreator>();
-        await databaseCreator.CreateTablesAsync(cancellationToken);
-    }
-
     private async Task EnsureL1TablesCreatedAsync(CancellationToken cancellationToken)
     {
         if (await TableExistsAsync("L1Accounts", cancellationToken))
@@ -109,7 +80,7 @@ public sealed class TestDatabaseManager
             await EnsureL1ApplicantPartyVerificationStatusColumnAsync(cancellationToken);
             await EnsureL1ClientRequestReviewColumnsAsync(cancellationToken);
             await EnsureL1RequestReviewsTableAsync(cancellationToken);
-            await EnsureL1EmployeesTableAsync(cancellationToken);
+            await EnsureL1AccountEmployeeColumnsAsync(cancellationToken);
             return;
         }
 
@@ -118,7 +89,7 @@ public sealed class TestDatabaseManager
         await databaseCreator.CreateTablesAsync(cancellationToken);
         await EnsureL1ClientRequestReviewColumnsAsync(cancellationToken);
         await EnsureL1RequestReviewsTableAsync(cancellationToken);
-        await EnsureL1EmployeesTableAsync(cancellationToken);
+        await EnsureL1AccountEmployeeColumnsAsync(cancellationToken);
     }
 
     private async Task EnsureL1ClientRequestReviewColumnsAsync(CancellationToken cancellationToken)
@@ -207,22 +178,16 @@ public sealed class TestDatabaseManager
     }
 
 
-    private async Task EnsureL1EmployeesTableAsync(CancellationToken cancellationToken)
+    private async Task EnsureL1AccountEmployeeColumnsAsync(CancellationToken cancellationToken)
     {
         const string query = """
-            IF OBJECT_ID(N'dbo.L1Employees', N'U') IS NULL
+            IF OBJECT_ID(N'dbo.L1Accounts', N'U') IS NOT NULL
+               AND COL_LENGTH(N'dbo.L1Accounts', N'EmployeeFullName_FirstName') IS NULL
             BEGIN
-                CREATE TABLE dbo.L1Employees
-                (
-                    Id bigint IDENTITY(1,1) NOT NULL,
-                    AccountId bigint NOT NULL,
-                    FullName_FirstName nvarchar(100) NOT NULL,
-                    FullName_MiddleName nvarchar(100) NOT NULL,
-                    FullName_LastName nvarchar(100) NOT NULL,
-                    IsActive bit NOT NULL,
-                    CreatedAt datetimeoffset NOT NULL,
-                    CONSTRAINT PK_L1Employees PRIMARY KEY (Id)
-                );
+                ALTER TABLE dbo.L1Accounts
+                ADD EmployeeFullName_FirstName nvarchar(100) NULL,
+                    EmployeeFullName_MiddleName nvarchar(100) NULL,
+                    EmployeeFullName_LastName nvarchar(100) NULL;
             END
             """;
 

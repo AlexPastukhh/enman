@@ -5,15 +5,9 @@ using static Domain.EnergyManagement.Common.Error;
 
 namespace Domain.EnergyManagement.L1;
 
-public sealed class Employee : L1Entity
+public sealed class Employee : Account
 {
-    public long AccountId { get; private set; }
-
     public FullName FullName { get; private set; }
-
-    public bool IsActive { get; private set; }
-
-    public DateTimeOffset CreatedAt { get; private set; }
 
     private Employee()
     {
@@ -21,26 +15,31 @@ public sealed class Employee : L1Entity
     }
 
     private Employee(
-        long accountId,
+        Email email,
+        PasswordHash passwordHash,
         FullName fullName,
         DateTimeOffset createdAt)
+        : base(email, passwordHash, AccountRole.Employee, createdAt)
     {
-        AccountId = accountId;
         FullName = fullName;
-        IsActive = true;
-        CreatedAt = createdAt;
     }
 
     public static Result<Employee, IReadOnlyList<Error>> Create(
-        long accountId,
+        Email email,
+        PasswordHash passwordHash,
         FullName fullName,
         DateTimeOffset createdAt)
     {
         var errors = new List<Error>();
 
-        if (accountId <= 0)
+        if (email is null)
         {
-            errors.Add(Errors.L1Domain.EmployeeAccountIsRequired);
+            errors.Add(Errors.Account.EmailIsRequired);
+        }
+
+        if (passwordHash is null)
+        {
+            errors.Add(Errors.Account.PasswordIsRequired);
         }
 
         if (fullName is null)
@@ -54,7 +53,7 @@ public sealed class Employee : L1Entity
         }
 
         return Result.Success<Employee, IReadOnlyList<Error>>(
-            new Employee(accountId, fullName!, createdAt));
+            new Employee(email!, passwordHash!, fullName!, createdAt));
     }
 
     public UnitResult<IReadOnlyList<Error>> EnsureCanReview()
@@ -79,6 +78,12 @@ public sealed class Employee : L1Entity
 
     private UnitResult<IReadOnlyList<Error>> EnsureActive()
     {
+        if (Role != AccountRole.Employee)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.EmployeeIsRequired]);
+        }
+
         if (!IsActive)
         {
             return UnitResult.Failure<IReadOnlyList<Error>>(

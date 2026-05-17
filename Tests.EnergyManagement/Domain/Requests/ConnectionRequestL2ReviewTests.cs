@@ -217,7 +217,8 @@ public class ConnectionRequestL2ReviewTests
     private static Employee CreatePersistedEmployee(long id)
     {
         return Employee.Create(
-            accountId: 20,
+            L1ValidTestData.Email,
+            L1ValidTestData.PasswordHash,
             L1ValidTestData.FullName,
             DateTimeOffset.UtcNow).Value.WithId(id);
     }

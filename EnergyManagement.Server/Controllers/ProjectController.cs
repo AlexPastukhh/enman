@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domain.EnergyManagement.Common;
 using EnergyManagement.Server.Api.Contracts.Common;
-using EnergyManagement.Server.Data;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 

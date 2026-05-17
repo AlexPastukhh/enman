@@ -537,7 +537,6 @@ public abstract class L1IntegrationTestBase
 
     protected async Task InsertEmployeeAsync(
         long employeeId,
-        long accountId = 1,
         string firstName = "Employee",
         string middleName = "Review",
         string lastName = "User",
@@ -548,16 +547,18 @@ public abstract class L1IntegrationTestBase
 
         await using var command = new SqlCommand(
             """
-            IF NOT EXISTS (SELECT 1 FROM dbo.L1Employees WHERE Id = @employeeId)
+            IF NOT EXISTS (SELECT 1 FROM dbo.L1Accounts WHERE Id = @employeeId)
             BEGIN
-                SET IDENTITY_INSERT dbo.L1Employees ON;
+                SET IDENTITY_INSERT dbo.L1Accounts ON;
 
-                INSERT INTO dbo.L1Employees
-                    (Id, AccountId, FullName_FirstName, FullName_MiddleName, FullName_LastName, IsActive, CreatedAt)
+                INSERT INTO dbo.L1Accounts
+                    (Id, Email, PasswordHash, Role, IsActive, CreatedAt, AccountType,
+                     EmployeeFullName_FirstName, EmployeeFullName_MiddleName, EmployeeFullName_LastName)
                 VALUES
-                    (@employeeId, @accountId, @firstName, @middleName, @lastName, @isActive, @createdAt);
+                    (@employeeId, @email, @passwordHash, N'Employee', @isActive, @createdAt, N'Employee',
+                     @firstName, @middleName, @lastName);
 
-                SET IDENTITY_INSERT dbo.L1Employees OFF;
+                SET IDENTITY_INSERT dbo.L1Accounts OFF;
             END
             """,
             connection)
@@ -566,7 +567,11 @@ public abstract class L1IntegrationTestBase
         };
 
         command.Parameters.AddWithValue("@employeeId", employeeId);
-        command.Parameters.AddWithValue("@accountId", accountId);
+        command.Parameters.AddWithValue("@email", $"employee-{employeeId}@example.com");
+        command.Parameters.AddWithValue(
+            "@passwordHash",
+            "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF-" +
+            "0123456789ABCDEF0123456789ABCDEF");
         command.Parameters.AddWithValue("@firstName", firstName);
         command.Parameters.AddWithValue("@middleName", middleName);
         command.Parameters.AddWithValue("@lastName", lastName);

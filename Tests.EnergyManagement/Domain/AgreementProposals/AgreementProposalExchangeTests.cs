@@ -432,7 +432,8 @@ public class AgreementProposalExchangeTests
     private static Employee CreateEmployee()
     {
         return Employee.Create(
-            accountId: 20,
+            L1ValidTestData.Email,
+            L1ValidTestData.PasswordHash,
             L1ValidTestData.FullName,
             DateTimeOffset.UtcNow).Value;
     }

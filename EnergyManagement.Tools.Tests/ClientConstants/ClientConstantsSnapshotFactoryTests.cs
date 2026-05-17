@@ -1,5 +1,5 @@
 using System.Reflection;
-using EnergyManagement.Server.Data;
+using EnergyManagement.Server.Api.Contracts.Common;
 using EnergyManagement.Tools.ClientConstants;
 using FluentAssertions;
 

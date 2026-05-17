@@ -6,7 +6,6 @@ using Xunit.Abstractions;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc;
 using EnergyManagement.Server.Api.Contracts.Common;
-using EnergyManagement.Server.Data;
 using System.Net;
 
 namespace Tests.EnergyManagement.TestHelpers

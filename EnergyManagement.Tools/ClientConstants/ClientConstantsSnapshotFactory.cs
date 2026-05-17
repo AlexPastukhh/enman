@@ -1,7 +1,6 @@
-using EnergyManagement.Server.Api.Contracts.Auth;
 using EnergyManagement.Server.Api.Contracts.Common;
-using EnergyManagement.Server.Api.Routes;
-using EnergyManagement.Server.Data;
+using EnergyManagement.Server.L1.Api;
+using EnergyManagement.Server.L1.Api.Validation;
 
 namespace EnergyManagement.Tools.ClientConstants;
 
@@ -12,38 +11,34 @@ public sealed class ClientConstantsSnapshotFactory
 
     public ConstantsSnapshot CreateConstantsSnapshot()
         => new(
-            AuthConstants: new AuthConstantsSnapshot(
-                RegisterIndividualClient: new RegisterIndividualClientConstantsSnapshot(
-                    Email: CreateField(AuthFieldNames.Register.Email, nameof(RegisterClientDto.Email)),
-                    Password: CreateField(AuthFieldNames.Register.Password, nameof(RegisterClientDto.Password)),
-                    PasswordConfirmation: CreateField(
-                        AuthFieldNames.Register.PasswordConfirmation,
-                        nameof(RegisterClientDto.PasswordConfirmation))),
-                Login: new LoginConstantsSnapshot(
-                    Email: CreateField(AuthFieldNames.Login.Email, nameof(LoginDto.Email)),
-                    Password: CreateField(AuthFieldNames.Login.Password, nameof(LoginDto.Password))),
-                ProvideIndividualClientsData: new ProvideIndividualClientsDataConstantsSnapshot(
+            L1AuthConstants: new L1AuthConstantsSnapshot(
+                RegisterClientAccount: new L1RegisterClientAccountConstantsSnapshot(
+                    Email: CreateField(L1FieldNames.Auth.Email, nameof(L1RegisterClientAccountDto.Email)),
+                    Password: CreateField(L1FieldNames.Auth.Password, nameof(L1RegisterClientAccountDto.Password))),
+                Login: new L1LoginConstantsSnapshot(
+                    Email: CreateField(L1FieldNames.Auth.Email, nameof(L1LoginRequest.Email)),
+                    Password: CreateField(L1FieldNames.Auth.Password, nameof(L1LoginRequest.Password)))),
+            L1ApplicantPartyConstants: new L1ApplicantPartyConstantsSnapshot(
+                CreateIndividualApplicantParty: new L1CreateIndividualApplicantPartyConstantsSnapshot(
                     PhoneNumber: CreateField(
-                        AuthFieldNames.ProvideIndividualClientData.Phone,
-                        nameof(ProvideIndividualClientsDataDto.PhoneNumber)),
+                        L1FieldNames.ApplicantParty.PhoneNumber,
+                        nameof(L1CreateIndividualApplicantPartyDto.PhoneNumber)),
+                    Email: CreateField(
+                        L1FieldNames.ApplicantParty.Email,
+                        nameof(L1CreateIndividualApplicantPartyDto.Email)),
                     FirstName: CreateField(
-                        JsonField.Of<FullNameDto>(x => x.FirstName),
-                        nameof(FullNameDto.FirstName)),
+                        L1FieldNames.FullName.FirstName,
+                        nameof(L1FullNameDto.FirstName)),
                     MiddleName: CreateField(
-                        JsonField.Of<FullNameDto>(x => x.MiddleName),
-                        nameof(FullNameDto.MiddleName)),
+                        L1FieldNames.FullName.MiddleName,
+                        nameof(L1FullNameDto.MiddleName)),
                     LastName: CreateField(
-                        JsonField.Of<FullNameDto>(x => x.LastName),
-                        nameof(FullNameDto.LastName)))),
-            GeneralConstants: new GeneralConstantsSnapshot(
+                        L1FieldNames.FullName.LastName,
+                        nameof(L1FullNameDto.LastName)))),
+            ProblemDetails: new ProblemDetailsConstantsSnapshot(
                 ValidationErrorStatusCode: ProblemDetailsContract.ValidationStatusCode,
                 ErrorsCollectionName: ProblemDetailsContract.ErrorsExtension,
-                ExceptionExtensionName: ProblemDetailsContract.ExceptionExtension),
-            Routes: new RoutesSnapshot(
-                RegisterIndividualPath: AuthRoutes.RegisterIndividualPath,
-                ProvideIndividualClientsDataPath: AuthRoutes.ProvideIndividualClientsDataPath,
-                LoginPath: AuthRoutes.LoginPath,
-                GetUserPath: AuthRoutes.GetUserPath));
+                ExceptionExtensionName: ProblemDetailsContract.ExceptionExtension));
 
     public ErrorObject CreateErrorCodesSnapshot()
         => ErrorObject.Create();
@@ -57,26 +52,28 @@ public sealed record ClientConstantsSnapshot(
     ErrorObject ErrorCodes);
 
 public sealed record ConstantsSnapshot(
-    AuthConstantsSnapshot AuthConstants,
-    GeneralConstantsSnapshot GeneralConstants,
-    RoutesSnapshot Routes);
+    L1AuthConstantsSnapshot L1AuthConstants,
+    L1ApplicantPartyConstantsSnapshot L1ApplicantPartyConstants,
+    ProblemDetailsConstantsSnapshot ProblemDetails);
 
-public sealed record AuthConstantsSnapshot(
-    RegisterIndividualClientConstantsSnapshot RegisterIndividualClient,
-    LoginConstantsSnapshot Login,
-    ProvideIndividualClientsDataConstantsSnapshot ProvideIndividualClientsData);
+public sealed record L1AuthConstantsSnapshot(
+    L1RegisterClientAccountConstantsSnapshot RegisterClientAccount,
+    L1LoginConstantsSnapshot Login);
 
-public sealed record RegisterIndividualClientConstantsSnapshot(
-    FormFieldWithDtoSnapshot Email,
-    FormFieldWithDtoSnapshot Password,
-    FormFieldWithDtoSnapshot PasswordConfirmation);
-
-public sealed record LoginConstantsSnapshot(
+public sealed record L1RegisterClientAccountConstantsSnapshot(
     FormFieldWithDtoSnapshot Email,
     FormFieldWithDtoSnapshot Password);
 
-public sealed record ProvideIndividualClientsDataConstantsSnapshot(
+public sealed record L1LoginConstantsSnapshot(
+    FormFieldWithDtoSnapshot Email,
+    FormFieldWithDtoSnapshot Password);
+
+public sealed record L1ApplicantPartyConstantsSnapshot(
+    L1CreateIndividualApplicantPartyConstantsSnapshot CreateIndividualApplicantParty);
+
+public sealed record L1CreateIndividualApplicantPartyConstantsSnapshot(
     FormFieldWithDtoSnapshot PhoneNumber,
+    FormFieldWithDtoSnapshot Email,
     FormFieldWithDtoSnapshot FirstName,
     FormFieldWithDtoSnapshot MiddleName,
     FormFieldWithDtoSnapshot LastName);
@@ -85,13 +82,7 @@ public sealed record FormFieldWithDtoSnapshot(
     string FieldName,
     string DtoFieldName);
 
-public sealed record GeneralConstantsSnapshot(
+public sealed record ProblemDetailsConstantsSnapshot(
     int ValidationErrorStatusCode,
     string ErrorsCollectionName,
     string ExceptionExtensionName);
-
-public sealed record RoutesSnapshot(
-    string RegisterIndividualPath,
-    string ProvideIndividualClientsDataPath,
-    string LoginPath,
-    string GetUserPath);

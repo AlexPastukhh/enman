@@ -1,6 +1,6 @@
 {
-  "AuthConstants": {
-    "RegisterIndividualClient": {
+  "L1AuthConstants": {
+    "RegisterClientAccount": {
       "Email": {
         "FieldName": "email",
         "DtoFieldName": "Email"
@@ -8,10 +8,6 @@
       "Password": {
         "FieldName": "password",
         "DtoFieldName": "Password"
-      },
-      "PasswordConfirmation": {
-        "FieldName": "passwordConfirmation",
-        "DtoFieldName": "PasswordConfirmation"
       }
     },
     "Login": {
@@ -23,11 +19,17 @@
         "FieldName": "password",
         "DtoFieldName": "Password"
       }
-    },
-    "ProvideIndividualClientsData": {
+    }
+  },
+  "L1ApplicantPartyConstants": {
+    "CreateIndividualApplicantParty": {
       "PhoneNumber": {
         "FieldName": "phoneNumber",
         "DtoFieldName": "PhoneNumber"
+      },
+      "Email": {
+        "FieldName": "email",
+        "DtoFieldName": "Email"
       },
       "FirstName": {
         "FieldName": "firstName",
@@ -43,15 +45,9 @@
       }
     }
   },
-  "GeneralConstants": {
+  "ProblemDetails": {
     "ValidationErrorStatusCode": 422,
     "ErrorsCollectionName": "errors",
     "ExceptionExtensionName": "exception"
-  },
-  "Routes": {
-    "RegisterIndividualPath": "api/auth/registerIndividual",
-    "ProvideIndividualClientsDataPath": "api/auth/provideIndividualClientsData",
-    "LoginPath": "api/auth/login",
-    "GetUserPath": "api/auth/getUser"
   }
 }

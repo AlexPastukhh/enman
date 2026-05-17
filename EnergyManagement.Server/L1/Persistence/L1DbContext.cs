@@ -28,9 +28,9 @@ public class L1DbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ConfigureAccounts(modelBuilder);
+        ConfigureEmployees(modelBuilder);
         ConfigureApplicantParties(modelBuilder);
         ConfigureClientRequests(modelBuilder);
-        ConfigureEmployees(modelBuilder);
         ConfigureAgreementProposalExchanges(modelBuilder);
     }
 
@@ -42,7 +42,8 @@ public class L1DbContext : DbContext
             account.HasKey(x => x.Id);
 
             account.HasDiscriminator<string>("AccountType")
-                .HasValue<ClientAccount>("Client");
+                .HasValue<ClientAccount>("Client")
+                .HasValue<Employee>("Employee");
 
             account.OwnsOne(x => x.Email, email =>
             {
@@ -285,38 +286,23 @@ public class L1DbContext : DbContext
     {
         modelBuilder.Entity<Employee>(employee =>
         {
-            employee.ToTable("L1Employees");
-            employee.HasKey(x => x.Id);
-
-            employee.Property(x => x.AccountId)
-                .HasColumnName("AccountId")
-                .IsRequired();
-
             employee.OwnsOne(x => x.FullName, fullName =>
             {
                 fullName.Property(x => x.FirstName)
-                    .HasColumnName("FullName_FirstName")
+                    .HasColumnName("EmployeeFullName_FirstName")
                     .HasMaxLength(100)
-                    .IsRequired();
+                    .IsRequired(false);
 
                 fullName.Property(x => x.MiddleName)
-                    .HasColumnName("FullName_MiddleName")
+                    .HasColumnName("EmployeeFullName_MiddleName")
                     .HasMaxLength(100)
-                    .IsRequired();
+                    .IsRequired(false);
 
                 fullName.Property(x => x.LastName)
-                    .HasColumnName("FullName_LastName")
+                    .HasColumnName("EmployeeFullName_LastName")
                     .HasMaxLength(100)
-                    .IsRequired();
+                    .IsRequired(false);
             });
-
-            employee.Property(x => x.IsActive)
-                .HasColumnName("IsActive")
-                .IsRequired();
-
-            employee.Property(x => x.CreatedAt)
-                .HasColumnName("CreatedAt")
-                .IsRequired();
         });
     }
 
