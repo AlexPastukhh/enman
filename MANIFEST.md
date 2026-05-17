@@ -1,34 +1,31 @@
-# SL-AGR-EXCH-006 — Final Refuse Agreement Exchange
+# L2-AGR-EXCH-START-001.client — Start Agreement Exchange With Initial Employee Proposal
 
-Archive contents are repository-relative and intended to be expanded from the repository root.
+Client-only implementation archive.
 
-## Files
+## Included files
 
-- `EnergyManagement.Server/L1/Api/L1Dtos.cs`
-- `EnergyManagement.Server/L1/Api/Validation/L1FieldNames.cs`
-- `EnergyManagement.Server/L1/Api/Validation/FinalRefuseAgreementExchangeDtoValidator.cs`
-- `EnergyManagement.Server/L1/Application/Abstractions/IAgreementExchangeApplicationService.cs`
-- `EnergyManagement.Server/L1/Application/Services/AgreementExchangeApplicationService.cs`
-- `EnergyManagement.Server/L1/Controllers/AgreementExchangesController.cs`
-- `EnergyManagement.Server/Program.cs`
-- `Tests.EnergyManagement/Integration/L1/AgreementExchanges/AgreementExchangeFinalRefusalIntegrationTests.cs`
+- `energymanagement.client/src/features/agreement-exchange/start-exchange/api/startAgreementExchange.ts`
+- `energymanagement.client/src/features/agreement-exchange/start-exchange/api/startAgreementExchange.test.ts`
+- `energymanagement.client/src/features/agreement-exchange/start-exchange/api/startAgreementExchangeApiTypes.ts`
+- `energymanagement.client/src/features/agreement-exchange/start-exchange/model/startAgreementExchangeAvailability.ts`
+- `energymanagement.client/src/features/agreement-exchange/start-exchange/model/startAgreementExchangeAvailability.test.ts`
+- `energymanagement.client/src/features/agreement-exchange/start-exchange/model/useStartAgreementExchangeMutation.ts`
+- `energymanagement.client/src/features/agreement-exchange/start-exchange/ui/StartAgreementExchangeForm.tsx`
+- `energymanagement.client/src/features/agreement-exchange/start-exchange/ui/StartAgreementExchangeForm.test.tsx`
+- `energymanagement.client/src/features/agreement-exchange/start-exchange/ui/startAgreementExchangeForm.css`
+- `energymanagement.client/src/features/agreement-exchange/start-exchange/ui/startAgreementExchangeFormConst.ts`
+- `energymanagement.client/src/pages/employee/requests/details/EmployeeRequestDetailsPage.tsx`
+- `energymanagement.client/src/pages/employee/requests/details/EmployeeRequestDetailsPage.test.tsx`
 
-## Implemented
+## Scope confirmations
 
-- Employee-only final refusal endpoint: `POST /api/agreement-exchanges/{exchangeId}/final-refuse`
-- CSRF boundary.
-- Nullable request body: missing/null body and missing/null reason are allowed.
-- Optional `reason` validation: blank/too long values return validation problem.
-- Application orchestration over two aggregates:
-  - `exchange.FinalRefuseProposal(employee, reason, now)`
-  - `request.MarkAgreementExchangeFailed(exchange.Id, now)`
-- Single `SaveChangesAsync` after both domain transitions succeed.
-- `204 No Content` on success.
-- Integration tests with DB state assertions.
-
-## Not included
-
-- OpenAPI/generated TypeScript artifacts.
-- Planning/docs updates.
-- Client UI.
-- Migrations.
+- Employee-only first pass.
+- Placement is Employee request details action area only.
+- Feature-owned command wrapper, no `shared/api` business wrapper.
+- Target endpoint direction: `POST /api/agreement-exchanges`.
+- Initial proposal DTO is local first pass until generated OpenAPI contract exists.
+- Request details and agreement exchange list are invalidated after success/error.
+- Navigates to `/employee/agreements/:exchangeId` when response contains `exchangeId`.
+- No Client start exchange.
+- No send-proposal/counter-proposal inside existing exchange.
+- No accept/final-refuse implementation.

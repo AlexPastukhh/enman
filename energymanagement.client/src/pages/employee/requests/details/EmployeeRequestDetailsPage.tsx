@@ -1,10 +1,12 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getEmployeeReviewActionAvailability } from "../../../../entities/employee-request/model/reviewActionAvailability";
 import { useEmployeeRequestDetailsQuery } from "../../../../entities/employee-request/model/useEmployeeRequestDetailsQuery";
 import { EmployeeRequestDetailsEmptyState } from "../../../../entities/employee-request/ui/EmployeeRequestDetailsEmptyState";
 import { EmployeeRequestDetailsView } from "../../../../entities/employee-request/ui/EmployeeRequestDetailsView";
 import { employeeRequestDetailsConst } from "../../../../entities/employee-request/ui/employeeRequestDetailsConst";
 import { useSession } from "../../../../entities/session/model/useSession";
+import { getStartAgreementExchangeAvailability } from "../../../../features/agreement-exchange/start-exchange/model/startAgreementExchangeAvailability";
+import { StartAgreementExchangeForm } from "../../../../features/agreement-exchange/start-exchange/ui/StartAgreementExchangeForm";
 import { ApproveReviewButton } from "../../../../features/employee-request/approve-review/ui/ApproveReviewButton";
 import { RejectReviewForm } from "../../../../features/employee-request/reject-review/ui/RejectReviewForm";
 import { StartReviewButton } from "../../../../features/employee-request/start-review/ui/StartReviewButton";
@@ -28,6 +30,7 @@ const parseRequestId = (value: string | undefined) => {
 const EmployeeRequestDetailsPage = () => {
   const session = useSession();
   const params = useParams();
+  const navigate = useNavigate();
   const requestId = parseRequestId(params.requestId);
   const isEmployee = isEmployeeSession(session?.role);
 
@@ -109,6 +112,8 @@ const EmployeeRequestDetailsPage = () => {
               details={detailsQuery.data}
               renderReviewActions={(details) => {
                 const availability = getEmployeeReviewActionAvailability(details);
+                const startExchangeAvailability =
+                  getStartAgreementExchangeAvailability(details);
 
                 return (
                   <>
@@ -128,6 +133,16 @@ const EmployeeRequestDetailsPage = () => {
                       disabled={!availability.canRejectReview}
                       unavailableReason={availability.reason}
                       showEmptyFeedbackWarning
+                    />
+                    <StartAgreementExchangeForm
+                      requestId={details.requestId}
+                      disabled={!startExchangeAvailability.canStartAgreementExchange}
+                      unavailableReason={startExchangeAvailability.reason}
+                      onStarted={(response) => {
+                        if (response.exchangeId !== undefined && response.exchangeId !== null) {
+                          navigate(clientRoutes.employeeAgreementExchangeDetails(response.exchangeId));
+                        }
+                      }}
                     />
                   </>
                 );

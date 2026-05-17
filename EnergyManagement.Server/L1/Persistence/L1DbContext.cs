@@ -171,6 +171,8 @@ public class L1DbContext : DbContext
                 .HasColumnName("ApplicantPartyId")
                 .IsRequired();
 
+            clientRequest.Ignore(x => x.ClientAccountId);
+
             clientRequest.Property(x => x.RequestType)
                 .HasColumnName("RequestType")
                 .HasConversion<string>()

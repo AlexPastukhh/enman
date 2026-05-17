@@ -32,7 +32,6 @@ public sealed class AgreementProposalExchange : L1Entity
 
     public static Result<AgreementProposalExchange, IReadOnlyList<Error>> StartByEmployee(
         ConnectionRequest approvedRequest,
-        long clientAccountId,
         AgreementDocumentRef document,
         ProposalComment? comment,
         Employee employee,
@@ -53,6 +52,7 @@ public sealed class AgreementProposalExchange : L1Entity
             errors.Add(Errors.L1Domain.AgreementExchangeRequiresApprovedRequest);
         }
 
+        var clientAccountId = approvedRequest?.ClientAccountId ?? 0;
         if (clientAccountId <= 0)
         {
             errors.Add(Errors.L1Domain.ClientAccountIsRequired);

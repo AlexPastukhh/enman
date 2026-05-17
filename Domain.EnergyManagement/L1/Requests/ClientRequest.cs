@@ -8,6 +8,7 @@ namespace Domain.EnergyManagement.L1;
 public abstract class ClientRequest : L1Entity
 {
     public long ApplicantPartyId { get; private set; }
+    public long ClientAccountId { get; private set; }
     public ClientRequestType RequestType { get; private set; }
     public RequestStatus Status { get; protected set; }
     public string Details { get; private set; }
@@ -22,6 +23,7 @@ public abstract class ClientRequest : L1Entity
         DateTimeOffset createdAt)
     {
         ApplicantPartyId = applicantParty.Id;
+        ClientAccountId = applicantParty.ClientAccountId;
         RequestType = requestType;
         Status = RequestStatus.InReview;
         Details = details;

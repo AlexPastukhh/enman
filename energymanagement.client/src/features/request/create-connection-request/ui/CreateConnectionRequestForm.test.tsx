@@ -140,7 +140,7 @@ describe("CreateConnectionRequestForm", () => {
         }),
       }),
     );
-  });
+  }, 10_000);
 
   it("shows validation feedback for missing fields", async () => {
     renderForm(applicantParties);

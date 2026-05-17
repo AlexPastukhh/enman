@@ -64,6 +64,15 @@ vi.mock("../../../../features/employee-request/reject-review/ui/RejectReviewForm
   __esModule: true,
 }));
 
+vi.mock("../../../../features/agreement-exchange/start-exchange/ui/StartAgreementExchangeForm", () => ({
+  StartAgreementExchangeForm: ({ disabled }: { disabled?: boolean }) => (
+    <button type="button" disabled={disabled}>
+      Start agreement exchange
+    </button>
+  ),
+  __esModule: true,
+}));
+
 const renderPage = (initialEntry = "/employee/requests/42") =>
   render(
     <MemoryRouter initialEntries={[initialEntry]}>
@@ -129,6 +138,9 @@ describe("EmployeeRequestDetailsPage", () => {
     expect(screen.getByRole("button", { name: "Start review" })).toBeVisible();
     expect(screen.getByRole("button", { name: "Approve review" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Reject review" })).toBeDisabled();
+    expect(
+      screen.getByRole("button", { name: "Start agreement exchange" }),
+    ).toBeDisabled();
   });
 
 
@@ -161,6 +173,41 @@ describe("EmployeeRequestDetailsPage", () => {
     expect(screen.getByRole("button", { name: "Approve review" })).toBeEnabled();
     expect(screen.getByRole("button", { name: "Reject review" })).toBeEnabled();
     expect(screen.getByRole("button", { name: "Start review" })).toBeDisabled();
+  });
+
+
+
+  it("renders Start Agreement Exchange action when request is approved", () => {
+    mockedUseEmployeeRequestDetailsQuery.mockReturnValue({
+      isPending: false,
+      isError: false,
+      data: {
+        requestId: 42,
+        requestType: "Connection",
+        status: "Approved",
+        applicant: {
+          applicantPartyId: 7,
+          applicantPartyType: "Individual",
+          displayName: "Ivan Petrov",
+          email: "ivan@example.com",
+          phoneNumber: "+79001234567",
+        },
+        objectAddress: "Altai Krai, Zarinsk, Lenina 10",
+        details: "Please connect the object to the grid.",
+        createdAt: "2026-01-02T10:30:00Z",
+        reviewState: "Approved",
+      },
+      error: null,
+    });
+
+    renderPage();
+
+    expect(
+      screen.getByRole("button", { name: "Start agreement exchange" }),
+    ).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Start review" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Approve review" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Reject review" })).toBeDisabled();
   });
 
   it("shows sign-in state without session", () => {

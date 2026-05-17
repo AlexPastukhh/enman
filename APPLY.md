@@ -3,24 +3,30 @@
 From repository root:
 
 ```powershell
-cd "C:\enman\enman"
-Expand-Archive -Path "C:\Users\alexa\Downloads\sl-agr-exch-006-final-refuse-agreement-exchange-v28.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agr-exch-start-001-client.zip" -DestinationPath "." -Force
 ```
 
-Then verify:
+# Verify
 
 ```powershell
-dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
-dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
+npm install
+npm --prefix .\energymanagement.client install
+npm run check:api
+npm --prefix .\energymanagement.client run build
+npm --prefix .\energymanagement.client run test -- --run
 ```
 
-API contract changes, so regenerate artifacts locally:
+Targeted tests:
 
 ```powershell
-npm.cmd run generate:openapi
-npm.cmd run generate:api-types
+npm --prefix .\energymanagement.client run test -- --run --reporter=verbose src/features/agreement-exchange/start-exchange/api/startAgreementExchange.test.ts src/features/agreement-exchange/start-exchange/model/startAgreementExchangeAvailability.test.ts src/features/agreement-exchange/start-exchange/ui/StartAgreementExchangeForm.test.tsx src/pages/employee/requests/details/EmployeeRequestDetailsPage.test.tsx
+```
 
-git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
+# OpenAPI note
 
-npm.cmd run check:api
+The uploaded snapshot does not expose `POST /api/agreement-exchanges` in generated OpenAPI yet. After `SL-AGR-EXCH-001` backend/OpenAPI is finalized, replace local first-pass DTOs in `startAgreementExchangeApiTypes.ts` with generated aliases and include generated artifacts if they change:
+
+```text
+Shared/openapi.json
+energymanagement.client/src/shared/api/generated/openapi-types.ts
 ```
