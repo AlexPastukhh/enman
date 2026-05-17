@@ -98,6 +98,24 @@ public sealed record EmployeeRequestListItemDto(
     [property: JsonPropertyName("createdAt")] DateTimeOffset CreatedAt,
     [property: JsonPropertyName("reviewState")] string ReviewState);
 
+
+public sealed record EmployeeRequestDetailsDto(
+    [property: JsonPropertyName("requestId")] long RequestId,
+    [property: JsonPropertyName("requestType")] string RequestType,
+    [property: JsonPropertyName("status")] string Status,
+    [property: JsonPropertyName("applicant")] EmployeeRequestApplicantSummaryDto Applicant,
+    [property: JsonPropertyName("objectAddress")] string ObjectAddress,
+    [property: JsonPropertyName("details")] string Details,
+    [property: JsonPropertyName("createdAt")] DateTimeOffset CreatedAt,
+    [property: JsonPropertyName("reviewState")] string ReviewState);
+
+public sealed record EmployeeRequestApplicantSummaryDto(
+    [property: JsonPropertyName("applicantPartyId")] long ApplicantPartyId,
+    [property: JsonPropertyName("applicantPartyType")] string ApplicantPartyType,
+    [property: JsonPropertyName("displayName")] string DisplayName,
+    [property: JsonPropertyName("email")] string? Email,
+    [property: JsonPropertyName("phoneNumber")] string? PhoneNumber);
+
 public sealed record L1AddressDto(
     [property: JsonPropertyName("postalCode")] string? PostalCode,
     [property: JsonPropertyName("region")] string? Region,

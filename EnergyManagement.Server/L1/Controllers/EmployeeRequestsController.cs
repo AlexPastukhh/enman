@@ -73,6 +73,43 @@ public sealed class EmployeeRequestsController : ProjectController
         }
     }
 
+
+    [Authorize(Roles = "Employee")]
+    [HttpGet("{requestId:long}", Name = "EmployeeGetRequestDetails")]
+    [ProducesResponseType(typeof(EmployeeRequestDetailsDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetRequestDetails(
+        long requestId,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (!TryGetCurrentEmployeeId(out var employeeId))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _sender.Send(
+                new EmployeeRequestDetailsQuery(employeeId, requestId),
+                cancellationToken);
+
+            if (result.HasNoValue)
+            {
+                return NotFound();
+            }
+
+            return Ok(ToDto(result.Value));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Employee request details failed for request {RequestId}.", requestId);
+            return ProblemDetailsWithExceptionDev(ex);
+        }
+    }
+
     private bool TryGetCurrentEmployeeId(out long employeeId)
     {
         employeeId = default;
@@ -104,4 +141,24 @@ public sealed class EmployeeRequestsController : ProjectController
             item.CreatedAt,
             item.ReviewState);
     }
+
+
+    private static EmployeeRequestDetailsDto ToDto(EmployeeRequestDetailsResponse response)
+    {
+        return new EmployeeRequestDetailsDto(
+            response.RequestId,
+            response.RequestType,
+            response.Status,
+            new EmployeeRequestApplicantSummaryDto(
+                response.Applicant.ApplicantPartyId,
+                response.Applicant.ApplicantPartyType,
+                response.Applicant.DisplayName,
+                response.Applicant.Email,
+                response.Applicant.PhoneNumber),
+            response.ObjectAddress,
+            response.Details,
+            response.CreatedAt,
+            response.ReviewState);
+    }
+
 }

@@ -176,12 +176,19 @@ public sealed class TestDatabaseManager
                     StartedAt datetimeoffset NOT NULL,
                     CompletedByEmployeeId bigint NULL,
                     CompletedAt datetimeoffset NULL,
-                    RejectionFeedback nvarchar(1000) NULL,
+                    RejectionReason nvarchar(1000) NULL,
                     CONSTRAINT PK_L1RequestReviews PRIMARY KEY (RequestId),
                     CONSTRAINT FK_L1RequestReviews_L1ClientRequests_RequestId
                         FOREIGN KEY (RequestId) REFERENCES dbo.L1ClientRequests(Id)
                         ON DELETE CASCADE
                 );
+            END
+
+            IF OBJECT_ID(N'dbo.L1RequestReviews', N'U') IS NOT NULL
+               AND COL_LENGTH(N'dbo.L1RequestReviews', N'RejectionReason') IS NULL
+            BEGIN
+                ALTER TABLE dbo.L1RequestReviews
+                ADD RejectionReason nvarchar(1000) NULL;
             END
             """;
 

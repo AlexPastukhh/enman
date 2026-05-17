@@ -131,6 +131,19 @@ public abstract class L1IntegrationTestBase
             ?? throw new InvalidOperationException("Employee request list response body was empty.");
     }
 
+
+    protected async Task<EmployeeRequestDetailsDto> GetEmployeeRequestDetailsAsync(
+        HttpClient client,
+        long requestId)
+    {
+        var response = await client.GetAsync($"/api/employee/requests/{requestId}");
+
+        await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
+
+        return await response.Content.ReadFromJsonAsync<EmployeeRequestDetailsDto>()
+            ?? throw new InvalidOperationException("Employee request details response body was empty.");
+    }
+
     protected async Task<L1MyRequestDetailsDto> GetMyRequestDetailsAsync(
         HttpClient client,
         long requestId)
@@ -521,7 +534,7 @@ public abstract class L1IntegrationTestBase
         await using var command = new SqlCommand(
             """
             INSERT INTO dbo.L1RequestReviews
-                (RequestId, Status, StartedByEmployeeId, StartedAt, CompletedByEmployeeId, CompletedAt, RejectionFeedback)
+                (RequestId, Status, StartedByEmployeeId, StartedAt, CompletedByEmployeeId, CompletedAt, RejectionReason)
             VALUES
                 (@requestId, @reviewStatus, @startedByEmployeeId, @startedAt, @completedByEmployeeId, @completedAt, @rejectionFeedback)
             """,
@@ -557,12 +570,21 @@ public abstract class L1IntegrationTestBase
         await using var command = new SqlCommand(
             """
             UPDATE dbo.L1ClientRequests
-            SET Status = @status,
-                ReviewDecision = @decision,
-                ReviewDecidedAt = @decidedAt,
-                ReviewReviewerId = @reviewerId,
-                ReviewRejectionReason = @rejectionReason
-            WHERE Id = @id
+            SET Status = @status
+            WHERE Id = @id;
+
+            MERGE dbo.L1RequestReviews AS target
+            USING (SELECT @id AS RequestId) AS source
+                ON target.RequestId = source.RequestId
+            WHEN MATCHED THEN
+                UPDATE SET
+                    Status = @decision,
+                    CompletedByEmployeeId = @reviewerId,
+                    CompletedAt = @decidedAt,
+                    RejectionReason = @rejectionReason
+            WHEN NOT MATCHED THEN
+                INSERT (RequestId, Status, StartedByEmployeeId, StartedAt, CompletedByEmployeeId, CompletedAt, RejectionReason)
+                VALUES (@id, @decision, @reviewerId, @decidedAt, @reviewerId, @decidedAt, @rejectionReason);
             """,
             connection)
         {
