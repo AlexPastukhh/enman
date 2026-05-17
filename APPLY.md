@@ -1,23 +1,23 @@
-# Apply
+# APPLY
 
 From repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agr-exch-accept-001-client.zip" -DestinationPath "." -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-agreement-exchange-send-proposal-impl.zip" -DestinationPath "." -Force
 ```
 
-Verify:
+Then verify:
 
 ```powershell
-npm install
-npm --prefix .\energymanagement.client install
-npm run check:api
-npm --prefix .\energymanagement.client run build
-npm --prefix .\energymanagement.client run test -- --run
+dotnet build .\Domain.EnergyManagement\Domain.EnergyManagement.csproj
+dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
+dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
 ```
 
-Targeted tests:
+Regenerate API artifacts after green server/tests:
 
 ```powershell
-npm --prefix .\energymanagement.client run test -- --run --reporter=verbose src/features/agreement-exchange/accept-proposal/api/acceptAgreementProposal.test.ts src/features/agreement-exchange/accept-proposal/model/acceptAgreementProposalAvailability.test.ts src/features/agreement-exchange/accept-proposal/ui/AcceptAgreementProposalButton.test.tsx src/pages/agreements/details/ClientAgreementExchangeDetailsPage.test.tsx src/pages/employee/agreements/details/EmployeeAgreementExchangeDetailsPage.test.tsx
+dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
+dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check
+npm.cmd run check:api
 ```

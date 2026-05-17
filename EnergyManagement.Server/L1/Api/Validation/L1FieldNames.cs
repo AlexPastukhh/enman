@@ -65,4 +65,14 @@ public static class L1FieldNames
         public const string Status = "status";
     }
 
+    public static class AgreementProposalVersion
+    {
+        public const string Document = "document";
+        public const string DocumentStorageKey = "document.storageKey";
+        public const string DocumentOriginalFileName = "document.originalFileName";
+        public const string DocumentContentType = "document.contentType";
+        public const string DocumentSizeBytes = "document.sizeBytes";
+        public static string Comment => JsonField.Of<SendAgreementProposalVersionDto>(x => x.Comment);
+    }
+
 }

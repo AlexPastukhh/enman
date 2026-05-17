@@ -165,10 +165,14 @@ public sealed record AgreementProposalDetailsDto(
     [property: JsonPropertyName("createdAt")] DateTimeOffset CreatedAt);
 
 public sealed record AgreementDocumentRefDto(
-    [property: JsonPropertyName("storageKey")] string StorageKey,
-    [property: JsonPropertyName("originalFileName")] string OriginalFileName,
-    [property: JsonPropertyName("contentType")] string ContentType,
+    [property: JsonPropertyName("storageKey")] string? StorageKey,
+    [property: JsonPropertyName("originalFileName")] string? OriginalFileName,
+    [property: JsonPropertyName("contentType")] string? ContentType,
     [property: JsonPropertyName("sizeBytes")] long SizeBytes);
+
+public sealed record SendAgreementProposalVersionDto(
+    [property: JsonPropertyName("document")] AgreementDocumentRefDto? Document,
+    [property: JsonPropertyName("comment")] string? Comment);
 
 public sealed record EmployeeRejectRequestReviewDto(
     [property: JsonPropertyName("feedback")] string? Feedback);

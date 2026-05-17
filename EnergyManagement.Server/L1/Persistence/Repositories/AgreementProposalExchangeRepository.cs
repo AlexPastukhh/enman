@@ -23,6 +23,7 @@ public sealed class AgreementProposalExchangeRepository : IAgreementProposalExch
         CancellationToken cancellationToken)
     {
         return _context.AgreementProposalExchanges
+            .Include(exchange => exchange.Proposals)
             .FirstOrDefaultAsync(exchange => exchange.Id == id, cancellationToken);
     }
 
@@ -31,6 +32,7 @@ public sealed class AgreementProposalExchangeRepository : IAgreementProposalExch
         CancellationToken cancellationToken)
     {
         return _context.AgreementProposalExchanges
+            .Include(exchange => exchange.Proposals)
             .FirstOrDefaultAsync(exchange => exchange.RequestId == requestId, cancellationToken);
     }
 }

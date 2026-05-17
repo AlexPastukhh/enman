@@ -56,6 +56,7 @@ builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddTransient<IAgreementProposalExchangeRepository, AgreementProposalExchangeRepository>();
 builder.Services.AddTransient<IAgreementExchangeReadRepository, AgreementExchangeReadRepository>();
 builder.Services.AddTransient<IAgreementExchangeReadService, AgreementExchangeReadService>();
+builder.Services.AddTransient<IAgreementExchangeApplicationService, AgreementExchangeApplicationService>();
 builder.Services.AddSingleton<L1ClaimsPrincipalFactory>();
 
 builder.Services.AddMediatR(c=>c.RegisterServicesFromAssembly(typeof(Program).Assembly));
@@ -67,6 +68,7 @@ builder.Services.AddTransient<IValidator<L1ListMyRequestsQueryDto>, L1ListMyRequ
 builder.Services.AddTransient<IValidator<EmployeeRequestListQueryDto>, EmployeeRequestListQueryDtoValidator>();
 builder.Services.AddTransient<IValidator<EmployeeRejectRequestReviewDto>, EmployeeRejectRequestReviewDtoValidator>();
 builder.Services.AddTransient<IValidator<AgreementExchangeListQueryDto>, AgreementExchangeListQueryDtoValidator>();
+builder.Services.AddTransient<IValidator<SendAgreementProposalVersionDto>, SendAgreementProposalVersionDtoValidator>();
 
 // 1️⃣ Register your config (it's already loaded by SharedFileService)
 // builder.Services.AddSingleton<ConstantsConfig>(_ => 

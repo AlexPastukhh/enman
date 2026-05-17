@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Domain.EnergyManagement.L1;
 using EnergyManagement.Server.Controllers;
 using EnergyManagement.Server.L1.Api;
+using EnergyManagement.Server.Api.Security;
 using EnergyManagement.Server.L1.Application.Abstractions;
 using EnergyManagement.Server.L1.Application.Security;
 using FluentValidation;
@@ -18,18 +19,24 @@ public sealed class AgreementExchangesController : ProjectController
 {
     private readonly ISender _sender;
     private readonly IAgreementExchangeReadService _readService;
+    private readonly IAgreementExchangeApplicationService _applicationService;
     private readonly IValidator<AgreementExchangeListQueryDto> _listQueryValidator;
+    private readonly IValidator<SendAgreementProposalVersionDto> _sendProposalValidator;
     private readonly ILogger<AgreementExchangesController> _logger;
 
     public AgreementExchangesController(
         ISender sender,
         IAgreementExchangeReadService readService,
+        IAgreementExchangeApplicationService applicationService,
         IValidator<AgreementExchangeListQueryDto> listQueryValidator,
+        IValidator<SendAgreementProposalVersionDto> sendProposalValidator,
         ILogger<AgreementExchangesController> logger)
     {
         _sender = sender;
         _readService = readService;
+        _applicationService = applicationService;
         _listQueryValidator = listQueryValidator;
+        _sendProposalValidator = sendProposalValidator;
         _logger = logger;
     }
 
@@ -150,6 +157,89 @@ public sealed class AgreementExchangesController : ProjectController
             return ProblemDetailsWithExceptionDev(ex);
         }
     }
+
+    [Authorize(Roles = "Client,Employee")]
+    [RequireAntiforgeryToken]
+    [HttpPost("/api/requests/{requestId:long:min(1)}/agreement-exchange/proposals", Name = "SendAgreementProposalVersion")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> SendProposal(
+        long requestId,
+        [FromBody] SendAgreementProposalVersionDto dto,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var validationResult = await _sendProposalValidator.ValidateAsync(dto, cancellationToken);
+            if (!validationResult.IsValid)
+            {
+                return ProblemDetailsFromValidation(validationResult.Errors);
+            }
+
+            if (!TryGetCurrentL1AccountId(out var accountId))
+            {
+                return Unauthorized();
+            }
+
+            var role = User.FindFirstValue(ClaimTypes.Role);
+            if (role == "Client")
+            {
+                var result = await _applicationService.SendClientProposalVersionAsync(
+                    accountId,
+                    requestId,
+                    ToInput(dto.Document!),
+                    dto.Comment,
+                    cancellationToken);
+
+                if (result.IsFailure)
+                {
+                    return ProblemDetailsFromValidation(result.Error);
+                }
+
+                return NoContent();
+            }
+
+            if (role == "Employee")
+            {
+                var result = await _applicationService.SendEmployeeProposalVersionAsync(
+                    accountId,
+                    requestId,
+                    ToInput(dto.Document!),
+                    dto.Comment,
+                    cancellationToken);
+
+                if (result.IsFailure)
+                {
+                    return ProblemDetailsFromValidation(result.Error);
+                }
+
+                return NoContent();
+            }
+
+            return Forbid();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Agreement proposal version send failed for request {RequestId}.", requestId);
+            return ProblemDetailsWithExceptionDev(ex);
+        }
+    }
+
+
+    private static AgreementDocumentRefInput ToInput(AgreementDocumentRefDto dto)
+    {
+        return new AgreementDocumentRefInput(
+            dto.StorageKey,
+            dto.OriginalFileName,
+            dto.ContentType,
+            dto.SizeBytes);
+    }
+
 
     private bool TryGetCurrentL1AccountId(out long accountId)
     {
