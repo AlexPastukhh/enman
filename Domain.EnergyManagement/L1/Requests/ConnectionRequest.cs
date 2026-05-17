@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using CSharpFunctionalExtensions;
 using Domain.EnergyManagement.Common;
 using Domain.EnergyManagement.DocumentManaging;
@@ -8,10 +7,7 @@ namespace Domain.EnergyManagement.L1;
 
 public sealed class ConnectionRequest : ClientRequest
 {
-    private RequestReview? _review;
-
-    [NotMapped]
-    public RequestReview? Review => _review;
+    public RequestReview? Review { get; private set; }
 
     private ConnectionRequest(
         ApplicantParty applicantParty,
@@ -84,13 +80,13 @@ public sealed class ConnectionRequest : ClientRequest
                 [Errors.L1Domain.OnlyInReviewRequestCanStartReview]);
         }
 
-        if (_review is not null && _review.Status == RequestReviewStatus.Started)
+        if (Review is not null && Review.Status == RequestReviewStatus.Started)
         {
             return UnitResult.Failure<IReadOnlyList<Error>>(
                 [Errors.L1Domain.RequestReviewAlreadyStarted]);
         }
 
-        _review = RequestReview.StartForRequest(
+        Review = RequestReview.StartForRequest(
             Id,
             employee,
             startedAt);
@@ -102,7 +98,7 @@ public sealed class ConnectionRequest : ClientRequest
         Employee employee,
         DateTimeOffset decidedAt)
     {
-        if (_review is null)
+        if (Review is null)
         {
             return UnitResult.Failure<IReadOnlyList<Error>>(
                 [Errors.L1Domain.RequestReviewMustBeStarted]);
@@ -114,7 +110,7 @@ public sealed class ConnectionRequest : ClientRequest
                 [Errors.L1Domain.OnlyInReviewRequestCanBeApproved]);
         }
 
-        var approve = _review.Approve(employee, decidedAt);
+        var approve = Review.Approve(employee, decidedAt);
         if (approve.IsFailure)
         {
             return approve;
@@ -130,7 +126,7 @@ public sealed class ConnectionRequest : ClientRequest
         RejectionFeedback? feedback,
         DateTimeOffset decidedAt)
     {
-        if (_review is null)
+        if (Review is null)
         {
             return UnitResult.Failure<IReadOnlyList<Error>>(
                 [Errors.L1Domain.RequestReviewMustBeStarted]);
@@ -142,7 +138,7 @@ public sealed class ConnectionRequest : ClientRequest
                 [Errors.L1Domain.OnlyInReviewRequestCanBeRejected]);
         }
 
-        var reject = _review.Reject(
+        var reject = Review.Reject(
             employee,
             feedback,
             decidedAt);

@@ -23,8 +23,14 @@ public sealed record L1SubmittedRequestResponse(
     L1MyRequestAddressResponse ObjectAddress);
 
 public sealed record L1MyRequestReviewResultResponse(
-    ReviewDecision Decision,
+    L1RequestReviewDecision Decision,
     DateTimeOffset DecidedAt,
     L1MyRequestRejectionResponse? Rejection);
+
+public enum L1RequestReviewDecision
+{
+    Approved = 1,
+    Rejected = 2
+}
 
 public sealed record L1MyRequestRejectionResponse(string Reason);

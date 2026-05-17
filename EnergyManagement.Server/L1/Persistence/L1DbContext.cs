@@ -16,6 +16,7 @@ public class L1DbContext : DbContext
     public DbSet<Account> Accounts => Set<Account>();
     public DbSet<ApplicantParty> ApplicantParties => Set<ApplicantParty>();
     public DbSet<ClientRequest> ClientRequests => Set<ClientRequest>();
+    public DbSet<AgreementProposalExchange> AgreementProposalExchanges => Set<AgreementProposalExchange>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -28,6 +29,7 @@ public class L1DbContext : DbContext
         ConfigureAccounts(modelBuilder);
         ConfigureApplicantParties(modelBuilder);
         ConfigureClientRequests(modelBuilder);
+        ConfigureAgreementProposalExchanges(modelBuilder);
     }
 
     private static void ConfigureAccounts(ModelBuilder modelBuilder)
@@ -225,28 +227,184 @@ public class L1DbContext : DbContext
                 .HasColumnName("CreatedAt")
                 .IsRequired();
 
-            clientRequest.Property<string?>("ReviewDecision")
-                .HasColumnName("ReviewDecision")
-                .HasMaxLength(50)
-                .IsRequired(false);
-
-            clientRequest.Property<DateTimeOffset?>("ReviewDecidedAt")
-                .HasColumnName("ReviewDecidedAt")
-                .IsRequired(false);
-
-            clientRequest.Property<long?>("ReviewReviewerId")
-                .HasColumnName("ReviewReviewerId")
-                .IsRequired(false);
-
-            clientRequest.Property<string?>("ReviewRejectionReason")
-                .HasColumnName("ReviewRejectionReason")
-                .HasMaxLength(RejectionFeedback.MaxLength)
-                .IsRequired(false);
-
             clientRequest.HasOne<ApplicantParty>()
                 .WithMany()
                 .HasForeignKey(x => x.ApplicantPartyId)
                 .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<ConnectionRequest>(connectionRequest =>
+        {
+            connectionRequest.OwnsOne(x => x.Review, review =>
+            {
+                review.ToTable("L1RequestReviews");
+                review.WithOwner().HasForeignKey(x => x.RequestId);
+                review.HasKey(x => x.RequestId);
+
+                review.Property(x => x.RequestId)
+                    .HasColumnName("RequestId")
+                    .ValueGeneratedNever();
+
+                review.Property(x => x.Status)
+                    .HasColumnName("Status")
+                    .HasConversion<string>()
+                    .HasMaxLength(50)
+                    .IsRequired();
+
+                review.Property(x => x.StartedByEmployeeId)
+                    .HasColumnName("StartedByEmployeeId")
+                    .IsRequired();
+
+                review.Property(x => x.StartedAt)
+                    .HasColumnName("StartedAt")
+                    .IsRequired();
+
+                review.Property(x => x.CompletedByEmployeeId)
+                    .HasColumnName("CompletedByEmployeeId")
+                    .IsRequired(false);
+
+                review.Property(x => x.CompletedAt)
+                    .HasColumnName("CompletedAt")
+                    .IsRequired(false);
+
+                review.OwnsOne(x => x.RejectionFeedback, feedback =>
+                {
+                    feedback.Property(x => x.Value)
+                        .HasColumnName("RejectionReason")
+                        .HasMaxLength(RejectionFeedback.MaxLength)
+                        .IsRequired(false);
+                });
+            });
+        });
+    }
+
+    private static void ConfigureAgreementProposalExchanges(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<AgreementProposalExchange>(exchange =>
+        {
+            exchange.ToTable("L1AgreementProposalExchanges");
+            exchange.HasKey(x => x.Id);
+
+            exchange.Property(x => x.RequestId)
+                .HasColumnName("RequestId")
+                .IsRequired();
+
+            exchange.Property(x => x.Status)
+                .HasColumnName("Status")
+                .HasConversion<string>()
+                .HasMaxLength(50)
+                .IsRequired();
+
+            exchange.Property(x => x.ActiveProposalVersion)
+                .HasColumnName("ActiveProposalVersion")
+                .HasConversion(
+                    version => version.Value,
+                    value => new AgreementProposalVersion(value))
+                .IsRequired();
+
+            exchange.Property(x => x.FinalRefusedByEmployeeId)
+                .HasColumnName("FinalRefusedByEmployeeId")
+                .IsRequired(false);
+
+            exchange.Property(x => x.FinalRefusedAt)
+                .HasColumnName("FinalRefusedAt")
+                .IsRequired(false);
+
+            exchange.OwnsOne(x => x.FinalRefusalReason, reason =>
+            {
+                reason.Property(x => x.Value)
+                    .HasColumnName("FinalRefusalReason")
+                    .HasMaxLength(FinalRefusalReason.MaxLength)
+                    .IsRequired(false);
+            });
+
+            exchange.Property(x => x.CreatedAt)
+                .HasColumnName("CreatedAt")
+                .IsRequired();
+
+            exchange.HasOne<ClientRequest>()
+                .WithMany()
+                .HasForeignKey(x => x.RequestId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            exchange.OwnsMany(x => x.Proposals, proposal =>
+            {
+                proposal.ToTable("L1AgreementProposals");
+                proposal.WithOwner().HasForeignKey(x => x.AgreementProposalExchangeId);
+                proposal.HasKey(x => x.Id);
+
+                proposal.Property(x => x.Id)
+                    .HasColumnName("Id")
+                    .ValueGeneratedOnAdd();
+
+                proposal.Property(x => x.AgreementProposalExchangeId)
+                    .HasColumnName("AgreementProposalExchangeId")
+                    .IsRequired();
+
+                proposal.Property(x => x.Version)
+                    .HasColumnName("Version")
+                    .HasConversion(
+                        version => version.Value,
+                        value => new AgreementProposalVersion(value))
+                    .IsRequired();
+
+                proposal.OwnsOne(x => x.Author, author =>
+                {
+                    author.Property(x => x.Sender)
+                        .HasColumnName("Sender")
+                        .HasConversion<string>()
+                        .HasMaxLength(50)
+                        .IsRequired();
+
+                    author.Property(x => x.SenderId)
+                        .HasColumnName("SenderId")
+                        .IsRequired();
+                });
+
+                proposal.Property(x => x.State)
+                    .HasColumnName("State")
+                    .HasConversion<string>()
+                    .HasMaxLength(50)
+                    .IsRequired();
+
+                proposal.OwnsOne(x => x.Document, document =>
+                {
+                    document.Property(x => x.StorageKey)
+                        .HasColumnName("DocumentStorageKey")
+                        .HasMaxLength(500)
+                        .IsRequired();
+
+                    document.Property(x => x.OriginalFileName)
+                        .HasColumnName("DocumentOriginalFileName")
+                        .HasMaxLength(255)
+                        .IsRequired();
+
+                    document.Property(x => x.ContentType)
+                        .HasColumnName("DocumentContentType")
+                        .HasMaxLength(100)
+                        .IsRequired();
+
+                    document.Property(x => x.SizeBytes)
+                        .HasColumnName("DocumentSizeBytes")
+                        .IsRequired();
+                });
+
+                proposal.OwnsOne(x => x.Comment, comment =>
+                {
+                    comment.Property(x => x.Value)
+                        .HasColumnName("Comment")
+                        .HasMaxLength(ProposalComment.MaxLength)
+                        .IsRequired(false);
+                });
+
+                proposal.Property(x => x.CreatedAt)
+                    .HasColumnName("CreatedAt")
+                    .IsRequired();
+            });
+
+            exchange.Navigation(x => x.Proposals)
+                .HasField("_proposals")
+                .UsePropertyAccessMode(PropertyAccessMode.Field);
         });
     }
 }

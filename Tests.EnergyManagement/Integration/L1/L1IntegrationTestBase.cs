@@ -490,12 +490,37 @@ public abstract class L1IntegrationTestBase
         await using var command = new SqlCommand(
             """
             UPDATE dbo.L1ClientRequests
-            SET Status = @status,
-                ReviewDecision = @decision,
-                ReviewDecidedAt = @decidedAt,
-                ReviewReviewerId = @reviewerId,
-                ReviewRejectionReason = @rejectionReason
-            WHERE Id = @id
+            SET Status = @status
+            WHERE Id = @id;
+
+            MERGE dbo.L1RequestReviews AS target
+            USING (SELECT @id AS RequestId) AS source
+                ON target.RequestId = source.RequestId
+            WHEN MATCHED THEN
+                UPDATE SET
+                    Status = @decision,
+                    StartedByEmployeeId = @reviewerId,
+                    StartedAt = COALESCE(target.StartedAt, @decidedAt),
+                    CompletedByEmployeeId = @reviewerId,
+                    CompletedAt = @decidedAt,
+                    RejectionReason = @rejectionReason
+            WHEN NOT MATCHED THEN
+                INSERT (
+                    RequestId,
+                    Status,
+                    StartedByEmployeeId,
+                    StartedAt,
+                    CompletedByEmployeeId,
+                    CompletedAt,
+                    RejectionReason)
+                VALUES (
+                    @id,
+                    @decision,
+                    @reviewerId,
+                    @decidedAt,
+                    @reviewerId,
+                    @decidedAt,
+                    @rejectionReason);
             """,
             connection)
         {

@@ -1,3 +1,4 @@
+using Dapper;
 using Domain.EnergyManagement.L1;
 using EnergyManagement.Server.L1.Application.Abstractions;
 using Microsoft.EntityFrameworkCore;
@@ -28,41 +29,53 @@ public sealed class ClientRequestRepository : IClientRequestRepository
         RequestStatus? status,
         CancellationToken cancellationToken)
     {
-        var query =
-            from request in _context.ClientRequests.AsNoTracking()
-            join applicantParty in _context.ApplicantParties.AsNoTracking()
-                on request.ApplicantPartyId equals applicantParty.Id
-            where applicantParty.ClientAccountId == clientAccountId
-            select request;
-
-        if (status is not null)
-        {
-            query = query.Where(request => request.Status == status);
-        }
-
-        var requests = await query
-            .OrderByDescending(request => request.CreatedAt)
-            .ThenByDescending(request => request.Id)
-            .ToListAsync(cancellationToken);
-
-        return requests
-            .Select(request => new ClientRequestSummaryReadModel(
-                request.Id,
+        const string sql = """
+            SELECT
+                request.Id AS RequestId,
                 request.RequestType,
                 request.Status,
                 request.CreatedAt,
                 request.Details,
-                request.ObjectAddress.PostalCode,
-                request.ObjectAddress.Region,
-                request.ObjectAddress.City,
-                request.ObjectAddress.Street,
-                request.ObjectAddress.House,
-                request.ObjectAddress.Building.HasValue
-                    ? request.ObjectAddress.Building.Value
-                    : null,
-                request.ObjectAddress.Apartment.HasValue
-                    ? request.ObjectAddress.Apartment.Value
-                    : null))
+                request.ObjectAddress_PostalCode AS PostalCode,
+                request.ObjectAddress_Region AS Region,
+                request.ObjectAddress_City AS City,
+                request.ObjectAddress_Street AS Street,
+                request.ObjectAddress_House AS House,
+                request.ObjectAddress_Building AS Building,
+                request.ObjectAddress_Apartment AS Apartment
+            FROM dbo.L1ClientRequests AS request
+            INNER JOIN dbo.L1ApplicantParties AS applicantParty
+                ON request.ApplicantPartyId = applicantParty.Id
+            WHERE applicantParty.ClientAccountId = @ClientAccountId
+              AND (@Status IS NULL OR request.Status = @Status)
+            ORDER BY request.CreatedAt DESC, request.Id DESC;
+            """;
+
+        var connection = _context.Database.GetDbConnection();
+        var rows = await connection.QueryAsync<ClientRequestSummaryRow>(
+            new CommandDefinition(
+                sql,
+                new
+                {
+                    ClientAccountId = clientAccountId,
+                    Status = status?.ToString()
+                },
+                cancellationToken: cancellationToken));
+
+        return rows
+            .Select(row => new ClientRequestSummaryReadModel(
+                row.RequestId,
+                Enum.Parse<ClientRequestType>(row.RequestType, ignoreCase: false),
+                Enum.Parse<RequestStatus>(row.Status, ignoreCase: false),
+                row.CreatedAt,
+                row.Details,
+                row.PostalCode,
+                row.Region,
+                row.City,
+                row.Street,
+                row.House,
+                row.Building,
+                row.Apartment))
             .ToList();
     }
 
@@ -71,53 +84,93 @@ public sealed class ClientRequestRepository : IClientRequestRepository
         long clientAccountId,
         CancellationToken cancellationToken)
     {
-        var row = await (
-                from clientRequest in _context.ClientRequests.AsNoTracking()
-                join applicantParty in _context.ApplicantParties.AsNoTracking()
-                    on clientRequest.ApplicantPartyId equals applicantParty.Id
-                where clientRequest.Id == requestId
-                    && applicantParty.ClientAccountId == clientAccountId
-                select new
+        const string sql = """
+            SELECT TOP (1)
+                request.Id AS RequestId,
+                request.RequestType,
+                request.Status,
+                request.CreatedAt,
+                request.Details,
+                request.ObjectAddress_PostalCode AS PostalCode,
+                request.ObjectAddress_Region AS Region,
+                request.ObjectAddress_City AS City,
+                request.ObjectAddress_Street AS Street,
+                request.ObjectAddress_House AS House,
+                request.ObjectAddress_Building AS Building,
+                request.ObjectAddress_Apartment AS Apartment,
+                review.Status AS ReviewStatus,
+                review.CompletedAt AS ReviewCompletedAt,
+                review.RejectionReason
+            FROM dbo.L1ClientRequests AS request
+            INNER JOIN dbo.L1ApplicantParties AS applicantParty
+                ON request.ApplicantPartyId = applicantParty.Id
+            LEFT JOIN dbo.L1RequestReviews AS review
+                ON review.RequestId = request.Id
+            WHERE request.Id = @RequestId
+              AND applicantParty.ClientAccountId = @ClientAccountId;
+            """;
+
+        var connection = _context.Database.GetDbConnection();
+        var row = await connection.QuerySingleOrDefaultAsync<ClientRequestDetailsRow>(
+            new CommandDefinition(
+                sql,
+                new
                 {
-                    Request = clientRequest,
-                    ReviewDecision = EF.Property<string?>(clientRequest, "ReviewDecision"),
-                    ReviewDecidedAt = EF.Property<DateTimeOffset?>(clientRequest, "ReviewDecidedAt"),
-                    RejectionReason = EF.Property<string?>(clientRequest, "ReviewRejectionReason")
-                })
-            .FirstOrDefaultAsync(cancellationToken);
+                    RequestId = requestId,
+                    ClientAccountId = clientAccountId
+                },
+                cancellationToken: cancellationToken));
 
         if (row is null)
         {
             return null;
         }
 
-        var request = row.Request;
-        var reviewDecision = Enum.TryParse<ReviewDecision>(
-            row.ReviewDecision,
+        var reviewStatus = Enum.TryParse<RequestReviewStatus>(
+            row.ReviewStatus,
             ignoreCase: false,
-            out var parsedDecision)
-                ? parsedDecision
-                : (ReviewDecision?)null;
+            out var parsedReviewStatus)
+                ? parsedReviewStatus
+                : (RequestReviewStatus?)null;
 
         return new ClientRequestDetailsReadModel(
-            request.Id,
-            request.RequestType,
-            request.Status,
-            request.CreatedAt,
-            request.Details,
-            request.ObjectAddress.PostalCode,
-            request.ObjectAddress.Region,
-            request.ObjectAddress.City,
-            request.ObjectAddress.Street,
-            request.ObjectAddress.House,
-            request.ObjectAddress.Building.HasValue
-                ? request.ObjectAddress.Building.Value
-                : null,
-            request.ObjectAddress.Apartment.HasValue
-                ? request.ObjectAddress.Apartment.Value
-                : null,
-            reviewDecision,
-            row.ReviewDecidedAt,
+            row.RequestId,
+            Enum.Parse<ClientRequestType>(row.RequestType, ignoreCase: false),
+            Enum.Parse<RequestStatus>(row.Status, ignoreCase: false),
+            row.CreatedAt,
+            row.Details,
+            row.PostalCode,
+            row.Region,
+            row.City,
+            row.Street,
+            row.House,
+            row.Building,
+            row.Apartment,
+            reviewStatus,
+            row.ReviewCompletedAt,
             row.RejectionReason);
+    }
+
+    private class ClientRequestSummaryRow
+    {
+        public long RequestId { get; set; }
+        public string RequestType { get; set; } = null!;
+        public string Status { get; set; } = null!;
+        public DateTimeOffset CreatedAt { get; set; }
+        public string Details { get; set; } = null!;
+        public string PostalCode { get; set; } = null!;
+        public string Region { get; set; } = null!;
+        public string City { get; set; } = null!;
+        public string Street { get; set; } = null!;
+        public string House { get; set; } = null!;
+        public string? Building { get; set; }
+        public string? Apartment { get; set; }
+    }
+
+    private sealed class ClientRequestDetailsRow : ClientRequestSummaryRow
+    {
+        public string? ReviewStatus { get; set; }
+        public DateTimeOffset? ReviewCompletedAt { get; set; }
+        public string? RejectionReason { get; set; }
     }
 }

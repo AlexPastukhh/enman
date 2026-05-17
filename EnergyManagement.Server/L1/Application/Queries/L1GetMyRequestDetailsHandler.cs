@@ -50,15 +50,27 @@ public sealed class L1GetMyRequestDetailsHandler
     private static L1MyRequestReviewResultResponse? ToReviewResult(
         ClientRequestDetailsReadModel request)
     {
-        if (request.ReviewDecision is null || request.ReviewDecidedAt is null)
+        if (request.ReviewStatus is null || request.ReviewCompletedAt is null)
+        {
+            return null;
+        }
+
+        var decision = request.ReviewStatus.Value switch
+        {
+            RequestReviewStatus.Approved => L1RequestReviewDecision.Approved,
+            RequestReviewStatus.Rejected => L1RequestReviewDecision.Rejected,
+            _ => (L1RequestReviewDecision?)null
+        };
+
+        if (decision is null)
         {
             return null;
         }
 
         return new L1MyRequestReviewResultResponse(
-            request.ReviewDecision.Value,
-            request.ReviewDecidedAt.Value,
-            request.ReviewDecision == ReviewDecision.Rejected
+            decision.Value,
+            request.ReviewCompletedAt.Value,
+            decision == L1RequestReviewDecision.Rejected
                 && !string.IsNullOrWhiteSpace(request.RejectionReason)
                     ? new L1MyRequestRejectionResponse(request.RejectionReason)
                     : null);

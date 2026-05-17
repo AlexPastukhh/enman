@@ -57,6 +57,7 @@ builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 builder.Services.AddTransient<IApplicantPartyRepository, ApplicantPartyRepository>();
 builder.Services.AddTransient<IApplicantPartyCreationService, ApplicantPartyCreationService>();
 builder.Services.AddTransient<IClientRequestRepository, ClientRequestRepository>();
+builder.Services.AddTransient<IAgreementProposalExchangeRepository, AgreementProposalExchangeRepository>();
 
 // builder.Services.AddSingleton(_=>ConstantsToWrite.Create());
 builder.Services.AddSingleton(_=>ErrorObject.Create());

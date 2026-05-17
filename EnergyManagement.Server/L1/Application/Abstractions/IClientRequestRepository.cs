@@ -46,6 +46,6 @@ public sealed record ClientRequestDetailsReadModel(
     string House,
     string? Building,
     string? Apartment,
-    ReviewDecision? ReviewDecision,
-    DateTimeOffset? ReviewDecidedAt,
+    RequestReviewStatus? ReviewStatus,
+    DateTimeOffset? ReviewCompletedAt,
     string? RejectionReason);
