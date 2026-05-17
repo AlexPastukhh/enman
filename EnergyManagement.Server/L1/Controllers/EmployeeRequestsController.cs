@@ -158,6 +158,49 @@ public sealed class EmployeeRequestsController : ProjectController
     }
 
 
+    [Authorize(Roles = "Employee")]
+    [RequireAntiforgeryToken]
+    [HttpPost("{requestId:long:min(1)}/review/approve", Name = "EmployeeApproveRequestReview")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> ApproveReview(
+        long requestId,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (!TryGetCurrentEmployeeId(out var employeeId))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _sender.Send(
+                new EmployeeApproveRequestReviewCommand(employeeId, requestId),
+                cancellationToken);
+
+            return result.Status switch
+            {
+                EmployeeApproveRequestReviewCommandStatus.Approved => NoContent(),
+                EmployeeApproveRequestReviewCommandStatus.NotFound => NotFound(),
+                EmployeeApproveRequestReviewCommandStatus.Forbidden => Forbid(),
+                EmployeeApproveRequestReviewCommandStatus.Invalid => ProblemDetailsFromValidation(result.Errors),
+                _ => ProblemDetailsFromInternalServerError(Domain.EnergyManagement.Common.Error.Errors.General.InternalServerError)
+            };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Employee approve request review failed for request {RequestId}.", requestId);
+            return ProblemDetailsWithExceptionDev(ex);
+        }
+    }
+
+
+
 
     [Authorize(Roles = "Employee")]
     [RequireAntiforgeryToken]

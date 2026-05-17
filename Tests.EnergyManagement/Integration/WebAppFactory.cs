@@ -55,7 +55,7 @@ namespace Tests.EnergyManagement.Integration
                 services.AddScoped(_ => new L1DbContext(ConnectionString));
 
                 var authSchemeProvider = services
-                    .SingleOrDefault(d => d.ServiceType == typeof(IAuthenticationSchemeProvider));
+                    .FirstOrDefault(d => d.ServiceType == typeof(IAuthenticationSchemeProvider));
 
                 if (authSchemeProvider != null)
                 {
@@ -64,7 +64,7 @@ namespace Tests.EnergyManagement.Integration
 
                 services.AddSingleton<IAuthenticationSchemeProvider,
                     TestEmployeeWindowsAuthenticationSchemeProvider>();
-                services.AddSingleton<MockClaimSeed>(_ => new([]));
+                services.AddSingleton<MockClaimSeed>(_ => new MockClaimSeed([]));
             });
 
             base.ConfigureWebHost(builder);
