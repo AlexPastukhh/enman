@@ -1,31 +1,21 @@
-# APPLY — SL-REQ-001.client Create Connection Request UI Archive
+# Apply SL-REQ-001.client E2E locator replacement archive
 
-Run from repo root.
-
-## 1. Confirm repo root
+Run from repo root:
 
 ```powershell
-Get-ChildItem .\EnergyManagement.sln, .\energymanagement.client\package.json, .\package.json
+Expand-Archive -Path "C:\Users\alexa\Downloads\sl-req-001-client-e2e-locator-fix.zip" -DestinationPath "." -Force
 ```
 
-## 2. Apply archive
+Recommended verification:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\sl-req-001-client-create-connection-request.zip" -DestinationPath "." -Force
-```
-
-This archive is merge-ready and has no wrapper folder.
-
-## 3. Verification commands
-
-```powershell
-npm install
-npm --prefix .\energymanagement.client install
-npm run check:api
-npm --prefix .\energymanagement.client run lint
-npm --prefix .\energymanagement.client run build
-npm --prefix .\energymanagement.client run test -- --run
+npm run test:e2e -- tests/e2e/requests/create-connection-request.spec.ts
 npm run test:e2e
 ```
 
-Known handoff note: lint may still fail on existing `react-refresh/only-export-components` issues outside this slice until that cross-cutting lint cleanup is addressed.
+Optional client checks:
+
+```powershell
+npm --prefix .\energymanagement.client run build
+npm --prefix .\energymanagement.client run test -- --run
+```

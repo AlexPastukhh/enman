@@ -113,7 +113,9 @@ test("user creates request with current/default saved ApplicantParty", async ({
   });
 
   await openCreateRequestPage(page);
-  await expect(page.getByLabel("Saved Applicant Party")).toHaveValue(/\d+/);
+  await expect(
+    page.getByLabel("Saved Applicant Party", { exact: true }),
+  ).toHaveValue(/\d+/);
   await fillRequestDetailsAndAddress(page);
   await submitAndExpectMyRequestsHandoff(page);
 });
@@ -144,7 +146,7 @@ test("user creates request with non-default saved ApplicantParty", async ({
 
   await openCreateRequestPage(page);
   await page
-    .getByLabel("Saved Applicant Party")
+    .getByLabel("Saved Applicant Party", { exact: true })
     .selectOption(String(nonDefaultApplicantPartyId));
   await fillRequestDetailsAndAddress(page);
   await submitAndExpectMyRequestsHandoff(page);
