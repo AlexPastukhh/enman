@@ -6,7 +6,7 @@ afterEach(() => {
 });
 
 describe("listAgreementExchanges", () => {
-  it("gets shared agreement exchanges list", async () => {
+  it("gets agreement exchanges without filters", async () => {
     const response = { exchanges: [] };
     const fetchMock = vi.fn().mockResolvedValueOnce(jsonResponse(response));
     vi.stubGlobal("fetch", fetchMock);
@@ -15,6 +15,22 @@ describe("listAgreementExchanges", () => {
 
     expect(fetchMock).toHaveBeenCalledWith(
       "/api/agreement-exchanges",
+      expect.objectContaining({
+        method: "GET",
+        credentials: "include",
+      }),
+    );
+  });
+
+  it("maps status filter to query string", async () => {
+    const response = { exchanges: [] };
+    const fetchMock = vi.fn().mockResolvedValueOnce(jsonResponse(response));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await listAgreementExchanges({ status: "AwaitingClientConfirmation" });
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/agreement-exchanges?status=AwaitingClientConfirmation",
       expect.objectContaining({
         method: "GET",
         credentials: "include",

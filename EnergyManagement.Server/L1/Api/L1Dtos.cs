@@ -117,6 +117,25 @@ public sealed record EmployeeRequestApplicantSummaryDto(
     [property: JsonPropertyName("phoneNumber")] string? PhoneNumber);
 
 
+
+public sealed record AgreementExchangeListResponseDto(
+    [property: JsonPropertyName("exchanges")] IReadOnlyList<AgreementExchangeListItemDto> Exchanges);
+
+public sealed record AgreementExchangeListItemDto(
+    [property: JsonPropertyName("exchangeId")] long ExchangeId,
+    [property: JsonPropertyName("requestId")] long RequestId,
+    [property: JsonPropertyName("exchangeStatus")] string ExchangeStatus,
+    [property: JsonPropertyName("activeProposalVersion")] int ActiveProposalVersion,
+    [property: JsonPropertyName("activeProposalSender")] string ActiveProposalSender,
+    [property: JsonPropertyName("activeProposalSenderId")] long ActiveProposalSenderId,
+    [property: JsonPropertyName("requestDisplayName")] string RequestDisplayName,
+    [property: JsonPropertyName("objectAddress")] string ObjectAddress,
+    [property: JsonPropertyName("createdAt")] DateTimeOffset CreatedAt,
+    [property: JsonPropertyName("lastActivityAt")] DateTimeOffset? LastActivityAt);
+
+public sealed record AgreementExchangeListQueryDto(
+    [property: JsonPropertyName("status")] string? Status);
+
 public sealed record EmployeeRejectRequestReviewDto(
     [property: JsonPropertyName("feedback")] string? Feedback);
 

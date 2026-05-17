@@ -25,4 +25,12 @@ public sealed class AgreementProposalExchangeRepository : IAgreementProposalExch
         return _context.AgreementProposalExchanges
             .FirstOrDefaultAsync(exchange => exchange.Id == id, cancellationToken);
     }
+
+    public Task<AgreementProposalExchange?> GetByRequestIdAsync(
+        long requestId,
+        CancellationToken cancellationToken)
+    {
+        return _context.AgreementProposalExchanges
+            .FirstOrDefaultAsync(exchange => exchange.RequestId == requestId, cancellationToken);
+    }
 }

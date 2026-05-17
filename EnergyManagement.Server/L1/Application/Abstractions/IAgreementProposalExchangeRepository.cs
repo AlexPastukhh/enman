@@ -9,4 +9,8 @@ public interface IAgreementProposalExchangeRepository
     Task<AgreementProposalExchange?> GetByIdAsync(
         long id,
         CancellationToken cancellationToken);
+
+    Task<AgreementProposalExchange?> GetByRequestIdAsync(
+        long requestId,
+        CancellationToken cancellationToken);
 }

@@ -1,10 +1,10 @@
 import { createBrowserRouter, useRouteError } from "react-router-dom";
 import AccountPage from "../../pages/account/AccountPage";
+import AgreementExchangesPage from "../../pages/agreement-exchanges/AgreementExchangesPage";
+import AgreementExchangeDetailsPage from "../../pages/agreement-exchanges/details/AgreementExchangeDetailsPage";
 import HomePage from "../../pages/home/HomePage";
 import { LoginPage } from "../../pages/login/LoginPage";
-import ClientAgreementExchangesPage from "../../pages/agreements/my/ClientAgreementExchangesPage";
 import MyRequestDetailsPage from "../../pages/requests/details/MyRequestDetailsPage";
-import EmployeeAgreementExchangesDashboardPage from "../../pages/employee/agreements/dashboard/EmployeeAgreementExchangesDashboardPage";
 import EmployeeDashboardPage from "../../pages/employee/requests/dashboard/EmployeeDashboardPage";
 import EmployeeRequestDetailsPage from "../../pages/employee/requests/details/EmployeeRequestDetailsPage";
 import CreateConnectionRequestPage from "../../pages/requests/create/CreateConnectionRequestPage";
@@ -59,12 +59,12 @@ export const router = createBrowserRouter([
   },
   {
     path: clientRoutes.agreementExchanges,
-    element: <ClientAgreementExchangesPage />,
+    element: <AgreementExchangesPage />,
     errorElement: <RouteError />,
   },
   {
-    path: clientRoutes.employeeAgreementExchanges,
-    element: <EmployeeAgreementExchangesDashboardPage />,
+    path: clientRoutes.agreementExchangeDetailsPath,
+    element: <AgreementExchangeDetailsPage />,
     errorElement: <RouteError />,
   },
   {

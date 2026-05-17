@@ -326,6 +326,12 @@ public class L1DbContext : DbContext
                 .HasColumnName("RequestId")
                 .IsRequired();
 
+            exchange.Property(x => x.ClientAccountId)
+                .HasColumnName("ClientAccountId")
+                .IsRequired();
+
+            exchange.HasIndex(x => x.ClientAccountId);
+
             exchange.Property(x => x.Status)
                 .HasColumnName("Status")
                 .HasConversion<string>()

@@ -8,6 +8,8 @@ public sealed class AgreementProposalExchange : L1Entity
 {
     public long RequestId { get; private set; }
 
+    public long ClientAccountId { get; private set; }
+
     public AgreementExchangeStatus Status { get; private set; }
 
     public AgreementProposalVersion ActiveProposalVersion { get; private set; }
@@ -30,6 +32,7 @@ public sealed class AgreementProposalExchange : L1Entity
 
     public static Result<AgreementProposalExchange, IReadOnlyList<Error>> StartByEmployee(
         ConnectionRequest approvedRequest,
+        long clientAccountId,
         AgreementDocumentRef document,
         ProposalComment? comment,
         Employee employee,
@@ -48,6 +51,11 @@ public sealed class AgreementProposalExchange : L1Entity
         else if (approvedRequest.Status != RequestStatus.Approved)
         {
             errors.Add(Errors.L1Domain.AgreementExchangeRequiresApprovedRequest);
+        }
+
+        if (clientAccountId <= 0)
+        {
+            errors.Add(Errors.L1Domain.ClientAccountIsRequired);
         }
 
         if (document is null)
@@ -83,6 +91,7 @@ public sealed class AgreementProposalExchange : L1Entity
         var exchange = new AgreementProposalExchange
         {
             RequestId = approvedRequest!.Id,
+            ClientAccountId = clientAccountId,
             Status = AgreementExchangeStatus.AwaitingClientConfirmation,
             ActiveProposalVersion = firstVersion,
             CreatedAt = startedAt
@@ -100,9 +109,7 @@ public sealed class AgreementProposalExchange : L1Entity
         return Result.Success<AgreementProposalExchange, IReadOnlyList<Error>>(exchange);
     }
 
-    public UnitResult<IReadOnlyList<Error>> ClientAcceptActiveProposal(
-        ClientAccount client,
-        DateTimeOffset acceptedAt)
+    private UnitResult<IReadOnlyList<Error>> EnsureClientCanAct(ClientAccount client)
     {
         if (client is null)
         {
@@ -114,6 +121,25 @@ public sealed class AgreementProposalExchange : L1Entity
         {
             return UnitResult.Failure<IReadOnlyList<Error>>(
                 [Errors.L1Domain.ClientAccountIsRequired]);
+        }
+
+        if (client.Id != ClientAccountId)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.ClientCannotActOnThisAgreementExchange]);
+        }
+
+        return UnitResult.Success<IReadOnlyList<Error>>();
+    }
+
+    public UnitResult<IReadOnlyList<Error>> ClientAcceptActiveProposal(
+        ClientAccount client,
+        DateTimeOffset acceptedAt)
+    {
+        var canAct = EnsureClientCanAct(client);
+        if (canAct.IsFailure)
+        {
+            return canAct;
         }
 
         if (Status != AgreementExchangeStatus.AwaitingClientConfirmation)
@@ -153,16 +179,10 @@ public sealed class AgreementProposalExchange : L1Entity
                 [Errors.L1Domain.AgreementDocumentIsRequired]);
         }
 
-        if (client is null)
+        var canAct = EnsureClientCanAct(client);
+        if (canAct.IsFailure)
         {
-            return UnitResult.Failure<IReadOnlyList<Error>>(
-                [Errors.L1Domain.ClientAccountIsRequired]);
-        }
-
-        if (client.Id <= 0)
-        {
-            return UnitResult.Failure<IReadOnlyList<Error>>(
-                [Errors.L1Domain.ClientAccountIsRequired]);
+            return canAct;
         }
 
         var activeProposal = GetActiveProposal();

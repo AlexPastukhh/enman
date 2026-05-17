@@ -169,6 +169,7 @@ public class Error : ValueObject
             public static readonly Error OnlyAwaitingClientConfirmationCanBeAccepted = Create("l1.agreement.exchange.only.awaiting.client.confirmation.can.be.accepted", 400);
             public static readonly Error ClientVersionCanBeSentOnlyWhenAwaitingClientConfirmation = Create("l1.agreement.exchange.client.version.only.awaiting.client.confirmation", 400);
             public static readonly Error ClientCanRespondOnlyToEmployeeProposal = Create("l1.agreement.exchange.client.can.respond.only.to.employee.proposal", 400);
+            public static readonly Error ClientCannotActOnThisAgreementExchange = Create("l1.agreement.exchange.client.cannot.act.on.this.exchange", 400);
             public static readonly Error EmployeeCanRespondOnlyWhenAwaitingEmployeeResponse = Create("l1.agreement.exchange.employee.can.respond.only.awaiting.employee.response", 400);
             public static readonly Error EmployeeCanSupersedeOnlyClientProposal = Create("l1.agreement.exchange.employee.can.supersede.only.client.proposal", 400);
             public static readonly Error AcceptedAgreementExchangeCannotBeRefused = Create("l1.agreement.exchange.accepted.cannot.be.refused", 400);

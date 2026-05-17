@@ -1,23 +1,34 @@
-# Apply L2-AGR-EXCH-LIST-001.client — Agreement Exchange List Pages
+# APPLY
 
-From repository root:
+From the repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agr-exch-list-001-client-shared-agreement-exchange-list-pages.zip" -DestinationPath "." -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-agreement-exchange-list-impl.zip" -DestinationPath "." -Force
 ```
 
-Then verify:
+Then run:
 
 ```powershell
-npm install
-npm --prefix .\energymanagement.client install
-npm run check:api
-npm --prefix .\energymanagement.client run build
-npm --prefix .\energymanagement.client run test -- --run
+dotnet build .\Domain.EnergyManagement\Domain.EnergyManagement.csproj
+dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
+dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
 ```
 
-Targeted tests:
+Apply/update local test DB if needed:
 
 ```powershell
-npm --prefix .\energymanagement.client run test -- --run --reporter=verbose src/entities/agreement-exchange/api/listAgreementExchanges.test.ts src/entities/agreement-exchange/model/useAgreementExchangeListQuery.test.tsx src/widgets/agreement-exchange-list/AgreementExchangeList.test.tsx src/pages/agreements/my/ClientAgreementExchangesPage.test.tsx src/pages/employee/agreements/dashboard/EmployeeAgreementExchangesDashboardPage.test.tsx
+dotnet ef database update `
+  --project .\EnergyManagement.Server\EnergyManagement.Server.csproj `
+  --startup-project .\EnergyManagement.Server\EnergyManagement.Server.csproj `
+  --context L1DbContext
+```
+
+Regenerate API artifacts after server build is green:
+
+```powershell
+dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
+dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check
+npm.cmd run check:api
+npm.cmd --prefix .\energymanagement.client run build
+npm.cmd --prefix .\energymanagement.client run test -- --run
 ```

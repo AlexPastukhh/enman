@@ -8,6 +8,7 @@ export const headerConst = {
   logoutPendingButtonText: "Logging out...",
   accountLinkText: "Личный кабинет",
   myRequestsLinkText: "Мои заявки",
+  agreementExchangesLinkText: "Договорные обмены",
   internetReceptionLinkText: "Интернет-приемная",
   hotlinePhoneNumberText: "8-800-100-70-00",
   hotlinePhoneLabelText: "Телефон горячей линии:",

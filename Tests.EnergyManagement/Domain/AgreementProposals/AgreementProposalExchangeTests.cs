@@ -18,6 +18,7 @@ public class AgreementProposalExchangeTests
 
         var result = AgreementProposalExchange.StartByEmployee(
             request,
+            ClientAccountId,
             document,
             null,
             employee,
@@ -25,6 +26,7 @@ public class AgreementProposalExchangeTests
 
         result.IsSuccess.Should().BeTrue();
         result.Value.RequestId.Should().Be(request.Id);
+        result.Value.ClientAccountId.Should().Be(ClientAccountId);
         result.Value.Status.Should().Be(AgreementExchangeStatus.AwaitingClientConfirmation);
         result.Value.ActiveProposalVersion.Should().Be(AgreementProposalVersion.First);
         result.Value.CreatedAt.Should().Be(startedAt);
@@ -43,6 +45,7 @@ public class AgreementProposalExchangeTests
     {
         var result = AgreementProposalExchange.StartByEmployee(
             CreateInReviewRequest().WithId(100),
+            ClientAccountId,
             CreateDocument(),
             null,
             CreatePersistedEmployee(id: 7),
@@ -57,6 +60,7 @@ public class AgreementProposalExchangeTests
     {
         var result = AgreementProposalExchange.StartByEmployee(
             CreateApprovedRequest(),
+            ClientAccountId,
             null!,
             null,
             CreatePersistedEmployee(id: 7),
@@ -71,6 +75,7 @@ public class AgreementProposalExchangeTests
     {
         var result = AgreementProposalExchange.StartByEmployee(
             CreateApprovedRequest(),
+            ClientAccountId,
             CreateDocument(),
             null,
             null!,
@@ -88,6 +93,7 @@ public class AgreementProposalExchangeTests
 
         var result = AgreementProposalExchange.StartByEmployee(
             request,
+            ClientAccountId,
             CreateDocument(),
             null,
             employee,
@@ -104,7 +110,7 @@ public class AgreementProposalExchangeTests
         var exchange = CreateAwaitingClientConfirmationExchange();
 
         var result = exchange.ClientAcceptActiveProposal(
-            CreatePersistedClient(id: 9),
+            CreatePersistedClient(id: ClientAccountId),
             DateTimeOffset.UtcNow);
 
         result.IsSuccess.Should().BeTrue();
@@ -119,7 +125,7 @@ public class AgreementProposalExchangeTests
         var activeProposal = exchange.Proposals.Single();
 
         var result = exchange.ClientAcceptActiveProposal(
-            CreatePersistedClient(id: 9),
+            CreatePersistedClient(id: ClientAccountId),
             DateTimeOffset.UtcNow);
 
         result.IsFailure.Should().BeTrue();
@@ -137,7 +143,7 @@ public class AgreementProposalExchangeTests
         var result = exchange.ClientSendOwnVersion(
             CreateDocument("client.pdf"),
             ProposalComment.Create("Client version.").Value,
-            CreatePersistedClient(id: 9),
+            CreatePersistedClient(id: ClientAccountId),
             DateTimeOffset.UtcNow);
 
         result.IsSuccess.Should().BeTrue();
@@ -148,7 +154,7 @@ public class AgreementProposalExchangeTests
 
         var activeProposal = exchange.Proposals.Single(x => x.Version == exchange.ActiveProposalVersion);
         activeProposal.Author.Sender.Should().Be(AgreementProposalSender.Client);
-        activeProposal.Author.SenderId.Should().Be(9);
+        activeProposal.Author.SenderId.Should().Be(ClientAccountId);
         activeProposal.State.Should().Be(AgreementProposalState.SentByClient);
     }
 
@@ -161,7 +167,7 @@ public class AgreementProposalExchangeTests
         var result = exchange.ClientSendOwnVersion(
             CreateDocument("client-second.pdf"),
             null,
-            CreatePersistedClient(id: 9),
+            CreatePersistedClient(id: ClientAccountId),
             DateTimeOffset.UtcNow);
 
         result.IsFailure.Should().BeTrue();
@@ -178,7 +184,7 @@ public class AgreementProposalExchangeTests
         var result = exchange.ClientSendOwnVersion(
             null!,
             null,
-            CreatePersistedClient(id: 9),
+            CreatePersistedClient(id: ClientAccountId),
             DateTimeOffset.UtcNow);
 
         result.IsFailure.Should().BeTrue();
@@ -200,6 +206,54 @@ public class AgreementProposalExchangeTests
 
         result.IsFailure.Should().BeTrue();
         result.Error.Should().Contain(Errors.L1Domain.ClientAccountIsRequired);
+        AssertSnapshot(exchange, before);
+    }
+
+
+    [Fact]
+    public void StartByEmployee_fails_when_client_account_id_is_missing()
+    {
+        var result = AgreementProposalExchange.StartByEmployee(
+            CreateApprovedRequest(),
+            0,
+            CreateDocument(),
+            null,
+            CreatePersistedEmployee(id: 7),
+            DateTimeOffset.UtcNow);
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Contain(Errors.L1Domain.ClientAccountIsRequired);
+    }
+
+    [Fact]
+    public void ClientSendOwnVersion_fails_when_client_does_not_belong_to_exchange()
+    {
+        var exchange = CreateAwaitingClientConfirmationExchange();
+        var before = Snapshot(exchange);
+
+        var result = exchange.ClientSendOwnVersion(
+            CreateDocument("client.pdf"),
+            null,
+            CreatePersistedClient(id: ClientAccountId + 100),
+            DateTimeOffset.UtcNow);
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Contain(Errors.L1Domain.ClientCannotActOnThisAgreementExchange);
+        AssertSnapshot(exchange, before);
+    }
+
+    [Fact]
+    public void ClientAcceptActiveProposal_fails_when_client_does_not_belong_to_exchange()
+    {
+        var exchange = CreateAwaitingClientConfirmationExchange();
+        var before = Snapshot(exchange);
+
+        var result = exchange.ClientAcceptActiveProposal(
+            CreatePersistedClient(id: ClientAccountId + 100),
+            DateTimeOffset.UtcNow);
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Contain(Errors.L1Domain.ClientCannotActOnThisAgreementExchange);
         AssertSnapshot(exchange, before);
     }
 
@@ -368,10 +422,13 @@ public class AgreementProposalExchangeTests
         AssertSnapshot(exchange, before);
     }
 
+    private const long ClientAccountId = 10;
+
     private static AgreementProposalExchange CreateAwaitingClientConfirmationExchange()
     {
         return AgreementProposalExchange.StartByEmployee(
             CreateApprovedRequest(),
+            ClientAccountId,
             CreateDocument(),
             null,
             CreatePersistedEmployee(id: 7),
@@ -384,7 +441,7 @@ public class AgreementProposalExchangeTests
         exchange.ClientSendOwnVersion(
             CreateDocument("client.pdf"),
             null,
-            CreatePersistedClient(id: 9),
+            CreatePersistedClient(id: ClientAccountId),
             DateTimeOffset.UtcNow);
 
         return exchange;
@@ -394,7 +451,7 @@ public class AgreementProposalExchangeTests
     {
         var exchange = CreateAwaitingClientConfirmationExchange();
         exchange.ClientAcceptActiveProposal(
-            CreatePersistedClient(id: 9),
+            CreatePersistedClient(id: ClientAccountId),
             DateTimeOffset.UtcNow);
 
         return exchange;

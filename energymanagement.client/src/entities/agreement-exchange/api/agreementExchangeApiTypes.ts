@@ -4,19 +4,23 @@ export type AgreementExchangeStatus =
   | "Accepted"
   | "FinallyRefused";
 
-export type AgreementProposalSender = "Client" | "Employee";
+export type AgreementProposalSender = "Employee" | "Client";
+
+export type AgreementExchangeListQuery = {
+  status?: AgreementExchangeStatus;
+};
 
 export type AgreementExchangeListItemDto = {
-  requestId: number;
   exchangeId: number;
-  exchangeStatus: AgreementExchangeStatus | string;
-  activeProposalVersion: number | null;
-  activeProposalSender: AgreementProposalSender | string | null;
-  activeProposalSenderId: number | null;
-  requestDisplayName?: string | null;
-  objectAddress?: string | null;
+  requestId: number;
+  exchangeStatus: string;
+  activeProposalVersion: number;
+  activeProposalSender: string;
+  activeProposalSenderId: number;
+  requestDisplayName: string;
+  objectAddress: string;
   createdAt: string;
-  lastActivityAt: string;
+  lastActivityAt?: string | null;
 };
 
 export type AgreementExchangeListResponseDto = {

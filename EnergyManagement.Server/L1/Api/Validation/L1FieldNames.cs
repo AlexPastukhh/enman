@@ -60,4 +60,9 @@ public static class L1FieldNames
         public const string Status = "status";
         public const string ReviewState = "reviewState";
     }
+    public static class AgreementExchangeList
+    {
+        public const string Status = "status";
+    }
+
 }
