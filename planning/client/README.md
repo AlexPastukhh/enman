@@ -99,3 +99,23 @@ Canonical current example:
 ```text
 planning/slices/SL-APPL-002-account-applicant-parties-read.client.md
 ```
+
+
+## Request Creation Client Sidecar
+
+Current full draft:
+
+```text
+planning/slices/SL-REQ-001-create-connection-request.client.md
+```
+
+Direction:
+
+```text
+- command/user-action slice;
+- page + features + entities + shared/api + generated contracts;
+- Existing branch uses saved ApplicantParty selector;
+- current/default ApplicantParty is initial selection only;
+- New branch submits applicant data inside request creation journey;
+- success hands off to My Requests because command success has no required requestId body.
+```

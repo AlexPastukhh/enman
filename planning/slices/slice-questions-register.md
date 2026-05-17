@@ -14,3 +14,20 @@ Status: active / client short-draft rules, OpenAPI workflow and ApplicantParty r
 | `SL-APPL-002-CLIENT-Q-001` | `SL-APPL-002-account-applicant-parties-read.client.md` | client read | accepted direction | Flat response or grouped response? | Flat `applicantParties[]`; client groups by `isCurrentDefault`. | API/UI mapping. |
 | `SL-APPL-002-CLIENT-Q-002` | `SL-APPL-002-account-applicant-parties-read.client.md` | layering | accepted direction | Where does ApplicantParty read list UI live? | `entities/applicant-party/ui/*`, because this is read/display UI. | Avoids feature-read placement. |
 | `SL-APPL-Q-006` | `SC-10` / `SC-10B` / `SL-APPL-*` | page model | accepted direction | Is ApplicantParty management split into two current pages? | No. One Applicant Parties page / section; SC-10B is future same-page management addendum. | Scenario wording and client sidecar placement. |
+
+## SL-REQ-001.client Additions
+
+| ID | Local file(s) | Area | Status | Question | Assumption / current direction | Impact |
+|---|---|---|---|---|---|---|
+| `Q-SL-REQ-001-CLIENT-001` | `SL-REQ-001-create-connection-request.client.md` | architecture | accepted | Is this read or command sidecar? | Command/user action sidecar; form/mutation lives in `features/request/create-connection-request`. | Client placement. |
+| `Q-SL-REQ-001-CLIENT-004` | `SL-REQ-001-create-connection-request.client.md` | applicant selector | accepted | Existing branch can use only current/default? | No. Existing branch shows saved ApplicantParty selector and allows any owned saved ApplicantParty. | DTO mapping, UI behavior, E2E. |
+| `Q-SL-REQ-001-CLIENT-006` | `SL-REQ-001-create-connection-request.client.md` | success UX | accepted | After success, navigate to details or My Requests? | My Requests handoff/list is preferred because command success has no required requestId body. | Success UX and E2E. |
+
+## SL-APPL-003 Server Additions
+
+| ID | Local file(s) | Area | Status | Question | Assumption / current direction | Impact |
+|---|---|---|---|---|---|---|
+| `SL-APPL-003-Q-005` | `SL-APPL-003-select-current-default-applicant-party-template.md` | response | implementation decision | Success response body? | Prefer no required body unless client implementation needs updated summary. | Client cache/update strategy. |
+| `SL-APPL-003-Q-007` | `SL-APPL-003-select-current-default-applicant-party-template.md` | idempotency | accepted direction | What happens when selected is already current/default? | Idempotent success is acceptable. | Safe retries/repeated clicks. |
+| `SL-APPL-003-Q-009` | `SL-APPL-003-select-current-default-applicant-party-template.md` | type scope | accepted direction | Should command be limited to selected ApplicantPartyType? | Yes. Only selected type changes; other types unchanged. | Per-type default model. |
+

@@ -1,21 +1,18 @@
-# Apply SL-REQ-001.client E2E locator replacement archive
+# APPLY — Full Slices + Server Test Draft Rules Sync
 
-Run from repo root:
-
-```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\sl-req-001-client-e2e-locator-fix.zip" -DestinationPath "." -Force
-```
-
-Recommended verification:
+Run from repository root:
 
 ```powershell
-npm run test:e2e -- tests/e2e/requests/create-connection-request.spec.ts
-npm run test:e2e
+Expand-Archive -Path "C:\Users\alexa\Downloads\full-slices-server-test-rules-sync.zip" -DestinationPath . -Force
+git status
+git diff -- planning
 ```
 
-Optional client checks:
+If the diff is correct:
 
 ```powershell
-npm --prefix .\energymanagement.client run build
-npm --prefix .\energymanagement.client run test -- --run
+git add planning
+git status
 ```
+
+This is docs-only. Do not run code generation for this archive unless you separately implement API changes.

@@ -1,7 +1,7 @@
 # Testing Planning Index
 
-Status: current testing planning index  
-Scope: testing responsibilities, E2E/Playwright workflow, test object patterns, Playwright cleanup plan
+Status: current testing planning index / server slice DB-state test-plan rules synchronized  
+Scope: testing responsibilities, server slice test-plan separation, E2E/Playwright workflow, test object patterns, Playwright cleanup plan
 
 ## 1. Purpose
 
@@ -20,6 +20,7 @@ end-to-end tests
 
 ```text
 planning/testing/testing-principles.md
+planning/testing/server-slice-test-plan-rules.md
 planning/testing/e2e-testing-workflow.md
 planning/testing/test-object-patterns.md
 planning/testing/playwright-e2e-cleanup-plan.md
@@ -37,6 +38,14 @@ Detailed UI behavior belongs to client/component tests.
 Detailed server/API behavior belongs to server integration/API tests.
 ```
 
+For backend/server slice drafts that change persisted state, use:
+
+```text
+planning/testing/server-slice-test-plan-rules.md
+```
+
+Primary proof for L1 backend command behavior should be API/integration tests with direct DB state assertions, not mocks.
+
 ## 4. Current Playwright Direction
 
 ```text
@@ -53,9 +62,10 @@ Detailed server/API behavior belongs to server integration/API tests.
 ```text
 1. planning/testing/README.md
 2. planning/testing/testing-principles.md
-3. planning/testing/e2e-testing-workflow.md
-4. planning/testing/test-object-patterns.md
-5. planning/testing/playwright-e2e-cleanup-plan.md
+3. planning/testing/server-slice-test-plan-rules.md
+4. planning/testing/e2e-testing-workflow.md
+5. planning/testing/test-object-patterns.md
+6. planning/testing/playwright-e2e-cleanup-plan.md
 ```
 
 ## 6. Related Docs

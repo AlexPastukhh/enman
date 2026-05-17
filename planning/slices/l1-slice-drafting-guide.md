@@ -1,6 +1,6 @@
 # L1 Slice Drafting Guide
 
-Status: current / strict example-driven drafting, client short-draft rules and flow separation synchronized  
+Status: current / strict example-driven drafting, client short-draft rules, server test-plan separation and flow separation synchronized  
 Scope: business slices, cross-cutting/helper slices, client sidecars, scenario source intake, implementation flow, extension/change points, questions, registers and tests
 
 ## 1. Draft-Driven Discovery Gate
@@ -249,3 +249,147 @@ planning/api/generated-artifact-check-workflow.md
 planning/api/openapi-contract-generation.md
 planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
 ```
+
+## 13. Server Slice Test Plan Separation Rule
+
+Server/backend slice drafts must separate test responsibilities by what they prove.
+
+Use this structure for non-trivial backend command slices:
+
+```text
+### API boundary / access tests
+### Main DB state transition tests
+### Idempotency / no-op DB state tests
+### No-mutation / unrelated-record safety tests
+### Same-type / type-scope tests, when applicable
+### Regression guards
+### What not to test
+```
+
+Do not write one flat list when the slice changes persisted state.
+
+### API boundary / access tests
+
+Use these to verify the endpoint boundary:
+
+```text
+- unauthenticated -> 401;
+- missing resource -> documented rejection response;
+- not-owned resource -> documented rejection response;
+- invalid route/body/query input -> documented validation/problem response.
+```
+
+These tests prove access/rejection semantics. They do not prove the main behavior unless they also assert DB state before/after.
+
+### DB state transition tests
+
+Use these as the primary proof for backend command behavior.
+
+For state-changing slices, assert persisted rows before and after the command:
+
+```text
+- selected row changed as expected;
+- previous row changed as expected;
+- required rows still exist;
+- stable fields are unchanged;
+- status/marker values are persisted correctly.
+```
+
+For `SL-APPL-003`, this means asserting the selected ApplicantParty becomes current/default and the previous same-type current/default is unset.
+
+### No-mutation tests
+
+Use these to protect important data-safety rules:
+
+```text
+- existing requests remain linked to the same ApplicantParty;
+- unrelated ApplicantParties are not deleted/hidden/replaced;
+- other rows/types remain unchanged;
+- rejected commands do not partially update state.
+```
+
+When setup is expensive, no-mutation assertions may be combined with the main DB transition test, but the draft must name what safety rule is being protected.
+
+### Regression guards
+
+Use regression guards for behavior owned by another slice but critical to the new slice boundary.
+
+Example:
+
+```text
+SL-APPL-003 explicit make-default command may reference the existing SL-APPL-001 regression:
+second same-type create still does not switch default implicitly.
+```
+
+Do not duplicate heavy tests if an existing stable test already covers the guard. Reference the owner slice when appropriate.
+
+### What not to test
+
+Do not use mocks as primary proof for server behavior that persists state.
+
+Do not add tests for:
+
+```text
+- repository mock call order;
+- handler mock call order;
+- exact SaveChanges call count, unless existing project style requires it;
+- generated TypeScript as behavior proof;
+- OpenAPI generation as behavior proof;
+- React Query invalidation;
+- client button rendering;
+- lifecycle behavior outside this slice.
+```
+
+Mocks can be helper-level/unit-level support, but the primary proof for L1 backend command behavior is API/integration + DB state assertions.
+
+## 14. Server Test Plan Example For State-Changing Command
+
+Good test-plan shape:
+
+```text
+## Test / Verification Plan
+
+Primary verification: API integration tests with direct DB state assertions.
+
+### API boundary / access tests
+- unauthenticated request returns 401;
+- missing selected entity returns documented rejection and leaves DB unchanged;
+- not-owned selected entity returns documented rejection and leaves DB unchanged.
+
+### Main DB state transition test
+- arrange current/default entity and non-default entity;
+- call command on non-default entity;
+- reload rows from DB;
+- assert selected is current/default;
+- assert previous same-type current/default is unset;
+- assert both rows still exist;
+- assert stable fields unchanged.
+
+### No-mutation test
+- arrange existing request linked to old ApplicantParty;
+- switch default/current;
+- reload request row;
+- assert request ApplicantPartyId/status/details unchanged.
+
+### Regression guard
+- second same-type create still does not switch default implicitly;
+- keep or reference existing create-slice test if already present.
+
+### What not to test
+- no repository mock assertions;
+- no handler call-order assertions;
+- no client/UI/cache assertions.
+```
+
+Bad test-plan shape:
+
+```text
+- handler calls repository;
+- repository method exists;
+- SaveChanges is called;
+- generated OpenAPI type exists;
+- React Query invalidates cache.
+```
+
+Those are implementation details or client concerns, not proof of server slice behavior.
+

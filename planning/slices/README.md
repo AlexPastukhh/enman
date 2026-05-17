@@ -1,6 +1,6 @@
 # Slice Planning Index
 
-Status: current slice-planning navigation index / strict client draft rules, OpenAPI workflow and ApplicantParty read sidecar synchronized
+Status: current slice-planning navigation index / full request client sidecar, SL-APPL-003 server draft, strict client draft rules and server test-plan rules synchronized
 
 ## 1. Core Rule
 
@@ -22,6 +22,12 @@ Client drafters must use the canonical short-draft shape:
 
 ```text
 planning/slices/client-slice-short-draft-rules-and-example.md
+```
+
+Server/backend state-changing slice drafts must separate API boundary tests, DB state transition tests, no-mutation tests, regression guards and what-not-to-test. Use:
+
+```text
+planning/testing/server-slice-test-plan-rules.md
 ```
 
 ## 2. Current / Active Backend Slice Files
@@ -49,6 +55,7 @@ planning/slices/SL-AUTH-002-current-user.client.md
 planning/slices/SL-AUTH-003-logout.client.md
 planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
 planning/slices/SL-APPL-002-account-applicant-parties-read.client.md
+planning/slices/SL-REQ-001-create-connection-request.client.md
 planning/slices/l1/L1-MY-REQUESTS-READ-LIST.client.md
 planning/slices/l1/L1-MY-REQUESTS-LIST-FILTERS.client.md
 planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md

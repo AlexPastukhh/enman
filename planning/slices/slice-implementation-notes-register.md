@@ -14,3 +14,19 @@ Status: active / client short-draft rules, OpenAPI workflow and ApplicantParty r
 | `NOTE-APPL-002-CLIENT-001` | `SL-APPL-002.client` | client read | ApplicantParty read UI should use flat account list and group by `isCurrentDefault`. | draft/implementation handoff |
 | `NOTE-MYREQ-LIST-PLACEMENT-001` | `L1-MY-REQUESTS-READ-LIST.client` | client placement | My Requests read list display should be treated as entity read UI, not feature command UI. | normalization |
 | `NOTE-MYREQ-DETAILS-PLACEMENT-001` | `L1-MY-REQUEST-DETAILS.client` | client placement | My Request details display should be treated as entity read UI, not feature command UI. | normalization |
+
+## Request Creation Client Draft Notes
+
+| ID | Related slice | Layer | Note | Status |
+|---|---|---|---|---|
+| `NOTE-REQ-CLIENT-001` | `SL-REQ-001.client` | client architecture | Request creation UI is a command sidecar: page + features + entities + shared/api + generated contracts. | full draft |
+| `NOTE-REQ-CLIENT-002` | `SL-REQ-001.client` | applicant selector | Existing branch uses saved ApplicantParty selector; current/default is initial selection only, not eligibility limit. | full draft |
+| `NOTE-REQ-CLIENT-003` | `SL-REQ-001.client` | success UX | Prefer My Requests handoff because command success has no required requestId body. | full draft |
+
+## Server Test Plan Notes
+
+| ID | Related slice | Layer | Note | Status |
+|---|---|---|---|---|
+| `NOTE-SERVER-TEST-001` | server slice drafts | testing | State-changing backend command slices should use API integration tests with DB state assertions as primary proof, not mocks. | accepted |
+| `NOTE-SERVER-TEST-002` | `SL-APPL-003` | testing | Test plan separates API boundary, main DB transition, idempotency/no-op, no-mutation, same-type/future type scope, regression guards and what-not-to-test. | full draft |
+
