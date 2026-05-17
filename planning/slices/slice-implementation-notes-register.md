@@ -1,6 +1,6 @@
 # Slice Implementation Notes Register
 
-Status: active / client API placement synchronized
+Status: active / client API placement and L2 Employee Details sidecar synchronized
 
 ## Client API Placement Notes
 
@@ -12,3 +12,14 @@ Status: active / client API placement synchronized
 | `IMPL-CLIENT-API-PLACEMENT-004` | existing runtime | Existing business-specific `shared/api/*Api.ts` wrappers are transitional compatibility. Do not mass-migrate without concrete slice scope. | future cleanup |
 | `IMPL-CLIENT-API-PLACEMENT-005` | generated types | Entities/features may import generated OpenAPI types and define local business aliases. | accepted |
 | `IMPL-CLIENT-API-PLACEMENT-006` | old sidecars | If an older sidecar says “Shared API wrapper owns low-level HTTP call”, interpret it through the new rule: entity/feature API owns business wrapper; shared owns transport/generated infrastructure only. | compatibility note |
+
+## L2 Employee Details Client Notes
+
+| ID | Applies to | Note | Status |
+|---|---|---|---|
+| `IMPL-L2-EMP-DETAILS-CLIENT-001` | `L2-EMP-DETAILS-001.client` | Details read wrapper lives in `entities/employee-request/api/getEmployeeRequestDetails.ts`. | accepted |
+| `IMPL-L2-EMP-DETAILS-CLIENT-002` | same | Generated DTO aliases for details read live near the entity in `entities/employee-request/api/employeeRequestApiTypes.ts`. | accepted |
+| `IMPL-L2-EMP-DETAILS-CLIENT-003` | same | Do not add `shared/api/employeeRequestApi.ts` for the details read. `shared/api` remains generic infrastructure only. | accepted |
+| `IMPL-L2-EMP-DETAILS-CLIENT-004` | same | Details read waits for `SL-EMP-REQ-002` server endpoint and generated DTOs. Current DTO sketch is scenario-derived only. | blocked by server contract |
+| `IMPL-L2-EMP-DETAILS-CLIENT-005` | same | `StartReviewResponseDto` is a compact command result from `SL-EMP-REQ-003` and must not be reused as details DTO. | accepted |
+| `IMPL-L2-EMP-DETAILS-CLIENT-006` | future review command sidecars | Start/approve/reject command wrappers live in `features/employee-request/<action>/api`, not in `entities` and not in `shared/api`. | accepted |

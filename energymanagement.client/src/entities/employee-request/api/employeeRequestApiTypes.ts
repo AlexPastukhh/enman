@@ -23,3 +23,9 @@ export type EmployeeRequestListItemDto =
 
 export type EmployeeRequestListResponseDto =
   components["schemas"]["EmployeeRequestListResponseDto"];
+
+export type EmployeeRequestDetailsDto =
+  components["schemas"]["EmployeeRequestDetailsDto"];
+
+export type EmployeeRequestApplicantSummaryDto =
+  components["schemas"]["EmployeeRequestApplicantSummaryDto"];

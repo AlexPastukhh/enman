@@ -4,6 +4,7 @@ import HomePage from "../../pages/home/HomePage";
 import { LoginPage } from "../../pages/login/LoginPage";
 import MyRequestDetailsPage from "../../pages/requests/details/MyRequestDetailsPage";
 import EmployeeDashboardPage from "../../pages/employee/dashboard/EmployeeDashboardPage";
+import EmployeeRequestDetailsPage from "../../pages/employee/requests/details/EmployeeRequestDetailsPage";
 import CreateConnectionRequestPage from "../../pages/requests/create/CreateConnectionRequestPage";
 import MyRequestsPage from "../../pages/requests/my/MyRequestsPage";
 import RegisterPage from "../../pages/register/RegisterPage";
@@ -52,6 +53,11 @@ export const router = createBrowserRouter([
   {
     path: clientRoutes.employeeRequests,
     element: <EmployeeDashboardPage />,
+    errorElement: <RouteError />,
+  },
+  {
+    path: clientRoutes.employeeRequestDetailsPath,
+    element: <EmployeeRequestDetailsPage />,
     errorElement: <RouteError />,
   },
   {

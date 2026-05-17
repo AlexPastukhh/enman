@@ -1,6 +1,6 @@
 # Slice Questions Register
 
-Status: active / client API placement synchronized
+Status: active / client API placement and L2 Employee Details sidecar synchronized
 
 | ID | Local file(s) | Area | Status | Question | Assumption / current direction | Impact |
 |---|---|---|---|---|---|---|
@@ -10,3 +10,18 @@ Status: active / client API placement synchronized
 | `CL-API-PLACEMENT-Q-004` | same | read placement | accepted | Where do read endpoint wrappers live? | `entities/<entity>/api`. | Employee dashboard/details and ApplicantParty reads. |
 | `CL-API-PLACEMENT-Q-005` | same | command placement | accepted | Where do command/mutation endpoint wrappers live? | `features/<business-action>/api`. | StartReview, make-current-default, create actions. |
 | `CL-LAYER-Q-001` | old docs | shared API | superseded | `shared/api` is the low-level client/server boundary grouped by layer. | Superseded for business-specific wrappers; shared remains transport/generated boundary only. | Do not copy old shared wrapper shape into new drafts. |
+
+## L2 Employee Details Client Questions
+
+| ID | Local file(s) | Area | Status | Question | Assumption / current direction | Impact |
+|---|---|---|---|---|---|---|
+| `Q-L2-EMP-DETAILS-CLIENT-001` | `planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md` | server contract | blocked | What is exact details read endpoint and generated DTO? | Use `SL-EMP-REQ-002` server/OpenAPI once available. Current DTO sketch is derived from SC-07A only. | API wrapper and tests. |
+| `Q-L2-EMP-DETAILS-CLIENT-002` | same | generated contract | blocked | What are exact generated operation/type names? | Use generated OpenAPI after server implementation. | `employeeRequestApiTypes.ts`. |
+| `Q-L2-EMP-DETAILS-CLIENT-003` | same | routing | assumption | First route path? | Candidate: `/employee/requests/:requestId`; final path follows server/client route decision. | Route setup. |
+| `Q-L2-EMP-DETAILS-CLIENT-004` | same | DTO design | assumption | Should action availability be server-provided? | Prefer server-provided action availability. Client should not guess unless contract explicitly provides all required fields. | DTO design and tests. |
+| `Q-L2-EMP-DETAILS-CLIENT-005` | same | read-vs-command | accepted | Is this read or command sidecar? | Read sidecar. Review commands are future feature sidecars. | Placement in `pages + entities`. |
+| `Q-L2-EMP-DETAILS-CLIENT-006` | same | scope | accepted | Does this sidecar execute start/approve/reject? | No. It only shows action availability / slots. | Scope boundary. |
+| `Q-L2-EMP-DETAILS-CLIENT-007` | same | API placement | accepted | Where does details endpoint wrapper live? | `entities/employee-request/api/getEmployeeRequestDetails.ts`. | New API ownership policy. |
+| `Q-L2-EMP-DETAILS-CLIENT-008` | same | shared API | accepted | Can we add `shared/api/employeeRequestApi.ts` for details read? | No. `shared/api` is generic infrastructure only. | Prevents shared API dump. |
+| `Q-L2-EMP-DETAILS-CLIENT-009` | same | future data | accepted | Does details include documents/review history? | No, future refinement. | Scope boundary. |
+| `Q-L2-EMP-DETAILS-CLIENT-010` | same | DTO misuse | accepted | Can `StartReviewResponseDto` be used as details DTO? | No. It is compact command result only. | Prevents command/read contract coupling. |

@@ -1,6 +1,6 @@
 # Slice Planning Index
 
-Status: current slice-planning navigation index / client API placement synchronized
+Status: current slice-planning navigation index / client API placement and L2 details sidecar synchronized
 
 ## 1. Core Rule
 
@@ -49,5 +49,21 @@ Existing business-specific wrappers in `shared/api` are transitional compatibili
 - Read endpoint wrappers belong in entities/*/api.
 - Command endpoint wrappers belong in features/*/api.
 - shared/api is only transport/generated infrastructure.
+- Generated OpenAPI types remain shared generated artifacts, but entity/feature API files may import them directly and define local business aliases.
 - One draft covers one slice; extension slices are named but not implemented.
 ```
+
+## 4. Current L2 Client Sidecar Reminder
+
+For `L2-EMP-DETAILS-001.client`:
+
+```text
+Do:
+  entities/employee-request/api/getEmployeeRequestDetails.ts
+  entities/employee-request/api/employeeRequestApiTypes.ts
+
+Do not:
+  shared/api/employeeRequestApi.ts
+```
+
+Future review commands use `features/employee-request/<action>/api`.

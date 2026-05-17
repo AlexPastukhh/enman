@@ -1,0 +1,54 @@
+.employeeRequestDetailsView {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.employeeRequestDetailsView__header,
+.employeeRequestDetailsPanel,
+.employeeRequestDetailsState {
+  border: 1px solid #d6dde8;
+  border-radius: 12px;
+  padding: 1rem;
+  background: #fff;
+}
+
+.employeeRequestDetailsView__header h2,
+.employeeRequestDetailsPanel h2,
+.employeeRequestDetailsState h2 {
+  margin-top: 0;
+}
+
+.employeeRequestDetailsDefinitionList {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.employeeRequestDetailsDefinitionList div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.employeeRequestDetailsDefinitionList dt {
+  font-weight: 700;
+}
+
+.employeeRequestDetailsDefinitionList dd {
+  margin: 0;
+}
+
+.employeeReviewActionAvailability {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.employeeRequestDetailsPanel__hint {
+  margin-bottom: 0;
+}
+
+.employeeRequestDetailsActions {
+  margin-top: 1rem;
+}

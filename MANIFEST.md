@@ -1,14 +1,53 @@
-# MANIFEST — SL-EMP-REQ-003 Start Request Review compile fix
+# MANIFEST — Employee Details Client API Placement Full Sync
 
-Archive: sl-emp-req-003-start-request-review-v12-compile-fix.zip
+Status: docs-only archive  
+Purpose: replace/synchronize Employee Request Details client sidecar after the client API ownership decision.
 
-Scope:
-- Fix compile error in `Tests.EnergyManagement/Integration/L1/L1IntegrationTestBase.cs` caused by calling `SqlDataReader.GetDateTimeOffset(string)`.
+## Source input
 
-Changed files:
-- Tests.EnergyManagement/Integration/L1/L1IntegrationTestBase.cs
+```text
+Uploaded file:
+Вставленная ​​уценка(21).md
+```
 
-Notes:
-- `SqlDataReader.GetDateTimeOffset` accepts an ordinal `int`, not a column name string.
-- The fix uses `reader.GetOrdinal("StartedAt")` and `reader.GetOrdinal("CompletedAt")`.
-- No docs/planning/client/generated/migrations/domain files changed.
+Key extracted decision:
+
+```text
+No business wrapper in shared/api.
+
+Read wrapper:
+  entities/employee-request/api/getEmployeeRequestDetails.ts
+
+Generated DTO aliases:
+  entities/employee-request/api/employeeRequestApiTypes.ts
+
+Future command wrappers:
+  features/employee-request/<action>/api
+
+shared/api:
+  fetchJson, ProblemDetails/ApiError, CSRF helpers,
+  generated OpenAPI types and generic transport helpers only.
+```
+
+## Replaced / synchronized files
+
+```text
+planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md
+planning/slices/l2/README.md
+planning/slices/README.md
+planning/slices/slice-implementation-notes-register.md
+planning/slices/slice-questions-register.md
+planning/slices/slice-extension-points-register.md
+```
+
+## Not included
+
+```text
+runtime code
+tests
+generated artifacts
+Shared/openapi.json
+energymanagement.client/src/shared/api/generated/openapi-types.ts
+```
+
+This is documentation-only. Generated artifacts belong only in implementation archives that change API shape.
