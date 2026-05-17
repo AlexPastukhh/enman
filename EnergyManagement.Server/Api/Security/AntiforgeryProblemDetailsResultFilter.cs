@@ -4,10 +4,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace EnergyManagement.Server.Api.Security;
 
-public sealed class AntiforgeryProblemDetailsResultFilter : IAlwaysRunResultFilter, IOrderedFilter
+public sealed class AntiforgeryProblemDetailsResultFilter : IAlwaysRunResultFilter
 {
-    public int Order => -2100;
-
     public void OnResultExecuting(ResultExecutingContext context)
     {
         if (context.Result is not IAntiforgeryValidationFailedResult

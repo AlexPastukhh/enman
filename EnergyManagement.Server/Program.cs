@@ -32,6 +32,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add(new AntiforgeryProblemDetailsResultFilter());
+})
+.ConfigureApiBehaviorOptions(options =>
+{
+    options.SuppressMapClientErrors = true;
 });
 builder.Services.AddProblemDetails();
 builder.Services.AddAntiforgery(options =>
