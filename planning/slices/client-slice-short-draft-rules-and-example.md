@@ -1,7 +1,7 @@
 # Client Slice Short Draft Rules And Canonical Example
 
-Status: current / canonical short-draft form for client sidecar drafters  
-Scope: client sidecar short drafts, scenario flow vs implementation flow, behavior coverage discipline, extension-slice boundaries
+Status: current / canonical short-draft form with cross-cutting concerns section  
+Scope: client sidecar short drafts, scenario flow vs implementation flow, behavior coverage discipline, extension-slice boundaries, cross-cutting considerations
 
 ## 1. Non-Negotiable Rule
 
@@ -15,6 +15,7 @@ The goal is boring consistency:
 same section names;
 same scope/out-of-scope discipline;
 same Scenario Flow vs Implementation Flow separation;
+same Cross-Cutting Concerns section;
 same Questions table shape;
 same Behavior Coverage discipline;
 same Testing style.
@@ -36,12 +37,13 @@ It must:
 - identify related slices / extension slices;
 - show only the scenario slice flow relevant to this slice;
 - show the client implementation layering;
+- include cross-cutting concerns / considerations;
 - capture questions/decisions;
 - cover source behavior items;
 - include a verification plan.
 ```
 
-Do not omit Scope / Out of Scope just because the draft is short.
+Do not omit Scope / Out of Scope / Cross-Cutting Concerns just because the draft is short.
 
 ## 3. Draft One Slice At A Time
 
@@ -56,7 +58,7 @@ Scenario: Applicant Parties page
         ↓
 SL-APPL-002.client reads and displays saved ApplicantParties.
 SL-APPL-001.client owns add Individual ApplicantParty action/form.
-SL-APPL-003 owns future explicit make default/current action.
+SL-APPL-003.client owns explicit make default/current action.
 Future lifecycle slice owns edit/delete/archive.
 ```
 
@@ -147,17 +149,18 @@ Why bad:
 ```text
 [Route / Page Layer]
 pages/account/AccountPage.tsx
-  Lives here: AccountPage
-  Uses: useSession(), useAccountApplicantPartiesQuery()
-  Owns: session branch, page layout, read-state composition
-  Does not own: fetchJson, generated DTO aliases, query keys
-        ↓
-[Entity Query Layer]
-entities/applicant-party/model/useAccountApplicantPartiesQuery.ts
-  Lives here: useAccountApplicantPartiesQuery(), applicantPartyQueryKeys
-  Uses: useQuery(), listAccountApplicantParties()
-  Owns: query key, enabled guard, read hook
-  Does not own: route/session decision, HTTP path string, command mutation
+
+Lives here:
+  AccountPage
+
+Uses:
+  useSession(), useAccountApplicantPartiesQuery()
+
+Owns:
+  session branch, page layout, read-state composition
+
+Does not own:
+  fetchJson, generated DTO aliases, query keys
 ```
 
 ## 6. Behavior Items Rule
@@ -175,10 +178,11 @@ Do not invent behavior items such as:
 - generated OpenAPI type exists;
 - cache invalidation happens;
 - route param is parsed;
-- API wrapper is shared.
+- API wrapper is shared;
+- CSRF header is attached.
 ```
 
-These belong in implementation flow, API contract, implementation notes or test plan.
+These belong in implementation flow, API contract, cross-cutting concerns, implementation notes or test plan.
 
 If source behavior item IDs are missing, write:
 
@@ -188,7 +192,38 @@ Source BI TBD
 
 and treat it as a source gap.
 
-## 7. Canonical Short Draft Shape
+## 7. Cross-Cutting Concerns Rule
+
+Every client draft must include:
+
+```text
+## Cross-Cutting Concerns / Considerations
+```
+
+Use:
+
+```text
+planning/slices/cross-cutting/cross-cutting-concerns-drafting-checklist.md
+```
+
+Client-specific concerns usually include:
+
+```text
+- auth/session branch;
+- ownership/not-found behavior surfaced from server;
+- antiforgery for unsafe browser commands;
+- ProblemDetails mapping;
+- OpenAPI/generated type dependency;
+- idempotency/double-submit/pending state;
+- stale server state/rejected command feedback;
+- file/document command upload boundary;
+- client feedback/accessibility;
+- E2E visible outcome vs implementation internals.
+```
+
+Do not put these concerns into Scenario Flow unless the scenario explicitly says they are user-visible behavior.
+
+## 8. Canonical Short Draft Shape
 
 Use this exact shape for short client drafts.
 
@@ -207,15 +242,16 @@ Backend/API contract evidence, when relevant:
 ## 4. Visual UI / Scenario Flow
 ## 5. Visual Client Implementation Flow
 ## 6. Client API / Server Contract
-## 7. Questions / Decisions
-## 8. Extension / Change Points
-## 9. Behavior Coverage
-## 10. Client / Component / E2E Verification Plan
-## 11. Implementation Checklist
-## 12. Next Step
+## 7. Cross-Cutting Concerns / Considerations
+## 8. Questions / Decisions
+## 9. Extension / Change Points
+## 10. Behavior Coverage
+## 11. Client / Component / E2E Verification Plan
+## 12. Implementation Checklist
+## 13. Next Step
 ```
 
-## 8. Canonical Implementation Flow Block Shape
+## 9. Canonical Implementation Flow Block Shape
 
 Every implementation layer should use:
 
@@ -239,7 +275,7 @@ Does not own:
 
 This is mandatory for new client drafts.
 
-## 9. Canonical Short Draft Example To Copy
+## 10. Canonical Short Draft Example To Copy
 
 Copy this form for future short drafts. Replace names and source items, but keep the section order and table shapes.
 
@@ -353,25 +389,39 @@ Client rule:
 
 Do not invent generated operation ids before generation exists.
 
-## 7. Questions / Decisions
+## 7. Cross-Cutting Concerns / Considerations
+
+| Concern | Applies? | Consideration / owner |
+|---|---:|---|
+| Auth/session/account context | yes/no | ... |
+| Authorization/ownership | yes/no | ... |
+| Antiforgery / browser unsafe requests | yes/no | ... |
+| Request validation / ProblemDetails | yes/no | ... |
+| OpenAPI / generated artifacts | yes/no | ... |
+| Idempotency / double-submit / retry | yes/no | ... |
+| Concurrency / stale state | yes/no | ... |
+| Client feedback / accessibility | yes/no | ... |
+| Testing responsibility split | yes/no | ... |
+
+## 8. Questions / Decisions
 
 | ID | Status | Question | Assumption / current direction | Impact |
 |---|---|---|---|---|
 | Q-... | accepted direction | ... | ... | ... |
 
-## 8. Extension / Change Points
+## 9. Extension / Change Points
 
 - <future behavior> -> <future slice>;
 - <cleanup> -> <cleanup task>.
 
-## 9. Behavior Coverage
+## 10. Behavior Coverage
 
 | Source behavior item | How sidecar covers it | Status |
 |---|---|---|
 | SC-... | ... | covered |
 | SC-... | owned by related slice | out of scope |
 
-## 10. Client / Component / E2E Verification Plan
+## 11. Client / Component / E2E Verification Plan
 
 Component/client tests:
 
@@ -388,34 +438,18 @@ Shared API/entity tests:
 E2E:
   visible user outcome only; do not assert React Query internals or refetch mechanics.
 
-## 11. Implementation Checklist
+## 12. Implementation Checklist
 
 [ ] ...
 
-## 12. Next Step
+## 13. Next Step
 
 <full sidecar / implementation handoff / source gap / backend blocker>
 ```
 
-## 10. Extension Slices
+## 11. Extension Slices
 
 An extension slice is a later slice that completes more of the same scenario without being part of this slice.
-
-Example:
-
-```text
-SL-APPL-002.client:
-  read/display ApplicantParties.
-
-SL-APPL-001.client:
-  add Individual ApplicantParty action/form.
-
-SL-APPL-003:
-  explicit make default/current action.
-
-Future lifecycle slice:
-  edit/delete/archive.
-```
 
 Extension slices should appear in:
 
@@ -428,7 +462,7 @@ Behavior Coverage as related/out of scope where relevant
 
 Do not implement extension behavior in the current draft.
 
-## 11. Current Full Draft Example
+## 12. Current Full Draft Example
 
 The current full read sidecar example is:
 
@@ -436,7 +470,11 @@ The current full read sidecar example is:
 planning/slices/SL-APPL-002-account-applicant-parties-read.client.md
 ```
 
-Use its detailed implementation-flow style for future full sidecars.
+The current full command sidecar example is:
+
+```text
+planning/slices/SL-APPL-003-select-current-default-applicant-party-template.client.md
+```
 
 Important distinction:
 
@@ -445,7 +483,7 @@ The full sidecar can be longer.
 The short draft still uses the same section order and same Lives here / Uses / Owns / Does not own style.
 ```
 
-## 12. Drafting Checklist
+## 13. Drafting Checklist
 
 Before finalizing a client short draft, verify:
 
@@ -454,6 +492,7 @@ Before finalizing a client short draft, verify:
 [ ] I read slice-scenario-flow-behavior-register.md.
 [ ] Scenario Flow is from scenario/UI specs and only covers this slice.
 [ ] Implementation Flow includes concrete files/functions/types per layer.
+[ ] I included Cross-Cutting Concerns / Considerations.
 [ ] I did not call implementation details behavior items.
 [ ] I separated Behavior Coverage from Test/Verification Plan.
 [ ] I named extension slices and owners.

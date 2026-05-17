@@ -1,6 +1,6 @@
 # Slice Planning Index
 
-Status: current slice-planning navigation index / SL-APPL-003.client full sidecar synchronized
+Status: current slice-planning navigation index / cross-cutting concerns drafting checklist synchronized
 
 ## 1. Core Rule
 
@@ -10,12 +10,24 @@ Scenario Flow and Behavior Items come from:
 planning/slices/slice-scenario-flow-behavior-register.md
 ```
 
-Do not use questions/extension/implementation registers as behavior source.
+Do not use questions/extension/implementation registers or domain drafts as direct behavior source.
 
 Implementation prompts must respect:
 
 ```text
 planning/agent-scope-boundaries-and-prompt-safety.md
+```
+
+All non-trivial slice drafts must include:
+
+```text
+Cross-Cutting Concerns / Considerations
+```
+
+Use:
+
+```text
+planning/slices/cross-cutting/cross-cutting-concerns-drafting-checklist.md
 ```
 
 Client drafters must use the canonical short-draft shape:
@@ -62,14 +74,15 @@ planning/slices/l1/L1-MY-REQUESTS-LIST-FILTERS.client.md
 planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md
 ```
 
-## 4. Current L1 Remaining Gaps
+## 4. Cross-Cutting / Helper Slices
 
 ```text
-- SL-APPL-003.client runtime implementation if not already implemented.
-- Final Applicant Parties page/section replacement of old current-individual AccountPage model if not already completed.
-- Tests for make-current/default backend/client behavior should be verified.
-- Delete/archive/edit lifecycle remains future.
-- LegalEntity / IndividualEntrepreneur ApplicantParty creation remains future unless implementation proves otherwise.
+planning/slices/cross-cutting/README.md
+planning/slices/cross-cutting/cross-cutting-concerns-drafting-checklist.md
+planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
+planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
+planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
+planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
 ```
 
 ## 5. Drafting Rules
@@ -79,6 +92,7 @@ planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md
 - Scenario Flow is user/system behavior from scenario sources.
 - Implementation Flow is code/layer responsibility.
 - Behavior items are not implementation details.
+- Cross-cutting concerns belong in their own considerations section unless source behavior says otherwise.
 - Read-only UI belongs in entities.
 - Command/user-action UI belongs in features.
 - One draft covers one slice; extension slices are named but not implemented.

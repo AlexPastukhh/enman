@@ -1,9 +1,9 @@
-# APPLY — L2 Employee / Review / Agreement Scenario Sync v2
+# APPLY — Cross-Cutting Concerns / Antiforgery Drafting Rules Sync
 
-Run from repository root:
+Run from repository root after downloading the archive:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l2-employee-review-agreement-scenarios-sync-v2.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\cross-cutting-concerns-drafting-rules-sync.zip" -DestinationPath . -Force
 git status
 git diff -- planning
 ```
@@ -15,4 +15,4 @@ git add planning
 git status
 ```
 
-This is docs-only. It intentionally does not include code, tests, generated artifacts, GitHub branch/commit/PR or implementation slice drafts.
+This is a docs-only archive. It does not include code, tests or generated artifacts.

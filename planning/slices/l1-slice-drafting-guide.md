@@ -1,7 +1,7 @@
 # L1 Slice Drafting Guide
 
-Status: current / strict example-driven drafting, client short-draft rules, server test-plan separation and flow separation synchronized  
-Scope: business slices, cross-cutting/helper slices, client sidecars, scenario source intake, implementation flow, extension/change points, questions, registers and tests
+Status: current / strict example-driven drafting, cross-cutting concerns checklist, client short-draft rules, server test-plan separation and flow separation synchronized  
+Scope: business slices, cross-cutting/helper slices, client sidecars, scenario source intake, implementation flow, extension/change points, questions, registers, cross-cutting concerns and tests
 
 ## 1. Draft-Driven Discovery Gate
 
@@ -15,6 +15,7 @@ planning/slices/slice-questions-register.md
 planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
 planning/slices/change-extension-points-principles.md
+planning/slices/cross-cutting/cross-cutting-concerns-drafting-checklist.md
 ```
 
 Client sidecar drafters must also read:
@@ -58,6 +59,8 @@ Scenario Flow is the part of the scenario that belongs to the current slice.
 It is not necessarily the whole scenario.
 
 A scenario can be implemented by several slices and extension slices.
+
+Domain drafts can be domain-design input for scenario updates, but scenario files remain the source of truth for Scenario Flow and Behavior Coverage after synchronization.
 
 ## 4. Scenario Flow vs Implementation Flow
 
@@ -114,12 +117,14 @@ Do not treat these as behavior items:
 - route param is parsed;
 - cache invalidation happens;
 - ApplicantPartyId is returned;
-- repository method exists.
+- repository method exists;
+- CSRF header exists;
+- ProblemDetails factory exists.
 ```
 
-They may be implementation notes, API contract notes or test plan items.
+They may be implementation notes, API contract notes, cross-cutting considerations or test plan items.
 
-Behavior items must come from scenario/UI/behavior sources or cross-cutting concern sources.
+Behavior items must come from scenario/UI/behavior sources or explicit cross-cutting concern behavior sources.
 
 If source IDs are missing, write `Source BI TBD` and mark it as a source gap.
 
@@ -145,7 +150,65 @@ Out-of-scope items must point to an owner:
 - explicit not planned.
 ```
 
-## 7. Client Sidecar Short Draft Template
+## 7. Cross-Cutting Concerns / Considerations Rule
+
+Every non-trivial backend/client slice draft must include:
+
+```text
+## Cross-Cutting Concerns / Considerations
+```
+
+Use:
+
+```text
+planning/slices/cross-cutting/cross-cutting-concerns-drafting-checklist.md
+```
+
+This section must not replace Scenario Flow or Behavior Coverage.
+
+It should answer:
+
+```text
+- which shared concerns apply;
+- which are not applicable;
+- which related/cross-cutting slice owns the concern;
+- which considerations affect implementation or tests.
+```
+
+Minimum table shape:
+
+| Concern | Applies? | Consideration / owner |
+|---|---:|---|
+| Auth/session/account context | yes/no | ... |
+| Authorization/ownership | yes/no | ... |
+| Antiforgery / browser unsafe requests | yes/no | ... |
+| Request validation / ProblemDetails | yes/no | ... |
+| OpenAPI / generated artifacts | yes/no | ... |
+| Generated constants / error codes | yes/no | ... |
+| Transaction / atomicity / no partial write | yes/no | ... |
+| No-mutation / existing data safety | yes/no | ... |
+| Idempotency / double-submit / retry | yes/no | ... |
+| Concurrency / stale state | yes/no | ... |
+| File/document boundary | yes/no | ... |
+| Clock/audit actor fields | yes/no | ... |
+| Privacy / cross-account data exposure | yes/no | ... |
+| Client feedback / accessibility | yes/no | ... |
+| Testing responsibility split | yes/no | ... |
+
+Examples:
+
+```text
+Unsafe browser POST command:
+  Antiforgery applies -> CC-CSRF-001 owns token mechanics.
+
+Read-only GET endpoint:
+  Antiforgery does not apply by default, but auth/ownership may apply.
+
+Agreement proposal document command:
+  File/document boundary applies -> domain stores AgreementDocumentRef, storage adapter owns bytes.
+```
+
+## 8. Client Sidecar Short Draft Template
 
 Use exactly:
 
@@ -164,15 +227,16 @@ Backend/API contract evidence, when relevant:
 ## 4. Visual UI / Scenario Flow
 ## 5. Visual Client Implementation Flow
 ## 6. Client API / Server Contract
-## 7. Questions / Decisions
-## 8. Extension / Change Points
-## 9. Behavior Coverage
-## 10. Client / Component / E2E Verification Plan
-## 11. Implementation Checklist
-## 12. Next Step
+## 7. Cross-Cutting Concerns / Considerations
+## 8. Questions / Decisions
+## 9. Extension / Change Points
+## 10. Behavior Coverage
+## 11. Client / Component / E2E Verification Plan
+## 12. Implementation Checklist
+## 13. Next Step
 ```
 
-## 8. Client Read vs Command Placement
+## 9. Client Read vs Command Placement
 
 Read slices:
 
@@ -190,7 +254,7 @@ Read-only UI belongs in `entities/<entity>/ui`.
 
 Command/action UI belongs in `features/<action>/ui`.
 
-## 9. Behavior Coverage Is Not Test Coverage
+## 10. Behavior Coverage Is Not Test Coverage
 
 Behavior Coverage answers:
 
@@ -206,7 +270,7 @@ How will implementation be verified?
 
 Do not mix these tables.
 
-## 10. Questions / Decisions Rule
+## 11. Questions / Decisions Rule
 
 Every non-trivial question should include:
 
@@ -225,7 +289,7 @@ Order:
 open -> blocked -> assumptions -> future review -> accepted -> resolved/superseded
 ```
 
-## 11. Shared Register Sync Rule
+## 12. Shared Register Sync Rule
 
 Use:
 
@@ -238,7 +302,7 @@ planning/slices/slice-implementation-notes-register.md
 
 Update them when local slice changes affect source mapping, future work, extension pressure, implementation notes or shared questions.
 
-## 12. OpenAPI / Generated Artifact Rule
+## 13. OpenAPI / Generated Artifact Rule
 
 If a slice changes API contract, generated artifacts must come from repo commands, not manual edits.
 
@@ -250,7 +314,7 @@ planning/api/openapi-contract-generation.md
 planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
 ```
 
-## 13. Server Slice Test Plan Separation Rule
+## 14. Server Slice Test Plan Separation Rule
 
 Server/backend slice drafts must separate test responsibilities by what they prove.
 
@@ -279,8 +343,6 @@ Use these to verify the endpoint boundary:
 - invalid route/body/query input -> documented validation/problem response.
 ```
 
-These tests prove access/rejection semantics. They do not prove the main behavior unless they also assert DB state before/after.
-
 ### DB state transition tests
 
 Use these as the primary proof for backend command behavior.
@@ -295,31 +357,20 @@ For state-changing slices, assert persisted rows before and after the command:
 - status/marker values are persisted correctly.
 ```
 
-For `SL-APPL-003`, this means asserting the selected ApplicantParty becomes current/default and the previous same-type current/default is unset.
-
 ### No-mutation tests
 
 Use these to protect important data-safety rules:
 
 ```text
 - existing requests remain linked to the same ApplicantParty;
-- unrelated ApplicantParties are not deleted/hidden/replaced;
-- other rows/types remain unchanged;
+- unrelated rows are not deleted/hidden/replaced;
+- other types remain unchanged;
 - rejected commands do not partially update state.
 ```
-
-When setup is expensive, no-mutation assertions may be combined with the main DB transition test, but the draft must name what safety rule is being protected.
 
 ### Regression guards
 
 Use regression guards for behavior owned by another slice but critical to the new slice boundary.
-
-Example:
-
-```text
-SL-APPL-003 explicit make-default command may reference the existing SL-APPL-001 regression:
-second same-type create still does not switch default implicitly.
-```
 
 Do not duplicate heavy tests if an existing stable test already covers the guard. Reference the owner slice when appropriate.
 
@@ -342,7 +393,7 @@ Do not add tests for:
 
 Mocks can be helper-level/unit-level support, but the primary proof for L1 backend command behavior is API/integration + DB state assertions.
 
-## 14. Server Test Plan Example For State-Changing Command
+## 15. Server Test Plan Example For State-Changing Command
 
 Good test-plan shape:
 
@@ -371,6 +422,11 @@ Primary verification: API integration tests with direct DB state assertions.
 - reload request row;
 - assert request ApplicantPartyId/status/details unchanged.
 
+### Cross-cutting concern checks
+- unsafe browser POST relies on CC-CSRF-001; do not duplicate all CSRF tests here;
+- route/body validation follows CC-VALIDATION-001;
+- API contract changes follow OpenAPI/generated artifacts workflow.
+
 ### Regression guard
 - second same-type create still does not switch default implicitly;
 - keep or reference existing create-slice test if already present.
@@ -390,6 +446,3 @@ Bad test-plan shape:
 - generated OpenAPI type exists;
 - React Query invalidates cache.
 ```
-
-Those are implementation details or client concerns, not proof of server slice behavior.
-
