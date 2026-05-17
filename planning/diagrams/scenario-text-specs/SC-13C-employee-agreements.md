@@ -1,4 +1,4 @@
-# SC-13C — Employee Agreements
+﻿# SC-13C вЂ” Employee Agreements
 
 Status: L2 scenario draft / Employee exchange list direction synchronized  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
@@ -13,14 +13,14 @@ Approved requests without an agreement exchange are started from Employee reques
 
 ```text
 Employee opens Agreements area
-        ↓
+        в†“
 System shows existing agreement proposal exchanges visible to Employees
-        ↓
+        в†“
 Employee sees items that need action:
   exchange AwaitingEmployeeResponse after client version
   active exchange eligible for final refusal
   exchange with final outcome for review/history
-        ↓
+        в†“
 Employee opens agreement exchange details to send proposal version or final-refuse exchange
 ```
 
@@ -55,7 +55,20 @@ v3 Employee employee-2
 ## 5. Behavior Items
 
 ```text
-L2-AGR-EMP-LIST-001 — Employee can see employee-visible existing agreement exchanges.
-L2-AGR-EMP-LIST-002 — Employee-facing agreement scenarios use Employee terminology only.
-L2-AGR-EMP-LIST-003 — Employee is not exchange-level owner first pass; proposal sender is tracked per version.
+L2-AGR-EMP-LIST-001 вЂ” Employee can see employee-visible existing agreement exchanges.
+L2-AGR-EMP-LIST-002 вЂ” Employee-facing agreement scenarios use Employee terminology only.
+L2-AGR-EMP-LIST-003 вЂ” Employee is not exchange-level owner first pass; proposal sender is tracked per version.
 ```
+
+## Diagram / Implementation Markers
+
+These markers are for diagrams and diploma planning only. They do not replace current repo implementation evidence.
+
+| Scenario element | Marker | Diagram / implementation meaning |
+|---|---|---|
+| Employee agreement exchange list | `[PLANNED]` | Employee-facing read surface for existing agreement exchanges. |
+| Employee access: any active Employee first pass | `[DESIGNED]` | Accepted first-pass service model; no `ResponsibleEmployeeId` guard. |
+| Employee opens existing exchange details | `[PLANNED]` | Existing exchange details/actions are agreement area work. |
+| Starting exchange from approved request details | `[PLANNED]` | Start is triggered from Employee request details (`SC-13D`), because the exchange does not exist yet. |
+| Department/assignment ownership model | `[DEFERRED]` | Future employee visibility/assignment model if needed. |
+

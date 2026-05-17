@@ -1,4 +1,4 @@
-# Planning Index
+﻿# Planning Index
 
 Status: current / L1 baseline and near-final L2 Employee Review + Agreement Exchange planning synchronized
 
@@ -169,18 +169,18 @@ planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
 Canonical L2 server slice set:
 
 ```text
-SL-EMP-REQ-001 — Employee Request List Read
-SL-EMP-REQ-002 — Employee Request Details Read
-SL-EMP-REQ-003 — Start Request Review
-SL-EMP-REQ-004 — Approve Request Review
-SL-EMP-REQ-005 — Reject Request Review
+SL-EMP-REQ-001 вЂ” Employee Request List Read
+SL-EMP-REQ-002 вЂ” Employee Request Details Read
+SL-EMP-REQ-003 вЂ” Start Request Review
+SL-EMP-REQ-004 вЂ” Approve Request Review
+SL-EMP-REQ-005 вЂ” Reject Request Review
 
-SL-AGR-EXCH-001 — Start Agreement Exchange With Initial Employee Proposal
-SL-AGR-EXCH-002 — Send Agreement Counter-Proposal Version
-SL-AGR-EXCH-003 — Agreement Exchange List Page / Read List
-SL-AGR-EXCH-004 — Agreement Exchange Details / Read Details
-SL-AGR-EXCH-005 — Client Accept Active Agreement Proposal
-SL-AGR-EXCH-006 — Final Refuse Agreement Exchange
+SL-AGR-EXCH-001 вЂ” Start Agreement Exchange With Initial Employee Proposal
+SL-AGR-EXCH-002 вЂ” Send Agreement Counter-Proposal Version
+SL-AGR-EXCH-003 вЂ” Agreement Exchange List Page / Read List
+SL-AGR-EXCH-004 вЂ” Agreement Exchange Details / Read Details
+SL-AGR-EXCH-005 вЂ” Client Accept Active Agreement Proposal
+SL-AGR-EXCH-006 вЂ” Final Refuse Agreement Exchange
 ```
 
 Canonical L2 client sidecar set:
@@ -268,3 +268,25 @@ planning/diagrams/README.md
 planning/adr/README.md
 planning/dirty-drafts/README.md
 ```
+
+## Scenario / Diagram Status Markers
+
+Marker: SCENARIO-STATUS-MARKERS-2026-05
+
+For post-L1/L2 scenario and diagram work, use:
+
+```text
+planning/diagrams/scenario-status-marker-rules.md
+```
+
+Scenario docs may mark future implementation and deferred extension points uniformly with:
+
+```text
+[PLANNED]
+[DEFERRED]
+[DESIGNED]
+[QUESTION]
+```
+
+`[IMPLEMENTED]` still requires current repo evidence.
+

@@ -1,4 +1,4 @@
-# Scenario / Diagram Planning Index
+﻿# Scenario / Diagram Planning Index
 
 Status: current / near-final L2 Employee Review Agreement scenarios and diagram workflow synchronized  
 Scope: scenario text specs, DATA, UI specs, behavior items, questions, clarifications, diagram prompt workflow and draw.io diagram generation workflow
@@ -155,21 +155,53 @@ Do not overclaim implementation status. `[IMPLEMENTED]` requires current repo ev
 ## 9. Recommended Diagram Batches
 
 ```text
-Part 1 — Core request/domain:
+Part 1 вЂ” Core request/domain:
   01 Use Case Overview
   04 Request Lifecycle
   06 Domain Model Overview
   08 Request Creation Sequence
   09 Request Review Sequence
 
-Part 2 — Client/employee/security/architecture:
+Part 2 вЂ” Client/employee/security/architecture:
   02 Client Use Cases
   03 Employee Use Cases
   05 Account Activation Lifecycle
   07 High-Level Architecture
 
-Part 3 — Agreement:
+Part 3 вЂ” Agreement:
   10 Agreement Use Cases
   11 Agreement Proposal Lifecycle
   12 Agreement Proposal Sequence
 ```
+
+## Scenario Status Markers
+
+Marker: SCENARIO-STATUS-MARKERS-2026-05
+
+For post-L1/L2 diagrams, scenario files may contain `## Diagram / Implementation Markers` sections.
+
+Read:
+
+```text
+planning/diagrams/scenario-status-marker-rules.md
+```
+
+Use the same marker vocabulary as diagram generation:
+
+```text
+[CORE]
+[IMPLEMENTED]
+[DESIGNED]
+[PLANNED]
+[DEFERRED]
+[QUESTION]
+```
+
+Important:
+
+```text
+Scenario markers help diagrams distinguish current target, planned implementation and deferred extensions.
+They do not prove implementation status.
+Diagram preflight must still inspect current repo evidence before using [IMPLEMENTED].
+```
+

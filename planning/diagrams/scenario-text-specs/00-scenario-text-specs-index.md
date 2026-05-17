@@ -1,4 +1,4 @@
-# Scenario Text Specifications Index
+﻿# Scenario Text Specifications Index
 
 Status: current / L1 foundation + near-final L2 Employee Review Agreement scenarios synchronized
 
@@ -95,3 +95,26 @@ SC-13D -> SL-AGR-EXCH-001,002 / start initial proposal + employee counter-propos
 SC-13E -> SL-AGR-EXCH-006 / final refusal sidecar
 SC-14  -> SL-DOC-* future document/reference family and AgreementDocumentRef usage in agreement slices
 ```
+
+## Scenario-local Diagram Markers
+
+Marker: SCENARIO-STATUS-MARKERS-2026-05
+
+L2 scenario specs may include `## Diagram / Implementation Markers` sections so diagrams can show planned/future/deferred items uniformly.
+
+Use:
+
+```text
+planning/diagrams/scenario-status-marker-rules.md
+```
+
+Interpretation:
+
+```text
+[PLANNED] = future implementation work in the current L2 plan.
+[DEFERRED] = future extension outside current L2 cut.
+[DESIGNED] = accepted domain/scenario target.
+[QUESTION] = unresolved source/contract question.
+[IMPLEMENTED] = only with current repo evidence.
+```
+

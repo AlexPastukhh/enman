@@ -1,4 +1,4 @@
-# SC-06 — Employee Request Dashboard
+﻿# SC-06 вЂ” Employee Request Dashboard
 
 Status: L2 scenario draft / StartReview entry point synchronized  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
@@ -24,18 +24,18 @@ Use `Employee`, not `Worker`.
 
 ```text
 Employee opens request dashboard
-        ↓
+        в†“
 System lists requests relevant to Employee review work
-        ↓
+        в†“
 For each request, System shows review state:
   no review started
   review started by current Employee
   review started by another Employee
-        ↓
+        в†“
 If StartReview command sidecar is wired,
 dashboard row may show a Start Review entry point
 for a request whose read state allows it
-        ↓
+        в†“
 Employee opens request details for a selected request
 ```
 
@@ -71,10 +71,10 @@ but command persistence and lifecycle behavior remain in SC-07B.
 ## 6. Behavior Items
 
 ```text
-L2-EMP-DASH-001 — Employee can see review-relevant requests.
-L2-EMP-DASH-002 — Dashboard distinguishes not-started review, started-by-current-employee review and started-by-another-employee review.
-L2-EMP-DASH-003 — Dashboard uses Employee terminology, not Worker terminology.
-L2-EMP-DASH-004 — Dashboard may host StartReview entry point when command sidecar is wired; dashboard itself does not define command persistence.
+L2-EMP-DASH-001 вЂ” Employee can see review-relevant requests.
+L2-EMP-DASH-002 вЂ” Dashboard distinguishes not-started review, started-by-current-employee review and started-by-another-employee review.
+L2-EMP-DASH-003 вЂ” Dashboard uses Employee terminology, not Worker terminology.
+L2-EMP-DASH-004 вЂ” Dashboard may host StartReview entry point when command sidecar is wired; dashboard itself does not define command persistence.
 ```
 
 ## 7. Out of Scope
@@ -86,3 +86,16 @@ L2-EMP-DASH-004 — Dashboard may host StartReview entry point when command side
 - department/permission model -> future slice;
 - agreement proposal exchange -> SC-13*.
 ```
+
+## Diagram / Implementation Markers
+
+These markers are for diagrams and diploma planning only. They do not replace current repo implementation evidence.
+
+| Scenario element | Marker | Diagram / implementation meaning |
+|---|---|---|
+| Employee request dashboard/list read | `[PLANNED]` | L2 employee read surface; diagram preflight may promote to `[IMPLEMENTED]` only with repo evidence. |
+| Review state markers on rows | `[PLANNED]` | Shows NotStarted / StartedByCurrentEmployee / StartedByAnotherEmployee-style state in the employee dashboard. |
+| Dashboard StartReview row entry point | `[PLANNED]` | Future/target host placement for the same StartReview command sidecar. |
+| Department/region/assignment visibility model | `[DEFERRED]` | Future authorization/read-filtering extension; first pass uses temporary active-Employee visibility policy. |
+| Agreement exchange work | `[DEFERRED]` | Belongs to `SC-13*`, not the employee request dashboard read scenario. |
+

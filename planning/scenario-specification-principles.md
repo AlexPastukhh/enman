@@ -1,4 +1,4 @@
-# Scenario Specification Principles
+﻿# Scenario Specification Principles
 
 Status: current source of truth for scenario specification principles  
 Scope: textual scenario specs, scenario DATA blocks, scenario UI specs, validation addenda, behavior items, scenario questions and diagram prompt handoff
@@ -202,3 +202,37 @@ scenario specs / DATA / UI specs / validation
 -> domain draft / slice boundary / parent slice / client sidecar workflow
 -> diagram prompt workflow, when diagrams are requested
 ```
+
+## 14. Scenario-local Diagram Status Markers
+
+Marker: SCENARIO-STATUS-MARKERS-2026-05
+
+Scenario docs may mark planned/future/deferred elements for diagram and diploma/VKR work using:
+
+```text
+[CORE]
+[IMPLEMENTED]
+[DESIGNED]
+[PLANNED]
+[DEFERRED]
+[QUESTION]
+```
+
+Use:
+
+```text
+planning/diagrams/scenario-status-marker-rules.md
+```
+
+Rules:
+
+```text
+- [PLANNED] marks future implementation work in the current plan.
+- [DEFERRED] marks extension points outside the current cut.
+- [DESIGNED] marks accepted scenario/domain direction.
+- [QUESTION] marks unresolved source/contract conflicts.
+- [IMPLEMENTED] requires current repo implementation evidence, not only scenario text.
+```
+
+Scenario marker sections are diagram-facing planning hints. They do not replace scenario source-of-truth text, slice docs, domain drafts, current OpenAPI/code evidence or implementation verification.
+

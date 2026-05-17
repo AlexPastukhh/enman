@@ -1,4 +1,4 @@
-# SC-13D — Employee Agreement Proposal Create / Send Version
+﻿# SC-13D вЂ” Employee Agreement Proposal Create / Send Version
 
 Status: L2 scenario draft / Start exchange and Employee send-version direction synchronized  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
@@ -10,29 +10,29 @@ Employee starts an `AgreementProposalExchange` by sending the first proposal for
 These are related but distinct slice boundaries:
 
 ```text
-SL-AGR-EXCH-001 — creates exchange + proposal version 1.
-SL-AGR-EXCH-002 — sends next Employee/Client proposal version inside existing exchange.
+SL-AGR-EXCH-001 вЂ” creates exchange + proposal version 1.
+SL-AGR-EXCH-002 вЂ” sends next Employee/Client proposal version inside existing exchange.
 ```
 
 ## 2. Start Exchange Flow
 
 ```text
 Employee opens Approved request details with no AgreementProposalExchange
-        ↓
+        в†“
 Employee chooses Start Agreement Exchange
-        ↓
+        в†“
 Employee provides AgreementDocumentRef-backed initial proposal document and optional ProposalComment
-        ↓
+        в†“
 System calls AgreementProposalExchange.StartByEmployee(approvedRequest, document, comment, employee, startedAt)
-        ↓
+        в†“
 Exchange is created
-        ↓
+        в†“
 Exchange stores ClientAccountId from approved request owner
-        ↓
+        в†“
 Exchange status becomes AwaitingClientConfirmation
-        ↓
+        в†“
 First AgreementProposalVersion is 1
-        ↓
+        в†“
 First proposal author is Sender=Employee, SenderId=employee.Id
 ```
 
@@ -42,19 +42,19 @@ Start exchange does not happen automatically during ApproveReview.
 
 ```text
 Employee opens existing exchange AwaitingEmployeeResponse
-        ↓
+        в†“
 Employee provides new AgreementDocumentRef and optional ProposalComment
-        ↓
+        в†“
 System calls exchange.EmployeeSendNewVersion(document, comment, employee, createdAt)
-        ↓
+        в†“
 Domain checks Employee capability and exchange turn/lifecycle
-        ↓
+        в†“
 Active Client proposal becomes SupersededByCounterProposal
-        ↓
+        в†“
 Exchange creates next local AgreementProposalVersion
-        ↓
+        в†“
 Employee proposal becomes active
-        ↓
+        в†“
 Exchange returns to AwaitingClientConfirmation
 ```
 
@@ -96,10 +96,24 @@ Do not put ownership/lifecycle/turn rules in FluentValidation.
 ## 6. Behavior Items
 
 ```text
-L2-AGR-EMP-START-001 — Employee can start exchange for Approved request by sending first proposal.
-L2-AGR-EMP-START-002 — First proposal version is 1 and status is AwaitingClientConfirmation.
-L2-AGR-EMP-START-003 — Start exchange stores ClientAccountId from approved request owner.
-L2-AGR-EMP-NEW-001 — Employee can send new version when exchange is AwaitingEmployeeResponse.
-L2-AGR-EMP-NEW-002 — Employee new version supersedes active Client proposal and returns exchange to AwaitingClientConfirmation.
-L2-AGR-AUTHOR-001 — Proposal author uses Sender and SenderId.
+L2-AGR-EMP-START-001 вЂ” Employee can start exchange for Approved request by sending first proposal.
+L2-AGR-EMP-START-002 вЂ” First proposal version is 1 and status is AwaitingClientConfirmation.
+L2-AGR-EMP-START-003 вЂ” Start exchange stores ClientAccountId from approved request owner.
+L2-AGR-EMP-NEW-001 вЂ” Employee can send new version when exchange is AwaitingEmployeeResponse.
+L2-AGR-EMP-NEW-002 вЂ” Employee new version supersedes active Client proposal and returns exchange to AwaitingClientConfirmation.
+L2-AGR-AUTHOR-001 вЂ” Proposal author uses Sender and SenderId.
 ```
+
+## Diagram / Implementation Markers
+
+These markers are for diagrams and diploma planning only. They do not replace current repo implementation evidence.
+
+| Scenario element | Marker | Diagram / implementation meaning |
+|---|---|---|
+| Start exchange from Employee request details | `[PLANNED]` | Current L2 planned command: Approved request -> create exchange + initial Employee proposal. |
+| Initial Employee proposal version 1 | `[DESIGNED]` | Accepted domain behavior: start is not empty; it creates proposal version 1. |
+| Store `ClientAccountId` from approved request owner | `[DESIGNED]` | Accepted participant/ownership invariant for future client actions. |
+| Employee sends new version after client counter-proposal | `[PLANNED]` | Current L2 planned Employee branch of `SL-AGR-EXCH-002`. |
+| Proposal author `Sender` / `SenderId` | `[DESIGNED]` | Accepted proposal-author model; do not use `EmployeeRef`/`ClientRef`. |
+| API/client choosing proposal version | `[DEFERRED]` | Not allowed in current domain; exchange assigns version. |
+

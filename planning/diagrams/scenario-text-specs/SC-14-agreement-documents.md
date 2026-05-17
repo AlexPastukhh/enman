@@ -1,4 +1,4 @@
-# SC-14 — Agreement Documents
+﻿# SC-14 вЂ” Agreement Documents
 
 Status: L2 scenario draft / AgreementDocumentRef naming conflict guard synchronized  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
@@ -9,17 +9,17 @@ Agreement proposal versions reference accepted/stored agreement document metadat
 
 Current SC-14 meaning is Agreement Documents / AgreementDocumentRef.
 
-Older “SC-14 Client Data Verification” wording, if found in archived/security/validation addenda, is stale for current agreement-document diagrams and must be renamed, deferred or deprecated rather than reused as current SC-14.
+Older вЂњSC-14 Client Data VerificationвЂќ wording, if found in archived/security/validation addenda, is stale for current agreement-document diagrams and must be renamed, deferred or deprecated rather than reused as current SC-14.
 
 ## 2. Scenario Direction
 
 ```text
 Actor provides or selects agreement document for proposal version
-        ↓
+        в†“
 Application/infrastructure stores or resolves file metadata
-        ↓
+        в†“
 Application creates AgreementDocumentRef
-        ↓
+        в†“
 AgreementProposal stores document reference
 ```
 
@@ -84,8 +84,21 @@ No binary file upload/storage adapter belongs to these agreement exchange comman
 ## 6. Behavior Items
 
 ```text
-L2-AGR-DOC-001 — Agreement proposal version requires AgreementDocumentRef.
-L2-AGR-DOC-002 — AgreementDocumentRef stores metadata reference only, not bytes/storage adapter.
-L2-AGR-COMMENT-001 — ProposalComment is optional; non-empty if provided.
-L2-AGR-DOC-NAMING-001 — Use AgreementDocumentRef, not DocumentFileRef or ProposalAttachment, in current L2 docs/diagrams.
+L2-AGR-DOC-001 вЂ” Agreement proposal version requires AgreementDocumentRef.
+L2-AGR-DOC-002 вЂ” AgreementDocumentRef stores metadata reference only, not bytes/storage adapter.
+L2-AGR-COMMENT-001 вЂ” ProposalComment is optional; non-empty if provided.
+L2-AGR-DOC-NAMING-001 вЂ” Use AgreementDocumentRef, not DocumentFileRef or ProposalAttachment, in current L2 docs/diagrams.
 ```
+
+## Diagram / Implementation Markers
+
+These markers are for diagrams and diploma planning only. They do not replace current repo implementation evidence.
+
+| Scenario element | Marker | Diagram / implementation meaning |
+|---|---|---|
+| `AgreementDocumentRef` metadata reference | `[DESIGNED]` | Accepted value object for proposal document metadata. |
+| Proposal stores document metadata, not bytes | `[DESIGNED]` | Current domain/scenario direction. |
+| ProposalComment optional value object | `[DESIGNED]` | Optional comment; non-empty/max-length when present. |
+| Binary upload/storage adapter | `[DEFERRED]` | Future infrastructure/document slice, not current scenario behavior. |
+| Old `SC-14 Client Data Verification` meaning | `[DEFERRED]` | Not current `SC-14`; current `SC-14` means Agreement Documents. |
+

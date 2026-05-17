@@ -1,4 +1,4 @@
-# SC-13E — Agreement Final Refusal
+﻿# SC-13E вЂ” Agreement Final Refusal
 
 Status: L2 scenario draft / Final refusal optional reason and cross-aggregate orchestration synchronized  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
@@ -11,21 +11,21 @@ Employee can final-refuse an active agreement proposal exchange, and the related
 
 ```text
 Employee opens active AgreementProposalExchange
-        ↓
+        в†“
 Exchange is AwaitingClientConfirmation or AwaitingEmployeeResponse
-        ↓
+        в†“
 Employee chooses final refusal
-        ↓
+        в†“
 Employee may optionally provide FinalRefusalReason
-        ↓
+        в†“
 Application service calls exchange.FinalRefuseProposal(employee, reason, refusedAt)
-        ↓
+        в†“
 Exchange becomes FinallyRefused
-        ↓
+        в†“
 Application service calls request.MarkAgreementExchangeFailed(exchange.Id, failedAt)
-        ↓
+        в†“
 Request becomes AgreementExchangeFailed
-        ↓
+        в†“
 System saves both aggregate changes in one application transaction
 ```
 
@@ -88,10 +88,24 @@ No new proposal version is created.
 ## 7. Behavior Items
 
 ```text
-L2-AGR-FINAL-001 — Employee can final-refuse exchange in AwaitingClientConfirmation or AwaitingEmployeeResponse.
-L2-AGR-FINAL-002 — Final refusal marks exchange FinallyRefused and records employee/time/reason fields.
-L2-AGR-FINAL-003 — Final refusal does not create a new proposal version.
-L2-REQ-AGR-FAIL-001 — Application service marks approved request AgreementExchangeFailed after exchange final refusal.
-L2-AGR-BOUNDARY-001 — Exchange and Request stay separate aggregates; application service orchestrates both.
-L2-AGR-FINAL-REASON-001 — Final refusal reason is optional; blank provided reason is invalid.
+L2-AGR-FINAL-001 вЂ” Employee can final-refuse exchange in AwaitingClientConfirmation or AwaitingEmployeeResponse.
+L2-AGR-FINAL-002 вЂ” Final refusal marks exchange FinallyRefused and records employee/time/reason fields.
+L2-AGR-FINAL-003 вЂ” Final refusal does not create a new proposal version.
+L2-REQ-AGR-FAIL-001 вЂ” Application service marks approved request AgreementExchangeFailed after exchange final refusal.
+L2-AGR-BOUNDARY-001 вЂ” Exchange and Request stay separate aggregates; application service orchestrates both.
+L2-AGR-FINAL-REASON-001 вЂ” Final refusal reason is optional; blank provided reason is invalid.
 ```
+
+## Diagram / Implementation Markers
+
+These markers are for diagrams and diploma planning only. They do not replace current repo implementation evidence.
+
+| Scenario element | Marker | Diagram / implementation meaning |
+|---|---|---|
+| Employee final refusal command | `[PLANNED]` | Current L2 planned command slice for ending active exchange. |
+| Exchange becomes `FinallyRefused` | `[DESIGNED]` | Accepted exchange lifecycle result. |
+| Request becomes `AgreementExchangeFailed` | `[DESIGNED]` | Accepted request lifecycle result through separate request domain method. |
+| Cross-aggregate orchestration | `[DESIGNED]` | Application service orchestrates exchange and request; aggregates do not mutate each other directly. |
+| Client final refusal | `[DEFERRED]` | Out of scope for current first pass. |
+| Final refusal as new proposal version/entity | `[DEFERRED]` | Explicitly not current direction; final refusal is direct exchange state. |
+
