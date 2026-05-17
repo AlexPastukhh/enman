@@ -60,6 +60,18 @@ public sealed class EmployeeStartRequestReviewIntegrationTests : L1IntegrationTe
     }
 
     [Fact]
+    public async Task StartRequestReview_WithEmployeeRoleClaimButNoEmployeeAccount_ReturnsForbidden()
+    {
+        await ResetDatabaseAsync();
+        var client = AuthenticatedEmployeeClient();
+
+        var response = await StartEmployeeRequestReviewRequestAsync(client, 987654);
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode((int)HttpStatusCode.Forbidden);
+    }
+
+    [Fact]
     public async Task StartRequestReview_StartsReviewAndReturnsNoContent()
     {
         await ResetDatabaseAsync();
@@ -90,6 +102,29 @@ public sealed class EmployeeStartRequestReviewIntegrationTests : L1IntegrationTe
 
         var details = await GetEmployeeRequestDetailsAsync(client, request.Id);
         details.ReviewState.Should().Be("StartedByCurrentEmployee");
+
+        var employeeAccount = await GetAccountRowAsync(CurrentEmployeeId);
+        employeeAccount.Should().NotBeNull();
+        employeeAccount!.AccountType.Should().Be("Employee");
+        employeeAccount.Role.Should().Be("Employee");
+    }
+
+    [Fact]
+    public async Task StartRequestReview_WithInactiveEmployee_ReturnsValidationProblemAndDoesNotCreateReview()
+    {
+        await ResetDatabaseAsync();
+        await InsertEmployeeAsync(CurrentEmployeeId, isActive: false);
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+        await CreateConnectionRequestAsync(account.AccountId, details: "Inactive employee cannot start review.");
+        var request = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
+        var client = AuthenticatedEmployeeClient();
+
+        var response = await StartEmployeeRequestReviewRequestAsync(client, request!.Id);
+
+        await HttpResponseAssertions.For(response, _output)
+            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+        (await GetRequestReviewRowAsync(request.Id)).Should().BeNull();
     }
 
     [Fact]

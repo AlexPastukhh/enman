@@ -23,13 +23,6 @@ public sealed class ApplicantPartyRepository : IApplicantPartyRepository
         return _context.ApplicantParties.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
-    public Task<ApplicantParty?> GetByAccountIdAsync(long accountId, CancellationToken cancellationToken)
-    {
-        return _context.ApplicantParties.FirstOrDefaultAsync(
-            x => x.ClientAccountId == accountId,
-            cancellationToken);
-    }
-
     public Task<ApplicantParty?> GetOwnedByIdAsync(
         long applicantPartyId,
         long clientAccountId,
