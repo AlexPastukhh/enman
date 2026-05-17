@@ -46,6 +46,15 @@ vi.mock("../../../../features/employee-request/start-review/ui/StartReviewButton
   __esModule: true,
 }));
 
+vi.mock("../../../../features/employee-request/approve-review/ui/ApproveReviewButton", () => ({
+  ApproveReviewButton: ({ disabled }: { disabled?: boolean }) => (
+    <button type="button" disabled={disabled}>
+      Approve review
+    </button>
+  ),
+  __esModule: true,
+}));
+
 const renderPage = (initialEntry = "/employee/requests/42") =>
   render(
     <MemoryRouter initialEntries={[initialEntry]}>
@@ -109,6 +118,38 @@ describe("EmployeeRequestDetailsPage", () => {
     expect(screen.getByRole("heading", { name: "Request #42" })).toBeVisible();
     expect(screen.getByText("Start review is available.")).toBeVisible();
     expect(screen.getByRole("button", { name: "Start review" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Approve review" })).toBeDisabled();
+  });
+
+
+  it("renders Approve action when review is started by current Employee", () => {
+    mockedUseEmployeeRequestDetailsQuery.mockReturnValue({
+      isPending: false,
+      isError: false,
+      data: {
+        requestId: 42,
+        requestType: "Connection",
+        status: "InReview",
+        applicant: {
+          applicantPartyId: 7,
+          applicantPartyType: "Individual",
+          displayName: "Ivan Petrov",
+          email: "ivan@example.com",
+          phoneNumber: "+79001234567",
+        },
+        objectAddress: "Altai Krai, Zarinsk, Lenina 10",
+        details: "Please connect the object to the grid.",
+        createdAt: "2026-01-02T10:30:00Z",
+        reviewState: "StartedByCurrentEmployee",
+      },
+      error: null,
+    });
+
+    renderPage();
+
+    expect(screen.getByText("Approve is available after review is started by current Employee.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Approve review" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Start review" })).toBeDisabled();
   });
 
   it("shows sign-in state without session", () => {

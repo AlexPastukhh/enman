@@ -5,6 +5,7 @@ import { EmployeeRequestDetailsEmptyState } from "../../../../entities/employee-
 import { EmployeeRequestDetailsView } from "../../../../entities/employee-request/ui/EmployeeRequestDetailsView";
 import { employeeRequestDetailsConst } from "../../../../entities/employee-request/ui/employeeRequestDetailsConst";
 import { useSession } from "../../../../entities/session/model/useSession";
+import { ApproveReviewButton } from "../../../../features/employee-request/approve-review/ui/ApproveReviewButton";
 import { StartReviewButton } from "../../../../features/employee-request/start-review/ui/StartReviewButton";
 import { ApiError } from "../../../../shared/api/fetchJson";
 import { clientRoutes } from "../../../../shared/config/clientRoutes";
@@ -109,12 +110,19 @@ const EmployeeRequestDetailsPage = () => {
                 const availability = getEmployeeReviewActionAvailability(details);
 
                 return (
-                  <StartReviewButton
-                    requestId={details.requestId}
-                    disabled={!availability.canStartReview}
-                    unavailableReason={availability.reason}
-                    surface="details"
-                  />
+                  <>
+                    <StartReviewButton
+                      requestId={details.requestId}
+                      disabled={!availability.canStartReview}
+                      unavailableReason={availability.reason}
+                      surface="details"
+                    />
+                    <ApproveReviewButton
+                      requestId={details.requestId}
+                      disabled={!availability.canApproveReview}
+                      unavailableReason={availability.reason}
+                    />
+                  </>
                 );
               }}
             />

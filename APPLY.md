@@ -1,32 +1,32 @@
-# APPLY
+# APPLY — L2-REVIEW-APPROVE-001.client
 
-From repository root:
-
-```powershell
-cd C:\enman\enman
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-approve-reject-windowsauth-combined.zip" -DestinationPath "." -Force
-```
-
-Then run:
+From repo root:
 
 ```powershell
-dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
-dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
+Expand-Archive -Path "C:\Users\alexa\Downloads\l2-review-approve-001-client-approve-request-review.zip" -DestinationPath "." -Force
 ```
 
-Regenerate API artifacts:
+Then verify:
 
 ```powershell
-dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
-dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check
-npm.cmd run check:api
+npm install
+npm --prefix .\energymanagement.client install
+npm run check:api
+npm --prefix .\energymanagement.client run build
+npm --prefix .\energymanagement.client run test -- --run
 ```
 
-Client checks:
+Targeted changed tests:
 
 ```powershell
-npm.cmd --prefix .\energymanagement.client run build
-npm.cmd --prefix .\energymanagement.client run test -- --run
+npm --prefix .\energymanagement.client run test -- --run --reporter=verbose src/features/employee-request/approve-review/api/approveRequestReview.test.ts src/features/employee-request/approve-review/ui/ApproveReviewButton.test.tsx src/pages/employee/requests/details/EmployeeRequestDetailsPage.test.tsx
 ```
 
-If build says a DLL is locked by EnergyManagement.Server, stop the running server process first.
+If `npm run check:api` reports stale OpenAPI artifacts after backend approve endpoint work, run:
+
+```powershell
+npm run generate:api
+npm run check:api
+```
+
+and include the changed generated artifacts in the backend/API handoff.

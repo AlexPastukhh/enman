@@ -1,0 +1,56 @@
+.approveReviewAction {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.approveReviewAction__button,
+.approveReviewAction__secondaryButton {
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0.7rem 1rem;
+}
+
+.approveReviewAction__button {
+  background: #166534;
+  color: #fff;
+}
+
+.approveReviewAction__secondaryButton {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.approveReviewAction__button:disabled,
+.approveReviewAction__secondaryButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.approveReviewAction__confirmation {
+  border: 1px solid #bbf7d0;
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.75rem;
+}
+
+.approveReviewAction__confirmationActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.approveReviewAction__hint,
+.approveReviewAction__error {
+  margin: 0;
+}
+
+.approveReviewAction__hint {
+  color: #4b5563;
+}
+
+.approveReviewAction__error {
+  color: #b91c1c;
+}
