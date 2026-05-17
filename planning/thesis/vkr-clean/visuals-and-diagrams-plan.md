@@ -1,7 +1,7 @@
 # Visuals And Diagrams Plan
 
-Status: draft  
-Scope: diagrams, tables and visual materials for VKR and defense
+Status: draft / repo-inspection sync  
+Scope: diagrams, tables and visual materials for VKR, prediploma report and defense
 
 ## 1. Main Principle
 
@@ -16,23 +16,27 @@ Each diagram should have:
 - relation to system behavior or architecture.
 ```
 
+For screenshots, prefer repeatable Playwright-generated assets after UI state is stable.
+
 ## 2. Recommended Diagrams
 
 | Diagram | VKR placement | Purpose |
 |---|---|---|
-| Business process of request handling | Chapter 1 or 2 | Shows client -> applicant -> request -> employee -> decision -> document -> notification |
+| Business process of request handling | Chapter 1 or 2 | Shows client -> applicant -> request -> employee -> decision -> agreement/document exchange -> notification/future feedback |
 | General Use Case diagram | Chapter 2 | Shows actors and main system use cases |
 | Client Use Case diagram | Chapter 2 or appendix | Details client actions |
-| Employee Use Case diagram | Chapter 2 or appendix | Details employee review actions |
+| Employee Use Case diagram | Chapter 2 or appendix | Details employee review and agreement actions |
 | Request lifecycle | Chapter 2 | Shows request states and transitions |
-| Document/agreement lifecycle | Chapter 2 or future work | Shows document draft and further exchange |
+| Agreement exchange lifecycle | Chapter 2/3 | Shows proposal exchange states after approved request |
 | Client-server architecture | Chapter 2/3 | Shows React -> API -> backend -> DB |
 | API contract flow | Chapter 2/3 | Shows OpenAPI/types/constants synchronization |
-| Domain model | Chapter 2/3 | Shows Account, ApplicantParty, ConnectionRequest, ReviewDecision, Agreement/Document |
+| Domain model | Chapter 2/3 | Shows Account, ApplicantParty, ConnectionRequest, RequestReview, AgreementProposalExchange, AgreementProposal |
 | ERD / database structure | Chapter 3 | Shows tables and relationships |
 | Sequence diagram: register/login | Chapter 3 | Shows frontend/API/session flow |
 | Sequence diagram: applicant creation | Chapter 3 | Shows Account page -> API -> handler -> DB |
 | Sequence diagram: request creation | Chapter 3 | Shows form -> API -> handler -> domain -> DB |
+| Sequence diagram: employee review | Chapter 3 | Shows employee dashboard/details -> start/approve/reject -> API -> domain -> DB |
+| Sequence diagram: agreement exchange | Chapter 3 | Shows approved request -> start exchange -> send proposal -> client response |
 | Testing responsibility matrix | Chapter 3 | Shows Domain/API/Client/E2E responsibility split |
 
 ## 3. Business Process Diagram Content
@@ -46,23 +50,56 @@ Each diagram should have:
 -> очередь сотрудника
 -> ручная проверка
 -> одобрение / отклонение
--> проект договора / документа
--> уведомление клиента
+-> при одобрении: договорно-документный обмен
+-> клиент видит результат / документный обмен
+-> email-уведомление как planned/future feedback channel
 ```
 
 ## 4. Request Lifecycle Diagram
 
+Use exact names after final repo-check. Current semantic lifecycle:
+
 ```text
-Created / InReview
+Submitted / InReview
         |
-        +-> Approved
-        |
-        +-> Rejected
+        +-> review started
+                |
+                +-> Approved
+                |      |
+                |      +-> Agreement exchange started
+                |
+                +-> Rejected
 ```
 
-If final code uses exact names, use the exact names from implementation.
+Additional implementation state:
 
-## 5. API Contract Diagram
+```text
+AgreementExchangeFailed
+```
+
+## 5. Agreement Exchange Lifecycle Diagram
+
+```text
+Approved request
+-> Employee starts agreement exchange with first proposal
+-> AwaitingClientConfirmation
+      |\
+      | +-> Client accepts active proposal -> Accepted
+      |
+      +-> Client sends own version -> AwaitingEmployeeResponse
+              |\
+              | +-> Employee sends new version -> AwaitingClientConfirmation
+              |
+              +-> Employee final refusal -> FinallyRefused
+```
+
+Use this diagram to avoid claiming full legal signing. Title should be similar to:
+
+```text
+Жизненный цикл обмена проектами договорного документа
+```
+
+## 6. API Contract Diagram
 
 ```text
 ASP.NET Core endpoints / DTO metadata
@@ -92,7 +129,31 @@ Shared/constants.json + Shared/errorcodes.json
 client error parser / form error mapping
 ```
 
-## 6. Defense Slides
+## 7. Screenshots For Prediploma / PZ / Slides
+
+Recommended screenshot set:
+
+```text
+01-register-client.png
+02-login-client.png
+03-account-applicant.png
+04-create-request.png
+05-my-requests-list.png
+06-my-request-details.png
+07-employee-request-dashboard.png
+08-employee-request-details-review-actions.png
+09-agreement-exchange-list.png
+10-agreement-exchange-details.png
+11-test-run-or-playwright-report.png
+```
+
+See detailed plan:
+
+```text
+planning/thesis/vkr-clean/playwright-screenshot-plan.md
+```
+
+## 8. Defense Slides
 
 For defense use simplified versions:
 
@@ -100,7 +161,9 @@ For defense use simplified versions:
 - one business process diagram;
 - one architecture diagram;
 - one domain model overview;
+- one agreement exchange lifecycle diagram;
 - one database overview;
 - one testing matrix;
-- one status/results table.
+- one status/results table;
+- several UI screenshots from Playwright.
 ```

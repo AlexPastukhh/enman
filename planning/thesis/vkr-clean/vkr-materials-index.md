@@ -110,9 +110,12 @@ Research materials should support the project text, not replace it.
 | File | Purpose |
 |---|---|
 | `visuals-and-diagrams-plan.md` | Diagram list, placement and content plan |
+| `playwright-screenshot-plan.md` | Repeatable screenshot plan for prediploma report, explanatory note and presentation |
 | `planning-to-vkr-extraction-map.md` | Mapping from planning/slices/API/testing docs to VKR sections |
 
 Final diagram generation should follow `planning/diagrams/diagram-prompt-generation-workflow.md` and `planning/diagrams/drawio-diagram-generation-workflow.md`.
+
+UI screenshots should preferably be regenerated through Playwright after stable demo data is available.
 
 ## 10. Expanded Drafts
 
@@ -149,5 +152,6 @@ Expanded drafts are working material. They should be cleaned and source-checked 
 6. Move successful fragments to fragment-bank.md.
 7. Use section-draft-register.md to track draft/review/status.
 8. Prepare full draft v2 from consolidated feedback.
-9. Before final chapter text, recheck repo evidence for each implemented claim.
+9. Use `playwright-screenshot-plan.md` for repeatable report/PZ/presentation screenshots.
+10. Before final chapter text, recheck repo evidence for each implemented claim.
 ```
