@@ -1,6 +1,6 @@
 # Slice Planning Index
 
-Status: current slice-planning navigation index / client API placement and L2 details sidecar synchronized
+Status: current slice-planning navigation index / client API placement and L2 review command drafts synchronized
 
 ## 1. Core Rule
 
@@ -53,7 +53,41 @@ Existing business-specific wrappers in `shared/api` are transitional compatibili
 - One draft covers one slice; extension slices are named but not implemented.
 ```
 
-## 4. Current L2 Client Sidecar Reminder
+## 4. Current L2 Review Drafts
+
+```text
+SL-EMP-REQ-001 — Employee Request List Read
+SL-EMP-REQ-002 — Employee Request Details Read
+SL-EMP-REQ-003 — Start Request Review
+SL-EMP-REQ-004 — Approve Request Review
+SL-EMP-REQ-005 — Reject Request Review
+
+L2-EMP-DASH-001.client — Employee Request Dashboard
+L2-EMP-DETAILS-001.client — Employee Request Details
+L2-REVIEW-START-001.client — Start Request Review client action
+```
+
+Current remaining draft gaps after this sync:
+
+```text
+L2-REVIEW-APPROVE-001.client — Approve Request Review client action
+L2-REVIEW-REJECT-001.client — Reject Request Review client action/form
+SL-AGR-* — AgreementProposalExchange family
+SL-DOC-* — AgreementDocumentRef/document reference family
+```
+
+## 5. StartReview Entry Point Rule
+
+StartReview client has one command sidecar and two entry points:
+
+```text
+dashboard/list row
+details action area
+```
+
+Dashboard/details read pages host feature actions; they do not own command mutations.
+
+## 6. Current L2 Client Sidecar Reminder
 
 For `L2-EMP-DETAILS-001.client`:
 

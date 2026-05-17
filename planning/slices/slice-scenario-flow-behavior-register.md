@@ -67,13 +67,15 @@ planning/diagrams/scenario-behavior-items/
 | Slice / sidecar | Marker | Source files | Applies to | Status |
 |---|---|---|---|---|
 | `SL-EMP-REQ-001-employee-request-list-read.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-06-employee-request-dashboard.md`, employee request DATA/behavior files | Employee request list/dashboard read endpoint + filters | drafted |
-| `L2-EMP-DASH-001-employee-request-dashboard.client.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-06-employee-request-dashboard.md`, employee request DATA/behavior files | Employee request dashboard client read UI | drafted |
+| `L2-EMP-DASH-001-employee-request-dashboard.client.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-06-employee-request-dashboard.md`, employee request DATA/behavior files | Employee request dashboard client read UI; may host StartReview row entry point | drafted |
 | `SL-EMP-REQ-002-employee-request-details-read.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-07A-employee-request-details.md`, details DATA/behavior files | Employee request details read endpoint | drafted |
-| `L2-EMP-DETAILS-001-employee-request-details.client.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-07A-employee-request-details.md`, details DATA/behavior files | Employee request details client read UI and action availability display | drafted |
-| `SL-EMP-REQ-003-start-request-review.md` | `[SCENARIO]` / `[BEHAVIOR]` | `SC-07B-employee-request-review.md`, review behavior files | StartReview backend command | drafted |
-| `L2-REVIEW-START-001-start-request-review.client.md` | `[SCENARIO]` / `[BEHAVIOR]` / `[CONCERN]` | `SC-07B-employee-request-review.md`, review behavior files, `CC-CSRF-001` | StartReview client action/mutation | drafted |
-| `SL-EMP-REQ-004` | `[SCENARIO]` / `[BEHAVIOR]` | `SC-07B-employee-request-review.md`, review behavior files | ApproveReview command | planned |
-| `SL-EMP-REQ-005` | `[SCENARIO]` / `[BEHAVIOR]` | `SC-07B-employee-request-review.md`, review behavior files | RejectReview command and feedback | planned |
+| `L2-EMP-DETAILS-001-employee-request-details.client.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-07A-employee-request-details.md`, details DATA/behavior files | Employee request details client read UI and action availability display; may host StartReview details entry point | drafted |
+| `SL-EMP-REQ-003-start-request-review.md` | `[SCENARIO]` / `[BEHAVIOR]` | `SC-07B-employee-request-review.md`, review behavior files | StartReview backend command; command may be initiated from dashboard row or details action area | drafted |
+| `L2-REVIEW-START-001-start-request-review.client.md` | `[SCENARIO]` / `[BEHAVIOR]` / `[CONCERN]` | `SC-07B-employee-request-review.md`, review behavior files, `CC-CSRF-001` | StartReview client action/mutation, one feature with dashboard and details entry points | drafted |
+| `SL-EMP-REQ-004-approve-request-review.md` | `[SCENARIO]` / `[BEHAVIOR]` / `[CONCERN]` | `SC-07B-employee-request-review.md`, review behavior files, `CC-CSRF-001` | ApproveReview backend command | drafted |
+| `SL-EMP-REQ-005-reject-request-review.md` | `[SCENARIO]` / `[BEHAVIOR]` / `[CONCERN]` | `SC-07B-employee-request-review.md`, review behavior files, `CC-CSRF-001` | RejectReview backend command and rejection feedback; includes client sidecar planning notes | drafted |
+| `L2-REVIEW-APPROVE-001.client` | `[SCENARIO]` / `[BEHAVIOR]` / `[CONCERN]` | `SC-07B-employee-request-review.md`, review behavior files, `CC-CSRF-001` | ApproveReview client action/mutation | planned |
+| `L2-REVIEW-REJECT-001.client` | `[SCENARIO]` / `[BEHAVIOR]` / `[CONCERN]` | `SC-07B-employee-request-review.md`, review behavior files, `CC-CSRF-001` | RejectReview client action/form/mutation | planned |
 | `SL-AGR-*` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-13A..E`, `SC-14`, agreement behavior files | AgreementProposalExchange, proposal versions, final refusal, agreement documents | planned source |
 | `SL-DOC-*` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-14-agreement-documents.md`, agreement documents DATA/behavior files | AgreementDocumentRef metadata references | planned source |
 
@@ -88,6 +90,7 @@ planning/diagrams/scenario-behavior-items/
 - Implementation details are not behavior items.
 - Domain draft informs domain boundaries but does not replace scenario source files.
 - Command client sidecars consume shared cross-cutting concerns; they do not implement local CSRF/session mechanics.
+- StartReview has one command sidecar with two UI entry points; do not duplicate it into two sidecars.
 ```
 
 ## 5. Update Rule

@@ -1,19 +1,43 @@
-# MANIFEST — Employee auth integration test namespace compile fix
+# MANIFEST — L2 Review Full Drafts Sync
 
-Archive: employee-auth-test-namespace-compile-fix-v18.zip
+Package: `l2-review-full-drafts-sync.zip`
 
-Scope: compile fix only.
+## Purpose
 
-Changed files:
+Adds full slice drafts from the uploaded materials and synchronizes L2 navigation/registers.
 
-```text
-Tests.EnergyManagement/Integration/L1/Auth/EmployeeAuthenticationIntegrationTests.cs
-```
-
-Fix:
+## Added / replaced docs
 
 ```text
-Use global::EnergyManagement.Testing.TestDatabase.TestDatabaseManager from inside Tests.EnergyManagement.* namespace.
+planning/slices/SL-EMP-REQ-004-approve-request-review.md
+planning/slices/SL-EMP-REQ-005-reject-request-review.md
+planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md
+planning/slices/l2/README.md
+planning/slices/README.md
+planning/slices/slice-scenario-flow-behavior-register.md
+planning/slices/slice-questions-register.md
+planning/slices/slice-extension-points-register.md
+planning/slices/slice-implementation-notes-register.md
+planning/diagrams/scenario-text-specs/SC-06-employee-request-dashboard.md
+planning/diagrams/scenario-text-specs/SC-07A-employee-request-details.md
+planning/diagrams/scenario-text-specs/SC-07B-employee-request-review.md
 ```
 
-No production/domain/client/docs/generated/migration changes.
+## Normalization applied
+
+The uploaded StartReview client draft was converted to the current command contract:
+
+```text
+POST /api/employee/requests/{requestId}/review/start
+success -> 204 No Content
+no StartReview response DTO
+client refreshes list/details reads after success
+```
+
+## Not included
+
+```text
+runtime source code
+tests
+generated OpenAPI/types artifacts
+```

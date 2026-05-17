@@ -1,6 +1,6 @@
 # Slice Implementation Notes Register
 
-Status: active / client API placement and L2 Employee Details sidecar synchronized
+Status: active / L2 review command drafts synchronized
 
 ## Client API Placement Notes
 
@@ -13,6 +13,19 @@ Status: active / client API placement and L2 Employee Details sidecar synchroniz
 | `IMPL-CLIENT-API-PLACEMENT-005` | generated types | Entities/features may import generated OpenAPI types and define local business aliases. | accepted |
 | `IMPL-CLIENT-API-PLACEMENT-006` | old sidecars | If an older sidecar says “Shared API wrapper owns low-level HTTP call”, interpret it through the new rule: entity/feature API owns business wrapper; shared owns transport/generated infrastructure only. | compatibility note |
 
+## L2 Review Command Notes
+
+| ID | Applies to | Note | Status |
+|---|---|---|---|
+| `IMPL-L2-REVIEW-START-CLIENT-001` | `L2-REVIEW-START-001.client` | StartReview has one feature-owned command action with two entry points: dashboard/list row and details action area. | accepted |
+| `IMPL-L2-REVIEW-START-CLIENT-002` | same | Command wrapper lives in `features/employee-request/start-review/api/startRequestReview.ts`; do not add `shared/api/employeeRequestApi.ts`. | accepted |
+| `IMPL-L2-REVIEW-START-CLIENT-003` | same | StartReview success contract is 204 No Content. Client refetches list/details read queries. | accepted |
+| `IMPL-L2-REVIEW-APPROVE-001` | `SL-EMP-REQ-004` | ApproveReview success is 204 No Content and does not create AgreementProposalExchange. | accepted |
+| `IMPL-L2-REVIEW-APPROVE-002` | `SL-EMP-REQ-004` | Verify review was started by current Employee before approval. | accepted |
+| `IMPL-L2-REVIEW-REJECT-001` | `SL-EMP-REQ-005` | RejectReview success is 204 No Content; updated state is read through list/details after refetch. | accepted |
+| `IMPL-L2-REVIEW-REJECT-002` | `SL-EMP-REQ-005` | Reject endpoint requires non-empty feedback at API boundary; do not silently make domain feedback required without separate decision. | accepted |
+| `IMPL-L2-REVIEW-REJECT-003` | `SL-EMP-REQ-005` | Reject client wrapper belongs in `features/employee-request/reject-review/api`, not `shared/api`. | accepted |
+
 ## L2 Employee Details Client Notes
 
 | ID | Applies to | Note | Status |
@@ -20,10 +33,8 @@ Status: active / client API placement and L2 Employee Details sidecar synchroniz
 | `IMPL-L2-EMP-DETAILS-CLIENT-001` | `L2-EMP-DETAILS-001.client` | Details read wrapper lives in `entities/employee-request/api/getEmployeeRequestDetails.ts`. | accepted |
 | `IMPL-L2-EMP-DETAILS-CLIENT-002` | same | Generated DTO aliases for details read live near the entity in `entities/employee-request/api/employeeRequestApiTypes.ts`. | accepted |
 | `IMPL-L2-EMP-DETAILS-CLIENT-003` | same | Do not add `shared/api/employeeRequestApi.ts` for the details read. `shared/api` remains generic infrastructure only. | accepted |
-| `IMPL-L2-EMP-DETAILS-CLIENT-004` | same | Details read waits for `SL-EMP-REQ-002` server endpoint and generated DTOs. Current DTO sketch is scenario-derived only. | blocked by server contract |
-| `IMPL-L2-EMP-DETAILS-CLIENT-005` | same | `StartReviewResponseDto` is a compact command result from `SL-EMP-REQ-003` and must not be reused as details DTO. | accepted |
+| `IMPL-L2-EMP-DETAILS-CLIENT-005` | same | StartReview command output is not a details DTO; current StartReview direction is 204 No Content. | accepted |
 | `IMPL-L2-EMP-DETAILS-CLIENT-006` | future review command sidecars | Start/approve/reject command wrappers live in `features/employee-request/<action>/api`, not in `entities` and not in `shared/api`. | accepted |
-
 
 ## L2 Account / Employee Implementation Notes
 

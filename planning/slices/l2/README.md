@@ -1,6 +1,6 @@
 # L2 Slice Planning Index
 
-Status: current / Employee request read/review drafts and client API placement synchronized  
+Status: current / Employee request read/review drafts, StartReview entry points and review command drafts synchronized  
 Scope: L2 Employee, Request Review, AgreementProposalExchange and document-reference slice navigation
 
 ## 1. Source Rule
@@ -35,7 +35,6 @@ For Employee sessions, Account.Id == Employee.Id.
 Do not model target `Employee` as a separate profile entity linked by `AccountId`.
 If current implementation has `Employee.AccountId`, treat it as compatibility/drift until a scoped persistence/domain slice resolves it.
 
-
 ## 2. Client API Placement Rule
 
 For L2 client sidecars:
@@ -60,7 +59,8 @@ entities/employee-request/api/getEmployeeRequestDetails.ts
 entities/employee-request/api/employeeRequestApiTypes.ts
 
 features/employee-request/start-review/api/startRequestReview.ts
-features/employee-request/start-review/api/startReviewApiTypes.ts
+features/employee-request/approve-review/api/approveRequestReview.ts
+features/employee-request/reject-review/api/rejectRequestReview.ts
 ```
 
 Do not add new business-specific wrappers such as:
@@ -71,47 +71,74 @@ shared/api/employeeRequestApi.ts
 
 Existing business-specific `shared/api/*Api.ts` files are transitional compatibility only and should not be copied into new L2 client work.
 
+## 3. Employee Request Page Placement Rule
+
+Employee request-area pages live under:
+
+```text
+pages/employee/requests/dashboard
+pages/employee/requests/details
+```
+
+Do not place dashboard under:
+
+```text
+pages/employee/dashboard
+```
+
 ## 4. Current L2 Drafted Slices
 
 ```text
 planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
 planning/slices/SL-EMP-REQ-002-employee-request-details-read.md
 planning/slices/SL-EMP-REQ-003-start-request-review.md
+planning/slices/SL-EMP-REQ-004-approve-request-review.md
+planning/slices/SL-EMP-REQ-005-reject-request-review.md
 
 planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
 planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md
 planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md
 ```
 
-## 5. Employee Details Client Placement Note
-
-`L2-EMP-DETAILS-001.client` is a read sidecar.
-
-Therefore:
+Planned client sidecars not yet full-drafted here:
 
 ```text
-entities/employee-request/api/getEmployeeRequestDetails.ts
-  owns the details read endpoint wrapper;
-
-entities/employee-request/api/employeeRequestApiTypes.ts
-  owns generated DTO aliases near the EmployeeRequest entity;
-
-shared/api
-  owns only fetchJson, ProblemDetails/ApiError, CSRF helpers,
-  generated OpenAPI types and generic transport helpers.
+L2-REVIEW-APPROVE-001.client — Approve Request Review client action
+L2-REVIEW-REJECT-001.client — Reject Request Review client action/form
 ```
 
-Future review commands are feature sidecars:
+## 5. Review Command Chain
 
 ```text
-features/employee-request/start-review/api/startRequestReview.ts
-features/employee-request/approve-review/api/approveRequestReview.ts
-features/employee-request/reject-review/api/rejectRequestReview.ts
+SL-EMP-REQ-003 — Start Request Review
+  POST /api/employee/requests/{requestId}/review/start
+  success: 204 No Content
+  client read state comes from list/details refetch
+
+SL-EMP-REQ-004 — Approve Request Review
+  POST /api/employee/requests/{requestId}/review/approve
+  success: 204 No Content
+  does not create AgreementProposalExchange
+
+SL-EMP-REQ-005 — Reject Request Review
+  POST /api/employee/requests/{requestId}/review/reject
+  body: rejection feedback
+  success: 204 No Content
+  no agreement proposal flow starts
 ```
 
-`StartReviewResponseDto` is a compact command result and must not be reused as the Employee request details DTO.
+## 6. StartReview Client Entry Points
 
-## 6. Current Guardrails
+`L2-REVIEW-START-001.client` is one client command sidecar with two host placements:
+
+```text
+1. Employee request dashboard/list row.
+2. Employee request details action area.
+```
+
+This does not create two StartReview slices. Dashboard and details host the same feature-owned command action.
+
+## 7. Current Guardrails
 
 ```text
 - Use Employee, not Worker.
@@ -122,4 +149,5 @@ features/employee-request/reject-review/api/rejectRequestReview.ts
 - No EmployeeRef in L2 target.
 - Temporary employee visibility policy: all active Employees can see all review-relevant requests.
 - Employee visibility is backend authorization/read filtering, not UI visibility.
+- Command success responses use 204 No Content when read state should be refreshed from read endpoints.
 ```

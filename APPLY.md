@@ -1,14 +1,20 @@
-# APPLY — Employee auth integration test namespace compile fix
+# APPLY — L2 Review Full Drafts Sync
 
-Apply from repository root:
-
-```powershell
-cd "C:\enman\enman"
-Expand-Archive -Path "C:\Users\alexa\Downloads\employee-auth-test-namespace-compile-fix-v18.zip" -DestinationPath . -Force
-```
-
-Then run:
+From repo root:
 
 ```powershell
-dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
+Expand-Archive -Path "C:\Users\alexa\Downloads\l2-review-full-drafts-sync.zip" -DestinationPath . -Force
+git status
+git diff -- planning
 ```
+
+If the diff is expected:
+
+```powershell
+git add planning
+git status
+```
+
+This is a docs-only archive.
+
+No runtime code, tests or generated artifacts are included.
