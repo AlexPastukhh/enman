@@ -1,0 +1,15 @@
+export const agreementExchangeListConst = {
+  listLabel: "Agreement exchanges",
+  defaultEmptyTitle: "Agreement exchanges not found.",
+  defaultEmptyDescription: "No agreement exchanges are available for this account yet.",
+  openDetailsText: "Open exchange details",
+  requestLabel: "Request",
+  exchangeLabel: "Exchange",
+  statusLabel: "Status",
+  activeProposalLabel: "Active proposal",
+  createdAtLabel: "Created",
+  lastActivityAtLabel: "Last activity",
+  noActiveProposalText: "No active proposal",
+  unknownSenderText: "Unknown sender",
+  objectAddressFallback: "Object address is not specified.",
+} as const;
