@@ -1,0 +1,47 @@
+.agreementExchangeDetails {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.agreementExchangeDetails__panel,
+.agreementExchangeDetails__proposal {
+  border: 1px solid #d6d8dc;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  background: #fff;
+}
+
+.agreementExchangeDetails__panel h3,
+.agreementExchangeDetails__proposal h4 {
+  margin-top: 0;
+}
+
+.agreementExchangeDetails dl {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0;
+}
+
+.agreementExchangeDetails dl div {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.agreementExchangeDetails dt {
+  font-weight: 700;
+}
+
+.agreementExchangeDetails dd {
+  margin: 0;
+}
+
+.agreementExchangeDetails__history {
+  display: grid;
+  gap: 1rem;
+  padding-left: 1.25rem;
+}
+
+.agreementExchangeDetails__document h4 {
+  margin-bottom: 0.35rem;
+}

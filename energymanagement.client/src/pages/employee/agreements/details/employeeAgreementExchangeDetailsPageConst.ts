@@ -1,0 +1,15 @@
+export const employeeAgreementExchangeDetailsPageConst = {
+  pageTitle: "Agreement exchange details",
+  pageDescription: "Review the proposal history and active agreement proposal.",
+  signInRequiredTitle: "Sign in to open agreement exchange details.",
+  signInRequiredDescription: "Employee agreement exchange details require an Employee session.",
+  signInLinkText: "Sign in",
+  accessDeniedTitle: "Employee access required",
+  accessDeniedDescription: "This page is available only to Employees.",
+  invalidExchangeTitle: "Agreement exchange not found",
+  invalidExchangeDescription: "Check the agreement exchange link and try again.",
+  loadingText: "Loading agreement exchange details...",
+  errorText: "Could not load agreement exchange details.",
+  notFoundText: "Agreement exchange was not found or is not visible.",
+  backToListText: "Back to agreement exchanges",
+} as const;

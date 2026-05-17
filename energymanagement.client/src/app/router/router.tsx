@@ -1,12 +1,14 @@
 import { createBrowserRouter, useRouteError } from "react-router-dom";
 import AccountPage from "../../pages/account/AccountPage";
-import AgreementExchangesPage from "../../pages/agreement-exchanges/AgreementExchangesPage";
-import AgreementExchangeDetailsPage from "../../pages/agreement-exchanges/details/AgreementExchangeDetailsPage";
+import ClientAgreementExchangeDetailsPage from "../../pages/agreements/details/ClientAgreementExchangeDetailsPage";
+import ClientAgreementExchangesPage from "../../pages/agreements/my/ClientAgreementExchangesPage";
+import EmployeeAgreementExchangeDetailsPage from "../../pages/employee/agreements/details/EmployeeAgreementExchangeDetailsPage";
+import EmployeeAgreementExchangesDashboardPage from "../../pages/employee/agreements/dashboard/EmployeeAgreementExchangesDashboardPage";
+import EmployeeDashboardPage from "../../pages/employee/requests/dashboard/EmployeeDashboardPage";
+import EmployeeRequestDetailsPage from "../../pages/employee/requests/details/EmployeeRequestDetailsPage";
 import HomePage from "../../pages/home/HomePage";
 import { LoginPage } from "../../pages/login/LoginPage";
 import MyRequestDetailsPage from "../../pages/requests/details/MyRequestDetailsPage";
-import EmployeeDashboardPage from "../../pages/employee/requests/dashboard/EmployeeDashboardPage";
-import EmployeeRequestDetailsPage from "../../pages/employee/requests/details/EmployeeRequestDetailsPage";
 import CreateConnectionRequestPage from "../../pages/requests/create/CreateConnectionRequestPage";
 import MyRequestsPage from "../../pages/requests/my/MyRequestsPage";
 import RegisterPage from "../../pages/register/RegisterPage";
@@ -59,12 +61,22 @@ export const router = createBrowserRouter([
   },
   {
     path: clientRoutes.agreementExchanges,
-    element: <AgreementExchangesPage />,
+    element: <ClientAgreementExchangesPage />,
     errorElement: <RouteError />,
   },
   {
     path: clientRoutes.agreementExchangeDetailsPath,
-    element: <AgreementExchangeDetailsPage />,
+    element: <ClientAgreementExchangeDetailsPage />,
+    errorElement: <RouteError />,
+  },
+  {
+    path: clientRoutes.employeeAgreementExchanges,
+    element: <EmployeeAgreementExchangesDashboardPage />,
+    errorElement: <RouteError />,
+  },
+  {
+    path: clientRoutes.employeeAgreementExchangeDetailsPath,
+    element: <EmployeeAgreementExchangeDetailsPage />,
     errorElement: <RouteError />,
   },
   {

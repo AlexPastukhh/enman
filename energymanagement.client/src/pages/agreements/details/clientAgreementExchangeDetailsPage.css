@@ -1,0 +1,16 @@
+.clientAgreementExchangeDetailsPage {
+  display: grid;
+  gap: 1rem;
+}
+
+.clientAgreementExchangeDetailsPage__state {
+  border: 1px solid #d6d8dc;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  background: #fff;
+}
+
+.clientAgreementExchangeDetailsPage__backLink {
+  display: inline-flex;
+  width: fit-content;
+}

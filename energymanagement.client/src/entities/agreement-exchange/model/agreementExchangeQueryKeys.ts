@@ -10,4 +10,6 @@ export const agreementExchangeQueryKeys = {
         status: filters.status ?? null,
       },
     ] as const,
+  details: (exchangeId: number) =>
+    [...agreementExchangeQueryKeys.all, "details", exchangeId] as const,
 } as const;
