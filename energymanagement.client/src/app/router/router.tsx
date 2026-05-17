@@ -3,7 +3,7 @@ import AccountPage from "../../pages/account/AccountPage";
 import HomePage from "../../pages/home/HomePage";
 import { LoginPage } from "../../pages/login/LoginPage";
 import MyRequestDetailsPage from "../../pages/requests/details/MyRequestDetailsPage";
-import EmployeeDashboardPage from "../../pages/employee/dashboard/EmployeeDashboardPage";
+import EmployeeDashboardPage from "../../pages/employee/requests/dashboard/EmployeeDashboardPage";
 import EmployeeRequestDetailsPage from "../../pages/employee/requests/details/EmployeeRequestDetailsPage";
 import CreateConnectionRequestPage from "../../pages/requests/create/CreateConnectionRequestPage";
 import MyRequestsPage from "../../pages/requests/my/MyRequestsPage";

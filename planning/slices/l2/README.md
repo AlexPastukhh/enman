@@ -71,7 +71,7 @@ shared/api/employeeRequestApi.ts
 
 Existing business-specific `shared/api/*Api.ts` files are transitional compatibility only and should not be copied into new L2 client work.
 
-## 3. Current L2 Drafted Slices
+## 4. Current L2 Drafted Slices
 
 ```text
 planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
@@ -83,7 +83,7 @@ planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md
 planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md
 ```
 
-## 4. Employee Details Client Placement Note
+## 5. Employee Details Client Placement Note
 
 `L2-EMP-DETAILS-001.client` is a read sidecar.
 
@@ -111,7 +111,7 @@ features/employee-request/reject-review/api/rejectRequestReview.ts
 
 `StartReviewResponseDto` is a compact command result and must not be reused as the Employee request details DTO.
 
-## 5. Current Guardrails
+## 6. Current Guardrails
 
 ```text
 - Use Employee, not Worker.

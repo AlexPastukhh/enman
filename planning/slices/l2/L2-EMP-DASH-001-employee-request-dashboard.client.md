@@ -22,7 +22,7 @@ Signed-in Employee opens dashboard
 ## 4. Client Implementation Flow
 
 ```text
-pages/employee/dashboard/EmployeeDashboardPage.tsx
+pages/employee/requests/dashboard/EmployeeDashboardPage.tsx
   -> entities/employee-request/model/useEmployeeRequestDashboardQuery.ts
   -> entities/employee-request/api/listEmployeeDashboardRequests.ts
   -> shared/api/fetchJson.ts + shared/api/generated/openapi-types.ts
@@ -53,6 +53,12 @@ Employee account identity:
   Target L2 model uses Employee : Account.
   ClaimTypes.NameIdentifier stores Account.Id, which is Employee.Id for Employee sessions.
   Client must never submit employeeId; server derives Employee actor from session.
+
+Page placement:
+  Employee request-area pages are grouped under pages/employee/requests/*.
+  Dashboard page lives in pages/employee/requests/dashboard.
+  Details page lives in pages/employee/requests/details.
+  Do not place Employee request dashboard under pages/employee/dashboard.
 
 
 Safe GET; Employee session required; Employee : Account so auth claim Account.Id is Employee.Id; server owns visibility/filtering; generated contract required; UI renders safe read errors.

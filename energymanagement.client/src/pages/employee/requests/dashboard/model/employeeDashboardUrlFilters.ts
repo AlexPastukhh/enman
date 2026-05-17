@@ -2,7 +2,7 @@ import {
   isEmployeeDashboardReviewState,
   isEmployeeRequestStatus,
   type EmployeeRequestDashboardFilters,
-} from "../../../../entities/employee-request/model/employeeRequestFilters";
+} from "../../../../../entities/employee-request/model/employeeRequestFilters";
 
 export type ParseEmployeeDashboardUrlFiltersResult = {
   filters: EmployeeRequestDashboardFilters;

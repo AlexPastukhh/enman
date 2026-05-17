@@ -2,8 +2,8 @@ import {
   employeeRequestStatusOptions,
   employeeReviewStateOptions,
   type EmployeeRequestDashboardFilters as EmployeeRequestDashboardFiltersState,
-} from "../../../entities/employee-request/model/employeeRequestFilters";
-import { employeeRequestDashboardConst } from "../../../entities/employee-request/ui/employeeRequestDashboardConst";
+} from "../../../../entities/employee-request/model/employeeRequestFilters";
+import { employeeRequestDashboardConst } from "../../../../entities/employee-request/ui/employeeRequestDashboardConst";
 
 type EmployeeRequestDashboardFiltersProps = {
   filters: EmployeeRequestDashboardFiltersState;

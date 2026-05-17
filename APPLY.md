@@ -1,35 +1,39 @@
-# APPLY
+# Apply L2 Employee request page placement sync
 
-From repository root, extract the archive over the working tree:
-
-```powershell
-Expand-Archive -Path "C:\path\to\enman-auth-employee-windows-impl.zip" -DestinationPath "." -Force
-```
-
-Then verify and regenerate if needed:
+From the repo root:
 
 ```powershell
-dotnet build .\Domain.EnergyManagement\Domain.EnergyManagement.csproj
-dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
-dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
+Expand-Archive -Path "C:\Users\alexa\Downloads\l2-employee-request-page-placement-sync.zip" -DestinationPath . -Force
 
-dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check
-dotnet run --project .\EnergyManagement.Tools -- generate-client-constants --out Shared --check
-npm.cmd run check:api
-npm.cmd --prefix .\energymanagement.client run build
-npm.cmd --prefix .\energymanagement.client run test -- --run
+.\APPLY-l2-employee-request-page-placement.ps1
+
+git status
+git diff -- energymanagement.client planning
 ```
 
-If `check:api` reports only intended generated OpenAPI/type changes before commit, stage the generated artifacts and rerun after commit/clean worktree.
-
-Expected old behavior remains absent:
+Then run at least:
 
 ```powershell
-rg "/api/auth|/api/ClientRequest|registerIndividual|IndivCreateConnectionRequest" Shared EnergyManagement.Server energymanagement.client/src Tests.EnergyManagement
+npm --prefix .\energymanagement.client run build
+npm --prefix .\energymanagement.client run test -- --run
 ```
 
-Expected new auth surface:
+This archive moves the Employee dashboard page files from:
 
-```powershell
-rg "EmployeeWindowsSignIn|employee/auth/windows-signin|EmployeeWindows|WindowsLogin" EnergyManagement.Server Tests.EnergyManagement energymanagement.client/src Shared
+```text
+energymanagement.client/src/pages/employee/dashboard
 ```
+
+to:
+
+```text
+energymanagement.client/src/pages/employee/requests/dashboard
+```
+
+Details already lives under:
+
+```text
+energymanagement.client/src/pages/employee/requests/details
+```
+
+No OpenAPI/generated artifacts are included because API shape does not change.
