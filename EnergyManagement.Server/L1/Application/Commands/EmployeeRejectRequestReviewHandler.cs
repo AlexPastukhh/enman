@@ -37,15 +37,21 @@ public sealed class EmployeeRejectRequestReviewHandler
             return EmployeeRejectRequestReviewCommandResult.NotFound();
         }
 
-        var feedback = Domain.EnergyManagement.L1.RejectionFeedback.Create(command.Feedback);
-        if (feedback.IsFailure)
+        Domain.EnergyManagement.L1.RejectionFeedback? feedback = null;
+        if (!string.IsNullOrWhiteSpace(command.Feedback))
         {
-            return EmployeeRejectRequestReviewCommandResult.Invalid(feedback.Error);
+            var feedbackResult = Domain.EnergyManagement.L1.RejectionFeedback.Create(command.Feedback);
+            if (feedbackResult.IsFailure)
+            {
+                return EmployeeRejectRequestReviewCommandResult.Invalid(feedbackResult.Error);
+            }
+
+            feedback = feedbackResult.Value;
         }
 
         var rejectReview = connectionRequest.RejectReview(
             employee,
-            feedback.Value,
+            feedback,
             DateTimeOffset.UtcNow);
         if (rejectReview.IsFailure)
         {

@@ -82,7 +82,7 @@ public sealed class EmployeeRejectRequestReviewIntegrationTests : L1IntegrationT
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public async Task RejectRequestReview_WithMissingFeedback_ReturnsValidationProblem(string? feedback)
+    public async Task RejectRequestReview_WithMissingFeedback_RejectsWithoutRejectionReason(string? feedback)
     {
         await ResetDatabaseAsync();
         await InsertEmployeeAsync(CurrentEmployeeId);
@@ -92,13 +92,13 @@ public sealed class EmployeeRejectRequestReviewIntegrationTests : L1IntegrationT
         var response = await RejectEmployeeRequestReviewRequestAsync(client, request.Id, feedback);
 
         await HttpResponseAssertions.For(response, _output)
-            .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+            .ShouldBeStatusCode((int)HttpStatusCode.NoContent);
 
         var requestAfter = await GetRequestRowAsync(request.Id);
-        requestAfter!.Status.Should().Be("InReview");
+        requestAfter!.Status.Should().Be("Rejected");
         var review = await GetRequestReviewRowAsync(request.Id);
-        review!.Status.Should().Be("Started");
-        review.CompletedByEmployeeId.Should().BeNull();
+        review!.Status.Should().Be("Rejected");
+        review.CompletedByEmployeeId.Should().Be(CurrentEmployeeId);
         review.RejectionReason.Should().BeNull();
     }
 
