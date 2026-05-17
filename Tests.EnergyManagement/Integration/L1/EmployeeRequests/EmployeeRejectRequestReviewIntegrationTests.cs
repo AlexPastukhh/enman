@@ -109,7 +109,7 @@ public sealed class EmployeeRejectRequestReviewIntegrationTests : L1IntegrationT
         await InsertEmployeeAsync(CurrentEmployeeId);
         var request = await CreateStartedRequestAsync(CurrentEmployeeId);
         var client = AuthenticatedEmployeeClient();
-        var feedback = new string('x', Domain.EnergyManagement.L1.RejectionFeedback.MaxLength + 1);
+        var feedback = new string('x', global::Domain.EnergyManagement.L1.RejectionFeedback.MaxLength + 1);
 
         var response = await RejectEmployeeRequestReviewRequestAsync(client, request.Id, feedback);
 
