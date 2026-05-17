@@ -1,6 +1,8 @@
 import { Link, useParams } from "react-router-dom";
 import { useAgreementExchangeDetailsQuery } from "../../../../entities/agreement-exchange/model/useAgreementExchangeDetailsQuery";
 import { useSession } from "../../../../entities/session/model/useSession";
+import { getFinalRefuseAgreementExchangeAvailability } from "../../../../features/agreement-exchange/final-refuse/model/finalRefuseAgreementExchangeAvailability";
+import { FinalRefuseAgreementExchangeForm } from "../../../../features/agreement-exchange/final-refuse/ui/FinalRefuseAgreementExchangeForm";
 import { getSendAgreementProposalAvailability } from "../../../../features/agreement-exchange/send-proposal/model/sendAgreementProposalAvailability";
 import { SendAgreementProposalForm } from "../../../../features/agreement-exchange/send-proposal/ui/SendAgreementProposalForm";
 import { ApiError } from "../../../../shared/api/fetchJson";
@@ -97,18 +99,28 @@ const EmployeeAgreementExchangeDetailsPage = () => {
               details={detailsQuery.data}
               viewerRole="Employee"
               renderActions={(details) => {
-                const availability = getSendAgreementProposalAvailability(
+                const sendAvailability = getSendAgreementProposalAvailability(
                   details,
                   "Employee",
                 );
+                const finalRefuseAvailability =
+                  getFinalRefuseAgreementExchangeAvailability(details);
 
                 return (
-                  <SendAgreementProposalForm
-                    exchangeId={details.exchangeId}
-                    viewerRole="Employee"
-                    disabled={!availability.canSendProposal}
-                    unavailableReason={availability.reason}
-                  />
+                  <>
+                    <SendAgreementProposalForm
+                      exchangeId={details.exchangeId}
+                      viewerRole="Employee"
+                      disabled={!sendAvailability.canSendProposal}
+                      unavailableReason={sendAvailability.reason}
+                    />
+                    <FinalRefuseAgreementExchangeForm
+                      exchangeId={details.exchangeId}
+                      requestId={details.requestId}
+                      disabled={!finalRefuseAvailability.canFinalRefuse}
+                      unavailableReason={finalRefuseAvailability.reason}
+                    />
+                  </>
                 );
               }}
             />

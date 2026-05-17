@@ -45,6 +45,15 @@ vi.mock("../../../../features/agreement-exchange/send-proposal/ui/SendAgreementP
   __esModule: true,
 }));
 
+vi.mock("../../../../features/agreement-exchange/final-refuse/ui/FinalRefuseAgreementExchangeForm", () => ({
+  FinalRefuseAgreementExchangeForm: ({ disabled }: { disabled?: boolean }) => (
+    <div data-testid="final-refuse-form">
+      Final refuse form {disabled ? "disabled" : "enabled"}
+    </div>
+  ),
+  __esModule: true,
+}));
+
 const details = {
   exchangeId: 20,
   requestId: 10,
@@ -124,6 +133,9 @@ describe("EmployeeAgreementExchangeDetailsPage", () => {
       "/employee/agreements",
     );
     expect(screen.getByTestId("send-proposal-form")).toBeVisible();
+    expect(screen.getByTestId("final-refuse-form")).toHaveTextContent(
+      "Final refuse form enabled",
+    );
   });
 
   it("blocks non-employee sessions from employee details page", () => {

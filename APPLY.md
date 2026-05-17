@@ -1,26 +1,23 @@
-# Apply SL-AGR-EXCH-005 — Client Accept Active Agreement Proposal
+# Apply
 
 From repository root:
 
 ```powershell
-cd "C:\enman\enman"
-Expand-Archive -Path "C:\Users\alexa\Downloads\sl-agr-exch-005-client-accept-active-agreement-proposal-v27.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agr-exch-final-refuse-001-client.zip" -DestinationPath "." -Force
 ```
 
-Run checks:
+Then verify:
 
 ```powershell
-dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
-dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
+npm install
+npm --prefix .\energymanagement.client install
+npm run check:api
+npm --prefix .\energymanagement.client run build
+npm --prefix .\energymanagement.client run test -- --run
 ```
 
-Because the API contract changes:
+Targeted tests:
 
 ```powershell
-npm.cmd run generate:openapi
-npm.cmd run generate:api-types
-
-git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
-
-npm.cmd run check:api
+npm --prefix .\energymanagement.client run test -- --run --reporter=verbose src/features/agreement-exchange/final-refuse/api/finalRefuseAgreementExchange.test.ts src/features/agreement-exchange/final-refuse/model/finalRefuseAgreementExchangeAvailability.test.ts src/features/agreement-exchange/final-refuse/ui/FinalRefuseAgreementExchangeForm.test.tsx src/pages/employee/agreements/details/EmployeeAgreementExchangeDetailsPage.test.tsx
 ```
