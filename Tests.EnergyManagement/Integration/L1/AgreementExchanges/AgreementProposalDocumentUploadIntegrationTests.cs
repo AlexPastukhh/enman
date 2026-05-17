@@ -122,6 +122,13 @@ public sealed class AgreementProposalDocumentUploadIntegrationTests : L1Integrat
             fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
             form.Add(fileContent, "document", fileName);
         }
+        else
+        {
+            // Keep the multipart body syntactically valid so the request reaches
+            // the application validator and returns our validation ProblemDetails
+            // instead of ASP.NET Core's malformed-form 400.
+            form.Add(new StringContent("true"), "metadataOnly");
+        }
 
         using var request = new HttpRequestMessage(
             HttpMethod.Post,

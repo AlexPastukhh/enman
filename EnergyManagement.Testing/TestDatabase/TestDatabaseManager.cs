@@ -80,6 +80,7 @@ public sealed class TestDatabaseManager
         {
             await EnsureL1ApplicantPartyCurrentVersionColumnAsync(cancellationToken);
             await EnsureL1ApplicantPartyVerificationStatusColumnAsync(cancellationToken);
+            await EnsureL1ClientRequestClientAccountIdColumnAsync(cancellationToken);
             await EnsureL1RequestReviewsTableAsync(cancellationToken);
             await EnsureL1AgreementProposalTablesAsync(cancellationToken);
             await EnsureL1AccountEmployeeColumnsAsync(cancellationToken);
@@ -89,10 +90,57 @@ public sealed class TestDatabaseManager
         await using var context = new L1DbContext(_connectionString);
         var databaseCreator = context.GetService<IRelationalDatabaseCreator>();
         await databaseCreator.CreateTablesAsync(cancellationToken);
+        await EnsureL1ClientRequestClientAccountIdColumnAsync(cancellationToken);
         await EnsureL1RequestReviewsTableAsync(cancellationToken);
         await EnsureL1AgreementProposalTablesAsync(cancellationToken);
         await EnsureL1AccountEmployeeColumnsAsync(cancellationToken);
     }
+
+    private async Task EnsureL1ClientRequestClientAccountIdColumnAsync(CancellationToken cancellationToken)
+    {
+        const string query = """
+            IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL
+               AND COL_LENGTH(N'dbo.L1ClientRequests', N'ClientAccountId') IS NULL
+            BEGIN
+                ALTER TABLE dbo.L1ClientRequests
+                ADD ClientAccountId bigint NOT NULL
+                    CONSTRAINT DF_L1ClientRequests_ClientAccountId DEFAULT(0);
+            END
+
+            IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL
+               AND COL_LENGTH(N'dbo.L1ClientRequests', N'ClientAccountId') IS NOT NULL
+            BEGIN
+                UPDATE requests
+                SET ClientAccountId = applicantParties.ClientAccountId
+                FROM dbo.L1ClientRequests AS requests
+                INNER JOIN dbo.L1ApplicantParties AS applicantParties
+                    ON requests.ApplicantPartyId = applicantParties.Id
+                WHERE requests.ClientAccountId = 0;
+            END
+
+            IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL
+               AND NOT EXISTS (
+                    SELECT 1
+                    FROM sys.indexes
+                    WHERE name = N'IX_L1ClientRequests_ClientAccountId'
+                      AND object_id = OBJECT_ID(N'dbo.L1ClientRequests'))
+            BEGIN
+                CREATE INDEX IX_L1ClientRequests_ClientAccountId
+                    ON dbo.L1ClientRequests(ClientAccountId);
+            END
+            """;
+
+        await using var connection = new SqlConnection(_connectionString);
+        await connection.OpenAsync(cancellationToken);
+
+        await using var command = new SqlCommand(query, connection)
+        {
+            CommandType = CommandType.Text
+        };
+
+        await command.ExecuteNonQueryAsync(cancellationToken);
+    }
+
 
     private async Task EnsureL1RequestReviewsTableAsync(CancellationToken cancellationToken)
     {
