@@ -71,6 +71,7 @@ builder.Services.AddTransient<IValidator<EmployeeRequestListQueryDto>, EmployeeR
 builder.Services.AddTransient<IValidator<EmployeeRejectRequestReviewDto>, EmployeeRejectRequestReviewDtoValidator>();
 builder.Services.AddTransient<IValidator<AgreementExchangeListQueryDto>, AgreementExchangeListQueryDtoValidator>();
 builder.Services.AddTransient<IValidator<SendAgreementProposalVersionDto>, SendAgreementProposalVersionDtoValidator>();
+builder.Services.AddTransient<IValidator<StartAgreementExchangeDto>, StartAgreementExchangeDtoValidator>();
 builder.Services.AddTransient<IValidator<FinalRefuseAgreementExchangeDto>, FinalRefuseAgreementExchangeDtoValidator>();
 builder.Services.AddTransient<IValidator<UploadAgreementProposalDocumentForm>, UploadAgreementProposalDocumentFormValidator>();
 
