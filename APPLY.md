@@ -1,23 +1,29 @@
-# Apply L2-AGR-EXCH-SEND-PROPOSAL-001.client
+# Apply — L2 Agreement Exchange Read Slices Sync
 
 From repo root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agr-exch-send-proposal-001-client.zip" -DestinationPath "." -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agr-exch-read-slices-sync.zip" -DestinationPath . -Force
+.\APPLY-l2-agr-exch-read-slices-sync.ps1
+git status
+git diff -- planning
 ```
 
-Then verify:
+If diff is acceptable:
 
 ```powershell
-npm install
-npm --prefix .\energymanagement.client install
-npm run check:api
-npm --prefix .\energymanagement.client run build
-npm --prefix .\energymanagement.client run test -- --run
+git add planning
+git status
 ```
 
-Targeted tests:
+## What this package does
 
-```powershell
-npm --prefix .\energymanagement.client run test -- --run --reporter=verbose src/features/agreement-exchange/send-proposal/api/sendAgreementProposal.test.ts src/features/agreement-exchange/send-proposal/model/sendAgreementProposalAvailability.test.ts src/features/agreement-exchange/send-proposal/ui/SendAgreementProposalForm.test.tsx src/pages/agreements/details/ClientAgreementExchangeDetailsPage.test.tsx src/pages/employee/agreements/details/EmployeeAgreementExchangeDetailsPage.test.tsx
-```
+- Adds canonical server slice drafts for Agreement Exchange list/details reads.
+- Adds canonical client sidecar drafts for Agreement Exchange list/details pages.
+- Renumbers Accept and Final Refuse to avoid conflict:
+  - Accept becomes `SL-AGR-EXCH-005`.
+  - Final Refuse becomes `SL-AGR-EXCH-006`.
+- Removes superseded conflicting file names through the apply script.
+- Appends navigation/register addenda with stable markers.
+
+No runtime code, no tests, no generated artifacts.

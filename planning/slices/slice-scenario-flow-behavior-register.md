@@ -1,4 +1,4 @@
-# Slice Scenario Flow / Behavior Source Register
+﻿# Slice Scenario Flow / Behavior Source Register
 
 Status: active source register / L1 + L2 Employee Review Agreement sources synchronized
 
@@ -104,3 +104,6 @@ planning/diagrams/scenario-behavior-items/
 Update this register when scenario files, behavior items, slices or sidecars are added/renamed.
 
 When a future L2 implementation slice is drafted, point it to the relevant scenario files and to `domain-draft-02.md` only as domain-design input.
+
+
+

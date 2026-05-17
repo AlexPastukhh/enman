@@ -1,4 +1,4 @@
-# Slice Questions Register
+﻿# Slice Questions Register
 
 Status: active / client API placement, L2 review sidecars and AgreementProposalExchange slice boundaries synchronized
 
@@ -42,5 +42,18 @@ Status: active / client API placement, L2 review sidecars and AgreementProposalE
 | `L2-AGR-EXCH-Q-001` | `planning/slices/l2/L2-agreement-exchange-slice-family.md` | slice split | accepted | Should initial employee proposal and counter-proposal be one implementation slice? | No. Initial employee proposal creates the exchange and version 1, so it is `SL-AGR-EXCH-001`. | Avoids create-vs-respond handler branching. |
 | `L2-AGR-EXCH-Q-002` | same | counter-proposal split | accepted | Should ClientSendOwnVersion and EmployeeSendNewVersion be split now? | No. Use one `SL-AGR-EXCH-002` with two actor branches until UI/permissions/document handling diverge. | Avoids duplicate near-identical slices. |
 | `L2-AGR-EXCH-Q-003` | same | initial exchange | accepted | Can exchange start without initial document? | No in current domain direction. `StartByEmployee(...)` creates exchange with initial document/proposal version. | Full draft must require document reference. |
-| `L2-AGR-EXCH-Q-004` | same | revision request | accepted | Is Applicant Request Revision a separate slice? | No for current domain direction. It is represented by client sending own version through `ClientSendOwnVersion(...)`. | Prevents extra “revision request only” slice. |
+| `L2-AGR-EXCH-Q-004` | same | revision request | accepted | Is Applicant Request Revision a separate slice? | No for current domain direction. It is represented by client sending own version through `ClientSendOwnVersion(...)`. | Prevents extra вЂњrevision request onlyвЂќ slice. |
 | `L2-AGR-EXCH-Q-005` | same | final refusal | accepted | Is final refusal a proposal version or separate entity? | No. It is direct exchange state; it does not create a proposal version and no `AgreementFinalRefusal` entity is needed now. | Keeps final refusal slice focused. |
+
+## Agreement Exchange Read Slice Decisions
+
+Marker: AGR-EXCH-READ-SLICE-DECISIONS-2026-05
+
+| ID | Local file(s) | Area | Status | Question | Assumption / current direction | Impact |
+|---|---|---|---|---|---|---|
+| AGR-EXCH-READ-Q-001 | SL-AGR-EXCH-003, SL-AGR-EXCH-004 | endpoint shape | accepted | Use shared list/details endpoints for Client and Employee first pass? | Yes. Server branches by current session role/access; frontend uses shared entity wrappers/widgets. | Avoids duplicate read slices. |
+| AGR-EXCH-READ-Q-002 | same | client ownership | accepted | How is Client access protected? | Persist and filter by AgreementProposalExchange.ClientAccountId. | Requires domain/persistence field. |
+| AGR-EXCH-READ-Q-003 | same | employee ownership | accepted | Does exchange have ResponsibleEmployeeId guard? | No first pass. Any active Employee can service exchange. | Avoids false employee ownership. |
+| AGR-EXCH-READ-Q-004 | SL-AGR-EXCH-004 | read implementation | accepted | Use application service for details read? | No. Use query handler + read repository / Dapper projection. | Keeps read slice projection-only. |
+| AGR-EXCH-READ-Q-005 | L2-AGR-EXCH-LIST-001.client, L2-AGR-EXCH-DETAILS-001.client | frontend ownership | accepted | Actor-specific wrappers first pass? | No while response shape is common. Use shared entity API/query/model and actor page shells. | Avoids duplicated client wrappers. |
+

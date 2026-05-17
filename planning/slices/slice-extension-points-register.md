@@ -1,4 +1,4 @@
-# Slice Extension Points Register
+﻿# Slice Extension Points Register
 
 Status: active / client API placement, L2 review sidecars and AgreementProposalExchange slice boundaries synchronized
 
@@ -35,3 +35,15 @@ Status: active / client API placement, L2 review sidecars and AgreementProposalE
 | `CP-L2-AGR-EXCH-005` | final refusal | `SL-AGR-EXCH-005` owns final refusal; exchange and request are separate aggregates orchestrated by application service. | planned boundary |
 | `CP-L2-AGR-DOC-001` | document metadata | AgreementDocumentRef metadata is part of proposal commands/read models; bytes/storage adapter remains future document/storage slice. | future |
 | `CP-L2-AGR-PERM-001` | actor permissions | Actor-specific route/auth rules can be separate in implementation but do not force separate counter-proposal slices yet. | future refinement |
+
+## Agreement Exchange Read Extension Points
+
+Marker: AGR-EXCH-READ-SLICE-DECISIONS-2026-05
+
+| ID | Area | Current direction | Status |
+|---|---|---|---|
+| CP-AGR-EXCH-READ-001 | read endpoint split | Shared list/details endpoints first pass; split actor endpoints only if behavior diverges. | future if needed |
+| CP-AGR-EXCH-READ-002 | employee assignment | No ResponsibleEmployeeId guard first pass; department/assignment visibility is future. | future |
+| CP-AGR-EXCH-READ-003 | actions in read DTO | AvailableActions may be added later if client derivation becomes too complex. | future |
+| CP-AGR-EXCH-READ-004 | document bytes/download | List/details return document references only; download/storage remains future document slice. | future |
+

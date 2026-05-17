@@ -1,4 +1,4 @@
-# Slice Implementation Notes Register
+﻿# Slice Implementation Notes Register
 
 Status: active / client API placement, L2 review sidecars and AgreementProposalExchange slice boundaries synchronized
 
@@ -11,7 +11,7 @@ Status: active / client API placement, L2 review sidecars and AgreementProposalE
 | `IMPL-CLIENT-API-PLACEMENT-003` | shared/api | Keep only transport/generated infrastructure in `shared/api`: `fetchJson`, ProblemDetails/ApiError, CSRF helpers, generated OpenAPI types and generic helpers. | accepted |
 | `IMPL-CLIENT-API-PLACEMENT-004` | existing runtime | Existing business-specific `shared/api/*Api.ts` wrappers are transitional compatibility. Do not mass-migrate without concrete slice scope. | future cleanup |
 | `IMPL-CLIENT-API-PLACEMENT-005` | generated types | Entities/features may import generated OpenAPI types and define local business aliases. | accepted |
-| `IMPL-CLIENT-API-PLACEMENT-006` | old sidecars | If an older sidecar says “Shared API wrapper owns low-level HTTP call”, interpret it through the new rule: entity/feature API owns business wrapper; shared owns transport/generated infrastructure only. | compatibility note |
+| `IMPL-CLIENT-API-PLACEMENT-006` | old sidecars | If an older sidecar says вЂњShared API wrapper owns low-level HTTP callвЂќ, interpret it through the new rule: entity/feature API owns business wrapper; shared owns transport/generated infrastructure only. | compatibility note |
 
 ## L2 Employee Details Client Notes
 
@@ -39,7 +39,7 @@ Status: active / client API placement, L2 review sidecars and AgreementProposalE
 
 | ID | Applies to | Note | Status |
 |---|---|---|---|
-| `IMPL-L2-AGR-EXCH-001` | `SL-AGR-EXCH-001` | Initial Employee proposal starts exchange and creates proposal version 1. Do not implement “start exchange without document”. | planned boundary |
+| `IMPL-L2-AGR-EXCH-001` | `SL-AGR-EXCH-001` | Initial Employee proposal starts exchange and creates proposal version 1. Do not implement вЂњstart exchange without documentвЂќ. | planned boundary |
 | `IMPL-L2-AGR-EXCH-002` | `SL-AGR-EXCH-001` | Preconditions: Approved request, no existing exchange, valid AgreementDocumentRef, optional valid ProposalComment, current Employee actor. | planned boundary |
 | `IMPL-L2-AGR-EXCH-003` | `SL-AGR-EXCH-002` | Counter-proposal creates next domain version from max existing version + 1; API/client never selects version. | planned boundary |
 | `IMPL-L2-AGR-EXCH-004` | `SL-AGR-EXCH-002` | Client and Employee counter-proposal branches may have different endpoints but stay one implementation slice until behavior diverges. | planned boundary |
@@ -48,3 +48,16 @@ Status: active / client API placement, L2 review sidecars and AgreementProposalE
 | `IMPL-L2-AGR-EXCH-007` | `SL-AGR-EXCH-005` | Final refusal orchestrates separate aggregates: exchange.FinalRefuseProposal(...) and request.MarkAgreementExchangeFailed(...). | planned boundary |
 | `IMPL-L2-AGR-EXCH-008` | `SL-AGR-EXCH-005` | Exchange must not mutate Request directly; Request must not navigate to Exchange. | planned boundary |
 | `IMPL-L2-AGR-EXCH-009` | client API placement | Agreement exchange read wrappers belong in entities; agreement exchange command wrappers belong in features; do not add `shared/api/agreementExchangeApi.ts`. | accepted |
+
+## Agreement Exchange Read Slice Implementation Notes
+
+Marker: AGR-EXCH-READ-SLICE-DECISIONS-2026-05
+
+| ID | Applies to | Note | Status |
+|---|---|---|---|
+| IMPL-AGR-EXCH-READ-001 | list/details server reads | Client access filters by AgreementProposalExchange.ClientAccountId. | accepted |
+| IMPL-AGR-EXCH-READ-002 | list/details server reads | Employee access first pass allows any active Employee; do not add ResponsibleEmployeeId guard. | accepted |
+| IMPL-AGR-EXCH-READ-003 | details read | Use query handler + read repository / Dapper projection; do not introduce application service for read-only projection. | accepted |
+| IMPL-AGR-EXCH-READ-004 | client sidecars | Use shared entity wrappers under entities/agreement-exchange/api; do not add shared/api/agreementExchangeApi.ts. | accepted |
+| IMPL-AGR-EXCH-READ-005 | client sidecars | Page shells may differ by actor; query/model/widgets stay shared while response shape is common. | accepted |
+

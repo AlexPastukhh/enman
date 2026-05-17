@@ -1,72 +1,58 @@
-# Drafting Implementation Checklist Rule
+# Drafting Rule — Implementation Checklist
 
-Status: current / applies to server and client full slice drafts
+Status: current / server and client full drafts synchronized
 
 ## Rule
 
-Every full server/backend/API draft and every full client sidecar draft must include an `Implementation Checklist` section near the end.
+Every full server/backend/API draft and every full client sidecar draft must end with a concrete `Implementation Checklist` section near the end.
 
-The checklist must be concrete and slice-specific.
+The checklist is part of the draft contract for implementation chats.
 
-It must not be a generic placeholder.
+## Server command checklist expectations
 
-## Placement
-
-Use near-final placement:
+Server command slice checklist should mention, when relevant:
 
 ```text
-## 18. Dependent / Follow-up Slices
-## 19. Implementation Checklist
-## 20. Guardrail Summary
+[ ] add request DTO
+[ ] add DTO validator
+[ ] add command returning UnitResult<IReadOnlyList<Error>> or current project Result model
+[ ] do not add per-command status enum unless explicitly accepted
+[ ] add handler/application service method
+[ ] add repository/read repository changes if needed
+[ ] add DbContext DbSet/mapping/migration if needed
+[ ] enforce uniqueness/lifecycle guards
+[ ] add/choose controller
+[ ] require role authorization
+[ ] require CSRF token for unsafe browser commands
+[ ] create value objects
+[ ] call domain method
+[ ] persist aggregate(s)
+[ ] return documented success status
+[ ] map failures through existing Error/ProblemDetails mapping
+[ ] add integration tests
+[ ] regenerate OpenAPI/types when API shape changes
 ```
 
-Exact numbering can change if the draft has more sections, but `Implementation Checklist` must stay near the end and before final guardrails/next step.
+## Client sidecar checklist expectations
 
-## Server Checklist Content
-
-Server command/read checklists should include concrete items for:
+Client sidecar checklist should mention, when relevant:
 
 ```text
-- DTO/query/route contract;
-- validator when applicable;
-- command/query object;
-- application handler/service;
-- repository/persistence changes;
-- controller endpoint;
-- auth/role boundary;
-- CSRF for unsafe commands;
-- domain value object creation;
-- domain method call;
-- persistence/transaction;
-- response contract;
-- ProblemDetails/Error mapping;
-- domain tests if missing;
-- integration tests;
-- OpenAPI/types regeneration when API shape changes.
+[ ] confirm backend endpoint and generated contract
+[ ] add entity/feature API wrapper in the owning layer
+[ ] add generated DTO aliases near the owning entity/feature
+[ ] do not add business wrapper to shared/api
+[ ] add React Query hook or mutation
+[ ] add widget/feature UI component
+[ ] add page shell wiring
+[ ] render loading/error/empty/success/pending states
+[ ] refresh/invalidate read queries after command success
+[ ] add component/entity/feature tests
+[ ] add E2E smoke when server/test setup exists
+[ ] regenerate OpenAPI/types only when the implementation package changes API shape
 ```
 
-## Client Checklist Content
-
-Client sidecar checklists should include concrete items for:
-
-```text
-- generated contract confirmation;
-- entity/feature API wrapper placement;
-- generated DTO aliases;
-- feature model/mutation/query hook;
-- UI component/form/action;
-- page/slot wiring;
-- auth/session assumptions;
-- CSRF-aware shared transport usage for unsafe commands;
-- query invalidation/refetch;
-- pending/error/success feedback;
-- component/model/E2E tests when appropriate;
-- no business wrapper in shared/api.
-```
-
-## SL-AGR-EXCH-001 Required Checklist
-
-For `SL-AGR-EXCH-001 — Start Agreement Exchange With Initial Employee Proposal`, use this checklist and keep it updated if the slice changes:
+## Specific accepted checklist for SL-AGR-EXCH-001
 
 ```text
 [ ] add EmployeeStartAgreementExchangeDto
@@ -77,9 +63,6 @@ For `SL-AGR-EXCH-001 — Start Agreement Exchange With Initial Employee Proposal
 [ ] add agreement exchange repository abstraction
 [ ] add agreement exchange EF repository
 [ ] add L1DbContext DbSet/mapping if missing
-[ ] add AgreementProposalExchange.ClientAccountId
-[ ] populate ClientAccountId from approved request owner in StartByEmployee
-[ ] add ClientAccountId EF mapping/index
 [ ] enforce unique exchange per request
 [ ] add separate EmployeeAgreementExchangeController
 [ ] require Employee role
