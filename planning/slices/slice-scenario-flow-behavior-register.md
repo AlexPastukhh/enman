@@ -1,57 +1,48 @@
 # Slice Scenario Flow / Behavior Source Register
 
-Status: active source register / full SL-REQ-001.client and SL-APPL-003 server draft synchronized
+Status: active source register / SL-APPL-003.client full sidecar synchronized
 
 ## 1. Rule
 
 Scenario Flow and Behavior Items come from scenario source artifacts:
 
 ```text
-[SCENARIO] planning/diagrams/scenario-text-specs/
-[DATA] planning/diagrams/scenario-data/
-[UI-SCENARIO] planning/diagrams/scenario-ui-specs/
-[BEHAVIOR] planning/diagrams/scenario-behavior-items/
-[CONCERN] planning/slices/cross-cutting/
+planning/diagrams/scenario-text-specs/
+planning/diagrams/scenario-data/
+planning/diagrams/scenario-ui-specs/
+planning/diagrams/scenario-behavior-items/
+planning/slices/cross-cutting/
 ```
 
-Scenario Flow is the part of the scenario that belongs to the current slice.
+Scenario Flow is the part of a scenario that belongs to the current slice. It is not the whole scenario and not an implementation flow.
 
-It is not the whole scenario unless the slice owns the whole scenario.
-
-A scenario may be implemented by multiple slices and extension slices.
-
-Do not put implementation details into Scenario Flow.
-
-Do not invent behavior items locally inside a slice when source artifacts exist.
+Behavior items are source behavior requirements. Implementation details are not behavior items.
 
 ## 2. Source Map
 
 | Slice / sidecar | Marker | Source file | Applies to | Status |
 |---|---|---|---|---|
 | `SL-APPL-001-create-individual-applicant-party.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-10-applicant-data.md` | add ApplicantParty and first-of-type default/current initialization | current |
-| `SL-APPL-001-create-individual-applicant-party.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-10-applicant-data-ui.md` | add ApplicantParty action/form on Applicant Parties page | current/target |
-| `SL-APPL-002-account-applicant-parties-read.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-10-applicant-data.md` | flat account-level ApplicantParty list read | implementation-ready |
-| `SL-APPL-002-account-applicant-parties-read.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-10-applicant-data-ui.md` | current/default top area, other saved cards, empty read state | draft/implementation handoff |
-| `SL-APPL-002-account-applicant-parties-read.client.md` | `[BEHAVIOR]` | `planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md` | read behavior coverage for saved/current/default cards | draft/implementation handoff |
-| `SL-APPL-003-select-current-default-applicant-party-template.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md` | same-page explicit default/current action | full server draft |
-| `SL-APPL-003-select-current-default-applicant-party-template.md` | `[BEHAVIOR]` | `planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md` | one current/default per type, explicit switch, existing requests unchanged | full server draft |
-| `SL-REQ-001-create-connection-request.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md` | request creation with explicit Existing/New applicant context | backend current |
-| `SL-REQ-001-create-connection-request.md` | `[BEHAVIOR]` | `planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md` | backend request creation behavior coverage | backend current |
-| `SL-REQ-001-create-connection-request.client.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md` | request creation UI with applicant context | full client draft |
-| `SL-REQ-001-create-connection-request.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-04-request-creation-ui.md` | request creation form and visible feedback | full client draft |
-| `SL-REQ-001-create-connection-request.client.md` | `[BEHAVIOR]` | `planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md` | client request creation behavior coverage | full client draft |
-| `SL-REQ-002-my-requests-list.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-05-my-requests-own-request-details.md` | My Requests list | current |
-| `SL-REQ-003-own-request-details.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-05-my-requests-own-request-details.md` | own request details | current |
-| `L1-MY-REQUESTS-READ-LIST.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-05-my-requests-ui.md` | My Requests read list UI | current |
-| `L1-MY-REQUESTS-LIST-FILTERS.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-05-my-requests-ui.md` | My Requests status filter UI | current |
-| `L1-MY-REQUEST-DETAILS.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-05-my-requests-ui.md` | My Request details UI | current |
-| `CC-API-001-openapi-contract-artifacts-and-type-generation.md` | `[CONCERN]` | `planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md` | OpenAPI/generated artifact workflow | current |
+| `SL-APPL-001-create-individual-applicant-party.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-10-applicant-data-ui.md` | Applicant Parties page add UI | current |
+| `SL-APPL-002-account-applicant-parties-read.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-10-applicant-data.md` | flat account-level ApplicantParty list read | implemented backend |
+| `SL-APPL-002-account-applicant-parties-read.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-10-applicant-data-ui.md` | flat read/list/card display for Applicant Parties page | draft/current depending runtime |
+| `SL-APPL-003-select-current-default-applicant-party-template.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md` | explicit same-page make current/default backend command | implemented backend |
+| `SL-APPL-003-select-current-default-applicant-party-template.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-10-applicant-data-ui.md` | same-page make current/default client action | full client sidecar draft |
+| `SL-APPL-003-select-current-default-applicant-party-template.client.md` | `[BEHAVIOR]` | `planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md` | explicit selection, one default per type, existing requests unchanged | full client sidecar draft |
+| `SL-APPL-004-applicant-party-creation-application-service.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-10-applicant-data.md` | shared creation logic and first-of-type default/current prerequisite | implemented |
+| `SL-REQ-001-create-connection-request.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md` | request target flow | implemented backend |
+| `SL-REQ-001-create-connection-request.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-04-request-creation-ui.md` | request creation UI with Existing/New applicant context | implemented/drafted |
+| `SL-REQ-002-my-requests-list.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-05-my-requests-own-request-details.md` | My Requests list | implemented |
+| `SL-REQ-003-own-request-details.md` | `[SCENARIO]` | `planning/diagrams/scenario-text-specs/SC-05-my-requests-own-request-details.md` | own request details | implemented |
+| `L1-MY-REQUESTS-READ-LIST.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-05-my-requests-ui.md` | list UI | implemented |
+| `L1-MY-REQUESTS-LIST-FILTERS.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-05-my-requests-ui.md` | filter UI | implemented |
+| `L1-MY-REQUEST-DETAILS.client.md` | `[UI-SCENARIO]` | `planning/diagrams/scenario-ui-specs/SC-05-my-requests-ui.md` | details UI | implemented |
 | `CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md` | `[CONCERN]` | `planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md` | server request validation boundary | current |
 
 ## 3. Update Rule
 
 Update this register when scenarios, behavior items, slices or sidecars are added/renamed.
 
-When a slice introduces local behavior wording that affects future work, create/update the scenario behavior item source first or mark `Source BI TBD` explicitly.
+When a slice introduces local behavior wording that affects future work, update scenario behavior source first or mark `Source BI TBD` explicitly.
 
-When a slice changes API contract direction but not scenario behavior, sync API docs, questions register and implementation notes instead of inventing behavior items.
+SC-10B is a same-page future-management addendum for Applicant Parties, not a separate current user page.

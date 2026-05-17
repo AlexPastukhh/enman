@@ -1,36 +1,19 @@
 # Slice Extension Points Register
 
-Status: active / L1 current implementation status and future extension points synchronized
-
-## 1. ApplicantParty Extensions
+Status: active / SL-APPL-003.client full sidecar synchronized
 
 | ID | Area | Current direction | Status |
 |---|---|---|---|
-| `CP-APPL-PAGE-001` | Applicant Parties page model | One Applicant Parties page/section contains current/default templates, other saved ApplicantParties, add action and future/default action. | accepted |
-| `CP-APPL-READ-001` | account read | `GET /api/l1/applicant-parties` returns flat `applicantParties[]`; client groups by `isCurrentDefault`. | implemented backend |
-| `CP-APPL-DEFAULT-001` | create default initialization | First account+ApplicantPartyType create initializes current/default; additional same-type create remains non-default. | implemented backend |
-| `CP-APPL-DEFAULT-003` | explicit make default/current | Backend command implemented; client action remains next L1 gap. | backend implemented / client pending |
-| `CP-APPL-COMPAT-001` | current-individual endpoint | Old narrow current-individual endpoint remains compatibility support until target page replacement is stable. | future cleanup decision |
-| `CP-APPL-LIFECYCLE-001` | delete/archive/edit lifecycle | Keep out of current L1 finish; future lifecycle slices. | future review |
-| `CP-APPL-TYPES-001` | extra ApplicantParty types | LegalEntity / IndividualEntrepreneur create/read/UI support remains future. | future review |
-
-## 2. Request Creation Extensions
-
-| ID | Area | Current direction | Status |
-|---|---|---|---|
-| `CP-REQ-CLIENT-001` | saved ApplicantParty selector | Initial request creation UI implemented with simple saved ApplicantParty selector; richer search/filter/sort remains future refinement. | implemented baseline / future refinement |
-| `CP-REQ-CLIENT-002` | post-create navigation | My Requests handoff is current because command success has no required requestId body; direct details navigation can be revisited if response changes. | accepted / future review |
-| `CP-REQ-SNAPSHOT-001` | request/applicant history | Existing requests are not rewritten by default/current changes; deeper snapshot/reference history remains future read/history decision. | future review |
-
-## 3. Server Testing Extension Notes
-
-| ID | Area | Current direction | Status |
-|---|---|---|---|
-| `CP-SERVER-TEST-001` | backend command tests | Prefer API/integration + DB state assertions over mocks as primary behavior proof for state-changing L1 server slices. | accepted |
-| `CP-SERVER-TEST-002` | make-current-default | Verify ownership rejection, same-type switching, idempotency and no request mutation. | needs verification |
-
-## 4. New Domain Transition
-
-| ID | Area | Current direction | Status |
-|---|---|---|---|
-| `CP-NEW-DOMAIN-001` | next domain draft | After remaining L1 gaps are closed or explicitly deferred, move to new domain scenario/domain draft work. | next phase |
+| `CP-APPL-MULTI-001` | ApplicantParty storage | many saved ApplicantParties over time. | accepted |
+| `CP-APPL-PAGE-001` | ApplicantParty page model | one Applicant Parties page / section contains default/current templates, other saved ApplicantParties and add/action areas. | accepted |
+| `CP-APPL-READ-001` | ApplicantParty read API | flat `applicantParties[]` list; client groups by `isCurrentDefault`. | implemented backend / client-consumable |
+| `CP-APPL-DEFAULT-001` | default template | one current/default per applicant type; top page area highlights current/default templates. | accepted |
+| `CP-APPL-DEFAULT-002` | create behavior | first account+type can initialize current/default; additional same-type create remains non-default. | implemented |
+| `CP-APPL-DEFAULT-003` | explicit default action backend | make current/default backend command is implemented. | implemented backend |
+| `CP-APPL-DEFAULT-004` | explicit default action client | client same-page action belongs to `SL-APPL-003.client`; use feature button/action + entity action slot. | full sidecar draft |
+| `CP-APPL-ACTION-SLOT-001` | entity card/list extensibility | entity display UI may expose optional action slot/render prop without owning command logic. | accepted |
+| `CP-APPL-NAMING-001` | persisted marker naming | current code uses `IsCurrentActiveVersion`; API/docs use `isCurrentDefault` / current-default template. Rename is later cleanup. | cleanup later |
+| `CP-APPL-LIFECYCLE-001` | delete/archive lifecycle | delete/archive/edit/version remains future lifecycle work. | future review |
+| `CP-REQ-CLIENT-001` | saved ApplicantParty selector | request creation Existing branch uses saved ApplicantParty selector; current/default is initial selection only. | implemented/drafted |
+| `CP-REQ-CLIENT-002` | post-create navigation | My Requests handoff preferred until command returns requestId. | accepted |
+| `CP-SERVER-TEST-001` | backend command tests | prefer API/integration + DB state assertions over mocks as primary behavior proof for state-changing L1 server slices. | accepted |

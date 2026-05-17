@@ -5,7 +5,7 @@ using EnergyManagement.Server.Data;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Tests.EnergyManagement.TestHelpers;
+namespace Tests.EnergyManagement.Legacy.TestHelpers;
 
 public static class ProblemDetailsTestHelper
 {

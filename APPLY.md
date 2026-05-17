@@ -1,20 +1,18 @@
-# Apply SL-APPL-003.client make current/default archive
+# APPLY — SL-APPL-003.client Full Draft Sync
 
-From repo root, apply the archive directly into the repository:
-
-```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\sl-appl-003-client-make-current-default.zip" -DestinationPath "." -Force
-```
-
-## Verify
+Run from repository root:
 
 ```powershell
-npm install
-npm --prefix .\energymanagement.client install
-npm run check:api
-npm --prefix .\energymanagement.client run lint
-npm --prefix .\energymanagement.client run build
-npm --prefix .\energymanagement.client run test -- --run
-npm run test:e2e -- tests/e2e/applicant-parties/applicant-parties-make-current-default.spec.ts
-npm run test:e2e
+Expand-Archive -Path "C:\Users\alexa\Downloads\sl-appl-003-client-full-draft-sync.zip" -DestinationPath . -Force
+git status
+git diff -- planning
 ```
+
+If the diff is correct:
+
+```powershell
+git add planning
+git status
+```
+
+This is a docs-only archive. It intentionally does not include runtime code, tests, generated artifacts or GitHub writes.

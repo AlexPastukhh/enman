@@ -1,6 +1,6 @@
 # Slice Planning Index
 
-Status: current slice-planning navigation index / L1 current implementation and remaining gaps synchronized
+Status: current slice-planning navigation index / SL-APPL-003.client full sidecar synchronized
 
 ## 1. Core Rule
 
@@ -18,15 +18,19 @@ Implementation prompts must respect:
 planning/agent-scope-boundaries-and-prompt-safety.md
 ```
 
-For current implementation status, read:
+Client drafters must use the canonical short-draft shape:
 
 ```text
-planning/l1-current-implementation-status.md
+planning/slices/client-slice-short-draft-rules-and-example.md
+```
+
+Server/backend state-changing slice drafts must separate API boundary tests, DB state transition tests, no-mutation tests, regression guards and what-not-to-test. Use:
+
+```text
+planning/testing/server-slice-test-plan-rules.md
 ```
 
 ## 2. Current / Active Backend Slice Files
-
-Implemented/current backend slices:
 
 ```text
 planning/slices/SL-ACC-001-register-client-account.md
@@ -42,43 +46,33 @@ planning/slices/SL-REQ-002-my-requests-list.md
 planning/slices/SL-REQ-003-own-request-details.md
 ```
 
-Future backend slices:
-
-```text
-future ApplicantParty delete/archive/edit lifecycle slices
-future LegalEntity / IndividualEntrepreneur ApplicantParty creation slices
-```
-
 ## 3. Current / Active Client Sidecars
-
-Implemented/current client sidecars:
 
 ```text
 planning/slices/SL-ACC-001-register-client-account.client.md
 planning/slices/SL-AUTH-001-login-client-account.client.md
 planning/slices/SL-AUTH-002-current-user.client.md
 planning/slices/SL-AUTH-003-logout.client.md
+planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
+planning/slices/SL-APPL-002-account-applicant-parties-read.client.md
+planning/slices/SL-APPL-003-select-current-default-applicant-party-template.client.md
 planning/slices/SL-REQ-001-create-connection-request.client.md
 planning/slices/l1/L1-MY-REQUESTS-READ-LIST.client.md
 planning/slices/l1/L1-MY-REQUESTS-LIST-FILTERS.client.md
 planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md
 ```
 
-Implemented/partial or target client sidecars:
+## 4. Current L1 Remaining Gaps
 
 ```text
-planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
-planning/slices/SL-APPL-002-account-applicant-parties-read.client.md
+- SL-APPL-003.client runtime implementation if not already implemented.
+- Final Applicant Parties page/section replacement of old current-individual AccountPage model if not already completed.
+- Tests for make-current/default backend/client behavior should be verified.
+- Delete/archive/edit lifecycle remains future.
+- LegalEntity / IndividualEntrepreneur ApplicantParty creation remains future unless implementation proves otherwise.
 ```
 
-Remaining likely client work:
-
-```text
-future SL-APPL-003.client — make ApplicantParty current/default button/action
-Applicant Parties page/section replacement for old current-individual AccountPage model
-```
-
-## 4. Drafting Rules
+## 5. Drafting Rules
 
 ```text
 - Draft by examples, not by improvisation.
@@ -90,7 +84,7 @@ Applicant Parties page/section replacement for old current-individual AccountPag
 - One draft covers one slice; extension slices are named but not implemented.
 ```
 
-## 5. API / Generated Contract Rules
+## 6. API / Generated Contract Rules
 
 For API-changing slices, read:
 
@@ -102,7 +96,7 @@ planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-gen
 
 Generated artifacts must come from repo commands, not manual edits.
 
-## 6. Registers
+## 7. Registers
 
 ```text
 planning/slices/slice-scenario-flow-behavior-register.md

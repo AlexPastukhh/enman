@@ -5,13 +5,11 @@ using EnergyManagement.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Tests.EnergyManagement.Integration;
-using Tests.EnergyManagement.Legacy.TestHelpers;
 
-namespace Tests.EnergyManagement.TestHelpers
+namespace Tests.EnergyManagement.Legacy.TestHelpers
 {
     public static class DatabaseHelpers
     {
-
         public static async Task AddValidIndividual(WebAppFactory factory)
         {
             using var scope = factory.Services.CreateScope();
@@ -25,7 +23,7 @@ namespace Tests.EnergyManagement.TestHelpers
         public static async Task DeleteIndividual(string email, WebAppFactory factory)
         {
             using var scope = factory.Services.CreateScope();
-            
+
             var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             var individual = await context.Set<IndividualClient>().FirstOrDefaultAsync(x => x.Email.Value == email);
             if (individual != null)
@@ -40,7 +38,7 @@ namespace Tests.EnergyManagement.TestHelpers
             var createIndividual = IndividualClient.Create(
                 Email.Create(validEmail).Value,
                 Password.Create(validPassword).Value);
-                
+
             var individual = createIndividual.Value;
 
             using var scope = factory.Services.CreateScope();
@@ -82,6 +80,7 @@ namespace Tests.EnergyManagement.TestHelpers
             {
                 return Result.Failure<IndividualClient>("Client not found");
             }
+
             context.Entry(individual).Collection(i => i.ClientRequests).Load();
             return Result.Success(individual);
         }
@@ -101,7 +100,5 @@ namespace Tests.EnergyManagement.TestHelpers
             var individual = await context.Set<IndividualClient>().FirstOrDefaultAsync(x => x.Email.Value == email);
             return individual != null;
         }
-
-        
     }
 }

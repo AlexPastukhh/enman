@@ -1,6 +1,6 @@
 # Client Planning Index
 
-Status: current client planning navigation / request creation UI implemented and remaining ApplicantParty client gaps synchronized  
+Status: current client planning navigation / read-vs-command layering, request creation UI and make-current/default sidecar synchronized  
 Scope: client-wide UI/client conventions, cross-cutting client behavior and current L1 client implementation state
 
 ## 1. Purpose
@@ -11,7 +11,6 @@ This folder contains client-wide planning docs that are broader than a single sl
 
 ```text
 planning/client/README.md
-planning/l1-current-implementation-status.md
 planning/client/client-layering-for-read-and-command-slices.md
 planning/client/cross-cutting/README.md
 planning/slices/client-architecture-principles.md
@@ -26,46 +25,22 @@ planning/api/generated-artifact-check-workflow.md
 
 ## 3. Responsibility
 
-This folder owns client-wide conventions:
+This folder owns:
 
 ```text
-- UI/accessibility/styling conventions;
-- form validation conventions;
-- error/feedback conventions;
-- command success conventions;
-- read-vs-command layering conventions.
+- client-wide UI conventions;
+- client-wide accessibility conventions;
+- client-wide styling conventions;
+- client-wide form validation conventions;
+- client-wide error mapping conventions;
+- client-wide feedback/message conventions;
+- client-wide command success conventions;
+- client layering conventions reused by multiple `.client.md` sidecars.
 ```
 
-Concrete feature flow and status belongs in the matching `.client.md` sidecar.
+Concrete feature flow and status belongs in the matching `.client.md` slice sidecar.
 
-## 4. Current L1 Client State
-
-Implemented/current:
-
-```text
-- Register/login/current-user/logout flows.
-- My Requests list, filters and details.
-- Request creation route `/requests/create`.
-- Request creation page/form with Existing/New applicant context.
-- Account ApplicantParties read used by request creation.
-```
-
-Remaining L1 client gaps:
-
-```text
-- SL-APPL-003.client make default/current button/action.
-- Replace old AccountPage single-current/current-individual UI with target flat Applicant Parties page/section.
-- Add shared API wrapper/path for make-current-default if still missing during implementation.
-```
-
-Future/not-current gaps:
-
-```text
-- ApplicantParty delete/archive/edit lifecycle UI.
-- LegalEntity / IndividualEntrepreneur ApplicantParty create UI.
-```
-
-## 5. Read vs Command Placement
+## 4. Read vs Command Placement
 
 Read slices use:
 
@@ -99,9 +74,36 @@ Detailed rule:
 planning/client/client-layering-for-read-and-command-slices.md
 ```
 
-## 6. Concrete Client Sidecar Rule
+## 5. Current L1 Client State Reminders
 
-Do not create `.client.md` files in advance unless a concrete client slice is being drafted, implemented or reconciled with existing code.
+```text
+- Register/login/current-user/logout client flows exist.
+- My Requests list, filters and details exist.
+- Request creation UI exists.
+- Account ApplicantParties flat read is available for client consumption.
+- ApplicantParty client still needs final migration from old current-individual AccountPage model to target Applicant Parties page/section if current UI has not been fully replaced.
+- Make current/default client action is now documented by full sidecar and is the next likely client implementation gap.
+```
+
+## 6. Concrete Client Sidecars
+
+```text
+planning/slices/SL-ACC-001-register-client-account.client.md
+planning/slices/SL-AUTH-001-login-client-account.client.md
+planning/slices/SL-AUTH-002-current-user.client.md
+planning/slices/SL-AUTH-003-logout.client.md
+planning/slices/SL-APPL-001-create-individual-applicant-party.client.md
+planning/slices/SL-APPL-002-account-applicant-parties-read.client.md
+planning/slices/SL-APPL-003-select-current-default-applicant-party-template.client.md
+planning/slices/SL-REQ-001-create-connection-request.client.md
+planning/slices/l1/L1-MY-REQUESTS-READ-LIST.client.md
+planning/slices/l1/L1-MY-REQUESTS-LIST-FILTERS.client.md
+planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md
+```
+
+## 7. Drafting Rule
+
+Do not create `.client.md` files in advance unless a concrete client slice is being drafted or implemented.
 
 When drafting, use the canonical short-draft shape:
 
@@ -109,20 +111,10 @@ When drafting, use the canonical short-draft shape:
 planning/slices/client-slice-short-draft-rules-and-example.md
 ```
 
-Current implemented command sidecar:
-
-```text
-planning/slices/SL-REQ-001-create-connection-request.client.md
-```
-
-Current target/read sidecar still needing page replacement work:
+For full sidecar examples, use:
 
 ```text
 planning/slices/SL-APPL-002-account-applicant-parties-read.client.md
-```
-
-Likely next client sidecar/implementation:
-
-```text
-SL-APPL-003.client — Make ApplicantParty Current/Default Action
+planning/slices/SL-REQ-001-create-connection-request.client.md
+planning/slices/SL-APPL-003-select-current-default-applicant-party-template.client.md
 ```

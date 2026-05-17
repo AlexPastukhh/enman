@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using EnergyManagement.Server.Data;
 
-namespace Tests.EnergyManagement.TestHelpers;
+namespace Tests.EnergyManagement.Legacy.TestHelpers;
 
 public sealed record TestIndividualActor(
     long Id,

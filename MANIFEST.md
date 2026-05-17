@@ -1,71 +1,45 @@
-# SL-APPL-003.client make current/default archive
+# MANIFEST — SL-APPL-003.client Full Draft Sync
 
-Archive type: client-only runtime-code archive for `SL-APPL-003.client`.
+Archive: `sl-appl-003-client-full-draft-sync.zip`  
+Scope: documentation-only replacement package for full `SL-APPL-003.client` sidecar and minimal navigation/register synchronization.
 
-## Added files
+## Add
 
-- `energymanagement.client/src/features/applicant-party/make-current-default/api/makeApplicantPartyCurrentDefault.ts`
-- `energymanagement.client/src/features/applicant-party/make-current-default/api/makeApplicantPartyCurrentDefault.test.ts`
-- `energymanagement.client/src/features/applicant-party/make-current-default/model/useMakeApplicantPartyCurrentDefaultMutation.ts`
-- `energymanagement.client/src/features/applicant-party/make-current-default/ui/MakeCurrentDefaultButton.tsx`
-- `energymanagement.client/src/features/applicant-party/make-current-default/ui/MakeCurrentDefaultButton.test.tsx`
-- `energymanagement.client/src/features/applicant-party/make-current-default/ui/makeCurrentDefaultButton.css`
-- `energymanagement.client/src/features/applicant-party/make-current-default/ui/makeCurrentDefaultButtonConst.ts`
-- `tests/e2e/applicant-parties/applicant-parties-make-current-default.spec.ts`
+| File | Why |
+|---|---|
+| `planning/slices/SL-APPL-003-select-current-default-applicant-party-template.client.md` | Adds full client command sidecar for same-page make current/default action. |
 
-## Replaced files
+## Replace
 
-- `energymanagement.client/src/shared/api/l1ApiPaths.ts`
-- `energymanagement.client/src/shared/api/l1ApplicantPartyApi.ts`
-- `energymanagement.client/src/shared/api/l1ApplicantPartyApi.test.ts`
-- `energymanagement.client/src/entities/applicant-party/ui/ApplicantPartiesList.tsx`
-- `energymanagement.client/src/entities/applicant-party/ui/ApplicantPartiesList.test.tsx`
-- `energymanagement.client/src/entities/applicant-party/ui/ApplicantPartySummaryCard.tsx`
-- `energymanagement.client/src/entities/applicant-party/ui/applicantPartiesList.css`
-- `energymanagement.client/src/pages/account/AccountPage.tsx`
-- `energymanagement.client/src/pages/account/AccountPage.test.tsx`
+| File | Why |
+|---|---|
+| `planning/client/README.md` | Adds `SL-APPL-003.client` to client navigation and remaining L1 client work. |
+| `planning/slices/README.md` | Adds `SL-APPL-003.client` to active client sidecars and clarifies remaining L1 client gaps. |
+| `planning/slices/slice-scenario-flow-behavior-register.md` | Adds source mapping for `SL-APPL-003.client`. |
+| `planning/slices/slice-questions-register.md` | Adds client-side make-current/default questions/decisions. |
+| `planning/slices/slice-extension-points-register.md` | Adds make-current/default client extension points while keeping lifecycle future. |
+| `planning/slices/slice-implementation-notes-register.md` | Adds implementation notes for feature/action placement, read UI action slot and generated API workflow. |
 
-## Deleted files
+## Delete
 
 None.
 
-## Generated artifacts
+## Current repo assumptions used
 
-Unchanged. This archive does not include generated artifacts.
+- Backend `SL-APPL-003` command endpoint is implemented as `POST /api/l1/applicant-parties/{applicantPartyId}/make-current-default`.
+- Backend handler loads selected owned ApplicantParty, unsets same-type previous current/default parties, marks selected current/default and saves changes.
+- Client shared API paths currently need make-current/default wrapper/path wiring if not already added in generated/client code.
+- Existing ApplicantParty read/display UI remains read-focused and should not own command mutation logic.
+- Command/user action belongs under `features/applicant-party/make-current-default`.
+- Entity cards/lists may expose an optional action slot/render prop for command actions.
 
-## Tests changed or added
+## Non-goals
 
-- `energymanagement.client/src/shared/api/l1ApplicantPartyApi.test.ts`
-- `energymanagement.client/src/entities/applicant-party/ui/ApplicantPartiesList.test.tsx`
-- `energymanagement.client/src/features/applicant-party/make-current-default/api/makeApplicantPartyCurrentDefault.test.ts`
-- `energymanagement.client/src/features/applicant-party/make-current-default/ui/MakeCurrentDefaultButton.test.tsx`
-- `energymanagement.client/src/pages/account/AccountPage.test.tsx`
-- `tests/e2e/applicant-parties/applicant-parties-make-current-default.spec.ts`
-
-## Commands run and results
-
-- `npm install` — success.
-- `npm --prefix ./energymanagement.client install` — success; npm reported existing audit vulnerabilities.
-- `npm --prefix ./energymanagement.client run build` — success.
-- `npm --prefix ./energymanagement.client run test -- --run --reporter=verbose src/shared/api/l1ApplicantPartyApi.test.ts src/entities/applicant-party/ui/ApplicantPartiesList.test.tsx src/features/applicant-party/make-current-default/ui/MakeCurrentDefaultButton.test.tsx src/features/applicant-party/make-current-default/api/makeApplicantPartyCurrentDefault.test.ts src/pages/account/AccountPage.test.tsx` — success: 5 files passed, 11 tests passed.
-- `npm --prefix ./energymanagement.client run test -- --run --reporter=dot` — timed out in the sandbox after printing passing dots; targeted changed tests passed separately.
-- `npm --prefix ./energymanagement.client run lint` — failed on pre-existing `react-refresh/only-export-components` errors outside this slice (`TestSetup.tsx`, `router.tsx`, `SessionProvider.tsx`, `pageErrorContext.tsx`).
-- `npm run check:api` — failed because sandbox has no `dotnet` executable (`sh: 1: dotnet: not found`).
-
-## Non-goals respected
-
-- No server/backend changes.
-- No `Domain.EnergyManagement` changes.
-- No planning docs changes.
-- No database/migration changes.
-- No generated artifact changes.
-- No manual generated artifact edits.
-- No unrelated cleanup.
-- No GitHub write, branch, commit, or PR.
-
-## Risks / handoff notes
-
-- Full E2E was not run in the sandbox because it requires dotnet/localdb test environment.
-- `applicant-parties-make-current-default.spec.ts` should be run locally with `npm run test:e2e -- tests/e2e/applicant-parties/applicant-parties-make-current-default.spec.ts` and then full `npm run test:e2e`.
-- The full Vitest command timed out in this sandbox; targeted changed tests passed.
-- Lint failure is from pre-existing files outside this archive.
+```text
+- no runtime code changes;
+- no tests;
+- no generated artifacts;
+- no GitHub write/branch/commit/PR;
+- no delete/archive/edit lifecycle behavior;
+- no manual OpenAPI/generated type edits.
+```
