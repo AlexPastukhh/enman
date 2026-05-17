@@ -6,7 +6,11 @@ export const clientRoutes = {
   requests: "/requests",
   createRequest: "/requests/create",
   requestDetailsPath: "/requests/:requestId",
+  employeeRequests: "/employee/requests",
+  employeeRequestDetailsPath: "/employee/requests/:requestId",
   requestDetails: (requestId: number | string) =>
     `/requests/${encodeURIComponent(String(requestId))}`,
+  employeeRequestDetails: (requestId: number | string) =>
+    `/employee/requests/${encodeURIComponent(String(requestId))}`,
   testUi: "/test-ui",
 } as const;
