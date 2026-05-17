@@ -1,18 +1,20 @@
-# APPLY — L1 Current Status Documentation Sync
+# Apply SL-APPL-003.client make current/default archive
 
-Run from repository root:
-
-```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l1-current-status-docs-sync.zip" -DestinationPath . -Force
-git status
-git diff -- planning
-```
-
-If the diff is correct:
+From repo root, apply the archive directly into the repository:
 
 ```powershell
-git add planning
-git status
+Expand-Archive -Path "C:\Users\alexa\Downloads\sl-appl-003-client-make-current-default.zip" -DestinationPath "." -Force
 ```
 
-This archive is docs-only. It must not change backend/client/runtime code, tests or generated artifacts.
+## Verify
+
+```powershell
+npm install
+npm --prefix .\energymanagement.client install
+npm run check:api
+npm --prefix .\energymanagement.client run lint
+npm --prefix .\energymanagement.client run build
+npm --prefix .\energymanagement.client run test -- --run
+npm run test:e2e -- tests/e2e/applicant-parties/applicant-parties-make-current-default.spec.ts
+npm run test:e2e
+```

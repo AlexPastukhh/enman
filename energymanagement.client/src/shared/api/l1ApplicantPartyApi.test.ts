@@ -1,5 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { getAccountApplicantParties } from "./l1ApplicantPartyApi";
+import {
+  getAccountApplicantParties,
+  makeApplicantPartyCurrentDefault,
+} from "./l1ApplicantPartyApi";
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -27,5 +30,21 @@ describe("l1ApplicantPartyApi", () => {
         credentials: "include",
       }),
     );
+  });
+
+  it("posts make current/default command without request body", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response(null, { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(makeApplicantPartyCurrentDefault(42)).resolves.toBeUndefined();
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/l1/applicant-parties/42/make-current-default",
+      expect.objectContaining({
+        method: "POST",
+        credentials: "include",
+      }),
+    );
+    expect(fetchMock.mock.calls[0]?.[1]).not.toHaveProperty("body");
   });
 });

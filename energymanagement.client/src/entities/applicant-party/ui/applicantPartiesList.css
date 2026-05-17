@@ -64,3 +64,8 @@
 .applicantPartyCard__row dd {
   margin: 0;
 }
+
+.applicantPartyCard__actions {
+  border-top: 1px solid currentColor;
+  padding-top: 0.75rem;
+}

@@ -1,6 +1,6 @@
 import type { components } from "./generated/openapi-types";
 import { fetchJson } from "./fetchJson";
-import { l1ApiPaths } from "./l1ApiPaths";
+import { l1ApiPaths, makeApplicantPartyCurrentDefaultPath } from "./l1ApiPaths";
 
 export type L1CreateIndividualApplicantPartyRequest =
   components["schemas"]["L1CreateIndividualApplicantPartyDto"];
@@ -35,6 +35,13 @@ export const getAccountApplicantParties =
         method: "GET",
       },
     );
+
+export const makeApplicantPartyCurrentDefault = (
+  applicantPartyId: number,
+): Promise<void> =>
+  fetchJson<void>(makeApplicantPartyCurrentDefaultPath(applicantPartyId), {
+    method: "POST",
+  });
 
 export const getCurrentIndividualApplicantParty =
   (): Promise<L1CurrentIndividualApplicantPartyResponse> =>

@@ -1,0 +1,9 @@
+.makeCurrentDefaultAction {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: start;
+}
+
+.makeCurrentDefaultAction__error {
+  margin: 0;
+}

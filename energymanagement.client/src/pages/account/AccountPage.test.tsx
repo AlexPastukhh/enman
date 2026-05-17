@@ -5,12 +5,15 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import AccountPage from "./AccountPage";
 
-const { mockedUseSession, mockedUseAccountApplicantPartiesQuery } = vi.hoisted(
-  () => ({
-    mockedUseSession: vi.fn(),
-    mockedUseAccountApplicantPartiesQuery: vi.fn(),
-  }),
-);
+const {
+  mockedUseSession,
+  mockedUseAccountApplicantPartiesQuery,
+  mockedUseMakeApplicantPartyCurrentDefaultMutation,
+} = vi.hoisted(() => ({
+  mockedUseSession: vi.fn(),
+  mockedUseAccountApplicantPartiesQuery: vi.fn(),
+  mockedUseMakeApplicantPartyCurrentDefaultMutation: vi.fn(),
+}));
 
 vi.mock("../../entities/session/model/useSession", () => ({
   useSession: mockedUseSession,
@@ -25,14 +28,26 @@ vi.mock(
   }),
 );
 
-vi.mock("../../features/applicant-party/create-individual/ui/CreateIndividualApplicantPartyForm", () => ({
-  CreateIndividualApplicantPartyForm: () => (
-    <form aria-label="Create applicant party">
-      <button type="submit">Save applicant data</button>
-    </form>
-  ),
-  __esModule: true,
-}));
+vi.mock(
+  "../../features/applicant-party/make-current-default/model/useMakeApplicantPartyCurrentDefaultMutation",
+  () => ({
+    useMakeApplicantPartyCurrentDefaultMutation:
+      mockedUseMakeApplicantPartyCurrentDefaultMutation,
+    __esModule: true,
+  }),
+);
+
+vi.mock(
+  "../../features/applicant-party/create-individual/ui/CreateIndividualApplicantPartyForm",
+  () => ({
+    CreateIndividualApplicantPartyForm: () => (
+      <form aria-label="Create applicant party">
+        <button type="submit">Save applicant data</button>
+      </form>
+    ),
+    __esModule: true,
+  }),
+);
 
 vi.mock("../../features/auth/register/ui/RegisterForm", () => ({
   RegisterForm: () => <form aria-label="Register"></form>,
@@ -58,12 +73,20 @@ describe("AccountPage", () => {
       isActive: true,
       isAuthenticated: true,
     });
+    mockedUseMakeApplicantPartyCurrentDefaultMutation.mockReturnValue({
+      mutate: vi.fn(),
+      variables: undefined,
+      isPending: false,
+      isError: false,
+      error: null,
+    });
   });
 
   afterEach(() => {
     cleanup();
     mockedUseSession.mockReset();
     mockedUseAccountApplicantPartiesQuery.mockReset();
+    mockedUseMakeApplicantPartyCurrentDefaultMutation.mockReset();
   });
 
   it("shows register form when client is not signed in", () => {
@@ -143,8 +166,11 @@ describe("AccountPage", () => {
 
     expect(screen.getByText("John Doe")).toBeVisible();
     expect(screen.getByText("Jane Doe")).toBeVisible();
-    expect(screen.getByText("Current/default")).toBeVisible();
+    expect(screen.getByText("Current/default", { exact: true })).toBeVisible();
     expect(screen.getByText("applicant.l1@example.com")).toBeVisible();
     expect(screen.getByText("applicant.two@example.com")).toBeVisible();
+    expect(
+      screen.getByRole("button", { name: "Make current/default" }),
+    ).toBeVisible();
   });
 });

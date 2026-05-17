@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { groupAccountApplicantParties } from "../model/groupAccountApplicantParties";
 import type { ApplicantPartySummary } from "../model/applicantPartyTypes";
 import { ApplicantPartiesEmptyState } from "./ApplicantPartiesEmptyState";
@@ -7,10 +8,15 @@ import "./applicantPartiesList.css";
 
 type ApplicantPartiesListProps = {
   applicantParties: ApplicantPartySummary[];
+  renderApplicantPartyActions?: (
+    applicantParty: ApplicantPartySummary,
+    options: { highlighted: boolean },
+  ) => ReactNode;
 };
 
 export const ApplicantPartiesList = ({
   applicantParties,
+  renderApplicantPartyActions,
 }: ApplicantPartiesListProps) => {
   const { currentDefaults, otherSaved } =
     groupAccountApplicantParties(applicantParties);
@@ -40,6 +46,9 @@ export const ApplicantPartiesList = ({
                 key={applicantParty.applicantPartyId ?? `current-${index}`}
                 applicantParty={applicantParty}
                 highlighted
+                action={renderApplicantPartyActions?.(applicantParty, {
+                  highlighted: true,
+                })}
               />
             ))}
           </div>
@@ -61,6 +70,9 @@ export const ApplicantPartiesList = ({
               <ApplicantPartySummaryCard
                 key={applicantParty.applicantPartyId ?? `saved-${index}`}
                 applicantParty={applicantParty}
+                action={renderApplicantPartyActions?.(applicantParty, {
+                  highlighted: false,
+                })}
               />
             ))}
           </div>

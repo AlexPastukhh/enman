@@ -2,7 +2,7 @@
  * @vitest environment jsdom
  */
 import { cleanup, render, screen, within } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import type { ApplicantPartySummary } from "../model/applicantPartyTypes";
 import { ApplicantPartiesList } from "./ApplicantPartiesList";
 
@@ -64,12 +64,35 @@ describe("ApplicantPartiesList", () => {
         name: "Applicant Party #1: Ivan",
       }),
     ).toBeVisible();
-    expect(within(currentDefaults).getByText("Current/default")).toBeVisible();
+    expect(
+      within(currentDefaults).getByText("Current/default", { exact: true }),
+    ).toBeVisible();
     expect(
       within(otherSaved).getByRole("heading", {
         name: "Applicant Party #2: Petr",
       }),
     ).toBeVisible();
-    expect(within(otherSaved).queryByText("Current/default")).not.toBeInTheDocument();
+    expect(
+      within(otherSaved).queryByText("Current/default", { exact: true }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("places optional actions for applicant party cards", () => {
+    const renderAction = vi.fn((party: ApplicantPartySummary) => (
+      <button type="button">Action for {party.displayName}</button>
+    ));
+
+    render(
+      <ApplicantPartiesList
+        applicantParties={[applicantParty(1, "Ivan", false)]}
+        renderApplicantPartyActions={renderAction}
+      />,
+    );
+
+    expect(screen.getByRole("button", { name: "Action for Ivan" })).toBeVisible();
+    expect(renderAction).toHaveBeenCalledWith(
+      expect.objectContaining({ applicantPartyId: 1 }),
+      { highlighted: false },
+    );
   });
 });

@@ -26,8 +26,6 @@ namespace Tests.EnergyManagement.Legacy.Integration
     [Collection("IntegrationTestCollection")]
     public class AuthTests:AuthTestsBase
     {
-        private readonly TestIndividualActor _clientActor;
-        
         public static Expression<Func<IAuthenticationService, Task>> ValidSignInFor(TestIndividualActor actor) =>
             authService=>authService
                     .SignInAsync(
@@ -48,8 +46,9 @@ namespace Tests.EnergyManagement.Legacy.Integration
                         
         public AuthTests(IntegrationTestFixture fixure, ITestOutputHelper output):base(fixure.Factory, output)
         {
-            _clientActor = fixure.Client;
         }
+
+        protected override bool CreateLegacyBaselineClient => true;
         
         [Theory]
         [MemberData(nameof(GetInvalidLoginData))]
@@ -166,7 +165,7 @@ namespace Tests.EnergyManagement.Legacy.Integration
         public async Task IndividualClientLogins()
         {
             //Arrange
-            var testClient = _clientActor;
+            var testClient = Client;
             var identity = new ClaimsIdentity(
                 testClient.Claims,
                 CookieAuthenticationDefaults.AuthenticationScheme);
@@ -196,7 +195,7 @@ namespace Tests.EnergyManagement.Legacy.Integration
         public async Task UnAuthenticatedIndividualCantProvideData()
         {
             //Arrange
-            var testClient = _clientActor;
+            var testClient = Client;
 
             var client = _factory.CreateClient(
                 new WebApplicationFactoryClientOptions
@@ -278,7 +277,7 @@ namespace Tests.EnergyManagement.Legacy.Integration
         {
             
             //Arrange
-            var testClient = _clientActor;
+            var testClient = Client;
             
             var client = _factory.AuthenticatedInstanceWithClaims([..testClient.Claims]).CreateClient();
             
@@ -304,7 +303,7 @@ namespace Tests.EnergyManagement.Legacy.Integration
         public async Task CantRegisterWithSameEmail()
         {
             //Arrange
-            var testClient = _clientActor;
+            var testClient = Client;
             var client = _factory.CreateClient();
             var dto = new RegisterClientDto(
                 testClient.Email,testClient.Password,testClient.Password);

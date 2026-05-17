@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { ApplicantPartySummary } from "../model/applicantPartyTypes";
 import { applicantPartiesListConst } from "./applicantPartiesListConst";
 import { formatApplicantPartyDate, valueOrUnknown } from "./formatApplicantParty";
@@ -5,6 +6,7 @@ import { formatApplicantPartyDate, valueOrUnknown } from "./formatApplicantParty
 type ApplicantPartySummaryCardProps = {
   applicantParty: ApplicantPartySummary;
   highlighted?: boolean;
+  action?: ReactNode;
 };
 
 const getCardTitle = (applicantParty: ApplicantPartySummary) => {
@@ -25,6 +27,7 @@ const getCardTitle = (applicantParty: ApplicantPartySummary) => {
 export const ApplicantPartySummaryCard = ({
   applicantParty,
   highlighted = false,
+  action = null,
 }: ApplicantPartySummaryCardProps) => {
   const title = getCardTitle(applicantParty);
   const titleId = `applicant-party-${applicantParty.applicantPartyId ?? "unknown"}-title`;
@@ -89,6 +92,7 @@ export const ApplicantPartySummaryCard = ({
           <dd>{formatApplicantPartyDate(applicantParty.createdAt)}</dd>
         </div>
       </dl>
+      {action && <div className="applicantPartyCard__actions">{action}</div>}
     </article>
   );
 };
