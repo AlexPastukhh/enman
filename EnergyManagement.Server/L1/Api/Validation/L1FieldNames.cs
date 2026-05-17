@@ -48,4 +48,10 @@ public static class L1FieldNames
     {
         public const string Status = "status";
     }
+
+    public static class EmployeeRequestList
+    {
+        public const string Status = "status";
+        public const string ReviewState = "reviewState";
+    }
 }

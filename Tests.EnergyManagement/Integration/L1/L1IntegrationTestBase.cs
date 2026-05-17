@@ -102,6 +102,35 @@ public abstract class L1IntegrationTestBase
             ?? throw new InvalidOperationException("L1 my requests response body was empty.");
     }
 
+
+    protected async Task<EmployeeRequestListResponseDto> GetEmployeeRequestsAsync(
+        HttpClient client,
+        string? status = null,
+        string? reviewState = null)
+    {
+        var query = new List<string>();
+        if (status is not null)
+        {
+            query.Add($"status={Uri.EscapeDataString(status)}");
+        }
+
+        if (reviewState is not null)
+        {
+            query.Add($"reviewState={Uri.EscapeDataString(reviewState)}");
+        }
+
+        var path = query.Count == 0
+            ? "/api/employee/requests"
+            : $"/api/employee/requests?{string.Join("&", query)}";
+
+        var response = await client.GetAsync(path);
+
+        await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
+
+        return await response.Content.ReadFromJsonAsync<EmployeeRequestListResponseDto>()
+            ?? throw new InvalidOperationException("Employee request list response body was empty.");
+    }
+
     protected async Task<L1MyRequestDetailsDto> GetMyRequestDetailsAsync(
         HttpClient client,
         long requestId)
@@ -477,6 +506,44 @@ public abstract class L1IntegrationTestBase
             createdAt);
     }
 
+    protected async Task InsertRequestReviewAsync(
+        long requestId,
+        string reviewStatus,
+        long startedByEmployeeId,
+        DateTimeOffset startedAt,
+        long? completedByEmployeeId = null,
+        DateTimeOffset? completedAt = null,
+        string? rejectionFeedback = null)
+    {
+        await using var connection = new SqlConnection(_fixture.ConnectionString);
+        await connection.OpenAsync();
+
+        await using var command = new SqlCommand(
+            """
+            INSERT INTO dbo.L1RequestReviews
+                (RequestId, Status, StartedByEmployeeId, StartedAt, CompletedByEmployeeId, CompletedAt, RejectionFeedback)
+            VALUES
+                (@requestId, @reviewStatus, @startedByEmployeeId, @startedAt, @completedByEmployeeId, @completedAt, @rejectionFeedback)
+            """,
+            connection)
+        {
+            CommandType = CommandType.Text
+        };
+
+        command.Parameters.AddWithValue("@requestId", requestId);
+        command.Parameters.AddWithValue("@reviewStatus", reviewStatus);
+        command.Parameters.AddWithValue("@startedByEmployeeId", startedByEmployeeId);
+        command.Parameters.AddWithValue("@startedAt", startedAt);
+        command.Parameters.AddWithValue("@completedByEmployeeId",
+            completedByEmployeeId is null ? DBNull.Value : completedByEmployeeId);
+        command.Parameters.AddWithValue("@completedAt",
+            completedAt is null ? DBNull.Value : completedAt);
+        command.Parameters.AddWithValue("@rejectionFeedback",
+            rejectionFeedback is null ? DBNull.Value : rejectionFeedback);
+
+        await command.ExecuteNonQueryAsync();
+    }
+
     protected async Task UpdateRequestReviewAsync(
         long requestId,
         string status,
@@ -490,37 +557,12 @@ public abstract class L1IntegrationTestBase
         await using var command = new SqlCommand(
             """
             UPDATE dbo.L1ClientRequests
-            SET Status = @status
-            WHERE Id = @id;
-
-            MERGE dbo.L1RequestReviews AS target
-            USING (SELECT @id AS RequestId) AS source
-                ON target.RequestId = source.RequestId
-            WHEN MATCHED THEN
-                UPDATE SET
-                    Status = @decision,
-                    StartedByEmployeeId = @reviewerId,
-                    StartedAt = COALESCE(target.StartedAt, @decidedAt),
-                    CompletedByEmployeeId = @reviewerId,
-                    CompletedAt = @decidedAt,
-                    RejectionReason = @rejectionReason
-            WHEN NOT MATCHED THEN
-                INSERT (
-                    RequestId,
-                    Status,
-                    StartedByEmployeeId,
-                    StartedAt,
-                    CompletedByEmployeeId,
-                    CompletedAt,
-                    RejectionReason)
-                VALUES (
-                    @id,
-                    @decision,
-                    @reviewerId,
-                    @decidedAt,
-                    @reviewerId,
-                    @decidedAt,
-                    @rejectionReason);
+            SET Status = @status,
+                ReviewDecision = @decision,
+                ReviewDecidedAt = @decidedAt,
+                ReviewReviewerId = @reviewerId,
+                ReviewRejectionReason = @rejectionReason
+            WHERE Id = @id
             """,
             connection)
         {

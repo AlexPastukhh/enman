@@ -86,6 +86,18 @@ public sealed record L1MyRequestReviewResultDto(
 public sealed record L1MyRequestRejectionDto(
     [property: JsonPropertyName("reason")] string Reason);
 
+public sealed record EmployeeRequestListResponseDto(
+    [property: JsonPropertyName("requests")] IReadOnlyList<EmployeeRequestListItemDto> Requests);
+
+public sealed record EmployeeRequestListItemDto(
+    [property: JsonPropertyName("requestId")] long RequestId,
+    [property: JsonPropertyName("requestType")] string RequestType,
+    [property: JsonPropertyName("status")] string Status,
+    [property: JsonPropertyName("applicantDisplayName")] string ApplicantDisplayName,
+    [property: JsonPropertyName("objectAddress")] string ObjectAddress,
+    [property: JsonPropertyName("createdAt")] DateTimeOffset CreatedAt,
+    [property: JsonPropertyName("reviewState")] string ReviewState);
+
 public sealed record L1AddressDto(
     [property: JsonPropertyName("postalCode")] string? PostalCode,
     [property: JsonPropertyName("region")] string? Region,

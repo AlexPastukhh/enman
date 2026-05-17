@@ -57,7 +57,6 @@ builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 builder.Services.AddTransient<IApplicantPartyRepository, ApplicantPartyRepository>();
 builder.Services.AddTransient<IApplicantPartyCreationService, ApplicantPartyCreationService>();
 builder.Services.AddTransient<IClientRequestRepository, ClientRequestRepository>();
-builder.Services.AddTransient<IAgreementProposalExchangeRepository, AgreementProposalExchangeRepository>();
 
 // builder.Services.AddSingleton(_=>ConstantsToWrite.Create());
 builder.Services.AddSingleton(_=>ErrorObject.Create());
@@ -74,6 +73,7 @@ builder.Services.AddTransient<IValidator<L1LoginRequest>, L1LoginRequestValidato
 builder.Services.AddTransient<IValidator<L1CreateIndividualApplicantPartyDto>, L1CreateIndividualApplicantPartyDtoValidator>();
 builder.Services.AddTransient<IValidator<L1CreateConnectionRequestDto>, L1CreateConnectionRequestDtoValidator>();
 builder.Services.AddTransient<IValidator<L1ListMyRequestsQueryDto>, L1ListMyRequestsQueryDtoValidator>();
+builder.Services.AddTransient<IValidator<EmployeeRequestListQueryDto>, EmployeeRequestListQueryDtoValidator>();
 
 // 1️⃣ Register your config (it's already loaded by SharedFileService)
 // builder.Services.AddSingleton<ConstantsConfig>(_ => 

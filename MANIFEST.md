@@ -1,105 +1,88 @@
-# L2-EMP-DASH-001.client — Employee Request Dashboard archive
+# MANIFEST — SL-EMP-REQ-001 Employee Request List Read
 
-## Summary
+Archive: `sl-emp-req-001-employee-request-list-read-v12.zip`
 
-Client-only implementation archive for the Employee Request Dashboard read-list sidecar.
-
-Implements:
-
-- `/employee/requests` route helper and router entry;
-- `EmployeeDashboardPage` with signed-out, non-Employee, loading, invalid-filter, error, empty and success states;
-- Employee request dashboard shared API wrapper for `GET /api/employee/requests`;
-- entity API/query/model files for dashboard read data;
-- read-only dashboard list/row/review-state UI under `entities/employee-request/ui`;
-- status and reviewState filters backed by URL query params;
-- component/shared API/entity tests for changed code.
+Scope: backend/API read slice implementation for `SL-EMP-REQ-001 — Employee Request List Read`.
 
 ## Added files
 
-- `energymanagement.client/src/shared/api/employeeRequestApi.ts`
-- `energymanagement.client/src/shared/api/employeeRequestApi.test.ts`
-- `energymanagement.client/src/entities/employee-request/api/listEmployeeDashboardRequests.ts`
-- `energymanagement.client/src/entities/employee-request/api/listEmployeeDashboardRequests.test.ts`
-- `energymanagement.client/src/entities/employee-request/model/employeeRequestFilters.ts`
-- `energymanagement.client/src/entities/employee-request/model/employeeRequestTypes.ts`
-- `energymanagement.client/src/entities/employee-request/model/employeeRequestQueryKeys.ts`
-- `energymanagement.client/src/entities/employee-request/model/useEmployeeRequestDashboardQuery.ts`
-- `energymanagement.client/src/entities/employee-request/ui/employeeRequestDashboardConst.ts`
-- `energymanagement.client/src/entities/employee-request/ui/formatEmployeeRequest.ts`
-- `energymanagement.client/src/entities/employee-request/ui/EmployeeReviewStateBadge.tsx`
-- `energymanagement.client/src/entities/employee-request/ui/EmployeeRequestDashboardEmptyState.tsx`
-- `energymanagement.client/src/entities/employee-request/ui/EmployeeRequestDashboardRow.tsx`
-- `energymanagement.client/src/entities/employee-request/ui/EmployeeRequestDashboardList.tsx`
-- `energymanagement.client/src/entities/employee-request/ui/EmployeeRequestDashboardList.test.tsx`
-- `energymanagement.client/src/entities/employee-request/ui/employeeRequestDashboard.css`
-- `energymanagement.client/src/pages/employee/dashboard/EmployeeDashboardPage.tsx`
-- `energymanagement.client/src/pages/employee/dashboard/EmployeeRequestDashboardFilters.tsx`
-- `energymanagement.client/src/pages/employee/dashboard/EmployeeRequestDashboardFilters.test.tsx`
-- `energymanagement.client/src/pages/employee/dashboard/employeeDashboardPage.css`
-- `energymanagement.client/src/pages/employee/dashboard/model/employeeDashboardUrlFilters.ts`
-- `energymanagement.client/src/pages/employee/dashboard/model/employeeDashboardUrlFilters.test.ts`
+- `EnergyManagement.Server/L1/Api/Validation/EmployeeRequestListQueryDtoValidator.cs`
+- `EnergyManagement.Server/L1/Application/Queries/EmployeeRequestListHandler.cs`
+- `EnergyManagement.Server/L1/Application/Queries/EmployeeRequestListQuery.cs`
+- `EnergyManagement.Server/L1/Controllers/EmployeeRequestsController.cs`
+- `Tests.EnergyManagement/Integration/L1/EmployeeRequests/EmployeeRequestListIntegrationTests.cs`
 
 ## Replaced files
 
-- `energymanagement.client/src/shared/config/clientRoutes.ts`
-- `energymanagement.client/src/app/router/router.tsx`
+- `EnergyManagement.Server/L1/Api/L1Dtos.cs`
+- `EnergyManagement.Server/L1/Api/Validation/L1FieldNames.cs`
+- `EnergyManagement.Server/L1/Api/Validation/L1RequestValidationDto.cs`
+- `EnergyManagement.Server/Program.cs`
+- `EnergyManagement.Testing/TestDatabase/TestDatabaseManager.cs`
+- `Tests.EnergyManagement/Integration/L1/L1IntegrationTestBase.cs`
 
 ## Deleted files
 
 None.
 
+## API shape
+
+Adds:
+
+```http
+GET /api/employee/requests?status=...&reviewState=...
+```
+
+Response:
+
+```ts
+type EmployeeRequestListResponseDto = {
+  requests: EmployeeRequestListItemDto[];
+};
+
+type EmployeeRequestListItemDto = {
+  requestId: number;
+  requestType: string;
+  status: string;
+  applicantDisplayName: string;
+  objectAddress: string;
+  createdAt: string;
+  reviewState: "NotStarted" | "StartedByCurrentEmployee" | "StartedByAnotherEmployee" | "Approved" | "Rejected";
+};
+```
+
+## Implementation notes
+
+- Uses a dedicated employee read controller at `/api/employee/requests`.
+- Requires authenticated L1 identity with `Employee` role.
+- Uses FluentValidation only for query shape / allowed `status` and `reviewState` values.
+- Uses Dapper read projection for request rows and review state.
+- Does not load or mutate request aggregates.
+- Does not implement details endpoint.
+- Does not implement StartReview / ApproveReview / RejectReview commands.
+- Adds test database support for `dbo.L1RequestReviews` if missing, so integration tests can seed review state.
+
+## Tests added/updated
+
+- Adds focused API integration tests for auth/access, empty list, compact rows, review-state projection, status filter, reviewState filter, and invalid query values.
+- Updates `L1IntegrationTestBase` with employee request list and request review seed helpers.
+
 ## Generated artifacts
 
-Unchanged:
+Not included.
 
-- `Shared/openapi.json`
-- `energymanagement.client/src/shared/api/generated/openapi-types.ts`
-- `Shared/constants.json`
-- `Shared/errorcodes.json`
+This archive changes the server API contract, so after applying it run the repository OpenAPI/type generation workflow locally.
 
-No generated artifact was manually edited.
+## Commands run in this environment
 
-## Tests changed
-
-Added:
-
-- `energymanagement.client/src/shared/api/employeeRequestApi.test.ts`
-- `energymanagement.client/src/entities/employee-request/api/listEmployeeDashboardRequests.test.ts`
-- `energymanagement.client/src/entities/employee-request/ui/EmployeeRequestDashboardList.test.tsx`
-- `energymanagement.client/src/pages/employee/dashboard/model/employeeDashboardUrlFilters.test.ts`
-- `energymanagement.client/src/pages/employee/dashboard/EmployeeRequestDashboardFilters.test.tsx`
-
-No E2E test is included because the server endpoint/generated OpenAPI contract is not implemented in this repo snapshot.
-
-## Commands run and results
-
-- `npm install` — success.
-- `npm --prefix ./energymanagement.client install` — success; npm reported 8 audit vulnerabilities.
-- `npm --prefix ./energymanagement.client run build` — success.
-- `npm --prefix ./energymanagement.client run test -- --run --reporter=verbose src/shared/api/employeeRequestApi.test.ts src/entities/employee-request/api/listEmployeeDashboardRequests.test.ts src/entities/employee-request/ui/EmployeeRequestDashboardList.test.tsx src/pages/employee/dashboard/model/employeeDashboardUrlFilters.test.ts src/pages/employee/dashboard/EmployeeRequestDashboardFilters.test.tsx` — success: 5 test files passed, 12 tests passed.
-- `npm --prefix ./energymanagement.client run test -- --run --reporter=dot` — timed out in sandbox after printing passing dots; targeted changed tests passed.
-- `npm --prefix ./energymanagement.client run lint` — failed on existing `react-refresh/only-export-components` errors outside this slice: `TestSetup.tsx`, `router.tsx`, `SessionProvider.tsx`, `pageErrorContext.tsx`.
-
-Not run:
-
-- `npm run check:api` — not run because this sandbox does not have dotnet tooling.
-- `npm run test:e2e` — not run because the Employee endpoint is not implemented and E2E requires dotnet/localdb test environment.
+Not run: `.NET SDK` is not available in this sandbox.
 
 ## Non-goals respected
 
-- No server/backend changes.
-- No `Domain.EnergyManagement` changes.
-- No planning docs changes.
-- No database/migration changes.
-- No generated artifact changes.
-- No review command/action implementation.
-- No start/approve/reject UI.
-- No local CSRF mechanics.
-- No GitHub write, branch, commit or PR.
-
-## Risks / handoff notes
-
-- The uploaded client sidecar says runtime implementation waits for the server read endpoint and generated DTOs. This archive implements the client against the documented `SL-EMP-REQ-001` endpoint/DTO direction because generated OpenAPI types are not present yet.
-- Once `SL-EMP-REQ-001` backend is implemented and OpenAPI is generated, replace local shared API DTO aliases with generated OpenAPI type aliases.
-- The route uses `session.role === "Employee"`. If Employee auth/session role uses another value, update the session guard.
-- `employeeRequestDetails` route helper is added for row links, but the actual Employee details page remains future `SL-EMP-REQ-002.client` work.
+- No planning/docs changes.
+- No client UI changes.
+- No domain behavior changes.
+- No review commands.
+- No details endpoint.
+- No AgreementProposalExchange behavior.
+- No generated artifact manual edits.
