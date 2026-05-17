@@ -55,3 +55,15 @@
   display: inline-flex;
   margin-top: 0.5rem;
 }
+
+.employeeRequestDashboardRow__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.employeeRequestDashboardRow__actions .employeeRequestDashboardRow__detailsLink {
+  margin-top: 0;
+}

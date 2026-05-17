@@ -37,6 +37,15 @@ vi.mock("../../../../shared/ui/layout/Footer", () => ({
   __esModule: true,
 }));
 
+vi.mock("../../../../features/employee-request/start-review/ui/StartReviewButton", () => ({
+  StartReviewButton: ({ disabled }: { disabled?: boolean }) => (
+    <button type="button" disabled={disabled}>
+      Start review
+    </button>
+  ),
+  __esModule: true,
+}));
+
 const renderPage = (initialEntry = "/employee/requests/42") =>
   render(
     <MemoryRouter initialEntries={[initialEntry]}>
@@ -99,6 +108,7 @@ describe("EmployeeRequestDetailsPage", () => {
     ).toBeVisible();
     expect(screen.getByRole("heading", { name: "Request #42" })).toBeVisible();
     expect(screen.getByText("Start review is available.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Start review" })).toBeVisible();
   });
 
   it("shows sign-in state without session", () => {

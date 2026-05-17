@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { EmployeeRequestDashboardItem } from "../model/employeeRequestTypes";
 import {
   EmployeeRequestDashboardEmptyState,
@@ -11,12 +12,14 @@ type EmployeeRequestDashboardListProps = {
   requests: EmployeeRequestDashboardItem[];
   emptyStateVariant?: EmployeeRequestDashboardEmptyStateVariant;
   onResetFilters?: () => void;
+  renderRowActions?: (request: EmployeeRequestDashboardItem) => ReactNode;
 };
 
 export const EmployeeRequestDashboardList = ({
   requests,
   emptyStateVariant = "default",
   onResetFilters,
+  renderRowActions,
 }: EmployeeRequestDashboardListProps) => {
   if (requests.length === 0) {
     return (
@@ -36,6 +39,7 @@ export const EmployeeRequestDashboardList = ({
         <EmployeeRequestDashboardRow
           key={request.requestId}
           request={request}
+          renderActions={renderRowActions}
         />
       ))}
     </div>

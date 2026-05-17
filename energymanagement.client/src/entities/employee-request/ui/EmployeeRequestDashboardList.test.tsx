@@ -51,6 +51,27 @@ describe("EmployeeRequestDashboardList", () => {
     ).toHaveAttribute("href", "/employee/requests/42");
   });
 
+  it("renders optional row action slot", () => {
+    renderWithRouter(
+      <EmployeeRequestDashboardList
+        requests={[
+          {
+            requestId: 42,
+            requestType: "Connection",
+            status: "InReview",
+            applicantDisplayName: "Ivan Petrov",
+            objectAddress: "Altai Krai, Zarinsk, Lenina 10",
+            createdAt: "2026-01-02T10:30:00Z",
+            reviewState: "NotStarted",
+          },
+        ]}
+        renderRowActions={() => <button type="button">Start review</button>}
+      />,
+    );
+
+    expect(screen.getByRole("button", { name: "Start review" })).toBeVisible();
+  });
+
   it("shows filtered empty state with reset action", () => {
     const onResetFilters = vi.fn();
 

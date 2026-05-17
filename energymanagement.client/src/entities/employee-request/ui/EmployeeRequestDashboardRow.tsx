@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import type { EmployeeRequestDashboardItem } from "../model/employeeRequestTypes";
 import { clientRoutes } from "../../../shared/config/clientRoutes";
@@ -10,10 +11,12 @@ import {
 
 type EmployeeRequestDashboardRowProps = {
   request: EmployeeRequestDashboardItem;
+  renderActions?: (request: EmployeeRequestDashboardItem) => ReactNode;
 };
 
 export const EmployeeRequestDashboardRow = ({
   request,
+  renderActions,
 }: EmployeeRequestDashboardRowProps) => {
   const requestId = request.requestId;
   const title = `${employeeRequestDashboardConst.requestTitlePrefix} #${requestId}`;
@@ -49,13 +52,16 @@ export const EmployeeRequestDashboardRow = ({
         </div>
       </dl>
 
-      <Link
-        className="employeeRequestDashboardRow__detailsLink"
-        to={clientRoutes.employeeRequestDetails(requestId)}
-        aria-label={`${employeeRequestDashboardConst.detailsLinkText} ${title}`}
-      >
-        {employeeRequestDashboardConst.detailsLinkText}
-      </Link>
+      <div className="employeeRequestDashboardRow__actions">
+        <Link
+          className="employeeRequestDashboardRow__detailsLink"
+          to={clientRoutes.employeeRequestDetails(requestId)}
+          aria-label={`${employeeRequestDashboardConst.detailsLinkText} ${title}`}
+        >
+          {employeeRequestDashboardConst.detailsLinkText}
+        </Link>
+        {renderActions?.(request)}
+      </div>
     </article>
   );
 };

@@ -1,9 +1,11 @@
 import { Link, useParams } from "react-router-dom";
+import { getEmployeeReviewActionAvailability } from "../../../../entities/employee-request/model/reviewActionAvailability";
 import { useEmployeeRequestDetailsQuery } from "../../../../entities/employee-request/model/useEmployeeRequestDetailsQuery";
 import { EmployeeRequestDetailsEmptyState } from "../../../../entities/employee-request/ui/EmployeeRequestDetailsEmptyState";
 import { EmployeeRequestDetailsView } from "../../../../entities/employee-request/ui/EmployeeRequestDetailsView";
 import { employeeRequestDetailsConst } from "../../../../entities/employee-request/ui/employeeRequestDetailsConst";
 import { useSession } from "../../../../entities/session/model/useSession";
+import { StartReviewButton } from "../../../../features/employee-request/start-review/ui/StartReviewButton";
 import { ApiError } from "../../../../shared/api/fetchJson";
 import { clientRoutes } from "../../../../shared/config/clientRoutes";
 import { Footer } from "../../../../shared/ui/layout/Footer";
@@ -101,7 +103,21 @@ const EmployeeRequestDetailsPage = () => {
             )}
 
           {session && isEmployee && !isNotFound && detailsQuery.data && (
-            <EmployeeRequestDetailsView details={detailsQuery.data} />
+            <EmployeeRequestDetailsView
+              details={detailsQuery.data}
+              renderReviewActions={(details) => {
+                const availability = getEmployeeReviewActionAvailability(details);
+
+                return (
+                  <StartReviewButton
+                    requestId={details.requestId}
+                    disabled={!availability.canStartReview}
+                    unavailableReason={availability.reason}
+                    surface="details"
+                  />
+                );
+              }}
+            />
           )}
         </section>
       </main>

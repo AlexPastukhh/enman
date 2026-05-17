@@ -3,10 +3,12 @@ import {
   hasActiveEmployeeRequestDashboardFilters,
   type EmployeeRequestDashboardFilters as EmployeeRequestDashboardFiltersState,
 } from "../../../../entities/employee-request/model/employeeRequestFilters";
+import type { EmployeeRequestDashboardItem } from "../../../../entities/employee-request/model/employeeRequestTypes";
 import { useEmployeeRequestDashboardQuery } from "../../../../entities/employee-request/model/useEmployeeRequestDashboardQuery";
 import { EmployeeRequestDashboardList } from "../../../../entities/employee-request/ui/EmployeeRequestDashboardList";
 import { employeeRequestDashboardConst } from "../../../../entities/employee-request/ui/employeeRequestDashboardConst";
 import { useSession } from "../../../../entities/session/model/useSession";
+import { StartReviewButton } from "../../../../features/employee-request/start-review/ui/StartReviewButton";
 import { clientRoutes } from "../../../../shared/config/clientRoutes";
 import { Footer } from "../../../../shared/ui/layout/Footer";
 import { Header } from "../../../../shared/ui/layout/Header";
@@ -18,6 +20,10 @@ import {
 import "./employeeDashboardPage.css";
 
 const isEmployeeSession = (role?: string | null) => role === "Employee";
+
+const canStartReviewFromDashboardRow = (
+  request: EmployeeRequestDashboardItem,
+) => request.status === "InReview" && request.reviewState === "NotStarted";
 
 const EmployeeDashboardPage = () => {
   const session = useSession();
@@ -105,6 +111,14 @@ const EmployeeDashboardPage = () => {
               requests={dashboardQuery.data}
               emptyStateVariant={hasActiveFilters ? "filtered" : "default"}
               onResetFilters={handleResetFilters}
+              renderRowActions={(request) =>
+                canStartReviewFromDashboardRow(request) ? (
+                  <StartReviewButton
+                    requestId={request.requestId}
+                    surface="dashboard"
+                  />
+                ) : null
+              }
             />
           )}
         </section>
