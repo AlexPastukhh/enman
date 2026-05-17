@@ -61,7 +61,8 @@ planning/diagrams/scenario-behavior-items/
 | `L2-EMP-DASH-001-employee-request-dashboard.client.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-06-employee-request-dashboard.md`, employee request DATA/behavior files | Employee request dashboard client read UI | drafted |
 | `SL-EMP-REQ-002-employee-request-details-read.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-07A-employee-request-details.md`, details DATA/behavior files | Employee request details read endpoint | drafted |
 | `L2-EMP-DETAILS-001-employee-request-details.client.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-07A-employee-request-details.md`, details DATA/behavior files | Employee request details client read UI and action availability display | drafted |
-| `SL-EMP-REQ-003-start-request-review.md` | `[SCENARIO]` / `[BEHAVIOR]` | `SC-07B-employee-request-review.md`, review behavior files | StartReview command | drafted |
+| `SL-EMP-REQ-003-start-request-review.md` | `[SCENARIO]` / `[BEHAVIOR]` | `SC-07B-employee-request-review.md`, review behavior files | StartReview backend command | drafted |
+| `L2-REVIEW-START-001-start-request-review.client.md` | `[SCENARIO]` / `[BEHAVIOR]` / `[CONCERN]` | `SC-07B-employee-request-review.md`, review behavior files, `CC-CSRF-001` | StartReview client action/mutation | drafted |
 | `SL-EMP-REQ-004` | `[SCENARIO]` / `[BEHAVIOR]` | `SC-07B-employee-request-review.md`, review behavior files | ApproveReview command | planned |
 | `SL-EMP-REQ-005` | `[SCENARIO]` / `[BEHAVIOR]` | `SC-07B-employee-request-review.md`, review behavior files | RejectReview command and feedback | planned |
 | `SL-AGR-*` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-13A..E`, `SC-14`, agreement behavior files | AgreementProposalExchange, proposal versions, final refusal, agreement documents | planned source |
@@ -77,6 +78,7 @@ planning/diagrams/scenario-behavior-items/
 - Implementation Flow must not be mistaken for Scenario Flow.
 - Implementation details are not behavior items.
 - Domain draft informs domain boundaries but does not replace scenario source files.
+- Command client sidecars consume shared cross-cutting concerns; they do not implement local CSRF/session mechanics.
 ```
 
 ## 5. Update Rule

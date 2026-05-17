@@ -1,22 +1,18 @@
-# Apply L2 Domain Persistence Cleanup Patch
+# APPLY — review-start-client-full-draft-sync
 
-From repo root:
-
-```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l2-domain-persistence-cleanup.zip" -DestinationPath "." -Force
-Remove-Item .\Domain.EnergyManagement\L1\Requests\ReviewDecision.cs -Force
-```
-
-Then verify locally:
+From repository root:
 
 ```powershell
-dotnet build .\Domain.EnergyManagement\Domain.EnergyManagement.csproj
-dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
-dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
+Expand-Archive -Path "C:\Users\alexa\Downloads\review-start-client-full-draft-sync.zip" -DestinationPath . -Force
+git status
+git diff -- planning
 ```
 
-Notes:
+If the diff is correct:
 
-- This patch does not add EF migrations.
-- L1 test database setup creates/ensures the new L1 request review/agreement proposal tables for tests.
-- Generated OpenAPI/client artifacts are not included and were not manually edited.
+```powershell
+git add planning
+git status
+```
+
+This package is docs-only.

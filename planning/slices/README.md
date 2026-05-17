@@ -1,6 +1,6 @@
 # Slice Planning Index
 
-Status: current slice-planning navigation index / L2 Employee read and client sidecars synchronized
+Status: current slice-planning navigation index / L2 Employee read, details and start-review sidecars synchronized
 
 ## 1. Core Rule
 
@@ -81,6 +81,7 @@ planning/slices/SL-EMP-REQ-003-start-request-review.md
 ```text
 planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
 planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md
+planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md
 ```
 
 ## 6. L2 Navigation
@@ -99,7 +100,16 @@ planning/slices/l2/README.md
 - LegalEntity / IndividualEntrepreneur ApplicantParty creation remains future unless implementation proves otherwise.
 ```
 
-## 8. Drafting Rules
+## 8. L2 Recommended Next Drafts
+
+```text
+SL-EMP-REQ-004 — Approve Request Review
+SL-EMP-REQ-005 — Reject Request Review
+L2-REVIEW-APPROVE-001.client — Approve Request Review
+L2-REVIEW-REJECT-001.client — Reject Request Review
+```
+
+## 9. Drafting Rules
 
 ```text
 - Draft by examples, not by improvisation.
@@ -112,7 +122,7 @@ planning/slices/l2/README.md
 - Cross-cutting concerns are considered in their own section; do not pollute Scenario Flow with implementation concerns.
 ```
 
-## 9. API / Generated Contract Rules
+## 10. API / Generated Contract Rules
 
 For API-changing slices, read:
 
@@ -124,7 +134,7 @@ planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-gen
 
 Generated artifacts must come from repo commands, not manual edits.
 
-## 10. Registers
+## 11. Registers
 
 ```text
 planning/slices/slice-scenario-flow-behavior-register.md

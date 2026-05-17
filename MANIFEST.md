@@ -1,37 +1,43 @@
-# L2 Domain Persistence Cleanup Patch
+# MANIFEST — review-start-client-full-draft-sync
 
-This archive updates the current project toward the L2 domain model:
+Docs-only replacement package.
 
-- removes the legacy `ReviewDecision` domain enum from effective code;
-- persists request-owned `RequestReview` through `L1RequestReviews`;
-- maps `AgreementProposalExchange` and owned `AgreementProposal` versions;
-- changes request details read compatibility from legacy review decision columns to `RequestReviewStatus`/`CompletedAt`;
-- switches `ClientRequestRepository` read projections to Dapper;
-- adds a repository for `AgreementProposalExchange`.
+## Added
 
-No planning/docs/client/generated/OpenAPI/migration files are included.
-
-## Files included
-
-- `Domain.EnergyManagement/L1/Requests/ConnectionRequest.cs`
-- `Domain.EnergyManagement/L1/Requests/ReviewDecision.cs` — no-op placeholder so archive extraction neutralizes the old enum if the file existed
-- `EnergyManagement.Server/L1/Application/Abstractions/IAgreementProposalExchangeRepository.cs`
-- `EnergyManagement.Server/L1/Application/Abstractions/IClientRequestRepository.cs`
-- `EnergyManagement.Server/L1/Application/Queries/L1GetMyRequestDetailsHandler.cs`
-- `EnergyManagement.Server/L1/Application/Queries/L1GetMyRequestDetailsQuery.cs`
-- `EnergyManagement.Server/L1/Persistence/L1DbContext.cs`
-- `EnergyManagement.Server/L1/Persistence/Repositories/AgreementProposalExchangeRepository.cs`
-- `EnergyManagement.Server/L1/Persistence/Repositories/ClientRequestRepository.cs`
-- `EnergyManagement.Server/Program.cs`
-- `EnergyManagement.Testing/TestDatabase/TestDatabaseManager.cs`
-- `Tests.EnergyManagement/Integration/L1/L1IntegrationTestBase.cs`
-
-## Intentional deletion
-
-After extraction, delete the old compatibility file path entirely if you want the tree to be clean:
-
-```powershell
-Remove-Item .\Domain.EnergyManagement\L1\Requests\ReviewDecision.cs -Force
+```text
+planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md
 ```
 
-The archive also overwrites that file with a no-op placeholder so the `ReviewDecision` type is removed even before deletion.
+## Replaced / synchronized
+
+```text
+planning/slices/l2/README.md
+planning/slices/README.md
+planning/slices/slice-scenario-flow-behavior-register.md
+planning/slices/slice-implementation-notes-register.md
+```
+
+## Source input
+
+```text
+Uploaded draft:
+Вставленная ​​уценка(18).md
+```
+
+The uploaded file was a short client command sidecar draft for:
+
+```text
+planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md
+```
+
+This package expands it to a full client sidecar draft and synchronizes navigation/register files.
+
+## Scope
+
+```text
+- docs only;
+- no runtime code;
+- no tests;
+- no generated OpenAPI or TypeScript artifacts;
+- no GitHub writes.
+```
