@@ -1,7 +1,7 @@
 import type {
   EmployeeDashboardReviewState,
   EmployeeRequestStatus,
-} from "../../../shared/api/employeeRequestApi";
+} from "../api/employeeRequestApiTypes";
 
 export type EmployeeRequestDashboardFilters = {
   status?: EmployeeRequestStatus;

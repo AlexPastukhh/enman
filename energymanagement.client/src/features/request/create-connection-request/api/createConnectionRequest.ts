@@ -1,8 +1,10 @@
-import {
-  createConnectionRequest as postCreateConnectionRequest,
-  type L1CreateConnectionRequestRequest,
-} from "../../../../shared/api/l1RequestApi";
+import type { L1CreateConnectionRequestRequest } from "../../../../entities/request/api/requestApiTypes";
+import { fetchJson } from "../../../../shared/api/fetchJson";
 
 export const createConnectionRequest = (
   request: L1CreateConnectionRequestRequest,
-): Promise<void> => postCreateConnectionRequest(request);
+): Promise<void> =>
+  fetchJson<void>("/api/l1/requests", {
+    method: "POST",
+    body: JSON.stringify(request),
+  });

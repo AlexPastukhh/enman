@@ -3,7 +3,7 @@ import type {
   L1ApplicantPartySummary,
   L1CurrentIndividualApplicantPartyResponse,
   L1IndividualApplicantParty,
-} from "../../../shared/api/l1ApplicantPartyApi";
+} from "../api/applicantPartyApiTypes";
 
 export type CurrentIndividualApplicantPartyState =
   L1CurrentIndividualApplicantPartyResponse;

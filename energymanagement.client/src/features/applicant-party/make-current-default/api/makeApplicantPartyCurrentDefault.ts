@@ -1,5 +1,13 @@
-import { makeApplicantPartyCurrentDefault as postMakeApplicantPartyCurrentDefault } from "../../../../shared/api/l1ApplicantPartyApi";
+import { fetchJson } from "../../../../shared/api/fetchJson";
+
+const makeApplicantPartyCurrentDefaultPath = (
+  applicantPartyId: number | string,
+) =>
+  `/api/l1/applicant-parties/${encodeURIComponent(String(applicantPartyId))}/make-current-default`;
 
 export const makeApplicantPartyCurrentDefault = (
   applicantPartyId: number,
-): Promise<void> => postMakeApplicantPartyCurrentDefault(applicantPartyId);
+): Promise<void> =>
+  fetchJson<void>(makeApplicantPartyCurrentDefaultPath(applicantPartyId), {
+    method: "POST",
+  });

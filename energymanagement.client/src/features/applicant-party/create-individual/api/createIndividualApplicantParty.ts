@@ -1,11 +1,15 @@
 import {
-  createIndividualApplicantParty as postCreateIndividualApplicantParty,
   type L1CreateIndividualApplicantPartyRequest,
-} from "../../../../shared/api/l1ApplicantPartyApi";
+  type L1CreateIndividualApplicantPartyResponse,
+} from "../../../../entities/applicant-party/api/applicantPartyApiTypes";
+import { fetchJson } from "../../../../shared/api/fetchJson";
 import {
   createIndividualApplicantPartyFieldNames,
   type CreateIndividualApplicantPartyFormValues,
 } from "../model/createIndividualApplicantPartySchema";
+
+const createIndividualApplicantPartyPath =
+  "/api/l1/applicant-parties/individual";
 
 export const createIndividualApplicantParty = (
   values: CreateIndividualApplicantPartyFormValues,
@@ -20,5 +24,11 @@ export const createIndividualApplicantParty = (
     phoneNumber: values[createIndividualApplicantPartyFieldNames.phoneNumber],
   };
 
-  return postCreateIndividualApplicantParty(request).then(() => undefined);
+  return fetchJson<L1CreateIndividualApplicantPartyResponse>(
+    createIndividualApplicantPartyPath,
+    {
+      method: "POST",
+      body: JSON.stringify(request),
+    },
+  ).then(() => undefined);
 };

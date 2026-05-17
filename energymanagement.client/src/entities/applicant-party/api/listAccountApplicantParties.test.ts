@@ -1,28 +1,31 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { listAccountApplicantParties } from "./listAccountApplicantParties";
 
-const { mockedGetAccountApplicantParties } = vi.hoisted(() => ({
-  mockedGetAccountApplicantParties: vi.fn(),
-}));
-
-vi.mock("../../../shared/api/l1ApplicantPartyApi", () => ({
-  getAccountApplicantParties: mockedGetAccountApplicantParties,
-  __esModule: true,
-}));
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
 
 describe("listAccountApplicantParties", () => {
-  afterEach(() => {
-    mockedGetAccountApplicantParties.mockReset();
-  });
-
-  it("delegates to the shared L1 applicant party API wrapper", async () => {
+  it("gets account applicant parties from the L1 account list endpoint", async () => {
     const response = {
       applicantParties: [],
     };
-    mockedGetAccountApplicantParties.mockResolvedValue(response);
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(JSON.stringify(response), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
 
-    await expect(listAccountApplicantParties()).resolves.toBe(response);
+    await expect(listAccountApplicantParties()).resolves.toEqual(response);
 
-    expect(mockedGetAccountApplicantParties).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/l1/applicant-parties",
+      expect.objectContaining({
+        method: "GET",
+        credentials: "include",
+      }),
+    );
   });
 });

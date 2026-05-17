@@ -3,7 +3,7 @@ import type {
   EmployeeRequestListItemDto,
   EmployeeRequestListResponseDto,
   EmployeeRequestStatus,
-} from "../../../shared/api/employeeRequestApi";
+} from "../api/employeeRequestApiTypes";
 
 export type EmployeeRequestDashboardItem = EmployeeRequestListItemDto;
 export type EmployeeRequestDashboardState = EmployeeRequestListResponseDto["requests"];

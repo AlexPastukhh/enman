@@ -1,13 +1,13 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { clearAntiforgeryToken } from "./antiforgeryTokenStore";
-import { createConnectionRequest } from "./l1RequestApi";
+import { clearAntiforgeryToken } from "../../../../shared/api/antiforgeryTokenStore";
+import { createConnectionRequest } from "./createConnectionRequest";
 
 afterEach(() => {
   clearAntiforgeryToken();
   vi.unstubAllGlobals();
 });
 
-describe("l1RequestApi", () => {
+describe("createConnectionRequest", () => {
   it("posts create connection request to the L1 requests endpoint", async () => {
     const fetchMock = vi
       .fn()
@@ -18,12 +18,12 @@ describe("l1RequestApi", () => {
     const request = {
       applicantContextType: "Existing",
       existingApplicantPartyId: 1,
-      details: "Подключение объекта к электрическим сетям",
+      details: "Connection request",
       address: {
         postalCode: "658480",
-        region: "Алтайский край",
-        city: "Заринск",
-        street: "Ленина",
+        region: "Altai Krai",
+        city: "Zarinsk",
+        street: "Lenina",
         house: "10",
         building: null,
         apartment: null,

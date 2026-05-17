@@ -1,32 +1,49 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
-import { listEmployeeRequests } from "../../../shared/api/employeeRequestApi";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { listEmployeeDashboardRequests } from "./listEmployeeDashboardRequests";
 
-vi.mock("../../../shared/api/employeeRequestApi", () => ({
-  listEmployeeRequests: vi.fn(),
-}));
-
-const listEmployeeRequestsMock = vi.mocked(listEmployeeRequests);
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
 
 describe("listEmployeeDashboardRequests", () => {
-  beforeEach(() => {
-    listEmployeeRequestsMock.mockReset();
+  it("gets employee requests without filters", async () => {
+    const response = { requests: [] };
+    const fetchMock = vi.fn().mockResolvedValueOnce(jsonResponse(response));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(listEmployeeDashboardRequests()).resolves.toEqual(response);
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/employee/requests",
+      expect.objectContaining({
+        method: "GET",
+        credentials: "include",
+      }),
+    );
   });
 
-  it("delegates dashboard filters to the shared API wrapper", async () => {
+  it("maps status and review state filters to query string", async () => {
     const response = { requests: [] };
-    listEmployeeRequestsMock.mockResolvedValueOnce(response);
+    const fetchMock = vi.fn().mockResolvedValueOnce(jsonResponse(response));
+    vi.stubGlobal("fetch", fetchMock);
 
-    await expect(
-      listEmployeeDashboardRequests({
-        status: "InReview",
-        reviewState: "NotStarted",
-      }),
-    ).resolves.toBe(response);
-
-    expect(listEmployeeRequestsMock).toHaveBeenCalledWith({
+    await listEmployeeDashboardRequests({
       status: "InReview",
-      reviewState: "NotStarted",
+      reviewState: "StartedByAnotherEmployee",
     });
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/employee/requests?status=InReview&reviewState=StartedByAnotherEmployee",
+      expect.objectContaining({
+        method: "GET",
+        credentials: "include",
+      }),
+    );
   });
 });
+
+const jsonResponse = (body: unknown) =>
+  new Response(JSON.stringify(body), {
+    status: 200,
+    headers: { "content-type": "application/json" },
+  });

@@ -1,4 +1,4 @@
-import type { L1CreateConnectionRequestRequest } from "../../../../shared/api/l1RequestApi";
+import type { L1CreateConnectionRequestRequest } from "../../../../entities/request/api/requestApiTypes";
 import { createConnectionRequestConst } from "../ui/createConnectionRequestConst";
 import type {
   CreateConnectionRequestFormErrors,
