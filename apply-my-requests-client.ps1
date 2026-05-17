@@ -1,6 +1,0 @@
-Write-Host "My Requests client slice files are already placed by Expand-Archive -Force."
-Write-Host "Run: npm.cmd --prefix energymanagement.client run build"
-Write-Host "Run: npm.cmd --prefix energymanagement.client run test"
-Write-Host "Run: npm.cmd run check:api"
-Write-Host "Run: npm.cmd run test:e2e -- --list"
-Write-Host "Run: npm.cmd run test:e2e"

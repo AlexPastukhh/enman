@@ -10,8 +10,8 @@ This file defines wording principles for clean VKR materials and defense materia
 Use it when editing:
 
 ```text
-vkr-clean/
-presentation/
+planning/thesis/vkr-clean/
+planning/thesis/presentation/
 ```
 
 This file is an internal writing guide. It is not final diploma text.

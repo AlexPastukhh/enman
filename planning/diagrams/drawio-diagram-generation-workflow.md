@@ -25,13 +25,13 @@ It must not generate PlantUML as the primary deliverable unless the user explici
 
 ## 2. Preferred Output Path
 
-Preferred output path when `vkr-clean/` is active in the repository:
+Preferred output path when `planning/thesis/vkr-clean/` is active in the repository:
 
 ```text
-vkr-clean/diagrams/enman-vkr-diagrams.drawio
+planning/thesis/vkr-clean/diagrams/enman-vkr-diagrams.drawio
 ```
 
-Fallback path when `vkr-clean/` is not active yet:
+Fallback path when `planning/thesis/vkr-clean/` is not active yet:
 
 ```text
 planning/diagrams/vkr-clean-drafts/enman-vkr-diagrams.drawio

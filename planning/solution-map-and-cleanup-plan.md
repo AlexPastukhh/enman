@@ -147,7 +147,7 @@ energymanagement.client/src/
 Tests.EnergyManagement/
 planning/
 docs/
-uml/
+planning/diagrams/uml/
 Shared/    temporary until contract generation is solved
 tests/     Playwright E2E
 ```

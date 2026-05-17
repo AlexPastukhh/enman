@@ -87,18 +87,18 @@ Avoid long `[IMPLEMENTED] / [DESIGNED] / [PLANNED]` markers inside every paragra
 Use these as the clean layer:
 
 ```text
-vkr-clean/vkr-outline.md
-vkr-clean/functional-specification.md
-vkr-clean/use-case-diagrams-plan.md
-vkr-clean/clean-requirements.md
-vkr-clean/clean-architecture.md
-vkr-clean/api-contract-and-client-server-sync.md
-vkr-clean/clean-domain-model.md
-vkr-clean/clean-database-design.md
-vkr-clean/clean-ui-description.md
-vkr-clean/clean-testing.md
-vkr-clean/visuals-and-diagrams-plan.md
-vkr-clean/planning-to-vkr-extraction-map.md
+planning/thesis/vkr-clean/vkr-outline.md
+planning/thesis/vkr-clean/functional-specification.md
+planning/thesis/vkr-clean/use-case-diagrams-plan.md
+planning/thesis/vkr-clean/clean-requirements.md
+planning/thesis/vkr-clean/clean-architecture.md
+planning/thesis/vkr-clean/api-contract-and-client-server-sync.md
+planning/thesis/vkr-clean/clean-domain-model.md
+planning/thesis/vkr-clean/clean-database-design.md
+planning/thesis/vkr-clean/clean-ui-description.md
+planning/thesis/vkr-clean/clean-testing.md
+planning/thesis/vkr-clean/visuals-and-diagrams-plan.md
+planning/thesis/vkr-clean/planning-to-vkr-extraction-map.md
 ```
 
 ## 6. Current Writing Direction
