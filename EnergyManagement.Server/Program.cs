@@ -54,6 +54,7 @@ builder.Services.AddTransient<IApplicantPartyCreationService, ApplicantPartyCrea
 builder.Services.AddTransient<IClientRequestRepository, ClientRequestRepository>();
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddTransient<IAgreementProposalExchangeRepository, AgreementProposalExchangeRepository>();
+builder.Services.AddTransient<IAgreementExchangeReadRepository, AgreementExchangeReadRepository>();
 builder.Services.AddTransient<IAgreementExchangeReadService, AgreementExchangeReadService>();
 builder.Services.AddSingleton<L1ClaimsPrincipalFactory>();
 

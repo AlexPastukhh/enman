@@ -103,6 +103,7 @@ public sealed class TestDatabaseManager
                 CREATE TABLE dbo.L1RequestReviews
                 (
                     RequestId bigint NOT NULL,
+                    ClientAccountId bigint NOT NULL,
                     Status nvarchar(50) NOT NULL,
                     StartedByEmployeeId bigint NOT NULL,
                     StartedAt datetimeoffset NOT NULL,
@@ -146,6 +147,7 @@ public sealed class TestDatabaseManager
                 (
                     Id bigint IDENTITY(1,1) NOT NULL,
                     RequestId bigint NOT NULL,
+                    ClientAccountId bigint NOT NULL,
                     Status nvarchar(50) NOT NULL,
                     ActiveProposalVersion int NOT NULL,
                     FinalRefusedByEmployeeId bigint NULL,
@@ -160,6 +162,28 @@ public sealed class TestDatabaseManager
 
                 CREATE INDEX IX_L1AgreementProposalExchanges_RequestId
                     ON dbo.L1AgreementProposalExchanges(RequestId);
+
+                CREATE INDEX IX_L1AgreementProposalExchanges_ClientAccountId
+                    ON dbo.L1AgreementProposalExchanges(ClientAccountId);
+            END
+
+            IF OBJECT_ID(N'dbo.L1AgreementProposalExchanges', N'U') IS NOT NULL
+               AND COL_LENGTH(N'dbo.L1AgreementProposalExchanges', N'ClientAccountId') IS NULL
+            BEGIN
+                ALTER TABLE dbo.L1AgreementProposalExchanges
+                ADD ClientAccountId bigint NOT NULL
+                    CONSTRAINT DF_L1AgreementProposalExchanges_ClientAccountId DEFAULT(0);
+            END
+
+            IF OBJECT_ID(N'dbo.L1AgreementProposalExchanges', N'U') IS NOT NULL
+               AND NOT EXISTS (
+                    SELECT 1
+                    FROM sys.indexes
+                    WHERE name = N'IX_L1AgreementProposalExchanges_ClientAccountId'
+                      AND object_id = OBJECT_ID(N'dbo.L1AgreementProposalExchanges'))
+            BEGIN
+                CREATE INDEX IX_L1AgreementProposalExchanges_ClientAccountId
+                    ON dbo.L1AgreementProposalExchanges(ClientAccountId);
             END
 
             IF OBJECT_ID(N'dbo.L1AgreementProposalExchanges', N'U') IS NOT NULL

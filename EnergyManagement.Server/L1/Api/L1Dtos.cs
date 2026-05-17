@@ -136,6 +136,40 @@ public sealed record AgreementExchangeListItemDto(
 public sealed record AgreementExchangeListQueryDto(
     [property: JsonPropertyName("status")] string? Status);
 
+public sealed record AgreementExchangeDetailsResponseDto(
+    [property: JsonPropertyName("exchangeId")] long ExchangeId,
+    [property: JsonPropertyName("requestId")] long RequestId,
+    [property: JsonPropertyName("exchangeStatus")] string ExchangeStatus,
+    [property: JsonPropertyName("activeProposalVersion")] int ActiveProposalVersion,
+    [property: JsonPropertyName("request")] AgreementExchangeRequestSummaryDto Request,
+    [property: JsonPropertyName("activeProposal")] AgreementProposalDetailsDto ActiveProposal,
+    [property: JsonPropertyName("proposals")] IReadOnlyList<AgreementProposalDetailsDto> Proposals,
+    [property: JsonPropertyName("currentActorSide")] string CurrentActorSide,
+    [property: JsonPropertyName("createdAt")] DateTimeOffset CreatedAt,
+    [property: JsonPropertyName("lastActivityAt")] DateTimeOffset? LastActivityAt);
+
+public sealed record AgreementExchangeRequestSummaryDto(
+    [property: JsonPropertyName("requestId")] long RequestId,
+    [property: JsonPropertyName("requestStatus")] string RequestStatus,
+    [property: JsonPropertyName("requestDisplayName")] string RequestDisplayName,
+    [property: JsonPropertyName("objectAddress")] string ObjectAddress);
+
+public sealed record AgreementProposalDetailsDto(
+    [property: JsonPropertyName("proposalId")] long ProposalId,
+    [property: JsonPropertyName("version")] int Version,
+    [property: JsonPropertyName("sender")] string Sender,
+    [property: JsonPropertyName("senderId")] long SenderId,
+    [property: JsonPropertyName("state")] string State,
+    [property: JsonPropertyName("document")] AgreementDocumentRefDto Document,
+    [property: JsonPropertyName("comment")] string? Comment,
+    [property: JsonPropertyName("createdAt")] DateTimeOffset CreatedAt);
+
+public sealed record AgreementDocumentRefDto(
+    [property: JsonPropertyName("storageKey")] string StorageKey,
+    [property: JsonPropertyName("originalFileName")] string OriginalFileName,
+    [property: JsonPropertyName("contentType")] string ContentType,
+    [property: JsonPropertyName("sizeBytes")] long SizeBytes);
+
 public sealed record EmployeeRejectRequestReviewDto(
     [property: JsonPropertyName("feedback")] string? Feedback);
 
