@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http;
 
 namespace EnergyManagement.Server.L1.Api;
 
@@ -164,6 +165,12 @@ public sealed record AgreementProposalDetailsDto(
     [property: JsonPropertyName("comment")] string? Comment,
     [property: JsonPropertyName("createdAt")] DateTimeOffset CreatedAt);
 
+
+public sealed class UploadAgreementProposalDocumentForm
+{
+    public IFormFile? Document { get; init; }
+}
+
 public sealed record AgreementDocumentRefDto(
     [property: JsonPropertyName("storageKey")] string? StorageKey,
     [property: JsonPropertyName("originalFileName")] string? OriginalFileName,
@@ -171,10 +178,6 @@ public sealed record AgreementDocumentRefDto(
     [property: JsonPropertyName("sizeBytes")] long SizeBytes);
 
 public sealed record SendAgreementProposalVersionDto(
-    [property: JsonPropertyName("document")] AgreementDocumentRefDto? Document,
-    [property: JsonPropertyName("comment")] string? Comment);
-
-public sealed record StartAgreementExchangeDto(
     [property: JsonPropertyName("document")] AgreementDocumentRefDto? Document,
     [property: JsonPropertyName("comment")] string? Comment);
 

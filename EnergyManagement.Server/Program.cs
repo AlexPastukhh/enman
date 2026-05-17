@@ -9,6 +9,7 @@ using EnergyManagement.Server.L1.Application.Services;
 using EnergyManagement.Server.L1.Application.Security;
 using EnergyManagement.Server.L1.Persistence;
 using EnergyManagement.Server.L1.Persistence.Repositories;
+using EnergyManagement.Server.L1.Infrastructure.Documents;
 using EnergyManagement.Server.Api.Security;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -57,6 +58,7 @@ builder.Services.AddTransient<IAgreementProposalExchangeRepository, AgreementPro
 builder.Services.AddTransient<IAgreementExchangeReadRepository, AgreementExchangeReadRepository>();
 builder.Services.AddTransient<IAgreementExchangeReadService, AgreementExchangeReadService>();
 builder.Services.AddTransient<IAgreementExchangeApplicationService, AgreementExchangeApplicationService>();
+builder.Services.AddTransient<IDocumentStorage, LocalDocumentStorage>();
 builder.Services.AddSingleton<L1ClaimsPrincipalFactory>();
 
 builder.Services.AddMediatR(c=>c.RegisterServicesFromAssembly(typeof(Program).Assembly));
@@ -69,8 +71,8 @@ builder.Services.AddTransient<IValidator<EmployeeRequestListQueryDto>, EmployeeR
 builder.Services.AddTransient<IValidator<EmployeeRejectRequestReviewDto>, EmployeeRejectRequestReviewDtoValidator>();
 builder.Services.AddTransient<IValidator<AgreementExchangeListQueryDto>, AgreementExchangeListQueryDtoValidator>();
 builder.Services.AddTransient<IValidator<SendAgreementProposalVersionDto>, SendAgreementProposalVersionDtoValidator>();
-builder.Services.AddTransient<IValidator<StartAgreementExchangeDto>, StartAgreementExchangeDtoValidator>();
 builder.Services.AddTransient<IValidator<FinalRefuseAgreementExchangeDto>, FinalRefuseAgreementExchangeDtoValidator>();
+builder.Services.AddTransient<IValidator<UploadAgreementProposalDocumentForm>, UploadAgreementProposalDocumentFormValidator>();
 
 // 1️⃣ Register your config (it's already loaded by SharedFileService)
 // builder.Services.AddSingleton<ConstantsConfig>(_ => 
