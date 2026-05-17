@@ -53,7 +53,7 @@ public sealed class AgreementExchangesController : ProjectController
                 return Unauthorized();
             }
 
-            var parsedStatus = string.IsNullOrWhiteSpace(status)
+            AgreementExchangeStatus? parsedStatus = string.IsNullOrWhiteSpace(status)
                 ? null
                 : Enum.Parse<AgreementExchangeStatus>(status);
 

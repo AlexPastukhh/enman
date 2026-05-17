@@ -5,6 +5,125 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/agreement-exchanges": {
+      "get": {
+        "tags": [
+          "AgreementExchanges"
+        ],
+        "operationId": "ListAgreementExchanges",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgreementExchangeListResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgreementExchangeListResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgreementExchangeListResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/antiforgery/token": {
       "get": {
         "tags": [
@@ -1802,6 +1921,66 @@
   },
   "components": {
     "schemas": {
+      "AgreementExchangeListItemDto": {
+        "type": "object",
+        "properties": {
+          "exchangeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "requestId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "exchangeStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "activeProposalVersion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "activeProposalSender": {
+            "type": "string",
+            "nullable": true
+          },
+          "activeProposalSenderId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "requestDisplayName": {
+            "type": "string",
+            "nullable": true
+          },
+          "objectAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastActivityAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AgreementExchangeListResponseDto": {
+        "type": "object",
+        "properties": {
+          "exchanges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgreementExchangeListItemDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AntiforgeryTokenResponse": {
         "type": "object",
         "properties": {
