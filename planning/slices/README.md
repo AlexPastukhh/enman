@@ -1,6 +1,6 @@
 # Slice Planning Index
 
-Status: current slice-planning navigation index / client API placement and L2 review command drafts synchronized
+Status: current slice-planning navigation index / client API placement, L2 review command drafts and AgreementProposalExchange slice boundaries synchronized
 
 ## 1. Core Rule
 
@@ -67,16 +67,40 @@ L2-EMP-DETAILS-001.client — Employee Request Details
 L2-REVIEW-START-001.client — Start Request Review client action
 ```
 
-Current remaining draft gaps after this sync:
+Current remaining review draft gaps:
 
 ```text
 L2-REVIEW-APPROVE-001.client — Approve Request Review client action
 L2-REVIEW-REJECT-001.client — Reject Request Review client action/form
-SL-AGR-* — AgreementProposalExchange family
-SL-DOC-* — AgreementDocumentRef/document reference family
 ```
 
-## 5. StartReview Entry Point Rule
+## 5. AgreementProposalExchange Slice Family
+
+Fixed planned slice boundaries:
+
+```text
+SL-AGR-EXCH-001 — Start Agreement Exchange With Initial Employee Proposal
+SL-AGR-EXCH-002 — Send Agreement Counter-Proposal Version
+SL-AGR-EXCH-003 — Read Agreement Exchange
+SL-AGR-EXCH-004 — Accept Active Agreement Proposal
+SL-AGR-EXCH-005 — Final Refuse Agreement Exchange
+```
+
+Decision summary:
+
+```text
+Start initial exchange — separate slice because it creates the exchange and version 1.
+Client send / Employee send counter-proposal — one slice with two actor branches.
+Read — separate slice.
+Accept — separate slice.
+Final refusal — separate slice.
+```
+
+Do not split client and employee counter-proposal sends unless UI, permissions, document handling or validation diverge materially.
+
+`SL-DOC-*` remains the future document/reference family for AgreementDocumentRef/document metadata/storage follow-up work.
+
+## 6. StartReview Entry Point Rule
 
 StartReview client has one command sidecar and two entry points:
 
@@ -87,7 +111,7 @@ details action area
 
 Dashboard/details read pages host feature actions; they do not own command mutations.
 
-## 6. Current L2 Client Sidecar Reminder
+## 7. Current L2 Client Sidecar Reminder
 
 For `L2-EMP-DETAILS-001.client`:
 
@@ -101,3 +125,4 @@ Do not:
 ```
 
 Future review commands use `features/employee-request/<action>/api`.
+Agreement exchange reads/commands follow the same ownership rule: reads in entities, commands in features.

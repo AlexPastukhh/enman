@@ -76,7 +76,11 @@ planning/diagrams/scenario-behavior-items/
 | `SL-EMP-REQ-005-reject-request-review.md` | `[SCENARIO]` / `[BEHAVIOR]` / `[CONCERN]` | `SC-07B-employee-request-review.md`, review behavior files, `CC-CSRF-001` | RejectReview backend command and rejection feedback; includes client sidecar planning notes | drafted |
 | `L2-REVIEW-APPROVE-001.client` | `[SCENARIO]` / `[BEHAVIOR]` / `[CONCERN]` | `SC-07B-employee-request-review.md`, review behavior files, `CC-CSRF-001` | ApproveReview client action/mutation | planned |
 | `L2-REVIEW-REJECT-001.client` | `[SCENARIO]` / `[BEHAVIOR]` / `[CONCERN]` | `SC-07B-employee-request-review.md`, review behavior files, `CC-CSRF-001` | RejectReview client action/form/mutation | planned |
-| `SL-AGR-*` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-13A..E`, `SC-14`, agreement behavior files | AgreementProposalExchange, proposal versions, final refusal, agreement documents | planned source |
+| `SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-13C`, `SC-13D`, agreement behavior files | Start exchange from Approved request with initial Employee proposal/version 1 | planned boundary |
+| `SL-AGR-EXCH-002-send-agreement-counter-proposal-version.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-13B`, `SC-13D`, agreement behavior files | Client and Employee counter-proposal versions inside existing exchange | planned boundary |
+| `SL-AGR-EXCH-003-read-agreement-exchange.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-13A`, `SC-13B`, `SC-13C`, agreement DATA/behavior files | Read exchange state, active proposal and version history | planned boundary |
+| `SL-AGR-EXCH-004-accept-active-agreement-proposal.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-13B`, agreement behavior files | Accept active agreement proposal | planned boundary |
+| `SL-AGR-EXCH-005-final-refuse-agreement-exchange.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-13E`, agreement behavior files | Employee final refusal of exchange and request exchange-failed marking | planned boundary |
 | `SL-DOC-*` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-14-agreement-documents.md`, agreement documents DATA/behavior files | AgreementDocumentRef metadata references | planned source |
 
 ## 4. L2 Drafting Guardrails
@@ -91,6 +95,8 @@ planning/diagrams/scenario-behavior-items/
 - Domain draft informs domain boundaries but does not replace scenario source files.
 - Command client sidecars consume shared cross-cutting concerns; they do not implement local CSRF/session mechanics.
 - StartReview has one command sidecar with two UI entry points; do not duplicate it into two sidecars.
+- Initial agreement exchange creation and counter-proposal versioning are separate slice boundaries.
+- Client and Employee counter-proposal sends stay in one slice until actor-specific handling diverges materially.
 ```
 
 ## 5. Update Rule

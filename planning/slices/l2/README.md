@@ -1,6 +1,6 @@
 # L2 Slice Planning Index
 
-Status: current / Employee request read/review drafts, StartReview entry points and review command drafts synchronized  
+Status: current / Employee request read/review drafts, StartReview entry points, review command drafts and AgreementProposalExchange slice boundaries synchronized  
 Scope: L2 Employee, Request Review, AgreementProposalExchange and document-reference slice navigation
 
 ## 1. Source Rule
@@ -46,6 +46,12 @@ Employee request reads:
 Employee review commands:
   features/employee-request/<action>/api
 
+Agreement exchange reads:
+  entities/agreement-exchange/api, unless a more specific entity name is chosen in the full draft
+
+Agreement exchange commands:
+  features/agreement-exchange/<action>/api
+
 shared/api:
   fetchJson, ProblemDetails/ApiError, CSRF helpers,
   generated OpenAPI types and generic transport helpers only
@@ -67,6 +73,7 @@ Do not add new business-specific wrappers such as:
 
 ```text
 shared/api/employeeRequestApi.ts
+shared/api/agreementExchangeApi.ts
 ```
 
 Existing business-specific `shared/api/*Api.ts` files are transitional compatibility only and should not be copied into new L2 client work.
@@ -107,7 +114,31 @@ L2-REVIEW-APPROVE-001.client — Approve Request Review client action
 L2-REVIEW-REJECT-001.client — Reject Request Review client action/form
 ```
 
-## 5. Review Command Chain
+## 5. AgreementProposalExchange Slice Family
+
+The previous loose `SL-AGR-*` placeholder is now fixed as five planned slice boundaries:
+
+```text
+planning/slices/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.md
+planning/slices/SL-AGR-EXCH-002-send-agreement-counter-proposal-version.md
+planning/slices/SL-AGR-EXCH-003-read-agreement-exchange.md
+planning/slices/SL-AGR-EXCH-004-accept-active-agreement-proposal.md
+planning/slices/SL-AGR-EXCH-005-final-refuse-agreement-exchange.md
+```
+
+Decision:
+
+```text
+Start initial exchange — separate slice.
+Client send / Employee send counter-proposal — one slice with two actor branches.
+Read — separate slice.
+Accept — separate slice.
+Final refusal — separate slice.
+```
+
+Do not split client and employee counter-proposal sends yet unless UI, permissions, document handling or validation diverge materially.
+
+## 6. Review Command Chain
 
 ```text
 SL-EMP-REQ-003 — Start Request Review
@@ -127,7 +158,7 @@ SL-EMP-REQ-005 — Reject Request Review
   no agreement proposal flow starts
 ```
 
-## 6. StartReview Client Entry Points
+## 7. StartReview Client Entry Points
 
 `L2-REVIEW-START-001.client` is one client command sidecar with two host placements:
 
@@ -138,7 +169,7 @@ SL-EMP-REQ-005 — Reject Request Review
 
 This does not create two StartReview slices. Dashboard and details host the same feature-owned command action.
 
-## 7. Current Guardrails
+## 8. Current Guardrails
 
 ```text
 - Use Employee, not Worker.
@@ -150,4 +181,7 @@ This does not create two StartReview slices. Dashboard and details host the same
 - Temporary employee visibility policy: all active Employees can see all review-relevant requests.
 - Employee visibility is backend authorization/read filtering, not UI visibility.
 - Command success responses use 204 No Content when read state should be refreshed from read endpoints.
+- AgreementProposalExchange and Request are separate aggregates.
+- Initial agreement exchange creation requires initial Employee proposal document.
+- Counter-proposal versioning is one lifecycle pattern with client and employee actor branches.
 ```

@@ -1,32 +1,19 @@
-# APPLY — L2-REVIEW-APPROVE-001.client
+# Apply — L2 Agreement Exchange Slice Family Sync
 
-From repo root:
-
-```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l2-review-approve-001-client-approve-request-review.zip" -DestinationPath "." -Force
-```
-
-Then verify:
+From repository root:
 
 ```powershell
-npm install
-npm --prefix .\energymanagement.client install
-npm run check:api
-npm --prefix .\energymanagement.client run build
-npm --prefix .\energymanagement.client run test -- --run
+Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agreement-exchange-slice-family-sync.zip" -DestinationPath . -Force
+
+git status
+git diff -- planning/slices
 ```
 
-Targeted changed tests:
+If diff is correct:
 
 ```powershell
-npm --prefix .\energymanagement.client run test -- --run --reporter=verbose src/features/employee-request/approve-review/api/approveRequestReview.test.ts src/features/employee-request/approve-review/ui/ApproveReviewButton.test.tsx src/pages/employee/requests/details/EmployeeRequestDetailsPage.test.tsx
+git add planning/slices
+git status
 ```
 
-If `npm run check:api` reports stale OpenAPI artifacts after backend approve endpoint work, run:
-
-```powershell
-npm run generate:api
-npm run check:api
-```
-
-and include the changed generated artifacts in the backend/API handoff.
+This is docs-only. Do not expect runtime code, tests or generated OpenAPI/type changes.
