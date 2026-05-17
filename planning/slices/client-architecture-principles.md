@@ -1,191 +1,106 @@
 # Client Architecture Principles For Slice Sidecars
 
-Status: current client architecture planning principles  
+Status: current client architecture planning principles / entity-feature API ownership synchronized  
 Scope: frontend/client implementation mapping for `.client.md` sidecars
 
-## 1. Purpose
-
-This file explains how client-side implementation should be planned for vertical slices.
-
-Core rule:
+## 1. Mapping
 
 ```text
-Planning slice and frontend feature are not 1:1.
-```
-
-In planning:
-
-```text
-Read behavior is still a slice.
-Command behavior is still a slice.
-```
-
-In frontend code:
-
-```text
-Read slice    -> pages + entities (+ widgets if reused)
-Command slice -> pages + features + entities
+Read slice    -> pages + entities + shared transport/generated infrastructure
+Command slice -> pages + features + entities + shared transport/generated infrastructure
 Shared concern -> app / shared
 ```
 
-For component discovery, styling and accessibility, use:
+## 2. Client API Placement
+
+Current accepted direction:
 
 ```text
-planning/slices/client-component-discovery-guide.md
-planning/client/
+shared/
+  only truly shared infrastructure.
+
+entities/*/
+  read/data/display ownership.
+
+features/*/
+  command/user-action ownership.
 ```
 
-For change/extension/pressure decisions, use:
+Detailed decision:
 
 ```text
-planning/slices/change-extension-points-principles.md
-planning/slices/slice-extension-points-register.md
+planning/client/client-api-placement-decision.md
+planning/client/client-layering-for-read-and-command-slices.md
 ```
 
-## 2. Draft-Driven Client Discovery
-
-Client sidecar work uses draft-driven discovery.
-
-Primary source:
-
-```text
-planning/slices/draft-driven-discovery-principles.md
-```
-
-Client sidecars are created only when concrete client work starts.
-
-The `.client.md` file is the discovery draft for:
-
-```text
-- client behavior to implement;
-- contract used by client;
-- route/page/feature/entity/shared mapping;
-- component placement;
-- form/validation logic;
-- ProblemDetails/error mapping;
-- client tests;
-- E2E boundaries;
-- open questions and assumptions.
-```
-
-Do not implement UI directly from a rough idea without updating the client sidecar draft.
-
-## 3. Frontend Architecture Terms
-
-### app
-
-Owns router setup, providers, query client setup, auth/session provider, route guards, activation/role guards, global layouts and global config.
+## 3. Architecture Terms
 
 ### pages
 
-Route-level composition. A page may read route params, load read context through entity query hooks, show loading/error/not-found/forbidden states, compose entity display components, render command features and own page-local read-context components.
+Route-level composition. A page may read route params, load read context through entity query hooks, show loading/error/not-found/forbidden states, compose entity display components and render command features.
 
 A page should not contain the core command logic itself.
 
 ### entities
 
-Reusable client read/data/display modules for business objects.
+Reusable client read/data/display modules.
 
-Owns read API functions, query keys, generic read query hooks, read DTO/view types, status helpers and small/medium reusable display components for business data.
+Owns:
 
-Does not own command mutations, feature-specific success/error orchestration, navigation caused by a command, or full screen/read-context layouts.
+```text
+read API functions
+read endpoint paths
+read DTO aliases/mapping from generated OpenAPI types
+query keys
+generic read query hooks
+read DTO/view types
+status/read helpers
+reusable display components
+```
+
+Does not own command mutations or command endpoint wrappers.
 
 ### features
 
-User command/action behavior. Owns command API/mutation functions, command DTO/result types, form values tied to command behavior, mutation hooks, command-specific normalization/DTO mapping, action/form components and command client tests.
+User command/action behavior.
 
-### widgets
+Owns:
 
-Optional reusable large read-context/composition blocks. Do not introduce widgets by default.
+```text
+command API/mutation functions
+command endpoint paths
+command DTO/result aliases from generated OpenAPI types
+form values tied to command behavior
+mutation hooks
+action/form components
+command success/error behavior
+query invalidation/refetch after command success
+```
 
 ### shared
 
 Domain-agnostic primitives and utilities.
 
-Does not own business-specific types/components such as RequestStatusBadge, ApplicantSummaryCard, ApproveRequestDto or RejectRequestForm.
-
-## 4. Read Slice Mapping
-
-Read slice client logic is usually:
+Owns:
 
 ```text
-pages + entities
+fetchJson
+ProblemDetails / ApiError
+CSRF/antiforgery transport helpers
+generated OpenAPI types
+generic URL/query helpers
+UI primitives/config/lib
 ```
 
-Optional widgets appear only after real reuse.
+Does not own business-specific wrappers such as `listEmployeeDashboardRequests()` or `startRequestReview()`.
 
-Filtering is part of a read slice when it only changes read query state.
-
-Filtering becomes a command feature only if a user action changes persistent state.
-
-## 5. Command Slice Mapping
-
-Command slice client implementation usually maps to:
-
-```text
-pages + features + entities
-```
-
-Meaning:
-
-```text
-pages    = route / composition / read context
-features = command behavior
-entities = reusable read data and display dependencies
-```
-
-Do not say “command logic lives in pages”.
-
-## 6. Entity Query Hook Rule
-
-Entity-level React Query hooks are allowed when they remain generic read hooks.
-
-Allowed: queryKey, queryFn, enabled guard, select, placeholderData, staleTime, caller options merged with base options.
-
-Not allowed: feature-specific toast/navigation, mutation success behavior, command-specific orchestration, approve/reject invalidation inside entity read hook.
-
-Caller options may override ordinary query options, but must not replace queryKey or queryFn.
-
-`enabled` should be combined with the base guard.
-
-## 7. Component Placement Rule
+## 4. Component Placement Rule
 
 | Component kind | Preferred layer | Example |
 |---|---|---|
-| Route/screen composition | pages | EmployeeRequestReviewPage |
-| Page-local list/table/filter | pages/.../components | EmployeeRequestsTable |
+| Route/screen composition | pages | EmployeeRequestDetailsPage |
 | Business data display | entities | RequestStatusBadge |
-| Command action/form | features | ApproveRequestAction |
-| Reusable large composition | widgets, only if reused | EmployeeRequestDetailsPanel |
+| Read endpoint wrapper | entities/api | getEmployeeRequestDetails |
+| Command endpoint wrapper | features/api | startRequestReview |
+| Command action/form | features/ui | ApproveRequestAction |
 | Domain-agnostic primitive | shared | Button |
-
-## 8. Review Page Rule
-
-Opening a review page is not a command feature if it is only navigation/read context.
-
-Do not create `features/start-review/` unless entering review creates server-side state.
-
-## 9. Extension Pressure In Client Architecture
-
-Default architecture conventions can be adjusted when known extension pressure would otherwise create harmful coupling.
-
-This does not mean creating abstractions for every future idea.
-
-A `.client.md` should record future client extension point, current anti-coupling decision, whether current convention is followed or intentionally avoided, trade-off, and revisit condition.
-
-Example:
-
-```text
-Approve request feature should not import or navigate to agreement proposal creation,
-because agreement proposal creation is a separate future slice.
-```
-
-## 10. Client Sidecar Architecture Mapping Section
-
-Each `.client.md` file must include Client Architecture Mapping and explain which client architecture part covers which behavior/UI item.
-
-## 11. Client Architecture Questions
-
-Question types include architecture, read-vs-command, feature-vs-page, entity-vs-feature, page-vs-widget, entity-query-hook, component-placement, client/API, cache, presentation, accessibility, styling, extension-pressure and scenario-level.
-
-For each question, include assumption/preferred answer.

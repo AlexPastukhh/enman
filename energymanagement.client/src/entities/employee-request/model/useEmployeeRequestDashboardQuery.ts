@@ -18,7 +18,7 @@ export const useEmployeeRequestDashboardQuery = (
     queryKey: employeeRequestQueryKeys.dashboard(filters),
     queryFn: async () => {
       const response = await listEmployeeDashboardRequests(filters);
-      return response.requests;
+      return (response.requests ?? []) as EmployeeRequestDashboardState;
     },
     enabled: args.enabled ?? true,
     retry: false,

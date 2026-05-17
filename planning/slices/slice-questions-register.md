@@ -1,53 +1,12 @@
 # Slice Questions Register
 
-Status: active / L2 Employee Review client command questions synchronized
-
-## 1. Current L2 Employee Review Questions
+Status: active / client API placement synchronized
 
 | ID | Local file(s) | Area | Status | Question | Assumption / current direction | Impact |
 |---|---|---|---|---|---|---|
-| `Q-L2-REVIEW-START-CLIENT-001` | `planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md` | contract dependency | blocked | Is backend endpoint and generated OpenAPI contract available? | Runtime client implementation waits for `SL-EMP-REQ-003` backend endpoint plus generated types. | Shared API wrapper, feature tests and E2E timing. |
-| `Q-L2-REVIEW-START-CLIENT-002` | same | generated contract | blocked | What are exact generated operation/type names? | Use OpenAPI after server implementation/generation; do not invent names. | Prevents generated contract drift. |
-| `Q-L2-REVIEW-START-CLIENT-003` | same | double-submit UX | assumption | Same Employee double-clicks Start Review? | Button pending state disables double-submit; backend may return idempotent success. | Mutation UX and stale-state handling. |
-| `Q-L2-REVIEW-START-CLIENT-004` | same | stale state | assumption | Another Employee starts review between read and click? | Server rejects; client shows lifecycle/conflict feedback and refreshes details. | Error UX and refresh behavior. |
-| `Q-L2-REVIEW-START-CLIENT-005` | same | scope | accepted | Is this approve/reject? | No. Start review only. | Keeps decision sidecars separate. |
-| `Q-L2-REVIEW-START-CLIENT-006` | same | security | accepted | Does client submit Employee id? | No. Server resolves Employee from session/auth. | Prevents spoofing. |
-| `Q-L2-REVIEW-START-CLIENT-007` | same | CSRF | accepted | Is this unsafe request? | Yes. POST uses shared CSRF-aware boundary. | Cross-cutting requirement. |
-| `Q-L2-REVIEW-START-CLIENT-008` | same | placement | accepted | Where does button live? | `features/employee-request/start-review/ui`. | Command feature placement. |
-| `Q-L2-REVIEW-START-CLIENT-009` | same | composition | accepted | Where does action appear? | In Employee request details page action slot when details read model says available. | Page/entity/feature composition. |
-| `Q-L2-REVIEW-START-CLIENT-010` | same | scope | accepted | Should dashboard show StartReview directly? | Not first pass. Start action belongs to details action area. | Dashboard remains read sidecar. |
-
-
-## 2. L2 Employee Visibility Questions
-
-| ID | Local file(s) | Area | Status | Question | Assumption / current direction | Impact |
-|---|---|---|---|---|---|---|
-| `Q-L2-EMP-VIS-001` | `SL-EMP-REQ-001`, `SL-EMP-REQ-002`, `L2-EMP-DASH-001.client` | employee visibility | accepted | What does employee-visible mean in the first Employee dashboard/read pass? | All active Employees can see all review-relevant requests. | Makes broad first-pass read behavior intentional. |
-| `Q-L2-EMP-VIS-002` | same | label derivation | accepted | Does current Employee id narrow the list in first pass? | No. It derives `StartedByCurrentEmployee` vs `StartedByAnotherEmployee`. | Avoids accidental department/assignment filtering. |
-| `Q-L2-EMP-VIS-003` | same | future policy | future review | Should visibility later depend on department, region, assignment or queue? | Future extension point, not current slice scope. | Later authorization/read-filtering change. |
-
-## 3. Current ApplicantParty / L1 Questions Still Relevant
-
-| ID | Local file(s) | Area | Status | Question | Assumption / current direction | Impact |
-|---|---|---|---|---|---|---|
-| `Q-SL-APPL-003-CLIENT-001` | `SL-APPL-003-select-current-default-applicant-party-template.client.md` | backend dependency | resolved | Is backend endpoint available? | Yes, backend command endpoint is implemented. | Client can proceed after generated/client contract sync. |
-| `Q-SL-APPL-003-CLIENT-002` | same | behavior | accepted | Is switching implicit on create? | No. This is explicit same-page user action. | Keeps create additive. |
-| `Q-SL-APPL-003-CLIENT-003` | same | layering | accepted | Where does visible action live? | Feature owns button/action; entity card/list receives optional action slot. | Preserves read vs command boundary. |
-| `Q-SL-APPL-003-CLIENT-004` | same | architecture | accepted | Where does mutation live? | `features/applicant-party/make-current-default`. | Command architecture. |
-| `Q-SL-APPL-003-CLIENT-005` | same | request safety | accepted | Does command update existing requests? | No. Existing requests remain unchanged. | Scope boundary and E2E non-goal. |
-| `Q-SL-APPL-003-CLIENT-006` | same | UX | accepted | What happens if selected already current/default? | UI hides/disables action; backend is safe/idempotent. | Avoids duplicate action. |
-| `Q-SL-APPL-003-CLIENT-007` | same | API | implemented server direction | Response `200` or `204`? | Current backend declares `200 OK`; wrapper treats success as `void`. | API wrapper/tests. |
-| `Q-SL-APPL-003-CLIENT-008` | same | error UX | implementation decision | Error placement? | Prefer feature-owned per-action error, with page fallback for unexpected errors. | UX/tests. |
-| `Q-SL-APPL-003-CLIENT-009` | same | generated artifacts | implementation check | Are generated artifacts already exposing endpoint? | Verify before client code. If missing, run generation workflow. | Prevents manual generated edits. |
-| `Q-SL-APPL-003-CLIENT-010` | same | page placement | implementation check | Is target Applicant Parties page already replacing old AccountPage? | Verify current UI. The action may be wired into existing AccountPage or future Applicant Parties page. | Placement and route/page scope. |
-
-## 4. Existing Accepted Directions Still Relevant
-
-| ID | Area | Status | Current direction |
-|---|---|---|---|
-| `CL-DRAFT-Q-001` | drafting | accepted | Client drafters follow canonical examples and keep form identical unless user asks otherwise. |
-| `CL-DRAFT-Q-002` | flows | accepted | Scenario Flow is scenario-sourced user/system behavior for this slice only. |
-| `CL-DRAFT-Q-003` | behavior | accepted | Implementation details are not behavior items. |
-| `CL-LAYER-Q-001` | shared API | accepted | `shared/api` is the low-level client/server boundary, grouped by layer rather than entity. |
-| `CL-LAYER-Q-002` | placement | accepted | Read-only UI belongs in `entities`; command/user action UI belongs in `features`. |
-| `SL-APPL-Q-006` | page model | accepted | One Applicant Parties page / section; SC-10B is same-page management addendum. |
+| `CL-API-PLACEMENT-Q-001` | `planning/client/client-api-placement-decision.md` | client architecture | accepted | Should business endpoint wrappers live in `shared/api`? | No for new drafts. `shared/api` owns transport/generated infrastructure only. | New read/command wrappers move to entities/features. |
+| `CL-API-PLACEMENT-Q-002` | same | generated types | accepted | Can entities/features import generated OpenAPI types directly? | Yes. Generated types are shared infrastructure; business aliases live in owning entity/feature API files. | Avoids business-aware shared wrappers. |
+| `CL-API-PLACEMENT-Q-003` | same | migration | accepted | Should existing shared business wrappers be mass-migrated now? | No. Treat them as transitional compatibility and migrate only in concrete slice/cleanup scope. | Avoids broad client churn. |
+| `CL-API-PLACEMENT-Q-004` | same | read placement | accepted | Where do read endpoint wrappers live? | `entities/<entity>/api`. | Employee dashboard/details and ApplicantParty reads. |
+| `CL-API-PLACEMENT-Q-005` | same | command placement | accepted | Where do command/mutation endpoint wrappers live? | `features/<business-action>/api`. | StartReview, make-current-default, create actions. |
+| `CL-LAYER-Q-001` | old docs | shared API | superseded | `shared/api` is the low-level client/server boundary grouped by layer. | Superseded for business-specific wrappers; shared remains transport/generated boundary only. | Do not copy old shared wrapper shape into new drafts. |

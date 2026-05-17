@@ -1,3 +1,5 @@
+import type { components } from "../../../shared/api/generated/openapi-types";
+
 export type EmployeeRequestStatus =
   | "InReview"
   | "Approved"
@@ -16,16 +18,8 @@ export type EmployeeRequestListQuery = {
   reviewState?: EmployeeDashboardReviewState;
 };
 
-export type EmployeeRequestListItemDto = {
-  requestId: number;
-  requestType: "Connection" | string;
-  status: EmployeeRequestStatus;
-  applicantDisplayName: string;
-  objectAddress: string;
-  createdAt: string;
-  reviewState: EmployeeDashboardReviewState;
-};
+export type EmployeeRequestListItemDto =
+  components["schemas"]["EmployeeRequestListItemDto"];
 
-export type EmployeeRequestListResponseDto = {
-  requests: EmployeeRequestListItemDto[];
-};
+export type EmployeeRequestListResponseDto =
+  components["schemas"]["EmployeeRequestListResponseDto"];

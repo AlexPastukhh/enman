@@ -1,6 +1,6 @@
 # Client / Server Contract Principles
 
-Status: ApplicantParty account list, applicant-context and My Requests contract synchronized
+Status: current / client API placement synchronized
 
 ## 1. Core Rule
 
@@ -17,165 +17,61 @@ Shared/errorcodes.json
 
 OpenAPI is the structural contract. Generated constants are the semantic contract.
 
-## 2. Current L1 Endpoint Baseline
+## 2. Client API Placement Rule
 
-Current L1 target endpoints include:
+Generated OpenAPI types are shared infrastructure.
 
-```text
-POST /api/l1/auth/register
-POST /api/l1/auth/login
-GET  /api/l1/auth/current-user
-POST /api/l1/auth/logout
-POST /api/l1/applicant-parties/individual
-GET  /api/l1/applicant-parties/current-individual
-GET  /api/l1/applicant-parties
-POST /api/l1/requests
-GET  /api/l1/requests
-GET  /api/l1/requests/{requestId}
-```
-
-When current implementation differs from target planning, the relevant slice must say so explicitly.
-
-`GET /api/l1/applicant-parties/current-individual` is old/narrow current implementation support. New Applicant Parties page work should target `GET /api/l1/applicant-parties`.
-
-## 3. ApplicantParty
-
-Standalone create ApplicantParty returns `ApplicantPartyId` for stable identity/cache/future actions.
-
-This is API support, not scenario behavior.
-
-## 4. Applicant Parties Account List Contract
-
-Target read endpoint for the one Applicant Parties page / section:
+Business-specific client API wrappers live with their owner:
 
 ```text
-GET /api/l1/applicant-parties
+entities/*/api
+  read endpoint wrappers and read DTO aliases/mapping.
+
+features/*/api
+  command/mutation endpoint wrappers and command DTO/result aliases/mapping.
+
+shared/api
+  fetchJson, ProblemDetails/ApiError, CSRF helpers,
+  generated OpenAPI types and generic transport helpers.
 ```
 
-Response:
+Existing business wrappers under `shared/api` are transitional compatibility and should be moved only when a concrete slice touches that area.
 
-```ts
-type L1AccountApplicantPartiesResponse = {
-  applicantParties: L1ApplicantPartySummaryDto[];
-};
-```
+## 3. Placement Examples
 
-Summary DTO direction:
-
-```ts
-type L1ApplicantPartySummaryDto = {
-  applicantPartyId: number;
-  applicantPartyType: "Individual" | "IndividualEntrepreneur" | "LegalEntity";
-  displayName: string;
-  fullName?: L1FullNameDto | null;
-  email?: string | null;
-  phoneNumber?: string | null;
-  verificationStatus: string;
-  isCurrentDefault: boolean;
-  createdAt?: string | null;
-};
-```
-
-Rules:
+ApplicantParty read:
 
 ```text
-- client does not submit accountId/clientAccountId;
-- endpoint returns all owned ApplicantParties in one flat list;
-- endpoint does not split currentDefaults and other saved parties in the API response;
-- client groups current/default vs other saved parties by isCurrentDefault;
-- empty account returns 200 with applicantParties = [];
-- response does not expose clientAccountId;
-- isCurrentDefault is the API-facing target name;
-- current implementation marker IsCurrentActiveVersion may be used behind the API until naming cleanup happens;
-- no 422 request-shape validation is expected because this read endpoint has no body/query input.
+entities/applicant-party/api/listAccountApplicantParties.ts
+  owns GET /api/l1/applicant-parties and generated DTO aliases.
+
+entities/applicant-party/model/useAccountApplicantPartiesQuery.ts
+  owns query key and read hook.
 ```
 
-Primary slice:
+Request creation command:
 
 ```text
-planning/slices/SL-APPL-002-account-applicant-parties-read.md
+features/request/create-connection-request/api/createConnectionRequest.ts
+  owns POST /api/l1/requests and generated request/response aliases.
 ```
 
-## 5. Request Creation Target
-
-Target direction for future request creation with applicant context:
-
-```ts
-type L1CreateConnectionRequestDto = {
-  applicantContextType: "Existing" | "New";
-  existingApplicantPartyId?: number | null;
-  newApplicantParty?: L1CreateIndividualApplicantPartyDto | null;
-  details: string;
-  address: L1AddressDto;
-};
-```
-
-Rules:
+Employee request reads:
 
 ```text
-- explicit branch marker;
-- Existing verifies selected ApplicantParty belongs to current account;
-- Existing can use current/default or any owned saved ApplicantParty;
-- New creates ApplicantParty + request atomically;
-- no required response body for initial command success unless UI needs it.
+entities/employee-request/api/listEmployeeDashboardRequests.ts
+entities/employee-request/api/getEmployeeRequestDetails.ts
 ```
 
-Server request validation must follow:
+Employee review commands:
 
 ```text
-planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
+features/employee-request/start-review/api/startRequestReview.ts
+features/employee-request/approve-review/api/approveRequestReview.ts
+features/employee-request/reject-review/api/rejectRequestReview.ts
 ```
 
-## 6. My Requests List Contract
-
-Current backend:
-
-```text
-GET /api/l1/requests
-GET /api/l1/requests?status=InReview|Approved|Rejected
-```
-
-Response:
-
-```text
-L1MyRequestSummaryDto[]
-```
-
-Client direction:
-
-```text
-Status is the first supported filter in an extensible My Requests filter model.
-The page owns URL query params.
-The filter feature owns controls and parse/serialize helpers.
-The entity query accepts a filter object.
-The shared API maps supported filters to query string.
-```
-
-## 7. Own Request Details Contract
-
-Current backend:
-
-```text
-GET /api/l1/requests/{requestId}
-```
-
-Response:
-
-```text
-L1MyRequestDetailsDto
-```
-
-Rules:
-
-```text
-- client does not submit accountId;
-- missing and not-owned requests both map to 404;
-- InReview can have reviewResult = null;
-- Rejected includes rejection reason when available;
-- client details sidecar owns UI/not-found behavior.
-```
-
-## 8. ProblemDetails And Validation
+## 4. ProblemDetails And Validation
 
 Server validation errors use API DTO field names, not React form field names.
 
