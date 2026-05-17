@@ -1,13 +1,13 @@
 # Scenario / Diagram Planning Index
 
-Status: current scenario/specification and diagram workflow index  
-Scope: scenario text specs, DATA, UI specs, validation/security addenda, behavior items, questions, scenario drafting workflow, diagram prompt workflow and draw.io diagram generation workflow
+Status: current scenario/specification and diagram workflow index / L2 Employee Review Agreement scenarios synchronized  
+Scope: scenario text specs, DATA, UI specs, validation/security addenda, behavior items, questions, scenario clarifications, diagram prompt workflow and draw.io diagram generation workflow
 
 ## 1. Purpose
 
 This folder contains scenario and specification source artifacts and diagram-generation workflow docs.
 
-It supports three related but separate activities:
+It supports:
 
 ```text
 scenario/specification drafting
@@ -32,7 +32,7 @@ draw.io diagram-generation workflow
 
 ## 3. Scenario Drafting Workflow
 
-Use this file when creating or updating scenarios:
+Use:
 
 ```text
 planning/diagrams/scenario-drafting-workflow.md
@@ -50,73 +50,7 @@ scenario questions register
 scenario clarifications, when needed
 ```
 
-Scenario Draft Chat may prepare a diagram request/prompt when diagrams are requested from scenario sources.
-
-It must use:
-
-```text
-planning/diagrams/diagram-prompt-generation-workflow.md
-planning/diagrams/drawio-diagram-generation-workflow.md
-```
-
-It does not draw diagrams itself.
-
-## 4. Diagram Workflow Files
-
-Use these files when preparing a diagram request or running the Diagram Chat:
-
-```text
-planning/diagrams/diagram-prompt-generation-workflow.md
-planning/diagrams/drawio-diagram-generation-workflow.md
-```
-
-Responsibilities:
-
-| File | Responsibility |
-|---|---|
-| `scenario-drafting-workflow.md` | How a Scenario Draft Chat maintains scenario text, DATA, UI, behavior items, questions and diagram prompt handoff together. |
-| `diagram-prompt-generation-workflow.md` | How a scenario/documentation/planning chat prepares a repo-grounded diagram request/prompt for the single Diagram Chat, and how the Diagram Chat runs preflight. |
-| `drawio-diagram-generation-workflow.md` | Target diagram format, diagram book structure, draw.io XML rules and diagram archive rules. |
-
-Core rule:
-
-```text
-scenario sources -> diagram prompt workflow -> draw.io XML workflow -> navigation
-```
-
-The scenario/documentation/prompt chat does not draw diagrams itself.
-
-The Diagram Chat should first run preflight, then generate only a selected diagram batch.
-
-## 5. Target Diagram Format
-
-Target format:
-
-```text
-draw.io XML
-```
-
-Preferred artifact:
-
-```text
-one multi-page `.drawio` file, diagram book style
-```
-
-Preferred output path when `vkr-clean/` is active:
-
-```text
-vkr-clean/diagrams/enman-vkr-diagrams.drawio
-```
-
-Fallback path while `vkr-clean/` is not active:
-
-```text
-planning/diagrams/vkr-clean-drafts/enman-vkr-diagrams.drawio
-```
-
-Do not use PlantUML as the primary deliverable unless the user explicitly asks.
-
-## 6. Scenario Source Read Order
+## 4. Scenario Source Read Order
 
 For scenario/diagram work, read:
 
@@ -124,80 +58,60 @@ For scenario/diagram work, read:
 planning/scenario-specification-principles.md
 planning/scenario-domain-validation-principles.md
 planning/diagrams/scenario-drafting-workflow.md
-planning/diagrams/scenario-text-specs/README.md
-planning/diagrams/scenario-data/README.md
-planning/diagrams/scenario-ui-specs/README.md, if exists
-planning/diagrams/scenario-behavior-items/README.md
-planning/diagrams/scenario-clarifications/README.md, if exists
-planning/diagrams/scenario-questions-register.md, if exists
-```
-
-Actual index files currently include:
-
-```text
 planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
 planning/diagrams/scenario-data/00-scenario-data-index.md
 planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
+planning/diagrams/scenario-clarifications/README.md, if exists
 ```
 
-Do not guess index filenames. Check the current repository.
-
-## 7. Security Addenda
-
-Scenario/security addenda may record rules that affect many scenarios without editing every scenario file.
-
-Current security addenda:
+For L2 Employee/Review/Agreement scenarios also read:
 
 ```text
-planning/diagrams/scenario-text-specs/SC-15-security-text-specification.md
-planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
-planning/diagrams/scenario-text-specs/scenario-browser-security-addendum.md
+planning/tables/domain-drafts/domain-draft-02.md
+planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
 ```
 
-## 8. Behavior Items
-
-Behavior items may be:
+## 5. Current Scenario Families
 
 ```text
-scenario-derived
-security-derived cross-cutting
-API-contract-derived cross-cutting
-tooling/testing-derived cross-cutting
-client-cross-cutting-derived
-infrastructure-derived
+SC-04  Client Request Creation
+SC-05  My Requests / Own Request Details
+SC-06  Employee Request Dashboard
+SC-07A Employee Request Details
+SC-07B Employee Request Review
+SC-10  Applicant Data
+SC-10B Applicant Parties Future Management
+SC-13A Client Agreements
+SC-13B Client Agreement Proposal Details / Response
+SC-13C Employee Agreements
+SC-13D Employee Agreement Proposal Create / Send Version
+SC-13E Agreement Final Refusal
+SC-14  Agreement Documents
 ```
 
-Cross-cutting behavior items must clearly state their source type.
-
-Scenario behavior items should be updated together with scenario text/DATA/UI changes when required behavior changes.
-
-## 9. Scenario Clarifications Before Diagram Generation
-
-Diagram generation must check scenario clarifications before drawing.
-
-Current clarification index:
+## 6. Current L2 Domain Scenario Guardrails
 
 ```text
-planning/diagrams/scenario-clarifications/README.md
+Use Employee, not Worker.
+Request owns RequestReview.
+Review is not aggregate and has no repository.
+AgreementProposalExchange and Request are separate aggregates.
+AgreementProposal is child entity.
+AgreementProposalVersion is local per exchange and generated by exchange.
+Final refusal is exchange state, not separate entity and not proposal version.
+AgreementDocumentRef is document metadata reference, not file bytes/storage adapter.
 ```
 
-Important current guardrail:
+## 7. Diagram Workflow Files
 
 ```text
-Do not draw agreement proposal replacement as Rejected.
-Use superseded/replaced by counterproposal, or SupersededByCounterProposal if a domain state is needed.
-Rejected is only for explicit rejection/decline.
+planning/diagrams/diagram-prompt-generation-workflow.md
+planning/diagrams/drawio-diagram-generation-workflow.md
 ```
 
-Primary clarification:
+Scenario/documentation/prompt chat does not draw diagrams itself.
 
-```text
-planning/diagrams/scenario-clarifications/AGR-001-agreement-proposal-replacement-terminology.md
-```
-
-## 10. Status Markers For Diagrams
-
-Diagram prompts must require status markers when status may be misunderstood:
+## 8. Status Markers For Diagrams
 
 ```text
 [CORE]
@@ -208,49 +122,4 @@ Diagram prompts must require status markers when status may be misunderstood:
 [QUESTION]
 ```
 
-Do not overclaim implementation status.
-
-A diagram element is `[IMPLEMENTED]` only when current repo implementation evidence confirms it in the stated scope.
-
-## 11. VKR-Clean Diagram Language
-
-Final draw.io diagrams and VKR-clean companion docs must not mention:
-
-```text
-AI
-ChatGPT
-prompt
-agent
-internal workflow
-planning chat
-```
-
-They may mention normal engineering concepts such as:
-
-```text
-OpenAPI
-generated TypeScript types
-generated semantic constants
-ProblemDetails
-client API layer
-ASP.NET Core API
-Application layer
-Domain layer
-Persistence
-external provider
-```
-
-## 12. CSRF / Antiforgery
-
-CSRF requirements and behavior items:
-
-```text
-planning/diagrams/scenario-text-specs/scenario-browser-security-addendum.md
-planning/diagrams/scenario-behavior-items/CC-CSRF-001-antiforgery-behavior-items.md
-```
-
-Implementation-ready cross-cutting slice:
-
-```text
-planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md
-```
+Do not overclaim implementation status. L2 Employee/Review/Agreement scenarios are target/domain-draft driven until implementation evidence exists.

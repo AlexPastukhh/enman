@@ -1,21 +1,18 @@
-# APPLY — Domain Draft 02 L2
+# APPLY — L2 Employee / Review / Agreement Scenario Sync v2
 
-From repo root:
-
-```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\domain-draft-02-l2-full.zip" -DestinationPath "." -Force
-```
-
-Verify file exists:
+Run from repository root:
 
 ```powershell
-Test-Path .\planning\tables\domain-drafts\domain-draft-02.md
+Expand-Archive -Path "C:\Users\alexa\Downloads\l2-employee-review-agreement-scenarios-sync-v2.zip" -DestinationPath . -Force
+git status
+git diff -- planning
 ```
 
-Open it:
+If the diff is correct:
 
 ```powershell
-code .\planning\tables\domain-drafts\domain-draft-02.md
+git add planning
+git status
 ```
 
-This archive adds `domain-draft-02.md` and does not replace `domain-draft-01.md`.
+This is docs-only. It intentionally does not include code, tests, generated artifacts, GitHub branch/commit/PR or implementation slice drafts.

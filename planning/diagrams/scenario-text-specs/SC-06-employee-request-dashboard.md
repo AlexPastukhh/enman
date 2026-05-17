@@ -1,36 +1,74 @@
 # SC-06 — Employee Request Dashboard
 
-## Status
-Corrected scenario specification draft.
+Status: L2 scenario draft / derived from Domain Draft 02  
+Source: `planning/tables/domain-drafts/domain-draft-02.md`
 
-## Purpose
-Employee finds requests awaiting review and chooses whether to open details or start review.
+## 1. Purpose
 
-## Actor / Screen
-Actor: Employee  
-Screen: Employee Request Dashboard  
-Goal: Find requests and start work on them
+Employee sees requests that may need review and can understand whether a request review is not started, started by them, or started by another Employee.
 
-## DATA
-Employee dashboard row visible DATA `SC-06-DATA-01`:
+This scenario prepares Employee-side work after the current L1 client foundation.
+
+## 2. Actors
+
 ```text
-- request summary visible enough for employee to identify request;
-- request status, especially InReview;
-- applicant/client summary if needed to distinguish requests.
+Employee
+System
 ```
 
-Employee dashboard filter DATA `SC-06-DATA-02`:
+Use `Employee`, not `Worker`.
+
+## 3. Scenario Flow
+
 ```text
-- status.
+Employee opens request dashboard
+        ↓
+System lists requests relevant to Employee review work
+        ↓
+For each request, System shows review state:
+  no review started
+  review started by current Employee
+  review started by another Employee
+        ↓
+Employee opens request details for a selected request
 ```
-Future: request type, applicant/client search, assigned/unassigned, priority, date/period only if UX later needs it.
 
-## Main Flow
-1. Employee opens dashboard.
-2. InReview queue is visible.
-3. Employee can filter/search requests.
-4. Employee can select/open request details.
-5. Employee can start review directly from dashboard for InReview request.
+## 4. Domain Direction
 
-## Invariants
-Employee can access only employee-authorized dashboard. Only InReview requests can be sent into review from dashboard.
+```text
+RequestReview is owned by ConnectionRequest.
+Review is not an aggregate.
+There is no Review repository.
+Started review state is derived from Request.Review.Status == Started.
+Started employee identity is stored as StartedByEmployeeId.
+```
+
+## 5. Data Shown
+
+```text
+request id / display number if available
+request type
+request status
+created at
+applicant/request summary
+review state marker
+StartedByEmployeeId when needed for current-vs-other Employee display
+```
+
+## 6. Behavior Items
+
+```text
+L2-EMP-DASH-001 — Employee can see review-relevant requests.
+L2-EMP-DASH-002 — Dashboard distinguishes not-started review, started-by-current-employee review and started-by-another-employee review.
+L2-EMP-DASH-003 — Dashboard uses Employee terminology, not Worker terminology.
+```
+
+## 7. Out of Scope
+
+```text
+- starting review command -> SC-07B;
+- approve/reject command -> SC-07B;
+- employee assignment/queue policy -> future slice;
+- department/permission model -> future slice;
+- agreement proposal exchange -> SC-13*.
+```

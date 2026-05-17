@@ -1,98 +1,87 @@
 # SC-07B — Employee Request Review
 
-## Status
+Status: L2 scenario draft / derived from Domain Draft 02  
+Source: `planning/tables/domain-drafts/domain-draft-02.md`
 
-Corrected scenario specification draft.
+## 1. Purpose
 
-## Purpose
+Employee starts, approves or rejects a request review through Request-owned review behavior.
 
-Employee reviews an InReview request and approves or rejects it.
-
-## Actor / Screen
-
-Actor: Employee  
-Screen: Employee Request Review  
-Goal: Process request decision
-
-## Entry Points
-
-Entry A: Employee starts review from Employee Dashboard.
-
-Entry B: Employee starts review while viewing Employee Request Details — SC-07A.
-
-## Preconditions
-
-- Employee is signed in.
-- Employee has permission to review requests.
-- Request status is InReview.
-
-## DATA
-
-Review decision DATA  
-`SC-07B-DATA-01`
-
-Input DATA:
+## 2. Start Review Flow
 
 ```text
-- decision: Approved or Rejected;
-- rejection explanation when decision is Rejected.
+Employee opens InReview request with no active started review
+        ↓
+Employee starts review
+        ↓
+System calls Request.StartReview(Employee, startedAt)
+        ↓
+Request owns new RequestReview with Status Started
+        ↓
+Dashboard/details show review started by this Employee
 ```
 
-Visible DATA:
+## 3. Approve Review Flow
 
 ```text
-- request data reviewed by employee;
-- applicant/client DATA reviewed by employee.
+Employee opens request with Review Started by same Employee
+        ↓
+Employee approves review
+        ↓
+System calls Request.ApproveReview(Employee, decidedAt)
+        ↓
+RequestReview becomes Approved
+        ↓
+Request status becomes Approved
+        ↓
+AgreementProposalExchange can be started later by Employee proposal workflow
 ```
 
-Extension / Future DATA:
+## 4. Reject Review Flow
 
 ```text
-[VAR:EXPAND]
-- approval message, if needed;
-- verification result, if verification flow is enabled.
+Employee opens request with Review Started by same Employee
+        ↓
+Employee rejects review, optionally with RejectionFeedback
+        ↓
+System calls Request.RejectReview(Employee, feedback, decidedAt)
+        ↓
+RequestReview becomes Rejected
+        ↓
+Request status becomes Rejected
 ```
 
-## Main Flow
+## 5. Blocked Flows
 
-1. Employee starts review.
-2. System checks that request status is InReview.
-3. Employee reviews request data.
-4. Employee may use client data verification result if available.
-5. Employee chooses approve or reject.
-6. Decision is recorded.
-7. Request status changes to Approved or Rejected.
+```text
+Approve/reject without started review -> blocked.
+Another Employee tries start/approve/reject after review was started by someone else -> blocked.
+Request not InReview -> start review blocked.
+Failed review command does not change Request status or Review state.
+```
 
-## Branches
+## 6. Domain Direction
 
-### Approve request
+```text
+Review is not aggregate.
+Request owns Review.
+Review has no repository.
+ReviewDecisionRecord is removed.
+Decision/result fields live inside RequestReview.
+Domain methods receive Employee object when employee capability matters.
+Owned state stores scalar ids: StartedByEmployeeId and CompletedByEmployeeId.
+```
 
--> employee approves request  
--> decision is recorded  
--> request status becomes Approved  
--> employee can later create agreement proposal from Approved request  
--> agreement proposal is not created automatically
+## 7. Behavior Items
 
-### Reject request
-
--> employee rejects request  
--> rejection explanation is recorded  
--> request status becomes Rejected  
--> rejected feedback is visible to client in own Request Details
-
-## Invariants
-
-Only InReview requests can enter review.
-
-Approved/Rejected requests cannot be reviewed again.
-
-Agreement proposal creation is available only for Approved requests.
-
-Approval does not automatically create agreement proposal.
-
-## Outcomes
-
-- Employee can process InReview requests.
-- Approved request becomes visible as Approved to client.
-- Rejected request becomes visible as Rejected to client with explanation/details.
-- Approved request can later be used by employee to start agreement proposal exchange.
+```text
+L2-REVIEW-START-001 — Employee can start review for InReview request with no active started review.
+L2-REVIEW-START-002 — Starting review stores StartedByEmployeeId and StartedAt.
+L2-REVIEW-APPROVE-001 — Employee who started review can approve it.
+L2-REVIEW-APPROVE-002 — ApproveReview changes Request status to Approved.
+L2-REVIEW-REJECT-001 — Employee who started review can reject it.
+L2-REVIEW-REJECT-002 — RejectReview changes Request status to Rejected and stores optional feedback.
+L2-REVIEW-BLOCK-001 — Approve/reject without started review is blocked.
+L2-REVIEW-BLOCK-002 — Another Employee cannot start/approve/reject review already started by someone else.
+L2-REVIEW-NW-001 — Failed review command does not change request/review state.
+```
