@@ -123,6 +123,39 @@ public sealed class AgreementExchangeApplicationService : IAgreementExchangeAppl
         return UnitResult.Success<IReadOnlyList<Error>>();
     }
 
+    public async Task<UnitResult<IReadOnlyList<Error>>> ClientAcceptActiveProposalAsync(
+        long clientAccountId,
+        long exchangeId,
+        CancellationToken cancellationToken)
+    {
+        var client = await _accounts.GetByIdAsync(clientAccountId, cancellationToken);
+        if (client is not ClientAccount clientAccount)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Error.Errors.L1Domain.ClientAccountIsRequired]);
+        }
+
+        var exchange = await _agreementExchanges.GetByIdAsync(exchangeId, cancellationToken);
+        if (exchange is null)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Error.Errors.L1Domain.AgreementProposalExchangeIsRequired]);
+        }
+
+        var accept = exchange.ClientAcceptActiveProposal(
+            clientAccount,
+            DateTimeOffset.UtcNow);
+
+        if (accept.IsFailure)
+        {
+            return accept;
+        }
+
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return UnitResult.Success<IReadOnlyList<Error>>();
+    }
+
     private static Result<AgreementDocumentRef, IReadOnlyList<Error>> CreateDocumentRef(
         AgreementDocumentRefInput document)
     {

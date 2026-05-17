@@ -1,19 +1,26 @@
-# Apply — L2 Agreement Exchange Final Refuse Slices Sync
+# Apply SL-AGR-EXCH-005 — Client Accept Active Agreement Proposal
 
 From repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agr-exch-final-refuse-slices-sync.zip" -DestinationPath . -Force
-.\APPLY-l2-agr-exch-final-refuse-slices-sync.ps1
-git status
-git diff -- planning
+cd "C:\enman\enman"
+Expand-Archive -Path "C:\Users\alexa\Downloads\sl-agr-exch-005-client-accept-active-agreement-proposal-v27.zip" -DestinationPath . -Force
 ```
 
-If diff is OK:
+Run checks:
 
 ```powershell
-git add planning
-git status
+dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
+dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
 ```
 
-Docs-only archive. No runtime code, tests, or generated artifacts.
+Because the API contract changes:
+
+```powershell
+npm.cmd run generate:openapi
+npm.cmd run generate:api-types
+
+git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
+
+npm.cmd run check:api
+```

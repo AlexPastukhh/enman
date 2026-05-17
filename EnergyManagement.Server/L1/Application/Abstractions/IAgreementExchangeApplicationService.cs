@@ -18,6 +18,11 @@ public interface IAgreementExchangeApplicationService
         AgreementDocumentRefInput document,
         string? comment,
         CancellationToken cancellationToken);
+
+    Task<UnitResult<IReadOnlyList<Error>>> ClientAcceptActiveProposalAsync(
+        long clientAccountId,
+        long exchangeId,
+        CancellationToken cancellationToken);
 }
 
 public sealed record AgreementDocumentRefInput(

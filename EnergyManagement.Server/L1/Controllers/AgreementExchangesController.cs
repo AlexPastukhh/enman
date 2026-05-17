@@ -158,6 +158,46 @@ public sealed class AgreementExchangesController : ProjectController
         }
     }
 
+    [Authorize(Roles = "Client")]
+    [RequireAntiforgeryToken]
+    [HttpPost("{exchangeId:long:min(1)}/accept", Name = "ClientAcceptActiveAgreementProposal")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> AcceptActiveProposal(
+        long exchangeId,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (!TryGetCurrentL1AccountId(out var accountId))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _applicationService.ClientAcceptActiveProposalAsync(
+                accountId,
+                exchangeId,
+                cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return ProblemDetailsFromValidation(result.Error);
+            }
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Agreement proposal accept failed for exchange {ExchangeId}.", exchangeId);
+            return ProblemDetailsWithExceptionDev(ex);
+        }
+    }
+
     [Authorize(Roles = "Client,Employee")]
     [RequireAntiforgeryToken]
     [HttpPost("/api/requests/{requestId:long:min(1)}/agreement-exchange/proposals", Name = "SendAgreementProposalVersion")]
