@@ -1,19 +1,23 @@
-# Apply — L2 Agreement Exchange Slice Family Sync
+# Apply L2-REVIEW-REJECT-001.client archive
 
 From repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agreement-exchange-slice-family-sync.zip" -DestinationPath . -Force
-
-git status
-git diff -- planning/slices
+Expand-Archive -Path "C:\Users\alexa\Downloads\l2-review-reject-001-client-reject-request-review.zip" -DestinationPath "." -Force
 ```
 
-If diff is correct:
+Then verify:
 
 ```powershell
-git add planning/slices
-git status
+npm install
+npm --prefix .\energymanagement.client install
+npm run check:api
+npm --prefix .\energymanagement.client run build
+npm --prefix .\energymanagement.client run test -- --run
 ```
 
-This is docs-only. Do not expect runtime code, tests or generated OpenAPI/type changes.
+Targeted tests:
+
+```powershell
+npm --prefix .\energymanagement.client run test -- --run --reporter=verbose src/features/employee-request/reject-review/api/rejectRequestReview.test.ts src/features/employee-request/reject-review/ui/RejectReviewForm.test.tsx src/pages/employee/requests/details/EmployeeRequestDetailsPage.test.tsx
+```

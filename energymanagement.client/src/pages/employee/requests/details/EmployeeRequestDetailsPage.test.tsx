@@ -55,6 +55,15 @@ vi.mock("../../../../features/employee-request/approve-review/ui/ApproveReviewBu
   __esModule: true,
 }));
 
+vi.mock("../../../../features/employee-request/reject-review/ui/RejectReviewForm", () => ({
+  RejectReviewForm: ({ disabled }: { disabled?: boolean }) => (
+    <button type="button" disabled={disabled}>
+      Reject review
+    </button>
+  ),
+  __esModule: true,
+}));
+
 const renderPage = (initialEntry = "/employee/requests/42") =>
   render(
     <MemoryRouter initialEntries={[initialEntry]}>
@@ -119,6 +128,7 @@ describe("EmployeeRequestDetailsPage", () => {
     expect(screen.getByText("Start review is available.")).toBeVisible();
     expect(screen.getByRole("button", { name: "Start review" })).toBeVisible();
     expect(screen.getByRole("button", { name: "Approve review" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Reject review" })).toBeDisabled();
   });
 
 
@@ -149,6 +159,7 @@ describe("EmployeeRequestDetailsPage", () => {
 
     expect(screen.getByText("Approve is available after review is started by current Employee.")).toBeVisible();
     expect(screen.getByRole("button", { name: "Approve review" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Reject review" })).toBeEnabled();
     expect(screen.getByRole("button", { name: "Start review" })).toBeDisabled();
   });
 

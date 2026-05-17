@@ -2,11 +2,14 @@ import { fetchJson } from "../../../../shared/api/fetchJson";
 
 export type RejectRequestReviewInput = {
   requestId: number;
-  feedback: string;
+  feedback?: string | null;
 };
 
 const rejectRequestReviewPath = (requestId: number | string) =>
   `/api/employee/requests/${encodeURIComponent(String(requestId))}/review/reject`;
+
+const toRejectReviewBody = (feedback?: string | null) =>
+  JSON.stringify({ feedback: feedback ?? "" });
 
 export const rejectRequestReview = ({
   requestId,
@@ -14,5 +17,5 @@ export const rejectRequestReview = ({
 }: RejectRequestReviewInput): Promise<void> =>
   fetchJson<void>(rejectRequestReviewPath(requestId), {
     method: "POST",
-    body: JSON.stringify({ feedback }),
+    body: toRejectReviewBody(feedback),
   });

@@ -6,6 +6,7 @@ import { EmployeeRequestDetailsView } from "../../../../entities/employee-reques
 import { employeeRequestDetailsConst } from "../../../../entities/employee-request/ui/employeeRequestDetailsConst";
 import { useSession } from "../../../../entities/session/model/useSession";
 import { ApproveReviewButton } from "../../../../features/employee-request/approve-review/ui/ApproveReviewButton";
+import { RejectReviewForm } from "../../../../features/employee-request/reject-review/ui/RejectReviewForm";
 import { StartReviewButton } from "../../../../features/employee-request/start-review/ui/StartReviewButton";
 import { ApiError } from "../../../../shared/api/fetchJson";
 import { clientRoutes } from "../../../../shared/config/clientRoutes";
@@ -121,6 +122,12 @@ const EmployeeRequestDetailsPage = () => {
                       requestId={details.requestId}
                       disabled={!availability.canApproveReview}
                       unavailableReason={availability.reason}
+                    />
+                    <RejectReviewForm
+                      requestId={details.requestId}
+                      disabled={!availability.canRejectReview}
+                      unavailableReason={availability.reason}
+                      showEmptyFeedbackWarning
                     />
                   </>
                 );

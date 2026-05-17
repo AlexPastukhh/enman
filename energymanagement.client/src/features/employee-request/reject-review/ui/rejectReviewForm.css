@@ -1,0 +1,57 @@
+.rejectReviewAction {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.rejectReviewAction__field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.rejectReviewAction__label {
+  color: #374151;
+  font-weight: 700;
+}
+
+.rejectReviewAction__textarea {
+  border: 1px solid #cbd5e1;
+  border-radius: 0.75rem;
+  font: inherit;
+  min-height: 5.5rem;
+  padding: 0.75rem;
+  resize: vertical;
+}
+
+.rejectReviewAction__button {
+  border: 0;
+  border-radius: 999px;
+  background: #991b1b;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0.7rem 1rem;
+}
+
+.rejectReviewAction__button:disabled,
+.rejectReviewAction__textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.rejectReviewAction__hint,
+.rejectReviewAction__warning,
+.rejectReviewAction__error {
+  margin: 0;
+}
+
+.rejectReviewAction__hint {
+  color: #4b5563;
+}
+
+.rejectReviewAction__warning {
+  color: #92400e;
+}
+
+.rejectReviewAction__error {
+  color: #b91c1c;
+}
