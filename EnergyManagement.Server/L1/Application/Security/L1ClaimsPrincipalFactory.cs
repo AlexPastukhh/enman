@@ -18,7 +18,7 @@ public sealed class L1ClaimsPrincipalFactory
 
         if (account is Employee employee)
         {
-            claims.Add(new(ClaimTypes.Name, employee.FullName.Value));
+            claims.Add(new(ClaimTypes.Name, FormatFullName(employee.FullName)));
         }
 
         if (!string.IsNullOrWhiteSpace(windowsLogin))
@@ -33,5 +33,15 @@ public sealed class L1ClaimsPrincipalFactory
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         return new ClaimsPrincipal(identity);
+    }
+
+    private static string FormatFullName(Domain.EnergyManagement.DocumentManaging.FullName fullName)
+    {
+        return string.Join(" ", new[]
+        {
+            fullName.LastName,
+            fullName.FirstName,
+            fullName.MiddleName
+        }.Where(part => !string.IsNullOrWhiteSpace(part)));
     }
 }

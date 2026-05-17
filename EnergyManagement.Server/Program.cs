@@ -134,7 +134,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
             }
         };
     })
-    .AddNegotiate(EmployeeAuthSchemes.EmployeeWindows);
+    .AddNegotiate();
 
 
 var app = builder.Build();
