@@ -1,18 +1,21 @@
-# APPLY — SL-APPL-003.client Full Draft Sync
+# APPLY — Domain Draft 02 L2
 
-Run from repository root:
-
-```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\sl-appl-003-client-full-draft-sync.zip" -DestinationPath . -Force
-git status
-git diff -- planning
-```
-
-If the diff is correct:
+From repo root:
 
 ```powershell
-git add planning
-git status
+Expand-Archive -Path "C:\Users\alexa\Downloads\domain-draft-02-l2-full.zip" -DestinationPath "." -Force
 ```
 
-This is a docs-only archive. It intentionally does not include runtime code, tests, generated artifacts or GitHub writes.
+Verify file exists:
+
+```powershell
+Test-Path .\planning\tables\domain-drafts\domain-draft-02.md
+```
+
+Open it:
+
+```powershell
+code .\planning\tables\domain-drafts\domain-draft-02.md
+```
+
+This archive adds `domain-draft-02.md` and does not replace `domain-draft-01.md`.
