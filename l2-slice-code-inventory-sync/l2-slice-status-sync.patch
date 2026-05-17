@@ -1,0 +1,286 @@
+diff --git a/planning/slices/SL-EMP-REQ-001-employee-request-list-read.md b/planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
+--- a/planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
++++ b/planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
+@@ -1,6 +1,6 @@
+ # SL-EMP-REQ-001 — Employee Request List Read
+ 
+-Status: full backend/API read slice draft / not implemented  
++Status: full backend/API read slice / API contract present in generated OpenAPI / implementation verification pending  
+ Package: `[Employee] [Requests]`  
+ Slice type: backend/API read slice  
+ Primary purpose: employee-visible request list with filters and compact review state  
+@@ -30,7 +30,7 @@ list + filters
+ | Request details endpoint | `SL-EMP-REQ-002 — Employee Request Details Read` |
+-| Start review command | future `SL-EMP-REQ-003 — Start Request Review` |
++| Start review command | `SL-EMP-REQ-003 — Start Request Review` |
+ | Approve review command | future `SL-EMP-REQ-004 — Approve Request Review` |
+ | Reject review command | future `SL-EMP-REQ-005 — Reject Request Review` |
+-| Employee dashboard/client UI | future `.client` sidecar |
++| Employee dashboard/client UI | `L2-EMP-DASH-001.client` |
+ | Employee profile/display-name read model | future Employee profile/read slice |
+@@ -59,6 +59,21 @@ CC-API-001
+   Owns OpenAPI/generated artifact workflow if API contract changes.
+ ```
++
++## 3A. Current Code / Contract Sync
++
++Current generated API artifacts contain:
++
++```text
++GET /api/employee/requests
++operationId: EmployeeListRequests
++response: EmployeeRequestListResponseDto
++```
++
++The client dashboard route/page/query/entity wrapper also exists and consumes this endpoint through:
++
++```text
++entities/employee-request/api/listEmployeeDashboardRequests.ts
++```
++
++Therefore this slice should no longer be described as plain `not implemented`. Final “implemented” status still requires server source/test verification.
+ 
+ ## 4A. Employee Account Identity Rule
+diff --git a/planning/slices/SL-EMP-REQ-002-employee-request-details-read.md b/planning/slices/SL-EMP-REQ-002-employee-request-details-read.md
+--- a/planning/slices/SL-EMP-REQ-002-employee-request-details-read.md
++++ b/planning/slices/SL-EMP-REQ-002-employee-request-details-read.md
+@@ -1,6 +1,6 @@
+ # SL-EMP-REQ-002 — Employee Request Details Read
+ 
+-Status: full backend/API read slice draft / not implemented  
++Status: full backend/API read slice / API contract present in generated OpenAPI / implementation verification pending  
+ Package: `[Employee] [Requests]`  
+ Slice type: backend/API read slice  
+ Primary purpose: employee request details by id  
+@@ -30,11 +30,11 @@ GET /api/employee/requests/{requestId}
+ | Out of scope | Owner |
+ |---|---|
+ | Employee request list / filters | `SL-EMP-REQ-001 — Employee Request List Read` |
+-| Start review command | future `SL-EMP-REQ-003 — Start Request Review` |
++| Start review command | `SL-EMP-REQ-003 — Start Request Review` |
+ | Approve review command | future `SL-EMP-REQ-004 — Approve Request Review` |
+ | Reject review command | future `SL-EMP-REQ-005 — Reject Request Review` |
+ | Action DTO / command affordance DTO | future command/client slices |
+-| Employee dashboard/client UI | future `.client` sidecar |
++| Employee dashboard/client UI | `L2-EMP-DASH-001.client`; details UI is `L2-EMP-DETAILS-001.client` |
+ | Employee profile/display-name read model | future Employee profile/read slice |
+@@ -61,6 +61,20 @@ CC-API-001
+   Owns OpenAPI/generated artifact workflow if API contract changes.
+ ```
++
++## 3A. Current Code / Contract Sync
++
++Current generated API artifacts contain:
++
++```text
++GET /api/employee/requests/{requestId}
++operationId: EmployeeGetRequestDetails
++response: EmployeeRequestDetailsDto
++```
++
++The client details route/page/query/entity wrapper also exists and consumes this endpoint through:
++
++```text
++entities/employee-request/api/getEmployeeRequestDetails.ts
++```
++
++Therefore this slice should no longer be described as plain `not implemented`. Final “implemented” status still requires server source/test verification.
+ 
+ ## 4A. Employee Account Identity Rule
+diff --git a/planning/slices/SL-EMP-REQ-003-start-request-review.md b/planning/slices/SL-EMP-REQ-003-start-request-review.md
+--- a/planning/slices/SL-EMP-REQ-003-start-request-review.md
++++ b/planning/slices/SL-EMP-REQ-003-start-request-review.md
+@@ -1,6 +1,6 @@
+ # SL-EMP-REQ-003 — Start Request Review
+ 
+-Status: full backend/API command slice draft / implementation-ready after Employee auth + Request-owned Review prerequisites are confirmed  
++Status: full backend/API command slice / API contract present in generated OpenAPI / source+tests verification pending  
+ Package: `[Employee] [Requests]`  
+ Slice type: backend/API command slice  
+ Primary purpose: employee starts request-owned Review  
+@@ -76,6 +76,20 @@ Do not model this command as `EmployeeProfile(AccountId)` or pass `EmployeeRef`.
+ 
+ ## 3. Out of Scope
++
++## 3B. Current Code / Contract Sync
++
++Current generated API artifacts contain:
++
++```text
++POST /api/employee/requests/{requestId}/review/start
++operationId: EmployeeStartRequestReview
++success: 204 No Content
++```
++
++The client command feature is not implemented yet; expected files under:
++
++```text
++features/employee-request/start-review/*
++```
++
++were not found during inspection.
+ 
+ | Out of scope                                                   | Owner                                            |
+diff --git a/planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md b/planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
+--- a/planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
++++ b/planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
+@@ -1,6 +1,6 @@
+ # L2-EMP-DASH-001.client — Employee Request Dashboard
+ 
+-Status: full client read sidecar draft / server read contract pending / API placement synchronized
++Status: first-stage client read implementation present / server read API contract present / API placement synchronized
+@@ -13,6 +13,17 @@ Start/approve/reject commands, details page, server endpoint implementation, emp
+ Signed-in Employee opens dashboard
+   -> sees review-relevant requests
+   -> sees row data and review state marker
+   -> opens request details
+ ```
++
++## Current Code / Contract Sync
++
++Current client code contains:
++
++```text
++clientRoutes.employeeRequests = /employee/requests
++router maps /employee/requests to EmployeeDashboardPage
++EmployeeDashboardPage uses useEmployeeRequestDashboardQuery
++useEmployeeRequestDashboardQuery calls listEmployeeDashboardRequests
++listEmployeeDashboardRequests calls GET /api/employee/requests
++```
+ 
+ ## 4. Client Implementation Flow
+diff --git a/planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md b/planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md
+--- a/planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md
++++ b/planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md
+@@ -1,6 +1,6 @@
+ # L2-EMP-DETAILS-001.client — Employee Request Details
+ 
+-Status: full client read sidecar draft / details read server contract pending / API placement synchronized
++Status: first-stage client read implementation present / details read API contract present / API placement synchronized
+ Server owner: `SL-EMP-REQ-002 — Employee Request Details Read`
+@@ -11,6 +11,21 @@ This full sidecar keeps `SL-EMP-REQ-002` as the server/details DTO owner and app
++## 0. Current Code / Contract Sync
++
++Current client code contains:
++
++```text
++clientRoutes.employeeRequestDetailsPath = /employee/requests/:requestId
++router maps /employee/requests/:requestId to EmployeeRequestDetailsPage
++EmployeeRequestDetailsPage uses useEmployeeRequestDetailsQuery
++useEmployeeRequestDetailsQuery calls getEmployeeRequestDetails
++getEmployeeRequestDetails calls GET /api/employee/requests/{requestId}
++EmployeeRequestDetailsView exposes renderReviewActions? slot
++```
++
++Current details UI derives action availability locally from `status` + `reviewState` through `getEmployeeReviewActionAvailability(...)`.
++
++Do not claim a server `reviewActionAvailability` DTO is already implemented unless the API adds it later.
++
+ ## 1. Scope
+@@ -221,10 +236,6 @@ type EmployeeRequestDetailsDto = {
+   applicantSummary?: EmployeeApplicantReviewSummaryDto | null;
+   clientSummary?: string | null;
+ 
+   reviewState: EmployeeRequestReviewState;
+-  reviewActionAvailability: EmployeeReviewActionAvailabilityDto;
+ };
+@@ -273,8 +284,8 @@ ProblemDetails/error mapping:
+ Antiforgery/CSRF:
+   Details read is safe GET by default and should not require local CSRF logic.
+   Future StartReview/Approve/Reject commands are unsafe and must consume shared antiforgery behavior.
+ 
+- Terminology:
++Terminology:
+   Use Employee, not Worker.
+diff --git a/planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md b/planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md
+--- a/planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md
++++ b/planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md
+@@ -1,6 +1,6 @@
+ # L2-REVIEW-START-001.client — Start Request Review
+ 
+-Status: full client command sidecar draft / blocked until `SL-EMP-REQ-003` server endpoint and generated OpenAPI contract exist / API placement synchronized
++Status: full client command sidecar draft / not implemented / server StartReview API contract present in generated OpenAPI / API placement synchronized
+@@ -17,6 +17,17 @@ Employee opens request details
+   -> rejection shows error and keeps previous state safe
+ ```
++
++## Current Code / Contract Sync
++
++Generated OpenAPI contains:
++
++```text
++POST /api/employee/requests/{requestId}/review/start
++operationId: EmployeeStartRequestReview
++```
++
++Client command feature files under `features/employee-request/start-review/*` were not found during inspection, and `EmployeeRequestDetailsPage` does not pass a StartReview action into the details view action slot.
+ 
+ ## 4. Client Implementation Flow
+diff --git a/planning/slices/l2/README.md b/planning/slices/l2/README.md
+--- a/planning/slices/l2/README.md
++++ b/planning/slices/l2/README.md
+@@ -1,6 +1,6 @@
+ # L2 Slice Planning Index
+ 
+-Status: current / Employee request read/review drafts and client API placement synchronized  
++Status: current / Employee request API+client implementation inventory synchronized  
+ Scope: L2 Employee, Request Review, AgreementProposalExchange and document-reference slice navigation
+@@ -34,15 +34,24 @@ Do not add new business-specific wrappers such as:
+ Existing business-specific `shared/api/*Api.ts` files are transitional compatibility only and should not be copied into new L2 client work.
+ 
+-## 3. Current L2 Drafted Slices
++## 3. Current L2 Slice Implementation Status
+ 
+-```text
+-planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
+-planning/slices/SL-EMP-REQ-002-employee-request-details-read.md
+-planning/slices/SL-EMP-REQ-003-start-request-review.md
++See detailed inventory:
+ 
+-planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
+-planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md
+-planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md
++```text
++planning/slices/l2/L2-current-implementation-inventory.md
+ ```
++
++| Slice | Current status |
++|---|---|
++| `SL-EMP-REQ-001-employee-request-list-read.md` | API contract present; server source/tests verification pending |
++| `L2-EMP-DASH-001-employee-request-dashboard.client.md` | first-stage client implementation present |
++| `SL-EMP-REQ-002-employee-request-details-read.md` | API contract present; server source/tests verification pending |
++| `L2-EMP-DETAILS-001-employee-request-details.client.md` | first-stage client implementation present |
++| `SL-EMP-REQ-003-start-request-review.md` | API contract present; server source/tests verification pending |
++| `L2-REVIEW-START-001-start-request-review.client.md` | not implemented; next client gap after server verification |
+diff --git a/planning/slices/slice-scenario-flow-behavior-register.md b/planning/slices/slice-scenario-flow-behavior-register.md
+--- a/planning/slices/slice-scenario-flow-behavior-register.md
++++ b/planning/slices/slice-scenario-flow-behavior-register.md
+@@ -56,12 +56,12 @@ Behavior source family:
+ | Slice / sidecar | Marker | Source files | Applies to | Status |
+ |---|---|---|---|---|
+-| `SL-EMP-REQ-001-employee-request-list-read.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-06-employee-request-dashboard.md`, employee request DATA/behavior files | Employee request list/dashboard read endpoint + filters | drafted |
+-| `L2-EMP-DASH-001-employee-request-dashboard.client.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-06-employee-request-dashboard.md`, employee request DATA/behavior files | Employee request dashboard client read UI | drafted |
+-| `SL-EMP-REQ-002-employee-request-details-read.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-07A-employee-request-details.md`, details DATA/behavior files | Employee request details read endpoint | drafted |
+-| `L2-EMP-DETAILS-001-employee-request-details.client.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-07A-employee-request-details.md`, details DATA/behavior files | Employee request details client read UI and action availability display | drafted |
+-| `SL-EMP-REQ-003-start-request-review.md` | `[SCENARIO]` / `[BEHAVIOR]` | `SC-07B-employee-request-review.md`, review behavior files | StartReview backend command | drafted |
+-| `L2-REVIEW-START-001-start-request-review.client.md` | `[SCENARIO]` / `[BEHAVIOR]` / `[CONCERN]` | `SC-07B-employee-request-review.md`, review behavior files, `CC-CSRF-001` | StartReview client action/mutation | drafted |
++| `SL-EMP-REQ-001-employee-request-list-read.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-06-employee-request-dashboard.md`, employee request DATA/behavior files | Employee request list/dashboard read endpoint + filters | API contract present / verify server implementation/tests |
++| `L2-EMP-DASH-001-employee-request-dashboard.client.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-06-employee-request-dashboard.md`, employee request DATA/behavior files | Employee request dashboard client read UI | first-stage client implemented |
++| `SL-EMP-REQ-002-employee-request-details-read.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-07A-employee-request-details.md`, details DATA/behavior files | Employee request details read endpoint | API contract present / verify server implementation/tests |
++| `L2-EMP-DETAILS-001-employee-request-details.client.md` | `[SCENARIO]` / `[DATA]` / `[BEHAVIOR]` | `SC-07A-employee-request-details.md`, details DATA/behavior files | Employee request details client read UI and local action-availability display | first-stage client implemented |
++| `SL-EMP-REQ-003-start-request-review.md` | `[SCENARIO]` / `[BEHAVIOR]` | `SC-07B-employee-request-review.md`, review behavior files | StartReview backend command | API contract present / verify source+tests |
++| `L2-REVIEW-START-001-start-request-review.client.md` | `[SCENARIO]` / `[BEHAVIOR]` / `[CONCERN]` | `SC-07B-employee-request-review.md`, review behavior files, `CC-CSRF-001` | StartReview client action/mutation | not implemented |
+diff --git a/planning/slices/slice-implementation-notes-register.md b/planning/slices/slice-implementation-notes-register.md
+--- a/planning/slices/slice-implementation-notes-register.md
++++ b/planning/slices/slice-implementation-notes-register.md
+@@ -8,6 +8,16 @@ Status: active / client API placement synchronized
+ | ID | Applies to | Note | Status |
+ |---|---|---|---|
++| `IMPL-L2-EMP-STATUS-001` | `SL-EMP-REQ-001` | Generated OpenAPI/types expose `GET /api/employee/requests`; dashboard client consumes it. Do not leave slice marked plain `not implemented`; verify server source/tests before final implemented label. | current |
++| `IMPL-L2-EMP-STATUS-002` | `SL-EMP-REQ-002` | Generated OpenAPI/types expose `GET /api/employee/requests/{requestId}`; details client consumes it. Do not leave slice marked plain `not implemented`; verify server source/tests before final implemented label. | current |
++| `IMPL-L2-EMP-STATUS-003` | `SL-EMP-REQ-003` | Generated OpenAPI/types expose `POST /api/employee/requests/{requestId}/review/start`; client StartReview feature is still missing. | current |
++| `IMPL-L2-EMP-STATUS-004` | `L2-EMP-DASH-001.client` | Route/page/query/entity API wrapper exist; first-stage dashboard client is implemented. | current |
++| `IMPL-L2-EMP-STATUS-005` | `L2-EMP-DETAILS-001.client` | Route/page/query/entity API wrapper/details UI exist; action availability is currently client-derived from status + reviewState. | current |
++| `IMPL-L2-EMP-STATUS-006` | `L2-REVIEW-START-001.client` | Expected feature files under `features/employee-request/start-review/*` were not found; details page does not render StartReview action. | current gap |
+ | `IMPL-CLIENT-API-PLACEMENT-001` | new client reads | Put read endpoint wrappers, path constants and generated DTO aliases in `entities/<entity>/api`. Use shared `fetchJson` and generated OpenAPI types. | accepted |
+ | `IMPL-CLIENT-API-PLACEMENT-002` | new client commands | Put command/mutation endpoint wrappers, path constants and generated command DTO/result aliases in `features/<business-action>/api`. Use shared unsafe/CSRF-aware transport. | accepted |
