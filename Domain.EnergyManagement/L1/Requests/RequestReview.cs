@@ -100,6 +100,12 @@ public sealed class RequestReview
                 [Errors.L1Domain.EmployeeIsRequired]);
         }
 
+        if (employee.Id <= 0)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.EmployeeIsRequired]);
+        }
+
         if (Status != RequestReviewStatus.Started)
         {
             return UnitResult.Failure<IReadOnlyList<Error>>(

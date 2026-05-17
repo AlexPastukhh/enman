@@ -8,11 +8,7 @@ namespace Domain.EnergyManagement.L1;
 
 public sealed class ConnectionRequest : ClientRequest
 {
-    private ReviewDecisionRecord? _reviewDecision;
-
     private RequestReview? _review;
-
-    public ReviewDecisionRecord? ReviewDecision => _reviewDecision;
 
     [NotMapped]
     public RequestReview? Review => _review;
@@ -59,6 +55,18 @@ public sealed class ConnectionRequest : ClientRequest
         DateTimeOffset startedAt)
     {
         if (employee is null)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.EmployeeIsRequired]);
+        }
+
+        if (Id <= 0)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.RequestIsRequired]);
+        }
+
+        if (employee.Id <= 0)
         {
             return UnitResult.Failure<IReadOnlyList<Error>>(
                 [Errors.L1Domain.EmployeeIsRequired]);
@@ -170,73 +178,4 @@ public sealed class ConnectionRequest : ClientRequest
         return UnitResult.Success<IReadOnlyList<Error>>();
     }
 
-    // Existing L1 review API is intentionally kept for current implemented behavior compatibility.
-    public UnitResult<IReadOnlyList<Error>> CanApprove(EmployeeRef reviewer)
-    {
-        if (reviewer is null)
-        {
-            return UnitResult.Failure<IReadOnlyList<Error>>(
-                [Errors.L1Domain.ReviewerIsRequired]);
-        }
-
-        if (Status != RequestStatus.InReview)
-        {
-            return UnitResult.Failure<IReadOnlyList<Error>>(
-                [Errors.L1Domain.OnlyInReviewRequestCanBeApproved]);
-        }
-
-        return UnitResult.Success<IReadOnlyList<Error>>();
-    }
-
-    public UnitResult<IReadOnlyList<Error>> Approve(EmployeeRef reviewer)
-    {
-        var canApprove = CanApprove(reviewer);
-        if (canApprove.IsFailure)
-        {
-            return canApprove;
-        }
-
-        Status = RequestStatus.Approved;
-        _reviewDecision = ReviewDecisionRecord.Approved(
-            reviewer,
-            DateTimeOffset.UtcNow);
-
-        return UnitResult.Success<IReadOnlyList<Error>>();
-    }
-
-    public UnitResult<IReadOnlyList<Error>> CanReject(EmployeeRef reviewer)
-    {
-        if (reviewer is null)
-        {
-            return UnitResult.Failure<IReadOnlyList<Error>>(
-                [Errors.L1Domain.ReviewerIsRequired]);
-        }
-
-        if (Status != RequestStatus.InReview)
-        {
-            return UnitResult.Failure<IReadOnlyList<Error>>(
-                [Errors.L1Domain.OnlyInReviewRequestCanBeRejected]);
-        }
-
-        return UnitResult.Success<IReadOnlyList<Error>>();
-    }
-
-    public UnitResult<IReadOnlyList<Error>> Reject(
-        EmployeeRef reviewer,
-        RejectionFeedback? feedback)
-    {
-        var canReject = CanReject(reviewer);
-        if (canReject.IsFailure)
-        {
-            return canReject;
-        }
-
-        Status = RequestStatus.Rejected;
-        _reviewDecision = ReviewDecisionRecord.Rejected(
-            reviewer,
-            feedback,
-            DateTimeOffset.UtcNow);
-
-        return UnitResult.Success<IReadOnlyList<Error>>();
-    }
 }

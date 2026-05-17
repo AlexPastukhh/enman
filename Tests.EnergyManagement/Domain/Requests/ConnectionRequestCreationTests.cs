@@ -24,7 +24,7 @@ public class ConnectionRequestCreationTests
         result.Value.Status.Should().Be(RequestStatus.InReview);
         result.Value.Details.Should().Be(L1ValidTestData.RequestDetails);
         result.Value.ObjectAddress.Should().Be(L1ValidTestData.Address);
-        result.Value.ReviewDecision.Should().BeNull();
+        result.Value.Review.Should().BeNull();
     }
 
     [Fact]

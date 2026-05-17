@@ -41,6 +41,10 @@ public sealed class AgreementProposalExchange : L1Entity
         {
             errors.Add(Errors.L1Domain.RequestIsRequired);
         }
+        else if (approvedRequest.Id <= 0)
+        {
+            errors.Add(Errors.L1Domain.RequestIsRequired);
+        }
         else if (approvedRequest.Status != RequestStatus.Approved)
         {
             errors.Add(Errors.L1Domain.AgreementExchangeRequiresApprovedRequest);
@@ -52,6 +56,10 @@ public sealed class AgreementProposalExchange : L1Entity
         }
 
         if (employee is null)
+        {
+            errors.Add(Errors.L1Domain.EmployeeIsRequired);
+        }
+        else if (employee.Id <= 0)
         {
             errors.Add(Errors.L1Domain.EmployeeIsRequired);
         }
@@ -102,6 +110,12 @@ public sealed class AgreementProposalExchange : L1Entity
                 [Errors.L1Domain.ClientAccountIsRequired]);
         }
 
+        if (client.Id <= 0)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.ClientAccountIsRequired]);
+        }
+
         if (Status != AgreementExchangeStatus.AwaitingClientConfirmation)
         {
             return UnitResult.Failure<IReadOnlyList<Error>>(
@@ -140,6 +154,12 @@ public sealed class AgreementProposalExchange : L1Entity
         }
 
         if (client is null)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.ClientAccountIsRequired]);
+        }
+
+        if (client.Id <= 0)
         {
             return UnitResult.Failure<IReadOnlyList<Error>>(
                 [Errors.L1Domain.ClientAccountIsRequired]);
@@ -200,6 +220,12 @@ public sealed class AgreementProposalExchange : L1Entity
                 [Errors.L1Domain.EmployeeIsRequired]);
         }
 
+        if (employee.Id <= 0)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.EmployeeIsRequired]);
+        }
+
         var canSend = employee.EnsureCanSendAgreementProposal();
         if (canSend.IsFailure)
         {
@@ -243,6 +269,12 @@ public sealed class AgreementProposalExchange : L1Entity
         DateTimeOffset refusedAt)
     {
         if (employee is null)
+        {
+            return UnitResult.Failure<IReadOnlyList<Error>>(
+                [Errors.L1Domain.EmployeeIsRequired]);
+        }
+
+        if (employee.Id <= 0)
         {
             return UnitResult.Failure<IReadOnlyList<Error>>(
                 [Errors.L1Domain.EmployeeIsRequired]);
