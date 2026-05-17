@@ -1,7 +1,5 @@
 using EnergyManagement.Server;
 using EnergyManagement.Server.Configuration;
-using EnergyManagement.Server.Contracts;
-using EnergyManagement.Server.Data;
 using EnergyManagement.Server.Infrastructure;
 using EnergyManagement.Server.L1.Api;
 using EnergyManagement.Server.L1.Api.Validation;
@@ -9,12 +7,9 @@ using EnergyManagement.Server.L1.Application.Abstractions;
 using EnergyManagement.Server.L1.Application.Services;
 using EnergyManagement.Server.L1.Persistence;
 using EnergyManagement.Server.L1.Persistence.Repositories;
-using EnergyManagement.Server.Repositories;
 using EnergyManagement.Server.Api.Security;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
@@ -49,26 +44,14 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped(
-    _=>new AppDbContext(builder.Configuration.GetConnectionString(ConnectionStringNames.ManagementDb)!));
-builder.Services.AddScoped(
     _=>new L1DbContext(builder.Configuration.GetConnectionString(ConnectionStringNames.ManagementDb)!));
-builder.Services.AddTransient<IClientRepository,ClientRepository>();
 builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 builder.Services.AddTransient<IApplicantPartyRepository, ApplicantPartyRepository>();
 builder.Services.AddTransient<IApplicantPartyCreationService, ApplicantPartyCreationService>();
 builder.Services.AddTransient<IClientRequestRepository, ClientRequestRepository>();
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 
-// builder.Services.AddSingleton(_=>ConstantsToWrite.Create());
-builder.Services.AddSingleton(_=>ErrorObject.Create());
-// builder.Services.AddHostedService<ConstantWriterService>();
-
-
 builder.Services.AddMediatR(c=>c.RegisterServicesFromAssembly(typeof(Program).Assembly));
-builder.Services.AddTransient<IValidator<RegisterClientDto>,RegisterClientDtoValidator>();
-builder.Services.AddTransient<IValidator<LoginDto>,LoginClientDtoValidator>();
-builder.Services.AddTransient<IValidator<ProvideIndividualClientsDataDto>,ProvideIndividualClientsDataDtoValidator>();
-builder.Services.AddTransient<IValidator<CreateIndividualRequestDto>,CreateIndividualRequestDtoValidator>();
 builder.Services.AddTransient<IValidator<L1RegisterClientAccountDto>, L1RegisterClientAccountDtoValidator>();
 builder.Services.AddTransient<IValidator<L1LoginRequest>, L1LoginRequestValidator>();
 builder.Services.AddTransient<IValidator<L1CreateIndividualApplicantPartyDto>, L1CreateIndividualApplicantPartyDtoValidator>();

@@ -20,172 +20,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/auth/registerIndividual": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["registerIndividual"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/auth/provideIndividualClientsData": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["ProvideIndividualClientsDataDto"];
-                    "text/json": components["schemas"]["ProvideIndividualClientsDataDto"];
-                    "application/*+json": components["schemas"]["ProvideIndividualClientsDataDto"];
-                };
-            };
-            responses: {
-                /** @description Success */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/auth/login": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["LoginDto"];
-                    "text/json": components["schemas"]["LoginDto"];
-                    "application/*+json": components["schemas"]["LoginDto"];
-                };
-            };
-            responses: {
-                /** @description Success */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/auth/getUser": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Success */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/ClientRequest/IndivCreateConnectionRequest": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["CreateIndividualRequestDto"];
-                    "text/json": components["schemas"]["CreateIndividualRequestDto"];
-                    "application/*+json": components["schemas"]["CreateIndividualRequestDto"];
-                };
-            };
-            responses: {
-                /** @description Success */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/employee/requests": {
         parameters: {
             query?: never;
@@ -398,21 +232,8 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        AddressDto: {
-            postalCode?: string | null;
-            region?: string | null;
-            city?: string | null;
-            street?: string | null;
-            house?: string | null;
-            building?: string | null;
-            apartment?: string | null;
-        };
         AntiforgeryTokenResponse: {
             requestToken?: string | null;
-        };
-        CreateIndividualRequestDto: {
-            requestDetails?: string | null;
-            address?: components["schemas"]["AddressDto"];
         };
         EmployeeRequestApplicantSummaryDto: {
             /** Format: int64 */
@@ -447,11 +268,6 @@ export interface components {
         };
         EmployeeRequestListResponseDto: {
             requests?: components["schemas"]["EmployeeRequestListItemDto"][] | null;
-        };
-        FullNameDto: {
-            firstName?: string | null;
-            middleName?: string | null;
-            lastName?: string | null;
         };
         L1AccountApplicantPartiesResponse: {
             applicantParties?: components["schemas"]["L1ApplicantPartySummaryDto"][] | null;
@@ -566,10 +382,6 @@ export interface components {
             details?: string | null;
             objectAddress?: components["schemas"]["L1AddressDto"];
         };
-        LoginDto: {
-            email?: string | null;
-            password?: string | null;
-        };
         ProblemDetails: {
             type?: string | null;
             title?: string | null;
@@ -579,15 +391,6 @@ export interface components {
             instance?: string | null;
         } & {
             [key: string]: unknown;
-        };
-        ProvideIndividualClientsDataDto: {
-            phoneNumber?: string | null;
-            fullNameDto?: components["schemas"]["FullNameDto"];
-        };
-        RegisterClientDto: {
-            email?: string | null;
-            password?: string | null;
-            passwordConfirmation?: string | null;
         };
     };
     responses: never;
@@ -628,30 +431,6 @@ export interface operations {
                     "application/json": components["schemas"]["ProblemDetails"];
                     "text/json": components["schemas"]["ProblemDetails"];
                 };
-            };
-        };
-    };
-    registerIndividual: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["RegisterClientDto"];
-                "text/json": components["schemas"]["RegisterClientDto"];
-                "application/*+json": components["schemas"]["RegisterClientDto"];
-            };
-        };
-        responses: {
-            /** @description Success */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
         };
     };

@@ -5,7 +5,6 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using EnergyManagement.Server;
 using EnergyManagement.Server.Configuration;
-using EnergyManagement.Server.Data;
 using EnergyManagement.Server.L1.Persistence;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -44,16 +43,6 @@ namespace Tests.EnergyManagement.Integration
 
             builder.ConfigureTestServices(services =>
             {
-                var dbContextDescriptor = services
-                    .SingleOrDefault(d => d.ServiceType == typeof(AppDbContext));
-
-                if (dbContextDescriptor != null)
-                {
-                    services.Remove(dbContextDescriptor);
-                }
-
-                services.AddScoped(_ => new AppDbContext(ConnectionString));
-
                 var l1DbContextDescriptor = services
                     .SingleOrDefault(d => d.ServiceType == typeof(L1DbContext));
 
