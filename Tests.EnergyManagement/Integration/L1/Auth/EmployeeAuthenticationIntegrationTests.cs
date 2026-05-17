@@ -121,6 +121,6 @@ public sealed class EmployeeAuthenticationIntegrationTests : L1IntegrationTestBa
 
     private Task ResetDatabaseAsync()
     {
-        return new EnergyManagement.Testing.TestDatabase.TestDatabaseManager(_fixture.ConnectionString).ResetAsync();
+        return new global::EnergyManagement.Testing.TestDatabase.TestDatabaseManager(_fixture.ConnectionString).ResetAsync();
     }
 }
