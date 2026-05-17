@@ -25,3 +25,34 @@ Generated contract note:
 Do not invent final generated operation/type names.
 Use exact names from generated OpenAPI after SL-EMP-REQ-003 backend implementation/generation.
 ```
+
+
+## SL-EMP-REQ-001 Implementation Verification / Packaging Note
+
+Source note:
+
+```text
+planning/slices/l2/SL-EMP-REQ-001-implementation-verification-and-packaging-note.md
+```
+
+Extracted conclusions:
+
+```text
+- client tests passed: 25 files, 121 tests;
+- server project build passed with dotnet build;
+- OpenAPI generation command:
+  dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json;
+- TypeScript API type generation command:
+  npm.cmd --prefix energymanagement.client run generate:api-types;
+- client build/test commands:
+  npm --prefix .\energymanagement.client run build;
+  npm --prefix .\energymanagement.client run test -- --run;
+- `check:api` can fail when generated artifacts are only unstaged working-tree changes;
+- if API shape changed, final implementation archive/commit must include:
+  Shared/openapi.json
+  energymanagement.client/src/shared/api/generated/openapi-types.ts;
+- LF/CRLF warnings are not errors;
+- final merge-ready packaging should also run dotnet test if integration tests are part of the gate.
+```
+
+Do not omit generated API artifacts from an implementation archive after API contract changes.

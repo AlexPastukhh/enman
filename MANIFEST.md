@@ -1,88 +1,53 @@
-# MANIFEST — SL-EMP-REQ-001 Employee Request List Read
+# Manifest — Review Start Client Files + API Generation Workflow Sync
 
-Archive: `sl-emp-req-001-employee-request-list-read-v12.zip`
+Status: docs-only replacement package  
+Purpose: keep the previous `L2-REVIEW-START-001.client` sync and add the corrected API/generated-artifact workflow guidance from the latest run-log discussion.
 
-Scope: backend/API read slice implementation for `SL-EMP-REQ-001 — Employee Request List Read`.
+## Files
 
-## Added files
-
-- `EnergyManagement.Server/L1/Api/Validation/EmployeeRequestListQueryDtoValidator.cs`
-- `EnergyManagement.Server/L1/Application/Queries/EmployeeRequestListHandler.cs`
-- `EnergyManagement.Server/L1/Application/Queries/EmployeeRequestListQuery.cs`
-- `EnergyManagement.Server/L1/Controllers/EmployeeRequestsController.cs`
-- `Tests.EnergyManagement/Integration/L1/EmployeeRequests/EmployeeRequestListIntegrationTests.cs`
-
-## Replaced files
-
-- `EnergyManagement.Server/L1/Api/L1Dtos.cs`
-- `EnergyManagement.Server/L1/Api/Validation/L1FieldNames.cs`
-- `EnergyManagement.Server/L1/Api/Validation/L1RequestValidationDto.cs`
-- `EnergyManagement.Server/Program.cs`
-- `EnergyManagement.Testing/TestDatabase/TestDatabaseManager.cs`
-- `Tests.EnergyManagement/Integration/L1/L1IntegrationTestBase.cs`
-
-## Deleted files
-
-None.
-
-## API shape
-
-Adds:
-
-```http
-GET /api/employee/requests?status=...&reviewState=...
+```text
+APPLY.md
+MANIFEST.md
+planning/api/README.md
+planning/api/generated-artifact-check-workflow.md
+planning/slices/README.md
+planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md
+planning/slices/l2/README.md
+planning/slices/l2/L2-REVIEW-START-001-start-request-review.client.md
+planning/slices/l2/SL-EMP-REQ-001-implementation-verification-and-packaging-note.md
+planning/slices/slice-extension-points-register.md
+planning/slices/slice-implementation-notes-register.md
+planning/slices/slice-questions-register.md
+planning/slices/slice-scenario-flow-behavior-register.md
 ```
 
-Response:
+## Important update
 
-```ts
-type EmployeeRequestListResponseDto = {
-  requests: EmployeeRequestListItemDto[];
-};
+For backend/API shape changes, the explicit generation workflow is:
 
-type EmployeeRequestListItemDto = {
-  requestId: number;
-  requestType: string;
-  status: string;
-  applicantDisplayName: string;
-  objectAddress: string;
-  createdAt: string;
-  reviewState: "NotStarted" | "StartedByCurrentEmployee" | "StartedByAnotherEmployee" | "Approved" | "Rejected";
-};
+```powershell
+dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
+npm.cmd --prefix energymanagement.client run generate:api-types
+npm --prefix .\energymanagement.client run build
+npm --prefix .\energymanagement.client run test -- --run
 ```
 
-## Implementation notes
+`npm run check:api` can still fail after correct generation if the generated files are only modified in the working tree and are not part of the expected state. Its final `git diff --exit-code` intentionally detects generated artifact drift.
 
-- Uses a dedicated employee read controller at `/api/employee/requests`.
-- Requires authenticated L1 identity with `Employee` role.
-- Uses FluentValidation only for query shape / allowed `status` and `reviewState` values.
-- Uses Dapper read projection for request rows and review state.
-- Does not load or mutate request aggregates.
-- Does not implement details endpoint.
-- Does not implement StartReview / ApproveReview / RejectReview commands.
-- Adds test database support for `dbo.L1RequestReviews` if missing, so integration tests can seed review state.
+Implementation archives/patches that change API shape must include:
 
-## Tests added/updated
+```text
+Shared/openapi.json
+energymanagement.client/src/shared/api/generated/openapi-types.ts
+```
 
-- Adds focused API integration tests for auth/access, empty list, compact rows, review-state projection, status filter, reviewState filter, and invalid query values.
-- Updates `L1IntegrationTestBase` with employee request list and request review seed helpers.
+Documentation-only archives must not include generated artifacts.
 
-## Generated artifacts
+## Not included
 
-Not included.
-
-This archive changes the server API contract, so after applying it run the repository OpenAPI/type generation workflow locally.
-
-## Commands run in this environment
-
-Not run: `.NET SDK` is not available in this sandbox.
-
-## Non-goals respected
-
-- No planning/docs changes.
-- No client UI changes.
-- No domain behavior changes.
-- No review commands.
-- No details endpoint.
-- No AgreementProposalExchange behavior.
-- No generated artifact manual edits.
+```text
+- runtime code;
+- tests;
+- Shared/openapi.json;
+- generated TypeScript artifacts.
+```

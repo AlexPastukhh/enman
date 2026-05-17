@@ -1,122 +1,176 @@
 # Generated Artifact Check Workflow
 
-Status: current / OpenAPI and generated TypeScript artifact workflow clarified  
-Scope: local developer workflow after backend API source changes, generated artifact checks, docs/archive handoff notes
+Status: current / explicit API-shape generation and `check:api` expectations clarified  
+Scope: local workflow after backend API source changes, generated artifact checks, implementation archive handoff rules
 
 ## 1. Purpose
 
-This note fixes the recurring confusion around `npm run check:api`.
+This note fixes the recurring confusion around generated OpenAPI/TypeScript artifacts and `check:api`.
 
-`check:api` is not only a generator. It is a stability check over generated artifacts.
+When backend/API shape changes, the generated artifacts are expected to change.
 
-Current root script shape:
+That is not a problem by itself.
 
-```text
-npm run check:openapi
-npm run generate:api-types
-git diff --exit-code Shared/openapi.json energymanagement.client/src/shared/api/generated/openapi-types.ts
-```
-
-That means `check:api` can fail when generated files are correct but not staged, because the final `git diff --exit-code` compares working tree files against the index.
+The problem is omitting generated artifacts from the implementation handoff or expecting `check:api` to pass while generated artifacts are still only unstaged working-tree changes.
 
 ## 2. Source Of Truth
 
 Never hand-edit generated artifacts.
 
-Source of truth:
+Source chain:
 
 ```text
-backend API source/metadata
+backend API source / endpoint metadata / DTO metadata
         ↓
-npm run generate:openapi
+EnergyManagement.Tools generate-openapi
         ↓
 Shared/openapi.json
         ↓
-npm run generate:api-types
+client generate:api-types
         ↓
 energymanagement.client/src/shared/api/generated/openapi-types.ts
 ```
 
-Generated artifacts included in an implementation archive must be files produced by repo generation commands, not manually reconstructed JSON/TypeScript.
+Generated artifacts included in an implementation archive must be produced by repo generation commands, not manually reconstructed JSON/TypeScript.
 
-## 3. Normal Local Workflow After API Source Changes
+## 3. Correct Workflow After Backend/API Shape Changes
 
 Run from repository root:
 
 ```powershell
-npm run generate:openapi
-npm run generate:api-types
+cd C:\enman\enman
 
-git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
+# 1. Regenerate OpenAPI, no --check
+dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
 
-npm run check:api
+# 2. Regenerate TypeScript API types
+npm.cmd --prefix energymanagement.client run generate:api-types
+
+# 3. Verify client build/tests
+npm --prefix .\energymanagement.client run build
+npm --prefix .\energymanagement.client run test -- --run
 ```
 
-If `npm run check:api` passes after staging, generated artifacts are stable.
+After this, these files may be modified:
 
-## 4. Why Staging Matters
+```text
+Shared/openapi.json
+energymanagement.client/src/shared/api/generated/openapi-types.ts
+```
 
-The final step in `check:api` is:
+That is expected when API shape changed.
+
+## 4. Why `check:api` Can Still Fail
+
+`check:api` ends with a generated-artifact drift check equivalent to:
 
 ```text
 git diff --exit-code Shared/openapi.json energymanagement.client/src/shared/api/generated/openapi-types.ts
 ```
 
-`git diff` without `--cached` compares working tree files to the index.
-
-So this can happen:
+That command says:
 
 ```text
-- generator output is correct;
-- generated files changed as part of the slice;
-- files are not staged;
-- git diff still sees changes;
-- check:api fails.
+After generation/check commands, there must be no generated-artifact diff left outside the expected repository state.
 ```
 
-Staging generated artifacts before `check:api` lets the command answer the intended question:
+In a commit/PR workflow, the generated files must be included in the commit.
 
-```text
-Did the check/generation command produce additional generated drift beyond the files we are about to commit/apply?
-```
+In an archive/handoff workflow, the generated files must be included in the archive/handoff.
 
-## 5. Recovery Workflow When check:api Fails On Generated Files
+If they are just modified in the working tree, `git diff --exit-code` is supposed to fail.
+
+## 5. Practical Workflow For Server/API Slices
 
 ```powershell
-git status --short .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
+# implement server endpoint / DTO / metadata changes first
 
-git restore --staged .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
+dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
+npm.cmd --prefix energymanagement.client run generate:api-types
 
-npm run generate:openapi
-npm run generate:api-types
-
-git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
-
-npm run check:api
+git status --short
 ```
 
-If the command still prints diff after this sequence, generated artifacts are still stale or the generator is not deterministic for the current source state.
-
-## 6. Archive Rule
-
-For an implementation archive that changes API shape, include:
+Expected when API shape changed:
 
 ```text
-- source code changes;
-- Shared/openapi.json produced by npm run generate:openapi;
-- openapi-types.ts produced by npm run generate:api-types;
-- MANIFEST.md;
-- APPLY.md.
+M Shared/openapi.json
+M energymanagement.client/src/shared/api/generated/openapi-types.ts
+```
+
+These files must travel with the same implementation handoff as the server API change.
+
+Implementation archive/commit should include:
+
+```text
+- server/API source files for the slice;
+- related tests;
+- Shared/openapi.json;
+- energymanagement.client/src/shared/api/generated/openapi-types.ts;
+- planning docs intentionally updated for the implementation.
+```
+
+## 6. Client-Only Slice Rule
+
+A client-only slice should not change API shape by itself.
+
+Usually it should not touch generated artifacts.
+
+Exception:
+
+```text
+A backend endpoint was added earlier but generated artifacts were not refreshed.
+```
+
+In that case `check:api` may reveal that the repository is already out of sync. The fix is still to regenerate and include generated artifacts in the appropriate API-contract sync or implementation handoff, not to hand-edit generated files.
+
+## 7. Build/Test Notes
+
+For the client after API type generation:
+
+```powershell
+npm --prefix .\energymanagement.client run build
+npm --prefix .\energymanagement.client run test -- --run
+```
+
+For server build/test gates, use the relevant project commands, for example:
+
+```powershell
+dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
+dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
+```
+
+A typo such as `otnet build` is not meaningful if the corrected `dotnet build` passes.
+
+Line-ending warnings such as `LF will be replaced by CRLF` are not failures.
+
+## 8. Archive Rule
+
+For documentation-only archives:
+
+```text
+Do not include generated artifacts.
+```
+
+For implementation archives that change API shape:
+
+```text
+Include generated artifacts.
+```
+
+Required generated files:
+
+```text
+Shared/openapi.json
+energymanagement.client/src/shared/api/generated/openapi-types.ts
 ```
 
 Do not include generated artifacts produced by manual editing or sandbox reconstruction.
 
-For documentation-only archives, do not include generated artifacts.
+## 9. OpenAPI Formatting Note
 
-## 7. OpenAPI Formatting Note
+The generator/formatter may serialize characters such as `+` as escaped JSON text like `\u002B`.
 
-The OpenAPI generator/formatter may serialize characters such as `+` as escaped JSON text like `\u002B`.
+Do not manually normalize generated artifacts to preferred visual formatting.
 
-Do not manually normalize the artifact to a preferred visual form.
-
-Use the generated file exactly as produced by the current repo command.
+Use generated files exactly as produced by the current repo command.

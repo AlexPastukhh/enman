@@ -74,3 +74,22 @@ SL-DOC-001 — AgreementDocumentRef / Proposal Document Reference
 - Details read contract must come from SL-EMP-REQ-002 server read slice and generated OpenAPI.
 - StartReview client implementation waits for SL-EMP-REQ-003 endpoint + generated OpenAPI.
 ```
+
+
+## 7. Implementation Verification Notes
+
+```text
+planning/slices/l2/SL-EMP-REQ-001-implementation-verification-and-packaging-note.md
+```
+
+Current note:
+
+```text
+SL-EMP-REQ-001 implementation verification logs indicate client tests, server build, OpenAPI generation, API type generation and check:api passed after generated artifacts were staged.
+
+If final implementation archive changes API shape, include:
+- Shared/openapi.json
+- energymanagement.client/src/shared/api/generated/openapi-types.ts
+
+Run server/integration tests separately if they are part of the final gate.
+```

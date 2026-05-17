@@ -1,6 +1,6 @@
 # API Contract Planning Index
 
-Status: current API contract planning index / generated-artifact check workflow, server validation and client wrapper principles synchronized  
+Status: current API contract planning index / explicit API-shape generation workflow synchronized  
 Scope: client/server API contract, OpenAPI structural contract, generated semantic constants, API errors, server request validation policy, generated artifact check workflow
 
 ## 1. Purpose
@@ -80,7 +80,7 @@ Shared API wrappers
 
 | Slice | Responsibility | Current status |
 |---|---|---|
-| `planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md` | OpenAPI artifact and generated TypeScript type workflow | first-stage implemented; generated artifact check workflow clarified |
+| `planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-generation.md` | OpenAPI artifact and generated TypeScript type workflow | first-stage implemented; explicit API-shape generation/archive workflow clarified |
 | `planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md` | Generated semantic constants and constants testing workflow | implemented baseline; client-consumer usage remains per slice |
 | `planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md` | Antiforgery token/session context support and API security error normalization | implementation-ready draft |
 | `planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md` | FluentValidation server request DTO/query validation principles and business-slice consumer rules | implementation-ready principles; L1 adoption planned |
@@ -94,50 +94,49 @@ The API artifact baseline exists and should be used by new client/server work:
 2. Client TypeScript DTO/types are generated from Shared/openapi.json.
 3. Semantic constants are generated through Shared/constants.json and Shared/errorcodes.json.
 4. Artifact generation is explicit command/tooling work, not server startup side effects.
-5. Root scripts provide generate/check API workflow.
-6. Request-level FluentValidation for L1 is a planned validation layer, not a fully implemented baseline.
+5. Root scripts/checks provide generated artifact drift detection.
+6. Request-level FluentValidation is a validation layer, not business/domain ownership logic.
 ```
 
-Current commands:
+## 6. Generated Artifact Workflow
 
-```bash
-npm run generate:openapi
-npm run generate:api-types
-npm run check:api
-dotnet run --project EnergyManagement.Tools -- generate-client-constants --out Shared --check
-```
-
-## 6. Generated Artifact Check Workflow
-
-Use this workflow after backend API contract changes:
+After backend/API contract changes, run from repo root:
 
 ```powershell
-npm run generate:openapi
-npm run generate:api-types
+cd C:\enman\enman
 
-git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
-
-npm run check:api
+dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
+npm.cmd --prefix energymanagement.client run generate:api-types
+npm --prefix .\energymanagement.client run build
+npm --prefix .\energymanagement.client run test -- --run
 ```
 
-Why staging is needed in archive/manual workflows:
+Expected changed generated files when API shape changed:
 
 ```text
-check:api runs check:openapi, regenerates TypeScript API types,
-and then ends with git diff --exit-code against:
-  Shared/openapi.json
-  energymanagement.client/src/shared/api/generated/openapi-types.ts
-
-In an uncommitted archive workflow, generated files are expected changes.
-If they are correct but unstaged, git diff can still fail because the working tree differs from the index.
-Staging generated artifacts before check:api lets the command verify that rerunning generation causes no additional working-tree diff.
+Shared/openapi.json
+energymanagement.client/src/shared/api/generated/openapi-types.ts
 ```
 
-Do not manually edit generated artifacts.
+Why `check:api` can still fail:
 
-If generated artifacts are wrong, regenerate them from the repo commands.
+```text
+check:api ends with git diff --exit-code against generated artifacts.
+If generated files are correct but only modified in the working tree,
+that diff is expected and check:api intentionally fails.
+```
 
-If the task is docs-only, do not include generated artifacts.
+Commit/archive rule:
+
+```text
+If server/API implementation changes API shape, include generated artifacts in the same handoff.
+```
+
+Docs-only rule:
+
+```text
+Do not include generated artifacts in docs-only archives.
+```
 
 Detailed workflow:
 
@@ -153,7 +152,7 @@ Before implementing missing client/server slices:
 
 ```text
 1. Do not redo OpenAPI/constants infrastructure.
-2. Classify endpoint status: target L1 / legacy-current / temporary compatibility / internal.
+2. Classify endpoint status: target L1/L2, legacy-current, temporary compatibility or internal.
 3. Use generated OpenAPI types for DTO/request/response structure.
 4. Use generated constants for semantic error/field/extension names.
 5. Keep thin handwritten client API wrappers unless a later ADR/slice explicitly changes that.
@@ -174,16 +173,6 @@ It is the project-wide client/server boundary for low-level HTTP calls, path con
 Entity-level API files wrap these low-level functions with domain-facing operation names.
 ```
 
-Example:
-
-```text
-shared/api/l1RequestApi.ts
-  owns low-level GET /api/l1/requests call.
-
-entities/request/api/listMyRequests.ts
-  owns request-entity read operation name and query integration.
-```
-
 Do not move read wrappers into `features` only because a page uses them.
 
 Read UI belongs under `entities/<entity>/ui` when it is display-only. Features remain for command/user-action flows.
@@ -196,4 +185,4 @@ Read UI belongs under `entities/<entity>/ui` when it is display-only. Features r
 | API-FR-002 | Endpoint inventory | Should a formal endpoint classification inventory be generated or maintained? | Keep local classification in slice/API docs first | future review |
 | API-FR-003 | OpenAPI hardening | Should `check:api` become a CI-required gate? | Use current command locally; revisit under CI hardening | future review |
 | API-FR-004 | Full generated client | Should the project move beyond generated types to a generated client? | Not in first stage; handwritten wrappers remain | future review |
-| API-FR-005 | L1 validation mechanism | Should L1 standardize manual validators or a pipeline/filter? | Use CC-VALIDATION-001; decide when first L1 validator is implemented | open |
+| API-FR-005 | L1/L2 validation mechanism | Should server request validation standardize manual validators or a pipeline/filter? | Use CC-VALIDATION-001; decide per first implementation slice | open |

@@ -1,48 +1,34 @@
-# APPLY — SL-EMP-REQ-001 Employee Request List Read
+# Apply Instructions
 
-Archive: `sl-emp-req-001-employee-request-list-read-v12.zip`
+This is a docs-only replacement package.
 
-## PowerShell / VS Code Terminal
+From the repository root:
 
 ```powershell
-cd "C:\enman\enman"
-Expand-Archive -Path "C:\Users\alexa\Downloads\sl-emp-req-001-employee-request-list-read-v12.zip" -DestinationPath . -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\review-start-client-files-sync-with-api-generation-workflow.zip" -DestinationPath . -Force
 git status
-git diff
+git diff -- planning
 ```
 
-## Git Bash / WSL
+If the diff is expected:
 
-```bash
-cd /c/enman/enman
-unzip -o "/c/Users/alexa/Downloads/sl-emp-req-001-employee-request-list-read-v12.zip" -d .
+```powershell
+git add planning
 git status
-git diff
 ```
 
-## Required checks after applying
+No runtime source files, tests or generated artifacts are included in this docs package.
+
+If you are packaging a real implementation that changes backend/API shape, regenerate and include the generated artifacts in that implementation archive/commit:
 
 ```powershell
-dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
-dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
+dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
+npm.cmd --prefix energymanagement.client run generate:api-types
 ```
 
-Because this archive changes API contract, run generated artifact workflow locally:
+Then include:
 
-```powershell
-dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check
-npm.cmd run check:api
-```
-
-If `check:api` reports expected API diffs for the new endpoint/DTOs, run the repo generation commands and include generated artifacts in a follow-up/staging step according to the project workflow.
-
-## Deletions
-
-None.
-
-## Commit suggestion
-
-```powershell
-git add EnergyManagement.Server EnergyManagement.Testing Tests.EnergyManagement
-git commit -m "Implement employee request list read endpoint"
+```text
+Shared/openapi.json
+energymanagement.client/src/shared/api/generated/openapi-types.ts
 ```

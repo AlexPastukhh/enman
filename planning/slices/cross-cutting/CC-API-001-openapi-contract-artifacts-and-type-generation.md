@@ -1,6 +1,6 @@
 # CC-API-001 — OpenAPI Contract Artifacts And Type Generation
 
-Status: first-stage implemented / generated artifact check workflow clarified / hardening planned  
+Status: first-stage implemented / explicit API-shape generation and archive workflow clarified / hardening planned  
 Slice type: cross-cutting slice  
 Layers: Server API metadata + `Shared/openapi.json` + client generated TypeScript types + checks  
 Depends on: ASP.NET Core API controllers, Swashbuckle/OpenAPI, client API layer  
@@ -29,11 +29,11 @@ Correct source chain:
 ```text
 backend API source/metadata
         ↓
-npm run generate:openapi
+dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
         ↓
 Shared/openapi.json
         ↓
-npm run generate:api-types
+npm.cmd --prefix energymanagement.client run generate:api-types
         ↓
 energymanagement.client/src/shared/api/generated/openapi-types.ts
 ```
@@ -50,7 +50,7 @@ Documentation-only archives must not include generated artifacts.
 | `--check` no-write mode | implemented |
 | `Shared/openapi.json` committed artifact | implemented |
 | generated `openapi-types.ts` | implemented |
-| root scripts `generate:openapi`, `check:openapi`, `generate:api-types`, `check:api` | implemented |
+| generated artifact drift checks | implemented |
 | client wrappers using generated types | planned/migrated per slice |
 | CI hardening | future review |
 
@@ -61,8 +61,8 @@ Documentation-only archives must not include generated artifacts.
 | `CC-API-SRV-001` | Server exposes client-facing endpoints through OpenAPI. |
 | `CC-API-SRV-002` | Client-facing DTOs appear in OpenAPI schemas. |
 | `CC-API-SRV-003` | Success and ProblemDetails response statuses are documented. |
-| `CC-API-SRV-004` | Client-facing endpoints are classified as target L1, legacy/current, temporary compatibility or internal. |
-| `CC-API-ART-001` | `Shared/openapi.json` is generated and committed. |
+| `CC-API-SRV-004` | Client-facing endpoints are classified as target, legacy/current, temporary compatibility or internal. |
+| `CC-API-ART-001` | `Shared/openapi.json` is generated and committed/included in API-changing handoffs. |
 | `CC-API-ART-002` | Client TypeScript types are generated from `Shared/openapi.json`. |
 | `CC-API-CL-001` | Client API wrappers use generated OpenAPI types. |
 | `CC-API-CHK-001` | Checks detect stale OpenAPI and generated TypeScript artifacts. |
@@ -76,7 +76,7 @@ Documentation-only archives must not include generated artifacts.
 F01 Server publishes structural API shape
 F02 Response statuses and ProblemDetails are visible
 F03 Endpoint contract status is explicit
-F04 OpenAPI artifact is generated and committed
+F04 OpenAPI artifact is generated and included in handoff
 F05 Client types are generated from OpenAPI
 F06 Client API wrappers use generated types
 F07 Stale artifacts are detected
@@ -86,23 +86,30 @@ F09 Runtime behavior is still tested
 
 ## 6. Generated Artifact Workflow
 
-After API source changes:
+After API source changes, run from repository root:
 
 ```powershell
-npm run generate:openapi
-npm run generate:api-types
+cd C:\enman\enman
 
-git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
-
-npm run check:api
+dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
+npm.cmd --prefix energymanagement.client run generate:api-types
+npm --prefix .\energymanagement.client run build
+npm --prefix .\energymanagement.client run test -- --run
 ```
 
-Why stage before `check:api`:
+Expected changed generated files when API shape changed:
+
+```text
+Shared/openapi.json
+energymanagement.client/src/shared/api/generated/openapi-types.ts
+```
+
+Why `check:api` can fail while this is correct:
 
 ```text
 check:api ends with git diff --exit-code Shared/openapi.json energymanagement.client/src/shared/api/generated/openapi-types.ts.
-That compares working tree to index.
-If generated files are correct but unstaged, check:api can still fail.
+That means generated files must already be part of the expected state.
+If they are only modified in the working tree, the check intentionally fails.
 ```
 
 Detailed workflow:
@@ -118,8 +125,9 @@ I01 Maintain server OpenAPI metadata
 I02 Generate Shared/openapi.json from server metadata
 I03 Generate client TypeScript types from Shared/openapi.json
 I04 Use generated types in thin handwritten client API wrappers
-I05 Run generated artifact checks
-I06 Keep runtime server/API tests for actual behavior
+I05 Include generated artifacts in API-changing implementation handoff
+I06 Run generated artifact/build/test checks
+I07 Keep runtime server/API tests for actual behavior
 ```
 
 ## 8. Client Consumer Rule
@@ -143,16 +151,18 @@ Do not move all client API work into generated client code unless a separate gen
 | ID | Status | Question | Current direction | Impact |
 |---|---|---|---|---|
 | `CC-API-Q-001` | accepted | Should generated artifacts be hand-edited? | No. Use repo generation commands only. | Prevents fake/stale contract artifacts. |
-| `CC-API-Q-002` | accepted | Why can `check:api` fail after correct generation? | Because final `git diff --exit-code` compares working tree to index; stage generated artifacts before no-extra-drift check. | Local workflow clarity. |
-| `CC-API-Q-003` | future review | Should CI enforce check:api? | Future hardening. | CI policy. |
-| `CC-API-Q-004` | accepted | Do generated types replace shared API wrappers? | No. First stage keeps thin handwritten wrappers using generated types. | Client architecture stability. |
+| `CC-API-Q-002` | accepted | Why can `check:api` fail after correct generation? | The final `git diff --exit-code` is a drift check; generated files must be in expected state, not just unstaged working-tree changes. | Local workflow clarity. |
+| `CC-API-Q-003` | accepted | Should implementation archives include generated files when API shape changes? | Yes: include `Shared/openapi.json` and generated `openapi-types.ts`. | Prevents broken handoffs. |
+| `CC-API-Q-004` | future review | Should CI enforce check:api? | Future hardening. | CI policy. |
+| `CC-API-Q-005` | accepted | Do generated types replace shared API wrappers? | No. First stage keeps thin handwritten wrappers using generated types. | Client architecture stability. |
 
 ## 10. Verification Plan
 
 ```text
-- npm run generate:openapi writes Shared/openapi.json.
-- npm run check:openapi verifies OpenAPI without writing.
-- npm run generate:api-types writes generated TypeScript types.
-- staging generated artifacts then npm run check:api passes with no extra diff.
+- dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json writes OpenAPI artifact.
+- npm.cmd --prefix energymanagement.client run generate:api-types writes generated TypeScript types.
+- npm --prefix .\energymanagement.client run build verifies generated types compile with client.
+- npm --prefix .\energymanagement.client run test -- --run verifies client tests.
 - server integration/API tests still verify runtime behavior.
+- if check:api is run, generated artifacts must already be part of the expected state for git diff --exit-code to pass.
 ```
