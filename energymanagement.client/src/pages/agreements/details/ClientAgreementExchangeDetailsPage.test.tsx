@@ -36,6 +36,15 @@ vi.mock("../../../shared/ui/layout/Footer", () => ({
   __esModule: true,
 }));
 
+vi.mock("../../../features/agreement-exchange/accept-proposal/ui/AcceptAgreementProposalButton", () => ({
+  AcceptAgreementProposalButton: ({ disabled }: { disabled?: boolean }) => (
+    <div data-testid="accept-proposal-button">
+      Accept proposal {disabled ? "disabled" : "enabled"}
+    </div>
+  ),
+  __esModule: true,
+}));
+
 vi.mock("../../../features/agreement-exchange/send-proposal/ui/SendAgreementProposalForm", () => ({
   SendAgreementProposalForm: ({ disabled }: { disabled?: boolean }) => (
     <div data-testid="send-proposal-form">
@@ -56,7 +65,16 @@ const details = {
     requestDisplayName: "Connection request #10",
     objectAddress: "Altai Krai, Barnaul, Lenina 10",
   },
-  activeProposal: null,
+  activeProposal: {
+    proposalId: 200,
+    version: 1,
+    sender: "Employee",
+    senderId: 10,
+    state: "AwaitingClientConfirmation",
+    document: null,
+    comment: null,
+    createdAt: "2026-01-02T10:00:00Z",
+  },
   proposals: [],
   currentActorSide: "Client",
   createdAt: "2026-01-01T10:00:00Z",
@@ -110,6 +128,9 @@ describe("ClientAgreementExchangeDetailsPage", () => {
     expect(screen.getByRole("link", { name: "Вернуться к моим договорам" })).toHaveAttribute(
       "href",
       "/agreements",
+    );
+    expect(screen.getByTestId("accept-proposal-button")).toHaveTextContent(
+      "Accept proposal enabled",
     );
     expect(screen.getByTestId("send-proposal-form")).toBeVisible();
   });

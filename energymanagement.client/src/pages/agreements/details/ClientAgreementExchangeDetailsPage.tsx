@@ -1,6 +1,8 @@
 import { Link, useParams } from "react-router-dom";
 import { useAgreementExchangeDetailsQuery } from "../../../entities/agreement-exchange/model/useAgreementExchangeDetailsQuery";
 import { useSession } from "../../../entities/session/model/useSession";
+import { getAcceptAgreementProposalAvailability } from "../../../features/agreement-exchange/accept-proposal/model/acceptAgreementProposalAvailability";
+import { AcceptAgreementProposalButton } from "../../../features/agreement-exchange/accept-proposal/ui/AcceptAgreementProposalButton";
 import { getSendAgreementProposalAvailability } from "../../../features/agreement-exchange/send-proposal/model/sendAgreementProposalAvailability";
 import { SendAgreementProposalForm } from "../../../features/agreement-exchange/send-proposal/ui/SendAgreementProposalForm";
 import { ApiError } from "../../../shared/api/fetchJson";
@@ -97,18 +99,26 @@ const ClientAgreementExchangeDetailsPage = () => {
               details={detailsQuery.data}
               viewerRole="Client"
               renderActions={(details) => {
-                const availability = getSendAgreementProposalAvailability(
+                const sendAvailability = getSendAgreementProposalAvailability(
                   details,
                   "Client",
                 );
+                const acceptAvailability = getAcceptAgreementProposalAvailability(details);
 
                 return (
-                  <SendAgreementProposalForm
-                    exchangeId={details.exchangeId}
-                    viewerRole="Client"
-                    disabled={!availability.canSendProposal}
-                    unavailableReason={availability.reason}
-                  />
+                  <>
+                    <AcceptAgreementProposalButton
+                      exchangeId={details.exchangeId}
+                      disabled={!acceptAvailability.canAcceptProposal}
+                      unavailableReason={acceptAvailability.reason}
+                    />
+                    <SendAgreementProposalForm
+                      exchangeId={details.exchangeId}
+                      viewerRole="Client"
+                      disabled={!sendAvailability.canSendProposal}
+                      unavailableReason={sendAvailability.reason}
+                    />
+                  </>
                 );
               }}
             />

@@ -1,19 +1,23 @@
-# Apply — L2 Agreement Exchange Command Slices Sync
+# Apply
 
 From repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agr-exch-command-slices-sync.zip" -DestinationPath . -Force
-.\APPLY-l2-agr-exch-command-slices-sync.ps1
-git status
-git diff -- planning
+Expand-Archive -Path "C:\Users\alexa\Downloads\l2-agr-exch-accept-001-client.zip" -DestinationPath "." -Force
 ```
 
-If the diff is correct:
+Verify:
 
 ```powershell
-git add planning
-git status
+npm install
+npm --prefix .\energymanagement.client install
+npm run check:api
+npm --prefix .\energymanagement.client run build
+npm --prefix .\energymanagement.client run test -- --run
 ```
 
-This is a docs-only sync.
+Targeted tests:
+
+```powershell
+npm --prefix .\energymanagement.client run test -- --run --reporter=verbose src/features/agreement-exchange/accept-proposal/api/acceptAgreementProposal.test.ts src/features/agreement-exchange/accept-proposal/model/acceptAgreementProposalAvailability.test.ts src/features/agreement-exchange/accept-proposal/ui/AcceptAgreementProposalButton.test.tsx src/pages/agreements/details/ClientAgreementExchangeDetailsPage.test.tsx src/pages/employee/agreements/details/EmployeeAgreementExchangeDetailsPage.test.tsx
+```

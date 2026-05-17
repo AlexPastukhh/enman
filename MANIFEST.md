@@ -1,30 +1,48 @@
-# MANIFEST — L2 Agreement Exchange Command Slices Sync
+# L2-AGR-EXCH-ACCEPT-001.client — Client Accept Active Agreement Proposal
 
-Docs-only archive.
+Client-only implementation archive.
 
-## Added / replaced files
+## Scope
+
+- Adds Client accept agreement proposal feature under `features/agreement-exchange/accept-proposal`.
+- Wires Accept action into Client agreement exchange details action area only.
+- Does not wire Employee accept.
+- Uses feature-owned command API wrapper for `POST /api/agreement-exchanges/{exchangeId}/accept`.
+- Sends no request body and expects `204 No Content`.
+- Invalidates agreement exchange details/list queries after success/error.
+- Does not create proposal version, counter-proposal, final refusal, or shared API business wrapper.
+
+## Files
 
 ```text
-planning/slices/SL-AGR-EXCH-002-send-agreement-counter-proposal-version.md
-planning/slices/l2/L2-AGR-EXCH-SEND-PROPOSAL-001-send-agreement-proposal-version.client.md
-planning/slices/SL-AGR-EXCH-005-client-accept-active-agreement-proposal.md
-planning/slices/l2/L2-AGR-EXCH-ACCEPT-001-client-accept-active-agreement-proposal.client.md
-planning/slices/SL-AGR-EXCH-006-final-refuse-agreement-exchange.md
-planning/slices/l2/L2-agreement-exchange-command-slices-sync.md
-APPLY-l2-agr-exch-command-slices-sync.ps1
+energymanagement.client/src/features/agreement-exchange/accept-proposal/api/acceptAgreementProposal.ts
+energymanagement.client/src/features/agreement-exchange/accept-proposal/api/acceptAgreementProposal.test.ts
+energymanagement.client/src/features/agreement-exchange/accept-proposal/model/acceptAgreementProposalAvailability.ts
+energymanagement.client/src/features/agreement-exchange/accept-proposal/model/acceptAgreementProposalAvailability.test.ts
+energymanagement.client/src/features/agreement-exchange/accept-proposal/model/useAcceptAgreementProposalMutation.ts
+energymanagement.client/src/features/agreement-exchange/accept-proposal/ui/AcceptAgreementProposalButton.tsx
+energymanagement.client/src/features/agreement-exchange/accept-proposal/ui/AcceptAgreementProposalButton.test.tsx
+energymanagement.client/src/features/agreement-exchange/accept-proposal/ui/acceptAgreementProposalButton.css
+energymanagement.client/src/features/agreement-exchange/accept-proposal/ui/acceptAgreementProposalButtonConst.ts
+energymanagement.client/src/pages/agreements/details/ClientAgreementExchangeDetailsPage.tsx
+energymanagement.client/src/pages/agreements/details/ClientAgreementExchangeDetailsPage.test.tsx
 ```
 
-## Apply script updates
+## Checks run
 
 ```text
-planning/slices/README.md
-planning/slices/l2/README.md
-planning/slices/slice-scenario-flow-behavior-register.md
-planning/slices/slice-questions-register.md
-planning/slices/slice-extension-points-register.md
-planning/slices/slice-implementation-notes-register.md
+npm --prefix ./energymanagement.client install
+npm --prefix ./energymanagement.client run test -- --run --reporter=verbose src/features/agreement-exchange/accept-proposal/api/acceptAgreementProposal.test.ts src/features/agreement-exchange/accept-proposal/model/acceptAgreementProposalAvailability.test.ts src/features/agreement-exchange/accept-proposal/ui/AcceptAgreementProposalButton.test.tsx src/pages/agreements/details/ClientAgreementExchangeDetailsPage.test.tsx src/pages/employee/agreements/details/EmployeeAgreementExchangeDetailsPage.test.tsx
+npm --prefix ./energymanagement.client run build
+```
+
+Results:
+
+```text
+targeted tests: 5 files passed, 14 tests passed
+build: success; Vite emitted existing chunk-size warning
 ```
 
 ## Notes
 
-No runtime code, no tests, no generated artifacts.
+Generated OpenAPI artifacts are unchanged in this archive. After server/OpenAPI generation for the accept endpoint, run `npm run check:api` locally and include generated artifacts if needed.

@@ -1,0 +1,56 @@
+.acceptAgreementProposalAction {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.acceptAgreementProposalAction__button,
+.acceptAgreementProposalAction__secondaryButton {
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0.7rem 1rem;
+}
+
+.acceptAgreementProposalAction__button {
+  background: #166534;
+  color: #fff;
+}
+
+.acceptAgreementProposalAction__secondaryButton {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.acceptAgreementProposalAction__button:disabled,
+.acceptAgreementProposalAction__secondaryButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.acceptAgreementProposalAction__confirmation {
+  border: 1px solid #bbf7d0;
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.75rem;
+}
+
+.acceptAgreementProposalAction__confirmationActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.acceptAgreementProposalAction__hint,
+.acceptAgreementProposalAction__error {
+  margin: 0;
+}
+
+.acceptAgreementProposalAction__hint {
+  color: #4b5563;
+}
+
+.acceptAgreementProposalAction__error {
+  color: #b91c1c;
+}
