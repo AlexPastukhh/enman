@@ -28,29 +28,30 @@ public sealed class L1LoginClientAccountHandler
             "Email was validated by FluentValidation but Email.Create failed.");
 
         var account = await _accounts.GetByEmailAsync(email, cancellationToken);
-        if (account is not ClientAccount clientAccount)
+        if (account is null)
         {
             return InvalidCredentials();
         }
 
-        var activationResult = clientAccount.EnsureActivated();
+        var activationResult = account.EnsureActivated();
         if (activationResult.IsFailure)
         {
             return Result.Failure<L1LoginClientAccountResponse, IReadOnlyList<Error>>(
                 activationResult.Error);
         }
 
-        if (PasswordHash.VerifyPlainTextPassword(clientAccount.PasswordHash, command.Password).IsFailure)
+        if (PasswordHash.VerifyPlainTextPassword(account.PasswordHash, command.Password).IsFailure)
         {
             return InvalidCredentials();
         }
 
         return Result.Success<L1LoginClientAccountResponse, IReadOnlyList<Error>>(
             new L1LoginClientAccountResponse(
-                clientAccount.Id,
-                clientAccount.Email.Value,
-                clientAccount.Role.ToString(),
-                clientAccount.IsActive));
+                account.Id,
+                account.Email.Value,
+                account.Role.ToString(),
+                account.IsActive,
+                account));
     }
 
     private static Result<L1LoginClientAccountResponse, IReadOnlyList<Error>> InvalidCredentials()

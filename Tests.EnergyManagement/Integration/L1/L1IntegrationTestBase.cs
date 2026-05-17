@@ -1,6 +1,7 @@
 using System.Data;
 using System.Net.Http.Json;
 using System.Security.Claims;
+using Domain.EnergyManagement.DocumentManaging;
 using EnergyManagement.Server.Api.Security;
 using EnergyManagement.Server.L1.Api;
 using EnergyManagement.Server.L1.Application.Commands;
@@ -540,8 +541,11 @@ public abstract class L1IntegrationTestBase
         string firstName = "Employee",
         string middleName = "Review",
         string lastName = "User",
-        bool isActive = true)
+        bool isActive = true,
+        string? email = null,
+        string? windowsLogin = null)
     {
+        var passwordHash = PasswordHash.CreateFromPlainTextPassword(ValidPassword).Value.Value;
         await using var connection = new SqlConnection(_fixture.ConnectionString);
         await connection.OpenAsync();
 
@@ -552,10 +556,10 @@ public abstract class L1IntegrationTestBase
                 SET IDENTITY_INSERT dbo.L1Accounts ON;
 
                 INSERT INTO dbo.L1Accounts
-                    (Id, Email, PasswordHash, Role, IsActive, CreatedAt, AccountType,
+                    (Id, Email, PasswordHash, Role, IsActive, CreatedAt, AccountType, WindowsLogin,
                      EmployeeFullName_FirstName, EmployeeFullName_MiddleName, EmployeeFullName_LastName)
                 VALUES
-                    (@employeeId, @email, @passwordHash, N'Employee', @isActive, @createdAt, N'Employee',
+                    (@employeeId, @email, @passwordHash, N'Employee', @isActive, @createdAt, N'Employee', @windowsLogin,
                      @firstName, @middleName, @lastName);
 
                 SET IDENTITY_INSERT dbo.L1Accounts OFF;
@@ -567,11 +571,9 @@ public abstract class L1IntegrationTestBase
         };
 
         command.Parameters.AddWithValue("@employeeId", employeeId);
-        command.Parameters.AddWithValue("@email", $"employee-{employeeId}@example.com");
-        command.Parameters.AddWithValue(
-            "@passwordHash",
-            "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF-" +
-            "0123456789ABCDEF0123456789ABCDEF");
+        command.Parameters.AddWithValue("@email", email ?? $"employee-{employeeId}@example.com");
+        command.Parameters.AddWithValue("@passwordHash", passwordHash);
+        command.Parameters.AddWithValue("@windowsLogin", (object?)windowsLogin ?? DBNull.Value);
         command.Parameters.AddWithValue("@firstName", firstName);
         command.Parameters.AddWithValue("@middleName", middleName);
         command.Parameters.AddWithValue("@lastName", lastName);

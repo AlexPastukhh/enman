@@ -29,6 +29,7 @@ public sealed class L1Controller : ProjectController
     private readonly IValidator<L1CreateIndividualApplicantPartyDto> _createIndividualApplicantPartyValidator;
     private readonly IValidator<L1CreateConnectionRequestDto> _createConnectionRequestValidator;
     private readonly IValidator<L1ListMyRequestsQueryDto> _listMyRequestsQueryValidator;
+    private readonly L1ClaimsPrincipalFactory _claimsPrincipalFactory;
 
     public L1Controller(
         ISender sender,
@@ -37,7 +38,8 @@ public sealed class L1Controller : ProjectController
         IValidator<L1LoginRequest> loginValidator,
         IValidator<L1CreateIndividualApplicantPartyDto> createIndividualApplicantPartyValidator,
         IValidator<L1CreateConnectionRequestDto> createConnectionRequestValidator,
-        IValidator<L1ListMyRequestsQueryDto> listMyRequestsQueryValidator)
+        IValidator<L1ListMyRequestsQueryDto> listMyRequestsQueryValidator,
+        L1ClaimsPrincipalFactory claimsPrincipalFactory)
     {
         _sender = sender;
         _logger = logger;
@@ -46,6 +48,7 @@ public sealed class L1Controller : ProjectController
         _createIndividualApplicantPartyValidator = createIndividualApplicantPartyValidator;
         _createConnectionRequestValidator = createConnectionRequestValidator;
         _listMyRequestsQueryValidator = listMyRequestsQueryValidator;
+        _claimsPrincipalFactory = claimsPrincipalFactory;
     }
 
     [HttpPost("auth/register", Name = "L1RegisterClientAccount")]
@@ -487,16 +490,7 @@ public sealed class L1Controller : ProjectController
 
     private async Task SignInL1AccountAsync(L1LoginClientAccountResponse account)
     {
-        var claims = new List<Claim>
-        {
-            new(ClaimTypes.NameIdentifier, account.AccountId.ToString()),
-            new(ClaimTypes.Email, account.Email),
-            new(ClaimTypes.Role, account.Role),
-            new(L1AuthClaimTypes.AuthModel, L1AuthClaimTypes.AuthModelValue)
-        };
-
-        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        var principal = new ClaimsPrincipal(identity);
+        var principal = _claimsPrincipalFactory.CreatePrincipal(account.Account);
 
         await HttpContext.SignInAsync(
             CookieAuthenticationDefaults.AuthenticationScheme,

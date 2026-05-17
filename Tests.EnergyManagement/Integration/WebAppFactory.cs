@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using EnergyManagement.Server.Api.Auth;
 using EnergyManagement.Server;
 using EnergyManagement.Server.Configuration;
 using EnergyManagement.Server.L1.Persistence;
@@ -80,6 +81,29 @@ namespace Tests.EnergyManagement.Integration
             });
         }
 
+
+        public WebApplicationFactory<Program> EmployeeWindowsIdentity(
+            params Claim[] claimsSeed)
+        {
+            return WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var authSchemeProvider = services
+                        .FirstOrDefault(d => d.ServiceType == typeof(IAuthenticationSchemeProvider));
+
+                    if (authSchemeProvider != null)
+                    {
+                        services.Remove(authSchemeProvider);
+                    }
+
+                    services.AddSingleton<IAuthenticationSchemeProvider,
+                        TestEmployeeWindowsAuthenticationSchemeProvider>();
+                    services.AddSingleton<MockClaimSeed>(_ => new(claimsSeed));
+                });
+            });
+        }
+
         public WebApplicationFactory<Program> CheckingAuthentication(
            out Mock<IAuthenticationService> authServiceMock)
         {
@@ -125,10 +149,10 @@ namespace Tests.EnergyManagement.Integration
             var claims = _seed.GetSeeds();
             var identity = new ClaimsIdentity(
                 claims,
-                CookieAuthenticationDefaults.AuthenticationScheme);
+                Scheme.Name);
             var principal = new ClaimsPrincipal(identity);
             var ticket = new AuthenticationTicket(principal,
-                CookieAuthenticationDefaults.AuthenticationScheme);
+                Scheme.Name);
 
             return Task.FromResult(AuthenticateResult.Success(ticket));
         }
@@ -164,12 +188,42 @@ namespace Tests.EnergyManagement.Integration
 
         public override Task<AuthenticationScheme?> GetSchemeAsync(string name)
         {
+            var schemeName = string.IsNullOrWhiteSpace(name)
+                ? CookieAuthenticationDefaults.AuthenticationScheme
+                : name;
+
             AuthenticationScheme mockScheme = new(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                CookieAuthenticationDefaults.AuthenticationScheme,
+                schemeName,
+                schemeName,
                 typeof(MockAuthenticationHandler));
 
             return Task.FromResult<AuthenticationScheme?>(mockScheme);
         }
     }
+
+    public class TestEmployeeWindowsAuthenticationSchemeProvider
+        : AuthenticationSchemeProvider
+    {
+        public TestEmployeeWindowsAuthenticationSchemeProvider(
+            IOptions<AuthenticationOptions> options)
+            : base(options)
+        {
+        }
+
+        public override Task<AuthenticationScheme?> GetSchemeAsync(string name)
+        {
+            if (name == EmployeeAuthSchemes.EmployeeWindows)
+            {
+                AuthenticationScheme mockScheme = new(
+                    EmployeeAuthSchemes.EmployeeWindows,
+                    EmployeeAuthSchemes.EmployeeWindows,
+                    typeof(MockAuthenticationHandler));
+
+                return Task.FromResult<AuthenticationScheme?>(mockScheme);
+            }
+
+            return base.GetSchemeAsync(name);
+        }
+    }
+
 }

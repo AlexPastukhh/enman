@@ -1,27 +1,59 @@
-# MANIFEST — Employee TPH Runtime/Test Database Fix
+# MANIFEST — Employee authentication / Windows sign-in implementation
 
-Archive: `employee-tph-runtime-fix-v15.zip`
+Archive: `enman-auth-employee-windows-impl.zip`
+Scope: implementation files for `CC-AUTH-EMP-001 — Employee Authentication / Windows Sign-in / Application Cookie Session`.
 
-Scope:
-- finish runtime/test-database cleanup after Employee was modeled as Account TPH subtype;
-- keep Employee identity as `Account.Id == Employee.Id`;
-- remove legacy test DB review-column provisioning;
-- make test DB reset safe when AgreementProposal tables exist.
+## What is included
 
-Changed files:
-- `EnergyManagement.Testing/TestDatabase/TestDatabaseManager.cs`
+### Domain / persistence
+- `Domain.EnergyManagement/L1/Employees/Employee.cs`
+- `EnergyManagement.Server/L1/Persistence/L1DbContext.cs`
+- `EnergyManagement.Server/L1/Persistence/Repositories/EmployeeRepository.cs`
+- `EnergyManagement.Server/L1/Application/Abstractions/IEmployeeRepository.cs`
+- `EnergyManagement.Server/Migrations/20260517113834_ModelEmployeeAsAccountSubtype.cs`
+- `EnergyManagement.Server/Migrations/20260517113834_ModelEmployeeAsAccountSubtype.Designer.cs`
+- `EnergyManagement.Server/Migrations/L1DbContextModelSnapshot.cs`
 
-Changes:
-- `ClearAsync` now deletes `L1AgreementProposals` and `L1AgreementProposalExchanges` before request/account tables.
-- Removed legacy provisioning of `ReviewDecision`, `ReviewDecidedAt`, `ReviewReviewerId`, `ReviewRejectionReason` columns on `L1ClientRequests`.
-- Existing test databases now ensure `L1AgreementProposalExchanges` and `L1AgreementProposals` tables exist when `L1Accounts` already exists.
-- Existing test databases still ensure `L1RequestReviews` and Employee TPH full-name columns exist.
+### Server auth implementation
+- `EnergyManagement.Server/EnergyManagement.Server.csproj`
+- `EnergyManagement.Server/Program.cs`
+- `EnergyManagement.Server/Api/Auth/EmployeeAuthSchemes.cs`
+- `EnergyManagement.Server/L1/Application/Security/L1AuthClaimTypes.cs`
+- `EnergyManagement.Server/L1/Application/Security/L1ClaimsPrincipalFactory.cs`
+- `EnergyManagement.Server/L1/Application/Commands/L1Commands.cs`
+- `EnergyManagement.Server/L1/Application/Commands/L1LoginClientAccountHandler.cs`
+- `EnergyManagement.Server/L1/Controllers/L1Controller.cs`
+- `EnergyManagement.Server/L1/Controllers/EmployeeAuthController.cs`
 
-Not changed:
-- no docs/planning changes;
-- no client UI changes;
-- no OpenAPI/generated artifacts;
-- no API contract changes;
-- no StartReview response contract changes;
-- no approve/reject implementation;
-- no migrations.
+### Client support
+- `energymanagement.client/src/features/auth/employee-windows-signin/api/signInEmployeeWithWindows.ts`
+- `energymanagement.client/src/features/auth/employee-windows-signin/api/signInEmployeeWithWindows.test.ts`
+- `energymanagement.client/src/shared/api/generated/openapi-types.ts`
+
+### Generated contract
+- `Shared/openapi.json`
+
+### Tests/helpers
+- `Tests.EnergyManagement/Domain/Employees/EmployeeTests.cs`
+- `Tests.EnergyManagement/Integration/WebAppFactory.cs`
+- `Tests.EnergyManagement/Integration/L1/L1IntegrationTestBase.cs`
+- `Tests.EnergyManagement/Integration/L1/Auth/EmployeeAuthenticationIntegrationTests.cs`
+
+## Behavior included
+
+- Employee remains `Account` subtype through TPH.
+- Employee additionally has optional `WindowsLogin` for Windows sign-in mapping.
+- Password login is account-role aware: `ClientAccount` -> `Role=Client`, `Employee` -> `Role=Employee`.
+- New `GET /api/employee/auth/windows-signin` endpoint maps `EmployeeWindows` external identity to Employee and issues normal app cookie.
+- Runtime authorization remains app cookie + app roles.
+- New `L1ClaimsPrincipalFactory` centralizes app-cookie claims for password login and Windows sign-in.
+- Tests use fake EmployeeWindows scheme; no real AD/Kerberos/NTLM is required.
+
+## Not included / not done
+
+- No real Active Directory setup.
+- No approve/reject implementation.
+- No employee registration UI.
+- No client UI button for Windows sign-in.
+- No broad auth API split.
+- No change to CSRF behavior.

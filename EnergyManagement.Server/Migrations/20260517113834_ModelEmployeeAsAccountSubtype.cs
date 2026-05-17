@@ -30,11 +30,33 @@ namespace EnergyManagement.Server.Migrations.L1Db
                 type: "nvarchar(100)",
                 maxLength: 100,
                 nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "WindowsLogin",
+                table: "L1Accounts",
+                type: "nvarchar(256)",
+                maxLength: 256,
+                nullable: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_L1Accounts_WindowsLogin",
+                table: "L1Accounts",
+                column: "WindowsLogin",
+                unique: true,
+                filter: "[WindowsLogin] IS NOT NULL");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropIndex(
+                name: "IX_L1Accounts_WindowsLogin",
+                table: "L1Accounts");
+
+            migrationBuilder.DropColumn(
+                name: "WindowsLogin",
+                table: "L1Accounts");
+
             migrationBuilder.DropColumn(
                 name: "EmployeeFullName_FirstName",
                 table: "L1Accounts");

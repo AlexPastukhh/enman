@@ -1,5 +1,6 @@
 using CSharpFunctionalExtensions;
 using Domain.EnergyManagement.Common;
+using Domain.EnergyManagement.L1;
 using MediatR;
 
 namespace EnergyManagement.Server.L1.Application.Commands;
@@ -22,7 +23,8 @@ public sealed record L1LoginClientAccountResponse(
     long AccountId,
     string Email,
     string Role,
-    bool IsActive);
+    bool IsActive,
+    Account Account);
 
 public sealed record L1CreateIndividualApplicantPartyCommand(
     long ClientAccountId,

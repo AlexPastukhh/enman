@@ -17,4 +17,12 @@ public sealed class EmployeeRepository : IEmployeeRepository
     {
         return _context.Employees.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
+
+    public Task<Employee?> GetByWindowsLoginAsync(string windowsLogin, CancellationToken cancellationToken)
+    {
+        var normalized = windowsLogin.Trim();
+        return _context.Employees.FirstOrDefaultAsync(
+            x => x.WindowsLogin == normalized,
+            cancellationToken);
+    }
 }

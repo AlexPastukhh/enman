@@ -16,13 +16,15 @@ public class EmployeeTests
             L1ValidTestData.Email,
             L1ValidTestData.PasswordHash,
             L1ValidTestData.FullName,
-            createdAt);
+            createdAt,
+            "TESTDOMAIN\\employee");
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Role.Should().Be(AccountRole.Employee);
         result.Value.Email.Should().Be(L1ValidTestData.Email);
         result.Value.PasswordHash.Should().Be(L1ValidTestData.PasswordHash);
         result.Value.FullName.Should().Be(L1ValidTestData.FullName);
+        result.Value.WindowsLogin.Should().Be("TESTDOMAIN\\employee");
         result.Value.IsActive.Should().BeTrue();
         result.Value.CreatedAt.Should().Be(createdAt);
     }

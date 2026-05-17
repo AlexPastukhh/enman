@@ -1,15 +1,18 @@
 using EnergyManagement.Server;
+using EnergyManagement.Server.Api.Auth;
 using EnergyManagement.Server.Configuration;
 using EnergyManagement.Server.Infrastructure;
 using EnergyManagement.Server.L1.Api;
 using EnergyManagement.Server.L1.Api.Validation;
 using EnergyManagement.Server.L1.Application.Abstractions;
 using EnergyManagement.Server.L1.Application.Services;
+using EnergyManagement.Server.L1.Application.Security;
 using EnergyManagement.Server.L1.Persistence;
 using EnergyManagement.Server.L1.Persistence.Repositories;
 using EnergyManagement.Server.Api.Security;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Negotiate;
 using Serilog;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
@@ -50,6 +53,7 @@ builder.Services.AddTransient<IApplicantPartyRepository, ApplicantPartyRepositor
 builder.Services.AddTransient<IApplicantPartyCreationService, ApplicantPartyCreationService>();
 builder.Services.AddTransient<IClientRequestRepository, ClientRequestRepository>();
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddSingleton<L1ClaimsPrincipalFactory>();
 
 builder.Services.AddMediatR(c=>c.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddTransient<IValidator<L1RegisterClientAccountDto>, L1RegisterClientAccountDtoValidator>();
@@ -129,7 +133,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
                 ctx.Response.Redirect(ctx.RedirectUri);
             }
         };
-    });
+    })
+    .AddNegotiate(EmployeeAuthSchemes.EmployeeWindows);
 
 
 var app = builder.Build();

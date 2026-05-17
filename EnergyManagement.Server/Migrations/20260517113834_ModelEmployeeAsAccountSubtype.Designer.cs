@@ -531,6 +531,15 @@ namespace EnergyManagement.Server.Migrations.L1Db
 
             modelBuilder.Entity("Domain.EnergyManagement.L1.Employee", b =>
                 {
+                    b.Property<string>("WindowsLogin")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)")
+                        .HasColumnName("WindowsLogin");
+
+                    b.HasIndex("WindowsLogin")
+                        .IsUnique()
+                        .HasFilter("[WindowsLogin] IS NOT NULL");
+
                     b.OwnsOne("Domain.EnergyManagement.DocumentManaging.FullName", "FullName", b1 =>
                         {
                             b1.Property<long>("EmployeeId")

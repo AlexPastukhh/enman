@@ -286,6 +286,15 @@ public class L1DbContext : DbContext
     {
         modelBuilder.Entity<Employee>(employee =>
         {
+            employee.Property(x => x.WindowsLogin)
+                .HasColumnName("WindowsLogin")
+                .HasMaxLength(256)
+                .IsRequired(false);
+
+            employee.HasIndex(x => x.WindowsLogin)
+                .IsUnique()
+                .HasFilter("[WindowsLogin] IS NOT NULL");
+
             employee.OwnsOne(x => x.FullName, fullName =>
             {
                 fullName.Property(x => x.FirstName)

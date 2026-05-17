@@ -8,6 +8,7 @@ namespace Domain.EnergyManagement.L1;
 public sealed class Employee : Account
 {
     public FullName FullName { get; private set; }
+    public string? WindowsLogin { get; private set; }
 
     private Employee()
     {
@@ -18,17 +19,20 @@ public sealed class Employee : Account
         Email email,
         PasswordHash passwordHash,
         FullName fullName,
-        DateTimeOffset createdAt)
+        DateTimeOffset createdAt,
+        string? windowsLogin = null)
         : base(email, passwordHash, AccountRole.Employee, createdAt)
     {
         FullName = fullName;
+        WindowsLogin = NormalizeWindowsLogin(windowsLogin);
     }
 
     public static Result<Employee, IReadOnlyList<Error>> Create(
         Email email,
         PasswordHash passwordHash,
         FullName fullName,
-        DateTimeOffset createdAt)
+        DateTimeOffset createdAt,
+        string? windowsLogin = null)
     {
         var errors = new List<Error>();
 
@@ -53,7 +57,7 @@ public sealed class Employee : Account
         }
 
         return Result.Success<Employee, IReadOnlyList<Error>>(
-            new Employee(email!, passwordHash!, fullName!, createdAt));
+            new Employee(email!, passwordHash!, fullName!, createdAt, windowsLogin));
     }
 
     public UnitResult<IReadOnlyList<Error>> EnsureCanReview()
@@ -74,6 +78,18 @@ public sealed class Employee : Account
     public UnitResult<IReadOnlyList<Error>> EnsureCanFinalRefuseAgreement()
     {
         return EnsureActive();
+    }
+
+    public void SetWindowsLogin(string? windowsLogin)
+    {
+        WindowsLogin = NormalizeWindowsLogin(windowsLogin);
+    }
+
+    private static string? NormalizeWindowsLogin(string? windowsLogin)
+    {
+        return string.IsNullOrWhiteSpace(windowsLogin)
+            ? null
+            : windowsLogin.Trim();
     }
 
     private UnitResult<IReadOnlyList<Error>> EnsureActive()
