@@ -120,6 +120,51 @@ public sealed class EmployeeRequestListIntegrationTests : L1IntegrationTestBase
     }
 
     [Fact]
+    public async Task ListEmployeeRequests_IncludesUnverifiedApplicantVerificationSummary()
+    {
+        await ResetDatabaseAsync();
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+        await CreateConnectionRequestAsync(account.AccountId);
+        var request = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
+        var client = AuthenticatedEmployeeClient();
+
+        var response = await GetEmployeeRequestsAsync(client);
+
+        var verification = response.Requests
+            .Single(x => x.RequestId == request!.Id)
+            .ApplicantVerification;
+        verification.Should().NotBeNull();
+        verification!.Required.Should().BeTrue();
+        verification.Status.Should().Be("Unverified");
+        verification.CanRun.Should().BeTrue();
+        verification.Message.Should().Be("Данные не проверены");
+    }
+
+    [Fact]
+    public async Task ListEmployeeRequests_IncludesVerifiedApplicantVerificationSummary()
+    {
+        await ResetDatabaseAsync();
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+        await UpdateApplicantVerificationStatusAsync(applicantParty.ApplicantPartyId, "Verified");
+        await CreateConnectionRequestAsync(account.AccountId);
+        var request = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
+        var client = AuthenticatedEmployeeClient();
+
+        var response = await GetEmployeeRequestsAsync(client);
+
+        var verification = response.Requests
+            .Single(x => x.RequestId == request!.Id)
+            .ApplicantVerification;
+        verification.Should().NotBeNull();
+        verification!.Required.Should().BeTrue();
+        verification.Status.Should().Be("Verified");
+        verification.CanRun.Should().BeFalse();
+        verification.Message.Should().Be("Данные проверены");
+    }
+
+    [Fact]
     public async Task ListEmployeeRequests_WithStatusFilter_ReturnsMatchingRows()
     {
         await ResetDatabaseAsync();

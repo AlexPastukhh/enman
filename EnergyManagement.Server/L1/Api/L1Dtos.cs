@@ -97,7 +97,8 @@ public sealed record EmployeeRequestListItemDto(
     [property: JsonPropertyName("applicantDisplayName")] string ApplicantDisplayName,
     [property: JsonPropertyName("objectAddress")] string ObjectAddress,
     [property: JsonPropertyName("createdAt")] DateTimeOffset CreatedAt,
-    [property: JsonPropertyName("reviewState")] string ReviewState);
+    [property: JsonPropertyName("reviewState")] string ReviewState,
+    [property: JsonPropertyName("applicantVerification")] EmployeeRequestApplicantVerificationDto? ApplicantVerification);
 
 
 public sealed record EmployeeRequestDetailsDto(
@@ -108,7 +109,14 @@ public sealed record EmployeeRequestDetailsDto(
     [property: JsonPropertyName("objectAddress")] string ObjectAddress,
     [property: JsonPropertyName("details")] string Details,
     [property: JsonPropertyName("createdAt")] DateTimeOffset CreatedAt,
-    [property: JsonPropertyName("reviewState")] string ReviewState);
+    [property: JsonPropertyName("reviewState")] string ReviewState,
+    [property: JsonPropertyName("applicantVerification")] EmployeeRequestApplicantVerificationDto? ApplicantVerification);
+
+public sealed record EmployeeRequestApplicantVerificationDto(
+    [property: JsonPropertyName("required")] bool Required,
+    [property: JsonPropertyName("status")] string Status,
+    [property: JsonPropertyName("canRun")] bool CanRun,
+    [property: JsonPropertyName("message")] string? Message);
 
 public sealed record EmployeeRequestApplicantSummaryDto(
     [property: JsonPropertyName("applicantPartyId")] long ApplicantPartyId,

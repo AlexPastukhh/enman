@@ -46,6 +46,7 @@ public sealed class EmployeeRequestDetailsHandler
                 applicant.FullName_LastName AS ApplicantLastName,
                 applicant.Email,
                 applicant.PhoneNumber,
+                applicant.VerificationStatus AS ApplicantVerificationStatus,
                 review.Status AS ReviewStatus,
                 review.StartedByEmployeeId
             FROM dbo.L1ClientRequests AS request
@@ -87,7 +88,27 @@ public sealed class EmployeeRequestDetailsHandler
             FormatAddress(row),
             row.Details,
             row.CreatedAt,
-            DeriveReviewState(row, currentEmployeeId).ToString());
+            DeriveReviewState(row, currentEmployeeId).ToString(),
+            ToApplicantVerificationResponse(row.ApplicantVerificationStatus));
+    }
+
+    private static EmployeeRequestApplicantVerificationResponse ToApplicantVerificationResponse(
+        string verificationStatus)
+    {
+        if (verificationStatus == ApplicantPartyVerificationStatus.Verified.ToString())
+        {
+            return new EmployeeRequestApplicantVerificationResponse(
+                Required: true,
+                Status: ApplicantPartyVerificationStatus.Verified.ToString(),
+                CanRun: false,
+                Message: "Данные проверены");
+        }
+
+        return new EmployeeRequestApplicantVerificationResponse(
+            Required: true,
+            Status: ApplicantPartyVerificationStatus.Unverified.ToString(),
+            CanRun: true,
+            Message: "Данные не проверены");
     }
 
     private static EmployeeRequestReviewState DeriveReviewState(
@@ -172,6 +193,7 @@ public sealed class EmployeeRequestDetailsHandler
         public string ApplicantLastName { get; init; } = string.Empty;
         public string? Email { get; init; }
         public string? PhoneNumber { get; init; }
+        public string ApplicantVerificationStatus { get; init; } = string.Empty;
         public string? ReviewStatus { get; init; }
         public long? StartedByEmployeeId { get; init; }
     }

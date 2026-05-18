@@ -334,7 +334,8 @@ public sealed class EmployeeRequestsController : ProjectController
             item.ApplicantDisplayName,
             item.ObjectAddress,
             item.CreatedAt,
-            item.ReviewState);
+            item.ReviewState,
+            ToDto(item.ApplicantVerification));
     }
 
 
@@ -353,7 +354,20 @@ public sealed class EmployeeRequestsController : ProjectController
             response.ObjectAddress,
             response.Details,
             response.CreatedAt,
-            response.ReviewState);
+            response.ReviewState,
+            ToDto(response.ApplicantVerification));
+    }
+
+    private static EmployeeRequestApplicantVerificationDto? ToDto(
+        EmployeeRequestApplicantVerificationResponse? response)
+    {
+        return response is null
+            ? null
+            : new EmployeeRequestApplicantVerificationDto(
+                response.Required,
+                response.Status,
+                response.CanRun,
+                response.Message);
     }
 
 }

@@ -564,6 +564,20 @@ public abstract class L1IntegrationTestBase
             isCurrent);
     }
 
+    protected async Task UpdateApplicantVerificationStatusAsync(
+        long applicantPartyId,
+        string verificationStatus)
+    {
+        await ExecuteNonQueryAsync(
+            """
+            UPDATE dbo.L1ApplicantParties
+            SET VerificationStatus = @value
+            WHERE Id = @id
+            """,
+            applicantPartyId,
+            verificationStatus);
+    }
+
     protected async Task UpdateRequestCreatedAtAsync(long requestId, DateTimeOffset createdAt)
     {
         await ExecuteNonQueryAsync(

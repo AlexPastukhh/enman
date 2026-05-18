@@ -20,7 +20,14 @@ public sealed record EmployeeRequestListItemResponse(
     string ApplicantDisplayName,
     string ObjectAddress,
     DateTimeOffset CreatedAt,
-    string ReviewState);
+    string ReviewState,
+    EmployeeRequestApplicantVerificationResponse? ApplicantVerification);
+
+public sealed record EmployeeRequestApplicantVerificationResponse(
+    bool Required,
+    string Status,
+    bool CanRun,
+    string? Message);
 
 public enum EmployeeRequestReviewState
 {

@@ -3247,6 +3247,26 @@
         },
         "additionalProperties": false
       },
+      "EmployeeRequestApplicantVerificationDto": {
+        "type": "object",
+        "properties": {
+          "required": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "canRun": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "EmployeeRequestDetailsDto": {
         "type": "object",
         "properties": {
@@ -3280,6 +3300,9 @@
           "reviewState": {
             "type": "string",
             "nullable": true
+          },
+          "applicantVerification": {
+            "$ref": "#/components/schemas/EmployeeRequestApplicantVerificationDto"
           }
         },
         "additionalProperties": false
@@ -3314,6 +3337,9 @@
           "reviewState": {
             "type": "string",
             "nullable": true
+          },
+          "applicantVerification": {
+            "$ref": "#/components/schemas/EmployeeRequestApplicantVerificationDto"
           }
         },
         "additionalProperties": false

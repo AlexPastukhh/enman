@@ -488,6 +488,12 @@ export interface components {
             email?: string | null;
             phoneNumber?: string | null;
         };
+        EmployeeRequestApplicantVerificationDto: {
+            required?: boolean;
+            status?: string | null;
+            canRun?: boolean;
+            message?: string | null;
+        };
         EmployeeRequestDetailsDto: {
             /** Format: int64 */
             requestId?: number;
@@ -499,6 +505,7 @@ export interface components {
             /** Format: date-time */
             createdAt?: string;
             reviewState?: string | null;
+            applicantVerification?: components["schemas"]["EmployeeRequestApplicantVerificationDto"];
         };
         EmployeeRequestListItemDto: {
             /** Format: int64 */
@@ -510,6 +517,7 @@ export interface components {
             /** Format: date-time */
             createdAt?: string;
             reviewState?: string | null;
+            applicantVerification?: components["schemas"]["EmployeeRequestApplicantVerificationDto"];
         };
         EmployeeRequestListResponseDto: {
             requests?: components["schemas"]["EmployeeRequestListItemDto"][] | null;

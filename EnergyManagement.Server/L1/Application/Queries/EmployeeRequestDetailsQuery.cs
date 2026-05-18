@@ -16,7 +16,8 @@ public sealed record EmployeeRequestDetailsResponse(
     string ObjectAddress,
     string Details,
     DateTimeOffset CreatedAt,
-    string ReviewState);
+    string ReviewState,
+    EmployeeRequestApplicantVerificationResponse? ApplicantVerification);
 
 public sealed record EmployeeRequestApplicantSummaryResponse(
     long ApplicantPartyId,

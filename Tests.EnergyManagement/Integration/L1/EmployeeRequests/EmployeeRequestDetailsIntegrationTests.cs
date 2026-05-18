@@ -75,6 +75,45 @@ public sealed class EmployeeRequestDetailsIntegrationTests : L1IntegrationTestBa
     }
 
     [Fact]
+    public async Task GetEmployeeRequestDetails_IncludesUnverifiedApplicantVerificationSummary()
+    {
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+        await CreateConnectionRequestAsync(account.AccountId);
+        var row = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
+        var client = AuthenticatedEmployeeClient();
+
+        var details = await GetEmployeeRequestDetailsAsync(client, row!.Id);
+
+        details.ApplicantVerification.Should().NotBeNull();
+        details.ApplicantVerification!.Required.Should().BeTrue();
+        details.ApplicantVerification.Status.Should().Be("Unverified");
+        details.ApplicantVerification.CanRun.Should().BeTrue();
+        details.ApplicantVerification.Message.Should().Be("Данные не проверены");
+        details.ReviewState.Should().Be("NotStarted");
+    }
+
+    [Fact]
+    public async Task GetEmployeeRequestDetails_IncludesVerifiedApplicantVerificationSummary()
+    {
+        var account = await RegisterAccountAsync();
+        var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
+        await UpdateApplicantVerificationStatusAsync(applicantParty.ApplicantPartyId, "Verified");
+        await CreateConnectionRequestAsync(account.AccountId);
+        var row = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
+        var client = AuthenticatedEmployeeClient();
+
+        var details = await GetEmployeeRequestDetailsAsync(client, row!.Id);
+
+        details.ApplicantVerification.Should().NotBeNull();
+        details.ApplicantVerification!.Required.Should().BeTrue();
+        details.ApplicantVerification.Status.Should().Be("Verified");
+        details.ApplicantVerification.CanRun.Should().BeFalse();
+        details.ApplicantVerification.Message.Should().Be("Данные проверены");
+        details.ReviewState.Should().Be("NotStarted");
+    }
+
+    [Fact]
     public async Task GetEmployeeRequestDetails_ReturnsStartedReviewStateForCurrentAndAnotherEmployee()
     {
         var account = await RegisterAccountAsync();
