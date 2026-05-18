@@ -1,0 +1,107 @@
+.homePage {
+  display: grid;
+  gap: 32px;
+  width: min(1120px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 40px 0 24px;
+}
+
+.homePage__hero,
+.homePage__quickStart,
+.homePage__flow {
+  display: grid;
+  gap: 18px;
+  padding: 28px;
+  border: 1px solid #d8d8d8;
+  border-radius: 18px;
+  background: #ffffff;
+}
+
+.homePage__hero {
+  min-height: 260px;
+  align-content: center;
+  background:
+    linear-gradient(135deg, rgba(41, 22, 111, 0.92), rgba(112, 137, 147, 0.72)),
+    #29166f;
+  color: #ffffff;
+}
+
+.homePage__eyebrow {
+  margin: 0;
+  font-size: 1.4rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.homePage h1 {
+  max-width: 760px;
+  margin: 0;
+  font-size: clamp(3.2rem, 6vw, 5.6rem);
+  line-height: 1.05;
+}
+
+.homePage__lead {
+  max-width: 720px;
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.45;
+}
+
+.homePage__sectionHeader {
+  display: grid;
+  gap: 8px;
+}
+
+.homePage__sectionHeader h2,
+.homePage__flow h2 {
+  margin: 0;
+  font-size: 2.8rem;
+}
+
+.homePage__sectionHeader p {
+  margin: 0;
+  color: #3d4c54;
+}
+
+.homePage__actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.homePage__actionCard {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  padding: 20px;
+  border: 1px solid #d8d8d8;
+  border-radius: 16px;
+  background: #f9fbfb;
+}
+
+.homePage__actionCard h3 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.homePage__actionCard p {
+  margin: 0;
+  color: #3d4c54;
+  line-height: 1.45;
+}
+
+.homePage__actionLink {
+  justify-self: start;
+  margin-top: 8px;
+}
+
+.homePage__flowSteps {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding-left: 24px;
+}
+
+.homePage__flowSteps li {
+  line-height: 1.5;
+}

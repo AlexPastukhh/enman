@@ -13,8 +13,13 @@ import { HomeNavLink } from "./HomeNavLink";
 import { NavButtonHollow } from "./NavButtonHollow";
 import { NavButtonPrimary } from "./NavButtonPrimary";
 
+const isClientSession = (role?: string | null) => role === "Client";
+const isEmployeeSession = (role?: string | null) => role === "Employee";
+
 export const Header = () => {
   const session = useSession();
+  const isClient = isClientSession(session?.role);
+  const isEmployee = isEmployeeSession(session?.role);
 
   return (
     <header className="header">
@@ -24,7 +29,7 @@ export const Header = () => {
         <div className="header__actions">
           {!session && (
             <NavButtonHollow
-              to={clientRoutes.home}
+              to={clientRoutes.createRequest}
               className="header__nav-button"
             >
               <MessagesIcon />
@@ -48,15 +53,33 @@ export const Header = () => {
             </HeaderNavLink>
           )}
 
-          {session && (
+          {session && isClient && (
+            <HeaderNavLink to={clientRoutes.createRequest}>
+              {headerConst.createRequestLinkText}
+            </HeaderNavLink>
+          )}
+
+          {session && isClient && (
             <HeaderNavLink to={clientRoutes.requests}>
               {headerConst.myRequestsLinkText}
             </HeaderNavLink>
           )}
 
-          {session && (
+          {session && isClient && (
             <HeaderNavLink to={clientRoutes.agreementExchanges}>
               {headerConst.agreementExchangesLinkText}
+            </HeaderNavLink>
+          )}
+
+          {session && isEmployee && (
+            <HeaderNavLink to={clientRoutes.employeeRequests}>
+              {headerConst.employeeRequestsLinkText}
+            </HeaderNavLink>
+          )}
+
+          {session && isEmployee && (
+            <HeaderNavLink to={clientRoutes.employeeAgreementExchanges}>
+              {headerConst.employeeAgreementExchangesLinkText}
             </HeaderNavLink>
           )}
 
@@ -70,7 +93,7 @@ export const Header = () => {
         </div>
 
         <div className="header__contact">
-          <NavLink to="/dashboard" className="header__hotline-link">
+          <NavLink to={clientRoutes.home} className="header__hotline-link">
             <PhoneIcon /> {headerConst.hotlinePhoneNumberText}
           </NavLink>
           {headerConst.hotlinePhoneLabelText}
@@ -78,20 +101,20 @@ export const Header = () => {
       </div>
 
       <div className="header__bottom">
-        <nav className="header__bottom-nav">
+        <nav className="header__bottom-nav" aria-label="Основная навигация">
           <HeaderNavLink to={clientRoutes.home}>
             {headerConst.aboutCompanyLinkText}
           </HeaderNavLink>
-          <HeaderNavLink to={clientRoutes.home}>
+          <HeaderNavLink to={clientRoutes.createRequest}>
             {headerConst.toCustomersLinkText}
           </HeaderNavLink>
-          <HeaderNavLink to={clientRoutes.home}>
+          <HeaderNavLink to={clientRoutes.requests}>
             {headerConst.disclosureInformationLinkText}
           </HeaderNavLink>
-          <HeaderNavLink to={clientRoutes.home}>
+          <HeaderNavLink to={clientRoutes.agreementExchanges}>
             {headerConst.procurementLinkText}
           </HeaderNavLink>
-          <HeaderNavLink to={clientRoutes.home}>
+          <HeaderNavLink to={clientRoutes.employeeRequests}>
             {headerConst.vacanciesLinkText}
           </HeaderNavLink>
         </nav>

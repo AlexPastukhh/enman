@@ -1,12 +1,12 @@
-# Mini Vite IPv4 + CSS fix
+# Apply
 
-From repo root, apply with:
+From repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\mini-vite-ipv4-css-fix.zip" -DestinationPath "." -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\home-flow-ui-fix.zip" -DestinationPath "." -Force
 ```
 
-Then run:
+Run client dev server:
 
 ```powershell
 npm --prefix .\energymanagement.client run dev
@@ -15,15 +15,18 @@ npm --prefix .\energymanagement.client run dev
 Open:
 
 ```text
-https://localhost:5173
+https://localhost:5173/
 ```
 
-What this changes:
+Useful routes:
 
-- `energymanagement.client/vite.config.ts`
-  - forces Node/Vite localhost resolution to IPv4 first;
-  - sets Vite dev server host to `localhost`;
-  - keeps existing HTTPS cert/proxy setup.
+```text
+Client:
+  https://localhost:5173/requests/create
+  https://localhost:5173/requests
+  https://localhost:5173/agreements
 
-- `energymanagement.client/src/main.tsx`
-  - imports `general.css` and `layout.css` in addition to `index.css`.
+Employee:
+  https://localhost:5173/employee/requests
+  https://localhost:5173/employee/agreements
+```
