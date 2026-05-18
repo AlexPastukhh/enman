@@ -1,21 +1,61 @@
-# Apply
+# APPLY — enman-vkr-research-bridge-and-topic-1-2-1-v1
 
-Docs-only archive. Apply from repository root:
+## Simple apply
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\sl-agr-exch-001-draft-refactor-v1.zip" -DestinationPath "." -Force
+cd "C:\enman\enman"
+
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-research-bridge-and-topic-1-2-1-v1.zip" -DestinationPath . -Force
+
+git status
 ```
 
-This archive refactors one existing slice draft:
+## Review
 
-```text
-planning/slices/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.md
+```powershell
+git diff -- planning/thesis/vkr-topic-workbench/00-workflow-and-rules/workflow.md
+git diff -- planning/thesis/vkr-topic-workbench/00-workflow-and-rules/research-bridge-protocol.md
+git diff -- planning/thesis/vkr-topic-workbench/00-workflow-and-rules/research-question-bank.md
+git diff -- planning/thesis/vkr-topic-workbench/00-workflow-and-rules/topic-card-template.md
+git diff -- planning/thesis/vkr-topic-workbench/00-research-materials/chapter-1-research-map.md
+git diff -- planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/02-documents-and-feedback/01-request-decision-document-chain.topic.md
 ```
 
-Runtime implementation, UI/page flow and redirects are not changed.
+## Add and commit
 
-Original file is preserved in:
+```powershell
+git add planning/thesis/vkr-topic-workbench `
+        _archive-review/2026-05-18-research-bridge-and-topic-1-2-1-v1 `
+        MANIFEST.md `
+        APPLY.md
 
-```text
-_archive-review/2026-05-19-sl-agr-exch-001-draft-refactor-v1/original-files/planning/slices/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.md
+git commit -m "Add VKR research bridge workflow"
+```
+
+## If you do not want to overwrite root MANIFEST.md / APPLY.md
+
+```powershell
+cd "C:\enman\enman"
+
+$tmp = "$env:TEMP\vkr-research-bridge-v1"
+Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-research-bridge-and-topic-1-2-1-v1.zip" -DestinationPath $tmp -Force
+
+Copy-Item "$tmp\planning" "." -Recurse -Force
+Copy-Item "$tmp\_archive-review" "." -Recurse -Force
+Copy-Item "$tmp\MANIFEST.md" ".\MANIFEST.vkr-research-bridge-and-topic-1-2-1-v1.md" -Force
+Copy-Item "$tmp\APPLY.md" ".\APPLY.vkr-research-bridge-and-topic-1-2-1-v1.md" -Force
+
+git status
+```
+
+Then:
+
+```powershell
+git add planning/thesis/vkr-topic-workbench `
+        _archive-review/2026-05-18-research-bridge-and-topic-1-2-1-v1 `
+        MANIFEST.vkr-research-bridge-and-topic-1-2-1-v1.md `
+        APPLY.vkr-research-bridge-and-topic-1-2-1-v1.md
+
+git commit -m "Add VKR research bridge workflow"
 ```
