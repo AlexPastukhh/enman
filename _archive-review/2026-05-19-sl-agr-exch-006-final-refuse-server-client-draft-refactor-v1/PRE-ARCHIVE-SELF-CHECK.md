@@ -1,0 +1,25 @@
+# Pre-Archive Self Check
+
+- [x] Archive is docs-only.
+- [x] Replacement files are limited to the paired server/client planning drafts.
+- [x] Runtime implementation files are not included.
+- [x] Tests are not changed.
+- [x] Generated artifacts are not changed.
+- [x] Original snapshots are included.
+- [x] Server draft includes `## 0. Scenario Sources`.
+- [x] Server draft includes `## 0.1 Source / Domain / Slice Coverage Snapshot`.
+- [x] Server draft includes `## 0.2 Implementation Sync Status`.
+- [x] Server draft includes `### Behavior-to-Test Trace`.
+- [x] Client draft includes `## 0. Scenario Sources`.
+- [x] Client draft includes `## 0.1 Source / Domain / Slice Coverage Snapshot`.
+- [x] Client draft includes `## 0.2 Implementation Sync Status`.
+- [x] Client draft includes `### Behavior-to-Test Trace`.
+- [x] Route kept as `POST /api/agreement-exchanges/{exchangeId}/final-refuse`.
+- [x] Success kept as `204 No Content`.
+- [x] Nullable/optional reason behavior preserved.
+- [x] `FinalRefusalReason.MaxLength = 2000` reflected.
+- [x] `AgreementExchangeStatus.FinallyRefused` reflected.
+- [x] `RequestStatus.AgreementExchangeFailed` reflected.
+- [x] No Client final refusal added.
+- [x] No `ResponsibleEmployeeId` guard added.
+- [x] No runtime UI/page-flow/redirect audit included.

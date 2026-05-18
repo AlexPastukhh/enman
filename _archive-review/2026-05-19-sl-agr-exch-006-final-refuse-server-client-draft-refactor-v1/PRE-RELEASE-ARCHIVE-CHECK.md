@@ -1,0 +1,23 @@
+# Pre-Release Archive Check
+
+- [x] server replacement file present
+- [x] client replacement file present
+- [x] server original snapshot present
+- [x] client original snapshot present
+- [x] server original snapshot equals source original
+- [x] client original snapshot equals source original
+- [x] server Scenario Sources present
+- [x] server Source / Domain / Slice Coverage Snapshot present
+- [x] server Implementation Sync Status present
+- [x] server Behavior-to-Test Trace present
+- [x] client Scenario Sources present
+- [x] client Source / Domain / Slice Coverage Snapshot present
+- [x] client Implementation Sync Status present
+- [x] client Behavior-to-Test Trace present
+- [x] client Q-L2-AGR-FINAL-REFUSE-CLIENT-001..012 present
+- [x] route `POST /api/agreement-exchanges/{exchangeId}/final-refuse` present in both drafts
+- [x] `204 No Content` present in both drafts
+- [x] nullable/optional reason behavior present in both drafts
+- [x] code evidence listed but runtime files not included
+- [x] zip contains no wrapper folder
+- [x] zip contains no runtime source/test/generated files
