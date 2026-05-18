@@ -1,0 +1,34 @@
+# Pre-Archive Self-Check
+
+- [x] Q001 retained
+- [x] Q002 retained
+- [x] Q003 retained
+- [x] Q004 retained
+- [x] Q005 retained
+- [x] Q006 retained
+- [x] Q007 retained
+- [x] Q008 retained
+- [x] Q009 retained
+- [x] Q010 retained
+- [x] Q011 retained
+- [x] Q012 retained
+- [x] Q013 retained
+- [x] Q014 retained
+- [x] Q015 retained
+- [x] Q016 retained
+- [x] Q017 retained
+- [x] Q018 retained
+- [x] Q019 retained
+- [x] Q020 retained
+- [x] Q021 retained
+- [x] Q022 retained
+- [x] Q023 retained
+- [x] 204 No Content retained
+- [x] No response DTO
+- [x] ClientAccountId retained
+- [x] No ResponsibleEmployeeId guard retained
+- [x] No per-command status enum retained
+- [x] Separate controller retained
+- [x] OpenAPI commands retained
+- [x] Behavior-to-Test Trace present
+- [x] implementation not rechecked stated
