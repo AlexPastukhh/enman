@@ -2,7 +2,7 @@ export const registerConst = {
   registerTitle: "Регистрация",
 
   emailLabel: "Email",
-  emailPlaceholder: "Введите email",
+  emailPlaceholder: "name@example.com",
   emailInputId: "emailInput",
   emailErrorsId: "emailErrors",
 

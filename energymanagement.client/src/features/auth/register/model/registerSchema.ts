@@ -4,11 +4,13 @@ import { getMessageFromErrorCode } from "../../../../shared/errors/clientErrorMe
 
 export const registerFieldNames = authFieldNames.register;
 
+const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
 export const registerSchema = z
   .object({
     [registerFieldNames.email]: z
       .string()
-      .regex(/^(.+)@(.+)$/, getMessageFromErrorCode(errorCodes.Email.IsInvalid)),
+      .regex(emailRegex, getMessageFromErrorCode(errorCodes.Email.IsInvalid)),
     [registerFieldNames.password]: z
       .string()
       .min(12, getMessageFromErrorCode(errorCodes.Password.IsTooShort))
@@ -39,4 +41,3 @@ export const registerServerFieldMap: Record<string, string> = {
   Password: registerFieldNames.password,
   password: registerFieldNames.password,
 };
-

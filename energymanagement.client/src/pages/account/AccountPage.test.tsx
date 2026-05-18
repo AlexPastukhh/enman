@@ -3,6 +3,7 @@
  */
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { MemoryRouter } from "react-router-dom";
 import AccountPage from "./AccountPage";
 
 const {
@@ -49,11 +50,6 @@ vi.mock(
   }),
 );
 
-vi.mock("../../features/auth/register/ui/RegisterForm", () => ({
-  RegisterForm: () => <form aria-label="Register"></form>,
-  __esModule: true,
-}));
-
 vi.mock("../../shared/ui/layout/Header", () => ({
   Header: () => <header>Header</header>,
   __esModule: true,
@@ -89,7 +85,7 @@ describe("AccountPage", () => {
     mockedUseMakeApplicantPartyCurrentDefaultMutation.mockReset();
   });
 
-  it("shows register form when client is not signed in", () => {
+  it("shows signed-out account call to action when client is not signed in", () => {
     mockedUseSession.mockReturnValue(null);
     mockedUseAccountApplicantPartiesQuery.mockReturnValue({
       isPending: false,
@@ -98,9 +94,24 @@ describe("AccountPage", () => {
       refetch: vi.fn(),
     });
 
-    render(<AccountPage />);
+    render(
+      <MemoryRouter>
+        <AccountPage />
+      </MemoryRouter>,
+    );
 
-    expect(screen.getByRole("form", { name: "Register" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        name: "Войдите, чтобы управлять данными заявителя",
+      }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Войти" })).toHaveAttribute(
+      "href",
+      "/login",
+    );
+    expect(
+      screen.getByRole("link", { name: "Зарегистрироваться" }),
+    ).toHaveAttribute("href", "/register");
   });
 
   it("shows empty applicant parties state for signed-in client without saved parties", () => {

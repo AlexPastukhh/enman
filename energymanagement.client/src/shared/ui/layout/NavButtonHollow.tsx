@@ -9,10 +9,7 @@ export const NavButtonHollow = ({
   children,
   ...rest
 }: NavButtonHollowProps) => (
-  <NavLink
-    className={`button-hollow link-base-clear ${className ?? ""}`.trim()}
-    {...rest}
-  >
+  <NavLink className={`button-hollow ${className ?? ""}`.trim()} {...rest}>
     {children}
   </NavLink>
 );

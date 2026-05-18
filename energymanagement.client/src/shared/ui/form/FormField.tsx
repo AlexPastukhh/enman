@@ -10,6 +10,8 @@ export const FormField = ({
   error,
   labelText,
   placeHolder,
+  type = "text",
+  autoComplete,
 }: {
   registerFormFn: DebouncedFormRegister<FieldValues>;
   fieldName: string;
@@ -18,25 +20,26 @@ export const FormField = ({
   error?: FieldError;
   labelText: string;
   placeHolder: string;
+  type?: React.HTMLInputTypeAttribute;
+  autoComplete?: string;
 }) => {
   return (
-    <>
-      <FormFieldBase
-        labelText={labelText}
-        inputId={inputId}
-        inputErrorId={errorId}
-        error={error}
-      >
-        <input
-          className="formControl"
-          type="text"
-          id={inputId}
-          placeholder={placeHolder}
-          aria-errormessage={error ? errorId : undefined}
-          aria-invalid={error ? "true" : "false"}
-          {...registerFormFn(fieldName)}
-        />
-      </FormFieldBase>
-    </>
+    <FormFieldBase
+      labelText={labelText}
+      inputId={inputId}
+      inputErrorId={errorId}
+      error={error}
+    >
+      <input
+        className="formControl"
+        type={type}
+        id={inputId}
+        placeholder={placeHolder}
+        autoComplete={autoComplete}
+        aria-errormessage={error ? errorId : undefined}
+        aria-invalid={error ? "true" : "false"}
+        {...registerFormFn(fieldName)}
+      />
+    </FormFieldBase>
   );
 };

@@ -30,6 +30,8 @@ export const RegisterForm = () => {
           errorId={registerConst.emailErrorsId}
           labelText={registerConst.emailLabel}
           placeHolder={registerConst.emailPlaceholder}
+          type="email"
+          autoComplete="email"
           error={errors[fieldNames.email]}
         />
       </FormGroup>
@@ -43,6 +45,7 @@ export const RegisterForm = () => {
           passwordInputId={registerConst.passwordInputId}
           passwordErrorId={registerConst.passwordErrorsId}
           placeHolder={registerConst.passwordPlaceholder}
+          autoComplete="new-password"
         />
       </FormGroup>
 
@@ -55,6 +58,7 @@ export const RegisterForm = () => {
           passwordInputId={registerConst.passwordConfirmInputId}
           passwordErrorId={registerConst.passwordConfirmErrorsId}
           placeHolder={registerConst.passwordConfirmPlaceholder}
+          autoComplete="new-password"
         />
       </FormGroup>
 

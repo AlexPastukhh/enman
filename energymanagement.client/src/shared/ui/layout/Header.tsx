@@ -1,82 +1,40 @@
-import { NavLink } from "react-router-dom";
-import { EnterIcon, PhoneIcon } from "../../../assets/icons/svgr_barrel";
+import { PhoneIcon } from "../../../assets/icons/svgr_barrel";
 import { useSession } from "../../../entities/session/model/useSession";
 import { LogoutButton } from "../../../features/auth/logout/ui/LogoutButton";
 import { clientRoutes } from "../../config/clientRoutes";
 import { HeaderNavLink } from "./HeaderNavLink";
 import { headerConst } from "./headerConst";
 import { HomeNavLink } from "./HomeNavLink";
-import { NavButtonHollow } from "./NavButtonHollow";
-import { NavButtonPrimary } from "./NavButtonPrimary";
 
-const isClientSession = (role?: string | null) => role === "Client";
-const isEmployeeSession = (role?: string | null) => role === "Employee";
+const isEmployee = (role?: string | null) => role === "Employee";
+const isClient = (role?: string | null) => role === "Client";
 
 export const Header = () => {
   const session = useSession();
-  const isClient = isClientSession(session?.role);
-  const isEmployee = isEmployeeSession(session?.role);
+  const employeeSession = isEmployee(session?.role);
+  const clientSession = isClient(session?.role);
 
   return (
     <header className="header">
       <div className="header__top">
         <HomeNavLink />
 
-        <div className="header__actions" aria-label="Быстрые действия">
+        <nav className="header__actions" aria-label="Основная навигация">
           {!session && (
             <>
-              <NavButtonHollow
-                to={clientRoutes.login}
-                className="header__nav-button"
-                aria-label={headerConst.loginLinkText}
-              >
-                <EnterIcon />
-                {headerConst.loginLinkText}
-              </NavButtonHollow>
-              <NavButtonPrimary
-                to={clientRoutes.register}
-                className="header__nav-button"
-                aria-label={headerConst.registerLinkText}
-              >
-                {headerConst.registerLinkText}
-              </NavButtonPrimary>
-            </>
-          )}
-
-          {session && (
-            <>
-              <HeaderNavLink to={clientRoutes.account}>
-                {headerConst.accountLinkText}
+              <HeaderNavLink to={clientRoutes.home}>
+                {headerConst.homeLinkText}
               </HeaderNavLink>
-              <LogoutButton
-                className="header__nav-button"
-                label={headerConst.logoutButtonText}
-                pendingLabel={headerConst.logoutPendingButtonText}
-              />
-            </>
-          )}
-        </div>
-
-        <div className="header__contact">
-          <NavLink to={clientRoutes.home} className="header__hotline-link">
-            <PhoneIcon /> {headerConst.hotlinePhoneNumberText}
-          </NavLink>
-          <span>{headerConst.hotlinePhoneLabelText}</span>
-        </div>
-      </div>
-
-      <div className="header__bottom">
-        <nav className="header__bottom-nav" aria-label="Основная навигация">
-          <HeaderNavLink to={clientRoutes.home}>{headerConst.homeLinkText}</HeaderNavLink>
-
-          {!session && (
-            <>
-              <HeaderNavLink to={clientRoutes.login}>{headerConst.loginLinkText}</HeaderNavLink>
-              <HeaderNavLink to={clientRoutes.register}>{headerConst.registerLinkText}</HeaderNavLink>
+              <HeaderNavLink to={clientRoutes.login}>
+                {headerConst.loginLinkText}
+              </HeaderNavLink>
+              <HeaderNavLink to={clientRoutes.register}>
+                {headerConst.registerLinkText}
+              </HeaderNavLink>
             </>
           )}
 
-          {isClient && (
+          {clientSession && (
             <>
               <HeaderNavLink to={clientRoutes.createRequest}>
                 {headerConst.createRequestLinkText}
@@ -87,10 +45,13 @@ export const Header = () => {
               <HeaderNavLink to={clientRoutes.agreementExchanges}>
                 {headerConst.agreementExchangesLinkText}
               </HeaderNavLink>
+              <HeaderNavLink to={clientRoutes.account}>
+                {headerConst.accountLinkText}
+              </HeaderNavLink>
             </>
           )}
 
-          {isEmployee && (
+          {employeeSession && (
             <>
               <HeaderNavLink to={clientRoutes.employeeRequests}>
                 {headerConst.employeeRequestsLinkText}
@@ -98,9 +59,27 @@ export const Header = () => {
               <HeaderNavLink to={clientRoutes.employeeAgreementExchanges}>
                 {headerConst.employeeAgreementExchangesLinkText}
               </HeaderNavLink>
+              <HeaderNavLink to={clientRoutes.account}>
+                {headerConst.accountLinkText}
+              </HeaderNavLink>
             </>
           )}
+
+          {session && (
+            <LogoutButton
+              className="header__nav-button"
+              label={headerConst.logoutButtonText}
+              pendingLabel={headerConst.logoutPendingButtonText}
+            />
+          )}
         </nav>
+
+        <div className="header__contact" aria-label="Контакты поддержки">
+          <a href="tel:88001007000" className="header__hotline-link">
+            <PhoneIcon /> {headerConst.hotlinePhoneNumberText}
+          </a>
+          <span>{headerConst.hotlinePhoneLabelText}</span>
+        </div>
       </div>
     </header>
   );

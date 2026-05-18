@@ -1,12 +1,8 @@
-import dns from "node:dns";
-import fs from "node:fs";
-import path from "node:path";
-import react from "@vitejs/plugin-react";
+import fs from "fs";
 import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
-
-// Keep dev server on IPv4 localhost so Windows does not prefer https://[::1]:5173.
-dns.setDefaultResultOrder("ipv4first");
+import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -19,7 +15,6 @@ export default defineConfig({
     },
     port: 5173,
     fs: {
-      // allow reading from repo root so ../../Shared works
       allow: [path.resolve(__dirname, "..", "..")],
     },
     proxy: {

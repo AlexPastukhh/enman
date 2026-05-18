@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { LoginForm } from "../../features/auth/login/ui/LoginForm";
 import { clientRoutes } from "../../shared/config/clientRoutes";
 import { Footer } from "../../shared/ui/layout/Footer";
@@ -11,14 +11,26 @@ export const LoginPage = () => {
       <main className="content">
         <section className="authPage" aria-labelledby="login-page-heading">
           <div className="authPage__intro">
-            <h1 id="login-page-heading">Вход в личный кабинет</h1>
-            <p>
-              Войдите, чтобы продолжить работу с заявками, проверкой и договорными
-              обменами. Нет аккаунта?{" "}
-              <Link to={clientRoutes.register}>Зарегистрируйтесь</Link>.
+            <p className="pageEyebrow">Вход</p>
+            <h1 className="pageTitle" id="login-page-heading">
+              Продолжите работу с заявками и договорами
+            </h1>
+            <p className="pageDescription">
+              Войдите как клиент для работы со своими заявками или используйте
+              Employee-вход, если работаете с dashboard сотрудника.
             </p>
+            <div className="homePage__actions">
+              <NavLink className="button-hollow" to={clientRoutes.register}>
+                Создать аккаунт клиента
+              </NavLink>
+              <NavLink className="button-hollow" to={clientRoutes.home}>
+                На главную
+              </NavLink>
+            </div>
           </div>
-          <LoginForm />
+          <div className="authPage__card">
+            <LoginForm />
+          </div>
         </section>
       </main>
       <Footer />

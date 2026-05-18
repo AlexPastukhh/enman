@@ -1,100 +1,159 @@
+.form {
+  width: min(100%, 42rem);
+  margin: 0;
+  padding: 2.8rem;
+  display: grid;
+  gap: 1.6rem;
+  border: 0.1rem solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
 
-.form{
- --formGroupMarginTop:1rem;
+.formTitle {
+  margin: 0 0 0.4rem;
+  color: var(--color-text);
+  font-size: 2.8rem;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
 
-  width: 30rem;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 0.1rem solid #ccc;
-  border-radius: 1rem;
-}
-.formTitle{
-  font-size: 2rem;
-}
-.formGroup{
-  width: 80%;
-  margin-top: 1rem;
-  
-  display: flex;
-  flex-direction: column;
-}
-.formControl{  
+.formGroup {
   width: 100%;
+  margin: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.form label {
+  color: var(--color-text);
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.formControl {
+  width: 100%;
+  min-height: 4.8rem;
+  margin: 0;
+  padding: 1.1rem 1.3rem;
+  border: 0.1rem solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: #ffffff;
+  color: var(--color-text);
   font-size: 1.6rem;
-  padding: 0.8rem; 
-  margin-top: 0.5rem;
-  border-radius: 1rem;
-  border: 0.1rem solid #ccc;
-}
-.form label{
-  font-weight: 400;
+  outline: none;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    background-color 150ms ease;
 }
 
+.formControl::placeholder {
+  color: #94a3b8;
+}
 
+.formControl:hover {
+  border-color: #9aa7b8;
+}
 
-input.formControl:focus{
+.formControl:focus {
   border-color: var(--color-primary);
-  outline: solid;
-  outline-width: 0.2rem;
-  outline-color: var(--color-background);
+  box-shadow: var(--focus-ring);
 }
 
-.passwordWrapper{
+.formControl[aria-invalid="true"] {
+  border-color: var(--color-danger);
+  background: #fffafa;
+}
+
+.formControl[aria-invalid="true"]:focus {
+  box-shadow: 0 0 0 0.35rem rgba(180, 35, 24, 0.14);
+}
+
+.passwordWrapper {
   position: relative;
 }
 
+.passwordWrapper .formControl {
+  padding-right: 4.8rem;
+}
 
-.iconsButton{
+.iconsButton {
   position: absolute;
-  right: 5%;
-  height: 35%;
-
-  transform: translateY(calc(50% + 0.85rem));
-  background: none;
-  border: none;
-  cursor: pointer;}
-.icon{
-  opacity: 0.7;
+  top: 50%;
+  right: 1rem;
+  width: 3.6rem;
+  height: 3.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-muted);
+  transform: translateY(-50%);
 }
+
+.iconsButton:hover,
+.iconsButton:focus-visible {
+  background: var(--color-surface-soft);
+  color: var(--color-primary);
+  outline: none;
+}
+
+.icon,
 .eyeClosedIcon {
-  width: 115%; /* Match parent width */
-  height: 115%; /* Match parent height */
-  transform: translate(-0.15rem, -0.12rem);
+  width: 2rem;
+  height: 2rem;
+  opacity: 0.78;
+  transform: none;
 }
 
-.formErrors{
-  font-size: 1.4rem;
-  margin-top: 0.5rem;
+.formErrors {
+  min-height: 1.8rem;
+  margin: 0;
+  font-size: 1.3rem;
 }
-.formRootError{
-  width: 80%;
-  color: red;
+
+.formRootError {
+  width: 100%;
+  margin: 0;
+  padding: 1rem 1.2rem;
+  border: 0.1rem solid rgba(180, 35, 24, 0.25);
+  border-radius: var(--radius-md);
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
   font-size: 1.4rem;
-  margin-top: 1rem;
+  font-weight: 700;
 }
-.errorsHidden{
+
+.errorsHidden {
   visibility: hidden;
-  transform: translate(-1rem);
   opacity: 0;
 }
-.errorsVisible{
+
+.errorsVisible {
   visibility: visible;
-  color: red;
-  transform: translateY(0);
-  transition: all 0.3s ease-in-out;
+  color: var(--color-danger);
+  opacity: 1;
 }
 
-.formInfoText{
-  display: inline-flex;
-  font-size: 1.2rem;
-}
-.formButtonGroup{
-  margin-top: -0.2rem;
-}
-.closeGroup{
-  margin-top:calc(var(--formGroupMarginTop)-0.5rem);
+.formInfoText {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 1.4rem;
 }
 
+.formButtonGroup {
+  margin-top: 0.4rem;
+}
+
+.closeGroup {
+  margin-top: 0;
+}
+
+.form .button-primary {
+  width: 100%;
+  min-height: 4.8rem;
+}

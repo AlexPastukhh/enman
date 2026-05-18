@@ -148,6 +148,12 @@ export class InvalidTestData {
       expectedErrors: [errorCodes.Email.IsInvalid],
     },
     {
+      // invalid email domain
+      email: "user@.com",
+      password: "ValidPass123!",
+      expectedErrors: [errorCodes.Email.IsInvalid],
+    },
+    {
       // password too short (<12)
       email: "shortpass@example.com",
       password: "Short1!",
@@ -171,6 +177,13 @@ export class InvalidTestData {
       password: "ValidPass123!",
       passwordConfirmation: "ValidPass123!",
       expectedErrors: [errorCodes.Email.IsInvalid] ,
+    },
+    {
+      // invalid email domain
+      email: "user@.com",
+      password: "ValidPass123!",
+      passwordConfirmation: "ValidPass123!",
+      expectedErrors: [errorCodes.Email.IsInvalid],
     },
     {
       // password too short (<12)

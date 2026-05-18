@@ -1,6 +1,6 @@
 import { NavLink, type NavLinkProps } from "react-router-dom";
 
-type NavButtonPrimaryProps = NavLinkProps & {
+export type NavButtonPrimaryProps = NavLinkProps & {
   children?: React.ReactNode;
 };
 

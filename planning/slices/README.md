@@ -1,31 +1,76 @@
 # Slice Planning Index
 
-Status: current / near-final L2 Employee Review and Agreement Exchange slice navigation synchronized
+Status: canonical slice planning entry point / client UI-CSS workflow synchronized
 
-## 1. Core Rule
+This folder owns slice planning navigation for server, client and cross-cutting slice work.
 
-Scenario Flow and Behavior Items come from:
-
-```text
-planning/slices/slice-scenario-flow-behavior-register.md
-```
-
-Client drafters must use:
+## Start Here
 
 ```text
-planning/slices/client-slice-short-draft-rules-and-example.md
-planning/client/client-api-placement-decision.md
-planning/client/client-layering-for-read-and-command-slices.md
+planning/slices/SLICE-FOLDER-MAP.md
+planning/slices/SLICE-INDEX.md
+planning/slices/SLICE-QUESTIONS.md
+planning/slices/client/README.md
+planning/slices/server/README.md
+planning/slices/cross-cutting/README.md
 ```
 
-For the current L2 state also read:
+## Folder Ownership
 
 ```text
-planning/l2-current-planning-status.md
-planning/slices/l2/README.md
+planning/slices/client/
+  client slice drafting rules, client UI/CSS workflow, client templates,
+  client examples and client sidecar drafts.
+
+planning/slices/server/
+  server/backend/API slice drafting rules, server templates,
+  server examples and server slice drafts.
+
+planning/slices/cross-cutting/
+  cross-cutting slice concerns that are not purely client or server.
+
+planning/slices/SLICE-INDEX.md
+  common index of server/client/cross-cutting slices.
+
+planning/slices/SLICE-QUESTIONS.md
+  common register of open/accepted/blocked/future questions.
 ```
 
-## 2. Current Client API Placement Rule
+## Core Slice Rule
+
+A slice is a responsibility boundary, not a guarantee that every change goes vertically through every application layer.
+
+```text
+Slice != always vertical.
+Same endpoint != same UI slice.
+Same DTO != same page.
+Different actor journey can justify separate client sidecars.
+```
+
+The reverse can also be true: when a first-pass response shape is intentionally common, different page shells may use the same endpoint, query/model and widget.
+
+## New Folder Rule
+
+New slice docs are grouped by implementation responsibility, not by L1/L2 level.
+
+Use:
+
+```text
+planning/slices/client/
+  for client sidecars, UI workflow, CSS rules and client slice drafts
+
+planning/slices/server/
+  for server/backend/API slice drafts and server workflow
+
+planning/slices/cross-cutting/
+  for concerns shared across client/server or architecture-level decisions
+```
+
+Do not create new `planning/slices/l1` or `planning/slices/l2` files.
+
+Existing historical L1/L2 files may remain during migration and should be indexed from `SLICE-INDEX.md` until they are rewritten or moved.
+
+## Current Client API Placement Rule
 
 ```text
 Read endpoint wrappers:
@@ -42,29 +87,46 @@ Shared API:
   generic transport helpers
 ```
 
-Existing business-specific wrappers in `shared/api` are transitional compatibility. New drafts should not copy that shape.
+Existing business-specific wrappers in `shared/api` are transitional compatibility. New client drafts should not copy that shape.
 
-## 3. Drafting Rules
+## Client UI/CSS Rule
+
+Client slice drafts must treat UI layout and CSS ownership as part of the slice, not as post-implementation polish.
+
+New `.client.md` drafts must include:
 
 ```text
-- Draft by examples, not by improvisation.
-- Scenario Flow is user/system behavior from scenario sources.
-- Implementation Flow is code/layer responsibility.
-- Behavior items are not implementation details.
-- Read-only UI belongs in entities/widgets/pages.
-- Command/user-action UI belongs in features.
-- Read endpoint wrappers belong in entities/*/api.
-- Command endpoint wrappers belong in features/*/api.
-- shared/api is only transport/generated infrastructure.
-- Generated OpenAPI types remain shared generated artifacts, but entity/feature API files may import them directly and define local business aliases.
-- One draft covers one slice; extension slices are named but not implemented.
-- Questions / Decisions and Behavior Coverage should appear early enough to guide implementation.
-- Full server/client drafts must include Implementation Checklist near the end.
+Visual UI / Scenario Flow
+Visual Layout / Screen Composition
+Visual Client Implementation Flow
+Styling / CSS Ownership
+Validation / Feedback / Error UI
+Accessibility / ARIA Contract
+Verification Plan
 ```
 
-## 4. Current L2 Review Drafts
+See:
 
-Server/API slices:
+```text
+planning/slices/client/CLIENT-SLICE-TEMPLATE.md
+planning/slices/client/CLIENT-UI-STYLE-WORKFLOW.md
+planning/slices/client/CLIENT-CSS-ARCHITECTURE-RULES.md
+```
+
+## Historical Slice Draft Navigation
+
+Some current slice drafts may still be located in legacy paths such as:
+
+```text
+planning/slices/l2/
+planning/slices/SL-*.md
+```
+
+Those files are not rewritten by this docs workflow update. Use `SLICE-INDEX.md` to find them during migration.
+
+## Current L2 Review Drafts — Legacy Navigation
+
+Server/API slices may still be found in legacy root paths:
 
 ```text
 planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
@@ -74,7 +136,7 @@ planning/slices/SL-EMP-REQ-004-approve-request-review.md
 planning/slices/SL-EMP-REQ-005-reject-request-review.md
 ```
 
-Client sidecars:
+Client sidecars may still be found in legacy paths:
 
 ```text
 planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
@@ -84,26 +146,11 @@ planning/slices/l2/L2-REVIEW-APPROVE-001-approve-request-review.client.md
 planning/slices/l2/L2-REVIEW-REJECT-001-reject-request-review.client.md
 ```
 
-Review command chain:
+Do not add new files to those legacy locations.
 
-```text
-StartReview:
-  two UI entry points: dashboard/list row + details action area;
-  one feature sidecar.
+## AgreementProposalExchange Slice Family — Legacy Navigation
 
-ApproveReview:
-  details-only first pass;
-  no AgreementProposalExchange creation.
-
-RejectReview:
-  details-only first pass;
-  feedback optional;
-  no AgreementProposalExchange creation.
-```
-
-## 5. AgreementProposalExchange Slice Family
-
-Canonical server/backend/API slices:
+Canonical server/backend/API slices may still be found in legacy paths:
 
 ```text
 planning/slices/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.md
@@ -114,7 +161,7 @@ planning/slices/SL-AGR-EXCH-005-client-accept-active-agreement-proposal.md
 planning/slices/SL-AGR-EXCH-006-final-refuse-agreement-exchange.md
 ```
 
-Canonical client sidecars:
+Canonical client sidecars may still be found in legacy paths:
 
 ```text
 planning/slices/l2/L2-AGR-EXCH-START-001-start-agreement-exchange-with-initial-employee-proposal.client.md
@@ -125,22 +172,14 @@ planning/slices/l2/L2-AGR-EXCH-ACCEPT-001-client-accept-active-agreement-proposa
 planning/slices/l2/L2-AGR-EXCH-FINAL-REFUSE-001-employee-final-refuse-agreement-exchange.client.md
 ```
 
-Decision summary:
+Future updated drafts should be created directly under:
 
 ```text
-Start initial exchange — separate slice because it creates the exchange and version 1.
-Client send / Employee send counter-proposal — one slice with two actor branches.
-List read — separate read slice.
-Details read — separate read slice.
-Client accept — separate Client-only command slice.
-Employee final refusal — separate Employee-only command slice.
+planning/slices/client/
+planning/slices/server/
 ```
 
-Do not split client and employee counter-proposal sends unless UI, permissions, document handling or validation diverge materially.
-
-`SL-DOC-*` remains the future document/reference family for AgreementDocumentRef/document metadata/storage follow-up work.
-
-## 6. Agreement Exchange Guardrails
+## Agreement Exchange Guardrails
 
 ```text
 AgreementProposalExchange and Request are separate aggregates.
@@ -156,7 +195,7 @@ AgreementDocumentRef is document metadata reference, not bytes/storage adapter.
 Do not use per-command status enums.
 ```
 
-## 7. StartReview Entry Point Rule
+## StartReview Entry Point Rule
 
 StartReview client has one command sidecar and two entry points:
 
@@ -167,36 +206,30 @@ details action area
 
 Dashboard/details read pages host feature actions; they do not own command mutations.
 
-## 8. Current L2 Client Sidecar Reminder
+## Migration Note
 
-For read sidecars:
-
-```text
-Do:
-  entities/<entity>/api/<readWrapper>.ts
-  entities/<entity>/api/<entity>ApiTypes.ts
-
-Do not:
-  shared/api/<businessEntity>Api.ts
-```
-
-For command sidecars:
+Old client planning docs under `planning/client/` are deprecated. New client planning docs live under:
 
 ```text
-Do:
-  features/<business-area>/<action>/api/<commandWrapper>.ts
-  features/<business-area>/<action>/model/<mutation>.ts
-  features/<business-area>/<action>/ui/<ActionFormOrButton>.tsx
-
-Do not:
-  entities/*/api for command wrappers
-  shared/api business wrappers
+planning/slices/client/
 ```
 
-Agreement exchange reads/commands follow the same ownership rule: reads in entities, commands in features.
+Existing old slice files may remain in their current paths during migration. New client slice drafts should be created directly under:
 
-## 9. Current-State Rule
+```text
+planning/slices/client/
+```
 
-When asked what exists or is implemented now, inspect GitHub/current branch.
+New server slice drafts should be created directly under:
+
+```text
+planning/slices/server/
+```
+
+Do not mass-move historical drafts without a dedicated cleanup task. Keep `SLICE-INDEX.md` updated while old and new paths coexist.
+
+## Current-State Rule
+
+When asked what exists or is implemented now, inspect the current repository branch.
 
 Do not answer current implementation status from uploaded archives or slice drafts alone.

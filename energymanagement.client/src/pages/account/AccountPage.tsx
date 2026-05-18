@@ -1,12 +1,12 @@
+import { NavLink } from "react-router-dom";
 import type { ApplicantPartySummary } from "../../entities/applicant-party/model/applicantPartyTypes";
 import { useAccountApplicantPartiesQuery } from "../../entities/applicant-party/model/useAccountApplicantPartiesQuery";
 import { ApplicantPartiesList } from "../../entities/applicant-party/ui/ApplicantPartiesList";
 import { useSession } from "../../entities/session/model/useSession";
+import { CreateIndividualApplicantPartyForm } from "../../features/applicant-party/create-individual/ui/CreateIndividualApplicantPartyForm";
 import { useMakeApplicantPartyCurrentDefaultMutation } from "../../features/applicant-party/make-current-default/model/useMakeApplicantPartyCurrentDefaultMutation";
 import { MakeCurrentDefaultButton } from "../../features/applicant-party/make-current-default/ui/MakeCurrentDefaultButton";
 import { makeCurrentDefaultButtonConst } from "../../features/applicant-party/make-current-default/ui/makeCurrentDefaultButtonConst";
-import { CreateIndividualApplicantPartyForm } from "../../features/applicant-party/create-individual/ui/CreateIndividualApplicantPartyForm";
-import { Link } from "react-router-dom";
 import { clientRoutes } from "../../shared/config/clientRoutes";
 import { Footer } from "../../shared/ui/layout/Footer";
 import { Header } from "../../shared/ui/layout/Header";
@@ -64,26 +64,33 @@ const AccountPage = () => {
       <Header />
       <main className="content">
         {!session && (
-          <section className="signedOutPanel" aria-labelledby="account-signed-out-heading">
-            <h1 id="account-signed-out-heading">Личный кабинет</h1>
-            <p>
-              Войдите в существующий аккаунт или зарегистрируйтесь, чтобы работать
-              с заявками, applicant parties и договорными обменами.
+          <section className="accountPage__signedOut pageCard" aria-labelledby="account-signed-out-heading">
+            <p className="pageEyebrow">Личный кабинет</p>
+            <h1 className="pageTitle" id="account-signed-out-heading">
+              Войдите, чтобы управлять данными заявителя
+            </h1>
+            <p className="pageDescription">
+              После входа здесь будут доступны сохранённые заявители,
+              текущий/default заявитель и форма добавления данных.
             </p>
-            <div className="signedOutPanel__actions">
-              <Link className="button-primary link-base-clear" to={clientRoutes.login}>
+            <div className="accountPage__actions">
+              <NavLink className="button-primary" to={clientRoutes.login}>
                 Войти
-              </Link>
-              <Link className="button-hollow link-base-clear" to={clientRoutes.register}>
+              </NavLink>
+              <NavLink className="button-hollow" to={clientRoutes.register}>
                 Зарегистрироваться
-              </Link>
+              </NavLink>
             </div>
           </section>
         )}
+
         {session && (
-          <section aria-labelledby="account-page-heading">
-            <h1 id="account-page-heading">Account</h1>
-            <p>{session.email}</p>
+          <section className="accountPage__panel pageCard" aria-labelledby="account-page-heading">
+            <p className="pageEyebrow">Личный кабинет</p>
+            <h1 id="account-page-heading" className="pageTitle">
+              Данные аккаунта
+            </h1>
+            <p className="pageDescription">{session.email}</p>
 
             {accountApplicantPartiesQuery.isPending && (
               <p>Loading applicant parties...</p>

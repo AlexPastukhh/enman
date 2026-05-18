@@ -33,6 +33,8 @@ export const LoginForm = () => {
           placeHolder={loginConst.emailPlaceholder}
           inputId={loginConst.emailInputId}
           errorId={loginConst.emailErrorsId}
+          type="email"
+          autoComplete="email"
         />
       </FormGroup>
 
@@ -45,11 +47,12 @@ export const LoginForm = () => {
           error={errors[loginFieldNames.password]}
           passwordInputId={loginConst.passwordInputId}
           passwordErrorId={loginConst.passwordErrorsId}
+          autoComplete="current-password"
         />
       </FormGroup>
       <FormGroup addClassName="closeGroup">
         <FormButton type="submit" disabled={isSubmitting || !isValid}>
-          {isSubmitting ? "Входим..." : loginConst.submitButtonText}
+          {isSubmitting ? "Logging in..." : loginConst.submitButtonText}
         </FormButton>
       </FormGroup>
     </form>

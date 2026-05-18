@@ -3,7 +3,7 @@ export const loginConst = {
   passwordLabel: "Пароль",
   passwordPlaceholder: "Введите пароль",
   emailLabel: "Email",
-  emailPlaceholder: "Введите email",
+  emailPlaceholder: "name@example.com",
   emailInputId: "emailInput",
   emailErrorsId: "emailErrors",
   submitButtonText: "Войти",

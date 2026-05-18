@@ -1,51 +1,82 @@
-:root{
-    --color-primary:#29166F;
-    --color-secondary:#708993;
-    --color-secondary-light:#A1C2BD;
-    --color-background:#9AF6E5;
+@import "./general.css";
+@import "./layout.css";
 
-    --color-warn:#B22222;
-
-    
-    --footer-height:15rem;
-    --btn-b-radius: 2rem;
-    --btn-pad-lr: 1.2rem;
-    --btn-pad-tb: 1rem;
-
-    --nav-button-width: 22rem;
-    --nav-link-pad: 2rem;
-
-    --header-nav-link-fs:1.6rem;    
-    --header-nav-btn-fs:1.6rem;
-}
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-html{
-    font-size: 62.5%;
-    
-}
-
-body{
-    display: flex;
-    flex-direction: column;
-    justify-content: stretch;
-    font-size: 1.6rem;
-    min-height: 100vh;
-    width: 100%;
-}
-#root{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; 
-    flex: 1;
-    min-width: 100%;  
-}
-svg{
-    width: 1em;
-    height: 1em;
+:root {
+  color-scheme: light;
+  --color-bg: #f5f7fb;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f8fafc;
+  --color-text: #172033;
+  --color-muted: #64748b;
+  --color-border: #d9e2ec;
+  --color-border-strong: #bdc8d7;
+  --color-primary: #2f4f9f;
+  --color-primary-dark: #243d7c;
+  --color-primary-soft: #edf3ff;
+  --color-danger: #b42318;
+  --color-danger-soft: #fff1f0;
+  --color-success: #177245;
+  --color-success-soft: #edfdf5;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 14px 35px rgba(15, 23, 42, 0.10);
+  --radius-sm: 0.8rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 2rem;
+  --container-width: 112rem;
+  --header-height: 7.2rem;
+  --footer-height: 8rem;
+  --focus-ring: 0 0 0 0.35rem rgba(47, 79, 159, 0.16);
 }
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  background: var(--color-bg);
+}
+
+body {
+  margin: 0;
+  min-width: 32rem;
+  min-height: 100vh;
+  color: var(--color-text);
+  background:
+    radial-gradient(circle at top left, rgba(47, 79, 159, 0.10), transparent 32rem),
+    var(--color-bg);
+  font-family:
+    Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.5;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled,
+a[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+a {
+  color: inherit;
+}
+
+svg {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+}
+
+#root {
+  min-height: 100vh;
+}
