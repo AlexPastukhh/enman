@@ -1,49 +1,57 @@
-# MANIFEST — enman-vkr-topic-draft-workflow-update-v1
+# MANIFEST
 
-Archive slug: `2026-05-18-topic-draft-workflow-update-v1`
+Archive: `implemented-slice-draft-sync-workflow-v1`  
+Review folder: `_archive-review/2026-05-18-implemented-slice-draft-sync-v1/`
 
 ## Purpose
 
-Update the VKR topic workbench workflow after the accepted format for topic drafts became clearer:
+Fix the docs workflow for refactoring existing slice drafts that already have implementation.
 
-- Russian-language semantic materials;
-- chapter-level placement maps;
-- previous accepted topics used as examples;
-- detailed visual task descriptions;
-- mock/demo/stub wording and extension-point boundaries.
-
-## Replacement files
+The archive adds a workflow for synchronizing:
 
 ```text
-planning/thesis/vkr-topic-workbench/00-workflow-and-rules/README.md
-planning/thesis/vkr-topic-workbench/00-workflow-and-rules/workflow.md
-planning/thesis/vkr-topic-workbench/00-workflow-and-rules/topic-card-template.md
-planning/thesis/vkr-topic-workbench/00-workflow-and-rules/visual-evidence-protocol.md
-planning/thesis/vkr-topic-workbench/00-workflow-and-rules/writing-from-topics-protocol.md
-planning/thesis/vkr-topic-workbench/00-workflow-and-rules/global-assumptions.md
-planning/thesis/vkr-topic-workbench/00-workflow-and-rules/archive-merge-safety-protocol.md
-planning/thesis/vkr-topic-workbench/00-workflow-and-rules/author-materials/raw-author-message-log.md
+source/domain/map
+  vs
+existing draft
+  vs
+actual implementation
+  vs
+actual tests
 ```
 
 ## New files
 
 ```text
-planning/thesis/vkr-topic-workbench/00-workflow-and-rules/topic-draft-format-protocol.md
-planning/thesis/vkr-topic-workbench/00-workflow-and-rules/mock-and-extension-point-wording-protocol.md
-planning/thesis/vkr-topic-workbench/00-workflow-and-rules/previous-topic-example-usage-rule.md
-planning/thesis/vkr-topic-workbench/00-workflow-and-rules/examples/README.md
-planning/thesis/vkr-topic-workbench/00-workflow-and-rules/examples/01-client-request-process-visual-topic-example.md
-_archive-review/2026-05-18-topic-draft-workflow-update-v1/...
+planning/slices/implemented-slice-sync-workflow.md
+planning/slices/IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE.md
+planning/slices/IMPLEMENTED-SLICE-SYNC-CHECKLIST.md
+planning/slices/IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE.md
 ```
 
-## Original snapshots
-
-Original copies of replacement files are stored under:
+## Replacement files
 
 ```text
-_archive-review/2026-05-18-topic-draft-workflow-update-v1/original-files/
+planning/slices/SLICE-FOLDER-MAP.md
+planning/slices/SLICE-INDEX.md
+planning/slices/SLICE-QUESTIONS.md
 ```
 
-## Cleanup
+Replacement files are additive navigation updates.
 
-No deletes are performed.
+## Original snapshots included
+
+```text
+_archive-review/2026-05-18-implemented-slice-draft-sync-v1/original-files/planning/slices/SLICE-FOLDER-MAP.md
+_archive-review/2026-05-18-implemented-slice-draft-sync-v1/original-files/planning/slices/SLICE-INDEX.md
+_archive-review/2026-05-18-implemented-slice-draft-sync-v1/original-files/planning/slices/SLICE-QUESTIONS.md
+```
+
+## Not included
+
+```text
+- no runtime code
+- no tests
+- no generated files
+- no concrete slice draft rewrites
+- no UI refactoring workflow
+```

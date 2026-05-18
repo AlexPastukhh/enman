@@ -144,22 +144,3 @@ _archive-review/<unique-archive-slug>/
 ```
 
 Archive workflow docs are not slice drafts. They are documentation/change-management workflow.
-
-
-## Implemented slice sync docs
-
-```text
-planning/slices/implemented-slice-sync-workflow.md
-  workflow for refactoring/synchronizing slice drafts that already have implementation.
-
-planning/slices/IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE.md
-  required draft block for implemented slice status and known drift.
-
-planning/slices/IMPLEMENTED-SLICE-SYNC-CHECKLIST.md
-  checklist for source/domain/map/code/test inspection before updating an implemented draft.
-
-planning/slices/IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE.md
-  user-facing report template for implemented slice sync audit.
-```
-
-These docs are for existing implemented slice drafts. New draft-only slices still use the normal client/server templates.

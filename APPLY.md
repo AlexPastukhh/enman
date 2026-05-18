@@ -1,61 +1,19 @@
-# APPLY — enman-vkr-topic-draft-workflow-update-v1
+# Apply
 
-## Simple apply
-
-```powershell
-cd "C:\enman\enman"
-
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-topic-draft-workflow-update-v1.zip" -DestinationPath . -Force
-
-git status
-```
-
-## Check diffs
+Docs-only archive. Apply from repository root:
 
 ```powershell
-git diff -- planning/thesis/vkr-topic-workbench/00-workflow-and-rules/workflow.md
-git diff -- planning/thesis/vkr-topic-workbench/00-workflow-and-rules/topic-card-template.md
-git diff -- planning/thesis/vkr-topic-workbench/00-workflow-and-rules/visual-evidence-protocol.md
-git diff -- planning/thesis/vkr-topic-workbench/00-workflow-and-rules/mock-and-extension-point-wording-protocol.md
-git diff -- planning/thesis/vkr-topic-workbench/00-workflow-and-rules/previous-topic-example-usage-rule.md
-git diff -- planning/thesis/vkr-topic-workbench/00-workflow-and-rules/author-materials/raw-author-message-log.md
+Expand-Archive -Path "C:\Users\alexa\Downloads\implemented-slice-draft-sync-workflow-v1.zip" -DestinationPath "." -Force
 ```
 
-## Add and commit
+This archive follows the safe archive workflow.
 
-```powershell
-git add planning/thesis/vkr-topic-workbench `
-        _archive-review/2026-05-18-topic-draft-workflow-update-v1 `
-        MANIFEST.md `
-        APPLY.md
+It adds implemented slice draft sync docs and updates navigation.
 
-git commit -m "Update VKR topic draft workflow"
+It preserves originals for replaced files in:
+
+```text
+_archive-review/2026-05-18-implemented-slice-draft-sync-v1/original-files/
 ```
 
-## Safer apply if MANIFEST.md / APPLY.md should not be overwritten
-
-```powershell
-cd "C:\enman\enman"
-
-$tmp = "$env:TEMP\vkr-topic-draft-workflow-update-v1"
-Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-topic-draft-workflow-update-v1.zip" -DestinationPath $tmp -Force
-
-Copy-Item "$tmp\planning" "." -Recurse -Force
-Copy-Item "$tmp\_archive-review" "." -Recurse -Force
-Copy-Item "$tmp\MANIFEST.md" ".\MANIFEST.vkr-topic-draft-workflow-update-v1.md" -Force
-Copy-Item "$tmp\APPLY.md" ".\APPLY.vkr-topic-draft-workflow-update-v1.md" -Force
-
-git status
-```
-
-Then add:
-
-```powershell
-git add planning/thesis/vkr-topic-workbench `
-        _archive-review/2026-05-18-topic-draft-workflow-update-v1 `
-        MANIFEST.vkr-topic-draft-workflow-update-v1.md `
-        APPLY.vkr-topic-draft-workflow-update-v1.md
-
-git commit -m "Update VKR topic draft workflow"
-```
+No runtime source code, OpenAPI artifacts, generated API types, routes, CSS implementation or app code are changed.

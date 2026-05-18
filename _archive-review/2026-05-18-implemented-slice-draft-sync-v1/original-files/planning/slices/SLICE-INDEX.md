@@ -84,13 +84,3 @@ Historical L1/L2 paths are legacy only.
 | ARCHIVE-PLAN-TEMPLATE | Archive Plan Template | template | current | `planning/archive-workflow/ARCHIVE-PLAN-TEMPLATE.md` | Required before creating replacement archive |
 | POST-APPLY-MERGE-REVIEW-WORKFLOW | Post-Apply Merge Review Workflow | workflow | current | `planning/archive-workflow/POST-APPLY-MERGE-REVIEW-WORKFLOW.md` | Compare applied files with archived originals, then create smaller correction archive |
 | ARCHIVE-REVIEW-FOLDER-RULES | Archive Review Folder Rules | workflow | current | `planning/archive-workflow/ARCHIVE-REVIEW-FOLDER-RULES.md` | Unique `_archive-review/<slug>/` folder rule |
-
-
-## Implemented slice sync docs
-
-| ID | Title | Type | Status | Current path | Notes |
-|---|---|---|---|---|---|
-| IMPLEMENTED-SLICE-SYNC-WORKFLOW | Implemented Slice Draft Sync Workflow | workflow | current | `planning/slices/implemented-slice-sync-workflow.md` | How to refactor/sync drafts that already have code/tests |
-| IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE | Implemented Slice Sync Status Template | template | current | `planning/slices/IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE.md` | Draft block for implementation status and drift |
-| IMPLEMENTED-SLICE-SYNC-CHECKLIST | Implemented Slice Sync Checklist | checklist | current | `planning/slices/IMPLEMENTED-SLICE-SYNC-CHECKLIST.md` | Preflight checklist before updating implemented drafts |
-| IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE | Implemented Slice Sync Report Template | template | current | `planning/slices/IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE.md` | Report format before changing an implemented draft |
