@@ -1,149 +1,446 @@
 # SL-EMP-REQ-005 — Reject Request Review
 
-Status: full backend/API command slice draft / implementation-ready after StartReview foundation
-Package: `[Employee] [Requests]`
-Source scenario: `SC-07B — Employee Request Review`
-Slice type: backend/API command slice with client command-sidecar implementation notes
-Current implementation status: domain rejection methods exist; API endpoint, application command, client mutation and generated contract are planned in this slice.
+Status: implemented slice draft refactor / implementation not rechecked in this pass  
+Package: `[Employee] [Requests]`  
+Slice type: backend/API command slice  
+Primary purpose: employee rejects a request-owned Review with feedback  
+Parent slices:
 
-## 1. Slice Overview
+* `SL-EMP-REQ-001 — Employee Request List Read`
+* `SL-EMP-REQ-002 — Employee Request Details Read`
+* `SL-EMP-REQ-003 — Start Request Review`
+* `SL-EMP-REQ-004 — Approve Request Review`
 
-Target behavior:
+Implementation direction: L2 target domain model — request-owned Review mutation through `ConnectionRequest.RejectReview(employee, feedback, decidedAt)` / `RequestReview.Reject(employee, feedback, decidedAt)`.
+
+Refactor note:
 
 ```text
-Employee opens employee request details.
+This draft was refactored as a docs-only implemented-slice sync pass.
 
-Request is currently InReview.
-
-Review was started by current Employee.
-
-Employee rejects the request and provides rejection feedback.
-
-System completes the review as Rejected.
-
-Request becomes Rejected.
-
-Employee request list/details show rejected state after refresh.
-
-No agreement proposal flow starts.
+Runtime implementation was not rechecked in this pass.
+UI/client page flow and redirects are out of scope for this pass.
 ```
 
-Command endpoint direction:
+---
+
+## 0. Scenario Sources
+
+Business scenario:
 
 ```text
+SC-07B — Employee Request Review Actions
+```
+
+UI scenario:
+
+```text
+missing / pending dedicated UI source for employee request review actions
+```
+
+Cross-cutting behavior:
+
+```text
+CC-SEC-CSRF-001 — Unsafe Command Protection
+CC-CLIENT-FEEDBACK-001 — Client Error / Feedback Visibility, for future client sidecar only
+```
+
+Data source:
+
+```text
+pending scenario-data source for employee review action outcomes and rejection feedback copy/length
+```
+
+Behavior items:
+
+```text
+stable source behavior item IDs are pending scenario/source registry;
+this draft uses provisional behavior names until source-sync files are completed.
+```
+
+Concern umbrella:
+
+```text
+none for this server slice;
+CSRF is cross-cutting security concern.
+```
+
+---
+
+## 0.1 Source / Domain / Slice Coverage Snapshot
+
+Source versions:
+
+```text
+SC-07B: pending / v000 if source registry is applied
+CC-SEC-CSRF-001: v001 if source registry is applied
+```
+
+Domain baseline:
+
+```text
+DOM-v001 if source-sync/domain registry is applied;
+otherwise pending domain baseline.
+```
+
+Slice derivation map:
+
+```text
+pending / add row for SL-EMP-REQ-005 during source-sync map update.
+```
+
+Coverage snapshot:
+
+| Behavior item / provisional behavior | Source version | Domain disposition | This slice responsibility | Notes |
+|---|---|---|---|---|
+| Employee can reject Review they started | SC-07B pending | provided/partially provided by request-owned review domain lifecycle | expose API command, resolve current Employee, verify Review was started by current Employee, call domain method, persist result | exact domain/service shape may be implementation-specific |
+| API requires non-empty rejection feedback | SC-07B pending | not domain-only | validate DTO/API boundary before domain call | domain may allow nullable feedback; this endpoint is stricter |
+| Valid rejection feedback is stored | SC-07B pending | provided/partially provided by `RejectionFeedback` value object and Review lifecycle | create/validate feedback, call domain, persist state | max length comes from `RejectionFeedback` |
+| Request becomes Rejected after rejection | SC-07B pending | partially provided by domain state transition | persist Request/Review state and expose through read slices after refetch | command returns no read DTO |
+| Employee cannot reject not-started Review | SC-07B pending | provided by domain lifecycle | map lifecycle failure to API problem response | no write on failure |
+| Employee cannot reject Review started by another Employee | SC-07B pending | provided by domain lifecycle if Review stores starter | resolve current Employee and pass actor to domain | no write on failure |
+| Duplicate/already completed reject attempt is rejected | SC-07B pending | provided by domain lifecycle | return validation/domain problem and preserve state | prefer `422` / no-mutation |
+| Command does not create AgreementProposalExchange | SC-07B pending | not applicable | keep agreement exchange/proposal flow out of this slice | agreement flow remains absent |
+| Unsafe command is CSRF-protected | CC-SEC-CSRF-001-v001 | not domain behavior | apply current CSRF/antiforgery boundary | full CSRF matrix belongs to cross-cutting tests |
+
+---
+
+## 0.2 Implementation Sync Status
+
+Implementation status:
+
+```text
+implemented-needs-doc-sync
+```
+
+Implemented files:
+
+```text
+server:
+  not rechecked in this pass
+
+client:
+  out of scope; future/legacy client sidecar
+
+tests:
+  not rechecked in this pass
+```
+
+Checked against:
+
+```text
+source versions:
+  pending source-sync registry
+
+domain baseline:
+  pending / DOM-v001 if source-sync files are applied
+
+slice derivation map version:
+  pending
+```
+
+Known drift:
+
+```text
+docs:
+  - old draft mixed backend/API command scope with client sidecar implementation notes;
+  - old draft lacked Source / Domain / Slice Coverage Snapshot;
+  - old draft lacked Implementation Sync Status;
+  - old draft used behavior coverage but not Behavior-to-Test Trace;
+  - old draft suggested a per-command status enum, while newer guardrails prefer shared Result/Error mapping.
+
+source:
+  - stable behavior item IDs are not yet assigned in source registry.
+
+implementation:
+  - not checked in this pass.
+
+UI:
+  - not touched in this pass.
+```
+
+Last sync note:
+
+```text
+Docs-only refactor. No runtime implementation inspection and no UI/redirect flow inspection.
+```
+
+---
+
+## 1. Scope
+
+This slice owns:
+
+```text
+- employee reject-review command endpoint;
+- CSRF-protected unsafe request boundary;
+- current authenticated Employee actor resolution;
+- request lookup by requestId;
+- verify request is visible/reviewable by current Employee;
+- verify request-owned Review was started;
+- verify Review was started by current Employee;
+- API validation for required non-empty rejection feedback;
+- validation/creation of RejectionFeedback;
+- request-owned Review rejection lifecycle call;
+- persisted Review rejected state and Request rejected status;
+- 204 No Content on success;
+- API integration test plan with DB/persisted state assertions.
+```
+
+Endpoint:
+
+```http
 POST /api/employee/requests/{requestId}/review/reject
-→ 204 No Content
 ```
 
-No response DTO.
+Request body:
 
-Reason:
-
-```text
-Reject is a command.
-Updated request status/review state must be read through employee list/details after refetch.
+```json
+{
+  "feedback": "Reason visible to the client/request owner where the read model exposes it."
+}
 ```
 
-Existing domain support:
+Target transition:
 
 ```text
-ConnectionRequest.RejectReview(employee, feedback, decidedAt)
-RequestReview.Reject(employee, feedback, decidedAt)
-RejectionFeedback
+Review.Started
+        ↓ RejectReview(Employee, RejectionFeedback)
+Review.Rejected
+
+Request.InReview
+        ↓
+Request.Rejected
 ```
 
-## 2. Scope
+This slice does **not** create `AgreementProposalExchange`.
 
-Implemented scope:
+This slice does **not** send an agreement proposal.
+
+This slice does **not** implement agreement final refusal.
+
+This slice does **not** return request details/list data.
+
+This slice does **not** own UI redirect/page flow.
+
+---
+
+## 2. Out of Scope
+
+| Out of scope | Owner |
+|---|---|
+| Employee request list / filters | `SL-EMP-REQ-001` |
+| Employee request details read | `SL-EMP-REQ-002` |
+| Start review command | `SL-EMP-REQ-003` |
+| Approve review command | `SL-EMP-REQ-004` |
+| Agreement proposal exchange | agreement exchange slices |
+| Agreement final refusal / agreement lifecycle refusal | agreement lifecycle decision slices |
+| Department/assignment visibility | future employee visibility/permissions slice |
+| Changing domain optional rejection feedback policy | separate domain/API decision |
+| Employee auth / Windows auth changes | cross-cutting auth slice |
+| Rewriting employee dashboard UI | client page/UI refactor workflow |
+| Client command sidecar implementation | future/legacy `.client` sidecar |
+| Page redirects/navigation after reject | client/page-flow audit, not this server draft |
+| Changing StartReview response contract | not this slice |
+
+---
+
+## 3. Related Slices / Owners
 
 ```text
-- protected Employee command endpoint;
-- CSRF-protected unsafe request;
-- current Employee derived from app cookie identity;
-- request aggregate loaded by requestId;
-- reject allowed only for review started by current Employee;
-- API requires non-empty rejection feedback;
-- valid rejection feedback is stored;
-- request status becomes Rejected;
-- review status becomes Rejected;
-- command returns 204 No Content;
-- client invalidates/refetches employee request list/details.
+SL-EMP-REQ-001
+  Owns employee request list endpoint and compact review/rejected state in list rows.
+
+SL-EMP-REQ-002
+  Owns employee request details endpoint and compact review/rejected state in details payload.
+
+SL-EMP-REQ-003
+  Owns StartReview command.
+
+SL-EMP-REQ-004
+  Owns ApproveReview command.
+
+SL-EMP-REQ-005
+  Owns RejectReview command and API-required rejection feedback.
+
+Agreement exchange / agreement proposal slices
+  Own agreement proposal exchange, agreement lifecycle and final refusal.
+
+Domain
+  Owns target domain concepts:
+  Employee,
+  Request-owned Review,
+  ConnectionRequest.RejectReview(employee, feedback, decidedAt),
+  RequestReview.Reject(employee, feedback, decidedAt),
+  RejectionFeedback,
+  Start/Started terminology,
+  no EmployeeRef,
+  no ReviewDecisionRecord,
+  no Review repository.
+
+CC-SEC-CSRF-001
+  Owns antiforgery token/session context for unsafe browser requests.
+
+Validation / ProblemDetails cross-cutting rules
+  Own route/body shape validation and error mapping conventions.
+
+OpenAPI/generated artifact workflow
+  Owns regeneration/checks if API contract changes.
+
+Client reject sidecar
+  Future/client owner for feature API wrapper, mutation, invalidation and visible form behavior.
 ```
 
-## 3. Out of Scope
+---
 
-| Out-of-scope item                      | Owner / destination                          |
-| -------------------------------------- | -------------------------------------------- |
-| Start review                           | `SL-EMP-REQ-003`                             |
-| Approve review                         | `SL-EMP-REQ-004`                             |
-| Agreement proposal exchange            | future agreement slices                      |
-| Final refusal / agreement refusal      | future agreement lifecycle decision          |
-| Department/assignment visibility       | future employee visibility/permissions slice |
-| Optional rejection feedback policy     | future domain/API decision if required       |
-| Employee auth / Windows auth changes   | cross-cutting auth slice                     |
-| Rewriting employee dashboard UI        | client page slice                            |
-| Changing StartReview response contract | not this slice                               |
-
-## 4. Visual Scenario Flow
+## 4. Scenario Flow
 
 ```text
-Employee opens employee request details
+[Signed-in Employee]
+opens employee request details
         ↓
-Request is shown as currently under review by this Employee
+System shows review state as started by current Employee
         ↓
-Employee chooses Reject
+Employee chooses “Reject”
         ↓
-UI asks for rejection feedback
+System/client asks for rejection feedback
         ↓
-Employee enters feedback and submits
+Employee submits feedback
         ↓
- ┌────────────────────────────────┬────────────────────────────────┐
- │ accepted                       │ not accepted                   │
- ▼                                ▼
-Request becomes Rejected           Employee sees validation/error
-Review is completed as Rejected    feedback and can correct input
+System verifies this Employee owns the active Review
         ↓
-Employee request details/list
-show rejected state after refresh
+System validates feedback
+        ↓
+System rejects the Review and marks Request as Rejected
+        ↓
+Command succeeds without response body
+        ↓
+Client refreshes request details/list read state
+        ↓
+System shows request as Rejected
         ↓
 No agreement proposal flow starts
 ```
 
-Scenario flow intentionally does not mention DTOs, controller, handler, repository, CSRF token, OpenAPI or database columns.
+Scenario flow table:
 
-## 5. Scenario Slice Flow
+| Step | Actor / System layer | User-visible / system responsibility |
+|---|---|---|
+| S01 | Signed-in Employee | Opens request details. |
+| S02 | System | Shows review was started by current Employee. |
+| S03 | Employee | Chooses “Reject”. |
+| S04 | System/Client | Requires rejection feedback. |
+| S05 | Employee | Submits feedback. |
+| S06 | System | Verifies rejection is allowed. |
+| S07 | System | Validates/stores feedback. |
+| S08 | System | Marks Review rejected and Request rejected. |
+| S09 | System | Returns command success without body. |
+| S10 | Client/System | Refreshes list/details read state. |
 
-| Step | Actor/system | Behavior                                                                                  | Status             |
-| ---- | ------------ | ----------------------------------------------------------------------------------------- | ------------------ |
-| F01  | Employee     | Opens request details.                                                                    | target             |
-| F02  | System       | Shows request as `InReview`.                                                              | existing read side |
-| F03  | System       | Shows review state as `StartedByCurrentEmployee`.                                         | existing read side |
-| F04  | Employee     | Chooses reject action.                                                                    | target             |
-| F05  | UI           | Requires rejection feedback.                                                              | target             |
-| F06  | Employee     | Submits rejection feedback.                                                               | target             |
-| F07  | System       | Accepts valid rejection command.                                                          | target             |
-| F08  | System       | Completes review as `Rejected`.                                                           | target             |
-| F09  | System       | Changes request status to `Rejected`.                                                     | target             |
-| F10  | System       | Keeps agreement proposal exchange absent.                                                 | target             |
-| F11  | System       | Does not accept reject when review is missing, completed, or started by another employee. | target             |
-| F12  | Client       | Refreshes list/details read state after success.                                          | target             |
+Scenario meaning:
+
+```text
+Reject review is the explicit final negative decision for request review.
+
+It is not StartReview.
+It is not ApproveReview.
+It is not AgreementProposalExchange creation.
+It is not agreement final refusal.
+```
+
+---
+
+## 5. Implementation Flow
+
+```text
+[HTTP POST]
+POST /api/employee/requests/{requestId}/review/reject
+        ↓
+[CSRF boundary]
+validate unsafe request protection
+        ↓
+[Auth / Employee context]
+resolve current Employee
+        ↓
+[Route binding / DTO validation]
+requestId is positive long
+feedback is required / not whitespace / max length
+        ↓
+[Command handler]
+load Employee
+load Request aggregate by requestId
+        ↓
+[Feedback]
+create/validate RejectionFeedback
+        ↓
+[Visibility / reviewability]
+verify request is visible/reviewable by current Employee
+verify Review was started by current Employee
+        ↓
+[Domain]
+connectionRequest.RejectReview(currentEmployee, feedback, now)
+        ↓
+[Persistence]
+save Request.Status = Rejected
+save Review.Status = Rejected
+save completed actor/timestamp/feedback
+        ↓
+[Response]
+204 No Content
+```
+
+Implementation ownership:
+
+```text
+Controller:
+  HTTP boundary, auth guard, route binding, CSRF attribute, response mapping.
+
+Validator:
+  route/body shape and API-required feedback policy.
+  No business lifecycle validation.
+
+Command handler:
+  current Employee resolution;
+  request aggregate load;
+  feedback value object creation;
+  employee visibility/reviewability check;
+  transaction boundary if needed;
+  SaveChanges.
+
+Domain:
+  Request owns review lifecycle.
+  RejectReview owns the state transition.
+  Review stores completion metadata and feedback.
+
+Persistence:
+  persists Request status and Review rejected state.
+
+Client:
+  future rendering/action UI, feedback form, mutation, refetch behavior and redirects.
+```
+
+---
 
 ## 6. API Contract
 
-| Endpoint                                           | Method | Request body           | Response         | Statuses                          |
-| -------------------------------------------------- | ------ | ---------------------- | ---------------- | --------------------------------- |
-| `/api/employee/requests/{requestId}/review/reject` | POST   | `{ feedback: string }` | `204 No Content` | 204, 400, 401, 403, 404, 422, 500 |
+### Endpoint
+
+```http
+POST /api/employee/requests/{requestId}/review/reject
+```
 
 Route:
 
 ```text
-requestId: long, min(1)
+requestId: long, positive
 ```
 
-Recommended route shape:
+### Request body
 
-```csharp
-[HttpPost("{requestId:long:min(1)}/review/reject", Name = "EmployeeRejectRequestReview")]
+```json
+{
+  "feedback": "string"
+}
 ```
 
 Request DTO:
@@ -160,34 +457,111 @@ feedback not whitespace
 feedback max length = RejectionFeedback.MaxLength
 ```
 
+Important decision:
+
+```text
+The stricter “feedback required” rule belongs to this API slice.
+
+The existing domain direction allows nullable/optional RejectionFeedback.
+This slice should not change domain optionality unless a separate domain decision is made.
+```
+
+### Success response
+
+```http
+204 No Content
+```
+
+Response body:
+
+```text
+none
+```
+
+Reason:
+
+```text
+- reject is a command;
+- client already has requestId;
+- rejection result is visible through employee list/details after refetch;
+- command does not create a separate external resource;
+- no reject DTO is needed.
+```
+
+### Error responses
+
+```text
+400 Bad Request
+  malformed JSON / antiforgery failure if current project CSRF boundary uses 400
+
+401 Unauthorized
+  no authenticated session
+
+403 Forbidden
+  authenticated but not Employee / cannot access employee API
+
+404 NotFound
+  request does not exist or is not visible to Employee
+
+422 UnprocessableEntity
+  DTO/API validation or domain lifecycle rejection:
+  - feedback is missing/blank/too long;
+  - review was not started;
+  - review was started by another Employee;
+  - request is not InReview;
+  - request already approved/rejected;
+  - request cannot be rejected now.
+
+500 InternalServerError
+  unexpected server failure
+```
+
+---
+
+## 7. Validation / ProblemDetails
+
+Route validation:
+
+```text
+requestId must be positive.
+```
+
+Body validation:
+
+```text
+feedback required
+feedback not whitespace
+feedback max length = RejectionFeedback.MaxLength
+```
+
 Domain validation:
 
 ```text
 RejectionFeedback.Create(feedback)
 ```
 
-Important decision:
+Validator does not own:
 
 ```text
-The stricter “feedback required” rule belongs to this API slice.
-
-The existing domain method accepts nullable RejectionFeedback.
-This slice should not change domain optionality unless a separate domain decision is made.
+- Employee exists;
+- current user is Employee;
+- request exists;
+- request visibility;
+- Review started state;
+- Review ownership by Employee;
+- request lifecycle;
+- DB reads;
+- transactions;
+- mutations.
 ```
 
-## 7. Questions / Decisions
+Lifecycle/domain errors should use existing API ProblemDetails/error-code pattern.
 
-| ID                    | Status   | Question                                           | Decision / current direction                                                                                                             | Impact                              |
-| --------------------- | -------- | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| `SL-EMP-REQ-005-Q001` | accepted | Should reject return DTO?                          | No. Return `204 No Content`.                                                                                                             | Client refetches list/details.      |
-| `SL-EMP-REQ-005-Q002` | accepted | Is feedback required?                              | Yes at API boundary for this slice. Domain currently allows nullable `RejectionFeedback`, but this endpoint requires non-empty feedback. | DTO/API validation.                 |
-| `SL-EMP-REQ-005-Q003` | accepted | Who can reject?                                    | Only Employee who started the review.                                                                                                    | Domain lifecycle rule.              |
-| `SL-EMP-REQ-005-Q004` | accepted | Can another Employee reject started review?        | No. Return lifecycle `422`.                                                                                                              | Prevents cross-employee completion. |
-| `SL-EMP-REQ-005-Q005` | accepted | Can not-started request be rejected?               | No. Review must be started.                                                                                                              | Lifecycle `422`.                    |
-| `SL-EMP-REQ-005-Q006` | accepted | Can already approved/rejected request be rejected? | No.                                                                                                                                      | Lifecycle `422`.                    |
-| `SL-EMP-REQ-005-Q007` | accepted | Should reject start agreement flow?                | No.                                                                                                                                      | Agreement flow remains absent.      |
-| `SL-EMP-REQ-005-Q008` | accepted | Should command be CSRF-protected?                  | Yes. Unsafe browser command.                                                                                                             | Server/client tests.                |
-| `SL-EMP-REQ-005-Q009` | accepted | Employee identity model?                           | `NameIdentifier = Account.Id = Employee.Id` under Employee TPH.                                                                          | Same identity rule as StartReview.  |
+Do not model CSRF as FluentValidation.
+
+Do not model lifecycle failures as CSRF.
+
+---
 
 ## 8. Domain Behavior
 
@@ -227,313 +601,242 @@ Implementation note:
 ```text
 RejectReview should protect against stale inactive Employee consistently with StartReview/ApproveReview direction.
 
-If Employee.EnsureCanReview is not currently called during reject/approve completion, add it or centralize it in RequestReview.CanComplete.
+If Employee.EnsureCanReview is not currently called during reject/approve completion,
+add it or centralize it in RequestReview.CanComplete during implementation sync/code refactor.
 ```
 
-## 9. Visual Implementation Flow
+---
+
+## 9. Cross-Cutting Concerns / Considerations
+
+| Concern | Applies? | Consideration / owner |
+|---|---:|---|
+| Auth/session/account context | yes | Resolve current authenticated Employee server-side. |
+| Authorization/visibility | yes | Handler owns request visibility/reviewability check. |
+| Antiforgery / unsafe requests | yes | POST command must follow current CSRF/unsafe-request policy. |
+| Request validation / ProblemDetails | yes | Route + feedback DTO validation. |
+| OpenAPI / generated artifacts | yes | API contract changes require generated artifact workflow. |
+| Transaction / atomicity | yes | Review rejection and Request rejection must persist atomically. |
+| No partial write | yes | Failed validation/lifecycle checks must not change Request or Review. |
+| Idempotency / double-submit | yes | Second reject attempt should not create/change another decision. Prefer lifecycle `422`. |
+| Concurrency / stale state | yes | Command re-checks domain state even if details page looked rejectable. |
+| File/document boundary | no | No documents in this slice. |
+| Clock/audit actor fields | yes | Use server UTC time and authenticated Employee id. |
+| Privacy / cross-account data exposure | yes | Do not expose client private fields in command response. |
+| Client feedback / accessibility | future | Future client sidecar owns feedback form/button/error UX. |
+| Redirect/page flow | future | Page-flow audit, not this server slice. |
+| Testing responsibility split | yes | API integration + DB assertions; no repository mocks as primary proof. |
+
+---
+
+## 10. Questions / Decisions
+
+| ID | Status | Question | Decision / current direction | Impact |
+|---|---|---|---|---|
+| `SL-EMP-REQ-005-Q001` | accepted | Should reject return DTO? | No. Return `204 No Content`. | Client refetches list/details. |
+| `SL-EMP-REQ-005-Q002` | accepted | Is feedback required? | Yes at API boundary for this slice. Domain currently allows nullable `RejectionFeedback`, but this endpoint requires non-empty feedback. | DTO/API validation. |
+| `SL-EMP-REQ-005-Q003` | accepted | Who can reject? | Only Employee who started the review. | Domain lifecycle rule. |
+| `SL-EMP-REQ-005-Q004` | accepted | Can another Employee reject started review? | No. Return lifecycle `422`. | Prevents cross-employee completion. |
+| `SL-EMP-REQ-005-Q005` | accepted | Can not-started request be rejected? | No. Review must be started. | Lifecycle `422`. |
+| `SL-EMP-REQ-005-Q006` | accepted | Can already approved/rejected request be rejected? | No. | Lifecycle `422`. |
+| `SL-EMP-REQ-005-Q007` | accepted | Should reject start agreement flow? | No. | Agreement flow remains absent. |
+| `SL-EMP-REQ-005-Q008` | accepted | Should command be CSRF-protected? | Yes. Unsafe browser command. | Server/client tests. |
+| `SL-EMP-REQ-005-Q009` | accepted | Employee identity model? | `NameIdentifier = Account.Id = Employee.Id` under Employee TPH. | Same identity rule as StartReview. |
+
+---
+
+## 11. Extension / Change Points
+
+| ID | Area | Current direction | Future owner |
+|---|---|---|---|
+| `CP-EMP-REQ-REJECT-001` | AgreementProposalExchange | Not created here. | Agreement exchange/proposal slices |
+| `CP-EMP-REQ-REJECT-002` | Agreement final refusal | Not this slice. | Agreement lifecycle decision slice |
+| `CP-EMP-REQ-REJECT-003` | Client reject action UI | Not this server slice. | Future `.client` sidecar |
+| `CP-EMP-REQ-REJECT-004` | Redirect/page flow | Not this server slice. | Page-flow/redirect audit |
+| `CP-EMP-REQ-REJECT-005` | Optional feedback policy | API requires feedback now; domain optionality remains separate. | Future domain/API decision |
+| `CP-EMP-REQ-REJECT-006` | Assignment semantics | First pass uses existing visibility/reviewability policy. | Future assignment/queue slice |
+| `CP-EMP-REQ-REJECT-007` | Inactive Employee completion guard | Keep consistent with approve/start direction. | Implementation sync/code refactor if missing |
+
+---
+
+## 12. Behavior Coverage
+
+| Source / draft behavior | Status | Covered by this slice |
+|---|---|---|
+| Employee can reject own started review | covered | `POST /api/employee/requests/{requestId}/review/reject`. |
+| Employee must provide feedback | covered | API validator + `RejectionFeedback` validation. |
+| Request becomes Rejected | covered | Domain sets request status and persistence saves it. |
+| Review stores completion metadata | covered | Review stores completed employee/time/feedback. |
+| Another Employee cannot reject | covered | lifecycle/domain rejection. |
+| Not-started Review cannot be rejected | covered | lifecycle/domain rejection. |
+| Already completed Review cannot be rejected again | covered | lifecycle/domain rejection. |
+| Reject does not start agreement flow | covered | command only changes request/review state. |
+| Command does not return details payload | covered | `204 No Content`. |
+| Client reads updated state after refetch | supported | read slices remain source of truth after command. |
+| Approve review | out of scope | `SL-EMP-REQ-004`. |
+| Agreement final refusal | out of scope | agreement lifecycle decision slice. |
+| Client reject form/UX | out of scope | future client sidecar. |
+| Redirect/page flow after reject | out of scope | future page-flow/redirect audit. |
+
+---
+
+## 13. Test / Verification Plan
+
+Primary rule:
 
 ```text
-[HTTP]
-POST /api/employee/requests/{requestId}/review/reject
-        ↓
-[Auth]
-Employee app cookie required
-        ↓
-[CSRF]
-valid antiforgery token required
-        ↓
-[DTO validation]
-feedback required / max length
-        ↓
-[Controller]
-derive current Employee id from app session
-        ↓
-[Command]
-EmployeeRejectRequestReviewCommand(employeeId, requestId, feedback)
-        ↓
-[Handler]
-load Employee
-load ConnectionRequest aggregate
-create RejectionFeedback
-call ConnectionRequest.RejectReview(employee, feedback, now)
-        ↓
-[Persistence]
-SaveChanges
-        ↓
-[Response]
-204 No Content
+Tests verify behavior items and server/system outcomes.
+Implementation details are only setup/action/observation mechanisms.
 ```
 
-## 10. Backend Implementation Notes
+### Behavior-to-Test Trace
 
-Add command:
+| Behavior item / behavior | Server/system outcome | Test layer | Implementation mechanism | Escape risk | Refactor risk | Planned/actual test |
+|---|---|---|---|---|---|---|
+| Employee rejects own started review | POST returns `204`; Request and Review become rejected | API integration + DB assertion | auth fixture, HTTP POST, DB/read assertion | Low if persisted Request/Review state is asserted | Low/Medium: helper/schema refactor may affect DB assertion code | `RejectRequestReview_RejectsStartedReviewAndReturnsNoContent` |
+| Feedback is required at API boundary | missing/blank feedback returns `422`; no state change | API integration + no-mutation assertion | HTTP POST body variants, DB snapshot | Low if no-mutation state is asserted | Low | `RejectRequestReview_WhenFeedbackMissingOrBlank_ReturnsValidationProblemAndDoesNotChangeState` |
+| Feedback max length is enforced | too-long feedback returns `422`; no state change | API integration | HTTP POST with too-long feedback | Medium if no DB snapshot | Low | `RejectRequestReview_WhenFeedbackTooLong_ReturnsValidationProblem` |
+| Employee actor comes from auth context | completed employee id is current Employee | API integration + DB assertion | auth fixture, HTTP POST, DB read | Low if actor id is asserted | Low | same success test or focused actor test |
+| Feedback is persisted | Review stores RejectionFeedback | API integration + DB assertion | HTTP POST, DB read | Low | Low/Medium | same success test |
+| No response DTO | command response has no body | API integration | HTTP response assertion | Low | Low | same success test |
+| Not-started review cannot be rejected | returns `422`; Request/Review unchanged | API integration + no-mutation assertion | DB precondition, HTTP POST, DB snapshot | Low if no-mutation state is asserted | Low/Medium | `RejectRequestReview_WhenReviewNotStarted_ReturnsValidationProblemAndDoesNotChangeState` |
+| Review started by another Employee cannot be rejected | returns `422`; original started actor/state unchanged | API integration + no-mutation assertion | DB precondition, HTTP POST, DB snapshot | Low if actor/state unchanged is asserted | Low/Medium | `RejectRequestReview_WhenStartedByAnotherEmployee_ReturnsValidationProblemAndDoesNotChangeState` |
+| Already approved/rejected request cannot be rejected again | returns `422`; completed state unchanged | API integration + no-mutation assertion | DB precondition, HTTP POST, DB snapshot | Low if completed fields unchanged are asserted | Low/Medium | `RejectRequestReview_WhenAlreadyCompleted_ReturnsValidationProblemAndDoesNotChangeState` |
+| Missing/not-visible request cannot be rejected | returns `404` or visibility-safe failure; no write | API integration | auth fixture, HTTP POST, DB/read assertion | Medium if only status asserted; Low with no-write check | Low | `RejectRequestReview_WhenMissingOrNotVisible_ReturnsNotFound` |
+| Unsafe command is protected | missing/invalid CSRF rejected by command family smoke | API integration smoke | POST without token | Medium if no no-mutation assertion | Low | one CSRF smoke; full matrix belongs to `CC-SEC-CSRF-001` |
+| Reject does not create agreement flow | no AgreementProposalExchange is created | API integration + DB assertion | HTTP POST, DB read for exchanges | Low if DB assertion exists | Low/Medium | success test or focused no-exchange test |
 
-```csharp
-public sealed record EmployeeRejectRequestReviewCommand(
-    long EmployeeId,
-    long RequestId,
-    string Feedback) : IRequest<EmployeeRejectRequestReviewCommandResult>;
-```
-
-Suggested command statuses:
-
-```csharp
-public enum EmployeeRejectRequestReviewCommandStatus
-{
-    Rejected,
-    NotFound,
-    Forbidden,
-    Invalid
-}
-```
-
-Handler rules:
+### API boundary / access
 
 ```text
-1. Load Employee by EmployeeId.
-2. If Employee not found -> Forbidden.
-3. Load request aggregate by RequestId.
-4. If request not found -> NotFound.
-5. If not ConnectionRequest -> NotFound or Invalid, consistent with existing request handling.
-6. Create RejectionFeedback from command.Feedback.
-7. If feedback invalid -> Invalid.
-8. Call connectionRequest.RejectReview(employee, feedback, now).
-9. If domain failure -> Invalid.
-10. SaveChangesAsync.
-11. Return Rejected.
+- unauthenticated reject-review returns 401;
+- non-Employee/client account returns 403;
+- authenticated Employee can reject review they started.
 ```
 
-No partial mutation:
+### Command success
 
 ```text
-If feedback validation or domain lifecycle validation fails,
-request status and review state must remain unchanged.
+- POST reject-review returns 204 No Content;
+- response body is empty;
+- DB Request.Status = Rejected;
+- DB RequestReview.Status = Rejected;
+- DB RequestReview.CompletedByEmployeeId = current Employee id;
+- DB RequestReview.CompletedAt is set;
+- DB RequestReview.RejectionFeedback is stored;
+- DB RequestReview.StartedByEmployeeId remains unchanged;
+- DB RequestReview.StartedAt remains unchanged;
+- no AgreementProposalExchange is created.
 ```
 
-## 11. Server API Notes
-
-Controller action follows existing StartReview style:
+### Lifecycle / no-write tests
 
 ```text
-Employee role authorization
-CSRF
-current employee id from claims
-MediatR command
-status mapping to 204 / 404 / 403 / 422
+- rejecting missing/not-visible request returns 404;
+- rejecting request without started Review returns 422;
+- rejecting Review started by another Employee returns 422;
+- rejecting already Approved request returns 422;
+- rejecting already Rejected request returns 422;
+- failed command does not change Request.Status;
+- failed command does not change existing Review.Status;
+- failed command does not set/overwrite CompletedByEmployeeId / CompletedAt / RejectionFeedback.
 ```
 
-Action shape:
-
-```csharp
-[Authorize(Roles = "Employee")]
-[RequireAntiforgeryToken]
-[HttpPost("{requestId:long:min(1)}/review/reject", Name = "EmployeeRejectRequestReview")]
-[ProducesResponseType(StatusCodes.Status204NoContent)]
-[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
-[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-public async Task<IActionResult> RejectReview(
-    long requestId,
-    [FromBody] EmployeeRejectRequestReviewDto dto,
-    CancellationToken cancellationToken)
-```
-
-Success mapping:
+### Generated artifacts
 
 ```text
-EmployeeRejectRequestReviewCommandStatus.Rejected -> NoContent()
+- run OpenAPI generation if API contract changed;
+- run API type generation if OpenAPI changed;
+- stage generated artifacts;
+- run check:api.
 ```
 
-Invalid lifecycle/domain/DTO mapping:
+### What not to test
 
 ```text
-ProblemDetailsFromValidation(...)
+- request details payload in command response;
+- reject response DTO;
+- StartReview command behavior except precondition setup;
+- ApproveReview command;
+- AgreementProposalExchange behavior beyond no-create guard;
+- client UI;
+- client feedback form;
+- redirect/page flow;
+- repository mock call-order as primary proof;
+- unit tests unless reusable helper logic is introduced.
 ```
 
-## 12. Client Implementation Notes
+---
 
-API owner:
+## 14. Backend Implementation Direction / Current Refactor Checklist
+
+Historical implementation checklist is replaced by implemented-draft sync checklist.
+
+```text
+[ ] Confirm endpoint is present or mark implementation drift.
+[ ] Confirm success is 204 No Content.
+[ ] Confirm no reject response DTO exists.
+[ ] Confirm Employee id is not accepted in request body.
+[ ] Confirm Employee comes from authenticated context.
+[ ] Confirm feedback DTO is required/not whitespace/max length.
+[ ] Confirm domain optional feedback policy is not changed by this API slice.
+[ ] Confirm Request aggregate is loaded by requestId.
+[ ] Confirm Review was started by current Employee or mark implementation drift.
+[ ] Confirm RejectionFeedback is created/validated.
+[ ] Confirm RejectReview(employee, feedback, now) or equivalent domain method is used.
+[ ] Confirm Request + RequestReview state is persisted.
+[ ] Confirm lifecycle failures map to ProblemDetails.
+[ ] Confirm no new per-command status enum is introduced in target direction; if implementation already has one, mark as future architecture cleanup.
+[ ] Confirm focused API integration tests with DB state assertions exist.
+[ ] Confirm OpenAPI/type generation is current if contract changed.
+[ ] Confirm ApproveReview is not implemented here.
+[ ] Confirm AgreementProposalExchange is not created here.
+[ ] Confirm command does not return details/list row.
+```
+
+This pass did not perform implementation verification.
+
+---
+
+## 15. Historical Client Notes / Future Client Sidecar
+
+The original draft included client command-sidecar implementation notes.
+
+Current docs direction separates server and client slice drafts. Therefore this server draft keeps only the server/API command target and records the future client owner.
+
+Future client sidecar should own:
 
 ```text
 features/employee-request/reject-review/api/rejectRequestReview.ts
-```
-
-Mutation owner:
-
-```text
 features/employee-request/reject-review/model/useRejectRequestReviewMutation.ts
+reject action UI/feedback form
+client validation
+query invalidation/refetch for list/details
+visible error/success feedback
+page-flow/redirect behavior if any
 ```
 
-Do not put wrapper in `shared/api`.
-
-API function:
-
-```ts
-export type RejectRequestReviewInput = {
-  requestId: number;
-  feedback: string;
-};
-
-export const rejectRequestReview = async ({
-  requestId,
-  feedback,
-}: RejectRequestReviewInput): Promise<void> => {
-  await fetchJson<void>(`/api/employee/requests/${requestId}/review/reject`, {
-    method: "POST",
-    body: JSON.stringify({ feedback }),
-  });
-};
-```
-
-On success:
+Client API placement rule remains:
 
 ```text
-invalidate/refetch employee request list query
-invalidate/refetch employee request details query
+command endpoint wrappers go to features/*/api;
+do not add business wrappers to shared/api.
 ```
 
-UI enablement direction:
+---
+
+## 16. Next Step
+
+Next draft-only refactor candidate:
 
 ```text
-Reject action is available when reviewState = StartedByCurrentEmployee.
+SL-AGR-EXCH-001 — Start Agreement Exchange With Initial Employee Proposal
 ```
 
-Client validation:
+Separate later work:
 
 ```text
-feedback required
-feedback max length 1000
-```
-
-Server remains authoritative.
-
-## 13. Behavior Coverage
-
-Behavior Coverage is not Test Coverage.
-
-| Behavior item                                     | How slice covers it                                   | Status                |
-| ------------------------------------------------- | ----------------------------------------------------- | --------------------- |
-| Employee can reject own started review            | command completes review as Rejected                  | target                |
-| Employee must provide feedback                    | API validator + RejectionFeedback validation          | target                |
-| Request becomes Rejected                          | domain sets request status                            | target/current domain |
-| Review stores completion metadata                 | RequestReview stores completed employee/time/feedback | target/current domain |
-| Another employee cannot reject                    | RequestReview blocks StartedByEmployeeId mismatch     | target/current domain |
-| Not-started review cannot be rejected             | ConnectionRequest requires Review exists              | target/current domain |
-| Already completed review cannot be rejected again | RequestReview requires Status = Started               | target/current domain |
-| Reject does not start agreement flow              | command only changes request/review state             | target                |
-| Client reads updated state after refetch          | no command DTO, read endpoints remain source          | target                |
-
-## 14. Test / Verification Plan
-
-| Test / check                                              | Verifies                  | Layer              | Status |
-| --------------------------------------------------------- | ------------------------- | ------------------ | ------ |
-| unauthenticated reject -> 401                             | auth boundary             | integration        | target |
-| Client role reject -> 403                                 | role boundary             | integration        | target |
-| missing CSRF -> 400 antiforgery ProblemDetails            | CSRF boundary             | integration        | target |
-| request not found -> 404                                  | command lookup            | integration        | target |
-| empty feedback -> 422                                     | DTO/API validation        | integration        | target |
-| whitespace feedback -> 422                                | DTO/API validation        | integration        | target |
-| feedback too long -> 422                                  | DTO/domain validation     | integration/domain | target |
-| review not started -> 422 and no mutation                 | lifecycle                 | integration/domain | target |
-| review started by another employee -> 422 and no mutation | ownership/lifecycle       | integration/domain | target |
-| current employee rejects -> 204 empty body                | success contract          | integration        | target |
-| success sets request status Rejected                      | domain/persistence        | integration/domain | target |
-| success sets review status Rejected                       | domain/persistence        | integration/domain | target |
-| success stores CompletedByEmployeeId                      | identity                  | integration/domain | target |
-| success stores RejectionFeedback                          | persistence               | integration/domain | target |
-| already approved -> 422 and no mutation                   | lifecycle                 | integration/domain | target |
-| already rejected -> 422 and no duplicate mutation         | lifecycle                 | integration/domain | target |
-| details after success shows Rejected                      | read model refresh target | integration        | target |
-| client wrapper sends POST body                            | client API owner          | client unit        | target |
-| mutation invalidates list/details                         | client query behavior     | client unit        | target |
-
-## 15. OpenAPI / Generated Artifacts
-
-Expected OpenAPI addition:
-
-```text
-POST /api/employee/requests/{requestId}/review/reject
-request body: EmployeeRejectRequestReviewDto
-responses:
-  204
-  400
-  401
-  403
-  404
-  422
-  500
-```
-
-Generated artifacts must be updated through tools only:
-
-```powershell
-dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
-npm.cmd run check:api
-```
-
-## 16. Dependent / Follow-up Slices
-
-```text
-SL-EMP-REQ-003 — Start Request Review
-SL-EMP-REQ-004 — Approve Request Review
-future agreement proposal exchange slices
-future employee visibility/assignment slices
-future optional rejection feedback policy decision
-```
-
-## 17. Implementation Checklist
-
-```text
-[ ] add EmployeeRejectRequestReviewDto
-[ ] add EmployeeRejectRequestReviewDtoValidator
-[ ] add EmployeeRejectRequestReviewCommand
-[ ] add EmployeeRejectRequestReviewCommandResult/status
-[ ] add EmployeeRejectRequestReviewHandler
-[ ] add controller endpoint
-[ ] require Employee role
-[ ] require CSRF token
-[ ] validate feedback at API boundary
-[ ] create RejectionFeedback
-[ ] call ConnectionRequest.RejectReview
-[ ] return 204 No Content on success
-[ ] add domain tests for reject lifecycle
-[ ] add integration tests for auth/CSRF/validation/lifecycle/success
-[ ] add client feature API wrapper
-[ ] add client mutation and invalidation
-[ ] regenerate OpenAPI/types
-```
-
-## 18. Guardrail Summary
-
-```text
-RejectReview is a command.
-
-No User Story section in this draft.
-
-Scenario flow describes user/system behavior only.
-
-Implementation flow is separate.
-
-Success response is 204 No Content.
-
-Do not return RejectReviewResponseDto.
-
-Client must refetch read endpoints after success.
-
-Only the Employee who started review can reject.
-
-Feedback is required at API boundary in this slice.
-
-Do not change domain optional feedback policy unless separately decided.
-
-CSRF is required.
-
-Do not implement Approve in this slice.
-
-Do not change Employee auth in this slice.
-
-Do not add assignment/department visibility.
+- client sidecar draft refactor;
+- page flow / redirects audit;
+- UI refactoring workflow.
 ```

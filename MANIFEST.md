@@ -1,28 +1,26 @@
 # MANIFEST
 
-Archive: `sl-emp-req-004-draft-refactor-v2`  
-Review folder: `_archive-review/2026-05-19-sl-emp-req-004-draft-refactor-v2/`
+Archive: `sl-emp-req-005-draft-refactor-v1`  
+Review folder: `_archive-review/2026-05-19-sl-emp-req-005-draft-refactor-v1/`
 
 ## Purpose
 
 Docs-only refactor of:
 
 ```text
-SL-EMP-REQ-004 — Approve Request Review
+SL-EMP-REQ-005 — Reject Request Review
 ```
-
-This v2 replaces the un-applied v1 archive and fixes the pre-release issues found in v1.
 
 ## Replacement files
 
 ```text
-planning/slices/SL-EMP-REQ-004-approve-request-review.md
+planning/slices/SL-EMP-REQ-005-reject-request-review.md
 ```
 
 ## Original snapshots included
 
 ```text
-_archive-review/2026-05-19-sl-emp-req-004-draft-refactor-v2/original-files/planning/slices/SL-EMP-REQ-004-approve-request-review.md
+_archive-review/2026-05-19-sl-emp-req-005-draft-refactor-v1/original-files/planning/slices/SL-EMP-REQ-005-reject-request-review.md
 ```
 
 ## Not included
