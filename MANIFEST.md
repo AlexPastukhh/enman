@@ -1,57 +1,69 @@
 # MANIFEST
 
-Docs-only archive for scenario-level UI requirements, UI scenario workflow, UI readiness, and current UI migration notes.
+Docs-only archive for slice taxonomy, cross-cutting behavior sources, legacy L1/L2 cleanup, and behavior-to-test trace workflow.
 
 ## Purpose
 
-Fix the source-of-truth split:
+Clarify the documentation model:
 
 ```text
-planning/diagrams/scenario-ui-specs/
-  scenario-level UI requirements:
-    what the user sees, screen composition, visible states, actions and actor differences.
-
-planning/slices/client/
-  client implementation rules:
-    layering, CSS ownership, validation, accessibility, handoff and draft template.
-
-planning/slices/client/<slice>.client.md
-  concrete implementation translation for one client slice.
+scenario sources describe required behavior;
+data files and behavior items extract/classify scenario details;
+slice drafts describe behavior subset + implementation plan + verification plan;
+slice test plans prove behavior items and scenario outcomes.
 ```
 
-## Important decisions captured
+This archive also clarifies that:
 
 ```text
-- UI requirements must exist in scenario UI specs, not only in client slice drafts.
-- The accepted UI scenario template is now fixed.
-- Existing UI scenarios are reviewed for completeness/readiness.
-- SC-10B My Applicant Parties UI is not current/canonical.
-- Applicant parties UI belongs to the Account page section.
-- Future ApplicantParty edit/delete/archive/current actions happen in that Account section unless a later decision changes it.
-- Current edit/delete/archive behavior is not implemented.
-- The current UI migration problem is documented as a temporary implementation goal, not an application scenario.
-- Archive-local raw author message logs are used when preserving user's wording for thesis/writing work.
+- L1/L2 are legacy identifiers, not future folder structure;
+- cross-cutting behavior must also have scenario/behavior sources;
+- cross-cutting implementation work should still be written as normal client/server slice drafts;
+- client/server drafts can be paired parts of one logical slice;
+- client-only or server-only slice drafts must be explicitly marked with `SINGLE-`;
+- planning/slices/cross-cutting/ is for umbrella/coordination docs, not for dumping implementation details;
+- every slice draft must include a Behavior-to-Test Trace;
+- tests use implementation details only as setup/action/observation mechanisms.
 ```
 
 ## Files included
 
 ```text
-planning/diagrams/scenario-ui-specs/README.md
-planning/diagrams/scenario-ui-specs/UI-SCENARIO-CONVENTIONS.md
-planning/diagrams/scenario-ui-specs/UI-SCENARIO-TEMPLATE.md
-planning/diagrams/scenario-ui-specs/UI-SCENARIO-READINESS.md
-planning/diagrams/scenario-ui-specs/APP-UI-001-app-shell-home-auth-flow-ui.md
-planning/diagrams/scenario-ui-specs/SC-04-request-creation-ui.md
-planning/diagrams/scenario-ui-specs/SC-05-my-requests-ui.md
-planning/diagrams/scenario-ui-specs/SC-10-applicant-data-ui.md
-planning/diagrams/scenario-ui-specs/SC-10B-my-applicant-parties-ui.md
+planning/slices/README.md
+planning/slices/SLICE-FOLDER-MAP.md
+planning/slices/SLICE-INDEX.md
+planning/slices/SLICE-QUESTIONS.md
+planning/slices/slice-test-plan-workflow.md
+planning/slices/l2/README.md
+planning/slices/client-slice-short-draft-rules-and-example.md
 
-planning/slices/slice-scenario-flow-behavior-register.md
-planning/slices/cross-cutting/CC-CLIENT-UI-MIGRATION-001-current-ui-to-slice-owned-ui.md
-planning/slices/cross-cutting/CC-AUTHOR-MESSAGE-LOG-001-archive-local-author-message-capture.md
+planning/slices/client/README.md
+planning/slices/client/CLIENT-SLICE-TEMPLATE.md
+planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md
+planning/slices/client/cross-cutting/README.md
+planning/slices/client/examples/CLIENT-CROSS-CUTTING-DEFERRED-VALIDATION-SLICE-EXAMPLE.md
 
-_archive-notes/scenario-ui-specs-workflow-and-readiness/raw-author-message-log.md
-_archive-notes/scenario-ui-specs-workflow-and-readiness/derived-decisions.md
+planning/slices/server/README.md
+planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
+planning/slices/server/SERVER-SLICE-TEMPLATE.md
+planning/slices/server/cross-cutting/README.md
+
+planning/slices/cross-cutting/README.md
+planning/slices/cross-cutting/CROSS-CUTTING-UMBRELLA-TEMPLATE.md
+planning/slices/cross-cutting/CC-SEC-CSRF-001-unsafe-command-protection.md
+
+planning/diagrams/scenario-behavior-items/README.md
+planning/diagrams/scenario-cross-cutting/README.md
+planning/diagrams/scenario-cross-cutting/client-behavior/README.md
+planning/diagrams/scenario-cross-cutting/client-behavior/CC-CLIENT-FORM-VALIDATION-001-deferred-validation.behavior.md
+planning/diagrams/scenario-cross-cutting/client-behavior/CC-CLIENT-FEEDBACK-001-error-feedback.behavior.md
+planning/diagrams/scenario-cross-cutting/server-behavior/README.md
+planning/diagrams/scenario-cross-cutting/server-client/README.md
+planning/diagrams/scenario-cross-cutting/security/README.md
+planning/diagrams/scenario-cross-cutting/security/CC-SEC-CSRF-001-unsafe-command-protection.behavior.md
+
+_archive-notes/slice-taxonomy-cross-cutting-testing-workflow-v3/raw-author-message-log.md
+_archive-notes/slice-taxonomy-cross-cutting-testing-workflow-v3/derived-decisions.md
 ```
 
 ## Not included
@@ -59,7 +71,7 @@ _archive-notes/scenario-ui-specs-workflow-and-readiness/derived-decisions.md
 ```text
 - no runtime UI fixes
 - no CSS implementation changes
-- no slice draft rewrites
+- no concrete slice draft rewrites
 - no mass movement of legacy L1/L2 slice files
 - no OpenAPI/generated file changes
 ```

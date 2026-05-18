@@ -10,11 +10,41 @@ Copy this structure for new client sidecar drafts.
 # <SLICE-ID>.client — <Title>
 
 Status:
+Logical slice:
 Parent server slice:
 Host surface:
 Actor:
 Slice type:
 Placement:
+```
+
+For client-only drafts, use `SINGLE-` prefix in the file name:
+
+```text
+SINGLE-CC-CLIENT-FORM-VALIDATION-001-deferred-validation.client.md
+```
+
+## Required Source Block
+
+```markdown
+## 0. Scenario Sources
+
+Business scenario:
+UI scenario:
+Cross-cutting behavior:
+Data source:
+Behavior items:
+Concern umbrella:
+```
+
+Rules:
+
+```text
+Business scenario may be empty for client-only cross-cutting behavior.
+UI scenario may be empty if the slice has no visual behavior.
+Cross-cutting behavior must be filled for shared/common behavior such as deferred validation.
+Behavior items should identify the exact behavior chain covered by this slice.
+Concern umbrella is used for paired server-client/security concerns.
 ```
 
 ## Required Sections
@@ -39,6 +69,8 @@ User performs action
         ↓
 System refreshes visible state
 ```
+
+This section must be derived from UI scenario sources or cross-cutting behavior sources.
 
 Add a scenario flow table when it clarifies responsibility.
 
@@ -99,42 +131,6 @@ Do not add `visual` for hooks, API wrappers, query keys, helpers or pure model f
 
 `visual` must describe only how the used UI block appears in the parent composition. It must not describe or override internal styling of the child component.
 
-Example:
-
-```text
-[Layer Name]
-path/to/File.tsx
-
-Lives here:
-  ComponentOrHookName
-
-Owns:
-  route params;
-  page title;
-  page branch composition.
-
-Uses:
-  useSomething(id)
-    from: entities/.../model/useSomething.ts
-    needed to: load data for this route.
-
-  SomeWidget
-    from: widgets/.../SomeWidget.tsx
-    needed to: render shared read-only content and expose action slot.
-    visual: main content block placed below page header; parent controls spacing around it.
-
-  SomeFeatureForm
-    from: features/.../ui/SomeFeatureForm.tsx
-    needed to: provide command form in the action area.
-    visual: compact command block placed inside the page action panel.
-
-Does not own:
-  internal layout of SomeWidget;
-  internal field styling of SomeFeatureForm;
-  endpoint wrapper;
-  server authorization/lifecycle rules.
-```
-
 ## 7. Styling / CSS Ownership
 
 | Area | Owner | CSS file | Rule |
@@ -189,9 +185,47 @@ Include table:
 
 ## 14. Behavior Coverage
 
-## 15. Verification Plan
+List behavior items covered by this slice.
 
-Separate component tests, API/model tests and E2E planned coverage.
+| Behavior item | Scenario/source meaning | Covered by this slice? | Notes |
+|---|---|---|---|
+
+## 15. Test / Verification Plan
+
+Primary rule:
+
+```text
+Tests verify behavior items and visible scenario outcomes.
+Implementation details are only setup/action/observation mechanisms.
+```
+
+Use:
+
+```text
+planning/slices/slice-test-plan-workflow.md
+```
+
+### Behavior-to-Test Trace
+
+| Behavior item | Visible scenario outcome | Test layer | Implementation mechanism | Escape risk | Refactor risk | Planned/actual test |
+|---|---|---|---|---|---|---|
+
+Test buckets:
+
+```text
+component/page tests
+API/model tests if client API wrappers/mapping are owned here
+E2E planned coverage when the user flow needs browser proof
+contract/generated checks when API shape changes
+```
+
+What not to test:
+
+```text
+React internal state shape
+exact query key internals unless this slice owns that contract
+CSS class names unless this slice owns a styling primitive contract
+```
 
 ## 16. Suggested File Placement
 

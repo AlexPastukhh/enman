@@ -1,4 +1,37 @@
-# L2 Slice Planning Index
+# Legacy L2 Slice Planning Index
+
+Status: legacy navigation with preserved historical guardrails  
+Scope: historical Employee Review and AgreementProposalExchange planning navigation
+
+> This folder is no longer the future slice planning structure.
+>
+> Do not add new files here.
+>
+> New slice docs are grouped by implementation responsibility:
+>
+> ```text
+> planning/slices/client/
+> planning/slices/server/
+> planning/slices/cross-cutting/
+> ```
+>
+> This file is kept because it contains historical guardrails that must not be lost before migration.
+
+## Migration Rule
+
+When a historical draft is updated:
+
+```text
+1. Read the historical draft.
+2. Check scenario sources, UI scenario sources, behavior items and data sources.
+3. Rewrite using the current client/server slice template.
+4. Place the updated draft in planning/slices/client/ or planning/slices/server/.
+5. Update SLICE-INDEX.md.
+```
+
+---
+
+# Historical L2 Slice Planning Index Content
 
 Status: current / near-final Employee Review and AgreementProposalExchange planning synchronized  
 Scope: L2 Employee, Request Review, AgreementProposalExchange, AgreementDocumentRef and client sidecar navigation

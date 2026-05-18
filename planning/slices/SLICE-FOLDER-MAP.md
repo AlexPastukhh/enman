@@ -1,18 +1,53 @@
 # Slice Folder Map
 
-Status: current folder ownership map
+Status: current folder ownership map / L1-L2 legacy, cross-cutting taxonomy and testing workflow synchronized
 
-## Canonical folders
+## Scenario source folders
+
+```text
+planning/diagrams/scenario-text-specs/
+  subject/business scenarios.
+
+planning/diagrams/scenario-ui-specs/
+  UI scenario requirements: visible screens, actions, states and visual flow.
+
+planning/diagrams/scenario-cross-cutting/client-behavior/
+  cross-cutting client behavior used across multiple UI/client scenarios
+  without a required server implementation.
+
+planning/diagrams/scenario-cross-cutting/server-behavior/
+  cross-cutting server behavior without a required client implementation.
+
+planning/diagrams/scenario-cross-cutting/server-client/
+  behavior where both server and client participate.
+
+planning/diagrams/scenario-cross-cutting/security/
+  security/protection/abuse scenarios such as CSRF protection.
+
+planning/diagrams/scenario-data/
+  scenario data details.
+
+planning/diagrams/scenario-behavior-items/
+  behavior items extracted from scenarios.
+```
+
+## Slice planning folders
 
 ```text
 planning/slices/client/
-  client rules, workflow, templates, examples and client sidecar drafts
+  client rules, workflow, templates, examples and client sidecar drafts.
+
+planning/slices/client/cross-cutting/
+  client-side slice drafts for cross-cutting behavior.
 
 planning/slices/server/
-  server rules, workflow, templates, examples and server/API/backend drafts
+  server rules, workflow, templates, examples and server/API/backend drafts.
+
+planning/slices/server/cross-cutting/
+  server-side slice drafts for cross-cutting behavior.
 
 planning/slices/cross-cutting/
-  cross-cutting concerns shared by client/server or architecture-level decisions
+  umbrella/coordination docs for paired server-client/security/cross-cutting concerns.
 ```
 
 ## Common navigation
@@ -26,6 +61,9 @@ planning/slices/SLICE-INDEX.md
 
 planning/slices/SLICE-QUESTIONS.md
   register of decisions, blocked questions, assumptions and future-review items
+
+planning/slices/slice-test-plan-workflow.md
+  rules for writing Test / Verification Plan inside slice drafts
 ```
 
 ## New slice file placement
@@ -42,7 +80,19 @@ New server drafts go directly to:
 planning/slices/server/
 ```
 
-Cross-cutting docs go to:
+New client-side cross-cutting implementation drafts go to:
+
+```text
+planning/slices/client/cross-cutting/
+```
+
+New server-side cross-cutting implementation drafts go to:
+
+```text
+planning/slices/server/cross-cutting/
+```
+
+Umbrella cross-cutting concern docs go to:
 
 ```text
 planning/slices/cross-cutting/

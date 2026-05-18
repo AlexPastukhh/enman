@@ -1,6 +1,6 @@
 # Client Slice Drafting Workflow
 
-Status: current workflow for drafting client sidecars
+Status: current workflow for drafting client sidecars / scenario source and test trace synchronized
 
 ## 1. Before Drafting
 
@@ -13,25 +13,70 @@ CLIENT-UI-STYLE-WORKFLOW.md
 CLIENT-CSS-ARCHITECTURE-RULES.md
 CLIENT-FORM-VALIDATION-WORKFLOW.md
 CLIENT-A11Y-WORKFLOW.md
+planning/slices/slice-test-plan-workflow.md
 CLIENT-SLICE-TEMPLATE.md
 ```
 
-## 2. Drafting Order
+Then identify scenario sources:
 
 ```text
-1. Identify parent server slice.
-2. Identify host surface/page.
-3. Define actor and route.
-4. Define Visual UI / Scenario Flow.
-5. Define Visual Layout / Screen Composition.
-6. Define Visual Client Implementation Flow.
-7. Define Styling / CSS Ownership.
-8. Define API contract.
-9. Define validation/feedback/a11y.
-10. Define verification plan.
+business scenario:
+UI scenario:
+cross-cutting behavior:
+data source:
+behavior items:
+concern umbrella:
 ```
 
-## 3. Visual Client Implementation Flow Rule
+## 2. UI Scenario Source Check
+
+Before writing `Visual UI / Scenario Flow`:
+
+```text
+1. Open planning/diagrams/scenario-ui-specs/.
+2. Check UI-SCENARIO-READINESS.md when present.
+3. Find the related UI scenario source.
+4. If the UI scenario is missing/stub/partial and the slice changes meaningful UI behavior, update the UI scenario first.
+5. Do not invent UI requirements only inside the client slice draft.
+```
+
+## 3. Cross-Cutting Behavior Source Check
+
+If the slice implements common client behavior used by many scenarios:
+
+```text
+1. Check planning/diagrams/scenario-cross-cutting/client-behavior/.
+2. If no behavior source exists, create/update one before writing the implementation slice draft.
+3. Use a normal client slice draft structure even for cross-cutting implementation.
+```
+
+Examples:
+
+```text
+deferred validation
+common error feedback
+flow navigation
+loading/empty/error visibility
+```
+
+## 4. Drafting Order
+
+```text
+1. Identify scenario sources.
+2. Identify parent logical slice or concern.
+3. Identify host surface/page or shared behavior scope.
+4. Define actor and route/context if applicable.
+5. Define Visual UI / Scenario Flow from UI/cross-cutting scenario sources.
+6. Define Visual Layout / Screen Composition.
+7. Define Visual Client Implementation Flow.
+8. Define Styling / CSS Ownership.
+9. Define API/server contract if any.
+10. Define validation/feedback/a11y.
+11. Define behavior coverage.
+12. Define Behavior-to-Test Trace and verification plan.
+```
+
+## 5. Visual Client Implementation Flow Rule
 
 Use `needed to`, not `does`.
 
@@ -72,11 +117,52 @@ visual: card with 16px padding, green status badge, button radius and internal b
 
 That describes child internals and belongs in the child owner's styling rules.
 
-## 4. Drafting Checklist
+## 6. Test / Verification Plan Rule
+
+Use:
+
+```text
+planning/slices/slice-test-plan-workflow.md
+```
+
+Every client slice draft must include Behavior-to-Test Trace.
+
+For each planned/actual test, answer:
+
+```text
+Which behavior item or visible scenario outcome does this test prove?
+Which implementation details are used only as setup/action/observation mechanisms?
+Can a bad implementation pass this test and still break the scenario?
+Can a behavior-preserving refactor break this test?
+What no-mutation/negative outcome is relevant, if any?
+```
+
+Component/page tests prove visible client behavior for a given server response or command result.
+
+Server behavior must be proven by server/API tests. E2E can connect the flow but does not replace all matrix tests.
+
+## 7. Paired/Single Naming
+
+If no server counterpart is expected, use `SINGLE-` prefix in the client draft file name:
+
+```text
+SINGLE-CC-CLIENT-FORM-VALIDATION-001-deferred-validation.client.md
+```
+
+If a server counterpart is expected or possible, do not use `SINGLE-`; use matching logical ID:
+
+```text
+CC-SEC-CSRF-001-unsafe-command-protection.client.md
+```
+
+## 8. Drafting Checklist
 
 ```text
 [ ] I used CLIENT-SLICE-TEMPLATE.md.
-[ ] I identified parent server slice and host surface.
+[ ] I identified scenario sources.
+[ ] I checked UI scenario source/readiness when UI behavior is involved.
+[ ] I checked cross-cutting behavior source when common behavior is involved.
+[ ] I identified parent server slice, logical slice, or concern.
 [ ] I described the visual layout before implementation flow.
 [ ] I used from / needed to / visual correctly.
 [ ] I added visual only for UI-rendering dependencies.
@@ -87,5 +173,7 @@ That describes child internals and belongs in the child owner's styling rules.
 [ ] I added Styling / CSS Ownership.
 [ ] I added Validation / Feedback / Error UI.
 [ ] I added Accessibility / ARIA Contract.
-[ ] I separated Behavior Coverage from Test/Verification Plan.
+[ ] I added Behavior Coverage.
+[ ] I added Behavior-to-Test Trace.
+[ ] I separated Behavior Coverage from Test / Verification Plan.
 ```
