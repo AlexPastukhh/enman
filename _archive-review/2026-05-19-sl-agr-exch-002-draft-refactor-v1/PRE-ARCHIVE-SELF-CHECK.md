@@ -1,0 +1,32 @@
+# Pre-Archive Self-Check
+
+- [x] Q001 retained
+- [x] Q002 retained
+- [x] Q003 retained
+- [x] Q004 retained
+- [x] Q005 retained
+- [x] Q006 retained
+- [x] Q007 retained
+- [x] Q008 retained
+- [x] Q009 retained
+- [x] Q010 retained
+- [x] Q011 retained
+- [x] Q012 retained
+- [x] Q013 retained
+- [x] Q014 retained
+- [x] Q015 retained
+- [x] Q016 retained
+- [x] Q017 retained
+- [x] Q018 retained
+- [x] Q019 retained
+- [x] Q020 retained
+- [x] shared route retained
+- [x] 204 No Content retained
+- [x] no response DTO retained
+- [x] ClientAccountId guard retained
+- [x] no ResponsibleEmployeeId retained
+- [x] no actor abstraction retained
+- [x] no per-command status enum retained
+- [x] Behavior-to-Test Trace present
+- [x] implementation not rechecked stated
+- [x] OpenAPI commands retained
