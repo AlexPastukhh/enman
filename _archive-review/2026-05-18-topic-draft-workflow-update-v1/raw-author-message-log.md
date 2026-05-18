@@ -1,6 +1,3 @@
-# Raw Author Message Log
-
-
 ## Entry 012 — Placement should show chapter map
 
 Date: 2026-05-18  
@@ -73,4 +70,3 @@ Raw author message:
 Notes:
 - Store raw only.
 - Basis for previous-topic example usage rule.
-

@@ -1,112 +1,125 @@
-# Visual Evidence Protocol
+# Протокол визуальных материалов
 
-Status: initial
+Статус: актуально
 
-## Purpose
+## 1. Назначение
 
-The VKR should be personalized through diagrams, screenshots, tables and explanatory text. Visuals are not decoration; they are evidence for project decisions and implementation results.
+Рисунки, таблицы и скриншоты должны не украшать текст, а доказывать и пояснять проектную мысль.
 
-## Main pattern
-
-```text
-claim
--> visual evidence
--> explanation
--> conclusion
-```
-
-## Visual types
-
-### Diagrams
-
-Use diagrams for domain analysis and design:
+Главная формула:
 
 ```text
-process before automation
-target process after automation
-request lifecycle
-document/agreement exchange lifecycle
-domain model
-ERD subset
-frontend/backend architecture
-API contract flow
-vertical slice flow
+тезис → визуал → пояснение → вывод
 ```
 
-### Screenshots
+## 2. Обязательное описание каждого рисунка
 
-Use screenshots for implementation and preddiploma demonstration:
+Для каждого рисунка указывать:
 
 ```text
-registration/login
-account/applicant
-create request
-my requests list
-request details
-employee dashboard
-employee request details
-agreement exchange list/details
-document reference fields
+1. Где стоит в тексте.
+2. Что читатель должен увидеть.
+3. Для чего рисунок нужен.
+4. Какие блоки и стрелки должны быть.
+5. Что нельзя показывать.
+6. Подпись.
+7. Пояснение после рисунка.
 ```
 
-### Tables
+## 3. Формат описания
 
-Use tables for compact explanation:
+```markdown
+### Рисунок X — <название>
+
+**Где стоит в тексте:**
+...
+
+**Что читатель должен увидеть:**
+...
+
+**Для чего нужен:**
+...
+
+**Что должно быть на рисунке:**
+...
+
+**Что нельзя показывать:**
+...
+
+**Подпись:**
+...
+
+**Пояснение после рисунка:**
+...
+```
+
+## 4. Рисунки предметной области
+
+В главе 1 рисунки должны быть предметными, а не техническими.
+
+Например, для процесса заявки показывать:
 
 ```text
-actors and actions
-problem -> manifestation -> project solution
-requirement -> source -> implementation evidence
-scenario -> API -> UI -> tests
-domain entity -> table -> purpose
-test type -> checked scenario
+Клиент
+→ личный кабинет
+→ заявитель
+→ заявка
+→ сотрудник
+→ решение
+→ договорно-документный этап
 ```
 
-## Large diagrams
-
-Do not put unreadable full diagrams in the main text.
-
-Use:
+Не показывать там:
 
 ```text
-main text: simplified overview
-appendix: full diagram
-optional: readable fragments
+ASP.NET Core;
+React;
+API;
+SQL Server;
+OpenAPI;
+тесты;
+эндпоинты;
+внутренние implementation labels.
 ```
 
-Example for SC-04:
+## 5. Таблицы
+
+Таблица нужна, если она делает текст короче и яснее.
+
+Полезные типы таблиц:
 
 ```text
-Main text:
-Figure 2.x — High-level client request creation scenario
-
-Appendix:
-Figure A.x — Full client request creation scenario
-Figure A.x — Applicant selection fragment
-Figure A.x — Validation and successful request creation fragment
+участник / роль / что обосновывает;
+проблема / проявление / требование;
+уровень автоматизации / что автоматизируется / значение;
+сценарий / экран / API / тест;
+доменная сущность / таблица / назначение.
 ```
 
-## Screenshot caption rule
+## 6. Mock/demo/stub на скриншотах
 
-Each screenshot needs:
+Если скриншот показывает демонстрационную функцию, подпись должна это отражать.
+
+Правильно:
 
 ```text
-number
-clear caption
-1-3 explanatory sentences
-connection to VKR task
+Рисунок 3.x — Демонстрационная проверка данных заявки сотрудником
 ```
 
-Bad:
+Неправильно:
 
 ```text
-Figure 3.5 — Requests page
+Рисунок 3.x — Внешняя проверка данных заявки
 ```
 
-Better:
+## 7. Большие диаграммы
+
+Большую диаграмму не вставлять целиком в основной текст, если она нечитаема.
+
+Использовать:
 
 ```text
-Figure 3.5 — Client request list with processing status
+основной текст — упрощённая схема;
+приложение — полная диаграмма;
+при необходимости — читаемые фрагменты.
 ```
-
-Then explain what the screen proves.

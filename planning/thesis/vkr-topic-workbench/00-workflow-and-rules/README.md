@@ -1,20 +1,52 @@
-# Workflow And Rules
+# Правила и workflow рабочей базы тем ВКР
 
-Status: initial  
-Scope: rules for topic-first VKR material assembly
+Статус: актуально / русскоязычный topic-first workflow
 
-Use these files before creating or rewriting section drafts.
+Эта папка содержит правила работы с материалами ВКР до написания полных черновиков разделов.
 
-| File | Purpose |
+## Основная идея
+
+Сначала собирается смысловая база темы, затем материалы, визуалы и только после этого пишется полный текст:
+
+```text
+карта главы
+→ тема
+→ обсуждение содержания
+→ что требуется обосновать
+→ границы утверждений
+→ рисунки и таблицы
+→ карта будущего текста
+→ черновые фрагменты
+→ полный черновик раздела
+```
+
+## Основные файлы
+
+| Файл | Назначение |
 |---|---|
-| `workflow.md` | Main topic-first workflow |
-| `topic-card-template.md` | Template for `.topic.md` files |
-| `section-index-template.md` | Template for `topic-index.md` files |
-| `visual-evidence-protocol.md` | How to use diagrams, screenshots and tables |
-| `material-harvest-protocol.md` | How to collect material from planning/docs/repo/research |
-| `writing-from-topics-protocol.md` | How to convert topic cards into VKR text |
-| `global-questions-register.md` | Cross-topic questions |
-| `global-assumptions.md` | Cross-topic assumptions and terminology decisions |
-| `vkr-point-map.md` | Map from VKR points to workbench folders |
-| `author-voice-and-message-capture-protocol.md` | How raw author messages are captured |
-| `author-materials/` | Raw author message log |
+| `workflow.md` | общий порядок работы с темами, драфтами и архивами |
+| `topic-card-template.md` | шаблон topic-файла на русском языке |
+| `topic-draft-format-protocol.md` | формат драфта темы перед полным текстом |
+| `writing-from-topics-protocol.md` | как превращать тему в текст ПЗ |
+| `visual-evidence-protocol.md` | как описывать рисунки, таблицы, скриншоты |
+| `mock-and-extension-point-wording-protocol.md` | как писать про mock/demo/stub-возможности без завышения реализации |
+| `previous-topic-example-usage-rule.md` | как использовать уже принятые темы как примеры |
+| `global-assumptions.md` | общие допущения и ограничения формулировок |
+| `archive-merge-safety-protocol.md` | правила безопасных архивов с replacement files |
+| `author-materials/raw-author-message-log.md` | сырые сообщения автора без обработки |
+| `examples/` | примеры удачного формата тем и визуальных ТЗ |
+
+## Правило языка
+
+Смысловые материалы ВКР пишутся на русском языке. Английские имена допускаются только для технологий, стандартов, классов, файлов и терминов кода, если они нужны для точности.
+
+Пример:
+
+```text
+Правильно: Статус: нужен сбор материалов
+Нежелательно: Status: material-harvest-needed
+```
+
+## Правило примеров
+
+Если пользователь не говорит иначе, новые темы и драфты следует делать по последнему принятому формату. Принятые темы и драфты использовать как примеры структуры, глубины и стиля.

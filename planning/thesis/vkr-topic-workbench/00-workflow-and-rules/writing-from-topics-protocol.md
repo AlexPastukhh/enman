@@ -1,52 +1,89 @@
-# Writing From Topics Protocol
+# Протокол превращения темы в текст ВКР
 
-Status: initial
+Статус: актуально
 
-## Purpose
+## 1. Не начинать с общего текста
 
-This protocol explains how topic cards later become VKR text.
-
-## Do not start with generic theory
-
-Start from the project question of the subsection:
+Сначала определить:
 
 ```text
-what should the reader understand here?
-which project decision or evidence proves it?
-what visual can support it?
+какой пункт ВКР раскрывается;
+какую роль выполняет тема;
+что должен понять читатель;
+какой рисунок или таблица это подтверждает;
+какие утверждения опасно завысить.
 ```
 
-## Paragraph source mode
-
-Every paragraph should have at least one source of meaning:
+## 2. Порядок подготовки текста
 
 ```text
-PROJECT — project/domain reasoning
-REPO — implementation evidence
-VISUAL — diagram/screenshot/table explanation
-SOURCE — external source or standard
-AUTHOR — author conclusion / decision reasoning
+тема
+→ содержание темы
+→ обоснования
+→ границы утверждений
+→ визуальные материалы
+→ карта будущего текста
+→ черновые фрагменты
+→ полный текст
 ```
 
-## Draft conversion steps
+## 3. Источник смысла каждого абзаца
 
-1. Open the relevant section `topic-index.md`.
-2. Select topics that should be included in the subsection.
-3. Check topic `Coverage` tables.
-4. Insert visual evidence plan.
-5. Write short draft.
-6. Create full draft only after the topic has enough material.
-7. Send full draft to reviewers when useful.
-
-## Avoiding dead text
-
-If a draft sounds too generic, use:
+Каждый абзац должен иметь понятный источник смысла:
 
 ```text
-author-materials/raw-author-message-log.md
-future author formulation bank
-questions and decisions from topic cards
-project visuals
+предметная область;
+проектное решение;
+рисунок/таблица;
+подтверждение по репозиторию;
+внешний источник;
+авторский вывод.
 ```
 
-The goal is not to bypass checks, but to recover author logic and project specificity.
+Если абзац не имеет источника смысла, он почти наверняка будет выглядеть шаблонно.
+
+## 4. Визуалы встроены в текст
+
+Не писать сначала много текста, а потом “накидать рисунки”. Правильный порядок:
+
+```text
+тезис
+→ рисунок/таблица/скриншот
+→ пояснение
+→ вывод
+```
+
+## 5. Mock/demo/stub-функции
+
+Если функция демонстрационная, писать об этом прямо:
+
+```text
+предусмотрена демонстрационная проверка данных;
+показана точка будущей внешней интеграции;
+реальная внешняя проверка относится к дальнейшему развитию.
+```
+
+Не писать:
+
+```text
+реализована внешняя проверка данных.
+```
+
+## 6. Предыдущие темы как примеры
+
+Если пользователь говорит “давай следующий драфт” и не задаёт новый формат, использовать последнюю принятую тему как пример:
+
+```text
+структура;
+глубина;
+уровень детализации рисунков;
+карта будущего текста;
+границы утверждений;
+русский язык оформления.
+```
+
+Не копировать содержимое механически. Использовать как формат.
+
+## 7. Русский язык
+
+Смысловые блоки писать на русском. Английские технические термины оставлять только там, где они являются именами технологий/стандартов/кода.

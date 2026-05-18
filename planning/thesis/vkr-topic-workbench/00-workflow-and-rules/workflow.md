@@ -1,107 +1,157 @@
-# Topic-First VKR Workflow
+# Topic-first workflow для материалов ВКР
 
-Status: initial  
-Scope: workflow before section drafts
+Статус: актуально
 
-## 1. Purpose
+## 1. Назначение
 
-The workbench is used to build the semantic base of the VKR before writing long drafts.
+Рабочая база тем нужна для подготовки ВКР до написания полного текста. Здесь фиксируются не красивые абзацы, а смысловая структура: что раскрываем, зачем, какими материалами, какими визуалами и с какими ограничениями.
 
-Main pipeline:
-
-```text
-mandatory VKR point
--> project-specific topic
--> material harvest
--> visual evidence
--> topic coverage check
--> section short draft
--> full draft
--> reviewer pass
--> final text
-```
-
-## 2. Folder hierarchy rule
-
-Top-level folders are mandatory VKR content blocks, not internal engineering interests.
-
-Correct:
+## 2. Основной порядок работы
 
 ```text
-02-chapter-1-analysis/
-03-chapter-2-design/
-04-chapter-3-implementation-and-testing/
+1. Показать карту размещения темы
+2. Обсудить содержание темы
+3. Определить, что требует обоснования
+4. Определить, что не нужно обосновывать в этой теме
+5. Зафиксировать границы утверждений
+6. Описать нужные рисунки и таблицы
+7. Составить карту будущего текста
+8. Подготовить черновые фрагменты
+9. Выполнить сбор материалов
+10. Только после этого писать полный драфт подраздела
 ```
 
-Incorrect as top-level folders:
+## 3. Карта размещения темы
+
+Каждый драфт темы должен начинаться не с длинного пути файлом, а с наглядной карты:
 
 ```text
-scenarios-and-specification/
-domain-model-and-ddd/
-architecture-and-slices/
+ВКР
+├─ Введение
+├─ Глава 1. Анализ предметной области и обоснование автоматизации
+│  ├─ 1.1 ...
+│  │  └─ Текущая тема: ...
+│  ├─ 1.2 ...
+│  └─ ...
+├─ Глава 2. ...
+├─ Глава 3. ...
+└─ Заключение
 ```
 
-These belong inside the relevant VKR point.
-
-## 3. L1/L2 terminology rule
-
-Do not expose `L1` / `L2` labels as VKR-level concepts. Treat them as internal planning labels only.
-
-Use thesis-facing terms instead:
+Затем показывается карта workbench:
 
 ```text
-client request flow
-employee review flow
-agreement/document exchange
-implementation phase
-software increment
-vertical slice
+planning/thesis/vkr-topic-workbench/
+└─ 02-chapter-1-analysis/
+   └─ 01-domain-process/
+      └─ 01-client-request-process.topic.md
 ```
 
-`L1` / `L2` may appear only in material-harvest notes when tracing repository/planning evidence.
+## 4. Роль темы
 
-## 4. Topic card rule
-
-Each `.topic.md` must answer:
+В теме нужно объяснять её роль на нескольких уровнях:
 
 ```text
-why the topic is needed;
-where it belongs;
-what the reader must understand;
-how the topic will be disclosed;
-what material is needed;
-what visual evidence is needed;
-which questions and assumptions exist;
-how coverage will be checked.
+на уровне самой темы;
+на уровне пункта ВКР;
+на уровне главы;
+на уровне всей работы.
 ```
 
-## 5. Visual-first personalization rule
+Тема не должна существовать как изолированная карточка. Она должна готовить переход к соседним пунктам и будущим главам.
 
-Use project evidence rather than generic prose:
+## 5. Русский язык workflow
+
+Внутри ВКР-материалов пишем по-русски:
 
 ```text
-thesis claim
--> diagram / screenshot / table
--> explanation
--> conclusion
+Статус
+Размещение
+Роль темы
+Содержание темы
+Что требует обоснования
+Границы утверждений
+Визуальные материалы
+Покрытие темы
+Риски
+Открытые вопросы
 ```
 
-Large diagrams should be simplified in the main text and moved in full to appendices.
-
-## 6. Author message capture rule
-
-Before creating a replacement/archive package, list in chat which user messages will be captured into `author-materials/raw-author-message-log.md`.
-
-Raw author messages are captured as source material only. They are not final thesis text and are not automatically accepted as workflow rules.
-
-## 7. Relationship with preddiploma practice
-
-The preddiploma practice report is treated as a derivative of VKR materials. Do not make it the main drafting center.
+Английские термины оставляются только там, где это технически нужно:
 
 ```text
-VKR topic workbench
--> preliminary explanatory note
--> preddiploma report as compressed derivative
--> presentation
--> speech
+OpenAPI, ProblemDetails, React, TypeScript, ASP.NET Core, Entity Framework Core, Playwright, DTO, API, AgreementDocumentRef.
 ```
+
+## 6. Правило L1/L2
+
+Не использовать `L1` / `L2` как понятия ВКР. Это внутренние implementation labels. В дипломных материалах использовать предметные названия:
+
+```text
+клиентский поток;
+рассмотрение заявки сотрудником;
+договорно-документный обмен;
+этап реализации;
+программный срез;
+```
+
+## 7. Mock/demo/stub-возможности
+
+Если функция является демонстрационной или заглушкой, всегда разделять:
+
+```text
+что реализовано;
+что имитируется;
+что является точкой расширения;
+что относится к дальнейшему развитию.
+```
+
+Не писать:
+
+```text
+реализована внешняя проверка данных.
+```
+
+Писать:
+
+```text
+предусмотрена демонстрационная проверка данных как точка расширения для будущей внешней интеграции.
+```
+
+## 8. Рисунки и таблицы
+
+Для каждого рисунка нужно описывать:
+
+```text
+где стоит в тексте;
+что читатель должен увидеть;
+для чего рисунок нужен;
+какие блоки и стрелки должны быть;
+что нельзя показывать;
+подпись;
+пояснение после рисунка.
+```
+
+## 9. Использование предыдущих тем как примеров
+
+Если пользователь не сказал обратное, новый драфт должен опираться на последнюю принятую тему как пример формата, глубины и стиля.
+
+Для текущей работы примером считается тема:
+
+```text
+02-chapter-1-analysis/01-domain-process/01-client-request-process.topic.md
+```
+
+и/или пример в:
+
+```text
+00-workflow-and-rules/examples/01-client-request-process-visual-topic-example.md
+```
+
+## 10. Отчёт по ПП
+
+Отчёт по преддипломной практике является производной от ВКР-материалов. Не писать его как отдельную независимую работу, пока не собрана смысловая база ВКР.
+
+## 11. Архивы
+
+Если архив заменяет существующие файлы, он должен сохранять оригиналы в `_archive-review/<archive-slug>/original-files/` и включать merge-risk report.

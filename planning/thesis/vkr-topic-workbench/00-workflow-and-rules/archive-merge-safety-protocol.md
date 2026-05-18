@@ -1,59 +1,26 @@
-# Archive Merge Safety Protocol
+# Протокол безопасного применения архивов
 
-Status: active / v1
+Статус: актуально
 
-Purpose:
-large documentation archives must be safe to apply and review. A large archive is not treated as the final merge. It is treated as a staged update with preserved originals and explicit post-apply review tasks.
+## 1. Проблема
 
-## When this protocol is required
-
-Use this protocol when an archive:
-
-- replaces existing README/index/workflow/template files;
-- changes navigation or topic structure;
-- touches many files;
-- may remove or compress previous guardrails;
-- introduces a refactoring of documentation structure.
-
-Small additive archives may skip original snapshots if they add only new files and do not replace existing files.
-
-## Required archive plan before generation
-
-Before creating an archive, state in chat:
+Архив может содержать много файлов:
 
 ```text
-Archive plan
-
-New files:
-- ...
-
-Files to replace:
-- ...
-
-Original snapshots to include:
-- ...
-
-High-risk files:
-- ...
-
-Expected post-apply review:
-- ...
-
-Author messages to capture:
-- ...
+часть файлов новые;
+часть файлов заменяет существующие;
+замена может быть правильной по новой теме;
+но случайно потерять старые guardrails, навигацию или детали.
 ```
 
-## Safe merge archive structure
+Поэтому для больших архивов используется двухшаговый safe-merge workflow.
 
-If files are replaced, the archive must contain preserved originals:
+## 2. Шаг 1 — safe merge archive
+
+Если архив заменяет существующие файлы, он обязан сохранить исходные версии внутри себя:
 
 ```text
-APPLY.md
-MANIFEST.md
-
-<new or replacement project files>
-
-_archive-review/<unique-archive-slug>/
+_archive-review/<archive-slug>/
   ORIGINALS-INDEX.md
   MERGE-RISK-REPORT.md
   original-files/
@@ -62,42 +29,49 @@ _archive-review/<unique-archive-slug>/
   derived-decisions.md
 ```
 
-## Original snapshots
-
-For every replacement file, preserve the pre-replacement version in:
+Если архив заменяет:
 
 ```text
-_archive-review/<archive-slug>/original-files/<repo-relative-path>
+planning/thesis/vkr-topic-workbench/00-workflow-and-rules/workflow.md
 ```
 
-If the exact local current file cannot be read, state the baseline used for the original snapshot, for example:
+то исходная копия должна быть сохранена как:
 
 ```text
-Original snapshot source: previous generated archive / GitHub branch / uploaded project zip.
+_archive-review/<archive-slug>/original-files/planning/thesis/vkr-topic-workbench/00-workflow-and-rules/workflow.md
 ```
 
-## Merge correction archive
+## 3. Шаг 2 — merge correction archive
 
-After applying the first archive, compare:
+После применения архива нужно проверить:
 
 ```text
-new project file
-vs
-_archive-review/<archive-slug>/original-files/<same project file>
+новые файлы нормальны или нет;
+replacement files не потеряли важные guardrails;
+какие sections из originals надо вернуть;
+какие docs стали беднее;
+что надо исправить небольшим correction-архивом.
 ```
 
-Then create a smaller correction archive if needed:
+Correction archive не должен тащить всё заново. Он исправляет только проблемные файлы.
 
-- restore lost guardrails;
-- fix navigation conflicts;
-- merge useful old sections;
-- update merge risk status;
-- avoid re-shipping all files.
+## 4. Перед созданием архива
 
-## Cleanup/delete rule
+Перед созданием архива в чате нужно озвучить:
 
-Do not delete or clean up old files through a large mixed archive. Cleanup is a separate explicit step with its own archive plan.
+```text
+какие author messages будут сохранены;
+какие файлы будут добавлены;
+какие файлы будут заменены;
+где будут сохранены originals;
+какие файлы high-risk;
+как проверять после применения.
+```
 
-## Author message capture
+## 5. Запрет на скрытое удаление
 
-Before archive generation, list in chat which user messages will be captured. Raw messages go only to `raw-author-message-log.md` or archive-review raw logs. They are not final thesis text.
+Не удалять старые папки и файлы внутри большого mixed archive. Cleanup — отдельный явный шаг.
+
+## 6. Исключение
+
+Add-only архив может не сохранять originals, если он добавляет только новые пути и не заменяет существующие файлы.
