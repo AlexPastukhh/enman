@@ -200,49 +200,6 @@ public sealed class EmployeeRequestsController : ProjectController
     }
 
 
-    [Authorize(Roles = "Employee")]
-    [RequireAntiforgeryToken]
-    [HttpPost("{requestId:long:min(1)}/applicant-party/verification/run", Name = "EmployeeRunApplicantPartyVerification")]
-    [ProducesResponseType(typeof(RunApplicantPartyVerificationResponseDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> RunApplicantPartyVerification(
-        long requestId,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            if (!TryGetCurrentEmployeeId(out var employeeId))
-            {
-                return Unauthorized();
-            }
-
-            var result = await _sender.Send(
-                new RunApplicantPartyVerificationFromRequestCommand(employeeId, requestId),
-                cancellationToken);
-
-            return result.Status switch
-            {
-                RunApplicantPartyVerificationFromRequestCommandStatus.Verified => Ok(ToDto(result.Response!)),
-                RunApplicantPartyVerificationFromRequestCommandStatus.NotFound => NotFound(),
-                RunApplicantPartyVerificationFromRequestCommandStatus.Forbidden => Forbid(),
-                RunApplicantPartyVerificationFromRequestCommandStatus.Invalid => ProblemDetailsFromValidation(result.Errors),
-                _ => ProblemDetailsFromInternalServerError(Domain.EnergyManagement.Common.Error.Errors.General.InternalServerError)
-            };
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Employee run applicant party verification failed for request {RequestId}.", requestId);
-            return ProblemDetailsWithExceptionDev(ex);
-        }
-    }
-
-
-
 
 
     [Authorize(Roles = "Employee")]
@@ -305,18 +262,6 @@ public sealed class EmployeeRequestsController : ProjectController
 
         var claimValue = User.FindFirstValue(ClaimTypes.NameIdentifier);
         return long.TryParse(claimValue, out employeeId);
-    }
-
-
-    private static RunApplicantPartyVerificationResponseDto ToDto(
-        RunApplicantPartyVerificationResponse response)
-    {
-        return new RunApplicantPartyVerificationResponseDto(
-            response.RequestId,
-            response.ApplicantPartyId,
-            response.VerificationStatus,
-            response.MockResult,
-            response.Message);
     }
 
     private static EmployeeRequestListResponseDto ToDto(EmployeeRequestListResponse response)

@@ -13,6 +13,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ApiError } from "../../../../shared/api/fetchJson";
 import { Header } from "../../../../shared/ui/layout/Header";
 import { SessionProvider } from "../../../../entities/session/model/SessionProvider";
+import { headerConst } from "../../../../shared/ui/layout/headerConst";
 
 vi.mock("*.svg?react", () => ({
   default: () => null,
@@ -96,7 +97,7 @@ describe("LogoutButton", () => {
     renderApp();
 
     expect(
-      await screen.findByRole("button", { name: "Logout" }),
+      await screen.findByRole("button", { name: headerConst.logoutButtonText }),
     ).toBeVisible();
   });
 
@@ -107,7 +108,7 @@ describe("LogoutButton", () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByRole("button", { name: "Logout" }),
+        screen.queryByRole("button", { name: headerConst.logoutButtonText }),
       ).not.toBeInTheDocument();
     });
   });
@@ -117,14 +118,16 @@ describe("LogoutButton", () => {
     mockedLogoutClientAccount.mockResolvedValueOnce(undefined);
     const { router } = renderApp();
 
-    await userEvent.click(await screen.findByRole("button", { name: "Logout" }));
+    await userEvent.click(
+      await screen.findByRole("button", { name: headerConst.logoutButtonText }),
+    );
 
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/");
     });
     expect(await screen.findByText("Home public")).toBeVisible();
     expect(
-      screen.queryByRole("button", { name: "Logout" }),
+      screen.queryByRole("button", { name: headerConst.logoutButtonText }),
     ).not.toBeInTheDocument();
   });
 
@@ -133,14 +136,16 @@ describe("LogoutButton", () => {
     mockedLogoutClientAccount.mockRejectedValueOnce(new ApiError(401, null));
     const { router } = renderApp();
 
-    await userEvent.click(await screen.findByRole("button", { name: "Logout" }));
+    await userEvent.click(
+      await screen.findByRole("button", { name: headerConst.logoutButtonText }),
+    );
 
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/");
     });
     expect(await screen.findByText("Home public")).toBeVisible();
     expect(
-      screen.queryByRole("button", { name: "Logout" }),
+      screen.queryByRole("button", { name: headerConst.logoutButtonText }),
     ).not.toBeInTheDocument();
   });
 
@@ -149,13 +154,17 @@ describe("LogoutButton", () => {
     mockedLogoutClientAccount.mockRejectedValueOnce(new Error("network"));
     const { router } = renderApp();
 
-    await userEvent.click(await screen.findByRole("button", { name: "Logout" }));
+    await userEvent.click(
+      await screen.findByRole("button", { name: headerConst.logoutButtonText }),
+    );
 
     expect(await screen.findByRole("alert")).toHaveTextContent(
       "Something went wrong",
     );
     expect(router.state.location.pathname).toBe("/account");
     expect(screen.getByText("Authenticated account")).toBeVisible();
-    expect(screen.getByRole("button", { name: "Logout" })).toBeVisible();
+    expect(
+      screen.getByRole("button", { name: headerConst.logoutButtonText }),
+    ).toBeVisible();
   });
 });

@@ -9,8 +9,6 @@ import { MyRequestsFilters } from "../../../features/request/my-requests-filters
 import { MyRequestsList } from "../../../features/request/my-requests-list/ui/MyRequestsList";
 import { myRequestsConst } from "../../../features/request/my-requests-list/ui/myRequestsConst";
 import { clientRoutes } from "../../../shared/config/clientRoutes";
-import { Footer } from "../../../shared/ui/layout/Footer";
-import { Header } from "../../../shared/ui/layout/Header";
 import {
   parseMyRequestsUrlFilters,
   serializeMyRequestsUrlFilters,
@@ -39,9 +37,7 @@ const MyRequestsPage = () => {
   };
 
   return (
-    <>
-      <Header />
-      <main className="content">
+    <main className="content">
         <section className="myRequestsPage" aria-labelledby="my-requests-heading">
           <h1 id="my-requests-heading">{myRequestsConst.pageTitle}</h1>
 
@@ -94,9 +90,7 @@ const MyRequestsPage = () => {
             />
           )}
         </section>
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 };
 

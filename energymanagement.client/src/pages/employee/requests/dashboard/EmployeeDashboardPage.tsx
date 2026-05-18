@@ -10,8 +10,6 @@ import { employeeRequestDashboardConst } from "../../../../entities/employee-req
 import { useSession } from "../../../../entities/session/model/useSession";
 import { StartReviewButton } from "../../../../features/employee-request/start-review/ui/StartReviewButton";
 import { clientRoutes } from "../../../../shared/config/clientRoutes";
-import { Footer } from "../../../../shared/ui/layout/Footer";
-import { Header } from "../../../../shared/ui/layout/Header";
 import { EmployeeRequestDashboardFilters } from "./EmployeeRequestDashboardFilters";
 import {
   parseEmployeeDashboardUrlFilters,
@@ -48,83 +46,79 @@ const EmployeeDashboardPage = () => {
   };
 
   return (
-    <>
-      <Header />
-      <main className="content">
-        <section
-          className="employeeDashboardPage"
-          aria-labelledby="employee-dashboard-heading"
-        >
-          <h1 id="employee-dashboard-heading">
-            {employeeRequestDashboardConst.pageTitle}
-          </h1>
-          <p>{employeeRequestDashboardConst.pageDescription}</p>
+    <main className="content">
+      <section
+        className="employeeDashboardPage"
+        aria-labelledby="employee-dashboard-heading"
+      >
+        <h1 id="employee-dashboard-heading">
+          {employeeRequestDashboardConst.pageTitle}
+        </h1>
+        <p>{employeeRequestDashboardConst.pageDescription}</p>
 
-          {!session && (
-            <div className="employeeDashboardPage__state">
-              <h2>{employeeRequestDashboardConst.signInRequiredTitle}</h2>
-              <p>{employeeRequestDashboardConst.signInRequiredDescription}</p>
-              <Link to={clientRoutes.login}>
-                {employeeRequestDashboardConst.signInLinkText}
-              </Link>
-            </div>
-          )}
+        {!session && (
+          <div className="employeeDashboardPage__state">
+            <h2>{employeeRequestDashboardConst.signInRequiredTitle}</h2>
+            <p>{employeeRequestDashboardConst.signInRequiredDescription}</p>
+            <Link to={clientRoutes.login}>
+              {employeeRequestDashboardConst.signInLinkText}
+            </Link>
+          </div>
+        )}
 
-          {session && !isEmployee && (
-            <div className="employeeDashboardPage__state" role="alert">
-              <h2>{employeeRequestDashboardConst.accessDeniedTitle}</h2>
-              <p>{employeeRequestDashboardConst.accessDeniedDescription}</p>
-            </div>
-          )}
+        {session && !isEmployee && (
+          <div className="employeeDashboardPage__state" role="alert">
+            <h2>{employeeRequestDashboardConst.accessDeniedTitle}</h2>
+            <p>{employeeRequestDashboardConst.accessDeniedDescription}</p>
+          </div>
+        )}
 
-          {session && isEmployee && (
-            <EmployeeRequestDashboardFilters
-              filters={filters}
-              onChange={handleFiltersChange}
-              onReset={handleResetFilters}
-            />
-          )}
+        {session && isEmployee && (
+          <EmployeeRequestDashboardFilters
+            filters={filters}
+            onChange={handleFiltersChange}
+            onReset={handleResetFilters}
+          />
+        )}
 
-          {session && isEmployee && hasInvalidFilters && (
-            <div className="employeeDashboardPage__state" role="alert">
-              <p>{parsedFilters.invalidFilterReason}</p>
-              <button type="button" onClick={handleResetFilters}>
-                {employeeRequestDashboardConst.invalidFiltersResetText}
-              </button>
-            </div>
-          )}
+        {session && isEmployee && hasInvalidFilters && (
+          <div className="employeeDashboardPage__state" role="alert">
+            <p>{parsedFilters.invalidFilterReason}</p>
+            <button type="button" onClick={handleResetFilters}>
+              {employeeRequestDashboardConst.invalidFiltersResetText}
+            </button>
+          </div>
+        )}
 
-          {session && isEmployee && !hasInvalidFilters && dashboardQuery.isPending && (
-            <p className="employeeDashboardPage__state">
-              {employeeRequestDashboardConst.loadingText}
-            </p>
-          )}
+        {session && isEmployee && !hasInvalidFilters && dashboardQuery.isPending && (
+          <p className="employeeDashboardPage__state">
+            {employeeRequestDashboardConst.loadingText}
+          </p>
+        )}
 
-          {session && isEmployee && !hasInvalidFilters && dashboardQuery.isError && (
-            <p className="employeeDashboardPage__state" role="alert">
-              {employeeRequestDashboardConst.errorText}
-            </p>
-          )}
+        {session && isEmployee && !hasInvalidFilters && dashboardQuery.isError && (
+          <p className="employeeDashboardPage__state" role="alert">
+            {employeeRequestDashboardConst.errorText}
+          </p>
+        )}
 
-          {session && isEmployee && !hasInvalidFilters && dashboardQuery.data && (
-            <EmployeeRequestDashboardList
-              requests={dashboardQuery.data}
-              emptyStateVariant={hasActiveFilters ? "filtered" : "default"}
-              onResetFilters={handleResetFilters}
-              renderRowActions={(request) =>
-                canStartReviewFromDashboardRow(request) ? (
-                  <StartReviewButton
-                    requestId={request.requestId}
-                    surface="dashboard"
-                  />
-                ) : null
-              }
-            />
-          )}
-        </section>
-      </main>
-      <Footer />
-    </>
+        {session && isEmployee && !hasInvalidFilters && dashboardQuery.data && (
+          <EmployeeRequestDashboardList
+            requests={dashboardQuery.data}
+            emptyStateVariant={hasActiveFilters ? "filtered" : "default"}
+            onResetFilters={handleResetFilters}
+            renderRowActions={(request) =>
+              canStartReviewFromDashboardRow(request) ? (
+                <StartReviewButton
+                  requestId={request.requestId}
+                  surface="dashboard"
+                />
+              ) : null
+            }
+          />
+        )}
+      </section>
+    </main>
   );
 };
 

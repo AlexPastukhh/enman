@@ -6,8 +6,6 @@ import { MyRequestDetailsView } from "../../../features/request/my-request-detai
 import { myRequestDetailsConst } from "../../../features/request/my-request-details/ui/myRequestDetailsConst";
 import { ApiError } from "../../../shared/api/fetchJson";
 import { clientRoutes } from "../../../shared/config/clientRoutes";
-import { Footer } from "../../../shared/ui/layout/Footer";
-import { Header } from "../../../shared/ui/layout/Header";
 import "./myRequestDetailsPage.css";
 
 const parseRequestId = (value: string | undefined) => {
@@ -34,9 +32,7 @@ const MyRequestDetailsPage = () => {
       requestDetailsQuery.error.status === 404);
 
   return (
-    <>
-      <Header />
-      <main className="content">
+    <main className="content">
         <section
           className="myRequestDetailsPage"
           aria-labelledby="my-request-details-page-heading"
@@ -71,9 +67,7 @@ const MyRequestDetailsPage = () => {
             <MyRequestDetailsView request={requestDetailsQuery.data} />
           )}
         </section>
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 };
 

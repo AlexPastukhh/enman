@@ -1,7 +1,5 @@
 import { useSession } from "../../entities/session/model/useSession";
 import { clientRoutes } from "../../shared/config/clientRoutes";
-import { Footer } from "../../shared/ui/layout/Footer";
-import { Header } from "../../shared/ui/layout/Header";
 import { NavButtonHollow } from "../../shared/ui/layout/NavButtonHollow";
 import { NavButtonPrimary } from "../../shared/ui/layout/NavButtonPrimary";
 
@@ -14,9 +12,7 @@ const HomePage = () => {
   const clientSession = isClient(session?.role);
 
   return (
-    <>
-      <Header />
-      <main className="content homePage">
+    <main className="content homePage">
         <section className="homePage__hero pageCard" aria-labelledby="home-page-heading">
           <div>
             <p className="pageEyebrow">Energy Management</p>
@@ -96,9 +92,7 @@ const HomePage = () => {
             </NavButtonHollow>
           </article>
         </section>
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 };
 

@@ -1,3 +1,16 @@
+.appShell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.appShell__session-loading {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
 .header {
   position: sticky;
   top: 0;
@@ -73,6 +86,16 @@
 .header__nav-link.active {
   color: var(--color-primary);
   background: var(--color-primary-soft);
+}
+
+.header__session-loading {
+  min-height: 4rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.9rem 1.2rem;
+  color: var(--color-muted);
+  font-size: 1.4rem;
+  font-weight: 800;
 }
 
 .header__logout {

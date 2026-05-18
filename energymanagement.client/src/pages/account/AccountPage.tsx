@@ -8,8 +8,6 @@ import { useMakeApplicantPartyCurrentDefaultMutation } from "../../features/appl
 import { MakeCurrentDefaultButton } from "../../features/applicant-party/make-current-default/ui/MakeCurrentDefaultButton";
 import { makeCurrentDefaultButtonConst } from "../../features/applicant-party/make-current-default/ui/makeCurrentDefaultButtonConst";
 import { clientRoutes } from "../../shared/config/clientRoutes";
-import { Footer } from "../../shared/ui/layout/Footer";
-import { Header } from "../../shared/ui/layout/Header";
 
 const getApplicantPartyId = (applicantParty: ApplicantPartySummary) => {
   const id = applicantParty.applicantPartyId;
@@ -60,9 +58,7 @@ const AccountPage = () => {
   };
 
   return (
-    <>
-      <Header />
-      <main className="content">
+    <main className="content">
         {!session && (
           <section className="accountPage__signedOut pageCard" aria-labelledby="account-signed-out-heading">
             <p className="pageEyebrow">Личный кабинет</p>
@@ -110,9 +106,7 @@ const AccountPage = () => {
             />
           </section>
         )}
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 };
 

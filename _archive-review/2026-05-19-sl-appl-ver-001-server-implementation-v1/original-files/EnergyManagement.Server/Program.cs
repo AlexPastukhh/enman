@@ -53,7 +53,6 @@ builder.Services.AddScoped(
 builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 builder.Services.AddTransient<IApplicantPartyRepository, ApplicantPartyRepository>();
 builder.Services.AddTransient<IApplicantPartyCreationService, ApplicantPartyCreationService>();
-builder.Services.AddTransient<IApplicantPartyMockVerificationService, MockApplicantPartyVerificationService>();
 builder.Services.AddTransient<IClientRequestRepository, ClientRequestRepository>();
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddTransient<IAgreementProposalExchangeRepository, AgreementProposalExchangeRepository>();

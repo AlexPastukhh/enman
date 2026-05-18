@@ -4,8 +4,6 @@ import { useSession } from "../../../entities/session/model/useSession";
 import { CreateConnectionRequestForm } from "../../../features/request/create-connection-request/ui/CreateConnectionRequestForm";
 import { createConnectionRequestConst } from "../../../features/request/create-connection-request/ui/createConnectionRequestConst";
 import { clientRoutes } from "../../../shared/config/clientRoutes";
-import { Footer } from "../../../shared/ui/layout/Footer";
-import { Header } from "../../../shared/ui/layout/Header";
 import "./createConnectionRequestPage.css";
 
 const CreateConnectionRequestPage = () => {
@@ -22,9 +20,7 @@ const CreateConnectionRequestPage = () => {
   };
 
   return (
-    <>
-      <Header />
-      <main className="content">
+    <main className="content">
         <section
           className="createConnectionRequestPage"
           aria-labelledby="create-connection-request-page-heading"
@@ -62,9 +58,7 @@ const CreateConnectionRequestPage = () => {
             />
           )}
         </section>
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 };
 

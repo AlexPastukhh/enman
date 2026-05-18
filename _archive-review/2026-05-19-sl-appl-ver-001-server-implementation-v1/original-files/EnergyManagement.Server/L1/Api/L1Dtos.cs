@@ -188,13 +188,6 @@ public sealed record SendAgreementProposalVersionDto(
 public sealed record FinalRefuseAgreementExchangeDto(
     [property: JsonPropertyName("reason")] string? Reason);
 
-public sealed record RunApplicantPartyVerificationResponseDto(
-    [property: JsonPropertyName("requestId")] long RequestId,
-    [property: JsonPropertyName("applicantPartyId")] long ApplicantPartyId,
-    [property: JsonPropertyName("verificationStatus")] string VerificationStatus,
-    [property: JsonPropertyName("mockResult")] string MockResult,
-    [property: JsonPropertyName("message")] string? Message);
-
 public sealed record EmployeeRejectRequestReviewDto(
     [property: JsonPropertyName("feedback")] string? Feedback);
 

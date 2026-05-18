@@ -1,4 +1,5 @@
 import { PhoneIcon } from "../../../assets/icons/svgr_barrel";
+import { useSessionQuery } from "../../../entities/session/model/useSessionQuery";
 import { useSession } from "../../../entities/session/model/useSession";
 import { LogoutButton } from "../../../features/auth/logout/ui/LogoutButton";
 import { clientRoutes } from "../../config/clientRoutes";
@@ -8,11 +9,15 @@ import { HomeNavLink } from "./HomeNavLink";
 
 const isEmployee = (role?: string | null) => role === "Employee";
 const isClient = (role?: string | null) => role === "Client";
+const isAdmin = (role?: string | null) => role === "Admin";
 
 export const Header = () => {
   const session = useSession();
+  const sessionQuery = useSessionQuery();
   const employeeSession = isEmployee(session?.role);
   const clientSession = isClient(session?.role);
+  const adminSession = isAdmin(session?.role);
+  const isSessionLoading = sessionQuery.isPending;
 
   return (
     <header className="header">
@@ -20,7 +25,13 @@ export const Header = () => {
         <HomeNavLink />
 
         <nav className="header__actions" aria-label="Основная навигация">
-          {!session && (
+          {isSessionLoading && (
+            <span className="header__session-loading" role="status">
+              {headerConst.sessionLoadingText}
+            </span>
+          )}
+
+          {!isSessionLoading && !session && (
             <>
               <HeaderNavLink to={clientRoutes.home}>
                 {headerConst.homeLinkText}
@@ -65,7 +76,13 @@ export const Header = () => {
             </>
           )}
 
-          {session && (
+          {adminSession && (
+            <HeaderNavLink to={clientRoutes.account}>
+              {headerConst.accountLinkText}
+            </HeaderNavLink>
+          )}
+
+          {!isSessionLoading && session && (
             <LogoutButton
               className="header__nav-button"
               label={headerConst.logoutButtonText}

@@ -1,14 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { LoginForm } from "../../features/auth/login/ui/LoginForm";
 import { clientRoutes } from "../../shared/config/clientRoutes";
-import { Footer } from "../../shared/ui/layout/Footer";
-import { Header } from "../../shared/ui/layout/Header";
 
 export const LoginPage = () => {
   return (
-    <>
-      <Header />
-      <main className="content">
+    <main className="content">
         <section className="authPage" aria-labelledby="login-page-heading">
           <div className="authPage__intro">
             <p className="pageEyebrow">Вход</p>
@@ -32,8 +28,6 @@ export const LoginPage = () => {
             <LoginForm />
           </div>
         </section>
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 };

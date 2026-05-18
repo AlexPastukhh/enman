@@ -12,8 +12,6 @@ import { RejectReviewForm } from "../../../../features/employee-request/reject-r
 import { StartReviewButton } from "../../../../features/employee-request/start-review/ui/StartReviewButton";
 import { ApiError } from "../../../../shared/api/fetchJson";
 import { clientRoutes } from "../../../../shared/config/clientRoutes";
-import { Footer } from "../../../../shared/ui/layout/Footer";
-import { Header } from "../../../../shared/ui/layout/Header";
 import "./employeeRequestDetailsPage.css";
 
 const isEmployeeSession = (role?: string | null) => role === "Employee";
@@ -47,106 +45,102 @@ const EmployeeRequestDetailsPage = () => {
     (detailsQuery.error.status === 401 || detailsQuery.error.status === 403);
 
   return (
-    <>
-      <Header />
-      <main className="content">
-        <section
-          className="employeeRequestDetailsPage"
-          aria-labelledby="employee-request-details-page-heading"
-        >
-          <Link to={clientRoutes.employeeRequests}>
-            {employeeRequestDetailsConst.backToDashboardText}
-          </Link>
+    <main className="content">
+      <section
+        className="employeeRequestDetailsPage"
+        aria-labelledby="employee-request-details-page-heading"
+      >
+        <Link to={clientRoutes.employeeRequests}>
+          {employeeRequestDetailsConst.backToDashboardText}
+        </Link>
 
-          <h1 id="employee-request-details-page-heading">
-            {employeeRequestDetailsConst.pageTitle}
-          </h1>
+        <h1 id="employee-request-details-page-heading">
+          {employeeRequestDetailsConst.pageTitle}
+        </h1>
 
-          {!session && (
-            <div className="employeeRequestDetailsPage__state">
-              <h2>{employeeRequestDetailsConst.signInRequiredTitle}</h2>
-              <p>{employeeRequestDetailsConst.signInRequiredDescription}</p>
-              <Link to={clientRoutes.login}>
-                {employeeRequestDetailsConst.signInLinkText}
-              </Link>
-            </div>
-          )}
+        {!session && (
+          <div className="employeeRequestDetailsPage__state">
+            <h2>{employeeRequestDetailsConst.signInRequiredTitle}</h2>
+            <p>{employeeRequestDetailsConst.signInRequiredDescription}</p>
+            <Link to={clientRoutes.login}>
+              {employeeRequestDetailsConst.signInLinkText}
+            </Link>
+          </div>
+        )}
 
-          {session && !isEmployee && (
-            <div className="employeeRequestDetailsPage__state" role="alert">
-              <h2>{employeeRequestDetailsConst.accessDeniedTitle}</h2>
-              <p>{employeeRequestDetailsConst.accessDeniedDescription}</p>
-            </div>
-          )}
+        {session && !isEmployee && (
+          <div className="employeeRequestDetailsPage__state" role="alert">
+            <h2>{employeeRequestDetailsConst.accessDeniedTitle}</h2>
+            <p>{employeeRequestDetailsConst.accessDeniedDescription}</p>
+          </div>
+        )}
 
-          {session && isEmployee && isNotFound && (
-            <EmployeeRequestDetailsEmptyState />
-          )}
+        {session && isEmployee && isNotFound && (
+          <EmployeeRequestDetailsEmptyState />
+        )}
 
-          {session && isEmployee && !isNotFound && detailsQuery.isPending && (
-            <p className="employeeRequestDetailsPage__state">
-              {employeeRequestDetailsConst.loadingText}
+        {session && isEmployee && !isNotFound && detailsQuery.isPending && (
+          <p className="employeeRequestDetailsPage__state">
+            {employeeRequestDetailsConst.loadingText}
+          </p>
+        )}
+
+        {session && isEmployee && !isNotFound && isAccessError && (
+          <div className="employeeRequestDetailsPage__state" role="alert">
+            <h2>{employeeRequestDetailsConst.accessDeniedTitle}</h2>
+            <p>{employeeRequestDetailsConst.accessDeniedDescription}</p>
+          </div>
+        )}
+
+        {session &&
+          isEmployee &&
+          !isNotFound &&
+          !isAccessError &&
+          detailsQuery.isError && (
+            <p className="employeeRequestDetailsPage__state" role="alert">
+              {employeeRequestDetailsConst.errorText}
             </p>
           )}
 
-          {session && isEmployee && !isNotFound && isAccessError && (
-            <div className="employeeRequestDetailsPage__state" role="alert">
-              <h2>{employeeRequestDetailsConst.accessDeniedTitle}</h2>
-              <p>{employeeRequestDetailsConst.accessDeniedDescription}</p>
-            </div>
-          )}
+        {session && isEmployee && !isNotFound && detailsQuery.data && (
+          <EmployeeRequestDetailsView
+            details={detailsQuery.data}
+            renderReviewActions={(details) => {
+              const availability = getEmployeeReviewActionAvailability(details);
+              const startExchangeAvailability =
+                getStartAgreementExchangeAvailability(details);
 
-          {session &&
-            isEmployee &&
-            !isNotFound &&
-            !isAccessError &&
-            detailsQuery.isError && (
-              <p className="employeeRequestDetailsPage__state" role="alert">
-                {employeeRequestDetailsConst.errorText}
-              </p>
-            )}
-
-          {session && isEmployee && !isNotFound && detailsQuery.data && (
-            <EmployeeRequestDetailsView
-              details={detailsQuery.data}
-              renderReviewActions={(details) => {
-                const availability = getEmployeeReviewActionAvailability(details);
-                const startExchangeAvailability =
-                  getStartAgreementExchangeAvailability(details);
-
-                return (
-                  <>
-                    <StartReviewButton
-                      requestId={details.requestId}
-                      disabled={!availability.canStartReview}
-                      unavailableReason={availability.reason}
-                      surface="details"
-                    />
-                    <ApproveReviewButton
-                      requestId={details.requestId}
-                      disabled={!availability.canApproveReview}
-                      unavailableReason={availability.reason}
-                    />
-                    <RejectReviewForm
-                      requestId={details.requestId}
-                      disabled={!availability.canRejectReview}
-                      unavailableReason={availability.reason}
-                      showEmptyFeedbackWarning
-                    />
-                    <StartAgreementExchangeForm
-                      requestId={details.requestId}
-                      disabled={!startExchangeAvailability.canStartAgreementExchange}
-                      unavailableReason={startExchangeAvailability.reason}
-                    />
-                  </>
-                );
-              }}
-            />
-          )}
-        </section>
-      </main>
-      <Footer />
-    </>
+              return (
+                <>
+                  <StartReviewButton
+                    requestId={details.requestId}
+                    disabled={!availability.canStartReview}
+                    unavailableReason={availability.reason}
+                    surface="details"
+                  />
+                  <ApproveReviewButton
+                    requestId={details.requestId}
+                    disabled={!availability.canApproveReview}
+                    unavailableReason={availability.reason}
+                  />
+                  <RejectReviewForm
+                    requestId={details.requestId}
+                    disabled={!availability.canRejectReview}
+                    unavailableReason={availability.reason}
+                    showEmptyFeedbackWarning
+                  />
+                  <StartAgreementExchangeForm
+                    requestId={details.requestId}
+                    disabled={!startExchangeAvailability.canStartAgreementExchange}
+                    unavailableReason={startExchangeAvailability.reason}
+                  />
+                </>
+              );
+            }}
+          />
+        )}
+      </section>
+    </main>
   );
 };
 

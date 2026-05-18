@@ -1,4 +1,4 @@
-import { createBrowserRouter, useRouteError } from "react-router-dom";
+import { createBrowserRouter, Outlet, useRouteError } from "react-router-dom";
 import AccountPage from "../../pages/account/AccountPage";
 import ClientAgreementExchangeDetailsPage from "../../pages/agreements/details/ClientAgreementExchangeDetailsPage";
 import ClientAgreementExchangesPage from "../../pages/agreements/my/ClientAgreementExchangesPage";
@@ -13,6 +13,7 @@ import CreateConnectionRequestPage from "../../pages/requests/create/CreateConne
 import MyRequestsPage from "../../pages/requests/my/MyRequestsPage";
 import RegisterPage from "../../pages/register/RegisterPage";
 import { clientRoutes } from "../../shared/config/clientRoutes";
+import { LayoutWrapper } from "../../shared/ui/layout/LayoutWrapper";
 import TestSiteMockup from "../../test-site-mockup/TestSiteMockup";
 
 type RouterError = {
@@ -28,75 +29,74 @@ const RouteError = () => {
   );
 };
 
+const AppShellRoute = () => (
+  <LayoutWrapper>
+    <Outlet />
+  </LayoutWrapper>
+);
+
 export const router = createBrowserRouter([
   {
     path: clientRoutes.home,
-    element: <HomePage />,
+    element: <AppShellRoute />,
     errorElement: <RouteError />,
-  },
-  {
-    path: clientRoutes.register,
-    element: <RegisterPage />,
-    errorElement: <RouteError />,
-  },
-  {
-    path: clientRoutes.login,
-    element: <LoginPage />,
-    errorElement: <RouteError />,
-  },
-  {
-    path: clientRoutes.account,
-    element: <AccountPage />,
-    errorElement: <RouteError />,
-  },
-  {
-    path: clientRoutes.requests,
-    element: <MyRequestsPage />,
-    errorElement: <RouteError />,
-  },
-  {
-    path: clientRoutes.employeeRequests,
-    element: <EmployeeDashboardPage />,
-    errorElement: <RouteError />,
-  },
-  {
-    path: clientRoutes.agreementExchanges,
-    element: <ClientAgreementExchangesPage />,
-    errorElement: <RouteError />,
-  },
-  {
-    path: clientRoutes.agreementExchangeDetailsPath,
-    element: <ClientAgreementExchangeDetailsPage />,
-    errorElement: <RouteError />,
-  },
-  {
-    path: clientRoutes.employeeAgreementExchanges,
-    element: <EmployeeAgreementExchangesDashboardPage />,
-    errorElement: <RouteError />,
-  },
-  {
-    path: clientRoutes.employeeAgreementExchangeDetailsPath,
-    element: <EmployeeAgreementExchangeDetailsPage />,
-    errorElement: <RouteError />,
-  },
-  {
-    path: clientRoutes.employeeRequestDetailsPath,
-    element: <EmployeeRequestDetailsPage />,
-    errorElement: <RouteError />,
-  },
-  {
-    path: clientRoutes.createRequest,
-    element: <CreateConnectionRequestPage />,
-    errorElement: <RouteError />,
-  },
-  {
-    path: clientRoutes.requestDetailsPath,
-    element: <MyRequestDetailsPage />,
-    errorElement: <RouteError />,
-  },
-  {
-    path: clientRoutes.testUi,
-    element: <TestSiteMockup />,
-    errorElement: <RouteError />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: clientRoutes.register,
+        element: <RegisterPage />,
+      },
+      {
+        path: clientRoutes.login,
+        element: <LoginPage />,
+      },
+      {
+        path: clientRoutes.account,
+        element: <AccountPage />,
+      },
+      {
+        path: clientRoutes.requests,
+        element: <MyRequestsPage />,
+      },
+      {
+        path: clientRoutes.employeeRequests,
+        element: <EmployeeDashboardPage />,
+      },
+      {
+        path: clientRoutes.agreementExchanges,
+        element: <ClientAgreementExchangesPage />,
+      },
+      {
+        path: clientRoutes.agreementExchangeDetailsPath,
+        element: <ClientAgreementExchangeDetailsPage />,
+      },
+      {
+        path: clientRoutes.employeeAgreementExchanges,
+        element: <EmployeeAgreementExchangesDashboardPage />,
+      },
+      {
+        path: clientRoutes.employeeAgreementExchangeDetailsPath,
+        element: <EmployeeAgreementExchangeDetailsPage />,
+      },
+      {
+        path: clientRoutes.employeeRequestDetailsPath,
+        element: <EmployeeRequestDetailsPage />,
+      },
+      {
+        path: clientRoutes.createRequest,
+        element: <CreateConnectionRequestPage />,
+      },
+      {
+        path: clientRoutes.requestDetailsPath,
+        element: <MyRequestDetailsPage />,
+      },
+      {
+        path: clientRoutes.testUi,
+        element: <TestSiteMockup />,
+      },
+    ],
   },
 ]);

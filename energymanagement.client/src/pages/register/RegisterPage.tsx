@@ -1,14 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { RegisterForm } from "../../features/auth/register/ui/RegisterForm";
 import { clientRoutes } from "../../shared/config/clientRoutes";
-import { Footer } from "../../shared/ui/layout/Footer";
-import { Header } from "../../shared/ui/layout/Header";
 
 const RegisterPage = () => {
   return (
-    <>
-      <Header />
-      <main className="content register-page">
+    <main className="content register-page">
         <section className="authPage" aria-labelledby="register-page-heading">
           <div className="authPage__intro">
             <p className="pageEyebrow">Клиентский аккаунт</p>
@@ -32,9 +28,7 @@ const RegisterPage = () => {
             <RegisterForm />
           </div>
         </section>
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 };
 
