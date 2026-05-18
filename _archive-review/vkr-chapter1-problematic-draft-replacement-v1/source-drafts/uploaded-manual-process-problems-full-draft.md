@@ -1,3 +1,16 @@
+Сохранять сюда:
+
+```text
+planning/thesis/vkr-topic-workbench/
+└─ 02-chapter-1-analysis/
+   └─ 03-problematic/
+      └─ 01-manual-process-problems.topic.md
+```
+
+В repo сейчас там лежит старый заготовочный файл со статусом `material-harvest-needed`, смешанным русско-английским текстом и коротким планом, поэтому его нужно будет заменить этим полным русским драфтом. 
+
+---
+
 # Тема: Проблематика ручного и разрозненного ведения заявок, документов и уведомлений
 
 **Статус:** полный topic-драфт v2 / добавлены уровень доказанности, problem-to-requirement bridge, большая матрица вопросов / нужен research bridge / нужен docs-check / готов к text generation и visual bridge
