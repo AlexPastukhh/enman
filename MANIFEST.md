@@ -1,56 +1,39 @@
-# MANIFEST
+# MANIFEST — enman-vkr-chapter1-workbench-refine-v1
 
-Archive: `archive-merge-workflow-with-originals-v1`  
-Review folder: `_archive-review/2026-05-18-archive-merge-workflow-v1/`
+Archive slug: `2026-05-18-chapter-1-workbench-refine-v1`
 
 ## Purpose
 
-Introduce a safe two-step archive workflow and update navigation to point to it.
+Refine Chapter 1 topic workbench structure according to the methodical logic of pre-project analysis and add the first topic draft for point 1.1.
 
 ## New files
 
-```text
-planning/archive-workflow/README.md
-planning/archive-workflow/SAFE-ARCHIVE-MERGE-WORKFLOW.md
-planning/archive-workflow/ARCHIVE-PLAN-TEMPLATE.md
-planning/archive-workflow/POST-APPLY-MERGE-REVIEW-WORKFLOW.md
-planning/archive-workflow/ARCHIVE-REVIEW-FOLDER-RULES.md
-```
+- `planning/thesis/vkr-topic-workbench/00-workflow-and-rules/archive-merge-safety-protocol.md`
+- `planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/chapter-1-structure-decision-v2.md`
+- new active Chapter 1 folders:
+  - `01-domain-process/`
+  - `02-documents-and-feedback/`
+  - `03-problematic/`
+  - `04-automation-options/`
+  - `05-selected-direction-and-requirements/`
+- `_archive-review/2026-05-18-chapter-1-workbench-refine-v1/...`
 
 ## Replacement files
 
-```text
-planning/slices/SLICE-FOLDER-MAP.md
-planning/slices/SLICE-INDEX.md
-planning/slices/SLICE-QUESTIONS.md
-```
-
-All replacement files are additive merges: existing content is preserved and archive workflow navigation is appended.
+- `planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/README.md`
+- `planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/topic-index.md`
+- `planning/thesis/vkr-topic-workbench/00-workflow-and-rules/author-materials/raw-author-message-log.md`
 
 ## Original snapshots included
 
-```text
-_archive-review/2026-05-18-archive-merge-workflow-v1/original-files/planning/slices/SLICE-FOLDER-MAP.md
-_archive-review/2026-05-18-archive-merge-workflow-v1/original-files/planning/slices/SLICE-INDEX.md
-_archive-review/2026-05-18-archive-merge-workflow-v1/original-files/planning/slices/SLICE-QUESTIONS.md
-```
+- `_archive-review/2026-05-18-chapter-1-workbench-refine-v1/original-files/planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/README.md`
+- `_archive-review/2026-05-18-chapter-1-workbench-refine-v1/original-files/planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/topic-index.md`
+- `_archive-review/2026-05-18-chapter-1-workbench-refine-v1/original-files/planning/thesis/vkr-topic-workbench/00-workflow-and-rules/author-materials/raw-author-message-log.md`
 
-## Review material included
+## High-risk files
 
-```text
-_archive-review/2026-05-18-archive-merge-workflow-v1/ARCHIVE-PLAN.md
-_archive-review/2026-05-18-archive-merge-workflow-v1/ORIGINALS-INDEX.md
-_archive-review/2026-05-18-archive-merge-workflow-v1/MERGE-RISK-REPORT.md
-_archive-review/2026-05-18-archive-merge-workflow-v1/raw-author-message-log.md
-_archive-review/2026-05-18-archive-merge-workflow-v1/derived-decisions.md
-```
+- Chapter 1 README and topic index because the active folder structure is being refined.
 
-## Not included
+## Cleanup
 
-```text
-- no runtime implementation changes
-- no test implementation changes
-- no OpenAPI/generated file changes
-- no mass update of slice drafts
-- no source-sync registry changes
-```
+No deletes are performed. Legacy first-version Chapter 1 folders remain in the repo and must be reviewed later before cleanup.

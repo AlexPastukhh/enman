@@ -1,23 +1,45 @@
-# Apply
+# APPLY — enman-vkr-chapter1-workbench-refine-v1
 
-Docs-only archive. Apply from repository root:
+This is a safe merge archive with replacement files and original snapshots.
+
+## Apply safely
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\archive-merge-workflow-with-originals-v1.zip" -DestinationPath "." -Force
+cd "C:\enman\enman"
+
+$tmp = "$env:TEMP\enman-vkr-chapter1-workbench-refine-v1"
+Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
+
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-chapter1-workbench-refine-v1.zip" -DestinationPath $tmp -Force
+
+Copy-Item -Path "$tmp\planning" -Destination "." -Recurse -Force
+Copy-Item -Path "$tmp\_archive-review" -Destination "." -Recurse -Force
+Copy-Item "$tmp\MANIFEST.md" ".\MANIFEST.vkr-chapter1-workbench-refine-v1.md"
+Copy-Item "$tmp\APPLY.md" ".\APPLY.vkr-chapter1-workbench-refine-v1.md"
+
+git status
 ```
 
-This archive follows the safe archive workflow it introduces.
+## Review after applying
 
-It includes replacement files and also preserves originals for those replacements in:
-
-```text
-_archive-review/2026-05-18-archive-merge-workflow-v1/original-files/
+```powershell
+git diff -- planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/README.md
+git diff -- planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/topic-index.md
+git diff -- planning/thesis/vkr-topic-workbench/00-workflow-and-rules/author-materials/raw-author-message-log.md
+git diff -- planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/01-domain-process/01-client-request-process.topic.md
 ```
 
-After applying, run the post-apply review described in:
+## Add to git
 
-```text
-planning/archive-workflow/POST-APPLY-MERGE-REVIEW-WORKFLOW.md
+```powershell
+git add planning/thesis/vkr-topic-workbench `
+        _archive-review/2026-05-18-chapter-1-workbench-refine-v1 `
+        MANIFEST.vkr-chapter1-workbench-refine-v1.md `
+        APPLY.vkr-chapter1-workbench-refine-v1.md
+
+git commit -m "Refine VKR Chapter 1 topic workbench"
 ```
 
-No runtime source code, OpenAPI artifacts, generated API types, routes, CSS implementation or app code are changed.
+## Important
+
+Do not delete legacy Chapter 1 folders from the first workbench version yet. They are intentionally left for a later cleanup/merge review.
