@@ -1,25 +1,21 @@
-# SC-05 — My Requests UI Spec
+# SC-05 — My Requests UI Scenario
 
-Status: current UI scenario source / list-filter-details split  
-Scenario: `SC-05 — My Requests / Own Request Details`  
-Scope: visible UI behavior for My Requests list, filters, empty states and details entry.
+Status: mostly complete / normalized UI scenario source  
+Applies to: My Requests list, filters, details entry  
+Actors: Client  
+Related scenario: `SC-05 — My Requests / Own Request Details`  
+Related slices: `SL-REQ-002-my-requests-list`, `SL-REQ-003-own-request-details`, related client sidecars when migrated
 
-## 1. Purpose
+## 1. User Goal
 
-The My Requests UI lets an authenticated client view their own requests, filter the list by supported criteria and open one request details page.
+The authenticated Client views their own requests, filters the list by supported criteria and opens one request details page.
 
-This file describes visible outcomes and accepted UI behavior. It does not define React component placement, query keys or HTTP wrapper implementation.
-
-## 2. List UI
-
-When the authenticated client opens My Requests:
+## 2. Screen Entry Points
 
 ```text
-[Authenticated Client]
-opens My Requests page
+Authenticated Client opens My Requests page
         ↓
-[Client UI]
-loads own requests
+Client UI loads own requests
         ↓
  ┌──────────────────────────────┬──────────────────────────────┐
  │ own requests exist           │ no own requests              │
@@ -27,35 +23,38 @@ loads own requests
 request list visible            regular empty state visible
 ```
 
+## 3. Screen Composition
+
+```text
+My Requests page
+  Page title / intro
+  Filter area
+  Request list
+  Empty state area when needed
+  Error/access state area when needed
+```
+
+## 4. Visible Data
+
 Each list item should show enough information to identify the request:
 
 ```text
-- request status;
-- request type;
-- created date;
-- summary;
-- object address / address summary when available.
+request status
+request type
+created date
+summary
+object address / address summary when available
 ```
 
-## 3. Filter UI
-
-Status is the first supported filter.
-
-Visible filter behavior:
+## 5. Actions
 
 ```text
-Client sees status filter controls
-        ↓
-Client selects a supported status
-        ↓
-List updates to show matching own requests
-        ↓
-URL/page state reflects selected filter
-        ↓
-Client can reset filters
-        ↓
-List returns to unfiltered state
+Select status filter
+Reset filters
+Open request details
 ```
+
+Status is the first supported filter.
 
 Supported first-cut statuses:
 
@@ -67,7 +66,17 @@ Rejected
 
 Future filters such as request type, date range or search are out of current scope until backend contract and scenario sources support them.
 
-## 4. Filtered Empty State
+## 6. State Matrix
+
+| State | Visible UI | Available actions | Notes |
+|---|---|---|---|
+| Requests exist | Request list | Open details, filter | Shows own requests only |
+| No requests | Regular empty state | Create request if available | Text: `У вас пока нет заявок.` |
+| Filter has matches | Filtered list | Reset filters, open details | URL/page state reflects selected filter |
+| Filter no matches | Filtered empty state | Reset filters | Text: `Заявок с выбранным фильтром не найдено.` |
+| Invalid filter URL | Safe invalid-filter or normalized state | Reset filters | UI must not crash |
+
+## 7. Empty / Loading / Error States
 
 Regular empty state:
 
@@ -83,11 +92,7 @@ Filtered empty state:
 
 Filtered empty state should offer a reset filters action.
 
-## 5. Invalid Filter URL State
-
-If the page is opened with an unsupported status value, the UI must not crash or show a misleading selected filter.
-
-Example:
+Invalid filter URL example:
 
 ```text
 /requests?status=Done
@@ -100,34 +105,42 @@ Accepted first-cut behavior:
 - or normalize to unfiltered state without crashing.
 ```
 
-The final choice belongs to `L1-MY-REQUESTS-LIST-FILTERS.client.md`.
+The final choice belongs to the related client slice draft.
 
-## 6. Details Entry
+## 8. Actor-Specific Differences
 
-List items may provide an action/link to open the request details page:
+Client-only screen first pass.
+
+## 9. Feedback / Validation Requirements
 
 ```text
-My Requests list item
-        ↓
-Client selects/open details
-        ↓
-/requests/:requestId
+invalid filter state must be visible or safely normalized
+filter reset action must be understandable
 ```
 
-Details rendering is owned by:
+## 10. Accessibility Notes
 
 ```text
-planning/slices/l1/L1-MY-REQUEST-DETAILS.client.md
+request details entry is a link/action with accessible name
+filter controls have labels
+empty/error states are text-visible
 ```
 
-## 7. Out Of Scope
+## 11. Out of Scope
 
 ```text
-- React component placement;
-- query key mechanics;
-- shared API wrapper implementation;
-- backend filter implementation;
-- request details page internals;
-- request creation UI;
-- employee review UI.
+React component placement
+query key mechanics
+shared API wrapper implementation
+backend filter implementation
+request details page internals
+request creation UI
+employee review UI
+```
+
+## 12. Related Client Slice Drafts
+
+```text
+my requests list client draft when migrated
+own request details client draft when migrated
 ```

@@ -3,11 +3,11 @@
 Docs-only archive. Apply from repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\slice-client-docs-ui-css-workflow-v3.zip" -DestinationPath "." -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\scenario-ui-specs-workflow-and-readiness.zip" -DestinationPath "." -Force
 ```
 
 This archive intentionally changes planning markdown files only.
 
 No runtime source code, OpenAPI artifacts, generated API types, routes, CSS implementation or app code are changed.
 
-Existing slice drafts are not rewritten in this archive. Historical drafts may stay where they are until a dedicated migration/update task handles them.
+Existing client/server slice drafts are not rewritten by this archive. This archive prepares UI scenario sources and workflow so slice drafts can be updated later.
