@@ -1,43 +1,29 @@
-# APPLY — sl-emp-req-001-dashboard-server-client-draft-refactor-v1
+# APPLY — sl-emp-req-002-details-server-client-draft-refactor-v1
 
-Archive type: docs-only paired replacement archive.
-
-## Replacement files
-
-```text
-planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
-planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
-```
-
-## Review folder
-
-```text
-_archive-review/2026-05-19-sl-emp-req-001-dashboard-server-client-draft-refactor-v1/
-```
-
-## Apply from repository root
+From repository root, apply this archive with:
 
 ```powershell
-Expand-Archive -Path ".\sl-emp-req-001-dashboard-server-client-draft-refactor-v1.zip" -DestinationPath "." -Force
+Expand-Archive -Path ".\sl-emp-req-002-details-server-client-draft-refactor-v1.zip" -DestinationPath "." -Force
 ```
 
-## Scope
+Expected replacement files:
 
 ```text
-- refactor server slice draft only;
-- refactor paired client sidecar draft only;
-- preserve originals under _archive-review;
-- use current implementation evidence read-only;
-- do not change runtime code;
-- do not change tests;
-- do not change generated artifacts;
-- do not deep-refactor UI/CSS/page flow.
+planning/slices/SL-EMP-REQ-002-employee-request-details-read.md
+planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md
 ```
 
-## After apply
+Review original snapshots before committing:
 
-```powershell
-git diff -- planning/slices/SL-EMP-REQ-001-employee-request-list-read.md planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
+```text
+_archive-review/2026-05-19-sl-emp-req-002-details-server-client-draft-refactor-v1/original-files/planning/slices/SL-EMP-REQ-002-employee-request-details-read.md
+_archive-review/2026-05-19-sl-emp-req-002-details-server-client-draft-refactor-v1/original-files/planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md
 ```
 
-Expected changed files are the two replacement drafts plus archive review files and this manifest/apply metadata.
+Scope:
+
+```text
+docs-only paired draft refactor;
+implementation evidence inspected read-only;
+no runtime source/test/generated files are changed by this archive.
+```

@@ -1,28 +1,236 @@
 # SL-EMP-REQ-002 — Employee Request Details Read
 
-Status: full backend/API read slice draft / not implemented  
+Status: implemented slice draft refactor / implementation evidence inspected read-only  
 Package: `[Employee] [Requests]`  
 Slice type: backend/API read slice  
-Primary purpose: employee request details by id  
+Primary purpose: Employee reads one employee-visible request details payload by request id  
 Parent slice: `SL-EMP-REQ-001 — Employee Request List Read`  
 Implementation direction: Dapper/read projection, not aggregate repository / EF DTO shaping
+
+Depends on:
+
+* `SL-EMP-REQ-001 — Employee Request List Read`
+* Employee auth/session
+* `Employee : Account` target identity direction
+* request-owned Review persistence
+* applicant party persistence
+* Dapper / SQL read projection infrastructure
+
+Implementation evidence note:
+
+```text
+This draft was refactored as a docs-only implemented-slice sync pass.
+
+Runtime implementation was inspected read-only from the uploaded repository snapshot to avoid stale route/DTO/test names.
+
+Runtime code, tests and generated artifacts are not changed by this archive.
+Client runtime UI/page flow is not changed by this archive.
+```
+
+---
+
+## 0. Scenario Sources
+
+Business scenario:
+
+```text
+SC-07A — Employee Request Details
+```
+
+Related scenarios:
+
+```text
+SC-06 — Employee Request Dashboard
+SC-07B — Employee Request Review Actions
+SC-13D — Employee Agreement Proposal Create / Send Version, only after approved request details host Start Agreement Exchange action
+```
+
+UI scenario:
+
+```text
+missing / pending dedicated UI source for Employee request details page;
+current client sidecar documents the implemented page behavior.
+```
+
+Cross-cutting behavior:
+
+```text
+CC-CLIENT-FEEDBACK-001 — Client Error / Feedback Visibility, for paired client sidecar
+CC-SEC-CSRF-001 — not directly applicable to this GET read slice; applies to hosted command sidecars only
+```
+
+Data source:
+
+```text
+request details payload from request, applicant party and request review persistence;
+current implementation projects directly with Dapper.
+```
+
+Behavior items:
+
+```text
+stable source behavior item IDs are pending scenario/source registry;
+this draft uses provisional behavior names and current test names until source-sync files are completed.
+```
+
+Concern umbrella:
+
+```text
+none for this server read slice.
+```
+
+---
+
+## 0.1 Source / Domain / Slice Coverage Snapshot
+
+Source versions:
+
+```text
+SC-07A: pending / v000 if source registry is applied
+SC-06: pending / v000 if source registry is applied
+SC-07B: pending / v000 if source registry is applied
+```
+
+Domain baseline:
+
+```text
+DOM-v001 if source-sync/domain registry is applied;
+otherwise pending domain baseline.
+
+Current target concepts used by the implemented read projection:
+- Employee derives from Account for session identity;
+- Request owns Review state;
+- ApplicantParty provides applicant summary/contact;
+- ConnectionRequest stores request status, details, object address and created timestamp.
+```
+
+Slice derivation map:
+
+```text
+pending / add row for SL-EMP-REQ-002 during source-sync map update.
+```
+
+Coverage snapshot:
+
+| Behavior item / provisional behavior | Source version | Domain / persistence disposition | This slice responsibility | Current implementation evidence | Notes |
+|---|---|---|---|---|---|
+| Employee opens one request details by id | SC-07A pending | request exists in `L1ClientRequests` | expose `GET /api/employee/requests/{requestId}` | `EmployeeRequestsController.GetRequestDetails` | Employee role only |
+| Signed-out user cannot read details | SC-07A pending | auth boundary | return 401 before query | `GetEmployeeRequestDetails_WithoutAuth_ReturnsUnauthorized` | public boundary proof |
+| Client account cannot read Employee details | SC-07A pending | auth/role boundary | return 403 | `GetEmployeeRequestDetails_WithClientAccount_ReturnsForbidden` | Employee-only endpoint |
+| Missing request returns not found | SC-07A pending | query returns no row | return 404 | `GetEmployeeRequestDetails_ForMissingRequest_ReturnsNotFound` | missing/not-visible behavior currently same shape |
+| Details payload includes request status/type/details/createdAt | SC-07A pending | request read projection | project fields to `EmployeeRequestDetailsDto` | `GetEmployeeRequestDetails_ReturnsDetailsPayloadWithNotStartedReview` | response DTO exists |
+| Details payload includes applicant summary/contact | SC-07A pending | ApplicantParty read projection | project applicant id/type/display/email/phone | same integration test | display name formatted from name parts |
+| Details payload includes object address | SC-07A pending | owned address columns | format address string | same integration test | no nested address DTO first pass |
+| Review not started is visible | SC-07A/07B pending | no review row or non-review status | derive `NotStarted` | same integration test | no mutation |
+| Review started by current Employee is visible | SC-07A/07B pending | review row has `Started` and current employee id | derive `StartedByCurrentEmployee` | `GetEmployeeRequestDetails_ReturnsStartedReviewStateForCurrentAndAnotherEmployee` | uses session Employee id |
+| Review started by another Employee is visible | SC-07A/07B pending | review row has `Started` and different employee id | derive `StartedByAnotherEmployee` | same integration test | blocks current Employee actions client-side |
+| Completed review state is visible | SC-07A/07B pending | request/review status is approved/rejected | derive `Approved` / `Rejected` | `GetEmployeeRequestDetails_ReturnsCompletedReviewStates` | read only |
+| No review command is executed | SC-07A pending | command slices own mutations | GET details does not start/approve/reject | read endpoint and tests | command buttons are separate sidecars |
+| Agreement exchange state is not returned here | SC-13D pending | agreement exchange slices own it | only request details plus review state | current DTO has no agreement exchange DTO | StartAgreementExchange UI is hosted client-side after approved state |
+
+---
+
+## 0.2 Implementation Sync Status
+
+Implementation status:
+
+```text
+implemented-current-doc-sync
+```
+
+Implemented files inspected read-only:
+
+```text
+server:
+  EnergyManagement.Server/L1/Controllers/EmployeeRequestsController.cs
+  EnergyManagement.Server/L1/Application/Queries/EmployeeRequestDetailsQuery.cs
+  EnergyManagement.Server/L1/Application/Queries/EmployeeRequestDetailsHandler.cs
+  EnergyManagement.Server/L1/Api/L1Dtos.cs
+
+client:
+  paired client draft refactored in this archive:
+    planning/slices/l2/L2-EMP-DETAILS-001-employee-request-details.client.md
+
+server tests:
+  Tests.EnergyManagement/Integration/L1/EmployeeRequests/EmployeeRequestDetailsIntegrationTests.cs
+
+client tests / companion evidence:
+  energymanagement.client/src/entities/employee-request/api/getEmployeeRequestDetails.test.ts
+  energymanagement.client/src/entities/employee-request/ui/EmployeeRequestDetailsView.test.tsx
+  energymanagement.client/src/pages/employee/requests/details/EmployeeRequestDetailsPage.test.tsx
+```
+
+Checked against:
+
+```text
+source versions:
+  pending source-sync registry
+
+domain baseline:
+  pending / DOM-v001 if source-sync files are applied
+
+slice derivation map version:
+  pending
+
+current implementation snapshot:
+  uploaded repo zip inspected read-only
+```
+
+Known drift corrected by this refactor:
+
+```text
+- old draft said not implemented, but current code implements endpoint/query/DTO/tests;
+- old draft lacked Scenario Sources;
+- old draft lacked Source / Domain / Slice Coverage Snapshot;
+- old draft lacked Implementation Sync Status;
+- old draft had a test plan but not current Behavior-to-Test Trace with actual test names;
+- old draft did not mention current StartAgreementExchange action hosting on the implemented details page.
+```
+
+Known remaining drift / follow-up:
+
+```text
+source:
+  - stable source behavior item IDs and source registry versions are still pending.
+
+implementation:
+  - current server details query returns any request by id for an authenticated Employee first pass;
+  - if future employee assignment/visibility rules are introduced, this read projection must change.
+
+client:
+  - details page currently hosts Start/Approve/Reject and StartAgreementExchange action slots/forms;
+  - command behavior belongs to command sidecars, not this read slice.
+
+tests:
+  - server integration tests cover auth, forbidden, not found, payload and review states;
+  - no explicit no-mutation smoke is listed in current evidence.
+```
+
+Last sync note:
+
+```text
+Docs-only refactor with read-only implementation evidence. No runtime implementation changes and no test execution in this pass.
+```
+
+---
 
 ## 1. Scope
 
 This slice owns:
 
 ```text
-- add employee request details read endpoint;
-- get one request by requestId;
-- use Dapper/read projection;
-- return employee request details payload;
-- include request status/type;
-- include full request details text;
-- include applicant summary/contact fields needed for employee review context;
-- include object address;
-- include compact review state;
-- do not load/mutate Request aggregate;
-- do not mutate request/review state.
+- Employee request details read endpoint;
+- Employee-only auth boundary;
+- current Employee account id derived from session claims;
+- one request details payload by requestId;
+- Dapper/read projection over request, applicant and review tables;
+- request type/status/details/createdAt fields;
+- applicant summary/contact fields;
+- formatted object address string;
+- compact review state derived relative to current Employee;
+- 200 OK details response;
+- 401/403/404 read failure boundaries;
+- API/read integration tests for auth, payload and review-state coverage.
 ```
 
 Endpoint:
@@ -31,144 +239,175 @@ Endpoint:
 GET /api/employee/requests/{requestId}
 ```
 
+Current response DTO:
+
+```text
+EmployeeRequestDetailsDto
+```
+
+This slice does **not** own:
+
+```text
+- dashboard/list filters;
+- StartReview command;
+- ApproveReview command;
+- RejectReview command;
+- StartAgreementExchange command;
+- AgreementProposalExchange read or command DTOs;
+- employee assignment/queue filtering beyond current first pass;
+- action command mutation behavior;
+- client page-flow/redirect audit.
+```
+
+---
+
 ## 2. Out of Scope
 
-| Out of scope | Owner |
+| Out of scope | Owner / destination |
 |---|---|
-| Employee request list / filters | `SL-EMP-REQ-001 — Employee Request List Read` |
-| Start review command | future `SL-EMP-REQ-003 — Start Request Review` |
-| Approve review command | future `SL-EMP-REQ-004 — Approve Request Review` |
-| Reject review command | future `SL-EMP-REQ-005 — Reject Request Review` |
-| Action DTO / command affordance DTO | future command/client slices |
-| Employee dashboard/client UI | future `.client` sidecar |
-| Employee profile/display-name read model | future Employee profile/read slice |
-| AgreementProposalExchange | future agreement proposal slices |
-| Review domain mutation | domain/command slices |
-| Query filters / paging / sorting | not this slice |
+| Employee request list / filters | `SL-EMP-REQ-001` |
+| Employee dashboard UI | `L2-EMP-DASH-001.client` |
+| Start review command | `SL-EMP-REQ-003` / `L2-REVIEW-START-001.client` |
+| Approve review command | `SL-EMP-REQ-004` / approve client feature sidecar |
+| Reject review command | `SL-EMP-REQ-005` / reject client feature sidecar |
+| Start agreement exchange | `SL-AGR-EXCH-001` / `L2-AGR-EXCH-START-001.client` |
+| Agreement exchange list/details | `SL-AGR-EXCH-003/004` and client sidecars |
+| Employee profile/display-name DTO | future Employee profile/read slice |
+| Review history/timestamps beyond current compact state | future details extension |
+| FluentValidation body/query validator | not needed for this read endpoint first pass |
+| Runtime UI refactor | out of this docs-only archive |
+
+Important boundary:
+
+```text
+This is a read/details slice.
+
+The fact that the current client details page hosts command action slots does not move command ownership into this server read slice.
+```
+
+---
 
 ## 3. Related Slices / Owners
 
 ```text
 SL-EMP-REQ-001
-  Owns employee request list read endpoint and filters.
+  Owns employee request dashboard/list read endpoint and filters.
+
+L2-EMP-DASH-001.client
+  Owns Employee request dashboard/list page.
 
 SL-EMP-REQ-002
-  Owns employee request details by id.
+  Owns Employee request details endpoint/read projection.
+
+L2-EMP-DETAILS-001.client
+  Owns Employee request details page/read UI and action-slot composition.
 
 SL-EMP-REQ-003 / 004 / 005
-  Own StartReview / ApproveReview / RejectReview commands.
+  Own StartReview / ApproveReview / RejectReview command behavior.
 
-L2 domain draft
-  Domain-design input for Employee, request-owned Review, Start/Started terminology,
-  no EmployeeRef and no ReviewDecisionRecord.
+L2-REVIEW-START-001.client and approve/reject client features
+  Own command buttons/forms/mutations.
 
-Scenario sources
-  Source of truth for Scenario Flow and Behavior Coverage.
+SL-AGR-EXCH-001 / L2-AGR-EXCH-START-001.client
+  Own Start Agreement Exchange action after approved request.
 
-CC-VALIDATION-001
-  Owns request/query validation boundary.
-  Minimal/no validation in this slice because there is no body/query.
-
-CC-API-001
-  Owns OpenAPI/generated artifact workflow if API contract changes.
+Domain / persistence
+  Own Request, RequestReview, ApplicantParty, Address persisted facts used by projection.
 ```
 
-## 4A. Employee Account Identity Rule
+---
 
-Accepted L2 target:
-
-```text
-Account
-  -> ClientAccount
-  -> Employee
-```
-
-Persistence direction:
-
-```text
-TPH in L1Accounts using AccountType / Role discriminator.
-```
-
-Auth/session identity rule:
-
-```text
-ClaimTypes.NameIdentifier = Account.Id.
-For Employee endpoints, Account.Id == Employee.Id.
-```
-
-This slice must not assume a separate `Employee.AccountId` lookup in the target model.
-The current employee id used for read projection/review-state derivation is the authenticated Employee account id.
-
-If existing code has a separate Employee profile linked by AccountId, that is compatibility/drift and should be handled by a scoped domain/persistence cleanup, not copied into the target slice design.
-
-## 4. Visual Scenario Flow
+## 4. Scenario Flow
 
 ```text
 [Signed-in Employee]
-opens request from employee request list
+opens request details from Employee dashboard
         ↓
-System loads request by id
+System resolves current Employee from session
         ↓
-System shows request details
+System loads request, applicant and review data by requestId
+        ↓
+System derives review state relative to current Employee
+        ↓
+System returns details payload
+        ↓
+Client page renders request/applicant/review state and hosted command action slots
 ```
 
-Details include:
+Scenario flow table:
+
+| Step | Actor / System layer | User-visible / system responsibility |
+|---|---|---|
+| S01 | Employee | Opens a request details page from dashboard/details link. |
+| S02 | System | Requires Employee session. |
+| S03 | System | Loads one request by `requestId`. |
+| S04 | System | Projects request details, applicant summary, address and review state. |
+| S05 | System | Returns `EmployeeRequestDetailsDto`. |
+| S06 | Client/UI | Renders details and state; command sidecars may render actions. |
+
+Scenario meaning:
 
 ```text
-- request status/type;
-- applicant summary/contact;
-- object address;
-- full request details text;
-- compact review state.
+Details gives an Employee enough information to understand the request and current review state.
+
+Details read does not itself start, approve, reject or start an agreement exchange.
 ```
 
-## 5. Visual Implementation Flow
+---
+
+## 5. Implementation Flow
 
 ```text
 [HTTP GET]
 GET /api/employee/requests/{requestId}
         ↓
-[Auth / Employee context]
-resolve current Employee id / Account.Id from Account.Id / ClaimTypes.NameIdentifier
+[Auth]
+Employee app cookie/session required
         ↓
-[Route binding]
-requestId is long
+[Controller]
+TryGetCurrentEmployeeId(out employeeId)
         ↓
-[Query handler / Dapper read projection]
-query request details by requestId for current Employee context
-project directly into read DTO
+[Query]
+EmployeeRequestDetailsQuery(employeeId, requestId)
+        ↓
+[Handler / Dapper]
+query L1ClientRequests + L1ApplicantParties + L1RequestReviews
+        ↓
+[Projection]
+format applicant display name
+format object address
+derive reviewState from review status / request status / currentEmployeeId
         ↓
 [Response]
-return EmployeeRequestDetailsDto
+200 OK EmployeeRequestDetailsDto
+or 401 / 403 / 404 / 500
 ```
 
 Implementation ownership:
 
 ```text
 Controller:
-  HTTP boundary, auth guard, route binding, response.
+  HTTP boundary, Employee auth guard, route binding, session Employee id, response mapping.
 
 Validator:
-  no body/query validator in first pass.
+  none for body/query first pass.
 
 Query handler:
-  Dapper query;
-  employee read visibility;
-  direct DTO projection.
+  Dapper read projection;
+  review-state derivation;
+  Maybe.None for missing row.
 
 Domain:
-  source semantics only:
-  Request.Status,
-  Request.Review.Status,
-  Request.Review.StartedByEmployeeId.
+  owns persisted statuses and review lifecycle semantics.
+  No domain lifecycle method is called in this read slice.
 
-Aggregate repositories:
-  not used for DTO shaping in this read slice.
+Client:
+  paired sidecar owns page/rendering/action-slot composition.
 ```
 
-Read/query convenience should not change write aggregate shape.
+---
 
-## 6. API Contract Draft
+## 6. API Contract
 
 ### Endpoint
 
@@ -182,69 +421,158 @@ Route:
 requestId: long
 ```
 
-### Response
+Auth:
 
-```ts
-type EmployeeRequestDetailsDto = {
-  requestId: number;
-  requestType: "Connection";
-
-  status:
-    | "InReview"
-    | "Approved"
-    | "Rejected"
-    | "AgreementExchangeFailed";
-
-  applicant: EmployeeRequestApplicantSummaryDto;
-
-  objectAddress: string;
-  details: string;
-  createdAt: string;
-
-  reviewState:
-    | "NotStarted"
-    | "StartedByCurrentEmployee"
-    | "StartedByAnotherEmployee"
-    | "Approved"
-    | "Rejected";
-};
+```csharp
+[Authorize(Roles = "Employee")]
 ```
 
-### Applicant summary
-
-```ts
-type EmployeeRequestApplicantSummaryDto = {
-  applicantPartyId: number;
-  applicantPartyType: "Individual";
-  displayName: string;
-  email?: string;
-  phoneNumber?: string;
-};
-```
-
-No extra DTOs in this slice:
+Request body:
 
 ```text
-- no list response DTO;
-- no filters;
-- no action DTO;
-- no command affordance DTO;
-- no Employee profile/display-name DTO;
-- no AgreementProposalExchange DTO.
+none
 ```
 
-## 7. Validation / ProblemDetails
+Query:
+
+```text
+none
+```
+
+Current response direction:
+
+```csharp
+public sealed record EmployeeRequestDetailsDto(
+    long RequestId,
+    string RequestType,
+    string Status,
+    EmployeeRequestApplicantSummaryDto Applicant,
+    string ObjectAddress,
+    string Details,
+    DateTimeOffset CreatedAt,
+    string ReviewState);
+
+public sealed record EmployeeRequestApplicantSummaryDto(
+    long ApplicantPartyId,
+    string ApplicantPartyType,
+    string DisplayName,
+    string? Email,
+    string? PhoneNumber);
+```
+
+Current review state values:
+
+```text
+NotStarted
+StartedByCurrentEmployee
+StartedByAnotherEmployee
+Approved
+Rejected
+```
+
+Success:
+
+```http
+200 OK
+```
+
+Failure categories:
+
+```text
+401 Unauthorized
+  no authenticated session or employee id cannot be resolved
+
+403 Forbidden
+  authenticated non-Employee role
+
+404 NotFound
+  request row is missing / not returned by read projection
+
+500 InternalServerError
+  unexpected server failure
+```
+
+No `422` is expected for this read endpoint first pass because there is no body/query validator.
+
+---
+
+## 7. Read Model Behavior
+
+Current SQL projection loads:
+
+```text
+request.Id
+request.RequestType
+request.Status
+request.CreatedAt
+request.Details
+owned object address columns
+applicant.Id
+applicant.ApplicantPartyType
+applicant FullName parts
+applicant.Email
+applicant.PhoneNumber
+review.Status
+review.StartedByEmployeeId
+```
+
+Applicant display name:
+
+```text
+LastName FirstName MiddleName, skipping blank parts.
+```
+
+Object address:
+
+```text
+PostalCode, Region, City, Street, House, Building, Apartment, skipping blank parts.
+```
+
+Review-state derivation:
+
+```text
+if review.Status == Started and review.StartedByEmployeeId == currentEmployeeId:
+  StartedByCurrentEmployee
+
+if review.Status == Started and review.StartedByEmployeeId != currentEmployeeId:
+  StartedByAnotherEmployee
+
+if review.Status == Approved:
+  Approved
+
+if review.Status == Rejected:
+  Rejected
+
+if no review status but request.Status == Approved:
+  Approved
+
+if no review status but request.Status == Rejected:
+  Rejected
+
+otherwise:
+  NotStarted
+```
+
+Read-only rule:
+
+```text
+GET details must not create Review, change Request.Status, change Review.Status, or start agreement exchange.
+```
+
+---
+
+## 8. Validation / ProblemDetails
 
 No request body.
 
 No query.
 
-No FluentValidation validator required in first pass.
+No FluentValidation validator is required first pass.
 
 ```text
-- route constraint/model binding handles requestId shape;
-- missing request / not-visible request is query-handler responsibility;
-- malformed route can use ASP.NET route/model-binding behavior.
+- route binding handles requestId shape;
+- missing request / not-returned request is query-handler/controller responsibility;
+- malformed route follows ASP.NET route/model-binding behavior.
 ```
 
 Do not put these into validators:
@@ -260,178 +588,167 @@ Do not put these into validators:
 - mutations.
 ```
 
-## 8. Cross-Cutting Concerns / Considerations
+---
 
-| Concern | Applies? | Consideration / owner |
-|---|---:|---|
-| Auth/session/account context | yes | Resolve current authenticated Employee account. Employee auth/account may be dependency/blocker. |
-| Authorization/visibility | yes | Query handler/Dapper projection must return only employee-visible request or documented not-found/visibility response. |
-| Antiforgery / unsafe requests | no | Read-only GET. |
-| Request validation / ProblemDetails | minimal | No body/query. Route id only. |
-| Dapper/read projection | yes | Use Dapper/read model for details. Do not load aggregate just to shape DTO. |
-| OpenAPI / generated artifacts | yes | New endpoint/DTO changes API contract; generated artifacts must come from repo commands. |
-| Transaction / atomicity | no | Read-only. |
-| No-mutation safety | yes | GET must not create review or change request state. |
-| Concurrency / stale state | yes | Review state may change after details load; future commands must re-check. |
-| Privacy / cross-employee exposure | yes | Do not expose Employee auth/private data. |
-| Testing responsibility split | yes | API/read integration tests; no command/UI tests; no unit tests by default. |
+## 9. Security / Protection
 
-## 9. Questions / Decisions
+Security/read boundaries:
 
-### Accepted
+```text
+- endpoint requires Employee role;
+- Employee id is derived from claims/session, not from route/body;
+- details projection uses current Employee id only to derive reviewState;
+- command permissions are still enforced by command endpoints/domain, not by this GET response alone.
+```
 
-| ID | Status | Question | Decision / direction | Impact |
-|---|---|---|---|---|
-| `SL-EMP-REQ-002-Q-001` | accepted | Is this a list/filter slice? | No. Details by id only. | Keeps scope separate from list slice. |
-| `SL-EMP-REQ-002-Q-002` | accepted | Should this use Dapper? | Yes. Dapper/read projection. | Do not add aggregate repository DTO shaping. |
-| `SL-EMP-REQ-002-Q-003` | accepted | Is there query/filter behavior? | No. | No query DTO, no query validator, no filter tests. |
-| `SL-EMP-REQ-002-Q-004` | accepted | Include action DTO? | No. | Actions belong to command/client slices. |
-| `SL-EMP-REQ-002-Q-005` | accepted | Include full request details text? | Yes. | This is details read. |
-| `SL-EMP-REQ-002-Q-006` | accepted | Add unit tests by default? | No. Integration/API tests unless reusable helper logic is introduced. | Prevents test bloat. |
+Current first-pass visibility:
 
-### Assumptions / current direction
+```text
+All authenticated active Employee sessions can read review-relevant requests first pass.
+```
 
-| ID | Status | Question | Assumption / current direction | Impact |
-|---|---|---|---|---|
-| `SL-EMP-REQ-002-Q-007` | assumption | Does Employee auth/account exist? | Treat as dependency. Implementation may block if missing. | Could require Employee auth slice first. |
-| `SL-EMP-REQ-002-Q-008` | assumption | Does details need Employee display name for started-by-other? | No in first pass. Only state. | Avoids Employee profile scope. |
-| `SL-EMP-REQ-002-Q-009` | assumption | Should route use `{requestId:long}`? | Yes. | No FluentValidation needed for route. |
+Future visibility extension:
 
-## 10. Extension / Change Points
+```text
+department/region/assignment/personal queue filtering can narrow this projection later.
+```
 
-| ID | Area | Current direction | Future owner |
+Guardrail:
+
+```text
+Do not expose Employee private profile data in this response.
+Do not accept employeeId from client.
+Do not rely on UI button availability for command security.
+```
+
+---
+
+## 10. Behavior Coverage
+
+| Behavior item / behavior | Server/system outcome | Current evidence | Status |
 |---|---|---|---|
-| `CP-EMP-REQ-DETAILS-001` | Action flags | Not first pass. | Command/client sidecars |
-| `CP-EMP-REQ-DETAILS-002` | Employee display name | Not first pass. | Employee profile/read slice |
-| `CP-EMP-REQ-DETAILS-003` | Review timestamps | Add only if UI needs StartedAt/CompletedAt. | Details extension |
-| `CP-EMP-REQ-DETAILS-004` | Review history | Not first pass. | Future review history slice |
-| `CP-EMP-REQ-DETAILS-005` | Agreement proposal state | Not first pass. | Agreement proposal read slice |
-| `CP-EMP-REQ-DETAILS-006` | Shared Dapper projection helper | Only if list/details duplication becomes non-trivial. | Helper/read-model cleanup |
+| Unauthenticated user cannot read details | 401 | `GetEmployeeRequestDetails_WithoutAuth_ReturnsUnauthorized` | covered |
+| Client account cannot read Employee details | 403 | `GetEmployeeRequestDetails_WithClientAccount_ReturnsForbidden` | covered |
+| Missing request returns not found | 404 | `GetEmployeeRequestDetails_ForMissingRequest_ReturnsNotFound` | covered |
+| Employee receives details payload | DTO has id/type/status/details/createdAt/address/applicant/reviewState | `GetEmployeeRequestDetails_ReturnsDetailsPayloadWithNotStartedReview` | covered |
+| Not-started review is shown | `reviewState = NotStarted` | same payload test | covered |
+| Started by current Employee is shown | `reviewState = StartedByCurrentEmployee` | `GetEmployeeRequestDetails_ReturnsStartedReviewStateForCurrentAndAnotherEmployee` | covered |
+| Started by another Employee is shown | `reviewState = StartedByAnotherEmployee` | same test | covered |
+| Completed review states are shown | `Approved` / `Rejected` | `GetEmployeeRequestDetails_ReturnsCompletedReviewStates` | covered |
+| Details read does not execute commands | no command endpoint called from GET | current endpoint shape | supported |
+| List/filter behavior | out of scope | `SL-EMP-REQ-001` | out of scope |
+| Start/approve/reject behavior | out of scope | command slices | out of scope |
 
-## 11. Behavior Coverage
+---
 
-| Source / draft behavior | Status | Covered by this slice |
-|---|---|---|
-| Employee opens request by id | covered | `GET /api/employee/requests/{requestId}`. |
-| Details show full request text | covered | `details` field. |
-| Details show applicant summary/contact | covered | compact applicant summary. |
-| Details show object address | covered | `objectAddress`. |
-| Details show review not started | covered | `reviewState = NotStarted`. |
-| Details show review started by current Employee | covered | `reviewState = StartedByCurrentEmployee`. |
-| Details show review started by another Employee | covered | `reviewState = StartedByAnotherEmployee`. |
-| Details show completed review outcome | covered | `reviewState = Approved` / `Rejected`. |
-| List/filter behavior | out of scope | `SL-EMP-REQ-001`. |
-| Start/approve/reject behavior | out of scope | Future command slices. |
+## 11. Test / Verification Plan
 
-## 12. Test / Verification Plan
-
-Primary verification: **API/read integration tests**.
-
-Do not add unit tests by default.
-
-Unit tests are allowed only if this slice introduces reusable helper logic with non-trivial branching. Even then, keep unit tests focused on that helper only.
-
-### API boundary / access tests
+Primary rule:
 
 ```text
-- unauthenticated details request returns 401;
-- non-Employee/client account returns documented rejection;
-- authenticated Employee gets 200 for visible request by id;
-- missing request id returns documented not-found response;
-- not-visible request id returns documented not-found/visibility response.
+Tests verify behavior items and server/system outcomes.
+Implementation details are only setup/action/observation mechanisms.
 ```
 
-### Details payload test
+### Behavior-to-Test Trace
 
-One focused integration test:
+| Behavior item / behavior | Server/system outcome | Test layer | Implementation mechanism | Escape risk | Refactor risk | Planned/actual test |
+|---|---|---|---|---|---|---|
+| Unauthenticated user cannot read details | request is rejected with 401 | API integration | HTTP GET without auth | Low: public boundary proof | Low | `GetEmployeeRequestDetails_WithoutAuth_ReturnsUnauthorized` |
+| Client account cannot read Employee details | request is rejected with 403 | API integration | client auth cookie, HTTP GET | Low: role boundary proof | Low | `GetEmployeeRequestDetails_WithClientAccount_ReturnsForbidden` |
+| Missing request returns not found | missing id returns 404 | API integration | employee auth, HTTP GET missing id | Low | Low | `GetEmployeeRequestDetails_ForMissingRequest_ReturnsNotFound` |
+| Details payload is returned | response includes details/applicant/address/review state | API integration | seeded request/applicant, HTTP GET, response assertions | Low if all required fields asserted | Low/Medium: DTO shape changes require test update | `GetEmployeeRequestDetails_ReturnsDetailsPayloadWithNotStartedReview` |
+| Review not started is visible | response `reviewState = NotStarted` | API integration | seeded request without review | Low | Low | same payload test |
+| Review started by current Employee is visible | response `StartedByCurrentEmployee` | API integration | seeded review row with current employee id | Low | Low/Medium: helper/schema changes affect setup | `GetEmployeeRequestDetails_ReturnsStartedReviewStateForCurrentAndAnotherEmployee` |
+| Review started by another Employee is visible | response `StartedByAnotherEmployee` | API integration | seeded review row with other employee id | Low | Low/Medium | same test |
+| Completed review state is visible | response `Approved` / `Rejected` | API integration | seeded request/review completed states | Low | Low/Medium | `GetEmployeeRequestDetails_ReturnsCompletedReviewStates` |
+| GET does not mutate request/review | state remains unchanged | optional API integration + DB snapshot | HTTP GET, DB snapshot before/after | Medium if omitted | Low/Medium | optional future no-mutation smoke |
+
+### Additional recommended checks
 
 ```text
-- returns requestId;
-- returns requestType;
-- returns status;
-- returns full details text;
-- returns applicant summary/contact;
-- returns objectAddress;
-- returns reviewState.
+- if future visibility rules are introduced, add not-visible request returns 404/403 according to project convention;
+- if request details DTO gains actionAvailability, add focused payload and client rendering tests;
+- if assignment/queue filtering is introduced, keep current all-active-Employees first-pass behavior documented as replaced/deprecated.
 ```
 
-### Review state coverage
-
-Keep compact:
+### What not to test here
 
 ```text
-- no Review -> NotStarted;
-- Review started by current Employee -> StartedByCurrentEmployee;
-- Review started by another Employee -> StartedByAnotherEmployee.
+- StartReview / ApproveReview / RejectReview mutations;
+- StartAgreementExchange mutation;
+- dashboard list filters;
+- React UI rendering;
+- repository mock call order;
+- generated TypeScript as primary behavior proof.
 ```
 
-Approved/rejected states may be one additional focused test if cheap:
+---
+
+## 12. OpenAPI / Generated Artifacts
+
+Current OpenAPI includes:
 
 ```text
-- approved reviewed request -> Approved;
-- rejected reviewed request -> Rejected.
+GET /api/employee/requests/{requestId}
+200 EmployeeRequestDetailsDto
+401
+403
+404
+500
 ```
 
-### No-mutation safety
+Generated artifacts are implementation artifacts and are **not** changed by this docs-only archive.
 
-Optional smoke only if cheap:
+If API contract changes later:
 
-```text
-- GET details does not create Review;
-- GET details does not change Request.Status;
-- GET details does not change Review.Status.
+```powershell
+dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
+npm.cmd --prefix energymanagement.client run generate:api-types
+npm.cmd --prefix energymanagement.client run check:api
 ```
 
-### What not to test
+---
+
+## 13. Implementation Checklist / Current Refactor Checklist
+
+Historical implementation checklist is replaced by implemented-draft sync checklist.
 
 ```text
-- no unit tests by default;
-- no validator unit tests;
-- no query validator tests;
-- no list/filter endpoint;
-- no StartReview command;
-- no ApproveReview command;
-- no RejectReview command;
-- no AgreementProposalExchange behavior;
-- no client UI;
-- no repository mock call-order as primary proof;
-- no generated TypeScript as behavior proof.
+[x] endpoint exists: GET /api/employee/requests/{requestId}
+[x] Employee role auth exists
+[x] current Employee id is resolved from session/claims
+[x] EmployeeRequestDetailsQuery exists
+[x] EmployeeRequestDetailsHandler exists
+[x] Dapper projection exists
+[x] EmployeeRequestDetailsDto exists
+[x] EmployeeRequestApplicantSummaryDto exists
+[x] reviewState derivation exists
+[x] 401/403/404 integration tests exist
+[x] payload/review-state integration tests exist
+[ ] no-mutation smoke exists, optional/future
+[ ] source registry behavior IDs assigned, future source-sync task
+[ ] future employee assignment/visibility model applied, if required
 ```
 
-## 13. Implementation Checklist
+This archive does not modify runtime implementation.
+
+---
+
+## 14. Guardrail Summary
 
 ```text
-[ ] Verify Employee auth/account dependency.
-[ ] Verify Request-owned Review state dependency.
-[ ] Add Employee request details endpoint.
-[ ] Add details response DTO.
-[ ] Add compact applicant summary DTO only if not already shared.
-[ ] Implement Dapper query/projection by requestId.
-[ ] Derive reviewState from request/review state and currentEmployeeId.
-[ ] Keep response scoped to details; no action DTOs.
-[ ] Add focused API/read integration tests.
-[ ] Run OpenAPI/generated artifact workflow if endpoint/DTOs are added.
-[ ] Do not implement list/filter endpoint.
-[ ] Do not implement review commands.
-[ ] Do not mutate request/review state.
-[ ] Do not add unit tests unless reusable helper logic requires them.
-```
-
-## 14. Next Step
-
-Before implementation, verify blockers:
-
-```text
-1. Is Employee auth/account/session already implemented?
-2. Is Request-owned Review state already implemented?
-3. Can current schema represent Review.Status and StartedByEmployeeId?
-4. Is there existing Dapper infrastructure/pattern to use for employee read projections?
-```
-
-Recommended next drafts:
-
-```text
-SL-EMP-REQ-003 — Start Request Review
-SL-EMP-REQ-004 — Approve Request Review
-SL-EMP-REQ-005 — Reject Request Review
+This is a read/details slice.
+Use GET /api/employee/requests/{requestId}.
+Require Employee role.
+Resolve Employee id from session, not client input.
+Use Dapper/read projection for DTO shaping.
+Do not load/mutate aggregate just to shape DTO.
+Do not start/approve/reject review here.
+Do not start agreement exchange here.
+Do not add body/query validation first pass.
+Do not put visibility/lifecycle into FluentValidation.
+Do not add Employee profile/display-name scope here.
+Do not add AgreementProposalExchange details here.
+Current first-pass Employee visibility is broad; future assignment rules require a scoped follow-up.
 ```

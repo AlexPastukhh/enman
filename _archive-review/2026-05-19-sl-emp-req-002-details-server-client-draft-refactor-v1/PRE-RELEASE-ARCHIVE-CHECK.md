@@ -1,0 +1,22 @@
+# Pre-Release Archive Check
+
+- [x] server replacement file present
+- [x] client replacement file present
+- [x] server original snapshot present
+- [x] client original snapshot present
+- [x] server original snapshot equals source original
+- [x] client original snapshot equals source original
+- [x] server Scenario Sources present
+- [x] server Source / Domain / Slice Coverage Snapshot present
+- [x] server Implementation Sync Status present
+- [x] server Behavior-to-Test Trace present
+- [x] client Scenario Sources present
+- [x] client Source / Domain / Slice Coverage Snapshot present
+- [x] client Implementation Sync Status present
+- [x] client Behavior-to-Test Trace present
+- [x] client Q-L2-EMP-DETAILS-CLIENT-001..012 present
+- [x] route GET /api/employee/requests/{requestId} present in both drafts
+- [x] actual server integration test names referenced in server draft
+- [x] actual client test names referenced in client draft
+- [x] code evidence listed but runtime files not included
+- [x] runtime source/test/generated files not included in tree
