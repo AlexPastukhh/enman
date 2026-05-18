@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { ApiError } from "../../../../shared/api/fetchJson";
-import type { StartAgreementExchangeResponse } from "../api/startAgreementExchangeApiTypes";
+import { uploadAgreementProposalDocument } from "../../upload-document/api/uploadAgreementProposalDocument";
 import { useStartAgreementExchangeMutation } from "../model/useStartAgreementExchangeMutation";
 import { startAgreementExchangeFormConst } from "./startAgreementExchangeFormConst";
 import "./startAgreementExchangeForm.css";
@@ -9,7 +9,7 @@ type StartAgreementExchangeFormProps = {
   requestId: number;
   disabled?: boolean;
   unavailableReason?: string | null;
-  onStarted?: (response: StartAgreementExchangeResponse) => void;
+  onStarted?: () => void;
 };
 
 const getErrorMessage = (error: unknown): string => {
@@ -24,66 +24,64 @@ const getErrorMessage = (error: unknown): string => {
   return startAgreementExchangeFormConst.defaultErrorMessage;
 };
 
-const isPositiveInteger = (value: string): boolean => {
-  const parsed = Number(value);
-  return Number.isInteger(parsed) && parsed > 0;
-};
-
 export const StartAgreementExchangeForm = ({
   requestId,
   disabled = false,
   unavailableReason = null,
   onStarted,
 }: StartAgreementExchangeFormProps) => {
-  const [storageKey, setStorageKey] = useState("");
-  const [originalFileName, setOriginalFileName] = useState("");
-  const [contentType, setContentType] = useState("application/pdf");
-  const [sizeBytes, setSizeBytes] = useState("");
+  const [document, setDocument] = useState<File | null>(null);
   const [comment, setComment] = useState("");
   const [validationError, setValidationError] = useState<string | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const mutation = useStartAgreementExchangeMutation();
-  const isDisabled = disabled || mutation.isPending;
+  const isDisabled = disabled || isUploading || mutation.isPending;
   const shouldShowUnavailableReason = disabled && unavailableReason;
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (isDisabled) {
       return;
     }
 
-    if (
-      storageKey.trim().length === 0 ||
-      originalFileName.trim().length === 0 ||
-      contentType.trim().length === 0 ||
-      !isPositiveInteger(sizeBytes)
-    ) {
+    if (document === null) {
       setValidationError(startAgreementExchangeFormConst.validationErrorMessage);
       return;
     }
 
     setValidationError(null);
+    setUploadError(null);
 
-    mutation.mutate(
-      {
-        requestId,
-        initialProposal: {
-          document: {
-            storageKey: storageKey.trim(),
-            originalFileName: originalFileName.trim(),
-            contentType: contentType.trim(),
-            sizeBytes: Number(sizeBytes),
+    try {
+      setIsUploading(true);
+      const documentRef = await uploadAgreementProposalDocument({ document });
+
+      mutation.mutate(
+        {
+          requestId,
+          proposal: {
+            document: documentRef,
+            comment: comment.trim() || null,
           },
-          comment: comment.trim() || null,
         },
-      },
-      {
-        onSuccess: (response) => {
-          onStarted?.(response);
+        {
+          onSuccess: () => {
+            onStarted?.();
+          },
         },
-      },
-    );
+      );
+    } catch (error) {
+      setUploadError(getErrorMessage(error));
+    } finally {
+      setIsUploading(false);
+    }
   };
+
+  const pendingLabel = isUploading
+    ? startAgreementExchangeFormConst.uploadingLabel
+    : startAgreementExchangeFormConst.pendingLabel;
 
   return (
     <form
@@ -94,72 +92,22 @@ export const StartAgreementExchangeForm = ({
       <h4 className="startAgreementExchangeAction__title">
         {startAgreementExchangeFormConst.title}
       </h4>
-      <div
-        className="startAgreementExchangeAction__grid"
-        role="group"
-        aria-label={startAgreementExchangeFormConst.documentSectionTitle}
-      >
-        <div className="startAgreementExchangeAction__field">
-          <label
-            className="startAgreementExchangeAction__label"
-            htmlFor={`start-exchange-storage-key-${requestId}`}
-          >
-            {startAgreementExchangeFormConst.storageKeyLabel}
-          </label>
-          <input
-            id={`start-exchange-storage-key-${requestId}`}
-            className="startAgreementExchangeAction__input"
-            disabled={isDisabled}
-            value={storageKey}
-            onChange={(event) => setStorageKey(event.target.value)}
-          />
-        </div>
-        <div className="startAgreementExchangeAction__field">
-          <label
-            className="startAgreementExchangeAction__label"
-            htmlFor={`start-exchange-file-name-${requestId}`}
-          >
-            {startAgreementExchangeFormConst.originalFileNameLabel}
-          </label>
-          <input
-            id={`start-exchange-file-name-${requestId}`}
-            className="startAgreementExchangeAction__input"
-            disabled={isDisabled}
-            value={originalFileName}
-            onChange={(event) => setOriginalFileName(event.target.value)}
-          />
-        </div>
-        <div className="startAgreementExchangeAction__field">
-          <label
-            className="startAgreementExchangeAction__label"
-            htmlFor={`start-exchange-content-type-${requestId}`}
-          >
-            {startAgreementExchangeFormConst.contentTypeLabel}
-          </label>
-          <input
-            id={`start-exchange-content-type-${requestId}`}
-            className="startAgreementExchangeAction__input"
-            disabled={isDisabled}
-            value={contentType}
-            onChange={(event) => setContentType(event.target.value)}
-          />
-        </div>
-        <div className="startAgreementExchangeAction__field">
-          <label
-            className="startAgreementExchangeAction__label"
-            htmlFor={`start-exchange-size-${requestId}`}
-          >
-            {startAgreementExchangeFormConst.sizeBytesLabel}
-          </label>
-          <input
-            id={`start-exchange-size-${requestId}`}
-            className="startAgreementExchangeAction__input"
-            disabled={isDisabled}
-            inputMode="numeric"
-            value={sizeBytes}
-            onChange={(event) => setSizeBytes(event.target.value)}
-          />
-        </div>
+      <div className="startAgreementExchangeAction__field">
+        <label
+          className="startAgreementExchangeAction__label"
+          htmlFor={`start-exchange-document-${requestId}`}
+        >
+          {startAgreementExchangeFormConst.documentLabel}
+        </label>
+        <input
+          id={`start-exchange-document-${requestId}`}
+          className="startAgreementExchangeAction__input"
+          type="file"
+          disabled={isDisabled}
+          onChange={(event) => {
+            setDocument(event.target.files?.[0] ?? null);
+          }}
+        />
       </div>
       <div className="startAgreementExchangeAction__field">
         <label
@@ -182,8 +130,8 @@ export const StartAgreementExchangeForm = ({
         className="startAgreementExchangeAction__button"
         disabled={isDisabled}
       >
-        {mutation.isPending
-          ? startAgreementExchangeFormConst.pendingLabel
+        {isUploading || mutation.isPending
+          ? pendingLabel
           : startAgreementExchangeFormConst.actionLabel}
       </button>
       {shouldShowUnavailableReason && (
@@ -192,6 +140,11 @@ export const StartAgreementExchangeForm = ({
       {validationError && (
         <p className="startAgreementExchangeAction__error" role="alert">
           {validationError}
+        </p>
+      )}
+      {uploadError && (
+        <p className="startAgreementExchangeAction__error" role="alert">
+          {uploadError}
         </p>
       )}
       {mutation.isError && (

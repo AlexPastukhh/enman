@@ -114,6 +114,7 @@ const ClientAgreementExchangeDetailsPage = () => {
                     />
                     <SendAgreementProposalForm
                       exchangeId={details.exchangeId}
+                      requestId={details.requestId}
                       viewerRole="Client"
                       disabled={!sendAvailability.canSendProposal}
                       unavailableReason={sendAvailability.reason}

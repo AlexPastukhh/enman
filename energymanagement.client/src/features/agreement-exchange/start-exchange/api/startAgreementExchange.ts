@@ -1,13 +1,16 @@
 import { fetchJson } from "../../../../shared/api/fetchJson";
-import type {
-  StartAgreementExchangeRequest,
-  StartAgreementExchangeResponse,
-} from "./startAgreementExchangeApiTypes";
+import type { StartAgreementExchangeInput } from "./startAgreementExchangeApiTypes";
 
-export const startAgreementExchange = (
-  payload: StartAgreementExchangeRequest,
-): Promise<StartAgreementExchangeResponse> =>
-  fetchJson<StartAgreementExchangeResponse>("/api/agreement-exchanges", {
+const startAgreementExchangePath = (requestId: number | string) =>
+  `/api/employee/requests/${encodeURIComponent(
+    String(requestId),
+  )}/agreement-exchange/start`;
+
+export const startAgreementExchange = ({
+  requestId,
+  proposal,
+}: StartAgreementExchangeInput): Promise<void> =>
+  fetchJson<void>(startAgreementExchangePath(requestId), {
     method: "POST",
-    body: JSON.stringify(payload),
+    body: JSON.stringify(proposal),
   });

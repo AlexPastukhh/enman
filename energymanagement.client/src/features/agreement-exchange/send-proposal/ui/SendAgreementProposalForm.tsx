@@ -1,12 +1,14 @@
 import { useState, type FormEvent } from "react";
 import type { AgreementExchangeViewerRole } from "../../../../entities/agreement-exchange/model/agreementExchangeTypes";
 import { ApiError } from "../../../../shared/api/fetchJson";
+import { uploadAgreementProposalDocument } from "../../upload-document/api/uploadAgreementProposalDocument";
 import { useSendAgreementProposalMutation } from "../model/useSendAgreementProposalMutation";
 import { sendAgreementProposalFormConst } from "./sendAgreementProposalFormConst";
 import "./sendAgreementProposalForm.css";
 
 type SendAgreementProposalFormProps = {
   exchangeId: number;
+  requestId: number;
   viewerRole: AgreementExchangeViewerRole;
   disabled?: boolean;
   unavailableReason?: string | null;
@@ -25,72 +27,71 @@ const getErrorMessage = (error: unknown): string => {
   return sendAgreementProposalFormConst.defaultErrorMessage;
 };
 
-const isPositiveInteger = (value: string): boolean => {
-  const parsed = Number(value);
-  return Number.isInteger(parsed) && parsed > 0;
-};
-
 export const SendAgreementProposalForm = ({
   exchangeId,
+  requestId,
   viewerRole,
   disabled = false,
   unavailableReason = null,
   onSent,
 }: SendAgreementProposalFormProps) => {
-  const [storageKey, setStorageKey] = useState("");
-  const [originalFileName, setOriginalFileName] = useState("");
-  const [contentType, setContentType] = useState("application/pdf");
-  const [sizeBytes, setSizeBytes] = useState("");
+  const [document, setDocument] = useState<File | null>(null);
   const [comment, setComment] = useState("");
   const [validationError, setValidationError] = useState<string | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const mutation = useSendAgreementProposalMutation();
-  const isDisabled = disabled || mutation.isPending;
+  const isDisabled = disabled || isUploading || mutation.isPending;
   const shouldShowUnavailableReason = disabled && unavailableReason;
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (isDisabled) {
       return;
     }
 
-    if (
-      storageKey.trim().length === 0 ||
-      originalFileName.trim().length === 0 ||
-      contentType.trim().length === 0 ||
-      !isPositiveInteger(sizeBytes)
-    ) {
+    if (document === null) {
       setValidationError(sendAgreementProposalFormConst.validationErrorMessage);
       return;
     }
 
     setValidationError(null);
+    setUploadError(null);
 
-    mutation.mutate(
-      {
-        exchangeId,
-        proposal: {
-          document: {
-            storageKey: storageKey.trim(),
-            originalFileName: originalFileName.trim(),
-            contentType: contentType.trim(),
-            sizeBytes: Number(sizeBytes),
+    try {
+      setIsUploading(true);
+      const documentRef = await uploadAgreementProposalDocument({ document });
+
+      mutation.mutate(
+        {
+          exchangeId,
+          requestId,
+          proposal: {
+            document: documentRef,
+            comment: comment.trim() || null,
           },
-          comment: comment.trim() || null,
         },
-      },
-      {
-        onSuccess: () => {
-          onSent?.();
+        {
+          onSuccess: () => {
+            onSent?.();
+          },
         },
-      },
-    );
+      );
+    } catch (error) {
+      setUploadError(getErrorMessage(error));
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const title =
     viewerRole === "Client"
       ? sendAgreementProposalFormConst.clientTitle
       : sendAgreementProposalFormConst.employeeTitle;
+  const pendingLabel = isUploading
+    ? sendAgreementProposalFormConst.uploadingLabel
+    : sendAgreementProposalFormConst.pendingLabel;
 
   return (
     <form
@@ -99,59 +100,28 @@ export const SendAgreementProposalForm = ({
       onSubmit={handleSubmit}
     >
       <h4 className="sendAgreementProposalAction__title">{title}</h4>
-      <div className="sendAgreementProposalAction__grid" role="group" aria-label={sendAgreementProposalFormConst.documentSectionTitle}>
-        <div className="sendAgreementProposalAction__field">
-          <label className="sendAgreementProposalAction__label" htmlFor={`send-proposal-storage-key-${exchangeId}`}>
-            {sendAgreementProposalFormConst.storageKeyLabel}
-          </label>
-          <input
-            id={`send-proposal-storage-key-${exchangeId}`}
-            className="sendAgreementProposalAction__input"
-            disabled={isDisabled}
-            value={storageKey}
-            onChange={(event) => setStorageKey(event.target.value)}
-          />
-        </div>
-        <div className="sendAgreementProposalAction__field">
-          <label className="sendAgreementProposalAction__label" htmlFor={`send-proposal-file-name-${exchangeId}`}>
-            {sendAgreementProposalFormConst.originalFileNameLabel}
-          </label>
-          <input
-            id={`send-proposal-file-name-${exchangeId}`}
-            className="sendAgreementProposalAction__input"
-            disabled={isDisabled}
-            value={originalFileName}
-            onChange={(event) => setOriginalFileName(event.target.value)}
-          />
-        </div>
-        <div className="sendAgreementProposalAction__field">
-          <label className="sendAgreementProposalAction__label" htmlFor={`send-proposal-content-type-${exchangeId}`}>
-            {sendAgreementProposalFormConst.contentTypeLabel}
-          </label>
-          <input
-            id={`send-proposal-content-type-${exchangeId}`}
-            className="sendAgreementProposalAction__input"
-            disabled={isDisabled}
-            value={contentType}
-            onChange={(event) => setContentType(event.target.value)}
-          />
-        </div>
-        <div className="sendAgreementProposalAction__field">
-          <label className="sendAgreementProposalAction__label" htmlFor={`send-proposal-size-${exchangeId}`}>
-            {sendAgreementProposalFormConst.sizeBytesLabel}
-          </label>
-          <input
-            id={`send-proposal-size-${exchangeId}`}
-            className="sendAgreementProposalAction__input"
-            disabled={isDisabled}
-            inputMode="numeric"
-            value={sizeBytes}
-            onChange={(event) => setSizeBytes(event.target.value)}
-          />
-        </div>
+      <div className="sendAgreementProposalAction__field">
+        <label
+          className="sendAgreementProposalAction__label"
+          htmlFor={`send-proposal-document-${exchangeId}`}
+        >
+          {sendAgreementProposalFormConst.documentLabel}
+        </label>
+        <input
+          id={`send-proposal-document-${exchangeId}`}
+          className="sendAgreementProposalAction__input"
+          type="file"
+          disabled={isDisabled}
+          onChange={(event) => {
+            setDocument(event.target.files?.[0] ?? null);
+          }}
+        />
       </div>
       <div className="sendAgreementProposalAction__field">
-        <label className="sendAgreementProposalAction__label" htmlFor={`send-proposal-comment-${exchangeId}`}>
+        <label
+          className="sendAgreementProposalAction__label"
+          htmlFor={`send-proposal-comment-${exchangeId}`}
+        >
           {sendAgreementProposalFormConst.commentLabel}
         </label>
         <textarea
@@ -168,8 +138,8 @@ export const SendAgreementProposalForm = ({
         className="sendAgreementProposalAction__button"
         disabled={isDisabled}
       >
-        {mutation.isPending
-          ? sendAgreementProposalFormConst.pendingLabel
+        {isUploading || mutation.isPending
+          ? pendingLabel
           : sendAgreementProposalFormConst.actionLabel}
       </button>
       {shouldShowUnavailableReason && (
@@ -178,6 +148,11 @@ export const SendAgreementProposalForm = ({
       {validationError && (
         <p className="sendAgreementProposalAction__error" role="alert">
           {validationError}
+        </p>
+      )}
+      {uploadError && (
+        <p className="sendAgreementProposalAction__error" role="alert">
+          {uploadError}
         </p>
       )}
       {mutation.isError && (

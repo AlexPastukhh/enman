@@ -3,17 +3,20 @@ import type { SendAgreementProposalRequest } from "./sendAgreementProposalApiTyp
 
 export type SendAgreementProposalInput = {
   exchangeId: number;
+  requestId: number;
   proposal: SendAgreementProposalRequest;
 };
 
-const sendAgreementProposalPath = (exchangeId: number | string) =>
-  `/api/agreement-exchanges/${encodeURIComponent(String(exchangeId))}/proposals`;
+const sendAgreementProposalPath = (requestId: number | string) =>
+  `/api/requests/${encodeURIComponent(
+    String(requestId),
+  )}/agreement-exchange/proposals`;
 
 export const sendAgreementProposal = ({
-  exchangeId,
+  requestId,
   proposal,
 }: SendAgreementProposalInput): Promise<void> =>
-  fetchJson<void>(sendAgreementProposalPath(exchangeId), {
+  fetchJson<void>(sendAgreementProposalPath(requestId), {
     method: "POST",
     body: JSON.stringify(proposal),
   });

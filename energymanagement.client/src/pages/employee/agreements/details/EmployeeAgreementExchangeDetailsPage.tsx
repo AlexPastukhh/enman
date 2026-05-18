@@ -110,6 +110,7 @@ const EmployeeAgreementExchangeDetailsPage = () => {
                   <>
                     <SendAgreementProposalForm
                       exchangeId={details.exchangeId}
+                      requestId={details.requestId}
                       viewerRole="Employee"
                       disabled={!sendAvailability.canSendProposal}
                       unavailableReason={sendAvailability.reason}

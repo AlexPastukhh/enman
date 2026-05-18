@@ -1,13 +1,17 @@
 /**
  * @vitest environment jsdom
  */
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { StartAgreementExchangeForm } from "./StartAgreementExchangeForm";
 
-const { mockedUseStartAgreementExchangeMutation } = vi.hoisted(() => ({
+const {
+  mockedUseStartAgreementExchangeMutation,
+  mockedUploadAgreementProposalDocument,
+} = vi.hoisted(() => ({
   mockedUseStartAgreementExchangeMutation: vi.fn(),
+  mockedUploadAgreementProposalDocument: vi.fn(),
 }));
 
 vi.mock("../model/useStartAgreementExchangeMutation", () => ({
@@ -15,8 +19,19 @@ vi.mock("../model/useStartAgreementExchangeMutation", () => ({
   __esModule: true,
 }));
 
+vi.mock("../../upload-document/api/uploadAgreementProposalDocument", () => ({
+  uploadAgreementProposalDocument: mockedUploadAgreementProposalDocument,
+  __esModule: true,
+}));
+
 describe("StartAgreementExchangeForm", () => {
   const mutate = vi.fn();
+  const uploadedDocumentRef = {
+    storageKey: "agreements/42/initial.pdf",
+    originalFileName: "initial.pdf",
+    contentType: "application/pdf",
+    sizeBytes: 4096,
+  };
 
   beforeEach(() => {
     mockedUseStartAgreementExchangeMutation.mockReturnValue({
@@ -25,37 +40,38 @@ describe("StartAgreementExchangeForm", () => {
       isError: false,
       error: null,
     });
+    mockedUploadAgreementProposalDocument.mockResolvedValue(uploadedDocumentRef);
   });
 
   afterEach(() => {
     cleanup();
     mutate.mockReset();
     mockedUseStartAgreementExchangeMutation.mockReset();
+    mockedUploadAgreementProposalDocument.mockReset();
   });
 
-  it("submits start exchange command with initial proposal payload", async () => {
+  it("uploads document before submitting start exchange command", async () => {
     const user = userEvent.setup();
+    const file = new File(["initial"], "initial.pdf", {
+      type: "application/pdf",
+    });
 
     render(<StartAgreementExchangeForm requestId={42} />);
 
-    await user.type(screen.getByLabelText("Document storage key"), " agreements/42/initial.pdf ");
-    await user.type(screen.getByLabelText("Original file name"), " initial.pdf ");
-    await user.clear(screen.getByLabelText("Content type"));
-    await user.type(screen.getByLabelText("Content type"), " application/pdf ");
-    await user.type(screen.getByLabelText("Size in bytes"), "4096");
+    await user.upload(screen.getByLabelText("Initial proposal document"), file);
     await user.type(screen.getByLabelText("Initial proposal comment"), " First proposal. ");
     await user.click(screen.getByRole("button", { name: "Start agreement exchange" }));
 
+    await waitFor(() => {
+      expect(mockedUploadAgreementProposalDocument).toHaveBeenCalledWith({
+        document: file,
+      });
+    });
     expect(mutate).toHaveBeenCalledWith(
       {
         requestId: 42,
-        initialProposal: {
-          document: {
-            storageKey: "agreements/42/initial.pdf",
-            originalFileName: "initial.pdf",
-            contentType: "application/pdf",
-            sizeBytes: 4096,
-          },
+        proposal: {
+          document: uploadedDocumentRef,
           comment: "First proposal.",
         },
       },
@@ -63,7 +79,7 @@ describe("StartAgreementExchangeForm", () => {
     );
   });
 
-  it("shows validation feedback when required document fields are missing", async () => {
+  it("shows validation feedback when document is missing", async () => {
     const user = userEvent.setup();
 
     render(<StartAgreementExchangeForm requestId={42} />);
@@ -71,8 +87,9 @@ describe("StartAgreementExchangeForm", () => {
     await user.click(screen.getByRole("button", { name: "Start agreement exchange" }));
 
     expect(screen.getByRole("alert")).toHaveTextContent(
-      "Provide document storage key, original file name, content type and positive size.",
+      "Choose an initial proposal document.",
     );
+    expect(mockedUploadAgreementProposalDocument).not.toHaveBeenCalled();
     expect(mutate).not.toHaveBeenCalled();
   });
 
@@ -92,6 +109,7 @@ describe("StartAgreementExchangeForm", () => {
     ).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Start agreement exchange" }));
 
+    expect(mockedUploadAgreementProposalDocument).not.toHaveBeenCalled();
     expect(mutate).not.toHaveBeenCalled();
   });
 
@@ -108,7 +126,7 @@ describe("StartAgreementExchangeForm", () => {
     expect(
       screen.getByRole("button", { name: "Starting exchange..." }),
     ).toBeDisabled();
-    expect(screen.getByLabelText("Document storage key")).toBeDisabled();
+    expect(screen.getByLabelText("Initial proposal document")).toBeDisabled();
     expect(screen.getByRole("alert")).toHaveTextContent(
       "Agreement exchange already exists.",
     );

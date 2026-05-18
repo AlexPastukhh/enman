@@ -2,10 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { agreementExchangeQueryKeys } from "../../../../entities/agreement-exchange/model/agreementExchangeQueryKeys";
 import { employeeRequestQueryKeys } from "../../../../entities/employee-request/model/employeeRequestQueryKeys";
 import { startAgreementExchange } from "../api/startAgreementExchange";
-import type {
-  StartAgreementExchangeRequest,
-  StartAgreementExchangeResponse,
-} from "../api/startAgreementExchangeApiTypes";
+import type { StartAgreementExchangeInput } from "../api/startAgreementExchangeApiTypes";
 
 const invalidateRelatedReads = async (
   queryClient: ReturnType<typeof useQueryClient>,
@@ -27,11 +24,7 @@ const invalidateRelatedReads = async (
 export const useStartAgreementExchangeMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<
-    StartAgreementExchangeResponse,
-    unknown,
-    StartAgreementExchangeRequest
-  >({
+  return useMutation<void, unknown, StartAgreementExchangeInput>({
     mutationFn: startAgreementExchange,
     onSuccess: async (_data, variables) => {
       await invalidateRelatedReads(queryClient, variables.requestId);

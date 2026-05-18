@@ -5,16 +5,12 @@ export type StartAgreementExchangeDocumentRef = {
   sizeBytes: number;
 };
 
-export type StartAgreementExchangeInitialProposal = {
+export type StartAgreementExchangeRequest = {
   document: StartAgreementExchangeDocumentRef;
   comment?: string | null;
 };
 
-export type StartAgreementExchangeRequest = {
+export type StartAgreementExchangeInput = {
   requestId: number;
-  initialProposal: StartAgreementExchangeInitialProposal;
-};
-
-export type StartAgreementExchangeResponse = {
-  exchangeId?: number | null;
+  proposal: StartAgreementExchangeRequest;
 };

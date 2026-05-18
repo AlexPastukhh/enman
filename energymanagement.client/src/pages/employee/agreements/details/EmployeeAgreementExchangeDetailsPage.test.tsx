@@ -37,9 +37,15 @@ vi.mock("../../../../shared/ui/layout/Footer", () => ({
 }));
 
 vi.mock("../../../../features/agreement-exchange/send-proposal/ui/SendAgreementProposalForm", () => ({
-  SendAgreementProposalForm: ({ disabled }: { disabled?: boolean }) => (
+  SendAgreementProposalForm: ({
+    disabled,
+    requestId,
+  }: {
+    disabled?: boolean;
+    requestId: number;
+  }) => (
     <div data-testid="send-proposal-form">
-      Send proposal form {disabled ? "disabled" : "enabled"}
+      Send proposal form {disabled ? "disabled" : "enabled"} for request {requestId}
     </div>
   ),
   __esModule: true,
@@ -133,6 +139,9 @@ describe("EmployeeAgreementExchangeDetailsPage", () => {
       "/employee/agreements",
     );
     expect(screen.getByTestId("send-proposal-form")).toBeVisible();
+    expect(screen.getByTestId("send-proposal-form")).toHaveTextContent(
+      "for request 10",
+    );
     expect(screen.getByTestId("final-refuse-form")).toHaveTextContent(
       "Final refuse form enabled",
     );

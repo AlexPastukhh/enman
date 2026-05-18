@@ -8,7 +8,7 @@ describe("sendAgreementProposal", () => {
     vi.unstubAllGlobals();
   });
 
-  it("posts proposal version command with document reference payload", async () => {
+  it("posts proposal version command to request agreement exchange route", async () => {
     const fetchMock = vi
       .fn()
       .mockResolvedValueOnce(tokenResponse("token-1"))
@@ -18,6 +18,7 @@ describe("sendAgreementProposal", () => {
     await expect(
       sendAgreementProposal({
         exchangeId: 77,
+        requestId: 42,
         proposal: {
           document: {
             storageKey: "agreements/77/v2.pdf",
@@ -31,7 +32,7 @@ describe("sendAgreementProposal", () => {
     ).resolves.toBeUndefined();
 
     expect(fetchMock).toHaveBeenLastCalledWith(
-      "/api/agreement-exchanges/77/proposals",
+      "/api/requests/42/agreement-exchange/proposals",
       expect.objectContaining({
         method: "POST",
         credentials: "include",

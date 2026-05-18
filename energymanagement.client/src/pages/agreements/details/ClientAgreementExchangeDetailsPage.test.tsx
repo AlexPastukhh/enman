@@ -46,9 +46,15 @@ vi.mock("../../../features/agreement-exchange/accept-proposal/ui/AcceptAgreement
 }));
 
 vi.mock("../../../features/agreement-exchange/send-proposal/ui/SendAgreementProposalForm", () => ({
-  SendAgreementProposalForm: ({ disabled }: { disabled?: boolean }) => (
+  SendAgreementProposalForm: ({
+    disabled,
+    requestId,
+  }: {
+    disabled?: boolean;
+    requestId: number;
+  }) => (
     <div data-testid="send-proposal-form">
-      Send proposal form {disabled ? "disabled" : "enabled"}
+      Send proposal form {disabled ? "disabled" : "enabled"} for request {requestId}
     </div>
   ),
   __esModule: true,
@@ -133,6 +139,9 @@ describe("ClientAgreementExchangeDetailsPage", () => {
       "Accept proposal enabled",
     );
     expect(screen.getByTestId("send-proposal-form")).toBeVisible();
+    expect(screen.getByTestId("send-proposal-form")).toHaveTextContent(
+      "for request 10",
+    );
   });
 
   it("blocks non-client sessions from client details page", () => {

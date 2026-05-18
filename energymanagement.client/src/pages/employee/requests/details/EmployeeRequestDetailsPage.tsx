@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getEmployeeReviewActionAvailability } from "../../../../entities/employee-request/model/reviewActionAvailability";
 import { useEmployeeRequestDetailsQuery } from "../../../../entities/employee-request/model/useEmployeeRequestDetailsQuery";
 import { EmployeeRequestDetailsEmptyState } from "../../../../entities/employee-request/ui/EmployeeRequestDetailsEmptyState";
@@ -30,7 +30,6 @@ const parseRequestId = (value: string | undefined) => {
 const EmployeeRequestDetailsPage = () => {
   const session = useSession();
   const params = useParams();
-  const navigate = useNavigate();
   const requestId = parseRequestId(params.requestId);
   const isEmployee = isEmployeeSession(session?.role);
 
@@ -138,11 +137,6 @@ const EmployeeRequestDetailsPage = () => {
                       requestId={details.requestId}
                       disabled={!startExchangeAvailability.canStartAgreementExchange}
                       unavailableReason={startExchangeAvailability.reason}
-                      onStarted={(response) => {
-                        if (response.exchangeId !== undefined && response.exchangeId !== null) {
-                          navigate(clientRoutes.employeeAgreementExchangeDetails(response.exchangeId));
-                        }
-                      }}
                     />
                   </>
                 );
