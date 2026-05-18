@@ -60,24 +60,6 @@ describe("EmployeeRequestDetailsView", () => {
     ).toBeVisible();
   });
 
-
-  it("renders optional applicant verification slot before review actions", () => {
-    render(
-      <EmployeeRequestDetailsView
-        details={baseDetails}
-        renderApplicantVerification={() => (
-          <section aria-label="Applicant verification">Verification panel</section>
-        )}
-        renderReviewActions={() => <button type="button">Future action</button>}
-      />,
-    );
-
-    expect(screen.getByLabelText("Applicant verification")).toHaveTextContent(
-      "Verification panel",
-    );
-    expect(screen.getByRole("button", { name: "Future action" })).toBeVisible();
-  });
-
   it("renders optional future review action slot", () => {
     render(
       <EmployeeRequestDetailsView

@@ -1,0 +1,62 @@
+.applicantVerificationPanel {
+  display: grid;
+  gap: 0.75rem;
+  border: 1px solid #d6dde8;
+  border-radius: 12px;
+  padding: 1rem;
+  background: #fff;
+}
+
+.applicantVerificationPanel__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.applicantVerificationPanel__header h2,
+.applicantVerificationPanel__description,
+.applicantVerificationPanel__message {
+  margin: 0;
+}
+
+.applicantVerificationPanel__description {
+  color: #465365;
+}
+
+.applicantVerificationAction {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: flex-start;
+}
+
+.applicantVerificationAction__button {
+  border: 1px solid #5c2d91;
+  border-radius: 8px;
+  background: #5c2d91;
+  color: #fff;
+  padding: 0.55rem 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.applicantVerificationAction__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.applicantVerificationAction[data-surface="dashboard"] .applicantVerificationAction__button {
+  background: #fff;
+  color: #5c2d91;
+}
+
+.applicantVerificationAction__error {
+  margin: 0;
+  color: #9f1c1c;
+}
+
+.applicantVerificationAction__success {
+  margin: 0;
+  color: #0f6b3d;
+}

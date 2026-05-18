@@ -29,6 +29,3 @@ export type EmployeeRequestDetailsDto =
 
 export type EmployeeRequestApplicantSummaryDto =
   components["schemas"]["EmployeeRequestApplicantSummaryDto"];
-
-export type EmployeeRequestApplicantVerificationDto =
-  components["schemas"]["EmployeeRequestApplicantVerificationDto"];

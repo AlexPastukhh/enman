@@ -67,33 +67,3 @@
 .employeeRequestDashboardRow__actions .employeeRequestDashboardRow__detailsLink {
   margin-top: 0;
 }
-
-.employeeRequestDashboardRow__badges {
-  display: inline-flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.5rem;
-}
-
-.applicantVerificationStatusBadge {
-  border-radius: 999px;
-  background: #f3f6fb;
-  color: #334155;
-  padding: 0.35rem 0.65rem;
-  font-weight: 700;
-}
-
-.applicantVerificationStatusBadge[data-status="verified"] {
-  background: #e8f7ef;
-  color: #0f6b3d;
-}
-
-.applicantVerificationStatusBadge[data-status="unverified"] {
-  background: #fff7e8;
-  color: #8a5a00;
-}
-
-.applicantVerificationStatusBadge[data-status="not-required"] {
-  background: #eef2f7;
-  color: #465365;
-}

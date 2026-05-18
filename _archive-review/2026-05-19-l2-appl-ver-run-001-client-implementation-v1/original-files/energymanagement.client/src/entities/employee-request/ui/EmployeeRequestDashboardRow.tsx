@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import type { EmployeeRequestDashboardItem } from "../model/employeeRequestTypes";
 import { clientRoutes } from "../../../shared/config/clientRoutes";
-import { ApplicantVerificationStatusBadge } from "./ApplicantVerificationStatusBadge";
 import { EmployeeReviewStateBadge } from "./EmployeeReviewStateBadge";
 import { employeeRequestDashboardConst } from "./employeeRequestDashboardConst";
 import {
@@ -27,14 +26,7 @@ export const EmployeeRequestDashboardRow = ({
     <article className="employeeRequestDashboardRow" aria-labelledby={titleId}>
       <header className="employeeRequestDashboardRow__header">
         <h2 id={titleId}>{title}</h2>
-        <div className="employeeRequestDashboardRow__badges">
-          {request.applicantVerification && (
-            <ApplicantVerificationStatusBadge
-              verification={request.applicantVerification}
-            />
-          )}
-          <EmployeeReviewStateBadge reviewState={request.reviewState} />
-        </div>
+        <EmployeeReviewStateBadge reviewState={request.reviewState} />
       </header>
 
       <dl className="employeeRequestDashboardRow__summary">

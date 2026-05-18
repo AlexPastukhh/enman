@@ -7,7 +7,6 @@ import { employeeRequestDetailsConst } from "../../../../entities/employee-reque
 import { useSession } from "../../../../entities/session/model/useSession";
 import { getStartAgreementExchangeAvailability } from "../../../../features/agreement-exchange/start-exchange/model/startAgreementExchangeAvailability";
 import { StartAgreementExchangeForm } from "../../../../features/agreement-exchange/start-exchange/ui/StartAgreementExchangeForm";
-import { ApplicantPartyVerificationPanel } from "../../../../features/employee-request/applicant-verification/ui/ApplicantPartyVerificationPanel";
 import { ApproveReviewButton } from "../../../../features/employee-request/approve-review/ui/ApproveReviewButton";
 import { RejectReviewForm } from "../../../../features/employee-request/reject-review/ui/RejectReviewForm";
 import { StartReviewButton } from "../../../../features/employee-request/start-review/ui/StartReviewButton";
@@ -106,14 +105,6 @@ const EmployeeRequestDetailsPage = () => {
         {session && isEmployee && !isNotFound && detailsQuery.data && (
           <EmployeeRequestDetailsView
             details={detailsQuery.data}
-            renderApplicantVerification={(details) =>
-              details.applicantVerification ? (
-                <ApplicantPartyVerificationPanel
-                  requestId={details.requestId}
-                  verification={details.applicantVerification}
-                />
-              ) : null
-            }
             renderReviewActions={(details) => {
               const availability = getEmployeeReviewActionAvailability(details);
               const startExchangeAvailability =

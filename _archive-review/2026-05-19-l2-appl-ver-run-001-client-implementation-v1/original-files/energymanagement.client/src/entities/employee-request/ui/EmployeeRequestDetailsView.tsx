@@ -9,13 +9,11 @@ import "./employeeRequestDetails.css";
 
 type EmployeeRequestDetailsViewProps = {
   details: EmployeeRequestDetails;
-  renderApplicantVerification?: (details: EmployeeRequestDetails) => ReactNode;
   renderReviewActions?: (details: EmployeeRequestDetails) => ReactNode;
 };
 
 export const EmployeeRequestDetailsView = ({
   details,
-  renderApplicantVerification,
   renderReviewActions,
 }: EmployeeRequestDetailsViewProps) => {
   const title = `${employeeRequestDetailsConst.requestTitlePrefix} #${details.requestId}`;
@@ -27,7 +25,6 @@ export const EmployeeRequestDetailsView = ({
       </header>
       <EmployeeRequestStatusPanel details={details} />
       <EmployeeApplicantReviewData details={details} />
-      {renderApplicantVerification?.(details)}
       <EmployeeReviewStatePanel details={details} />
       <EmployeeReviewActionAvailabilityPanel
         details={details}

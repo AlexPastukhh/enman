@@ -8,7 +8,6 @@ import { useEmployeeRequestDashboardQuery } from "../../../../entities/employee-
 import { EmployeeRequestDashboardList } from "../../../../entities/employee-request/ui/EmployeeRequestDashboardList";
 import { employeeRequestDashboardConst } from "../../../../entities/employee-request/ui/employeeRequestDashboardConst";
 import { useSession } from "../../../../entities/session/model/useSession";
-import { RunApplicantPartyVerificationButton } from "../../../../features/employee-request/applicant-verification/ui/RunApplicantPartyVerificationButton";
 import { StartReviewButton } from "../../../../features/employee-request/start-review/ui/StartReviewButton";
 import { clientRoutes } from "../../../../shared/config/clientRoutes";
 import { EmployeeRequestDashboardFilters } from "./EmployeeRequestDashboardFilters";
@@ -108,22 +107,14 @@ const EmployeeDashboardPage = () => {
             requests={dashboardQuery.data}
             emptyStateVariant={hasActiveFilters ? "filtered" : "default"}
             onResetFilters={handleResetFilters}
-            renderRowActions={(request) => (
-              <>
-                {canStartReviewFromDashboardRow(request) ? (
-                  <StartReviewButton
-                    requestId={request.requestId}
-                    surface="dashboard"
-                  />
-                ) : null}
-                {request.applicantVerification?.canRun ? (
-                  <RunApplicantPartyVerificationButton
-                    requestId={request.requestId}
-                    surface="dashboard"
-                  />
-                ) : null}
-              </>
-            )}
+            renderRowActions={(request) =>
+              canStartReviewFromDashboardRow(request) ? (
+                <StartReviewButton
+                  requestId={request.requestId}
+                  surface="dashboard"
+                />
+              ) : null
+            }
           />
         )}
       </section>

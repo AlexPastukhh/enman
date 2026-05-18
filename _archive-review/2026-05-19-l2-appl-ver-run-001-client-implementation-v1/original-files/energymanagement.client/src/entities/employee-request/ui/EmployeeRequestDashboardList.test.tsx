@@ -51,54 +51,6 @@ describe("EmployeeRequestDashboardList", () => {
     ).toHaveAttribute("href", "/employee/requests/42");
   });
 
-
-  it("renders applicant verification badge when verification summary exists", () => {
-    renderWithRouter(
-      <EmployeeRequestDashboardList
-        requests={[
-          {
-            requestId: 42,
-            requestType: "Connection",
-            status: "InReview",
-            applicantDisplayName: "Ivan Petrov",
-            objectAddress: "Altai Krai, Zarinsk, Lenina 10",
-            createdAt: "2026-01-02T10:30:00Z",
-            reviewState: "NotStarted",
-            applicantVerification: {
-              required: true,
-              status: "Unverified",
-              canRun: true,
-              message: "Данные не проверены",
-            },
-          },
-        ]}
-      />,
-    );
-
-    expect(screen.getByText("Данные не проверены")).toBeVisible();
-  });
-
-  it("does not guess applicant verification state when summary is missing", () => {
-    renderWithRouter(
-      <EmployeeRequestDashboardList
-        requests={[
-          {
-            requestId: 42,
-            requestType: "Connection",
-            status: "InReview",
-            applicantDisplayName: "Ivan Petrov",
-            objectAddress: "Altai Krai, Zarinsk, Lenina 10",
-            createdAt: "2026-01-02T10:30:00Z",
-            reviewState: "NotStarted",
-          },
-        ]}
-      />,
-    );
-
-    expect(screen.queryByText("Данные не проверены")).not.toBeInTheDocument();
-    expect(screen.queryByText("Данные проверены")).not.toBeInTheDocument();
-  });
-
   it("renders optional row action slot", () => {
     renderWithRouter(
       <EmployeeRequestDashboardList

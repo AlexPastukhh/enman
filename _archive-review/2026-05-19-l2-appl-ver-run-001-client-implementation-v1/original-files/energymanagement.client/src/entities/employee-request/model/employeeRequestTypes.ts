@@ -1,13 +1,9 @@
 import type {
   EmployeeDashboardReviewState,
-  EmployeeRequestApplicantVerificationDto,
   EmployeeRequestDetailsDto,
   EmployeeRequestListItemDto,
   EmployeeRequestStatus,
 } from "../api/employeeRequestApiTypes";
-
-export type EmployeeRequestApplicantVerification =
-  EmployeeRequestApplicantVerificationDto;
 
 export type EmployeeRequestDashboardItem = EmployeeRequestListItemDto & {
   requestId: number;
