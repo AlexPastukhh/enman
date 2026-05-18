@@ -1,12 +1,164 @@
 # L2-AGR-EXCH-LIST-001.client — Agreement Exchange List Pages
 
-Status: client read sidecar draft / shared list endpoint and shared list widget first pass
-Parent server slice: `SL-AGR-EXCH-003 — Agreement Exchange List Page / Read List`
-Slice type: client read sidecar
-Actors: ClientAccount, Employee
+Status: implemented client-sidecar draft refactor / implementation not rechecked in this pass  
+Parent server slice: `SL-AGR-EXCH-003 — Agreement Exchange List Page / Read List`  
+Slice type: client read sidecar  
+Actors: ClientAccount, Employee  
 Architecture direction: shared entity read/query/list widget, separate actor page shells.
 
-## 0. Key Decision
+Refactor note:
+
+```text
+This draft was refactored as a docs-only implemented-slice sync pass.
+
+Runtime implementation was not rechecked in this pass.
+Deep UI redesign and page-flow/redirect audit are out of scope for this pass.
+```
+
+---
+
+## 0. Scenario Sources
+
+Business scenario:
+
+```text
+SC-13A — Agreement Exchange List
+```
+
+UI scenario:
+
+```text
+missing / pending dedicated UI source for Client and Employee agreement exchange list pages
+```
+
+Server source:
+
+```text
+SL-AGR-EXCH-003 — Agreement Exchange List Page / Read List
+```
+
+Cross-cutting behavior:
+
+```text
+CC-CLIENT-FEEDBACK-001 — Client Error / Feedback Visibility
+CC-CLIENT-FORM-VALIDATION-001 — only if filters become user-editable form fields
+```
+
+Data source:
+
+```text
+pending scenario-data source for list row summary fields, empty states and actor-specific labels
+```
+
+Behavior items:
+
+```text
+stable source behavior item IDs are pending scenario/source registry;
+this draft uses provisional behavior names until source-sync files are completed.
+```
+
+---
+
+## 0.1 Source / Domain / Slice Coverage Snapshot
+
+Source versions:
+
+```text
+SC-13A: pending / v000 if source registry is applied
+SL-AGR-EXCH-003: paired server draft in same archive
+```
+
+Domain/server baseline:
+
+```text
+server read endpoint must filter by current session role/account;
+client-side filtering is UX only and not security.
+```
+
+Slice derivation map:
+
+```text
+pending / add row for L2-AGR-EXCH-LIST-001.client during source-sync map update.
+```
+
+Coverage snapshot:
+
+| Behavior item / provisional behavior | Source version | Server/domain disposition | This client slice responsibility | Notes |
+|---|---|---|---|---|
+| Client opens own agreement exchange list | SC-13A pending | server filters rows by ClientAccountId | render Client page shell and call shared query | page copy: `Мои договоры` |
+| Employee opens employee exchange dashboard | SC-13A pending | server returns employee-visible exchanges | render Employee page shell and call shared query | any active Employee first pass |
+| Shared list row summary is displayed | SC-13A pending | server returns compact DTO | render common list widget/rows | no full history |
+| Actor-specific empty states | SC-13A pending | not server behavior | page shell provides title/empty text | keep simple first pass |
+| Row opens actor-appropriate details page | SC-13A/SC-13B pending | details route/read owned elsewhere | page shell supplies `getDetailsHref` | redirect audit later |
+| No command forms in list slice | SC-13A pending | command slices own mutations | list does not render command forms first pass | actions are future sidecars |
+| Shared endpoint wrapper | SL-AGR-EXCH-003 | server exposes one endpoint | use `entities/agreement-exchange/api/listAgreementExchanges.ts` | no actor-specific wrappers |
+| Loading/error/empty/success states | cross-cutting UI | not server behavior | render visible states with simple layout | no deep UI overhaul |
+
+---
+
+## 0.2 Implementation Sync Status
+
+Implementation status:
+
+```text
+implemented-needs-doc-sync
+```
+
+Implemented files:
+
+```text
+client:
+  not rechecked in this pass
+
+server:
+  paired server draft refactored in this archive:
+    planning/slices/SL-AGR-EXCH-003-agreement-exchange-list-read.md
+
+tests:
+  not rechecked in this pass
+```
+
+Checked against:
+
+```text
+source versions:
+  pending source-sync registry
+
+server contract:
+  pending generated OpenAPI confirmation
+
+slice derivation map version:
+  pending
+```
+
+Known drift:
+
+```text
+docs:
+  - old client draft lacked Source / Domain / Slice Coverage Snapshot;
+  - old client draft lacked Implementation Sync Status;
+  - old test plan lacked Behavior-to-Test Trace with escape/refactor risk;
+  - old visual implementation flow used ownership language but not explicit `from`, `needed to`, `visual` structure.
+
+source:
+  - stable behavior item IDs and final UI scenario are not yet assigned.
+
+implementation:
+  - not checked in this pass.
+
+UI:
+  - deep UI redesign and redirects are not touched in this pass.
+```
+
+Last sync note:
+
+```text
+Docs-only refactor. No runtime implementation inspection and no page-flow/redirect audit.
+```
+
+---
+
+## 1. Key Decision
 
 First pass uses **one shared read model and one shared frontend list ownership**:
 
@@ -53,7 +205,9 @@ entities/agreement-exchange/api/listAgreementExchanges.ts
 entities/agreement-exchange/api/agreementExchangeApiTypes.ts
 ```
 
-## 1. Scope
+---
+
+## 2. Scope
 
 This client sidecar owns:
 
@@ -88,7 +242,9 @@ lastActivityAt
 
 Full proposal history belongs to exchange details/read slice, not list.
 
-## 2. Out of Scope
+---
+
+## 3. Out of Scope
 
 ```text
 - backend endpoint implementation details beyond consuming generated contract;
@@ -102,10 +258,14 @@ Full proposal history belongs to exchange details/read slice, not list.
 - employee exchange-level ownership / ResponsibleEmployeeId guard;
 - local CSRF mechanics;
 - manual generated OpenAPI/type edits;
-- business-specific wrappers in shared/api.
+- business-specific wrappers in shared/api;
+- deep UI redesign;
+- page flow / redirect audit.
 ```
 
-## 3. Related Slices / Owners
+---
+
+## 4. Related Slices / Owners
 
 ```text
 SL-AGR-EXCH-003 — Agreement Exchange List Page / Read List
@@ -114,11 +274,8 @@ SL-AGR-EXCH-003 — Agreement Exchange List Page / Read List
 L2-AGR-EXCH-LIST-001.client
   Owns shared client query/model/list widget and actor page shells.
 
-Future Client Exchange Details client sidecar
-  Owns Client-facing exchange details page.
-
-Future Employee Exchange Details client sidecar
-  Owns Employee-facing exchange details page.
+L2-AGR-EXCH-DETAILS-001.client
+  Owns Client/Employee-facing exchange details pages.
 
 Agreement Exchange command sidecars
   Own start/counter/accept/refuse action UI and mutations.
@@ -127,9 +284,11 @@ shared/api
   Owns generic transport, ProblemDetails/ApiError, CSRF helpers and generated types only.
 ```
 
-## 4. Server Visibility Direction
+---
 
-First-pass read endpoint is shared:
+## 5. Server Visibility Direction
+
+First-pass read endpoint:
 
 ```http
 GET /api/agreement-exchanges
@@ -166,7 +325,9 @@ AgreementProposal.Author.SenderId
 
 The UI may show who sent a proposal version/active proposal using these fields.
 
-## 5. Shared API / Separate Page Shell Rule
+---
+
+## 6. Shared API / Separate Page Shell Rule
 
 This slice intentionally demonstrates the general slicing rule:
 
@@ -198,7 +359,9 @@ Employee page:
   provides employee title/empty state/navigation
 ```
 
-## 6. Visual UI / Scenario Flow
+---
+
+## 7. Visual UI / Scenario Flow
 
 ```text
 [Signed-in Client]
@@ -225,136 +388,147 @@ shows employee-visible exchanges
 Employee opens exchange details
 ```
 
-In ordinary words:
-
-Client and Employee open different pages, but both pages use the same shared Agreement Exchange list query and list widget. The server decides which rows are visible based on the current session role. The list page only shows summary information and navigates to details.
-
 Scenario flow table:
 
-| Step | Layer               | Responsibility                                             |
-| ---- | ------------------- | ---------------------------------------------------------- |
-| S01  | Client page shell   | Opens “Мои договоры”.                                      |
-| S02  | Employee page shell | Opens Employee exchange dashboard.                         |
-| S03  | Shared query        | Calls shared list endpoint.                                |
-| S04  | Server              | Filters rows by session role.                              |
-| S05  | Shared list widget  | Renders common exchange rows.                              |
-| S06  | Page shell          | Provides actor-specific title, empty state and navigation. |
-| S07  | Row navigation      | Opens actor-appropriate exchange details page.             |
+| Step | Layer | Responsibility |
+|---|---|---|
+| S01 | Client page shell | Opens `Мои договоры`. |
+| S02 | Employee page shell | Opens Employee exchange dashboard. |
+| S03 | Shared query | Calls shared list endpoint. |
+| S04 | Server | Filters rows by session role. |
+| S05 | Shared list widget | Renders common exchange rows. |
+| S06 | Page shell | Provides actor-specific title, empty state and navigation. |
+| S07 | Row navigation | Opens actor-appropriate exchange details page. |
 
-## 7. Visual Client Implementation Flow
+---
+
+## 8. Visual Client Implementation Flow
+
+### Client Page Shell
 
 ```text
-[Client Page Shell]
-pages/agreements/my/ClientAgreementExchangesPage.tsx
-
-Owns:
-  client route/page composition;
-  page title: "Мои договоры";
-  client empty state;
-  client-specific navigation to client details route.
+ClientAgreementExchangesPage
+  from: pages/agreements/my/ClientAgreementExchangesPage.tsx
+  needed to: compose the Client list route with shared query/list and Client-specific copy/navigation.
+  visual: page-level container, title "Мои договоры", simple empty/error/loading area.
+```
 
 Uses:
-  useAgreementExchangeListQuery()
-  AgreementExchangeList
-```
 
 ```text
-[Employee Page Shell]
-pages/employee/agreements/dashboard/EmployeeAgreementExchangesDashboardPage.tsx
+useAgreementExchangeListQuery
+  from: entities/agreement-exchange/model/useAgreementExchangeListQuery.ts
+  needed to: load the shared agreement exchange list through the entity model layer.
 
-Owns:
-  employee route/page composition;
-  employee dashboard title/copy;
-  employee empty state;
-  employee-specific navigation to employee details route.
+AgreementExchangeList
+  from: widgets/agreement-exchange-list/AgreementExchangeList.tsx
+  needed to: render common rows and list states.
+  visual: shared list/card/table block inside the page content area.
+```
+
+### Employee Page Shell
+
+```text
+EmployeeAgreementExchangesDashboardPage
+  from: pages/employee/agreements/dashboard/EmployeeAgreementExchangesDashboardPage.tsx
+  needed to: compose the Employee list route with shared query/list and Employee-specific copy/navigation.
+  visual: page-level dashboard container, title/copy for Employee work queue.
+```
 
 Uses:
-  useAgreementExchangeListQuery()
-  AgreementExchangeList
-```
 
 ```text
-[Entity API Layer]
-entities/agreement-exchange/api/listAgreementExchanges.ts
-entities/agreement-exchange/api/agreementExchangeApiTypes.ts
+useAgreementExchangeListQuery
+  from: entities/agreement-exchange/model/useAgreementExchangeListQuery.ts
+  needed to: load the same shared server list endpoint.
 
-Owns:
-  shared read endpoint wrapper;
-  generated DTO aliases near agreement-exchange entity.
+AgreementExchangeList
+  from: widgets/agreement-exchange-list/AgreementExchangeList.tsx
+  needed to: render common rows and list states.
+  visual: shared list/card/table block inside the page content area.
+```
+
+### Entity API Layer
+
+```text
+listAgreementExchanges
+  from: entities/agreement-exchange/api/listAgreementExchanges.ts
+  needed to: wrap the shared read endpoint and keep business endpoint wrappers out of shared/api.
+```
 
 Uses:
-  shared/api/fetchJson
-  shared/api/generated/openapi-types
-```
 
 ```text
-[Entity Model Layer]
-entities/agreement-exchange/model/useAgreementExchangeListQuery.ts
-entities/agreement-exchange/model/agreementExchangeQueryKeys.ts
-entities/agreement-exchange/model/agreementExchangeTypes.ts
+fetchJson
+  from: shared/api/fetchJson.ts
+  needed to: execute generic GET request and parse response/errors.
 
-Owns:
-  React Query hook;
-  query key;
-  local view model helpers if needed.
+AgreementExchangeListResponse
+  from: entities/agreement-exchange/api/agreementExchangeApiTypes.ts
+  needed to: expose generated OpenAPI DTO aliases near the entity.
 ```
+
+### Entity Model Layer
 
 ```text
-[Widget Layer]
-widgets/agreement-exchange-list/AgreementExchangeList.tsx
-widgets/agreement-exchange-list/AgreementExchangeRow.tsx
-widgets/agreement-exchange-list/agreementExchangeList.css
+useAgreementExchangeListQuery
+  from: entities/agreement-exchange/model/useAgreementExchangeListQuery.ts
+  needed to: own React Query loading/error/success state for the shared list.
 
-Owns:
-  common list layout;
-  row rendering;
-  loading/empty/error display hooks if passed from page;
-  row click/link callback.
+agreementExchangeQueryKeys
+  from: entities/agreement-exchange/model/agreementExchangeQueryKeys.ts
+  needed to: centralize query keys for list/details invalidation.
 
-Does not own:
-  actor-specific page shell;
-  command buttons/mutations;
-  server visibility.
+agreementExchangeTypes
+  from: entities/agreement-exchange/model/agreementExchangeTypes.ts
+  needed to: hold small view-model helpers only if generated DTOs need local shape normalization.
 ```
+
+### Widget Layer
 
 ```text
-[Shared API Infrastructure]
-shared/api/fetchJson.ts
-shared/api/generated/openapi-types.ts
-shared/api/ApiError / ProblemDetails helpers
-shared/api/antiforgery helpers
+AgreementExchangeList
+  from: widgets/agreement-exchange-list/AgreementExchangeList.tsx
+  needed to: render the common list shell and delegate each row.
+  visual: simple, readable list block with consistent row spacing and no dense decorative styling.
 
-Owns:
-  generic request execution;
-  generated type source;
-  generic error parsing.
+AgreementExchangeRow
+  from: widgets/agreement-exchange-list/AgreementExchangeRow.tsx
+  needed to: render one exchange summary and details link target supplied by page shell.
+  visual: compact summary row/card; no command form inside row.
 
-Does not own:
-  listAgreementExchanges()
-  agreement exchange business wrappers
+AgreementExchangeListEmptyState
+  from: widgets/agreement-exchange-list/AgreementExchangeListEmptyState.tsx
+  needed to: render actor-specific empty state text provided by page shell.
+  visual: calm empty panel, not a modal.
 ```
 
-Implementation flow table:
+### Shared API Infrastructure
 
-| Step | Layer            | Responsibility                                                    |
-| ---- | ---------------- | ----------------------------------------------------------------- |
-| I01  | Client page      | Renders client “Мои договоры” shell.                              |
-| I02  | Employee page    | Renders Employee dashboard shell.                                 |
-| I03  | Entity query     | Loads shared agreement exchange list.                             |
-| I04  | Entity API       | Calls shared list endpoint.                                       |
-| I05  | Shared API infra | Executes generic GET and ProblemDetails mapping.                  |
-| I06  | Widget           | Renders shared list rows.                                         |
-| I07  | Page shell       | Supplies actor-specific title, empty state and detail navigation. |
+```text
+fetchJson / ApiError / ProblemDetails / generated OpenAPI types
+  from: shared/api/*
+  needed to: provide generic transport and generated contract primitives only.
+```
 
-## 8. Client API / Server Contract
+Not owned here:
+
+```text
+shared/api/agreementExchangeApi.ts
+business-specific wrappers in shared/api
+clientAgreementExchangeApi.ts
+employeeAgreementExchangeApi.ts
+```
+
+---
+
+## 9. Client API / Server Contract
 
 Target endpoint:
 
 ```http
 GET /api/agreement-exchanges
 ```
-
-or actual generated OpenAPI route.
 
 Target response direction:
 
@@ -415,7 +589,9 @@ Do not create first pass:
   listEmployeeAgreementExchanges.ts
 ```
 
-## 9. Role-Based UI Rules
+---
+
+## 10. Role-Based UI Rules
 
 The shared widget may receive page-level props:
 
@@ -443,7 +619,9 @@ Employee:
 
 The widget can use `viewerRole` only for display wording and row navigation. It must not enforce security.
 
-## 10. Security / Protection
+---
+
+## 11. Security / Protection
 
 Client-side buttons/visibility are UX only.
 
@@ -482,64 +660,92 @@ For server implementation, prefer app service/policies:
 
 ```text
 AgreementExchangeApplicationService
-AgreementExchangeActorContext
 AgreementExchangeVisibilityPolicy
 AgreementExchangeActionPolicy
 AgreementExchangeReadProjector
 ```
 
-This avoids huge role `if` blocks inside controllers/handlers.
+---
 
-## 11. Questions / Decisions
+## 12. Questions / Decisions
 
 ### Blocked / unresolved
 
-| ID                         | Status  | Question                        | Current direction                                          |
-| -------------------------- | ------- | ------------------------------- | ---------------------------------------------------------- |
-| `Q-L2-AGR-LIST-CLIENT-001` | blocked | Exact generated endpoint path?  | Use `SL-AGR-EXCH-003` OpenAPI after server implementation. |
-| `Q-L2-AGR-LIST-CLIENT-002` | blocked | Exact generated DTO names?      | Alias generated DTOs in `entities/agreement-exchange/api`. |
-| `Q-L2-AGR-LIST-CLIENT-003` | blocked | Which filters exist first pass? | Use only server-supported filters; do not invent.          |
+| ID | Status | Question | Current direction |
+|---|---|---|---|
+| `Q-L2-AGR-LIST-CLIENT-001` | blocked | Exact generated endpoint path? | Use `SL-AGR-EXCH-003` OpenAPI after server implementation. |
+| `Q-L2-AGR-LIST-CLIENT-002` | blocked | Exact generated DTO names? | Alias generated DTOs in `entities/agreement-exchange/api`. |
+| `Q-L2-AGR-LIST-CLIENT-003` | blocked | Which filters exist first pass? | Use only server-supported filters; do not invent. |
 
 ### Accepted
 
-| ID                         | Status   | Question                                        | Current direction                                        |
-| -------------------------- | -------- | ----------------------------------------------- | -------------------------------------------------------- |
-| `Q-L2-AGR-LIST-CLIENT-004` | accepted | One shared list endpoint?                       | Yes, first pass.                                         |
-| `Q-L2-AGR-LIST-CLIENT-005` | accepted | One shared frontend query/model/list widget?    | Yes.                                                     |
-| `Q-L2-AGR-LIST-CLIENT-006` | accepted | Separate page shells?                           | Yes, Client and Employee routes/pages differ.            |
-| `Q-L2-AGR-LIST-CLIENT-007` | accepted | Separate client/employee API wrappers?          | No, not while response shape is common.                  |
-| `Q-L2-AGR-LIST-CLIENT-008` | accepted | Employee exchange-level owner?                  | No. Any active Employee may service exchange first pass. |
-| `Q-L2-AGR-LIST-CLIENT-009` | accepted | Full proposal history in list?                  | No. Details slice owns full history.                     |
-| `Q-L2-AGR-LIST-CLIENT-010` | accepted | Merge request details and exchange details DTO? | No. Pages may compose multiple queries.                  |
+| ID | Status | Question | Current direction |
+|---|---|---|---|
+| `Q-L2-AGR-LIST-CLIENT-004` | accepted | One shared list endpoint? | Yes, first pass. |
+| `Q-L2-AGR-LIST-CLIENT-005` | accepted | One shared frontend query/model/list widget? | Yes. |
+| `Q-L2-AGR-LIST-CLIENT-006` | accepted | Separate page shells? | Yes, Client and Employee routes/pages differ. |
+| `Q-L2-AGR-LIST-CLIENT-007` | accepted | Separate client/employee API wrappers? | No, not while response shape is common. |
+| `Q-L2-AGR-LIST-CLIENT-008` | accepted | Employee exchange-level owner? | No. Any active Employee may service exchange first pass. |
+| `Q-L2-AGR-LIST-CLIENT-009` | accepted | Full proposal history in list? | No. Details slice owns full history. |
+| `Q-L2-AGR-LIST-CLIENT-010` | accepted | Merge request details and exchange details DTO? | No. Pages may compose multiple queries. |
 
-## 12. Behavior Coverage
+---
 
-| Behavior                                  | How client sidecar covers it                                 |
-| ----------------------------------------- | ------------------------------------------------------------ |
-| Client sees own agreement exchanges       | Client page calls shared query; server filters by session.   |
-| Employee sees employee-visible exchanges  | Employee page calls shared query; server filters by session. |
-| Shared row summary is displayed           | `AgreementExchangeList` renders common DTO rows.             |
-| Proposal active sender is visible         | Row shows `activeProposalSender` / version info.             |
-| Proposal author identity can be displayed | Row can show sender type/id where provided.                  |
-| Full proposal history                     | Out of scope; details read slice.                            |
-| Commands                                  | Out of scope; command sidecars.                              |
-| Security                                  | Server responsibility; client UI is not security boundary.   |
+## 13. Behavior Coverage
 
-## 13. Verification Plan
+| Source / draft behavior | Status | How client sidecar covers it |
+|---|---|---|
+| Client sees own agreement exchanges | covered | Client page calls shared query; server filters by session. |
+| Employee sees employee-visible exchanges | covered | Employee page calls shared query; server filters by session. |
+| Shared row summary is displayed | covered | `AgreementExchangeList` renders common DTO rows. |
+| Proposal active sender is visible | covered | Row shows active proposal sender/version info. |
+| Proposal author identity can be displayed | covered | Row can show sender type/id where provided. |
+| Loading/error/empty/success states are visible | covered | page/query/widget render visible states. |
+| Full proposal history | out of scope | details read slice. |
+| Commands | out of scope | command sidecars. |
+| Security | out of client scope | server responsibility; client UI is not security boundary. |
+| Redirect/page flow | out of scope | future page-flow/redirect audit. |
 
-Component tests:
+---
+
+## 14. Test / Verification Plan
+
+Primary rule:
+
+```text
+Tests verify visible client behavior and scenario outcomes.
+Implementation details are only setup/action/observation mechanisms.
+```
+
+### Behavior-to-Test Trace
+
+| Behavior item / behavior | Visible/client outcome | Test layer | Implementation mechanism | Escape risk | Refactor risk | Planned/actual test |
+|---|---|---|---|---|---|---|
+| Client page renders own agreements shell | Client title/empty/list state is visible | component/page test | render Client page with mocked query response | Medium: does not prove server filtering | Low if assertions use accessible text/roles | `ClientAgreementExchangesPage_RendersClientShellAndList` |
+| Employee page renders dashboard shell | Employee title/empty/list state is visible | component/page test | render Employee page with mocked query response | Medium: does not prove server filtering | Low | `EmployeeAgreementExchangesDashboardPage_RendersEmployeeShellAndList` |
+| Both pages use shared list widget | common row summary is rendered consistently | component test | render pages/list with same DTO data | Medium: can be bypassed by duplicating internal UI unless row output is asserted | Medium if testing component names instead of visible output | page tests + `AgreementExchangeList_RendersRows` |
+| Row displays summary fields | status/version/sender/request display/dates visible | component test | render `AgreementExchangeList` with DTO rows | Low for visual row behavior | Low | `AgreementExchangeList_RendersExchangeSummaryRows` |
+| Row navigates to actor-specific details | link href comes from page shell callback | component/page test | render row/page and inspect link href | Low for link behavior, not full redirect | Low/Medium if routes change | `AgreementExchangeRow_UsesProvidedDetailsHref` |
+| Full history is absent | list does not render proposal history block | component test | render row with summary data only | Medium; absence tests can be weak | Low | `AgreementExchangeList_DoesNotRenderProposalHistory` |
+| No command forms in list slice | list page has no send/accept/refuse form | component test | render page/list | Medium; commands may appear later intentionally | Low if tied to current scope | `AgreementExchangeList_DoesNotRenderCommandFormsFirstPass` |
+| Entity wrapper calls shared endpoint | wrapper uses `/api/agreement-exchanges` | API wrapper test | mock fetchJson | Medium: does not prove server behavior | Medium if over-asserting internals | `listAgreementExchanges_CallsSharedEndpoint` |
+| Query exposes loading/error/success | visible states render | component/query test | mock query states | Low for UI states | Low | list/page state tests |
+| E2E Client list | Client sees client-visible exchanges and opens details | E2E | seeded backend + browser | Low for integrated flow | Medium | future E2E |
+| E2E Employee list | Employee sees employee-visible exchanges and opens details | E2E | seeded backend + browser | Low for integrated flow | Medium | future E2E |
+
+### Component tests
 
 ```text
 - Client page renders client title and empty state.
 - Employee page renders employee title and empty state.
-- Both pages use shared AgreementExchangeList.
+- Both pages render shared row summary output.
 - AgreementExchangeList renders requestId/exchangeId/status/version/sender/address/dates.
 - Row click/link uses actor-specific details href from page shell.
 - List does not render full proposal history.
 - List does not render command forms.
 ```
 
-Entity API/query tests:
+### Entity API/query tests
 
 ```text
 - listAgreementExchanges calls shared endpoint.
@@ -549,7 +755,7 @@ Entity API/query tests:
 - no client/employee-specific API wrapper exists first pass.
 ```
 
-E2E planned:
+### E2E planned
 
 ```text
 Client session:
@@ -563,17 +769,20 @@ Employee session:
   open exchange details
 ```
 
-Non-goals:
+### Non-goals
 
 ```text
 - do not test command lifecycle here;
 - do not test accept/refuse/counter-proposal here;
 - do not assert server filtering internals from client tests;
 - do not test full proposal history here;
-- do not assert React Query cache internals in E2E.
+- do not assert React Query cache internals in E2E;
+- do not test redirect/page-flow policy until page-flow audit.
 ```
 
-## 14. Suggested File Placement
+---
+
+## 15. Suggested File Placement
 
 ```text
 src/entities/agreement-exchange/api/
@@ -614,7 +823,9 @@ src/entities/agreement-exchange/api/listClientAgreementExchanges.ts
 src/entities/agreement-exchange/api/listEmployeeAgreementExchanges.ts
 ```
 
-## 15. Next Step
+---
+
+## 16. Next Step
 
 ```text
 1. Confirm/apply SL-AGR-EXCH-003 backend endpoint.
@@ -629,7 +840,19 @@ src/entities/agreement-exchange/api/listEmployeeAgreementExchanges.ts
 10. Add E2E once server/test setup is ready.
 ```
 
-## 16. Implementation Checklist
+Separate later work:
+
+```text
+- page flow / redirects audit;
+- UI refactoring workflow;
+- source registry/behavior item ID sync.
+```
+
+---
+
+## 17. Implementation Checklist / Current Refactor Checklist
+
+Historical implementation checklist is replaced by implemented-draft sync checklist.
 
 ```text
 [ ] confirm/apply SL-AGR-EXCH-003 backend endpoint
@@ -651,4 +874,23 @@ src/entities/agreement-exchange/api/listEmployeeAgreementExchanges.ts
 [ ] add component/entity query tests
 [ ] add E2E smoke when server/test setup is ready
 [ ] regenerate OpenAPI/types if this implementation package changes API shape
+```
+
+This pass did not perform implementation verification.
+
+---
+
+## 18. Guardrail Summary
+
+```text
+Use one shared list endpoint and one shared frontend query/model/list widget first pass.
+Keep Client and Employee page shells separate.
+Do not create client/employee-specific API wrappers while response shape is common.
+Keep business endpoint wrappers out of shared/api.
+Server filters visibility; client UI is not security.
+Employee is not exchange-level owner.
+Do not use ResponsibleEmployeeId as guard.
+Do not include full proposal history in list.
+Do not render command forms in this list slice first pass.
+Page-flow/redirect audit is separate later work.
 ```

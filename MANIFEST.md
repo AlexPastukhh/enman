@@ -1,26 +1,29 @@
 # MANIFEST
 
-Archive: `sl-agr-exch-002-draft-refactor-v1`  
-Review folder: `_archive-review/2026-05-19-sl-agr-exch-002-draft-refactor-v1/`
+Archive: `sl-agr-exch-003-list-server-client-draft-refactor-v1`  
+Review folder: `_archive-review/2026-05-19-sl-agr-exch-003-list-server-client-draft-refactor-v1/`
 
 ## Purpose
 
-Docs-only refactor of:
+Docs-only paired refactor of:
 
 ```text
-SL-AGR-EXCH-002 — Send Agreement Counter-Proposal Version
+SL-AGR-EXCH-003 — Agreement Exchange List Page / Read List
+L2-AGR-EXCH-LIST-001.client — Agreement Exchange List Pages
 ```
 
 ## Replacement files
 
 ```text
-planning/slices/SL-AGR-EXCH-002-send-agreement-counter-proposal-version.md
+planning/slices/SL-AGR-EXCH-003-agreement-exchange-list-read.md
+planning/slices/l2/L2-AGR-EXCH-LIST-001-agreement-exchange-list.client.md
 ```
 
 ## Original snapshots included
 
 ```text
-_archive-review/2026-05-19-sl-agr-exch-002-draft-refactor-v1/original-files/planning/slices/SL-AGR-EXCH-002-send-agreement-counter-proposal-version.md
+_archive-review/2026-05-19-sl-agr-exch-003-list-server-client-draft-refactor-v1/original-files/planning/slices/SL-AGR-EXCH-003-agreement-exchange-list-read.md
+_archive-review/2026-05-19-sl-agr-exch-003-list-server-client-draft-refactor-v1/original-files/planning/slices/l2/L2-AGR-EXCH-LIST-001-agreement-exchange-list.client.md
 ```
 
 ## Not included
@@ -29,7 +32,7 @@ _archive-review/2026-05-19-sl-agr-exch-002-draft-refactor-v1/original-files/plan
 - no runtime implementation audit
 - no runtime code changes
 - no tests changed
-- no UI refactor
+- no deep UI refactor
 - no page flow / redirect audit
 - no navigation updates
 ```
