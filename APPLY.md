@@ -1,36 +1,43 @@
-# Apply — sl-agr-exch-006-final-refuse-server-client-draft-refactor-v1.zip
+# APPLY — sl-emp-req-001-dashboard-server-client-draft-refactor-v1
 
-This is a docs-only replacement archive.
+Archive type: docs-only paired replacement archive.
 
-It replaces planning draft files only:
-
-```text
-planning/slices/SL-AGR-EXCH-006-final-refuse-agreement-exchange.md
-planning/slices/l2/L2-AGR-EXCH-FINAL-REFUSE-001-employee-final-refuse-agreement-exchange.client.md
-```
-
-Original snapshots are preserved under:
+## Replacement files
 
 ```text
-_archive-review/2026-05-19-sl-agr-exch-006-final-refuse-server-client-draft-refactor-v1/original-files/planning/slices/SL-AGR-EXCH-006-final-refuse-agreement-exchange.md
-_archive-review/2026-05-19-sl-agr-exch-006-final-refuse-server-client-draft-refactor-v1/original-files/planning/slices/l2/L2-AGR-EXCH-FINAL-REFUSE-001-employee-final-refuse-agreement-exchange.client.md
+planning/slices/SL-EMP-REQ-001-employee-request-list-read.md
+planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
 ```
 
-Implementation/code was used as read-only evidence from the uploaded repo snapshot for names/routes/DTOs/tests.
-
-Not included:
+## Review folder
 
 ```text
-- no runtime code changes
-- no tests changed
-- no generated artifacts
-- no runtime UI refactor
-- no page flow / redirect audit
-- no navigation updates
+_archive-review/2026-05-19-sl-emp-req-001-dashboard-server-client-draft-refactor-v1/
 ```
 
-Apply from repository root:
+## Apply from repository root
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\sl-agr-exch-006-final-refuse-server-client-draft-refactor-v1.zip" -DestinationPath "." -Force
+Expand-Archive -Path ".\sl-emp-req-001-dashboard-server-client-draft-refactor-v1.zip" -DestinationPath "." -Force
 ```
+
+## Scope
+
+```text
+- refactor server slice draft only;
+- refactor paired client sidecar draft only;
+- preserve originals under _archive-review;
+- use current implementation evidence read-only;
+- do not change runtime code;
+- do not change tests;
+- do not change generated artifacts;
+- do not deep-refactor UI/CSS/page flow.
+```
+
+## After apply
+
+```powershell
+git diff -- planning/slices/SL-EMP-REQ-001-employee-request-list-read.md planning/slices/l2/L2-EMP-DASH-001-employee-request-dashboard.client.md
+```
+
+Expected changed files are the two replacement drafts plus archive review files and this manifest/apply metadata.
