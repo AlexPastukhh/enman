@@ -1,63 +1,134 @@
 # SL-EMP-REQ-003 — Start Request Review
 
-Status: full backend/API command slice draft / implementation-ready after Employee auth + Request-owned Review prerequisites are confirmed  
+Status: refactored server/backend slice draft / implementation sync pending  
+Logical slice: Employee Request Review command family  
 Package: `[Employee] [Requests]`  
-Slice type: backend/API command slice  
-Primary purpose: employee starts request-owned Review  
+Slice type: server/API command slice  
+Primary purpose: Employee starts request-owned Review for one request  
+Draft refactor mode: docs-only; runtime implementation was not rechecked in this pass
+
 Parent slices:
 - `SL-EMP-REQ-001 — Employee Request List Read`
 - `SL-EMP-REQ-002 — Employee Request Details Read`
 
-Implementation direction: L2 target domain model — Request-owned Review mutation through `Request.StartReview(Employee)`
+Related client sidecar:
+- `L2-REVIEW-START-001.client — Start Request Review`
+
+## 0. Scenario Sources
+
+Business scenario:
+- `planning/diagrams/scenario-text-specs/SC-07B-employee-request-review.md`
+
+Related read scenario context:
+- `planning/diagrams/scenario-text-specs/SC-06-employee-request-dashboard.md`
+- `planning/diagrams/scenario-text-specs/SC-07A-employee-request-details.md`
+
+Behavior items:
+- `planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md`
+
+Domain-design input:
+- `planning/tables/domain-drafts/domain-draft-02.md`
+
+Cross-cutting behavior:
+- `CC-CSRF-001` for unsafe browser command protection
+- `CC-VALIDATION-001` for API validation / ProblemDetails conventions
+- `CC-API-001` for OpenAPI/generated artifact workflow
+
+Source note:
+
+```text
+Scenario text/DATA/UI/behavior files remain the source of truth for behavior.
+Domain drafts inform terminology, aggregate boundaries and invariants.
+This slice draft must not invent final behavior item IDs when source IDs are missing.
+```
+
+## 0.1 Source / Domain / Slice Coverage Snapshot
+
+Source registry status:
+
+```text
+Scenario source registry was not available in the uploaded archive used for this pass.
+Versions are therefore marked as pending source-sync registry.
+```
+
+| Behavior label | Source/version | Domain disposition | This slice responsibility | Notes |
+|---|---|---|---|---|
+| `EMP-REQ-START-B01` | pending registry | provided/owned by Request domain model | call domain start-review method from API/application | provisional label, not final source ID |
+| `EMP-REQ-START-B02` | pending registry | partially provided | persist started Review state | domain mutates aggregate; application saves |
+| `EMP-REQ-START-B03` | pending registry | not domain-only | resolve authenticated Employee and enforce Employee API boundary | actor comes from session/claims |
+| `EMP-REQ-START-B04` | pending registry | application/read-model responsibility | list/details later show `StartedByCurrentEmployee` | read slices own read DTOs |
+| `EMP-REQ-START-B05` | pending registry | domain/application | failed start does not mutate request/review | command tests must prove no-mutation |
+
+## 0.2 Implementation Sync Status
+
+Implementation status:
+
+```text
+draft-refactor-only / implementation-not-rechecked
+```
+
+Known draft drift corrected by this refactor:
+
+```text
+- old draft described preferred 200 OK with response DTO;
+- current command family direction is 204 No Content and read-state refresh from read endpoints;
+- old draft allowed an idempotent duplicate-start assumption;
+- first-pass draft now treats already-started review as 422/no-mutation;
+- old draft did not have Source / Domain / Slice Coverage Snapshot;
+- old draft did not have Behavior-to-Test Trace.
+```
+
+Implementation inspection:
+
+```text
+Skipped intentionally in this pass per user direction.
+If code/test drift must be checked later, run implemented slice sync workflow before changing runtime code.
+```
 
 ## 1. Slice Overview
 
-This slice adds an employee-side command endpoint that starts review for one request.
+This slice adds the Employee command endpoint for starting review of one request.
 
-Endpoint direction:
+Endpoint:
 
 ```http
 POST /api/employee/requests/{requestId}/review/start
 ```
 
-This slice is only:
+Meaning:
 
 ```text
-start request-owned Review for current authenticated Employee account
+Start review is the explicit moment when an Employee takes a request into active review.
+It is not approval.
+It is not rejection.
+It is not agreement exchange creation.
+It does not send an agreement proposal.
 ```
 
-Target behavior:
+Target state after success:
 
 ```text
-Employee starts review for a request that is not already started/completed.
-Request-owned Review records started state, started Employee and started timestamp.
-Employee request list/details can then show reviewState = StartedByCurrentEmployee.
+Request remains in high-level InReview lifecycle.
+Request-owned Review becomes Started.
+Review records started Employee and started timestamp.
+Employee list/details can derive reviewState = StartedByCurrentEmployee.
 ```
-
-This slice does not approve or reject the request.
-
-This slice does not create AgreementProposalExchange.
-
-This slice does not send the first agreement proposal.
-
-This slice does not add employee UI.
 
 ## 2. Scope
 
 ```text
-- add employee start-review command endpoint;
-- resolve current authenticated Employee account;
-- load request by requestId;
-- verify request is visible/reviewable by current Employee;
-- use the current temporary Employee visibility policy unless a stricter assignment policy is introduced;
-- verify request-owned Review can be started;
-- call Request.StartReview(currentEmployee);
-- persist Review started state;
-- return compact command result;
-- add API integration tests with DB state assertions.
+- Employee-only command endpoint;
+- current Employee resolution from authenticated session;
+- route id validation / route constraint;
+- load request aggregate;
+- use temporary first-pass visibility policy unless a stricter assignment policy exists;
+- start request-owned Review through domain method;
+- persist started review state;
+- return 204 No Content;
+- provide integration-testable behavior contract.
 ```
 
-Target review transition:
+Target transition:
 
 ```text
 Review.NotStarted
@@ -65,74 +136,22 @@ Review.NotStarted
 Review.Started
 ```
 
-Employee-facing read state after successful command:
-
-```text
-StartedByCurrentEmployee
-```
-
-This state is consumed by:
-
-```text
-SL-EMP-REQ-001 — Employee Request List Read
-SL-EMP-REQ-002 — Employee Request Details Read
-```
-
-## 3A. Employee Account Identity Rule
-
-Accepted L2 target:
-
-```text
-Account
-  -> ClientAccount
-  -> Employee
-```
-
-Persistence direction:
-
-```text
-TPH in L1Accounts using AccountType / Role discriminator.
-```
-
-Auth/session identity rule:
-
-```text
-ClaimTypes.NameIdentifier = Account.Id.
-For Employee command endpoints, Account.Id == Employee.Id.
-```
-
-Handler direction:
-
-```text
-currentAccountId from auth claim
-        ↓
-load Employee by id = currentAccountId
-        ↓
-pass Employee domain object to Request.StartReview(employee, startedAt)
-        ↓
-RequestReview stores StartedByEmployeeId = employee.Id
-```
-
-Do not model this command as `EmployeeProfile(AccountId)` or pass `EmployeeRef`.
-
 ## 3. Out of Scope
 
-| Out of scope                                                   | Owner                                            |
-| -------------------------------------------------------------- | ------------------------------------------------ |
-| Employee request list / filters                                | `SL-EMP-REQ-001 — Employee Request List Read`    |
-| Employee request details read                                  | `SL-EMP-REQ-002 — Employee Request Details Read` |
-| Approve review command                                         | `SL-EMP-REQ-004 — Approve Request Review`        |
-| Reject review command                                          | `SL-EMP-REQ-005 — Reject Request Review`         |
-| Rejection feedback                                             | `SL-EMP-REQ-005`                                 |
-| AgreementProposalExchange creation                             | future agreement proposal slices                 |
-| Employee sends first proposal                                  | future agreement proposal slices                 |
-| Employee dashboard/client UI                                   | future `.client` sidecar                         |
-| Employee profile/display-name read model                       | future Employee profile/read slice               |
-| Full assignment/queue model                                    | future employee assignment/review queue slice    |
-| Notifications                                                  | future notification slice                        |
-| Review history/audit log beyond required Review started fields | future audit/review-history slice                |
-| Legacy runtime cleanup                                         | backend cleanup / compatibility task             |
-| Broad validation matrix                                        | future validation matrix testing slice           |
+| Out of scope | Owner |
+|---|---|
+| Employee request list / filters | `SL-EMP-REQ-001` |
+| Employee request details read | `SL-EMP-REQ-002` |
+| Approve review command | `SL-EMP-REQ-004` |
+| Reject review command | `SL-EMP-REQ-005` |
+| Rejection feedback | `SL-EMP-REQ-005` |
+| AgreementProposalExchange creation | agreement exchange slices |
+| First agreement proposal | agreement exchange slices |
+| Employee UI button/action rendering | client sidecar |
+| Full assignment/queue model | future assignment/queue slice |
+| Notifications | future notification slice |
+| Review history beyond started fields | future audit/history slice |
+| UI refactoring / redirects / page flow | separate UI/page-flow audit |
 
 ## 4. Related Slices / Owners
 
@@ -152,181 +171,99 @@ SL-EMP-REQ-004
 SL-EMP-REQ-005
   Owns RejectReview command and rejection feedback.
 
-L2 Domain Draft
-  Owns target domain concepts:
-  Employee,
-  Request-owned Review,
-  Request.StartReview(Employee),
-  Start/Started terminology,
-  no EmployeeRef,
-  no ReviewDecisionRecord.
+L2-REVIEW-START-001.client
+  Owns UI action placement, click handling, pending/error state and read refetch.
 
 CC-CSRF-001
   Owns antiforgery token/session context for unsafe browser requests.
 
 CC-VALIDATION-001
-  Owns FluentValidation boundary for request/route/body shape validation.
+  Owns validation/ProblemDetails conventions.
 
 CC-API-001
-  Owns OpenAPI/generated artifact workflow if API contract changes.
+  Owns OpenAPI/generated artifact workflow.
 ```
 
-## 5. Sources / Source Behavior Items
-
-Scenario Flow and Behavior Coverage must come from scenario source files, not from this slice locally.
-
-Primary scenario sources after L2 scenario sync:
-
-```text
-planning/diagrams/scenario-text-specs/SC-07B-employee-request-review.md
-planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
-```
-
-Related read scenario context:
-
-```text
-planning/diagrams/scenario-text-specs/SC-06-employee-request-dashboard.md
-planning/diagrams/scenario-text-specs/SC-07A-employee-request-details.md
-```
-
-Domain-design input:
-
-```text
-planning/tables/domain-drafts/domain-draft-02.md
-```
-
-Important distinction:
-
-```text
-The domain draft informs domain terminology, aggregate boundaries and state-machine direction.
-Scenario text/DATA/UI/behavior files remain source of truth for Scenario Flow and Behavior Coverage.
-```
-
-Target L2 domain direction for this slice:
-
-```text
-- Use Employee terminology.
-- Request owns Review.
-- Review is not an aggregate.
-- Review starts through Request.StartReview(...).
-- Domain methods receive Employee when employee behavior matters.
-- Do not use EmployeeRef in the L2 target model.
-- Do not use ReviewDecisionRecord in the L2 target model.
-- Decision/result data lives inside Review.
-```
-
-Stable behavior item IDs for this command slice may still need final mapping in the behavior source file.
-
-Until then, use `Source BI TBD` and do not invent final IDs inside this slice.
-
-## 6. Visual Scenario Flow
+## 5. Scenario Flow
 
 ```text
 [Signed-in Employee]
-opens employee request details
+opens employee request list or request details
         ↓
-System shows review state as not started
+system shows review state as not started
         ↓
-Employee chooses “Start review”
+Employee chooses Start review
         ↓
-System verifies that the Employee can review this request
+system verifies Employee command boundary and request lifecycle
         ↓
-System starts the request-owned Review for this Employee
+system starts request-owned Review for the authenticated Employee
         ↓
-System shows review state as started by current Employee
+system returns 204 No Content
         ↓
-Employee can continue with later approve/reject actions
+client refetches list/details
+        ↓
+read model shows reviewState = StartedByCurrentEmployee
 ```
 
-Scenario meaning:
-
-```text
-Start review is the explicit moment when an Employee takes the request into active review.
-
-It is not final approval.
-It is not rejection.
-It is not agreement proposal creation.
-```
-
-## 7. Visual Implementation Flow
+## 6. Implementation Flow
 
 ```text
 [HTTP POST]
 POST /api/employee/requests/{requestId}/review/start
         ↓
 [CSRF boundary]
-validate X-CSRF-TOKEN via CC-CSRF-001
+validate unsafe browser request through CC-CSRF-001
         ↓
 [Auth / Employee context]
-resolve current Employee
+resolve current Employee from authenticated L1 account claims
         ↓
-[Route binding / validation]
-requestId is positive long
+[Route binding]
+requestId is long and >= 1
         ↓
-[Command handler]
-load Request aggregate by requestId
+[Application command]
+load Employee and request aggregate
         ↓
 [Visibility / reviewability]
-verify request is visible/reviewable by current Employee
+apply first-pass Employee review visibility policy
         ↓
 [Domain]
-request.StartReview(currentEmployee)
+request.StartReview(employee, now)
         ↓
 [Persistence]
-save request-owned Review started state
+SaveChanges
         ↓
 [Response]
-return compact StartReview result
+204 No Content
 ```
 
-Implementation ownership:
+Ownership:
 
 ```text
 Controller:
-  HTTP boundary, auth guard, route binding, CSRF attribute, response.
+  HTTP boundary, auth guard, route binding, CSRF attribute, response mapping.
 
-Validator:
-  route/body shape only if needed.
-  No business lifecycle validation.
-
-Command handler:
+Application command/handler:
   current Employee resolution;
   request aggregate load;
-  employee visibility/reviewability check;
-  transaction boundary if needed;
+  first-pass visibility/reviewability policy;
   SaveChanges.
 
 Domain:
-  Request owns review lifecycle.
-  Request.StartReview(Employee) owns the transition.
-  Review stores started state internally.
+  request-owned Review lifecycle;
+  Employee active/review capability;
+  NotStarted -> Started transition;
+  already-started and non-reviewable lifecycle rejection.
 
 Persistence:
-  persists Review started state and actor/timestamp fields.
+  Review started state, actor and timestamp.
 
 Client:
-  future rendering/action UI.
+  not in this server slice.
 ```
 
-Current implementation compatibility note:
+## 7. API Contract
 
-```text
-Current runtime may still contain EmployeeRef and ReviewDecisionRecord.
-
-For L2 target implementation, these are compatibility/background details, not target design.
-
-Implementation should move toward:
-- Employee domain object as actor;
-- request-owned Review;
-- Review started/decision/result state stored inside Review;
-- public Request.StartReview(Employee) API.
-
-If current runtime structures are temporarily bridged, the implementation handoff must explicitly call that compatibility out.
-```
-
-## 8. API Contract Draft
-
-### 8.1 Endpoint
+### 7.1 Endpoint
 
 ```http
 POST /api/employee/requests/{requestId}/review/start
@@ -335,82 +272,88 @@ POST /api/employee/requests/{requestId}/review/start
 Route:
 
 ```text
-requestId: long
+requestId: long, min 1
 ```
 
-### 8.2 Request body
+### 7.2 Auth
 
-No request body in first pass.
-
-```json
-{}
+```text
+Employee only.
 ```
 
-Do not accept Employee id in body.
+The client must not send Employee id in the body. The Employee actor comes from authenticated server-side context.
 
-Employee actor comes from authenticated server-side context.
+### 7.3 CSRF
 
-### 8.3 Response
+Required for browser request:
 
-Preferred success status:
+```text
+X-CSRF-TOKEN
+```
+
+CSRF behavior is owned by `CC-CSRF-001`.
+
+### 7.4 Request body
+
+```text
+none
+```
+
+Do not define a command body for first pass.
+
+### 7.5 Success response
 
 ```http
-200 OK
+204 No Content
 ```
 
-Response:
-
-```ts
-type StartRequestReviewResponseDto = {
-  requestId: number;
-  status:
-    | "InReview"
-    | "Approved"
-    | "Rejected"
-    | "AgreementExchangeFailed";
-
-  reviewState: "StartedByCurrentEmployee";
-  reviewStartedAt: string;
-};
-```
-
-Notes:
+Response body:
 
 ```text
-status is high-level request status.
-reviewState is employee-facing compact review state.
-
-If implementation separates Request.Status and Review.Status, keep both meanings explicit.
+none
 ```
 
-No extra DTOs in this slice:
+Read state is refreshed through:
 
 ```text
-- no request details DTO;
-- no list row DTO;
-- no action affordance DTO;
-- no approval DTO;
-- no rejection DTO;
-- no Employee profile/display-name DTO;
-- no AgreementProposalExchange DTO.
+SL-EMP-REQ-001 — Employee Request List Read
+SL-EMP-REQ-002 — Employee Request Details Read
 ```
 
-## 9. Validation / ProblemDetails
+Do not create `StartRequestReviewResponseDto` for this first pass.
 
-No request body validation in first pass.
-
-Route validation:
+### 7.6 Failure responses
 
 ```text
-requestId must be positive.
+401 Unauthorized
+  no authenticated session
+
+403 Forbidden
+  authenticated but not Employee / cannot access employee command boundary
+
+404 NotFound
+  request does not exist or is not visible to Employee
+
+422 UnprocessableEntity
+  lifecycle/domain rejection:
+    inactive Employee;
+    request is not InReview;
+    review already started;
+    request cannot be reviewed
+
+400 Bad Request
+  antiforgery failure only, owned by CC-CSRF-001
 ```
 
-Accepted options:
+## 8. Validation / ProblemDetails
+
+Shape validation:
 
 ```text
-- route constraint `{requestId:long:min(1)}`;
-- or small route DTO validator if project style requires it.
+requestId must be long and >= 1.
 ```
+
+No body validation in first pass.
 
 Validator does not own:
 
@@ -419,296 +362,203 @@ Validator does not own:
 - current user is Employee;
 - request exists;
 - request visibility;
-- Review not started;
-- Review started by another Employee;
-- request already approved/rejected;
-- concurrency;
+- Review lifecycle;
+- duplicate start;
+- request approved/rejected lifecycle;
 - DB reads;
-- transactions;
-- mutations.
+- mutation.
 ```
 
-ProblemDetails direction:
+Domain/application lifecycle errors are mapped to the existing validation/ProblemDetails pattern.
+
+## 9. Domain Rules
+
+Target domain direction:
 
 ```text
-401 Unauthorized
-  no authenticated session
-
-403 Forbidden
-  authenticated but not Employee / cannot access employee API
-
-404 NotFound
-  request does not exist or is not visible to Employee
-
-422 UnprocessableEntity
-  route/request shape validation or domain lifecycle rejection
-
-400 Bad Request
-  antiforgery failure only, owned by CC-CSRF-001
+- Use Employee terminology.
+- Employee is an Account-derived actor in the L2 target.
+- Request owns Review.
+- Review is not an aggregate.
+- Review starts through Request.StartReview(Employee, startedAt).
+- StartReview receives Employee when employee behavior matters.
+- Review records started state, started Employee and started timestamp.
 ```
 
-Lifecycle/domain errors should use existing API ProblemDetails/error-code pattern.
-
-Do not model CSRF as FluentValidation.
-
-Do not model lifecycle failures as CSRF.
-
-## 10. Cross-Cutting Concerns / Considerations
-
-| Concern                               | Applies? | Consideration / owner                                                                                   |
-| ------------------------------------- | -------: | ------------------------------------------------------------------------------------------------------- |
-| Auth/session/account context          |      yes | Must resolve current authenticated Employee account. Employee auth/account may be dependency/blocker.           |
-| Authorization/visibility              |      yes | Only Employee actors can start review. Request must be visible/reviewable by Employee.                  |
-| Antiforgery / unsafe requests         |      yes | Unsafe POST. Must use `CC-CSRF-001` and `X-CSRF-TOKEN`.                                                 |
-| Request validation / ProblemDetails   |      yes | Route id shape only. Lifecycle checks are domain/application.                                           |
-| OpenAPI / generated artifacts         |      yes | New endpoint/DTO changes API contract; generated artifacts must come from repo commands.                |
-| Generated constants/error codes       |    maybe | New review lifecycle errors may require constants if exposed to client.                                 |
-| Transaction / atomicity               |      yes | Single request-owned Review state update. Use transaction if more than one row/table is touched.        |
-| No-mutation safety                    |      yes | Failed start must not mutate request/review. Successful start must not alter details/applicant/address. |
-| Idempotency / retry / double-submit   |      yes | Duplicate start behavior must be defined.                                                               |
-| Concurrency / stale state             |      yes | Two Employees may attempt to start review concurrently.                                                 |
-| File/document boundary                |       no | No documents in this slice.                                                                             |
-| Clock/audit actor fields              |      yes | Use server UTC time and authenticated Employee id.                                                      |
-| Privacy / cross-account data exposure |      yes | Do not expose client private fields beyond command response.                                            |
-| Client feedback / accessibility       |   future | Future client sidecar owns button/error UX.                                                             |
-| Testing responsibility split          |      yes | API integration + DB state assertions; no repository mocks as primary proof.                            |
-
-### CSRF / antiforgery
-
-This slice adds an unsafe browser API call.
-
-Required:
+First-pass duplicate rule:
 
 ```text
-- endpoint uses CSRF protection from CC-CSRF-001;
-- client mutation must go through shared CSRF-aware API boundary in future client sidecar;
-- missing/invalid token returns 400 ProblemDetails with:
-  code = security.antiforgery.validation.failed;
-- no domain/application CSRF logic.
+Already-started Review cannot be started again.
+Duplicate start returns lifecycle/domain validation problem.
+Existing review row remains unchanged.
 ```
 
-This slice should not duplicate the full CSRF matrix. Generic CSRF behavior is owned by `CC-CSRF-001`.
+Request status rule:
+
+```text
+StartReview does not approve/reject the request.
+Request high-level status remains InReview.
+Review state carries Started/StartedByCurrentEmployee semantics.
+```
+
+## 10. Security / Protection
+
+| Concern | Direction |
+|---|---|
+| Auth/session | Employee account is resolved from server-side session/claims |
+| Role authorization | Employee-only endpoint |
+| Actor spoofing | Employee id is never accepted from request body |
+| CSRF | unsafe POST protected by CSRF boundary |
+| Visibility | first-pass temporary policy may allow active Employees to review relevant requests; stricter assignment can replace later |
+| Data exposure | response body is empty; read DTOs are owned by read slices |
+| No-mutation safety | failed command must not create or alter review/request state |
 
 ## 11. Questions / Decisions
 
 ### Accepted
 
-| ID                     | Status   | Question                                   | Decision / direction                                            | Impact                                |
-| ---------------------- | -------- | ------------------------------------------ | --------------------------------------------------------------- | ------------------------------------- |
-| `SL-EMP-REQ-003-Q-001` | accepted | Is this approve/reject?                    | No. Start review only.                                          | Keeps final decision slices separate. |
-| `SL-EMP-REQ-003-Q-002` | accepted | Should client submit Employee id?          | No. Employee actor comes from authenticated context.            | Prevents spoofing.                    |
-| `SL-EMP-REQ-003-Q-003` | accepted | Is this unsafe browser request?            | Yes. POST uses `CC-CSRF-001`.                                   | Requires CSRF-aware boundary.         |
-| `SL-EMP-REQ-003-Q-004` | accepted | Should L2 target use EmployeeRef?          | No. Use Employee domain object where employee behavior matters. | Aligns L2 domain direction.           |
-| `SL-EMP-REQ-003-Q-005` | accepted | Should L2 target use ReviewDecisionRecord? | No. Decision/result data lives inside Review.                   | Aligns L2 domain direction.           |
-| `SL-EMP-REQ-003-Q-006` | accepted | Add unit tests by default?                 | No. Use API integration + DB state assertions.                  | Matches server command test rules.    |
+| ID | Decision | Impact |
+|---|---|---|
+| `SL-EMP-REQ-003-D-001` | Start review only; no approve/reject. | Keeps final decision slices separate. |
+| `SL-EMP-REQ-003-D-002` | Employee actor comes from authenticated context. | Prevents spoofing. |
+| `SL-EMP-REQ-003-D-003` | Success is `204 No Content`. | Read state refresh is done through list/details. |
+| `SL-EMP-REQ-003-D-004` | No response DTO in first pass. | Keeps command compact. |
+| `SL-EMP-REQ-003-D-005` | Already-started review returns lifecycle/domain validation problem. | Avoids ambiguous idempotency. |
+| `SL-EMP-REQ-003-D-006` | No client UI in this server slice. | UI sidecar owns button/feedback/refetch. |
+| `SL-EMP-REQ-003-D-007` | No AgreementProposalExchange behavior. | Agreement exchange slices own that flow. |
 
-### Assumptions / current direction
+### Assumptions
 
-| ID                     | Status     | Question                                          | Assumption / current direction                                                                                                        | Impact                                   |
-| ---------------------- | ---------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
-| `SL-EMP-REQ-003-Q-007` | assumption | Does Employee auth/account exist?                 | Treat as dependency. Implementation may block if missing.                                                                             | Could require Employee auth slice first. |
-| `SL-EMP-REQ-003-Q-008` | assumption | What does StartReview mutate?                     | Request-owned Review state.                                                                                                           | Aligns L2 target terminology.            |
-| `SL-EMP-REQ-003-Q-009` | assumption | Should Request.Status change?                     | Prefer Review state as source for NotStarted/Started; Request.Status remains high-level lifecycle unless domain draft says otherwise. | Avoids overloading Request.Status.       |
-| `SL-EMP-REQ-003-Q-010` | assumption | Same Employee starts twice?                       | Prefer idempotent no-op success if already started by same Employee.                                                                  | Reduces double-click issues.             |
-| `SL-EMP-REQ-003-Q-011` | assumption | Different Employee starts already-started Review? | Reject as lifecycle/conflict error.                                                                                                   | Prevents silent reassignment.            |
-| `SL-EMP-REQ-003-Q-016` | accepted | Does first pass require department/assignment visibility? | No. Use temporary policy: all active Employees can see review-relevant requests. StartReview still enforces lifecycle/reviewability. | Keeps first command slice unblocked. |
+| ID | Assumption | Impact |
+|---|---|---|
+| `SL-EMP-REQ-003-A-001` | Temporary Employee visibility policy remains acceptable first pass. | Future assignment/queue can replace it. |
+| `SL-EMP-REQ-003-A-002` | Review started timestamp uses server UTC time. | Tests should not require exact timestamp equality. |
+| `SL-EMP-REQ-003-A-003` | Stable source behavior IDs are pending scenario registry. | Use provisional labels only in this draft. |
 
-### Open / implementation blockers
+### Open
 
-| ID                     | Status | Question                                                                                  | Current direction                                  | Impact                                      |
-| ---------------------- | ------ | ----------------------------------------------------------------------------------------- | -------------------------------------------------- | ------------------------------------------- |
-| `SL-EMP-REQ-003-Q-012` | open   | Does current schema already represent request-owned Review state and StartedByEmployeeId? | Verify before implementation.                      | May require domain/schema foundation.       |
-| `SL-EMP-REQ-003-Q-013` | open   | Is row-version/concurrency token needed in first pass?                                    | Not first pass unless implementation risk is high. | Future hardening point.                     |
-| `SL-EMP-REQ-003-Q-014` | open   | Exact error code for already-started-by-another-Employee?                                 | Add domain error if missing.                       | Needed for stable ProblemDetails.           |
-| `SL-EMP-REQ-003-Q-015` | open   | Should current EmployeeRef/ReviewDecisionRecord code be refactored before this slice?     | Preferred yes for L2 alignment.                    | Affects implementation size and sequencing. |
+| ID | Question | Current direction |
+|---|---|---|
+| `SL-EMP-REQ-003-O-001` | Exact stable error code for already-started review. | Use existing domain validation error if present; otherwise add explicit code during implementation sync. |
+| `SL-EMP-REQ-003-O-002` | Whether stricter assignment/queue visibility is needed. | Future slice; not first pass. |
+| `SL-EMP-REQ-003-O-003` | Whether source registry versions exist. | Add when source-sync registry is applied. |
 
-## 12. Extension / Change Points
+## 12. Behavior Coverage
 
-| ID                      | Area                          | Current direction                                          | Future owner                          |
-| ----------------------- | ----------------------------- | ---------------------------------------------------------- | ------------------------------------- |
-| `CP-EMP-REQ-REVIEW-001` | Request-owned Review state    | StartReview introduces Started state.                      | L2 domain / review command slices     |
-| `CP-EMP-REQ-REVIEW-002` | Assignment semantics          | First pass records started-by Employee only.               | Future assignment/queue slice         |
-| `CP-EMP-REQ-REVIEW-003` | Concurrency hardening         | State guard first; row version later if needed.            | Future concurrency hardening          |
-| `CP-EMP-REQ-REVIEW-004` | Employee display name         | Not in command response.                                   | Employee profile/read slice           |
-| `CP-EMP-REQ-REVIEW-005` | Audit history                 | Not first pass beyond Review fields.                       | Future audit/review history slice     |
-| `CP-EMP-REQ-REVIEW-006` | Client action button          | Future `.client` sidecar.                                  | Employee request details client slice |
-| `CP-EMP-REQ-REVIEW-007` | Runtime compatibility cleanup | Remove/replace EmployeeRef and ReviewDecisionRecord usage. | L2 domain alignment cleanup           |
+| Behavior label | Scenario/source meaning | Covered by this slice? | Verification direction |
+|---|---|---|---|
+| `EMP-REQ-START-B01` | Employee can start review for a not-started InReview request. | yes | API integration + DB review state |
+| `EMP-REQ-START-B02` | Started Review is associated with authenticated Employee. | yes | DB `StartedByEmployeeId` |
+| `EMP-REQ-START-B03` | Command does not return state body; read state comes from read endpoints. | yes | 204 + read refetch/read endpoint proof |
+| `EMP-REQ-START-B04` | Unauthenticated user cannot start review. | yes | 401 |
+| `EMP-REQ-START-B05` | Client/non-Employee cannot start employee review. | yes | 403 |
+| `EMP-REQ-START-B06` | Missing/not-visible request cannot be started. | yes | 404 |
+| `EMP-REQ-START-B07` | Inactive Employee cannot start review. | yes | 422/no mutation |
+| `EMP-REQ-START-B08` | Already-started review cannot be started again. | yes | 422/no mutation |
+| `EMP-REQ-START-B09` | Approved/rejected/non-InReview request cannot be started. | yes | 422/no mutation |
+| `EMP-REQ-START-B10` | Failed start does not alter request/review. | yes | DB snapshot/no mutation |
+| `EMP-REQ-START-B11` | Approve/reject remain unavailable in this slice. | out of scope | owned by `SL-EMP-REQ-004/005` |
+| `EMP-REQ-START-B12` | UI button rendering and redirects. | out of scope | client/page-flow audit later |
 
-## 13. Behavior Coverage
+## 13. Test / Verification Plan
 
-| Source / draft behavior                                          | Status       | Covered by this slice                                     |
-| ---------------------------------------------------------------- | ------------ | --------------------------------------------------------- |
-| Employee can start review for not-started request                | covered      | `POST /api/employee/requests/{requestId}/review/start`.   |
-| Started Review is associated with current Employee               | covered      | Employee comes from authenticated context.                |
-| Started Review becomes visible to read models                    | covered      | persisted Review state supports list/details reviewState. |
-| Employee cannot start missing/not-visible request                | covered      | documented rejection.                                     |
-| Client actor cannot start employee review                        | covered      | authorization/access test.                                |
-| Already approved/rejected request cannot be started              | covered      | lifecycle guard.                                          |
-| Already-started-by-another request cannot be silently taken over | covered      | lifecycle/conflict guard.                                 |
-| Approve request                                                  | out of scope | `SL-EMP-REQ-004`.                                         |
-| Reject request                                                   | out of scope | `SL-EMP-REQ-005`.                                         |
-| Rejection feedback                                               | out of scope | `SL-EMP-REQ-005`.                                         |
-| AgreementProposalExchange                                        | out of scope | future agreement slices.                                  |
-| Employee UI button rendering                                     | out of scope | future `.client` sidecar.                                 |
-
-Source behavior ID note:
+Primary rule:
 
 ```text
-Stable scenario behavior IDs for StartReview are not yet referenced here.
-If scenario/register IDs are added or found, map this table to those IDs.
+Tests verify behavior items and scenario outcomes.
+Implementation details are only setup/action/observation mechanisms.
 ```
 
-## 14. Test / Verification Plan
+### Behavior-to-Test Trace
 
-Primary verification: **API integration tests with direct DB state assertions**.
+| Behavior label | Scenario outcome being proved | Test layer | Implementation used as mechanism | Escape risk | Refactor risk | Planned / expected test |
+|---|---|---|---|---|---|---|
+| `EMP-REQ-START-B01` | Employee starts review for not-started request. | API integration + DB assertion | HTTP POST, auth cookie, CSRF token, DB read | Low if DB review state and read state are asserted | Low/Medium: DB helper may change with schema | `StartRequestReview_StartsReviewAndReturnsNoContent` |
+| `EMP-REQ-START-B02` | Started review belongs to current Employee. | API integration + DB assertion | authenticated Employee id + review row | Low if `StartedByEmployeeId` is asserted | Low | same success test |
+| `EMP-REQ-START-B03` | Command success has no body; read state is refreshed elsewhere. | API integration + read endpoint assertion | response status/body + details read | Low | Low | success test + details read assertion |
+| `EMP-REQ-START-B04` | Anonymous user cannot start review. | API integration | unauthenticated HTTP client | Low | Low | `StartRequestReview_WithoutAuth_ReturnsUnauthorized` |
+| `EMP-REQ-START-B05` | Client account cannot start Employee review. | API integration | authenticated Client role | Low | Low | `StartRequestReview_WithClientAccount_ReturnsForbidden` |
+| `EMP-REQ-START-B06` | Missing request is not started. | API integration | missing route id | Low | Low | `StartRequestReview_ForMissingRequest_ReturnsNotFound` |
+| `EMP-REQ-START-B07` | Inactive Employee is rejected and no review is created. | API integration + DB assertion | inactive employee fixture + DB read | Low | Medium: fixture helper may change | inactive Employee test |
+| `EMP-REQ-START-B08` | Already-started review is rejected and original review remains unchanged. | API integration + DB snapshot | preinserted review row + post-failure read | Low if started-by/timestamp unchanged are asserted | Medium: schema helper may change | already-started no-mutation test |
+| `EMP-REQ-START-B09` | Non-InReview request cannot start review. | API integration + DB assertion | DB status fixture + HTTP POST | Low if request status and review absence are asserted | Medium | non-InReview no-mutation test |
 
-Do not add unit tests by default.
-
-Unit tests are allowed only if this slice introduces reusable helper logic with non-trivial branching.
-
-Endpoint behavior, auth, validation, lifecycle, persistence and no-mutation safety are verified through integration tests.
-
-### API boundary / access tests
+### Required no-mutation checks
 
 ```text
-- unauthenticated start-review request returns 401;
-- authenticated non-Employee/client account returns documented rejection;
-- authenticated Employee can start visible request;
-- missing request id returns documented not-found response;
-- not-visible request id returns documented not-found/visibility response;
-- invalid route id returns documented route/model-binding response if testable.
+- failed start does not create Review;
+- failed start does not alter existing Review;
+- failed start does not change Request status;
+- failed start does not alter applicant party/details/address.
 ```
 
-### Main DB state transition test
-
-One focused state transition test:
+### What not to test here
 
 ```text
-Arrange:
-- request exists;
-- request-owned Review is NotStarted;
-- no started-by Employee;
-- no started-at timestamp;
-- no final decision/result.
-
-Act:
-- POST /api/employee/requests/{requestId}/review/start as Employee.
-
-Assert:
-- Review state is Started;
-- startedByEmployeeId = current Employee id / Account.Id;
-- startedAt is not null;
-- final decision/result fields remain empty;
-- request details/address/applicantPartyId remain unchanged;
-- response returns requestId and reviewState = StartedByCurrentEmployee.
+- repository mock call order;
+- exact SaveChanges count;
+- MediatR pipeline internals;
+- generated TypeScript as behavior proof;
+- OpenAPI generation as behavior proof;
+- client button rendering;
+- route redirect/page flow;
+- approve/reject behavior;
+- AgreementProposalExchange behavior;
+- full CSRF matrix duplication.
 ```
 
-### Idempotency / conflict tests
+## 14. OpenAPI / Generated Artifacts
 
-Depending accepted decision:
+If endpoint shape changes:
 
-```text
-- same Employee starts same request twice:
-  expected no-op success and same started-by Employee.
-
-- different Employee starts already-started request:
-  expected lifecycle/conflict rejection and original started-by Employee unchanged.
+```powershell
+npm run generate:api
+npm run check:api
 ```
 
-### No-mutation / unrelated-record safety tests
+Current first-pass contract expected by this draft:
 
 ```text
-- failed start does not change Review started fields;
-- starting one request does not mutate another request;
-- starting review does not mutate ApplicantParty;
-- starting review does not mutate request details/address;
-- starting review does not write approve/reject decision/result fields.
+POST /api/employee/requests/{requestId}/review/start
+204 No Content
+no request body
+no response DTO
 ```
 
-### Regression guards
+## 15. Implementation / Refactor Checklist
+
+Docs-only refactor checklist:
 
 ```text
-- approved request cannot be started again;
-- rejected request cannot be started again;
-- employee list/details read can derive StartedByCurrentEmployee after start, if cheap to assert through existing read endpoint;
-- client-created request enters the expected not-started Review state, if this is not already covered by domain/read tests.
+[ ] Add Source / Domain / Slice Coverage Snapshot.
+[ ] Replace old 200 OK response section with 204 No Content.
+[ ] Remove StartRequestReviewResponseDto from first-pass contract.
+[ ] Replace duplicate-start idempotency assumption with 422/no-mutation behavior.
+[ ] Add Behavior-to-Test Trace.
+[ ] Mark behavior labels as provisional until scenario registry IDs exist.
+[ ] Keep UI/page-flow/redirect work out of this draft.
 ```
 
-### Cross-cutting tests
+Runtime implementation checklist for a later implementation-sync pass:
 
 ```text
-- endpoint uses CSRF-aware boundary;
-- generic CSRF failure behavior is owned by CC-CSRF-001;
-- this slice may include only a smoke/access test if needed.
-```
-
-### What not to test
-
-```text
-- no repository mock call-order tests;
-- no exact SaveChanges count tests;
-- no MediatR pipeline tests;
-- no generated TypeScript as behavior proof;
-- no OpenAPI generation as behavior proof;
-- no client button rendering;
-- no approve/reject behavior;
-- no AgreementProposalExchange behavior;
-- no React Query/cache behavior;
-- no broad CSRF matrix duplication.
-```
-
-## 15. Implementation Checklist
-
-```text
-[ ] Verify Employee auth/account/session dependency.
-[ ] Verify request-owned Review target domain model.
-[ ] Align current runtime away from EmployeeRef if implementing L2 target now.
-[ ] Align current runtime away from ReviewDecisionRecord if implementing L2 target now.
-[ ] Add/confirm Request.StartReview(Employee).
-[ ] Ensure Review stores:
-    - started state;
-    - startedByEmployeeId;
-    - startedAt;
-    - decision/result state for later approve/reject slices.
-[ ] Add API endpoint:
-    POST /api/employee/requests/{requestId}/review/start.
-[ ] Apply employee authorization.
-[ ] Apply CSRF protection.
-[ ] Add command:
-    StartRequestReviewCommand(requestId, currentEmployeeId).
-[ ] Add command handler.
-[ ] Add response DTO.
-[ ] Add missing error codes if lifecycle errors do not exist.
-[ ] Add API integration tests with DB assertions.
-[ ] Run OpenAPI/generated artifact workflow if endpoint/DTOs are added.
-[ ] Do not implement approve command.
-[ ] Do not implement reject command.
-[ ] Do not implement client UI.
-[ ] Do not accept Employee id from body.
+[ ] Verify controller endpoint matches contract.
+[ ] Verify handler calls domain lifecycle method and persists.
+[ ] Verify domain duplicate-start behavior matches this draft.
+[ ] Verify tests prove behavior/no-mutation without testing internals.
+[ ] Verify command result style against current guardrails.
 ```
 
 ## 16. Next Step
 
-Before implementation, verify blockers:
-
-```text
-1. Is Employee auth/account/session already implemented?
-2. Is request-owned Review state already implemented?
-3. Can current schema represent:
-   - NotStarted;
-   - Started;
-   - StartedByEmployeeId;
-   - StartedAt?
-4. Should same-Employee duplicate start be idempotent?
-5. What exact error code should be used for already-started-by-another-Employee?
-6. Will implementation include L2 domain alignment away from EmployeeRef/ReviewDecisionRecord now,
-   or will that be a prerequisite slice?
-```
-
-Recommended next drafts:
+Recommended next draft-only refactor:
 
 ```text
 SL-EMP-REQ-004 — Approve Request Review
-SL-EMP-REQ-005 — Reject Request Review
 ```
 
+Separate later work:
+
+```text
+Client page flow / redirects / UI route audit.
+```
