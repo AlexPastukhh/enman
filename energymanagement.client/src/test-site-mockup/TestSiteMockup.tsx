@@ -1,6 +1,4 @@
 import { useMemo, useState, type ChangeEvent } from "react";
-import { Footer } from "../shared/ui/layout/Footer";
-import { Header } from "../shared/ui/layout/Header";
 import {
   accountStates,
   agreementSenders,
@@ -1112,9 +1110,7 @@ export default function TestSiteMockup() {
   );
 
   return (
-    <>
-      <Header />
-      <main className="content test-ui">
+    <main className="content test-ui">
         <section className="test-ui__hero">
           <div>
             <span className="test-ui__eyebrow">Low-fidelity isolated test-site mockup</span>
@@ -1230,8 +1226,6 @@ export default function TestSiteMockup() {
             {renderActivePage()}
           </section>
         </section>
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 }

@@ -11,7 +11,7 @@ export const headerConst = {
   createRequestLinkText: "Создать заявку",
   myRequestsLinkText: "Мои заявки",
   agreementExchangesLinkText: "Мои договоры",
-  employeeRequestsLinkText: "Заявки Employee",
+  employeeRequestsLinkText: "Заявки",
   employeeAgreementExchangesLinkText: "Договорные обмены",
   homeLinkText: "Главная",
   hotlinePhoneNumberText: "8-800-100-70-00",
