@@ -1,246 +1,220 @@
 # SL-AGR-EXCH-005 — Client Accept Active Agreement Proposal
 
-Status: implementation-ready server draft
-Package: `[L2] Agreement Proposal Exchange`
-Slice type: Client backend/API command slice
-Primary purpose: Client accepts the active Employee proposal in an existing agreement exchange
-
+Status: implemented slice draft refactor / implementation not rechecked in this pass  
+Package: `[L2] Agreement Proposal Exchange`  
+Slice type: Client server/API command slice  
+Primary purpose: Client accepts the active Employee proposal in an existing AgreementProposalExchange  
 Depends on:
 
 * `SL-AGR-EXCH-001 — Start Agreement Exchange With Initial Employee Proposal`
 * `SL-AGR-EXCH-003 — Agreement Exchange List Page / Read List`
 * `SL-AGR-EXCH-004 — Agreement Exchange Details / Read Details`
-* existing `AgreementProposalExchange.ClientAccountId`
-* auth/session
-* CSRF boundary
+* `AgreementProposalExchange.ClientAccountId`
+* Client auth/session
+* CSRF / unsafe command protection
 
----
-
-## 1. Current Domain Prerequisite
-
-Current domain already has the required client ownership state:
+Implementation direction:
 
 ```text
-AgreementProposalExchange.ClientAccountId
+POST /api/agreement-exchanges/{exchangeId}/accept
+
+ClientAcceptActiveProposal(client, acceptedAt)
+
+Success:
+  204 No Content
+  response body: none
 ```
 
-Current domain direction is already correct:
+Refactor note:
 
 ```text
-StartByEmployee fills ClientAccountId.
+This draft was refactored as a docs-only implemented-slice sync pass.
 
-ClientAcceptActiveProposal checks:
-  client.Id == ClientAccountId
-```
-
-So this slice does **not** need to add `ClientAccountId`. It only needs to expose the API/application command around the existing domain behavior.
-
----
-
-## 2. Slice Overview
-
-Target behavior:
-
-```text
-Client opens agreement exchange details.
-
-Exchange is AwaitingClientConfirmation.
-
-Active proposal was sent by Employee.
-
-Client accepts the active proposal.
-
-System marks:
-  AgreementProposalExchange.Status = Accepted
-  active AgreementProposal.State = Accepted
-
-No new proposal version is created.
-
-Client refetches exchange details/list and sees Accepted state.
-```
-
-Important:
-
-```text
-This is a command slice.
-
-This is Client-only first pass.
-
-Employee accept is out of scope.
-
-Accept does not create a new proposal version.
-
-Accept does not upload documents.
-
-Accept does not send counter-proposal.
-
-Accept returns no response DTO.
+Runtime implementation was not rechecked in this pass.
+Runtime UI, page-flow, redirects, tests and generated artifacts are out of scope for this pass.
 ```
 
 ---
 
-## 3. Scope
+## 0. Scenario Sources
+
+Business scenario:
 
 ```text
-- add Client accept active proposal endpoint;
-- require Client role;
-- require CSRF;
-- resolve current Client account id from authenticated session;
-- load ClientAccount if domain method requires ClientAccount instance;
-- load AgreementProposalExchange by exchangeId;
-- call AgreementProposalExchange.ClientAcceptActiveProposal(client, now);
-- persist exchange/proposal accepted state atomically;
-- return 204 No Content on success;
-- add integration tests with DB state assertions.
+SC-13B — Client Agreement Proposal Details / Response
+```
+
+Related scenarios:
+
+```text
+SC-13A — Client Agreements / Agreement Exchange List
+SC-13D — Employee Agreement Proposal Create / Send Version, as prerequisite/source of Employee proposal
+SC-13E — Agreement Final Refusal, out-of-scope alternative terminal path
+```
+
+UI scenario:
+
+```text
+missing / pending dedicated UI source for Client accept action.
+```
+
+Cross-cutting behavior:
+
+```text
+CC-SEC-CSRF-001 — Unsafe Command Protection
+CC-CLIENT-FEEDBACK-001 — Client Error / Feedback Visibility, for paired client sidecar only
+```
+
+Data source:
+
+```text
+pending scenario-data source for accept command visible states, problem details mapping and post-accept read refresh.
+```
+
+Behavior items:
+
+```text
+stable source behavior item IDs are pending scenario/source registry;
+this draft uses provisional behavior names until source-sync files are completed.
+```
+
+Concern umbrella:
+
+```text
+none for this server command slice;
+CSRF is cross-cutting security concern.
+```
+
+---
+
+## 0.1 Source / Domain / Slice Coverage Snapshot
+
+Source versions:
+
+```text
+SC-13B: pending / v000 if source registry is applied
+SC-13A: pending / v000 if source registry is applied
+CC-SEC-CSRF-001: v001 if source registry is applied
+```
+
+Domain baseline:
+
+```text
+DOM-v001 if source-sync/domain registry is applied;
+otherwise pending domain baseline.
+```
+
+Slice derivation map:
+
+```text
+pending / add row for SL-AGR-EXCH-005 during source-sync map update.
+```
+
+Coverage snapshot:
+
+| Behavior item / provisional behavior | Source version | Domain disposition | This slice responsibility | Notes |
+|---|---|---|---|---|
+| Client accepts active Employee proposal | SC-13B pending | provided/partially provided by `AgreementProposalExchange.ClientAcceptActiveProposal` | expose Client-only API command, resolve Client actor, call domain, persist result | final positive Client decision |
+| Client ownership is enforced | SC-13B pending | provided by `ClientAccountId` guard | resolve Client from session, pass actor to domain, avoid clientId in body | ownership failures may map as 404/422 per project convention |
+| Active proposal must be Employee-authored | SC-13B pending | domain lifecycle/participant guard | do not bypass domain turn/author check | client cannot accept own active proposal |
+| Exchange becomes Accepted | SC-13B pending | domain state transition | persist accepted exchange state atomically | visible through details/list refetch |
+| Active proposal becomes Accepted | SC-13B pending | domain proposal state transition | persist active proposal state atomically | no new proposal version |
+| Accept creates no new proposal version | SC-13B pending | domain lifecycle rule | command only accepts existing active version | proposal count and active version unchanged |
+| Success returns no response DTO | server contract direction | API/application decision | return `204 No Content` | details/list read slices own refreshed state |
+| Employee accept is out of scope | SC-13B pending | not supported first pass | reject by auth role and do not document Employee accept as current behavior | future only by explicit source/domain decision |
+| Unsafe command is CSRF-protected | CC-SEC-CSRF-001-v001 | not domain behavior | apply current antiforgery boundary | full matrix belongs to cross-cutting tests |
+| Runtime UI implementation is not touched | client sidecar only | not server behavior | server draft links future client sidecar; no UI code changes | docs-only archive |
+
+---
+
+## 0.2 Implementation Sync Status
+
+Implementation status:
+
+```text
+implemented-needs-doc-sync
+```
+
+Implemented files:
+
+```text
+server:
+  not rechecked in this pass
+
+client:
+  paired client draft refactored in this archive:
+    planning/slices/l2/L2-AGR-EXCH-ACCEPT-001-client-accept-active-agreement-proposal.client.md
+
+tests:
+  not rechecked in this pass
+```
+
+Checked against:
+
+```text
+source versions:
+  pending source-sync registry
+
+domain baseline:
+  pending / DOM-v001 if source-sync files are applied
+
+slice derivation map version:
+  pending
+```
+
+Known drift:
+
+```text
+docs:
+  - old draft lacked Scenario Sources;
+  - old draft lacked Source / Domain / Slice Coverage Snapshot;
+  - old draft lacked Implementation Sync Status;
+  - old draft had test notes but not Behavior-to-Test Trace with escape/refactor risk;
+  - old draft did not explicitly separate docs-only refactor from runtime/UI implementation work.
+
+source:
+  - stable behavior item IDs are not yet assigned in source registry.
+
+implementation:
+  - not checked in this pass.
+
+UI:
+  - runtime UI/page-flow/redirect implementation not touched in this pass.
+```
+
+Last sync note:
+
+```text
+Docs-only refactor. No runtime implementation inspection, no runtime UI implementation, no test changes and no generated artifact changes.
+```
+
+---
+
+## 1. Scope
+
+This slice owns:
+
+```text
+- Client-only accept active proposal API command;
+- endpoint POST /api/agreement-exchanges/{exchangeId}/accept;
+- Client role auth;
+- CSRF / antiforgery protection for unsafe command;
+- actor resolution from authenticated session;
+- no clientId / employeeId / proposalId / status in request body;
+- route exchangeId binding;
+- loading AgreementProposalExchange by exchangeId;
+- loading ClientAccount if the current domain method requires Client object;
+- calling AgreementProposalExchange.ClientAcceptActiveProposal(client, acceptedAt/now);
+- persisting exchange/proposal accepted state atomically;
+- returning 204 No Content on success;
+- mapping ownership/lifecycle failures through existing ProblemDetails/Error mapper;
+- API integration test plan with DB/no-mutation assertions.
 ```
 
 Endpoint:
 
 ```http
 POST /api/agreement-exchanges/{exchangeId}/accept
-```
-
-Auth:
-
-```csharp
-[Authorize(Roles = "Client")]
-```
-
----
-
-## 4. Out of Scope
-
-| Out of scope                            | Owner                                            |
-| --------------------------------------- | ------------------------------------------------ |
-| Agreement exchange list                 | `SL-AGR-EXCH-003`                                |
-| Agreement exchange details read         | `SL-AGR-EXCH-004`                                |
-| Initial exchange creation               | `SL-AGR-EXCH-001`                                |
-| Counter-proposal version creation       | `SL-AGR-EXCH-002`                                |
-| Employee accept active proposal         | future slice only if scenario/domain requires it |
-| Final refusal                           | `SL-AGR-EXCH-006`                                |
-| File download / binary document serving | future document/file slice                       |
-| Document upload/storage                 | future document/storage slice                    |
-| Client UI button implementation         | future client sidecar                            |
-| Adding `ClientAccountId` to domain      | already done/current prerequisite                |
-
----
-
-## 5. Visual Scenario Flow
-
-```text
-Client opens Agreement Exchange details
-        ↓
-System shows active Employee proposal
-        ↓
-Client chooses “Accept”
-        ↓
-System verifies Client owns the exchange through domain guard
-        ↓
-System verifies active proposal is acceptable by Client
-        ↓
-System accepts active proposal and exchange
-        ↓
-Command succeeds without response body
-        ↓
-Client refreshes agreement exchange details/list
-        ↓
-System shows Accepted state
-```
-
-Scenario flow table:
-
-| Step | Actor/system  | Behavior                                              | Status |
-| ---- | ------------- | ----------------------------------------------------- | ------ |
-| F01  | Client        | Opens agreement exchange details.                     | target |
-| F02  | System        | Shows active Employee proposal.                       | target |
-| F03  | Client        | Clicks “Accept”.                                      | target |
-| F04  | System        | Verifies authenticated Client owns the exchange.      | target |
-| F05  | System        | Verifies exchange lifecycle allows Client acceptance. | target |
-| F06  | System        | Marks active proposal and exchange as Accepted.       | target |
-| F07  | System        | Returns command success without body.                 | target |
-| F08  | Client/System | Refetches agreement exchange details/list.            | target |
-
----
-
-## 6. Visual Implementation Flow
-
-```text
-[HTTP POST]
-POST /api/agreement-exchanges/{exchangeId}/accept
-        ↓
-[CSRF boundary]
-validate unsafe request protection
-        ↓
-[Auth boundary]
-require authenticated Client session
-        ↓
-[Session context]
-read current client account id from app cookie identity
-        ↓
-[Route binding]
-exchangeId is positive long
-        ↓
-[Command handler]
-load ClientAccount by current account id if needed
-load AgreementProposalExchange by exchangeId
-        ↓
-[Domain]
-exchange.ClientAcceptActiveProposal(client, now)
-        ↓
-[Persistence]
-save exchange.Status = Accepted
-save activeProposal.State = Accepted
-        ↓
-[Response]
-204 No Content
-```
-
-Implementation flow table:
-
-| Step | Layer              | Responsibility                                                                         |
-| ---- | ------------------ | -------------------------------------------------------------------------------------- |
-| I01  | Route / Controller | Exposes `POST /api/agreement-exchanges/{exchangeId}/accept`.                           |
-| I02  | CSRF boundary      | Applies unsafe-request protection.                                                     |
-| I03  | Auth boundary      | Allows authenticated Client only.                                                      |
-| I04  | Session context    | Reads current client account id from claims.                                           |
-| I05  | Route binding      | Binds `exchangeId` as positive `long`; no body/query validator.                        |
-| I06  | Command handler    | Loads Client and AgreementProposalExchange.                                            |
-| I07  | Domain             | Calls `exchange.ClientAcceptActiveProposal(client, now)`.                              |
-| I08  | Domain invariant   | Checks `client.Id == ClientAccountId`, exchange status, active sender, proposal state. |
-| I09  | Persistence        | Saves exchange/proposal accepted state atomically.                                     |
-| I10  | API response       | Returns `204 No Content`; failures use existing ProblemDetails mapper.                 |
-
-Guardrail:
-
-```text
-Controller/application layer must not manually set exchange status or proposal state.
-
-Controller/application layer says:
-  “Client accepts active proposal.”
-
-Domain decides whether this is allowed and how exchange/proposal state changes.
-```
-
----
-
-## 7. API Contract
-
-Endpoint:
-
-```http
-POST /api/agreement-exchanges/{exchangeId}/accept
-```
-
-Route:
-
-```text
-exchangeId: long, positive
-```
-
-Request body:
-
-```text
-none
 ```
 
 Success:
@@ -255,19 +229,251 @@ Response body:
 none
 ```
 
-Reason:
+This slice does **not** create an exchange.
+
+This slice does **not** send a counter-proposal.
+
+This slice does **not** create a proposal version.
+
+This slice does **not** accept Employee actor.
+
+This slice does **not** return refreshed details/list DTO.
+
+---
+
+## 2. Out of Scope
+
+| Out of scope | Owner / destination |
+|---|---|
+| Agreement exchange list read | `SL-AGR-EXCH-003` |
+| Agreement exchange details read | `SL-AGR-EXCH-004` |
+| Initial exchange creation | `SL-AGR-EXCH-001` |
+| Counter-proposal version creation | `SL-AGR-EXCH-002` |
+| Employee accept active proposal | future source/domain decision only |
+| Final refusal | `SL-AGR-EXCH-006` |
+| File download / binary document serving | future document/file slice |
+| Document upload/storage | future document/storage slice |
+| Request lifecycle mutation after accept | explicit future source/domain decision if needed |
+| Runtime client button/form implementation | paired client sidecar future implementation; not this archive |
+| Runtime UI/page-flow/redirect audit | separate UI/page-flow audit mode |
+| Tests/runtime implementation audit | separate implemented-sync/audit mode |
+| Generated OpenAPI/types update | implementation archive/tool workflow only |
+| Adding `ClientAccountId` to domain | already current prerequisite / source-sync if drift found |
+
+Important boundary:
 
 ```text
-Client already has exchangeId.
-
-Accepted state is visible through exchange details/list after refetch.
-
-No command DTO is needed.
+This docs-only archive updates planning drafts only.
+It does not change runtime UI, server code, tests, generated artifacts, navigation or redirects.
 ```
 
-Error responses:
+---
+
+## 3. Related Slices / Owners
 
 ```text
+SL-AGR-EXCH-001
+  Owns exchange creation and first Employee proposal.
+
+SL-AGR-EXCH-002
+  Owns sending later proposal versions / counter-proposals.
+
+SL-AGR-EXCH-003
+  Owns shared agreement exchange list/read projection.
+
+SL-AGR-EXCH-004
+  Owns shared agreement exchange details/read projection.
+
+SL-AGR-EXCH-005
+  Owns Client accept active proposal server command.
+
+L2-AGR-EXCH-ACCEPT-001.client
+  Owns future Client accept action/mutation planning and UI-side behavior proof.
+
+SL-AGR-EXCH-006
+  Owns Employee final refusal.
+
+Domain / persistence
+  Owns AgreementProposalExchange.ClientAccountId,
+  AgreementExchangeStatus.Accepted,
+  AgreementProposalState.Accepted,
+  proposal version history and no-new-version invariant.
+
+CC-SEC-CSRF-001
+  Owns cross-cutting unsafe browser request protection.
+
+OpenAPI/generated artifact workflow
+  Owns regeneration/checks if API contract changes.
+```
+
+---
+
+## 4. Scenario Flow
+
+```text
+Client opens Agreement Exchange details
+        ↓
+System shows active Employee proposal
+        ↓
+Client chooses Accept
+        ↓
+System resolves authenticated Client from session
+        ↓
+System checks Client owns exchange through domain guard
+        ↓
+System checks active proposal is acceptable by Client
+        ↓
+System marks active proposal Accepted
+        ↓
+System marks exchange Accepted
+        ↓
+Command returns 204 No Content
+        ↓
+Client refetches details/list and sees Accepted state
+```
+
+Scenario flow table:
+
+| Step | Actor / System layer | User-visible / system responsibility |
+|---|---|---|
+| S01 | Client | Opens agreement exchange details. |
+| S02 | System | Shows active Employee proposal through details read. |
+| S03 | Client | Chooses Accept as final positive decision. |
+| S04 | System | Resolves Client actor from authenticated session. |
+| S05 | System/domain | Verifies `client.Id == exchange.ClientAccountId`. |
+| S06 | System/domain | Verifies lifecycle/turn/active proposal author allow Client accept. |
+| S07 | Domain | Marks exchange and active proposal Accepted. |
+| S08 | API | Returns `204 No Content`. |
+| S09 | Client/read slices | Refetch details/list and show Accepted state. |
+
+Scenario meaning:
+
+```text
+Accept is a terminal positive command.
+It does not create a new proposal version.
+It does not upload/send a document.
+```
+
+---
+
+## 5. Implementation Flow
+
+```text
+[HTTP POST]
+POST /api/agreement-exchanges/{exchangeId}/accept
+        ↓
+[CSRF boundary]
+validate unsafe request protection
+        ↓
+[Auth boundary]
+require authenticated Client session
+        ↓
+[Session context]
+read current Client account id from app cookie identity
+        ↓
+[Route binding]
+exchangeId is positive long
+        ↓
+[Command handler]
+load ClientAccount if domain requires Client instance
+load AgreementProposalExchange by exchangeId
+        ↓
+[Domain]
+exchange.ClientAcceptActiveProposal(client, now)
+        ↓
+[Persistence]
+save exchange.Status = Accepted
+save activeProposal.State = Accepted
+without creating proposal version
+        ↓
+[Response]
+204 No Content
+```
+
+Implementation ownership:
+
+```text
+Controller:
+  HTTP boundary, auth, CSRF attribute/filter, route binding, response mapping.
+
+Command handler/application:
+  actor resolution input, load Client/Exchange, call domain, save atomically.
+
+Domain:
+  ownership, lifecycle, active proposal author/state, accepted state transition, no-new-version invariant.
+
+Persistence:
+  stores exchange/proposal state changes in one unit of work.
+
+Client sidecar:
+  future feature-owned mutation/button planning, not runtime implementation in this archive.
+```
+
+Guardrail:
+
+```text
+Controller/application layer must not manually set exchange status or proposal state.
+Domain decides whether accept is allowed and which states change.
+```
+
+---
+
+## 6. API Contract
+
+Endpoint:
+
+```http
+POST /api/agreement-exchanges/{exchangeId}/accept
+```
+
+Route:
+
+```text
+exchangeId: long, positive
+```
+
+Auth:
+
+```csharp
+[Authorize(Roles = "Client")]
+```
+
+CSRF:
+
+```text
+required for unsafe browser command according to current antiforgery boundary.
+```
+
+Request body:
+
+```text
+none
+```
+
+DTO:
+
+```text
+none
+```
+
+Success response:
+
+```http
+204 No Content
+```
+
+Response body:
+
+```text
+none
+```
+
+Failure categories:
+
+```text
+400 BadRequest
+  antiforgery failure if current project CSRF boundary maps to 400
+
 401 Unauthorized
   no authenticated session
 
@@ -275,39 +481,91 @@ Error responses:
   authenticated but not Client
 
 404 NotFound
-  exchange does not exist or is not visible to current Client
+  exchange does not exist or is hidden as not visible/not owned
 
 422 UnprocessableEntity
-  domain lifecycle rejection:
+  domain/lifecycle problem, if project maps visible lifecycle failures this way:
   - exchange does not belong to current Client;
   - exchange is not AwaitingClientConfirmation;
   - active proposal was not sent by Employee;
-  - active proposal is already Accepted/Superseded;
-  - exchange is already Accepted/FinallyRefused;
+  - active proposal already Accepted/Superseded;
+  - exchange already Accepted/FinallyRefused;
   - exchange cannot be accepted now.
 
-400 Bad Request
-  antiforgery failure if current project CSRF boundary uses 400
+500 InternalServerError
+  unexpected server failure
 ```
 
-Note:
+Generated artifacts:
 
 ```text
-If project convention hides ownership failures as 404, application/repository can map not-owned exchange to 404.
-
-Domain must still keep ClientAccountId guard.
+API shape changes require OpenAPI/type generation through repo tools only.
+This docs-only archive does not include generated artifacts.
 ```
 
 ---
 
-## 8. Domain Rules
+## 7. Validation / ProblemDetails
+
+Route/body shape validation:
+
+```text
+- exchangeId must be a positive long.
+- route constraint `{exchangeId:long:min(1)}` is enough first pass.
+- request body must be absent/ignored; no body DTO.
+```
+
+FluentValidation:
+
+```text
+No command body validator is needed first pass because request body is none.
+```
+
+Domain/application validation:
+
+```text
+- exchange exists;
+- Client actor exists if domain requires Client instance;
+- Client owns exchange via ClientAccountId;
+- exchange lifecycle allows Client accept;
+- active proposal exists;
+- active proposal was sent by Employee;
+- active proposal can become Accepted;
+- Accepted/FinallyRefused exchanges cannot continue.
+```
+
+Auth/visibility:
+
+```text
+- endpoint requires Client role;
+- current Client id comes from session, not request body;
+- not-owned exchange can map to 404 or domain/validation ProblemDetails according to project convention;
+- domain must still guard `client.Id == ClientAccountId`.
+```
+
+CSRF:
+
+```text
+- unsafe command requires antiforgery protection;
+- CSRF is not FluentValidation;
+- full CSRF matrix belongs to cross-cutting tests.
+```
+
+---
+
+## 8. Domain Behavior
 
 Current domain prerequisite:
 
 ```text
 AgreementProposalExchange.ClientAccountId exists.
+ClientAcceptActiveProposal checks client.Id == ClientAccountId.
+```
 
-ClientAcceptActiveProposal already calls ownership guard.
+Domain call:
+
+```csharp
+exchange.ClientAcceptActiveProposal(client, acceptedAt);
 ```
 
 Preconditions:
@@ -319,15 +577,9 @@ Preconditions:
 - exchange.Status == AwaitingClientConfirmation;
 - active proposal exists;
 - active proposal.Sender == Employee;
-- active proposal.State is awaiting/active according to current domain;
+- active proposal.State is active/awaiting according to current domain;
 - exchange.Status is not Accepted;
 - exchange.Status is not FinallyRefused.
-```
-
-Domain call:
-
-```csharp
-exchange.ClientAcceptActiveProposal(client, acceptedAt);
 ```
 
 On success:
@@ -335,165 +587,143 @@ On success:
 ```text
 - exchange.Status = AgreementExchangeStatus.Accepted;
 - activeProposal.State = AgreementProposalState.Accepted;
-- no new proposal version is created;
 - ActiveProposalVersion remains unchanged;
 - proposal count remains unchanged;
-- proposal version history remains intact.
+- proposal history remains intact;
+- no new proposal version is created.
 ```
 
 Timestamp note:
 
 ```text
-acceptedAt is passed to the domain method for current/future audit compatibility.
+acceptedAt/now can be passed to the domain for current/future audit compatibility.
+First-pass client UI and tests should not require AcceptedAt unless persistence/DTO is explicitly extended.
+```
 
-First pass persistence/tests should not require AcceptedAt unless domain is explicitly extended to store it.
+Anti-terms / guardrails:
+
+```text
+Do not use vague Finalized status.
+Do not add ResponsibleEmployeeId.
+Do not add per-command status enums.
+Do not treat UI action availability as security.
+Do not put turn/lifecycle/ownership rules in FluentValidation.
 ```
 
 ---
 
-## 9. Application / Handler Direction
+## 9. Cross-Cutting Concerns / Considerations
 
-Use existing project style. Preferred command shape:
-
-```csharp
-public sealed record ClientAcceptActiveAgreementProposalCommand(
-    long ExchangeId,
-    long ClientAccountId)
-    : IRequest<UnitResult<IReadOnlyList<Error>>>;
-```
-
-Handler/application flow:
-
-```text
-1. Resolve current Client account id from session.
-2. Load ClientAccount by current account id if domain method requires ClientAccount instance.
-3. Load AgreementProposalExchange by exchangeId.
-4. If missing/not visible, return NotFound-style Error.
-5. Call exchange.ClientAcceptActiveProposal(client, now).
-6. If domain failure, return UnitResult failure with domain errors.
-7. SaveChanges.
-8. Return UnitResult success.
-```
-
-Do not add per-command status enum:
-
-```text
-Do not add:
-- ClientAcceptAgreementProposalCommandStatus
-- AcceptAgreementProposalCommandStatus
-```
-
-Use existing:
-
-```csharp
-UnitResult<IReadOnlyList<Error>>
-```
-
-`AgreementExchangeStatus` is persisted domain state, not command execution status.
+| Concern | Applies? | Consideration / owner |
+|---|---:|---|
+| Auth/session/account context | yes | Current Client id is resolved from authenticated session. |
+| Authorization/visibility | yes | Client-only endpoint; ownership through `ClientAccountId`. |
+| Antiforgery / unsafe requests | yes | POST command must use current CSRF boundary. |
+| Validation / ProblemDetails | yes | Route/body shape at API boundary; lifecycle/ownership via domain/application. |
+| OpenAPI / generated artifacts | yes | Contract changes require generated artifact workflow, not manual edits. |
+| Transaction / atomicity | yes | Exchange/proposal accepted states saved atomically. |
+| No partial write | yes | Failed command must not mutate exchange/proposal or create versions. |
+| Idempotency / double-submit | yes | Already Accepted second click should be rejected/no-mutation. |
+| Concurrency / stale state | yes | Stale client UI cannot bypass domain lifecycle. |
+| Privacy / cross-account exposure | yes | Client cannot accept another ClientAccount exchange. |
+| File/document boundary | yes | Accept does not upload/download document bytes. |
+| Clock/audit actor fields | limited | `acceptedAt` passed if domain supports it; no client requirement first pass. |
+| Client feedback / accessibility | paired sidecar | Client draft owns future visible feedback planning. |
+| Redirect/page flow | no | Out of scope for docs-only archive. |
+| Testing responsibility split | yes | Server API integration + DB/no-mutation; client component/API tests later. |
 
 ---
 
-## 10. Validation / FluentValidation
+## 10. Questions / Decisions
 
-No body validation.
+Original server draft did not contain stable question IDs. This refactor adds server-side IDs after preserving the original decisions and meanings.
 
-Route validation:
-
-```text
-exchangeId must be positive.
-```
-
-Accepted implementation:
-
-```text
-route constraint {exchangeId:long:min(1)}
-```
-
-FluentValidation is not needed first pass.
-
-Do not put these into FluentValidation:
-
-```text
-- exchange exists;
-- Client owns exchange;
-- active proposal sender;
-- exchange status;
-- proposal state;
-- accepted/finally refused lifecycle;
-- DB reads;
-- mutations.
-```
-
-Those are application/domain responsibilities.
+| ID | Status | Question | Decision / current direction | Impact |
+|---|---|---|---|---|
+| `SL-AGR-EXCH-005-Q001` | accepted | Is this Client-only first pass? | Yes. Endpoint requires Client role. | Employee accept remains out of scope. |
+| `SL-AGR-EXCH-005-Q002` | accepted | Does command send a request body? | No body. `exchangeId` is route-only; actor comes from session. | No command DTO / no body validator. |
+| `SL-AGR-EXCH-005-Q003` | accepted | Does success return a DTO? | No. Return `204 No Content`. | Details/list refetch shows Accepted state. |
+| `SL-AGR-EXCH-005-Q004` | accepted | Does accept create a new proposal version? | No. It accepts active proposal and exchange only. | Tests must assert proposal count unchanged. |
+| `SL-AGR-EXCH-005-Q005` | accepted | Which states are expected after accept? | `AgreementExchangeStatus.Accepted`; active `AgreementProposalState.Accepted`. | Avoid vague Finalized terminology. |
+| `SL-AGR-EXCH-005-Q006` | accepted | Is `ClientAccountId` added here? | No. It is current prerequisite / domain guard. | Do not duplicate domain migration in this slice. |
+| `SL-AGR-EXCH-005-Q007` | accepted | Is Employee accept implemented? | No. Future only with explicit source/domain decision. | Auth remains Client-only. |
+| `SL-AGR-EXCH-005-Q008` | accepted | Is UI button visibility authorization? | No. Server/domain remain authoritative. | Security tests must use server boundary. |
+| `SL-AGR-EXCH-005-Q009` | accepted | Is AcceptedAt required in UI/tests? | No first pass unless persistence/DTO is explicitly extended. | Avoid brittle timestamp assertions. |
+| `SL-AGR-EXCH-005-Q010` | accepted | Are ownership/lifecycle rules FluentValidation? | No. Domain/application own them. | Validator stays absent/minimal. |
+| `SL-AGR-EXCH-005-Q011` | accepted | Does command mutate request lifecycle? | No first pass. | Request lifecycle after accept is separate/future if needed. |
+| `SL-AGR-EXCH-005-Q012` | accepted | Are per-command status enums needed? | No. Use existing `Error`/`ProblemDetails` mapping and domain state enum. | Avoid command-status enum proliferation. |
 
 ---
 
-## 11. Security / Protection
-
-Security layers:
+## 11. Extension / Change Points
 
 ```text
-1. Auth role:
-   endpoint requires Client.
-
-2. Session identity:
-   client id comes from authenticated account id, not request body.
-
-3. Visibility:
-   missing/not-owned exchange should not be readable/actionable by this Client.
-
-4. Domain participant guard:
-   client.Id == exchange.ClientAccountId.
-
-5. Domain lifecycle guard:
-   status/active proposal must allow Client acceptance.
-```
-
-Guardrail:
-
-```text
-UI button visibility is not authorization.
-
-Even if UI hides the Accept button, server must enforce:
-- Client role;
-- ClientAccountId ownership;
-- active proposal sender;
-- exchange lifecycle.
+- Optional confirmation UX belongs to client sidecar implementation.
+- AvailableActions DTO may later come from details read slice.
+- AcceptedAt audit/display can be added only if domain/persistence/DTO explicitly supports it.
+- Employee accept remains future-only and needs source/domain decision.
+- Request lifecycle mutation after accept is not assumed; add a separate slice/source decision if needed.
+- Concurrency handling can be strengthened with rowversion/ETag later if project needs it.
 ```
 
 ---
 
 ## 12. Behavior Coverage
 
-| Behavior item                                             | How slice covers it                                 | Status |
-| --------------------------------------------------------- | --------------------------------------------------- | ------ |
-| Client can accept own active Employee proposal            | `POST /api/agreement-exchanges/{exchangeId}/accept` | target |
-| Client cannot accept another Client’s exchange            | `ClientAccountId` domain/query guard                | target |
-| Client cannot accept when exchange is not awaiting Client | domain lifecycle guard                              | target |
-| Client cannot accept client-authored active proposal      | active proposal sender guard                        | target |
-| Accept does not create new version                        | domain rule / DB assertion                          | target |
-| Active proposal becomes Accepted                          | domain state persisted                              | target |
-| Exchange becomes Accepted                                 | domain state persisted                              | target |
-| Accepted state visible after refetch                      | details/list read slices                            | target |
-| Employee accept is not implemented here                   | out of scope                                        | target |
+| Source / draft behavior | Status | Covered by this slice |
+|---|---|---|
+| Client can accept own active Employee proposal | covered | Client-only POST command calls domain accept. |
+| Client cannot accept another ClientAccount exchange | covered | session actor + `ClientAccountId` guard. |
+| Client cannot accept when exchange is not awaiting Client | covered | domain lifecycle guard. |
+| Client cannot accept client-authored active proposal | covered | active proposal sender/turn guard. |
+| Accept marks active proposal Accepted | covered | domain transition persisted. |
+| Accept marks exchange Accepted | covered | domain transition persisted. |
+| Accept creates no proposal version | covered | no-new-version invariant and tests. |
+| Command returns no response body | covered | `204 No Content`. |
+| Accepted state visible after refetch | supported | read slices own details/list. |
+| Employee accept | out of scope | future only. |
+| Counter-proposal | out of scope | `SL-AGR-EXCH-002`. |
+| Final refusal | out of scope | `SL-AGR-EXCH-006`. |
+| Runtime client button/form | out of archive scope | paired client draft only; no UI code changes. |
+| Page-flow/redirect audit | out of scope | future UI/page-flow mode. |
 
 ---
 
 ## 13. Test / Verification Plan
 
-Primary verification: API integration tests with DB state assertions.
-
-No unit tests by default unless reusable helper logic with branching is introduced.
-
-API boundary:
+Primary rule:
 
 ```text
-- unauthenticated accept -> 401;
-- Employee calls client accept endpoint -> 403;
-- Client accepts own exchange -> 204.
+Tests verify behavior items and server/system outcomes.
+Implementation details are only setup/action/observation mechanisms.
 ```
 
-Success DB assertions:
+### Behavior-to-Test Trace
+
+| Behavior item / behavior | Server/system outcome | Test layer | Implementation mechanism | Escape risk | Refactor risk | Planned/actual test |
+|---|---|---|---|---|---|---|
+| Client accepts own active Employee proposal | API returns 204 and persisted exchange/proposal become Accepted | API integration + DB assertion | Client auth fixture, seeded exchange/proposal, HTTP POST, DB read | Low: persisted state and response are asserted | Low: endpoint/domain internals can refactor if behavior stays | `AcceptAgreementProposal_ClientAcceptsOwnEmployeeProposal_ReturnsNoContentAndPersistsAcceptedState` |
+| Success has no response DTO | HTTP 204 with empty body | API integration / contract test | HTTP POST, response assertion | Low | Low | same success test / contract assertion |
+| Accept creates no proposal version | proposal count unchanged and ActiveProposalVersion unchanged | API integration + DB assertion | DB snapshot before/after | Low if count/version asserted | Low/Medium: schema helper changes may affect setup | `AcceptAgreementProposal_DoesNotCreateProposalVersion` |
+| Client cannot accept another Client's exchange | not-owned exchange returns 404 or mapped domain problem and no mutation | API integration + no-mutation assertion | two Client fixtures, HTTP POST, DB snapshot | Low if not-owned status and unchanged state asserted | Low | `AcceptAgreementProposal_OtherClientExchange_ReturnsFailureAndDoesNotMutate` |
+| Employee cannot call Client accept endpoint | Employee session rejected | API integration | Employee auth fixture, HTTP POST | Low | Low | `AcceptAgreementProposal_Employee_ReturnsForbidden` |
+| Unauthenticated actor rejected | unauthenticated request returns 401 | API integration | no auth cookie, HTTP POST | Low | Low | `AcceptAgreementProposal_Unauthenticated_ReturnsUnauthorized` |
+| Wrong exchange lifecycle rejected | AwaitingEmployeeResponse / Accepted / FinallyRefused state fails and no mutation | API integration + no-mutation assertion | seeded lifecycle states, HTTP POST, DB snapshot | Low if failed state unchanged asserted | Low/Medium | `AcceptAgreementProposal_InvalidLifecycle_ReturnsValidationProblemAndDoesNotMutate` |
+| Client-authored active proposal rejected | command fails and proposal/exchange unchanged | API integration + DB assertion | seed active proposal Sender=Client | Low | Low/Medium | `AcceptAgreementProposal_WhenActiveProposalFromClient_ReturnsFailureAndDoesNotMutate` |
+| CSRF protection applies | unsafe POST without token is rejected | API integration smoke | Client session, missing token/header, HTTP POST | Medium if only status asserted; full matrix belongs elsewhere | Low | command-family CSRF smoke or `CC-SEC-CSRF-001` test |
+| Generated contract remains current | OpenAPI shows POST accept 204/no body | generated artifact check | repo generation/check commands | Medium; contract check does not prove behavior | Low | `check:api` / OpenAPI artifact check |
+
+### API boundary tests
+
+```text
+- unauthenticated accept returns 401;
+- Employee role returns 403;
+- Client success returns 204 No Content;
+- invalid route id follows project route/model binding convention;
+- missing exchange returns 404.
+```
+
+### Success DB assertions
 
 ```text
 Given:
@@ -503,10 +733,7 @@ Given:
 - active proposal state = active/awaiting client according to current domain;
 - ActiveProposalVersion = N.
 
-When:
-- Client accepts active proposal.
-
-Expect:
+Expect after POST:
 - HTTP 204;
 - response body empty;
 - exchange.Status = Accepted;
@@ -516,141 +743,153 @@ Expect:
 - no new proposal version created.
 ```
 
-Ownership / lifecycle failures:
+### No-mutation failures
 
 ```text
-- Client cannot accept exchange owned by another Client -> 404 or 422 according to project mapping;
-- Client cannot accept when exchange.Status = AwaitingEmployeeResponse -> 422;
-- Client cannot accept when active proposal sender = Client -> 422;
-- Client cannot accept already Accepted exchange -> 422;
-- Client cannot accept FinallyRefused exchange -> 422;
-- failed command does not change exchange status;
-- failed command does not change active proposal state;
+- not-owned exchange does not change status/proposal state;
+- wrong lifecycle does not change status/proposal state;
+- client-authored active proposal does not change status/proposal state;
+- already Accepted/FinallyRefused exchange remains unchanged;
 - failed command does not create proposal version.
 ```
 
-Do not assert:
+### What not to test here
 
 ```text
-- AcceptedAt timestamp, unless domain/persistence is explicitly extended.
-```
-
-Generated artifacts:
-
-```text
-- run OpenAPI generation;
-- run API type generation;
-- stage generated artifacts;
-- run check:api.
+- Employee accept behavior;
+- counter-proposal behavior;
+- final refusal behavior;
+- file upload/download;
+- runtime UI button placement;
+- redirect/page-flow behavior;
+- AcceptedAt timestamp unless domain/persistence explicitly stores it;
+- repository mock call order as primary proof.
 ```
 
 ---
 
-## 14. OpenAPI / Generated Artifacts
+## 14. Implementation Direction / Current Refactor Checklist
+
+```text
+[ ] Confirm AgreementProposalExchange.ClientAccountId exists or mark implementation drift.
+[ ] Confirm ClientAcceptActiveProposal checks client.Id == ClientAccountId.
+[ ] Confirm ClientAcceptActiveProposal sets exchange.Status = Accepted.
+[ ] Confirm ClientAcceptActiveProposal sets activeProposal.State = Accepted.
+[ ] Confirm ClientAcceptActiveProposal does not create proposal version.
+[ ] Confirm endpoint exists as POST /api/agreement-exchanges/{exchangeId}/accept or mark route drift.
+[ ] Confirm endpoint requires Client role.
+[ ] Confirm endpoint requires CSRF for unsafe browser request.
+[ ] Confirm command accepts no request body.
+[ ] Confirm client id is resolved from session, not body.
+[ ] Confirm success is 204 No Content.
+[ ] Confirm response body is none.
+[ ] Confirm failures map through existing Error/ProblemDetails conventions.
+[ ] Confirm API integration success test asserts persisted Accepted state.
+[ ] Confirm failure tests assert no mutation and no new proposal version.
+[ ] Confirm OpenAPI/generated artifacts are updated if contract changed.
+```
+
+This pass did not perform implementation verification.
+
+---
+
+## 15. Historical Client Notes / Future Client Sidecar
+
+Paired client sidecar:
+
+```text
+planning/slices/l2/L2-AGR-EXCH-ACCEPT-001-client-accept-active-agreement-proposal.client.md
+```
+
+Future client sidecar should own:
+
+```text
+- Client agreement exchange details action placement;
+- feature-owned API wrapper:
+  features/agreement-exchange/accept-proposal/api/acceptAgreementProposal.ts;
+- mutation hook;
+- Accept button/action UI;
+- optional confirmation UX;
+- pending/disabled/error/success feedback;
+- details/list invalidation/refetch;
+- accessibility and component/API/model tests.
+```
+
+This server draft does not implement runtime client UI.
+
+UI/page-flow/redirect audit remains separate later work.
+
+---
+
+## 16. OpenAPI / Generated Artifacts
 
 Expected OpenAPI addition:
 
 ```text
 POST /api/agreement-exchanges/{exchangeId}/accept
-
-204
-400
-401
-403
-404
-422
-500
+responses:
+  204 No Content
+  400
+  401
+  403
+  404
+  422
+  500
 ```
 
-Generation workflow:
+Generated artifacts must be updated through tools only:
 
 ```powershell
-npm.cmd run generate:openapi
-npm.cmd run generate:api-types
-
-git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
-
+dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
+npm.cmd --prefix energymanagement.client run generate:api-types
 npm.cmd run check:api
 ```
 
-Generated artifacts must come from repo commands, not manual edits.
+This docs-only archive does not include generated artifacts and does not claim they are current.
 
 ---
 
-## 15. Implementation Checklist
+## 17. Dependent / Follow-up Slices
 
 ```text
-[ ] confirm AgreementProposalExchange.ClientAccountId exists
-[ ] confirm ClientAcceptActiveProposal checks client.Id == ClientAccountId
-[ ] confirm ClientAcceptActiveProposal sets exchange.Status = Accepted
-[ ] confirm ClientAcceptActiveProposal sets activeProposal.State = Accepted
-[ ] add POST /api/agreement-exchanges/{exchangeId}/accept
-[ ] require Client role
-[ ] require CSRF
-[ ] do not accept client id in body
-[ ] resolve client id from session
-[ ] add ClientAcceptActiveAgreementProposalCommand
-[ ] add command handler
-[ ] load ClientAccount if domain method requires it
-[ ] load exchange by exchangeId
-[ ] call exchange.ClientAcceptActiveProposal(client, now)
-[ ] save exchange/proposal accepted state
-[ ] return 204 No Content
-[ ] add integration tests for success
-[ ] add integration tests for ownership failure
-[ ] add integration tests for lifecycle failures
-[ ] assert no new proposal version is created
-[ ] regenerate OpenAPI/types
-[ ] do not implement Employee accept
-[ ] do not implement counter-proposal
-[ ] do not implement final refusal
-[ ] do not return details/list DTO from command
+SL-AGR-EXCH-002 — Send Agreement Counter-Proposal Version
+SL-AGR-EXCH-003 — Agreement Exchange List Page / Read List
+SL-AGR-EXCH-004 — Agreement Exchange Details / Read Details
+SL-AGR-EXCH-006 — Final Refuse Agreement Exchange
+L2-AGR-EXCH-ACCEPT-001.client — Client accept action sidecar
+```
+
+Separate later work:
+
+```text
+- runtime implementation audit;
+- runtime UI/client implementation;
+- page flow / redirects audit;
+- source registry / behavior item ID sync.
 ```
 
 ---
 
-## 16. Guardrail Summary
+## 18. Guardrail Summary
 
 ```text
-Client accept is a command slice.
-
-It is Client-only first pass.
-
-Domain prerequisite already exists:
-  AgreementProposalExchange.ClientAccountId
-  ClientAcceptActiveProposal ownership guard
-
-Use exact domain states:
-  AgreementExchangeStatus.Accepted
-  AgreementProposalState.Accepted
-
-Do not use vague Finalized status unless domain is changed.
-
-Do not create a new proposal version.
-
-Do not create an exchange.
-
-Do not send a counter-proposal.
-
-Do not accept Employee actor here.
-
+Client accept is a Client-only command slice.
+Accept returns 204 No Content.
+Response body is none.
+No request body is sent.
+Client id comes from authenticated session.
+CSRF is required for unsafe POST.
+Domain owns ownership/turn/lifecycle checks.
+AgreementProposalExchange.ClientAccountId is required and preserved.
 Do not add ResponsibleEmployeeId.
-
 Do not add per-command status enums.
-
-Do not rely on UI button visibility for security.
-
 Do not put ownership/turn/lifecycle in FluentValidation.
-
-Do keep ClientAccountId ownership guard in domain.
-
-Do keep active proposal sender/lifecycle checks in domain.
-
-Do not assert AcceptedAt first pass unless persistence is extended.
-
-Do return 204 No Content on success.
-
-Do refetch details/list after success.
+Do not create a proposal version.
+Do not create an exchange.
+Do not send a counter-proposal.
+Do not final-refuse here.
+Do not implement Employee accept first pass.
+Do not rely on UI button visibility for security.
+Do not assert AcceptedAt first pass unless explicitly added to persistence/DTO.
+Runtime implementation, tests, generated artifacts, UI/page-flow/redirects were not checked or changed in this pass.
 ```
-
-Готово к имплементации: доменная часть ownership уже считается выполненной в текущем v23, поэтому остаётся API/application/tests/OpenAPI workflow.

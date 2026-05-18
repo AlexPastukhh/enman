@@ -1,0 +1,37 @@
+# Pre-Archive Self-Check
+
+- [x] Original server file loaded from remote branch source.
+- [x] Original client file loaded from remote branch source.
+- [x] Replacement server path correct: `planning/slices/SL-AGR-EXCH-005-client-accept-active-agreement-proposal.md`.
+- [x] Replacement client path correct: `planning/slices/l2/L2-AGR-EXCH-ACCEPT-001-client-accept-active-agreement-proposal.client.md`.
+- [x] Original server snapshot path correct.
+- [x] Original client snapshot path correct.
+- [x] No wrapper folder planned.
+- [x] No runtime files included.
+- [x] No tests included.
+- [x] No generated artifacts included.
+- [x] No runtime UI files included.
+- [x] No page-flow/redirect changes included.
+- [x] Implementation-not-rechecked note present in server draft.
+- [x] Implementation-not-rechecked note present in client draft.
+- [x] Source / Domain / Slice Coverage Snapshot present in server draft.
+- [x] Source / Domain / Slice Coverage Snapshot present in client draft.
+- [x] Implementation Sync Status present in server draft.
+- [x] Implementation Sync Status present in client draft.
+- [x] Behavior-to-Test Trace present in server draft.
+- [x] Behavior-to-Test Trace present in client draft.
+- [x] Existing client Q IDs `Q-L2-AGR-ACCEPT-CLIENT-001..012` retained.
+- [x] Existing client Q ID meanings retained.
+- [x] Server original had no stable Q IDs; new server IDs added without reusing old IDs.
+- [x] Success status `204 No Content` preserved.
+- [x] Request body policy `none` preserved.
+- [x] No response DTO / response body none preserved.
+- [x] Client-only first pass preserved.
+- [x] Employee accept out of scope preserved.
+- [x] No proposal version creation preserved.
+- [x] ClientAccountId ownership guard preserved.
+- [x] No ResponsibleEmployeeId guard preserved.
+- [x] No per-command status enum preserved.
+- [x] AcceptedAt not required first pass preserved.
+- [x] Runtime UI implementation not touched statement present.
+- [x] `This pass did not perform implementation verification.` present in both drafts.

@@ -1,28 +1,35 @@
-# APPLY — sl-agr-exch-004-details-server-client-draft-refactor-v1.zip
+# Apply — sl-agr-exch-005-accept-server-client-draft-refactor-v1.zip
 
-Docs-only replacement archive.
+This is a docs-only replacement archive.
 
-Replacement files:
-
-```text
-planning/slices/SL-AGR-EXCH-004-agreement-exchange-details-read.md
-planning/slices/l2/L2-AGR-EXCH-DETAILS-001-agreement-exchange-details.client.md
-```
-
-Original snapshots:
+It replaces planning draft files only:
 
 ```text
-_archive-review/2026-05-19-sl-agr-exch-004-details-server-client-draft-refactor-v1/original-files/planning/slices/SL-AGR-EXCH-004-agreement-exchange-details-read.md
-_archive-review/2026-05-19-sl-agr-exch-004-details-server-client-draft-refactor-v1/original-files/planning/slices/l2/L2-AGR-EXCH-DETAILS-001-agreement-exchange-details.client.md
+planning/slices/SL-AGR-EXCH-005-client-accept-active-agreement-proposal.md
+planning/slices/l2/L2-AGR-EXCH-ACCEPT-001-client-accept-active-agreement-proposal.client.md
 ```
 
-Runtime implementation was not changed.
-Tests were not changed.
-Generated artifacts were not changed.
-Runtime UI/page-flow/redirect behavior was not changed.
+Original snapshots are preserved under:
+
+```text
+_archive-review/2026-05-19-sl-agr-exch-005-accept-server-client-draft-refactor-v1/original-files/planning/slices/SL-AGR-EXCH-005-client-accept-active-agreement-proposal.md
+_archive-review/2026-05-19-sl-agr-exch-005-accept-server-client-draft-refactor-v1/original-files/planning/slices/l2/L2-AGR-EXCH-ACCEPT-001-client-accept-active-agreement-proposal.client.md
+```
+
+Not included:
+
+```text
+- no runtime implementation audit
+- no runtime code changes
+- no tests changed
+- no generated artifacts
+- no runtime UI refactor
+- no page flow / redirect audit
+- no navigation updates
+```
 
 Apply from repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\sl-agr-exch-004-details-server-client-draft-refactor-v1.zip" -DestinationPath "." -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\sl-agr-exch-005-accept-server-client-draft-refactor-v1.zip" -DestinationPath "." -Force
 ```
