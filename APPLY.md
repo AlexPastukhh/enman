@@ -1,22 +1,38 @@
 # Apply
 
-From repo root:
+From repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\ui-normalize-flow-fix.zip" -DestinationPath "." -Force
+cd "C:\enman\enman"
+Expand-Archive -Path "C:\Users\alexa\Downloads\sl-auth-reg-email-001-registration-email-notification-v38.zip" -DestinationPath . -Force
 ```
 
-Run:
+## Check
 
 ```powershell
-npm --prefix .\energymanagement.client run dev
+dotnet build .\EnergyManagement.Server\EnergyManagement.Server.csproj
+dotnet test .\Tests.EnergyManagement\Tests.EnergyManagement.csproj
 ```
 
-Open:
+No OpenAPI regeneration is expected because the registration API shape is unchanged.
 
-```text
-https://localhost:5173/
-https://localhost:5173/login
-https://localhost:5173/register
-https://localhost:5173/account
+## SMTP configuration
+
+Configure real SMTP transport through configuration section:
+
+```json
+{
+  "Email": {
+    "Smtp": {
+      "Host": "smtp.example.com",
+      "Port": 587,
+      "EnableSsl": true,
+      "UserName": "...",
+      "Password": "...",
+      "From": "noreply@example.com"
+    }
+  }
+}
 ```
+
+If SMTP is not configured, registration still succeeds and email notification failure is logged.

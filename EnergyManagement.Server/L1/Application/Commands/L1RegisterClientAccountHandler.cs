@@ -6,6 +6,7 @@ using EnergyManagement.Server.L1.Application;
 using EnergyManagement.Server.L1.Application.Abstractions;
 using EnergyManagement.Server.L1.Persistence;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using static Domain.EnergyManagement.Common.Error;
 
 namespace EnergyManagement.Server.L1.Application.Commands;
@@ -15,13 +16,19 @@ public sealed class L1RegisterClientAccountHandler
 {
     private readonly IAccountRepository _accounts;
     private readonly L1DbContext _context;
+    private readonly IRegistrationEmailNotificationService _registrationEmailNotifications;
+    private readonly ILogger<L1RegisterClientAccountHandler> _logger;
 
     public L1RegisterClientAccountHandler(
         IAccountRepository accounts,
-        L1DbContext context)
+        L1DbContext context,
+        IRegistrationEmailNotificationService registrationEmailNotifications,
+        ILogger<L1RegisterClientAccountHandler> logger)
     {
         _accounts = accounts;
         _context = context;
+        _registrationEmailNotifications = registrationEmailNotifications;
+        _logger = logger;
     }
 
     public async Task<Result<L1RegisterClientAccountResponse, IReadOnlyList<Error>>> Handle(
@@ -50,6 +57,21 @@ public sealed class L1RegisterClientAccountHandler
 
         _accounts.Add(accountResult.Value);
         await _context.SaveChangesAsync(cancellationToken);
+
+        try
+        {
+            await _registrationEmailNotifications.SendRegistrationEmailAsync(
+                accountResult.Value.Id,
+                accountResult.Value.Email.Value,
+                cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Registration email notification failed for account {AccountId}.",
+                accountResult.Value.Id);
+        }
 
         return Result.Success<L1RegisterClientAccountResponse, IReadOnlyList<Error>>(
             new L1RegisterClientAccountResponse(

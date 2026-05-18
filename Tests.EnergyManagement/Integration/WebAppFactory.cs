@@ -7,6 +7,7 @@ using EnergyManagement.Server.Api.Auth;
 using EnergyManagement.Server;
 using EnergyManagement.Server.Configuration;
 using EnergyManagement.Server.L1.Persistence;
+using EnergyManagement.Server.L1.Application.Abstractions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Hosting;
@@ -68,6 +69,27 @@ namespace Tests.EnergyManagement.Integration
             });
 
             base.ConfigureWebHost(builder);
+        }
+
+
+        public WebApplicationFactory<Program> WithEmailSender(IEmailSender emailSender)
+        {
+            return WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var descriptors = services
+                        .Where(d => d.ServiceType == typeof(IEmailSender))
+                        .ToList();
+
+                    foreach (var descriptor in descriptors)
+                    {
+                        services.Remove(descriptor);
+                    }
+
+                    services.AddSingleton(emailSender);
+                });
+            });
         }
 
         public WebApplicationFactory<Program> AuthenticatedInstanceWithClaims(

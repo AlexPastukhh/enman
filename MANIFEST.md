@@ -1,20 +1,27 @@
-# UI normalization mini-fix
+# SL-AUTH-REG-EMAIL-001 — Send Registration Email Notification
 
-## Changed
+Merge-ready archive without wrapper folder.
 
-- normalized Header navigation and guest/session actions
-- removed confusing AccountPage unauthenticated RegisterForm duplicate
-- added signed-out account prompt with Login/Register actions
-- added auth page intro shells for Login/Register
-- translated auth constants to Russian
-- fixed global anchor CSS selector that affected all links
-- removed primary button shrink hover behavior
-- stopped hollow button border width jump on hover
-- improved header responsiveness and spacing
+## Implemented
 
-## Verified
+- Registration success triggers registration email notification.
+- Application-level notification abstraction:
+  - `IRegistrationEmailNotificationService`
+  - `IEmailSender`
+  - `EmailMessage`
+- Infrastructure SMTP adapter using native `System.Net.Mail.SmtpClient`:
+  - `SmtpEmailOptions`
+  - `SmtpEmailSender`
+- Registration handler calls notification only after account is persisted.
+- Email send failure is logged and does not roll back/suppress successful registration response.
+- Tests override `IEmailSender` with fake sender.
+- Integration tests cover success, validation failure, duplicate failure, and sender failure behavior.
 
-```text
-npm --prefix ./energymanagement.client run build
-→ success
-```
+## Not changed
+
+- No API contract shape change.
+- No OpenAPI/generated TypeScript artifacts.
+- No domain changes.
+- No migrations.
+- No docs/planning/client UI changes.
+- No outbox/background worker.

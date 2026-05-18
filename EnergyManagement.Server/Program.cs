@@ -10,6 +10,7 @@ using EnergyManagement.Server.L1.Application.Security;
 using EnergyManagement.Server.L1.Persistence;
 using EnergyManagement.Server.L1.Persistence.Repositories;
 using EnergyManagement.Server.L1.Infrastructure.Documents;
+using EnergyManagement.Server.L1.Infrastructure.Email;
 using EnergyManagement.Server.Api.Security;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -59,6 +60,10 @@ builder.Services.AddTransient<IAgreementExchangeReadRepository, AgreementExchang
 builder.Services.AddTransient<IAgreementExchangeReadService, AgreementExchangeReadService>();
 builder.Services.AddTransient<IAgreementExchangeApplicationService, AgreementExchangeApplicationService>();
 builder.Services.AddTransient<IDocumentStorage, LocalDocumentStorage>();
+builder.Services.Configure<SmtpEmailOptions>(
+    builder.Configuration.GetSection(SmtpEmailOptions.SectionName));
+builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
+builder.Services.AddTransient<IRegistrationEmailNotificationService, RegistrationEmailNotificationService>();
 builder.Services.AddSingleton<L1ClaimsPrincipalFactory>();
 
 builder.Services.AddMediatR(c=>c.RegisterServicesFromAssembly(typeof(Program).Assembly));
