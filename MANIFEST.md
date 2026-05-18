@@ -1,77 +1,56 @@
 # MANIFEST
 
-Docs-only archive for slice taxonomy, cross-cutting behavior sources, legacy L1/L2 cleanup, and behavior-to-test trace workflow.
+Archive: `archive-merge-workflow-with-originals-v1`  
+Review folder: `_archive-review/2026-05-18-archive-merge-workflow-v1/`
 
 ## Purpose
 
-Clarify the documentation model:
+Introduce a safe two-step archive workflow and update navigation to point to it.
+
+## New files
 
 ```text
-scenario sources describe required behavior;
-data files and behavior items extract/classify scenario details;
-slice drafts describe behavior subset + implementation plan + verification plan;
-slice test plans prove behavior items and scenario outcomes.
+planning/archive-workflow/README.md
+planning/archive-workflow/SAFE-ARCHIVE-MERGE-WORKFLOW.md
+planning/archive-workflow/ARCHIVE-PLAN-TEMPLATE.md
+planning/archive-workflow/POST-APPLY-MERGE-REVIEW-WORKFLOW.md
+planning/archive-workflow/ARCHIVE-REVIEW-FOLDER-RULES.md
 ```
 
-This archive also clarifies that:
+## Replacement files
 
 ```text
-- L1/L2 are legacy identifiers, not future folder structure;
-- cross-cutting behavior must also have scenario/behavior sources;
-- cross-cutting implementation work should still be written as normal client/server slice drafts;
-- client/server drafts can be paired parts of one logical slice;
-- client-only or server-only slice drafts must be explicitly marked with `SINGLE-`;
-- planning/slices/cross-cutting/ is for umbrella/coordination docs, not for dumping implementation details;
-- every slice draft must include a Behavior-to-Test Trace;
-- tests use implementation details only as setup/action/observation mechanisms.
-```
-
-## Files included
-
-```text
-planning/slices/README.md
 planning/slices/SLICE-FOLDER-MAP.md
 planning/slices/SLICE-INDEX.md
 planning/slices/SLICE-QUESTIONS.md
-planning/slices/slice-test-plan-workflow.md
-planning/slices/l2/README.md
-planning/slices/client-slice-short-draft-rules-and-example.md
+```
 
-planning/slices/client/README.md
-planning/slices/client/CLIENT-SLICE-TEMPLATE.md
-planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md
-planning/slices/client/cross-cutting/README.md
-planning/slices/client/examples/CLIENT-CROSS-CUTTING-DEFERRED-VALIDATION-SLICE-EXAMPLE.md
+All replacement files are additive merges: existing content is preserved and archive workflow navigation is appended.
 
-planning/slices/server/README.md
-planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
-planning/slices/server/SERVER-SLICE-TEMPLATE.md
-planning/slices/server/cross-cutting/README.md
+## Original snapshots included
 
-planning/slices/cross-cutting/README.md
-planning/slices/cross-cutting/CROSS-CUTTING-UMBRELLA-TEMPLATE.md
-planning/slices/cross-cutting/CC-SEC-CSRF-001-unsafe-command-protection.md
+```text
+_archive-review/2026-05-18-archive-merge-workflow-v1/original-files/planning/slices/SLICE-FOLDER-MAP.md
+_archive-review/2026-05-18-archive-merge-workflow-v1/original-files/planning/slices/SLICE-INDEX.md
+_archive-review/2026-05-18-archive-merge-workflow-v1/original-files/planning/slices/SLICE-QUESTIONS.md
+```
 
-planning/diagrams/scenario-behavior-items/README.md
-planning/diagrams/scenario-cross-cutting/README.md
-planning/diagrams/scenario-cross-cutting/client-behavior/README.md
-planning/diagrams/scenario-cross-cutting/client-behavior/CC-CLIENT-FORM-VALIDATION-001-deferred-validation.behavior.md
-planning/diagrams/scenario-cross-cutting/client-behavior/CC-CLIENT-FEEDBACK-001-error-feedback.behavior.md
-planning/diagrams/scenario-cross-cutting/server-behavior/README.md
-planning/diagrams/scenario-cross-cutting/server-client/README.md
-planning/diagrams/scenario-cross-cutting/security/README.md
-planning/diagrams/scenario-cross-cutting/security/CC-SEC-CSRF-001-unsafe-command-protection.behavior.md
+## Review material included
 
-_archive-notes/slice-taxonomy-cross-cutting-testing-workflow-v3/raw-author-message-log.md
-_archive-notes/slice-taxonomy-cross-cutting-testing-workflow-v3/derived-decisions.md
+```text
+_archive-review/2026-05-18-archive-merge-workflow-v1/ARCHIVE-PLAN.md
+_archive-review/2026-05-18-archive-merge-workflow-v1/ORIGINALS-INDEX.md
+_archive-review/2026-05-18-archive-merge-workflow-v1/MERGE-RISK-REPORT.md
+_archive-review/2026-05-18-archive-merge-workflow-v1/raw-author-message-log.md
+_archive-review/2026-05-18-archive-merge-workflow-v1/derived-decisions.md
 ```
 
 ## Not included
 
 ```text
-- no runtime UI fixes
-- no CSS implementation changes
-- no concrete slice draft rewrites
-- no mass movement of legacy L1/L2 slice files
+- no runtime implementation changes
+- no test implementation changes
 - no OpenAPI/generated file changes
+- no mass update of slice drafts
+- no source-sync registry changes
 ```

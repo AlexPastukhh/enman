@@ -125,22 +125,3 @@ planning/slices/l1/
 planning/slices/l2/
   legacy historical slice draft grouping; do not add new files
 ```
-
-
-## Archive workflow folders
-
-```text
-planning/archive-workflow/
-  rules for safe docs archives, original snapshots, post-apply merge review and second-step correction archives.
-
-_archive-review/<unique-archive-slug>/
-  archive-local review material created by archives that replace existing files:
-    ORIGINALS-INDEX.md
-    MERGE-RISK-REPORT.md
-    ARCHIVE-PLAN.md
-    original-files/
-    raw-author-message-log.md
-    derived-decisions.md
-```
-
-Archive workflow docs are not slice drafts. They are documentation/change-management workflow.

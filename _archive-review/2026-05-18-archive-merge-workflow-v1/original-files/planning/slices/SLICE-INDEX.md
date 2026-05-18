@@ -73,14 +73,3 @@ Historical L1/L2 paths are legacy only.
 | CC-SEC-CSRF-001 | Unsafe Command Protection | umbrella concern | draft | `planning/slices/cross-cutting/CC-SEC-CSRF-001-unsafe-command-protection.md` | Coordinates server/client slice drafts and cross-side proof |
 | CC-SEC-CSRF-001.server | Unsafe Command Protection Server Slice | server cross-cutting draft | future | `planning/slices/server/cross-cutting/CC-SEC-CSRF-001-unsafe-command-protection.server.md` | Not created in this archive |
 | CC-SEC-CSRF-001.client | Unsafe Command Protection Client Slice | client cross-cutting draft | future | `planning/slices/client/cross-cutting/CC-SEC-CSRF-001-unsafe-command-protection.client.md` | Not created in this archive |
-
-
-## Archive workflow docs
-
-| ID | Title | Type | Status | Current path | Notes |
-|---|---|---|---|---|---|
-| ARCHIVE-WORKFLOW-README | Archive Workflow | workflow index | current | `planning/archive-workflow/README.md` | Entry point for safe archive generation/apply/review |
-| SAFE-ARCHIVE-MERGE-WORKFLOW | Safe Archive Merge Workflow | workflow | current | `planning/archive-workflow/SAFE-ARCHIVE-MERGE-WORKFLOW.md` | Requires original snapshots for replacement files |
-| ARCHIVE-PLAN-TEMPLATE | Archive Plan Template | template | current | `planning/archive-workflow/ARCHIVE-PLAN-TEMPLATE.md` | Required before creating replacement archive |
-| POST-APPLY-MERGE-REVIEW-WORKFLOW | Post-Apply Merge Review Workflow | workflow | current | `planning/archive-workflow/POST-APPLY-MERGE-REVIEW-WORKFLOW.md` | Compare applied files with archived originals, then create smaller correction archive |
-| ARCHIVE-REVIEW-FOLDER-RULES | Archive Review Folder Rules | workflow | current | `planning/archive-workflow/ARCHIVE-REVIEW-FOLDER-RULES.md` | Unique `_archive-review/<slug>/` folder rule |
