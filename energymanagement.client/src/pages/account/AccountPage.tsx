@@ -6,7 +6,8 @@ import { useMakeApplicantPartyCurrentDefaultMutation } from "../../features/appl
 import { MakeCurrentDefaultButton } from "../../features/applicant-party/make-current-default/ui/MakeCurrentDefaultButton";
 import { makeCurrentDefaultButtonConst } from "../../features/applicant-party/make-current-default/ui/makeCurrentDefaultButtonConst";
 import { CreateIndividualApplicantPartyForm } from "../../features/applicant-party/create-individual/ui/CreateIndividualApplicantPartyForm";
-import { RegisterForm } from "../../features/auth/register/ui/RegisterForm";
+import { Link } from "react-router-dom";
+import { clientRoutes } from "../../shared/config/clientRoutes";
 import { Footer } from "../../shared/ui/layout/Footer";
 import { Header } from "../../shared/ui/layout/Header";
 
@@ -62,7 +63,23 @@ const AccountPage = () => {
     <>
       <Header />
       <main className="content">
-        {!session && <RegisterForm />}
+        {!session && (
+          <section className="signedOutPanel" aria-labelledby="account-signed-out-heading">
+            <h1 id="account-signed-out-heading">Личный кабинет</h1>
+            <p>
+              Войдите в существующий аккаунт или зарегистрируйтесь, чтобы работать
+              с заявками, applicant parties и договорными обменами.
+            </p>
+            <div className="signedOutPanel__actions">
+              <Link className="button-primary link-base-clear" to={clientRoutes.login}>
+                Войти
+              </Link>
+              <Link className="button-hollow link-base-clear" to={clientRoutes.register}>
+                Зарегистрироваться
+              </Link>
+            </div>
+          </section>
+        )}
         {session && (
           <section aria-labelledby="account-page-heading">
             <h1 id="account-page-heading">Account</h1>

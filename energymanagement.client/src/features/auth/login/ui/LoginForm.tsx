@@ -49,7 +49,7 @@ export const LoginForm = () => {
       </FormGroup>
       <FormGroup addClassName="closeGroup">
         <FormButton type="submit" disabled={isSubmitting || !isValid}>
-          {isSubmitting ? "Logging in..." : loginConst.submitButtonText}
+          {isSubmitting ? "Входим..." : loginConst.submitButtonText}
         </FormButton>
       </FormGroup>
     </form>

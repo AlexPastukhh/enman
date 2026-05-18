@@ -1,13 +1,12 @@
 export const loginConst = {
-  loginTitle: "Login",
-  passwordLabel: "Password",
-  passwordPlaceholder: "Enter your password",
+  loginTitle: "Вход",
+  passwordLabel: "Пароль",
+  passwordPlaceholder: "Введите пароль",
   emailLabel: "Email",
-  emailPlaceholder: "Enter your email",
+  emailPlaceholder: "Введите email",
   emailInputId: "emailInput",
   emailErrorsId: "emailErrors",
-  submitButtonText: "Login",
+  submitButtonText: "Войти",
   passwordInputId: "passwordInput",
   passwordErrorsId: "passwordErrors",
 };
-

@@ -1,12 +1,12 @@
 # Apply
 
-From repository root:
+From repo root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\home-flow-ui-fix.zip" -DestinationPath "." -Force
+Expand-Archive -Path "C:\Users\alexa\Downloads\ui-normalize-flow-fix.zip" -DestinationPath "." -Force
 ```
 
-Run client dev server:
+Run:
 
 ```powershell
 npm --prefix .\energymanagement.client run dev
@@ -16,17 +16,7 @@ Open:
 
 ```text
 https://localhost:5173/
-```
-
-Useful routes:
-
-```text
-Client:
-  https://localhost:5173/requests/create
-  https://localhost:5173/requests
-  https://localhost:5173/agreements
-
-Employee:
-  https://localhost:5173/employee/requests
-  https://localhost:5173/employee/agreements
+https://localhost:5173/login
+https://localhost:5173/register
+https://localhost:5173/account
 ```

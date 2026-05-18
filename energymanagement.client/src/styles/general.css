@@ -2,91 +2,158 @@
   text-decoration: none;
   color: inherit;
 }
+
 .textWrapper {
   font-size: 1.2rem;
 }
 
 .redirectGroup p,
-a {
+.redirectGroup a {
   font-size: 1.2rem;
   text-decoration: none;
 }
+
 .redirectGroup a {
   color: var(--color-primary);
 }
 
-
-.button-primary {
+.button-primary,
+.button-hollow {
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  gap: 0.6rem;
+  min-height: 4.2rem;
   padding: var(--btn-pad-tb) var(--btn-pad-lr);
-  font-size: 1.6rem;
-  border: none;
   border-radius: var(--btn-b-radius);
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.button-primary {
+  border: 0.1rem solid var(--color-primary);
   background-color: var(--color-primary);
   color: white;
-  transition: all 0.3s ease-in-out;
 }
 
 .button-primary svg {
-  fill: white;
+  fill: currentColor;
 }
 
-.button-primary:hover{
-  cursor: pointer;
+.button-primary:hover {
+  background-color: #37208c;
+  border-color: #37208c;
+  box-shadow: 0 0.8rem 1.8rem rgba(41, 22, 111, 0.16);
+  transform: translateY(-0.1rem);
 }
 
-.shrinking-button-primary {
-  position: relative;
-  --btn-primary-pad-tb-shrunk: calc(
-    var(--btn-pad-tb) * 0.5
-  );
-  padding: var(--btn-primary-pad-tb-shrunk) var(--btn-pad-lr);
-}
-.shrinking-button-primary:before {
-  --extra-pad-tb: calc(
-    var(--btn-pad-tb) - var(--btn-primary-pad-tb-shrunk)
-  );
-  content: "";
-  position: absolute;
-  top: calc(var(--extra-pad-tb) * -1);
-  bottom: calc(var(--extra-pad-tb) * -1);
-  left: 0;
-  right: 0;
-  z-index: -1;
-  width: 100%;
-
-  border-radius: var(--btn-b-radius);
-  background-color: var(--color-primary);
+.button-primary:active {
+  transform: translateY(0);
 }
 
-.shrinking-button-primary:hover:before {
-  transform: scale(0);
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
+.button-primary:disabled,
+.button-primary[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.65;
+  transform: none;
+  box-shadow: none;
 }
 
-.button-hollow{
-
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+.shrinking-button-primary,
+.shrinking-button-primary:hover,
+.shrinking-button-primary:active {
   padding: var(--btn-pad-tb) var(--btn-pad-lr);
-  font-size: 1.6rem;
+}
+
+.shrinking-button-primary::before {
+  content: none;
+}
+
+.button-hollow {
+  border: 0.1rem solid rgba(41, 22, 111, 0.34);
+  background-color: #ffffff;
   color: var(--color-primary);
-  border:solid 0.1rem var(--color-primary);
-  border-radius: var(--btn-b-radius);
-  transition: all 0.3s ease-in-out;
-
-}
-.button-hollow svg{
-  fill: var(--color-primary);
 }
 
-.button-hollow:hover{
-  cursor: pointer;
-  border-width: 0.2rem;
-  
+.button-hollow svg {
+  fill: currentColor;
 }
 
+.button-hollow:hover {
+  border-color: var(--color-primary);
+  background-color: rgba(41, 22, 111, 0.06);
+  box-shadow: 0 0.6rem 1.4rem rgba(41, 22, 111, 0.08);
+  transform: translateY(-0.1rem);
+}
+
+.button-hollow:active {
+  transform: translateY(0);
+}
+
+.button-primary:focus-visible,
+.button-hollow:focus-visible,
+.header__nav-link:focus-visible,
+.header__hotline-link:focus-visible,
+.header__home-link:focus-visible {
+  outline: 0.3rem solid rgba(41, 22, 111, 0.22);
+  outline-offset: 0.2rem;
+}
+
+.authPage,
+.signedOutPanel {
+  width: min(64rem, calc(100% - 4.8rem));
+  margin: 4rem auto 0;
+  display: grid;
+  gap: 2rem;
+}
+
+.authPage__intro,
+.signedOutPanel {
+  padding: 2.4rem;
+  border: 0.1rem solid rgba(112, 137, 147, 0.28);
+  border-radius: 1.8rem;
+  background: #ffffff;
+  box-shadow: 0 1rem 2.4rem rgba(41, 22, 111, 0.06);
+}
+
+.authPage__intro h1,
+.signedOutPanel h1 {
+  margin: 0 0 1rem;
+  font-size: 2.8rem;
+  color: var(--color-primary);
+}
+
+.authPage__intro p,
+.signedOutPanel p {
+  margin: 0;
+  color: #3d4c54;
+  line-height: 1.5;
+}
+
+.authPage .form {
+  margin: 0 auto;
+}
+
+.signedOutPanel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 760px) {
+  .button-primary,
+  .button-hollow {
+    width: 100%;
+  }
+}

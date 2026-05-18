@@ -1,31 +1,30 @@
 export const registerConst = {
-  registerTitle: "Register",
+  registerTitle: "Регистрация",
 
   emailLabel: "Email",
-  emailPlaceholder: "Enter your email",
+  emailPlaceholder: "Введите email",
   emailInputId: "emailInput",
   emailErrorsId: "emailErrors",
 
-  passwordLabel: "Password",
-  passwordPlaceholder: "Enter your password",
+  passwordLabel: "Пароль",
+  passwordPlaceholder: "Введите пароль",
   passwordInputId: "passwordInput",
   passwordErrorsId: "passwordErrors",
 
-  passwordConfirmLabel: "Confirm Password",
-  passwordConfirmPlaceholder: "Confirm your password",
+  passwordConfirmLabel: "Подтвердите пароль",
+  passwordConfirmPlaceholder: "Повторите пароль",
   passwordConfirmInputId: "confirmPasswordInput",
   passwordConfirmErrorsId: "confirmPasswordErrors",
 
-  submitButtonText: "Register",
-  submitButtonAriaLabel: "Register Button",
-  buttonSubmittingText: "Registering...",
+  submitButtonText: "Зарегистрироваться",
+  submitButtonAriaLabel: "Зарегистрироваться",
+  buttonSubmittingText: "Регистрируем...",
 
-  formInfoText: "By registering, you agree to our Terms and Conditions.",
+  formInfoText: "Регистрируясь, вы соглашаетесь с условиями использования.",
 
   loginLinkText: {
-    getFirstPartTrim: () => "Already have an account?",
-    getSecondPartTrim: () => "here.",
-    linkText: "Login",
+    getFirstPartTrim: () => "Уже есть аккаунт?",
+    getSecondPartTrim: () => "",
+    linkText: "Войти",
   },
 };
-

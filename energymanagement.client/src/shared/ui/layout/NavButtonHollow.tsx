@@ -1,5 +1,4 @@
 import { NavLink, type NavLinkProps } from "react-router-dom";
-import { headerConst } from "./headerConst";
 
 type NavButtonHollowProps = NavLinkProps & {
   children: React.ReactNode;
@@ -11,8 +10,7 @@ export const NavButtonHollow = ({
   ...rest
 }: NavButtonHollowProps) => (
   <NavLink
-    className={`button-hollow ${className ?? ""}`.trim()}
-    aria-label={headerConst.internetReceptionLinkText}
+    className={`button-hollow link-base-clear ${className ?? ""}`.trim()}
     {...rest}
   >
     {children}
