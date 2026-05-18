@@ -1,22 +1,59 @@
-# Apply
+# APPLY: enman-vkr-chapter1-topic-drafts-update-v1
 
-Docs-only archive. Apply from repository root:
+## Simple apply
+
+From repository root:
 
 ```powershell
-Expand-Archive -Path "C:\Users\alexa\Downloads\sl-agr-exch-003-list-server-client-draft-refactor-v1.zip" -DestinationPath "." -Force
+cd "C:\enman\enman"
+
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-chapter1-topic-drafts-update-v1.zip" -DestinationPath . -Force
+
+git status
 ```
 
-This archive refactors the paired server and client list drafts:
+## Check diffs
 
-```text
-planning/slices/SL-AGR-EXCH-003-agreement-exchange-list-read.md
-planning/slices/l2/L2-AGR-EXCH-LIST-001-agreement-exchange-list.client.md
+```powershell
+git diff -- planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/01-domain-process/01-client-request-process.topic.md
+git diff -- planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/04-automation-options/01-existing-solutions-and-custom-development.topic.md
 ```
 
-Runtime implementation, tests, deep UI refactor, page flow and redirects are not changed.
+## Add and commit
 
-Original files are preserved in:
+```powershell
+git add planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/01-domain-process/01-client-request-process.topic.md `
+        planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/04-automation-options/01-existing-solutions-and-custom-development.topic.md `
+        MANIFEST.md `
+        APPLY.md
 
-```text
-_archive-review/2026-05-19-sl-agr-exch-003-list-server-client-draft-refactor-v1/original-files/
+git commit -m "Update VKR Chapter 1 topic drafts"
+```
+
+## Safer apply without overwriting root MANIFEST/APPLY names
+
+```powershell
+cd "C:\enman\enman"
+
+$tmp = "$env:TEMP\vkr-chapter1-topic-drafts-update-v1"
+Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
+
+Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-chapter1-topic-drafts-update-v1.zip" -DestinationPath $tmp -Force
+
+Copy-Item "$tmp\planning" "." -Recurse -Force
+Copy-Item "$tmp\MANIFEST.md" ".\MANIFEST.vkr-chapter1-topic-drafts-update-v1.md" -Force
+Copy-Item "$tmp\APPLY.md" ".\APPLY.vkr-chapter1-topic-drafts-update-v1.md" -Force
+
+git status
+```
+
+Then:
+
+```powershell
+git add planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/01-domain-process/01-client-request-process.topic.md `
+        planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/04-automation-options/01-existing-solutions-and-custom-development.topic.md `
+        MANIFEST.vkr-chapter1-topic-drafts-update-v1.md `
+        APPLY.vkr-chapter1-topic-drafts-update-v1.md
+
+git commit -m "Update VKR Chapter 1 topic drafts"
 ```

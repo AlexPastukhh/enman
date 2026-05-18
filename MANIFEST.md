@@ -1,38 +1,23 @@
-# MANIFEST
-
-Archive: `sl-agr-exch-003-list-server-client-draft-refactor-v1`  
-Review folder: `_archive-review/2026-05-19-sl-agr-exch-003-list-server-client-draft-refactor-v1/`
+# MANIFEST: enman-vkr-chapter1-topic-drafts-update-v1
 
 ## Purpose
 
-Docs-only paired refactor of:
+Archive with two updated VKR Chapter 1 topic drafts.
 
-```text
-SL-AGR-EXCH-003 — Agreement Exchange List Page / Read List
-L2-AGR-EXCH-LIST-001.client — Agreement Exchange List Pages
-```
+## Files included
 
-## Replacement files
+### Replace / add
 
-```text
-planning/slices/SL-AGR-EXCH-003-agreement-exchange-list-read.md
-planning/slices/l2/L2-AGR-EXCH-LIST-001-agreement-exchange-list.client.md
-```
+- `planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/01-domain-process/01-client-request-process.topic.md`
+  - Topic for VKR 1.1: process of client request processing.
+  - Updated full topic draft v2.
 
-## Original snapshots included
+- `planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/04-automation-options/01-existing-solutions-and-custom-development.topic.md`
+  - Topic for VKR 1.4: automation options and justification of custom development.
+  - Updated topic/subsection draft v2.
 
-```text
-_archive-review/2026-05-19-sl-agr-exch-003-list-server-client-draft-refactor-v1/original-files/planning/slices/SL-AGR-EXCH-003-agreement-exchange-list-read.md
-_archive-review/2026-05-19-sl-agr-exch-003-list-server-client-draft-refactor-v1/original-files/planning/slices/l2/L2-AGR-EXCH-LIST-001-agreement-exchange-list.client.md
-```
+## Notes
 
-## Not included
-
-```text
-- no runtime implementation audit
-- no runtime code changes
-- no tests changed
-- no deep UI refactor
-- no page flow / redirect audit
-- no navigation updates
-```
+- This archive intentionally focuses on the two updated drafts discussed before archive creation.
+- It does not update workflow files, topic indexes, or chapter README files.
+- If destination files already exist, review `git diff` before committing.
