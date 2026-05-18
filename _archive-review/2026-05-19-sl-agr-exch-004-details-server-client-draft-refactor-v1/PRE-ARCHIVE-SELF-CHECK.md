@@ -1,0 +1,30 @@
+# Pre-Archive Self-Check
+
+- [x] server has Scenario Sources
+- [x] server has Source / Domain / Slice Coverage Snapshot
+- [x] server has Implementation Sync Status
+- [x] server has Behavior-to-Test Trace
+- [x] server says implementation not rechecked
+- [x] server preserves endpoint
+- [x] server preserves ClientAccountId guard
+- [x] server forbids ResponsibleEmployeeId guard
+- [x] server preserves document refs not bytes
+- [x] server no runtime changes claim
+- [x] client has Scenario Sources
+- [x] client has Source / Domain / Slice Coverage Snapshot
+- [x] client has Implementation Sync Status
+- [x] client has Behavior-to-Test Trace
+- [x] client says implementation not rechecked
+- [ ] client preserves shared endpoint/query/widget
+- [x] client forbids actor-specific wrappers
+- [x] client preserves all Q IDs
+- [x] client marks runtime UI out of scope
+- [x] original server file loaded from remote branch source and preserved as snapshot
+- [x] original client file loaded from remote branch source and preserved as snapshot
+- [x] replacement paths are repo-relative
+- [x] original snapshot paths are repo-relative under archive review folder
+- [x] no wrapper folder planned inside zip
+- [x] no runtime files included
+- [x] no tests included
+- [x] no generated artifacts included
+- [x] no UI/page-flow/redirect runtime files included

@@ -1,0 +1,28 @@
+# Derived Decisions
+
+- Work from remote GitHub branch `my-changes`.
+- Use the next unrefactored Agreement Exchange paired read/details draft:
+  - `SL-AGR-EXCH-004 — Agreement Exchange Details / Read Details`
+  - `L2-AGR-EXCH-DETAILS-001.client — Shared Agreement Exchange Details Pages`
+- Keep archive docs-only.
+- Replace only planning draft files and add safe archive review files.
+- Preserve originals for both replacement files.
+- Preserve server guardrails:
+  - `GET /api/agreement-exchanges/{exchangeId}`
+  - Client/Employee auth
+  - no request body/query first pass
+  - `200 OK` details DTO
+  - ClientAccountId server-side filter
+  - no ResponsibleEmployeeId guard
+  - no AgreementExchangeActor first pass
+  - read-only projection, no lifecycle mutation
+  - document refs only, no bytes
+- Preserve client guardrails:
+  - one shared details endpoint
+  - one shared entity query/model/details widget
+  - separate Client/Employee page shells
+  - no actor-specific details wrappers first pass
+  - no business wrappers in `shared/api`
+  - command buttons/forms/mutations owned by future command sidecars
+  - runtime UI/page-flow/redirect audit out of scope
+- Preserve all existing client question IDs and meanings.

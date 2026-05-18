@@ -1,23 +1,39 @@
-# MANIFEST: enman-vkr-chapter1-topic-drafts-update-v1
+# MANIFEST
+
+Archive: `sl-agr-exch-004-details-server-client-draft-refactor-v1.zip`  
+Review folder: `_archive-review/2026-05-19-sl-agr-exch-004-details-server-client-draft-refactor-v1/`
 
 ## Purpose
 
-Archive with two updated VKR Chapter 1 topic drafts.
+Docs-only paired refactor of:
 
-## Files included
+```text
+SL-AGR-EXCH-004 — Agreement Exchange Details / Read Details
+L2-AGR-EXCH-DETAILS-001.client — Shared Agreement Exchange Details Pages
+```
 
-### Replace / add
+## Replacement files
 
-- `planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/01-domain-process/01-client-request-process.topic.md`
-  - Topic for VKR 1.1: process of client request processing.
-  - Updated full topic draft v2.
+```text
+planning/slices/SL-AGR-EXCH-004-agreement-exchange-details-read.md
+planning/slices/l2/L2-AGR-EXCH-DETAILS-001-agreement-exchange-details.client.md
+```
 
-- `planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/04-automation-options/01-existing-solutions-and-custom-development.topic.md`
-  - Topic for VKR 1.4: automation options and justification of custom development.
-  - Updated topic/subsection draft v2.
+## Original snapshots included
 
-## Notes
+```text
+_archive-review/2026-05-19-sl-agr-exch-004-details-server-client-draft-refactor-v1/original-files/planning/slices/SL-AGR-EXCH-004-agreement-exchange-details-read.md
+_archive-review/2026-05-19-sl-agr-exch-004-details-server-client-draft-refactor-v1/original-files/planning/slices/l2/L2-AGR-EXCH-DETAILS-001-agreement-exchange-details.client.md
+```
 
-- This archive intentionally focuses on the two updated drafts discussed before archive creation.
-- It does not update workflow files, topic indexes, or chapter README files.
-- If destination files already exist, review `git diff` before committing.
+## Not included
+
+```text
+- no runtime implementation audit
+- no runtime code changes
+- no tests changed
+- no generated artifacts changed
+- no runtime UI refactor
+- no page flow / redirect audit
+- no navigation updates
+```

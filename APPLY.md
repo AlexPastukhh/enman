@@ -1,59 +1,28 @@
-# APPLY: enman-vkr-chapter1-topic-drafts-update-v1
+# APPLY — sl-agr-exch-004-details-server-client-draft-refactor-v1.zip
 
-## Simple apply
+Docs-only replacement archive.
 
-From repository root:
+Replacement files:
 
-```powershell
-cd "C:\enman\enman"
-
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-chapter1-topic-drafts-update-v1.zip" -DestinationPath . -Force
-
-git status
+```text
+planning/slices/SL-AGR-EXCH-004-agreement-exchange-details-read.md
+planning/slices/l2/L2-AGR-EXCH-DETAILS-001-agreement-exchange-details.client.md
 ```
 
-## Check diffs
+Original snapshots:
 
-```powershell
-git diff -- planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/01-domain-process/01-client-request-process.topic.md
-git diff -- planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/04-automation-options/01-existing-solutions-and-custom-development.topic.md
+```text
+_archive-review/2026-05-19-sl-agr-exch-004-details-server-client-draft-refactor-v1/original-files/planning/slices/SL-AGR-EXCH-004-agreement-exchange-details-read.md
+_archive-review/2026-05-19-sl-agr-exch-004-details-server-client-draft-refactor-v1/original-files/planning/slices/l2/L2-AGR-EXCH-DETAILS-001-agreement-exchange-details.client.md
 ```
 
-## Add and commit
+Runtime implementation was not changed.
+Tests were not changed.
+Generated artifacts were not changed.
+Runtime UI/page-flow/redirect behavior was not changed.
+
+Apply from repository root:
 
 ```powershell
-git add planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/01-domain-process/01-client-request-process.topic.md `
-        planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/04-automation-options/01-existing-solutions-and-custom-development.topic.md `
-        MANIFEST.md `
-        APPLY.md
-
-git commit -m "Update VKR Chapter 1 topic drafts"
-```
-
-## Safer apply without overwriting root MANIFEST/APPLY names
-
-```powershell
-cd "C:\enman\enman"
-
-$tmp = "$env:TEMP\vkr-chapter1-topic-drafts-update-v1"
-Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
-
-Expand-Archive -Path "C:\Users\alexa\Downloads\enman-vkr-chapter1-topic-drafts-update-v1.zip" -DestinationPath $tmp -Force
-
-Copy-Item "$tmp\planning" "." -Recurse -Force
-Copy-Item "$tmp\MANIFEST.md" ".\MANIFEST.vkr-chapter1-topic-drafts-update-v1.md" -Force
-Copy-Item "$tmp\APPLY.md" ".\APPLY.vkr-chapter1-topic-drafts-update-v1.md" -Force
-
-git status
-```
-
-Then:
-
-```powershell
-git add planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/01-domain-process/01-client-request-process.topic.md `
-        planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/04-automation-options/01-existing-solutions-and-custom-development.topic.md `
-        MANIFEST.vkr-chapter1-topic-drafts-update-v1.md `
-        APPLY.vkr-chapter1-topic-drafts-update-v1.md
-
-git commit -m "Update VKR Chapter 1 topic drafts"
+Expand-Archive -Path "C:\Users\alexa\Downloads\sl-agr-exch-004-details-server-client-draft-refactor-v1.zip" -DestinationPath "." -Force
 ```

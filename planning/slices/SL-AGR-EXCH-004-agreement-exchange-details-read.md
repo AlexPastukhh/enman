@@ -1,85 +1,220 @@
 # SL-AGR-EXCH-004 — Agreement Exchange Details / Read Details
 
-Status: implementation-ready server draft after `SL-AGR-EXCH-003` list direction
-Package: `[L2] Agreement Proposal Exchange`
-Slice type: shared backend/API read details slice
-Primary purpose: Client or Employee reads one agreement exchange with proposal history
-
+Status: implemented slice draft refactor / implementation not rechecked in this pass  
+Package: `[L2] Agreement Proposal Exchange`  
+Slice type: shared server read endpoint + shared details read model  
+Primary purpose: Client or Employee reads one visible `AgreementProposalExchange` with request summary, active proposal and full proposal history  
 Depends on:
 
 * `SL-AGR-EXCH-001 — Start Agreement Exchange With Initial Employee Proposal`
+* `SL-AGR-EXCH-002 — Send Agreement Counter-Proposal Version`
 * `SL-AGR-EXCH-003 — Agreement Exchange List Page / Read List`
-* agreement exchange persistence
 * `AgreementProposalExchange.ClientAccountId`
-* auth/session
+* Client/Employee auth/session
+* agreement exchange persistence/read projection
 
-## 1. Numbering / docs note
+Implementation direction:
 
 ```text
-SL-AGR-EXCH-003 — Agreement Exchange List Page / Read List
-SL-AGR-EXCH-004 — Agreement Exchange Details / Read Details
-SL-AGR-EXCH-005 — Accept Active Agreement Proposal
-SL-AGR-EXCH-006 — Final Refuse Agreement Exchange
+GET /api/agreement-exchanges/{exchangeId}
+
+Client branch:
+  read exchange only when exchange.ClientAccountId == current ClientAccountId
+
+Employee branch:
+  first pass: any active Employee can see/service agreement exchanges
 ```
 
-If GitHub still has old `SL-AGR-EXCH-004` as Accept and `005` as Final Refuse, docs should be renamed/synchronized before committing.
+Refactor note:
+
+```text
+This draft was refactored as a docs-only implemented-slice sync pass.
+
+Runtime implementation was not rechecked in this pass.
+Client UI/page flow, redirect audit, runtime UI refactor, tests and generated artifacts are out of scope for this pass.
+```
 
 ---
 
-## 2. Slice Overview
+## 0. Scenario Sources
 
-Target behavior:
+Business scenarios:
 
 ```text
-Client or Employee opens one Agreement Exchange details page.
-
-System reads current session role and account id.
-
-System loads agreement exchange by exchangeId.
-
-Client can read only exchanges where:
-  AgreementProposalExchange.ClientAccountId == current client account id.
-
-Employee can read according to employee visibility policy.
-
-First pass:
-  any active Employee can see/service agreement exchanges.
-
-System returns:
-- exchange status;
-- request summary;
-- active proposal;
-- full proposal version history;
-- document references;
-- current actor side.
-
-No lifecycle transition happens here.
-No proposal is sent here.
-No accept/refuse action happens here.
+SC-13B — Client Agreement Proposal Details / Response
+SC-13C — Employee Agreements
+SC-13D — Employee Agreement Proposal Create / Send Version, as source of proposal history semantics
+SC-13E — Agreement Final Refusal, as related final-state/details context
 ```
 
-This is a shared read/details endpoint for both roles.
+Related scenarios:
+
+```text
+SC-13A — Client/Employee Agreement Exchange List
+SC-14 — Agreement Documents, for AgreementDocumentRef metadata references only
+```
+
+UI scenario status:
+
+```text
+missing / pending dedicated UI source for Client and Employee agreement exchange details pages
+```
+
+Cross-cutting behavior:
+
+```text
+CC-CLIENT-FEEDBACK-001 — Client Error / Feedback Visibility, for paired/future client sidecar
+```
+
+Data source:
+
+```text
+pending scenario-data source for details DTO fields, request summary fields, proposal history rows and document reference display fields
+```
+
+Behavior items status:
+
+```text
+stable source behavior item IDs are pending scenario/source registry;
+this draft uses provisional behavior names until source-sync files are completed.
+```
+
+Concern umbrella:
+
+```text
+none for this server read slice.
+```
 
 ---
 
-## 3. Scope
+## 0.1 Source / Domain / Slice Coverage Snapshot
+
+Source versions:
 
 ```text
-- add shared agreement exchange details endpoint;
-- authorize Client and Employee roles;
-- resolve current role and account id from session;
-- for Client, filter by exchange.ClientAccountId;
-- for Employee, validate active Employee if current infrastructure supports it;
-- first pass Employee visibility: any active Employee can see/service;
-- use query handler + read repository / Dapper projection;
-- return exchange details DTO;
-- return request summary context;
-- return active proposal;
-- return full proposal version history;
-- return document references only, not file bytes;
-- return currentActorSide for UI derivation;
-- do not mutate exchange/request/proposals;
-- add integration tests for Client/Employee access and projection.
+SC-13B: pending / v000 if source registry is applied
+SC-13C: pending / v000 if source registry is applied
+SC-13D: pending / v000 if source registry is applied
+SC-13E: pending / v000 if source registry is applied
+SC-14: pending / v000 if source registry is applied
+```
+
+Domain baseline:
+
+```text
+DOM-v001 if source-sync/domain registry is applied;
+otherwise pending domain baseline.
+```
+
+Slice derivation map:
+
+```text
+pending / add row for SL-AGR-EXCH-004 during source-sync map update.
+```
+
+Coverage snapshot:
+
+| Behavior item / provisional behavior | Source version | Domain disposition | This slice responsibility | Notes |
+|---|---|---|---|---|
+| Client opens own exchange details | SC-13B pending | depends on persisted `ClientAccountId` | filter read projection by current ClientAccountId | not UI-only access |
+| Client cannot open another client's exchange | SC-13B pending | depends on persisted `ClientAccountId` | return not-found/not-visible result | avoid cross-account exposure |
+| Employee opens visible exchange details | SC-13C pending | first-pass policy, not exchange-level domain owner | validate active Employee if supported and return employee-visible exchange | any active Employee first pass |
+| No `ResponsibleEmployeeId` guard | SC-13C pending | domain/access policy decision | do not filter details by ResponsibleEmployeeId | proposal authors track actual Employee per version |
+| Details show exchange status | SC-13B/13C pending | persisted exchange state | project status in details DTO | list remains summary-only |
+| Details show request summary | SC-13B/13C pending | read projection responsibility | return compact request context | not full request details DTO |
+| Details show active proposal | SC-13B/13D pending | exchange active proposal state | project active proposal, version, sender and document ref | command rules remain elsewhere |
+| Details show full proposal history | SC-13B/13D pending | exchange owns proposal versions | return all proposal versions ordered by version | list slice excludes full history |
+| Details show document references, not bytes | SC-14 pending | `AgreementDocumentRef` metadata reference | return metadata/reference DTO only | download/storage slice owns bytes |
+| Details read does not mutate lifecycle | SC-13B/13C pending | read-only projection | do not call proposal send/accept/final-refuse methods | no side effects on GET |
+| UI may show action slots but server commands enforce rules | SC-13B/13E pending | command slices/domain own lifecycle | details DTO can support future UI, but no command security here | UI is not authorization |
+
+---
+
+## 0.2 Implementation Sync Status
+
+Implementation status:
+
+```text
+implemented-needs-doc-sync
+```
+
+Implemented files:
+
+```text
+server:
+  not rechecked in this pass
+
+client:
+  paired client draft refactored in this archive:
+    planning/slices/l2/L2-AGR-EXCH-DETAILS-001-agreement-exchange-details.client.md
+
+tests:
+  not rechecked in this pass
+```
+
+Checked against:
+
+```text
+source versions:
+  pending source-sync registry
+
+domain baseline:
+  pending / DOM-v001 if source-sync files are applied
+
+slice derivation map version:
+  pending
+```
+
+Known drift:
+
+```text
+docs:
+  - old draft lacked Scenario Sources section;
+  - old draft lacked Source / Domain / Slice Coverage Snapshot;
+  - old draft lacked Implementation Sync Status;
+  - old draft had behavior coverage and verification notes, but not current Behavior-to-Test Trace with escape/refactor risk;
+  - old draft used "Visual Scenario Flow" wording in a server/API read draft;
+  - old draft mixed server and client/UI action-slot notes without explicitly preserving page-flow/UI audit as out of scope.
+
+source:
+  - stable behavior item IDs are not yet assigned in source registry.
+
+implementation:
+  - not checked in this pass.
+
+UI:
+  - runtime UI, page-flow and redirect behavior are not touched in this pass.
+```
+
+Last sync note:
+
+```text
+Docs-only refactor. No runtime implementation inspection, no tests inspection, no generated artifact regeneration and no UI/redirect flow inspection.
+```
+
+---
+
+## 1. Scope
+
+This slice owns:
+
+```text
+- one shared details endpoint for Client and Employee;
+- current role and current account id derived from app cookie identity;
+- Client branch filters by AgreementProposalExchange.ClientAccountId;
+- Employee branch uses first-pass employee visibility policy;
+- one details read model / response DTO;
+- exchange status projection;
+- compact request summary projection;
+- active proposal projection;
+- full proposal version history projection;
+- proposal sender and sender id projection per proposal version;
+- AgreementDocumentRef metadata projection, not binary file bytes;
+- currentActorSide or equivalent UI derivation field if implemented by contract;
+- 200 OK read response;
+- not-found/not-visible behavior;
+- no lifecycle mutation;
+- API integration test plan with visibility, projection and no-mutation assertions.
 ```
 
 Endpoint:
@@ -94,146 +229,218 @@ Auth:
 [Authorize(Roles = "Client,Employee")]
 ```
 
----
-
-## 4. Out of Scope
-
-| Out of scope                            | Owner                          |
-| --------------------------------------- | ------------------------------ |
-| Agreement exchange list                 | `SL-AGR-EXCH-003`              |
-| Start exchange with initial proposal    | `SL-AGR-EXCH-001`              |
-| Send counter-proposal                   | `SL-AGR-EXCH-002`              |
-| Accept active proposal                  | `SL-AGR-EXCH-005`              |
-| Final refusal                           | `SL-AGR-EXCH-006`              |
-| File download / binary document serving | future document/file slice     |
-| Document upload/storage                 | future document/storage slice  |
-| Complex employee assignment visibility  | future visibility slice        |
-| Available actions DTO                   | optional future enhancement    |
-| AgreementExchangeActor abstraction      | not used first pass            |
-| Application command service             | not needed for this read slice |
-| UI command buttons implementation       | future client command sidecars |
-
----
-
-## 5. Visual Scenario Flow
+First-pass response:
 
 ```text
-User opens Agreement Exchange details page
+AgreementExchangeDetailsResponseDto
+```
+
+This slice does **not** send proposal versions.
+
+This slice does **not** start agreement exchange.
+
+This slice does **not** accept/refuse agreement exchange.
+
+This slice does **not** download or upload files.
+
+This slice does **not** introduce `ResponsibleEmployeeId`.
+
+This slice does **not** own client page layout, runtime UI or redirects.
+
+---
+
+## 2. Out of Scope
+
+| Out of scope | Owner / destination |
+|---|---|
+| Agreement exchange list / compact list rows | `SL-AGR-EXCH-003` |
+| Start exchange with first Employee proposal | `SL-AGR-EXCH-001` |
+| Send counter-proposal / next proposal version | `SL-AGR-EXCH-002` |
+| Client accept active proposal | `SL-AGR-EXCH-005` |
+| Final refusal | `SL-AGR-EXCH-006` |
+| Binary file download / serving | future document/file slice |
+| Document upload/storage adapter | future document/storage slice / `CC-DOC-*` family |
+| Complex employee assignment / department visibility | future visibility slice |
+| `ResponsibleEmployeeId` authorization guard | explicitly not this slice |
+| Full request details DTO merge | request/details slices or page composition, not this exchange details endpoint |
+| Client page shells/details widget runtime UI | paired client sidecar planning, implementation later |
+| Page-flow / redirect audit | separate future audit, not this pass |
+| Command button implementation | command client sidecars |
+| Runtime implementation audit | separate mode if user asks |
+| Tests / generated artifacts changes | separate implementation/archive work |
+
+Important boundary:
+
+```text
+This is a read/details slice.
+
+No agreement lifecycle transition happens here.
+No proposal is sent here.
+No accept/refuse action happens here.
+```
+
+---
+
+## 3. Related Slices / Owners
+
+```text
+SL-AGR-EXCH-001
+  Owns initial exchange creation and first Employee proposal.
+
+SL-AGR-EXCH-002
+  Owns sending later Client/Employee proposal versions.
+
+SL-AGR-EXCH-003
+  Owns shared server list endpoint/read projection.
+
+L2-AGR-EXCH-LIST-001.client
+  Owns shared client list query/model/list widget and actor page shells.
+
+SL-AGR-EXCH-004
+  Owns shared server details endpoint/read projection.
+
+L2-AGR-EXCH-DETAILS-001.client
+  Owns shared client details query/model/details widget and actor page shells as a docs draft only in this archive.
+
+SL-AGR-EXCH-005
+  Owns Client accept active proposal command.
+
+SL-AGR-EXCH-006
+  Owns Employee final refusal command and request failure orchestration.
+
+SC-14 / document slices
+  Own document storage/download behavior; this read slice returns metadata refs only.
+
+OpenAPI/generated artifact workflow
+  Owns regeneration/checks if API contract changes during implementation.
+```
+
+---
+
+## 4. Scenario Flow
+
+```text
+Client or Employee opens Agreement Exchange details page
         ↓
-System reads current role and current account id
+System resolves current role/account from session
         ↓
-System loads exchange by exchangeId
+System loads visible exchange by exchangeId
         ↓
- ┌──────────────────────────────┬──────────────────────────────┐
- │ Client session               │ Employee session             │
- ▼                              ▼
-Verify exchange.ClientAccountId Verify active Employee can view
-equals current account id        serviceable exchanges
-        ↓                              ↓
-Return exchange details:
-  status, request summary, active proposal, proposal history
+Client branch filters by ClientAccountId
         ↓
-UI shows exchange state and possible buttons by role/status
+Employee branch uses employee visibility first-pass policy
+        ↓
+System returns exchange details:
+  status, request summary, active proposal, proposal history, document refs
+        ↓
+User reads details and may use future command actions hosted elsewhere
 ```
 
 Scenario flow table:
 
-| Step | Actor/system       | Behavior                                                                        | Status |
-| ---- | ------------------ | ------------------------------------------------------------------------------- | ------ |
-| F01  | Client or Employee | Opens one agreement exchange details page.                                      | target |
-| F02  | System             | Determines current role and account id from session.                            | target |
-| F03  | System             | Loads exchange by `exchangeId`.                                                 | target |
-| F04  | System             | For Client, verifies `ClientAccountId == current account id`.                   | target |
-| F05  | System             | For Employee, verifies active Employee and first-pass visibility.               | target |
-| F06  | System             | Returns exchange status, request summary, active proposal and proposal history. | target |
-| F07  | System             | Does not perform proposal send/accept/final-refuse.                             | target |
-| F08  | UI                 | May show buttons from returned state, but server commands remain authoritative. | target |
+| Step | Actor / System layer | User-visible / system responsibility |
+|---|---|---|
+| S01 | Client or Employee | Opens one agreement exchange details page. |
+| S02 | System | Resolves current role and account id. |
+| S03 | System | Applies branch-specific visibility. |
+| S04 | System | Projects details with request summary, active proposal and history. |
+| S05 | System | Returns document refs, not binary bytes. |
+| S06 | Client/UI | Renders details and action slots owned by other sidecars. |
+
+Scenario meaning:
+
+```text
+The details read provides visibility, context and proposal history.
+It does not decide lifecycle command permissions by itself.
+It does not execute lifecycle commands.
+```
 
 ---
 
-## 6. Visual Implementation Flow
+## 5. Implementation Flow
 
 ```text
 [HTTP GET]
 GET /api/agreement-exchanges/{exchangeId}
         ↓
-[Auth boundary]
-require authenticated Client or Employee session
-        ↓
-[Session context]
-read current role and current account id from app cookie identity
+[Auth]
+Client or Employee app cookie required
         ↓
 [Route binding]
 exchangeId is positive long
         ↓
-[Query handler]
-branch by role:
-  Client -> repository.GetDetailsForClientAsync(currentAccountId, exchangeId)
-  Employee -> repository.GetDetailsForEmployeeAsync(currentAccountId, exchangeId)
+[Controller]
+read current role and account id from session
         ↓
-[Read repository / Dapper]
-Client branch:
-  query exchange details where ClientAccountId == currentAccountId
-
-Employee branch:
-  verify active Employee if supported
-  query employee-visible exchange details
+[Branch]
+Client role   -> readRepository.GetDetailsForClientAsync(clientAccountId, exchangeId)
+Employee role -> readRepository.GetDetailsForEmployeeAsync(employeeId, exchangeId)
         ↓
 [Read projection]
 load exchange, request summary, active proposal and proposal versions
         ↓
-[DTO mapping]
-project shared AgreementExchangeDetailsResponseDto
-        ↓
 [Response]
-200 OK with details
-or 401 / 403 / 404 / 500 ProblemDetails
+200 OK AgreementExchangeDetailsResponseDto
 ```
 
-Implementation flow table:
-
-| Step | Layer                      | Responsibility                                                               |
-| ---- | -------------------------- | ---------------------------------------------------------------------------- |
-| I01  | Route / Controller         | Exposes shared `GET /api/agreement-exchanges/{exchangeId}` endpoint.         |
-| I02  | Auth boundary              | Allows authenticated `Client` and `Employee` sessions only.                  |
-| I03  | Session context            | Reads current role and account id from claims.                               |
-| I04  | Route binding              | Binds `exchangeId` as positive `long`; no body/query validator first pass.   |
-| I05  | Query handler              | Branches by role and calls matching read repository method.                  |
-| I06  | Read repository — Client   | Queries details where `ClientAccountId == currentClientAccountId`.           |
-| I07  | Read repository — Employee | Verifies/uses employee visibility policy; no `ResponsibleEmployeeId` filter. |
-| I08  | Dapper projection          | Loads exchange, request summary, active proposal and proposal history.       |
-| I09  | DTO mapping                | Projects document references, not binary bytes.                              |
-| I10  | API response               | Returns `200 OK`; missing/not visible returns `404`.                         |
-
-Guardrail:
+Implementation ownership:
 
 ```text
-Implementation flow must not call domain mutation methods.
+Controller:
+  HTTP boundary, auth guard, route binding, current actor context, response mapping.
 
-Do not call:
-- ClientSendOwnVersion
-- EmployeeSendNewVersion
-- ClientAcceptActiveProposal
-- FinalRefuseProposal
-- MarkAgreementExchangeFailed
+Validator / binding:
+  route shape only first pass.
+  No body/query validator needed unless a future query is added.
 
-Details read is projection-only.
+Read repository / read service:
+  current role branch;
+  current account visibility;
+  read projection query;
+  no mutation.
+
+Projection/query:
+  filters one exchange;
+  projects request summary, active proposal and proposal history.
+
+Domain:
+  owns persisted facts used by projection.
+  No domain lifecycle method is called in this read slice.
+
+Client:
+  paired sidecar owns UI/query/details widget planning; runtime UI is not touched here.
+```
+
+Do **not** call from this slice:
+
+```text
+ClientSendOwnVersion
+EmployeeSendNewVersion
+ClientAcceptActiveProposal
+FinalRefuseProposal
+MarkAgreementExchangeFailed
 ```
 
 ---
 
-## 7. API Contract
+## 6. API Contract
 
-Endpoint:
+### Endpoint
 
 ```http
 GET /api/agreement-exchanges/{exchangeId}
 ```
 
+Auth:
+
+```csharp
+[Authorize(Roles = "Client,Employee")]
+```
+
 Route:
 
 ```text
-exchangeId: long, positive
+exchangeId: positive long
 ```
 
 Request body:
@@ -248,7 +455,7 @@ Query:
 none first pass
 ```
 
-Response:
+Response direction:
 
 ```csharp
 public sealed record AgreementExchangeDetailsResponseDto(
@@ -262,21 +469,13 @@ public sealed record AgreementExchangeDetailsResponseDto(
     string CurrentActorSide,
     DateTimeOffset CreatedAt,
     DateTimeOffset? LastActivityAt);
-```
 
-Request summary:
-
-```csharp
 public sealed record AgreementExchangeRequestSummaryDto(
     long RequestId,
     string RequestStatus,
     string? RequestDisplayName,
     string? ObjectAddress);
-```
 
-Proposal details:
-
-```csharp
 public sealed record AgreementProposalDetailsDto(
     long ProposalId,
     int Version,
@@ -286,11 +485,7 @@ public sealed record AgreementProposalDetailsDto(
     AgreementDocumentRefDto Document,
     string? Comment,
     DateTimeOffset CreatedAt);
-```
 
-Document reference:
-
-```csharp
 public sealed record AgreementDocumentRefDto(
     string StorageKey,
     string OriginalFileName,
@@ -298,328 +493,238 @@ public sealed record AgreementDocumentRefDto(
     long SizeBytes);
 ```
 
-Do **not** return `ClientAccountId` in the details response first pass. It is required for server filtering/protection, but UI should not need the raw owner id.
+Success:
 
-Optional later:
-
-```csharp
-IReadOnlyList<string> AvailableActions
+```http
+200 OK
 ```
 
-First pass can omit this.
-
----
-
-## 8. Error Responses
+Failure categories:
 
 ```text
 401 Unauthorized
   no authenticated session
 
 403 Forbidden
-  authenticated but not Client/Employee, or Employee account is not active/valid
+  unsupported role or inactive/invalid Employee if current project mapping uses forbidden
 
 404 NotFound
-  exchange does not exist or is not visible to current actor
+  exchange does not exist or is not visible to the current actor
 
-500 ServerError
-  unexpected server error
+500 InternalServerError
+  unexpected server failure
 ```
 
-Route malformed behavior follows existing ASP.NET/project convention.
-
-No FluentValidation validator is needed first pass because there is no body/query.
-
----
-
-## 9. Read Model Behavior
-
-Client branch:
+Notes:
 
 ```text
-current role = Client
-current account id = current ClientAccountId
-
-Query where:
-  exchange.Id == exchangeId
-  exchange.ClientAccountId == currentClientAccountId
-
-If no row:
-  return 404
-```
-
-Employee branch:
-
-```text
-current role = Employee
-current account id = current EmployeeId
-
-First pass:
-  verify Employee exists and is active if current infrastructure supports it.
-
-Query employee-visible exchange by exchangeId.
-
-Current visibility policy:
-  any active Employee can see/service agreement exchanges.
-
-If no row:
-  return 404
-```
-
-Common projection:
-
-```text
-- exchange id
-- request id
-- exchange status
-- active proposal version
-- request summary
-- active proposal
-- all proposal versions ordered by version
-- proposal sender per version
-- document refs
-- created at
-- last activity at
-```
-
-`LastActivityAt` first pass can be derived as:
-
-```text
-max(proposals.CreatedAt) ?? exchange.CreatedAt
+- Do not return raw ClientAccountId first pass.
+- Do not return document bytes.
+- Optional AvailableActions DTO is a future enhancement, not required for this read slice.
 ```
 
 ---
 
-## 10. Backend Implementation Notes
+## 7. Validation / ProblemDetails
 
-Do not introduce `AgreementExchangeActor`.
-
-Do not introduce application service for this read slice.
-
-Recommended shape:
-
-```csharp
-public sealed record AgreementExchangeDetailsQuery(
-    long ExchangeId,
-    long CurrentAccountId,
-    string CurrentRole)
-    : IRequest<Result<AgreementExchangeDetailsResponseDto, IReadOnlyList<Error>>>;
-```
-
-Query handler:
-
-```csharp
-public sealed class AgreementExchangeDetailsQueryHandler
-{
-    private readonly IAgreementExchangeReadRepository _repository;
-
-    public async Task<Result<AgreementExchangeDetailsResponseDto, IReadOnlyList<Error>>> Handle(
-        AgreementExchangeDetailsQuery query,
-        CancellationToken cancellationToken)
-    {
-        if (query.CurrentRole == "Client")
-        {
-            return await _repository.GetDetailsForClientAsync(
-                query.CurrentAccountId,
-                query.ExchangeId,
-                cancellationToken);
-        }
-
-        if (query.CurrentRole == "Employee")
-        {
-            return await _repository.GetDetailsForEmployeeAsync(
-                query.CurrentAccountId,
-                query.ExchangeId,
-                cancellationToken);
-        }
-
-        return Result.Failure(...);
-    }
-}
-```
-
-Read repository:
-
-```csharp
-public interface IAgreementExchangeReadRepository
-{
-    Task<AgreementExchangeDetailsResponseDto?> GetDetailsForClientAsync(
-        long clientAccountId,
-        long exchangeId,
-        CancellationToken cancellationToken);
-
-    Task<AgreementExchangeDetailsResponseDto?> GetDetailsForEmployeeAsync(
-        long employeeId,
-        long exchangeId,
-        CancellationToken cancellationToken);
-}
-```
-
-Controller direction:
-
-```csharp
-[ApiController]
-[Route("api/agreement-exchanges")]
-public sealed class AgreementExchangesController : ProjectController
-{
-    [Authorize(Roles = "Client,Employee")]
-    [HttpGet("{exchangeId:long:min(1)}", Name = "GetAgreementExchangeDetails")]
-    public async Task<IActionResult> GetDetails(
-        long exchangeId,
-        CancellationToken cancellationToken)
-    {
-        // resolve current role + account id
-        // create AgreementExchangeDetailsQuery
-        // query handler returns DTO or failure
-        // success -> 200
-        // not found/not visible -> 404
-        // other failures -> ProblemDetails
-    }
-}
-```
-
-Read implementation can use Dapper/read projection. Do not load the aggregate just to shape DTO.
-
----
-
-## 11. Repository / Query Notes
-
-The repository owns projection and role-specific filtering.
-
-Client query:
+Route/body shape validation:
 
 ```text
-WHERE e.Id = @exchangeId
-  AND e.ClientAccountId = @clientAccountId
+- `exchangeId` must be a positive long by route constraint / model binding;
+- no request body;
+- no query first pass;
+- no FluentValidation validator needed first pass unless project convention requires one for route validation.
 ```
 
-Employee query first pass:
+Domain/application/read validation:
 
 ```text
--- verify active Employee if implemented as part of query or helper check
-WHERE e.Id = @exchangeId
+- Client visibility is enforced by `ClientAccountId` filter;
+- Employee visibility follows active Employee / first-pass any-active-Employee policy;
+- missing/not-visible exchange maps to 404;
+- lifecycle/turn/active proposal validity is not validated here because this is read-only.
 ```
 
-No `ResponsibleEmployeeId` filter.
-
-Projection should load:
+Auth/visibility:
 
 ```text
-AgreementProposalExchange
-request summary fields
-active proposal
-all proposal versions ordered by Version
-document reference fields
+- no session -> 401;
+- non Client/Employee -> 403;
+- Client reading another ClientAccount exchange -> 404, not data leak;
+- Employee branch must not require ResponsibleEmployeeId first pass.
 ```
 
-For Dapper implementation, either:
+CSRF:
 
 ```text
-- one multi-result query:
-  1) exchange/request row
-  2) proposals rows
-```
-
-or:
-
-```text
-- one joined query and in-memory grouping
-```
-
-Preferred first pass: multi-result query if project already uses Dapper and it keeps mapping simple.
-
----
-
-## 12. Security / Protection
-
-Important:
-
-```text
-UI button visibility is not authorization.
-```
-
-Details endpoint protects reads:
-
-```text
-Client:
-  persisted ClientAccountId filter.
-
-Employee:
-  active Employee validation + first-pass employee visibility.
-```
-
-Command endpoints still must protect writes:
-
-```text
-- actor role;
-- ClientAccountId ownership for client actions;
-- active Employee for employee actions;
-- whose turn;
-- active proposal sender;
-- exchange lifecycle.
+not applicable; this is safe GET read endpoint.
 ```
 
 Do not put these into FluentValidation:
 
 ```text
-- ownership
-- visibility
-- active proposal sender
-- exchange status
-- actor turn
-- lifecycle
+ownership
+visibility
+active proposal sender
+exchange lifecycle
+actor turn
+command permission
 ```
 
 ---
 
-## 13. Behavior Coverage
+## 8. Domain Behavior
 
-| Behavior item                                       | How slice covers it                | Status                |
-| --------------------------------------------------- | ---------------------------------- | --------------------- |
-| Client can open own exchange details                | query filters by `ClientAccountId` | target                |
-| Client cannot open another client exchange          | same filter returns 404            | target                |
-| Employee can open visible exchange details          | employee branch query              | target                |
-| Any active Employee can service exchange first pass | no responsible employee guard      | target                |
-| Details show exchange status                        | details DTO                        | target                |
-| Details show active proposal                        | details DTO                        | target                |
-| Details show proposal history                       | details DTO                        | target                |
-| Details show document refs, not bytes               | document ref DTO                   | target                |
-| Details does not mutate exchange                    | read-only endpoint                 | target                |
-| Employee sender history is preserved                | proposal-level sender fields       | target/current domain |
+Domain facts consumed by this read slice:
+
+```text
+AgreementProposalExchange.Id
+AgreementProposalExchange.RequestId
+AgreementProposalExchange.ClientAccountId
+AgreementProposalExchange.Status
+AgreementProposalExchange.ActiveProposalVersion
+AgreementProposalExchange proposal versions
+AgreementProposal.Author.Sender
+AgreementProposal.Author.SenderId
+AgreementDocumentRef metadata reference
+```
+
+Guardrails:
+
+```text
+AgreementProposalExchange and Request are separate aggregates.
+Request approval enables exchange start but does not create the exchange automatically.
+AgreementProposalExchange owns proposal versions.
+AgreementProposal is child entity, not aggregate.
+AgreementProposalVersion is local per exchange.
+AgreementDocumentRef is metadata reference, not bytes/storage adapter.
+No `ResponsibleEmployeeId` guard first pass.
+Proposal sender identity is tracked per proposal version.
+```
+
+Read behavior:
+
+```text
+No domain mutation method is called.
+No proposal state is changed.
+No request status is changed.
+```
 
 ---
 
-## 14. Test / Verification Plan
+## 9. Cross-Cutting Concerns / Considerations
 
-Primary verification: API/read integration tests.
+| Concern | Applies? | Consideration / owner |
+|---|---:|---|
+| Auth/session/account context | yes | Resolve current Client or Employee server-side. |
+| Authorization/visibility | yes | Client by `ClientAccountId`; Employee by first-pass active Employee policy. |
+| Antiforgery / unsafe requests | no | Safe GET; command slices own CSRF. |
+| Validation / ProblemDetails | yes | Route binding, 401/403/404/500 mapping; no body/query first pass. |
+| OpenAPI / generated artifacts | yes | API contract changes require generated artifact workflow. |
+| Transaction / atomicity | no write | Read-only projection; no transaction semantics beyond read consistency. |
+| No partial write | yes | GET must not mutate request/exchange/proposals. |
+| Idempotency / double-submit | no | Read endpoint; command slices own duplicate-submit behavior. |
+| Concurrency / stale state | indirect | Details may be stale after commands; client refetch belongs to sidecars. |
+| Privacy / cross-account data exposure | yes | Client must not receive another client's exchange. |
+| File/document boundary | yes | Return refs only; no bytes/download/upload. |
+| Clock/audit actor fields | no write | Projection may display created/last activity timestamps. |
+| Client feedback / accessibility | paired sidecar | Client draft owns visible loading/error/not-found states. |
+| Redirect/page flow | out of scope | Page-flow/redirect audit is separate. |
+| Testing responsibility split | yes | API integration + projection/visibility/no-mutation assertions. |
 
-No unit tests by default unless reusable helper logic with branching is introduced.
+---
 
-API boundary:
+## 10. Questions / Decisions
+
+| ID | Status | Question | Decision / current direction | Impact |
+|---|---|---|---|---|
+| `SL-AGR-EXCH-004-Q001` | accepted | Shared Client/Employee details endpoint? | Yes, one shared endpoint first pass. | Shared server read model and shared client details query. |
+| `SL-AGR-EXCH-004-Q002` | accepted | Does details include full proposal history? | Yes. Details owns history; list stays summary-only. | Response includes proposal versions ordered by version. |
+| `SL-AGR-EXCH-004-Q003` | accepted | Does details return file bytes? | No. Return `AgreementDocumentRef` metadata only. | File download/storage stays future document slice. |
+| `SL-AGR-EXCH-004-Q004` | accepted | How does Client access work? | Filter by `AgreementProposalExchange.ClientAccountId == currentClientAccountId`. | Prevents cross-account exposure. |
+| `SL-AGR-EXCH-004-Q005` | accepted | How does Employee access work first pass? | Any active Employee can see/service exchanges. | No `ResponsibleEmployeeId` filter. |
+| `SL-AGR-EXCH-004-Q006` | accepted | Should details expose raw `ClientAccountId`? | No first pass. It is server protection state, not UI data. | Avoid leaking owner ids. |
+| `SL-AGR-EXCH-004-Q007` | accepted | Does details execute commands or determine command permission? | No. Commands enforce their own auth/lifecycle. | UI action slots are not security. |
+| `SL-AGR-EXCH-004-Q008` | accepted | Should details merge full request details DTO? | No. Return compact request summary only. | Rich request details remain request read slices/page composition. |
+| `SL-AGR-EXCH-004-Q009` | accepted | Use `AgreementExchangeActor` abstraction? | No first pass. Use current role/current account id and explicit branch methods. | Keeps implementation direct. |
+| `SL-AGR-EXCH-004-Q010` | accepted | Use application command service for read? | No. Query/read repository projection is enough. | No lifecycle orchestration here. |
+| `SL-AGR-EXCH-004-Q011` | accepted | What status for missing/not-visible exchange? | 404 not found/not visible. | Avoid visibility leaks. |
+| `SL-AGR-EXCH-004-Q012` | accepted | Is page-flow/redirect behavior part of this pass? | No. Separate future audit. | Archive remains docs-only planning refactor. |
+
+Original draft had no stable question IDs; IDs above are new for the preserved decisions and must not be reused for different meanings later.
+
+---
+
+## 11. Extension / Change Points
+
+| Extension point | Owner / destination | Notes |
+|---|---|---|
+| Available actions DTO | future details/read enhancement or action policy slice | Optional; command endpoints remain authoritative. |
+| File download links | future document/file slice | Details currently returns metadata refs only. |
+| Employee assignment/department visibility | future visibility slice | Do not add ResponsibleEmployeeId first pass. |
+| Rich request details composition | page/client read composition | Do not merge into exchange details DTO by default. |
+| Pagination/history window | future if proposal history grows | Current details returns full history. |
+| Audit trail display | future read extension | Proposal sender/time already available. |
+
+---
+
+## 12. Behavior Coverage
+
+| Source / draft behavior | Status | Covered by this slice |
+|---|---|---|
+| Client can open own exchange details | covered | query filters by `ClientAccountId`. |
+| Client cannot open another client's exchange | covered | same filter returns not-found/not-visible. |
+| Employee can open employee-visible exchange details | covered | employee branch read. |
+| Any active Employee can service exchange first pass | covered | no ResponsibleEmployeeId guard. |
+| Details show exchange status | covered | details DTO. |
+| Details show request summary | covered | compact request summary DTO. |
+| Details show active proposal | covered | active proposal fields. |
+| Details show full proposal history | covered | proposal list ordered by version. |
+| Details show proposal sender/senderId | covered | proposal-level author projection. |
+| Details show document refs, not bytes | covered | document metadata DTO only. |
+| Details does not mutate exchange/request/proposals | covered | safe GET/read projection. |
+| List summary | out of scope | `SL-AGR-EXCH-003`. |
+| Commands | out of scope | command slices. |
+| Runtime UI / page-flow / redirects | out of scope | future UI/page-flow audit. |
+
+---
+
+## 13. Test / Verification Plan
+
+Primary rule:
 
 ```text
-- unauthenticated details -> 401;
-- authenticated non Client/Employee -> 403 if such test setup exists;
-- missing exchange -> 404.
+Tests verify behavior items and server/system outcomes.
+Implementation details are only setup/action/observation mechanisms.
 ```
 
-Client access:
+### Behavior-to-Test Trace
+
+| Behavior item / behavior | Server/system outcome | Test layer | Implementation mechanism | Escape risk | Refactor risk | Planned/actual test |
+|---|---|---|---|---|---|---|
+| Client opens own exchange details | 200 response for exchange owned by current ClientAccountId | API integration + DB fixture | client auth fixture, seeded exchange, HTTP GET | Low if DTO fields and id asserted | Low/Medium: projection helper changes may require fixture updates | `GetAgreementExchangeDetails_ClientOwnExchange_ReturnsDetails` |
+| Client cannot open another client's exchange | returns 404 and no other client's details leak | API integration | two client fixtures, HTTP GET by non-owner | Low if response body does not include foreign id/data | Low | `GetAgreementExchangeDetails_ClientOtherExchange_ReturnsNotFound` |
+| Employee opens visible exchange details | active Employee receives details | API integration | employee auth fixture, seeded exchange, HTTP GET | Medium if employee visibility policy later changes | Low/Medium | `GetAgreementExchangeDetails_EmployeeVisibleExchange_ReturnsDetails` |
+| No ResponsibleEmployeeId guard | Employee not tied to proposal sender can still read first pass | API integration | seed exchange with proposal sender employee A, auth employee B, HTTP GET | Low if employee B receives details by policy | Medium if future visibility changes intentionally | `GetAgreementExchangeDetails_EmployeeNotSender_CanReadFirstPass` |
+| Missing exchange | missing id returns 404 | API integration | HTTP GET unknown id | Low | Low | `GetAgreementExchangeDetails_MissingExchange_ReturnsNotFound` |
+| Details include request summary | response has compact request context | API integration/projection assertion | seeded request/exchange, HTTP GET | Low if summary fields asserted | Low/Medium | covered by success details test |
+| Details include active proposal | response has active proposal version/sender/document ref | API integration/projection assertion | seeded proposal history, HTTP GET | Low | Low/Medium | `GetAgreementExchangeDetails_ReturnsActiveProposal` |
+| Details include full proposal history | response includes all proposal versions ordered by version | API integration/projection assertion | seeded v1/v2/v3, HTTP GET | Low if order and count asserted | Low/Medium | `GetAgreementExchangeDetails_ReturnsProposalHistoryInVersionOrder` |
+| Document refs only | response includes metadata and no binary bytes | API/contract test | HTTP GET and response shape assertion | Low for API shape if bytes field absence checked | Low | `GetAgreementExchangeDetails_ReturnsDocumentRefsOnly` |
+| GET does not mutate | exchange/request/proposal state unchanged after details read | API integration + DB snapshot | DB snapshot before/after HTTP GET | Medium if snapshot too narrow | Low/Medium | `GetAgreementExchangeDetails_DoesNotMutateState` |
+| Unauthenticated access | unauthenticated caller cannot read details | API integration | HTTP GET without auth | Low | Low | `GetAgreementExchangeDetails_Unauthenticated_ReturnsUnauthorized` |
+
+### API boundary / access
 
 ```text
-- Client gets own exchange details -> 200;
-- Client cannot get another client exchange details -> 404;
-- response includes only expected exchange data.
+- unauthenticated details returns 401;
+- unsupported role returns 403 if test fixture supports it;
+- Client can read own exchange;
+- Client cannot read another client's exchange;
+- Employee can read employee-visible exchange first pass.
 ```
 
-Employee access:
-
-```text
-- active Employee gets exchange details -> 200;
-- inactive Employee cannot get details -> 403 or existing project failure mapping;
-- no ResponsibleEmployeeId filter is required.
-```
-
-Projection:
+### Projection
 
 ```text
 - response includes exchangeStatus;
@@ -627,141 +732,169 @@ Projection:
 - response includes activeProposal;
 - response includes all proposal versions ordered by Version;
 - response includes proposal sender/senderId;
-- response includes document refs;
-- response does not include binary bytes.
+- response includes document refs only;
+- response does not include binary bytes or raw ClientAccountId first pass.
 ```
 
-No-mutation safety:
+### No-write tests
 
 ```text
 - GET details does not change exchange status;
 - GET details does not create proposals;
-- GET details does not supersede/accept/refuse proposals.
+- GET details does not supersede/accept/refuse proposals;
+- GET details does not change related request status.
 ```
 
-Generated artifacts:
+### Generated artifacts
 
 ```text
-- run OpenAPI generation;
-- run API type generation;
+- run OpenAPI generation if API contract changed;
+- run API type generation if OpenAPI changed;
 - stage generated artifacts;
 - run check:api.
 ```
 
+### What not to test here
+
+```text
+- proposal send/accept/final-refuse behavior;
+- file download bytes;
+- client widget layout;
+- redirect/page flow;
+- repository mock call-order as primary proof.
+```
+
 ---
 
-## 15. OpenAPI / Generated Artifacts
+## 14. Implementation Direction / Current Refactor Checklist
 
-Expected OpenAPI addition:
+This checklist is for a future implementation verification pass. It is not a claim that implementation was checked now.
+
+```text
+[ ] Confirm endpoint is present or mark implementation drift.
+[ ] Confirm route is GET /api/agreement-exchanges/{exchangeId} or update draft/source if actual route differs.
+[ ] Confirm auth accepts Client and Employee.
+[ ] Confirm request body is none.
+[ ] Confirm response is 200 OK with AgreementExchangeDetailsResponseDto.
+[ ] Confirm Client branch filters by ClientAccountId.
+[ ] Confirm Client cannot read another client's exchange.
+[ ] Confirm Employee branch does not require ResponsibleEmployeeId.
+[ ] Confirm active Employee policy is explicit if implemented.
+[ ] Confirm request summary is projected.
+[ ] Confirm active proposal is projected.
+[ ] Confirm full proposal history is projected and ordered by version.
+[ ] Confirm proposal sender and sender id are projected.
+[ ] Confirm document refs are projected without binary bytes.
+[ ] Confirm raw ClientAccountId is not returned first pass unless source decision changes.
+[ ] Confirm no lifecycle mutation happens in read endpoint.
+[ ] Confirm no AgreementExchangeActor abstraction is introduced in target direction.
+[ ] Confirm focused API integration tests with visibility/projection/no-mutation assertions exist.
+[ ] Confirm OpenAPI/type generation is current if contract changed.
+```
+
+This pass did not perform implementation verification.
+
+---
+
+## 15. Historical Client Notes / Future Client Sidecar
+
+Paired client draft in this archive:
+
+```text
+planning/slices/l2/L2-AGR-EXCH-DETAILS-001-agreement-exchange-details.client.md
+```
+
+Future/client sidecar owns planning for:
+
+```text
+- shared entity API wrapper;
+- shared details query/model;
+- shared details widget;
+- Client and Employee page shells;
+- visible loading/error/not-found/success states;
+- actor-specific back links and copy;
+- optional action slots for command sidecars;
+- component/entity/E2E test planning.
+```
+
+This server draft does not implement runtime client UI.
+
+Deep UI redesign, page-flow and redirect audit are explicitly out of scope for this docs-only archive.
+
+---
+
+## 16. OpenAPI / Generated Artifacts
+
+Expected OpenAPI addition/confirmation:
 
 ```text
 GET /api/agreement-exchanges/{exchangeId}
-
-200 AgreementExchangeDetailsResponseDto
-401
-403
-404
-500
+responses:
+  200 AgreementExchangeDetailsResponseDto
+  401
+  403
+  404
+  500
 ```
 
-Generation workflow:
+Generated artifacts must be updated through repo commands only during implementation work:
 
 ```powershell
-npm.cmd run generate:openapi
-npm.cmd run generate:api-types
-
-git add .\Shared\openapi.json .\energymanagement.client\src\shared\api\generated\openapi-types.ts
-
+dotnet run --project .\EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json
+npm.cmd --prefix energymanagement.client run generate:api-types
 npm.cmd run check:api
 ```
 
-Generated artifacts must come from repo commands, not manual edits.
+This docs-only archive does not change generated artifacts.
 
 ---
 
-## 16. Implementation Checklist
+## 17. Dependent / Follow-up Slices
 
 ```text
-[ ] ensure AgreementProposalExchange has ClientAccountId
-[ ] do not add ResponsibleEmployeeId as authorization guard
-[ ] add AgreementExchangeDetailsResponseDto
-[ ] add AgreementExchangeRequestSummaryDto
-[ ] add AgreementProposalDetailsDto
-[ ] add AgreementDocumentRefDto or reuse existing compatible DTO
-[ ] add shared details endpoint
-[ ] add AgreementExchangeDetailsQuery
-[ ] add AgreementExchangeDetailsQueryHandler
-[ ] add IAgreementExchangeReadRepository
-[ ] add GetDetailsForClientAsync
-[ ] add GetDetailsForEmployeeAsync
-[ ] add client branch query by ClientAccountId
-[ ] add employee branch query by first-pass visibility policy
-[ ] include request summary
-[ ] include active proposal
-[ ] include proposal history ordered by version
-[ ] include document refs only, not file bytes
-[ ] return 200 with details
-[ ] return 404 for missing/not-visible exchange
-[ ] add integration tests for client ownership filtering
-[ ] add integration tests for employee visibility
-[ ] add projection integration tests
-[ ] add no-mutation smoke if cheap
-[ ] regenerate OpenAPI/types
-[ ] do not send proposal here
-[ ] do not accept proposal here
-[ ] do not final-refuse here
+SL-AGR-EXCH-001 — Start Agreement Exchange With Initial Employee Proposal
+SL-AGR-EXCH-002 — Send Agreement Counter-Proposal Version
+SL-AGR-EXCH-003 — Agreement Exchange List Page / Read List
+SL-AGR-EXCH-005 — Client Accept Active Agreement Proposal
+SL-AGR-EXCH-006 — Final Refuse Agreement Exchange
+```
+
+Separate later work:
+
+```text
+- implementation verification pass;
+- page flow / redirects audit;
+- runtime UI refactoring workflow;
+- source registry/behavior item ID sync;
+- document/file download/storage slice.
+```
+
+Next draft-only refactor candidate:
+
+```text
+user-selected next slice from current archive/order.
 ```
 
 ---
 
-## 17. Guardrail Summary
+## 18. Guardrail Summary
 
 ```text
 This is a read/details slice.
-
 Use shared endpoint first pass.
-
-Use query handler + read repository / Dapper projection.
-
-Do not introduce application service for this read slice.
-
-Do not introduce AgreementExchangeActor abstraction.
-
 Use current role/current account id from session.
-
 Client access must filter by AgreementProposalExchange.ClientAccountId.
-
 Employee access first pass allows any active Employee.
-
 Do not add ResponsibleEmployeeId as exchange authorization guard.
-
-Employee sender identity is tracked per proposal version.
-
+Do not introduce AgreementExchangeActor abstraction in this draft.
+Do not introduce application command service for this read slice.
 Details includes full proposal history.
-
 List remains summary-only.
-
-Document bytes are not returned here.
-
-Request details and exchange reads remain separate.
-
-UI buttons are not security.
-
-Server commands still enforce domain lifecycle and participant rules.
+Document refs are metadata only; no bytes/download/upload here.
+Do not return raw ClientAccountId first pass unless source decision changes.
+Request details and exchange details remain separate reads.
+UI buttons/action slots are not security.
+Server command slices still enforce lifecycle and participant rules.
+No proposal send/accept/final-refuse occurs here.
+No runtime implementation, tests, generated artifacts or UI/page-flow code were touched in this pass.
 ```
-
-## Готовность к имплементации
-
-Draft готов к имплементации при трёх подтверждениях:
-
-```text
-1. Route family confirmed:
-   GET /api/agreement-exchanges/{exchangeId}
-
-2. AgreementProposalExchange.ClientAccountId exists or is added before/details with migration/test DB update.
-
-3. Persistence has enough data:
-   exchange, request summary, active proposal, proposal versions, document refs.
-```
-
-Единственный docs-риск: numbering conflict с уже существующими `SL-AGR-EXCH-004/005` в GitHub. Это надо синхронизировать в planning, чтобы details не конфликтовал с accept/final-refuse.
