@@ -18,6 +18,7 @@ export const EmployeeRequestDetailsView = ({
   details,
   renderApplicantVerification,
   renderReviewActions,
+  renderAgreementExchangeActions,
 }: EmployeeRequestDetailsViewProps) => {
   const title = `${employeeRequestDetailsConst.requestTitlePrefix} #${details.requestId}`;
 
