@@ -7,12 +7,10 @@ import {
 } from "./formatAgreementExchangeDetails";
 
 type AgreementProposalHistoryProps = {
-  exchangeId: number;
   proposals: AgreementProposalDetails[];
 };
 
 export const AgreementProposalHistory = ({
-  exchangeId,
   proposals,
 }: AgreementProposalHistoryProps) => (
   <section
@@ -46,11 +44,7 @@ export const AgreementProposalHistory = ({
                 </div>
               </dl>
               {proposal.comment && <p>{proposal.comment}</p>}
-              <AgreementDocumentRefList
-                exchangeId={exchangeId}
-                proposalId={proposal.proposalId}
-                document={proposal.document}
-              />
+              <AgreementDocumentRefList document={proposal.document} />
             </article>
           </li>
         ))}

@@ -20,7 +20,6 @@ public sealed class AgreementExchangesController : ProjectController
     private readonly ISender _sender;
     private readonly IAgreementExchangeReadService _readService;
     private readonly IAgreementExchangeApplicationService _applicationService;
-    private readonly IDocumentStorage _documentStorage;
     private readonly IValidator<AgreementExchangeListQueryDto> _listQueryValidator;
     private readonly IValidator<SendAgreementProposalVersionDto> _sendProposalValidator;
     private readonly IValidator<StartAgreementExchangeDto> _startExchangeValidator;
@@ -31,7 +30,6 @@ public sealed class AgreementExchangesController : ProjectController
         ISender sender,
         IAgreementExchangeReadService readService,
         IAgreementExchangeApplicationService applicationService,
-        IDocumentStorage documentStorage,
         IValidator<AgreementExchangeListQueryDto> listQueryValidator,
         IValidator<SendAgreementProposalVersionDto> sendProposalValidator,
         IValidator<StartAgreementExchangeDto> startExchangeValidator,
@@ -41,7 +39,6 @@ public sealed class AgreementExchangesController : ProjectController
         _sender = sender;
         _readService = readService;
         _applicationService = applicationService;
-        _documentStorage = documentStorage;
         _listQueryValidator = listQueryValidator;
         _sendProposalValidator = sendProposalValidator;
         _startExchangeValidator = startExchangeValidator;
@@ -163,99 +160,6 @@ public sealed class AgreementExchangesController : ProjectController
         catch (Exception ex)
         {
             _logger.LogError(ex, "Agreement exchange details failed for exchange {ExchangeId}.", exchangeId);
-            return ProblemDetailsWithExceptionDev(ex);
-        }
-    }
-
-
-    [Authorize(Roles = "Client,Employee")]
-    [HttpGet("{exchangeId:long:min(1)}/proposals/{proposalId:long:min(1)}/document/download", Name = "DownloadAgreementProposalDocument")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> DownloadProposalDocument(
-        long exchangeId,
-        long proposalId,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            if (!TryGetCurrentL1AccountId(out var accountId))
-            {
-                return Unauthorized();
-            }
-
-            var role = User.FindFirstValue(ClaimTypes.Role);
-            if (role is not "Client" and not "Employee")
-            {
-                return Forbid();
-            }
-
-            var result = await _sender.Send(
-                new AgreementExchangeDetailsQuery(accountId, role, exchangeId),
-                cancellationToken);
-
-            if (result.IsFailure)
-            {
-                return ProblemDetailsFromValidation(result.Error);
-            }
-
-            var details = result.Value.Details;
-            if (details is null)
-            {
-                return NotFound();
-            }
-
-            var proposal = details.Proposals.FirstOrDefault(x => x.ProposalId == proposalId);
-            proposal ??= details.ActiveProposal.ProposalId == proposalId
-                ? details.ActiveProposal
-                : null;
-
-            if (proposal is null)
-            {
-                return NotFound();
-            }
-
-            var document = proposal.Document;
-            Stream stream;
-            try
-            {
-                stream = await _documentStorage.OpenReadAsync(
-                    document.StorageKey,
-                    cancellationToken);
-            }
-            catch (FileNotFoundException)
-            {
-                return NotFound();
-            }
-            catch (DirectoryNotFoundException)
-            {
-                return NotFound();
-            }
-
-            var contentType = string.IsNullOrWhiteSpace(document.ContentType)
-                ? "application/octet-stream"
-                : document.ContentType;
-            var fileName = string.IsNullOrWhiteSpace(document.OriginalFileName)
-                ? $"agreement-proposal-{proposal.ProposalId}"
-                : document.OriginalFileName;
-
-            return File(
-                stream,
-                contentType,
-                fileName,
-                enableRangeProcessing: true);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(
-                ex,
-                "Agreement proposal document download failed for exchange {ExchangeId}, proposal {ProposalId}.",
-                exchangeId,
-                proposalId);
             return ProblemDetailsWithExceptionDev(ex);
         }
     }

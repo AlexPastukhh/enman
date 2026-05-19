@@ -5,8 +5,6 @@ export const agreementExchangeDetailsConst = {
   activeProposalTitle: "Active proposal",
   proposalHistoryTitle: "Proposal history",
   documentTitle: "Document",
-  downloadDocumentLinkText: "Download document",
-  unknownDocumentFileName: "agreement document",
   noActiveProposalText: "No active proposal is available.",
   noProposalHistoryText: "No proposal versions are available.",
   actionsRegionTitle: "Available exchange actions",

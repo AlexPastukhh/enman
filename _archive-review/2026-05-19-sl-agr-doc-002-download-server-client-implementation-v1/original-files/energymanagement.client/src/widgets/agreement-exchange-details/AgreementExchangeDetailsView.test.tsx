@@ -64,14 +64,6 @@ describe("AgreementExchangeDetailsView", () => {
     expect(screen.getByRole("heading", { name: "Version 2 from Employee" })).toBeVisible();
     expect(screen.getByText("Employee #5")).toBeVisible();
     expect(screen.getByText("agreement-v2.pdf (application/pdf, 2.0 KB)")).toBeVisible();
-    const downloadLink = screen.getByRole("link", {
-      name: "Download document: agreement-v2.pdf",
-    });
-    expect(downloadLink).toHaveAttribute(
-      "href",
-      "/api/agreement-exchanges/20/proposals/200/document/download",
-    );
-    expect(downloadLink).toHaveAttribute("download", "agreement-v2.pdf");
     expect(screen.getByRole("heading", { name: "Proposal history" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Version 1 from Client" })).toBeVisible();
   });

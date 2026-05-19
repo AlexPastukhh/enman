@@ -25,14 +25,8 @@ export const AgreementExchangeDetailsView = ({
     <div className="agreementExchangeDetails">
       <AgreementExchangeStatusPanel details={details} />
       <AgreementExchangeRequestSummary request={details.request} />
-      <AgreementActiveProposalPanel
-        exchangeId={details.exchangeId}
-        proposal={details.activeProposal}
-      />
-      <AgreementProposalHistory
-        exchangeId={details.exchangeId}
-        proposals={details.proposals ?? []}
-      />
+      <AgreementActiveProposalPanel proposal={details.activeProposal} />
+      <AgreementProposalHistory proposals={details.proposals ?? []} />
       {actions && (
         <section
           className="agreementExchangeDetails__panel"

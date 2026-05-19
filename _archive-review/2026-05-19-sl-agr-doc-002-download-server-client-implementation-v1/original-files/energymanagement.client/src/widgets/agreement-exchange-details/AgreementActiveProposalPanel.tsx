@@ -7,12 +7,10 @@ import {
 } from "./formatAgreementExchangeDetails";
 
 type AgreementActiveProposalPanelProps = {
-  exchangeId: number;
   proposal?: AgreementProposalDetails | null;
 };
 
 export const AgreementActiveProposalPanel = ({
-  exchangeId,
   proposal,
 }: AgreementActiveProposalPanelProps) => (
   <section
@@ -41,11 +39,7 @@ export const AgreementActiveProposalPanel = ({
           </div>
         </dl>
         {proposal.comment && <p>{proposal.comment}</p>}
-        <AgreementDocumentRefList
-          exchangeId={exchangeId}
-          proposalId={proposal.proposalId}
-          document={proposal.document}
-        />
+        <AgreementDocumentRefList document={proposal.document} />
       </article>
     )}
   </section>

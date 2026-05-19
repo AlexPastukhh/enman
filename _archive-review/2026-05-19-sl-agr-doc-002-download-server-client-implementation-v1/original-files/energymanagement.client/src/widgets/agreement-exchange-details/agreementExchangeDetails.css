@@ -45,10 +45,3 @@
 .agreementExchangeDetails__document h4 {
   margin-bottom: 0.35rem;
 }
-
-.agreementExchangeDetails__documentDownloadLink {
-  display: inline-flex;
-  width: fit-content;
-  margin-top: 0.5rem;
-  font-weight: 700;
-}
