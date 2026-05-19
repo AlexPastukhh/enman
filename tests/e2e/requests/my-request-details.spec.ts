@@ -6,6 +6,7 @@ import {
   registerAndLoginClient,
 } from "../support/clientSetup";
 import { waitForApiResponse } from "../support/apiResponse";
+import { L } from "../support/locators";
 
 const objectAddressText = "658480, Алтайский край, Заринск, Ленина, 10";
 
@@ -35,7 +36,7 @@ test("user sees own request details", async ({ page, request }) => {
   await expect(
     page.getByRole("heading", { name: `Заявка #${requestId}` }),
   ).toBeVisible();
-  await expect(page.getByText("InReview", { exact: true })).toBeVisible();
+  await expect(page.getByText(L.status.inReview, { exact: true })).toBeVisible();
   await expect(
     page.getByText("Подключение объекта к электрическим сетям"),
   ).toBeVisible();

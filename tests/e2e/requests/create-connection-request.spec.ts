@@ -4,6 +4,7 @@ import {
   postWithCsrf,
   registerAndLoginClient,
 } from "../support/clientSetup";
+import { L } from "../support/locators";
 
 const validAddress = {
   postalCode: "658480",
@@ -58,7 +59,7 @@ async function openCreateRequestPage(page: Page) {
   const applicantPartiesResponse = await applicantPartiesResponsePromise;
   expect(applicantPartiesResponse.ok()).toBeTruthy();
   await expect(
-    page.getByRole("heading", { name: "Create connection request" }),
+    page.getByRole("heading", { name: L.headings.createRequest, level: 2 }),
   ).toBeVisible();
 }
 
@@ -85,7 +86,7 @@ async function submitAndExpectMyRequestsHandoff(page: Page) {
     "/api/requests",
   );
 
-  await page.getByRole("button", { name: "Create request" }).click();
+  await page.getByRole("button", { name: L.buttons.createRequest }).click();
 
   const createResponse = await createResponsePromise;
   expect(createResponse.ok()).toBeTruthy();
@@ -93,7 +94,7 @@ async function submitAndExpectMyRequestsHandoff(page: Page) {
   expect(myRequestsResponse.ok()).toBeTruthy();
 
   await expect(page).toHaveURL(/\/requests$/);
-  await expect(page.getByText("InReview", { exact: true })).toBeVisible();
+  await expect(page.getByText(L.status.inReview, { exact: true }).nth(1)).toBeVisible();
   await expect(
     page.getByText("Подключение объекта к электрическим сетям"),
   ).toBeVisible();

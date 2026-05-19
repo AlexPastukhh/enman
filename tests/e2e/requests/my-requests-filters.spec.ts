@@ -5,6 +5,7 @@ import {
   registerAndLoginClient,
 } from "../support/clientSetup";
 import { waitForApiResponse } from "../support/apiResponse";
+import { L } from "../support/locators";
 
 test("user filters My Requests by status", async ({ page, request }) => {
   const { email } = await registerAndLoginClient(
@@ -30,7 +31,7 @@ test("user filters My Requests by status", async ({ page, request }) => {
   expect(filteredResponse.ok()).toBeTruthy();
 
   await expect(page).toHaveURL(/\/requests\?status=InReview/);
-  await expect(page.getByText("InReview", { exact: true })).toBeVisible();
+  await expect(page.getByText(L.status.inReview, { exact: true })).toBeVisible();
 
   const unfilteredResponsePromise = waitForApiResponse(
     page,

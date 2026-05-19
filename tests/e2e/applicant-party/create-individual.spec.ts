@@ -3,6 +3,7 @@ import { LoginPage } from "../pages/LoginPage";
 import { waitForApiResponse } from "../support/apiResponse";
 import { postWithCsrf } from "../support/clientSetup";
 import { uniqueEmail, validPassword } from "../support/testData";
+import { L } from "../support/locators";
 
 test("user creates individual applicant party through real client-server flow", async ({
   page,
@@ -46,7 +47,7 @@ test("user creates individual applicant party through real client-server flow", 
   const initialApplicantPartiesResponse = await initialApplicantPartiesPromise;
   expect(initialApplicantPartiesResponse.ok()).toBeTruthy();
 
-  await expect(page.getByText("No saved Applicant Parties yet.")).toBeVisible();
+  await expect(page.getByText(L.applicantParties.noSaved)).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "Applicant data", exact: true }),
   ).toBeVisible();
@@ -79,7 +80,7 @@ test("user creates individual applicant party through real client-server flow", 
   await expect(page.getByText("Ivanovich", { exact: true })).toBeVisible();
   await expect(page.getByText("Ivanov", { exact: true })).toBeVisible();
   await expect(page.getByText("Unverified", { exact: true })).toBeVisible();
-  await expect(page.getByText("Current/default", { exact: true })).toBeVisible();
+  await expect(page.getByText(L.applicantParties.currentDefaultRegion, { exact: true })).toBeVisible();
 
   const applicantPartiesAfterReloadPromise = waitForApiResponse(
     page,

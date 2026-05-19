@@ -4,6 +4,7 @@ import {
   registerAndLoginClient,
 } from "../support/clientSetup";
 import { waitForApiResponse } from "../support/apiResponse";
+import { L } from "../support/locators";
 
 async function createIndividualApplicantParty(
   page: Page,
@@ -69,10 +70,10 @@ test("user sees current default and other saved Applicant Parties", async ({
   expect(applicantPartiesResponse.ok()).toBeTruthy();
 
   const currentDefaults = page.getByRole("region", {
-    name: "Current/default templates",
+    name: L.applicantParties.currentDefaultRegion,
   });
   const otherSaved = page.getByRole("region", {
-    name: "Other saved Applicant Parties",
+    name: L.applicantParties.otherSavedRegion,
   });
 
   const currentDefaultCard = currentDefaults.locator("article").filter({
@@ -85,12 +86,16 @@ const otherSavedCard = otherSaved.locator("article").filter({
 
 await expect(currentDefaultCard).toBeVisible();
 await expect(
-  currentDefaultCard.getByText("Current/default", { exact: true }),
+  currentDefaultCard.getByText(L.applicantParties.currentDefaultBadge, {
+    exact: true,
+  }),
 ).toBeVisible();
 
 await expect(otherSavedCard).toBeVisible();
 await expect(
-  otherSavedCard.getByText("Current/default", { exact: true }),
+  otherSavedCard.getByText(L.applicantParties.currentDefaultBadge, {
+    exact: true,
+  }),
 ).toHaveCount(0);
 });
 
@@ -106,6 +111,6 @@ test("user sees empty Applicant Parties read state", async ({ page, request }) =
   const applicantPartiesResponse = await applicantPartiesResponsePromise;
   expect(applicantPartiesResponse.ok()).toBeTruthy();
 
-  await expect(page.getByText("No saved Applicant Parties yet.")).toBeVisible();
+  await expect(page.getByText(L.applicantParties.noSaved)).toBeVisible();
   await expect(page.getByText("Applicant Party #")).not.toBeVisible();
 });

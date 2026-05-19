@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 import { LoginPage } from "../pages/LoginPage";
 import { waitForApiResponse } from "../support/apiResponse";
 import { demoCredentials, demoText, seedE2eDemoData } from "../support/demoSeed";
+import { L } from "../support/locators";
 
 test.beforeEach(() => {
   seedE2eDemoData();
@@ -29,7 +30,7 @@ test("employee reviews and approves a seeded request", async ({ page }) => {
   expect(dashboardResponse.ok()).toBeTruthy();
 
   await expect(
-    page.getByRole("heading", { name: "Employee Request Dashboard" }),
+    page.getByRole("heading", { name: L.headings.employeeDashboard, level: 2 }),
   ).toBeVisible();
   await expect(page.getByText(demoText.reviewRequestDetails)).toBeVisible();
 
@@ -43,7 +44,7 @@ test("employee reviews and approves a seeded request", async ({ page }) => {
   expect(detailsResponse.ok()).toBeTruthy();
 
   await expect(
-    page.getByRole("heading", { name: "Employee Request Details" }),
+    page.getByRole("heading", { name: L.headings.employeeRequestDetails, level: 2 }),
   ).toBeVisible();
   await expect(page.getByText(demoText.reviewRequestDetails)).toBeVisible();
 

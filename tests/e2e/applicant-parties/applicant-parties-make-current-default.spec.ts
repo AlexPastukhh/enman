@@ -4,6 +4,7 @@ import {
   postWithCsrf,
   registerAndLoginClient,
 } from "../support/clientSetup";
+import { L } from "../support/locators";
 
 async function createIndividualApplicantParty(
   page: Page,
@@ -93,10 +94,10 @@ test("user makes another saved Applicant Party current/default", async ({
   expect((await applicantPartiesResponsePromise).ok()).toBeTruthy();
 
   const currentDefaults = page.getByRole("region", {
-    name: "Current/default templates",
+    name: L.applicantParties.currentDefaultRegion,
   });
   const otherSaved = page.getByRole("region", {
-    name: "Other saved Applicant Parties",
+    name: L.applicantParties.otherSavedRegion,
   });
 
   await expect(
@@ -111,7 +112,9 @@ test("user makes another saved Applicant Party current/default", async ({
     "POST",
     `/api/applicant-parties/${nonDefaultApplicantPartyId}/make-current-default`,
   );
-  await petrCard.getByRole("button", { name: "Make current/default" }).click();
+  await petrCard
+    .getByRole("button", { name: /Сделать текущим|Make current\/default/i })
+    .click();
   expect((await makeCurrentDefaultResponsePromise).ok()).toBeTruthy();
 
   await expect(

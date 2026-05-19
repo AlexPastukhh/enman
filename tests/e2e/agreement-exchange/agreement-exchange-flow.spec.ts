@@ -3,6 +3,7 @@ import path from "node:path";
 import { LoginPage } from "../pages/LoginPage";
 import { waitForApiResponse } from "../support/apiResponse";
 import { demoCredentials, demoText, seedE2eDemoData } from "../support/demoSeed";
+import { L } from "../support/locators";
 
 const fixtureDocumentPath = path.join(
   process.cwd(),
@@ -40,12 +41,12 @@ test("employee starts exchange and client sends counter-proposal with document d
 
   await expect(page.getByText(demoText.agreementRequestDetails)).toBeVisible();
 
-  await page
-    .getByLabel("Initial proposal document")
-    .setInputFiles(fixtureDocumentPath);
-  await page
-    .getByLabel("Initial proposal comment")
-    .fill("Initial E2E agreement proposal.");
+  await page.getByLabel(L.agreementExchange.initialDocumentLabel).setInputFiles(
+    fixtureDocumentPath,
+  );
+  await page.getByLabel(L.agreementExchange.commentLabel).fill(
+    "Initial E2E agreement proposal.",
+  );
 
   const startExchangeResponsePromise = waitForApiResponse(
     page,
