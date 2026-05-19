@@ -6,9 +6,9 @@ namespace EnergyManagement.Server.Persistence.Repositories;
 
 public sealed class AgreementProposalExchangeRepository : IAgreementProposalExchangeRepository
 {
-    private readonly L1DbContext _context;
+    private readonly EnergyManagementDbContext _context;
 
-    public AgreementProposalExchangeRepository(L1DbContext context)
+    public AgreementProposalExchangeRepository(EnergyManagementDbContext context)
     {
         _context = context;
     }

@@ -12,14 +12,14 @@ public sealed class RunApplicantPartyVerificationFromRequestHandler
     private readonly IClientRequestRepository _clientRequests;
     private readonly IApplicantPartyRepository _applicantParties;
     private readonly IApplicantPartyMockVerificationService _mockVerificationService;
-    private readonly L1DbContext _context;
+    private readonly EnergyManagementDbContext _context;
 
     public RunApplicantPartyVerificationFromRequestHandler(
         IEmployeeRepository employees,
         IClientRequestRepository clientRequests,
         IApplicantPartyRepository applicantParties,
         IApplicantPartyMockVerificationService mockVerificationService,
-        L1DbContext context)
+        EnergyManagementDbContext context)
     {
         _employees = employees;
         _clientRequests = clientRequests;

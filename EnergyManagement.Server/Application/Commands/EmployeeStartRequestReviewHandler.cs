@@ -9,12 +9,12 @@ public sealed class EmployeeStartRequestReviewHandler
 {
     private readonly IEmployeeRepository _employees;
     private readonly IClientRequestRepository _clientRequests;
-    private readonly L1DbContext _context;
+    private readonly EnergyManagementDbContext _context;
 
     public EmployeeStartRequestReviewHandler(
         IEmployeeRepository employees,
         IClientRequestRepository clientRequests,
-        L1DbContext context)
+        EnergyManagementDbContext context)
     {
         _employees = employees;
         _clientRequests = clientRequests;

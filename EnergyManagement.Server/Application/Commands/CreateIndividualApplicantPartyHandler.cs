@@ -11,12 +11,12 @@ public sealed class CreateIndividualApplicantPartyHandler
 {
     private readonly IApplicantPartyCreationService _applicantPartyCreation;
     private readonly IApplicantPartyRepository _applicantParties;
-    private readonly L1DbContext _context;
+    private readonly EnergyManagementDbContext _context;
 
     public CreateIndividualApplicantPartyHandler(
         IApplicantPartyCreationService applicantPartyCreation,
         IApplicantPartyRepository applicantParties,
-        L1DbContext context)
+        EnergyManagementDbContext context)
     {
         _applicantPartyCreation = applicantPartyCreation;
         _applicantParties = applicantParties;

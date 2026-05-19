@@ -12,14 +12,14 @@ public sealed class AgreementExchangeApplicationService : IAgreementExchangeAppl
     private readonly IEmployeeRepository _employees;
     private readonly IAgreementProposalExchangeRepository _agreementExchanges;
     private readonly IClientRequestRepository _clientRequests;
-    private readonly L1DbContext _context;
+    private readonly EnergyManagementDbContext _context;
 
     public AgreementExchangeApplicationService(
         IAccountRepository accounts,
         IEmployeeRepository employees,
         IAgreementProposalExchangeRepository agreementExchanges,
         IClientRequestRepository clientRequests,
-        L1DbContext context)
+        EnergyManagementDbContext context)
     {
         _accounts = accounts;
         _employees = employees;

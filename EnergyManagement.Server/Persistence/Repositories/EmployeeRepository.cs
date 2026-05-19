@@ -6,9 +6,9 @@ namespace EnergyManagement.Server.Persistence.Repositories;
 
 public sealed class EmployeeRepository : IEmployeeRepository
 {
-    private readonly L1DbContext _context;
+    private readonly EnergyManagementDbContext _context;
 
-    public EmployeeRepository(L1DbContext context)
+    public EmployeeRepository(EnergyManagementDbContext context)
     {
         _context = context;
     }

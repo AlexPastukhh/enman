@@ -49,7 +49,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped(
-    _=>new L1DbContext(builder.Configuration.GetConnectionString(ConnectionStringNames.ManagementDb)!));
+    _=>new EnergyManagementDbContext(builder.Configuration.GetConnectionString(ConnectionStringNames.ManagementDb)!));
 builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 builder.Services.AddTransient<IApplicantPartyRepository, ApplicantPartyRepository>();
 builder.Services.AddTransient<IApplicantPartyCreationService, ApplicantPartyCreationService>();

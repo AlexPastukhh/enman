@@ -7,9 +7,9 @@ namespace EnergyManagement.Server.Persistence.Repositories;
 
 public sealed class ClientRequestRepository : IClientRequestRepository
 {
-    private readonly L1DbContext _context;
+    private readonly EnergyManagementDbContext _context;
 
-    public ClientRequestRepository(L1DbContext context)
+    public ClientRequestRepository(EnergyManagementDbContext context)
     {
         _context = context;
     }

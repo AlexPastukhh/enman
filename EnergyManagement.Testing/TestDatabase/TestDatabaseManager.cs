@@ -87,7 +87,7 @@ public sealed class TestDatabaseManager
             return;
         }
 
-        await using var context = new L1DbContext(_connectionString);
+        await using var context = new EnergyManagementDbContext(_connectionString);
         var databaseCreator = context.GetService<IRelationalDatabaseCreator>();
         await databaseCreator.CreateTablesAsync(cancellationToken);
         await EnsureL1ClientRequestClientAccountIdColumnAsync(cancellationToken);

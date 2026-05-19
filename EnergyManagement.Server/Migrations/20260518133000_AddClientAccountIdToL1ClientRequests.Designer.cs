@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EnergyManagement.Server.Migrations.L1Db
 {
-    [DbContext(typeof(L1DbContext))]
+    [DbContext(typeof(EnergyManagementDbContext))]
     [Migration("20260518133000_AddClientAccountIdToL1ClientRequests")]
     partial class AddClientAccountIdToL1ClientRequests
     {

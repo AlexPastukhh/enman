@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EnergyManagement.Server.Migrations.L1Db
 {
-    [DbContext(typeof(L1DbContext))]
+    [DbContext(typeof(EnergyManagementDbContext))]
     [Migration("20260517113834_ModelEmployeeAsAccountSubtype")]
     partial class ModelEmployeeAsAccountSubtype
     {

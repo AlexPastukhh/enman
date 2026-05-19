@@ -7,9 +7,9 @@ namespace EnergyManagement.Server.Persistence.Repositories;
 
 public sealed class AccountRepository : IAccountRepository
 {
-    private readonly L1DbContext _context;
+    private readonly EnergyManagementDbContext _context;
 
-    public AccountRepository(L1DbContext context)
+    public AccountRepository(EnergyManagementDbContext context)
     {
         _context = context;
     }

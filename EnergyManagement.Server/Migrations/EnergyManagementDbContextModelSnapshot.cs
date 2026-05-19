@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EnergyManagement.Server.Migrations
 {
-    [DbContext(typeof(L1DbContext))]
-    partial class L1DbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(EnergyManagementDbContext))]
+    partial class EnergyManagementDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

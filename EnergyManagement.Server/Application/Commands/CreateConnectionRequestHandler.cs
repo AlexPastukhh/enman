@@ -20,13 +20,13 @@ public sealed class CreateConnectionRequestHandler
     private readonly IApplicantPartyCreationService _applicantPartyCreation;
     private readonly IApplicantPartyRepository _applicantParties;
     private readonly IClientRequestRepository _clientRequests;
-    private readonly L1DbContext _context;
+    private readonly EnergyManagementDbContext _context;
 
     public CreateConnectionRequestHandler(
         IApplicantPartyCreationService applicantPartyCreation,
         IApplicantPartyRepository applicantParties,
         IClientRequestRepository clientRequests,
-        L1DbContext context)
+        EnergyManagementDbContext context)
     {
         _applicantPartyCreation = applicantPartyCreation;
         _applicantParties = applicantParties;

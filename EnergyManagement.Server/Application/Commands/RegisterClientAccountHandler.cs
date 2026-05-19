@@ -15,13 +15,13 @@ public sealed class RegisterClientAccountHandler
     : IRequestHandler<RegisterClientAccountCommand, Result<RegisterClientAccountResponse, IReadOnlyList<Error>>>
 {
     private readonly IAccountRepository _accounts;
-    private readonly L1DbContext _context;
+    private readonly EnergyManagementDbContext _context;
     private readonly IRegistrationEmailNotificationService _registrationEmailNotifications;
     private readonly ILogger<RegisterClientAccountHandler> _logger;
 
     public RegisterClientAccountHandler(
         IAccountRepository accounts,
-        L1DbContext context,
+        EnergyManagementDbContext context,
         IRegistrationEmailNotificationService registrationEmailNotifications,
         ILogger<RegisterClientAccountHandler> logger)
     {

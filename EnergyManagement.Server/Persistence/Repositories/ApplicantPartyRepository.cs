@@ -6,9 +6,9 @@ namespace EnergyManagement.Server.Persistence.Repositories;
 
 public sealed class ApplicantPartyRepository : IApplicantPartyRepository
 {
-    private readonly L1DbContext _context;
+    private readonly EnergyManagementDbContext _context;
 
-    public ApplicantPartyRepository(L1DbContext context)
+    public ApplicantPartyRepository(EnergyManagementDbContext context)
     {
         _context = context;
     }

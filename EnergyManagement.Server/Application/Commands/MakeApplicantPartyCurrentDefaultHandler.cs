@@ -11,11 +11,11 @@ public sealed class MakeApplicantPartyCurrentDefaultHandler
     : IRequestHandler<MakeApplicantPartyCurrentDefaultCommand, UnitResult<IReadOnlyList<Error>>>
 {
     private readonly IApplicantPartyRepository _applicantParties;
-    private readonly L1DbContext _context;
+    private readonly EnergyManagementDbContext _context;
 
     public MakeApplicantPartyCurrentDefaultHandler(
         IApplicantPartyRepository applicantParties,
-        L1DbContext context)
+        EnergyManagementDbContext context)
     {
         _applicantParties = applicantParties;
         _context = context;

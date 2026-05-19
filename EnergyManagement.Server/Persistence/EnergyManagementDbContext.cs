@@ -4,11 +4,11 @@ using PasswordHash = Domain.EnergyManagement.DocumentManaging.PasswordHash;
 
 namespace EnergyManagement.Server.Persistence;
 
-public class L1DbContext : DbContext
+public class EnergyManagementDbContext : DbContext
 {
     private readonly string _connectionString;
 
-    public L1DbContext(string connectionString)
+    public EnergyManagementDbContext(string connectionString)
     {
         _connectionString = connectionString;
     }

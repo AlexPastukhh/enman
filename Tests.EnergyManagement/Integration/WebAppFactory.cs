@@ -45,15 +45,15 @@ namespace Tests.EnergyManagement.Integration
 
             builder.ConfigureTestServices(services =>
             {
-                var l1DbContextDescriptor = services
-                    .SingleOrDefault(d => d.ServiceType == typeof(L1DbContext));
+                var dbContextDescriptor = services
+                    .SingleOrDefault(d => d.ServiceType == typeof(EnergyManagementDbContext));
 
-                if (l1DbContextDescriptor != null)
+                if (dbContextDescriptor != null)
                 {
-                    services.Remove(l1DbContextDescriptor);
+                    services.Remove(dbContextDescriptor);
                 }
 
-                services.AddScoped(_ => new L1DbContext(ConnectionString));
+                services.AddScoped(_ => new EnergyManagementDbContext(ConnectionString));
 
                 var authSchemeProvider = services
                     .FirstOrDefault(d => d.ServiceType == typeof(IAuthenticationSchemeProvider));

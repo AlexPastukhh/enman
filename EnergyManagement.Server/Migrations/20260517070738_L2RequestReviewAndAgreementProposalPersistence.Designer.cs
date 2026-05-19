@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EnergyManagement.Server.Migrations
 {
-    [DbContext(typeof(L1DbContext))]
+    [DbContext(typeof(EnergyManagementDbContext))]
     [Migration("20260517070738_L2RequestReviewAndAgreementProposalPersistence")]
     partial class L2RequestReviewAndAgreementProposalPersistence
     {
