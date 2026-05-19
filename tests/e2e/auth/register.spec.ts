@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { RegisterPage } from "../pages/RegisterPage";
+import { LoginPage } from "../pages/LoginPage";
 import { waitForApiResponse } from "../support/apiResponse";
 import { uniqueEmail, validPassword } from "../support/testData";
 
@@ -26,5 +27,6 @@ test("user registers through real client-server flow", async ({ page }) => {
 
   expect(registerResponse.ok()).toBeTruthy();
   await expect(page).toHaveURL(/\/login$/i);
-  await expect(page.getByRole("heading", { name: "Login", exact: true })).toBeVisible();
+  const loginPage = new LoginPage(page);
+  await expect(loginPage.heading()).toBeVisible();
 });

@@ -16,14 +16,14 @@ export class LoginPage {
   async login(values: LoginValues) {
     await this.page.getByLabel(exactTextIgnoreCase("Email")).fill(values.email);
     await this.page
-      .getByLabel(exactTextIgnoreCase("Password"))
+      .getByLabel(exactTextIgnoreCase("Пароль"))
       .fill(values.password);
     await this.page
-      .getByRole("button", { name: "Login", exact: true })
+      .getByRole("button", { name: "Войти", exact: true })
       .click();
   }
 
   heading() {
-    return this.page.getByRole("heading", { name: "Login", exact: true });
+    return this.page.getByRole("heading", { name: /Вход/, level: 2 });
   }
 }

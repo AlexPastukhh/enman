@@ -54,18 +54,22 @@ test.describe("VKR documentation screenshots @screenshots", () => {
 
     await page.goto("/requests/create");
     await expect(
-      page.getByRole("heading", { name: "Create connection request" }),
+      page.getByRole("heading", { name: /Создание заявки|Заявка на подключение/, level: 2 }),
     ).toBeVisible();
     await capture(page, "04-create-request.png");
 
     await createConnectionRequestForExistingApplicant(
       page,
-      Number(await page.getByLabel("Saved Applicant Party", { exact: true }).inputValue()),
+      Number(
+        await page
+          .getByLabel(/Saved Applicant Party|Сохранённый заявитель/, { exact: true })
+          .inputValue(),
+      ),
       "VKR screenshot request.",
     );
 
     await page.goto("/requests");
-    await expect(page.getByRole("heading", { name: "My Requests" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Мои заявки" })).toBeVisible();
     await expect(page.getByText("VKR screenshot request.")).toBeVisible();
     await capture(page, "05-my-requests-list.png");
 
@@ -75,7 +79,7 @@ test.describe("VKR documentation screenshots @screenshots", () => {
     expect(requests.length).toBeGreaterThan(0);
 
     await page.goto(`/requests/${requests[0].requestId}`);
-    await expect(page.getByRole("heading", { name: "Request Details" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Детали заявки" })).toBeVisible();
     await expect(page.getByText("VKR screenshot request.")).toBeVisible();
     await capture(page, "06-my-request-details.png");
   });
@@ -95,19 +99,19 @@ test.describe("VKR documentation screenshots @screenshots", () => {
 
     await page.goto("/employee/requests");
     await expect(
-      page.getByRole("heading", { name: "Employee Request Dashboard" }),
+      page.getByRole("heading", { name: "Заявки на рассмотрение" }),
     ).toBeVisible();
     await capture(page, "07-employee-request-dashboard.png");
 
     await page.goto("/employee/requests/9004");
     await expect(
-      page.getByRole("heading", { name: "Employee Request Details" }),
+      page.getByRole("heading", { name: "Рассмотрение заявки" }),
     ).toBeVisible();
     await capture(page, "08-employee-request-details-review-actions.png");
 
     await page.goto("/employee/agreements");
     await expect(
-      page.getByRole("heading", { name: "Employee Agreement Exchanges" }),
+      page.getByRole("heading", { name: /Договорные обмены|Мои договоры/ }),
     ).toBeVisible();
     await capture(page, "09-agreement-exchange-list.png");
   });

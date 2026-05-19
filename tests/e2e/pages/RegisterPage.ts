@@ -17,17 +17,17 @@ export class RegisterPage {
   async register(values: RegisterValues) {
     await this.page.getByLabel(exactTextIgnoreCase("Email")).fill(values.email);
     await this.page
-      .getByLabel(exactTextIgnoreCase("Password"))
+      .getByLabel(exactTextIgnoreCase("Пароль"))
       .fill(values.password);
     await this.page
-      .getByLabel(exactTextIgnoreCase("Confirm Password"))
+      .getByLabel(exactTextIgnoreCase("Подтвердите пароль"))
       .fill(values.passwordConfirmation);
     await this.page
-      .getByRole("button", { name: "Register Button", exact: true })
+      .getByRole("button", { name: "Зарегистрироваться", exact: true })
       .click();
   }
 
   heading() {
-    return this.page.getByRole("heading", { name: "Register", exact: true });
+    return this.page.getByRole("heading", { name: /Регистрация/, level: 2 });
   }
 }
