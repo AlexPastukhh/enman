@@ -1,6 +1,6 @@
 # Algorithm: raw notes capture and distribution
 
-Run this when the user gives many ideas, objections, future notes, cross-chapter remarks or unfinished thoughts.
+Run when the user gives many ideas, objections, future notes, cross-chapter remarks or unfinished thoughts.
 
 ## Core rule
 
@@ -11,67 +11,42 @@ raw notes
 → VKR-DRAFTING-ROADMAP.md
 → CHAPTER-X-ROADMAP.md
 → topic draft
-→ section draft block
+→ full text / section draft block
 ```
 
-The chat does not need to immediately and perfectly decide where every note belongs.
+## Raw notes are cautious sources
 
-The first goal is to avoid losing the idea and to keep the overall picture visible.
+Raw notes are useful material, but they are not clean thesis text and not factual proof.
+
+Before using a raw note in text, it must be:
+
+```text
+preserved
+→ classified
+→ attached to a desired result / semantic point / roadmap item
+→ rephrased
+→ checked if needed
+```
+
+Use:
+
+```text
+planning/thesis/chat-action-algorithms/evidence-and-materials/raw-user-notes-as-cautious-source.md
+```
 
 ## Required behavior
 
-1. Identify whether the user message contains:
-   - cross-chapter notes;
-   - future topic ideas;
-   - disputed decisions;
-   - possible semantic points;
-   - guardrails;
-   - notes to transfer later;
-   - candidate wording;
-   - rejected / risky ideas;
-   - corrections to workflow itself.
-
-2. Save the raw note or its faithful summary into the general roadmap layer:
+1. Identify cross-chapter notes, decisions, questions, semantic point candidates, guardrails and future ideas.
+2. Save raw note or faithful expanded summary into:
    - `planning/thesis/vkr-topic-workbench/VKR-DRAFTING-ROADMAP.md`
-   - and, if useful, `planning/thesis/vkr-topic-workbench/00-inbox/raw-notes/`
+   - `planning/thesis/vkr-topic-workbench/00-inbox/raw-notes/`
+3. Do not compress too much.
+4. Add possible location, how to use, risk/caution and status.
+5. If capture was already saved, do not duplicate it in every draft; add only new additions.
+6. If the note explains a desired result, attach it to the relevant semantic point or full-text source-pass.
 
-3. Add a distribution plan:
-   - possible chapter;
-   - possible topic;
-   - why it matters;
-   - risk;
-   - status.
+## Until saved-confirmed rule
 
-4. If the note clarifies how a specific desired result is covered, attach it to the relevant semantic point card, not to a huge topic-level table.
+If the user is actively producing raw notes and has not confirmed that they are safely stored, include a "roadmap additions" block with each draft/update.
 
-5. Only after capture, distribute relevant parts into:
-   - chapter roadmap;
-   - topic draft;
-   - section draft;
-   - decisions list;
-   - transfer notes;
-   - future/rejected notes.
-
-6. Do not overload the current topic draft with every future note.
-   A topic draft should contain only notes needed for the current topic plus links to roadmap notes when necessary.
-
-## Statuses for raw notes
-
-```text
-captured
-needs distribution
-moved to chapter roadmap
-moved to topic draft
-moved to section draft
-decided
-rejected
-deferred
-research needed
-repo-check needed
-```
-
-## Main rule
-
-Do not carry future notes from draft to draft manually.
-
-Use the roadmap layer as the shared memory for cross-topic and future material.
+If the user confirms capture was saved, do not repeat the big block; reference the roadmap.

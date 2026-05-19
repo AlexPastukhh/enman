@@ -13,7 +13,7 @@ export const LoginPage = () => {
             </h1>
             <p className="pageDescription">
               Войдите как клиент для работы со своими заявками или используйте
-              Employee-вход, если работаете с dashboard сотрудника.
+              Вход сотрудника, если вы работаете с панелью сотрудника.
             </p>
             <div className="homePage__actions">
               <NavLink className="button-hollow" to={clientRoutes.register}>

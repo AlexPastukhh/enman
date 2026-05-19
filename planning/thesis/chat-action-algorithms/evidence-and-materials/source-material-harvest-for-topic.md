@@ -1,29 +1,40 @@
-# Algorithm: source material harvest for topic
+# Algorithm: source material harvest for topic drafts and full text
 
-Run when a topic draft needs clarification or update from project materials.
+Run when a topic draft or full-text version needs material from project sources.
 
-## Required process
+## Source types
 
-1. Find relevant scenarios.
-2. Find DATA/rules.
-3. Find domain decisions.
-4. Find slice drafts.
-5. Find ADR/questions/decisions.
-6. Find research if the topic requires external support.
-7. Extract useful materials as candidates, not as final VKR text.
-8. For each material candidate, record:
-   - what it is;
-   - where it came from;
-   - why it matters;
-   - where it may go;
-   - risks;
-   - questions.
+- existing section draft candidates;
+- existing chapter draft candidates;
+- active topic drafts;
+- chapter roadmap;
+- general VKR drafting roadmap;
+- raw user notes as cautious source;
+- scenarios;
+- DATA / rules;
+- domain notes;
+- slice drafts;
+- ADR / questions / decisions;
+- research;
+- visual materials;
+- repo/evidence.
 
-## Table format
+## Required source-pass table
 
-| Материал | Откуда | Почему важен | Куда вставить | Риск | Вопрос |
-|---|---|---|---|---|---|
+```markdown
+| Source | What was checked | What was found | How it affects draft/text |
+|---|---|---|---|
+```
 
-## Important
+## Question answer table
 
-Questions/decisions can be useful in whole paragraphs if they concern the chapter area. Preserve useful reasoning, but convert it to clean VKR language later.
+```markdown
+| Question | Where searched | What was found | Status | What to do |
+|---|---|---|---|---|
+```
+
+## Chapter 1 note
+
+For Chapter 1, prefer scenarios, domain rules, existing drafts, topic drafts, roadmap notes and research.
+
+Repo/code should be used mainly for overclaim checks or Chapter 3 evidence, not as the main language of Chapter 1.

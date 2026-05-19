@@ -50,7 +50,7 @@ const HomePage = () => {
             {employeeSession && (
               <div className="homePage__actions">
                 <NavButtonPrimary to={clientRoutes.employeeRequests}>
-                  Заявки Employee
+                  Заявки сотрудника
                 </NavButtonPrimary>
                 <NavButtonHollow to={clientRoutes.employeeAgreementExchanges}>
                   Договорные обмены
@@ -60,7 +60,7 @@ const HomePage = () => {
           </div>
 
           <aside className="homePage__summary" aria-label="Основные сценарии">
-            <span className="statusPill">Flow</span>
+            <span className="statusPill">Процесс</span>
             <ul>
               <li>Клиент создаёт заявку и видит статус.</li>
               <li>Employee проверяет заявку и запускает обмен.</li>
@@ -78,7 +78,7 @@ const HomePage = () => {
             </NavButtonHollow>
           </article>
           <article className="homePage__card pageCard">
-            <h2>Employee</h2>
+            <h2>Сотрудник</h2>
             <p>Рабочий dashboard заявок, детали проверки и договорные обмены.</p>
             <NavButtonHollow to={clientRoutes.employeeRequests}>
               Рабочие заявки
@@ -88,7 +88,7 @@ const HomePage = () => {
             <h2>Договорный обмен</h2>
             <p>История предложений, активное предложение и доступные действия.</p>
             <NavButtonHollow to={clientRoutes.employeeAgreementExchanges}>
-              Открыть exchanges
+              Открыть договорные обмены
             </NavButtonHollow>
           </article>
         </section>

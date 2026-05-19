@@ -1,101 +1,45 @@
 # Algorithm: existing chapter draft review
 
-Run when the user provides existing chapter drafts or old section drafts that are not final but may contain useful material.
+Run when existing chapter drafts or old section drafts are used.
 
-## Storage
+## Current interpretation
 
-Store or reference them under:
+Existing chapters 1-2 are valid candidate drafts.
 
-```text
-planning/thesis/vkr-clean/existing-chapter-drafts/
-```
-
-Do not confuse with:
+They are:
 
 ```text
-planning/thesis/vkr-clean/legacy-chaotic-drafts/
-```
-
-`existing-chapter-drafts` may be useful. `legacy-chaotic-drafts` are mostly cautionary / cleanup material.
-
-## Important interpretation
-
-Existing chapters are currently treated as **section draft candidates**.
-
-That means:
-
-```text
-existing chapter text stays on the section-draft side;
-topic draft receives semantic analysis of that text;
-raw chapter paragraphs are not pasted into topic draft as topic content.
-```
-
-If the task is to break an existing subsection into topic/section workflow, also run:
-
-```text
-planning/thesis/chat-action-algorithms/cleanup-and-legacy/existing-section-draft-reverse-engineering.md
+not final;
+not source of truth;
+not garbage;
+useful candidate material.
 ```
 
 ## Required behavior
 
-1. Do not treat the existing chapter as final clean VKR text.
-2. Determine which VKR chapters, subsections and topic drafts it relates to.
-3. Review it by categories:
-   - what is already good;
-   - what can be reused;
-   - what is too generic;
-   - what is inaccurate;
-   - what overclaims implementation;
-   - what needs research sources;
-   - what needs repo/evidence check;
-   - what has formatting/numbering/visual issues.
-4. Extract useful material as candidates:
-   - structure candidates;
-   - semantic point candidates;
-   - section block candidates;
-   - wording candidates;
-   - table candidates;
-   - problem notes;
-   - questions.
-5. Reverse-engineer useful text into semantic points before updating topic drafts.
-6. Move ideas into topic drafts as material candidates and semantic-point cards.
-7. Move usable text only into corresponding section draft blocks, marked as requiring review.
-8. Run topic-draft workflow for reused material:
-   - questions;
-   - source support;
-   - research/repo/visual checks;
-   - plan of disclosure;
-   - rewrite/edit.
-9. Do not copy the chapter wholesale into final VKR text.
+1. Do not ignore existing text.
+2. Do not copy it as final clean text.
+3. Run source-pass.
+4. Extract semantic points or full-text paragraph candidates.
+5. Check desired result, location, risks and sources.
+6. Decide:
+   - use;
+   - rewrite;
+   - expand;
+   - transfer;
+   - leave only in candidate;
+   - reject.
 
-## Output format
+## If existing chapter has an idea absent from topic draft
 
-```markdown
-## Existing chapter draft review
+Do not discard it automatically.
 
-### What is good
-...
+Use:
 
-### What can be reused
-| Material | Type | Where to use | Required checks |
-|---|---|---|---|
-
-### What is dangerous
-...
-
-### Questions generated
-| Question | Priority | Why it matters | Where it goes |
-|---|---|---|---|
-
-### Semantic point candidates
-| Semantic point | Related topic draft | Current section text | Checks | Action |
-|---|---|---|---|---|
-
-### Section block candidates
-| Candidate block | Related topic draft | Reuse mode | Checks |
-|---|---|---|---|
+```text
+existing chapter thought
+→ semantic point / text block candidate
+→ desired result check
+→ risk/source check
+→ topic draft or full-text version decision
 ```
-
-## Main rule
-
-Existing chapter draft can feed topic draft and section draft, but it does not replace topic-draft workflow. The topic draft should contain semantic points, questions and plans; the section draft contains candidate text.

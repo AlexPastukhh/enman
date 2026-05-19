@@ -1,108 +1,46 @@
 # Chapter source priority map
 
-Use this to decide which sources to check for each chapter.
+## Chapter 1: analysis and automation justification
 
-## Chapter 1 — analysis and automation justification
+Preferred sources:
 
-Purpose:
+1. topic drafts;
+2. chapter roadmap and VKR drafting roadmap;
+3. raw user notes as cautious source;
+4. existing section/chapter draft candidates;
+5. scenarios;
+6. domain/process rules;
+7. research reports;
+8. visual materials;
+9. clean requirements.
 
-```text
-предметная область;
-процесс;
-проблемы;
-варианты автоматизации;
-выбор направления.
-```
+Repo/code is used mainly for overclaim checks or Chapter 3 evidence.
 
-Priority sources:
+## Chapter 2: design
 
-```text
-topic-драфты главы 1;
-existing chapter drafts / ранние главы 1–2 as secondary resource;
-research reports;
-visual reviews;
-clean requirements;
-scenarios only to check process logic;
-domain only as subject concepts;
-repo-check only for overclaim risks.
-```
+Preferred sources:
 
-Use existing chapter drafts carefully:
+1. chapter 1 conclusions;
+2. requirements;
+3. scenarios;
+4. DATA / rules;
+5. domain notes;
+6. architecture decisions;
+7. UI/API/database planning;
+8. existing chapter 2 draft candidates;
+9. selected repo checks when design must match implementation.
 
-```text
-good structure → candidate for section blocks;
-good paragraph → place into section draft block and review;
-weak/general paragraph → convert to questions and rewrite;
-problem notes → update topic questions/checklists.
-```
+## Chapter 3: implementation and testing
 
-## Chapter 2 — requirements and design
+Preferred sources:
 
-Purpose:
+1. repo/code;
+2. tests;
+3. slice drafts;
+4. screenshots;
+5. scenarios;
+6. DATA/domain;
+7. ADR/questions/decisions;
+8. implementation evidence inventory.
 
-```text
-требования;
-сценарии;
-данные;
-доменная модель;
-архитектура;
-БД;
-API/UI проектирование.
-```
-
-Priority sources:
-
-```text
-topic-драфты главы 2;
-existing chapter drafts / previous chapter 2 text as secondary resource;
-scenario specs;
-DATA;
-domain drafts;
-requirements;
-architecture decisions;
-UI planning;
-API planning;
-database planning;
-research on requirements/architecture if needed.
-```
-
-## Chapter 3 — implementation and testing
-
-Purpose:
-
-```text
-реализация;
-код;
-тесты;
-скриншоты;
-демонстрация;
-ограничения.
-```
-
-Priority sources:
-
-```text
-code;
-tests;
-slice drafts;
-scenario specs;
-DATA;
-domain drafts;
-ADR / questions / decisions;
-UI screenshots;
-repo/evidence checks;
-existing chapter drafts only as style/structure resource, not fact source.
-```
-
-Chapter 3 source chain:
-
-```text
-сценарии
-→ вопросы
-→ решения
-→ домен
-→ ADR / архитектурные решения
-→ slice drafts
-→ код / тесты / скриншоты
-→ чистый текст главы 3
-```
+Chapter 3 must be grounded in repo/evidence.
