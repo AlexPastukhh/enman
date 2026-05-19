@@ -18,7 +18,7 @@ describe("EmployeeRequestDashboardList", () => {
   it("shows an empty state when there are no employee requests", () => {
     renderWithRouter(<EmployeeRequestDashboardList requests={[]} />);
 
-    expect(screen.getByText("No employee requests to review.")).toBeVisible();
+    expect(screen.getByText("Нет заявок для рассмотрения.")).toBeVisible();
   });
 
   it("renders employee request row data and details link", () => {
@@ -38,19 +38,18 @@ describe("EmployeeRequestDashboardList", () => {
       />,
     );
 
-    expect(screen.getByRole("heading", { name: "Request #42" })).toBeVisible();
-    expect(screen.getByText("InReview")).toBeVisible();
-    expect(screen.getByText("Connection")).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Заявка #42" })).toBeVisible();
+    expect(screen.getByText("На рассмотрении")).toBeVisible();
+    expect(screen.getByText("Подключение")).toBeVisible();
     expect(screen.getByText("Ivan Petrov")).toBeVisible();
     expect(screen.getByText("Altai Krai, Zarinsk, Lenina 10")).toBeVisible();
-    expect(screen.getByText("Started by another Employee")).toBeVisible();
+    expect(screen.getByText("Рассматривается другим сотрудником")).toBeVisible();
     expect(
       screen.getByRole("link", {
-        name: "Open employee details Request #42",
+        name: "Открыть детали Заявка #42",
       }),
     ).toHaveAttribute("href", "/employee/requests/42");
   });
-
 
   it("renders applicant verification badge when verification summary exists", () => {
     renderWithRouter(
@@ -113,11 +112,11 @@ describe("EmployeeRequestDashboardList", () => {
             reviewState: "NotStarted",
           },
         ]}
-        renderRowActions={() => <button type="button">Start review</button>}
+        renderRowActions={() => <button type="button">Начать рассмотрение</button>}
       />,
     );
 
-    expect(screen.getByRole("button", { name: "Start review" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Начать рассмотрение" })).toBeVisible();
   });
 
   it("shows filtered empty state with reset action", () => {
@@ -131,9 +130,7 @@ describe("EmployeeRequestDashboardList", () => {
       />,
     );
 
-    expect(
-      screen.getByText("No employee requests match selected filters."),
-    ).toBeVisible();
-    expect(screen.getByRole("button", { name: "Reset filters" })).toBeVisible();
+    expect(screen.getByText("Нет заявок по выбранным фильтрам.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Сбросить фильтры" })).toBeVisible();
   });
 });

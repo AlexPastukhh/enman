@@ -1,33 +1,33 @@
 import { errorCodes } from "../constants/generatedConstants";
 
-export const fallbackErrorMessage = "Something went wrong";
+export const fallbackErrorMessage = "Не удалось выполнить действие. Попробуйте ещё раз.";
 
 export const errorToMessageMap: Record<string, string> = {
   [errorCodes.Email.IsInvalid]:
-    "Email format is invalid. Use name@example.com.",
-  [errorCodes.Email.IsRegisteredAlready]: "Email is already registered.",
-  [errorCodes.Email.IsRequired]: "Email is required.",
+    "Неверный формат email. Используйте формат name@example.com.",
+  [errorCodes.Email.IsRegisteredAlready]: "Этот email уже зарегистрирован.",
+  [errorCodes.Email.IsRequired]: "Укажите email.",
   [errorCodes.Password.IsTooShort]:
-    "Password is too short. Use at least 12 characters.",
-  [errorCodes.Password.IsRequired]: "Password is required.",
+    "Пароль должен содержать не менее 12 символов.",
+  [errorCodes.Password.IsRequired]: "Укажите пароль.",
   [errorCodes.Password.IsTooLong]:
-    "Password is too long. Use no more than 50 characters.",
+    "Пароль должен содержать не более 50 символов.",
   [errorCodes.Password.LacksSpecialChars]:
-    "Password must contain a special character, for example !, @, #, $, %, ^, &, *, (, or ).",
+    "Пароль должен содержать специальный символ, например !, @, #, $, %, ^, &, *.",
   [errorCodes.PasswordConfirmation.DoesNotMatch]:
-    "Password confirmation does not match.",
+    "Пароли не совпадают.",
   [errorCodes.PasswordConfirmation.IsRequired]:
-    "Password confirmation is required.",
-  [errorCodes.Phone.IsRequired]: "Phone number is required.",
+    "Подтвердите пароль.",
+  [errorCodes.Phone.IsRequired]: "Укажите телефон.",
   [errorCodes.Phone.IsInvalid]:
-    "Phone number format is invalid. Use digits with an optional leading +.",
-  "account.firstName.is.required": "First name is required.",
-  "account.firstName.is.too.large": "First name is too long.",
-  "account.middleName.is.required": "Middle name is required.",
-  "account.middleName.is.too.large": "Middle name is too long.",
-  "account.lastName.is.required": "Last name is required.",
-  "account.lastName.is.too.large": "Last name is too long.",
+    "Неверный формат телефона. Используйте цифры и при необходимости знак + в начале.",
+  "account.firstName.is.required": "Укажите имя.",
+  "account.firstName.is.too.large": "Имя слишком длинное.",
+  "account.middleName.is.required": "Укажите отчество.",
+  "account.middleName.is.too.large": "Отчество слишком длинное.",
+  "account.lastName.is.required": "Укажите фамилию.",
+  "account.lastName.is.too.large": "Фамилия слишком длинная.",
 };
 
 export const getMessageFromErrorCode = (code: string): string =>
-  errorToMessageMap[code] ?? "An unknown error occurred.";
+  errorToMessageMap[code] ?? "Не удалось выполнить действие. Попробуйте ещё раз.";

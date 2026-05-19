@@ -39,10 +39,10 @@ describe("RejectReviewForm", () => {
     render(<RejectReviewForm requestId={42} />);
 
     await user.type(
-      screen.getByLabelText("Rejection feedback"),
+      screen.getByLabelText("Причина отклонения"),
       "Applicant must provide additional documents.",
     );
-    await user.click(screen.getByRole("button", { name: "Reject review" }));
+    await user.click(screen.getByRole("button", { name: "Отклонить заявку" }));
 
     expect(mutate).toHaveBeenCalledWith(
       {
@@ -59,10 +59,12 @@ describe("RejectReviewForm", () => {
     render(<RejectReviewForm requestId={42} showEmptyFeedbackWarning />);
 
     expect(
-      screen.getByText("No rejection reason was added. You can still reject this review without feedback."),
+      screen.getByText(
+        "Причина отклонения не указана. Заявку всё равно можно отклонить без комментария.",
+      ),
     ).toBeVisible();
 
-    await user.click(screen.getByRole("button", { name: "Reject review" }));
+    await user.click(screen.getByRole("button", { name: "Отклонить заявку" }));
 
     expect(mutate).toHaveBeenCalledWith(
       {
@@ -84,9 +86,9 @@ describe("RejectReviewForm", () => {
     render(<RejectReviewForm requestId={42} />);
 
     expect(
-      screen.getByRole("button", { name: "Rejecting review..." }),
+      screen.getByRole("button", { name: "Отклоняем заявку..." }),
     ).toBeDisabled();
-    expect(screen.getByLabelText("Rejection feedback")).toBeDisabled();
+    expect(screen.getByLabelText("Причина отклонения")).toBeDisabled();
   });
 
   it("shows unavailable reason and does not submit when disabled", async () => {
@@ -96,15 +98,15 @@ describe("RejectReviewForm", () => {
       <RejectReviewForm
         requestId={42}
         disabled
-        unavailableReason="Another Employee has already started this review."
+        unavailableReason="Другой сотрудник уже начал рассмотрение этой заявки."
       />,
     );
 
     expect(
-      screen.getByText("Another Employee has already started this review."),
+      screen.getByText("Другой сотрудник уже начал рассмотрение этой заявки."),
     ).toBeVisible();
 
-    await user.click(screen.getByRole("button", { name: "Reject review" }));
+    await user.click(screen.getByRole("button", { name: "Отклонить заявку" }));
 
     expect(mutate).not.toHaveBeenCalled();
   });

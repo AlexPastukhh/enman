@@ -15,42 +15,42 @@ export const getAcceptAgreementProposalAvailability = (
   if (completedStatuses.has(details.exchangeStatus)) {
     return {
       canAcceptProposal: false,
-      reason: "Agreement exchange is already completed.",
+      reason: "Договорной обмен уже завершён.",
     };
   }
 
   if (details.currentActorSide !== "Client") {
     return {
       canAcceptProposal: false,
-      reason: "Only the Client can accept an active Employee proposal.",
+      reason: "Только клиент может принять активное предложение сотрудника.",
     };
   }
 
   if (details.exchangeStatus !== "AwaitingClientConfirmation") {
     return {
       canAcceptProposal: false,
-      reason: "Agreement exchange is not awaiting Client confirmation.",
+      reason: "Договорной обмен не ожидает подтверждения клиента.",
     };
   }
 
   if (!details.activeProposal) {
     return {
       canAcceptProposal: false,
-      reason: "There is no active proposal to accept.",
+      reason: "Нет активного предложения для принятия.",
     };
   }
 
   if (details.activeProposal.sender !== "Employee") {
     return {
       canAcceptProposal: false,
-      reason: "Only an active Employee proposal can be accepted by the Client.",
+      reason: "Клиент может принять только активное предложение сотрудника.",
     };
   }
 
   if (acceptedProposalStates.has(details.activeProposal.state)) {
     return {
       canAcceptProposal: false,
-      reason: "Active proposal is not awaiting Client acceptance.",
+      reason: "Активное предложение не ожидает принятия клиентом.",
     };
   }
 

@@ -82,7 +82,11 @@ export const ApproveReviewButton = ({
       </button>
 
       {isConfirming && !disabled && (
-        <div className="approveReviewAction__confirmation" role="group" aria-label="Approve review confirmation">
+        <div
+          className="approveReviewAction__confirmation"
+          role="group"
+          aria-label="Подтверждение одобрения заявки"
+        >
           <p>{approveReviewButtonConst.confirmationText}</p>
           <div className="approveReviewAction__confirmationActions">
             <button

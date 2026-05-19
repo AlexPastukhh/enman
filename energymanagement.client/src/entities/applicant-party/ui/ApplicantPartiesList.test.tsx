@@ -34,10 +34,10 @@ describe("ApplicantPartiesList", () => {
   it("shows an empty read state when no applicant parties exist", () => {
     render(<ApplicantPartiesList applicantParties={[]} />);
 
-    expect(screen.getByText("No saved Applicant Parties yet.")).toBeVisible();
+    expect(screen.getByText("Сохранённых заявителей пока нет.")).toBeVisible();
     expect(
       screen.getByText(
-        "Saved Applicant Parties will appear here after they are added to the account.",
+        "Сохранённые заявители появятся здесь после добавления к аккаунту.",
       ),
     ).toBeVisible();
   });
@@ -53,27 +53,27 @@ describe("ApplicantPartiesList", () => {
     );
 
     const currentDefaults = screen.getByRole("region", {
-      name: "Current/default templates",
+      name: "Текущий заявитель",
     });
     const otherSaved = screen.getByRole("region", {
-      name: "Other saved Applicant Parties",
+      name: "Другие сохранённые заявители",
     });
 
     expect(
       within(currentDefaults).getByRole("heading", {
-        name: "Applicant Party #1: Ivan",
+        name: "Заявитель #1: Ivan",
       }),
     ).toBeVisible();
     expect(
-      within(currentDefaults).getByText("Current/default", { exact: true }),
+      within(currentDefaults).getByText("Текущий", { exact: true }),
     ).toBeVisible();
     expect(
       within(otherSaved).getByRole("heading", {
-        name: "Applicant Party #2: Petr",
+        name: "Заявитель #2: Petr",
       }),
     ).toBeVisible();
     expect(
-      within(otherSaved).queryByText("Current/default", { exact: true }),
+      within(otherSaved).queryByText("Текущий", { exact: true }),
     ).not.toBeInTheDocument();
   });
 

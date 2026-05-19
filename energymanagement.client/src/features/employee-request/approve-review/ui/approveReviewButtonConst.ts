@@ -1,9 +1,9 @@
 export const approveReviewButtonConst = {
-  actionLabel: "Approve review",
-  confirmationLabel: "Confirm approval",
-  cancelConfirmationLabel: "Cancel approval",
+  actionLabel: "Одобрить заявку",
+  confirmationLabel: "Подтвердить одобрение",
+  cancelConfirmationLabel: "Отменить одобрение",
   confirmationText:
-    "Approving is a final positive review decision. Confirm that you want to approve this request.",
-  pendingLabel: "Approving review...",
-  defaultErrorMessage: "Could not approve request review.",
+    "Одобрение является итоговым положительным решением. Подтвердите, что хотите одобрить эту заявку.",
+  pendingLabel: "Одобряем заявку...",
+  defaultErrorMessage: "Не удалось одобрить заявку.",
 } as const;

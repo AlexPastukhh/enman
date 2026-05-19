@@ -8,25 +8,25 @@ import { getMessageFromErrorCode } from "../../../../shared/errors/clientErrorMe
 export const createIndividualApplicantPartyFieldNames =
   applicantPartyFieldNames.createIndividual;
 
-const requiredMessage = (fieldLabel: string) => `${fieldLabel} is required.`;
-const tooLongMessage = (fieldLabel: string) => `${fieldLabel} is too long.`;
+const requiredMessage = (fieldLabel: string) => `Укажите ${fieldLabel}.`;
+const tooLongMessage = (fieldLabel: string) => `${fieldLabel} слишком длинное.`;
 
 export const createIndividualApplicantPartySchema = z.object({
   [createIndividualApplicantPartyFieldNames.firstName]: z
     .string()
     .trim()
-    .min(1, requiredMessage("First name"))
-    .max(50, tooLongMessage("First name")),
+    .min(1, requiredMessage("имя"))
+    .max(50, tooLongMessage("Имя")),
   [createIndividualApplicantPartyFieldNames.middleName]: z
     .string()
     .trim()
-    .min(1, requiredMessage("Middle name"))
-    .max(50, tooLongMessage("Middle name")),
+    .min(1, requiredMessage("отчество"))
+    .max(50, tooLongMessage("Отчество")),
   [createIndividualApplicantPartyFieldNames.lastName]: z
     .string()
     .trim()
-    .min(1, requiredMessage("Last name"))
-    .max(50, tooLongMessage("Last name")),
+    .min(1, requiredMessage("фамилию"))
+    .max(50, "Фамилия слишком длинная."),
   [createIndividualApplicantPartyFieldNames.email]: z
     .string()
     .trim()

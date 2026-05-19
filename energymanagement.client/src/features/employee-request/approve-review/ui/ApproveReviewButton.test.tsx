@@ -38,7 +38,7 @@ describe("ApproveReviewButton", () => {
 
     render(<ApproveReviewButton requestId={42} />);
 
-    await user.click(screen.getByRole("button", { name: "Approve review" }));
+    await user.click(screen.getByRole("button", { name: "Одобрить заявку" }));
 
     expect(mutate).toHaveBeenCalledWith(42, expect.any(Object));
   });
@@ -48,12 +48,12 @@ describe("ApproveReviewButton", () => {
 
     render(<ApproveReviewButton requestId={42} requireConfirmation />);
 
-    await user.click(screen.getByRole("button", { name: "Approve review" }));
+    await user.click(screen.getByRole("button", { name: "Одобрить заявку" }));
 
     expect(mutate).not.toHaveBeenCalled();
-    expect(screen.getByText(/Approving is a final positive review decision/i)).toBeVisible();
+    expect(screen.getByText(/Одобрение является итоговым положительным решением/i)).toBeVisible();
 
-    await user.click(screen.getByRole("button", { name: "Confirm approval" }));
+    await user.click(screen.getByRole("button", { name: "Подтвердить одобрение" }));
 
     expect(mutate).toHaveBeenCalledWith(42, expect.any(Object));
   });
@@ -69,7 +69,7 @@ describe("ApproveReviewButton", () => {
     render(<ApproveReviewButton requestId={42} />);
 
     expect(
-      screen.getByRole("button", { name: "Approving review..." }),
+      screen.getByRole("button", { name: "Одобряем заявку..." }),
     ).toBeDisabled();
   });
 
@@ -80,15 +80,15 @@ describe("ApproveReviewButton", () => {
       <ApproveReviewButton
         requestId={42}
         disabled
-        unavailableReason="Another Employee has already started this review."
+        unavailableReason="Другой сотрудник уже начал рассмотрение этой заявки."
       />,
     );
 
     expect(
-      screen.getByText("Another Employee has already started this review."),
+      screen.getByText("Другой сотрудник уже начал рассмотрение этой заявки."),
     ).toBeVisible();
 
-    await user.click(screen.getByRole("button", { name: "Approve review" }));
+    await user.click(screen.getByRole("button", { name: "Одобрить заявку" }));
 
     expect(mutate).not.toHaveBeenCalled();
   });

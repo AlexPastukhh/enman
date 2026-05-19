@@ -1,9 +1,9 @@
 export const rejectReviewFormConst = {
-  actionLabel: "Reject review",
-  feedbackLabel: "Rejection feedback",
-  feedbackPlaceholder: "Add rejection reason or feedback for the request review.",
+  actionLabel: "Отклонить заявку",
+  feedbackLabel: "Причина отклонения",
+  feedbackPlaceholder: "Добавьте причину или комментарий к отклонению заявки.",
   noFeedbackWarning:
-    "No rejection reason was added. You can still reject this review without feedback.",
-  pendingLabel: "Rejecting review...",
-  defaultErrorMessage: "Could not reject request review.",
+    "Причина отклонения не указана. Заявку всё равно можно отклонить без комментария.",
+  pendingLabel: "Отклоняем заявку...",
+  defaultErrorMessage: "Не удалось отклонить заявку.",
 } as const;

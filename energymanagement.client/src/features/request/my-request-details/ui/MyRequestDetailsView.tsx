@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import type { MyRequestDetails } from "../../../../entities/request/model/requestTypes";
 import { clientRoutes } from "../../../../shared/config/clientRoutes";
-import { formatMyRequestDate, valueOrUnknown } from "./formatMyRequestDetails";
+import {
+  formatMyRequestDate,
+  formatMyRequestStatus,
+  formatMyRequestType,
+} from "./formatMyRequestDetails";
 import { myRequestDetailsConst } from "./myRequestDetailsConst";
 import { MyRequestReviewResult } from "./MyRequestReviewResult";
 import { MyRequestSubmittedData } from "./MyRequestSubmittedData";
@@ -30,11 +34,11 @@ export const MyRequestDetailsView = ({ request }: MyRequestDetailsViewProps) => 
         <dl className="myRequestDetailsDefinitionList">
           <div className="myRequestDetailsDefinitionList__row">
             <dt>{myRequestDetailsConst.statusLabel}</dt>
-            <dd>{valueOrUnknown(request.status)}</dd>
+            <dd>{formatMyRequestStatus(request.status)}</dd>
           </div>
           <div className="myRequestDetailsDefinitionList__row">
             <dt>{myRequestDetailsConst.requestTypeLabel}</dt>
-            <dd>{valueOrUnknown(request.requestType)}</dd>
+            <dd>{formatMyRequestType(request.requestType)}</dd>
           </div>
           <div className="myRequestDetailsDefinitionList__row">
             <dt>{myRequestDetailsConst.createdAtLabel}</dt>

@@ -57,23 +57,23 @@ describe("AgreementExchangeDetailsView", () => {
   it("renders shared details, active proposal, proposal history and document refs", () => {
     render(<AgreementExchangeDetailsView details={details} viewerRole="Client" />);
 
-    expect(screen.getByRole("heading", { name: "Exchange #20" })).toBeVisible();
-    expect(screen.getByText("Awaiting client confirmation")).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Обмен #20" })).toBeVisible();
+    expect(screen.getByText("Ожидает подтверждения клиента")).toBeVisible();
     expect(screen.getByText("Connection request #10")).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Active proposal" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Version 2 from Employee" })).toBeVisible();
-    expect(screen.getByText("Employee #5")).toBeVisible();
-    expect(screen.getByText("agreement-v2.pdf (application/pdf, 2.0 KB)")).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Активное предложение" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Версия 2, автор: Сотрудник" })).toBeVisible();
+    expect(screen.getByText("Сотрудник #5")).toBeVisible();
+    expect(screen.getByText("agreement-v2.pdf (application/pdf, 2.0 КБ)")).toBeVisible();
     const downloadLink = screen.getByRole("link", {
-      name: "Download document: agreement-v2.pdf",
+      name: "Скачать документ: agreement-v2.pdf",
     });
     expect(downloadLink).toHaveAttribute(
       "href",
       "/api/agreement-exchanges/20/proposals/200/document/download",
     );
     expect(downloadLink).toHaveAttribute("download", "agreement-v2.pdf");
-    expect(screen.getByRole("heading", { name: "Proposal history" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Version 1 from Client" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "История предложений" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Версия 1, автор: Клиент" })).toBeVisible();
   });
 
   it("renders optional action slot without owning command behavior", () => {
@@ -86,7 +86,7 @@ describe("AgreementExchangeDetailsView", () => {
     );
 
     expect(
-      screen.getByRole("heading", { name: "Available exchange actions" }),
+      screen.getByRole("heading", { name: "Доступные действия по обмену" }),
     ).toBeVisible();
     expect(screen.getByRole("button", { name: "Future action" })).toBeVisible();
   });

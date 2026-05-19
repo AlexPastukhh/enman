@@ -74,14 +74,14 @@ const fillRequestFields = async () => {
   const user = userEvent.setup();
 
   await user.type(
-    screen.getByLabelText("Request details"),
+    screen.getByLabelText("Описание заявки"),
     "Подключение объекта к электрическим сетям",
   );
-  await user.type(screen.getByLabelText("Postal code"), "658480");
-  await user.type(screen.getByLabelText("Region"), "Алтайский край");
-  await user.type(screen.getByLabelText("City"), "Заринск");
-  await user.type(screen.getByLabelText("Street"), "Ленина");
-  await user.type(screen.getByLabelText("House"), "10");
+  await user.type(screen.getByLabelText("Почтовый индекс"), "658480");
+  await user.type(screen.getByLabelText("Регион"), "Алтайский край");
+  await user.type(screen.getByLabelText("Город"), "Заринск");
+  await user.type(screen.getByLabelText("Улица"), "Ленина");
+  await user.type(screen.getByLabelText("Дом"), "10");
 
   return user;
 };
@@ -95,9 +95,9 @@ describe("CreateConnectionRequestForm", () => {
   it("selects the current/default ApplicantParty first", () => {
     renderForm(applicantParties);
 
-    expect(screen.getByLabelText("Saved Applicant Party")).toHaveValue("1");
+    expect(screen.getByLabelText("Сохранённый заявитель")).toHaveValue("1");
     expect(screen.getByText(/Ivan Ivanov/)).toBeVisible();
-    expect(screen.getByText(/Current\/default/)).toBeVisible();
+    expect(screen.getByText(/Текущий/)).toBeVisible();
   });
 
   it("submits the Existing branch with a selected non-default ApplicantParty", async () => {
@@ -105,8 +105,8 @@ describe("CreateConnectionRequestForm", () => {
     const { onSuccess } = renderForm(applicantParties);
     const user = await fillRequestFields();
 
-    await user.selectOptions(screen.getByLabelText("Saved Applicant Party"), "2");
-    await user.click(screen.getByRole("button", { name: "Create request" }));
+    await user.selectOptions(screen.getByLabelText("Сохранённый заявитель"), "2");
+    await user.click(screen.getByRole("button", { name: "Создать заявку" }));
 
     await waitFor(() => expect(onSuccess).toHaveBeenCalledTimes(1));
     expect(mockedCreateConnectionRequest).toHaveBeenCalledWith(
@@ -122,12 +122,12 @@ describe("CreateConnectionRequestForm", () => {
     const { onSuccess } = renderForm([]);
     const user = await fillRequestFields();
 
-    await user.type(screen.getByLabelText("First name"), "Ivan");
-    await user.type(screen.getByLabelText("Middle name"), "Ivanovich");
-    await user.type(screen.getByLabelText("Last name"), "Ivanov");
-    await user.type(screen.getByLabelText("Applicant email"), "ivan@example.com");
-    await user.type(screen.getByLabelText("Phone number"), "+79001234567");
-    await user.click(screen.getByRole("button", { name: "Create request" }));
+    await user.type(screen.getByLabelText("Имя"), "Ivan");
+    await user.type(screen.getByLabelText("Отчество"), "Ivanovich");
+    await user.type(screen.getByLabelText("Фамилия"), "Ivanov");
+    await user.type(screen.getByLabelText("Email заявителя"), "ivan@example.com");
+    await user.type(screen.getByLabelText("Телефон"), "+79001234567");
+    await user.click(screen.getByRole("button", { name: "Создать заявку" }));
 
     await waitFor(() => expect(onSuccess).toHaveBeenCalledTimes(1));
     expect(mockedCreateConnectionRequest).toHaveBeenCalledWith(
@@ -146,10 +146,10 @@ describe("CreateConnectionRequestForm", () => {
     renderForm(applicantParties);
     const user = userEvent.setup();
 
-    await user.click(screen.getByRole("button", { name: "Create request" }));
+    await user.click(screen.getByRole("button", { name: "Создать заявку" }));
 
-    expect(screen.getByText("Request details is required.")).toBeVisible();
-    expect(screen.getByText("Postal code is required.")).toBeVisible();
+    expect(screen.getByText("Описание заявки: заполните поле.")).toBeVisible();
+    expect(screen.getByText("Почтовый индекс: заполните поле.")).toBeVisible();
     expect(mockedCreateConnectionRequest).not.toHaveBeenCalled();
   });
 });

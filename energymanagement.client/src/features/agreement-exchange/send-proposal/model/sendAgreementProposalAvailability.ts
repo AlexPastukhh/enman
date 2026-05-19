@@ -17,28 +17,28 @@ export const getSendAgreementProposalAvailability = (
   if (completedStatuses.has(details.exchangeStatus)) {
     return {
       canSendProposal: false,
-      reason: "Agreement exchange is already completed.",
+      reason: "Договорной обмен уже завершён.",
     };
   }
 
   if (details.currentActorSide !== viewerRole) {
     return {
       canSendProposal: false,
-      reason: "This agreement exchange is not available for the current role.",
+      reason: "Этот договорной обмен недоступен для текущей роли.",
     };
   }
 
   if (!details.activeProposal) {
     return {
       canSendProposal: false,
-      reason: "There is no active proposal to answer.",
+      reason: "Нет активного предложения для ответа.",
     };
   }
 
   if (details.activeProposal.sender === viewerRole) {
     return {
       canSendProposal: false,
-      reason: "Waiting for the other party to respond to the active proposal.",
+      reason: "Ожидается ответ другой стороны на активное предложение.",
     };
   }
 
@@ -48,7 +48,7 @@ export const getSendAgreementProposalAvailability = (
   ) {
     return {
       canSendProposal: false,
-      reason: "Client proposal can be sent only while client confirmation is pending.",
+      reason: "Клиент может отправить предложение только пока ожидается подтверждение клиента.",
     };
   }
 
@@ -58,7 +58,7 @@ export const getSendAgreementProposalAvailability = (
   ) {
     return {
       canSendProposal: false,
-      reason: "Employee proposal can be sent only while employee response is pending.",
+      reason: "Сотрудник может отправить предложение только пока ожидается ответ сотрудника.",
     };
   }
 

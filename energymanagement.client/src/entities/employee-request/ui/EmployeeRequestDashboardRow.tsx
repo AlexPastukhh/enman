@@ -7,6 +7,8 @@ import { EmployeeReviewStateBadge } from "./EmployeeReviewStateBadge";
 import { employeeRequestDashboardConst } from "./employeeRequestDashboardConst";
 import {
   formatEmployeeRequestDate,
+  formatEmployeeRequestStatus,
+  formatEmployeeRequestType,
   valueOrUnknown,
 } from "./formatEmployeeRequest";
 
@@ -40,11 +42,11 @@ export const EmployeeRequestDashboardRow = ({
       <dl className="employeeRequestDashboardRow__summary">
         <div className="employeeRequestDashboardRow__field">
           <dt>{employeeRequestDashboardConst.statusLabel}</dt>
-          <dd>{valueOrUnknown(request.status)}</dd>
+          <dd>{formatEmployeeRequestStatus(request.status)}</dd>
         </div>
         <div className="employeeRequestDashboardRow__field">
           <dt>{employeeRequestDashboardConst.requestTypeLabel}</dt>
-          <dd>{valueOrUnknown(request.requestType)}</dd>
+          <dd>{formatEmployeeRequestType(request.requestType)}</dd>
         </div>
         <div className="employeeRequestDashboardRow__field">
           <dt>{employeeRequestDashboardConst.createdAtLabel}</dt>

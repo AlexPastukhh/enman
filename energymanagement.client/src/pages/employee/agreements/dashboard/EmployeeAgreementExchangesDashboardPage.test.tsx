@@ -88,7 +88,7 @@ describe("EmployeeAgreementExchangesDashboardPage", () => {
     renderPage();
 
     expect(
-      screen.getByRole("heading", { name: "Agreement exchanges" }),
+      screen.getByRole("heading", { name: "Договорные обмены" }),
     ).toBeVisible();
     expect(
       mockedUseAgreementExchangeListQuery,
@@ -96,8 +96,8 @@ describe("EmployeeAgreementExchangesDashboardPage", () => {
     expect(
       screen.getByRole("heading", { name: "Connection request #10" }),
     ).toBeVisible();
-    expect(screen.getByText("Version 2 from Client")).toBeVisible();
-    expect(screen.getByRole("link", { name: "Open exchange details" })).toHaveAttribute(
+    expect(screen.getByText("Версия 2, автор: Клиент")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Открыть детали обмена" })).toHaveAttribute(
       "href",
       "/employee/agreements/20",
     );
@@ -115,7 +115,7 @@ describe("EmployeeAgreementExchangesDashboardPage", () => {
     renderPage();
 
     expect(screen.getByRole("alert")).toHaveTextContent(
-      "Employee access required.",
+      "Требуется доступ сотрудника.",
     );
     expect(
       mockedUseAgreementExchangeListQuery,

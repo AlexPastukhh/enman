@@ -39,7 +39,7 @@ describe("FinalRefuseAgreementExchangeForm", () => {
 
     render(<FinalRefuseAgreementExchangeForm exchangeId={77} requestId={10} />);
 
-    await user.click(screen.getByRole("button", { name: "Final refuse" }));
+    await user.click(screen.getByRole("button", { name: "Финально отказаться" }));
 
     expect(mutate).toHaveBeenCalledWith(
       {
@@ -57,10 +57,10 @@ describe("FinalRefuseAgreementExchangeForm", () => {
     render(<FinalRefuseAgreementExchangeForm exchangeId={77} requestId={10} />);
 
     await user.type(
-      screen.getByLabelText("Final refusal reason"),
+      screen.getByLabelText("Причина финального отказа"),
       "  Cannot agree on terms.  ",
     );
-    await user.click(screen.getByRole("button", { name: "Final refuse" }));
+    await user.click(screen.getByRole("button", { name: "Финально отказаться" }));
 
     expect(mutate).toHaveBeenCalledWith(
       {
@@ -77,11 +77,11 @@ describe("FinalRefuseAgreementExchangeForm", () => {
 
     render(<FinalRefuseAgreementExchangeForm exchangeId={77} />);
 
-    await user.type(screen.getByLabelText("Final refusal reason"), "   ");
-    await user.click(screen.getByRole("button", { name: "Final refuse" }));
+    await user.type(screen.getByLabelText("Причина финального отказа"), "   ");
+    await user.click(screen.getByRole("button", { name: "Финально отказаться" }));
 
     expect(screen.getByRole("alert")).toHaveTextContent(
-      "Enter a reason or leave the field empty.",
+      "Введите причину или оставьте поле пустым.",
     );
     expect(mutate).not.toHaveBeenCalled();
   });
@@ -93,14 +93,14 @@ describe("FinalRefuseAgreementExchangeForm", () => {
       <FinalRefuseAgreementExchangeForm exchangeId={77} requireConfirmation />,
     );
 
-    await user.click(screen.getByRole("button", { name: "Final refuse" }));
+    await user.click(screen.getByRole("button", { name: "Финально отказаться" }));
 
     expect(
-      screen.getByRole("group", { name: "Final refusal confirmation" }),
+      screen.getByRole("group", { name: "Подтверждение финального отказа" }),
     ).toBeVisible();
 
     await user.click(
-      screen.getByRole("button", { name: "Confirm final refusal" }),
+      screen.getByRole("button", { name: "Подтвердить финальный отказ" }),
     );
 
     expect(mutate).toHaveBeenCalledWith(
@@ -120,12 +120,12 @@ describe("FinalRefuseAgreementExchangeForm", () => {
       <FinalRefuseAgreementExchangeForm
         exchangeId={77}
         disabled
-        unavailableReason="Agreement exchange is already completed."
+        unavailableReason="Договорной обмен уже завершён."
       />,
     );
 
-    expect(screen.getByText("Agreement exchange is already completed.")).toBeVisible();
-    await user.click(screen.getByRole("button", { name: "Final refuse" }));
+    expect(screen.getByText("Договорной обмен уже завершён.")).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Финально отказаться" }));
 
     expect(mutate).not.toHaveBeenCalled();
   });
@@ -141,9 +141,9 @@ describe("FinalRefuseAgreementExchangeForm", () => {
     render(<FinalRefuseAgreementExchangeForm exchangeId={77} />);
 
     expect(
-      screen.getByRole("button", { name: "Refusing exchange..." }),
+      screen.getByRole("button", { name: "Отказываемся от обмена..." }),
     ).toBeDisabled();
-    expect(screen.getByLabelText("Final refusal reason")).toBeDisabled();
+    expect(screen.getByLabelText("Причина финального отказа")).toBeDisabled();
     expect(screen.getByRole("alert")).toHaveTextContent(
       "Exchange cannot be finally refused.",
     );

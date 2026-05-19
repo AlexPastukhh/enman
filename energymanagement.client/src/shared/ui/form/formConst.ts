@@ -4,9 +4,9 @@ export class  formConst{
     static rootErrorId="formRootErrors"
     static labelForRootErrors="formRootErrorsLabel"
 
-    static ariaLabelShowPwd="Show Password"
-    static ariaLabelHidePwd="Hide Password"
-    static errorsAriaLabelPrefix="Errors For "
+    static ariaLabelShowPwd="Показать пароль"
+    static ariaLabelHidePwd="Скрыть пароль"
+    static errorsAriaLabelPrefix="Ошибки поля "
     static getAriaLabelForError=(inputId:string)=>{
         return this.errorsAriaLabelPrefix+inputId
     }

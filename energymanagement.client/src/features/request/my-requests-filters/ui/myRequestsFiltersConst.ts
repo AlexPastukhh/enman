@@ -7,7 +7,7 @@ export const myRequestsFiltersConst = {
   resetButtonText: "Сбросить фильтры",
   statusOptions: {
     InReview: "На рассмотрении",
-    Approved: "Одобрено",
-    Rejected: "Отклонено",
+    Approved: "Одобрена",
+    Rejected: "Отклонена",
   } satisfies Record<MyRequestStatus, string>,
 } as const;

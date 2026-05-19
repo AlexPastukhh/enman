@@ -45,7 +45,7 @@ vi.mock("../../../../features/agreement-exchange/send-proposal/ui/SendAgreementP
     requestId: number;
   }) => (
     <div data-testid="send-proposal-form">
-      Send proposal form {disabled ? "disabled" : "enabled"} for request {requestId}
+      Форма отправки предложения {disabled ? "недоступна" : "доступна"} для заявки {requestId}
     </div>
   ),
   __esModule: true,
@@ -54,7 +54,7 @@ vi.mock("../../../../features/agreement-exchange/send-proposal/ui/SendAgreementP
 vi.mock("../../../../features/agreement-exchange/final-refuse/ui/FinalRefuseAgreementExchangeForm", () => ({
   FinalRefuseAgreementExchangeForm: ({ disabled }: { disabled?: boolean }) => (
     <div data-testid="final-refuse-form">
-      Final refuse form {disabled ? "disabled" : "enabled"}
+      Форма финального отказа {disabled ? "недоступна" : "доступна"}
     </div>
   ),
   __esModule: true,
@@ -126,24 +126,24 @@ describe("EmployeeAgreementExchangeDetailsPage", () => {
     renderPage();
 
     expect(
-      screen.getByRole("heading", { name: "Agreement exchange details" }),
+      screen.getByRole("heading", { name: "Детали договорного обмена" }),
     ).toBeVisible();
     expect(mockedUseAgreementExchangeDetailsQuery).toHaveBeenCalledWith({
       exchangeId: 20,
       enabled: true,
     });
-    expect(screen.getByRole("heading", { name: "Exchange #20" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Version 2 from Client" })).toBeVisible();
-    expect(screen.getByRole("link", { name: "Back to agreement exchanges" })).toHaveAttribute(
+    expect(screen.getByRole("heading", { name: "Обмен #20" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Версия 2, автор: Клиент" })).toBeVisible();
+    expect(screen.getByRole("link", { name: "Вернуться к договорным обменам" })).toHaveAttribute(
       "href",
       "/employee/agreements",
     );
     expect(screen.getByTestId("send-proposal-form")).toBeVisible();
     expect(screen.getByTestId("send-proposal-form")).toHaveTextContent(
-      "for request 10",
+      "для заявки 10",
     );
     expect(screen.getByTestId("final-refuse-form")).toHaveTextContent(
-      "Final refuse form enabled",
+      "Форма финального отказа доступна",
     );
   });
 
@@ -159,7 +159,7 @@ describe("EmployeeAgreementExchangeDetailsPage", () => {
     renderPage();
 
     expect(screen.getByRole("alert")).toHaveTextContent(
-      "This page is available only to Employees.",
+      "Эта страница доступна только сотрудникам.",
     );
     expect(mockedUseAgreementExchangeDetailsQuery).toHaveBeenCalledWith({
       exchangeId: 20,

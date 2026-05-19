@@ -83,9 +83,9 @@ describe("buildCreateConnectionRequestDto", () => {
       }),
     ).toMatchObject({
       existingApplicantPartyId:
-        "Choose a saved Applicant Party or enter new applicant data.",
-      details: "Request details is required.",
-      postalCode: "Postal code is required.",
+        "Выберите сохранённого заявителя или введите новые данные заявителя.",
+      details: "Описание заявки: заполните поле.",
+      postalCode: "Почтовый индекс: заполните поле.",
     });
   });
 });

@@ -58,9 +58,9 @@ describe("StartAgreementExchangeForm", () => {
 
     render(<StartAgreementExchangeForm requestId={42} />);
 
-    await user.upload(screen.getByLabelText("Initial proposal document"), file);
-    await user.type(screen.getByLabelText("Initial proposal comment"), " First proposal. ");
-    await user.click(screen.getByRole("button", { name: "Start agreement exchange" }));
+    await user.upload(screen.getByLabelText("Первичный документ предложения"), file);
+    await user.type(screen.getByLabelText("Комментарий к первичному предложению"), " First proposal. ");
+    await user.click(screen.getByRole("button", { name: "Начать договорной обмен" }));
 
     await waitFor(() => {
       expect(mockedUploadAgreementProposalDocument).toHaveBeenCalledWith({
@@ -84,10 +84,10 @@ describe("StartAgreementExchangeForm", () => {
 
     render(<StartAgreementExchangeForm requestId={42} />);
 
-    await user.click(screen.getByRole("button", { name: "Start agreement exchange" }));
+    await user.click(screen.getByRole("button", { name: "Начать договорной обмен" }));
 
     expect(screen.getByRole("alert")).toHaveTextContent(
-      "Choose an initial proposal document.",
+      "Выберите первичный документ предложения.",
     );
     expect(mockedUploadAgreementProposalDocument).not.toHaveBeenCalled();
     expect(mutate).not.toHaveBeenCalled();
@@ -100,14 +100,14 @@ describe("StartAgreementExchangeForm", () => {
       <StartAgreementExchangeForm
         requestId={42}
         disabled
-        unavailableReason="Agreement exchange can be started only after approval."
+        unavailableReason="Договорной обмен можно начать только после одобрения."
       />,
     );
 
     expect(
-      screen.getByText("Agreement exchange can be started only after approval."),
+      screen.getByText("Договорной обмен можно начать только после одобрения."),
     ).toBeVisible();
-    await user.click(screen.getByRole("button", { name: "Start agreement exchange" }));
+    await user.click(screen.getByRole("button", { name: "Начать договорной обмен" }));
 
     expect(mockedUploadAgreementProposalDocument).not.toHaveBeenCalled();
     expect(mutate).not.toHaveBeenCalled();
@@ -124,9 +124,9 @@ describe("StartAgreementExchangeForm", () => {
     render(<StartAgreementExchangeForm requestId={42} />);
 
     expect(
-      screen.getByRole("button", { name: "Starting exchange..." }),
+      screen.getByRole("button", { name: "Начинаем обмен..." }),
     ).toBeDisabled();
-    expect(screen.getByLabelText("Initial proposal document")).toBeDisabled();
+    expect(screen.getByLabelText("Первичный документ предложения")).toBeDisabled();
     expect(screen.getByRole("alert")).toHaveTextContent(
       "Agreement exchange already exists.",
     );

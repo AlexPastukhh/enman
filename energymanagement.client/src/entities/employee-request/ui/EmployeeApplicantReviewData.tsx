@@ -1,6 +1,9 @@
 import type { EmployeeRequestDetails } from "../model/employeeRequestTypes";
 import { employeeRequestDetailsConst } from "./employeeRequestDetailsConst";
-import { valueOrUnknown } from "./formatEmployeeRequestDetails";
+import {
+  formatEmployeeApplicantType,
+  valueOrUnknown,
+} from "./formatEmployeeRequestDetails";
 
 type EmployeeApplicantReviewDataProps = {
   details: EmployeeRequestDetails;
@@ -26,7 +29,7 @@ export const EmployeeApplicantReviewData = ({
         </div>
         <div>
           <dt>{employeeRequestDetailsConst.applicantTypeLabel}</dt>
-          <dd>{valueOrUnknown(applicant?.applicantPartyType)}</dd>
+          <dd>{formatEmployeeApplicantType(applicant?.applicantPartyType)}</dd>
         </div>
         <div>
           <dt>{employeeRequestDetailsConst.applicantEmailLabel}</dt>

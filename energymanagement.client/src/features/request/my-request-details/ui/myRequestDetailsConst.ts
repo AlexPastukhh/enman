@@ -24,4 +24,17 @@ export const myRequestDetailsConst = {
   decidedAtLabel: "Дата решения",
   rejectionReasonLabel: "Причина отклонения",
   unknownValue: "—",
+  statusLabels: {
+    InReview: "На рассмотрении",
+    Approved: "Одобрена",
+    Rejected: "Отклонена",
+    AgreementExchangeFailed: "Договорной обмен не завершён",
+  },
+  requestTypeLabels: {
+    Connection: "Подключение",
+  },
+  decisionLabels: {
+    Approved: "Одобрена",
+    Rejected: "Отклонена",
+  },
 } as const;

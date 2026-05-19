@@ -1,6 +1,7 @@
 import type { MyRequestDetails } from "../../../../entities/request/model/requestTypes";
 import {
   formatMyRequestDate,
+  formatMyRequestDecision,
   valueOrUnknown,
 } from "./formatMyRequestDetails";
 import { myRequestDetailsConst } from "./myRequestDetailsConst";
@@ -25,7 +26,7 @@ export const MyRequestReviewResult = ({ request }: MyRequestReviewResultProps) =
         <dl className="myRequestDetailsDefinitionList">
           <div className="myRequestDetailsDefinitionList__row">
             <dt>{myRequestDetailsConst.decisionLabel}</dt>
-            <dd>{valueOrUnknown(reviewResult.decision)}</dd>
+            <dd>{formatMyRequestDecision(reviewResult.decision)}</dd>
           </div>
           <div className="myRequestDetailsDefinitionList__row">
             <dt>{myRequestDetailsConst.decidedAtLabel}</dt>

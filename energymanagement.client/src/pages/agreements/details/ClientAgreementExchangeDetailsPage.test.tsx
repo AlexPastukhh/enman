@@ -39,7 +39,7 @@ vi.mock("../../../shared/ui/layout/Footer", () => ({
 vi.mock("../../../features/agreement-exchange/accept-proposal/ui/AcceptAgreementProposalButton", () => ({
   AcceptAgreementProposalButton: ({ disabled }: { disabled?: boolean }) => (
     <div data-testid="accept-proposal-button">
-      Accept proposal {disabled ? "disabled" : "enabled"}
+      Принять предложение {disabled ? "недоступно" : "доступно"}
     </div>
   ),
   __esModule: true,
@@ -54,7 +54,7 @@ vi.mock("../../../features/agreement-exchange/send-proposal/ui/SendAgreementProp
     requestId: number;
   }) => (
     <div data-testid="send-proposal-form">
-      Send proposal form {disabled ? "disabled" : "enabled"} for request {requestId}
+      Форма отправки предложения {disabled ? "недоступна" : "доступна"} для заявки {requestId}
     </div>
   ),
   __esModule: true,
@@ -130,17 +130,17 @@ describe("ClientAgreementExchangeDetailsPage", () => {
       exchangeId: 20,
       enabled: true,
     });
-    expect(screen.getByRole("heading", { name: "Exchange #20" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Обмен #20" })).toBeVisible();
     expect(screen.getByRole("link", { name: "Вернуться к моим договорам" })).toHaveAttribute(
       "href",
       "/agreements",
     );
     expect(screen.getByTestId("accept-proposal-button")).toHaveTextContent(
-      "Accept proposal enabled",
+      "Принять предложение доступно",
     );
     expect(screen.getByTestId("send-proposal-form")).toBeVisible();
     expect(screen.getByTestId("send-proposal-form")).toHaveTextContent(
-      "for request 10",
+      "для заявки 10",
     );
   });
 

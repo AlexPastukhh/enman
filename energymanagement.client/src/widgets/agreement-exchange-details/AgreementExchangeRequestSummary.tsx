@@ -1,5 +1,6 @@
 import type { AgreementExchangeRequestSummary as AgreementExchangeRequestSummaryModel } from "../../entities/agreement-exchange/model/agreementExchangeTypes";
 import { agreementExchangeDetailsConst } from "./agreementExchangeDetailsConst";
+import { formatRequestStatus } from "./formatAgreementExchangeDetails";
 
 type AgreementExchangeRequestSummaryProps = {
   request: AgreementExchangeRequestSummaryModel;
@@ -17,16 +18,16 @@ export const AgreementExchangeRequestSummary = ({
     </h3>
     <dl>
       <div>
-        <dt>Request</dt>
-        <dd>{request.requestDisplayName ?? `Request #${request.requestId}`}</dd>
+        <dt>{agreementExchangeDetailsConst.requestLabel}</dt>
+        <dd>{request.requestDisplayName ?? `Заявка #${request.requestId}`}</dd>
       </div>
       <div>
-        <dt>Request status</dt>
-        <dd>{request.requestStatus}</dd>
+        <dt>{agreementExchangeDetailsConst.requestStatusLabel}</dt>
+        <dd>{formatRequestStatus(request.requestStatus)}</dd>
       </div>
       {request.objectAddress && (
         <div>
-          <dt>Object address</dt>
+          <dt>{agreementExchangeDetailsConst.objectAddressLabel}</dt>
           <dd>{request.objectAddress}</dd>
         </div>
       )}

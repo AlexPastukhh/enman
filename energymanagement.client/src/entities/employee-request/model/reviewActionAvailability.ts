@@ -23,7 +23,7 @@ export const getEmployeeReviewActionAvailability = (
       canStartReview: false,
       canApproveReview: true,
       canRejectReview: true,
-      reason: "Review is already started by the current Employee.",
+      reason: "Рассмотрение уже начато текущим сотрудником.",
     };
   }
 
@@ -32,7 +32,7 @@ export const getEmployeeReviewActionAvailability = (
       canStartReview: false,
       canApproveReview: false,
       canRejectReview: false,
-      reason: "Another Employee has already started this review.",
+      reason: "Другой сотрудник уже начал рассмотрение этой заявки.",
     };
   }
 
@@ -41,7 +41,7 @@ export const getEmployeeReviewActionAvailability = (
       canStartReview: false,
       canApproveReview: false,
       canRejectReview: false,
-      reason: "Review is already completed.",
+      reason: "Рассмотрение уже завершено.",
     };
   }
 
@@ -49,6 +49,6 @@ export const getEmployeeReviewActionAvailability = (
     canStartReview: false,
     canApproveReview: false,
     canRejectReview: false,
-    reason: "Review actions are unavailable for this request status.",
+    reason: "Действия рассмотрения недоступны для текущего статуса заявки.",
   };
 };

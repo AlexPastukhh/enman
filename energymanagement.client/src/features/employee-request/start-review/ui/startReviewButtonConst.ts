@@ -1,6 +1,7 @@
 export const startReviewButtonConst = {
-  actionLabel: "Start review",
-  pendingLabel: "Starting review...",
-  defaultUnavailableReason: "Start review is not available for this request.",
-  defaultErrorMessage: "Could not start review. Refresh request state and try again.",
+  actionLabel: "Начать рассмотрение",
+  pendingLabel: "Начинаем рассмотрение...",
+  defaultUnavailableReason: "Начать рассмотрение этой заявки сейчас нельзя.",
+  defaultErrorMessage:
+    "Не удалось начать рассмотрение. Обновите состояние заявки и попробуйте ещё раз.",
 } as const;

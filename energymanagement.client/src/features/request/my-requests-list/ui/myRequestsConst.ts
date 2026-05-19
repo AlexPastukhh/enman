@@ -11,7 +11,8 @@ export const myRequestsConst = {
   emptyTitle: "У вас пока нет заявок.",
   emptyDescription: "Созданные заявки появятся здесь.",
   filteredEmptyTitle: "Заявок с выбранным фильтром не найдено.",
-  filteredEmptyDescription: "Измените или сбросьте фильтры, чтобы увидеть другие заявки.",
+  filteredEmptyDescription:
+    "Измените или сбросьте фильтры, чтобы увидеть другие заявки.",
   filteredEmptyResetText: "Сбросить фильтры",
   requestTitlePrefix: "Заявка",
   requestTypeLabel: "Тип заявки",
@@ -21,4 +22,13 @@ export const myRequestsConst = {
   objectAddressLabel: "Адрес объекта",
   detailsLinkText: "Открыть детали",
   unknownValue: "—",
+  statusLabels: {
+    InReview: "На рассмотрении",
+    Approved: "Одобрена",
+    Rejected: "Отклонена",
+    AgreementExchangeFailed: "Договорной обмен не завершён",
+  },
+  requestTypeLabels: {
+    Connection: "Подключение",
+  },
 } as const;

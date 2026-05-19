@@ -42,8 +42,8 @@ vi.mock(
   "../../features/applicant-party/create-individual/ui/CreateIndividualApplicantPartyForm",
   () => ({
     CreateIndividualApplicantPartyForm: () => (
-      <form aria-label="Create applicant party">
-        <button type="submit">Save applicant data</button>
+      <form aria-label="Создание заявителя">
+        <button type="submit">Сохранить данные заявителя</button>
       </form>
     ),
     __esModule: true,
@@ -126,9 +126,9 @@ describe("AccountPage", () => {
 
     render(<AccountPage />);
 
-    expect(screen.getByText("No saved Applicant Parties yet.")).toBeVisible();
+    expect(screen.getByText("Сохранённых заявителей пока нет.")).toBeVisible();
     expect(
-      screen.getByRole("form", { name: "Create applicant party" }),
+      screen.getByRole("form", { name: "Создание заявителя" }),
     ).toBeInTheDocument();
   });
 
@@ -177,11 +177,11 @@ describe("AccountPage", () => {
 
     expect(screen.getByText("John Doe")).toBeVisible();
     expect(screen.getByText("Jane Doe")).toBeVisible();
-    expect(screen.getByText("Current/default", { exact: true })).toBeVisible();
+    expect(screen.getByText("Текущий", { exact: true })).toBeVisible();
     expect(screen.getByText("applicant.l1@example.com")).toBeVisible();
     expect(screen.getByText("applicant.two@example.com")).toBeVisible();
     expect(
-      screen.getByRole("button", { name: "Make current/default" }),
+      screen.getByRole("button", { name: "Сделать текущим" }),
     ).toBeVisible();
   });
 });

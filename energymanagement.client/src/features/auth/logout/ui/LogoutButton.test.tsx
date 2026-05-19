@@ -44,7 +44,7 @@ const routes: RouteObject[] = [
     element: (
       <>
         <Header />
-        <main>Home public</main>
+        <main>Главная страница</main>
       </>
     ),
   },
@@ -125,7 +125,7 @@ describe("LogoutButton", () => {
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/");
     });
-    expect(await screen.findByText("Home public")).toBeVisible();
+    expect(await screen.findByText("Главная страница")).toBeVisible();
     expect(
       screen.queryByRole("button", { name: headerConst.logoutButtonText }),
     ).not.toBeInTheDocument();
@@ -143,7 +143,7 @@ describe("LogoutButton", () => {
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/");
     });
-    expect(await screen.findByText("Home public")).toBeVisible();
+    expect(await screen.findByText("Главная страница")).toBeVisible();
     expect(
       screen.queryByRole("button", { name: headerConst.logoutButtonText }),
     ).not.toBeInTheDocument();
@@ -159,7 +159,7 @@ describe("LogoutButton", () => {
     );
 
     expect(await screen.findByRole("alert")).toHaveTextContent(
-      "Something went wrong",
+      "Не удалось выполнить действие. Попробуйте ещё раз.",
     );
     expect(router.state.location.pathname).toBe("/account");
     expect(screen.getByText("Authenticated account")).toBeVisible();

@@ -38,7 +38,7 @@ describe("AcceptAgreementProposalButton", () => {
 
     render(<AcceptAgreementProposalButton exchangeId={77} />);
 
-    await user.click(screen.getByRole("button", { name: "Accept proposal" }));
+    await user.click(screen.getByRole("button", { name: "Принять предложение" }));
 
     expect(mutate).toHaveBeenCalledWith(77, expect.any(Object));
   });
@@ -48,14 +48,14 @@ describe("AcceptAgreementProposalButton", () => {
 
     render(<AcceptAgreementProposalButton exchangeId={77} requireConfirmation />);
 
-    await user.click(screen.getByRole("button", { name: "Accept proposal" }));
+    await user.click(screen.getByRole("button", { name: "Принять предложение" }));
 
     expect(mutate).not.toHaveBeenCalled();
     expect(
-      screen.getByText(/Accepting is a final positive agreement decision/i),
+      screen.getByText(/Принятие является итоговым положительным решением/i),
     ).toBeVisible();
 
-    await user.click(screen.getByRole("button", { name: "Confirm acceptance" }));
+    await user.click(screen.getByRole("button", { name: "Подтвердить принятие" }));
 
     expect(mutate).toHaveBeenCalledWith(77, expect.any(Object));
   });
@@ -71,7 +71,7 @@ describe("AcceptAgreementProposalButton", () => {
     render(<AcceptAgreementProposalButton exchangeId={77} />);
 
     expect(
-      screen.getByRole("button", { name: "Accepting proposal..." }),
+      screen.getByRole("button", { name: "Принимаем предложение..." }),
     ).toBeDisabled();
   });
 
@@ -82,15 +82,15 @@ describe("AcceptAgreementProposalButton", () => {
       <AcceptAgreementProposalButton
         exchangeId={77}
         disabled
-        unavailableReason="Agreement exchange is not awaiting Client confirmation."
+        unavailableReason="Договорной обмен не ожидает подтверждения клиента."
       />,
     );
 
     expect(
-      screen.getByText("Agreement exchange is not awaiting Client confirmation."),
+      screen.getByText("Договорной обмен не ожидает подтверждения клиента."),
     ).toBeVisible();
 
-    await user.click(screen.getByRole("button", { name: "Accept proposal" }));
+    await user.click(screen.getByRole("button", { name: "Принять предложение" }));
 
     expect(mutate).not.toHaveBeenCalled();
   });

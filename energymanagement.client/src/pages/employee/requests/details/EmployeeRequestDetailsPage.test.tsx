@@ -40,7 +40,7 @@ vi.mock("../../../../shared/ui/layout/Footer", () => ({
 vi.mock("../../../../features/employee-request/start-review/ui/StartReviewButton", () => ({
   StartReviewButton: ({ disabled }: { disabled?: boolean }) => (
     <button type="button" disabled={disabled}>
-      Start review
+      Начать рассмотрение
     </button>
   ),
   __esModule: true,
@@ -49,7 +49,7 @@ vi.mock("../../../../features/employee-request/start-review/ui/StartReviewButton
 vi.mock("../../../../features/employee-request/approve-review/ui/ApproveReviewButton", () => ({
   ApproveReviewButton: ({ disabled }: { disabled?: boolean }) => (
     <button type="button" disabled={disabled}>
-      Approve review
+      Одобрить заявку
     </button>
   ),
   __esModule: true,
@@ -58,7 +58,7 @@ vi.mock("../../../../features/employee-request/approve-review/ui/ApproveReviewBu
 vi.mock("../../../../features/employee-request/reject-review/ui/RejectReviewForm", () => ({
   RejectReviewForm: ({ disabled }: { disabled?: boolean }) => (
     <button type="button" disabled={disabled}>
-      Reject review
+      Отклонить заявку
     </button>
   ),
   __esModule: true,
@@ -67,7 +67,7 @@ vi.mock("../../../../features/employee-request/reject-review/ui/RejectReviewForm
 vi.mock("../../../../features/agreement-exchange/start-exchange/ui/StartAgreementExchangeForm", () => ({
   StartAgreementExchangeForm: ({ disabled }: { disabled?: boolean }) => (
     <button type="button" disabled={disabled}>
-      Start agreement exchange
+      Начать договорной обмен
     </button>
   ),
   __esModule: true,
@@ -131,15 +131,15 @@ describe("EmployeeRequestDetailsPage", () => {
       enabled: true,
     });
     expect(
-      screen.getByRole("heading", { name: "Employee Request Details" }),
+      screen.getByRole("heading", { name: "Рассмотрение заявки" }),
     ).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Request #42" })).toBeVisible();
-    expect(screen.getByText("Start review is available.")).toBeVisible();
-    expect(screen.getByRole("button", { name: "Start review" })).toBeVisible();
-    expect(screen.getByRole("button", { name: "Approve review" })).toBeDisabled();
-    expect(screen.getByRole("button", { name: "Reject review" })).toBeDisabled();
+    expect(screen.getByRole("heading", { name: "Заявка #42" })).toBeVisible();
+    expect(screen.getByText("Можно начать рассмотрение.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Начать рассмотрение" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Одобрить заявку" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Отклонить заявку" })).toBeDisabled();
     expect(
-      screen.getByRole("button", { name: "Start agreement exchange" }),
+      screen.getByRole("button", { name: "Начать договорной обмен" }),
     ).toBeDisabled();
   });
 
@@ -169,10 +169,14 @@ describe("EmployeeRequestDetailsPage", () => {
 
     renderPage();
 
-    expect(screen.getByText("Approve is available after review is started by current Employee.")).toBeVisible();
-    expect(screen.getByRole("button", { name: "Approve review" })).toBeEnabled();
-    expect(screen.getByRole("button", { name: "Reject review" })).toBeEnabled();
-    expect(screen.getByRole("button", { name: "Start review" })).toBeDisabled();
+    expect(
+      screen.getByText(
+        "Одобрение доступно после начала рассмотрения текущим сотрудником.",
+      ),
+    ).toBeVisible();
+    expect(screen.getByRole("button", { name: "Одобрить заявку" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Отклонить заявку" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Начать рассмотрение" })).toBeDisabled();
   });
 
 
@@ -203,11 +207,11 @@ describe("EmployeeRequestDetailsPage", () => {
     renderPage();
 
     expect(
-      screen.getByRole("button", { name: "Start agreement exchange" }),
+      screen.getByRole("button", { name: "Начать договорной обмен" }),
     ).toBeEnabled();
-    expect(screen.getByRole("button", { name: "Start review" })).toBeDisabled();
-    expect(screen.getByRole("button", { name: "Approve review" })).toBeDisabled();
-    expect(screen.getByRole("button", { name: "Reject review" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Начать рассмотрение" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Одобрить заявку" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Отклонить заявку" })).toBeDisabled();
   });
 
   it("shows sign-in state without session", () => {
@@ -216,7 +220,7 @@ describe("EmployeeRequestDetailsPage", () => {
     renderPage();
 
     expect(
-      screen.getByText("Sign in as Employee to view request details"),
+      screen.getByText("Войдите как сотрудник, чтобы открыть детали заявки"),
     ).toBeVisible();
     expect(mockedUseEmployeeRequestDetailsQuery).toHaveBeenCalledWith({
       requestId: 42,
@@ -235,7 +239,7 @@ describe("EmployeeRequestDetailsPage", () => {
 
     renderPage();
 
-    expect(screen.getByText("Employee access required")).toBeVisible();
+    expect(screen.getByText("Требуется доступ сотрудника")).toBeVisible();
     expect(mockedUseEmployeeRequestDetailsQuery).toHaveBeenCalledWith({
       requestId: 42,
       enabled: false,
@@ -245,7 +249,7 @@ describe("EmployeeRequestDetailsPage", () => {
   it("shows not-found state for invalid route id", () => {
     renderPage("/employee/requests/not-a-number");
 
-    expect(screen.getByText("Employee request details not found.")).toBeVisible();
+    expect(screen.getByText("Детали заявки не найдены.")).toBeVisible();
     expect(mockedUseEmployeeRequestDetailsQuery).toHaveBeenCalledWith({
       requestId: 0,
       enabled: false,
@@ -262,6 +266,6 @@ describe("EmployeeRequestDetailsPage", () => {
 
     renderPage();
 
-    expect(screen.getByText("Employee request details not found.")).toBeVisible();
+    expect(screen.getByText("Детали заявки не найдены.")).toBeVisible();
   });
 });

@@ -1,6 +1,8 @@
 import type { EmployeeRequestDetails } from "../model/employeeRequestTypes";
 import { employeeRequestDetailsConst } from "./employeeRequestDetailsConst";
 import {
+  formatEmployeeRequestDetailsStatus,
+  formatEmployeeRequestDetailsType,
   formatEmployeeRequestDetailsDate,
   valueOrUnknown,
 } from "./formatEmployeeRequestDetails";
@@ -22,11 +24,11 @@ export const EmployeeRequestStatusPanel = ({
     <dl className="employeeRequestDetailsDefinitionList">
       <div>
         <dt>{employeeRequestDetailsConst.statusLabel}</dt>
-        <dd>{valueOrUnknown(details.status)}</dd>
+        <dd>{formatEmployeeRequestDetailsStatus(details.status)}</dd>
       </div>
       <div>
         <dt>{employeeRequestDetailsConst.requestTypeLabel}</dt>
-        <dd>{valueOrUnknown(details.requestType)}</dd>
+        <dd>{formatEmployeeRequestDetailsType(details.requestType)}</dd>
       </div>
       <div>
         <dt>{employeeRequestDetailsConst.createdAtLabel}</dt>

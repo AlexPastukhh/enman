@@ -1,9 +1,9 @@
 export const acceptAgreementProposalButtonConst = {
-  actionLabel: "Accept proposal",
-  confirmationLabel: "Confirm acceptance",
-  cancelConfirmationLabel: "Cancel acceptance",
+  actionLabel: "Принять предложение",
+  confirmationLabel: "Подтвердить принятие",
+  cancelConfirmationLabel: "Отменить принятие",
   confirmationText:
-    "Accepting is a final positive agreement decision. Confirm that you want to accept the active Employee proposal.",
-  pendingLabel: "Accepting proposal...",
-  defaultErrorMessage: "Could not accept agreement proposal.",
+    "Принятие является итоговым положительным решением по договору. Подтвердите, что хотите принять активное предложение сотрудника.",
+  pendingLabel: "Принимаем предложение...",
+  defaultErrorMessage: "Не удалось принять предложение.",
 } as const;

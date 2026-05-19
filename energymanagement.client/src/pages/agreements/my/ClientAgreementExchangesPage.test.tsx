@@ -91,7 +91,7 @@ describe("ClientAgreementExchangesPage", () => {
     expect(
       screen.getByRole("heading", { name: "Connection request #10" }),
     ).toBeVisible();
-    expect(screen.getByRole("link", { name: "Open exchange details" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Открыть детали обмена" })).toHaveAttribute(
       "href",
       "/agreements/20",
     );

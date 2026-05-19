@@ -3,6 +3,7 @@ import { AgreementDocumentRefList } from "./AgreementDocumentRefList";
 import { agreementExchangeDetailsConst } from "./agreementExchangeDetailsConst";
 import {
   formatProposalSender,
+  formatProposalState,
   formatProposalVersion,
 } from "./formatAgreementExchangeDetails";
 
@@ -28,15 +29,15 @@ export const AgreementActiveProposalPanel = ({
         <h4>{formatProposalVersion(proposal.version, proposal.sender)}</h4>
         <dl>
           <div>
-            <dt>Sender</dt>
+            <dt>{agreementExchangeDetailsConst.senderLabel}</dt>
             <dd>{formatProposalSender(proposal.sender, proposal.senderId)}</dd>
           </div>
           <div>
-            <dt>State</dt>
-            <dd>{proposal.state}</dd>
+            <dt>{agreementExchangeDetailsConst.stateLabel}</dt>
+            <dd>{formatProposalState(proposal.state)}</dd>
           </div>
           <div>
-            <dt>Created</dt>
+            <dt>{agreementExchangeDetailsConst.createdAtLabel}</dt>
             <dd>{proposal.createdAt}</dd>
           </div>
         </dl>

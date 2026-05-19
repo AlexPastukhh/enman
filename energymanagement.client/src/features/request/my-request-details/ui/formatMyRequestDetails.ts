@@ -20,6 +20,27 @@ export const formatMyRequestDate = (value?: string) => {
 export const valueOrUnknown = (value?: string | null) =>
   value?.trim() ? value : myRequestDetailsConst.unknownValue;
 
+export const formatMyRequestStatus = (status?: string | null) =>
+  status
+    ? myRequestDetailsConst.statusLabels[
+        status as keyof typeof myRequestDetailsConst.statusLabels
+      ] ?? status
+    : myRequestDetailsConst.unknownValue;
+
+export const formatMyRequestType = (requestType?: string | null) =>
+  requestType
+    ? myRequestDetailsConst.requestTypeLabels[
+        requestType as keyof typeof myRequestDetailsConst.requestTypeLabels
+      ] ?? requestType
+    : myRequestDetailsConst.unknownValue;
+
+export const formatMyRequestDecision = (decision?: string | null) =>
+  decision
+    ? myRequestDetailsConst.decisionLabels[
+        decision as keyof typeof myRequestDetailsConst.decisionLabels
+      ] ?? decision
+    : myRequestDetailsConst.unknownValue;
+
 export const formatMyRequestAddress = (
   address?: components["schemas"]["AddressDto"],
 ) => {

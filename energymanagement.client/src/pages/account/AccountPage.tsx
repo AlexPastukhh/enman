@@ -59,53 +59,59 @@ const AccountPage = () => {
 
   return (
     <main className="content">
-        {!session && (
-          <section className="accountPage__signedOut pageCard" aria-labelledby="account-signed-out-heading">
-            <p className="pageEyebrow">Личный кабинет</p>
-            <h1 className="pageTitle" id="account-signed-out-heading">
-              Войдите, чтобы управлять данными заявителя
-            </h1>
-            <p className="pageDescription">
-              После входа здесь будут доступны сохранённые заявители,
-              текущий/default заявитель и форма добавления данных.
-            </p>
-            <div className="accountPage__actions">
-              <NavLink className="button-primary" to={clientRoutes.login}>
-                Войти
-              </NavLink>
-              <NavLink className="button-hollow" to={clientRoutes.register}>
-                Зарегистрироваться
-              </NavLink>
-            </div>
-          </section>
-        )}
+      {!session && (
+        <section
+          className="accountPage__signedOut pageCard"
+          aria-labelledby="account-signed-out-heading"
+        >
+          <p className="pageEyebrow">Личный кабинет</p>
+          <h1 className="pageTitle" id="account-signed-out-heading">
+            Войдите, чтобы управлять данными заявителя
+          </h1>
+          <p className="pageDescription">
+            После входа здесь будут доступны сохранённые заявители, текущий
+            заявитель и форма добавления данных.
+          </p>
+          <div className="accountPage__actions">
+            <NavLink className="button-primary" to={clientRoutes.login}>
+              Войти
+            </NavLink>
+            <NavLink className="button-hollow" to={clientRoutes.register}>
+              Зарегистрироваться
+            </NavLink>
+          </div>
+        </section>
+      )}
 
-        {session && (
-          <section className="accountPage__panel pageCard" aria-labelledby="account-page-heading">
-            <p className="pageEyebrow">Личный кабинет</p>
-            <h1 id="account-page-heading" className="pageTitle">
-              Данные аккаунта
-            </h1>
-            <p className="pageDescription">{session.email}</p>
+      {session && (
+        <section
+          className="accountPage__panel pageCard"
+          aria-labelledby="account-page-heading"
+        >
+          <p className="pageEyebrow">Личный кабинет</p>
+          <h1 id="account-page-heading" className="pageTitle">
+            Данные аккаунта
+          </h1>
+          <p className="pageDescription">{session.email}</p>
 
-            {accountApplicantPartiesQuery.isPending && (
-              <p>Loading applicant parties...</p>
-            )}
-            {accountApplicantPartiesQuery.isError && (
-              <p role="alert">Applicant parties could not be loaded.</p>
-            )}
-            {accountApplicantPartiesQuery.data && (
-              <ApplicantPartiesList
-                applicantParties={applicantParties}
-                renderApplicantPartyActions={renderMakeCurrentDefaultAction}
-              />
-            )}
-
-            <CreateIndividualApplicantPartyForm
-              onSuccess={handleApplicantPartyCreated}
+          {accountApplicantPartiesQuery.isPending && (
+            <p>Загружаем заявителей...</p>
+          )}
+          {accountApplicantPartiesQuery.isError && (
+            <p role="alert">Не удалось загрузить заявителей.</p>
+          )}
+          {accountApplicantPartiesQuery.data && (
+            <ApplicantPartiesList
+              applicantParties={applicantParties}
+              renderApplicantPartyActions={renderMakeCurrentDefaultAction}
             />
-          </section>
-        )}
+          )}
+
+          <CreateIndividualApplicantPartyForm
+            onSuccess={handleApplicantPartyCreated}
+          />
+        </section>
+      )}
     </main>
   );
 };

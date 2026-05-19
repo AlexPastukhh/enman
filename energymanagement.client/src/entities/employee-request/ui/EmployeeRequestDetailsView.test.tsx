@@ -31,16 +31,16 @@ describe("EmployeeRequestDetailsView", () => {
   it("renders employee request details and applicant review data", () => {
     render(<EmployeeRequestDetailsView details={baseDetails} />);
 
-    expect(screen.getByRole("heading", { name: "Request #42" })).toBeVisible();
-    expect(screen.getByText("InReview")).toBeVisible();
-    expect(screen.getByText("Connection")).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Заявка #42" })).toBeVisible();
+    expect(screen.getByText("На рассмотрении")).toBeVisible();
+    expect(screen.getByText("Подключение")).toBeVisible();
     expect(screen.getByText("Ivan Petrov")).toBeVisible();
     expect(screen.getByText("ivan@example.com")).toBeVisible();
     expect(screen.getByText("+79001234567")).toBeVisible();
     expect(screen.getByText("Altai Krai, Zarinsk, Lenina 10")).toBeVisible();
     expect(screen.getByText("Please connect the object to the grid.")).toBeVisible();
-    expect(screen.getByText("Not started")).toBeVisible();
-    expect(screen.getByText("Start review is available.")).toBeVisible();
+    expect(screen.getByText("Не начато")).toBeVisible();
+    expect(screen.getByText("Можно начать рассмотрение.")).toBeVisible();
   });
 
   it("renders blocked action state when another Employee started review", () => {
@@ -53,10 +53,10 @@ describe("EmployeeRequestDetailsView", () => {
       />,
     );
 
-    expect(screen.getByText("Started by another Employee")).toBeVisible();
-    expect(screen.getByText("Start review is not available.")).toBeVisible();
+    expect(screen.getByText("Рассматривается другим сотрудником")).toBeVisible();
+    expect(screen.getByText("Начать рассмотрение сейчас нельзя.")).toBeVisible();
     expect(
-      screen.getByText("Another Employee has already started this review."),
+      screen.getByText("Другой сотрудник уже начал рассмотрение этой заявки."),
     ).toBeVisible();
   });
 

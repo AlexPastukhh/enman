@@ -52,7 +52,7 @@ describe("getEmployeeReviewActionAvailability", () => {
       canStartReview: false,
       canApproveReview: false,
       canRejectReview: false,
-      reason: "Another Employee has already started this review.",
+      reason: "Другой сотрудник уже начал рассмотрение этой заявки.",
     });
   });
 

@@ -17,7 +17,7 @@ describe("MakeCurrentDefaultButton", () => {
 
     render(<MakeCurrentDefaultButton onClick={onClick} />);
 
-    await user.click(screen.getByRole("button", { name: "Make current/default" }));
+    await user.click(screen.getByRole("button", { name: "Сделать текущим" }));
 
     expect(onClick).toHaveBeenCalledTimes(1);
   });
@@ -26,12 +26,14 @@ describe("MakeCurrentDefaultButton", () => {
     render(
       <MakeCurrentDefaultButton
         isPending
-        errorMessage="Could not update default"
+        errorMessage="Не удалось обновить текущего заявителя."
         onClick={vi.fn()}
       />,
     );
 
-    expect(screen.getByRole("button", { name: "Making current/default..." })).toBeDisabled();
-    expect(screen.getByRole("alert")).toHaveTextContent("Could not update default");
+    expect(screen.getByRole("button", { name: "Назначаем текущим..." })).toBeDisabled();
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Не удалось обновить текущего заявителя.",
+    );
   });
 });

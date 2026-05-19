@@ -20,8 +20,8 @@ describe("EmployeeRequestDashboardFilters", () => {
       />,
     );
 
-    expect(screen.getByLabelText("Status")).toHaveValue("InReview");
-    expect(screen.getByLabelText("Review state")).toHaveValue("NotStarted");
+    expect(screen.getByLabelText("Статус")).toHaveValue("InReview");
+    expect(screen.getByLabelText("Состояние рассмотрения")).toHaveValue("NotStarted");
   });
 
   it("reports filter changes", async () => {
@@ -36,7 +36,10 @@ describe("EmployeeRequestDashboardFilters", () => {
       />,
     );
 
-    await user.selectOptions(screen.getByLabelText("Review state"), "StartedByAnotherEmployee");
+    await user.selectOptions(
+      screen.getByLabelText("Состояние рассмотрения"),
+      "StartedByAnotherEmployee",
+    );
 
     expect(onChange).toHaveBeenCalledWith({
       reviewState: "StartedByAnotherEmployee",
@@ -55,7 +58,7 @@ describe("EmployeeRequestDashboardFilters", () => {
       />,
     );
 
-    await user.click(screen.getByRole("button", { name: "Reset filters" }));
+    await user.click(screen.getByRole("button", { name: "Сбросить фильтры" }));
 
     expect(onReset).toHaveBeenCalledTimes(1);
   });

@@ -28,7 +28,7 @@ vi.mock(
 
 vi.mock("../../../../features/employee-request/start-review/ui/StartReviewButton", () => ({
   StartReviewButton: ({ requestId }: { requestId: number }) => (
-    <button type="button">Start review #{requestId}</button>
+    <button type="button">Начать рассмотрение #{requestId}</button>
   ),
   __esModule: true,
 }));
@@ -97,10 +97,10 @@ describe("EmployeeDashboardPage", () => {
   it("hosts Start Review action for not-started InReview dashboard rows only", () => {
     renderPage();
 
-    expect(screen.getByRole("heading", { name: "Request #42" })).toBeVisible();
-    expect(screen.getByRole("button", { name: "Start review #42" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Заявка #42" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Начать рассмотрение #42" })).toBeVisible();
     expect(
-      screen.queryByRole("button", { name: "Start review #43" }),
+      screen.queryByRole("button", { name: "Начать рассмотрение #43" }),
     ).not.toBeInTheDocument();
   });
 });

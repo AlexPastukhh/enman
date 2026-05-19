@@ -6,6 +6,13 @@ type ApplicantPartyReadOnlyViewProps = {
   showSuccessNotification?: boolean;
 };
 
+const formatVerificationStatus = (status?: string | null) =>
+  status
+    ? createIndividualApplicantPartyConst.verificationStatusLabels[
+        status as keyof typeof createIndividualApplicantPartyConst.verificationStatusLabels
+      ] ?? status
+    : "—";
+
 export const ApplicantPartyReadOnlyView = ({
   applicantParty,
   showSuccessNotification = false,
@@ -46,7 +53,7 @@ export const ApplicantPartyReadOnlyView = ({
         </div>
         <div className="applicantPartySummary__row">
           <dt>{createIndividualApplicantPartyConst.verificationStatusLabel}</dt>
-          <dd>{applicantParty.verificationStatus}</dd>
+          <dd>{formatVerificationStatus(applicantParty.verificationStatus)}</dd>
         </div>
       </dl>
     </section>

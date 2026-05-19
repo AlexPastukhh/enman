@@ -45,6 +45,20 @@ const formatAddress = (request: MyRequestSummary) => {
 const valueOrUnknown = (value?: string | null) =>
   value?.trim() ? value : myRequestsConst.unknownValue;
 
+const formatStatus = (status?: string | null) =>
+  status
+    ? myRequestsConst.statusLabels[
+        status as keyof typeof myRequestsConst.statusLabels
+      ] ?? status
+    : myRequestsConst.unknownValue;
+
+const formatRequestType = (requestType?: string | null) =>
+  requestType
+    ? myRequestsConst.requestTypeLabels[
+        requestType as keyof typeof myRequestsConst.requestTypeLabels
+      ] ?? requestType
+    : myRequestsConst.unknownValue;
+
 export const MyRequestSummaryCard = ({ request }: MyRequestSummaryCardProps) => {
   const requestId = request.requestId;
   const titleId = `my-request-${requestId ?? "unknown"}-title`;
@@ -60,11 +74,11 @@ export const MyRequestSummaryCard = ({ request }: MyRequestSummaryCardProps) => 
       <dl className="myRequestCard__summary">
         <div className="myRequestCard__row">
           <dt>{myRequestsConst.statusLabel}</dt>
-          <dd>{valueOrUnknown(request.status)}</dd>
+          <dd>{formatStatus(request.status)}</dd>
         </div>
         <div className="myRequestCard__row">
           <dt>{myRequestsConst.requestTypeLabel}</dt>
-          <dd>{valueOrUnknown(request.requestType)}</dd>
+          <dd>{formatRequestType(request.requestType)}</dd>
         </div>
         <div className="myRequestCard__row">
           <dt>{myRequestsConst.createdAtLabel}</dt>

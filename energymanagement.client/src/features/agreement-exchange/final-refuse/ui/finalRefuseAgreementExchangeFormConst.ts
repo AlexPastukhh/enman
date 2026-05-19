@@ -1,19 +1,19 @@
 export const finalRefuseAgreementExchangeFormConst = {
-  title: "Final refuse agreement exchange",
+  title: "Финально отказаться от договорного обмена",
   description:
-    "This final refusal closes the agreement exchange and marks the related request as agreement-exchange failed.",
-  reasonLabel: "Final refusal reason",
-  reasonPlaceholder: "Optional reason for final refusal",
-  reasonHelpText: "Reason is optional. Whitespace-only reason is not valid.",
-  actionLabel: "Final refuse",
-  pendingLabel: "Refusing exchange...",
+    "Финальный отказ закрывает договорной обмен и переводит связанную заявку в статус незавершённого договорного обмена.",
+  reasonLabel: "Причина финального отказа",
+  reasonPlaceholder: "Необязательная причина финального отказа",
+  reasonHelpText: "Причина необязательна. Строка только из пробелов недопустима.",
+  actionLabel: "Финально отказаться",
+  pendingLabel: "Отказываемся от обмена...",
   confirmationText:
-    "Final refusal cannot be undone in this flow. The related request will be marked as agreement-exchange failed.",
-  confirmationLabel: "Confirm final refusal",
-  cancelConfirmationLabel: "Cancel",
-  blankReasonError: "Enter a reason or leave the field empty.",
-  reasonTooLongError: "Reason must be 2000 characters or fewer.",
-  defaultErrorMessage: "Could not finally refuse this agreement exchange.",
+    "Финальный отказ нельзя отменить в этом сценарии. Связанная заявка будет отмечена как заявка с незавершённым договорным обменом.",
+  confirmationLabel: "Подтвердить финальный отказ",
+  cancelConfirmationLabel: "Отмена",
+  blankReasonError: "Введите причину или оставьте поле пустым.",
+  reasonTooLongError: "Причина должна содержать не более 2000 символов.",
+  defaultErrorMessage: "Не удалось финально отказаться от договорного обмена.",
 } as const;
 
 export const finalRefusalReasonMaxLength = 2000;

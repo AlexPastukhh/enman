@@ -1,5 +1,5 @@
 export const makeCurrentDefaultButtonConst = {
-  actionLabel: "Make current/default",
-  pendingLabel: "Making current/default...",
-  errorMessage: "Could not make this Applicant Party current/default.",
+  actionLabel: "Сделать текущим",
+  pendingLabel: "Назначаем текущим...",
+  errorMessage: "Не удалось сделать этого заявителя текущим.",
 } as const;

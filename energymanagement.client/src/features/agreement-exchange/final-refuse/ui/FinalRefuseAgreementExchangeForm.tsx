@@ -158,7 +158,7 @@ export const FinalRefuseAgreementExchangeForm = ({
         <div
           className="finalRefuseAgreementExchangeAction__confirmation"
           role="group"
-          aria-label="Final refusal confirmation"
+          aria-label="Подтверждение финального отказа"
         >
           <p>{finalRefuseAgreementExchangeFormConst.confirmationText}</p>
           <div className="finalRefuseAgreementExchangeAction__confirmationActions">

@@ -1,35 +1,39 @@
 export const createIndividualApplicantPartyConst = {
-  formTitle: "Applicant data",
-  readOnlyTitle: "Applicant data",
-  successMessage: "Applicant data saved.",
+  formTitle: "Данные заявителя",
+  readOnlyTitle: "Данные заявителя",
+  successMessage: "Данные заявителя сохранены.",
 
-  firstNameLabel: "First name",
-  firstNamePlaceholder: "Enter first name",
+  firstNameLabel: "Имя",
+  firstNamePlaceholder: "Введите имя",
   firstNameInputId: "applicantFirstNameInput",
   firstNameErrorsId: "applicantFirstNameErrors",
 
-  middleNameLabel: "Middle name",
-  middleNamePlaceholder: "Enter middle name",
+  middleNameLabel: "Отчество",
+  middleNamePlaceholder: "Введите отчество",
   middleNameInputId: "applicantMiddleNameInput",
   middleNameErrorsId: "applicantMiddleNameErrors",
 
-  lastNameLabel: "Last name",
-  lastNamePlaceholder: "Enter last name",
+  lastNameLabel: "Фамилия",
+  lastNamePlaceholder: "Введите фамилию",
   lastNameInputId: "applicantLastNameInput",
   lastNameErrorsId: "applicantLastNameErrors",
 
-  emailLabel: "Applicant email",
-  emailPlaceholder: "Enter applicant email",
+  emailLabel: "Email заявителя",
+  emailPlaceholder: "Введите email заявителя",
   emailInputId: "applicantEmailInput",
   emailErrorsId: "applicantEmailErrors",
 
-  phoneNumberLabel: "Phone number",
+  phoneNumberLabel: "Телефон",
   phoneNumberPlaceholder: "+79001234567",
   phoneNumberInputId: "applicantPhoneNumberInput",
   phoneNumberErrorsId: "applicantPhoneNumberErrors",
 
-  verificationStatusLabel: "Verification status",
+  verificationStatusLabel: "Статус проверки",
+  verificationStatusLabels: {
+    Unverified: "Данные не проверены",
+    Verified: "Данные проверены",
+  },
 
-  submitButtonText: "Save applicant data",
-  submittingButtonText: "Saving...",
+  submitButtonText: "Сохранить данные заявителя",
+  submittingButtonText: "Сохраняем...",
 } as const;

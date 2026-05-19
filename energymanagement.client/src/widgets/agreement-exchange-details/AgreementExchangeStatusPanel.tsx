@@ -13,7 +13,9 @@ export const AgreementExchangeStatusPanel = ({
     className="agreementExchangeDetails__panel"
     aria-labelledby="agreement-exchange-status-heading"
   >
-    <h3 id="agreement-exchange-status-heading">Exchange #{details.exchangeId}</h3>
+    <h3 id="agreement-exchange-status-heading">
+      {agreementExchangeDetailsConst.exchangeTitlePrefix} #{details.exchangeId}
+    </h3>
     <dl>
       <div>
         <dt>{agreementExchangeDetailsConst.statusLabel}</dt>
@@ -21,15 +23,15 @@ export const AgreementExchangeStatusPanel = ({
       </div>
       <div>
         <dt>{agreementExchangeDetailsConst.actorSideLabel}</dt>
-        <dd>{details.currentActorSide}</dd>
+        <dd>{details.currentActorSide === "Employee" ? "Сотрудник" : "Клиент"}</dd>
       </div>
       <div>
-        <dt>Created</dt>
+        <dt>{agreementExchangeDetailsConst.createdAtLabel}</dt>
         <dd>{details.createdAt}</dd>
       </div>
       {details.lastActivityAt && (
         <div>
-          <dt>Last activity</dt>
+          <dt>{agreementExchangeDetailsConst.lastActivityAtLabel}</dt>
           <dd>{details.lastActivityAt}</dd>
         </div>
       )}

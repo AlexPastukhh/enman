@@ -46,7 +46,7 @@ describe("MyRequestsList", () => {
     );
 
     expect(screen.getByRole("heading", { name: "Заявка #12" })).toBeVisible();
-    expect(screen.getByText("InReview")).toBeVisible();
+    expect(screen.getByText("На рассмотрении")).toBeVisible();
     expect(screen.getByText("Подключение объекта")).toBeVisible();
     expect(screen.getByText(/Алтайский край/)).toBeVisible();
     expect(screen.getByText(/Заринск/)).toBeVisible();
@@ -65,8 +65,6 @@ describe("MyRequestsList", () => {
     );
 
     expect(screen.getByText("Заявок с выбранным фильтром не найдено.")).toBeVisible();
-    expect(
-      screen.getByRole("button", { name: "Сбросить фильтры" }),
-    ).toBeVisible();
+    expect(screen.getByRole("button", { name: "Сбросить фильтры" })).toBeVisible();
   });
 });

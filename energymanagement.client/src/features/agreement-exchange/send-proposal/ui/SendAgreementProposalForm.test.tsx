@@ -64,9 +64,9 @@ describe("SendAgreementProposalForm", () => {
       />,
     );
 
-    await user.upload(screen.getByLabelText("Proposal document"), file);
-    await user.type(screen.getByLabelText("Comment"), "Updated connection terms.");
-    await user.click(screen.getByRole("button", { name: "Send proposal version" }));
+    await user.upload(screen.getByLabelText("Документ предложения"), file);
+    await user.type(screen.getByLabelText("Комментарий"), "Updated connection terms.");
+    await user.click(screen.getByRole("button", { name: "Отправить версию предложения" }));
 
     await waitFor(() => {
       expect(mockedUploadAgreementProposalDocument).toHaveBeenCalledWith({
@@ -97,10 +97,10 @@ describe("SendAgreementProposalForm", () => {
       />,
     );
 
-    await user.click(screen.getByRole("button", { name: "Send proposal version" }));
+    await user.click(screen.getByRole("button", { name: "Отправить версию предложения" }));
 
     expect(screen.getByRole("alert")).toHaveTextContent(
-      "Choose a proposal document.",
+      "Выберите документ предложения.",
     );
     expect(mockedUploadAgreementProposalDocument).not.toHaveBeenCalled();
     expect(mutate).not.toHaveBeenCalled();
@@ -123,9 +123,9 @@ describe("SendAgreementProposalForm", () => {
     );
 
     expect(
-      screen.getByRole("button", { name: "Sending proposal..." }),
+      screen.getByRole("button", { name: "Отправляем предложение..." }),
     ).toBeDisabled();
-    expect(screen.getByLabelText("Proposal document")).toBeDisabled();
+    expect(screen.getByLabelText("Документ предложения")).toBeDisabled();
   });
 
   it("shows unavailable reason and does not submit when disabled", async () => {
@@ -137,12 +137,12 @@ describe("SendAgreementProposalForm", () => {
         requestId={42}
         viewerRole="Client"
         disabled
-        unavailableReason="Waiting for the other party to respond."
+        unavailableReason="Ожидается ответ другой стороны."
       />,
     );
 
-    expect(screen.getByText("Waiting for the other party to respond.")).toBeVisible();
-    await user.click(screen.getByRole("button", { name: "Send proposal version" }));
+    expect(screen.getByText("Ожидается ответ другой стороны.")).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Отправить версию предложения" }));
 
     expect(mockedUploadAgreementProposalDocument).not.toHaveBeenCalled();
     expect(mutate).not.toHaveBeenCalled();

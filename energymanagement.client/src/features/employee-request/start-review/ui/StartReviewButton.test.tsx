@@ -38,7 +38,7 @@ describe("StartReviewButton", () => {
 
     render(<StartReviewButton requestId={42} surface="details" />);
 
-    await user.click(screen.getByRole("button", { name: "Start review" }));
+    await user.click(screen.getByRole("button", { name: "Начать рассмотрение" }));
 
     expect(mutate).toHaveBeenCalledWith(42, expect.any(Object));
   });
@@ -54,7 +54,7 @@ describe("StartReviewButton", () => {
     render(<StartReviewButton requestId={42} />);
 
     expect(
-      screen.getByRole("button", { name: "Starting review..." }),
+      screen.getByRole("button", { name: "Начинаем рассмотрение..." }),
     ).toBeDisabled();
   });
 
@@ -65,15 +65,15 @@ describe("StartReviewButton", () => {
       <StartReviewButton
         requestId={42}
         disabled
-        unavailableReason="Another Employee has already started this review."
+        unavailableReason="Другой сотрудник уже начал рассмотрение этой заявки."
       />,
     );
 
     expect(
-      screen.getByText("Another Employee has already started this review."),
+      screen.getByText("Другой сотрудник уже начал рассмотрение этой заявки."),
     ).toBeVisible();
 
-    await user.click(screen.getByRole("button", { name: "Start review" }));
+    await user.click(screen.getByRole("button", { name: "Начать рассмотрение" }));
 
     expect(mutate).not.toHaveBeenCalled();
   });

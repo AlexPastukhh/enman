@@ -7,6 +7,7 @@ export const loginConst = {
   emailInputId: "emailInput",
   emailErrorsId: "emailErrors",
   submitButtonText: "Войти",
+  submittingButtonText: "Выполняем вход...",
   passwordInputId: "passwordInput",
   passwordErrorsId: "passwordErrors",
 };

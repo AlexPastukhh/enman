@@ -4,13 +4,13 @@ import { agreementExchangeListConst } from "./agreementExchangeListConst";
 export const formatAgreementExchangeStatus = (status: string): string => {
   switch (status) {
     case "AwaitingClientConfirmation":
-      return "Awaiting client confirmation";
+      return "Ожидает подтверждения клиента";
     case "AwaitingEmployeeResponse":
-      return "Awaiting employee response";
+      return "Ожидает ответа сотрудника";
     case "Accepted":
-      return "Accepted";
+      return "Принято";
     case "FinallyRefused":
-      return "Finally refused";
+      return "Финально отклонено";
     default:
       return status;
   }
@@ -25,9 +25,9 @@ export const formatProposalSender = (
 
   switch (sender) {
     case "Client":
-      return "Client";
+      return "Клиент";
     case "Employee":
-      return "Employee";
+      return "Сотрудник";
     default:
       return String(sender);
   }
@@ -40,7 +40,7 @@ export const formatProposalSummary = (
     return agreementExchangeListConst.noActiveProposalText;
   }
 
-  return `Version ${exchange.activeProposalVersion} from ${formatProposalSender(
+  return `Версия ${exchange.activeProposalVersion}, автор: ${formatProposalSender(
     exchange.activeProposalSender,
   )}`;
 };
@@ -55,9 +55,13 @@ export const formatDateTime = (value?: string | null): string => {
     return value;
   }
 
-  return date.toLocaleString();
+  return new Intl.DateTimeFormat("ru-RU", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(date);
 };
 
 export const getAgreementExchangeTitle = (
   exchange: AgreementExchangeListItem,
-): string => exchange.requestDisplayName?.trim() || `Request #${exchange.requestId}`;
+): string =>
+  exchange.requestDisplayName?.trim() || `Заявка #${exchange.requestId}`;
