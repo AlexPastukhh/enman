@@ -1,5 +1,5 @@
 export const headerConst = {
-  homeLinkTextPart1: "ЭнергоМенеджмент",
+  homeLinkTextPart1: "ООО «ЗСК»",
   homeLinkTextPart2: "",
   sessionLoadingText: "Загружаем сессию...",
   homeLinkSloganText: "Заявки и договоры в одном интерфейсе",
