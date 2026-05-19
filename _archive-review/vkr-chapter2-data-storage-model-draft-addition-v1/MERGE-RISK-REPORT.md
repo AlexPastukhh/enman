@@ -1,0 +1,20 @@
+# Merge risk report
+
+## Risk level
+
+Low to medium.
+
+## Why
+
+The archive adds one topic-draft file in the Chapter 2 data/file storage workbench area.
+
+## Possible conflict
+
+If the target file already exists locally, applying this archive will replace it. The provided command backs up the previous local version first.
+
+## Recommended check after applying
+
+```powershell
+git diff -- planning/thesis/vkr-topic-workbench/03-chapter-2-design/04-data-and-file-storage/01-data-storage-model.topic.md
+git status
+```

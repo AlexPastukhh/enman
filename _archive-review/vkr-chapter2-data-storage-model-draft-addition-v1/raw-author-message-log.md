@@ -1,0 +1,20 @@
+# Raw author message log
+
+Archive: `vkr-chapter2-data-storage-model-draft-addition-v1`
+
+This archive was created from the uploaded markdown draft.
+
+## Uploaded file
+
+- `Вставленная ​​уценка(83).md`
+
+## Target file
+
+```text
+planning/thesis/vkr-topic-workbench/03-chapter-2-design/04-data-and-file-storage/01-data-storage-model.topic.md
+```
+
+## Note
+
+The main repository file contains the normalized topic draft starting from `# Тема...`.
+The complete uploaded material, including the instruction about where to add the file, is preserved in `source-drafts/01-data-storage-model.source.md`.
