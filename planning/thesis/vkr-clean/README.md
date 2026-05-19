@@ -1,110 +1,86 @@
 # Clean VKR Materials
 
-Status: draft / section-drafting workflow synchronized  
-Scope: clean materials for VKR text, defense materials, section drafts and diagram planning
+Статус: clean layer / section drafts / evidence / reviewer workflow
 
-## Тема ВКР
+Эта папка содержит материалы, которые можно разворачивать в текст ВКР. Planning-файлы используются как источники, но не копируются напрямую.
 
-«Разработка web-приложения для автоматизации ведения документооборота и обработки клиентских заявок в сетевой компании ООО „ЗСК“».
-
-## Назначение папки
-
-Папка `planning/thesis/vkr-clean/` содержит материалы, которые можно разворачивать в текст ВКР:
+## 1. Главная граница
 
 ```text
-- структура ВКР;
-- терминология;
-- анализ предметной области;
-- требования и функциональная спецификация;
-- пользовательские сценарии и Use Case-диаграммы;
-- архитектура web-приложения;
-- API-контракт между backend и frontend;
-- доменная модель;
-- база данных;
-- пользовательский интерфейс;
-- тестирование;
-- результаты и дальнейшее развитие;
-- планы диаграмм и приложений;
-- workflow подготовки subsection drafts и reviewer feedback.
+planning/ — рабочая инженерная кухня;
+vkr-topic-workbench/ — смысловые topic-драфты и блоки будущего текста;
+vkr-clean/ — чистые материалы, evidence, section-драфты и reviewer workflow.
 ```
 
-## Граница между planning и clean VKR
-
-Рабочие planning-файлы используются как источники, но не переносятся в диплом напрямую.
-
-В `planning/thesis/vkr-clean/` нужно писать:
+В финальную ПЗ не переносятся:
 
 ```text
-- академично;
-- конкретно по ООО «ЗСК»;
-- без внутренних слов вроде agent, prompt, chat в итоговом тексте ВКР;
-- без длинных технических трекеров в основном тексте;
-- с аккуратными TODO там, где раздел зависит от будущей реализации, источника, визуального материала или repo-check.
+ИИ;
+чаты;
+промпты;
+agent workflow;
+archive notes;
+raw author logs.
 ```
 
-## Статусы реализации
-
-Подробные статусы реализации фиксируются в служебных файлах:
-
-```text
-planning/vkr-work-context-current.md
-planning/thesis/vkr-clean/evidence-map.md
-```
-
-В чистовых файлах допустимы краткие пояснения и placeholders, если текст зависит от будущей проверки кода.
-
-## Главная линия ВКР
-
-```text
-клиент регистрируется
--> входит в систему
--> создает заявителя-физическое лицо
--> подает заявку
--> сотрудник рассматривает заявку
--> заявка одобряется или отклоняется
--> после одобрения подготавливается проект договора/документа
--> клиент получает уведомление и продолжает документооборот
-```
-
-## Текущий акцент clean-документов
-
-С учетом актуального planning, clean-документы должны отражать:
-
-```text
-- сценарную спецификацию поведения;
-- разделение backend/frontend;
-- API-контракт через OpenAPI;
-- генерируемые семантические константы;
-- typed client API wrappers;
-- ProblemDetails / form error mapping;
-- тестирование по слоям;
-- диаграммы и визуальные материалы;
-- reviewer workflow для проверки subsection drafts.
-```
-
-## Section Draft Workflow
-
-Для подготовки подразделов ВКР используется отдельная зона:
+## 2. Где section-драфты
 
 ```text
 planning/thesis/vkr-clean/section-drafts/
 ```
 
-Она отвечает за:
+Section draft — это рабочий текст подраздела, который постепенно собирается из блоков, заданных topic-драфтом.
+
+## 3. Где слабые/хаотичные главы
 
 ```text
-- short drafts, которые сначала обсуждаются в чате и обычно не сохраняются как файлы;
-- full draft attempts, которые сохраняются как файлы и могут иметь версии v1/v2/v3;
-- reviewer workflow для content / structure / style-originality review;
-- fragment bank для удачных формулировок;
-- section draft register для статусов подразделов.
+planning/thesis/vkr-clean/legacy-chaotic-drafts/
 ```
 
-Начинать работу с подразделом нужно с:
+Эта папка предназначена для глав, созданных до текущего workflow. Такие тексты нельзя считать clean section drafts без анализа.
+
+## 4. Active workflow для section drafts
 
 ```text
+topic draft
+↔ вопросы / research / repo-check / visual bridge
+↔ section draft blocks
+→ section draft v1
+→ reviewer pass
+→ clean VKR text
+```
+
+Основной переход описан здесь:
+
+```text
+planning/thesis/vkr-topic-workbench/TOPIC-TO-SECTION-BLOCK-WORKFLOW.md
+```
+
+## 5. Section draft files
+
+| Path | Purpose |
+|---|---|
+| `section-drafts/README.md` | Entry point for section draft workflow |
+| `section-drafts/section-draft-register.md` | Register of subsection draft attempts and review status |
+| `section-drafts/reviewer-workflow.md` | Reviewer roles and review process |
+| `section-drafts/reviewer-prompts.md` | Reusable reviewer prompts |
+| `section-drafts/full-draft-template.md` | Template for full draft attempts |
+| `section-drafts/full-draft-review-checklist.md` | Review checklist |
+
+`fragment-bank.md` is deprecated/support and not part of the active workflow.
+
+## 6. Clean source files
+
+Use clean source files for terminology, requirements, domain, architecture, database, UI, testing, results and future work. Keep them clean, project-specific and evidence-aware.
+
+## 7. Navigation rule
+
+If structure changes, update:
+
+```text
+planning/thesis/README.md
+planning/thesis/VKR-WORKFLOW-SOURCE-OF-TRUTH.md
+planning/thesis/vkr-clean/README.md
 planning/thesis/vkr-clean/vkr-materials-index.md
-planning/thesis/vkr-clean/section-drafts/README.md
-planning/thesis/vkr-clean/section-drafts/vkr-section-drafting-workflow.md
-planning/thesis/vkr-clean/section-drafts/reviewer-workflow.md
+relevant section-drafts README/register files
 ```

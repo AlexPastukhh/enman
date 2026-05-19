@@ -77,26 +77,22 @@ test("user sees current default and other saved Applicant Parties", async ({
   });
 
   const currentDefaultCard = currentDefaults.locator("article").filter({
-  hasText: "Ivan",
-});
+    hasText: "Ivan",
+  });
 
-const otherSavedCard = otherSaved.locator("article").filter({
-  hasText: "Petr",
-});
+  const otherSavedCard = otherSaved.locator("article").filter({
+    hasText: "Petr",
+  });
 
-await expect(currentDefaultCard).toBeVisible();
-await expect(
-  currentDefaultCard.getByText(L.applicantParties.currentDefaultBadge, {
-    exact: true,
-  }),
-).toBeVisible();
+  await expect(currentDefaultCard).toBeVisible();
+  await expect(
+    currentDefaultCard.getByText(L.applicantParties.currentDefaultBadge),
+  ).toBeVisible();
 
-await expect(otherSavedCard).toBeVisible();
-await expect(
-  otherSavedCard.getByText(L.applicantParties.currentDefaultBadge, {
-    exact: true,
-  }),
-).toHaveCount(0);
+  await expect(otherSavedCard).toBeVisible();
+  await expect(
+    otherSavedCard.getByText(L.applicantParties.currentDefaultBadge),
+  ).toHaveCount(0);
 });
 
 test("user sees empty Applicant Parties read state", async ({ page, request }) => {
@@ -112,5 +108,5 @@ test("user sees empty Applicant Parties read state", async ({ page, request }) =
   expect(applicantPartiesResponse.ok()).toBeTruthy();
 
   await expect(page.getByText(L.applicantParties.noSaved)).toBeVisible();
-  await expect(page.getByText("Applicant Party #")).not.toBeVisible();
+  await expect(page.getByText(/Заявитель #|Applicant Party #/)).not.toBeVisible();
 });

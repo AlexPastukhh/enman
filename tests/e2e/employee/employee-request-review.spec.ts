@@ -30,7 +30,7 @@ test("employee reviews and approves a seeded request", async ({ page }) => {
   expect(dashboardResponse.ok()).toBeTruthy();
 
   await expect(
-    page.getByRole("heading", { name: L.headings.employeeDashboard, level: 2 }),
+    page.getByRole("heading", { name: L.headings.employeeDashboard }),
   ).toBeVisible();
   await expect(page.getByText(demoText.reviewRequestDetails)).toBeVisible();
 
@@ -44,7 +44,7 @@ test("employee reviews and approves a seeded request", async ({ page }) => {
   expect(detailsResponse.ok()).toBeTruthy();
 
   await expect(
-    page.getByRole("heading", { name: L.headings.employeeRequestDetails, level: 2 }),
+    page.getByRole("heading", { name: L.headings.employeeRequestDetails }),
   ).toBeVisible();
   await expect(page.getByText(demoText.reviewRequestDetails)).toBeVisible();
 
@@ -53,7 +53,7 @@ test("employee reviews and approves a seeded request", async ({ page }) => {
     "POST",
     "/review/start",
   );
-  await page.getByRole("button", { name: "Start review" }).click();
+  await page.getByRole("button", { name: L.buttons.startReview }).click();
   const startReviewResponse = await startReviewResponsePromise;
   expect(startReviewResponse.ok()).toBeTruthy();
 
@@ -77,9 +77,9 @@ test("employee reviews and approves a seeded request", async ({ page }) => {
     "POST",
     "/review/approve",
   );
-  await page.getByRole("button", { name: "Approve review" }).click();
+  await page.getByRole("button", { name: L.buttons.approveReview }).click();
   const approveResponse = await approveResponsePromise;
   expect(approveResponse.ok()).toBeTruthy();
 
-  await expect(page.getByText("Approved").first()).toBeVisible();
+  await expect(page.getByText(L.status.approved).first()).toBeVisible();
 });

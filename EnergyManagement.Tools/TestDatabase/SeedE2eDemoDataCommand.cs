@@ -67,11 +67,13 @@ public sealed class SeedE2eDemoDataCommand
             DELETE FROM dbo.L1RequestReviews
             WHERE RequestId IN (@reviewRequestId, @agreementRequestId);
 
-                DELETE FROM dbo.L1ClientRequests
-                WHERE Id IN (@reviewRequestId, @agreementRequestId);
+            DELETE FROM dbo.L1ClientRequests
+            WHERE Id IN (@reviewRequestId, @agreementRequestId)
+               OR ClientAccountId = @clientAccountId;
 
-                DELETE FROM dbo.L1ApplicantParties
-                WHERE Id = @applicantPartyId;
+            DELETE FROM dbo.L1ApplicantParties
+            WHERE Id = @applicantPartyId
+               OR ClientAccountId = @clientAccountId;
 
             DELETE FROM dbo.L1Accounts
             WHERE Id IN (@employeeId, @clientAccountId);
@@ -96,105 +98,46 @@ public sealed class SeedE2eDemoDataCommand
 
             SET IDENTITY_INSERT dbo.L1ApplicantParties ON;
 
-            IF COL_LENGTH(N'dbo.L1ApplicantParties', N'ClientAccountId') IS NOT NULL
-            BEGIN
-                EXEC sp_executesql
-                    N'INSERT INTO dbo.L1ApplicantParties
-                        (Id, ClientAccountId, ApplicantPartyType, Email, PhoneNumber, CreatedAt,
-                         ApplicantPartyDiscriminator, FullName_FirstName, FullName_MiddleName, FullName_LastName,
-                         IsCurrentActiveVersion, VerificationStatus)
-                    VALUES
-                        (@applicantPartyId, @clientAccountId, N''Individual'', @clientEmail, N''+79001234567'', @now,
-                         N''Individual'', N''Demo'', N''Client'', N''Applicant'', 1, N''Unverified'');',
-                    N'@applicantPartyId bigint, @clientAccountId bigint, @clientEmail nvarchar(400), @now datetimeoffset',
-                    @applicantPartyId = @applicantPartyId, @clientAccountId = @clientAccountId, @clientEmail = @clientEmail, @now = @now;
-            END
-            ELSE
-            BEGIN
-                INSERT INTO dbo.L1ApplicantParties
-                    (Id, ApplicantPartyType, Email, PhoneNumber, CreatedAt,
-                     ApplicantPartyDiscriminator, FullName_FirstName, FullName_MiddleName, FullName_LastName,
-                     IsCurrentActiveVersion, VerificationStatus)
-                VALUES
-                    (@applicantPartyId, N'Individual', @clientEmail, N'+79001234567', @now,
-                     N'Individual', N'Demo', N'Client', N'Applicant', 1, N'Unverified');
-            END
+            INSERT INTO dbo.L1ApplicantParties
+                (Id, ClientAccountId, ApplicantPartyType, Email, PhoneNumber, CreatedAt,
+                 ApplicantPartyDiscriminator, FullName_FirstName, FullName_MiddleName, FullName_LastName,
+                 IsCurrentActiveVersion, VerificationStatus)
+            VALUES
+                (@applicantPartyId, @clientAccountId, N'Individual', @clientEmail, N'+79001234567', @now,
+                 N'Individual', N'Demo', N'Client', N'Applicant', 1, N'Unverified');
 
             SET IDENTITY_INSERT dbo.L1ApplicantParties OFF;
 
             SET IDENTITY_INSERT dbo.L1ClientRequests ON;
 
-            IF COL_LENGTH(N'dbo.L1ClientRequests', N'ClientAccountId') IS NOT NULL
-            BEGIN
-                EXEC sp_executesql
-                    N'INSERT INTO dbo.L1ClientRequests
-                        (Id, ApplicantPartyId, ClientAccountId, RequestType, Status, Details, CreatedAt,
-                         ClientRequestDiscriminator, ObjectAddress_PostalCode, ObjectAddress_Region,
-                         ObjectAddress_City, ObjectAddress_Street, ObjectAddress_House,
-                         ObjectAddress_Building, ObjectAddress_Apartment)
-                    VALUES
-                        (@reviewRequestId, @applicantPartyId, @clientAccountId, N''Connection'', N''InReview'',
-                         N''E2E employee review request.'', @now, N''Connection'', N''658480'', N''Алтайский край'',
-                         N''Заринск'', N''Ленина'', N''10'', NULL, NULL);
+            INSERT INTO dbo.L1ClientRequests
+                (Id, ApplicantPartyId, ClientAccountId, RequestType, Status, Details, CreatedAt,
+                 ClientRequestDiscriminator, ObjectAddress_PostalCode, ObjectAddress_Region,
+                 ObjectAddress_City, ObjectAddress_Street, ObjectAddress_House,
+                 ObjectAddress_Building, ObjectAddress_Apartment)
+            VALUES
+                (@reviewRequestId, @applicantPartyId, @clientAccountId, N'Connection', N'InReview',
+                 N'E2E employee review request.', @now, N'Connection', N'658480', N'Алтайский край',
+                 N'Заринск', N'Ленина', N'10', NULL, NULL);
 
-                    INSERT INTO dbo.L1ClientRequests
-                        (Id, ApplicantPartyId, ClientAccountId, RequestType, Status, Details, CreatedAt,
-                         ClientRequestDiscriminator, ObjectAddress_PostalCode, ObjectAddress_Region,
-                         ObjectAddress_City, ObjectAddress_Street, ObjectAddress_House,
-                         ObjectAddress_Building, ObjectAddress_Apartment)
-                    VALUES
-                        (@agreementRequestId, @applicantPartyId, @clientAccountId, N''Connection'', N''Approved'',
-                         N''E2E agreement exchange request.'', @now, N''Connection'', N''658480'', N''Алтайский край'',
-                         N''Заринск'', N''Ленина'', N''12'', NULL, NULL);',
-                    N'@reviewRequestId bigint, @applicantPartyId bigint, @clientAccountId bigint, @agreementRequestId bigint, @now datetimeoffset',
-                    @reviewRequestId = @reviewRequestId, @applicantPartyId = @applicantPartyId, @clientAccountId = @clientAccountId, @agreementRequestId = @agreementRequestId, @now = @now;
-            END
-            ELSE
-            BEGIN
-                INSERT INTO dbo.L1ClientRequests
-                    (Id, ApplicantPartyId, RequestType, Status, Details, CreatedAt,
-                     ClientRequestDiscriminator, ObjectAddress_PostalCode, ObjectAddress_Region,
-                     ObjectAddress_City, ObjectAddress_Street, ObjectAddress_House,
-                     ObjectAddress_Building, ObjectAddress_Apartment)
-                VALUES
-                    (@reviewRequestId, @applicantPartyId, N'Connection', N'InReview',
-                     N'E2E employee review request.', @now, N'Connection', N'658480', N'Алтайский край',
-                     N'Заринск', N'Ленина', N'10', NULL, NULL);
-
-                INSERT INTO dbo.L1ClientRequests
-                    (Id, ApplicantPartyId, RequestType, Status, Details, CreatedAt,
-                     ClientRequestDiscriminator, ObjectAddress_PostalCode, ObjectAddress_Region,
-                     ObjectAddress_City, ObjectAddress_Street, ObjectAddress_House,
-                     ObjectAddress_Building, ObjectAddress_Apartment)
-                VALUES
-                    (@agreementRequestId, @applicantPartyId, N'Connection', N'Approved',
-                     N'E2E agreement exchange request.', @now, N'Connection', N'658480', N'Алтайский край',
-                     N'Заринск', N'Ленина', N'12', NULL, NULL);
-            END
+            INSERT INTO dbo.L1ClientRequests
+                (Id, ApplicantPartyId, ClientAccountId, RequestType, Status, Details, CreatedAt,
+                 ClientRequestDiscriminator, ObjectAddress_PostalCode, ObjectAddress_Region,
+                 ObjectAddress_City, ObjectAddress_Street, ObjectAddress_House,
+                 ObjectAddress_Building, ObjectAddress_Apartment)
+            VALUES
+                (@agreementRequestId, @applicantPartyId, @clientAccountId, N'Connection', N'Approved',
+                 N'E2E agreement exchange request.', @now, N'Connection', N'658480', N'Алтайский край',
+                 N'Заринск', N'Ленина', N'12', NULL, NULL);
 
             SET IDENTITY_INSERT dbo.L1ClientRequests OFF;
 
-            IF COL_LENGTH(N'dbo.L1RequestReviews', N'ClientAccountId') IS NOT NULL
-            BEGIN
-                EXEC sp_executesql
-                    N'INSERT INTO dbo.L1RequestReviews
-                        (RequestId, ClientAccountId, Status, StartedByEmployeeId, StartedAt,
-                         CompletedByEmployeeId, CompletedAt, RejectionReason)
-                    VALUES
-                        (@agreementRequestId, @clientAccountId, N''Approved'', @employeeId, DATEADD(minute, -20, @now),
-                         @employeeId, DATEADD(minute, -10, @now), NULL);',
-                    N'@agreementRequestId bigint, @clientAccountId bigint, @employeeId bigint, @now datetimeoffset',
-                    @agreementRequestId = @agreementRequestId, @clientAccountId = @clientAccountId, @employeeId = @employeeId, @now = @now;
-            END
-            ELSE
-            BEGIN
-                INSERT INTO dbo.L1RequestReviews
-                    (RequestId, Status, StartedByEmployeeId, StartedAt,
-                     CompletedByEmployeeId, CompletedAt, RejectionReason)
-                VALUES
-                    (@agreementRequestId, N'Approved', @employeeId, DATEADD(minute, -20, @now),
-                     @employeeId, DATEADD(minute, -10, @now), NULL);
-            END
+            INSERT INTO dbo.L1RequestReviews
+                (RequestId, ClientAccountId, Status, StartedByEmployeeId, StartedAt,
+                 CompletedByEmployeeId, CompletedAt, RejectionReason)
+            VALUES
+                (@agreementRequestId, @clientAccountId, N'Approved', @employeeId, DATEADD(minute, -20, @now),
+                 @employeeId, DATEADD(minute, -10, @now), NULL);
 
             COMMIT TRANSACTION;
             """;

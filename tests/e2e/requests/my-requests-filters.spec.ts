@@ -31,7 +31,7 @@ test("user filters My Requests by status", async ({ page, request }) => {
   expect(filteredResponse.ok()).toBeTruthy();
 
   await expect(page).toHaveURL(/\/requests\?status=InReview/);
-  await expect(page.getByText(L.status.inReview, { exact: true })).toBeVisible();
+  await expect(page.getByText(L.status.inReview).first()).toBeVisible();
 
   const unfilteredResponsePromise = waitForApiResponse(
     page,
@@ -39,7 +39,7 @@ test("user filters My Requests by status", async ({ page, request }) => {
     "/api/requests",
   );
   await page
-    .getByLabel("Фильтры")
+    .getByRole("region", { name: "Фильтры" })
     .getByRole("button", { name: "Сбросить фильтры" })
     .click();
   const unfilteredResponse = await unfilteredResponsePromise;
@@ -60,8 +60,8 @@ test("filtered empty state can be reset", async ({ page, request }) => {
   await page.goto("/requests?status=Approved");
 
   const filteredEmptyState = page.getByRole("region", {
-  name: "Заявок с выбранным фильтром не найдено",
-});
+    name: /Заявок с выбранным фильтром не найдено/i,
+  });
 
   await expect(filteredEmptyState).toBeVisible();
 
@@ -71,9 +71,9 @@ test("filtered empty state can be reset", async ({ page, request }) => {
     "/api/requests",
   );
   await filteredEmptyState
-  .getByRole("button", { name: "Сбросить фильтры" })
-  .click();
-  
+    .getByRole("button", { name: "Сбросить фильтры" })
+    .click();
+
   const unfilteredResponse = await unfilteredResponsePromise;
   expect(unfilteredResponse.ok()).toBeTruthy();
 

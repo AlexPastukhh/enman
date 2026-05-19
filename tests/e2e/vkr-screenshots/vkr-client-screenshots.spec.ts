@@ -62,7 +62,7 @@ test.describe("VKR documentation screenshots @screenshots", () => {
       page,
       Number(
         await page
-          .getByLabel(/Saved Applicant Party|Сохранённый заявитель/, { exact: true })
+          .getByLabel(/Saved Applicant Party|Сохранённый заявитель|Сохраненный заявитель/)
           .inputValue(),
       ),
       "VKR screenshot request.",

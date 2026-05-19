@@ -1,28 +1,41 @@
-import type { Page } from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 
 export const L = {
   headings: {
-    createRequest: /Создать заявку|Создание заявки|Create connection request/i,
-    employeeDashboard: /Заявки|Employee Request Dashboard|Request Dashboard/i,
-    employeeRequestDetails: /Детали заявки|Employee Request Details/i,
+    createRequest: /Создание заявки на подключение|Заявка на подключение|Create connection request/i,
+    myRequests: /Мои заявки|My Requests/i,
+    requestDetails: /Детали заявки|Request Details/i,
+    employeeDashboard: /Заявки на рассмотрение|Employee Request Dashboard|Request Dashboard/i,
+    employeeRequestDetails: /Рассмотрение заявки|Employee Request Details/i,
+    employeeAgreementExchanges: /Договорные обмены|Employee Agreement Exchanges/i,
+    clientAgreementExchanges: /Мои договоры|Client Agreement Exchanges/i,
   },
   status: {
     inReview: /На рассмотрении|InReview/i,
+    approved: /Одобрена|Approved/i,
+    rejected: /Отклонена|Rejected/i,
   },
   applicantParties: {
     noSaved: /Сохранённых заявителей пока нет|Сохраненных заявителей пока нет|No saved Applicant Parties yet\.?/i,
-    currentDefaultRegion: /Текущий|Current\/default templates|Текущие шаблоны/i,
-    otherSavedRegion: /Other saved Applicant Parties|Сохранённые заявители|Другие сохранённые заявители/i,
+    currentDefaultRegion: /Текущий заявитель|Current\/default templates|Текущие шаблоны/i,
+    otherSavedRegion: /Другие сохранённые заявители|Другие сохраненные заявители|Other saved Applicant Parties/i,
     currentDefaultBadge: /Текущий|Current\/default|Current default/i,
+    savedApplicantLabel: /Сохранённый заявитель|Сохраненный заявитель|Saved Applicant Party/i,
   },
   agreementExchange: {
-    // labels seen in UI: "Первичный документ предложения", "Документ предложения", or English fallbacks
-    initialDocumentLabel: /Первичный документ предложения|Документ предложения|Initial proposal document/i,
-    proposalDocumentLabel: /Документ предложения|Proposal document|Proposal document/i,
-    commentLabel: /Комментарий|Comment|Initial proposal comment/i,
+    initialDocumentLabel: /Первичный документ предложения|Initial proposal document/i,
+    proposalDocumentLabel: /Документ предложения|Proposal document/i,
+    initialCommentLabel: /Комментарий к первичному предложению|Initial proposal comment/i,
+    commentLabel: /Комментарий|Comment/i,
+    openDetailsLink: /Открыть детали обмена|Open exchange details/i,
+    downloadDocumentLink: /Скачать документ|Download document/i,
   },
   buttons: {
     createRequest: /Создать заявку|Create request/i,
+    startReview: /Начать рассмотрение|Start review/i,
+    approveReview: /Одобрить заявку|Approve review/i,
+    startAgreementExchange: /Начать договорной обмен|Start agreement exchange/i,
+    sendProposalVersion: /Отправить версию предложения|Send proposal version/i,
   },
 };
 
@@ -41,4 +54,12 @@ export function escapeRegExp(value: string) {
 
 export function exactTextIgnoreCase(value: string) {
   return new RegExp(`^${escapeRegExp(value)}$`, "i");
+}
+
+export function cardWithText(page: Page, text: string | RegExp) {
+  return page.locator("article").filter({ hasText: text });
+}
+
+export function statusInCard(card: Locator, regex: RegExp) {
+  return card.getByText(regex);
 }

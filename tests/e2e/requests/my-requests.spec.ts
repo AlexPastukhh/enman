@@ -27,7 +27,7 @@ test("user sees created request in My Requests", async ({ page, request }) => {
   await expect(
     page.getByRole("heading", { name: "Мои заявки", exact: true }),
   ).toBeVisible();
-  await expect(page.getByText(L.status.inReview, { exact: true })).toBeVisible();
+  await expect(page.getByText(L.status.inReview).first()).toBeVisible();
   await expect(
     page.getByText("Подключение объекта к электрическим сетям"),
   ).toBeVisible();

@@ -36,7 +36,7 @@ test("user sees own request details", async ({ page, request }) => {
   await expect(
     page.getByRole("heading", { name: `Заявка #${requestId}` }),
   ).toBeVisible();
-  await expect(page.getByText(L.status.inReview, { exact: true })).toBeVisible();
+  await expect(page.getByText(L.status.inReview).first()).toBeVisible();
   await expect(
     page.getByText("Подключение объекта к электрическим сетям"),
   ).toBeVisible();

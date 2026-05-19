@@ -49,7 +49,7 @@ test("user creates individual applicant party through real client-server flow", 
 
   await expect(page.getByText(L.applicantParties.noSaved)).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Applicant data", exact: true }),
+    page.getByRole("heading", { name: "Данные заявителя", exact: true }),
   ).toBeVisible();
 
   const applicantPartyResponsePromise = waitForApiResponse(
@@ -63,24 +63,24 @@ test("user creates individual applicant party through real client-server flow", 
     "/api/applicant-parties",
   );
 
-  await page.getByLabel("First name").fill("Ivan");
-  await page.getByLabel("Middle name").fill("Ivanovich");
-  await page.getByLabel("Last name").fill("Ivanov");
-  await page.getByLabel("Applicant email").fill(email);
-  await page.getByLabel("Phone number").fill("+79001234567");
-  await page.getByRole("button", { name: "Save applicant data" }).click();
+  await page.getByLabel("Имя").fill("Ivan");
+  await page.getByLabel("Отчество").fill("Ivanovich");
+  await page.getByLabel("Фамилия").fill("Ivanov");
+  await page.getByLabel("Email заявителя").fill(email);
+  await page.getByLabel("Телефон").fill("+79001234567");
+  await page.getByRole("button", { name: "Сохранить данные заявителя" }).click();
 
   const applicantPartyResponse = await applicantPartyResponsePromise;
   expect(applicantPartyResponse.ok()).toBeTruthy();
   const applicantPartiesAfterCreate = await applicantPartiesAfterCreatePromise;
   expect(applicantPartiesAfterCreate.ok()).toBeTruthy();
 
-  await expect(page.getByText("Applicant data saved.")).toBeVisible();
+  await expect(page.getByText("Данные заявителя сохранены.")).toBeVisible();
   await expect(page.getByText("Ivan", { exact: true })).toBeVisible();
   await expect(page.getByText("Ivanovich", { exact: true })).toBeVisible();
   await expect(page.getByText("Ivanov", { exact: true })).toBeVisible();
-  await expect(page.getByText("Unverified", { exact: true })).toBeVisible();
-  await expect(page.getByText(L.applicantParties.currentDefaultRegion, { exact: true })).toBeVisible();
+  await expect(page.getByText("Данные не проверены", { exact: true })).toBeVisible();
+  await expect(page.getByText(L.applicantParties.currentDefaultBadge).first()).toBeVisible();
 
   const applicantPartiesAfterReloadPromise = waitForApiResponse(
     page,

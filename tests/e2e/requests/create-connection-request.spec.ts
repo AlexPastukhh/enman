@@ -4,7 +4,7 @@ import {
   postWithCsrf,
   registerAndLoginClient,
 } from "../support/clientSetup";
-import { L } from "../support/locators";
+import { L, cardWithText, statusInCard } from "../support/locators";
 
 const validAddress = {
   postalCode: "658480",
@@ -65,13 +65,13 @@ async function openCreateRequestPage(page: Page) {
 
 async function fillRequestDetailsAndAddress(page: Page) {
   await page
-    .getByLabel("Request details")
+    .getByLabel("Описание заявки")
     .fill("Подключение объекта к электрическим сетям");
-  await page.getByLabel("Postal code").fill(validAddress.postalCode);
-  await page.getByLabel("Region").fill(validAddress.region);
-  await page.getByLabel("City").fill(validAddress.city);
-  await page.getByLabel("Street").fill(validAddress.street);
-  await page.getByLabel("House").fill(validAddress.house);
+  await page.getByLabel("Почтовый индекс").fill(validAddress.postalCode);
+  await page.getByLabel("Регион").fill(validAddress.region);
+  await page.getByLabel("Город").fill(validAddress.city);
+  await page.getByLabel("Улица").fill(validAddress.street);
+  await page.getByLabel("Дом").fill(validAddress.house);
 }
 
 async function submitAndExpectMyRequestsHandoff(page: Page) {
@@ -94,10 +94,12 @@ async function submitAndExpectMyRequestsHandoff(page: Page) {
   expect(myRequestsResponse.ok()).toBeTruthy();
 
   await expect(page).toHaveURL(/\/requests$/);
-  await expect(page.getByText(L.status.inReview, { exact: true }).nth(1)).toBeVisible();
-  await expect(
-    page.getByText("Подключение объекта к электрическим сетям"),
-  ).toBeVisible();
+  const createdRequestCard = cardWithText(
+    page,
+    "Подключение объекта к электрическим сетям",
+  );
+  await expect(createdRequestCard).toBeVisible();
+  await expect(statusInCard(createdRequestCard, L.status.inReview)).toBeVisible();
 }
 
 test("user creates request with current/default saved ApplicantParty", async ({
@@ -119,7 +121,7 @@ test("user creates request with current/default saved ApplicantParty", async ({
 
   await openCreateRequestPage(page);
   await expect(
-    page.getByLabel("Saved Applicant Party", { exact: true }),
+    page.getByLabel(L.applicantParties.savedApplicantLabel),
   ).toHaveValue(/\d+/);
   await fillRequestDetailsAndAddress(page);
   await submitAndExpectMyRequestsHandoff(page);
@@ -151,7 +153,7 @@ test("user creates request with non-default saved ApplicantParty", async ({
 
   await openCreateRequestPage(page);
   await page
-    .getByLabel("Saved Applicant Party", { exact: true })
+    .getByLabel(L.applicantParties.savedApplicantLabel)
     .selectOption(String(nonDefaultApplicantPartyId));
   await fillRequestDetailsAndAddress(page);
   await submitAndExpectMyRequestsHandoff(page);
@@ -165,12 +167,12 @@ test("user creates request with new applicant data", async ({ page, request }) =
   );
 
   await openCreateRequestPage(page);
-  await expect(page.getByLabel("Enter new applicant data")).toBeChecked();
-  await page.getByLabel("First name").fill("Ivan");
-  await page.getByLabel("Middle name").fill("Ivanovich");
-  await page.getByLabel("Last name").fill("Ivanov");
-  await page.getByLabel("Applicant email").fill(`applicant-${email}`);
-  await page.getByLabel("Phone number").fill("+79001234567");
+  await expect(page.getByLabel("Ввести новые данные заявителя")).toBeChecked();
+  await page.getByLabel("Имя").fill("Ivan");
+  await page.getByLabel("Отчество").fill("Ivanovich");
+  await page.getByLabel("Фамилия").fill("Ivanov");
+  await page.getByLabel("Email заявителя").fill(`applicant-${email}`);
+  await page.getByLabel("Телефон").fill("+79001234567");
   await fillRequestDetailsAndAddress(page);
   await submitAndExpectMyRequestsHandoff(page);
 });
@@ -186,8 +188,8 @@ test("request creation validation feedback is visible", async ({
   );
 
   await openCreateRequestPage(page);
-  await page.getByRole("button", { name: "Create request" }).click();
+  await page.getByRole("button", { name: L.buttons.createRequest }).click();
 
-  await expect(page.getByText("Request details is required.")).toBeVisible();
-  await expect(page.getByText("Postal code is required.")).toBeVisible();
+  await expect(page.getByText("Описание заявки: заполните поле.")).toBeVisible();
+  await expect(page.getByText("Почтовый индекс: заполните поле.")).toBeVisible();
 });
