@@ -24,7 +24,6 @@ return args[0] switch
         new OpenApiArtifactWriter(),
         new OpenApiArtifactChecker()).ExecuteAsync(args),
     "reset-test-db" => await new ResetTestDatabaseCommand().ExecuteAsync(args),
-    "seed-e2e-demo-data" => await new SeedE2eDemoDataCommand().ExecuteAsync(args),
     _ => UnknownCommand(args[0])
 };
 
@@ -41,5 +40,4 @@ static void WriteUsage(TextWriter writer)
     writer.WriteLine("  dotnet run --project EnergyManagement.Tools -- generate-client-constants --out <directory> [--check]");
     writer.WriteLine("  dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json [--check]");
     writer.WriteLine("  dotnet run --project EnergyManagement.Tools -- reset-test-db [--connection <connection string>]");
-    writer.WriteLine("  dotnet run --project EnergyManagement.Tools -- seed-e2e-demo-data [--connection <connection string>]");
 }

@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "test:e2e": "dotnet run --project EnergyManagement.Tools -- reset-test-db && playwright test",
+    "test:e2e:headed": "dotnet run --project EnergyManagement.Tools -- reset-test-db && playwright test --headed",
+    "test:e2e:ui": "dotnet run --project EnergyManagement.Tools -- reset-test-db && playwright test --ui",
+    "generate:openapi": "dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json",
+    "check:openapi": "dotnet run --project EnergyManagement.Tools -- generate-openapi --out Shared/openapi.json --check",
+    "generate:api-types": "npm --prefix energymanagement.client run generate:api-types",
+    "generate:api": "npm run generate:openapi && npm run generate:api-types",
+    "check:api": "npm run check:openapi && npm run generate:api-types && git diff --exit-code Shared/openapi.json energymanagement.client/src/shared/api/generated/openapi-types.ts"
+  },
+  "engines": {
+    "node": ">=22.12.0",
+    "npm": ">=10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@playwright/test": "^1.57.0"
+  }
+}

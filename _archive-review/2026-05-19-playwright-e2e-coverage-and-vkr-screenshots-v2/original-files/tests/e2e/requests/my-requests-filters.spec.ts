@@ -2,12 +2,12 @@ import { expect, test } from "@playwright/test";
 import {
   createConnectionRequestForExistingApplicant,
   createIndividualApplicantParty,
-  registerAndLoginClient,
-} from "../support/clientSetup";
+  registerAndLoginL1Client,
+} from "../support/l1ClientSetup";
 import { waitForApiResponse } from "../support/apiResponse";
 
 test("user filters My Requests by status", async ({ page, request }) => {
-  const { email } = await registerAndLoginClient(
+  const { email } = await registerAndLoginL1Client(
     page,
     request,
     "my-requests-filters",
@@ -23,7 +23,7 @@ test("user filters My Requests by status", async ({ page, request }) => {
   const filteredResponsePromise = waitForApiResponse(
     page,
     "GET",
-    "/api/requests?status=InReview",
+    "/api/l1/requests?status=InReview",
   );
   await page.getByLabel("Статус").selectOption("InReview");
   const filteredResponse = await filteredResponsePromise;
@@ -35,7 +35,7 @@ test("user filters My Requests by status", async ({ page, request }) => {
   const unfilteredResponsePromise = waitForApiResponse(
     page,
     "GET",
-    "/api/requests",
+    "/api/l1/requests",
   );
   await page
     .getByLabel("Фильтры")
@@ -48,7 +48,7 @@ test("user filters My Requests by status", async ({ page, request }) => {
 });
 
 test("filtered empty state can be reset", async ({ page, request }) => {
-  const { email } = await registerAndLoginClient(
+  const { email } = await registerAndLoginL1Client(
     page,
     request,
     "my-requests-filters-empty",
@@ -67,7 +67,7 @@ test("filtered empty state can be reset", async ({ page, request }) => {
   const unfilteredResponsePromise = waitForApiResponse(
     page,
     "GET",
-    "/api/requests",
+    "/api/l1/requests",
   );
   await filteredEmptyState
   .getByRole("button", { name: "Сбросить фильтры" })

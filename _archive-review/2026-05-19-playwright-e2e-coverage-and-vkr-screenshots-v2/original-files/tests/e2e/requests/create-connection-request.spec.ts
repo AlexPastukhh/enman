@@ -2,8 +2,8 @@ import { expect, test, type Page } from "@playwright/test";
 import { waitForApiResponse } from "../support/apiResponse";
 import {
   postWithCsrf,
-  registerAndLoginClient,
-} from "../support/clientSetup";
+  registerAndLoginL1Client,
+} from "../support/l1ClientSetup";
 
 const validAddress = {
   postalCode: "658480",
@@ -25,7 +25,7 @@ async function createIndividualApplicantParty(
 ) {
   const response = await postWithCsrf(
     page.request,
-    "/api/applicant-parties/individual",
+    "/api/l1/applicant-parties/individual",
     {
       data: {
         fullName: {
@@ -52,7 +52,7 @@ async function openCreateRequestPage(page: Page) {
   const applicantPartiesResponsePromise = waitForApiResponse(
     page,
     "GET",
-    "/api/applicant-parties",
+    "/api/l1/applicant-parties",
   );
   await page.goto("/requests/create");
   const applicantPartiesResponse = await applicantPartiesResponsePromise;
@@ -77,12 +77,12 @@ async function submitAndExpectMyRequestsHandoff(page: Page) {
   const createResponsePromise = waitForApiResponse(
     page,
     "POST",
-    "/api/requests",
+    "/api/l1/requests",
   );
   const myRequestsResponsePromise = waitForApiResponse(
     page,
     "GET",
-    "/api/requests",
+    "/api/l1/requests",
   );
 
   await page.getByRole("button", { name: "Create request" }).click();
@@ -103,7 +103,7 @@ test("user creates request with current/default saved ApplicantParty", async ({
   page,
   request,
 }) => {
-  const { email } = await registerAndLoginClient(
+  const { email } = await registerAndLoginL1Client(
     page,
     request,
     "create-request-existing-default",
@@ -128,7 +128,7 @@ test("user creates request with non-default saved ApplicantParty", async ({
   page,
   request,
 }) => {
-  const { email } = await registerAndLoginClient(
+  const { email } = await registerAndLoginL1Client(
     page,
     request,
     "create-request-existing-non-default",
@@ -157,7 +157,7 @@ test("user creates request with non-default saved ApplicantParty", async ({
 });
 
 test("user creates request with new applicant data", async ({ page, request }) => {
-  const { email } = await registerAndLoginClient(
+  const { email } = await registerAndLoginL1Client(
     page,
     request,
     "create-request-new-applicant",
@@ -178,7 +178,7 @@ test("request creation validation feedback is visible", async ({
   page,
   request,
 }) => {
-  await registerAndLoginClient(
+  await registerAndLoginL1Client(
     page,
     request,
     "create-request-validation",

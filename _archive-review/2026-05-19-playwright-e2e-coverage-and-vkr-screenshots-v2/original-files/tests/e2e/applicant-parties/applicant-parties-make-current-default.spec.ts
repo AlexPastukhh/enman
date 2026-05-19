@@ -2,8 +2,8 @@ import { expect, test, type Page } from "@playwright/test";
 import { waitForApiResponse } from "../support/apiResponse";
 import {
   postWithCsrf,
-  registerAndLoginClient,
-} from "../support/clientSetup";
+  registerAndLoginL1Client,
+} from "../support/l1ClientSetup";
 
 async function createIndividualApplicantParty(
   page: Page,
@@ -17,7 +17,7 @@ async function createIndividualApplicantParty(
 ) {
   const response = await postWithCsrf(
     page.request,
-    "/api/applicant-parties/individual",
+    "/api/l1/applicant-parties/individual",
     {
       data: {
         fullName: {
@@ -35,7 +35,7 @@ async function createIndividualApplicantParty(
 }
 
 async function getApplicantPartyIdByEmail(page: Page, email: string) {
-  const response = await page.request.get("/api/applicant-parties");
+  const response = await page.request.get("/api/l1/applicant-parties");
   expect(response.ok()).toBeTruthy();
 
   const body = (await response.json()) as {
@@ -57,7 +57,7 @@ test("user makes another saved Applicant Party current/default", async ({
   page,
   request,
 }) => {
-  const { email } = await registerAndLoginClient(
+  const { email } = await registerAndLoginL1Client(
     page,
     request,
     "applicant-parties-make-default",
@@ -87,7 +87,7 @@ test("user makes another saved Applicant Party current/default", async ({
   const applicantPartiesResponsePromise = waitForApiResponse(
     page,
     "GET",
-    "/api/applicant-parties",
+    "/api/l1/applicant-parties",
   );
   await page.goto("/account");
   expect((await applicantPartiesResponsePromise).ok()).toBeTruthy();
@@ -109,7 +109,7 @@ test("user makes another saved Applicant Party current/default", async ({
   const makeCurrentDefaultResponsePromise = waitForApiResponse(
     page,
     "POST",
-    `/api/applicant-parties/${nonDefaultApplicantPartyId}/make-current-default`,
+    `/api/l1/applicant-parties/${nonDefaultApplicantPartyId}/make-current-default`,
   );
   await petrCard.getByRole("button", { name: "Make current/default" }).click();
   expect((await makeCurrentDefaultResponsePromise).ok()).toBeTruthy();

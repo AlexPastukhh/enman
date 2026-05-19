@@ -13,7 +13,7 @@ test("user registers through real client-server flow", async ({ page }) => {
   const registerResponsePromise = waitForApiResponse(
     page,
     "POST",
-    "/api/auth/register"
+    "/api/l1/auth/register"
   );
 
   await registerPage.register({

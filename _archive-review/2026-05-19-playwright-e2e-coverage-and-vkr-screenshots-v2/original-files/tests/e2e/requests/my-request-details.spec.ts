@@ -3,14 +3,14 @@ import {
   createConnectionRequestForExistingApplicant,
   createIndividualApplicantParty,
   getLatestMyRequestId,
-  registerAndLoginClient,
-} from "../support/clientSetup";
+  registerAndLoginL1Client,
+} from "../support/l1ClientSetup";
 import { waitForApiResponse } from "../support/apiResponse";
 
 const objectAddressText = "658480, Алтайский край, Заринск, Ленина, 10";
 
 test("user sees own request details", async ({ page, request }) => {
-  const { email } = await registerAndLoginClient(
+  const { email } = await registerAndLoginL1Client(
     page,
     request,
     "my-request-details",
@@ -22,7 +22,7 @@ test("user sees own request details", async ({ page, request }) => {
   const detailsResponsePromise = waitForApiResponse(
     page,
     "GET",
-    `/api/requests/${requestId}`,
+    `/api/l1/requests/${requestId}`,
   );
 
   await page.goto(`/requests/${requestId}`);
@@ -44,7 +44,7 @@ test("user sees own request details", async ({ page, request }) => {
 });
 
 test("missing request details show not found state", async ({ page, request }) => {
-  await registerAndLoginClient(page, request, "my-request-details-missing");
+  await registerAndLoginL1Client(page, request, "my-request-details-missing");
 
   await page.goto("/requests/999999999");
 

@@ -1,8 +1,8 @@
 import { expect, test, type Page } from "@playwright/test";
 import {
   postWithCsrf,
-  registerAndLoginClient,
-} from "../support/clientSetup";
+  registerAndLoginL1Client,
+} from "../support/l1ClientSetup";
 import { waitForApiResponse } from "../support/apiResponse";
 
 async function createIndividualApplicantParty(
@@ -17,7 +17,7 @@ async function createIndividualApplicantParty(
 ) {
   const response = await postWithCsrf(
     page.request,
-    "/api/applicant-parties/individual",
+    "/api/l1/applicant-parties/individual",
     {
       data: {
         fullName: {
@@ -38,7 +38,7 @@ test("user sees current default and other saved Applicant Parties", async ({
   page,
   request,
 }) => {
-  const { email } = await registerAndLoginClient(
+  const { email } = await registerAndLoginL1Client(
     page,
     request,
     "applicant-parties-read",
@@ -62,7 +62,7 @@ test("user sees current default and other saved Applicant Parties", async ({
   const applicantPartiesResponsePromise = waitForApiResponse(
     page,
     "GET",
-    "/api/applicant-parties",
+    "/api/l1/applicant-parties",
   );
   await page.goto("/account");
   const applicantPartiesResponse = await applicantPartiesResponsePromise;
@@ -95,12 +95,12 @@ await expect(
 });
 
 test("user sees empty Applicant Parties read state", async ({ page, request }) => {
-  await registerAndLoginClient(page, request, "applicant-parties-empty");
+  await registerAndLoginL1Client(page, request, "applicant-parties-empty");
 
   const applicantPartiesResponsePromise = waitForApiResponse(
     page,
     "GET",
-    "/api/applicant-parties",
+    "/api/l1/applicant-parties",
   );
   await page.goto("/account");
   const applicantPartiesResponse = await applicantPartiesResponsePromise;

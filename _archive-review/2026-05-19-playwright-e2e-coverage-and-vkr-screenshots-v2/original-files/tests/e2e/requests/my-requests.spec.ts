@@ -2,21 +2,21 @@ import { expect, test } from "@playwright/test";
 import {
   createConnectionRequestForExistingApplicant,
   createIndividualApplicantParty,
-  registerAndLoginClient,
-} from "../support/clientSetup";
+  registerAndLoginL1Client,
+} from "../support/l1ClientSetup";
 import { waitForApiResponse } from "../support/apiResponse";
 
 const objectAddressText = "658480, Алтайский край, Заринск, Ленина, 10";
 
 test("user sees created request in My Requests", async ({ page, request }) => {
-  const { email } = await registerAndLoginClient(page, request, "my-requests");
+  const { email } = await registerAndLoginL1Client(page, request, "my-requests");
   const applicantPartyId = await createIndividualApplicantParty(page, email);
   await createConnectionRequestForExistingApplicant(page, applicantPartyId);
 
   const myRequestsResponsePromise = waitForApiResponse(
     page,
     "GET",
-    "/api/requests",
+    "/api/l1/requests",
   );
 
   await page.goto("/requests");

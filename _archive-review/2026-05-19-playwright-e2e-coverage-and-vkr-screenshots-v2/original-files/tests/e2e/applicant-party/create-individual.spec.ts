@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { LoginPage } from "../pages/LoginPage";
 import { waitForApiResponse } from "../support/apiResponse";
-import { postWithCsrf } from "../support/clientSetup";
+import { postWithCsrf } from "../support/l1ClientSetup";
 import { uniqueEmail, validPassword } from "../support/testData";
 
 test("user creates individual applicant party through real client-server flow", async ({
@@ -10,7 +10,7 @@ test("user creates individual applicant party through real client-server flow", 
 }) => {
   const email = uniqueEmail("applicant-party");
 
-  const setupResponse = await postWithCsrf(request, "/api/auth/register", {
+  const setupResponse = await postWithCsrf(request, "/api/l1/auth/register", {
     data: {
       email,
       password: validPassword,
@@ -25,7 +25,7 @@ test("user creates individual applicant party through real client-server flow", 
   const loginResponsePromise = waitForApiResponse(
     page,
     "POST",
-    "/api/auth/login",
+    "/api/l1/auth/login",
   );
 
   await loginPage.login({
@@ -39,7 +39,7 @@ test("user creates individual applicant party through real client-server flow", 
   const initialApplicantPartiesPromise = waitForApiResponse(
     page,
     "GET",
-    "/api/applicant-parties",
+    "/api/l1/applicant-parties",
   );
 
   await page.goto("/account");
@@ -54,12 +54,12 @@ test("user creates individual applicant party through real client-server flow", 
   const applicantPartyResponsePromise = waitForApiResponse(
     page,
     "POST",
-    "/api/applicant-parties/individual",
+    "/api/l1/applicant-parties/individual",
   );
   const applicantPartiesAfterCreatePromise = waitForApiResponse(
     page,
     "GET",
-    "/api/applicant-parties",
+    "/api/l1/applicant-parties",
   );
 
   await page.getByLabel("First name").fill("Ivan");
@@ -84,7 +84,7 @@ test("user creates individual applicant party through real client-server flow", 
   const applicantPartiesAfterReloadPromise = waitForApiResponse(
     page,
     "GET",
-    "/api/applicant-parties",
+    "/api/l1/applicant-parties",
   );
   await page.reload();
   const applicantPartiesAfterReload = await applicantPartiesAfterReloadPromise;
