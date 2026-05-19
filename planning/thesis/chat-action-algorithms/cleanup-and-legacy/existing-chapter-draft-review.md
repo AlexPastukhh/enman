@@ -18,6 +18,24 @@ planning/thesis/vkr-clean/legacy-chaotic-drafts/
 
 `existing-chapter-drafts` may be useful. `legacy-chaotic-drafts` are mostly cautionary / cleanup material.
 
+## Important interpretation
+
+Existing chapters are currently treated as **section draft candidates**.
+
+That means:
+
+```text
+existing chapter text stays on the section-draft side;
+topic draft receives semantic analysis of that text;
+raw chapter paragraphs are not pasted into topic draft as topic content.
+```
+
+If the task is to break an existing subsection into topic/section workflow, also run:
+
+```text
+planning/thesis/chat-action-algorithms/cleanup-and-legacy/existing-section-draft-reverse-engineering.md
+```
+
 ## Required behavior
 
 1. Do not treat the existing chapter as final clean VKR text.
@@ -33,20 +51,22 @@ planning/thesis/vkr-clean/legacy-chaotic-drafts/
    - what has formatting/numbering/visual issues.
 4. Extract useful material as candidates:
    - structure candidates;
+   - semantic point candidates;
    - section block candidates;
    - wording candidates;
    - table candidates;
    - problem notes;
    - questions.
-5. Move ideas into topic drafts as material candidates.
-6. Move usable text only into corresponding section draft blocks, marked as requiring review.
-7. Run topic-draft workflow for reused material:
+5. Reverse-engineer useful text into semantic points before updating topic drafts.
+6. Move ideas into topic drafts as material candidates and semantic-point cards.
+7. Move usable text only into corresponding section draft blocks, marked as requiring review.
+8. Run topic-draft workflow for reused material:
    - questions;
    - source support;
    - research/repo/visual checks;
    - plan of disclosure;
    - rewrite/edit.
-8. Do not copy the chapter wholesale into final VKR text.
+9. Do not copy the chapter wholesale into final VKR text.
 
 ## Output format
 
@@ -67,6 +87,10 @@ planning/thesis/vkr-clean/legacy-chaotic-drafts/
 | Question | Priority | Why it matters | Where it goes |
 |---|---|---|---|
 
+### Semantic point candidates
+| Semantic point | Related topic draft | Current section text | Checks | Action |
+|---|---|---|---|---|
+
 ### Section block candidates
 | Candidate block | Related topic draft | Reuse mode | Checks |
 |---|---|---|---|
@@ -74,4 +98,4 @@ planning/thesis/vkr-clean/legacy-chaotic-drafts/
 
 ## Main rule
 
-Existing chapter draft can feed topic draft and section draft, but it does not replace topic-draft workflow.
+Existing chapter draft can feed topic draft and section draft, but it does not replace topic-draft workflow. The topic draft should contain semantic points, questions and plans; the section draft contains candidate text.

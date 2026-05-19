@@ -2,7 +2,12 @@ import { expect, test, type Page } from "@playwright/test";
 import path from "node:path";
 import { LoginPage } from "../pages/LoginPage";
 import { waitForApiResponse } from "../support/apiResponse";
-import { demoCredentials, demoText, seedE2eDemoData } from "../support/demoSeed";
+import {
+  demoCredentials,
+  demoRequestIds,
+  demoText,
+  seedE2eDemoData,
+} from "../support/demoSeed";
 import { L } from "../support/locators";
 
 const fixtureDocumentPath = path.join(
@@ -61,10 +66,22 @@ test("employee starts exchange and client sends counter-proposal with document d
   await expect(
     page.getByRole("heading", { name: L.headings.employeeAgreementExchanges }),
   ).toBeVisible();
-  await expect(page.getByText(demoText.agreementRequestDetails)).toBeVisible();
+  const employeeExchangeCard = page.locator("article").filter({
+    hasText: `#${demoRequestIds.agreement}`,
+  });
+  await expect(employeeExchangeCard).toBeVisible();
+  await expect(
+    employeeExchangeCard.getByRole("link", {
+      name: L.agreementExchange.openDetailsLink,
+    }),
+  ).toBeVisible();
 
   await page.getByRole("button", { name: "Выйти" }).click();
-  await expect(page.getByRole("link", { name: "Войти" })).toBeVisible();
+  await expect(
+    page
+      .getByLabel("Основная навигация")
+      .getByRole("link", { name: "Войти" }),
+  ).toBeVisible();
 
   await login(page, demoCredentials.clientEmail);
 
@@ -77,16 +94,28 @@ test("employee starts exchange and client sends counter-proposal with document d
   const clientAgreementsResponse = await clientAgreementsResponsePromise;
   expect(clientAgreementsResponse.ok()).toBeTruthy();
 
-  await expect(page.getByText(demoText.agreementRequestDetails)).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: L.headings.clientAgreementExchanges }),
+  ).toBeVisible();
+  const clientExchangeCard = page.locator("article").filter({
+    hasText: `#${demoRequestIds.agreement}`,
+  });
+  await expect(clientExchangeCard).toBeVisible();
 
   const detailsResponsePromise = waitForApiResponse(
     page,
     "GET",
     "/api/agreement-exchanges/",
   );
-  await page.getByRole("link", { name: L.agreementExchange.openDetailsLink }).first().click();
+  await clientExchangeCard
+    .getByRole("link", { name: L.agreementExchange.openDetailsLink })
+    .click();
   const detailsResponse = await detailsResponsePromise;
   expect(detailsResponse.ok()).toBeTruthy();
+
+  await expect(
+    page.getByRole("link", { name: L.agreementExchange.downloadDocumentLink }).first(),
+  ).toBeVisible();
 
   const downloadPromise = page.waitForEvent("download");
   await page.getByRole("link", { name: L.agreementExchange.downloadDocumentLink }).first().click();

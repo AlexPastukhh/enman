@@ -10,7 +10,6 @@ topic draft
 ↔ источники материалов
 ↔ вопросы / дефолтные ответы / варианты
 ↔ research / repo / visual / domain / slices / existing chapter drafts
-↔ semantic points
 ↔ section draft blocks
 → section draft v1
 → reviewer pass
@@ -36,7 +35,6 @@ This folder is a central workflow layer, not an optional note collection. If the
 | research insertion | `evidence-and-materials/research-bridge.md` |
 | implementation text / chapter 3 | `evidence-and-materials/repo-check-before-implementation-text.md` |
 | existing chapter / old section draft | `cleanup-and-legacy/existing-chapter-draft-review.md` |
-| reverse-engineer existing section draft | `cleanup-and-legacy/existing-section-draft-reverse-engineering.md` |
 | archive creation | `archive-generation-and-navigation-update.md` |
 | new chat lost context | `new-chat-context-recovery.md` |
 | `тчт` | `tcht-command.md` |
@@ -63,7 +61,6 @@ meaning of the topic;
 what changed since previous draft;
 source materials;
 useful material candidates;
-semantic points;
 questions with priority;
 default answers and variants;
 research bridge;
@@ -80,7 +77,7 @@ plan of disclosure for each block.
 planning/thesis/vkr-clean/section-drafts/
 ```
 
-Section drafts are not generated from nowhere. They are built from section blocks, each connected to a topic-draft semantic point.
+Section drafts are not generated from nowhere. They are built from section blocks, each connected to a topic-draft semantic block.
 
 No required `fragment-bank.md`. If text is ready, it belongs inside the relevant section-draft block.
 
@@ -90,15 +87,12 @@ No required `fragment-bank.md`. If text is ready, it belongs inside the relevant
 planning/thesis/vkr-clean/existing-chapter-drafts/
 ```
 
-Existing chapter drafts are a secondary resource and may act as section draft candidates. They may be not bad and may contain useful wording, tables and structure, but they are not source of truth and are not final clean text.
-
-They can feed topic drafts and section drafts only after review and reverse engineering.
+Existing chapter drafts are a secondary resource. They may be not bad and may contain useful wording, tables and structure, but they are not source of truth and are not final clean text. They can feed topic drafts and section drafts only after review.
 
 Use:
 
 ```text
 planning/thesis/chat-action-algorithms/cleanup-and-legacy/existing-chapter-draft-review.md
-planning/thesis/chat-action-algorithms/cleanup-and-legacy/existing-section-draft-reverse-engineering.md
 ```
 
 ### Clean materials
@@ -140,37 +134,17 @@ planning/thesis/vkr-topic-workbench/TOPIC-TO-SECTION-BLOCK-WORKFLOW.md
 Main rule:
 
 ```text
-topic-драфт задаёт смысловые пункты;
+topic-драфт задаёт смысловые блоки;
 section-драфт создаёт похожие блоки/подзаголовки;
-для каждого смыслового пункта задаются вопросы;
+для каждого блока задаются вопросы;
 по вопросам собираются материалы;
-для смыслового пункта составляется план раскрытия;
+для блока составляется план раскрытия;
 текст постепенно пишется внутрь section-драфта.
 ```
 
-Existing chapter drafts may provide candidate blocks or candidate text, but any reused material must pass through reverse engineering and the same block workflow.
+Existing chapter drafts may provide candidate blocks or candidate text, but any reused material must pass through the same block workflow.
 
-## 6. Existing section draft reverse engineering
-
-When a ready chapter/subchapter already exists, the chat must not paste it into a topic draft.
-
-Use:
-
-```text
-planning/thesis/chat-action-algorithms/cleanup-and-legacy/existing-section-draft-reverse-engineering.md
-```
-
-Correct process:
-
-```text
-existing section text
-→ semantic point
-→ purpose / order / questions / checks
-→ topic draft update
-→ section draft correction
-```
-
-## 7. Navigation impact check
+## 6. Navigation impact check
 
 Whenever a file or folder changes, run:
 
@@ -199,7 +173,7 @@ chapter README / topic-index when relevant
 
 Do not maintain statuses in `topic-index.md`. Topic-index is navigation, not a task board.
 
-## 8. Question priority
+## 7. Question priority
 
 Questions are not just a large list. They must be prioritised:
 
@@ -218,7 +192,7 @@ Use:
 planning/thesis/chat-action-algorithms/drafting/question-priority.md
 ```
 
-## 9. Guardrails
+## 8. Guardrails
 
 ### AI / prompts / chats
 
@@ -248,6 +222,6 @@ Document reference / metadata is not a full ECM/EDO/storage solution. Do not cla
 
 Do not claim complete email notification implementation without repo/evidence check.
 
-## 10. Archive rule
+## 9. Archive rule
 
 Before giving an archive link, the chat must open and verify the zip contents, check MANIFEST/APPLY, check originals for replacements, and confirm navigation impact check was performed.

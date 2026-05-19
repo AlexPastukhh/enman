@@ -29,7 +29,6 @@ Do not overclaim implementation.
 | user sends diagrams | `chat-action-algorithms/evidence-and-materials/visual-material-review.md` |
 | implementation/chapter 3 text | `chat-action-algorithms/evidence-and-materials/repo-check-before-implementation-text.md` |
 | existing chapter / old section draft | `chat-action-algorithms/cleanup-and-legacy/existing-chapter-draft-review.md` |
-| reverse-engineering existing section draft | `chat-action-algorithms/cleanup-and-legacy/existing-section-draft-reverse-engineering.md` |
 | archive request | `chat-action-algorithms/archive-generation-and-navigation-update.md` |
 | `тчт` | `chat-action-algorithms/tcht-command.md` |
 
@@ -37,49 +36,29 @@ Do not overclaim implementation.
 
 A topic draft is the semantic base. A section draft is text being accumulated by section blocks.
 
-Never create a section draft as one uncontrolled wall of text. First create semantic points, questions and a plan of disclosure.
+Never create a section draft as one uncontrolled wall of text. First create blocks, questions and a plan of disclosure.
 
 ## 5. Existing chapter drafts
 
 Existing chapters or older section drafts can be useful resources. They may contain good structure, wording, tables or problem notes.
 
-But they are not final clean text and not source of truth.
-
-Use:
+But they are not final clean text and not source of truth. Use:
 
 ```text
 planning/thesis/vkr-clean/existing-chapter-drafts/
 planning/thesis/chat-action-algorithms/cleanup-and-legacy/existing-chapter-draft-review.md
-planning/thesis/chat-action-algorithms/cleanup-and-legacy/existing-section-draft-reverse-engineering.md
 ```
 
 Reuse modes:
 
 ```text
 idea → topic draft material candidate;
-semantic point → topic draft semantic point;
 usable paragraph → section draft block, marked for review;
 problem note → question/checklist;
 weak part → avoid/rewrite through workflow.
 ```
 
-Do not paste whole chapter fragments into topic drafts. Topic drafts must contain semantic points, questions and plans. Section drafts contain candidate text.
-
-## 6. Reverse-engineering principle
-
-When an existing chapter/subsection exists:
-
-```text
-existing text block
-→ semantic point
-→ purpose/order/questions/sources/checks
-→ topic draft update
-→ section draft correction
-```
-
-The chat must decide whether the current text should be kept, compressed, expanded, rewritten, moved or removed.
-
-## 7. Question principle
+## 6. Question principle
 
 Questions must be prioritised. Do not ask a random large list.
 
@@ -100,7 +79,7 @@ visual;
 style.
 ```
 
-## 8. Navigation rule
+## 7. Navigation rule
 
 Whenever a file is created, changed, moved or deleted, check:
 
@@ -114,7 +93,7 @@ The chat should ask/check:
 Какие навигационные файлы нужно обновить из-за этого изменения?
 ```
 
-## 9. Core guardrails
+## 8. Core guardrails
 
 - Account activation is not a central implemented VKR flow.
 - Mock check is a demonstration / extension point, not real external verification.

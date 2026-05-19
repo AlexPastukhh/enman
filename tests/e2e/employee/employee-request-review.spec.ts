@@ -1,7 +1,12 @@
 import { expect, test } from "@playwright/test";
 import { LoginPage } from "../pages/LoginPage";
 import { waitForApiResponse } from "../support/apiResponse";
-import { demoCredentials, demoText, seedE2eDemoData } from "../support/demoSeed";
+import {
+  demoCredentials,
+  demoRequestIds,
+  demoText,
+  seedE2eDemoData,
+} from "../support/demoSeed";
 import { L } from "../support/locators";
 
 test.beforeEach(() => {
@@ -32,14 +37,23 @@ test("employee reviews and approves a seeded request", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: L.headings.employeeDashboard }),
   ).toBeVisible();
-  await expect(page.getByText(demoText.reviewRequestDetails)).toBeVisible();
+
+  const reviewRequestCard = page.locator("article").filter({
+    has: page.getByRole("heading", {
+      name: `Заявка #${demoRequestIds.review}`,
+    }),
+  });
+  await expect(reviewRequestCard).toBeVisible();
+  await expect(reviewRequestCard.getByText(L.status.inReview)).toBeVisible();
 
   const detailsResponsePromise = waitForApiResponse(
     page,
     "GET",
     "/api/employee/requests/",
   );
-  await page.goto("/employee/requests/9004");
+  await reviewRequestCard
+    .getByRole("link", { name: /Открыть детали/ })
+    .click();
   const detailsResponse = await detailsResponsePromise;
   expect(detailsResponse.ok()).toBeTruthy();
 

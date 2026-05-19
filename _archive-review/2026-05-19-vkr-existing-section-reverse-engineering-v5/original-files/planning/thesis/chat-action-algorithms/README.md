@@ -30,7 +30,6 @@ evidence-and-materials/
 cleanup-and-legacy/
   legacy-chaotic-draft-review.md
   existing-chapter-draft-review.md
-  existing-section-draft-reverse-engineering.md
 ```
 
 ## Core idea
@@ -44,23 +43,14 @@ User command
 → safe draft/update/review/archive
 ```
 
-## Existing chapter / section drafts
+## Existing chapter drafts
 
-Existing chapters are not ignored. They can be used as a resource and as section draft candidates, but only through review and topic/section block workflow.
+Existing chapters are not ignored. They can be used as a resource, but only through review and topic/section block workflow.
 
 Use:
 
 ```text
 cleanup-and-legacy/existing-chapter-draft-review.md
-cleanup-and-legacy/existing-section-draft-reverse-engineering.md
-```
-
-Key rule:
-
-```text
-existing text stays as section draft candidate;
-topic draft receives semantic points, questions and disclosure plans;
-section draft is then corrected through those semantic points.
 ```
 
 ## Navigation rule

@@ -7,7 +7,6 @@ This file answers: where are VKR resources stored and how can a chat reach the n
 ```text
 planning/thesis/README.md
 planning/thesis/VKR-WORKFLOW-SOURCE-OF-TRUTH.md
-planning/thesis/VKR-RESOURCE-MAP.md
 planning/thesis/NEW-CHAT-ONBOARDING.md
 planning/thesis/chat-action-algorithms/README.md
 planning/thesis/vkr-topic-workbench/README.md
@@ -41,9 +40,7 @@ If legacy/support folders exist, do not write new drafts there unless navigation
 planning/thesis/vkr-clean/section-drafts/
 ```
 
-Section drafts are developing VKR text. They accumulate text by section blocks that come from topic-draft semantic points.
-
-When existing chapters already exist, those chapters may temporarily be section draft candidates.
+Section drafts are developing VKR text. They accumulate text by section blocks that come from topic drafts.
 
 ## 4. Existing chapter drafts
 
@@ -68,7 +65,6 @@ These drafts can provide:
 
 ```text
 structure candidates;
-semantic point candidates;
 successful wording;
 examples of tables;
 problem notes;
@@ -77,12 +73,6 @@ source reminders.
 ```
 
 They must not bypass topic-draft workflow.
-
-If an existing chapter/subsection is used as a section draft candidate, use:
-
-```text
-planning/thesis/chat-action-algorithms/cleanup-and-legacy/existing-section-draft-reverse-engineering.md
-```
 
 ## 5. Research materials
 
@@ -152,16 +142,6 @@ README.md
 → relevant layer README
 → relevant chapter README / topic-index
 → topic draft / section draft / research / evidence file
-```
-
-For existing section draft reverse engineering:
-
-```text
-README.md
-→ VKR-RESOURCE-MAP.md
-→ vkr-clean/existing-chapter-drafts/README.md
-→ chat-action-algorithms/cleanup-and-legacy/existing-section-draft-reverse-engineering.md
-→ topic draft / section draft candidate
 ```
 
 If any step is missing, update navigation before or with the content change.
