@@ -27,18 +27,6 @@ VKR-DRAFTING-ROADMAP.md
 04-chapter-3-implementation/CHAPTER-3-ROADMAP.md
 ```
 
-## Why there are several roadmaps
-
-```text
-VKR-DRAFTING-ROADMAP.md
-→ whole VKR picture, raw notes, cross-chapter decisions
-
-CHAPTER-X-ROADMAP.md
-→ chapter-level planning and distribution
-```
-
-Topic drafts should not carry every future note. They may reference roadmap notes when needed.
-
 ## Capture-first rule
 
 If the user gives many notes or future ideas, capture them first:
@@ -58,3 +46,7 @@ Do not overload the current topic draft with all future notes.
 Topic drafts are `.topic.md` files. They contain semantic points, questions, checks, sources, visual/research bridges and section block plans.
 
 They are not final VKR text.
+
+## Semantic point coverage
+
+Detailed desired-result coverage belongs inside semantic point cards, not in one huge table for the whole topic.

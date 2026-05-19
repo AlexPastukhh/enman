@@ -36,6 +36,13 @@ Topic drafts are the primary semantic base for VKR sections.
 
 They should not carry all future notes. Future/cross-topic notes should be kept in the roadmap layer.
 
+Topic structure files:
+
+```text
+planning/thesis/vkr-topic-workbench/00-workflow-and-rules/topic-draft-structure-current.md
+planning/thesis/vkr-topic-workbench/00-workflow-and-rules/topic-card-template.md
+```
+
 ## 4. Section drafts
 
 ```text
@@ -43,8 +50,6 @@ planning/thesis/vkr-clean/section-drafts/
 ```
 
 Section drafts are developing VKR text. They accumulate text by section blocks that come from topic draft semantic points.
-
-When existing chapters already exist, those chapters may temporarily be section draft candidates.
 
 ## 5. Existing chapter drafts
 
@@ -73,8 +78,6 @@ If a dedicated folder is created, use:
 ```text
 planning/thesis/vkr-topic-workbench/<chapter>/visual-briefs/
 ```
-
-A visual must be connected to a section block and must not create overclaim.
 
 ## 8. Evidence / implementation facts
 

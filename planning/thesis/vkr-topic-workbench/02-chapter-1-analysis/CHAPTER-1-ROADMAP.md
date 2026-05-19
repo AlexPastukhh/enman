@@ -47,10 +47,12 @@ Chapter 1 must not prove that custom development is always better than ready-mad
 | Decision | Reason | Affects |
 |---|---|---|
 | 1.1 remains first | Need to introduce automated process before problems/options | Chapter order |
+| Chapter 1 may start with short organization context but must quickly move to request process | Prevents generic organization description | 1.1 |
 | Mock-check not mentioned in 1.1 | It is implementation/demo | Chapter 3 |
 | "Client" is clarified through "user of web app" and "applicant" | Avoids mixing account and person data | 1.1, Chapter 2 |
 | Request is described as linking object | Better explains process logic | 1.1, 1.3 |
 | Own app analysis is framed through conditions/trade-offs | Avoids artificial proof | 1.4/1.5 |
+| Conditions for choosing automation options need research | Avoids weak claims | 1.4/1.5 |
 
 ## 6. Transfer notes
 
@@ -59,6 +61,9 @@ Chapter 1 must not prove that custom development is always better than ready-mad
 | Request state controls allowed actions | 1.1 / 1.3 / Chapter 2 | captured |
 | Manual process problem includes consistency, not only extra actions | 1.3 | captured |
 | Ready solutions vs own development should be conditions/trade-offs | 1.4 | captured |
+| Need research on when custom development vs ready systems is chosen | 1.4/1.5 | research needed |
+| License/subscription/implementation costs may matter when choosing ready solutions | 1.4/1.5 | research needed |
 | Own web app is used within VKR topic and can model specific process logic | 1.5 | captured |
 | Architecture supports rules, consistency and maintainability | Chapter 2 | captured |
 | Mock-check as demonstration/extension point | Chapter 3 | decided |
+| Desired-result coverage belongs inside semantic point cards | all topic drafts | workflow update |

@@ -18,23 +18,7 @@ When a note may belong to several future sections, do not force it into the curr
 
 First capture it here. Later distribute it to concrete chapter roadmaps, topic drafts and section draft blocks.
 
-## 2. Why there are several roadmap files
-
-The general roadmap keeps the whole VKR picture and cross-chapter notes.
-
-Chapter roadmaps keep notes that already belong mainly to one chapter.
-
-```text
-VKR-DRAFTING-ROADMAP.md
-→ общая картина, сквозные решения, сырые заметки, спорные мысли
-
-CHAPTER-X-ROADMAP.md
-→ план конкретной главы, желаемый итог главы, заметки на перенос внутри главы
-```
-
-This prevents topic drafts from carrying future notes.
-
-## 3. Current cross-cutting drafting model
+## 2. Current cross-cutting drafting model
 
 ```text
 desired outcome of parent element
@@ -42,15 +26,31 @@ desired outcome of parent element
 → desired outcome of current element
 → discovery questions
 → semantic points
+→ semantic point desired-result coverage
 → order of disclosure
 → section draft blocks
+```
+
+## 3. Important workflow decision
+
+Do not create one huge desired-result coverage table for the whole topic.
+
+The topic has a concise desired outcome and discovery table.
+
+The detailed coverage table belongs inside each semantic point card.
+
+```text
+theme desired outcome
+→ semantic points
+→ semantic point desired result
+→ coverage table inside semantic point
 ```
 
 ## 4. Cross-chapter logic
 
 | Chapter | Main role | Notes |
 |---|---|---|
-| Chapter 1 | domain process → problems → automation options → requirements | Should not claim that own app is universally best |
+| Chapter 1 | domain process → problems → automation options → requirements | Should not claim own app is universally best |
 | Chapter 2 | requirements → design → model → architecture → DB/API/UI | Should use conclusions from Chapter 1 |
 | Chapter 3 | implementation → evidence → testing → result | Should be grounded in repo, slices, tests and screenshots |
 
@@ -73,6 +73,7 @@ desired outcome of parent element
 | Topic drafts should not carry all future notes | Topic drafts stay focused on current topic | topic drafts |
 | Existing chapters are section draft candidates | They can be useful but are not final | section drafts/topic drafts |
 | Semantic points derive from desired outcomes | Prevents random blocks | all topic drafts |
+| Detailed desired-result coverage lives inside semantic point cards | Keeps coverage tied to the current point | all topic drafts |
 | Own app is not presented as universally best | Honest analysis of alternatives and trade-offs | 1.4/1.5 |
 | Mock-check is not a Chapter 1 point | It is implementation/demo evidence | Chapter 3 |
 | Use "user of web app" and "applicant" carefully | Avoids mixing account and person data | 1.1 / Chapter 2 |
@@ -81,23 +82,16 @@ desired outcome of parent element
 
 | Date | Source | Summary | Raw file | Status |
 |---|---|---|---|---|
-| 2026-05-19 | user discussion | Chapter 1 notes about own app trade-offs, request state, allowed actions, user/applicant distinction, mock-check transfer and future chapter plans | `00-inbox/raw-notes/2026-05-19-chapter1-request-process-automation-options-notes.txt` | captured / needs distribution |
+| 2026-05-19 | user discussion | Chapter 1 topic v5 and workflow correction: desired-result coverage should live inside semantic point cards; automation-option choice needs research; organization intro should be short; 1.1 should track which semantic point covers which result | `00-inbox/raw-notes/2026-05-19-chapter1-topic-v5-semantic-point-coverage-notes.txt` | captured / needs distribution |
 
 ## 8. Distribution plan for current captured notes
 
 | Note | Possible places | Why important | Risk | Status |
 |---|---|---|---|---|
-| Chapter 1 should not prove own app is always best | 1.4, 1.5 | Keeps argument honest | artificial justification | captured |
-| Explain conditions for choosing alternatives | 1.4 | Makes automation analysis stronger | too broad if not controlled | captured |
-| Own app in VKR is considered because the topic requires development and because it can model specific process logic | 1.5 | Gives acceptable academic framing | sounding like "because forced" | captured |
-| Request as linking process object | 1.1, 1.3, Chapter 2 | Stronger domain explanation | too technical if DDD terms used | captured |
-| Request state and allowed actions | 1.1, 1.3, Chapter 2 | Shows automation as consistency support | needs careful examples/repo-check | captured |
-| User web account vs applicant | 1.1, Chapter 2 | Clarifies model | overexplaining account | captured |
-| Mock-check only in Chapter 3 | Chapter 3 | Avoids overclaim in Chapter 1 | losing useful implementation note | decided |
-| Architecture as way to support process rules | Chapter 2 | Creates bridge from Chapter 1 to design | too abstract if not tied to requirements | captured |
-
-## 9. Unsorted notes area
-
-Use this section for future notes that do not yet have a clear place.
-
-Each note should eventually be moved to a chapter roadmap, topic draft or section draft block.
+| Desired-result coverage table belongs inside semantic point cards | topic-card-template, semantic-point-discovery, 1.1 topic draft | Prevents huge unclear topic-level coverage tables | missing user's ideas if not attached to points | captured / workflow update |
+| Conditions for choosing automation options require research | 1.4, 1.5 | Needs stronger evidence than memory | weak justification of own app | research needed |
+| License/implementation costs can matter when considering ready solutions | 1.4, 1.5 | User explicitly raised cost/payment | may require current sources | research needed |
+| Specific business logic can justify custom app in some cases | 1.4, 1.5, Chapter 2 | Connects domain rules to implementation direction | needs careful wording | captured |
+| Typical processes may fit ready solutions better | 1.4 | Avoids fake argument that own app is always best | may weaken if not balanced | captured |
+| Short organization context should lead quickly to request process | 1.1 | Avoids starting too abruptly or too broadly | generic organization description | captured |
+| "Automation is broader than a form" belongs inside semantic point coverage | 1.1 semantic point "state and allowed actions" | Shows exactly what this idea explains | can be lost in roadmap | move to topic draft |

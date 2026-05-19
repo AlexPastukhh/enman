@@ -42,6 +42,7 @@ User command
 → mandatory algorithm
 → roadmap capture if needed
 → desired outcome / semantic points
+→ semantic point desired-result coverage
 → relevant sources
 → question priority
 → questions + default answers
@@ -55,6 +56,12 @@ If the user gives many cross-topic or future notes, use:
 ```text
 drafting/raw-notes-capture-and-distribution.md
 ```
+
+## Semantic point coverage
+
+If the user gives an idea that explains a result, attach it to the relevant semantic point card.
+
+Do not keep one huge topic-level coverage table.
 
 ## Existing section candidates
 

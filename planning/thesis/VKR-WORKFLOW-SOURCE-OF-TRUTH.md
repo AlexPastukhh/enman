@@ -25,7 +25,25 @@ raw notes
 
 Topic draft and section draft develop in parallel. A topic draft is not a final text. It is a semantic base that feeds section draft blocks.
 
-## 2. Capture-first roadmap rule
+## 2. Desired-result coverage rule
+
+Topic-level desired outcome defines which semantic points are needed.
+
+Do not create one huge coverage table for all desired topic results.
+
+Detailed coverage belongs inside each semantic point card:
+
+```text
+semantic point
+→ desired result of this point
+→ coverage table for this point
+→ questions/checks/plan
+→ section draft block
+```
+
+This keeps user ideas and source materials attached to the exact point they help раскрыть.
+
+## 3. Capture-first roadmap rule
 
 If a user message contains cross-topic ideas, future notes, disputed decisions or material that may belong to several future drafts, do not force it into the current topic draft immediately.
 
@@ -49,39 +67,6 @@ Use:
 
 ```text
 planning/thesis/chat-action-algorithms/drafting/raw-notes-capture-and-distribution.md
-```
-
-## 3. Roadmap layer
-
-The roadmap layer stores intermediate planning material.
-
-```text
-planning/thesis/vkr-topic-workbench/VKR-DRAFTING-ROADMAP.md
-planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/CHAPTER-1-ROADMAP.md
-planning/thesis/vkr-topic-workbench/03-chapter-2-design/CHAPTER-2-ROADMAP.md
-planning/thesis/vkr-topic-workbench/04-chapter-3-implementation/CHAPTER-3-ROADMAP.md
-planning/thesis/vkr-topic-workbench/00-inbox/
-```
-
-General roadmap:
-
-```text
-whole VKR picture;
-cross-chapter notes;
-raw user notes;
-disputed decisions;
-future ideas;
-distribution plan.
-```
-
-Chapter roadmap:
-
-```text
-desired outcome of the chapter;
-chapter points and their roles;
-chapter decisions;
-transfer notes;
-chapter-level planning.
 ```
 
 ## 4. Central role of chat action algorithms

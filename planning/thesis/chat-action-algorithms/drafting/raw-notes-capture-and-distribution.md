@@ -28,7 +28,8 @@ The first goal is to avoid losing the idea and to keep the overall picture visib
    - guardrails;
    - notes to transfer later;
    - candidate wording;
-   - rejected / risky ideas.
+   - rejected / risky ideas;
+   - corrections to workflow itself.
 
 2. Save the raw note or its faithful summary into the general roadmap layer:
    - `planning/thesis/vkr-topic-workbench/VKR-DRAFTING-ROADMAP.md`
@@ -41,7 +42,9 @@ The first goal is to avoid losing the idea and to keep the overall picture visib
    - risk;
    - status.
 
-4. Only after capture, distribute relevant parts into:
+4. If the note clarifies how a specific desired result is covered, attach it to the relevant semantic point card, not to a huge topic-level table.
+
+5. Only after capture, distribute relevant parts into:
    - chapter roadmap;
    - topic draft;
    - section draft;
@@ -49,7 +52,7 @@ The first goal is to avoid losing the idea and to keep the overall picture visib
    - transfer notes;
    - future/rejected notes.
 
-5. Do not overload the current topic draft with every future note.
+6. Do not overload the current topic draft with every future note.
    A topic draft should contain only notes needed for the current topic plus links to roadmap notes when necessary.
 
 ## Statuses for raw notes
@@ -63,6 +66,8 @@ moved to section draft
 decided
 rejected
 deferred
+research needed
+repo-check needed
 ```
 
 ## Main rule

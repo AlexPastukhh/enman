@@ -1,15 +1,23 @@
 import { expect, test, type Page } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
+import path from "node:path";
 import { LoginPage } from "../pages/LoginPage";
 import { RegisterPage } from "../pages/RegisterPage";
 import {
   createConnectionRequestForExistingApplicant,
   createIndividualApplicantParty,
 } from "../support/clientSetup";
-import { demoCredentials, seedE2eDemoData } from "../support/demoSeed";
+import { waitForApiResponse } from "../support/apiResponse";
+import { demoCredentials, demoRequestIds, seedE2eDemoData } from "../support/demoSeed";
+import { L } from "../support/locators";
 import { uniqueEmail, validPassword } from "../support/testData";
 
 const outputDir = "planning/thesis/assets/screenshots";
+
+const fixtureDocumentPath = path.join(
+  process.cwd(),
+  "tests/e2e/fixtures/demo-agreement.pdf",
+);
 
 async function capture(page: Page, fileName: string) {
   await page.screenshot({
@@ -109,10 +117,85 @@ test.describe("VKR documentation screenshots @screenshots", () => {
     ).toBeVisible();
     await capture(page, "08-employee-request-details-review-actions.png");
 
+    // Start review and capture applicant verification before/after
+    const startReviewResponsePromise = waitForApiResponse(
+      page,
+      "POST",
+      "/review/start",
+    );
+    await page.getByRole("button", { name: L.buttons.startReview }).click();
+    const startReviewResponse = await startReviewResponsePromise;
+    expect(startReviewResponse.ok()).toBeTruthy();
+
+    const verificationButton = page.getByRole("button", { name: /Проверить данные/ });
+    if (!(await verificationButton.isVisible())) {
+      throw new Error("Applicant verification button is not visible in seeded demo data");
+    }
+
+    await capture(page, "11-applicant-verification-before.png");
+
+    const verificationResponsePromise = waitForApiResponse(
+      page,
+      "POST",
+      "/applicant-party/verification/run",
+    );
+    await verificationButton.click();
+    const verificationResponse = await verificationResponsePromise;
+    expect(verificationResponse.ok()).toBeTruthy();
+    await expect(page.getByText("Данные проверены").first()).toBeVisible();
+    await capture(page, "12-applicant-verification-after.png");
+
+    // Start an agreement exchange for deterministic details capture
+    await page.goto("/employee/requests/9005");
+    const employeeDetailsResponsePromise = waitForApiResponse(
+      page,
+      "GET",
+      "/api/employee/requests/",
+    );
+    await page.goto("/employee/requests/9005");
+    const employeeDetailsResponse = await employeeDetailsResponsePromise;
+    expect(employeeDetailsResponse.ok()).toBeTruthy();
+
+    await page
+      .locator('input[type="file"][id^="start-exchange-document-"]')
+      .setInputFiles(fixtureDocumentPath);
+    await page
+      .getByLabel(L.agreementExchange.initialCommentLabel)
+      .fill("Initial E2E agreement proposal.");
+
+    const startExchangeResponsePromise = waitForApiResponse(
+      page,
+      "POST",
+      "/agreement-exchange/start",
+    );
+    await page.getByRole("button", { name: L.buttons.startAgreementExchange }).click();
+    const startExchangeResponse = await startExchangeResponsePromise;
+    expect(startExchangeResponse.ok()).toBeTruthy();
+
     await page.goto("/employee/agreements");
     await expect(
       page.getByRole("heading", { name: /Договорные обмены|Мои договоры/ }),
     ).toBeVisible();
     await capture(page, "09-agreement-exchange-list.png");
+
+    const employeeExchangeCard = page.locator("article").filter({
+      hasText: `#${demoRequestIds.agreement}`,
+    });
+    await expect(employeeExchangeCard).toBeVisible();
+    const detailsResponsePromise = waitForApiResponse(
+      page,
+      "GET",
+      "/api/agreement-exchanges/",
+    );
+    await employeeExchangeCard
+      .getByRole("link", { name: L.agreementExchange.openDetailsLink })
+      .click();
+    const detailsResponse = await detailsResponsePromise;
+    expect(detailsResponse.ok()).toBeTruthy();
+
+    await expect(
+      page.getByRole("link", { name: L.agreementExchange.downloadDocumentLink }).first(),
+    ).toBeVisible();
+    await capture(page, "10-agreement-exchange-details.png");
   });
 });

@@ -33,7 +33,27 @@ Use:
 planning/thesis/chat-action-algorithms/drafting/raw-notes-capture-and-distribution.md
 ```
 
-## 3. What not to do
+## 3. Desired-result coverage
+
+Do not create one huge desired-result coverage table for the entire topic.
+
+Use this rule:
+
+```text
+theme desired outcome
+→ semantic points
+→ each semantic point has its own desired result
+→ each semantic point has its own coverage table
+```
+
+So when the user gives an idea, the chat should show:
+
+- which desired result inside the semantic point it covers;
+- whether it stays in the current topic;
+- whether it goes to roadmap;
+- whether it needs research/repo/visual check.
+
+## 4. What not to do
 
 Do not write the thesis directly from memory. Do not copy planning files directly into the thesis. Do not mention AI, prompts, chats or agent workflow in VKR text.
 
@@ -41,7 +61,7 @@ Do not use L1/L2 as thesis language.
 
 Do not overclaim implementation.
 
-## 4. What to do on typical commands
+## 5. What to do on typical commands
 
 | User says | Run |
 |---|---|
@@ -56,12 +76,6 @@ Do not overclaim implementation.
 | existing section candidate reverse engineering | `chat-action-algorithms/cleanup-and-legacy/existing-section-draft-reverse-engineering.md` |
 | archive request | `chat-action-algorithms/archive-generation-and-navigation-update.md` |
 | `тчт` | `chat-action-algorithms/tcht-command.md` |
-
-## 5. Drafting principle
-
-A topic draft is the semantic base. A section draft is text being accumulated by section blocks.
-
-Never create a section draft as one uncontrolled wall of text. First define desired outcomes, semantic points, questions and a plan of disclosure.
 
 ## 6. Core guardrails
 
