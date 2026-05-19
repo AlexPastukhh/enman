@@ -13,12 +13,14 @@ new-chat-context-recovery.md
 tcht-command.md
 
 drafting/
+  raw-notes-capture-and-distribution.md
   topic-draft-default-flow.md
   topic-clarify-and-recheck-flow.md
   topic-to-section-block-drafting.md
   section-draft-generation.md
   question-generation-for-drafts.md
   question-priority.md
+  semantic-point-discovery.md
 
 evidence-and-materials/
   chapter-source-priority-map.md
@@ -38,29 +40,31 @@ cleanup-and-legacy/
 ```text
 User command
 → mandatory algorithm
+→ roadmap capture if needed
+→ desired outcome / semantic points
 → relevant sources
 → question priority
 → questions + default answers
 → safe draft/update/review/archive
 ```
 
-## Existing chapter / section drafts
+## Roadmap capture
 
-Existing chapters are not ignored. They can be used as a resource and as section draft candidates, but only through review and topic/section block workflow.
+If the user gives many cross-topic or future notes, use:
+
+```text
+drafting/raw-notes-capture-and-distribution.md
+```
+
+## Existing section candidates
+
+Existing chapters are not ignored. They can be used as section draft candidates, but only through reverse engineering and topic/section block workflow.
 
 Use:
 
 ```text
-cleanup-and-legacy/existing-chapter-draft-review.md
 cleanup-and-legacy/existing-section-draft-reverse-engineering.md
-```
-
-Key rule:
-
-```text
-existing text stays as section draft candidate;
-topic draft receives semantic points, questions and disclosure plans;
-section draft is then corrected through those semantic points.
+cleanup-and-legacy/existing-chapter-draft-review.md
 ```
 
 ## Navigation rule

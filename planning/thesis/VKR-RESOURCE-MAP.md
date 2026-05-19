@@ -14,7 +14,19 @@ planning/thesis/vkr-topic-workbench/README.md
 planning/thesis/vkr-clean/README.md
 ```
 
-## 2. Topic drafts
+## 2. Roadmap and inbox
+
+```text
+planning/thesis/vkr-topic-workbench/VKR-DRAFTING-ROADMAP.md
+planning/thesis/vkr-topic-workbench/00-inbox/
+planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/CHAPTER-1-ROADMAP.md
+planning/thesis/vkr-topic-workbench/03-chapter-2-design/CHAPTER-2-ROADMAP.md
+planning/thesis/vkr-topic-workbench/04-chapter-3-implementation/CHAPTER-3-ROADMAP.md
+```
+
+Use these files for high-level notes, raw captured material, cross-chapter decisions and future planning.
+
+## 3. Topic drafts
 
 ```text
 planning/thesis/vkr-topic-workbench/**/*.topic.md
@@ -22,30 +34,19 @@ planning/thesis/vkr-topic-workbench/**/*.topic.md
 
 Topic drafts are the primary semantic base for VKR sections.
 
-Active high-level areas:
+They should not carry all future notes. Future/cross-topic notes should be kept in the roadmap layer.
 
-```text
-vkr-topic-workbench/01-introduction/
-vkr-topic-workbench/02-chapter-1-analysis/
-vkr-topic-workbench/03-chapter-2-design/
-vkr-topic-workbench/04-chapter-3-implementation/
-vkr-topic-workbench/05-conclusion/
-vkr-topic-workbench/06-preddiploma-derivatives/
-```
-
-If legacy/support folders exist, do not write new drafts there unless navigation explicitly says so.
-
-## 3. Section drafts
+## 4. Section drafts
 
 ```text
 planning/thesis/vkr-clean/section-drafts/
 ```
 
-Section drafts are developing VKR text. They accumulate text by section blocks that come from topic-draft semantic points.
+Section drafts are developing VKR text. They accumulate text by section blocks that come from topic draft semantic points.
 
 When existing chapters already exist, those chapters may temporarily be section draft candidates.
 
-## 4. Existing chapter drafts
+## 5. Existing chapter drafts
 
 ```text
 planning/thesis/vkr-clean/existing-chapter-drafts/
@@ -53,38 +54,7 @@ planning/thesis/vkr-clean/existing-chapter-drafts/
 
 Use this for existing/early chapters that are not final but may be useful.
 
-Suggested structure:
-
-```text
-existing-chapter-drafts/
-├─ README.md
-├─ chapter-1/
-├─ chapter-2/
-├─ review-notes/
-└─ extracted-materials/
-```
-
-These drafts can provide:
-
-```text
-structure candidates;
-semantic point candidates;
-successful wording;
-examples of tables;
-problem notes;
-things to avoid;
-source reminders.
-```
-
-They must not bypass topic-draft workflow.
-
-If an existing chapter/subsection is used as a section draft candidate, use:
-
-```text
-planning/thesis/chat-action-algorithms/cleanup-and-legacy/existing-section-draft-reverse-engineering.md
-```
-
-## 5. Research materials
+## 6. Research materials
 
 Primary location depends on current repository state, but the resource should be reachable through:
 
@@ -94,16 +64,7 @@ planning/thesis/vkr-topic-workbench/00-research-materials/
 
 If research is stored elsewhere, update this file and the relevant README.
 
-Research is used through questions:
-
-```text
-question from topic draft
-→ research answer
-→ project conclusion
-→ section draft block
-```
-
-## 6. Visual materials and briefs
+## 7. Visual materials and briefs
 
 Visual information may live inside topic drafts or in chapter-level visual briefs.
 
@@ -115,7 +76,7 @@ planning/thesis/vkr-topic-workbench/<chapter>/visual-briefs/
 
 A visual must be connected to a section block and must not create overclaim.
 
-## 7. Evidence / implementation facts
+## 8. Evidence / implementation facts
 
 For chapter 3 use:
 
@@ -123,25 +84,15 @@ For chapter 3 use:
 planning/thesis/vkr-clean/chapter-3/
 ```
 
-Typical files:
-
-```text
-chapter3_repo_preflight.md
-chapter3_repo_check_facts.md
-chapter3_slices_matrix.md
-chapter3_screenshots_inventory.md
-chapter3_open_questions.md
-```
-
 If absent, create only after repo/evidence check.
 
-## 8. Scenarios, DATA, domain and slices
+## 9. Scenarios, DATA, domain and slices
 
 These usually live outside `planning/thesis/` in main planning areas. When a topic needs them, use `chapter-source-priority-map.md` and `source-material-harvest-for-topic.md`.
 
 The chat must not assume paths by memory. If a source path is missing or moved, update navigation.
 
-## 9. Reachability check
+## 10. Reachability check
 
 A chat can reach necessary VKR files if it can follow:
 
@@ -150,18 +101,8 @@ README.md
 → VKR-WORKFLOW-SOURCE-OF-TRUTH.md
 → VKR-RESOURCE-MAP.md
 → relevant layer README
-→ relevant chapter README / topic-index
+→ relevant chapter README / roadmap / topic-index
 → topic draft / section draft / research / evidence file
-```
-
-For existing section draft reverse engineering:
-
-```text
-README.md
-→ VKR-RESOURCE-MAP.md
-→ vkr-clean/existing-chapter-drafts/README.md
-→ chat-action-algorithms/cleanup-and-legacy/existing-section-draft-reverse-engineering.md
-→ topic draft / section draft candidate
 ```
 
 If any step is missing, update navigation before or with the content change.

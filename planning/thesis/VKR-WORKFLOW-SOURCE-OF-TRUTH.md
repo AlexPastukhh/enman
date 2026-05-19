@@ -5,12 +5,18 @@ This file is the main reference for how VKR materials are created, checked and t
 ## 1. Main workflow formula
 
 ```text
-topic draft
-↔ обязательные алгоритмы чатов
-↔ источники материалов
-↔ вопросы / дефолтные ответы / варианты
-↔ research / repo / visual / domain / slices / existing chapter drafts
-↔ semantic points
+raw notes
+→ VKR-DRAFTING-ROADMAP.md
+→ chapter roadmap
+→ desired outcome of parent element
+→ role of current element
+→ desired outcome of current element
+→ semantic point discovery
+→ topic draft
+↔ mandatory chat algorithms
+↔ source materials
+↔ questions / default answers / variants
+↔ research / repo / visual / domain / slices / existing section candidates
 ↔ section draft blocks
 → section draft v1
 → reviewer pass
@@ -19,7 +25,66 @@ topic draft
 
 Topic draft and section draft develop in parallel. A topic draft is not a final text. It is a semantic base that feeds section draft blocks.
 
-## 2. Central role of chat action algorithms
+## 2. Capture-first roadmap rule
+
+If a user message contains cross-topic ideas, future notes, disputed decisions or material that may belong to several future drafts, do not force it into the current topic draft immediately.
+
+First capture the shared picture in:
+
+```text
+planning/thesis/vkr-topic-workbench/VKR-DRAFTING-ROADMAP.md
+```
+
+Then distribute the material into:
+
+```text
+chapter roadmap
+→ topic draft
+→ section draft block
+```
+
+This means topic drafts do not need to carry all future notes. They should stay focused on the current topic and reference roadmap notes only when needed.
+
+Use:
+
+```text
+planning/thesis/chat-action-algorithms/drafting/raw-notes-capture-and-distribution.md
+```
+
+## 3. Roadmap layer
+
+The roadmap layer stores intermediate planning material.
+
+```text
+planning/thesis/vkr-topic-workbench/VKR-DRAFTING-ROADMAP.md
+planning/thesis/vkr-topic-workbench/02-chapter-1-analysis/CHAPTER-1-ROADMAP.md
+planning/thesis/vkr-topic-workbench/03-chapter-2-design/CHAPTER-2-ROADMAP.md
+planning/thesis/vkr-topic-workbench/04-chapter-3-implementation/CHAPTER-3-ROADMAP.md
+planning/thesis/vkr-topic-workbench/00-inbox/
+```
+
+General roadmap:
+
+```text
+whole VKR picture;
+cross-chapter notes;
+raw user notes;
+disputed decisions;
+future ideas;
+distribution plan.
+```
+
+Chapter roadmap:
+
+```text
+desired outcome of the chapter;
+chapter points and their roles;
+chapter decisions;
+transfer notes;
+chapter-level planning.
+```
+
+## 4. Central role of chat action algorithms
 
 ```text
 planning/thesis/chat-action-algorithms/
@@ -29,6 +94,8 @@ This folder is a central workflow layer, not an optional note collection. If the
 
 | User signal | Required algorithm |
 |---|---|
+| raw notes / many future ideas | `drafting/raw-notes-capture-and-distribution.md` |
+| semantic point discovery | `drafting/semantic-point-discovery.md` |
 | `дай драфт`, `давай драфт`, `обнови драфт` | `drafting/topic-draft-default-flow.md` |
 | `уточни`, `перепроверь`, `проверь всё` | `drafting/topic-clarify-and-recheck-flow.md` |
 | `дай section draft` | `drafting/section-draft-generation.md` |
@@ -36,12 +103,12 @@ This folder is a central workflow layer, not an optional note collection. If the
 | research insertion | `evidence-and-materials/research-bridge.md` |
 | implementation text / chapter 3 | `evidence-and-materials/repo-check-before-implementation-text.md` |
 | existing chapter / old section draft | `cleanup-and-legacy/existing-chapter-draft-review.md` |
-| reverse-engineer existing section draft | `cleanup-and-legacy/existing-section-draft-reverse-engineering.md` |
+| existing section candidate reverse engineering | `cleanup-and-legacy/existing-section-draft-reverse-engineering.md` |
 | archive creation | `archive-generation-and-navigation-update.md` |
 | new chat lost context | `new-chat-context-recovery.md` |
 | `тчт` | `tcht-command.md` |
 
-## 3. Storage map
+## 5. Storage map
 
 For a full resource map, read:
 
@@ -49,205 +116,16 @@ For a full resource map, read:
 planning/thesis/VKR-RESOURCE-MAP.md
 ```
 
-### Topic drafts
-
-```text
-planning/thesis/vkr-topic-workbench/**/*.topic.md
-```
-
-Topic drafts contain:
-
-```text
-placement in VKR;
-meaning of the topic;
-what changed since previous draft;
-source materials;
-useful material candidates;
-semantic points;
-questions with priority;
-default answers and variants;
-research bridge;
-repo/evidence questions;
-visual bridge;
-boundaries and overclaim risks;
-future section draft blocks;
-plan of disclosure for each block.
-```
-
-### Section drafts
-
-```text
-planning/thesis/vkr-clean/section-drafts/
-```
-
-Section drafts are not generated from nowhere. They are built from section blocks, each connected to a topic-draft semantic point.
-
-No required `fragment-bank.md`. If text is ready, it belongs inside the relevant section-draft block.
-
-### Existing chapter drafts
-
-```text
-planning/thesis/vkr-clean/existing-chapter-drafts/
-```
-
-Existing chapter drafts are a secondary resource and may act as section draft candidates. They may be not bad and may contain useful wording, tables and structure, but they are not source of truth and are not final clean text.
-
-They can feed topic drafts and section drafts only after review and reverse engineering.
-
-Use:
-
-```text
-planning/thesis/chat-action-algorithms/cleanup-and-legacy/existing-chapter-draft-review.md
-planning/thesis/chat-action-algorithms/cleanup-and-legacy/existing-section-draft-reverse-engineering.md
-```
-
-### Clean materials
-
-```text
-planning/thesis/vkr-clean/
-```
-
-Clean materials are VKR-safe engineering materials. Do not copy planning prompts, AI/chat workflow or internal generation notes into the final thesis.
-
-### Legacy chaotic drafts
-
-```text
-planning/thesis/vkr-clean/legacy-chaotic-drafts/
-```
-
-Chaotic/weak chapter versions created outside the workflow are stored here for analysis only. They are not clean section drafts.
-
-## 4. Chapter source priority
-
-Use:
-
-```text
-planning/thesis/chat-action-algorithms/evidence-and-materials/chapter-source-priority-map.md
-```
-
-Short version:
-
-- Chapter 1: topic drafts, existing chapter drafts, research, visuals, clean requirements; scenario/domain/repo only to check logic and avoid overclaiming.
-- Chapter 2: topic drafts, existing chapter drafts, scenarios, DATA, domain, requirements, architecture, UI/API/database planning.
-- Chapter 3: code, tests, slice drafts, scenarios, DATA, domain, ADR/questions/decisions, screenshots, repo/evidence checks.
-
-## 5. Topic-to-section block workflow
-
-```text
-planning/thesis/vkr-topic-workbench/TOPIC-TO-SECTION-BLOCK-WORKFLOW.md
-```
-
-Main rule:
-
-```text
-topic-драфт задаёт смысловые пункты;
-section-драфт создаёт похожие блоки/подзаголовки;
-для каждого смыслового пункта задаются вопросы;
-по вопросам собираются материалы;
-для смыслового пункта составляется план раскрытия;
-текст постепенно пишется внутрь section-драфта.
-```
-
-Existing chapter drafts may provide candidate blocks or candidate text, but any reused material must pass through reverse engineering and the same block workflow.
-
-## 6. Existing section draft reverse engineering
-
-When a ready chapter/subchapter already exists, the chat must not paste it into a topic draft.
-
-Use:
-
-```text
-planning/thesis/chat-action-algorithms/cleanup-and-legacy/existing-section-draft-reverse-engineering.md
-```
-
-Correct process:
-
-```text
-existing section text
-→ semantic point
-→ purpose / order / questions / checks
-→ topic draft update
-→ section draft correction
-```
-
-## 7. Navigation impact check
-
-Whenever a file or folder changes, run:
-
-```text
-planning/thesis/chat-action-algorithms/navigation-impact-check.md
-```
-
-The chat must check:
-
-```text
-Какие навигационные файлы нужно обновить из-за этого изменения?
-```
-
-Always consider:
-
-```text
-planning/thesis/README.md
-planning/thesis/VKR-WORKFLOW-SOURCE-OF-TRUTH.md
-planning/thesis/VKR-RESOURCE-MAP.md
-planning/thesis/NEW-CHAT-ONBOARDING.md
-planning/thesis/chat-action-algorithms/README.md
-planning/thesis/vkr-topic-workbench/README.md
-planning/thesis/vkr-clean/README.md
-chapter README / topic-index when relevant
-```
-
-Do not maintain statuses in `topic-index.md`. Topic-index is navigation, not a task board.
-
-## 8. Question priority
-
-Questions are not just a large list. They must be prioritised:
-
-```text
-blocking — without answer unsafe/impossible to write;
-strong — improves precision and project specificity;
-research — requires external support;
-repo/evidence — prevents overclaim;
-visual — needed for schemes/screenshots;
-style — useful later during editing.
-```
-
-Use:
-
-```text
-planning/thesis/chat-action-algorithms/drafting/question-priority.md
-```
-
-## 9. Guardrails
-
-### AI / prompts / chats
-
-Do not include AI, ChatGPT, prompts, agent workflow or chat process in VKR text.
-
-### L1/L2
-
-Do not use L1/L2 as VKR language. They may remain internal implementation labels only.
-
-### Account activation
-
-Account activation must not be described as a realised VKR user flow. Treat it as supporting auth detail / future or limited detail unless a dedicated repo-check proves otherwise.
-
-### Mock check
-
-Mock data check is a demonstration / extension point, not a real external integration.
-
-### Agreement stage
-
-The agreement stage is started by the employee after approval. The system does not automatically generate a contract. It supports exchange of ready document versions.
-
-### Documents
-
-Document reference / metadata is not a full ECM/EDO/storage solution. Do not claim e-signature, legal EDO, external integrations, industrial file storage or full audit without repo-check.
-
-### Email
-
-Do not claim complete email notification implementation without repo/evidence check.
-
-## 10. Archive rule
-
-Before giving an archive link, the chat must open and verify the zip contents, check MANIFEST/APPLY, check originals for replacements, and confirm navigation impact check was performed.
+## 6. Guardrails
+
+- Do not include AI, ChatGPT, prompts, agent workflow or chat process in VKR text.
+- Do not use L1/L2 as VKR language.
+- Account activation must not be described as a realised VKR user flow without repo-check.
+- Mock data check is a demonstration / extension point, not a real external integration.
+- The agreement stage is started by the employee after approval. The system does not automatically generate a contract.
+- Document reference / metadata is not a full ECM/EDO/storage solution.
+- Do not claim complete email notification implementation without repo/evidence check.
+
+## 7. Archive rule
+
+Before giving an archive link, the chat must open and verify the zip contents, check MANIFEST/APPLY and confirm navigation impact check was performed.
