@@ -11,30 +11,30 @@ public sealed class ClientConstantsSnapshotFactory
 
     public ConstantsSnapshot CreateConstantsSnapshot()
         => new(
-            L1AuthConstants: new L1AuthConstantsSnapshot(
-                RegisterClientAccount: new L1RegisterClientAccountConstantsSnapshot(
-                    Email: CreateField(L1FieldNames.Auth.Email, nameof(L1RegisterClientAccountDto.Email)),
-                    Password: CreateField(L1FieldNames.Auth.Password, nameof(L1RegisterClientAccountDto.Password))),
-                Login: new L1LoginConstantsSnapshot(
-                    Email: CreateField(L1FieldNames.Auth.Email, nameof(L1LoginRequest.Email)),
-                    Password: CreateField(L1FieldNames.Auth.Password, nameof(L1LoginRequest.Password)))),
-            L1ApplicantPartyConstants: new L1ApplicantPartyConstantsSnapshot(
-                CreateIndividualApplicantParty: new L1CreateIndividualApplicantPartyConstantsSnapshot(
+            AuthConstants: new AuthConstantsSnapshot(
+                RegisterClientAccount: new RegisterClientAccountConstantsSnapshot(
+                    Email: CreateField(FieldNames.Auth.Email, nameof(RegisterClientAccountDto.Email)),
+                    Password: CreateField(FieldNames.Auth.Password, nameof(RegisterClientAccountDto.Password))),
+                Login: new LoginConstantsSnapshot(
+                    Email: CreateField(FieldNames.Auth.Email, nameof(LoginRequestDto.Email)),
+                    Password: CreateField(FieldNames.Auth.Password, nameof(LoginRequestDto.Password)))),
+            ApplicantPartyConstants: new ApplicantPartyConstantsSnapshot(
+                CreateIndividualApplicantParty: new CreateIndividualApplicantPartyConstantsSnapshot(
                     PhoneNumber: CreateField(
-                        L1FieldNames.ApplicantParty.PhoneNumber,
-                        nameof(L1CreateIndividualApplicantPartyDto.PhoneNumber)),
+                        FieldNames.ApplicantParty.PhoneNumber,
+                        nameof(CreateIndividualApplicantPartyDto.PhoneNumber)),
                     Email: CreateField(
-                        L1FieldNames.ApplicantParty.Email,
-                        nameof(L1CreateIndividualApplicantPartyDto.Email)),
+                        FieldNames.ApplicantParty.Email,
+                        nameof(CreateIndividualApplicantPartyDto.Email)),
                     FirstName: CreateField(
-                        L1FieldNames.FullName.FirstName,
-                        nameof(L1FullNameDto.FirstName)),
+                        FieldNames.FullName.FirstName,
+                        nameof(FullNameDto.FirstName)),
                     MiddleName: CreateField(
-                        L1FieldNames.FullName.MiddleName,
-                        nameof(L1FullNameDto.MiddleName)),
+                        FieldNames.FullName.MiddleName,
+                        nameof(FullNameDto.MiddleName)),
                     LastName: CreateField(
-                        L1FieldNames.FullName.LastName,
-                        nameof(L1FullNameDto.LastName)))),
+                        FieldNames.FullName.LastName,
+                        nameof(FullNameDto.LastName)))),
             ProblemDetails: new ProblemDetailsConstantsSnapshot(
                 ValidationErrorStatusCode: ProblemDetailsContract.ValidationStatusCode,
                 ErrorsCollectionName: ProblemDetailsContract.ErrorsExtension,
@@ -52,26 +52,26 @@ public sealed record ClientConstantsSnapshot(
     ErrorObject ErrorCodes);
 
 public sealed record ConstantsSnapshot(
-    L1AuthConstantsSnapshot L1AuthConstants,
-    L1ApplicantPartyConstantsSnapshot L1ApplicantPartyConstants,
+    AuthConstantsSnapshot AuthConstants,
+    ApplicantPartyConstantsSnapshot ApplicantPartyConstants,
     ProblemDetailsConstantsSnapshot ProblemDetails);
 
-public sealed record L1AuthConstantsSnapshot(
-    L1RegisterClientAccountConstantsSnapshot RegisterClientAccount,
-    L1LoginConstantsSnapshot Login);
+public sealed record AuthConstantsSnapshot(
+    RegisterClientAccountConstantsSnapshot RegisterClientAccount,
+    LoginConstantsSnapshot Login);
 
-public sealed record L1RegisterClientAccountConstantsSnapshot(
+public sealed record RegisterClientAccountConstantsSnapshot(
     FormFieldWithDtoSnapshot Email,
     FormFieldWithDtoSnapshot Password);
 
-public sealed record L1LoginConstantsSnapshot(
+public sealed record LoginConstantsSnapshot(
     FormFieldWithDtoSnapshot Email,
     FormFieldWithDtoSnapshot Password);
 
-public sealed record L1ApplicantPartyConstantsSnapshot(
-    L1CreateIndividualApplicantPartyConstantsSnapshot CreateIndividualApplicantParty);
+public sealed record ApplicantPartyConstantsSnapshot(
+    CreateIndividualApplicantPartyConstantsSnapshot CreateIndividualApplicantParty);
 
-public sealed record L1CreateIndividualApplicantPartyConstantsSnapshot(
+public sealed record CreateIndividualApplicantPartyConstantsSnapshot(
     FormFieldWithDtoSnapshot PhoneNumber,
     FormFieldWithDtoSnapshot Email,
     FormFieldWithDtoSnapshot FirstName,

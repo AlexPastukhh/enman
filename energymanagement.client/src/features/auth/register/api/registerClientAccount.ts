@@ -1,7 +1,7 @@
 import {
   registerClientAccount as postRegisterClientAccount,
   type L1RegisterRequest,
-} from "../../../../shared/apiAuthApi";
+} from "../../../../shared/api/authApi";
 import type { RegisterFormValues } from "../model/registerSchema";
 import { registerFieldNames } from "../model/registerSchema";
 
@@ -15,4 +15,3 @@ export const registerClientAccount = (
 
   return postRegisterClientAccount(request).then(() => undefined);
 };
-

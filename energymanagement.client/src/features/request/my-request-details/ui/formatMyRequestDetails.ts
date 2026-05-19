@@ -21,7 +21,7 @@ export const valueOrUnknown = (value?: string | null) =>
   value?.trim() ? value : myRequestDetailsConst.unknownValue;
 
 export const formatMyRequestAddress = (
-  address?: components["schemas"]["L1AddressDto"],
+  address?: components["schemas"]["AddressDto"],
 ) => {
   if (!address) {
     return myRequestDetailsConst.unknownValue;

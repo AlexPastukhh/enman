@@ -12,35 +12,35 @@ public sealed class StartAgreementExchangeDtoValidator
     {
         RuleFor(x => x.Document)
             .NotNull()
-            .OverridePropertyName(L1FieldNames.AgreementProposalVersion.Document)
+            .OverridePropertyName(FieldNames.AgreementProposalVersion.Document)
             .WithMessage(Error.Errors.General.ValueIsRequired.Code);
 
         When(x => x.Document is not null, () =>
         {
             RuleFor(x => x.Document!.StorageKey)
                 .NotEmpty()
-                .OverridePropertyName(L1FieldNames.AgreementProposalVersion.DocumentStorageKey)
+                .OverridePropertyName(FieldNames.AgreementProposalVersion.DocumentStorageKey)
                 .WithMessage(Error.Errors.General.ValueIsRequired.Code);
 
             RuleFor(x => x.Document!.OriginalFileName)
                 .NotEmpty()
-                .OverridePropertyName(L1FieldNames.AgreementProposalVersion.DocumentOriginalFileName)
+                .OverridePropertyName(FieldNames.AgreementProposalVersion.DocumentOriginalFileName)
                 .WithMessage(Error.Errors.General.ValueIsRequired.Code);
 
             RuleFor(x => x.Document!.ContentType)
                 .NotEmpty()
-                .OverridePropertyName(L1FieldNames.AgreementProposalVersion.DocumentContentType)
+                .OverridePropertyName(FieldNames.AgreementProposalVersion.DocumentContentType)
                 .WithMessage(Error.Errors.General.ValueIsRequired.Code);
 
             RuleFor(x => x.Document!.SizeBytes)
                 .GreaterThan(0)
-                .OverridePropertyName(L1FieldNames.AgreementProposalVersion.DocumentSizeBytes)
+                .OverridePropertyName(FieldNames.AgreementProposalVersion.DocumentSizeBytes)
                 .WithMessage(Error.Errors.General.ValueIsInvalid.Code);
         });
 
         RuleFor(x => x.Comment)
             .MaximumLength(ProposalComment.MaxLength)
-            .OverridePropertyName(L1FieldNames.AgreementProposalVersion.Comment)
+            .OverridePropertyName(FieldNames.AgreementProposalVersion.Comment)
             .WithMessage(Error.Errors.L1Domain.ProposalCommentIsTooLong.Code)
             .When(x => !string.IsNullOrWhiteSpace(x.Comment));
     }

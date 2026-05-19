@@ -26,10 +26,10 @@ public sealed class RegistrationEmailNotificationIntegrationTests : AppIntegrati
         var response = await PostAsJsonWithCsrfAsync(
             client,
             "/api/auth/register",
-            new L1RegisterClientAccountDto(email, ValidPassword));
+            new RegisterClientAccountDto(email, ValidPassword));
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
-        var registered = await response.Content.ReadFromJsonAsync<L1RegisterClientAccountResponse>()
+        var registered = await response.Content.ReadFromJsonAsync<RegisterClientAccountResponse>()
             ?? throw new InvalidOperationException("L1 register response body was empty.");
 
         emailSender.SendAttempts.Should().Be(1);
@@ -49,7 +49,7 @@ public sealed class RegistrationEmailNotificationIntegrationTests : AppIntegrati
         var response = await PostAsJsonWithCsrfAsync(
             client,
             "/api/auth/register",
-            new L1RegisterClientAccountDto("not-an-email", "short"));
+            new RegisterClientAccountDto("not-an-email", "short"));
 
         await HttpResponseAssertions.For(response, _output)
             .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
@@ -67,14 +67,14 @@ public sealed class RegistrationEmailNotificationIntegrationTests : AppIntegrati
         var first = await PostAsJsonWithCsrfAsync(
             client,
             "/api/auth/register",
-            new L1RegisterClientAccountDto(email, ValidPassword));
+            new RegisterClientAccountDto(email, ValidPassword));
         await HttpResponseAssertions.For(first, _output).ShouldBeSuccess();
         emailSender.Clear();
 
         var duplicate = await PostAsJsonWithCsrfAsync(
             client,
             "/api/auth/register",
-            new L1RegisterClientAccountDto(email, ValidPassword));
+            new RegisterClientAccountDto(email, ValidPassword));
 
         await HttpResponseAssertions.For(duplicate, _output)
             .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
@@ -92,10 +92,10 @@ public sealed class RegistrationEmailNotificationIntegrationTests : AppIntegrati
         var response = await PostAsJsonWithCsrfAsync(
             client,
             "/api/auth/register",
-            new L1RegisterClientAccountDto(email, ValidPassword));
+            new RegisterClientAccountDto(email, ValidPassword));
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
-        var registered = await response.Content.ReadFromJsonAsync<L1RegisterClientAccountResponse>()
+        var registered = await response.Content.ReadFromJsonAsync<RegisterClientAccountResponse>()
             ?? throw new InvalidOperationException("L1 register response body was empty.");
         var row = await GetAccountRowAsync(registered.AccountId);
 

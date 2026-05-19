@@ -3,7 +3,7 @@ import { refreshAntiforgeryToken } from "../../../../shared/api/antiforgeryToken
 import { fetchJson } from "../../../../shared/api/fetchJson";
 
 export type EmployeeWindowsSignInResponse =
-  components["schemas"]["L1CurrentUserResponse"];
+  components["schemas"]["CurrentUserResponseDto"];
 
 export const signInEmployeeWithWindows = (): Promise<EmployeeWindowsSignInResponse> =>
   fetchJson<EmployeeWindowsSignInResponse>("/api/employee/auth/windows-signin", {

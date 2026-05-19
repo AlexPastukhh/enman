@@ -488,8 +488,8 @@ public sealed class AgreementExchangesController : ProjectController
     {
         accountId = default;
 
-        var authModel = User.FindFirstValue(L1AuthClaimTypes.AuthModel);
-        if (authModel != L1AuthClaimTypes.AuthModelValue)
+        var authModel = User.FindFirstValue(AuthClaimTypes.AuthModel);
+        if (authModel != AuthClaimTypes.AuthModelValue)
         {
             return false;
         }

@@ -26,21 +26,21 @@ public abstract class AppIntegrationTestBase
         _output = output;
     }
 
-    protected async Task<L1RegisterClientAccountResponse> RegisterAccountAsync(string? email = null)
+    protected async Task<RegisterClientAccountResponse> RegisterAccountAsync(string? email = null)
     {
         var client = _factory.CreateClient();
         var response = await PostAsJsonWithCsrfAsync(
             client,
             "/api/auth/register",
-            new L1RegisterClientAccountDto(email ?? UniqueEmail(), ValidPassword));
+            new RegisterClientAccountDto(email ?? UniqueEmail(), ValidPassword));
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
-        return await response.Content.ReadFromJsonAsync<L1RegisterClientAccountResponse>()
+        return await response.Content.ReadFromJsonAsync<RegisterClientAccountResponse>()
             ?? throw new InvalidOperationException("L1 register response body was empty.");
     }
 
-    protected async Task<L1CurrentUserResponse> LoginAsync(
+    protected async Task<CurrentUserResponseDto> LoginAsync(
         HttpClient client,
         string email,
         string password)
@@ -48,47 +48,47 @@ public abstract class AppIntegrationTestBase
         var response = await PostAsJsonWithCsrfAsync(
             client,
             "/api/auth/login",
-            new L1LoginRequest(email, password));
+            new LoginRequestDto(email, password));
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
-        return await response.Content.ReadFromJsonAsync<L1CurrentUserResponse>()
+        return await response.Content.ReadFromJsonAsync<CurrentUserResponseDto>()
             ?? throw new InvalidOperationException("L1 login response body was empty.");
     }
 
-    protected async Task<L1CurrentUserResponse> GetCurrentUserAsync(HttpClient client)
+    protected async Task<CurrentUserResponseDto> GetCurrentUserAsync(HttpClient client)
     {
         var response = await client.GetAsync("/api/auth/current-user");
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
-        return await response.Content.ReadFromJsonAsync<L1CurrentUserResponse>()
+        return await response.Content.ReadFromJsonAsync<CurrentUserResponseDto>()
             ?? throw new InvalidOperationException("L1 current-user response body was empty.");
     }
 
-    protected async Task<L1CurrentIndividualApplicantPartyResponse> GetCurrentIndividualApplicantPartyAsync(
+    protected async Task<CurrentIndividualApplicantPartyResponseDto> GetCurrentIndividualApplicantPartyAsync(
         HttpClient client)
     {
         var response = await client.GetAsync("/api/applicant-parties/current-individual");
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
-        return await response.Content.ReadFromJsonAsync<L1CurrentIndividualApplicantPartyResponse>()
+        return await response.Content.ReadFromJsonAsync<CurrentIndividualApplicantPartyResponseDto>()
             ?? throw new InvalidOperationException("L1 current applicant party response body was empty.");
     }
 
-    protected async Task<L1AccountApplicantPartiesResponse> GetAccountApplicantPartiesAsync(
+    protected async Task<AccountApplicantPartiesResponseDto> GetAccountApplicantPartiesAsync(
         HttpClient client)
     {
         var response = await client.GetAsync("/api/applicant-parties");
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
-        return await response.Content.ReadFromJsonAsync<L1AccountApplicantPartiesResponse>()
+        return await response.Content.ReadFromJsonAsync<AccountApplicantPartiesResponseDto>()
             ?? throw new InvalidOperationException("L1 account applicant parties response body was empty.");
     }
 
-    protected async Task<IReadOnlyList<L1MyRequestSummaryDto>> GetMyRequestsAsync(
+    protected async Task<IReadOnlyList<MyRequestSummaryDto>> GetMyRequestsAsync(
         HttpClient client,
         string? status = null)
     {
@@ -99,7 +99,7 @@ public abstract class AppIntegrationTestBase
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
-        return await response.Content.ReadFromJsonAsync<IReadOnlyList<L1MyRequestSummaryDto>>()
+        return await response.Content.ReadFromJsonAsync<IReadOnlyList<MyRequestSummaryDto>>()
             ?? throw new InvalidOperationException("L1 my requests response body was empty.");
     }
 
@@ -201,7 +201,7 @@ public abstract class AppIntegrationTestBase
         await HttpResponseAssertions.For(response, _output).ShouldBeStatusCode((int)System.Net.HttpStatusCode.NoContent);
     }
 
-    protected async Task<L1MyRequestDetailsDto> GetMyRequestDetailsAsync(
+    protected async Task<MyRequestDetailsDto> GetMyRequestDetailsAsync(
         HttpClient client,
         long requestId)
     {
@@ -209,18 +209,18 @@ public abstract class AppIntegrationTestBase
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
-        return await response.Content.ReadFromJsonAsync<L1MyRequestDetailsDto>()
+        return await response.Content.ReadFromJsonAsync<MyRequestDetailsDto>()
             ?? throw new InvalidOperationException("L1 my request details response body was empty.");
     }
 
-    protected async Task<L1CreateIndividualApplicantPartyResponse> CreateApplicantPartyAsync(long accountId)
+    protected async Task<CreateIndividualApplicantPartyResponse> CreateApplicantPartyAsync(long accountId)
     {
         return await CreateApplicantPartyAsync(accountId, ValidApplicantPartyDto());
     }
 
-    protected async Task<L1CreateIndividualApplicantPartyResponse> CreateApplicantPartyAsync(
+    protected async Task<CreateIndividualApplicantPartyResponse> CreateApplicantPartyAsync(
         long accountId,
-        L1CreateIndividualApplicantPartyDto dto)
+        CreateIndividualApplicantPartyDto dto)
     {
         var response = await PostAsJsonWithCsrfAsync(
             AuthenticatedL1Client(accountId),
@@ -229,7 +229,7 @@ public abstract class AppIntegrationTestBase
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
-        return await response.Content.ReadFromJsonAsync<L1CreateIndividualApplicantPartyResponse>()
+        return await response.Content.ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
             ?? throw new InvalidOperationException("L1 applicant party response body was empty.");
     }
 
@@ -318,7 +318,7 @@ public abstract class AppIntegrationTestBase
             new Claim(ClaimTypes.NameIdentifier, accountId.ToString()),
             new Claim(ClaimTypes.Email, email),
             new Claim(ClaimTypes.Role, role),
-            new Claim(L1AuthClaimTypes.AuthModel, L1AuthClaimTypes.AuthModelValue))
+            new Claim(AuthClaimTypes.AuthModel, AuthClaimTypes.AuthModelValue))
             .CreateClient();
     }
 
@@ -330,31 +330,31 @@ public abstract class AppIntegrationTestBase
             .CreateClient();
     }
 
-    protected static L1CreateIndividualApplicantPartyDto ValidApplicantPartyDto(
+    protected static CreateIndividualApplicantPartyDto ValidApplicantPartyDto(
         string firstName = FirstName,
         string middleName = MiddleName,
         string lastName = LastName,
         string email = ApplicantEmail,
         string phoneNumber = PhoneNumber)
     {
-        return new L1CreateIndividualApplicantPartyDto(
-            new L1FullNameDto(firstName, middleName, lastName),
+        return new CreateIndividualApplicantPartyDto(
+            new FullNameDto(firstName, middleName, lastName),
             email,
             phoneNumber);
     }
 
-    protected static L1CreateConnectionRequestDto ValidConnectionRequestDto(
+    protected static CreateConnectionRequestDto ValidConnectionRequestDto(
         string details = RequestDetails,
         string? applicantContextType = "Existing",
         long? existingApplicantPartyId = 1,
-        L1CreateIndividualApplicantPartyDto? newApplicantParty = null)
+        CreateIndividualApplicantPartyDto? newApplicantParty = null)
     {
-        return new L1CreateConnectionRequestDto(
+        return new CreateConnectionRequestDto(
             applicantContextType,
             existingApplicantPartyId,
             newApplicantParty,
             details,
-            new L1AddressDto(
+            new AddressDto(
                 PostalCode,
                 Region,
                 City,
@@ -364,9 +364,9 @@ public abstract class AppIntegrationTestBase
                 Apartment));
     }
 
-    protected static L1CreateConnectionRequestDto ValidConnectionRequestWithNewApplicantDto(
+    protected static CreateConnectionRequestDto ValidConnectionRequestWithNewApplicantDto(
         string details = RequestDetails,
-        L1CreateIndividualApplicantPartyDto? newApplicantParty = null,
+        CreateIndividualApplicantPartyDto? newApplicantParty = null,
         long? existingApplicantPartyId = null)
     {
         return ValidConnectionRequestDto(

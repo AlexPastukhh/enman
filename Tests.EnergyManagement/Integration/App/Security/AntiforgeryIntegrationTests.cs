@@ -43,7 +43,7 @@ public sealed class AntiforgeryIntegrationTests : AppIntegrationTestBase
 
         var response = await client.PostAsJsonAsync(
             "/api/auth/login",
-            new L1LoginRequest(UniqueEmail(), "WrongPassword!123"));
+            new LoginRequestDto(UniqueEmail(), "WrongPassword!123"));
 
         await AssertAntiforgeryProblemAsync(response);
     }
@@ -56,7 +56,7 @@ public sealed class AntiforgeryIntegrationTests : AppIntegrationTestBase
         var response = await PostAsJsonWithCsrfAsync(
             client,
             "/api/auth/login",
-            new L1LoginRequest(UniqueEmail(), "WrongPassword!123"));
+            new LoginRequestDto(UniqueEmail(), "WrongPassword!123"));
 
         await HttpResponseAssertions.For(response, _output)
             .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
@@ -94,7 +94,7 @@ public sealed class AntiforgeryIntegrationTests : AppIntegrationTestBase
             ValidApplicantPartyDto());
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
-        var applicant = await response.Content.ReadFromJsonAsync<L1CreateIndividualApplicantPartyResponse>()
+        var applicant = await response.Content.ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
             ?? throw new InvalidOperationException("L1 applicant party response body was empty.");
         applicant.ClientAccountId.Should().Be(account.AccountId);
     }
@@ -108,7 +108,7 @@ public sealed class AntiforgeryIntegrationTests : AppIntegrationTestBase
         var response = await PostAsJsonWithCsrfAsync(
             client,
             "/api/applicant-parties/individual",
-            new L1CreateIndividualApplicantPartyDto(
+            new CreateIndividualApplicantPartyDto(
                 null!,
                 ApplicantEmail,
                 PhoneNumber));

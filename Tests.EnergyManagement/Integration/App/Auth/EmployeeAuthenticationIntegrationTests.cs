@@ -77,7 +77,7 @@ public sealed class EmployeeAuthenticationIntegrationTests : AppIntegrationTestB
         var response = await client.GetAsync("/api/employee/auth/windows-signin");
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
-        var session = await response.Content.ReadFromJsonAsync<L1CurrentUserResponse>()
+        var session = await response.Content.ReadFromJsonAsync<CurrentUserResponseDto>()
             ?? throw new InvalidOperationException("Windows sign-in response body was empty.");
         session.AccountId.Should().Be(EmployeeId);
         session.Email.Should().Be(EmployeeEmail);

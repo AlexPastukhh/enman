@@ -31,7 +31,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
             ValidApplicantPartyDto());
         await HttpResponseAssertions.For(applicantResponse, _output).ShouldBeSuccess();
         var applicantParty = await applicantResponse.Content
-            .ReadFromJsonAsync<L1CreateIndividualApplicantPartyResponse>()
+            .ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
             ?? throw new InvalidOperationException("L1 applicant party response body was empty.");
 
         var requestResponse = await PostAsJsonWithCsrfAsync(
@@ -177,7 +177,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
         var response = await PostAsJsonWithCsrfAsync(
             client,
             "/api/requests",
-            new L1CreateConnectionRequestDto(
+            new CreateConnectionRequestDto(
                 "Existing",
                 applicantParty.ApplicantPartyId,
                 null,
@@ -198,12 +198,12 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
         var response = await PostAsJsonWithCsrfAsync(
             client,
             "/api/requests",
-            new L1CreateConnectionRequestDto(
+            new CreateConnectionRequestDto(
                 "Existing",
                 applicantParty.ApplicantPartyId,
                 null,
                 RequestDetails,
-                new L1AddressDto(
+                new AddressDto(
                     "12",
                     Region,
                     City,
@@ -256,8 +256,8 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
             client,
             "/api/requests",
             ValidConnectionRequestWithNewApplicantDto(
-                newApplicantParty: new L1CreateIndividualApplicantPartyDto(
-                    new L1FullNameDto("", MiddleName, LastName),
+                newApplicantParty: new CreateIndividualApplicantPartyDto(
+                    new FullNameDto("", MiddleName, LastName),
                     "not-an-email",
                     "")));
 
@@ -280,7 +280,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
             client,
             "/api/requests",
             ValidConnectionRequestWithNewApplicantDto(
-                newApplicantParty: new L1CreateIndividualApplicantPartyDto(
+                newApplicantParty: new CreateIndividualApplicantPartyDto(
                     null!,
                     ApplicantEmail,
                     PhoneNumber)));

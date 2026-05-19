@@ -20,7 +20,7 @@ public sealed class FinalRefuseAgreementExchangeDtoValidator
                 if (string.IsNullOrWhiteSpace(reason))
                 {
                     context.AddFailure(
-                        L1FieldNames.FinalRefuseAgreementExchange.Reason,
+                        FieldNames.FinalRefuseAgreementExchange.Reason,
                         Error.Errors.L1Domain.FinalRefusalReasonIsRequired.Code);
                     return;
                 }
@@ -28,7 +28,7 @@ public sealed class FinalRefuseAgreementExchangeDtoValidator
                 if (reason.Length > FinalRefusalReason.MaxLength)
                 {
                     context.AddFailure(
-                        L1FieldNames.FinalRefuseAgreementExchange.Reason,
+                        FieldNames.FinalRefuseAgreementExchange.Reason,
                         Error.Errors.L1Domain.FinalRefusalReasonIsTooLong.Code);
                 }
             });

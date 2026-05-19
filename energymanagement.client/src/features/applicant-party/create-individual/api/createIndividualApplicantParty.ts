@@ -1,6 +1,6 @@
 import {
   type L1CreateIndividualApplicantPartyRequest,
-  type L1CreateIndividualApplicantPartyResponse,
+  type CreateIndividualApplicantPartyResponse,
 } from "../../../../entities/applicant-party/api/applicantPartyApiTypes";
 import { fetchJson } from "../../../../shared/api/fetchJson";
 import {
@@ -24,7 +24,7 @@ export const createIndividualApplicantParty = (
     phoneNumber: values[createIndividualApplicantPartyFieldNames.phoneNumber],
   };
 
-  return fetchJson<L1CreateIndividualApplicantPartyResponse>(
+  return fetchJson<CreateIndividualApplicantPartyResponse>(
     createIndividualApplicantPartyPath,
     {
       method: "POST",

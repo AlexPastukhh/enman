@@ -1,8 +1,8 @@
 import { fetchJson } from "../../../shared/api/fetchJson";
-import type { L1AccountApplicantPartiesResponse } from "./applicantPartyApiTypes";
+import type { AccountApplicantPartiesResponseDto } from "./applicantPartyApiTypes";
 
 export const listAccountApplicantParties =
-  (): Promise<L1AccountApplicantPartiesResponse> =>
-    fetchJson<L1AccountApplicantPartiesResponse>("/api/applicant-parties", {
+  (): Promise<AccountApplicantPartiesResponseDto> =>
+    fetchJson<AccountApplicantPartiesResponseDto>("/api/applicant-parties", {
       method: "GET",
     });

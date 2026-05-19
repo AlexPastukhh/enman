@@ -22,7 +22,7 @@ public sealed class EmployeeRequestListQueryDtoValidator
                     || !Enum.IsDefined(parsed))
                 {
                     context.AddFailure(
-                        L1FieldNames.EmployeeRequestList.Status,
+                        FieldNames.EmployeeRequestList.Status,
                         Error.Errors.General.ValueIsInvalid.Code);
                 }
             });
@@ -39,7 +39,7 @@ public sealed class EmployeeRequestListQueryDtoValidator
                     || !Enum.IsDefined(parsed))
                 {
                     context.AddFailure(
-                        L1FieldNames.EmployeeRequestList.ReviewState,
+                        FieldNames.EmployeeRequestList.ReviewState,
                         Error.Errors.General.ValueIsInvalid.Code);
                 }
             });

@@ -65,14 +65,14 @@ builder.Services.Configure<SmtpEmailOptions>(
     builder.Configuration.GetSection(SmtpEmailOptions.SectionName));
 builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 builder.Services.AddTransient<IRegistrationEmailNotificationService, RegistrationEmailNotificationService>();
-builder.Services.AddSingleton<L1ClaimsPrincipalFactory>();
+builder.Services.AddSingleton<ClaimsPrincipalFactory>();
 
 builder.Services.AddMediatR(c=>c.RegisterServicesFromAssembly(typeof(Program).Assembly));
-builder.Services.AddTransient<IValidator<L1RegisterClientAccountDto>, L1RegisterClientAccountDtoValidator>();
-builder.Services.AddTransient<IValidator<L1LoginRequest>, L1LoginRequestValidator>();
-builder.Services.AddTransient<IValidator<L1CreateIndividualApplicantPartyDto>, L1CreateIndividualApplicantPartyDtoValidator>();
-builder.Services.AddTransient<IValidator<L1CreateConnectionRequestDto>, L1CreateConnectionRequestDtoValidator>();
-builder.Services.AddTransient<IValidator<L1ListMyRequestsQueryDto>, L1ListMyRequestsQueryDtoValidator>();
+builder.Services.AddTransient<IValidator<RegisterClientAccountDto>, RegisterClientAccountDtoValidator>();
+builder.Services.AddTransient<IValidator<LoginRequestDto>, LoginRequestDtoValidator>();
+builder.Services.AddTransient<IValidator<CreateIndividualApplicantPartyDto>, CreateIndividualApplicantPartyDtoValidator>();
+builder.Services.AddTransient<IValidator<CreateConnectionRequestDto>, CreateConnectionRequestDtoValidator>();
+builder.Services.AddTransient<IValidator<ListMyRequestsQueryDto>, ListMyRequestsQueryDtoValidator>();
 builder.Services.AddTransient<IValidator<EmployeeRequestListQueryDto>, EmployeeRequestListQueryDtoValidator>();
 builder.Services.AddTransient<IValidator<EmployeeRejectRequestReviewDto>, EmployeeRejectRequestReviewDtoValidator>();
 builder.Services.AddTransient<IValidator<AgreementExchangeListQueryDto>, AgreementExchangeListQueryDtoValidator>();

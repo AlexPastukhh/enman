@@ -16,7 +16,7 @@ public sealed class EmployeeRejectRequestReviewDtoValidator
                     && feedback.Length > RejectionFeedback.MaxLength)
                 {
                     context.AddFailure(
-                        L1FieldNames.EmployeeRejectRequestReview.Feedback,
+                        FieldNames.EmployeeRejectRequestReview.Feedback,
                         Error.Errors.L1Domain.RejectionFeedbackIsTooLong.Code);
                 }
             });

@@ -14,20 +14,20 @@ public sealed class UploadAgreementProposalDocumentFormValidator
     {
         RuleFor(x => x.Document)
             .NotNull()
-            .OverridePropertyName(L1FieldNames.AgreementProposalDocumentUpload.Document)
+            .OverridePropertyName(FieldNames.AgreementProposalDocumentUpload.Document)
             .WithMessage(Error.Errors.General.ValueIsRequired.Code);
 
         When(x => x.Document is not null, () =>
         {
             RuleFor(x => x.Document!.FileName)
                 .NotEmpty()
-                .OverridePropertyName(L1FieldNames.AgreementProposalDocumentUpload.Document)
+                .OverridePropertyName(FieldNames.AgreementProposalDocumentUpload.Document)
                 .WithMessage(Error.Errors.General.ValueIsRequired.Code);
 
             RuleFor(x => x.Document!.Length)
                 .GreaterThan(0)
                 .LessThanOrEqualTo(MaxAgreementProposalDocumentBytes)
-                .OverridePropertyName(L1FieldNames.AgreementProposalDocumentUpload.DocumentSizeBytes)
+                .OverridePropertyName(FieldNames.AgreementProposalDocumentUpload.DocumentSizeBytes)
                 .WithMessage(Error.Errors.General.ValueIsInvalid.Code);
 
             RuleFor(x => x.Document!.ContentType)
@@ -35,7 +35,7 @@ public sealed class UploadAgreementProposalDocumentFormValidator
                 .Must(contentType => AllowedContentTypes.Contains(
                     contentType,
                     StringComparer.OrdinalIgnoreCase))
-                .OverridePropertyName(L1FieldNames.AgreementProposalDocumentUpload.DocumentContentType)
+                .OverridePropertyName(FieldNames.AgreementProposalDocumentUpload.DocumentContentType)
                 .WithMessage(Error.Errors.General.ValueIsInvalid.Code);
         });
     }

@@ -23,7 +23,7 @@ public sealed class AgreementExchangeListQueryDtoValidator
                     || !Enum.IsDefined(parsed))
                 {
                     context.AddFailure(new ValidationFailure(
-                        L1FieldNames.AgreementExchangeList.Status,
+                        FieldNames.AgreementExchangeList.Status,
                         Error.Errors.General.ValueIsInvalid.Code));
                 }
             });

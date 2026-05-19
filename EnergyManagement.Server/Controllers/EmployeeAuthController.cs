@@ -20,12 +20,12 @@ public sealed class EmployeeAuthController : ProjectController
     private const string EmployeeInactiveCode = "auth.employee.inactive";
 
     private readonly IEmployeeRepository _employees;
-    private readonly L1ClaimsPrincipalFactory _claimsPrincipalFactory;
+    private readonly ClaimsPrincipalFactory _claimsPrincipalFactory;
     private readonly ILogger<EmployeeAuthController> _logger;
 
     public EmployeeAuthController(
         IEmployeeRepository employees,
-        L1ClaimsPrincipalFactory claimsPrincipalFactory,
+        ClaimsPrincipalFactory claimsPrincipalFactory,
         ILogger<EmployeeAuthController> logger)
     {
         _employees = employees;
@@ -35,7 +35,7 @@ public sealed class EmployeeAuthController : ProjectController
 
     [Authorize(AuthenticationSchemes = EmployeeAuthSchemes.EmployeeWindows)]
     [HttpGet("windows-signin", Name = "EmployeeWindowsSignIn")]
-    [ProducesResponseType(typeof(L1CurrentUserResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(CurrentUserResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -83,7 +83,7 @@ public sealed class EmployeeAuthController : ProjectController
                 principal,
                 new AuthenticationProperties { IsPersistent = false });
 
-            return Ok(new L1CurrentUserResponse(
+            return Ok(new CurrentUserResponseDto(
                 employee.Id,
                 employee.Email.Value,
                 employee.Role.ToString(),

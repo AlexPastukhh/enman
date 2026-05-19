@@ -260,7 +260,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/l1/auth/register": {
+    "/api/auth/register": {
         parameters: {
             query?: never;
             header?: never;
@@ -269,14 +269,14 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["L1RegisterClientAccount"];
+        post: operations["RegisterClientAccount"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/l1/auth/login": {
+    "/api/auth/login": {
         parameters: {
             query?: never;
             header?: never;
@@ -285,21 +285,21 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["L1LoginClientAccount"];
+        post: operations["LoginClientAccount"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/l1/auth/current-user": {
+    "/api/auth/current-user": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["L1GetCurrentUser"];
+        get: operations["GetCurrentUser"];
         put?: never;
         post?: never;
         delete?: never;
@@ -308,7 +308,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/l1/auth/logout": {
+    "/api/auth/logout": {
         parameters: {
             query?: never;
             header?: never;
@@ -317,14 +317,14 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["L1Logout"];
+        post: operations["Logout"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/l1/applicant-parties/individual": {
+    "/api/applicant-parties/individual": {
         parameters: {
             query?: never;
             header?: never;
@@ -333,21 +333,21 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["L1CreateIndividualApplicantParty"];
+        post: operations["CreateIndividualApplicantParty"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/l1/applicant-parties": {
+    "/api/applicant-parties": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["L1ListAccountApplicantParties"];
+        get: operations["GetAccountApplicantParties"];
         put?: never;
         post?: never;
         delete?: never;
@@ -356,7 +356,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/l1/applicant-parties/{applicantPartyId}/make-current-default": {
+    "/api/applicant-parties/{applicantPartyId}/make-current-default": {
         parameters: {
             query?: never;
             header?: never;
@@ -365,21 +365,21 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["L1MakeApplicantPartyCurrentDefault"];
+        post: operations["MakeApplicantPartyCurrentDefault"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/l1/applicant-parties/current-individual": {
+    "/api/applicant-parties/current-individual": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["L1GetCurrentIndividualApplicantParty"];
+        get: operations["GetCurrentIndividualApplicantParty"];
         put?: never;
         post?: never;
         delete?: never;
@@ -388,30 +388,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/l1/requests": {
+    "/api/requests": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["L1ListMyRequests"];
+        get: operations["ListMyRequests"];
         put?: never;
-        post: operations["L1CreateConnectionRequest"];
+        post: operations["CreateConnectionRequest"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/l1/requests/{requestId}": {
+    "/api/requests/{requestId}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["L1GetMyRequestDetails"];
+        get: operations["GetMyRequestDetails"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1938,7 +1938,7 @@ export interface operations {
             };
         };
     };
-    L1RegisterClientAccount: {
+    RegisterClientAccount: {
         parameters: {
             query?: never;
             header?: never;
@@ -1988,7 +1988,7 @@ export interface operations {
             };
         };
     };
-    L1LoginClientAccount: {
+    LoginClientAccount: {
         parameters: {
             query?: never;
             header?: never;
@@ -2038,7 +2038,7 @@ export interface operations {
             };
         };
     };
-    L1GetCurrentUser: {
+    GetCurrentUser: {
         parameters: {
             query?: never;
             header?: never;
@@ -2082,7 +2082,7 @@ export interface operations {
             };
         };
     };
-    L1Logout: {
+    Logout: {
         parameters: {
             query?: never;
             header?: never;
@@ -2111,7 +2111,7 @@ export interface operations {
             };
         };
     };
-    L1CreateIndividualApplicantParty: {
+    CreateIndividualApplicantParty: {
         parameters: {
             query?: never;
             header?: never;
@@ -2183,7 +2183,7 @@ export interface operations {
             };
         };
     };
-    L1ListAccountApplicantParties: {
+    GetAccountApplicantParties: {
         parameters: {
             query?: never;
             header?: never;
@@ -2227,7 +2227,7 @@ export interface operations {
             };
         };
     };
-    L1MakeApplicantPartyCurrentDefault: {
+    MakeApplicantPartyCurrentDefault: {
         parameters: {
             query?: never;
             header?: never;
@@ -2280,7 +2280,7 @@ export interface operations {
             };
         };
     };
-    L1GetCurrentIndividualApplicantParty: {
+    GetCurrentIndividualApplicantParty: {
         parameters: {
             query?: never;
             header?: never;
@@ -2324,7 +2324,7 @@ export interface operations {
             };
         };
     };
-    L1ListMyRequests: {
+    ListMyRequests: {
         parameters: {
             query?: {
                 status?: string;
@@ -2381,7 +2381,7 @@ export interface operations {
             };
         };
     };
-    L1CreateConnectionRequest: {
+    CreateConnectionRequest: {
         parameters: {
             query?: never;
             header?: never;
@@ -2449,7 +2449,7 @@ export interface operations {
             };
         };
     };
-    L1GetMyRequestDetails: {
+    GetMyRequestDetails: {
         parameters: {
             query?: never;
             header?: never;

@@ -1,9 +1,9 @@
 import { fetchJson } from "../../../shared/api/fetchJson";
-import type { L1CurrentIndividualApplicantPartyResponse } from "./applicantPartyApiTypes";
+import type { CurrentIndividualApplicantPartyResponseDto } from "./applicantPartyApiTypes";
 
 export const getCurrentIndividualApplicantParty =
-  (): Promise<L1CurrentIndividualApplicantPartyResponse> =>
-    fetchJson<L1CurrentIndividualApplicantPartyResponse>(
+  (): Promise<CurrentIndividualApplicantPartyResponseDto> =>
+    fetchJson<CurrentIndividualApplicantPartyResponseDto>(
       "/api/applicant-parties/current-individual",
       {
         method: "GET",

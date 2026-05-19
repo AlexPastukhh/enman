@@ -6,32 +6,32 @@ export const errorCodes = errorCodesJson;
 
 export const authFieldNames = {
   register: {
-    email: constants.L1AuthConstants.RegisterClientAccount.Email.FieldName,
-    password: constants.L1AuthConstants.RegisterClientAccount.Password.FieldName,
+    email: constants.AuthConstants.RegisterClientAccount.Email.FieldName,
+    password: constants.AuthConstants.RegisterClientAccount.Password.FieldName,
     passwordConfirmation: "passwordConfirmation",
   },
   login: {
-    email: constants.L1AuthConstants.Login.Email.FieldName,
-    password: constants.L1AuthConstants.Login.Password.FieldName,
+    email: constants.AuthConstants.Login.Email.FieldName,
+    password: constants.AuthConstants.Login.Password.FieldName,
   },
 } as const;
 
 export const applicantPartyFieldNames = {
   createIndividual: {
     firstName:
-      constants.L1ApplicantPartyConstants.CreateIndividualApplicantParty.FirstName
+      constants.ApplicantPartyConstants.CreateIndividualApplicantParty.FirstName
         .FieldName,
     middleName:
-      constants.L1ApplicantPartyConstants.CreateIndividualApplicantParty.MiddleName
+      constants.ApplicantPartyConstants.CreateIndividualApplicantParty.MiddleName
         .FieldName,
     lastName:
-      constants.L1ApplicantPartyConstants.CreateIndividualApplicantParty.LastName
+      constants.ApplicantPartyConstants.CreateIndividualApplicantParty.LastName
         .FieldName,
     email:
-      constants.L1ApplicantPartyConstants.CreateIndividualApplicantParty.Email
+      constants.ApplicantPartyConstants.CreateIndividualApplicantParty.Email
         .FieldName,
     phoneNumber:
-      constants.L1ApplicantPartyConstants.CreateIndividualApplicantParty
+      constants.ApplicantPartyConstants.CreateIndividualApplicantParty
         .PhoneNumber.FieldName,
   },
 } as const;

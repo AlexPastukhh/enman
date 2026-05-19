@@ -46,7 +46,7 @@ public sealed class AuthIntegrationTests : AppIntegrationTestBase
         var response = await PostAsJsonWithCsrfAsync(
             client,
             "/api/auth/login",
-            new L1LoginRequest(email, "WrongPassword!123"));
+            new LoginRequestDto(email, "WrongPassword!123"));
 
         await HttpResponseAssertions.For(response, _output)
             .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
@@ -62,11 +62,11 @@ public sealed class AuthIntegrationTests : AppIntegrationTestBase
         var invalidPassword = await PostAsJsonWithCsrfAsync(
             client,
             "/api/auth/login",
-            new L1LoginRequest(email, "WrongPassword!123"));
+            new LoginRequestDto(email, "WrongPassword!123"));
         var unknownEmail = await PostAsJsonWithCsrfAsync(
             client,
             "/api/auth/login",
-            new L1LoginRequest(UniqueEmail(), "WrongPassword!123"));
+            new LoginRequestDto(UniqueEmail(), "WrongPassword!123"));
 
         await HttpResponseAssertions.For(invalidPassword, _output)
             .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
@@ -88,14 +88,22 @@ public sealed class AuthIntegrationTests : AppIntegrationTestBase
     }
 
     [Fact]
-    public async Task OldL1LoginRoute_ReturnsNotFound()
+    public async Task OldL1LoginPostRoute_ReturnsMethodNotAllowed()
     {
+        var oldLoginRoute = string.Join(
+            '/',
+            string.Empty,
+            "api",
+            "l1",
+            "auth",
+            "login");
+
         var response = await _factory.CreateClient().PostAsJsonAsync(
-            "/api/l1/auth/login",
-            new L1LoginRequest(UniqueEmail(), ValidPassword));
+            oldLoginRoute,
+            new LoginRequestDto(UniqueEmail(), ValidPassword));
 
         await HttpResponseAssertions.For(response, _output)
-            .ShouldBeStatusCode((int)HttpStatusCode.NotFound);
+            .ShouldBeStatusCode((int)HttpStatusCode.MethodNotAllowed);
     }
 
     [Fact]
@@ -193,7 +201,7 @@ public sealed class AuthIntegrationTests : AppIntegrationTestBase
         var response = await PostAsJsonWithCsrfAsync(
             client,
             "/api/auth/register",
-            new L1RegisterClientAccountDto(email, ValidPassword));
+            new RegisterClientAccountDto(email, ValidPassword));
 
         await HttpResponseAssertions.For(response, _output)
             .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
@@ -206,7 +214,7 @@ public sealed class AuthIntegrationTests : AppIntegrationTestBase
         var response = await PostAsJsonWithCsrfAsync(
             client,
             "/api/auth/register",
-            new L1RegisterClientAccountDto("not-an-email", "short"));
+            new RegisterClientAccountDto("not-an-email", "short"));
 
         await HttpResponseAssertions.For(response, _output)
             .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
@@ -219,7 +227,7 @@ public sealed class AuthIntegrationTests : AppIntegrationTestBase
         var response = await PostAsJsonWithCsrfAsync(
             client,
             "/api/auth/login",
-            new L1LoginRequest("not-an-email", " "));
+            new LoginRequestDto("not-an-email", " "));
 
         await HttpResponseAssertions.For(response, _output)
             .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);

@@ -1,4 +1,4 @@
-import type { L1CurrentUserResponse } from "../../../shared/apiAuthApi";
+import type { CurrentUserResponseDto } from "../../../shared/api/authApi";
 
 export type SessionState = {
   accountId: number;
@@ -20,7 +20,7 @@ const requireCurrentUserField = <T>(
 };
 
 export const mapCurrentUserToSession = (
-  response: L1CurrentUserResponse,
+  response: CurrentUserResponseDto,
 ): SessionState => ({
   accountId: requireCurrentUserField(response.accountId, "accountId"),
   email: requireCurrentUserField(response.email, "email"),

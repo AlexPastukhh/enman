@@ -2191,12 +2191,12 @@
         }
       }
     },
-    "/api/l1/auth/register": {
+    "/api/auth/register": {
       "post": {
         "tags": [
           "L1"
         ],
-        "operationId": "L1RegisterClientAccount",
+        "operationId": "RegisterClientAccount",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2280,12 +2280,12 @@
         }
       }
     },
-    "/api/l1/auth/login": {
+    "/api/auth/login": {
       "post": {
         "tags": [
           "L1"
         ],
-        "operationId": "L1LoginClientAccount",
+        "operationId": "LoginClientAccount",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2369,12 +2369,12 @@
         }
       }
     },
-    "/api/l1/auth/current-user": {
+    "/api/auth/current-user": {
       "get": {
         "tags": [
           "L1"
         ],
-        "operationId": "L1GetCurrentUser",
+        "operationId": "GetCurrentUser",
         "responses": {
           "200": {
             "description": "Success",
@@ -2439,12 +2439,12 @@
         }
       }
     },
-    "/api/l1/auth/logout": {
+    "/api/auth/logout": {
       "post": {
         "tags": [
           "L1"
         ],
-        "operationId": "L1Logout",
+        "operationId": "Logout",
         "responses": {
           "204": {
             "description": "No Content"
@@ -2472,12 +2472,12 @@
         }
       }
     },
-    "/api/l1/applicant-parties/individual": {
+    "/api/applicant-parties/individual": {
       "post": {
         "tags": [
           "L1"
         ],
-        "operationId": "L1CreateIndividualApplicantParty",
+        "operationId": "CreateIndividualApplicantParty",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2601,12 +2601,12 @@
         }
       }
     },
-    "/api/l1/applicant-parties": {
+    "/api/applicant-parties": {
       "get": {
         "tags": [
           "L1"
         ],
-        "operationId": "L1ListAccountApplicantParties",
+        "operationId": "GetAccountApplicantParties",
         "responses": {
           "200": {
             "description": "Success",
@@ -2671,12 +2671,12 @@
         }
       }
     },
-    "/api/l1/applicant-parties/{applicantPartyId}/make-current-default": {
+    "/api/applicant-parties/{applicantPartyId}/make-current-default": {
       "post": {
         "tags": [
           "L1"
         ],
-        "operationId": "L1MakeApplicantPartyCurrentDefault",
+        "operationId": "MakeApplicantPartyCurrentDefault",
         "parameters": [
           {
             "name": "applicantPartyId",
@@ -2755,12 +2755,12 @@
         }
       }
     },
-    "/api/l1/applicant-parties/current-individual": {
+    "/api/applicant-parties/current-individual": {
       "get": {
         "tags": [
           "L1"
         ],
-        "operationId": "L1GetCurrentIndividualApplicantParty",
+        "operationId": "GetCurrentIndividualApplicantParty",
         "responses": {
           "200": {
             "description": "Success",
@@ -2825,12 +2825,12 @@
         }
       }
     },
-    "/api/l1/requests": {
+    "/api/requests": {
       "get": {
         "tags": [
           "L1"
         ],
-        "operationId": "L1ListMyRequests",
+        "operationId": "ListMyRequests",
         "parameters": [
           {
             "name": "status",
@@ -2936,7 +2936,7 @@
         "tags": [
           "L1"
         ],
-        "operationId": "L1CreateConnectionRequest",
+        "operationId": "CreateConnectionRequest",
         "requestBody": {
           "content": {
             "application/json": {
@@ -3043,12 +3043,12 @@
         }
       }
     },
-    "/api/l1/requests/{requestId}": {
+    "/api/requests/{requestId}": {
       "get": {
         "tags": [
           "L1"
         ],
-        "operationId": "L1GetMyRequestDetails",
+        "operationId": "GetMyRequestDetails",
         "parameters": [
           {
             "name": "requestId",
