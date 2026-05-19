@@ -32,7 +32,7 @@ public sealed class AgreementProposalAcceptIntegrationTests : AppIntegrationTest
     public async Task Accept_without_csrf_returns_bad_request()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var response = await client.PostAsync(
             "/api/agreement-exchanges/1/accept",
@@ -47,7 +47,7 @@ public sealed class AgreementProposalAcceptIntegrationTests : AppIntegrationTest
     {
         const long employeeId = 820;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedL1Client(employeeId, "employee-820@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-820@example.com", role: "Employee");
 
         var response = await AcceptProposalRequestAsync(employeeClient, exchangeId: 1);
 
@@ -64,7 +64,7 @@ public sealed class AgreementProposalAcceptIntegrationTests : AppIntegrationTest
             requestId,
             account.AccountId,
             employeeSenderId: 77);
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var response = await AcceptProposalRequestAsync(client, exchangeId);
 
@@ -92,7 +92,7 @@ public sealed class AgreementProposalAcceptIntegrationTests : AppIntegrationTest
             requestId,
             account.AccountId,
             employeeSenderId: 77);
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
         var before = await GetProposalRowsAsync(exchangeId);
 
         var response = await AcceptProposalRequestAsync(client, exchangeId);
@@ -116,7 +116,7 @@ public sealed class AgreementProposalAcceptIntegrationTests : AppIntegrationTest
             employeeSenderId: 77);
 
         var other = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(other.AccountId, other.Email, role: "Client");
+        var client = AuthenticatedClient(other.AccountId, other.Email, role: "Client");
 
         var response = await AcceptProposalRequestAsync(client, exchangeId);
 
@@ -141,7 +141,7 @@ public sealed class AgreementProposalAcceptIntegrationTests : AppIntegrationTest
             requestId,
             account.AccountId,
             clientSenderId: account.AccountId);
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var response = await AcceptProposalRequestAsync(client, exchangeId);
 
@@ -167,7 +167,7 @@ public sealed class AgreementProposalAcceptIntegrationTests : AppIntegrationTest
             requestId,
             account.AccountId,
             employeeSenderId: 77);
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var response = await AcceptProposalRequestAsync(client, exchangeId);
 

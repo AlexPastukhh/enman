@@ -37,7 +37,7 @@ public abstract class AppIntegrationTestBase
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
         return await response.Content.ReadFromJsonAsync<RegisterClientAccountResponse>()
-            ?? throw new InvalidOperationException("L1 register response body was empty.");
+            ?? throw new InvalidOperationException("Register response body was empty.");
     }
 
     protected async Task<CurrentUserResponseDto> LoginAsync(
@@ -53,7 +53,7 @@ public abstract class AppIntegrationTestBase
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
         return await response.Content.ReadFromJsonAsync<CurrentUserResponseDto>()
-            ?? throw new InvalidOperationException("L1 login response body was empty.");
+            ?? throw new InvalidOperationException("Login response body was empty.");
     }
 
     protected async Task<CurrentUserResponseDto> GetCurrentUserAsync(HttpClient client)
@@ -63,7 +63,7 @@ public abstract class AppIntegrationTestBase
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
         return await response.Content.ReadFromJsonAsync<CurrentUserResponseDto>()
-            ?? throw new InvalidOperationException("L1 current-user response body was empty.");
+            ?? throw new InvalidOperationException("Current-user response body was empty.");
     }
 
     protected async Task<CurrentIndividualApplicantPartyResponseDto> GetCurrentIndividualApplicantPartyAsync(
@@ -74,7 +74,7 @@ public abstract class AppIntegrationTestBase
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
         return await response.Content.ReadFromJsonAsync<CurrentIndividualApplicantPartyResponseDto>()
-            ?? throw new InvalidOperationException("L1 current applicant party response body was empty.");
+            ?? throw new InvalidOperationException("Current applicant party response body was empty.");
     }
 
     protected async Task<AccountApplicantPartiesResponseDto> GetAccountApplicantPartiesAsync(
@@ -85,7 +85,7 @@ public abstract class AppIntegrationTestBase
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
         return await response.Content.ReadFromJsonAsync<AccountApplicantPartiesResponseDto>()
-            ?? throw new InvalidOperationException("L1 account applicant parties response body was empty.");
+            ?? throw new InvalidOperationException("Account applicant parties response body was empty.");
     }
 
     protected async Task<IReadOnlyList<MyRequestSummaryDto>> GetMyRequestsAsync(
@@ -100,7 +100,7 @@ public abstract class AppIntegrationTestBase
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
         return await response.Content.ReadFromJsonAsync<IReadOnlyList<MyRequestSummaryDto>>()
-            ?? throw new InvalidOperationException("L1 my requests response body was empty.");
+            ?? throw new InvalidOperationException("My requests response body was empty.");
     }
 
 
@@ -210,7 +210,7 @@ public abstract class AppIntegrationTestBase
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
         return await response.Content.ReadFromJsonAsync<MyRequestDetailsDto>()
-            ?? throw new InvalidOperationException("L1 my request details response body was empty.");
+            ?? throw new InvalidOperationException("My request details response body was empty.");
     }
 
     protected async Task<CreateIndividualApplicantPartyResponse> CreateApplicantPartyAsync(long accountId)
@@ -223,14 +223,14 @@ public abstract class AppIntegrationTestBase
         CreateIndividualApplicantPartyDto dto)
     {
         var response = await PostAsJsonWithCsrfAsync(
-            AuthenticatedL1Client(accountId),
+            AuthenticatedClient(accountId),
             "/api/applicant-parties/individual",
             dto);
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
         return await response.Content.ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
-            ?? throw new InvalidOperationException("L1 applicant party response body was empty.");
+            ?? throw new InvalidOperationException("Applicant party response body was empty.");
     }
 
     protected Task<HttpResponseMessage> MakeApplicantPartyCurrentDefaultRequestAsync(
@@ -238,7 +238,7 @@ public abstract class AppIntegrationTestBase
         long applicantPartyId)
     {
         return PostWithCsrfAsync(
-            AuthenticatedL1Client(accountId),
+            AuthenticatedClient(accountId),
             $"/api/applicant-parties/{applicantPartyId}/make-current-default");
     }
 
@@ -260,7 +260,7 @@ public abstract class AppIntegrationTestBase
             ?? throw new InvalidOperationException("Could not find applicant party for request helper.");
 
         var response = await PostAsJsonWithCsrfAsync(
-            AuthenticatedL1Client(accountId),
+            AuthenticatedClient(accountId),
             "/api/requests",
             ValidConnectionRequestDto(
                 details: details,
@@ -309,7 +309,7 @@ public abstract class AppIntegrationTestBase
         return token.RequestToken;
     }
 
-    protected HttpClient AuthenticatedL1Client(
+    protected HttpClient AuthenticatedClient(
         long accountId,
         string email = "l1-authenticated@example.com",
         string role = "Client")
@@ -786,7 +786,7 @@ public abstract class AppIntegrationTestBase
     protected const string LastName = "Doe";
     protected const string ApplicantEmail = "applicant.l1@example.com";
     protected const string PhoneNumber = "79237554726";
-    protected const string RequestDetails = "Connection request details for L1 integration test.";
+    protected const string RequestDetails = "Connection request details for app integration test.";
     protected const string PostalCode = "123456";
     protected const string Region = "Region";
     protected const string City = "City";

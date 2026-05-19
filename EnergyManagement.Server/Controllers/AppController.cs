@@ -20,10 +20,10 @@ namespace EnergyManagement.Server.Controllers;
 
 [ApiController]
 [Route("api")]
-public sealed class L1Controller : ProjectController
+public sealed class AppController : ProjectController
 {
     private readonly ISender _sender;
-    private readonly ILogger<L1Controller> _logger;
+    private readonly ILogger<AppController> _logger;
     private readonly IValidator<RegisterClientAccountDto> _registerValidator;
     private readonly IValidator<LoginRequestDto> _loginValidator;
     private readonly IValidator<CreateIndividualApplicantPartyDto> _createIndividualApplicantPartyValidator;
@@ -31,9 +31,9 @@ public sealed class L1Controller : ProjectController
     private readonly IValidator<ListMyRequestsQueryDto> _listMyRequestsQueryValidator;
     private readonly ClaimsPrincipalFactory _claimsPrincipalFactory;
 
-    public L1Controller(
+    public AppController(
         ISender sender,
-        ILogger<L1Controller> logger,
+        ILogger<AppController> logger,
         IValidator<RegisterClientAccountDto> registerValidator,
         IValidator<LoginRequestDto> loginValidator,
         IValidator<CreateIndividualApplicantPartyDto> createIndividualApplicantPartyValidator,
@@ -53,7 +53,7 @@ public sealed class L1Controller : ProjectController
 
     [HttpPost("auth/register", Name = "RegisterClientAccount")]
     [RequireAntiforgeryToken]
-    [ProducesResponseType(typeof(RegisterClientAccountResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(RegisterClientAccountResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Register(
@@ -72,11 +72,18 @@ public sealed class L1Controller : ProjectController
                 new RegisterClientAccountCommand(dto!.Email!, dto.Password!),
                 cancellationToken);
 
-            return ToActionResult(result);
+            if (result.IsFailure)
+            {
+                return ProblemDetailsFromValidation(result.Error);
+            }
+
+            return Ok(new RegisterClientAccountResponseDto(
+                result.Value.AccountId,
+                result.Value.Email));
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "L1 register client account failed.");
+            _logger.LogError(ex, "Register client account failed.");
             return ProblemDetailsWithExceptionDev(ex);
         }
     }
@@ -107,13 +114,13 @@ public sealed class L1Controller : ProjectController
                 return ProblemDetailsFromValidation(result.Error);
             }
 
-            await SignInL1AccountAsync(result.Value);
+            await SignInAccountAsync(result.Value);
 
             return Ok(ToCurrentUserResponse(result.Value));
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "L1 login failed.");
+            _logger.LogError(ex, "Login failed.");
             return ProblemDetailsWithExceptionDev(ex);
         }
     }
@@ -127,7 +134,7 @@ public sealed class L1Controller : ProjectController
     {
         try
         {
-            if (!TryGetCurrentL1AccountId(out var accountId))
+            if (!TryGetCurrentAccountId(out var accountId))
             {
                 return Unauthorized();
             }
@@ -142,7 +149,7 @@ public sealed class L1Controller : ProjectController
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "L1 current-user failed.");
+            _logger.LogError(ex, "Current-user failed.");
             return ProblemDetailsWithExceptionDev(ex);
         }
     }
@@ -161,7 +168,7 @@ public sealed class L1Controller : ProjectController
     [Authorize]
     [HttpPost("applicant-parties/individual", Name = "CreateIndividualApplicantParty")]
     [RequireAntiforgeryToken]
-    [ProducesResponseType(typeof(CreateIndividualApplicantPartyResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(CreateIndividualApplicantPartyResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
@@ -181,7 +188,7 @@ public sealed class L1Controller : ProjectController
                 return validationProblem;
             }
 
-            if (!TryGetCurrentL1AccountId(out var accountId))
+            if (!TryGetCurrentAccountId(out var accountId))
             {
                 return Unauthorized();
             }
@@ -196,11 +203,18 @@ public sealed class L1Controller : ProjectController
                     dto.PhoneNumber!),
                 cancellationToken);
 
-            return ToActionResult(result);
+            if (result.IsFailure)
+            {
+                return ProblemDetailsFromValidation(result.Error);
+            }
+
+            return Ok(new CreateIndividualApplicantPartyResponseDto(
+                result.Value.ApplicantPartyId,
+                result.Value.ClientAccountId));
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "L1 create individual applicant party failed.");
+            _logger.LogError(ex, "Create individual applicant party failed.");
             return ProblemDetailsWithExceptionDev(ex);
         }
     }
@@ -215,7 +229,7 @@ public sealed class L1Controller : ProjectController
     {
         try
         {
-            if (!TryGetCurrentL1AccountId(out var accountId))
+            if (!TryGetCurrentAccountId(out var accountId))
             {
                 return Unauthorized();
             }
@@ -233,7 +247,7 @@ public sealed class L1Controller : ProjectController
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "L1 list account applicant parties failed.");
+            _logger.LogError(ex, "List account applicant parties failed.");
             return ProblemDetailsWithExceptionDev(ex);
         }
     }
@@ -251,7 +265,7 @@ public sealed class L1Controller : ProjectController
     {
         try
         {
-            if (!TryGetCurrentL1AccountId(out var accountId))
+            if (!TryGetCurrentAccountId(out var accountId))
             {
                 return Unauthorized();
             }
@@ -264,7 +278,7 @@ public sealed class L1Controller : ProjectController
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "L1 make applicant party current/default failed.");
+            _logger.LogError(ex, "Make applicant party current/default failed.");
             return ProblemDetailsWithExceptionDev(ex);
         }
     }
@@ -278,7 +292,7 @@ public sealed class L1Controller : ProjectController
     {
         try
         {
-            if (!TryGetCurrentL1AccountId(out var accountId))
+            if (!TryGetCurrentAccountId(out var accountId))
             {
                 return Unauthorized();
             }
@@ -296,7 +310,7 @@ public sealed class L1Controller : ProjectController
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "L1 get current individual applicant party failed.");
+            _logger.LogError(ex, "Get current individual applicant party failed.");
             return ProblemDetailsWithExceptionDev(ex);
         }
     }
@@ -322,7 +336,7 @@ public sealed class L1Controller : ProjectController
                 return validationProblem;
             }
 
-            if (!TryGetCurrentL1AccountId(out var accountId))
+            if (!TryGetCurrentAccountId(out var accountId))
             {
                 return Unauthorized();
             }
@@ -340,7 +354,7 @@ public sealed class L1Controller : ProjectController
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "L1 list my requests failed.");
+            _logger.LogError(ex, "List my requests failed.");
             return ProblemDetailsWithExceptionDev(ex);
         }
     }
@@ -357,7 +371,7 @@ public sealed class L1Controller : ProjectController
     {
         try
         {
-            if (!TryGetCurrentL1AccountId(out var accountId))
+            if (!TryGetCurrentAccountId(out var accountId))
             {
                 return Unauthorized();
             }
@@ -375,7 +389,7 @@ public sealed class L1Controller : ProjectController
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "L1 get my request details failed.");
+            _logger.LogError(ex, "Get my request details failed.");
             return ProblemDetailsWithExceptionDev(ex);
         }
     }
@@ -403,7 +417,7 @@ public sealed class L1Controller : ProjectController
                 return validationProblem;
             }
 
-            if (!TryGetCurrentL1AccountId(out var accountId))
+            if (!TryGetCurrentAccountId(out var accountId))
             {
                 return Unauthorized();
             }
@@ -435,12 +449,12 @@ public sealed class L1Controller : ProjectController
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "L1 create connection request failed.");
+            _logger.LogError(ex, "Create connection request failed.");
             return ProblemDetailsWithExceptionDev(ex);
         }
     }
 
-    private bool TryGetCurrentL1AccountId(out long accountId)
+    private bool TryGetCurrentAccountId(out long accountId)
     {
         accountId = default;
 
@@ -488,7 +502,7 @@ public sealed class L1Controller : ProjectController
         return null;
     }
 
-    private async Task SignInL1AccountAsync(LoginClientAccountResponse account)
+    private async Task SignInAccountAsync(LoginClientAccountResponse account)
     {
         var principal = _claimsPrincipalFactory.CreatePrincipal(account.Account);
 

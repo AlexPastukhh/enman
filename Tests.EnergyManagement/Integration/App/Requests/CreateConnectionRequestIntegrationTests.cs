@@ -18,7 +18,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
     }
 
     [Fact]
-    public async Task L1LoginCookie_CreateConnectionRequest_Succeeds()
+    public async Task LoginCookie_CreateConnectionRequest_Succeeds()
     {
         var email = UniqueEmail();
         await RegisterAccountAsync(email);
@@ -32,7 +32,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
         await HttpResponseAssertions.For(applicantResponse, _output).ShouldBeSuccess();
         var applicantParty = await applicantResponse.Content
             .ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
-            ?? throw new InvalidOperationException("L1 applicant party response body was empty.");
+            ?? throw new InvalidOperationException("Applicant party response body was empty.");
 
         var requestResponse = await PostAsJsonWithCsrfAsync(
             client,
@@ -74,7 +74,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
         var account = await RegisterAccountAsync();
         var first = await CreateApplicantPartyAsync(account.AccountId);
         var second = await PostAsJsonWithCsrfAsync(
-            AuthenticatedL1Client(account.AccountId),
+            AuthenticatedClient(account.AccountId),
             "/api/applicant-parties/individual",
             ValidApplicantPartyDto(
                 firstName: "Second",
@@ -94,7 +94,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
     }
 
     [Fact]
-    public async Task L1Flow_PropagatesEfGeneratedIdsAcrossAggregates()
+    public async Task AppFlow_PropagatesEfGeneratedIdsAcrossAggregates()
     {
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
@@ -116,7 +116,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
         var owner = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(owner.AccountId);
         var other = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(other.AccountId);
+        var client = AuthenticatedClient(other.AccountId);
         var requestCountBefore = await GetRequestCountAsync();
 
         var response = await PostAsJsonWithCsrfAsync(
@@ -136,7 +136,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
     {
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
-        var client = AuthenticatedL1Client(account.AccountId);
+        var client = AuthenticatedClient(account.AccountId);
 
         var response = await PostAsJsonWithCsrfAsync(
             client,
@@ -154,7 +154,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
     {
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
-        var client = AuthenticatedL1Client(account.AccountId);
+        var client = AuthenticatedClient(account.AccountId);
 
         var response = await PostAsJsonWithCsrfAsync(
             client,
@@ -172,7 +172,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
     {
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
-        var client = AuthenticatedL1Client(account.AccountId);
+        var client = AuthenticatedClient(account.AccountId);
 
         var response = await PostAsJsonWithCsrfAsync(
             client,
@@ -193,7 +193,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
     {
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
-        var client = AuthenticatedL1Client(account.AccountId);
+        var client = AuthenticatedClient(account.AccountId);
 
         var response = await PostAsJsonWithCsrfAsync(
             client,
@@ -221,7 +221,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
     {
         var account = await RegisterAccountAsync();
         await CreateApplicantPartyAsync(account.AccountId);
-        var client = AuthenticatedL1Client(account.AccountId);
+        var client = AuthenticatedClient(account.AccountId);
         var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
 
         var response = await PostAsJsonWithCsrfAsync(
@@ -248,7 +248,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
     public async Task CreateConnectionRequest_WithInvalidNewApplicantData_CreatesNoApplicantAndNoRequest()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId);
+        var client = AuthenticatedClient(account.AccountId);
         var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
         var requestCountBefore = await GetRequestCountAsync();
 
@@ -272,7 +272,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
     public async Task CreateConnectionRequest_NewBranchWithMissingFullName_ReturnsValidationProblemAndCreatesNoApplicantOrRequest()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId);
+        var client = AuthenticatedClient(account.AccountId);
         var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
         var requestCountBefore = await GetRequestCountAsync();
 
@@ -296,7 +296,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
     public async Task CreateConnectionRequest_WithInvalidRequestDataInNewBranch_CreatesNoApplicantAndNoRequest()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId);
+        var client = AuthenticatedClient(account.AccountId);
         var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
         var requestCountBefore = await GetRequestCountAsync();
 
@@ -322,7 +322,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
 
         var response = await PostAsJsonWithCsrfAsync(
-            AuthenticatedL1Client(account.AccountId),
+            AuthenticatedClient(account.AccountId),
             "/api/requests",
             ValidConnectionRequestDto(
                 applicantContextType: applicantContextType,
@@ -338,7 +338,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
         var account = await RegisterAccountAsync();
 
         var response = await PostAsJsonWithCsrfAsync(
-            AuthenticatedL1Client(account.AccountId),
+            AuthenticatedClient(account.AccountId),
             "/api/requests",
             ValidConnectionRequestDto(existingApplicantPartyId: null));
 
@@ -353,7 +353,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
 
         var response = await PostAsJsonWithCsrfAsync(
-            AuthenticatedL1Client(account.AccountId),
+            AuthenticatedClient(account.AccountId),
             "/api/requests",
             ValidConnectionRequestDto(
                 existingApplicantPartyId: applicantParty.ApplicantPartyId,
@@ -369,7 +369,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
         var account = await RegisterAccountAsync();
 
         var response = await PostAsJsonWithCsrfAsync(
-            AuthenticatedL1Client(account.AccountId),
+            AuthenticatedClient(account.AccountId),
             "/api/requests",
             ValidConnectionRequestDto(
                 applicantContextType: "New",
@@ -387,7 +387,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
 
         var response = await PostAsJsonWithCsrfAsync(
-            AuthenticatedL1Client(account.AccountId),
+            AuthenticatedClient(account.AccountId),
             "/api/requests",
             ValidConnectionRequestWithNewApplicantDto(
                 existingApplicantPartyId: applicantParty.ApplicantPartyId));

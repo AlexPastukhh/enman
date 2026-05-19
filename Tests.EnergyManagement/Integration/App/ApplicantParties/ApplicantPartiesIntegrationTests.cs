@@ -18,7 +18,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
     }
 
     [Fact]
-    public async Task L1LoginCookie_CreateIndividualApplicantParty_Succeeds()
+    public async Task LoginCookie_CreateIndividualApplicantParty_Succeeds()
     {
         var email = UniqueEmail();
         var account = await RegisterAccountAsync(email);
@@ -33,7 +33,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
         var applicantParty = await response.Content.ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
-            ?? throw new InvalidOperationException("L1 applicant party response body was empty.");
+            ?? throw new InvalidOperationException("Applicant party response body was empty.");
 
         applicantParty.ClientAccountId.Should().Be(account.AccountId);
     }
@@ -43,7 +43,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
     {
         var account = await RegisterAccountAsync();
         await CreateApplicantPartyAsync(account.AccountId);
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
 
         var currentApplicant = await GetCurrentIndividualApplicantPartyAsync(client);
 
@@ -61,7 +61,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
     public async Task GetCurrentIndividualApplicantParty_WithoutCurrentApplicant_ReturnsExistsFalse()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
 
         var currentApplicant = await GetCurrentIndividualApplicantPartyAsync(client);
 
@@ -86,7 +86,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
         await CreateApplicantPartyAsync(accountWithApplicant.AccountId);
 
         var accountWithoutApplicant = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(
+        var client = AuthenticatedClient(
             accountWithoutApplicant.AccountId,
             accountWithoutApplicant.Email);
 
@@ -109,7 +109,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
     public async Task ListAccountApplicantParties_WithNoApplicantParties_ReturnsEmptyList()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
 
         var response = await GetAccountApplicantPartiesAsync(client);
 
@@ -121,7 +121,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
     {
         var account = await RegisterAccountAsync();
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
 
         var httpResponse = await client.GetAsync("/api/applicant-parties");
         await HttpResponseAssertions.For(httpResponse, _output).ShouldBeSuccess();
@@ -129,7 +129,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
         var response = System.Text.Json.JsonSerializer.Deserialize<AccountApplicantPartiesResponseDto>(
                 responseBody,
                 new System.Text.Json.JsonSerializerOptions(System.Text.Json.JsonSerializerDefaults.Web))
-            ?? throw new InvalidOperationException("L1 account applicant parties response body was empty.");
+            ?? throw new InvalidOperationException("Account applicant parties response body was empty.");
 
         response.ApplicantParties.Should().ContainSingle();
         var summary = response.ApplicantParties.Single();
@@ -155,7 +155,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
         var first = await CreateApplicantPartyAsync(account.AccountId);
 
         var secondResponse = await PostAsJsonWithCsrfAsync(
-            AuthenticatedL1Client(account.AccountId),
+            AuthenticatedClient(account.AccountId),
             "/api/applicant-parties/individual",
             ValidApplicantPartyDto(
                 firstName: "Jane",
@@ -165,9 +165,9 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
                 phoneNumber: "79237554727"));
         await HttpResponseAssertions.For(secondResponse, _output).ShouldBeSuccess();
         var second = await secondResponse.Content.ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
-            ?? throw new InvalidOperationException("L1 applicant party response body was empty.");
+            ?? throw new InvalidOperationException("Applicant party response body was empty.");
 
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
         var response = await GetAccountApplicantPartiesAsync(client);
 
         response.ApplicantParties.Should().HaveCount(2);
@@ -186,7 +186,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
 
         var other = await RegisterAccountAsync();
         var otherApplicantParty = await CreateApplicantPartyAsync(other.AccountId);
-        var client = AuthenticatedL1Client(other.AccountId, other.Email);
+        var client = AuthenticatedClient(other.AccountId, other.Email);
 
         var response = await GetAccountApplicantPartiesAsync(client);
 
@@ -378,7 +378,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
     public async Task CreateIndividualApplicantParty_WithInvalidData_ReturnsValidationProblemAndCreatesNoApplicant()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId);
+        var client = AuthenticatedClient(account.AccountId);
         var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
 
         var response = await PostAsJsonWithCsrfAsync(
@@ -403,7 +403,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
         var first = await CreateApplicantPartyAsync(account.AccountId);
 
         var secondResponse = await PostAsJsonWithCsrfAsync(
-            AuthenticatedL1Client(account.AccountId),
+            AuthenticatedClient(account.AccountId),
             "/api/applicant-parties/individual",
             ValidApplicantPartyDto(
                 firstName: "Jane",
@@ -413,7 +413,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
                 phoneNumber: "79237554727"));
         await HttpResponseAssertions.For(secondResponse, _output).ShouldBeSuccess();
         var second = await secondResponse.Content.ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
-            ?? throw new InvalidOperationException("L1 applicant party response body was empty.");
+            ?? throw new InvalidOperationException("Applicant party response body was empty.");
 
         var firstRow = await GetApplicantPartyRowAsync(first.ApplicantPartyId);
         var secondRow = await GetApplicantPartyRowAsync(second.ApplicantPartyId);
@@ -434,7 +434,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
     [Fact]
     public async Task CreateIndividualApplicantParty_ForMissingAccount_ReturnsValidationProblem()
     {
-        var client = AuthenticatedL1Client(989_898);
+        var client = AuthenticatedClient(989_898);
 
         var response = await PostAsJsonWithCsrfAsync(
             client,
@@ -449,7 +449,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
     public async Task CreateIndividualApplicantParty_WithMissingFullName_ReturnsValidationProblemAndCreatesNoApplicant()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId);
+        var client = AuthenticatedClient(account.AccountId);
         var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
 
         var response = await PostAsJsonWithCsrfAsync(

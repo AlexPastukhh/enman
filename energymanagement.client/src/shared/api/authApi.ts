@@ -6,18 +6,18 @@ import {
 import { fetchJson } from "./fetchJson";
 import { apiPaths } from "./apiPaths";
 
-export type L1RegisterRequest =
+export type RegisterClientAccountRequest =
   components["schemas"]["RegisterClientAccountDto"];
-export type L1RegisterResponse =
-  components["schemas"]["RegisterClientAccountResponse"];
+export type RegisterClientAccountResponse =
+  components["schemas"]["RegisterClientAccountResponseDto"];
 export type LoginRequestDto = components["schemas"]["LoginRequestDto"];
 export type CurrentUserResponseDto =
   components["schemas"]["CurrentUserResponseDto"];
 
 export const registerClientAccount = (
-  request: L1RegisterRequest,
-): Promise<L1RegisterResponse> =>
-  fetchJson<L1RegisterResponse>(apiPaths.register, {
+  request: RegisterClientAccountRequest,
+): Promise<RegisterClientAccountResponse> =>
+  fetchJson<RegisterClientAccountResponse>(apiPaths.register, {
     method: "POST",
     body: JSON.stringify(request),
   });

@@ -34,7 +34,7 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
     {
         const long employeeId = 930;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedL1Client(employeeId, "employee-930@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-930@example.com", role: "Employee");
 
         var response = await employeeClient.PostAsync(
             "/api/agreement-exchanges/1/final-refuse",
@@ -48,7 +48,7 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
     public async Task Client_cannot_final_refuse_exchange()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var response = await FinalRefuseRequestAsync(client, exchangeId: 1);
 
@@ -68,7 +68,7 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
 
         const long employeeId = 932;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedL1Client(employeeId, "employee-932@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-932@example.com", role: "Employee");
 
         var beforeProposals = await GetProposalRowsAsync(exchangeId);
 
@@ -110,7 +110,7 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
 
         const long employeeId = 933;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedL1Client(employeeId, "employee-933@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-933@example.com", role: "Employee");
 
         var response = await FinalRefuseRequestAsync(employeeClient, exchangeId);
 
@@ -140,7 +140,7 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
 
         const long employeeId = 935;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedL1Client(employeeId, "employee-935@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-935@example.com", role: "Employee");
 
         var response = await FinalRefuseRequestAsync(
             employeeClient,
@@ -174,7 +174,7 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
 
         const long employeeId = 937;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedL1Client(employeeId, "employee-937@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-937@example.com", role: "Employee");
 
         var response = await FinalRefuseRequestAsync(
             employeeClient,
@@ -206,7 +206,7 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
 
         const long employeeId = 939;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedL1Client(employeeId, "employee-939@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-939@example.com", role: "Employee");
 
         var response = await FinalRefuseRequestAsync(
             employeeClient,
@@ -241,7 +241,7 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
 
         const long employeeId = 941;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedL1Client(employeeId, "employee-941@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-941@example.com", role: "Employee");
 
         var response = await FinalRefuseRequestAsync(
             employeeClient,

@@ -1,5 +1,5 @@
 import {
-  type L1CreateIndividualApplicantPartyRequest,
+  type CreateIndividualApplicantPartyRequest,
   type CreateIndividualApplicantPartyResponse,
 } from "../../../../entities/applicant-party/api/applicantPartyApiTypes";
 import { fetchJson } from "../../../../shared/api/fetchJson";
@@ -14,7 +14,7 @@ const createIndividualApplicantPartyPath =
 export const createIndividualApplicantParty = (
   values: CreateIndividualApplicantPartyFormValues,
 ): Promise<void> => {
-  const request: L1CreateIndividualApplicantPartyRequest = {
+  const request: CreateIndividualApplicantPartyRequest = {
     fullName: {
       firstName: values[createIndividualApplicantPartyFieldNames.firstName],
       middleName: values[createIndividualApplicantPartyFieldNames.middleName],

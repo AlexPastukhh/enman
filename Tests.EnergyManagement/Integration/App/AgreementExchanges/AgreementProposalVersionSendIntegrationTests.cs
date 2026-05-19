@@ -35,7 +35,7 @@ public sealed class AgreementProposalVersionSendIntegrationTests : AppIntegratio
     public async Task Send_without_csrf_returns_bad_request()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var response = await client.PostAsJsonAsync(
             "/api/requests/1/agreement-exchange/proposals",
@@ -49,7 +49,7 @@ public sealed class AgreementProposalVersionSendIntegrationTests : AppIntegratio
     public async Task Send_with_missing_document_returns_validation_problem()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var response = await PostAsJsonWithCsrfAsync(
             client,
@@ -70,7 +70,7 @@ public sealed class AgreementProposalVersionSendIntegrationTests : AppIntegratio
             account.AccountId,
             employeeSenderId: 77);
 
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var response = await SendProposalVersionRequestAsync(
             client,
@@ -108,7 +108,7 @@ public sealed class AgreementProposalVersionSendIntegrationTests : AppIntegratio
             employeeSenderId: 77);
 
         var other = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(other.AccountId, other.Email, role: "Client");
+        var client = AuthenticatedClient(other.AccountId, other.Email, role: "Client");
 
         var response = await SendProposalVersionRequestAsync(
             client,
@@ -131,7 +131,7 @@ public sealed class AgreementProposalVersionSendIntegrationTests : AppIntegratio
 
         const long employeeId = 810;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedL1Client(employeeId, "employee-810@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-810@example.com", role: "Employee");
 
         var response = await SendProposalVersionRequestAsync(
             employeeClient,
@@ -173,7 +173,7 @@ public sealed class AgreementProposalVersionSendIntegrationTests : AppIntegratio
 
         const long differentEmployeeId = 901;
         await InsertEmployeeAsync(differentEmployeeId);
-        var employeeClient = AuthenticatedL1Client(
+        var employeeClient = AuthenticatedClient(
             differentEmployeeId,
             "employee-901@example.com",
             role: "Employee");
@@ -197,7 +197,7 @@ public sealed class AgreementProposalVersionSendIntegrationTests : AppIntegratio
             account.AccountId,
             clientSenderId: account.AccountId);
 
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var response = await SendProposalVersionRequestAsync(
             client,
@@ -220,7 +220,7 @@ public sealed class AgreementProposalVersionSendIntegrationTests : AppIntegratio
 
         const long employeeId = 811;
         await InsertEmployeeAsync(employeeId, isActive: false);
-        var employeeClient = AuthenticatedL1Client(employeeId, "employee-811@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-811@example.com", role: "Employee");
 
         var response = await SendProposalVersionRequestAsync(
             employeeClient,

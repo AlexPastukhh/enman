@@ -68,7 +68,7 @@ public sealed class AntiforgeryIntegrationTests : AppIntegrationTestBase
     public async Task UnsafeAuthenticatedEndpoint_WithoutToken_ReturnsAntiforgeryProblemAndDoesNotMutateState()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
         var applicantCountBefore = await GetApplicantPartyCountAsync(account.AccountId);
 
         var response = await client.PostAsJsonAsync(
@@ -95,7 +95,7 @@ public sealed class AntiforgeryIntegrationTests : AppIntegrationTestBase
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
         var applicant = await response.Content.ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
-            ?? throw new InvalidOperationException("L1 applicant party response body was empty.");
+            ?? throw new InvalidOperationException("Applicant party response body was empty.");
         applicant.ClientAccountId.Should().Be(account.AccountId);
     }
 
@@ -103,7 +103,7 @@ public sealed class AntiforgeryIntegrationTests : AppIntegrationTestBase
     public async Task UnsafeEndpoint_WithValidTokenAndInvalidDto_ReturnsValidationProblemNotAntiforgeryProblem()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
 
         var response = await PostAsJsonWithCsrfAsync(
             client,
@@ -123,7 +123,7 @@ public sealed class AntiforgeryIntegrationTests : AppIntegrationTestBase
     public async Task SafeGetEndpoint_WithoutToken_DoesNotRequireAntiforgeryToken()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
 
         var response = await client.GetAsync("/api/applicant-parties");
 

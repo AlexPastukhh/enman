@@ -1,15 +1,15 @@
 import type {
   AccountApplicantPartiesResponseDto,
-  L1ApplicantPartySummary,
+  ApplicantPartySummaryDto,
   CurrentIndividualApplicantPartyResponseDto,
-  L1IndividualApplicantParty,
+  IndividualApplicantPartyDto,
 } from "../api/applicantPartyApiTypes";
 
 export type CurrentIndividualApplicantPartyState =
   CurrentIndividualApplicantPartyResponseDto;
 
-export type IndividualApplicantParty = L1IndividualApplicantParty;
+export type IndividualApplicantParty = IndividualApplicantPartyDto;
 
 export type AccountApplicantPartiesState = AccountApplicantPartiesResponseDto;
 
-export type ApplicantPartySummary = L1ApplicantPartySummary;
+export type ApplicantPartySummary = ApplicantPartySummaryDto;

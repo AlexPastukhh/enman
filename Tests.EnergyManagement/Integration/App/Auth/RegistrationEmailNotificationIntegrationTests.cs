@@ -30,7 +30,7 @@ public sealed class RegistrationEmailNotificationIntegrationTests : AppIntegrati
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
         var registered = await response.Content.ReadFromJsonAsync<RegisterClientAccountResponse>()
-            ?? throw new InvalidOperationException("L1 register response body was empty.");
+            ?? throw new InvalidOperationException("Register response body was empty.");
 
         emailSender.SendAttempts.Should().Be(1);
         emailSender.SentMessages.Should().ContainSingle();
@@ -96,7 +96,7 @@ public sealed class RegistrationEmailNotificationIntegrationTests : AppIntegrati
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
         var registered = await response.Content.ReadFromJsonAsync<RegisterClientAccountResponse>()
-            ?? throw new InvalidOperationException("L1 register response body was empty.");
+            ?? throw new InvalidOperationException("Register response body was empty.");
         var row = await GetAccountRowAsync(registered.AccountId);
 
         emailSender.SendAttempts.Should().Be(1);

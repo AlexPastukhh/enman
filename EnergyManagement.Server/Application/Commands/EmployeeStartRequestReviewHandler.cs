@@ -37,7 +37,7 @@ public sealed class EmployeeStartRequestReviewHandler
             return EmployeeStartRequestReviewCommandResult.NotFound();
         }
 
-        // Current temporary Employee visibility policy: every active Employee can review every L1 request.
+        // Current temporary Employee visibility policy: every active Employee can review every request.
         // Future assignment/queue slices can replace this with stricter visibility rules.
         var startReview = connectionRequest.StartReview(employee, DateTimeOffset.UtcNow);
         if (startReview.IsFailure)

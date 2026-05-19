@@ -69,7 +69,7 @@ public sealed class AgreementExchangesController : ProjectController
                 return ProblemDetailsFromValidation(validationResult.Errors);
             }
 
-            if (!TryGetCurrentL1AccountId(out var accountId))
+            if (!TryGetCurrentAccountId(out var accountId))
             {
                 return Unauthorized();
             }
@@ -133,7 +133,7 @@ public sealed class AgreementExchangesController : ProjectController
     {
         try
         {
-            if (!TryGetCurrentL1AccountId(out var accountId))
+            if (!TryGetCurrentAccountId(out var accountId))
             {
                 return Unauthorized();
             }
@@ -183,7 +183,7 @@ public sealed class AgreementExchangesController : ProjectController
     {
         try
         {
-            if (!TryGetCurrentL1AccountId(out var accountId))
+            if (!TryGetCurrentAccountId(out var accountId))
             {
                 return Unauthorized();
             }
@@ -276,7 +276,7 @@ public sealed class AgreementExchangesController : ProjectController
     {
         try
         {
-            if (!TryGetCurrentL1AccountId(out var accountId))
+            if (!TryGetCurrentAccountId(out var accountId))
             {
                 return Unauthorized();
             }
@@ -326,7 +326,7 @@ public sealed class AgreementExchangesController : ProjectController
                 }
             }
 
-            if (!TryGetCurrentL1AccountId(out var accountId))
+            if (!TryGetCurrentAccountId(out var accountId))
             {
                 return Unauthorized();
             }
@@ -374,7 +374,7 @@ public sealed class AgreementExchangesController : ProjectController
                 return ProblemDetailsFromValidation(validationResult.Errors);
             }
 
-            if (!TryGetCurrentL1AccountId(out var accountId))
+            if (!TryGetCurrentAccountId(out var accountId))
             {
                 return Unauthorized();
             }
@@ -424,7 +424,7 @@ public sealed class AgreementExchangesController : ProjectController
                 return ProblemDetailsFromValidation(validationResult.Errors);
             }
 
-            if (!TryGetCurrentL1AccountId(out var accountId))
+            if (!TryGetCurrentAccountId(out var accountId))
             {
                 return Unauthorized();
             }
@@ -484,7 +484,7 @@ public sealed class AgreementExchangesController : ProjectController
     }
 
 
-    private bool TryGetCurrentL1AccountId(out long accountId)
+    private bool TryGetCurrentAccountId(out long accountId)
     {
         accountId = default;
 

@@ -1,7 +1,7 @@
 import type { components } from "../../../shared/api/generated/openapi-types";
 
-export type L1MyRequestSummary = components["schemas"]["MyRequestSummaryDto"];
-export type L1ListMyRequestsResponse = L1MyRequestSummary[];
-export type L1MyRequestDetails = components["schemas"]["MyRequestDetailsDto"];
-export type L1CreateConnectionRequestRequest =
+export type MyRequestSummaryDto = components["schemas"]["MyRequestSummaryDto"];
+export type ListMyRequestsResponse = MyRequestSummaryDto[];
+export type MyRequestDetailsDto = components["schemas"]["MyRequestDetailsDto"];
+export type CreateConnectionRequestRequest =
   components["schemas"]["CreateConnectionRequestDto"];

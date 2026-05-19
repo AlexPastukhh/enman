@@ -1,15 +1,15 @@
 import type { components } from "../../../shared/api/generated/openapi-types";
 
-export type L1CreateIndividualApplicantPartyRequest =
+export type CreateIndividualApplicantPartyRequest =
   components["schemas"]["CreateIndividualApplicantPartyDto"];
 
 export type CreateIndividualApplicantPartyResponse =
-  components["schemas"]["CreateIndividualApplicantPartyResponse"];
+  components["schemas"]["CreateIndividualApplicantPartyResponseDto"];
 export type CurrentIndividualApplicantPartyResponseDto =
   components["schemas"]["CurrentIndividualApplicantPartyResponseDto"];
-export type L1IndividualApplicantParty =
+export type IndividualApplicantPartyDto =
   components["schemas"]["IndividualApplicantPartyDto"];
 export type AccountApplicantPartiesResponseDto =
   components["schemas"]["AccountApplicantPartiesResponseDto"];
-export type L1ApplicantPartySummary =
+export type ApplicantPartySummaryDto =
   components["schemas"]["ApplicantPartySummaryDto"];

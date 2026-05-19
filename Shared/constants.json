@@ -1,5 +1,5 @@
 {
-  "L1AuthConstants": {
+  "AuthConstants": {
     "RegisterClientAccount": {
       "Email": {
         "FieldName": "email",
@@ -21,7 +21,7 @@
       }
     }
   },
-  "L1ApplicantPartyConstants": {
+  "ApplicantPartyConstants": {
     "CreateIndividualApplicantParty": {
       "PhoneNumber": {
         "FieldName": "phoneNumber",

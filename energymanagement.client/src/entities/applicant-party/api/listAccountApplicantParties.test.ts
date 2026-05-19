@@ -6,7 +6,7 @@ afterEach(() => {
 });
 
 describe("listAccountApplicantParties", () => {
-  it("gets account applicant parties from the L1 account list endpoint", async () => {
+  it("gets account applicant parties from the account list endpoint", async () => {
     const response = {
       applicantParties: [],
     };

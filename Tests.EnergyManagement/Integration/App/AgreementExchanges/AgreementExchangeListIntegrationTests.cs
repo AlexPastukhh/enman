@@ -47,7 +47,7 @@ public sealed class AgreementExchangeListIntegrationTests : AppIntegrationTestBa
             sender: "Employee",
             senderId: 78);
 
-        var client = AuthenticatedL1Client(firstAccount.AccountId, firstAccount.Email, role: "Client");
+        var client = AuthenticatedClient(firstAccount.AccountId, firstAccount.Email, role: "Client");
 
         var result = await GetAgreementExchangesAsync(client);
 
@@ -85,7 +85,7 @@ public sealed class AgreementExchangeListIntegrationTests : AppIntegrationTestBa
 
         const long employeeId = 500;
         await InsertEmployeeAsync(employeeId);
-        var client = AuthenticatedL1Client(employeeId, "employee-500@example.com", role: "Employee");
+        var client = AuthenticatedClient(employeeId, "employee-500@example.com", role: "Employee");
 
         var result = await GetAgreementExchangesAsync(client);
 
@@ -99,7 +99,7 @@ public sealed class AgreementExchangeListIntegrationTests : AppIntegrationTestBa
     {
         const long employeeId = 501;
         await InsertEmployeeAsync(employeeId, isActive: false);
-        var client = AuthenticatedL1Client(employeeId, "employee-501@example.com", role: "Employee");
+        var client = AuthenticatedClient(employeeId, "employee-501@example.com", role: "Employee");
 
         var response = await client.GetAsync("/api/agreement-exchanges");
 
@@ -129,7 +129,7 @@ public sealed class AgreementExchangeListIntegrationTests : AppIntegrationTestBa
             senderId: account.AccountId,
             proposalState: "SentByClient");
 
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var result = await GetAgreementExchangesAsync(client, "AwaitingClientConfirmation");
 
@@ -141,7 +141,7 @@ public sealed class AgreementExchangeListIntegrationTests : AppIntegrationTestBa
     public async Task List_with_invalid_status_returns_validation_problem()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var response = await client.GetAsync("/api/agreement-exchanges?status=Unknown");
 

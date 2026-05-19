@@ -38,7 +38,7 @@ public sealed class AgreementExchangeDetailsIntegrationTests : AppIntegrationTes
             account.AccountId,
             clientSenderId: account.AccountId);
 
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var details = await GetAgreementExchangeDetailsAsync(client, exchangeId);
 
@@ -80,7 +80,7 @@ public sealed class AgreementExchangeDetailsIntegrationTests : AppIntegrationTes
             clientSenderId: owner.AccountId);
 
         var other = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(other.AccountId, other.Email, role: "Client");
+        var client = AuthenticatedClient(other.AccountId, other.Email, role: "Client");
 
         var response = await client.GetAsync($"/api/agreement-exchanges/{exchangeId}");
 
@@ -100,7 +100,7 @@ public sealed class AgreementExchangeDetailsIntegrationTests : AppIntegrationTes
 
         const long employeeId = 700;
         await InsertEmployeeAsync(employeeId);
-        var client = AuthenticatedL1Client(employeeId, "employee-700@example.com", role: "Employee");
+        var client = AuthenticatedClient(employeeId, "employee-700@example.com", role: "Employee");
 
         var details = await GetAgreementExchangeDetailsAsync(client, exchangeId);
 
@@ -122,7 +122,7 @@ public sealed class AgreementExchangeDetailsIntegrationTests : AppIntegrationTes
 
         const long employeeId = 701;
         await InsertEmployeeAsync(employeeId, isActive: false);
-        var client = AuthenticatedL1Client(employeeId, "employee-701@example.com", role: "Employee");
+        var client = AuthenticatedClient(employeeId, "employee-701@example.com", role: "Employee");
 
         var response = await client.GetAsync($"/api/agreement-exchanges/{exchangeId}");
 
@@ -134,7 +134,7 @@ public sealed class AgreementExchangeDetailsIntegrationTests : AppIntegrationTes
     public async Task Details_for_missing_exchange_returns_not_found()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var response = await client.GetAsync("/api/agreement-exchanges/999999");
 

@@ -30,7 +30,7 @@ public sealed class MyRequestsIntegrationTests : AppIntegrationTestBase
     public async Task ListMyRequests_WithNoRequests_ReturnsEmptyArray()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
 
         var requests = await GetMyRequestsAsync(client);
 
@@ -44,7 +44,7 @@ public sealed class MyRequestsIntegrationTests : AppIntegrationTestBase
         var applicantParty = await CreateApplicantPartyAsync(account.AccountId);
         await CreateConnectionRequestAsync(account.AccountId);
 
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
         var requests = await GetMyRequestsAsync(client);
         var persisted = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
 
@@ -66,7 +66,7 @@ public sealed class MyRequestsIntegrationTests : AppIntegrationTestBase
         await CreateConnectionRequestAsync(accountWithRequest.AccountId);
 
         var accountWithoutRequest = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(
+        var client = AuthenticatedClient(
             accountWithoutRequest.AccountId,
             accountWithoutRequest.Email);
 
@@ -88,7 +88,7 @@ public sealed class MyRequestsIntegrationTests : AppIntegrationTestBase
         var approved = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
         await UpdateRequestStatusAsync(approved!.Id, "Approved");
 
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
         var requests = await GetMyRequestsAsync(client, status: "Approved");
 
         requests.Should().ContainSingle();
@@ -101,7 +101,7 @@ public sealed class MyRequestsIntegrationTests : AppIntegrationTestBase
     public async Task ListMyRequests_WithInvalidStatusFilter_ReturnsValidationProblem()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
 
         var response = await client.GetAsync("/api/requests?status=Done");
 
@@ -113,7 +113,7 @@ public sealed class MyRequestsIntegrationTests : AppIntegrationTestBase
     public async Task ListMyRequests_WithEmptyStatusFilter_ReturnsSuccess()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
 
         var response = await client.GetAsync("/api/requests?status=");
 
@@ -134,7 +134,7 @@ public sealed class MyRequestsIntegrationTests : AppIntegrationTestBase
         var newer = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
         await UpdateRequestCreatedAtAsync(newer!.Id, DateTimeOffset.UtcNow);
 
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
         var requests = await GetMyRequestsAsync(client);
 
         requests.Should().HaveCount(2);
@@ -159,7 +159,7 @@ public sealed class MyRequestsIntegrationTests : AppIntegrationTestBase
         await CreateConnectionRequestAsync(account.AccountId);
         var row = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
 
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
         var details = await GetMyRequestDetailsAsync(client, row!.Id);
 
         details.RequestId.Should().Be(row.Id);
@@ -176,7 +176,7 @@ public sealed class MyRequestsIntegrationTests : AppIntegrationTestBase
     public async Task GetMyRequestDetails_ForMissingRequest_ReturnsNotFound()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
 
         var response = await client.GetAsync("/api/requests/987654");
 
@@ -193,7 +193,7 @@ public sealed class MyRequestsIntegrationTests : AppIntegrationTestBase
         var row = await GetLatestRequestRowForApplicantPartyAsync(applicantParty.ApplicantPartyId);
 
         var anotherAccount = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(anotherAccount.AccountId, anotherAccount.Email);
+        var client = AuthenticatedClient(anotherAccount.AccountId, anotherAccount.Email);
 
         var response = await client.GetAsync($"/api/requests/{row!.Id}");
 
@@ -217,7 +217,7 @@ public sealed class MyRequestsIntegrationTests : AppIntegrationTestBase
             decidedAt,
             rejectionReason);
 
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
         var details = await GetMyRequestDetailsAsync(client, row.Id);
 
         details.Status.Should().Be("Rejected");
@@ -245,7 +245,7 @@ public sealed class MyRequestsIntegrationTests : AppIntegrationTestBase
             decidedAt,
             rejectionReason: null);
 
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
         var details = await GetMyRequestDetailsAsync(client, row.Id);
 
         details.Status.Should().Be("Approved");

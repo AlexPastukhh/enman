@@ -39,7 +39,7 @@ public sealed class EmployeeRejectRequestReviewIntegrationTests : AppIntegration
     {
         await ResetDatabaseAsync();
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
 
         var response = await RejectEmployeeRequestReviewRequestAsync(client, 1, RejectionReason);
 
@@ -257,7 +257,7 @@ public sealed class EmployeeRejectRequestReviewIntegrationTests : AppIntegration
 
     private HttpClient AuthenticatedEmployeeClient()
     {
-        return AuthenticatedL1Client(
+        return AuthenticatedClient(
             CurrentEmployeeId,
             email: "employee@example.com",
             role: "Employee");

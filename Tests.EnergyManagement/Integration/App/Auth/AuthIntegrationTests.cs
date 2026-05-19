@@ -18,7 +18,7 @@ public sealed class AuthIntegrationTests : AppIntegrationTestBase
     }
 
     [Fact]
-    public async Task L1RegisterLoginAndCurrentUser_UsesL1AccountIdentity()
+    public async Task RegisterLoginAndCurrentUser_UsesAccountIdentity()
     {
         var email = UniqueEmail();
         var account = await RegisterAccountAsync(email);
@@ -37,7 +37,7 @@ public sealed class AuthIntegrationTests : AppIntegrationTestBase
     }
 
     [Fact]
-    public async Task L1Login_WithInvalidPassword_ReturnsValidationProblem()
+    public async Task Login_WithInvalidPassword_ReturnsValidationProblem()
     {
         var email = UniqueEmail();
         await RegisterAccountAsync(email);
@@ -53,7 +53,7 @@ public sealed class AuthIntegrationTests : AppIntegrationTestBase
     }
 
     [Fact]
-    public async Task L1Login_WithUnknownEmail_ReturnsSameSafeFailureAsInvalidPassword()
+    public async Task Login_WithUnknownEmail_ReturnsSameSafeFailureAsInvalidPassword()
     {
         var email = UniqueEmail();
         await RegisterAccountAsync(email);
@@ -79,7 +79,7 @@ public sealed class AuthIntegrationTests : AppIntegrationTestBase
     }
 
     [Fact]
-    public async Task L1CurrentUser_WithoutAuth_ReturnsUnauthorized()
+    public async Task CurrentUser_WithoutAuth_ReturnsUnauthorized()
     {
         var response = await _factory.CreateClient().GetAsync("/api/auth/current-user");
 
@@ -88,7 +88,7 @@ public sealed class AuthIntegrationTests : AppIntegrationTestBase
     }
 
     [Fact]
-    public async Task OldL1LoginPostRoute_ReturnsMethodNotAllowed()
+    public async Task OldLoginPostRoute_ReturnsMethodNotAllowed()
     {
         var oldLoginRoute = string.Join(
             '/',
@@ -107,7 +107,7 @@ public sealed class AuthIntegrationTests : AppIntegrationTestBase
     }
 
     [Fact]
-    public async Task L1ProtectedEndpoint_WithoutAuth_ReturnsUnauthorized()
+    public async Task ProtectedEndpoint_WithoutAuth_ReturnsUnauthorized()
     {
         var client = _factory.CreateClient();
         var response = await PostAsJsonWithCsrfAsync(
@@ -120,16 +120,16 @@ public sealed class AuthIntegrationTests : AppIntegrationTestBase
     }
 
     [Fact]
-    public async Task L1CurrentUser_WithNonExistingAccountClaim_ReturnsUnauthorized()
+    public async Task CurrentUser_WithNonExistingAccountClaim_ReturnsUnauthorized()
     {
-        var response = await AuthenticatedL1Client(989_898).GetAsync("/api/auth/current-user");
+        var response = await AuthenticatedClient(989_898).GetAsync("/api/auth/current-user");
 
         await HttpResponseAssertions.For(response, _output)
             .ShouldBeStatusCode((int)HttpStatusCode.Unauthorized);
     }
 
     [Fact]
-    public async Task LegacyShapedCookie_WithExistingL1AccountId_IsRejected()
+    public async Task LegacyShapedCookie_WithExistingAccountId_IsRejected()
     {
         var account = await RegisterAccountAsync();
         var client = LegacyShapedAuthenticatedClient(account.AccountId);
@@ -147,18 +147,18 @@ public sealed class AuthIntegrationTests : AppIntegrationTestBase
     }
 
     [Fact]
-    public async Task L1Cookie_WithMarkerAndExistingAccount_Succeeds()
+    public async Task Cookie_WithMarkerAndExistingAccount_Succeeds()
     {
         var account = await RegisterAccountAsync();
 
-        var currentUser = await AuthenticatedL1Client(account.AccountId, account.Email)
+        var currentUser = await AuthenticatedClient(account.AccountId, account.Email)
             .GetAsync("/api/auth/current-user");
 
         await HttpResponseAssertions.For(currentUser, _output).ShouldBeSuccess();
     }
 
     [Fact]
-    public async Task L1Logout_AfterLogin_RemovesCurrentUserSession()
+    public async Task Logout_AfterLogin_RemovesCurrentUserSession()
     {
         var email = UniqueEmail();
         await RegisterAccountAsync(email);
@@ -174,7 +174,7 @@ public sealed class AuthIntegrationTests : AppIntegrationTestBase
     }
 
     [Fact]
-    public async Task RegisterClientAccount_CreatesL1Account()
+    public async Task RegisterClientAccount_CreatesAccount()
     {
         var email = UniqueEmail();
         var response = await RegisterAccountAsync(email);

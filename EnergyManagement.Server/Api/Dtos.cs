@@ -7,6 +7,10 @@ public sealed record RegisterClientAccountDto(
     [property: JsonPropertyName("email")] string? Email,
     [property: JsonPropertyName("password")] string? Password);
 
+public sealed record RegisterClientAccountResponseDto(
+    [property: JsonPropertyName("accountId")] long AccountId,
+    [property: JsonPropertyName("email")] string Email);
+
 public sealed record LoginRequestDto(
     [property: JsonPropertyName("email")] string? Email,
     [property: JsonPropertyName("password")] string? Password);
@@ -22,6 +26,10 @@ public sealed record CreateIndividualApplicantPartyDto(
     [property: JsonPropertyName("fullName")] FullNameDto? FullName,
     [property: JsonPropertyName("email")] string? Email,
     [property: JsonPropertyName("phoneNumber")] string? PhoneNumber);
+
+public sealed record CreateIndividualApplicantPartyResponseDto(
+    [property: JsonPropertyName("applicantPartyId")] long ApplicantPartyId,
+    [property: JsonPropertyName("clientAccountId")] long ClientAccountId);
 
 public sealed record CurrentIndividualApplicantPartyResponseDto(
     [property: JsonPropertyName("exists")] bool Exists,

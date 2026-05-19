@@ -34,7 +34,7 @@ describe("getCurrentSession", () => {
     );
 
     await expect(getCurrentSession()).rejects.toThrow(
-      "L1 current-user response is missing accountId.",
+      "Current-user response is missing accountId.",
     );
   });
 });

@@ -8,7 +8,7 @@ afterEach(() => {
 });
 
 describe("createConnectionRequest", () => {
-  it("posts create connection request to the L1 requests endpoint", async () => {
+  it("posts create connection request to the requests endpoint", async () => {
     const fetchMock = vi
       .fn()
       .mockResolvedValueOnce(tokenResponse("token-1"))

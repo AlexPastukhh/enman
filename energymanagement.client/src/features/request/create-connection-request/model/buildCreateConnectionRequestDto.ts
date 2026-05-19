@@ -1,4 +1,4 @@
-import type { L1CreateConnectionRequestRequest } from "../../../../entities/request/api/requestApiTypes";
+import type { CreateConnectionRequestRequest } from "../../../../entities/request/api/requestApiTypes";
 import { createConnectionRequestConst } from "../ui/createConnectionRequestConst";
 import type {
   CreateConnectionRequestFormErrors,
@@ -68,7 +68,7 @@ export const validateCreateConnectionRequestValues = (
 
 export const buildCreateConnectionRequestDto = (
   values: CreateConnectionRequestFormValues,
-): L1CreateConnectionRequestRequest => {
+): CreateConnectionRequestRequest => {
   const baseRequest = {
     details: trimmed(values.details),
     address: {
@@ -80,7 +80,7 @@ export const buildCreateConnectionRequestDto = (
       building: optionalTrimmed(values.building),
       apartment: optionalTrimmed(values.apartment),
     },
-  } satisfies Pick<L1CreateConnectionRequestRequest, "details" | "address">;
+  } satisfies Pick<CreateConnectionRequestRequest, "details" | "address">;
 
   if (values.applicantContextType === "Existing") {
     return {

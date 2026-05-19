@@ -37,7 +37,7 @@ public sealed class RunApplicantPartyVerificationIntegrationTests : AppIntegrati
     {
         await ResetDatabaseAsync();
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
 
         var response = await RunApplicantPartyVerificationRequestAsync(client, 1);
 
@@ -154,7 +154,7 @@ public sealed class RunApplicantPartyVerificationIntegrationTests : AppIntegrati
 
     private HttpClient AuthenticatedEmployeeClient()
     {
-        return AuthenticatedL1Client(
+        return AuthenticatedClient(
             CurrentEmployeeId,
             email: "employee@example.com",
             role: "Employee");

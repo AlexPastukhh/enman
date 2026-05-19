@@ -1,8 +1,8 @@
 import type {
-  L1MyRequestDetails,
-  L1MyRequestSummary,
+  MyRequestDetailsDto,
+  MyRequestSummaryDto,
 } from "../api/requestApiTypes";
 
-export type MyRequestSummary = L1MyRequestSummary;
+export type MyRequestSummary = MyRequestSummaryDto;
 export type MyRequestsState = MyRequestSummary[];
-export type MyRequestDetails = L1MyRequestDetails;
+export type MyRequestDetails = MyRequestDetailsDto;

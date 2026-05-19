@@ -29,7 +29,7 @@ public sealed class EmployeeRequestDetailsIntegrationTests : AppIntegrationTestB
     public async Task GetEmployeeRequestDetails_WithClientAccount_ReturnsForbidden()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email);
+        var client = AuthenticatedClient(account.AccountId, account.Email);
 
         var response = await client.GetAsync("/api/employee/requests/1");
 
@@ -184,7 +184,7 @@ public sealed class EmployeeRequestDetailsIntegrationTests : AppIntegrationTestB
 
     private HttpClient AuthenticatedEmployeeClient()
     {
-        return AuthenticatedL1Client(
+        return AuthenticatedClient(
             CurrentEmployeeId,
             email: "employee@example.com",
             role: "Employee");

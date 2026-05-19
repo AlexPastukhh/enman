@@ -35,7 +35,7 @@ public sealed class AgreementProposalDocumentUploadIntegrationTests : AppIntegra
     public async Task Upload_without_csrf_returns_bad_request()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var response = await UploadDocumentRequestAsync(
             client,
@@ -49,7 +49,7 @@ public sealed class AgreementProposalDocumentUploadIntegrationTests : AppIntegra
     public async Task Upload_with_missing_document_returns_validation_problem()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var response = await UploadDocumentRequestAsync(
             client,
@@ -63,7 +63,7 @@ public sealed class AgreementProposalDocumentUploadIntegrationTests : AppIntegra
     public async Task Upload_with_unsupported_content_type_returns_validation_problem()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var response = await UploadDocumentRequestAsync(
             client,
@@ -78,7 +78,7 @@ public sealed class AgreementProposalDocumentUploadIntegrationTests : AppIntegra
     public async Task Client_can_upload_valid_pdf_document()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var response = await UploadDocumentRequestAsync(client);
 
@@ -99,7 +99,7 @@ public sealed class AgreementProposalDocumentUploadIntegrationTests : AppIntegra
     {
         const long employeeId = 930;
         await InsertEmployeeAsync(employeeId);
-        var client = AuthenticatedL1Client(employeeId, "employee-930@example.com", role: "Employee");
+        var client = AuthenticatedClient(employeeId, "employee-930@example.com", role: "Employee");
 
         var response = await UploadDocumentRequestAsync(client);
 

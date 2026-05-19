@@ -13,7 +13,7 @@ const requireCurrentUserField = <T>(
   fieldName: string,
 ): T => {
   if (value === null || value === undefined) {
-    throw new Error(`L1 current-user response is missing ${fieldName}.`);
+    throw new Error(`Current-user response is missing ${fieldName}.`);
   }
 
   return value;

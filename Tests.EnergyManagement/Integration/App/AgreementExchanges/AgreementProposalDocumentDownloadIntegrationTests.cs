@@ -36,7 +36,7 @@ public sealed class AgreementProposalDocumentDownloadIntegrationTests : AppInteg
     public async Task Client_can_download_own_agreement_proposal_document()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
         var document = await UploadDocumentAsync(client);
         var requestId = await CreateApprovedRequestForAccountAsync(account.AccountId);
         var (exchangeId, proposalId) = await InsertAgreementExchangeWithDocumentProposalAsync(
@@ -60,7 +60,7 @@ public sealed class AgreementProposalDocumentDownloadIntegrationTests : AppInteg
     public async Task Other_client_cannot_download_document_from_foreign_exchange()
     {
         var owner = await RegisterAccountAsync();
-        var ownerClient = AuthenticatedL1Client(owner.AccountId, owner.Email, role: "Client");
+        var ownerClient = AuthenticatedClient(owner.AccountId, owner.Email, role: "Client");
         var document = await UploadDocumentAsync(ownerClient);
         var requestId = await CreateApprovedRequestForAccountAsync(owner.AccountId);
         var (exchangeId, proposalId) = await InsertAgreementExchangeWithDocumentProposalAsync(
@@ -70,7 +70,7 @@ public sealed class AgreementProposalDocumentDownloadIntegrationTests : AppInteg
             senderId: owner.AccountId,
             document);
         var other = await RegisterAccountAsync();
-        var otherClient = AuthenticatedL1Client(other.AccountId, other.Email, role: "Client");
+        var otherClient = AuthenticatedClient(other.AccountId, other.Email, role: "Client");
 
         var response = await otherClient.GetAsync(
             $"/api/agreement-exchanges/{exchangeId}/proposals/{proposalId}/document/download");
@@ -83,7 +83,7 @@ public sealed class AgreementProposalDocumentDownloadIntegrationTests : AppInteg
     public async Task Employee_can_download_visible_agreement_proposal_document()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
         var document = await UploadDocumentAsync(client);
         var requestId = await CreateApprovedRequestForAccountAsync(account.AccountId);
         var (exchangeId, proposalId) = await InsertAgreementExchangeWithDocumentProposalAsync(
@@ -94,7 +94,7 @@ public sealed class AgreementProposalDocumentDownloadIntegrationTests : AppInteg
             document);
         const long employeeId = 740;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedL1Client(employeeId, "employee-740@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-740@example.com", role: "Employee");
 
         var response = await employeeClient.GetAsync(
             $"/api/agreement-exchanges/{exchangeId}/proposals/{proposalId}/document/download");
@@ -108,7 +108,7 @@ public sealed class AgreementProposalDocumentDownloadIntegrationTests : AppInteg
     public async Task Download_for_proposal_not_belonging_to_exchange_returns_not_found()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
         var firstDocument = await UploadDocumentAsync(client);
         var firstRequestId = await CreateApprovedRequestForAccountAsync(account.AccountId);
         var (firstExchangeId, _) = await InsertAgreementExchangeWithDocumentProposalAsync(

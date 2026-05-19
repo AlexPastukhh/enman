@@ -34,7 +34,7 @@ public sealed class AgreementExchangeStartIntegrationTests : AppIntegrationTestB
     public async Task Start_as_client_returns_forbidden()
     {
         var account = await RegisterAccountAsync();
-        var client = AuthenticatedL1Client(account.AccountId, account.Email, role: "Client");
+        var client = AuthenticatedClient(account.AccountId, account.Email, role: "Client");
 
         var response = await StartAgreementExchangeRequestAsync(
             client,
@@ -50,7 +50,7 @@ public sealed class AgreementExchangeStartIntegrationTests : AppIntegrationTestB
     {
         const long employeeId = 1201;
         await InsertEmployeeAsync(employeeId);
-        var client = AuthenticatedL1Client(employeeId, "employee-1201@example.com", role: "Employee");
+        var client = AuthenticatedClient(employeeId, "employee-1201@example.com", role: "Employee");
 
         var response = await client.PostAsJsonAsync(
             "/api/employee/requests/1/agreement-exchange/start",
@@ -65,7 +65,7 @@ public sealed class AgreementExchangeStartIntegrationTests : AppIntegrationTestB
     {
         const long employeeId = 1202;
         await InsertEmployeeAsync(employeeId);
-        var client = AuthenticatedL1Client(employeeId, "employee-1202@example.com", role: "Employee");
+        var client = AuthenticatedClient(employeeId, "employee-1202@example.com", role: "Employee");
 
         var response = await StartAgreementExchangeRequestAsync(
             client,
@@ -87,7 +87,7 @@ public sealed class AgreementExchangeStartIntegrationTests : AppIntegrationTestB
 
         const long employeeId = 1203;
         await InsertEmployeeAsync(employeeId);
-        var client = AuthenticatedL1Client(employeeId, "employee-1203@example.com", role: "Employee");
+        var client = AuthenticatedClient(employeeId, "employee-1203@example.com", role: "Employee");
 
         var response = await StartAgreementExchangeRequestAsync(
             client,
@@ -106,7 +106,7 @@ public sealed class AgreementExchangeStartIntegrationTests : AppIntegrationTestB
 
         const long employeeId = 1204;
         await InsertEmployeeAsync(employeeId);
-        var client = AuthenticatedL1Client(employeeId, "employee-1204@example.com", role: "Employee");
+        var client = AuthenticatedClient(employeeId, "employee-1204@example.com", role: "Employee");
 
         var response = await StartAgreementExchangeRequestAsync(
             client,
@@ -143,7 +143,7 @@ public sealed class AgreementExchangeStartIntegrationTests : AppIntegrationTestB
 
         const long employeeId = 1205;
         await InsertEmployeeAsync(employeeId);
-        var client = AuthenticatedL1Client(employeeId, "employee-1205@example.com", role: "Employee");
+        var client = AuthenticatedClient(employeeId, "employee-1205@example.com", role: "Employee");
 
         var first = await StartAgreementExchangeRequestAsync(
             client,
