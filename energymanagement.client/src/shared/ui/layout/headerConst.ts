@@ -1,7 +1,7 @@
 export const headerConst = {
   homeLinkTextPart1: "Energy",
   homeLinkTextPart2: "Management",
-  sessionLoadingText: "Loading session...",
+  sessionLoadingText: "Загружаем сессию...",
   homeLinkSloganText: "Заявки и договоры в одном интерфейсе",
   loginLinkText: "Войти",
   registerLinkText: "Регистрация",
