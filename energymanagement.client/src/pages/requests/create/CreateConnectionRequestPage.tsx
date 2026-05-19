@@ -22,7 +22,7 @@ const CreateConnectionRequestPage = () => {
   return (
     <main className="content">
         <section
-          className="createConnectionRequestPage"
+          className="createConnectionRequestPage clientPage"
           aria-labelledby="create-connection-request-page-heading"
         >
           <h1 id="create-connection-request-page-heading">

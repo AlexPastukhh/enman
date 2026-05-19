@@ -16,3 +16,14 @@
   background: #fff;
   padding: 1.25rem;
 }
+
+/* Client page normalization */
+.clientPage {
+  display: grid;
+  gap: 1rem;
+}
+
+.clientPage__description {
+  margin: 0 0 1rem;
+  color: #333;
+}

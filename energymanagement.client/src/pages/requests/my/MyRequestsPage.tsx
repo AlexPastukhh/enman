@@ -38,7 +38,7 @@ const MyRequestsPage = () => {
 
   return (
     <main className="content">
-        <section className="myRequestsPage" aria-labelledby="my-requests-heading">
+        <section className="myRequestsPage clientPage" aria-labelledby="my-requests-heading">
           <h1 id="my-requests-heading">{myRequestsConst.pageTitle}</h1>
 
           {session && (

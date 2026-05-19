@@ -7,3 +7,14 @@
   margin: 1rem 0;
   font-size: 1.4rem;
 }
+
+/* Client page normalization */
+.clientPage {
+  display: grid;
+  gap: 1rem;
+}
+
+.clientPage__description {
+  margin: 0 0 1rem;
+  color: #333;
+}

@@ -34,7 +34,7 @@ const MyRequestDetailsPage = () => {
   return (
     <main className="content">
         <section
-          className="myRequestDetailsPage"
+          className="myRequestDetailsPage clientPage"
           aria-labelledby="my-request-details-page-heading"
         >
           <h1 id="my-request-details-page-heading">

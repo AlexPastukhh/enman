@@ -18,13 +18,13 @@ const ClientAgreementExchangesPage = () => {
   return (
     <main className="content">
       <section
-        className="clientAgreementExchangesPage"
+        className="clientAgreementExchangesPage clientPage"
         aria-labelledby="client-agreement-exchanges-heading"
       >
         <h1 id="client-agreement-exchanges-heading">
           {clientAgreementExchangesPageConst.pageTitle}
         </h1>
-        <p>{clientAgreementExchangesPageConst.pageDescription}</p>
+        <p className="clientPage__description">{clientAgreementExchangesPageConst.pageDescription}</p>
 
         {!session && (
           <div className="clientAgreementExchangesPage__state">
