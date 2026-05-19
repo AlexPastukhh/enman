@@ -116,8 +116,6 @@ const EmployeeRequestDetailsPage = () => {
             }
             renderReviewActions={(details) => {
               const availability = getEmployeeReviewActionAvailability(details);
-              const startExchangeAvailability =
-                getStartAgreementExchangeAvailability(details);
 
               return (
                 <>
@@ -138,12 +136,19 @@ const EmployeeRequestDetailsPage = () => {
                     unavailableReason={availability.reason}
                     showEmptyFeedbackWarning
                   />
-                  <StartAgreementExchangeForm
-                    requestId={details.requestId}
-                    disabled={!startExchangeAvailability.canStartAgreementExchange}
-                    unavailableReason={startExchangeAvailability.reason}
-                  />
                 </>
+              );
+            }}
+            renderAgreementExchangeActions={(details) => {
+              const startExchangeAvailability =
+                getStartAgreementExchangeAvailability(details);
+
+              return (
+                <StartAgreementExchangeForm
+                  requestId={details.requestId}
+                  disabled={!startExchangeAvailability.canStartAgreementExchange}
+                  unavailableReason={startExchangeAvailability.reason}
+                />
               );
             }}
           />

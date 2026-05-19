@@ -11,6 +11,7 @@ type EmployeeRequestDetailsViewProps = {
   details: EmployeeRequestDetails;
   renderApplicantVerification?: (details: EmployeeRequestDetails) => ReactNode;
   renderReviewActions?: (details: EmployeeRequestDetails) => ReactNode;
+  renderAgreementExchangeActions?: (details: EmployeeRequestDetails) => ReactNode;
 };
 
 export const EmployeeRequestDetailsView = ({
@@ -32,6 +33,7 @@ export const EmployeeRequestDetailsView = ({
       <EmployeeReviewActionAvailabilityPanel
         details={details}
         renderReviewActions={renderReviewActions}
+        renderAgreementExchangeActions={renderAgreementExchangeActions}
       />
     </article>
   );

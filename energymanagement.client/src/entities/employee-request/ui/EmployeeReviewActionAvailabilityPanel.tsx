@@ -6,11 +6,13 @@ import { employeeRequestDetailsConst } from "./employeeRequestDetailsConst";
 type EmployeeReviewActionAvailabilityPanelProps = {
   details: EmployeeRequestDetails;
   renderReviewActions?: (details: EmployeeRequestDetails) => ReactNode;
+  renderAgreementExchangeActions?: (details: EmployeeRequestDetails) => ReactNode;
 };
 
 export const EmployeeReviewActionAvailabilityPanel = ({
   details,
   renderReviewActions,
+  renderAgreementExchangeActions,
 }: EmployeeReviewActionAvailabilityPanelProps) => {
   const availability = getEmployeeReviewActionAvailability(details);
 
@@ -47,6 +49,12 @@ export const EmployeeReviewActionAvailabilityPanel = ({
           {renderReviewActions(details)}
         </div>
       )}
+          {renderAgreementExchangeActions && (
+            <div className="employeeRequestDetailsAgreementActions">
+              <h3>{employeeRequestDetailsConst.agreementExchangeTitle}</h3>
+              {renderAgreementExchangeActions(details)}
+            </div>
+          )}
     </section>
   );
 };

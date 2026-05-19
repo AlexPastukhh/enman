@@ -18,6 +18,7 @@ export const employeeRequestDetailsConst = {
   applicantTitle: "Applicant / client data",
   reviewStateTitle: "Review state",
   actionAvailabilityTitle: "Review action availability",
+  agreementExchangeTitle: "Agreement exchange",
   requestTypeLabel: "Request type",
   statusLabel: "Status",
   createdAtLabel: "Created at",
