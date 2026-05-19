@@ -12,15 +12,6 @@ vi.mock("./RunApplicantPartyVerificationButton", () => ({
   __esModule: true,
 }));
 
-const expectVisibleTextInstances = (text: string, count: number) => {
-  const elements = screen.getAllByText(text);
-
-  expect(elements).toHaveLength(count);
-  elements.forEach((element) => {
-    expect(element).toBeVisible();
-  });
-};
-
 describe("ApplicantPartyVerificationPanel", () => {
   afterEach(() => {
     cleanup();
@@ -42,7 +33,7 @@ describe("ApplicantPartyVerificationPanel", () => {
     expect(
       screen.getByRole("heading", { name: "Проверка данных заявителя" }),
     ).toBeVisible();
-    expectVisibleTextInstances("Данные не проверены", 2);
+    expect(screen.getByText("Данные не проверены")).toBeVisible();
     expect(screen.getByRole("button", { name: "Проверить данные 42" })).toBeVisible();
   });
 
@@ -59,7 +50,7 @@ describe("ApplicantPartyVerificationPanel", () => {
       />,
     );
 
-    expectVisibleTextInstances("Проверка не требуется", 2);
+    expect(screen.getByText("Проверка не требуется")).toBeVisible();
     expect(
       screen.queryByRole("button", { name: "Проверить данные 42" }),
     ).not.toBeInTheDocument();
@@ -78,7 +69,7 @@ describe("ApplicantPartyVerificationPanel", () => {
       />,
     );
 
-    expectVisibleTextInstances("Данные проверены", 2);
+    expect(screen.getByText("Данные проверены")).toBeVisible();
     expect(
       screen.queryByRole("button", { name: "Проверить данные 42" }),
     ).not.toBeInTheDocument();
