@@ -29,7 +29,6 @@ public sealed class SeedE2eDemoDataCommand
         {
             var manager = new TestDatabaseManager(connectionString);
             await manager.EnsureTablesCreatedAsync(cancellationToken);
-            await EnsureSeedSchemaAsync(connectionString, cancellationToken);
             await SeedAsync(connectionString, cancellationToken);
 
             Console.WriteLine("E2E demo data seeded.");
@@ -157,41 +156,6 @@ public sealed class SeedE2eDemoDataCommand
         command.Parameters.AddWithValue("@passwordHash", passwordHash);
         command.Parameters.AddWithValue("@now", now);
 
-        await command.ExecuteNonQueryAsync(cancellationToken);
-    }
-
-    private static async Task EnsureSeedSchemaAsync(string connectionString, CancellationToken cancellationToken)
-    {
-        const string sql = """
-            IF OBJECT_ID(N'dbo.L1ApplicantParties', N'U') IS NOT NULL
-               AND COL_LENGTH(N'dbo.L1ApplicantParties', N'ClientAccountId') IS NULL
-            BEGIN
-                ALTER TABLE dbo.L1ApplicantParties
-                ADD ClientAccountId bigint NOT NULL
-                    CONSTRAINT DF_L1ApplicantParties_ClientAccountId_E2ESeed DEFAULT(0);
-            END;
-
-            IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL
-               AND COL_LENGTH(N'dbo.L1ClientRequests', N'ClientAccountId') IS NULL
-            BEGIN
-                ALTER TABLE dbo.L1ClientRequests
-                ADD ClientAccountId bigint NOT NULL
-                    CONSTRAINT DF_L1ClientRequests_ClientAccountId_E2ESeed DEFAULT(0);
-            END;
-
-            IF OBJECT_ID(N'dbo.L1AgreementProposalExchanges', N'U') IS NOT NULL
-               AND COL_LENGTH(N'dbo.L1AgreementProposalExchanges', N'ClientAccountId') IS NULL
-            BEGIN
-                ALTER TABLE dbo.L1AgreementProposalExchanges
-                ADD ClientAccountId bigint NOT NULL
-                    CONSTRAINT DF_L1AgreementProposalExchanges_ClientAccountId_E2ESeed DEFAULT(0);
-            END;
-            """;
-
-        await using var connection = new SqlConnection(connectionString);
-        await connection.OpenAsync(cancellationToken);
-
-        await using var command = new SqlCommand(sql, connection);
         await command.ExecuteNonQueryAsync(cancellationToken);
     }
 
