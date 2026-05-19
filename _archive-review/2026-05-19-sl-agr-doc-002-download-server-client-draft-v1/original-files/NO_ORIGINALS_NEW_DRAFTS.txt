@@ -1,0 +1,5 @@
+No original files were present for these two draft paths at archive creation time.
+
+New draft paths:
+- planning/slices/SL-AGR-DOC-002-download-agreement-proposal-document.md
+- planning/slices/l2/L2-AGR-DOC-DOWNLOAD-001-agreement-proposal-document-download.client.md
