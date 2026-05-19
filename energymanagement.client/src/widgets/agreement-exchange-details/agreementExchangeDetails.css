@@ -1,15 +1,16 @@
 .agreementExchangeDetails {
   display: grid;
-  gap: 1rem;
+  gap: var(--app-gap);
   margin-top: 1.5rem;
 }
 
 .agreementExchangeDetails__panel,
 .agreementExchangeDetails__proposal {
-  border: 1px solid #d6d8dc;
-  border-radius: 0.75rem;
+  border: 0.1rem solid var(--app-border);
+  border-radius: var(--app-radius);
   padding: 1rem;
-  background: #fff;
+  background: var(--app-surface);
+  box-shadow: var(--shadow-sm);
 }
 
 .agreementExchangeDetails__panel h3,

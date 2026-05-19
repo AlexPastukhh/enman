@@ -1,10 +1,11 @@
 .applicantVerificationPanel {
   display: grid;
   gap: 0.75rem;
-  border: 1px solid #d6dde8;
-  border-radius: 12px;
+  border: 0.1rem solid var(--app-border);
+  border-radius: var(--app-radius);
   padding: 1rem;
-  background: #fff;
+  background: var(--app-surface);
+  box-shadow: var(--shadow-sm);
 }
 
 .applicantVerificationPanel__header {

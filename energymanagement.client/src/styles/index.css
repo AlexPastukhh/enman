@@ -26,6 +26,15 @@
   --header-height: 7.2rem;
   --footer-height: 8rem;
   --focus-ring: 0 0 0 0.35rem rgba(47, 79, 159, 0.16);
+
+  /* App tokens (aliases for consistency) */
+  --app-bg: var(--color-bg);
+  --app-surface: var(--color-surface);
+  --app-border: var(--color-border);
+  --app-text: var(--color-text);
+  --app-muted: var(--color-muted);
+  --app-radius: var(--radius-md);
+  --app-gap: 1rem;
 }
 
 * {
