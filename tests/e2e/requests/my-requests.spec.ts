@@ -5,7 +5,7 @@ import {
   registerAndLoginClient,
 } from "../support/clientSetup";
 import { waitForApiResponse } from "../support/apiResponse";
-import { L } from "../support/locators";
+import { cardWithText, L, statusInCard } from "../support/locators";
 
 const objectAddressText = "658480, Алтайский край, Заринск, Ленина, 10";
 
@@ -27,10 +27,12 @@ test("user sees created request in My Requests", async ({ page, request }) => {
   await expect(
     page.getByRole("heading", { name: "Мои заявки", exact: true }),
   ).toBeVisible();
-  await expect(page.getByText(L.status.inReview).first()).toBeVisible();
-  await expect(
-    page.getByText("Подключение объекта к электрическим сетям"),
-  ).toBeVisible();
+  const createdRequestCard = cardWithText(
+    page,
+    "Подключение объекта к электрическим сетям",
+  );
+  await expect(createdRequestCard).toBeVisible();
+  await expect(statusInCard(createdRequestCard, L.status.inReview)).toBeVisible();
   await expect(page.getByText(objectAddressText, { exact: true })).toBeVisible();
   await expect(
     page.getByRole("link", { name: /Открыть детали Заявка/ }),

@@ -79,7 +79,7 @@ test("user creates individual applicant party through real client-server flow", 
   await expect(page.getByText("Ivan", { exact: true })).toBeVisible();
   await expect(page.getByText("Ivanovich", { exact: true })).toBeVisible();
   await expect(page.getByText("Ivanov", { exact: true })).toBeVisible();
-  await expect(page.getByText("Данные не проверены", { exact: true })).toBeVisible();
+  await expect(page.getByText(L.applicantParties.unverifiedSummary).first()).toBeVisible();
   await expect(page.getByText(L.applicantParties.currentDefaultBadge).first()).toBeVisible();
 
   const applicantPartiesAfterReloadPromise = waitForApiResponse(

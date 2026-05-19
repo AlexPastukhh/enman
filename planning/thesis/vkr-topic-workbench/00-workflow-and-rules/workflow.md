@@ -1,118 +1,68 @@
-# Topic-first and block-based section drafting workflow
+# VKR topic workflow
 
-Статус: актуально / v2 / без fragment-bank workflow
-
-## 1. Назначение
-
-Рабочая база тем нужна для подготовки ВКР до и во время написания section-драфтов. Здесь фиксируются не финальные абзацы, а смысловая структура: что раскрываем, зачем, какими вопросами, research, repo/evidence и визуалами.
-
-## 2. Основная формула
+## Current formula
 
 ```text
 topic draft
-↔ вопросы / research / repo-check / visual bridge
+↔ mandatory chat algorithms
+↔ source materials
+↔ questions / default answers / variants
+↔ research / repo / visual / domain / slices / existing chapter drafts
 ↔ section draft blocks
 → section draft v1
 → reviewer pass
 → clean VKR text
 ```
 
-Topic draft не обязан быть полностью завершён перед началом section draft. Если отдельный блок темы уже понятен, можно создавать соответствующий блок section draft и постепенно заполнять его текстом.
+## Topic draft role
 
-## 3. Основной порядок работы
-
-```text
-1. Показать карту размещения темы.
-2. Обсудить содержание темы.
-3. Разложить тему на смысловые блоки.
-4. Для каждого блока найти вопросы, которые нужно закрыть.
-5. Определить, что требует research.
-6. Определить, что требует repo/evidence check.
-7. Определить, какие визуалы нужны.
-8. Зафиксировать границы утверждений.
-9. Составить план раскрытия каждого блока.
-10. Создать соответствующие блоки в section draft.
-11. Постепенно генерировать текст внутри этих блоков.
-12. После сборки section draft v1 провести reviewer pass.
-```
-
-## 4. Карта размещения темы
-
-Каждый драфт темы должен начинаться с карты ВКР и workbench, чтобы было понятно, какой обязательный пункт ВКР раскрывается.
-
-## 5. Блоки будущего section draft
-
-Каждый topic-драфт должен содержать блок:
-
-```markdown
-## Блоки будущего section draft
-
-| Блок section draft | Смысл из topic-драфта | Вопросы к блоку | План раскрытия | Статус |
-|---|---|---|---|---|
-```
-
-Это основной мост от topic-драфта к тексту ПЗ.
-
-## 6. Research bridge
-
-Research bridge — не отдельная теория, а ответы на вопросы темы.
+Topic draft stores:
 
 ```text
-тезис темы
-→ вопрос к research
-→ короткий ответ из research
-→ переработка под проект
-→ место в section block
+what changed;
+placement;
+meaning;
+sources;
+useful material candidates;
+existing chapter draft candidates;
+questions with priority;
+research bridge;
+repo/evidence questions;
+visual bridge;
+boundaries;
+future section draft blocks;
+plan of disclosure.
 ```
 
-Если research короткий — держать внутри topic-драфта. Если большой — можно создать `*.research-bridge.md` рядом с topic-драфтом.
+## Section draft role
 
-## 7. Repo/evidence check
+Section draft stores developing VKR text by blocks. No mandatory fragment bank.
 
-Перед текстом про реализацию обязательно отделять:
+If existing chapter text is useful, it can be placed into a section draft block with a review note, but it must pass the topic-draft workflow.
+
+## Existing chapter drafts
+
+Use:
 
 ```text
-что описано как предметная потребность;
-что запланировано как проектное решение;
-что реально реализовано;
-что только демонстрируется/mock;
-что отнесено к дальнейшему развитию.
+planning/thesis/vkr-clean/existing-chapter-drafts/
+planning/thesis/chat-action-algorithms/cleanup-and-legacy/existing-chapter-draft-review.md
 ```
 
-Глава 3 требует обязательного repo/evidence check.
+Existing chapter drafts are resources, not final text and not source of truth.
 
-## 8. Visual bridge
+## Commands
 
-Для рисунков и таблиц фиксировать:
+See mandatory algorithms in:
 
 ```text
-где стоит в тексте;
-что читатель должен увидеть;
-для чего нужен;
-какие блоки/стрелки;
-что нельзя показывать;
-подпись;
-пояснение после рисунка.
+planning/thesis/chat-action-algorithms/
 ```
 
-Если визуалов много — отдельный `*.figures-brief.md` или `visual-briefs/`.
+## Navigation
 
-## 9. Section draft
-
-Section draft хранится в:
+Any structural change requires navigation impact check.
 
 ```text
-planning/thesis/vkr-clean/section-drafts/
+planning/thesis/chat-action-algorithms/navigation-impact-check.md
 ```
-
-Section draft должен быть построен по блокам, которые соответствуют смысловым блокам topic-драфта. В рабочей версии могут оставаться вопросы, планы раскрытия и TODO.
-
-## 10. Fragment bank не активен
-
-Fragment-bank workflow больше не является активным. Не собирать хорошие абзацы в отдельный банк как обязательный этап. Если текст готов, привязывать его к конкретному блоку section draft.
-
-Старый `fragment-bank.md` считать deprecated/support до отдельного cleanup.
-
-## 11. Навигация
-
-Любое изменение структуры требует обновления navigation files. Не добавлять новые папки без README или упоминания в source of truth.

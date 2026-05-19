@@ -1,45 +1,26 @@
-# Chaotic Draft Review Template
+# Chaotic draft review template
 
-Reviewed draft:
+## Draft file
 
-Intended VKR chapter/section:
+- File:
+- Chapter/section claimed:
+- Created before current workflow: yes/no
 
-Status: not clean / needs analysis
+## What is useful
 
-## 1. What this draft tries to cover
-
-...
-
-## 2. Useful content to salvage
-
-| Fragment / idea | Why useful | Target topic/section block |
+| Useful idea | Where it may go | Needs rewrite? |
 |---|---|---|
-| ... | ... | ... |
 
-## 3. Problems
+## Problems
 
-| Problem | Example | Risk |
+| Problem | Type | Fix |
 |---|---|---|
-| overclaiming | ... | ... |
-| generic text | ... | ... |
-| missing repo-check | ... | ... |
-| missing research bridge | ... | ... |
-| weak visual plan | ... | ... |
+| ... | overclaim / generic / wrong section / no evidence / style | ... |
 
-## 4. Required topic blocks before rewriting
-
-...
-
-## 5. Required questions before rewriting
-
-...
-
-## 6. Rewrite plan
+## Salvage plan
 
 ```text
-topic draft/update
-→ section blocks
-→ questions
-→ research/repo/visual checks
-→ new section draft
+convert useful ideas into topic questions;
+connect ideas to section blocks;
+rewrite from sources, not from this draft directly.
 ```

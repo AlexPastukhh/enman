@@ -1,0 +1,50 @@
+# VKR topic workflow
+
+## Current formula
+
+```text
+topic draft
+↔ mandatory chat algorithms
+↔ source materials
+↔ questions / default answers / variants
+↔ research / repo / visual / domain / slices
+↔ section draft blocks
+→ section draft v1
+→ reviewer pass
+→ clean VKR text
+```
+
+## Topic draft role
+
+Topic draft stores:
+
+```text
+what changed;
+placement;
+meaning;
+sources;
+useful material candidates;
+questions;
+research bridge;
+repo/evidence questions;
+visual bridge;
+boundaries;
+future section draft blocks;
+plan of disclosure.
+```
+
+## Section draft role
+
+Section draft stores developing VKR text by blocks. No mandatory fragment bank.
+
+## Commands
+
+See mandatory algorithms in:
+
+```text
+planning/thesis/chat-action-algorithms/
+```
+
+## Navigation
+
+Any structural change requires navigation impact check.

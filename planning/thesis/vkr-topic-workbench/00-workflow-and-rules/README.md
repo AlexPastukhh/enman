@@ -1,59 +1,34 @@
-# Правила и workflow рабочей базы тем ВКР
+# Workflow and rules
 
-Статус: актуально / block-based topic-to-section workflow / research и visual bridge
+This directory contains templates and content rules for topic drafts.
 
-Эта папка содержит правила работы с материалами ВКР до и во время написания section-драфтов.
-
-## Основная идея
-
-Topic-драфты и section-драфты развиваются параллельно. Topic-драфт хранит смысловые блоки, вопросы, research/repo/visual notes и планы раскрытия. Section-драфт постепенно собирает текст по этим блокам.
+For mandatory chat behavior algorithms, see:
 
 ```text
-topic draft
-↔ вопросы / research / repo-check / visual bridge
-↔ section draft blocks
-→ section draft v1
-→ reviewer pass
-→ clean VKR text
+planning/thesis/chat-action-algorithms/README.md
 ```
 
-## Основные файлы
+For the global resource map, see:
 
-| Файл | Назначение |
-|---|---|
-| `workflow.md` | общий порядок работы с темами, блоками section draft, research, visual и текстом |
-| `topic-card-template.md` | шаблон topic-файла на русском языке |
-| `topic-draft-format-protocol.md` | формат драфта темы перед/во время подготовки текста |
-| `research-bridge-protocol.md` | как связывать topic-драфт с research без буквального копирования |
-| `visual-bridge-protocol.md` | как превращать визуальные требования в рисунки/таблицы/скриншоты |
-| `research-question-bank.md` | банк типовых вопросов к research и к проекту |
-| `writing-from-topics-protocol.md` | как превращать темы в текст ПЗ |
-| `visual-evidence-protocol.md` | старый/совместимый протокол для визуальных материалов |
-| `mock-and-extension-point-wording-protocol.md` | как писать про mock/demo/stub-возможности без завышения реализации |
-| `previous-topic-example-usage-rule.md` | как использовать уже принятые темы как примеры |
-| `global-assumptions.md` | общие допущения и ограничения формулировок |
-| `archive-merge-safety-protocol.md` | правила безопасных архивов с replacement files |
-| `navigation-sync-note.md` | обязательное обновление навигации при изменении структуры |
-| `author-materials/raw-author-message-log.md` | сырые сообщения автора без обработки |
-| `examples/` | примеры удачного формата тем и визуальных ТЗ |
+```text
+planning/thesis/VKR-RESOURCE-MAP.md
+```
 
-## Внешние navigation files
+Key files:
 
-| Файл | Назначение |
-|---|---|
-| `../../VKR-WORKFLOW-SOURCE-OF-TRUTH.md` | главный source of truth |
-| `../../NEW-CHAT-ONBOARDING.md` | памятка для новых чатов |
-| `../TOPIC-TO-SECTION-BLOCK-WORKFLOW.md` | как topic-блоки превращаются в section-блоки |
-| `../../chat-action-algorithms/` | обязательные действия чатов в типовых ситуациях |
+```text
+workflow.md
+topic-card-template.md
+research-bridge-protocol.md
+visual-bridge-protocol.md
+global-assumptions.md
+navigation-sync-note.md
+```
 
-## Правило языка
+## Important content rules
 
-Смысловые материалы ВКР пишутся на русском языке. Английские имена допускаются только для технологий, стандартов, классов, файлов и терминов кода, если они нужны для точности.
-
-## Правило active/legacy
-
-Не писать новые драфты в legacy/support папки. Использовать их только для harvest. Cleanup делать отдельным архивом.
-
-## Правило навигации
-
-Если добавляется папка, новый тип артефакта или меняется active/legacy статус, одновременно обновить README/index/source-of-truth.
+- Topic drafts are semantic bases, not final VKR text.
+- Topic drafts must include source materials and future section draft blocks.
+- Existing chapter drafts may be used as secondary material, but only after review.
+- Research is not copied literally; it answers topic questions.
+- Visual materials must support specific section blocks and avoid overclaiming.

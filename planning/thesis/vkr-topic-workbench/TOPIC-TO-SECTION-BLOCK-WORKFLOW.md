@@ -1,171 +1,67 @@
-# Topic-to-Section Block Workflow
+# Topic-to-section block workflow
 
-Статус: актуально / block-based workflow
+This file explains how topic drafts become section drafts.
 
-Этот файл объясняет, как topic-драфт превращается в section-драфт.
+## Main idea
 
-## 1. Главная формула
+```text
+topic draft does not replace section draft;
+topic draft feeds section draft.
+```
+
+Topic draft and section draft develop in parallel.
 
 ```text
 topic draft
-↔ вопросы / research / repo-check / visual bridge
+↔ questions / research / repo-check / visual bridge / existing chapter drafts
 ↔ section draft blocks
 → section draft v1
-→ reviewer pass
-→ clean text
+→ review
+→ clean VKR text
 ```
 
-Topic draft не заменяет section draft. Topic draft описывает смысловые блоки, вопросы и план раскрытия. Section draft постепенно собирает текст по этим блокам.
+## Process
 
-## 2. Почему не fragment bank
+1. Topic draft describes semantic blocks of a topic.
+2. For each semantic block, the chat generates questions.
+3. Questions are prioritised: blocking, strong, research, repo/evidence, visual, style.
+4. The chat collects source materials: scenarios, DATA, domain, slices, research, visuals, repo/evidence, existing chapter drafts.
+5. For each block, the chat creates a plan of disclosure.
+6. The section draft creates similar headings/blocks.
+7. Text is gradually written inside those blocks.
+8. The section draft is reviewed and edited.
 
-Старый подход “складировать удачные фрагменты” может привести к хаотичному набору абзацев. Новый подход:
+## Existing chapter drafts
+
+Existing chapter drafts can be used as a secondary source.
+
+They may provide:
 
 ```text
-сначала смысловой блок;
-потом вопросы к блоку;
-потом ответы и проверки;
-потом план раскрытия;
-потом текст под этим блоком в section draft.
+structure candidates;
+paragraph candidates;
+table candidates;
+problem notes;
+questions;
+things to avoid.
 ```
 
-Если есть хороший абзац, его лучше не складывать в fragment bank, а сразу привязать к блоку section draft или к вопросу, который он закрывает.
+But they cannot bypass workflow.
 
-## 3. Блоки будущего section draft
-
-В каждом topic-драфте нужно иметь раздел:
-
-```markdown
-## Блоки будущего section draft
-
-| Блок section draft | Смысл из topic-драфта | Вопросы к блоку | План раскрытия | Статус |
-|---|---|---|---|---|
-| ... | ... | ... | ... | ... |
-```
-
-Названия блоков section draft могут быть похожи на смысловые блоки topic-драфта, но должны звучать как будущие подзаголовки или логические части текста.
-
-## 4. Вопросы к блоку
-
-Перед генерацией текста для блока нужно найти вопросы, без которых текст будет пустым или неточным.
-
-Типы вопросов:
+Reuse must follow:
 
 ```text
-- что именно нужно объяснить читателю;
-- что требует обоснования;
-- какие project facts нужны;
-- какие research-ответы нужны;
-- какие repo/evidence факты нужны;
-- какой рисунок/таблица нужны;
-- какие overclaim risks есть;
-- что нельзя раскрывать в этом блоке.
+existing chapter material
+→ review
+→ topic draft material candidate / section block candidate
+→ questions
+→ source support
+→ overclaim check
+→ section draft block
 ```
 
-## 5. План раскрытия блока
+## No fragment bank
 
-Для каждого блока section draft сделать короткий план:
+There is no mandatory fragment bank. Section draft itself is where text accumulates.
 
-```text
-1. тезис;
-2. пояснение;
-3. project-specific пример;
-4. research/repo/visual support, если нужен;
-5. вывод;
-6. переход к следующему блоку.
-```
-
-## 6. Как собирать информацию для блоков
-
-После применения этого workflow информацию для каждого блока нужно собирать из нескольких источников.
-
-### Для главы 1
-
-```text
-topic-драфты;
-research reports;
-визуальные задания;
-предметные уточнения;
-тексты existing-solutions / problem-domain;
-осторожный repo-check только там, где есть риск overclaiming.
-```
-
-### Для главы 2
-
-```text
-сценарии;
-DATA;
-questions/decisions;
-domain drafts;
-architecture/ADR notes;
-UI planning;
-API/design notes;
-research для требований/архитектуры/API, если нужен.
-```
-
-### Для главы 3
-
-```text
-сценарии;
-questions/decisions;
-домен;
-ADR / архитектурные решения;
-slice drafts;
-код;
-тесты;
-скриншоты/demo;
-repo/evidence facts;
-visual bridge.
-```
-
-Глава 3 не пишется только по topic-драфтам. Для каждого блока нужен evidence layer.
-
-## 7. Как section draft растёт
-
-Section draft может начинаться как скелет:
-
-```markdown
-# 1.1 Характеристика процесса обработки клиентских заявок
-
-## Блок: Заявка как центральный объект процесса
-
-Вопросы:
-- ...
-
-План раскрытия:
-- ...
-
-Текст:
-...
-```
-
-Постепенно вопросы и план могут исчезать из финального текста, но сохраняться в рабочей версии, пока раздел не стабилизирован.
-
-## 8. Когда блок готов к тексту
-
-Блок можно превращать в текст, если:
-
-```text
-- понятно, какой вопрос он закрывает;
-- есть план раскрытия;
-- known overclaim risks сняты;
-- research bridge выполнен, если нужен;
-- repo-check выполнен, если блок про реализацию;
-- визуал описан, если блок зависит от рисунка/таблицы.
-```
-
-## 9. Когда section draft считается v1
-
-Section draft v1 появляется, когда все основные блоки подраздела имеют:
-
-```text
-- рабочий текст;
-- переходы между блоками;
-- TODO SOURCE / TODO FIGURE / TODO CHECK REPO там, где ещё не закрыто;
-- внутренне согласованную логику;
-- понятный список open questions.
-```
-
-## 10. Главное правило
-
-Не создавать section draft как один случайный текст. Сначала создать блоки, обсудить их, ответить на вопросы, составить план раскрытия и только потом заполнять текст внутри этих блоков.
+If a paragraph has no clear section block, do not store it as random text. Return to topic draft and decide which block it supports.

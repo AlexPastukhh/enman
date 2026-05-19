@@ -1,205 +1,227 @@
-# VKR Workflow Source of Truth
+# VKR workflow source of truth
 
-Статус: актуально / block-based topic-to-section workflow v2
+This file is the main reference for how VKR materials are created, checked and turned into section drafts.
 
-Этот файл является главным источником правды по workflow подготовки ВКР.
-
-## 1. Главная идея
-
-ВКР собирается не прямым копированием planning-файлов и не одной большой генерацией текста. Работа идёт через смысловые темы и блоки будущих section-драфтов.
+## 1. Main workflow formula
 
 ```text
 topic draft
-↔ вопросы / research / repo-check / visual bridge
+↔ обязательные алгоритмы чатов
+↔ источники материалов
+↔ вопросы / дефолтные ответы / варианты
+↔ research / repo / visual / domain / slices / existing chapter drafts
 ↔ section draft blocks
 → section draft v1
 → reviewer pass
 → clean VKR text
 ```
 
-Topic draft — рабочая смысловая база темы. Section draft — постепенно собираемый текст ПЗ.
+Topic draft and section draft develop in parallel. A topic draft is not a final text. It is a semantic base that feeds section draft blocks.
 
-## 2. Где что хранится
-
-| Тип материала | Путь | Роль |
-|---|---|---|
-| Topic-драфты | `planning/thesis/vkr-topic-workbench/**/*.topic.md` | Смысловые темы, вопросы, research/visual/repo notes, план раскрытия |
-| Topic-to-section workflow | `planning/thesis/vkr-topic-workbench/TOPIC-TO-SECTION-BLOCK-WORKFLOW.md` | Как topic-блоки превращаются в блоки section-драфта |
-| Section-драфты | `planning/thesis/vkr-clean/section-drafts/` | Уже текстовые черновики подразделов ВКР |
-| Research | `planning/thesis/vkr-topic-workbench/00-research-materials/` | Исследовательские отчёты и source IDs |
-| Clean materials | `planning/thesis/vkr-clean/` | Чистые материалы ВКР, evidence, section drafts, reviewer workflow |
-| Chat action algorithms | `planning/thesis/chat-action-algorithms/` | Обязательные действия чатов в повторяющихся ситуациях |
-| Chaotic legacy drafts | `planning/thesis/vkr-clean/legacy-chaotic-drafts/` | Слабые/хаотичные главы для анализа, не clean text |
-
-## 3. Topic draft
-
-Topic draft хранит:
+## 2. Central role of chat action algorithms
 
 ```text
-- карту размещения темы в структуре ВКР;
-- роль темы;
-- смысловые блоки темы;
-- вопросы для конкретизации;
-- research questions;
-- repo/evidence questions;
-- visual bridge;
-- границы утверждений;
-- план раскрытия будущих section blocks;
-- черновые тезисы, которые могут стать текстом.
+planning/thesis/chat-action-algorithms/
 ```
 
-Topic draft не обязан быть идеальным перед началом section draft. Если один блок темы уже понятен, можно начинать соответствующий блок section draft.
+This folder is a central workflow layer, not an optional note collection. If the user gives a typical command, the chat must run the matching algorithm.
 
-## 4. Section draft
+| User signal | Required algorithm |
+|---|---|
+| `дай драфт`, `давай драфт`, `обнови драфт` | `drafting/topic-draft-default-flow.md` |
+| `уточни`, `перепроверь`, `проверь всё` | `drafting/topic-clarify-and-recheck-flow.md` |
+| `дай section draft` | `drafting/section-draft-generation.md` |
+| visual PDF / diagrams / screenshots | `evidence-and-materials/visual-material-review.md` |
+| research insertion | `evidence-and-materials/research-bridge.md` |
+| implementation text / chapter 3 | `evidence-and-materials/repo-check-before-implementation-text.md` |
+| existing chapter / old section draft | `cleanup-and-legacy/existing-chapter-draft-review.md` |
+| archive creation | `archive-generation-and-navigation-update.md` |
+| new chat lost context | `new-chat-context-recovery.md` |
+| `тчт` | `tcht-command.md` |
 
-Section draft хранится в:
+## 3. Storage map
+
+For a full resource map, read:
+
+```text
+planning/thesis/VKR-RESOURCE-MAP.md
+```
+
+### Topic drafts
+
+```text
+planning/thesis/vkr-topic-workbench/**/*.topic.md
+```
+
+Topic drafts contain:
+
+```text
+placement in VKR;
+meaning of the topic;
+what changed since previous draft;
+source materials;
+useful material candidates;
+questions with priority;
+default answers and variants;
+research bridge;
+repo/evidence questions;
+visual bridge;
+boundaries and overclaim risks;
+future section draft blocks;
+plan of disclosure for each block.
+```
+
+### Section drafts
 
 ```text
 planning/thesis/vkr-clean/section-drafts/
 ```
 
-Section draft должен состоять из блоков, которые соответствуют смысловым блокам topic-драфта.
+Section drafts are not generated from nowhere. They are built from section blocks, each connected to a topic-draft semantic block.
 
-Для каждого блока section draft желательно иметь:
+No required `fragment-bank.md`. If text is ready, it belongs inside the relevant section-draft block.
 
-```text
-1. вопрос, который блок закрывает;
-2. ответы/уточнения;
-3. research bridge, если нужен внешний источник;
-4. repo-check, если блок говорит о реализации;
-5. visual bridge, если нужен рисунок/таблица/скриншот;
-6. план раскрытия;
-7. постепенно собранный текст.
-```
-
-## 5. Research bridge
-
-Research не вставляется буквально.
+### Existing chapter drafts
 
 ```text
-вопрос по теме
-→ ответ из research
-→ переработка под проект ООО «ЗСК»
-→ место вставки в будущий section block
+planning/thesis/vkr-clean/existing-chapter-drafts/
 ```
 
-Минимальный research bridge может быть внутри topic-драфта. Если research большой, можно создать рядом отдельный файл `*.research-bridge.md`.
+Existing chapter drafts are a secondary resource. They may be not bad and may contain useful wording, tables and structure, but they are not source of truth and are not final clean text. They can feed topic drafts and section drafts only after review.
 
-## 6. Visual bridge
-
-Визуальный материал не должен быть просто картинкой. Для каждого рисунка/таблицы/скриншота фиксировать:
+Use:
 
 ```text
-- где стоит в тексте;
-- что читатель должен увидеть;
-- для чего нужен;
-- какие блоки/стрелки/поля;
-- что нельзя показывать;
-- подпись;
-- пояснение после рисунка;
-- где использовать: ПЗ / приложение / презентация / глава 3.
+planning/thesis/chat-action-algorithms/cleanup-and-legacy/existing-chapter-draft-review.md
 ```
 
-Если визуалов много, можно создать `*.figures-brief.md` или папку `visual-briefs/` рядом с темами.
-
-## 7. Repo/evidence check
-
-Repo-check обязателен для реализации и особенно для главы 3. Нельзя писать “реализовано” без проверки кода, тестов, UI, скриншотов или актуальных slice drafts.
-
-Глава 3 должна строиться через связку:
+### Clean materials
 
 ```text
-сценарии
-→ вопросы
-→ решения
-→ домен
-→ ADR / архитектурные решения
-→ slice drafts
-→ код / тесты / скриншоты
-→ чистый текст главы 3
+planning/thesis/vkr-clean/
 ```
 
-## 8. Active / support / legacy
+Clean materials are VKR-safe engineering materials. Do not copy planning prompts, AI/chat workflow or internal generation notes into the final thesis.
 
-Не удалять legacy/support материалы смешанным архивом. Правило:
+### Legacy chaotic drafts
 
 ```text
-legacy/support не удалять;
-не писать туда новые драфты;
-использовать только для harvest;
-cleanup делать отдельным архивом;
-при изменении структуры обязательно обновлять README/navigation.
+planning/thesis/vkr-clean/legacy-chaotic-drafts/
 ```
 
-Активная компактная папка главы 3:
+Chaotic/weak chapter versions created outside the workflow are stored here for analysis only. They are not clean section drafts.
+
+## 4. Chapter source priority
+
+Use:
 
 ```text
-planning/thesis/vkr-topic-workbench/04-chapter-3-implementation/
+planning/thesis/chat-action-algorithms/evidence-and-materials/chapter-source-priority-map.md
 ```
 
-Подробная support-папка главы 3:
+Short version:
+
+- Chapter 1: topic drafts, existing chapter drafts, research, visuals, clean requirements; scenario/domain/repo only to check logic and avoid overclaiming.
+- Chapter 2: topic drafts, existing chapter drafts, scenarios, DATA, domain, requirements, architecture, UI/API/database planning.
+- Chapter 3: code, tests, slice drafts, scenarios, DATA, domain, ADR/questions/decisions, screenshots, repo/evidence checks.
+
+## 5. Topic-to-section block workflow
 
 ```text
-planning/thesis/vkr-topic-workbench/04-chapter-3-implementation-and-testing/
+planning/thesis/vkr-topic-workbench/TOPIC-TO-SECTION-BLOCK-WORKFLOW.md
 ```
 
-## 9. Неактивный fragment bank
-
-Fragment bank не является частью активного workflow. Вместо него используются section draft blocks: сначала обсуждается блок, задаются вопросы, строится план раскрытия, затем текст постепенно собирается прямо в section draft.
-
-Старый `section-drafts/fragment-bank.md` не удаляется этим архивом, но считается deprecated/support, пока не будет отдельного cleanup.
-
-## 10. Запреты для финальной ПЗ
-
-Не писать в ВКР про:
+Main rule:
 
 ```text
-ИИ;
-ChatGPT;
-промпты;
-чаты;
-agent workflow;
-archive-generation kitchen;
-raw author logs.
+topic-драфт задаёт смысловые блоки;
+section-драфт создаёт похожие блоки/подзаголовки;
+для каждого блока задаются вопросы;
+по вопросам собираются материалы;
+для блока составляется план раскрытия;
+текст постепенно пишется внутрь section-драфта.
 ```
 
-Не использовать L1/L2 как язык ВКР. Использовать предметные формулировки: клиентский поток, рассмотрение заявки сотрудником, договорный обмен, программный срез, этап реализации.
+Existing chapter drafts may provide candidate blocks or candidate text, but any reused material must pass through the same block workflow.
 
-## 11. Overclaim guardrails
+## 6. Navigation impact check
 
-Всегда разделять:
+Whenever a file or folder changes, run:
 
 ```text
-что реализовано;
-что проектируется;
-что имитируется;
-что является точкой расширения;
-что относится к дальнейшему развитию.
+planning/thesis/chat-action-algorithms/navigation-impact-check.md
 ```
 
-Особенно осторожно писать про:
+The chat must check:
 
 ```text
-mock-проверку данных;
-email-уведомления;
-файловое хранилище;
-электронную подпись;
-СЭД/ЭДО;
-автоматическую генерацию договора;
-внешние интеграции.
+Какие навигационные файлы нужно обновить из-за этого изменения?
 ```
 
-## 12. Обязательная навигационная синхронизация
-
-Любое изменение структуры требует обновления навигации. Новый чат должен уметь открыть `planning/thesis/README.md`, затем этот файл, затем понять:
+Always consider:
 
 ```text
-где topic-драфты;
-где section-драфты;
-где research;
-где visual briefs;
-где repo/evidence facts;
-какие папки active;
-какие support/legacy;
-как из темы получается текст ПЗ.
+planning/thesis/README.md
+planning/thesis/VKR-WORKFLOW-SOURCE-OF-TRUTH.md
+planning/thesis/VKR-RESOURCE-MAP.md
+planning/thesis/NEW-CHAT-ONBOARDING.md
+planning/thesis/chat-action-algorithms/README.md
+planning/thesis/vkr-topic-workbench/README.md
+planning/thesis/vkr-clean/README.md
+chapter README / topic-index when relevant
 ```
+
+Do not maintain statuses in `topic-index.md`. Topic-index is navigation, not a task board.
+
+## 7. Question priority
+
+Questions are not just a large list. They must be prioritised:
+
+```text
+blocking — without answer unsafe/impossible to write;
+strong — improves precision and project specificity;
+research — requires external support;
+repo/evidence — prevents overclaim;
+visual — needed for schemes/screenshots;
+style — useful later during editing.
+```
+
+Use:
+
+```text
+planning/thesis/chat-action-algorithms/drafting/question-priority.md
+```
+
+## 8. Guardrails
+
+### AI / prompts / chats
+
+Do not include AI, ChatGPT, prompts, agent workflow or chat process in VKR text.
+
+### L1/L2
+
+Do not use L1/L2 as VKR language. They may remain internal implementation labels only.
+
+### Account activation
+
+Account activation must not be described as a realised VKR user flow. Treat it as supporting auth detail / future or limited detail unless a dedicated repo-check proves otherwise.
+
+### Mock check
+
+Mock data check is a demonstration / extension point, not a real external integration.
+
+### Agreement stage
+
+The agreement stage is started by the employee after approval. The system does not automatically generate a contract. It supports exchange of ready document versions.
+
+### Documents
+
+Document reference / metadata is not a full ECM/EDO/storage solution. Do not claim e-signature, legal EDO, external integrations, industrial file storage or full audit without repo-check.
+
+### Email
+
+Do not claim complete email notification implementation without repo/evidence check.
+
+## 9. Archive rule
+
+Before giving an archive link, the chat must open and verify the zip contents, check MANIFEST/APPLY, check originals for replacements, and confirm navigation impact check was performed.

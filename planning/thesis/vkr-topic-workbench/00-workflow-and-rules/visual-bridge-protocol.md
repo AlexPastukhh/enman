@@ -1,73 +1,32 @@
-# Visual Bridge Protocol
+# Visual bridge protocol
 
-Статус: актуально
+Visual bridge connects figures/tables/screenshots to section blocks.
 
-## 1. Назначение
-
-Visual bridge превращает смысловые блоки topic-драфта в рисунки, таблицы, схемы, UI-flow и скриншоты, которые можно использовать в section draft, приложении или презентации.
-
-## 2. Где хранить
-
-Кратко — внутри topic-драфта.
-
-Если визуалов много, использовать:
+## Required questions
 
 ```text
-<topic-slug>.figures-brief.md
+Which section block does this visual support?
+What should the reader understand?
+What thesis does it prove?
+Where should it stand?
+What must not be shown?
+Is it main text, appendix, presentation, or chapter 3 screenshot?
 ```
 
-или папку:
+## Figure checklist
+
+For each visual:
 
 ```text
-visual-briefs/
+place in text;
+purpose;
+reader takeaway;
+blocks / arrows;
+caption;
+explanation after figure;
+overclaim risks;
+recommended format;
+what to remove from final image.
 ```
 
-## 3. Для каждого визуала фиксировать
-
-```text
-1. Где стоит в тексте.
-2. Что читатель должен увидеть.
-3. Для чего нужен визуал.
-4. Какие блоки, стрелки, поля или строки должны быть.
-5. Что нельзя показывать.
-6. Подпись.
-7. Пояснение после рисунка.
-8. Где использовать: ПЗ / приложение / презентация / глава 3.
-```
-
-## 4. Версии визуалов
-
-Для важных визуалов желательно делать три версии:
-
-```text
-1. простая версия для основного текста;
-2. подробная версия для приложения/проектного раздела;
-3. презентационная версия для слайда.
-```
-
-## 5. Внутренние заметки не оставлять в финальных рисунках
-
-Блоки вроде:
-
-```text
-Смысл рисунка
-Как использовать
-Для ПЗ лучше таблица
-```
-
-полезны для обсуждения, но в финальной ПЗ их лучше вынести в пояснение после рисунка или в visual brief.
-
-## 6. Overclaim правила
-
-Не показывать как реализованное то, что является future work или mock.
-
-Пример:
-
-```text
-Правильно: “Демонстрационная проверка данных / точка расширения”.
-Неправильно: “Внешняя проверка данных выполнена”.
-```
-
-## 7. Скриншоты
-
-Наличие скриншота подтверждается repo/evidence check. Объяснение, подпись и место вставки — зона visual bridge.
+Do not leave internal editor notes inside final VKR figures, such as “Смысл рисунка”, “Как использовать”, “Для ПЗ лучше таблица”.

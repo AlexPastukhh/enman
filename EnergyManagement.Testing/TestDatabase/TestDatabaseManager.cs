@@ -117,8 +117,8 @@ public sealed class TestDatabaseManager
                     WHERE name = N'IX_L1ApplicantParties_ClientAccountId'
                       AND object_id = OBJECT_ID(N'dbo.L1ApplicantParties'))
             BEGIN
-                CREATE INDEX IX_L1ApplicantParties_ClientAccountId
-                    ON dbo.L1ApplicantParties(ClientAccountId);
+                EXEC(N'CREATE INDEX IX_L1ApplicantParties_ClientAccountId
+                    ON dbo.L1ApplicantParties(ClientAccountId);');
             END
             """;
 
@@ -148,12 +148,12 @@ public sealed class TestDatabaseManager
             IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL
                AND COL_LENGTH(N'dbo.L1ClientRequests', N'ClientAccountId') IS NOT NULL
             BEGIN
-                UPDATE requests
+                EXEC(N'UPDATE requests
                 SET ClientAccountId = applicantParties.ClientAccountId
                 FROM dbo.L1ClientRequests AS requests
                 INNER JOIN dbo.L1ApplicantParties AS applicantParties
                     ON requests.ApplicantPartyId = applicantParties.Id
-                WHERE requests.ClientAccountId = 0;
+                WHERE requests.ClientAccountId = 0;');
             END
 
             IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL
@@ -163,8 +163,8 @@ public sealed class TestDatabaseManager
                     WHERE name = N'IX_L1ClientRequests_ClientAccountId'
                       AND object_id = OBJECT_ID(N'dbo.L1ClientRequests'))
             BEGIN
-                CREATE INDEX IX_L1ClientRequests_ClientAccountId
-                    ON dbo.L1ClientRequests(ClientAccountId);
+                EXEC(N'CREATE INDEX IX_L1ClientRequests_ClientAccountId
+                    ON dbo.L1ClientRequests(ClientAccountId);');
             END
             """;
 
@@ -249,8 +249,8 @@ public sealed class TestDatabaseManager
                 CREATE INDEX IX_L1AgreementProposalExchanges_RequestId
                     ON dbo.L1AgreementProposalExchanges(RequestId);
 
-                CREATE INDEX IX_L1AgreementProposalExchanges_ClientAccountId
-                    ON dbo.L1AgreementProposalExchanges(ClientAccountId);
+                EXEC(N'CREATE INDEX IX_L1AgreementProposalExchanges_ClientAccountId
+                    ON dbo.L1AgreementProposalExchanges(ClientAccountId);');
             END
 
             IF OBJECT_ID(N'dbo.L1AgreementProposalExchanges', N'U') IS NOT NULL
@@ -268,8 +268,8 @@ public sealed class TestDatabaseManager
                     WHERE name = N'IX_L1AgreementProposalExchanges_ClientAccountId'
                       AND object_id = OBJECT_ID(N'dbo.L1AgreementProposalExchanges'))
             BEGIN
-                CREATE INDEX IX_L1AgreementProposalExchanges_ClientAccountId
-                    ON dbo.L1AgreementProposalExchanges(ClientAccountId);
+                EXEC(N'CREATE INDEX IX_L1AgreementProposalExchanges_ClientAccountId
+                    ON dbo.L1AgreementProposalExchanges(ClientAccountId);');
             END
 
             IF OBJECT_ID(N'dbo.L1AgreementProposalExchanges', N'U') IS NOT NULL

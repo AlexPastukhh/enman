@@ -5,7 +5,7 @@ import {
   registerAndLoginClient,
 } from "../support/clientSetup";
 import { waitForApiResponse } from "../support/apiResponse";
-import { L } from "../support/locators";
+import { cardWithText, L, statusInCard } from "../support/locators";
 
 test("user filters My Requests by status", async ({ page, request }) => {
   const { email } = await registerAndLoginClient(
@@ -31,7 +31,12 @@ test("user filters My Requests by status", async ({ page, request }) => {
   expect(filteredResponse.ok()).toBeTruthy();
 
   await expect(page).toHaveURL(/\/requests\?status=InReview/);
-  await expect(page.getByText(L.status.inReview).first()).toBeVisible();
+  const filteredRequestCard = cardWithText(
+    page,
+    "Подключение объекта к электрическим сетям",
+  );
+  await expect(filteredRequestCard).toBeVisible();
+  await expect(statusInCard(filteredRequestCard, L.status.inReview)).toBeVisible();
 
   const unfilteredResponsePromise = waitForApiResponse(
     page,

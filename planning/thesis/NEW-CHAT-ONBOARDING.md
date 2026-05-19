@@ -1,108 +1,104 @@
-# New Chat Onboarding for VKR Work
+# New chat onboarding for VKR work
 
-Статус: обязательная памятка для новых чатов
+Read this before working on VKR materials.
 
-Если чат потерял контекст или начинает работать с ВКР заново, сначала читать этот файл.
+## 1. Main files
 
-## 1. Что сейчас строится
+1. `planning/thesis/VKR-WORKFLOW-SOURCE-OF-TRUTH.md`
+2. `planning/thesis/VKR-RESOURCE-MAP.md`
+3. `planning/thesis/README.md`
+4. `planning/thesis/chat-action-algorithms/README.md`
+5. `planning/thesis/vkr-topic-workbench/README.md`
+6. `planning/thesis/vkr-clean/README.md`
 
-Мы готовим ВКР по теме:
+## 2. What not to do
 
-> Разработка web-приложения для автоматизации ведения документооборота и обработки клиентских заявок в сетевой компании ООО «ЗСК».
+Do not write the thesis directly from memory. Do not copy planning files directly into the thesis. Do not mention AI, prompts, chats or agent workflow in VKR text.
 
-Цель текущего workflow — не сразу писать ПЗ, а управляемо переходить от topic-драфтов к section-драфтам.
+Do not use L1/L2 as thesis language.
 
-## 2. Обязательные входы
+Do not overclaim implementation.
 
-Читать в таком порядке:
+## 3. What to do on typical commands
 
-```text
-1. planning/thesis/README.md
-2. planning/thesis/VKR-WORKFLOW-SOURCE-OF-TRUTH.md
-3. planning/thesis/vkr-topic-workbench/README.md
-4. planning/thesis/vkr-topic-workbench/TOPIC-TO-SECTION-BLOCK-WORKFLOW.md
-5. planning/thesis/vkr-topic-workbench/00-workflow-and-rules/README.md
-6. active chapter README
-7. topic-index.md
-8. нужный .topic.md
-9. связанные research / visual / repo-check файлы
-10. section draft, если он уже есть
-```
+| User says | Run |
+|---|---|
+| `дай драфт`, `давай драфт`, `обнови драфт` | `chat-action-algorithms/drafting/topic-draft-default-flow.md` |
+| `уточни`, `перепроверь` | `chat-action-algorithms/drafting/topic-clarify-and-recheck-flow.md` |
+| `дай section draft` | `chat-action-algorithms/drafting/section-draft-generation.md` |
+| user sends diagrams | `chat-action-algorithms/evidence-and-materials/visual-material-review.md` |
+| implementation/chapter 3 text | `chat-action-algorithms/evidence-and-materials/repo-check-before-implementation-text.md` |
+| existing chapter / old section draft | `chat-action-algorithms/cleanup-and-legacy/existing-chapter-draft-review.md` |
+| archive request | `chat-action-algorithms/archive-generation-and-navigation-update.md` |
+| `тчт` | `chat-action-algorithms/tcht-command.md` |
 
-## 3. Главное различие файлов
+## 4. Drafting principle
 
-```text
-planning/ — рабочая инженерная кухня проекта.
-vkr-topic-workbench/ — смысловая база тем.
-vkr-clean/section-drafts/ — текстовые черновики подразделов.
-vkr-clean/ — clean layer для материалов ВКР.
-```
+A topic draft is the semantic base. A section draft is text being accumulated by section blocks.
 
-Не копировать planning напрямую в ПЗ.
+Never create a section draft as one uncontrolled wall of text. First create blocks, questions and a plan of disclosure.
 
-## 4. Основной workflow
+## 5. Existing chapter drafts
 
-```text
-topic draft
-↔ вопросы / research / repo-check / visual bridge
-↔ section draft blocks
-→ section draft v1
-→ reviewer pass
-→ clean VKR text
-```
+Existing chapters or older section drafts can be useful resources. They may contain good structure, wording, tables or problem notes.
 
-Не ждать, пока topic-драфт станет идеальным. Если отдельный блок темы уже понятен, можно создавать соответствующий блок section draft и постепенно его заполнять.
-
-## 5. Что нельзя делать
+But they are not final clean text and not source of truth. Use:
 
 ```text
-- не писать финальный текст ВКР из воздуха;
-- не использовать AI/chats/prompts в тексте ПЗ;
-- не использовать L1/L2 как язык ВКР;
-- не писать “реализовано” без repo/evidence check;
-- не называть mock-проверку реальной внешней интеграцией;
-- не называть договорный обмен юридически значимым подписанием;
-- не заявлять ЭДО/ЭП/внешние сервисы без проверки;
-- не писать новые драфты в legacy/support папки;
-- не удалять legacy без отдельного cleanup архива.
+planning/thesis/vkr-clean/existing-chapter-drafts/
+planning/thesis/chat-action-algorithms/cleanup-and-legacy/existing-chapter-draft-review.md
 ```
 
-## 6. Как действовать при неопределённости
-
-Если непонятно, active ли папка или файл:
+Reuse modes:
 
 ```text
-1. проверить README текущей папки;
-2. проверить topic-index.md;
-3. проверить VKR-WORKFLOW-SOURCE-OF-TRUTH.md;
-4. спросить пользователя, если active/support статус всё ещё неясен;
-5. не переписывать и не удалять по памяти.
+idea → topic draft material candidate;
+usable paragraph → section draft block, marked for review;
+problem note → question/checklist;
+weak part → avoid/rewrite through workflow.
 ```
 
-## 7. Как писать про реализацию
+## 6. Question principle
 
-Для главы 3 обязательно смотреть:
+Questions must be prioritised. Do not ask a random large list.
+
+Use:
 
 ```text
-код;
-tests;
-screenshots/demo;
-slice drafts;
-scenario specs;
-DATA;
-domain drafts;
-ADR/решения;
-questions/decisions.
+chat-action-algorithms/drafting/question-priority.md
 ```
 
-Глава 3 — доказательная глава. В ней нельзя опираться только на красивый topic-драфт.
+Priorities:
 
-## 8. Как писать про research
+```text
+blocking;
+strong;
+research;
+repo/evidence;
+visual;
+style.
+```
 
-Research не вставляется буквально. Нужно сформулировать вопрос темы, найти ответ в research, переработать его под проект и вставить в нужный блок section draft.
+## 7. Navigation rule
 
-## 9. Команды пользователя
+Whenever a file is created, changed, moved or deleted, check:
 
-Если пользователь пишет `тчт`, значит нужно сохранить **предыдущий уже данный ответ** в `.txt` и дать ссылку на файл.
+```text
+chat-action-algorithms/navigation-impact-check.md
+```
 
-Если пользователь просит архив, использовать safe-merge/archive алгоритм из `planning/thesis/chat-action-algorithms/archive-generation-and-navigation-update.md`.
+The chat should ask/check:
+
+```text
+Какие навигационные файлы нужно обновить из-за этого изменения?
+```
+
+## 8. Core guardrails
+
+- Account activation is not a central implemented VKR flow.
+- Mock check is a demonstration / extension point, not real external verification.
+- Contract is not generated automatically.
+- Agreement stage is started by an employee after approval.
+- Agreement stage is exchange of ready document versions.
+- Document reference / metadata is not a full ECM/EDO/file storage system.
+- Do not claim email is fully implemented without repo-check.

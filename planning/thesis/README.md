@@ -1,77 +1,78 @@
-# VKR Thesis Workspace
+# VKR thesis workspace
 
-Статус: главный вход в материалы ВКР / навигация v2
+This directory contains the working materials for the VKR / diploma text.
 
-Эта папка содержит рабочую систему подготовки ВКР по теме:
+## Read first
 
-> Разработка web-приложения для автоматизации ведения документооборота и обработки клиентских заявок в сетевой компании ООО «ЗСК».
+1. `VKR-WORKFLOW-SOURCE-OF-TRUTH.md` — главный источник правил и workflow.
+2. `VKR-RESOURCE-MAP.md` — карта ресурсов: где искать topic-драфты, section-драфты, research, существующие главы и evidence.
+3. `NEW-CHAT-ONBOARDING.md` — памятка для нового чата.
+4. `chat-action-algorithms/README.md` — обязательные алгоритмы поведения чатов.
+5. `vkr-topic-workbench/README.md` — где живут topic-драфты и как они устроены.
+6. `vkr-clean/README.md` — где живут section-драфты, existing chapter drafts и clean-материалы.
 
-## 1. Главный source of truth
-
-Сначала читать:
+## Core storage
 
 ```text
-planning/thesis/VKR-WORKFLOW-SOURCE-OF-TRUTH.md
-planning/thesis/NEW-CHAT-ONBOARDING.md
+planning/thesis/
+├─ VKR-WORKFLOW-SOURCE-OF-TRUTH.md
+├─ VKR-RESOURCE-MAP.md
+├─ NEW-CHAT-ONBOARDING.md
+├─ chat-action-algorithms/
+├─ vkr-topic-workbench/
+└─ vkr-clean/
 ```
 
-Эти файлы объясняют, где лежат topic-драфты, section-драфты, research, визуальные материалы, repo/evidence facts и правила для новых чатов.
+## File roles
 
-## 2. Основные зоны
-
-| Зона | Путь | Назначение |
-|---|---|---|
-| Topic workbench | `vkr-topic-workbench/` | Смысловые topic-драфты, вопросы, research bridge, visual bridge, планы раскрытия |
-| Clean VKR materials | `vkr-clean/` | Чистые материалы, section-драфты, evidence, тексты ближе к ПЗ |
-| Research | `vkr-topic-workbench/00-research-materials/` | Research-отчёты и карты источников |
-| Chat action algorithms | `chat-action-algorithms/` | Обязательные действия чатов в типовых ситуациях |
-| Preddiploma derivatives | `preddiploma/` | Отчёт по практике и производные материалы |
-| Presentation | `presentation/` | Слайды, доклад, демо-сценарий |
-
-## 3. Где хранятся драфты
-
-Topic-драфты:
+### Topic drafts
 
 ```text
 planning/thesis/vkr-topic-workbench/**/*.topic.md
 ```
 
-Section-драфты:
+Topic draft is the semantic base of a topic: placement, questions, source materials, research bridge, visual plan, boundaries, section blocks and drafting plan.
+
+### Section drafts
 
 ```text
 planning/thesis/vkr-clean/section-drafts/
 ```
 
-Слабые/хаотичные главы, созданные до workflow:
+Section draft is a developing text of a VKR subsection. It accumulates text inside section blocks prepared through topic-draft workflow.
+
+### Existing chapter drafts
 
 ```text
-planning/thesis/vkr-clean/legacy-chaotic-drafts/
+planning/thesis/vkr-clean/existing-chapter-drafts/
 ```
 
-## 4. Актуальная формула работы
+Existing chapter drafts are early/ хаотично созданные главы or large section drafts that are not final, but are useful resources. They can provide structure, successful wording, tables and problem notes. They must be reviewed and passed through topic-draft workflow before reuse.
+
+### Chat action algorithms
 
 ```text
-topic draft
-↔ вопросы / research / repo-check / visual bridge
-↔ section draft blocks
-→ section draft v1
-→ reviewer pass
-→ clean VKR text
+planning/thesis/chat-action-algorithms/
 ```
 
-Topic draft не заменяет section draft. Topic draft задаёт смысловые блоки, вопросы и план раскрытия. Section draft постепенно собирает текст под эти блоки.
+This is the mandatory behavior layer. If the user asks for a draft, clarification, archive, visual review, repo-check or `тчт`, the chat must run the relevant algorithm.
 
-## 5. Обязательное правило навигации
+## Active vs legacy
 
-Если меняется структура папок, появляется новый тип артефакта, добавляется active/legacy статус или переносится драфт, нужно одновременно обновить навигацию:
+Legacy/support folders are not deleted automatically. They are used only for harvest and comparison. New drafts should be written only into active folders named in `VKR-WORKFLOW-SOURCE-OF-TRUTH.md`, `VKR-RESOURCE-MAP.md` and related README files.
+
+## Navigation rule
+
+Whenever a file is created, moved, deleted, renamed, or a folder structure changes, run navigation impact check:
 
 ```text
-planning/thesis/README.md
-planning/thesis/VKR-WORKFLOW-SOURCE-OF-TRUTH.md
-planning/thesis/vkr-topic-workbench/README.md
-соответствующий chapter README
-соответствующий topic-index.md, если меняются темы
-planning/thesis/vkr-clean/README.md, если меняется clean layer
+planning/thesis/chat-action-algorithms/navigation-impact-check.md
 ```
 
-Не добавлять новые папки без README или явного упоминания в навигации.
+The chat must ask/check:
+
+```text
+Какие навигационные файлы нужно обновить из-за этого изменения?
+```
+
+At minimum check `README.md`, `VKR-WORKFLOW-SOURCE-OF-TRUTH.md`, `VKR-RESOURCE-MAP.md` and the README of the changed layer.

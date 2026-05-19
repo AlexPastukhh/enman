@@ -1,39 +1,26 @@
-# Legacy Chaotic Drafts
+# Legacy chaotic drafts
 
-Статус: support / analysis only
+This folder stores weak, chaotic or clearly outdated chapter versions produced outside the current workflow.
 
-Эта папка предназначена для глав и больших текстов, которые были сгенерированы хаотично до текущего workflow.
+They are not clean section drafts.
 
-## Правило
+## Use only for analysis
 
-Эти тексты не считаются clean section drafts.
-
-Их нельзя напрямую переносить в ПЗ без анализа.
-
-## Как использовать
-
-Для каждого хаотичного текста нужно понять:
+Review them to find:
 
 ```text
-- что в нём полезно;
-- что неточно;
-- что завышает реализацию;
-- где generic/template text;
-- какие мысли можно сохранить;
-- каких topic-драфтов или section blocks ему не хватает;
-- как переписать через текущий workflow.
+what is useful;
+what is inaccurate;
+what is too generic;
+what overclaims implementation;
+what conflicts with current workflow;
+what can be salvaged.
 ```
 
-## Template
-
-Использовать:
+If a draft turns out to be coherent and useful, move/categorise it under:
 
 ```text
-chaotic-draft-review-template.md
+planning/thesis/vkr-clean/existing-chapter-drafts/
 ```
 
-## Где должны быть нормальные section drafts
-
-```text
-planning/thesis/vkr-clean/section-drafts/
-```
+and use `existing-chapter-draft-review.md`.

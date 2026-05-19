@@ -1,86 +1,46 @@
-# Clean VKR Materials
+# VKR clean materials
 
-Статус: clean layer / section drafts / evidence / reviewer workflow
+This folder contains VKR-safe materials and section drafts.
 
-Эта папка содержит материалы, которые можно разворачивать в текст ВКР. Planning-файлы используются как источники, но не копируются напрямую.
+## Important
 
-## 1. Главная граница
+`vkr-clean/` is not the same as final thesis text. It is the clean layer where planning content is converted into thesis-safe engineering language.
 
-```text
-planning/ — рабочая инженерная кухня;
-vkr-topic-workbench/ — смысловые topic-драфты и блоки будущего текста;
-vkr-clean/ — чистые материалы, evidence, section-драфты и reviewer workflow.
-```
-
-В финальную ПЗ не переносятся:
+## Key folders
 
 ```text
-ИИ;
-чаты;
-промпты;
-agent workflow;
-archive notes;
-raw author logs.
+section-drafts/
+existing-chapter-drafts/
+legacy-chaotic-drafts/
+chapter-3/        # if present: repo/evidence facts for chapter 3
 ```
 
-## 2. Где section-драфты
+## Section drafts
 
 ```text
 planning/thesis/vkr-clean/section-drafts/
 ```
 
-Section draft — это рабочий текст подраздела, который постепенно собирается из блоков, заданных topic-драфтом.
+Section drafts accumulate text inside section blocks prepared from topic drafts.
 
-## 3. Где слабые/хаотичные главы
+No mandatory fragment bank. If a paragraph is ready, place it in the relevant section draft block.
+
+## Existing chapter drafts
+
+```text
+planning/thesis/vkr-clean/existing-chapter-drafts/
+```
+
+Existing chapter drafts are early or previously generated chapters that may be useful. They can provide structure, wording, tables and review notes, but they are not final clean text and must pass topic-draft workflow before reuse.
+
+## Legacy chaotic drafts
 
 ```text
 planning/thesis/vkr-clean/legacy-chaotic-drafts/
 ```
 
-Эта папка предназначена для глав, созданных до текущего workflow. Такие тексты нельзя считать clean section drafts без анализа.
+Weak/chaotic chapter versions are stored here for analysis only. They are not clean section drafts.
 
-## 4. Active workflow для section drafts
+## Navigation rule
 
-```text
-topic draft
-↔ вопросы / research / repo-check / visual bridge
-↔ section draft blocks
-→ section draft v1
-→ reviewer pass
-→ clean VKR text
-```
-
-Основной переход описан здесь:
-
-```text
-planning/thesis/vkr-topic-workbench/TOPIC-TO-SECTION-BLOCK-WORKFLOW.md
-```
-
-## 5. Section draft files
-
-| Path | Purpose |
-|---|---|
-| `section-drafts/README.md` | Entry point for section draft workflow |
-| `section-drafts/section-draft-register.md` | Register of subsection draft attempts and review status |
-| `section-drafts/reviewer-workflow.md` | Reviewer roles and review process |
-| `section-drafts/reviewer-prompts.md` | Reusable reviewer prompts |
-| `section-drafts/full-draft-template.md` | Template for full draft attempts |
-| `section-drafts/full-draft-review-checklist.md` | Review checklist |
-
-`fragment-bank.md` is deprecated/support and not part of the active workflow.
-
-## 6. Clean source files
-
-Use clean source files for terminology, requirements, domain, architecture, database, UI, testing, results and future work. Keep them clean, project-specific and evidence-aware.
-
-## 7. Navigation rule
-
-If structure changes, update:
-
-```text
-planning/thesis/README.md
-planning/thesis/VKR-WORKFLOW-SOURCE-OF-TRUTH.md
-planning/thesis/vkr-clean/README.md
-planning/thesis/vkr-clean/vkr-materials-index.md
-relevant section-drafts README/register files
-```
+If this folder structure changes, run navigation impact check and update `VKR-RESOURCE-MAP.md` if resource paths changed.

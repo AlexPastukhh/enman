@@ -1,36 +1,35 @@
-# Algorithm: Archive Generation and Navigation Update
+# Algorithm: archive generation and navigation update
 
-Когда пользователь просит создать архив с обновлением docs/workflow/planning:
+Run when the user asks to update docs/planning files by archive.
 
-## Обязательные действия
+## Required behavior
 
-```text
-1. Проверить текущий repo/archive, а не работать по памяти.
-2. Определить add/replace/deprecate/delete candidates.
-3. Не удалять legacy/support файлы смешанным архивом.
-4. Для replacement-файлов сохранить originals в `_archive-review/<slug>/original-files/`.
-5. Обновить navigation/source-of-truth в том же архиве.
-6. Если добавлена папка, создать README или указать её в навигации.
-7. Если меняется active/legacy статус, явно отметить это в README.
-8. Создать MANIFEST и APPLY с понятными командами.
-9. Дать пользователю ссылку на архив и краткое резюме.
-```
+1. Check current repo/archive state. Do not work only from memory.
+2. Identify add/replace/deprecate/delete files.
+3. Perform navigation impact check.
+4. Create complete replacement files.
+5. Save originals for replacement files in `_archive-review/.../original-files/`.
+6. Create MANIFEST and APPLY.
+7. Create DELETIONS if files should be removed.
+8. Create MERGE-RISK-REPORT and PRE-DELIVERY-CHECK.
 
-## Navigation минимум
+## Pre-delivery check
 
-```text
-planning/thesis/README.md
-planning/thesis/VKR-WORKFLOW-SOURCE-OF-TRUTH.md
-planning/thesis/vkr-topic-workbench/README.md
-planning/thesis/vkr-topic-workbench/00-workflow-and-rules/README.md
-planning/thesis/vkr-clean/README.md, если меняется clean layer
-```
+Before giving the archive link, the chat must:
 
-## Нельзя
-
-```text
-- перезаписывать пользовательские изменения без originals;
-- удалять legacy без отдельного cleanup;
-- делать архив, который меняет workflow, но не меняет navigation;
-- утверждать, что repo проверен, если архив не был прочитан.
-```
+1. Open created zip.
+2. Check file list.
+3. Check MANIFEST and APPLY exist.
+4. Check DELETIONS exists if deletions are needed.
+5. Check new files are inside.
+6. Check replacement files have originals in `_archive-review`.
+7. Check navigation impact check was performed.
+8. Check new folders have README or are reflected in navigation.
+9. Check legacy/support was not deleted accidentally.
+10. In final response list:
+    - added files;
+    - updated files;
+    - deprecated/deleted files;
+    - apply command;
+    - git diff checks;
+    - git add/commit command.

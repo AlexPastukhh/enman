@@ -133,10 +133,10 @@ public sealed class SeedE2eDemoDataCommand
             SET IDENTITY_INSERT dbo.L1ClientRequests OFF;
 
             INSERT INTO dbo.L1RequestReviews
-                (RequestId, ClientAccountId, Status, StartedByEmployeeId, StartedAt,
+                (RequestId, Status, StartedByEmployeeId, StartedAt,
                  CompletedByEmployeeId, CompletedAt, RejectionReason)
             VALUES
-                (@agreementRequestId, @clientAccountId, N'Approved', @employeeId, DATEADD(minute, -20, @now),
+                (@agreementRequestId, N'Approved', @employeeId, DATEADD(minute, -20, @now),
                  @employeeId, DATEADD(minute, -10, @now), NULL);
 
             COMMIT TRANSACTION;

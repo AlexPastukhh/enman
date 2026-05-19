@@ -1,12 +1,10 @@
-# Algorithm: `тчт` command
+# Algorithm: `тчт`
 
-Когда пользователь пишет `тчт`:
+If the user writes `тчт`:
 
-```text
-1. Взять предыдущий уже данный ответ ассистента.
-2. Сохранить его в `.txt` файл.
-3. Дать ссылку на скачивание.
-4. Не сохранять новый ответ, который только собираешься дать.
-```
+1. Take the previous already sent assistant answer.
+2. Save that answer into a `.txt` file.
+3. Do not save the new answer that the assistant is about to produce.
+4. Reply only with a short confirmation and a link to the `.txt` file.
 
-Если непонятно, какой ответ предыдущий, спросить коротко или взять непосредственно последний assistant answer.
+If there is ambiguity about which previous answer is meant, use the immediately previous assistant message.

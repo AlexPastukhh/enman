@@ -1,65 +1,24 @@
-# Протокол исследовательской привязки темы
+# Research bridge protocol
 
-Статус: актуально / v2
+Research bridge answers questions from a topic draft. It is not a copy-paste source.
 
-## 1. Назначение
-
-Research bridge нужен, чтобы использовать research-материалы как ответы на вопросы темы, а не как готовый текст ВКР.
-
-## 2. Основная формула
+## Formula
 
 ```text
-тема / section block
-→ вопрос к research
-→ короткий ответ из research
-→ переработанный тезис
-→ место в section draft
+topic question
+→ research answer
+→ project-specific conclusion
+→ section block placement
 ```
 
-## 3. Где хранить
+## Required fields
 
-Минимальный research bridge хранится в topic-драфте.
+| Topic question | Why external support is needed | Research answer | Project conclusion | Section block | Citation/source later |
+|---|---|---|---|---|---|
 
-Если research большой или относится к нескольким блокам, можно создать рядом отдельный файл:
+## Rules
 
-```text
-<topic-slug>.research-bridge.md
-```
-
-## 4. Правильное использование
-
-Правильно:
-
-```text
-Вопрос: почему договорная версия должна быть связана с заявкой и решением?
-Research: records management и workflow/BPM поддерживают идею связи документа с процессом, маршрутом и участниками.
-Вставка: блок section draft “Документная версия как часть договорного обмена”.
-```
-
-Неправильно:
-
-```text
-Вставить большой фрагмент research-отчёта без связи с нашей заявкой и договорным этапом.
-```
-
-## 5. Research questions for section blocks
-
-Research-вопросы должны задаваться не только на тему целиком, а на конкретный блок будущего section draft.
-
-| Блок section draft | Вопрос к research | Какой тезис нужен | Куда вставить |
-|---|---|---|---|
-| ... | ... | ... | ... |
-
-## 6. Не каждая тема требует research
-
-```text
-1.1 Процесс заявки — research минимален, основа: проект и предметная логика.
-1.2 Документный этап — research точечно: records management, workflow/BPM.
-1.3 Проблематика — research по ручному процессу, email+Excel, разрозненности.
-1.4 Анализ решений — основной получатель comparative research.
-1.5 Выбор направления — вывод из research + требования проекта.
-```
-
-## 7. Citation pass
-
-Перед финальной ПЗ research IDs должны быть превращены в нормальные библиографические ссылки. Не оставлять в финальном тексте внутренние маркеры research/chat.
+- Do not insert research literally.
+- Do not use research to claim implementation.
+- Separate external general thesis from project-specific conclusion.
+- Use research mainly where the topic needs external support: document workflow, existing solutions, manual process, requirements, architecture, testing, security.

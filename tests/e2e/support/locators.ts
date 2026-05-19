@@ -20,6 +20,7 @@ export const L = {
     currentDefaultRegion: /Текущий заявитель|Current\/default templates|Текущие шаблоны/i,
     otherSavedRegion: /Другие сохранённые заявители|Другие сохраненные заявители|Other saved Applicant Parties/i,
     currentDefaultBadge: /Текущий|Current\/default|Current default/i,
+    unverifiedSummary: /Данные не проверены|Unverified/i,
     savedApplicantLabel: /Сохранённый заявитель|Сохраненный заявитель|Saved Applicant Party/i,
   },
   agreementExchange: {
