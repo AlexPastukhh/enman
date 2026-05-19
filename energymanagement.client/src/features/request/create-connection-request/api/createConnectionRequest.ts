@@ -4,7 +4,7 @@ import { fetchJson } from "../../../../shared/api/fetchJson";
 export const createConnectionRequest = (
   request: L1CreateConnectionRequestRequest,
 ): Promise<void> =>
-  fetchJson<void>("/api/l1/requests", {
+  fetchJson<void>("/api/requests", {
     method: "POST",
     body: JSON.stringify(request),
   });

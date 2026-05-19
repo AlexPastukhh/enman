@@ -1,7 +1,7 @@
 import {
   loginClientAccount as postLoginClientAccount,
   type L1LoginRequest,
-} from "../../../../shared/api/l1AuthApi";
+} from "../../../../shared/apiAuthApi";
 import { loginFieldNames, type LoginFormValues } from "../model/loginSchema";
 
 export const loginClientAccount = (

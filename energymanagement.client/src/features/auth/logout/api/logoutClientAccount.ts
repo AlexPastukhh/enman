@@ -1,4 +1,4 @@
-import { logoutClientAccount as postLogoutClientAccount } from "../../../../shared/api/l1AuthApi";
+import { logoutClientAccount as postLogoutClientAccount } from "../../../../shared/apiAuthApi";
 
 export const logoutClientAccount = (): Promise<void> => postLogoutClientAccount();
 

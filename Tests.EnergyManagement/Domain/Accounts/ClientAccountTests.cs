@@ -1,10 +1,10 @@
 using Domain.EnergyManagement.Common;
-using Domain.EnergyManagement.L1;
+using Domain.EnergyManagement;
 using FluentAssertions;
-using Tests.EnergyManagement.TestHelpers.L1;
+using Tests.EnergyManagement.TestHelpers.App;
 using static Domain.EnergyManagement.Common.Error;
 
-namespace Tests.EnergyManagement.L1Domain.Accounts;
+namespace Tests.EnergyManagement.Domain.Accounts;
 
 public class ClientAccountTests
 {
@@ -14,13 +14,13 @@ public class ClientAccountTests
         var createdAt = DateTimeOffset.UtcNow;
 
         var result = ClientAccount.Register(
-            L1ValidTestData.Email,
-            L1ValidTestData.PasswordHash,
+            ValidDomainTestData.Email,
+            ValidDomainTestData.PasswordHash,
             createdAt);
 
         result.IsSuccess.Should().BeTrue();
-        result.Value.Email.Should().Be(L1ValidTestData.Email);
-        result.Value.PasswordHash.Should().Be(L1ValidTestData.PasswordHash);
+        result.Value.Email.Should().Be(ValidDomainTestData.Email);
+        result.Value.PasswordHash.Should().Be(ValidDomainTestData.PasswordHash);
         result.Value.Role.Should().Be(AccountRole.Client);
         result.Value.ActivationState.Should().Be(AccountActivationState.Active);
         result.Value.IsActive.Should().BeTrue();
@@ -32,7 +32,7 @@ public class ClientAccountTests
     {
         var result = ClientAccount.Register(
             null!,
-            L1ValidTestData.PasswordHash,
+            ValidDomainTestData.PasswordHash,
             DateTimeOffset.UtcNow);
 
         result.IsFailure.Should().BeTrue();
@@ -64,8 +64,8 @@ public class ClientAccountTests
     private static ClientAccount CreateActiveAccount()
     {
         return ClientAccount.Register(
-            L1ValidTestData.Email,
-            L1ValidTestData.PasswordHash,
+            ValidDomainTestData.Email,
+            ValidDomainTestData.PasswordHash,
             DateTimeOffset.UtcNow).Value;
     }
 

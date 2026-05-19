@@ -1,7 +1,7 @@
-using Domain.EnergyManagement.L1;
+using Domain.EnergyManagement;
 using FluentAssertions;
 
-namespace Tests.EnergyManagement.L1Domain.AgreementProposals;
+namespace Tests.EnergyManagement.Domain.AgreementProposals;
 
 public class AgreementProposalVersionTests
 {

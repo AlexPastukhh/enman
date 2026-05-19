@@ -5,7 +5,7 @@ export const getMyRequestDetails = (
   requestId: number,
 ): Promise<L1MyRequestDetails> =>
   fetchJson<L1MyRequestDetails>(
-    `/api/l1/requests/${encodeURIComponent(String(requestId))}`,
+    `/api/requests/${encodeURIComponent(String(requestId))}`,
     {
       method: "GET",
     },

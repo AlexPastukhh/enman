@@ -1,8 +1,8 @@
-using Domain.EnergyManagement.L1;
+using Domain.EnergyManagement;
 using FluentAssertions;
 using static Domain.EnergyManagement.Common.Error;
 
-namespace Tests.EnergyManagement.L1Domain.AgreementProposals;
+namespace Tests.EnergyManagement.Domain.AgreementProposals;
 
 public class FinalRefusalReasonTests
 {

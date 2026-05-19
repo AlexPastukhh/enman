@@ -33,7 +33,7 @@ describe("createConnectionRequest", () => {
     await expect(createConnectionRequest(request)).resolves.toBeUndefined();
 
     expect(fetchMock).toHaveBeenLastCalledWith(
-      "/api/l1/requests",
+      "/api/requests",
       expect.objectContaining({
         method: "POST",
         credentials: "include",

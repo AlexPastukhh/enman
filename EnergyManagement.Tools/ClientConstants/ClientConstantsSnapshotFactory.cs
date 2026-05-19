@@ -1,6 +1,6 @@
 using EnergyManagement.Server.Api.Contracts.Common;
-using EnergyManagement.Server.L1.Api;
-using EnergyManagement.Server.L1.Api.Validation;
+using EnergyManagement.Server.Api;
+using EnergyManagement.Server.Api.Validation;
 
 namespace EnergyManagement.Tools.ClientConstants;
 

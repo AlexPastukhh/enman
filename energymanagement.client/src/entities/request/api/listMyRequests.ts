@@ -2,7 +2,7 @@ import { fetchJson } from "../../../shared/api/fetchJson";
 import type { MyRequestsFilters } from "../model/myRequestsFilters";
 import type { L1ListMyRequestsResponse } from "./requestApiTypes";
 
-const requestsPath = "/api/l1/requests";
+const requestsPath = "/api/requests";
 
 const withQuery = (path: string, searchParams: URLSearchParams) => {
   const query = searchParams.toString();

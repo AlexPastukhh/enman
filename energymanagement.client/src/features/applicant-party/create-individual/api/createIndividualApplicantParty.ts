@@ -9,7 +9,7 @@ import {
 } from "../model/createIndividualApplicantPartySchema";
 
 const createIndividualApplicantPartyPath =
-  "/api/l1/applicant-parties/individual";
+  "/api/applicant-parties/individual";
 
 export const createIndividualApplicantParty = (
   values: CreateIndividualApplicantPartyFormValues,

@@ -1,7 +1,7 @@
 import {
   registerClientAccount as postRegisterClientAccount,
   type L1RegisterRequest,
-} from "../../../../shared/api/l1AuthApi";
+} from "../../../../shared/apiAuthApi";
 import type { RegisterFormValues } from "../model/registerSchema";
 import { registerFieldNames } from "../model/registerSchema";
 

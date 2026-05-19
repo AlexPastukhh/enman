@@ -1,10 +1,10 @@
-using Domain.EnergyManagement.L1;
+using Domain.EnergyManagement;
 using FluentAssertions;
-using Tests.EnergyManagement.L1Domain;
-using Tests.EnergyManagement.TestHelpers.L1;
+using Tests.EnergyManagement.Domain;
+using Tests.EnergyManagement.TestHelpers.App;
 using static Domain.EnergyManagement.Common.Error;
 
-namespace Tests.EnergyManagement.L1Domain.Requests;
+namespace Tests.EnergyManagement.Domain.Requests;
 
 public class ConnectionRequestL2ReviewTests
 {
@@ -200,26 +200,26 @@ public class ConnectionRequestL2ReviewTests
     {
         return ConnectionRequest.Create(
             CreatePersistedApplicant(),
-            L1ValidTestData.RequestDetails,
-            L1ValidTestData.Address).Value;
+            ValidDomainTestData.RequestDetails,
+            ValidDomainTestData.Address).Value;
     }
 
     private static IndividualApplicantParty CreatePersistedApplicant()
     {
         return IndividualApplicantParty.Create(
             clientAccountId: 10,
-            L1ValidTestData.FullName,
-            L1ValidTestData.Email,
-            L1ValidTestData.PhoneNumber,
+            ValidDomainTestData.FullName,
+            ValidDomainTestData.Email,
+            ValidDomainTestData.PhoneNumber,
             DateTimeOffset.UtcNow).Value.WithId(42);
     }
 
     private static Employee CreatePersistedEmployee(long id)
     {
         return Employee.Create(
-            L1ValidTestData.Email,
-            L1ValidTestData.PasswordHash,
-            L1ValidTestData.FullName,
+            ValidDomainTestData.Email,
+            ValidDomainTestData.PasswordHash,
+            ValidDomainTestData.FullName,
             DateTimeOffset.UtcNow).Value.WithId(id);
     }
 }

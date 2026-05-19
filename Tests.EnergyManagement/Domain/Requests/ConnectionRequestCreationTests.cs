@@ -1,10 +1,10 @@
-using Domain.EnergyManagement.L1;
+using Domain.EnergyManagement;
 using FluentAssertions;
-using Tests.EnergyManagement.L1Domain;
-using Tests.EnergyManagement.TestHelpers.L1;
+using Tests.EnergyManagement.Domain;
+using Tests.EnergyManagement.TestHelpers.App;
 using static Domain.EnergyManagement.Common.Error;
 
-namespace Tests.EnergyManagement.L1Domain.Requests;
+namespace Tests.EnergyManagement.Domain.Requests;
 
 public class ConnectionRequestCreationTests
 {
@@ -15,15 +15,15 @@ public class ConnectionRequestCreationTests
 
         var result = ConnectionRequest.Create(
             applicant,
-            L1ValidTestData.RequestDetails,
-            L1ValidTestData.Address);
+            ValidDomainTestData.RequestDetails,
+            ValidDomainTestData.Address);
 
         result.IsSuccess.Should().BeTrue();
         result.Value.ApplicantPartyId.Should().Be(applicant.Id);
         result.Value.RequestType.Should().Be(ClientRequestType.Connection);
         result.Value.Status.Should().Be(RequestStatus.InReview);
-        result.Value.Details.Should().Be(L1ValidTestData.RequestDetails);
-        result.Value.ObjectAddress.Should().Be(L1ValidTestData.Address);
+        result.Value.Details.Should().Be(ValidDomainTestData.RequestDetails);
+        result.Value.ObjectAddress.Should().Be(ValidDomainTestData.Address);
         result.Value.Review.Should().BeNull();
     }
 
@@ -33,7 +33,7 @@ public class ConnectionRequestCreationTests
         var result = ConnectionRequest.Create(
             CreatePersistedApplicant(),
             " ",
-            L1ValidTestData.Address);
+            ValidDomainTestData.Address);
 
         result.IsFailure.Should().BeTrue();
         result.Error.Should().Contain(Errors.ClientRequestErrors.ClientRequestTextIsRequired);
@@ -44,7 +44,7 @@ public class ConnectionRequestCreationTests
     {
         var result = ConnectionRequest.Create(
             CreatePersistedApplicant(),
-            L1ValidTestData.RequestDetails,
+            ValidDomainTestData.RequestDetails,
             null!);
 
         result.IsFailure.Should().BeTrue();
@@ -58,8 +58,8 @@ public class ConnectionRequestCreationTests
 
         var result = ConnectionRequest.Create(
             applicant,
-            L1ValidTestData.RequestDetails,
-            L1ValidTestData.Address);
+            ValidDomainTestData.RequestDetails,
+            ValidDomainTestData.Address);
 
         result.IsFailure.Should().BeTrue();
         result.Error.Should().Contain(Errors.L1Domain.ApplicantPartyMustBePersisted);
@@ -74,9 +74,9 @@ public class ConnectionRequestCreationTests
     {
         return IndividualApplicantParty.Create(
             clientAccountId: 10,
-            L1ValidTestData.FullName,
-            L1ValidTestData.Email,
-            L1ValidTestData.PhoneNumber,
+            ValidDomainTestData.FullName,
+            ValidDomainTestData.Email,
+            ValidDomainTestData.PhoneNumber,
             DateTimeOffset.UtcNow).Value;
     }
 }

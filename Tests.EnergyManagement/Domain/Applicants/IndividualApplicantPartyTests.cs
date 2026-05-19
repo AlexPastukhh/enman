@@ -1,9 +1,9 @@
-using Domain.EnergyManagement.L1;
+using Domain.EnergyManagement;
 using FluentAssertions;
-using Tests.EnergyManagement.TestHelpers.L1;
+using Tests.EnergyManagement.TestHelpers.App;
 using static Domain.EnergyManagement.Common.Error;
 
-namespace Tests.EnergyManagement.L1Domain.Applicants;
+namespace Tests.EnergyManagement.Domain.Applicants;
 
 public class IndividualApplicantPartyTests
 {
@@ -14,9 +14,9 @@ public class IndividualApplicantPartyTests
 
         var result = IndividualApplicantParty.Create(
             clientAccountId: 10,
-            L1ValidTestData.FullName,
-            L1ValidTestData.Email,
-            L1ValidTestData.PhoneNumber,
+            ValidDomainTestData.FullName,
+            ValidDomainTestData.Email,
+            ValidDomainTestData.PhoneNumber,
             createdAt);
 
         result.IsSuccess.Should().BeTrue();
@@ -25,9 +25,9 @@ public class IndividualApplicantPartyTests
         result.Value.Type.Should().Be(ApplicantPartyType.Individual);
         result.Value.VerificationStatus.Should().Be(ApplicantPartyVerificationStatus.Unverified);
         result.Value.IsCurrentActiveVersion.Should().BeFalse();
-        result.Value.Email.Should().Be(L1ValidTestData.Email);
-        result.Value.PhoneNumber.Should().Be(L1ValidTestData.PhoneNumber);
-        result.Value.FullName.Should().Be(L1ValidTestData.FullName);
+        result.Value.Email.Should().Be(ValidDomainTestData.Email);
+        result.Value.PhoneNumber.Should().Be(ValidDomainTestData.PhoneNumber);
+        result.Value.FullName.Should().Be(ValidDomainTestData.FullName);
         result.Value.CreatedAt.Should().Be(createdAt);
     }
 
@@ -86,9 +86,9 @@ public class IndividualApplicantPartyTests
     {
         return IndividualApplicantParty.Create(
             clientAccountId: 10,
-            L1ValidTestData.FullName,
-            L1ValidTestData.Email,
-            L1ValidTestData.PhoneNumber,
+            ValidDomainTestData.FullName,
+            ValidDomainTestData.Email,
+            ValidDomainTestData.PhoneNumber,
             DateTimeOffset.UtcNow).Value;
     }
 }

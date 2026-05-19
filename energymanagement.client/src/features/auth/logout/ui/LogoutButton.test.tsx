@@ -24,7 +24,7 @@ const { mockedGetCurrentUser, mockedLogoutClientAccount } = vi.hoisted(() => ({
   mockedLogoutClientAccount: vi.fn(),
 }));
 
-vi.mock("../../../../shared/api/l1AuthApi", () => ({
+vi.mock("../../../../shared/apiAuthApi", () => ({
   getCurrentUser: mockedGetCurrentUser,
   logoutClientAccount: mockedLogoutClientAccount,
   __esModule: true,

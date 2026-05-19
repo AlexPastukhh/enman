@@ -37,7 +37,7 @@ describe("l1AuthApi antiforgery session lifecycle", () => {
     expect(getCurrentAntiforgeryToken()).toBe("authenticated-token");
     expect(fetchMock.mock.calls.map((call) => call[0])).toEqual([
       "/api/antiforgery/token",
-      "/api/l1/auth/login",
+      "/api/auth/login",
       "/api/antiforgery/token",
     ]);
   });

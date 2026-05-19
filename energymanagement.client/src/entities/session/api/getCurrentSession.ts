@@ -1,5 +1,5 @@
 import { ApiError } from "../../../shared/api/fetchJson";
-import { getCurrentUser } from "../../../shared/api/l1AuthApi";
+import { getCurrentUser } from "../../../shared/apiAuthApi";
 import { mapCurrentUserToSession, type SessionState } from "../model/sessionTypes";
 
 export const getCurrentSession = async (): Promise<SessionState | null> => {

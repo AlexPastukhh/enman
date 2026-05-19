@@ -18,7 +18,7 @@ describe("makeApplicantPartyCurrentDefault", () => {
     await expect(makeApplicantPartyCurrentDefault(7)).resolves.toBeUndefined();
 
     expect(fetchMock).toHaveBeenLastCalledWith(
-      "/api/l1/applicant-parties/7/make-current-default",
+      "/api/applicant-parties/7/make-current-default",
       expect.objectContaining({
         method: "POST",
         credentials: "include",

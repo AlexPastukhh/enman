@@ -4,7 +4,7 @@ import type { L1CurrentIndividualApplicantPartyResponse } from "./applicantParty
 export const getCurrentIndividualApplicantParty =
   (): Promise<L1CurrentIndividualApplicantPartyResponse> =>
     fetchJson<L1CurrentIndividualApplicantPartyResponse>(
-      "/api/l1/applicant-parties/current-individual",
+      "/api/applicant-parties/current-individual",
       {
         method: "GET",
       },

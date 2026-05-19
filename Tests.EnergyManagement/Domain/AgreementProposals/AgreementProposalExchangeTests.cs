@@ -1,10 +1,10 @@
-using Domain.EnergyManagement.L1;
+using Domain.EnergyManagement;
 using FluentAssertions;
-using Tests.EnergyManagement.L1Domain;
-using Tests.EnergyManagement.TestHelpers.L1;
+using Tests.EnergyManagement.Domain;
+using Tests.EnergyManagement.TestHelpers.App;
 using static Domain.EnergyManagement.Common.Error;
 
-namespace Tests.EnergyManagement.L1Domain.AgreementProposals;
+namespace Tests.EnergyManagement.Domain.AgreementProposals;
 
 public class AgreementProposalExchangeTests
 {
@@ -452,26 +452,26 @@ public class AgreementProposalExchangeTests
     {
         return ConnectionRequest.Create(
             CreatePersistedApplicant(),
-            L1ValidTestData.RequestDetails,
-            L1ValidTestData.Address).Value;
+            ValidDomainTestData.RequestDetails,
+            ValidDomainTestData.Address).Value;
     }
 
     private static IndividualApplicantParty CreatePersistedApplicant()
     {
         return IndividualApplicantParty.Create(
             clientAccountId: 10,
-            L1ValidTestData.FullName,
-            L1ValidTestData.Email,
-            L1ValidTestData.PhoneNumber,
+            ValidDomainTestData.FullName,
+            ValidDomainTestData.Email,
+            ValidDomainTestData.PhoneNumber,
             DateTimeOffset.UtcNow).Value.WithId(42);
     }
 
     private static Employee CreateEmployee()
     {
         return Employee.Create(
-            L1ValidTestData.Email,
-            L1ValidTestData.PasswordHash,
-            L1ValidTestData.FullName,
+            ValidDomainTestData.Email,
+            ValidDomainTestData.PasswordHash,
+            ValidDomainTestData.FullName,
             DateTimeOffset.UtcNow).Value;
     }
 
@@ -483,8 +483,8 @@ public class AgreementProposalExchangeTests
     private static ClientAccount CreateClient()
     {
         return ClientAccount.Register(
-            L1ValidTestData.Email,
-            L1ValidTestData.PasswordHash,
+            ValidDomainTestData.Email,
+            ValidDomainTestData.PasswordHash,
             DateTimeOffset.UtcNow).Value;
     }
 

@@ -21,7 +21,7 @@ describe("listAccountApplicantParties", () => {
     await expect(listAccountApplicantParties()).resolves.toEqual(response);
 
     expect(fetchMock).toHaveBeenCalledWith(
-      "/api/l1/applicant-parties",
+      "/api/applicant-parties",
       expect.objectContaining({
         method: "GET",
         credentials: "include",

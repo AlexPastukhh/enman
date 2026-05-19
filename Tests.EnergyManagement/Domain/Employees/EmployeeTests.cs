@@ -1,9 +1,9 @@
-using Domain.EnergyManagement.L1;
+using Domain.EnergyManagement;
 using FluentAssertions;
-using Tests.EnergyManagement.TestHelpers.L1;
+using Tests.EnergyManagement.TestHelpers.App;
 using static Domain.EnergyManagement.Common.Error;
 
-namespace Tests.EnergyManagement.L1Domain.Employees;
+namespace Tests.EnergyManagement.Domain.Employees;
 
 public class EmployeeTests
 {
@@ -13,17 +13,17 @@ public class EmployeeTests
         var createdAt = DateTimeOffset.UtcNow;
 
         var result = Employee.Create(
-            L1ValidTestData.Email,
-            L1ValidTestData.PasswordHash,
-            L1ValidTestData.FullName,
+            ValidDomainTestData.Email,
+            ValidDomainTestData.PasswordHash,
+            ValidDomainTestData.FullName,
             createdAt,
             "TESTDOMAIN\\employee");
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Role.Should().Be(AccountRole.Employee);
-        result.Value.Email.Should().Be(L1ValidTestData.Email);
-        result.Value.PasswordHash.Should().Be(L1ValidTestData.PasswordHash);
-        result.Value.FullName.Should().Be(L1ValidTestData.FullName);
+        result.Value.Email.Should().Be(ValidDomainTestData.Email);
+        result.Value.PasswordHash.Should().Be(ValidDomainTestData.PasswordHash);
+        result.Value.FullName.Should().Be(ValidDomainTestData.FullName);
         result.Value.WindowsLogin.Should().Be("TESTDOMAIN\\employee");
         result.Value.IsActive.Should().BeTrue();
         result.Value.CreatedAt.Should().Be(createdAt);
@@ -34,8 +34,8 @@ public class EmployeeTests
     {
         var result = Employee.Create(
             null!,
-            L1ValidTestData.PasswordHash,
-            L1ValidTestData.FullName,
+            ValidDomainTestData.PasswordHash,
+            ValidDomainTestData.FullName,
             DateTimeOffset.UtcNow);
 
         result.IsFailure.Should().BeTrue();
@@ -46,9 +46,9 @@ public class EmployeeTests
     public void Create_fails_when_password_hash_is_missing()
     {
         var result = Employee.Create(
-            L1ValidTestData.Email,
+            ValidDomainTestData.Email,
             null!,
-            L1ValidTestData.FullName,
+            ValidDomainTestData.FullName,
             DateTimeOffset.UtcNow);
 
         result.IsFailure.Should().BeTrue();
@@ -59,8 +59,8 @@ public class EmployeeTests
     public void Create_fails_when_full_name_is_missing()
     {
         var result = Employee.Create(
-            L1ValidTestData.Email,
-            L1ValidTestData.PasswordHash,
+            ValidDomainTestData.Email,
+            ValidDomainTestData.PasswordHash,
             null!,
             DateTimeOffset.UtcNow);
 
@@ -82,9 +82,9 @@ public class EmployeeTests
     private static Employee CreateEmployee()
     {
         return Employee.Create(
-            L1ValidTestData.Email,
-            L1ValidTestData.PasswordHash,
-            L1ValidTestData.FullName,
+            ValidDomainTestData.Email,
+            ValidDomainTestData.PasswordHash,
+            ValidDomainTestData.FullName,
             DateTimeOffset.UtcNow).Value;
     }
 }

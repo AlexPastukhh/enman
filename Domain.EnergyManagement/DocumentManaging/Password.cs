@@ -217,7 +217,7 @@ namespace Domain.EnergyManagement.DocumentManaging
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                return UnitResult.Failure<Error>(Account.PasswordConfirmationDoesntMatch);
+                return UnitResult.Failure<Error>(Errors.Account.PasswordConfirmationDoesntMatch);
             }
             var newHash = Rfc2898DeriveBytes.Pbkdf2(
                 password,

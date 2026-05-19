@@ -1,7 +1,7 @@
 using System.Reflection;
 using CSharpFunctionalExtensions;
 
-namespace Tests.EnergyManagement.L1Domain;
+namespace Tests.EnergyManagement.Domain;
 
 internal static class L1TestEntityExtensions
 {

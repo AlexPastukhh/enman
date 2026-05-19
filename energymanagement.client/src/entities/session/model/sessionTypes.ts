@@ -1,4 +1,4 @@
-import type { L1CurrentUserResponse } from "../../../shared/api/l1AuthApi";
+import type { L1CurrentUserResponse } from "../../../shared/apiAuthApi";
 
 export type SessionState = {
   accountId: number;

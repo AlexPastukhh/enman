@@ -1,5 +1,5 @@
 using System.Data;
-using EnergyManagement.Server.L1.Persistence;
+using EnergyManagement.Server.Persistence;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;

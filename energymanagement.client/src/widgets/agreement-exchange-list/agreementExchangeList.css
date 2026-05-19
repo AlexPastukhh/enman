@@ -1,15 +1,15 @@
 .agreementExchangeList {
   display: grid;
-  gap: 1rem;
+  gap: var(--app-gap);
   margin-top: 1.5rem;
 }
 
 .agreementExchangeRow,
 .agreementExchangeListEmpty {
-  border: 1px solid #d8dee8;
-  border-radius: 16px;
-  background: #fff;
-  box-shadow: 0 8px 20px rgba(38, 46, 66, 0.06);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius);
+  background: var(--app-surface);
+  box-shadow: var(--shadow-sm);
   padding: 1.25rem;
 }
 
@@ -63,15 +63,15 @@
 }
 
 .agreementExchangeRow__address {
-  color: #334155;
+  color: var(--app-text);
   margin: 0 0 1rem;
 }
 
 .agreementExchangeRow__detailsLink {
   display: inline-flex;
   border-radius: 999px;
-  border: 1px solid #1e3a8a;
-  color: #1e3a8a;
+  border: 1px solid var(--color-primary-dark);
+  color: var(--color-primary-dark);
   font-weight: 600;
   padding: 0.5rem 0.9rem;
   text-decoration: none;
