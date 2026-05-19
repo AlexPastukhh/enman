@@ -1,31 +1,36 @@
 # Algorithm: existing section draft reverse engineering
 
-Run when an existing chapter/subsection is being used as a section draft or full-text candidate.
+Use when old section drafts or ready chapter fragments are used.
 
-## Core idea
+## Source priority rule
 
-Existing text is treated as candidate material.
+Existing section drafts are fallback/candidate sources, normally checked after:
 
 ```text
-existing chapter / subsection
-→ candidate material
-→ source-pass
-→ semantic points / text block candidates
-→ questions and checks
-→ updated topic draft or full-text version
+active topic drafts;
+roadmap/raw notes;
+scenarios/domain;
+research;
+visuals.
 ```
 
-## Required process
+## Reverse engineering
 
-1. Identify source file and related VKR point.
-2. Determine desired outcome of parent/current element.
-3. Read existing text.
-4. Extract semantic points and useful paragraph/table candidates.
-5. Mark outdated elements.
-6. Answer what can be answered from sources.
-7. Create new questions when sources reveal gaps.
-8. Decide what to keep, rewrite, move or reject.
+```text
+existing text
+→ semantic point / text block candidate
+→ desired result
+→ risks/checks
+→ decision
+```
 
-## Main rule
+## Possible decisions
 
-Do not treat existing chapters as either final or garbage. They are candidates that must be processed.
+```text
+use;
+rewrite;
+move;
+expand;
+keep as candidate;
+reject.
+```

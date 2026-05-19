@@ -2,39 +2,82 @@
 
 Run when a topic draft or full-text version needs material from project sources.
 
-## Source types
+## Default source priority
 
-- existing section draft candidates;
-- existing chapter draft candidates;
-- active topic drafts;
-- chapter roadmap;
-- general VKR drafting roadmap;
-- raw user notes as cautious source;
-- scenarios;
-- DATA / rules;
-- domain notes;
-- slice drafts;
-- ADR / questions / decisions;
-- research;
-- visual materials;
-- repo/evidence.
+Use sources in this order, unless the user explicitly instructs otherwise:
+
+```text
+1. Active topic drafts and confirmed roadmap decisions.
+2. Current chapter roadmap and raw notes as cautious source.
+3. Scenarios and subject/process rules.
+4. Research materials.
+5. Visual materials.
+6. Existing section drafts.
+7. Existing chapter drafts.
+8. Legacy chaotic drafts.
+```
+
+## Why old drafts are late
+
+Old drafts / ready chapters / legacy drafts are useful but can be outdated, chaotic or based on older workflow.
+
+Use them after stronger current sources, mainly to:
+
+- recover useful ideas;
+- compare whether a semantic point was lost;
+- reuse good structure or wording after rewriting;
+- identify candidate section/full-text paragraphs;
+- check whether the new draft is missing something.
+
+## Exception: user points to previous draft as example
+
+If the user explicitly points to a previous draft as an example, include it in source-pass as:
+
+```text
+draft example source
+```
+
+It may guide structure and depth, but not override topic-specific desired outcomes.
+
+## Research
+
+Research is stored in:
+
+```text
+planning/thesis/vkr-topic-workbench/00-research-materials/
+```
+
+Always consult:
+
+```text
+planning/thesis/vkr-topic-workbench/00-research-materials/research-index.md
+```
+
+before using research files.
 
 ## Required source-pass table
 
 ```markdown
-| Source | What was checked | What was found | How it affects draft/text |
-|---|---|---|---|
+| Source | Priority | What was checked | What was found | How it affects draft/text |
+|---|---:|---|---|---|
 ```
 
-## Question answer table
+## Required question table
 
 ```markdown
 | Question | Where searched | What was found | Status | What to do |
 |---|---|---|---|---|
 ```
 
-## Chapter 1 note
+Statuses:
 
-For Chapter 1, prefer scenarios, domain rules, existing drafts, topic drafts, roadmap notes and research.
-
-Repo/code should be used mainly for overclaim checks or Chapter 3 evidence, not as the main language of Chapter 1.
+```text
+answered;
+partial;
+ask user;
+research needed;
+scenario/domain check needed;
+repo-check needed;
+visual decision needed;
+defer.
+```

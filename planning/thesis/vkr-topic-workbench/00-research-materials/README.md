@@ -1,61 +1,47 @@
-# Research materials for VKR topic workbench
+# VKR research materials
 
-Статус: raw/support materials / не финальный текст ВКР
+This folder stores research reports used for VKR drafting, bibliography, theoretical grounding and comparison of automation alternatives.
 
-Эта папка хранит research-материалы, которые помогают готовить главу 1, теоретические опоры, список литературы и будущие citation passes.
+## Important rule
 
-## Содержимое
+Research is not copied into VKR text literally.
 
-```text
-source-reports/
-  deep-research-literature-base.md
-  comparative-automation-solutions.md
-
-chapter-1-research-map.md
-source-id-index.md
-```
-
-## Как использовать
-
-Research не вставляется буквально. Его нужно использовать как ответы на вопросы из topic-драфтов:
+Use research through a bridge:
 
 ```text
-topic-драфт
-→ вопрос к research
-→ ответ из research
-→ переработанный тезис
-→ место в будущем тексте
+question from topic/full-text draft
+→ relevant research report
+→ extracted answer
+→ project-specific conclusion
+→ section/full-text paragraph
 ```
 
-## Основные отчёты
+## Main files
 
-### `deep-research-literature-base.md`
+```text
+research-index.md
 
-Общая литературная база:
+chapter-1/
+  literature-and-theory-sources.md
+  automation-solutions-comparison.md
 
-- records management;
-- workflow/BPM;
-- client-server web architecture;
-- ASP.NET Core / React / TypeScript;
-- EF Core / SQL Server;
-- OpenAPI / API contract;
-- testing;
-- security;
-- use cases / requirements.
+originals/
+  deep-research-report-1-1.md
+  deep-research-report-automation-solutions.md
+```
 
-### `comparative-automation-solutions.md`
+## Current meaning
 
-Сравнение вариантов автоматизации:
+`chapter-1/literature-and-theory-sources.md`:
+general literature and theoretical source base for VKR, including standards, books, specifications and official documentation.
 
-- 1С:Документооборот;
-- Directum RX;
-- ELMA365;
-- Bitrix24;
-- Naumen Service Desk;
-- Jira Service Management;
-- email + Excel;
-- собственное специализированное web-приложение.
+`chapter-1/automation-solutions-comparison.md`:
+comparative research of ready-made solutions and manual/simple alternatives for automation of document flow and client request processing.
 
-## Важное ограничение
+## Use discipline
 
-Внутренние citations из research-отчётов должны быть нормализованы перед финальной ПЗ. Не оставлять в итоговом тексте внутренние маркеры research-сессий.
+- Do not paste research prose directly into clean VKR text.
+- Extract answers to concrete questions.
+- Distinguish external source facts from project conclusions.
+- Mark whether the research supports Chapter 1, Chapter 2, Chapter 3 or bibliography.
+- If a research claim is current/time-sensitive, verify it before final clean text.

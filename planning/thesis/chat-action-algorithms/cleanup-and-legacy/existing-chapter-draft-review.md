@@ -1,45 +1,32 @@
 # Algorithm: existing chapter draft review
 
-Run when existing chapter drafts or old section drafts are used.
-
-## Current interpretation
-
-Existing chapters 1-2 are valid candidate drafts.
+Existing chapters and old ready drafts are candidate material.
 
 They are:
 
 ```text
 not final;
-not source of truth;
 not garbage;
-useful candidate material.
+not first source by default.
 ```
 
-## Required behavior
+## Use priority
 
-1. Do not ignore existing text.
-2. Do not copy it as final clean text.
-3. Run source-pass.
-4. Extract semantic points or full-text paragraph candidates.
-5. Check desired result, location, risks and sources.
-6. Decide:
-   - use;
-   - rewrite;
-   - expand;
-   - transfer;
-   - leave only in candidate;
-   - reject.
+Use old chapter drafts after active topic drafts, roadmap, scenarios/domain, research and visuals, unless the user explicitly points to an old draft as an example.
 
-## If existing chapter has an idea absent from topic draft
-
-Do not discard it automatically.
-
-Use:
+## Process
 
 ```text
-existing chapter thought
-→ semantic point / text block candidate
-→ desired result check
-→ risk/source check
-→ topic draft or full-text version decision
+old chapter draft
+→ candidate material
+→ extract idea/text/table
+→ compare with current desired outcome
+→ check current decisions and sources
+→ use / rewrite / move / reject
 ```
+
+## Do not
+
+- let old text override current topic logic without source-pass;
+- copy old text mechanically;
+- ignore useful missed ideas.

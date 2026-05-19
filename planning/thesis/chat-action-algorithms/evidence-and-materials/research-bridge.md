@@ -1,30 +1,51 @@
 # Algorithm: research bridge
 
-Research bridge answers topic-draft questions. It does not copy research text into VKR.
+Run when a topic draft, section draft or full-text version uses research.
 
-## Formula
+## Research location
 
 ```text
-вопрос topic-драфта
-→ answer from research
-→ project-specific conclusion
-→ section block placement
+planning/thesis/vkr-topic-workbench/00-research-materials/
+planning/thesis/vkr-topic-workbench/00-research-materials/research-index.md
 ```
 
-## Required behavior
+## Current research files
 
-1. Identify which topic question needs external support.
-2. Find the relevant research material.
-3. Extract the answer in short form.
-4. Rephrase as a project-specific thesis.
-5. Separate:
-   - external support;
-   - project conclusion;
-   - implementation fact;
-   - assumption.
-6. Identify section draft block where it belongs.
-7. Avoid overclaiming implementation.
+```text
+chapter-1/literature-and-theory-sources.md
+chapter-1/automation-solutions-comparison.md
+```
 
-## Do not
+## Core rule
 
-Do not insert long research paragraphs literally. Do not cite research to claim implementation that repo-check did not confirm.
+Do not paste research literally.
+
+Use:
+
+```text
+question
+→ research finding
+→ project-specific conclusion
+→ draft/text block
+```
+
+## Required table
+
+```markdown
+| Draft question | Research file | Finding | Project-specific conclusion | Where used |
+|---|---|---|---|---|
+```
+
+## Chapter 1 examples
+
+`automation-solutions-comparison.md` can support:
+
+- 1.3: email/Excel/manual tools as typical weak baseline, without claiming the organization uses them;
+- 1.4: comparison of ready automation options;
+- 1.5: cautious justification of own specialized web application.
+
+`literature-and-theory-sources.md` can support:
+
+- literature list;
+- theoretical grounding;
+- requirements/architecture/API/database/security/testing discussions.

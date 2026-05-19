@@ -1,66 +1,55 @@
 # Algorithm: topic draft default flow
 
-Run when the user says something like:
+Run when the user says:
 
 ```text
-дай драфт
-давай драфт
-обнови драфт
-следующий драфт
-драфт темы
+дай драфт;
+давай драфт;
+след драфт;
+обнови драфт;
+давай next topic draft.
 ```
 
 ## Required behavior
 
-1. Determine the topic and its VKR location.
-2. Check if a previous draft exists or was discussed.
-3. Start with:
+1. Identify the current topic and parent chapter.
+2. Check roadmap and chapter roadmap.
+3. Run source-pass using source priority.
+4. Generate/update the topic draft.
+5. Say what changed since the previous draft.
+6. Ask focused questions and propose default answers.
+7. Mark what needs research/scenario/domain/repo/visual check.
+
+## Source priority
 
 ```text
-Что добавилось / изменилось с прошлого драфта
+1. Active topic drafts and confirmed roadmap decisions.
+2. Roadmap/raw notes as cautious source.
+3. Scenarios and subject/process rules.
+4. Research.
+5. Visual materials.
+6. Existing section drafts.
+7. Existing chapter drafts.
+8. Legacy chaotic drafts.
 ```
 
-4. Explicitly list source materials relevant to this topic.
-5. Harvest useful information from those materials.
-6. Ask questions on multiple levels:
-   - topic;
-   - subsection;
-   - chapter;
-   - implementation/evidence;
-   - research;
-   - visuals;
-   - section draft text.
-7. For questions, provide:
-   - why the question matters;
-   - default answer;
-   - alternative options;
-   - where the answer would go in section draft.
-8. Create/update the topic draft.
-9. Add future section draft blocks.
-10. For each block, include questions and plan of disclosure.
+Old drafts and ready chapters are fallback candidate sources. They are not ignored, but they are not the first source unless the user points to them directly.
 
-## Required topic draft blocks
+## Previous drafts as examples
 
-At minimum:
+If the user says that a previous draft should be used as an example, include it in source-pass.
 
-```text
-What changed since previous draft
-Placement map
-What this topic is
-Why this topic is needed
-Source materials for this topic
-Useful information for disclosure
-What requires justification
-Research bridge
-Repo/evidence questions
-Visual bridge
-Boundaries / overclaim risks
-Future section draft blocks
-Questions for clarification
-What to check next
-Summary formula
+Do not copy it mechanically. Use it as an example of structure, depth, table style, semantic point cards, visual bridge and source-pass format.
+
+## Required first block
+
+```markdown
+## Что изменилось с прошлого драфта
+
+...
+
+## Source-pass / уточнение по источникам
+
+| Источник | Приоритет | Что проверяли | Что найдено | Как влияет на драфт |
+|---|---:|---|---|---|
 ```
-
-## Important
-
-Do not wait for the topic draft to become perfect before section draft blocks appear. Topic draft and section draft can develop in parallel.

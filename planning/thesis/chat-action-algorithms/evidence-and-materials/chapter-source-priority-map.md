@@ -1,46 +1,51 @@
 # Chapter source priority map
 
-## Chapter 1: analysis and automation justification
+## Chapter 1
 
-Preferred sources:
+Preferred order:
 
-1. topic drafts;
-2. chapter roadmap and VKR drafting roadmap;
-3. raw user notes as cautious source;
-4. existing section/chapter draft candidates;
-5. scenarios;
-6. domain/process rules;
-7. research reports;
-8. visual materials;
-9. clean requirements.
+```text
+1. Active topic drafts and confirmed roadmap decisions.
+2. Chapter roadmap and raw notes as cautious source.
+3. Scenarios and subject/process rules.
+4. Research materials.
+5. Visual materials.
+6. Existing section drafts.
+7. Existing chapter drafts.
+8. Legacy chaotic drafts.
+```
 
-Repo/code is used mainly for overclaim checks or Chapter 3 evidence.
+Repo/code is used mainly for overclaim checks.
 
-## Chapter 2: design
+## Chapter 2
 
-Preferred sources:
+Preferred order:
 
-1. chapter 1 conclusions;
-2. requirements;
-3. scenarios;
-4. DATA / rules;
-5. domain notes;
-6. architecture decisions;
-7. UI/API/database planning;
-8. existing chapter 2 draft candidates;
-9. selected repo checks when design must match implementation.
+```text
+1. Chapter 1 conclusions and active Chapter 2 topic drafts.
+2. Requirements/scenarios/domain/DATA.
+3. Architecture decisions and design materials.
+4. Research/theory sources.
+5. Visual/design diagrams.
+6. Existing section drafts.
+7. Existing chapter drafts.
+8. Legacy chaotic drafts.
+9. Repo checks if design must match implementation.
+```
 
-## Chapter 3: implementation and testing
+## Chapter 3
 
-Preferred sources:
+Preferred order:
 
-1. repo/code;
-2. tests;
-3. slice drafts;
-4. screenshots;
-5. scenarios;
-6. DATA/domain;
-7. ADR/questions/decisions;
-8. implementation evidence inventory.
+```text
+1. Repo/code.
+2. Tests.
+3. Slice drafts.
+4. Screenshots/UI evidence.
+5. Scenarios/DATA/domain.
+6. ADR/questions/decisions.
+7. Research/theory sources if needed.
+8. Existing drafts only as fallback wording/structure candidates.
+```
 
-Chapter 3 must be grounded in repo/evidence.
+Chapter 3 must be evidence-grounded.
