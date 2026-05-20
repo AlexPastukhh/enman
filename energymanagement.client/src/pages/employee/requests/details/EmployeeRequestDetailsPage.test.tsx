@@ -67,7 +67,7 @@ vi.mock("../../../../features/employee-request/reject-review/ui/RejectReviewForm
 vi.mock("../../../../features/agreement-exchange/start-exchange/ui/StartAgreementExchangeForm", () => ({
   StartAgreementExchangeForm: ({ disabled }: { disabled?: boolean }) => (
     <button type="button" disabled={disabled}>
-      Начать договорной обмен
+      Начать согласование договора
     </button>
   ),
   __esModule: true,
@@ -139,7 +139,7 @@ describe("EmployeeRequestDetailsPage", () => {
     expect(screen.getByRole("button", { name: "Одобрить заявку" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Отклонить заявку" })).toBeDisabled();
     expect(
-      screen.getByRole("button", { name: "Начать договорной обмен" }),
+      screen.getByRole("button", { name: "Начать согласование договора" }),
     ).toBeDisabled();
   });
 
@@ -207,7 +207,7 @@ describe("EmployeeRequestDetailsPage", () => {
     renderPage();
 
     expect(
-      screen.getByRole("button", { name: "Начать договорной обмен" }),
+      screen.getByRole("button", { name: "Начать согласование договора" }),
     ).toBeEnabled();
     expect(screen.getByRole("button", { name: "Начать рассмотрение" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Одобрить заявку" })).toBeDisabled();

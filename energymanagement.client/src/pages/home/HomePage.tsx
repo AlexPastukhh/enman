@@ -50,10 +50,10 @@ const HomePage = () => {
             {employeeSession && (
               <div className="homePage__actions">
                 <NavButtonPrimary to={clientRoutes.employeeRequests}>
-                  Заявки сотрудника
+                  Заявки на рассмотрение
                 </NavButtonPrimary>
                 <NavButtonHollow to={clientRoutes.employeeAgreementExchanges}>
-                  Договорные обмены
+                  Согласование договоров
                 </NavButtonHollow>
               </div>
             )}
@@ -66,7 +66,7 @@ const HomePage = () => {
           {clientSession && (
             <article className="homePage__card pageCard">
               <h2>Клиент</h2>
-              <p>Создание заявок, просмотр своих заявок и договорных обменов.</p>
+              <p>Создание заявок, просмотр своих заявок и согласований договоров.</p>
               <NavButtonHollow to={clientRoutes.agreementExchanges}>
                 Мои договоры
               </NavButtonHollow>
@@ -77,17 +77,17 @@ const HomePage = () => {
             <>
               <article className="homePage__card pageCard">
                 <h2>Сотрудник</h2>
-                <p>Рабочая панель заявок, детали проверки и договорные обмены.</p>
+                <p>Рабочая панель заявок, детали проверки и согласование договоров.</p>
                 <NavButtonHollow to={clientRoutes.employeeRequests}>
-                  Рабочие заявки
+                  Перейти к заявкам
                 </NavButtonHollow>
               </article>
 
               <article className="homePage__card pageCard">
-                <h2>Договорный обмен</h2>
+                <h2>Согласование договора</h2>
                 <p>История предложений, активное предложение и доступные действия.</p>
                 <NavButtonHollow to={clientRoutes.employeeAgreementExchanges}>
-                  Открыть договорные обмены
+                  Перейти к согласованию договоров
                 </NavButtonHollow>
               </article>
             </>

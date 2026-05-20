@@ -1,11 +1,11 @@
 export const agreementExchangeListConst = {
-  listLabel: "Договорные обмены",
-  defaultEmptyTitle: "Договорные обмены не найдены.",
+  listLabel: "Согласование договоров",
+  defaultEmptyTitle: "Согласования договоров не найдены.",
   defaultEmptyDescription:
-    "Для этого аккаунта пока нет доступных договорных обменов.",
-  openDetailsText: "Открыть детали обмена",
+    "Для этого аккаунта пока нет доступных согласований договоров.",
+  openDetailsText: "Открыть детали согласования",
   requestLabel: "Заявка",
-  exchangeLabel: "Обмен",
+  exchangeLabel: "Согласование",
   statusLabel: "Статус",
   activeProposalLabel: "Активное предложение",
   createdAtLabel: "Создан",

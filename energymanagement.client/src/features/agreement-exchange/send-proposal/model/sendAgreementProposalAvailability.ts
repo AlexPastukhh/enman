@@ -17,14 +17,14 @@ export const getSendAgreementProposalAvailability = (
   if (completedStatuses.has(details.exchangeStatus)) {
     return {
       canSendProposal: false,
-      reason: "Договорной обмен уже завершён.",
+      reason: "Согласование договора уже завершено.",
     };
   }
 
   if (details.currentActorSide !== viewerRole) {
     return {
       canSendProposal: false,
-      reason: "Этот договорной обмен недоступен для текущей роли.",
+      reason: "Это согласование договора недоступно для текущей роли.",
     };
   }
 

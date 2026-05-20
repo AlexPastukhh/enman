@@ -5,9 +5,9 @@ export const L = {
     createRequest: /Создание заявки на подключение|Заявка на подключение|Create connection request/i,
     myRequests: /Мои заявки|My Requests/i,
     requestDetails: /Детали заявки|Request Details/i,
-    employeeDashboard: /Заявки на рассмотрение|Employee Request Dashboard|Request Dashboard/i,
+    employeeDashboard: /Заявки на рассмотрение|Request Dashboard/i,
     employeeRequestDetails: /Рассмотрение заявки|Employee Request Details/i,
-    employeeAgreementExchanges: /Договорные обмены|Employee Agreement Exchanges/i,
+    employeeAgreementExchanges: /Согласование договоров|Employee Agreement Exchanges/i,
     clientAgreementExchanges: /Мои договоры|Client Agreement Exchanges/i,
   },
   status: {
@@ -28,14 +28,14 @@ export const L = {
     proposalDocumentLabel: /Документ предложения|Proposal document/i,
     initialCommentLabel: /Комментарий к первичному предложению|Initial proposal comment/i,
     commentLabel: /Комментарий|Comment/i,
-    openDetailsLink: /Открыть детали обмена|Open exchange details/i,
+    openDetailsLink: /Открыть детали согласования|Open exchange details/i,
     downloadDocumentLink: /Скачать документ|Download document/i,
   },
   buttons: {
     createRequest: /Создать заявку|Create request/i,
     startReview: /Начать рассмотрение|Start review/i,
     approveReview: /Одобрить заявку|Approve review/i,
-    startAgreementExchange: /Начать договорной обмен|Start agreement exchange/i,
+    startAgreementExchange: /Начать согласование договора|Start agreement exchange/i,
     sendProposalVersion: /Отправить версию предложения|Send proposal version/i,
   },
 };

@@ -120,11 +120,11 @@ describe("FinalRefuseAgreementExchangeForm", () => {
       <FinalRefuseAgreementExchangeForm
         exchangeId={77}
         disabled
-        unavailableReason="Договорной обмен уже завершён."
+        unavailableReason="Согласование договора уже завершено."
       />,
     );
 
-    expect(screen.getByText("Договорной обмен уже завершён.")).toBeVisible();
+    expect(screen.getByText("Согласование договора уже завершено.")).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Финально отказаться" }));
 
     expect(mutate).not.toHaveBeenCalled();
@@ -141,7 +141,7 @@ describe("FinalRefuseAgreementExchangeForm", () => {
     render(<FinalRefuseAgreementExchangeForm exchangeId={77} />);
 
     expect(
-      screen.getByRole("button", { name: "Отказываемся от обмена..." }),
+      screen.getByRole("button", { name: "Отказываемся от согласования..." }),
     ).toBeDisabled();
     expect(screen.getByLabelText("Причина финального отказа")).toBeDisabled();
     expect(screen.getByRole("alert")).toHaveTextContent(

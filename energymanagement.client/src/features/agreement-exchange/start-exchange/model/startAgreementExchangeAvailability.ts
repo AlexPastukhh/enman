@@ -18,12 +18,12 @@ export const getStartAgreementExchangeAvailability = (
   if (details.status === "AgreementExchangeFailed") {
     return {
       canStartAgreementExchange: false,
-      reason: "Договорной обмен по этой заявке уже не завершён.",
+      reason: "Согласование договора по этой заявке уже не завершено.",
     };
   }
 
   return {
     canStartAgreementExchange: false,
-    reason: "Договорной обмен можно начать только после одобрения заявки.",
+    reason: "Согласование договора можно начать только после одобрения заявки.",
   };
 };

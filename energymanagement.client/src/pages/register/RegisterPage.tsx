@@ -13,7 +13,7 @@ const RegisterPage = () => {
             </h1>
             <p className="pageDescription">
               После регистрации можно добавить данные заявителя, создать заявку
-              на подключение и отслеживать договорный обмен.
+              на подключение и отслеживать согласование договора.
             </p>
             <div className="homePage__actions">
               <NavLink className="button-hollow" to={clientRoutes.login}>

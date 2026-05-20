@@ -17,21 +17,21 @@ export const getFinalRefuseAgreementExchangeAvailability = (
   if (completedStatuses.has(details.exchangeStatus)) {
     return {
       canFinalRefuse: false,
-      reason: "Договорной обмен уже завершён.",
+      reason: "Согласование договора уже завершено.",
     };
   }
 
   if (details.currentActorSide !== "Employee") {
     return {
       canFinalRefuse: false,
-      reason: "Только сотрудник может финально отказаться от договорного обмена.",
+      reason: "Только сотрудник может финально отказаться от согласования договора.",
     };
   }
 
   if (!finalRefusalAllowedStatuses.has(details.exchangeStatus)) {
     return {
       canFinalRefuse: false,
-      reason: "Договорной обмен сейчас нельзя финально отклонить.",
+      reason: "Согласование договора сейчас нельзя финально отклонить.",
     };
   }
 

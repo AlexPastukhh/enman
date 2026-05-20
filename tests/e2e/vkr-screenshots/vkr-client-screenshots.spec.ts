@@ -174,7 +174,7 @@ test.describe("VKR documentation screenshots @screenshots", () => {
 
     await page.goto("/employee/agreements");
     await expect(
-      page.getByRole("heading", { name: /Договорные обмены|Мои договоры/ }),
+      page.getByRole("heading", { name: /Согласование договоров|Мои договоры/ }),
     ).toBeVisible();
     await capture(page, "09-agreement-exchange-list.png");
 

@@ -60,7 +60,7 @@ describe("StartAgreementExchangeForm", () => {
 
     await user.upload(screen.getByLabelText("Первичный документ предложения"), file);
     await user.type(screen.getByLabelText("Комментарий к первичному предложению"), " First proposal. ");
-    await user.click(screen.getByRole("button", { name: "Начать договорной обмен" }));
+    await user.click(screen.getByRole("button", { name: "Начать согласование договора" }));
 
     await waitFor(() => {
       expect(mockedUploadAgreementProposalDocument).toHaveBeenCalledWith({
@@ -84,7 +84,7 @@ describe("StartAgreementExchangeForm", () => {
 
     render(<StartAgreementExchangeForm requestId={42} />);
 
-    await user.click(screen.getByRole("button", { name: "Начать договорной обмен" }));
+    await user.click(screen.getByRole("button", { name: "Начать согласование договора" }));
 
     expect(screen.getByRole("alert")).toHaveTextContent(
       "Выберите первичный документ предложения.",
@@ -100,14 +100,14 @@ describe("StartAgreementExchangeForm", () => {
       <StartAgreementExchangeForm
         requestId={42}
         disabled
-        unavailableReason="Договорной обмен можно начать только после одобрения."
+        unavailableReason="Согласование договора можно начать только после одобрения."
       />,
     );
 
     expect(
-      screen.getByText("Договорной обмен можно начать только после одобрения."),
+      screen.getByText("Согласование договора можно начать только после одобрения."),
     ).toBeVisible();
-    await user.click(screen.getByRole("button", { name: "Начать договорной обмен" }));
+    await user.click(screen.getByRole("button", { name: "Начать согласование договора" }));
 
     expect(mockedUploadAgreementProposalDocument).not.toHaveBeenCalled();
     expect(mutate).not.toHaveBeenCalled();
@@ -124,7 +124,7 @@ describe("StartAgreementExchangeForm", () => {
     render(<StartAgreementExchangeForm requestId={42} />);
 
     expect(
-      screen.getByRole("button", { name: "Начинаем обмен..." }),
+      screen.getByRole("button", { name: "Начинаем согласование..." }),
     ).toBeDisabled();
     expect(screen.getByLabelText("Первичный документ предложения")).toBeDisabled();
     expect(screen.getByRole("alert")).toHaveTextContent(

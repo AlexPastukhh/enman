@@ -28,7 +28,7 @@ export const myRequestDetailsConst = {
     InReview: "На рассмотрении",
     Approved: "Одобрена",
     Rejected: "Отклонена",
-    AgreementExchangeFailed: "Договорной обмен не завершён",
+    AgreementExchangeFailed: "Согласование договора не завершено",
   },
   requestTypeLabels: {
     Connection: "Подключение",

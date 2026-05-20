@@ -126,15 +126,15 @@ describe("EmployeeAgreementExchangeDetailsPage", () => {
     renderPage();
 
     expect(
-      screen.getByRole("heading", { name: "Детали договорного обмена" }),
+      screen.getByRole("heading", { name: "Детали согласования договора" }),
     ).toBeVisible();
     expect(mockedUseAgreementExchangeDetailsQuery).toHaveBeenCalledWith({
       exchangeId: 20,
       enabled: true,
     });
-    expect(screen.getByRole("heading", { name: "Обмен #20" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Согласование #20" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Версия 2, автор: Клиент" })).toBeVisible();
-    expect(screen.getByRole("link", { name: "Вернуться к договорным обменам" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Вернуться к согласованию договоров" })).toHaveAttribute(
       "href",
       "/employee/agreements",
     );

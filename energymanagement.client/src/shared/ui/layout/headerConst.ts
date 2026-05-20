@@ -12,7 +12,7 @@ export const headerConst = {
   myRequestsLinkText: "Мои заявки",
   agreementExchangesLinkText: "Мои договоры",
   employeeRequestsLinkText: "Заявки",
-  employeeAgreementExchangesLinkText: "Договорные обмены",
+  employeeAgreementExchangesLinkText: "Согласование договоров",
   homeLinkText: "Главная",
   hotlinePhoneNumberText: "8-800-100-70-00",
   hotlinePhoneLabelText: "Поддержка",

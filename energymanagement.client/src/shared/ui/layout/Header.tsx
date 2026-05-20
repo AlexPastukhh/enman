@@ -9,14 +9,12 @@ import { HomeNavLink } from "./HomeNavLink";
 
 const isEmployee = (role?: string | null) => role === "Employee";
 const isClient = (role?: string | null) => role === "Client";
-const isAdmin = (role?: string | null) => role === "Admin";
 
 export const Header = () => {
   const session = useSession();
   const sessionQuery = useSessionQuery();
   const employeeSession = isEmployee(session?.role);
   const clientSession = isClient(session?.role);
-  const adminSession = isAdmin(session?.role);
   const isSessionLoading = sessionQuery.isPending;
 
   return (
@@ -70,16 +68,7 @@ export const Header = () => {
               <HeaderNavLink to={clientRoutes.employeeAgreementExchanges}>
                 {headerConst.employeeAgreementExchangesLinkText}
               </HeaderNavLink>
-              <HeaderNavLink to={clientRoutes.account}>
-                {headerConst.accountLinkText}
-              </HeaderNavLink>
             </>
-          )}
-
-          {adminSession && (
-            <HeaderNavLink to={clientRoutes.account}>
-              {headerConst.accountLinkText}
-            </HeaderNavLink>
           )}
 
           {!isSessionLoading && session && (

@@ -130,7 +130,7 @@ describe("ClientAgreementExchangeDetailsPage", () => {
       exchangeId: 20,
       enabled: true,
     });
-    expect(screen.getByRole("heading", { name: "Обмен #20" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Согласование #20" })).toBeVisible();
     expect(screen.getByRole("link", { name: "Вернуться к моим договорам" })).toHaveAttribute(
       "href",
       "/agreements",

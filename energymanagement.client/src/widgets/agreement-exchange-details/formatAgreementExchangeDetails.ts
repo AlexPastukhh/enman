@@ -23,7 +23,7 @@ const requestStatusLabels: Record<string, string> = {
   InReview: "На рассмотрении",
   Approved: "Одобрена",
   Rejected: "Отклонена",
-  AgreementExchangeFailed: "Договорной обмен не завершён",
+  AgreementExchangeFailed: "Согласование договора не завершено",
 };
 
 export const formatAgreementExchangeStatus = (status: string): string =>

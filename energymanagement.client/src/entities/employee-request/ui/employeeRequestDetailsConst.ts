@@ -17,7 +17,7 @@ export const employeeRequestDetailsConst = {
   applicantTitle: "Данные заявителя",
   reviewStateTitle: "Состояние рассмотрения",
   actionAvailabilityTitle: "Доступные действия",
-  agreementExchangeTitle: "Договорной обмен",
+  agreementExchangeTitle: "Согласование договора",
   requestTypeLabel: "Тип заявки",
   statusLabel: "Статус",
   createdAtLabel: "Создана",
@@ -47,7 +47,7 @@ export const employeeRequestDetailsConst = {
     InReview: "На рассмотрении",
     Approved: "Одобрена",
     Rejected: "Отклонена",
-    AgreementExchangeFailed: "Договорной обмен не завершён",
+    AgreementExchangeFailed: "Согласование договора не завершено",
   },
   requestTypeLabels: {
     Connection: "Подключение",

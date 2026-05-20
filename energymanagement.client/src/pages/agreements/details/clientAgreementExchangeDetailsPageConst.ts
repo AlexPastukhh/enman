@@ -1,7 +1,7 @@
 export const clientAgreementExchangeDetailsPageConst = {
   pageTitle: "Детали договора",
   pageDescription:
-    "История договорного обмена и активное предложение по вашей заявке.",
+    "История согласования договора и активное предложение по вашей заявке.",
   signInRequiredTitle: "Войдите, чтобы открыть договор.",
   signInRequiredDescription:
     "Детали договоров доступны только после входа в аккаунт клиента.",

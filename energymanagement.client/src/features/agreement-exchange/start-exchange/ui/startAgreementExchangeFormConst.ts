@@ -1,11 +1,11 @@
 export const startAgreementExchangeFormConst = {
-  title: "Начать договорной обмен",
+  title: "Начать согласование договора",
   documentLabel: "Первичный документ предложения",
   commentLabel: "Комментарий к первичному предложению",
   commentPlaceholder: "Необязательный комментарий для клиента",
-  actionLabel: "Начать договорной обмен",
+  actionLabel: "Начать согласование договора",
   uploadingLabel: "Загружаем документ...",
-  pendingLabel: "Начинаем обмен...",
+  pendingLabel: "Начинаем согласование...",
   validationErrorMessage: "Выберите первичный документ предложения.",
-  defaultErrorMessage: "Не удалось начать договорной обмен.",
+  defaultErrorMessage: "Не удалось начать согласование договора.",
 } as const;

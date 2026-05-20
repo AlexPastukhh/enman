@@ -1,5 +1,5 @@
 export const agreementExchangeDetailsConst = {
-  statusLabel: "Статус обмена",
+  statusLabel: "Статус согласования",
   actorSideLabel: "Текущая сторона",
   requestSummaryTitle: "Сводка заявки",
   activeProposalTitle: "Активное предложение",
@@ -7,7 +7,7 @@ export const agreementExchangeDetailsConst = {
   documentTitle: "Документ",
   downloadDocumentLinkText: "Скачать документ",
   unknownDocumentFileName: "документ договора",
-  exchangeTitlePrefix: "Обмен",
+  exchangeTitlePrefix: "Согласование",
   senderLabel: "Автор",
   stateLabel: "Состояние",
   createdAtLabel: "Создан",
@@ -17,5 +17,5 @@ export const agreementExchangeDetailsConst = {
   objectAddressLabel: "Адрес объекта",
   noActiveProposalText: "Активного предложения нет.",
   noProposalHistoryText: "Версий предложения пока нет.",
-  actionsRegionTitle: "Доступные действия по обмену",
+  actionsRegionTitle: "Доступные действия по согласованию",
 } as const;

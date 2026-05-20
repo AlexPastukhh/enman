@@ -12,7 +12,7 @@ export const LoginPage = () => {
               Продолжите работу с заявками и договорами
             </h1>
             <p className="pageDescription">
-              Войдите в систему, чтобы продолжить работу с заявками и договорными обменами.
+              Войдите в систему, чтобы продолжить работу с заявками и согласованием договоров.
             </p>
             <div className="homePage__actions">
               <NavLink className="button-hollow" to={clientRoutes.register}>

@@ -31,7 +31,7 @@ describe("getStartAgreementExchangeAvailability", () => {
   it("blocks start exchange before request is approved", () => {
     expect(getStartAgreementExchangeAvailability(details("InReview"))).toEqual({
       canStartAgreementExchange: false,
-      reason: "Договорной обмен можно начать только после одобрения заявки.",
+      reason: "Согласование договора можно начать только после одобрения заявки.",
     });
   });
 
@@ -40,7 +40,7 @@ describe("getStartAgreementExchangeAvailability", () => {
       getStartAgreementExchangeAvailability(details("AgreementExchangeFailed")),
     ).toEqual({
       canStartAgreementExchange: false,
-      reason: "Договорной обмен по этой заявке уже не завершён.",
+      reason: "Согласование договора по этой заявке уже не завершено.",
     });
   });
 });

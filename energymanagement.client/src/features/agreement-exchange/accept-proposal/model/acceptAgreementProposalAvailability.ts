@@ -15,7 +15,7 @@ export const getAcceptAgreementProposalAvailability = (
   if (completedStatuses.has(details.exchangeStatus)) {
     return {
       canAcceptProposal: false,
-      reason: "Договорной обмен уже завершён.",
+      reason: "Согласование договора уже завершено.",
     };
   }
 
@@ -29,7 +29,7 @@ export const getAcceptAgreementProposalAvailability = (
   if (details.exchangeStatus !== "AwaitingClientConfirmation") {
     return {
       canAcceptProposal: false,
-      reason: "Договорной обмен не ожидает подтверждения клиента.",
+      reason: "Согласование договора не ожидает подтверждения клиента.",
     };
   }
 

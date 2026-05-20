@@ -165,10 +165,10 @@ describe("Header", () => {
       }),
     ).toBeVisible();
     expect(
-      within(navigation).getByRole("link", {
+      within(navigation).queryByRole("link", {
         name: headerConst.accountLinkText,
       }),
-    ).toBeVisible();
+    ).not.toBeInTheDocument();
     expect(
       within(navigation).getByRole("button", {
         name: headerConst.logoutButtonText,
@@ -181,7 +181,7 @@ describe("Header", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("shows only account navigation for admin users", async () => {
+  it("shows only logout navigation for admin users", async () => {
     mockedGetCurrentSession.mockResolvedValueOnce(adminSession);
 
     renderWithProviders(<Header />);
@@ -189,15 +189,15 @@ describe("Header", () => {
     const navigation = getNavigation();
 
     expect(
-      await within(navigation).findByRole("link", {
-        name: headerConst.accountLinkText,
-      }),
-    ).toBeVisible();
-    expect(
-      within(navigation).getByRole("button", {
+      await within(navigation).findByRole("button", {
         name: headerConst.logoutButtonText,
       }),
     ).toBeVisible();
+    expect(
+      within(navigation).queryByRole("link", {
+        name: headerConst.accountLinkText,
+      }),
+    ).not.toBeInTheDocument();
     expect(
       within(navigation).queryByRole("link", {
         name: headerConst.createRequestLinkText,

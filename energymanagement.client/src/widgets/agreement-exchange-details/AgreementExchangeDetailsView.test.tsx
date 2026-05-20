@@ -57,7 +57,7 @@ describe("AgreementExchangeDetailsView", () => {
   it("renders shared details, active proposal, proposal history and document refs", () => {
     render(<AgreementExchangeDetailsView details={details} viewerRole="Client" />);
 
-    expect(screen.getByRole("heading", { name: "Обмен #20" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Согласование #20" })).toBeVisible();
     expect(screen.getByText("Ожидает подтверждения клиента")).toBeVisible();
     expect(screen.getByText("Connection request #10")).toBeVisible();
     expect(screen.getByRole("heading", { name: "Активное предложение" })).toBeVisible();
@@ -86,7 +86,7 @@ describe("AgreementExchangeDetailsView", () => {
     );
 
     expect(
-      screen.getByRole("heading", { name: "Доступные действия по обмену" }),
+      screen.getByRole("heading", { name: "Доступные действия по согласованию" }),
     ).toBeVisible();
     expect(screen.getByRole("button", { name: "Future action" })).toBeVisible();
   });

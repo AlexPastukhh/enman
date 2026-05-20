@@ -82,12 +82,12 @@ describe("AcceptAgreementProposalButton", () => {
       <AcceptAgreementProposalButton
         exchangeId={77}
         disabled
-        unavailableReason="Договорной обмен не ожидает подтверждения клиента."
+        unavailableReason="Согласование договора не ожидает подтверждения клиента."
       />,
     );
 
     expect(
-      screen.getByText("Договорной обмен не ожидает подтверждения клиента."),
+      screen.getByText("Согласование договора не ожидает подтверждения клиента."),
     ).toBeVisible();
 
     await user.click(screen.getByRole("button", { name: "Принять предложение" }));

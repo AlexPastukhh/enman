@@ -44,7 +44,7 @@ describe("AgreementExchangeList", () => {
     expect(screen.getByText("Ожидает подтверждения клиента")).toBeVisible();
     expect(screen.getByText("Версия 2, автор: Сотрудник")).toBeVisible();
     expect(screen.getByText("Altai Krai, Barnaul, Lenina 10")).toBeVisible();
-    expect(screen.getByRole("link", { name: "Открыть детали обмена" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Открыть детали согласования" })).toHaveAttribute(
       "href",
       "/agreements/20",
     );
@@ -56,16 +56,16 @@ describe("AgreementExchangeList", () => {
         <AgreementExchangeList
           exchanges={[]}
           viewerRole="Employee"
-          emptyStateTitle="Нет обменов, требующих внимания."
-          emptyStateDescription="Доступные сотруднику обмены появятся здесь."
+          emptyStateTitle="Нет согласований, требующих внимания."
+          emptyStateDescription="Доступные сотруднику согласования появятся здесь."
           getDetailsHref={(exchange) => `/employee/agreements/${exchange.exchangeId}`}
         />
       </MemoryRouter>,
     );
 
     expect(
-      screen.getByRole("heading", { name: "Нет обменов, требующих внимания." }),
+      screen.getByRole("heading", { name: "Нет согласований, требующих внимания." }),
     ).toBeVisible();
-    expect(screen.getByText("Доступные сотруднику обмены появятся здесь.")).toBeVisible();
+    expect(screen.getByText("Доступные сотруднику согласования появятся здесь.")).toBeVisible();
   });
 });
