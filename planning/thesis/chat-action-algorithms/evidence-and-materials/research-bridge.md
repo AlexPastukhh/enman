@@ -1,24 +1,6 @@
 # Algorithm: research bridge
 
-Run when a topic draft, section draft or full-text version uses research.
-
-## Research location
-
-```text
-planning/thesis/vkr-topic-workbench/00-research-materials/
-planning/thesis/vkr-topic-workbench/00-research-materials/research-index.md
-```
-
-## Current research files
-
-```text
-chapter-1/literature-and-theory-sources.md
-chapter-1/automation-solutions-comparison.md
-```
-
-## Core rule
-
-Do not paste research literally.
+Research is not copied literally.
 
 Use:
 
@@ -29,23 +11,10 @@ question
 → draft/text block
 ```
 
-## Required table
+## Chapter 2 architecture / DDD research
 
-```markdown
-| Draft question | Research file | Finding | Project-specific conclusion | Where used |
-|---|---|---|---|---|
+```text
+planning/thesis/vkr-topic-workbench/00-research-materials/chapter-2/architecture-and-ddd-approaches.md
 ```
 
-## Chapter 1 examples
-
-`automation-solutions-comparison.md` can support:
-
-- 1.3: email/Excel/manual tools as typical weak baseline, without claiming the organization uses them;
-- 1.4: comparison of ready automation options;
-- 1.5: cautious justification of own specialized web application.
-
-`literature-and-theory-sources.md` can support:
-
-- literature list;
-- theoretical grounding;
-- requirements/architecture/API/database/security/testing discussions.
+Use after canonical planning/source-pass. It can support selective DDD, independent domain layer, simplified CQRS, backend vertical slices, FSD-lite frontend and EF Core mapping decisions. It must not override scenario specs, domain drafts, slice docs or repo evidence.

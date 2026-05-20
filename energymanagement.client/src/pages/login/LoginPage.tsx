@@ -12,8 +12,7 @@ export const LoginPage = () => {
               Продолжите работу с заявками и договорами
             </h1>
             <p className="pageDescription">
-              Войдите как клиент для работы со своими заявками или используйте
-              Вход сотрудника, если вы работаете с панелью сотрудника.
+              Войдите в систему, чтобы продолжить работу с заявками и договорными обменами.
             </p>
             <div className="homePage__actions">
               <NavLink className="button-hollow" to={clientRoutes.register}>

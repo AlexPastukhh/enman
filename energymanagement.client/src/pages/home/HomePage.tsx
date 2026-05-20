@@ -59,38 +59,39 @@ const HomePage = () => {
             )}
           </div>
 
-          <aside className="homePage__summary" aria-label="Основные сценарии">
-            <span className="statusPill">Процесс</span>
-            <ul>
-              <li>Клиент создаёт заявку и видит статус.</li>
-              <li>Employee проверяет заявку и запускает обмен.</li>
-              <li>Стороны работают с версиями предложений.</li>
-            </ul>
-          </aside>
+          {/* Process promo removed per UI visibility rules */}
         </section>
 
         <section className="homePage__cards" aria-label="Разделы приложения">
-          <article className="homePage__card pageCard">
-            <h2>Клиент</h2>
-            <p>Создание заявок, просмотр своих заявок и договорных обменов.</p>
-            <NavButtonHollow to={clientRoutes.agreementExchanges}>
-              Мои договоры
-            </NavButtonHollow>
-          </article>
-          <article className="homePage__card pageCard">
-            <h2>Сотрудник</h2>
-            <p>Рабочий dashboard заявок, детали проверки и договорные обмены.</p>
-            <NavButtonHollow to={clientRoutes.employeeRequests}>
-              Рабочие заявки
-            </NavButtonHollow>
-          </article>
-          <article className="homePage__card pageCard">
-            <h2>Договорный обмен</h2>
-            <p>История предложений, активное предложение и доступные действия.</p>
-            <NavButtonHollow to={clientRoutes.employeeAgreementExchanges}>
-              Открыть договорные обмены
-            </NavButtonHollow>
-          </article>
+          {clientSession && (
+            <article className="homePage__card pageCard">
+              <h2>Клиент</h2>
+              <p>Создание заявок, просмотр своих заявок и договорных обменов.</p>
+              <NavButtonHollow to={clientRoutes.agreementExchanges}>
+                Мои договоры
+              </NavButtonHollow>
+            </article>
+          )}
+
+          {employeeSession && (
+            <>
+              <article className="homePage__card pageCard">
+                <h2>Сотрудник</h2>
+                <p>Рабочая панель заявок, детали проверки и договорные обмены.</p>
+                <NavButtonHollow to={clientRoutes.employeeRequests}>
+                  Рабочие заявки
+                </NavButtonHollow>
+              </article>
+
+              <article className="homePage__card pageCard">
+                <h2>Договорный обмен</h2>
+                <p>История предложений, активное предложение и доступные действия.</p>
+                <NavButtonHollow to={clientRoutes.employeeAgreementExchanges}>
+                  Открыть договорные обмены
+                </NavButtonHollow>
+              </article>
+            </>
+          )}
         </section>
     </main>
   );

@@ -1,26 +1,38 @@
 # Chapter 2 roadmap
 
-## Purpose
+## Current chapter structure
 
-This file stores high-level notes for Chapter 2 before they are distributed into concrete topic drafts.
+```text
+2.1 Обобщённый алгоритм работы web-приложения
+2.2 Анализ прототипов и аналогов с точки зрения сценариев системы
+2.3 Формирование требований к web-приложению
+2.4 Структурная организация программного решения
+2.5 Проектирование модели предметной области
+2.6 Проектирование структуры хранения данных и документов
+2.7 Проектирование программного взаимодействия и пользовательского интерфейса
+2.8 Средства выполнения ВКР
+2.9 Резервирование САПР
+2.10 Легитимность средств выполнения ВКР
+```
 
-## Expected bridge from Chapter 1
+## Saved topic drafts
 
-Chapter 1 should lead to the idea that supporting a process with states, allowed actions, request/applicant/document relationships and future changes requires careful design.
-
-Chapter 2 should turn that into:
-
-- requirements;
-- semantic/domain model;
-- architecture;
-- database/API/UI design;
-- boundaries and responsibilities.
-
-## Captured notes
-
-| Note | Source / reason | Status |
+| Point | File | Status |
 |---|---|---|
-| Request state and allowed actions should influence design | from Chapter 1 roadmap | captured |
-| User account and applicant should not be collapsed without thought | from 1.1 notes | captured |
-| Architecture should support maintainability and changing business rules | from user notes | captured |
-| Avoid heavy DDD terms in Chapter 1, but use design concepts properly in Chapter 2 | workflow decision | captured |
+| 2.1 | `planning/thesis/vkr-topic-workbench/03-chapter-2-design/01-general-application-algorithm/01-general-application-algorithm.topic.md` | saved |
+| 2.2 | `planning/thesis/vkr-topic-workbench/03-chapter-2-design/02-prototype-and-analog-analysis/01-scenario-based-prototype-and-analog-analysis.topic.md` | saved |
+| 2.3 | `planning/thesis/vkr-topic-workbench/03-chapter-2-design/03-requirements/01-web-application-requirements.topic.md` | saved |
+| 2.4 | `planning/thesis/vkr-topic-workbench/03-chapter-2-design/04-structural-organization/01-structural-organization.topic.md` | saved |
+| 2.5 | `planning/thesis/vkr-topic-workbench/03-chapter-2-design/05-domain-model/01-domain-model-design.topic.md` | saved |
+| 2.6 | `planning/thesis/vkr-topic-workbench/03-chapter-2-design/06-data-and-document-storage/01-data-and-document-storage.topic.md` | saved |
+| 2.7 | `planning/thesis/vkr-topic-workbench/03-chapter-2-design/07-api-and-ui-interaction/01-api-and-ui-interaction.topic.md` | saved |
+| 2.8 | `planning/thesis/vkr-topic-workbench/03-chapter-2-design/08-execution-tools/01-vkr-execution-tools.topic.md` | saved |
+| 2.9 | `planning/thesis/vkr-topic-workbench/03-chapter-2-design/09-cad-backup/01-cad-backup.topic.md` | saved |
+
+## Guardrails
+
+- Do not claim automatic contract generation.
+- Do not claim approval automatically creates agreement exchange.
+- Do not treat client version as refusal.
+- Do not claim electronic signature / legally significant EDI / full ECM/СЭД implementation.
+- Do not use old ready drafts as first source.

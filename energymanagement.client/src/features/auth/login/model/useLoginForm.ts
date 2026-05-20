@@ -33,7 +33,18 @@ export const useLoginForm = () => {
   const loginMutation = useMutation({
     mutationFn: loginClientAccount,
     onError: (error) => {
-      applyApiErrorToForm(error, setError, loginServerFieldMap);
+      // Apply mapped problem-details errors when available, otherwise show a
+      // login-specific fallback message advising to check credentials.
+      if (error instanceof Error && (error as any).problemDetails) {
+        applyApiErrorToForm(error, setError, loginServerFieldMap);
+        return;
+      }
+
+      // Fallback for unmapped login errors (do not change global fallback)
+      setError("root" as const, {
+        type: "server",
+        message: "Не удалось войти. Проверьте email и пароль.",
+      });
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: sessionQueryKey });

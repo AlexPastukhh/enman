@@ -1,51 +1,22 @@
 # Chapter source priority map
 
-## Chapter 1
-
-Preferred order:
-
-```text
-1. Active topic drafts and confirmed roadmap decisions.
-2. Chapter roadmap and raw notes as cautious source.
-3. Scenarios and subject/process rules.
-4. Research materials.
-5. Visual materials.
-6. Existing section drafts.
-7. Existing chapter drafts.
-8. Legacy chaotic drafts.
-```
-
-Repo/code is used mainly for overclaim checks.
-
 ## Chapter 2
 
 Preferred order:
 
 ```text
-1. Chapter 1 conclusions and active Chapter 2 topic drafts.
-2. Requirements/scenarios/domain/DATA.
-3. Architecture decisions and design materials.
-4. Research/theory sources.
-5. Visual/design diagrams.
-6. Existing section drafts.
-7. Existing chapter drafts.
-8. Legacy chaotic drafts.
-9. Repo checks if design must match implementation.
+1. Current Chapter 2 topic drafts and confirmed roadmap decisions.
+2. CHAPTER-2-SOURCE-MAP.md.
+3. planning/README.md and canonical planning docs.
+4. Scenario specs, scenario data and behavior items.
+5. Domain drafts.
+6. Architecture/API/client/server/slice planning docs.
+7. Repo evidence when design must match implementation.
+8. Research/theory sources, especially architecture-and-ddd-approaches.md.
+9. Visual/design diagrams.
+10. Existing section drafts.
+11. Existing chapter drafts.
+12. Legacy/dirty drafts.
 ```
 
-## Chapter 3
-
-Preferred order:
-
-```text
-1. Repo/code.
-2. Tests.
-3. Slice drafts.
-4. Screenshots/UI evidence.
-5. Scenarios/DATA/domain.
-6. ADR/questions/decisions.
-7. Research/theory sources if needed.
-8. Existing drafts only as fallback wording/structure candidates.
-```
-
-Chapter 3 must be evidence-grounded.
+Chapter 2 research explains and justifies architecture choices, but does not replace scenario specs, domain drafts, slice docs or repo evidence.
