@@ -21,7 +21,19 @@ When a local file contains information that affects future work, synchronize it 
 | `planning/planning-doc-responsibility-map.md` | Ownership map for planning documentation |
 | `planning/replacement-file-generation-guide.md` | Archive/package generation rules for manual repo application |
 
-## 3. VKR / Thesis Clean Reference Responsibility
+## 3. Documentation Workflow Responsibility
+
+| File / folder | Responsibility |
+|---|---|
+| `planning/documentation/README.md` | Documentation workflow navigation and read order |
+| `planning/documentation/documentation-update-plan-workflow.md` | Required preflight plan format for broad docs/navigation/status/register updates |
+| `planning/documentation/documentation-update-workflow.md` | Documentation update process, output modes, quality checks and direct-edit/archive rules |
+| `planning/documentation/planning-docs-architecture-principles.md` | Architecture principles for planning documentation itself, not runtime application architecture |
+| `planning/documentation/local-global-documentation-sync-workflow.md` | Local detail to shared navigation/register synchronization rules |
+| `planning/documentation/status-reconciliation-workflow.md` | Status reconciliation between current implementation evidence and planning docs |
+| `planning/documentation/documentation-update-agent-prompt.md` | Prompt template for documentation update chats/agents |
+
+## 4. VKR / Thesis Clean Reference Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -30,13 +42,13 @@ When a local file contains information that affects future work, synchronize it 
 
 VKR-facing materials must not use internal planning labels such as `L1`, `L2`, `dirty draft`, `agent`, `prompt` or implementation archive terminology.
 
-## 4. Repository Edit Responsibility
+## 5. Repository Edit Responsibility
 
 Direct GitHub edits from ChatGPT are preferred for small scoped documentation changes because they create visible commits that can be inspected and reverted independently.
 
 By default, use one file per commit. Large generated replacement archives should be reserved for broad file/package generation when direct scoped commits are less practical.
 
-## 5. Architecture Responsibility
+## 6. Architecture Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -45,7 +57,7 @@ By default, use one file per commit. Large generated replacement archives should
 
 Architecture docs do not replace slice docs, scenario sources, API contract docs, testing docs or ADRs.
 
-## 6. Scenario Source Responsibility
+## 7. Scenario Source Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -58,7 +70,7 @@ Architecture docs do not replace slice docs, scenario sources, API contract docs
 | `planning/diagrams/scenario-behavior-items/` | Scenario-derived, UI-scenario-derived and concern-derived behavior items |
 | `planning/diagrams/scenario-questions-register.md` | Scenario/domain questions that can change scenario behavior, DATA, UI requirements or diagrams |
 
-## 7. Slice Discovery Responsibility
+## 8. Slice Discovery Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -78,7 +90,7 @@ Scenario Flow and Behavior Items for slices come from `slice-scenario-flow-behav
 
 Questions/extension/implementation registers do not replace scenario source files.
 
-## 8. Client Planning Responsibility
+## 9. Client Planning Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -87,7 +99,7 @@ Questions/extension/implementation registers do not replace scenario source file
 
 Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 
-## 9. API / Testing / ADR Responsibility
+## 10. API / Testing / ADR Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -96,7 +108,7 @@ Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 | `planning/testing/` | Cross-slice testing principles, E2E workflow, test object patterns |
 | `planning/adr/` | ADR workflow, architecture decision notes and ADR candidates |
 
-## 10. Evidence Link Responsibility
+## 11. Evidence Link Responsibility
 
 Repo-grounded line-link rules belong in:
 
@@ -106,7 +118,7 @@ planning/repo-grounded-github-line-links-workflow.md
 
 Other workflow docs may link to that file, but should not duplicate detailed line-link mechanics unless needed for a local role checklist.
 
-## 11. Responsibility Decision Heuristic
+## 12. Responsibility Decision Heuristic
 
 ```text
 1. scenario text/DATA/UI/behavior source -> planning/diagrams/scenario-*/
@@ -126,4 +138,7 @@ Other workflow docs may link to that file, but should not duplicate detailed lin
 15. possible future full ADR -> adr-candidates.md
 16. VKR/presentation/defense clean wording -> planning/vkr-clean-reference.md
 17. raw non-canonical recovery wording -> planning/dirty-drafts/
+18. broad docs/navigation/status/register update plan -> planning/documentation/documentation-update-plan-workflow.md
+19. planning documentation architecture principle -> planning/documentation/planning-docs-architecture-principles.md
+20. documentation local/global sync rule -> planning/documentation/local-global-documentation-sync-workflow.md
 ```
