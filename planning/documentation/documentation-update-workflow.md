@@ -1,19 +1,34 @@
 # Documentation Update Workflow
 
 Status: current documentation-only workflow  
-Scope: how to update planning docs accurately without touching code or GitHub
+Scope: how to update planning docs accurately without touching code or generated artifacts
 
 ## 1. Core Principle
 
-Documentation updates must be repo-grounded and scope-controlled.
+Documentation updates must be repo-grounded, plan-first and scope-controlled.
 
 A documentation update is not a place to implement behavior.
+
+For broad docs/navigation/status/register changes, prepare a `Documentation Update Plan` first:
+
+```text
+planning/documentation/documentation-update-plan-workflow.md
+```
+
+After the plan is reviewed, use the output mode explicitly requested or approved by the user:
+
+```text
+direct GitHub edits
+replacement archive/package
+patch proposal only
+plan only
+```
 
 ## 2. Workflow
 
 ```text
 1. Read central navigation and responsibility docs.
-2. Read documentation update and local/global sync workflow docs.
+2. Read documentation update, planning architecture and local/global sync workflow docs.
 3. Read the current docs for the requested area.
 4. Inspect current code/artifacts only enough to avoid stale status.
 5. Identify doc drift:
@@ -23,12 +38,13 @@ A documentation update is not a place to implement behavior.
    - local file carrying global workflow rules;
    - local question not mirrored in shared register;
    - shared register stale compared to local file;
-   - missing responsibility owner.
+   - missing responsibility owner;
+   - docs still assuming archive-only output when direct GitHub edits are approved.
 6. Decide update scope.
-7. Ask only blocking questions that can change archive contents.
-8. If no blocking questions, create complete replacement/add files.
-9. Include MANIFEST.md and APPLY.md.
-10. Final response includes archive link, scope, non-goals and next step.
+7. Prepare a Documentation Update Plan when the change is broad or multi-file.
+8. Ask only blocking questions that can change the planned update.
+9. After approval, apply the selected output mode.
+10. Final response includes changed files or archive link, scope, non-goals, commit SHAs when applicable and next step.
 ```
 
 ## 3. Required Current-State Check
@@ -48,7 +64,7 @@ Do not trust old archive assumptions when current repo has changed.
 
 ## 4. Local / Global Synchronization Check
 
-Before finalizing a documentation archive, check whether local changes must be reflected globally.
+Before applying or finalizing a documentation update, check whether local changes must be reflected globally.
 
 Use:
 
@@ -90,6 +106,8 @@ open question
 accepted direction
 resolved
 superseded
+historical/internal
+non-canonical
 ```
 
 Avoid ambiguous status like “done” unless the scope is very small and exact.
@@ -121,8 +139,11 @@ Heuristic:
 ```text
 global workflow rule -> central workflow/protocol docs
 documentation update process -> planning/documentation/
+documentation update plan format -> planning/documentation/documentation-update-plan-workflow.md
+planning docs architecture principles -> planning/documentation/planning-docs-architecture-principles.md
 local/global sync rule -> planning/documentation/local-global-documentation-sync-workflow.md
 archive packaging rules -> replacement-file-generation-guide.md
+VKR clean terminology -> planning/vkr-clean-reference.md
 API contract -> planning/api/
 cross-cutting implementation flow -> planning/slices/cross-cutting/
 slice implementation -> slice file / .client.md
@@ -134,7 +155,7 @@ testing/E2E rules -> planning/testing/
 scenario meaning -> planning/diagrams/scenario-text-specs or scenario-clarifications
 behavior items -> scenario-behavior-items
 accepted decisions -> planning/adr/architecture-decision-notes.md
-future full ADR backlog -> planning/adr/adr-candidates.md
+future full ADR backlog -> adr-candidates.md
 ```
 
 ## 8. Question Ordering Rule
@@ -150,29 +171,59 @@ cross-cutting/helper slices
 scenario clarifications
 status reconciliation docs
 ADR candidate notes
+documentation update plans
 ```
 
 Accepted decisions are still recorded, but they must not hide unresolved questions below them.
 
 ## 9. Blocking Questions Rule
 
-Ask only questions that can change this archive.
+Ask only questions that can change this documentation update.
 
 For every question include an assumption.
 
 Non-blocking questions should be recorded as future review items or mirrored into the relevant register instead of stopping the update.
 
-## 10. Archive-Only Rule
+## 10. Output Mode Rule
 
-Default output is an archive.
+Default behavior is plan-first.
 
-Do not use GitHub mutation tools such as creating/updating files, branches, commits, PRs or comments unless the user explicitly asks for direct GitHub changes.
+After the plan is reviewed, use the output mode requested or approved by the user.
+
+### Direct GitHub edit mode
+
+Use direct GitHub edits only when the user explicitly asks to apply changes to the repository.
+
+Rules:
+
+```text
+- keep the approved scope;
+- use one file per commit by default;
+- use specific commit messages;
+- do not combine unrelated documentation refactors;
+- do not change code or generated artifacts unless explicitly in scope;
+- report changed files and commit SHAs after applying.
+```
+
+### Archive / replacement package mode
+
+Use archive mode when direct repo edits are not requested or when a broad generated package is easier to review manually.
+
+Rules:
+
+```text
+- include complete replacement/add files;
+- include MANIFEST.md and APPLY.md;
+- do not include code changes in documentation-only archives;
+- follow planning/replacement-file-generation-guide.md.
+```
 
 ## 11. Documentation Quality Checklist
 
-Before finalizing archive, verify:
+Before finalizing a documentation update, verify:
 
 ```text
+- broad changes had a Documentation Update Plan;
 - every added file appears in navigation or a folder README;
 - responsibility map knows the new responsibility;
 - local questions that matter later are mirrored into shared registers;
@@ -181,9 +232,11 @@ Before finalizing archive, verify:
 - old paths/names are not accidentally reintroduced;
 - future questions are not presented as current defects;
 - planned features are not overclaimed as implemented;
-- archive contains complete files, not patches;
-- APPLY.md and MANIFEST.md are present;
-- no code changes are included in documentation-only archive.
+- selected output mode is explicit;
+- direct GitHub edits use one file per commit by default;
+- archive mode contains complete files, not patches;
+- APPLY.md and MANIFEST.md are present for archive mode;
+- no code/generated changes are included unless explicitly in scope.
 ```
 
 ## 12. Do Not
@@ -196,4 +249,6 @@ Before finalizing archive, verify:
 - Do not update GitHub directly unless explicitly requested.
 - Do not hide uncertainty; record assumptions and questions.
 - Do not leave important local slice questions only in local tables.
+- Do not introduce master-chat, work-register or mandatory status-packet workflow unless explicitly requested.
+- Do not make replacement archives mandatory for every documentation update.
 ```
