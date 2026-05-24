@@ -1,5 +1,11 @@
 # L2 Current Planning Status
 
+> Historical/internal status note.
+> This file is not implementation truth and may be stale.
+> Do not use it as proof that a feature is implemented.
+> For current implementation state, inspect the current branch, code, tests, migrations, generated API contracts and runtime screenshots.
+> For VKR/thesis wording, use `planning/vkr-clean-reference.md`.
+
 Status: current / L2 Employee Review and Agreement Exchange planning nearly complete  
 Scope: L2 planning status, canonical slice navigation, remaining draft/implementation gaps
 
