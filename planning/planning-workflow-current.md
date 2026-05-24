@@ -1,10 +1,32 @@
 # Current Planning Workflow
 
+> Stable workflow rules with historical/current-state notes.
+> Concrete L1/L2 inventory sections in this file are internal context, not implementation truth.
+> For implementation state, inspect the current branch.
+> For VKR/thesis wording, use `planning/vkr-clean-reference.md`.
+
 Status: current / L1 baseline and near-final L2 Employee Review + Agreement Exchange planning synchronized
 
 Always separate current implementation from target scenario direction.
 
-## 1. Current Implementation Baseline
+## 1. Repository Editing Workflow
+
+For planning and documentation cleanup, prefer direct GitHub edits from ChatGPT when the change is small and scoped.
+
+By default, use one commit per file. This keeps changes easy to inspect and revert.
+
+Use specific commit messages, for example:
+
+```text
+docs: stabilize planning README navigation
+docs: mark L1 status note as historical
+docs: add VKR clean reference
+docs: update planning responsibility map
+```
+
+Do not combine unrelated documentation refactors, generated artifacts and code changes in one commit.
+
+## 2. Current Implementation Baseline
 
 Known L1 current repo evidence includes:
 
@@ -30,7 +52,7 @@ planning/l1-current-implementation-status.md
 
 For L2 implementation status, inspect GitHub/current branch directly. Do not infer implementation status from slice drafts or archives.
 
-## 2. Current Target Direction
+## 3. Current Target Direction
 
 ```text
 ApplicantParty:
@@ -56,7 +78,7 @@ L2 Employee/Review/Agreement:
   implementation status must be checked from GitHub/current branch.
 ```
 
-## 3. Remaining L1 Finish Items
+## 4. Remaining L1 Finish Items
 
 Before moving fully to the next domain cut, finish or explicitly defer:
 
@@ -75,7 +97,7 @@ Future but not current L1 finish:
 - larger new domain scenario/draft.
 ```
 
-## 4. L2 Planning Status
+## 5. L2 Planning Status
 
 The current L2 planning cut is nearly complete for:
 
@@ -98,7 +120,7 @@ planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
 planning/diagrams/scenario-clarifications/README.md
 ```
 
-## 5. Slice Drafting Rules
+## 6. Slice Drafting Rules
 
 ```text
 Behavior Coverage is not Test Coverage.
@@ -111,7 +133,7 @@ Every non-trivial slice draft must include Scope, Out of scope, Related slices /
 Every full server/client draft must include Implementation Checklist near the end.
 ```
 
-## 6. Agent Scope Rules
+## 7. Agent Scope Rules
 
 Implementation prompts must include explicit scope boundaries:
 
