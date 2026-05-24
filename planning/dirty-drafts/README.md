@@ -32,6 +32,22 @@ planning/testing/
 
 Use dirty drafts only as recovery/context material.
 
+## VKR / Thesis Warning
+
+Dirty drafts must not be copied directly into VKR/thesis text.
+
+They may contain stale terms, internal planning labels, rejected decisions, old implementation assumptions or wording that was useful only during discussion.
+
+Before using wording from dirty drafts:
+
+```text
+1. check canonical docs;
+2. check current implementation if the text describes implemented behavior;
+3. rewrite the wording using clean VKR terminology.
+```
+
+If a dirty draft contains a useful stable decision, promote it into the appropriate canonical document through a normal documentation sync.
+
 ## Current files
 
 ```text
