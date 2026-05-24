@@ -1,34 +1,134 @@
-﻿# Planning Index
+# Planning Documentation
 
-Status: current / L1 baseline and near-final L2 Employee Review + Agreement Exchange planning synchronized
+Status: stable navigation / source-of-truth map  
+Purpose: explain where to read planning materials and how not to confuse planning notes with implementation truth.
 
-## 1. Start Here
+## 1. Core Rule
 
-Future chats should be able to start from this file, then follow the relevant read order without relying on a long external prompt.
+Planning docs are not a replacement for checking the current codebase.
 
-Core read order:
+For implementation state, inspect the current branch, code, tests, migrations, generated API contracts and runtime screenshots.
+
+For scenario behavior, use scenario specs and behavior items.
+
+For VKR/thesis wording, use `planning/vkr-clean-reference.md`.
+
+## 2. Repository Editing Workflow
+
+When documentation changes are small and well-scoped, prefer direct GitHub file edits from ChatGPT over manual replacement archives.
+
+By default, use one commit per file. This makes each change easy to inspect and easy to revert.
+
+Direct GitHub edits must still follow scope rules:
+
+```text
+- change only files explicitly included in the requested scope;
+- do not rewrite unrelated planning documents;
+- do not change code, generated artifacts or implementation files unless explicitly requested;
+- keep commit messages specific;
+- prefer one file per commit by default.
+```
+
+## 3. Source-of-Truth Model
+
+### Implementation truth
+
+Use:
+
+```text
+current Git branch
+code
+tests
+migrations
+OpenAPI / generated contracts
+runtime screenshots
+```
+
+Do not use planning status files as proof that a feature is implemented.
+
+### Scenario behavior truth
+
+Use:
+
+```text
+planning/diagrams/scenario-text-specs/
+planning/diagrams/scenario-data/
+planning/diagrams/scenario-behavior-items/
+planning/diagrams/scenario-clarifications/
+```
+
+### Slice scope truth
+
+Use:
+
+```text
+planning/slices/
+planning/slices/l2/
+planning/slices/cross-cutting/
+```
+
+Slice docs describe intended work and scope. They are not implementation proof.
+
+### Architecture, API, client and testing decisions
+
+Use:
+
+```text
+planning/architecture/
+planning/api/
+planning/client/
+planning/testing/
+planning/adr/
+```
+
+### VKR / thesis clean wording
+
+Use:
+
+```text
+planning/vkr-clean-reference.md
+```
+
+### Non-canonical recovery notes
+
+Use only after canonical docs:
+
+```text
+planning/dirty-drafts/
+```
+
+Dirty drafts are not source of truth.
+
+## 4. Task-Based Navigation
+
+### For implementation planning
+
+Read:
 
 ```text
 planning/README.md
-planning/l1-current-implementation-status.md
-planning/l2-current-planning-status.md
-planning/planning-workflow-current.md
-planning/planning-agent-protocol.md
-planning/agent-scope-boundaries-and-prompt-safety.md
-planning/planning-doc-responsibility-map.md
+relevant scenario spec
+relevant slice doc
+relevant architecture/API/client/testing doc
 ```
 
-For documentation-only work also read:
+Then inspect the current branch.
+
+### For VKR / thesis writing
+
+Read:
 
 ```text
-planning/documentation/README.md
-planning/documentation/documentation-update-workflow.md
-planning/documentation/status-reconciliation-workflow.md
-planning/documentation/local-global-documentation-sync-workflow.md
-planning/replacement-file-generation-guide.md
+planning/README.md
+planning/vkr-clean-reference.md
+relevant scenario/domain/architecture docs
 ```
 
-For scenario/diagram work read:
+Then verify implementation from code, tests, screenshots or generated contracts.
+
+### For scenario and diagram work
+
+Read:
 
 ```text
 planning/diagrams/README.md
@@ -40,7 +140,9 @@ planning/diagrams/diagram-prompt-generation-workflow.md
 planning/diagrams/drawio-diagram-generation-workflow.md
 ```
 
-For slice/client/server work read:
+### For slice work
+
+Read:
 
 ```text
 planning/slices/README.md
@@ -52,7 +154,9 @@ planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
 ```
 
-For backend cleanup / legacy-to-L1/L2 boundary work also read:
+### For backend cleanup / legacy boundary work
+
+Read:
 
 ```text
 planning/architecture/README.md
@@ -61,217 +165,65 @@ planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fl
 planning/api/api-error-contract.md
 ```
 
-For non-canonical thesis/diploma recovery notes:
+### For documentation-only work
+
+Read:
+
+```text
+planning/documentation/README.md
+planning/documentation/documentation-update-workflow.md
+planning/documentation/status-reconciliation-workflow.md
+planning/documentation/local-global-documentation-sync-workflow.md
+planning/replacement-file-generation-guide.md
+```
+
+### For agent scope / prompt safety work
+
+Read:
+
+```text
+planning/planning-agent-protocol.md
+planning/agent-scope-boundaries-and-prompt-safety.md
+planning/planning-doc-responsibility-map.md
+```
+
+### For dirty draft recovery
+
+Read dirty drafts only after canonical docs:
 
 ```text
 planning/dirty-drafts/README.md
 ```
 
-Dirty drafts are not source of truth. Use them only to recover explanations or thesis wording after canonical docs are checked.
+Dirty drafts are recovery/context notes, not implementation truth and not final VKR wording.
 
-## 2. Source-of-Truth Rules
+## 5. Historical / Internal Status Notes
 
-```text
-Scenario specs are source of truth for scenario behavior.
-Slice docs map a scenario portion to one implementation slice.
-Domain drafts are domain-design input, not a replacement for scenario specs.
-GitHub/current branch is source of truth for current implementation state.
-Archives are handoff artifacts, not current-state truth.
-Dirty drafts are non-canonical scratch/recovery/thesis notes.
-```
-
-When the user asks about what is implemented now, inspect GitHub/current branch directly.
-
-## 3. Current L1 Snapshot
-
-Implemented/current:
-
-```text
-Backend:
-- auth register/login/current-user/logout;
-- create individual ApplicantParty;
-- GET /api/l1/applicant-parties flat account ApplicantParties read;
-- POST /api/l1/applicant-parties/{applicantPartyId}/make-current-default;
-- create connection request with Existing/New applicant context;
-- My Requests list/filter/details.
-
-Client:
-- auth/register/login/current-user/logout flows;
-- My Requests list/filter/details;
-- request creation page /requests/create;
-- Existing/New applicant context request creation form;
-- account ApplicantParties read used by request creation.
-```
-
-Remaining L1 finish items:
-
-```text
-- SL-APPL-003.client make default/current button/action;
-- replace old AccountPage single-current/current-individual UI with target flat Applicant Parties page/section;
-- confirm/add make-current-default API integration tests;
-- later compatibility decision for old current-individual endpoint.
-```
-
-Use:
+The following files may be useful as historical or internal handoff notes, but they are not implementation truth:
 
 ```text
 planning/l1-current-implementation-status.md
-```
-
-## 4. Current Applicant/Request Target Direction
-
-```text
-ApplicantParty:
-- one Applicant Parties page / section is the planning model;
-- top page area shows current/default ApplicantParty templates by applicant type;
-- current/default templates are visually outlined/highlighted;
-- below the default/current area, the page shows other saved ApplicantParties;
-- create is additive, not replacement;
-- first account+ApplicantPartyType initializes current/default;
-- additional same-type create does not switch default/current silently;
-- explicit make default/current backend command is implemented;
-- client make default/current action is still remaining;
-- existing requests do not change when ApplicantParty is created or default/current changes.
-```
-
-ApplicantParty account read model:
-
-```text
-GET /api/l1/applicant-parties
-returns one flat applicantParties[] list.
-Each item has isCurrentDefault.
-Client groups current/default vs other saved cards by isCurrentDefault.
-API does not return currentDefaults / otherApplicantParties layout arrays.
-```
-
-Request creation current state:
-
-```text
-- explicit applicant context: Existing ApplicantPartyId or New applicant data;
-- Existing can use any owned saved ApplicantParty;
-- New creates ApplicantParty + ConnectionRequest atomically;
-- client /requests/create route and form exist;
-- command success hands off to My Requests.
-```
-
-## 5. Current L2 Snapshot
-
-L2 planning is almost complete for the Employee Review and Agreement Exchange cut.
-
-Use:
-
-```text
 planning/l2-current-planning-status.md
-planning/slices/l2/README.md
-planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
+planning/planning-workflow-current.md
 ```
 
-Canonical L2 server slice set:
+Use them only as context. For implementation state, inspect the current branch.
 
-```text
-SL-EMP-REQ-001 вЂ” Employee Request List Read
-SL-EMP-REQ-002 вЂ” Employee Request Details Read
-SL-EMP-REQ-003 вЂ” Start Request Review
-SL-EMP-REQ-004 вЂ” Approve Request Review
-SL-EMP-REQ-005 вЂ” Reject Request Review
+## 6. Internal Labels and VKR Wording
 
-SL-AGR-EXCH-001 вЂ” Start Agreement Exchange With Initial Employee Proposal
-SL-AGR-EXCH-002 вЂ” Send Agreement Counter-Proposal Version
-SL-AGR-EXCH-003 вЂ” Agreement Exchange List Page / Read List
-SL-AGR-EXCH-004 вЂ” Agreement Exchange Details / Read Details
-SL-AGR-EXCH-005 вЂ” Client Accept Active Agreement Proposal
-SL-AGR-EXCH-006 вЂ” Final Refuse Agreement Exchange
-```
+`L1` and `L2` may appear in internal planning history, but they must not be used in VKR, presentation, report or defense speech.
 
-Canonical L2 client sidecar set:
+Use clean terms instead:
 
-```text
-L2-EMP-DASH-001.client
-L2-EMP-DETAILS-001.client
-L2-REVIEW-START-001.client
-L2-REVIEW-APPROVE-001.client
-L2-REVIEW-REJECT-001.client
+| Internal label | Clean wording |
+|---|---|
+| L1 | client account, applicant, request creation, my requests |
+| L2 | employee review and agreement exchange |
+| Employee Review | request review by employee |
+| Agreement Exchange | agreement/document exchange |
+| AgreementDocumentRef | document reference and metadata |
 
-L2-AGR-EXCH-START-001.client
-L2-AGR-EXCH-LIST-001.client
-L2-AGR-EXCH-DETAILS-001.client
-L2-AGR-EXCH-SEND-PROPOSAL-001.client
-L2-AGR-EXCH-ACCEPT-001.client
-L2-AGR-EXCH-FINAL-REFUSE-001.client
-```
-
-Key L2 guardrails:
-
-```text
-Employee : Account / TPH target.
-No EmployeeRef.
-Review is owned by Request.
-RejectReview feedback is optional.
-ApproveReview does not create AgreementProposalExchange.
-AgreementProposalExchange stores ClientAccountId.
-No ResponsibleEmployeeId guard first pass.
-Counter-proposal replacement is SupersededByCounterProposal.
-AgreementDocumentRef is metadata reference, not bytes/storage adapter.
-No per-command status enums.
-```
-
-## 6. Server Validation Direction
-
-Use:
-
-```text
-planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
-```
-
-Current direction:
-
-```text
-FluentValidation owns API request/query shape validation.
-Application handlers/services own orchestration, loading, ownership and transaction behavior.
-Domain owns lifecycle, participant and invariant checks as final guard.
-```
-
-Do not put ownership, lifecycle, current turn, active proposal author or exchange status rules into FluentValidation.
-
-## 7. Backend Cleanup Boundary
-
-Use:
-
-```text
-planning/architecture/backend-legacy-and-l1-boundaries.md
-```
-
-before backend cleanup, legacy removal/isolation, post-FluentValidation handler cleanup, test classification or thesis/diploma architecture writing.
-
-## 8. Agent Scope Rule
-
-Prompts for implementation chats must not allow changing docs, domain code or generated artifacts unless the user explicitly asked for that scope.
-
-Use:
-
-```text
-planning/agent-scope-boundaries-and-prompt-safety.md
-```
-
-Implementation prompts generated from slice drafts must preserve the slice `Scope`, `Out of scope`, `Related slices` and `Future extension points`.
-
-## 9. Key Navigation
-
-```text
-planning/api/README.md
-planning/architecture/README.md
-planning/client/README.md
-planning/slices/README.md
-planning/slices/l2/README.md
-planning/testing/README.md
-planning/diagrams/README.md
-planning/adr/README.md
-planning/dirty-drafts/README.md
-```
-
-## Scenario / Diagram Status Markers
-
-Marker: SCENARIO-STATUS-MARKERS-2026-05
+## 7. Scenario / Diagram Status Markers
 
 For post-L1/L2 scenario and diagram work, use:
 
@@ -290,3 +242,14 @@ Scenario docs may mark future implementation and deferred extension points unifo
 
 `[IMPLEMENTED]` still requires current repo evidence.
 
+## 8. Not Source of Truth
+
+Do not use these as current implementation proof:
+
+```text
+dirty drafts
+old current-status snapshots
+implementation archives
+chat/prompt notes
+unverified planning text
+```
