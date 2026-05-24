@@ -18,6 +18,12 @@ what is deferred?
 what should be a future review item rather than a defect?
 ```
 
+For broad or multi-file status/navigation documentation changes, prepare a Documentation Update Plan first:
+
+```text
+planning/documentation/documentation-update-plan-workflow.md
+```
+
 ## 2. When To Run
 
 Run status reconciliation when:
@@ -108,4 +114,5 @@ When docs are reconciled, update prompts for other chats:
 - Do not leave old planned wording after implementation is confirmed.
 - Do not bury status updates in unrelated docs.
 - Do not update only central README while detailed slice doc remains stale.
+- Do not skip the Documentation Update Plan for broad status/navigation changes.
 ```
