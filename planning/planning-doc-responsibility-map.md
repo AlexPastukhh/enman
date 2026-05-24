@@ -12,15 +12,31 @@ When a local file contains information that affects future work, synchronize it 
 
 | File / folder | Responsibility |
 |---|---|
-| `planning/README.md` | Central planning navigation and current direction snapshot |
-| `planning/planning-workflow-current.md` | Current workflow/status baseline and cross-cutting reminders |
+| `planning/README.md` | Stable planning navigation and source-of-truth map; must not duplicate detailed current implementation status |
+| `planning/planning-workflow-current.md` | Workflow rules, repository-edit workflow and historical/current-state reminders; concrete inventory sections are not implementation truth |
+| `planning/vkr-clean-reference.md` | Clean VKR/thesis terminology, internal-to-clean mapping and evidence map for VKR-facing materials |
 | `planning/planning-agent-protocol.md` | Role-level protocol, read rules, handoff rules and global do-not rules |
 | `planning/agent-scope-boundaries-and-prompt-safety.md` | Rules for prompt creators and implementation agents: read broadly, change only explicit scope |
 | `planning/repo-grounded-github-line-links-workflow.md` | User-facing GitHub line-link rules for repo-grounded code/docs/status explanations |
 | `planning/planning-doc-responsibility-map.md` | Ownership map for planning documentation |
 | `planning/replacement-file-generation-guide.md` | Archive/package generation rules for manual repo application |
 
-## 3. Architecture Responsibility
+## 3. VKR / Thesis Clean Reference Responsibility
+
+| File / folder | Responsibility |
+|---|---|
+| `planning/vkr-clean-reference.md` | Clean terminology and evidence mapping for VKR, presentation, defense speech and practice-report wording |
+| `planning/dirty-drafts/` | Non-canonical recovery notes only; useful wording must be checked against canonical docs and rewritten before VKR use |
+
+VKR-facing materials must not use internal planning labels such as `L1`, `L2`, `dirty draft`, `agent`, `prompt` or implementation archive terminology.
+
+## 4. Repository Edit Responsibility
+
+Direct GitHub edits from ChatGPT are preferred for small scoped documentation changes because they create visible commits that can be inspected and reverted independently.
+
+By default, use one file per commit. Large generated replacement archives should be reserved for broad file/package generation when direct scoped commits are less practical.
+
+## 5. Architecture Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -29,7 +45,7 @@ When a local file contains information that affects future work, synchronize it 
 
 Architecture docs do not replace slice docs, scenario sources, API contract docs, testing docs or ADRs.
 
-## 4. Scenario Source Responsibility
+## 6. Scenario Source Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -42,7 +58,7 @@ Architecture docs do not replace slice docs, scenario sources, API contract docs
 | `planning/diagrams/scenario-behavior-items/` | Scenario-derived, UI-scenario-derived and concern-derived behavior items |
 | `planning/diagrams/scenario-questions-register.md` | Scenario/domain questions that can change scenario behavior, DATA, UI requirements or diagrams |
 
-## 5. Slice Discovery Responsibility
+## 7. Slice Discovery Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -62,7 +78,7 @@ Scenario Flow and Behavior Items for slices come from `slice-scenario-flow-behav
 
 Questions/extension/implementation registers do not replace scenario source files.
 
-## 6. Client Planning Responsibility
+## 8. Client Planning Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -71,7 +87,7 @@ Questions/extension/implementation registers do not replace scenario source file
 
 Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 
-## 7. API / Testing / ADR Responsibility
+## 9. API / Testing / ADR Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -80,7 +96,7 @@ Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 | `planning/testing/` | Cross-slice testing principles, E2E workflow, test object patterns |
 | `planning/adr/` | ADR workflow, architecture decision notes and ADR candidates |
 
-## 8. Evidence Link Responsibility
+## 10. Evidence Link Responsibility
 
 Repo-grounded line-link rules belong in:
 
@@ -90,7 +106,7 @@ planning/repo-grounded-github-line-links-workflow.md
 
 Other workflow docs may link to that file, but should not duplicate detailed line-link mechanics unless needed for a local role checklist.
 
-## 9. Responsibility Decision Heuristic
+## 11. Responsibility Decision Heuristic
 
 ```text
 1. scenario text/DATA/UI/behavior source -> planning/diagrams/scenario-*/
@@ -108,4 +124,6 @@ Other workflow docs may link to that file, but should not duplicate detailed lin
 13. test layer boundaries / E2E workflow -> planning/testing/
 14. accepted/current architecture decision -> architecture-decision-notes.md
 15. possible future full ADR -> adr-candidates.md
+16. VKR/presentation/defense clean wording -> planning/vkr-clean-reference.md
+17. raw non-canonical recovery wording -> planning/dirty-drafts/
 ```
