@@ -43,6 +43,12 @@ update shared index/register if needed
 update navigation if files were added/moved/superseded
 ```
 
+For broad or multi-file documentation changes, prepare a Documentation Update Plan first:
+
+```text
+planning/documentation/documentation-update-plan-workflow.md
+```
+
 ## 3. Local vs Global
 
 Local files own detailed context.
@@ -265,7 +271,7 @@ Check for:
 
 ## 11. Preflight Checklist
 
-Before producing a documentation archive, check:
+Before applying or finalizing a documentation update, check:
 
 ```text
 1. Which local files changed?
