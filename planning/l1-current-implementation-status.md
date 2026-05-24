@@ -1,5 +1,11 @@
 # L1 Current Implementation Status
 
+> Historical/internal status note.
+> This file is not implementation truth and may be stale.
+> Do not use it as proof that a feature is implemented.
+> For current implementation state, inspect the current branch, code, tests, migrations, generated API contracts and runtime screenshots.
+> For VKR/thesis wording, use `planning/vkr-clean-reference.md`.
+
 Status: current implementation inventory / L1 server and client status reconciled  
 Scope: current L1 runtime state, remaining L1 implementation gaps and next-step guidance
 
