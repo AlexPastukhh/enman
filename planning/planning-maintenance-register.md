@@ -111,28 +111,26 @@ Notes:
 
 ```text
 ID: PMR-003
-Status: open
+Status: superseded
 Area: slice workflow cleanup
 Task / reminder:
   Audit planning/slices/implemented-slice-sync-workflow.md because it references source/domain registry files that may be legacy, future or missing.
 Trigger / condition:
   Before using implemented-slice-sync-workflow.md as the canonical implemented slice synchronization workflow.
 Why it matters:
-  It contains useful sync logic, but may not match the current normalized docs architecture.
+  It contained useful sync logic, but did not match the current normalized docs architecture.
 Owner layer:
   slice / documentation governance
 Target files:
   planning/slices/implemented-slice-sync-workflow.md
-  future slice responsibility map
-  source usage register files, if created
 Depends on:
   slice layer audit
 Do when:
-  Before implemented-slice sync work is applied broadly.
+  Superseded by PMR-010.
 Do not do before:
-  Do not treat old source registry filenames as current truth without checking existing files.
+  n/a
 Notes:
-  The workflow may remain useful as a reference even before refactor.
+  The workflow references were modernized. Remaining cleanup is tracked by PMR-010.
 ```
 
 ### PMR-004 — Shrink root responsibility map after local maps
@@ -276,12 +274,12 @@ Notes:
 
 ```text
 ID: PMR-009
-Status: waiting-for-condition
+Status: ready
 Area: slice templates
 Task / reminder:
   Update client/server/cross-cutting slice templates after the slice responsibility map and source/dependency expectations are clear.
 Trigger / condition:
-  After planning/slices/slice-responsibility-map.md exists and section/source/dependency rules are stable.
+  Slice responsibility map exists. Next step is to add slice draft authoring principles and server implementation principles, then update templates.
 Why it matters:
   Templates should eventually include the new model: section-level sources where needed, dependencies between draft sections, local/global register sync, and future source/version tracking hooks.
 Owner layer:
@@ -291,72 +289,69 @@ Target files:
   planning/slices/server/SERVER-SLICE-TEMPLATE.md
   planning/slices/cross-cutting/CROSS-CUTTING-UMBRELLA-TEMPLATE.md
 Depends on:
-  slice responsibility map, reviewable-agent-output workflow, future source/dependency model
+  slice responsibility map, reviewable-agent-output workflow, slice draft authoring principles, server implementation principles
 Do when:
-  After map/responsibility cleanup, not during the first inventory pass.
+  After authoring/server principles are created and routed.
 Do not do before:
   Do not churn templates before owner/register boundaries are clear.
 Notes:
   Keep existing templates as current until this cleanup is explicitly started.
 ```
 
-### PMR-010 — Refactor implemented slice sync artifacts into the new model
+### PMR-010 — Refactor implemented slice sync workflow under the new model
 
 ```text
 ID: PMR-010
-Status: waiting-for-condition
+Status: open
 Area: implemented slice sync
 Task / reminder:
-  Refactor implemented-slice-sync-workflow.md and decide the fate of IMPLEMENTED-SLICE-SYNC-CHECKLIST.md, IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE.md and IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE.md.
+  Continue refactoring implemented-slice-sync-workflow.md under the new source/current-code model.
 Trigger / condition:
-  Before implemented-slice sync is used broadly or after slice responsibility map clarifies workflow/template/checklist responsibilities.
+  Before implemented-slice sync is used broadly or before treating it as fully canonical.
 Why it matters:
-  The current workflow has useful ideas but references source/domain/map files that may be legacy/future/missing. The checklist/templates may be old artifacts or may need to be folded into the workflow and reviewable output model.
+  The separate checklist/status/report helper artifacts were removed. Useful concepts now need to live inside implemented-slice-sync-workflow.md and slice-questions-register.md.
 Owner layer:
   slice / documentation governance
 Target files:
   planning/slices/implemented-slice-sync-workflow.md
-  planning/slices/IMPLEMENTED-SLICE-SYNC-CHECKLIST.md
-  planning/slices/IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE.md
-  planning/slices/IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE.md
+  planning/slices/slice-questions-register.md
   planning/documentation/status-reconciliation-workflow.md
 Depends on:
-  slice responsibility map, source/version model, status reconciliation workflow
+  slice responsibility map, source/version model, status reconciliation workflow, slice draft authoring principles
 Do when:
-  Before treating implemented slice sync artifacts as canonical.
+  After slice draft authoring principles are created, or before broad implemented-slice sync work.
 Do not do before:
-  Do not remove useful sync/report/status concepts without migrating them into the new workflow/template model.
+  Do not recreate separate checklist/status/report helper artifacts unless a future workflow proves they are needed.
 Notes:
-  Likely useful parts: compare source/draft/code/tests, drift statuses, report-before-edit, implementation sync status block.
+  Done so far: deleted helper artifacts, consolidated useful decisions into slice-questions-register.md, modernized workflow references. Remaining work: align workflow with new server template, authoring principles and future source/version model.
 ```
 
 ### PMR-011 — Resolve duplicate slice questions registers
 
 ```text
 ID: PMR-011
-Status: open
+Status: done
 Area: slice registers
 Task / reminder:
   Resolve responsibility overlap between planning/slices/SLICE-QUESTIONS.md and planning/slices/slice-questions-register.md.
 Trigger / condition:
   During slice responsibility map work or before adding new slice-wide questions.
 Why it matters:
-  Two files currently present themselves as slice question registers, which makes it unclear where new questions/decisions belong.
+  Two files previously presented themselves as slice question registers.
 Owner layer:
   slice
 Target files:
-  planning/slices/SLICE-QUESTIONS.md
   planning/slices/slice-questions-register.md
   planning/slices/slice-responsibility-map.md
   planning/slices/README.md
 Depends on:
   slice layer audit
 Do when:
-  Before normalizing register routing in the slice responsibility map.
+  Done.
 Do not do before:
-  Do not delete either file until useful entries are classified as active/current, legacy, docs-governance or superseded.
+  n/a
 Notes:
-  Likely target: slice-questions-register.md becomes canonical active register; SLICE-QUESTIONS.md becomes transitional legacy/taxonomy decision log or is merged/superseded.
+  SLICE-QUESTIONS.md was removed. Useful content was consolidated into slice-questions-register.md. slice-questions-register.md is now the canonical active slice-layer questions/decisions register.
 ```
 
 ### PMR-012 — Decide scope of draft-driven discovery and L1 slice drafting guide
@@ -366,9 +361,9 @@ ID: PMR-012
 Status: open
 Area: slice principles/workflows cleanup
 Task / reminder:
-  Decide whether draft-driven-discovery-principles.md is a slice-layer principle or a broader planning principle, and decide whether l1-slice-drafting-guide.md still owns useful content after client/server workflows/templates exist.
+  Narrow draft-driven-discovery-principles.md to slice-layer scope and decide whether l1-slice-drafting-guide.md still owns useful content after client/server workflows/templates exist.
 Trigger / condition:
-  During slice responsibility map work or before rewriting slice drafting workflows.
+  During slice principles cleanup or before rewriting slice drafting workflows.
 Why it matters:
   Some files currently use broader wording than the slice layer or duplicate client/server workflow/template content.
 Owner layer:
@@ -379,14 +374,15 @@ Target files:
   planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md
   planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
   planning/slices/slice-responsibility-map.md
+  planning/slices/slice-draft-authoring-principles.md
 Depends on:
   slice layer audit
 Do when:
-  Before declaring slice workflow/principle files clean.
+  After slice-draft-authoring-principles.md exists.
 Do not do before:
   Do not archive l1-slice-drafting-guide.md until its useful short-draft guidance is migrated or explicitly superseded.
 Notes:
-  Candidate target: draft-driven discovery becomes either a broader documentation/planning principle or is narrowed to slice-layer discovery; l1 guide becomes transitional or a short-draft guide only.
+  Candidate target: draft-driven discovery is narrowed to slice-layer discovery; l1 guide remains transitional or becomes a short-draft compatibility pointer.
 ```
 
 ## 4. Maintenance Rules
