@@ -20,6 +20,15 @@ planning/slices/slice-responsibility-map.md
 | SLICE-FOLDER-MAP | Slice Folder Map | folder map | transitional | `planning/slices/SLICE-FOLDER-MAP.md` | Folder placement map kept during migration; placement authority is moving to responsibility map |
 | SLICE-INDEX | Slice Index | index/catalog | current | `planning/slices/SLICE-INDEX.md` | Concrete catalog of slice docs/files while old and new paths coexist |
 
+## Slice register docs
+
+| ID | Title | Type | Status | Current path | Notes |
+|---|---|---|---|---|---|
+| SLICE-SCENARIO-FLOW-BEHAVIOR-REGISTER | Slice Scenario Flow / Behavior Register | source mapping register | current | `planning/slices/slice-scenario-flow-behavior-register.md` | Maps scenario/source artifacts to slice drafts and sidecars |
+| SLICE-QUESTIONS-REGISTER | Slice Questions Register | questions / decisions register | current | `planning/slices/slice-questions-register.md` | Canonical active slice-layer questions and decisions register |
+| SLICE-EXTENSION-POINTS-REGISTER | Slice Extension Points Register | extension register | current | `planning/slices/slice-extension-points-register.md` | Extension points, change pressure and future seams |
+| SLICE-IMPLEMENTATION-NOTES-REGISTER | Slice Implementation Notes Register | implementation notes register | current | `planning/slices/slice-implementation-notes-register.md` | Shared future/current implementation notes that must remain visible |
+
 ## Current file-location rule
 
 ```text
@@ -88,7 +97,6 @@ Historical L1/L2 paths are legacy only.
 | CC-SEC-CSRF-001.server | Unsafe Command Protection Server Slice | server cross-cutting draft | future | `planning/slices/server/cross-cutting/CC-SEC-CSRF-001-unsafe-command-protection.server.md` | Not created in this archive |
 | CC-SEC-CSRF-001.client | Unsafe Command Protection Client Slice | client cross-cutting draft | future | `planning/slices/client/cross-cutting/CC-SEC-CSRF-001-unsafe-command-protection.client.md` | Not created in this archive |
 
-
 ## Archive workflow docs
 
 | ID | Title | Type | Status | Current path | Notes |
@@ -99,12 +107,8 @@ Historical L1/L2 paths are legacy only.
 | POST-APPLY-MERGE-REVIEW-WORKFLOW | Post-Apply Merge Review Workflow | workflow | current | `planning/archive-workflow/POST-APPLY-MERGE-REVIEW-WORKFLOW.md` | Compare applied files with archived originals, then create smaller correction archive |
 | ARCHIVE-REVIEW-FOLDER-RULES | Archive Review Folder Rules | workflow | current | `planning/archive-workflow/ARCHIVE-REVIEW-FOLDER-RULES.md` | Unique `_archive-review/<slug>/` folder rule |
 
-
 ## Implemented slice sync docs
 
 | ID | Title | Type | Status | Current path | Notes |
 |---|---|---|---|---|---|
 | IMPLEMENTED-SLICE-SYNC-WORKFLOW | Implemented Slice Draft Sync Workflow | workflow | transitional | `planning/slices/implemented-slice-sync-workflow.md` | Useful sync workflow; needs refactor before canonical use |
-| IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE | Implemented Slice Sync Status Template | template | transitional | `planning/slices/IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE.md` | Draft block for implementation status and drift; future fate TBD |
-| IMPLEMENTED-SLICE-SYNC-CHECKLIST | Implemented Slice Sync Checklist | checklist | transitional | `planning/slices/IMPLEMENTED-SLICE-SYNC-CHECKLIST.md` | Preflight checklist; likely fold into workflow or supersede |
-| IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE | Implemented Slice Sync Report Template | template | transitional | `planning/slices/IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE.md` | Report format before changing an implemented draft; future fate TBD |
