@@ -1,6 +1,6 @@
 # Planning Agent Protocol
 
-Status: current collaboration protocol / GitHub line-link workflow synchronized
+Status: current collaboration protocol / workflow activation synchronized
 
 ## 1. Core Rule
 
@@ -8,7 +8,35 @@ Do not continue implementation planning through a question that may change requi
 
 If the question is not blocking the current task, record it with a status and assumption/current direction, then sync it to the relevant shared register when it can affect future work.
 
-## 2. Role Identification Rule
+## 2. Workflow Activation Rule
+
+Before non-trivial planning/repo work, read:
+
+```text
+planning/workflow-activation-map.md
+```
+
+Then output a short `Workflow Preflight` before the main answer or before proposing edits.
+
+The preflight must include:
+
+```text
+Active role
+Task type
+Activated workflows and why
+Implicit checks
+Explicit permission needed, if any
+Relevant workflows not activated and why
+Future/missing workflows, if relevant
+```
+
+This rule is meant to make workflow choice visible before work continues.
+
+The user should not need to know workflow file names. The chat must discover relevant workflows from the repo docs.
+
+Do not treat Workflow Preflight as permission to edit files. GitHub writes still require explicit user instruction.
+
+## 3. Role Identification Rule
 
 Before specialized work, identify the active role using:
 
@@ -31,7 +59,7 @@ Testing / E2E Keeper Gate
 
 If a task crosses role boundaries, write a handoff note instead of silently changing responsibility.
 
-## 3. Repo-Grounded GitHub Line Link Rule
+## 4. Repo-Grounded GitHub Line Link Rule
 
 Before explaining current repo code/docs, implementation status, tests, generated artifacts or a concrete consistency problem, read:
 
@@ -49,7 +77,7 @@ Use commit SHA links when possible. If the current commit SHA is unavailable, us
 
 Do not use whole-file links for specific implementation/code/test/status claims.
 
-## 4. Agent Scope Boundary Rule
+## 5. Agent Scope Boundary Rule
 
 Before writing a prompt for another chat, read:
 
@@ -78,7 +106,7 @@ Forbidden by default unless explicitly requested:
 - create branch/commit/PR.
 ```
 
-## 5. Documentation Update Agent Rule
+## 6. Documentation Update Agent Rule
 
 Documentation-only agents must read:
 
@@ -86,6 +114,7 @@ Documentation-only agents must read:
 planning/documentation/README.md
 planning/documentation/documentation-update-plan-workflow.md
 planning/documentation/planning-docs-architecture-principles.md
+planning/documentation/documentation-responsibility-map.md
 planning/documentation/documentation-update-workflow.md
 planning/documentation/status-reconciliation-workflow.md
 planning/documentation/local-global-documentation-sync-workflow.md
@@ -114,7 +143,7 @@ Direct GitHub edit mode is allowed only when the user explicitly asks to apply/u
 
 Archive/replacement package mode is still valid for manual application, archive output, package output or broad changes that should not be applied directly.
 
-## 6. Questions First And Assumption Rule
+## 7. Questions First And Assumption Rule
 
 In any `Questions / Decisions` section, list:
 
@@ -137,7 +166,7 @@ Impact:
 Shared register / local-only reason:
 ```
 
-## 7. Scenario Drafting Rule
+## 8. Scenario Drafting Rule
 
 Scenario drafting uses:
 
@@ -159,7 +188,7 @@ scenario questions register
 scenario clarifications
 ```
 
-## 8. Draft-Driven Slice Rule
+## 9. Draft-Driven Slice Rule
 
 All slice-related planning uses:
 
@@ -171,7 +200,7 @@ planning/slices/slice-scenario-flow-behavior-register.md
 
 Slice drafts must include visual scenario/UI flow, visual implementation flow, behavior coverage and test/verification planning.
 
-## 9. Server Request Validation Rule
+## 10. Server Request Validation Rule
 
 When planning or implementing server API input, read:
 
@@ -185,7 +214,7 @@ Request-level FluentValidation handles DTO/query shape, required fields, discrim
 
 Application/domain validation still owns ownership, account existence, state transitions, domain invariants, no-write and atomicity.
 
-## 10. Client / Server Contract Rule
+## 11. Client / Server Contract Rule
 
 Before planning missing client slices, check:
 
@@ -197,7 +226,7 @@ planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contr
 
 The agent must not let client code guess routes, DTOs, statuses, ProblemDetails extension names or error code strings.
 
-## 11. Do Not
+## 12. Do Not
 
 ```text
 - Do not implement client slices by manually guessing API contract.
@@ -205,6 +234,7 @@ The agent must not let client code guess routes, DTOs, statuses, ProblemDetails 
 - Do not implement cross-cutting security from loose notes only.
 - Do not generate diagrams without repo-grounded preflight.
 - Do not use PlantUML as the primary diagram deliverable unless explicitly asked.
+- Do not skip Workflow Preflight for non-trivial planning/repo work.
 - Do not use GitHub mutation tools during documentation-only plan/archive work unless direct GitHub edits were explicitly requested.
 - Do not leave important local questions only in local files when they affect future work.
 - Do not hide assumptions in prose.
