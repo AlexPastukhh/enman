@@ -14,13 +14,27 @@ planning/slices/slice-responsibility-map.md
 
 ```text
 planning/slices/slice-responsibility-map.md
+planning/slices/slice-draft-authoring-principles.md
 planning/slices/SLICE-FOLDER-MAP.md
 planning/slices/SLICE-INDEX.md
 planning/slices/slice-questions-register.md
 planning/slices/slice-test-plan-workflow.md
 planning/slices/client/README.md
 planning/slices/server/README.md
+planning/slices/server/server-implementation-principles.md
 planning/slices/cross-cutting/README.md
+```
+
+For authoring any slice draft, read:
+
+```text
+planning/slices/slice-draft-authoring-principles.md
+```
+
+For server/backend/API slice drafts, also read:
+
+```text
+planning/slices/server/server-implementation-principles.md
 ```
 
 ## Core Rule
