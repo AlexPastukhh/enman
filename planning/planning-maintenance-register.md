@@ -216,6 +216,180 @@ Notes:
   Slice is likely the highest operational cleanup value; domain/tables is important for thesis/domain architecture.
 ```
 
+### PMR-007 — Add archive/local-state availability rule
+
+```text
+ID: PMR-007
+Status: open
+Area: workflow activation / source availability
+Task / reminder:
+  Add a rule that chats must ask for an archive or confirm pushed state when the task depends on local files, archive-applied changes, generated replacement packages or unpushed changes that may not be visible on the remote branch.
+Trigger / condition:
+  Before relying on local archive state, before auditing files that may exist only in uploaded archives, or when repo search/remote branch does not show expected files.
+Why it matters:
+  Future chats can otherwise overclaim current state from the remote branch and miss local/archive-only changes.
+Owner layer:
+  documentation / workflow governance
+Target files:
+  planning/workflow-activation-map.md
+  planning/planning-agent-protocol.md
+  Prompt Manager Rules and Design, if quick prompts are updated
+Depends on:
+  none
+Do when:
+  Next workflow-activation cleanup or prompt-manager quick prompt update.
+Do not do before:
+  Do not make archives mandatory for every task; only require them when local/archive state matters.
+Notes:
+  Rule should distinguish remote branch truth, uploaded archive snapshot and local unpushed state.
+```
+
+### PMR-008 — Fold slice folder placement rules into slice responsibility map
+
+```text
+ID: PMR-008
+Status: waiting-for-condition
+Area: slice layer responsibility map
+Task / reminder:
+  Move or summarize the placement responsibility from planning/slices/SLICE-FOLDER-MAP.md into future planning/slices/slice-responsibility-map.md, then decide whether SLICE-FOLDER-MAP.md remains a folder map, becomes a short compatibility pointer or is superseded.
+Trigger / condition:
+  When creating or updating planning/slices/slice-responsibility-map.md.
+Why it matters:
+  Responsibility maps should explain where new information/files belong. Folder placement is part of that responsibility and should not live only in a separate competing map.
+Owner layer:
+  slice / documentation governance
+Target files:
+  planning/slices/slice-responsibility-map.md
+  planning/slices/SLICE-FOLDER-MAP.md
+  planning/slices/README.md
+  planning/slices/SLICE-INDEX.md
+Depends on:
+  slice layer responsibility map creation
+Do when:
+  During slice responsibility map implementation.
+Do not do before:
+  Do not delete SLICE-FOLDER-MAP.md before README/index links and legacy migration references are synchronized.
+Notes:
+  Likely target: responsibility map owns placement rules; README owns read order; SLICE-INDEX owns concrete file catalog.
+```
+
+### PMR-009 — Update slice templates after responsibility/source model stabilizes
+
+```text
+ID: PMR-009
+Status: waiting-for-condition
+Area: slice templates
+Task / reminder:
+  Update client/server/cross-cutting slice templates after the slice responsibility map and source/dependency expectations are clear.
+Trigger / condition:
+  After planning/slices/slice-responsibility-map.md exists and section/source/dependency rules are stable.
+Why it matters:
+  Templates should eventually include the new model: section-level sources where needed, dependencies between draft sections, local/global register sync, and future source/version tracking hooks.
+Owner layer:
+  slice
+Target files:
+  planning/slices/client/CLIENT-SLICE-TEMPLATE.md
+  planning/slices/server/SERVER-SLICE-TEMPLATE.md
+  planning/slices/cross-cutting/CROSS-CUTTING-UMBRELLA-TEMPLATE.md
+Depends on:
+  slice responsibility map, reviewable-agent-output workflow, future source/dependency model
+Do when:
+  After map/responsibility cleanup, not during the first inventory pass.
+Do not do before:
+  Do not churn templates before owner/register boundaries are clear.
+Notes:
+  Keep existing templates as current until this cleanup is explicitly started.
+```
+
+### PMR-010 — Refactor implemented slice sync artifacts into the new model
+
+```text
+ID: PMR-010
+Status: waiting-for-condition
+Area: implemented slice sync
+Task / reminder:
+  Refactor implemented-slice-sync-workflow.md and decide the fate of IMPLEMENTED-SLICE-SYNC-CHECKLIST.md, IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE.md and IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE.md.
+Trigger / condition:
+  Before implemented-slice sync is used broadly or after slice responsibility map clarifies workflow/template/checklist responsibilities.
+Why it matters:
+  The current workflow has useful ideas but references source/domain/map files that may be legacy/future/missing. The checklist/templates may be old artifacts or may need to be folded into the workflow and reviewable output model.
+Owner layer:
+  slice / documentation governance
+Target files:
+  planning/slices/implemented-slice-sync-workflow.md
+  planning/slices/IMPLEMENTED-SLICE-SYNC-CHECKLIST.md
+  planning/slices/IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE.md
+  planning/slices/IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE.md
+  planning/documentation/status-reconciliation-workflow.md
+Depends on:
+  slice responsibility map, source/version model, status reconciliation workflow
+Do when:
+  Before treating implemented slice sync artifacts as canonical.
+Do not do before:
+  Do not remove useful sync/report/status concepts without migrating them into the new workflow/template model.
+Notes:
+  Likely useful parts: compare source/draft/code/tests, drift statuses, report-before-edit, implementation sync status block.
+```
+
+### PMR-011 — Resolve duplicate slice questions registers
+
+```text
+ID: PMR-011
+Status: open
+Area: slice registers
+Task / reminder:
+  Resolve responsibility overlap between planning/slices/SLICE-QUESTIONS.md and planning/slices/slice-questions-register.md.
+Trigger / condition:
+  During slice responsibility map work or before adding new slice-wide questions.
+Why it matters:
+  Two files currently present themselves as slice question registers, which makes it unclear where new questions/decisions belong.
+Owner layer:
+  slice
+Target files:
+  planning/slices/SLICE-QUESTIONS.md
+  planning/slices/slice-questions-register.md
+  planning/slices/slice-responsibility-map.md
+  planning/slices/README.md
+Depends on:
+  slice layer audit
+Do when:
+  Before normalizing register routing in the slice responsibility map.
+Do not do before:
+  Do not delete either file until useful entries are classified as active/current, legacy, docs-governance or superseded.
+Notes:
+  Likely target: slice-questions-register.md becomes canonical active register; SLICE-QUESTIONS.md becomes transitional legacy/taxonomy decision log or is merged/superseded.
+```
+
+### PMR-012 — Decide scope of draft-driven discovery and L1 slice drafting guide
+
+```text
+ID: PMR-012
+Status: open
+Area: slice principles/workflows cleanup
+Task / reminder:
+  Decide whether draft-driven-discovery-principles.md is a slice-layer principle or a broader planning principle, and decide whether l1-slice-drafting-guide.md still owns useful content after client/server workflows/templates exist.
+Trigger / condition:
+  During slice responsibility map work or before rewriting slice drafting workflows.
+Why it matters:
+  Some files currently use broader wording than the slice layer or duplicate client/server workflow/template content.
+Owner layer:
+  slice / documentation governance
+Target files:
+  planning/slices/draft-driven-discovery-principles.md
+  planning/slices/l1-slice-drafting-guide.md
+  planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md
+  planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
+  planning/slices/slice-responsibility-map.md
+Depends on:
+  slice layer audit
+Do when:
+  Before declaring slice workflow/principle files clean.
+Do not do before:
+  Do not archive l1-slice-drafting-guide.md until its useful short-draft guidance is migrated or explicitly superseded.
+Notes:
+  Candidate target: draft-driven discovery becomes either a broader documentation/planning principle or is narrowed to slice-layer discovery; l1 guide becomes transitional or a short-draft guide only.
+```
+
 ## 4. Maintenance Rules
 
 ```text
