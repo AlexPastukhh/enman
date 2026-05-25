@@ -1,6 +1,17 @@
 # Slice Folder Map
 
-Status: current folder ownership map / L1-L2 legacy, cross-cutting taxonomy and testing workflow synchronized
+Status: transitional folder ownership map / L1-L2 legacy, cross-cutting taxonomy and testing workflow synchronized
+
+Authority note:
+
+```text
+This file is transitional.
+Canonical slice-layer placement and responsibility routing now lives in:
+planning/slices/slice-responsibility-map.md
+
+Keep this file during migration because it still preserves folder placement, legacy path and archive-workflow references.
+Do not delete it until README/index links and legacy migration references are synchronized.
+```
 
 ## Scenario source folders
 
@@ -56,11 +67,14 @@ planning/slices/cross-cutting/
 planning/slices/README.md
   main entry point
 
+planning/slices/slice-responsibility-map.md
+  canonical slice-layer placement and responsibility routing
+
 planning/slices/SLICE-INDEX.md
   list of known slices and docs
 
 planning/slices/SLICE-QUESTIONS.md
-  register of decisions, blocked questions, assumptions and future-review items
+  transitional register of decisions, blocked questions, assumptions and future-review items
 
 planning/slices/slice-test-plan-workflow.md
   rules for writing Test / Verification Plan inside slice drafts
@@ -99,6 +113,12 @@ planning/slices/cross-cutting/
 ```
 
 Do not create new L1/L2 folders for future slice docs.
+
+For canonical placement/routing, read:
+
+```text
+planning/slices/slice-responsibility-map.md
+```
 
 ## Migration rule
 
@@ -150,16 +170,22 @@ Archive workflow docs are not slice drafts. They are documentation/change-manage
 
 ```text
 planning/slices/implemented-slice-sync-workflow.md
-  workflow for refactoring/synchronizing slice drafts that already have implementation.
+  transitional workflow for refactoring/synchronizing slice drafts that already have implementation.
 
 planning/slices/IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE.md
-  required draft block for implemented slice status and known drift.
+  transitional draft block for implemented slice status and known drift.
 
 planning/slices/IMPLEMENTED-SLICE-SYNC-CHECKLIST.md
-  checklist for source/domain/map/code/test inspection before updating an implemented draft.
+  transitional checklist for source/domain/map/code/test inspection before updating an implemented draft.
 
 planning/slices/IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE.md
-  user-facing report template for implemented slice sync audit.
+  transitional user-facing report template for implemented slice sync audit.
 ```
 
 These docs are for existing implemented slice drafts. New draft-only slices still use the normal client/server templates.
+
+Their future shape is tracked in:
+
+```text
+planning/planning-maintenance-register.md
+```
