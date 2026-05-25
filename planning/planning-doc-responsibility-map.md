@@ -1,6 +1,7 @@
 # Planning Document Responsibility Map
 
-Status: current responsibility map / architecture boundary and ApplicantParty one-page direction synchronized
+Status: transitional global responsibility map / root layer router  
+Scope: routes planning documentation information to the correct layer and, where available, to the layer-local responsibility map
 
 ## 1. Core Rule
 
@@ -8,7 +9,53 @@ A file should contain only content that belongs to its responsibility zone.
 
 When a local file contains information that affects future work, synchronize it with the correct shared index/register.
 
-## 2. Agent / Workflow Responsibility
+This root map is the first routing step for planning documentation:
+
+```text
+new information
+  -> choose planning layer here
+  -> open the layer-local responsibility map or README
+  -> update the correct local file/register/index
+```
+
+This file should not become the permanent detailed owner for every file inside every layer.
+
+Target model:
+
+```text
+root responsibility map
+  = chooses the layer and points to local responsibility maps.
+
+local layer responsibility map
+  = decides where information belongs inside that layer.
+
+folder README / index
+  = navigation and read order.
+```
+
+Until local responsibility maps exist for all layers, this file keeps transitional fallback routing for scenario, slice, API/testing, architecture and VKR responsibilities.
+
+## 2. Layer Router
+
+| Layer | Belongs here | Local responsibility entry |
+|---|---|---|
+| Documentation | Planning-doc architecture, docs update workflows, documentation-layer placement, agent output rules, documentation prompts and scoped sync notes. | `planning/documentation/documentation-responsibility-map.md` |
+| Scenario | Scenario text specs, UI specs, DATA sources, behavior items, clarifications and scenario questions. | `planning/diagrams/README.md` now; future scenario responsibility map. |
+| Domain | Domain drafts, invariants, value objects, aggregate boundaries, accepted domain decisions and domain implementation cuts. | `planning/tables/README.md` now; future domain responsibility map. |
+| Slice | Slice drafts, slice source mapping, slice questions, extension points, implementation notes and client sidecars. | `planning/slices/README.md` now; future slice responsibility map. |
+| API | API contract rules, OpenAPI generation rules, client/server contract rules, API error contracts and generated artifact rules. | `planning/api/README.md` |
+| Testing | Testing principles, E2E workflows, test object patterns and verification rules. | `planning/testing/README.md` |
+| Architecture / ADR | Cross-slice architecture boundaries, accepted/candidate decisions and ADR workflow. | `planning/architecture/README.md`, `planning/adr/README.md` |
+| VKR / Thesis | Clean thesis wording, evidence maps, thesis resources and presentation/defense-safe wording. | `planning/thesis/README.md`, `planning/vkr-clean-reference.md` |
+| Archive / Recovery | Archive/replacement workflows, dirty drafts and non-canonical recovery notes. | `planning/archive-workflow/README.md`, `planning/dirty-drafts/` |
+
+Global docs architecture theory lives in:
+
+```text
+planning/documentation/planning-docs-architecture-principles.md
+```
+
+## 3. Agent / Workflow Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -18,23 +65,24 @@ When a local file contains information that affects future work, synchronize it 
 | `planning/planning-agent-protocol.md` | Role-level protocol, read rules, handoff rules and global do-not rules |
 | `planning/agent-scope-boundaries-and-prompt-safety.md` | Rules for prompt creators and implementation agents: read broadly, change only explicit scope |
 | `planning/repo-grounded-github-line-links-workflow.md` | User-facing GitHub line-link rules for repo-grounded code/docs/status explanations |
-| `planning/planning-doc-responsibility-map.md` | Ownership map for planning documentation |
+| `planning/planning-doc-responsibility-map.md` | Transitional root layer router for planning documentation; detailed local placement should move to local responsibility maps over time |
 | `planning/replacement-file-generation-guide.md` | Archive/package generation rules for manual repo application |
 
-## 3. Documentation Workflow Responsibility
+## 4. Documentation Workflow Responsibility
 
 | File / folder | Responsibility |
 |---|---|
 | `planning/documentation/README.md` | Documentation workflow navigation and read order |
+| `planning/documentation/documentation-responsibility-map.md` | Local responsibility map for documentation-layer information placement |
 | `planning/documentation/documentation-update-plan-workflow.md` | Required preflight plan format for broad docs/navigation/status/register updates |
 | `planning/documentation/documentation-update-workflow.md` | Documentation update process, output modes, quality checks and direct-edit/archive rules |
 | `planning/documentation/planning-docs-architecture-principles.md` | Architecture principles for planning documentation itself, not runtime application architecture |
 | `planning/documentation/reviewable-agent-output-workflow.md` | Response-level workflow for reviewable AI/agent outputs: answer detail levels, sources/coverage blocks, handoff/review format, recheck/clarify/section commands and section-level source expectations for major draft sections |
 | `planning/documentation/local-global-documentation-sync-workflow.md` | Local detail to shared navigation/register synchronization rules |
 | `planning/documentation/status-reconciliation-workflow.md` | Status reconciliation between current implementation evidence and planning docs |
-| `planning/documentation/documentation-update-agent-prompt.md` | Prompt template for documentation update chats/agents |
+| `planning/documentation/documentation-update-agent-prompt.md` | Derived prompt template for documentation update chats/agents; canonical docs win if there is conflict |
 
-## 4. VKR / Thesis Clean Reference Responsibility
+## 5. VKR / Thesis Clean Reference Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -43,13 +91,13 @@ When a local file contains information that affects future work, synchronize it 
 
 VKR-facing materials must not use internal planning labels such as `L1`, `L2`, `dirty draft`, `agent`, `prompt` or implementation archive terminology.
 
-## 5. Repository Edit Responsibility
+## 6. Repository Edit Responsibility
 
 Direct GitHub edits from ChatGPT are preferred for small scoped documentation changes because they create visible commits that can be inspected and reverted independently.
 
 By default, use one file per commit. Large generated replacement archives should be reserved for broad file/package generation when direct scoped commits are less practical.
 
-## 6. Architecture Responsibility
+## 7. Architecture Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -58,7 +106,7 @@ By default, use one file per commit. Large generated replacement archives should
 
 Architecture docs do not replace slice docs, scenario sources, API contract docs, testing docs or ADRs.
 
-## 7. Scenario Source Responsibility
+## 8. Scenario Source Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -71,7 +119,7 @@ Architecture docs do not replace slice docs, scenario sources, API contract docs
 | `planning/diagrams/scenario-behavior-items/` | Scenario-derived, UI-scenario-derived and concern-derived behavior items |
 | `planning/diagrams/scenario-questions-register.md` | Scenario/domain questions that can change scenario behavior, DATA, UI requirements or diagrams |
 
-## 8. Slice Discovery Responsibility
+## 9. Slice Discovery Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -91,7 +139,7 @@ Scenario Flow and Behavior Items for slices come from `slice-scenario-flow-behav
 
 Questions/extension/implementation registers do not replace scenario source files.
 
-## 9. Client Planning Responsibility
+## 10. Client Planning Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -100,7 +148,7 @@ Questions/extension/implementation registers do not replace scenario source file
 
 Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 
-## 10. API / Testing / ADR Responsibility
+## 11. API / Testing / ADR Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -109,7 +157,7 @@ Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 | `planning/testing/` | Cross-slice testing principles, E2E workflow, test object patterns |
 | `planning/adr/` | ADR workflow, architecture decision notes and ADR candidates |
 
-## 11. Evidence Link Responsibility
+## 12. Evidence Link Responsibility
 
 Repo-grounded line-link rules belong in:
 
@@ -119,28 +167,38 @@ planning/repo-grounded-github-line-links-workflow.md
 
 Other workflow docs may link to that file, but should not duplicate detailed line-link mechanics unless needed for a local role checklist.
 
-## 12. Responsibility Decision Heuristic
+## 13. Responsibility Decision Heuristic
+
+Use this file first to choose the layer. Then use the local responsibility map or README for that layer.
 
 ```text
-1. scenario text/DATA/UI/behavior source -> planning/diagrams/scenario-*/
-2. slice-to-source mapping -> planning/slices/slice-scenario-flow-behavior-register.md
-3. active parent backend/business slice file -> planning/slices/SL-*.md
-4. client sidecar file -> planning/slices/**/*.client.md
-5. slice-wide question overview -> planning/slices/slice-questions-register.md
-6. extension/change pressure -> planning/slices/slice-extension-points-register.md
-7. future implementation/client/testing note -> planning/slices/slice-implementation-notes-register.md
-8. architecture-level cleanup / legacy-current boundary -> planning/architecture/
-9. agent scope/prompt safety rule -> planning/agent-scope-boundaries-and-prompt-safety.md
-10. repo-grounded evidence line links -> planning/repo-grounded-github-line-links-workflow.md
-11. client-wide UI/client convention -> planning/client/cross-cutting/
-12. client/server contract split -> planning/api/client-server-contract-principles.md
-13. test layer boundaries / E2E workflow -> planning/testing/
-14. accepted/current architecture decision -> architecture-decision-notes.md
-15. possible future full ADR -> adr-candidates.md
-16. VKR/presentation/defense clean wording -> planning/vkr-clean-reference.md
-17. raw non-canonical recovery wording -> planning/dirty-drafts/
-18. broad docs/navigation/status/register update plan -> planning/documentation/documentation-update-plan-workflow.md
-19. planning documentation architecture principle -> planning/documentation/planning-docs-architecture-principles.md
-20. reviewable AI/agent response format -> planning/documentation/reviewable-agent-output-workflow.md
-21. documentation local/global sync rule -> planning/documentation/local-global-documentation-sync-workflow.md
+1. documentation architecture/process/prompt/sync note -> planning/documentation/documentation-responsibility-map.md
+2. scenario text/DATA/UI/behavior source -> planning/diagrams/scenario-*/
+3. domain concepts/drafts/decisions -> planning/tables/ now, future domain layer responsibility map
+4. slice-to-source mapping -> planning/slices/slice-scenario-flow-behavior-register.md
+5. active parent backend/business slice file -> planning/slices/SL-*.md
+6. client sidecar file -> planning/slices/**/*.client.md
+7. slice-wide question overview -> planning/slices/slice-questions-register.md
+8. extension/change pressure -> planning/slices/slice-extension-points-register.md
+9. future implementation/client/testing note -> planning/slices/slice-implementation-notes-register.md
+10. architecture-level cleanup / legacy-current boundary -> planning/architecture/
+11. agent scope/prompt safety rule -> planning/agent-scope-boundaries-and-prompt-safety.md
+12. repo-grounded evidence line links -> planning/repo-grounded-github-line-links-workflow.md
+13. client-wide UI/client convention -> planning/client/cross-cutting/
+14. client/server contract split -> planning/api/client-server-contract-principles.md
+15. test layer boundaries / E2E workflow -> planning/testing/
+16. accepted/current architecture decision -> architecture-decision-notes.md
+17. possible future full ADR -> adr-candidates.md
+18. VKR/presentation/defense clean wording -> planning/vkr-clean-reference.md
+19. raw non-canonical recovery wording -> planning/dirty-drafts/
+20. broad docs/navigation/status/register update plan -> planning/documentation/documentation-update-plan-workflow.md
+21. planning documentation architecture principle -> planning/documentation/planning-docs-architecture-principles.md
+22. reviewable AI/agent response format -> planning/documentation/reviewable-agent-output-workflow.md
+23. documentation local/global sync rule -> planning/documentation/local-global-documentation-sync-workflow.md
 ```
+
+## 14. Future Cleanup Rule
+
+When local responsibility maps exist for documentation, scenario, domain, slice, API/testing and VKR layers, shrink this root map to a thin router.
+
+Do not remove useful routing rows until an equivalent local map exists and README/navigation points to it.
