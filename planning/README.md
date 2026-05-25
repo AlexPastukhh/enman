@@ -29,7 +29,36 @@ Direct GitHub edits must still follow scope rules:
 - prefer one file per commit by default.
 ```
 
-## 3. Source-of-Truth Model
+## 3. Workflow Activation
+
+For non-trivial planning/repo work, read:
+
+```text
+planning/workflow-activation-map.md
+```
+
+The workflow activation map explains:
+
+```text
+- which workflows exist;
+- when each workflow is activated;
+- which workflows are implicit checks;
+- which actions require explicit user permission;
+- what Workflow Preflight should be shown before deep work or edits;
+- which workflows are future/missing or transitional.
+```
+
+A future chat should not require the user to remember workflow file names. It should read the activation map and disclose activated workflows before continuing.
+
+For deferred planning-docs/workflow cleanup tasks and condition-based follow-ups, use:
+
+```text
+planning/planning-maintenance-register.md
+```
+
+This register is for future documentation/workflow maintenance, not for ordinary feature TODOs.
+
+## 4. Source-of-Truth Model
 
 ### Implementation truth
 
@@ -99,7 +128,7 @@ planning/dirty-drafts/
 
 Dirty drafts are not source of truth.
 
-## 4. Task-Based Navigation
+## 5. Task-Based Navigation
 
 ### For implementation planning
 
@@ -107,6 +136,7 @@ Read:
 
 ```text
 planning/README.md
+planning/workflow-activation-map.md
 relevant scenario spec
 relevant slice doc
 relevant architecture/API/client/testing doc
@@ -120,6 +150,7 @@ Read:
 
 ```text
 planning/README.md
+planning/workflow-activation-map.md
 planning/vkr-clean-reference.md
 relevant scenario/domain/architecture docs
 ```
@@ -131,6 +162,7 @@ Then verify implementation from code, tests, screenshots or generated contracts.
 Read:
 
 ```text
+planning/workflow-activation-map.md
 planning/diagrams/README.md
 planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
 planning/diagrams/scenario-data/00-scenario-data-index.md
@@ -145,6 +177,7 @@ planning/diagrams/drawio-diagram-generation-workflow.md
 Read:
 
 ```text
+planning/workflow-activation-map.md
 planning/slices/README.md
 planning/slices/l2/README.md
 planning/slices/l1-slice-drafting-guide.md
@@ -159,6 +192,7 @@ planning/slices/slice-implementation-notes-register.md
 Read:
 
 ```text
+planning/workflow-activation-map.md
 planning/architecture/README.md
 planning/architecture/backend-legacy-and-l1-boundaries.md
 planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
@@ -170,6 +204,7 @@ planning/api/api-error-contract.md
 Read:
 
 ```text
+planning/workflow-activation-map.md
 planning/documentation/README.md
 planning/documentation/documentation-update-workflow.md
 planning/documentation/status-reconciliation-workflow.md
@@ -182,10 +217,23 @@ planning/replacement-file-generation-guide.md
 Read:
 
 ```text
+planning/workflow-activation-map.md
 planning/planning-agent-protocol.md
 planning/agent-scope-boundaries-and-prompt-safety.md
 planning/planning-doc-responsibility-map.md
 ```
+
+### For workflow/documentation maintenance tracking
+
+Read:
+
+```text
+planning/workflow-activation-map.md
+planning/planning-maintenance-register.md
+planning/planning-doc-responsibility-map.md
+```
+
+Use the maintenance register for deferred planning-docs/workflow tasks that have trigger conditions.
 
 ### For dirty draft recovery
 
@@ -197,7 +245,7 @@ planning/dirty-drafts/README.md
 
 Dirty drafts are recovery/context notes, not implementation truth and not final VKR wording.
 
-## 5. Historical / Internal Status Notes
+## 6. Historical / Internal Status Notes
 
 The following files may be useful as historical or internal handoff notes, but they are not implementation truth:
 
@@ -209,7 +257,7 @@ planning/planning-workflow-current.md
 
 Use them only as context. For implementation state, inspect the current branch.
 
-## 6. Internal Labels and VKR Wording
+## 7. Internal Labels and VKR Wording
 
 `L1` and `L2` may appear in internal planning history, but they must not be used in VKR, presentation, report or defense speech.
 
@@ -223,7 +271,7 @@ Use clean terms instead:
 | Agreement Exchange | agreement/document exchange |
 | AgreementDocumentRef | document reference and metadata |
 
-## 7. Scenario / Diagram Status Markers
+## 8. Scenario / Diagram Status Markers
 
 For post-L1/L2 scenario and diagram work, use:
 
@@ -242,7 +290,7 @@ Scenario docs may mark future implementation and deferred extension points unifo
 
 `[IMPLEMENTED]` still requires current repo evidence.
 
-## 8. Not Source of Truth
+## 9. Not Source of Truth
 
 Do not use these as current implementation proof:
 
