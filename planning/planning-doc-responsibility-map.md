@@ -29,6 +29,7 @@ When a local file contains information that affects future work, synchronize it 
 | `planning/documentation/documentation-update-plan-workflow.md` | Required preflight plan format for broad docs/navigation/status/register updates |
 | `planning/documentation/documentation-update-workflow.md` | Documentation update process, output modes, quality checks and direct-edit/archive rules |
 | `planning/documentation/planning-docs-architecture-principles.md` | Architecture principles for planning documentation itself, not runtime application architecture |
+| `planning/documentation/reviewable-agent-output-workflow.md` | Response-level workflow for reviewable AI/agent outputs: answer detail levels, sources/coverage blocks, handoff/review format, recheck/clarify/section commands and section-level source expectations for major draft sections |
 | `planning/documentation/local-global-documentation-sync-workflow.md` | Local detail to shared navigation/register synchronization rules |
 | `planning/documentation/status-reconciliation-workflow.md` | Status reconciliation between current implementation evidence and planning docs |
 | `planning/documentation/documentation-update-agent-prompt.md` | Prompt template for documentation update chats/agents |
@@ -140,5 +141,6 @@ Other workflow docs may link to that file, but should not duplicate detailed lin
 17. raw non-canonical recovery wording -> planning/dirty-drafts/
 18. broad docs/navigation/status/register update plan -> planning/documentation/documentation-update-plan-workflow.md
 19. planning documentation architecture principle -> planning/documentation/planning-docs-architecture-principles.md
-20. documentation local/global sync rule -> planning/documentation/local-global-documentation-sync-workflow.md
+20. reviewable AI/agent response format -> planning/documentation/reviewable-agent-output-workflow.md
+21. documentation local/global sync rule -> planning/documentation/local-global-documentation-sync-workflow.md
 ```
