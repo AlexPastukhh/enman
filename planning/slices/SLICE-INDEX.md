@@ -6,6 +6,20 @@ This file is the common navigation index for server, client and cross-cutting sl
 
 Use it while old and new paths coexist during migration.
 
+This file is a concrete catalog, not the slice-layer responsibility map. For placement/routing rules, use:
+
+```text
+planning/slices/slice-responsibility-map.md
+```
+
+## Slice governance docs
+
+| ID | Title | Type | Status | Current path | Notes |
+|---|---|---|---|---|---|
+| SLICE-RESPONSIBILITY-MAP | Slice Responsibility Map | responsibility map | current | `planning/slices/slice-responsibility-map.md` | Local placement/routing owner for slice-layer information |
+| SLICE-FOLDER-MAP | Slice Folder Map | folder map | transitional | `planning/slices/SLICE-FOLDER-MAP.md` | Folder placement map kept during migration; placement authority is moving to responsibility map |
+| SLICE-INDEX | Slice Index | index/catalog | current | `planning/slices/SLICE-INDEX.md` | Concrete catalog of slice docs/files while old and new paths coexist |
+
 ## Current file-location rule
 
 ```text
@@ -90,7 +104,7 @@ Historical L1/L2 paths are legacy only.
 
 | ID | Title | Type | Status | Current path | Notes |
 |---|---|---|---|---|---|
-| IMPLEMENTED-SLICE-SYNC-WORKFLOW | Implemented Slice Draft Sync Workflow | workflow | current | `planning/slices/implemented-slice-sync-workflow.md` | How to refactor/sync drafts that already have code/tests |
-| IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE | Implemented Slice Sync Status Template | template | current | `planning/slices/IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE.md` | Draft block for implementation status and drift |
-| IMPLEMENTED-SLICE-SYNC-CHECKLIST | Implemented Slice Sync Checklist | checklist | current | `planning/slices/IMPLEMENTED-SLICE-SYNC-CHECKLIST.md` | Preflight checklist before updating implemented drafts |
-| IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE | Implemented Slice Sync Report Template | template | current | `planning/slices/IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE.md` | Report format before changing an implemented draft |
+| IMPLEMENTED-SLICE-SYNC-WORKFLOW | Implemented Slice Draft Sync Workflow | workflow | transitional | `planning/slices/implemented-slice-sync-workflow.md` | Useful sync workflow; needs refactor before canonical use |
+| IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE | Implemented Slice Sync Status Template | template | transitional | `planning/slices/IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE.md` | Draft block for implementation status and drift; future fate TBD |
+| IMPLEMENTED-SLICE-SYNC-CHECKLIST | Implemented Slice Sync Checklist | checklist | transitional | `planning/slices/IMPLEMENTED-SLICE-SYNC-CHECKLIST.md` | Preflight checklist; likely fold into workflow or supersede |
+| IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE | Implemented Slice Sync Report Template | template | transitional | `planning/slices/IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE.md` | Report format before changing an implemented draft; future fate TBD |
