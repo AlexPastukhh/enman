@@ -1,7 +1,25 @@
 # Documentation Update Agent Prompt
 
-Status: reusable prompt for documentation-only chats  
+Status: reusable derived prompt for documentation-only chats  
 Scope: prompt to give a separate chat that updates planning docs through a plan-first workflow and explicit output mode
+
+## Authority Note
+
+This prompt is derived from canonical documentation governance files.
+
+If this prompt conflicts with any of the following files, follow the canonical docs instead of this prompt:
+
+```text
+planning/documentation/planning-docs-architecture-principles.md
+planning/planning-doc-responsibility-map.md
+planning/documentation/documentation-responsibility-map.md
+planning/documentation/documentation-update-workflow.md
+planning/documentation/documentation-update-plan-workflow.md
+planning/documentation/local-global-documentation-sync-workflow.md
+planning/documentation/status-reconciliation-workflow.md
+```
+
+This file is a reusable prompt, not a canonical rule source.
 
 ## Prompt
 
@@ -65,8 +83,9 @@ planning/planning-workflow-current.md
 planning/planning-agent-protocol.md
 planning/planning-doc-responsibility-map.md
 planning/documentation/README.md
-planning/documentation/documentation-update-plan-workflow.md
 planning/documentation/planning-docs-architecture-principles.md
+planning/documentation/documentation-responsibility-map.md
+planning/documentation/documentation-update-plan-workflow.md
 planning/documentation/documentation-update-workflow.md
 planning/documentation/status-reconciliation-workflow.md
 planning/documentation/local-global-documentation-sync-workflow.md
