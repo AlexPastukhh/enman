@@ -33,7 +33,7 @@ folder README / index
   = navigation and read order.
 ```
 
-Until local responsibility maps exist for all layers, this file keeps transitional fallback routing for scenario, slice, API/testing, architecture and VKR responsibilities.
+Until local responsibility maps exist for all layers, this file keeps transitional fallback routing for scenario, API/testing, architecture and VKR responsibilities. Slice-specific placement now starts from `planning/slices/slice-responsibility-map.md`.
 
 ## 2. Layer Router
 
@@ -42,7 +42,7 @@ Until local responsibility maps exist for all layers, this file keeps transition
 | Documentation | Planning-doc architecture, docs update workflows, documentation-layer placement, agent output rules, documentation prompts and scoped sync notes. | `planning/documentation/documentation-responsibility-map.md` |
 | Scenario | Scenario text specs, UI specs, DATA sources, behavior items, clarifications and scenario questions. | `planning/diagrams/README.md` now; future scenario responsibility map. |
 | Domain | Domain drafts, invariants, value objects, aggregate boundaries, accepted domain decisions and domain implementation cuts. | `planning/tables/README.md` now; future domain responsibility map. |
-| Slice | Slice drafts, slice source mapping, slice questions, extension points, implementation notes and client sidecars. | `planning/slices/README.md` now; future slice responsibility map. |
+| Slice | Slice drafts, slice source mapping, slice questions, extension points, implementation notes, client/server/cross-cutting sidecars and slice workflows/templates. | `planning/slices/slice-responsibility-map.md` |
 | API | API contract rules, OpenAPI generation rules, client/server contract rules, API error contracts and generated artifact rules. | `planning/api/README.md` |
 | Testing | Testing principles, E2E workflows, test object patterns and verification rules. | `planning/testing/README.md` |
 | Architecture / ADR | Cross-slice architecture boundaries, accepted/candidate decisions and ADR workflow. | `planning/architecture/README.md`, `planning/adr/README.md` |
@@ -126,19 +126,27 @@ Architecture docs do not replace slice docs, scenario sources, API contract docs
 
 ## 9. Slice Discovery Responsibility
 
+Detailed slice-layer placement now belongs to:
+
+```text
+planning/slices/slice-responsibility-map.md
+```
+
+Transitional overview:
+
 | File / folder | Responsibility |
 |---|---|
-| `planning/slices/README.md` | Slice-planning navigation, active backend/client slice files, source register and shared registers |
-| `planning/slices/l1/README.md` | L1 client sidecar navigation and current client slice status |
-| `planning/slices/draft-driven-discovery-principles.md` | Draft-driven discovery principles |
-| `planning/slices/l1-slice-drafting-guide.md` | Practical L1 slice drafting workflow and templates |
+| `planning/slices/README.md` | Slice-planning navigation and read order |
+| `planning/slices/slice-responsibility-map.md` | Local responsibility map for slice-layer placement/routing |
+| `planning/slices/SLICE-INDEX.md` | Concrete catalog of slice docs, workflows, templates, registers and drafts |
 | `planning/slices/slice-scenario-flow-behavior-register.md` | Maps slices/client sidecars to scenario text, DATA, UI and behavior item sources |
 | `planning/slices/slice-questions-register.md` | Shared overview of currently relevant local questions, including implemented slices |
 | `planning/slices/slice-extension-points-register.md` | Cross-slice extension points and change pressure |
 | `planning/slices/slice-implementation-notes-register.md` | Concrete future implementation/client/testing notes |
-| `planning/slices/SL-*.md` | Active parent backend/business slice docs |
-| `planning/slices/*.client.md` and `planning/slices/l1/*.client.md` | Client sidecar docs for concrete client work or implemented client logic reconciliation |
-| `planning/slices/cross-cutting/` | Cross-cutting/helper slices such as API, constants, CSRF and server validation |
+| `planning/slices/client/` | Client slice drafts, workflows and templates |
+| `planning/slices/server/` | Server/backend/API slice drafts, workflows and templates |
+| `planning/slices/cross-cutting/` | Cross-cutting umbrella/coordination docs |
+| `planning/slices/SL-*.md`, `planning/slices/l1/`, `planning/slices/l2/` | Legacy/historical slice draft locations during migration |
 
 Scenario Flow and Behavior Items for slices come from `slice-scenario-flow-behavior-register.md` and the source files it points to.
 
@@ -148,8 +156,9 @@ Questions/extension/implementation registers do not replace scenario source file
 
 | File / folder | Responsibility |
 |---|---|
-| `planning/client/` | Client-wide planning index and client convention navigation |
-| `planning/client/cross-cutting/` | Client-wide reusable UI/client implementation conventions |
+| `planning/client/` | Deprecated old client planning index and client convention navigation during migration |
+| `planning/slices/client/` | Current client slice planning entry, workflows, templates and client sidecar drafts |
+| `planning/slices/client/cross-cutting/` | Current client-side reusable/cross-cutting implementation drafts |
 
 Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 
@@ -182,26 +191,27 @@ Use this file first to choose the layer. Then use the local responsibility map o
 3. documentation architecture/process/prompt/sync note -> planning/documentation/documentation-responsibility-map.md
 4. scenario text/DATA/UI/behavior source -> planning/diagrams/scenario-*/
 5. domain concepts/drafts/decisions -> planning/tables/ now, future domain layer responsibility map
-6. slice-to-source mapping -> planning/slices/slice-scenario-flow-behavior-register.md
-7. active parent backend/business slice file -> planning/slices/SL-*.md
-8. client sidecar file -> planning/slices/**/*.client.md
-9. slice-wide question overview -> planning/slices/slice-questions-register.md
-10. extension/change pressure -> planning/slices/slice-extension-points-register.md
-11. future implementation/client/testing note -> planning/slices/slice-implementation-notes-register.md
-12. architecture-level cleanup / legacy-current boundary -> planning/architecture/
-13. agent scope/prompt safety rule -> planning/agent-scope-boundaries-and-prompt-safety.md
-14. repo-grounded evidence line links -> planning/repo-grounded-github-line-links-workflow.md
-15. client-wide UI/client convention -> planning/client/cross-cutting/
-16. client/server contract split -> planning/api/client-server-contract-principles.md
-17. test layer boundaries / E2E workflow -> planning/testing/
-18. accepted/current architecture decision -> architecture-decision-notes.md
-19. possible future full ADR -> adr-candidates.md
-20. VKR/presentation/defense clean wording -> planning/vkr-clean-reference.md
-21. raw non-canonical recovery wording -> planning/dirty-drafts/
-22. broad docs/navigation/status/register update plan -> planning/documentation/documentation-update-plan-workflow.md
-23. planning documentation architecture principle -> planning/documentation/planning-docs-architecture-principles.md
-24. reviewable AI/agent response format -> planning/documentation/reviewable-agent-output-workflow.md
-25. documentation local/global sync rule -> planning/documentation/local-global-documentation-sync-workflow.md
+6. slice-layer placement/routing -> planning/slices/slice-responsibility-map.md
+7. slice-to-source mapping -> planning/slices/slice-scenario-flow-behavior-register.md
+8. active parent backend/business slice file -> planning/slices/SL-*.md now or planning/slices/server/ for new drafts
+9. client sidecar file -> planning/slices/client/ for new drafts; legacy sidecars may still live in planning/slices/l1 or planning/slices/l2
+10. slice-wide question overview -> planning/slices/slice-questions-register.md
+11. extension/change pressure -> planning/slices/slice-extension-points-register.md
+12. future implementation/client/testing note -> planning/slices/slice-implementation-notes-register.md
+13. architecture-level cleanup / legacy-current boundary -> planning/architecture/
+14. agent scope/prompt safety rule -> planning/agent-scope-boundaries-and-prompt-safety.md
+15. repo-grounded evidence line links -> planning/repo-grounded-github-line-links-workflow.md
+16. client-wide UI/client convention -> planning/slices/client/ or planning/slices/client/cross-cutting/ for current docs
+17. client/server contract split -> planning/api/client-server-contract-principles.md
+18. test layer boundaries / E2E workflow -> planning/testing/
+19. accepted/current architecture decision -> architecture-decision-notes.md
+20. possible future full ADR -> adr-candidates.md
+21. VKR/presentation/defense clean wording -> planning/vkr-clean-reference.md
+22. raw non-canonical recovery wording -> planning/dirty-drafts/
+23. broad docs/navigation/status/register update plan -> planning/documentation/documentation-update-plan-workflow.md
+24. planning documentation architecture principle -> planning/documentation/planning-docs-architecture-principles.md
+25. reviewable AI/agent response format -> planning/documentation/reviewable-agent-output-workflow.md
+26. documentation local/global sync rule -> planning/documentation/local-global-documentation-sync-workflow.md
 ```
 
 ## 14. Future Cleanup Rule
