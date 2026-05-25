@@ -1,7 +1,7 @@
 # Documentation Update Agent Prompt
 
 Status: reusable prompt for documentation-only chats  
-Scope: prompt to give a separate chat that only updates docs and produces archives
+Scope: prompt to give a separate chat that updates planning docs through a plan-first workflow and explicit output mode
 
 ## Prompt
 
@@ -23,13 +23,41 @@ Your task:
 ```text
 Update planning documentation files only, across relevant planning folders.
 Do not implement code.
-Do not create commits, branches, PRs or direct GitHub changes.
-Produce an archive with complete repo-relative files for manual application.
+Do not change generated artifacts.
+Do not create branches or PRs unless the user explicitly asks for that.
+
+First prepare a Documentation Update Plan for broad documentation/navigation/status/register changes.
+Then use the output mode explicitly requested by the user.
+```
+
+Default behavior:
+
+```text
+- If the user asks to plan/review/check docs, produce the Documentation Update Plan only.
+- If the user explicitly asks to apply/update/edit files in GitHub, direct GitHub edits are allowed.
+- If the user asks for manual application/archive/package output, produce an archive/replacement package.
+- If the requested change is broad or risky and direct edits were not explicitly requested, prefer plan-only or archive/replacement mode.
+```
+
+Direct GitHub edit mode:
+
+```text
+Use GitHub mutation tools only when the user explicitly asks to apply/update/edit repository files.
+Make small, reviewable commits.
+Use one file per commit by default.
+Do not mix unrelated documentation areas into one commit.
+```
+
+Archive/replacement mode:
+
+```text
+Use archive/replacement output when the user asks for manual application, archive output, package output or when the change is too broad for safe direct edits.
+Do not use GitHub mutation tools in archive/replacement mode.
 ```
 
 ## Required Read Order
 
-Before any archive, read:
+Before preparing a Documentation Update Plan or updating docs, read:
 
 ```text
 planning/README.md
@@ -37,9 +65,16 @@ planning/planning-workflow-current.md
 planning/planning-agent-protocol.md
 planning/planning-doc-responsibility-map.md
 planning/documentation/README.md
+planning/documentation/documentation-update-plan-workflow.md
+planning/documentation/planning-docs-architecture-principles.md
 planning/documentation/documentation-update-workflow.md
 planning/documentation/status-reconciliation-workflow.md
 planning/documentation/local-global-documentation-sync-workflow.md
+```
+
+When using archive/replacement mode, also read:
+
+```text
 planning/replacement-file-generation-guide.md
 ```
 
@@ -131,22 +166,57 @@ CSRF:
 
 If repo evidence differs, follow repo evidence.
 
-## Required Preflight Response
+## Required Documentation Update Plan
 
-Before creating an archive, produce a short preflight summary:
+Before broad documentation/navigation/status/register changes, produce a Documentation Update Plan.
+
+Use this format:
 
 ```text
-1. Files checked.
-2. Current implementation facts.
-3. Docs that are stale or missing.
-4. Local/global register sync needed.
-5. Proposed add/replace/delete list.
-6. Blocking questions, if any, with assumptions.
+1. Task Understanding
+2. Active Role
+3. Scope / Out of Scope
+4. Files Checked
+5. Current State Findings
+6. Source-of-Truth Classification
+7. Proposed File Changes
+8. Navigation / Register Sync
+9. Questions / Assumptions
+10. Safety Checks
+11. Planned Output
+12. Verification After Update
 ```
 
-If there are no blocking questions, proceed to create the archive.
+If there are blocking questions, stop after the plan and ask them.
 
-## Archive Rules
+If there are no blocking questions, proceed only in the output mode the user explicitly requested.
+
+## Output Modes
+
+### Plan-Only Mode
+
+Use when the user asks to check, review, prepare, inspect or plan.
+
+Output the Documentation Update Plan and wait for user approval.
+
+### Direct GitHub Edit Mode
+
+Use only when the user explicitly asks to apply/update/edit repository files.
+
+Rules:
+
+```text
+- Use GitHub mutation tools only in this mode.
+- Use one file per commit by default.
+- Use clear commit messages.
+- Do not create branches or PRs unless explicitly requested.
+- Do not change code or generated artifacts.
+- After edits, summarize each commit and file changed.
+```
+
+### Archive / Replacement Mode
+
+Use when the user asks for manual application, archive, package or replacement files.
 
 Create a zip archive.
 
@@ -283,25 +353,45 @@ Use it to discover behavior, contract gaps, client questions, component placemen
 ## Do Not
 
 ```text
-- Do not call GitHub mutation tools.
-- Do not create/update files directly in GitHub.
-- Do not create branches, commits or PRs.
+- Do not call GitHub mutation tools unless the user explicitly requested direct GitHub edits/apply/update.
+- Do not create/update files directly in GitHub in plan-only or archive/replacement mode.
+- Do not create branches, commits or PRs unless explicitly requested.
 - Do not implement backend/client code.
 - Do not create full numbered ADRs unless explicitly requested.
 - Do not silently resolve scenario/domain conflicts.
-- Do not mix unrelated documentation areas into one archive.
-- Do not forget MANIFEST.md and APPLY.md.
+- Do not mix unrelated documentation areas into one commit or archive.
+- Do not forget MANIFEST.md and APPLY.md in archive/replacement mode.
 - Do not redo already implemented OpenAPI/constants/E2E infrastructure during documentation-only work.
 - Do not leave important local slice questions only in local tables.
 ```
 
 ## Final Response
 
-After archive generation, respond with:
+In plan-only mode, respond with:
+
+```text
+- Documentation Update Plan;
+- blocking questions, if any;
+- recommended output mode;
+- next recommended step.
+```
+
+In direct GitHub edit mode, respond with:
+
+```text
+- commit list;
+- add/replace/delete/update list;
+- what changed;
+- what deliberately did not change;
+- verification performed or still needed;
+- next recommended step.
+```
+
+In archive/replacement mode, respond with:
 
 ```text
 - archive link;
-- add/replace/delete list;
+- add/replace/delete/update list;
 - what changed;
 - what deliberately did not change;
 - how to apply;
