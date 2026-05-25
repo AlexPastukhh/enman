@@ -84,9 +84,16 @@ Documentation-only agents must read:
 
 ```text
 planning/documentation/README.md
+planning/documentation/documentation-update-plan-workflow.md
+planning/documentation/planning-docs-architecture-principles.md
 planning/documentation/documentation-update-workflow.md
 planning/documentation/status-reconciliation-workflow.md
 planning/documentation/local-global-documentation-sync-workflow.md
+```
+
+When archive/replacement output is requested, also read:
+
+```text
 planning/replacement-file-generation-guide.md
 ```
 
@@ -94,12 +101,18 @@ Documentation-only agents must:
 
 ```text
 - inspect current repo state before changing docs;
+- prepare a Documentation Update Plan before broad docs/navigation/status/register changes;
 - update navigation/responsibility maps when adding docs;
 - synchronize local docs with shared registers when needed;
-- create archive packages with full replacement files;
+- choose an explicit output mode: plan-only, direct GitHub edits, archive/replacement package or patch proposal;
 - not change code;
+- not change generated artifacts;
 - not write directly to GitHub unless explicitly asked.
 ```
+
+Direct GitHub edit mode is allowed only when the user explicitly asks to apply/update/edit repository files. Use small reviewable commits, one file per commit by default.
+
+Archive/replacement package mode is still valid for manual application, archive output, package output or broad changes that should not be applied directly.
 
 ## 6. Questions First And Assumption Rule
 
@@ -192,7 +205,7 @@ The agent must not let client code guess routes, DTOs, statuses, ProblemDetails 
 - Do not implement cross-cutting security from loose notes only.
 - Do not generate diagrams without repo-grounded preflight.
 - Do not use PlantUML as the primary diagram deliverable unless explicitly asked.
-- Do not use GitHub mutation tools during documentation-only archive work unless explicitly requested.
+- Do not use GitHub mutation tools during documentation-only plan/archive work unless direct GitHub edits were explicitly requested.
 - Do not leave important local questions only in local files when they affect future work.
 - Do not hide assumptions in prose.
 - Do not give another chat permission to edit docs/domain/generated artifacts unless the user explicitly asked for that scope.
