@@ -422,7 +422,7 @@ Review focus:
 
 Do not add this heavy block to every section by default.
 
-## 10. Recheck / Clarify / Section Commands
+## 10. Recheck / Clarify / Keep Previous / Section Commands
 
 The user may ask the same chat or another chat to perform response-level operations.
 
@@ -464,6 +464,71 @@ The answer should cover:
 - sharper risks;
 - updated wording.
 ```
+
+### Keep Previous
+
+Aliases:
+
+```text
+keep prev
+keep previous
+кип прев
+оставь прошлое
+сохрани предыдущий ответ
+```
+
+Purpose:
+
+```text
+Apply the user's correction, clarification or additional constraint while preserving the previous answer's structure, scope and useful content.
+```
+
+Use this when the user gives a note such as:
+
+```text
+keep prev, but add that archive files were not checked
+кип прев, но учти что tables/domain should be treated as domain layer
+keep previous and make it lvl 2
+оставь прошлое, только добавь source coverage section
+```
+
+The agent should:
+
+```text
+- treat the previous answer as the base version;
+- keep the previous structure unless the user asks to change it;
+- apply the user's new correction or constraint;
+- preserve useful unchanged sections;
+- update only the affected parts when possible;
+- avoid silently dropping previous caveats, sources, risks or next steps;
+- mention if the new instruction conflicts with the previous answer.
+```
+
+The agent should not:
+
+```text
+- restart from scratch unless necessary;
+- replace the previous answer with an unrelated new answer;
+- drop sources/coverage just because the user gave a small correction;
+- treat `keep prev` as approval to ignore the new correction.
+```
+
+Recommended mini-format when useful:
+
+```text
+Applied change:
+- ...
+
+Previous answer preserved:
+- structure: yes/no
+- scope: yes/no
+- important limits: yes/no
+
+Updated answer:
+...
+```
+
+If the previous answer is too long to fully repeat, the agent may say that it is preserving the previous structure and then provide only the updated sections, unless the user explicitly asks to output the full updated answer.
 
 ### Show Section Separately
 
@@ -541,6 +606,7 @@ Instead:
 - Do not make assumptions invisible in prose.
 - Do not make another chat guess what was checked.
 - Do not use section-level source blocks as a substitute for actually checking sources.
+- Do not ignore a `keep prev` correction by rewriting the answer from scratch without preserving the useful previous structure/content.
 ```
 
 ## 13. Success Criteria
@@ -554,5 +620,6 @@ This workflow works when:
 - source-of-truth boundaries are clear;
 - assumptions and risks are not hidden;
 - important draft sections can be extracted, reviewed and merged back safely;
+- small corrections can be applied with `keep prev` without losing useful prior structure or caveats;
 - response structure helps verification without adding unnecessary bureaucracy.
 ```
