@@ -17,6 +17,8 @@ planning/slices/slice-responsibility-map.md
 | ID | Title | Type | Status | Current path | Notes |
 |---|---|---|---|---|---|
 | SLICE-RESPONSIBILITY-MAP | Slice Responsibility Map | responsibility map | current | `planning/slices/slice-responsibility-map.md` | Local placement/routing owner for slice-layer information |
+| SLICE-DRAFT-AUTHORING-PRINCIPLES | Slice Draft Authoring Principles | principles | current | `planning/slices/slice-draft-authoring-principles.md` | Explains slice draft scope, boundary, coverage, drift and section-authoring rules |
+| SERVER-IMPLEMENTATION-PRINCIPLES | Server Implementation Principles | principles | current | `planning/slices/server/server-implementation-principles.md` | Backend/server implementation architecture principles for server slice drafts |
 | SLICE-FOLDER-MAP | Slice Folder Map | folder map | transitional | `planning/slices/SLICE-FOLDER-MAP.md` | Folder placement map kept during migration; placement authority is moving to responsibility map |
 | SLICE-INDEX | Slice Index | index/catalog | current | `planning/slices/SLICE-INDEX.md` | Concrete catalog of slice docs/files while old and new paths coexist |
 
