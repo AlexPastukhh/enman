@@ -195,17 +195,16 @@ ID: PMR-006
 Status: open
 Area: local responsibility maps
 Task / reminder:
-  Add local responsibility maps or stable local responsibility sections for scenario, domain and slice layers.
+  Add local responsibility maps or stable local responsibility sections for scenario and domain layers.
 Trigger / condition:
   Before root map can be simplified and before source/version sync can become reliable.
 Why it matters:
   Root routing is currently transitional. Local maps are needed to know exactly where questions, registers, source usage and drafts belong inside each layer.
 Owner layer:
-  documentation / scenario / domain / slice
+  documentation / scenario / domain
 Target files:
   future scenario-responsibility-map.md or diagrams README section
   future domain-responsibility-map.md or tables/domain README section
-  future slice-responsibility-map.md or slices README section
 Depends on:
   layer audits
 Do when:
@@ -213,7 +212,7 @@ Do when:
 Do not do before:
   Do not rename/move large folders before auditing current responsibility and stale files.
 Notes:
-  Slice is likely the highest operational cleanup value; domain/tables is important for thesis/domain architecture.
+  Slice responsibility map now exists. Scenario/domain maps remain future work. Domain/tables is important for thesis/domain architecture.
 ```
 
 ### PMR-007 — Add archive/local-state availability rule
@@ -248,12 +247,12 @@ Notes:
 
 ```text
 ID: PMR-008
-Status: waiting-for-condition
+Status: open
 Area: slice layer responsibility map
 Task / reminder:
-  Move or summarize the placement responsibility from planning/slices/SLICE-FOLDER-MAP.md into future planning/slices/slice-responsibility-map.md, then decide whether SLICE-FOLDER-MAP.md remains a folder map, becomes a short compatibility pointer or is superseded.
+  Move or summarize remaining placement responsibility from planning/slices/SLICE-FOLDER-MAP.md into planning/slices/slice-responsibility-map.md, then decide whether SLICE-FOLDER-MAP.md remains a folder map, becomes a short compatibility pointer or is superseded.
 Trigger / condition:
-  When creating or updating planning/slices/slice-responsibility-map.md.
+  Slice responsibility map exists. SLICE-FOLDER-MAP.md is now explicitly transitional.
 Why it matters:
   Responsibility maps should explain where new information/files belong. Folder placement is part of that responsibility and should not live only in a separate competing map.
 Owner layer:
@@ -266,11 +265,11 @@ Target files:
 Depends on:
   slice layer responsibility map creation
 Do when:
-  During slice responsibility map implementation.
+  During the next slice-layer cleanup pass.
 Do not do before:
   Do not delete SLICE-FOLDER-MAP.md before README/index links and legacy migration references are synchronized.
 Notes:
-  Likely target: responsibility map owns placement rules; README owns read order; SLICE-INDEX owns concrete file catalog.
+  Current target: responsibility map owns placement rules; README owns read order; SLICE-INDEX owns concrete file catalog.
 ```
 
 ### PMR-009 — Update slice templates after responsibility/source model stabilizes
