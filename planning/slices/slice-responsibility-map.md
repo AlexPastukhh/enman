@@ -58,7 +58,6 @@ This file owns slice-layer placement and responsibility routing.
 | Principles | Stable rules and reasoning principles used by slice work. |
 | Template | Copyable shape of a draft, report or section. |
 | Draft | Concrete working slice, sidecar or concern document. |
-| Checklist | Transitional helper only when it does not duplicate workflow. |
 
 ## 4. Core Navigation / Placement Owners
 
@@ -77,8 +76,7 @@ This file owns slice-layer placement and responsibility routing.
 | Information type | Owner register | Notes |
 |---|---|---|
 | Scenario/source artifact to slice/sidecar mapping | `slice-scenario-flow-behavior-register.md` | Maps scenario text/DATA/UI/behavior sources to slices. It is not the scenario inventory owner and not full version tracking. |
-| Active slice questions / decisions | `slice-questions-register.md` | Canonical active slice questions/decisions register candidate. |
-| Legacy or taxonomy-level slice questions | `SLICE-QUESTIONS.md` transitional | Must be audited/merged/superseded later. Do not add new active questions here by default. |
+| Active slice questions / decisions | `slice-questions-register.md` | Canonical active slice questions/decisions register. Historical `SLICE-QUESTIONS.md` content was consolidated here. |
 | Extension points, change pressure, anti-coupling decisions | `slice-extension-points-register.md` | Use when the item can affect future slices or current implementation seams. |
 | Future/current implementation, client or testing notes needing shared visibility | `slice-implementation-notes-register.md` | Use when a note is not safely owned by one active draft only. |
 
@@ -126,7 +124,7 @@ Do not put long workflow algorithms into principles files unless they are high-l
 | Slice Test / Verification Plan | `slice-test-plan-workflow.md` | Practical workflow for Behavior-to-Test Trace and test planning sections. |
 | Client slice drafting | `client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Client sidecar and client slice drafting process. |
 | Server slice drafting | `server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Server/backend/API slice drafting process. |
-| Implemented slice draft sync | `implemented-slice-sync-workflow.md` transitional | Useful but not fully canonical until refactored under the new source/dependency model. |
+| Implemented slice draft sync | `implemented-slice-sync-workflow.md` | Implemented sync workflow. Separate checklist/status/report helper artifacts were removed; keep useful process/report/status rules in the workflow and active questions register. |
 | Client UI/style/form/a11y workflows | `client/*-WORKFLOW.md` | Client-specific workflows for UI, style, form validation, accessibility and implementation handoff. |
 
 Workflow rule:
@@ -143,8 +141,6 @@ They should not be the main owner for layer-wide placement/routing rules.
 | Client slice draft | `client/CLIENT-SLICE-TEMPLATE.md` | Current canonical template for new `.client.md` drafts. |
 | Server/backend/API slice draft | `server/SERVER-SLICE-TEMPLATE.md` | Current canonical template for server slice drafts. |
 | Cross-cutting umbrella/coordination doc | `cross-cutting/CROSS-CUTTING-UMBRELLA-TEMPLATE.md` | Current canonical template for umbrella docs. |
-| Implemented sync status block | `IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE.md` transitional | Decide later whether to keep, fold into workflow or update under new source model. |
-| Implemented sync report | `IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE.md` transitional | Decide later whether to keep or fold into implemented sync workflow / reviewable output model. |
 
 Current client/server/cross-cutting templates stay as-is until a dedicated template update task.
 
@@ -171,19 +167,31 @@ Rules:
 - Use paired logical IDs with `.client.md` / `.server.md` when a counterpart may exist.
 ```
 
-## 11. Transitional Files
+## 11. Transitional / Follow-Up Files
 
 These files are intentionally kept but need later cleanup:
 
 | File | Current role | Later decision |
 |---|---|---|
-| `SLICE-FOLDER-MAP.md` | Transitional folder placement map | Fold into this responsibility map, then reduce to pointer or supersede. |
-| `SLICE-QUESTIONS.md` | Transitional/legacy questions or taxonomy decision log | Merge active items into `slice-questions-register.md` or mark superseded/historical. |
+| `SLICE-FOLDER-MAP.md` | Transitional folder placement map | Fold remaining placement details into this responsibility map, then reduce to pointer or supersede. |
 | `l1-slice-drafting-guide.md` | Transitional/general slice drafting guide | Keep for now; later simplify or migrate useful short-draft guidance. |
-| `implemented-slice-sync-workflow.md` | Transitional implemented sync workflow | Refactor to current source/dependency/status model before treating as canonical. |
-| `IMPLEMENTED-SLICE-SYNC-CHECKLIST.md` | Transitional checklist | Fold useful checks into workflow or supersede. |
-| `IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE.md` | Transitional template | Update or fold into implemented sync workflow/template model. |
-| `IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE.md` | Transitional template | Update or fold into implemented sync workflow/reviewable output model. |
+| `implemented-slice-sync-workflow.md` | Implemented sync workflow | Refactor to current source/dependency/status model before treating as fully clean. |
+
+Removed/superseded artifacts:
+
+```text
+SLICE-QUESTIONS.md
+IMPLEMENTED-SLICE-SYNC-CHECKLIST.md
+IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE.md
+IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE.md
+```
+
+Their useful content was consolidated into:
+
+```text
+planning/slices/slice-questions-register.md
+planning/slices/implemented-slice-sync-workflow.md, for future workflow refactor
+```
 
 Deferred cleanup is tracked in:
 
@@ -237,7 +245,7 @@ If slice-layer files conflict:
 - README.md wins for read order and navigation summary.
 - SLICE-INDEX.md wins for concrete file catalog only.
 - slice-scenario-flow-behavior-register.md wins for current scenario/source-to-slice mapping.
-- slice-questions-register.md should be treated as the active questions register unless SLICE-QUESTIONS.md is explicitly being audited.
+- slice-questions-register.md wins for active slice questions and decisions.
 - workflow files win for their own process steps.
 - template files win for output/draft shape.
 - scenario layer files win for scenario meaning.
@@ -262,12 +270,11 @@ Do not create new files for local-only notes that belong inside one active draft
 ## 15. Do Not
 
 ```text
-- Do not put active new slice questions into SLICE-QUESTIONS.md by default.
+- Do not recreate SLICE-QUESTIONS.md for active questions.
 - Do not use SLICE-FOLDER-MAP.md as the long-term placement authority once this map exists.
 - Do not invent scenario behavior inside slice drafts when scenario/behavior sources exist.
 - Do not treat slice-scenario-flow-behavior-register.md as exact source/version tracking.
-- Do not delete transitional files until useful content is migrated or explicitly superseded.
-- Do not update templates as part of basic responsibility-map creation.
+- Do not update templates as part of basic responsibility-map cleanup.
 - Do not create slice-source-usage-register.md until the source/version model is ready.
 ```
 
