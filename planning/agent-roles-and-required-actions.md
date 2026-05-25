@@ -1,6 +1,6 @@
 # Agent Roles And Required Actions
 
-Status: current role map / GitHub line-link workflow synchronized  
+Status: current role map / workflow activation synchronized  
 Scope: reusable chat roles, required read order, mandatory actions, shared register updates and handoff boundaries
 
 ## 1. Purpose
@@ -35,17 +35,31 @@ Every planning role must:
 ```text
 1. Start from planning/README.md.
 2. Read planning/planning-agent-protocol.md.
-3. Read planning/repo-grounded-github-line-links-workflow.md.
-4. Read planning/planning-doc-responsibility-map.md.
-5. Read the role-specific workflow docs listed below.
-6. Work from current repo state, not memory.
-7. Identify local files and shared registers that may need synchronization.
-8. Keep important open questions and unresolved risks first.
-9. Record an assumption/current direction when continuing without a final answer.
-10. Give each important question a clear status.
-11. Update navigation/responsibility maps when adding, moving or superseding docs.
-12. Avoid direct GitHub writes unless explicitly requested.
-13. When describing repo code/docs/status, provide exact GitHub line links.
+3. Read planning/workflow-activation-map.md before non-trivial planning/repo work.
+4. Output Workflow Preflight for non-trivial planning/repo work.
+5. Read planning/repo-grounded-github-line-links-workflow.md.
+6. Read planning/planning-doc-responsibility-map.md.
+7. Read the role-specific workflow docs listed below.
+8. Work from current repo state, not memory.
+9. Identify local files and shared registers that may need synchronization.
+10. Keep important open questions and unresolved risks first.
+11. Record an assumption/current direction when continuing without a final answer.
+12. Give each important question a clear status.
+13. Update navigation/responsibility maps when adding, moving or superseding docs.
+14. Avoid direct GitHub writes unless explicitly requested.
+15. When describing repo code/docs/status, provide exact GitHub line links.
+```
+
+Workflow Preflight should include:
+
+```text
+Active role:
+Task type:
+Activated workflows:
+Implicit checks:
+Requires explicit permission:
+Not activated but relevant:
+Future / missing workflows:
 ```
 
 Question fields used across roles:
@@ -94,6 +108,7 @@ Keeps planning documentation synchronized with current repo implementation, curr
 ```text
 planning/README.md
 planning/planning-agent-protocol.md
+planning/workflow-activation-map.md
 planning/repo-grounded-github-line-links-workflow.md
 planning/planning-doc-responsibility-map.md
 planning/documentation/README.md
@@ -113,8 +128,8 @@ planning/replacement-file-generation-guide.md
 5. Link specific repo evidence with GitHub line links when reporting status/drift.
 6. Decide Add / Replace / Delete scope.
 7. Ask only blocking questions that can change the archive.
-8. If no blocking questions, create a zip archive with complete repo-relative files.
-9. Include MANIFEST.md and APPLY.md in the archive.
+8. If no blocking questions and archive mode is explicitly selected, create a zip archive with complete repo-relative files.
+9. Include MANIFEST.md and APPLY.md in archive mode.
 10. Do not change code or generated artifacts.
 11. Do not write directly to GitHub unless explicitly requested.
 ```
@@ -126,7 +141,7 @@ planning/documentation/
 planning/README.md updates when navigation changes
 planning/planning-doc-responsibility-map.md updates when responsibility changes
 shared register synchronization checks
-archive/package generation
+archive/package generation when requested
 ```
 
 ### Does not own
@@ -153,6 +168,7 @@ This is not a separate diagram-prompt role; it is a handoff/request prepared by 
 ```text
 planning/README.md
 planning/planning-agent-protocol.md
+planning/workflow-activation-map.md
 planning/repo-grounded-github-line-links-workflow.md
 planning/scenario-specification-principles.md
 planning/scenario-domain-validation-principles.md
@@ -221,6 +237,7 @@ Creates and reconciles domain drafts, aggregate boundaries, value objects, invar
 ```text
 planning/README.md
 planning/planning-agent-protocol.md
+planning/workflow-activation-map.md
 planning/repo-grounded-github-line-links-workflow.md
 planning/scenario-specification-principles.md
 planning/scenario-domain-validation-principles.md
@@ -273,6 +290,7 @@ Creates, reviews and updates backend parent slice files, client sidecars and cro
 ```text
 planning/README.md
 planning/planning-agent-protocol.md
+planning/workflow-activation-map.md
 planning/repo-grounded-github-line-links-workflow.md
 planning/slices/README.md
 planning/slices/draft-driven-discovery-principles.md
@@ -363,6 +381,7 @@ It must not generate diagrams before preflight unless the user explicitly reques
 ```text
 planning/README.md
 planning/planning-agent-protocol.md
+planning/workflow-activation-map.md
 planning/repo-grounded-github-line-links-workflow.md
 planning/diagrams/README.md
 planning/diagrams/diagram-prompt-generation-workflow.md
@@ -445,6 +464,7 @@ It can help when a coding agent is token-limited or unavailable, but it must not
 ```text
 planning/README.md
 planning/planning-agent-protocol.md
+planning/workflow-activation-map.md
 planning/repo-grounded-github-line-links-workflow.md
 planning/planning-workflow-current.md
 relevant scenario/domain/slice/API/testing docs
