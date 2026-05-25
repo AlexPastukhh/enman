@@ -98,7 +98,7 @@ VKR-facing materials must not use internal planning labels such as `L1`, `L2`, `
 
 Direct GitHub edits from ChatGPT are preferred for small scoped documentation changes because they create visible commits that can be inspected and reverted independently.
 
-By default, use one file per file when reasonable. Large generated replacement archives should be reserved for broad file/package generation when direct scoped commits are less practical.
+By default, use one commit per file when reasonable. Large generated replacement archives should be reserved for broad file/package generation when direct scoped commits are less practical.
 
 Direct GitHub edits, file creation, file deletion, moves and commits require explicit user instruction.
 
