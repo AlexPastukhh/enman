@@ -16,7 +16,7 @@ planning/slices/slice-responsibility-map.md
 planning/slices/slice-responsibility-map.md
 planning/slices/SLICE-FOLDER-MAP.md
 planning/slices/SLICE-INDEX.md
-planning/slices/SLICE-QUESTIONS.md
+planning/slices/slice-questions-register.md
 planning/slices/slice-test-plan-workflow.md
 planning/slices/client/README.md
 planning/slices/server/README.md
