@@ -126,37 +126,23 @@ ADR notes/candidates, if accepted architecture decisions changed
 
 Do not leave orphan docs.
 
-## 7. Responsibility Rule
+## 7. Responsibility / Placement Rule
 
-Before placing content, use:
+Before placing new information, choose the layer and then use the local responsibility map for that layer.
+
+For root layer routing, use:
 
 ```text
 planning/planning-doc-responsibility-map.md
 ```
 
-Heuristic:
+For documentation-layer placement, use:
 
 ```text
-global workflow rule -> central workflow/protocol docs
-documentation update process -> planning/documentation/
-documentation update plan format -> planning/documentation/documentation-update-plan-workflow.md
-planning docs architecture principles -> planning/documentation/planning-docs-architecture-principles.md
-local/global sync rule -> planning/documentation/local-global-documentation-sync-workflow.md
-archive packaging rules -> replacement-file-generation-guide.md
-VKR clean terminology -> planning/vkr-clean-reference.md
-API contract -> planning/api/
-cross-cutting implementation flow -> planning/slices/cross-cutting/
-slice implementation -> slice file / .client.md
-slice-wide question overview -> planning/slices/slice-questions-register.md
-extension/change pressure -> planning/slices/slice-extension-points-register.md
-future implementation/client/testing notes -> planning/slices/slice-implementation-notes-register.md
-client architecture convention -> planning/client/ or client architecture docs
-testing/E2E rules -> planning/testing/
-scenario meaning -> planning/diagrams/scenario-text-specs or scenario-clarifications
-behavior items -> scenario-behavior-items
-accepted decisions -> planning/adr/architecture-decision-notes.md
-future full ADR backlog -> adr-candidates.md
+planning/documentation/documentation-responsibility-map.md
 ```
+
+Do not duplicate full placement tables in this workflow. This workflow describes the update process; responsibility maps own placement decisions.
 
 ## 8. Question Ordering Rule
 
@@ -225,7 +211,7 @@ Before finalizing a documentation update, verify:
 ```text
 - broad changes had a Documentation Update Plan;
 - every added file appears in navigation or a folder README;
-- responsibility map knows the new responsibility;
+- responsibility maps know the new responsibility;
 - local questions that matter later are mirrored into shared registers;
 - shared register rows are not stale compared to local docs;
 - docs do not conflict with current repo status;
@@ -249,6 +235,7 @@ Before finalizing a documentation update, verify:
 - Do not update GitHub directly unless explicitly requested.
 - Do not hide uncertainty; record assumptions and questions.
 - Do not leave important local slice questions only in local tables.
+- Do not duplicate full responsibility/placement maps inside workflow files.
 - Do not introduce master-chat, work-register or mandatory status-packet workflow unless explicitly requested.
 - Do not make replacement archives mandatory for every documentation update.
 ```
