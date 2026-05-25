@@ -111,9 +111,11 @@ Future exact source/version usage may need a separate source usage register, but
 
 | Principle area | Owner file | Notes |
 |---|---|---|
-| Draft-driven discovery | `draft-driven-discovery-principles.md` | Current practical principle, but scope is broader than slice layer and needs future decision. |
+| Slice draft authoring | `slice-draft-authoring-principles.md` | Scope, scenario boundary, behavior coverage, semantic names, implementation drift and section-authoring rules for slice drafts. |
+| Draft-driven discovery | `draft-driven-discovery-principles.md` | Current practical discovery loop; should be narrowed to slice-layer scope after authoring principles are routed. |
 | Change/extension points and extension pressure | `change-extension-points-principles.md` | Definitions and rules for change points, extension points, pressure and anti-coupling decisions. |
 | Common slice implementation principles | `implementation-principles.md` | Shared implementation rules near slice planning. |
+| Server implementation principles | `server/server-implementation-principles.md` | Backend/server implementation architecture principles for server slice drafts. |
 
 Do not put long workflow algorithms into principles files unless they are high-level principles.
 
@@ -246,6 +248,8 @@ If slice-layer files conflict:
 - SLICE-INDEX.md wins for concrete file catalog only.
 - slice-scenario-flow-behavior-register.md wins for current scenario/source-to-slice mapping.
 - slice-questions-register.md wins for active slice questions and decisions.
+- slice-draft-authoring-principles.md wins for slice draft section-authoring principles.
+- server/server-implementation-principles.md wins for server implementation principle status within server slice drafting.
 - workflow files win for their own process steps.
 - template files win for output/draft shape.
 - scenario layer files win for scenario meaning.
