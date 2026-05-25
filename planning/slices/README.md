@@ -4,9 +4,16 @@ Status: canonical slice planning entry point / taxonomy, cross-cutting behavior 
 
 This folder owns slice planning navigation for server, client and cross-cutting slice work.
 
+This README is the slice-layer entry point and read order. It is not the full ownership map. For slice-layer placement/routing decisions, use:
+
+```text
+planning/slices/slice-responsibility-map.md
+```
+
 ## Start Here
 
 ```text
+planning/slices/slice-responsibility-map.md
 planning/slices/SLICE-FOLDER-MAP.md
 planning/slices/SLICE-INDEX.md
 planning/slices/SLICE-QUESTIONS.md
@@ -31,6 +38,32 @@ how the implementation is verified.
 Data files and behavior item files extract, clarify and classify details from scenarios.
 
 Do not invent behavior locally inside a slice draft when scenario/behavior sources exist.
+
+## Responsibility Routing Rule
+
+Before adding new slice-layer information, first use:
+
+```text
+planning/slices/slice-responsibility-map.md
+```
+
+Use it to decide whether the information belongs in:
+
+```text
+README / read order
+SLICE-INDEX.md catalog
+source mapping register
+questions register
+extension points register
+implementation notes register
+workflow
+principles file
+template
+concrete slice draft
+transitional legacy file
+```
+
+`SLICE-FOLDER-MAP.md` is still available during migration, but folder placement responsibility is moving into `slice-responsibility-map.md`.
 
 ## Scenario Source Layer
 
