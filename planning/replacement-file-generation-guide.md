@@ -120,6 +120,12 @@ For package layout, do not instruct the user to extract the zip directly into th
 
 Use a temporary directory and then copy `replacement-files/*` into the repository root.
 
+PowerShell guardrail:
+
+```text
+For Copy-Item, use -Destination. Do not use -DestinationPath.
+```
+
 PowerShell shape:
 
 ```powershell
@@ -133,7 +139,7 @@ $tmp = Join-Path $env:TEMP "<archive-name>-apply"
 Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
 New-Item -ItemType Directory -Path $tmp | Out-Null
 Expand-Archive -Path $archive -DestinationPath $tmp -Force
-Copy-Item -Path (Join-Path $tmp "replacement-files\*") -DestinationPath . -Recurse -Force
+Copy-Item -Path (Join-Path $tmp "replacement-files\*") -Destination . -Recurse -Force
 
 git status
 ```
