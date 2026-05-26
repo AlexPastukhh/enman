@@ -18,7 +18,7 @@ planning/documentation/documentation-update-plan-workflow.md
 After the plan is reviewed, use the output mode explicitly requested or approved by the user:
 
 ```text
-direct GitHub edits
+direct repository edits
 replacement archive/package
 patch proposal only
 plan only
@@ -39,7 +39,7 @@ plan only
    - local question not mirrored in shared register;
    - shared register stale compared to local file;
    - missing responsibility owner;
-   - docs still assuming archive-only output when direct GitHub edits are approved.
+   - docs still assuming archive-only output when direct repository edits are approved.
 6. Decide update scope.
 7. Prepare a Documentation Update Plan when the change is broad or multi-file.
 8. Ask only blocking questions that can change the planned update.
@@ -176,9 +176,9 @@ Default behavior is plan-first.
 
 After the plan is reviewed, use the output mode requested or approved by the user.
 
-### Direct GitHub edit mode
+### Direct repository edit mode
 
-Use direct GitHub edits only when the user explicitly asks to apply changes to the repository.
+Use direct repository edits only when the user explicitly asks to apply changes to the repository.
 
 Rules:
 
@@ -189,6 +189,16 @@ Rules:
 - do not combine unrelated documentation refactors;
 - do not change code or generated artifacts unless explicitly in scope;
 - report changed files and commit SHAs after applying.
+```
+
+Bundled commit exception:
+
+```text
+A single bundled commit may be better for mechanical multi-file link/path/name synchronization when:
+- every edited file participates in the same logical rename/link sync;
+- no unrelated semantic refactors are mixed in;
+- the user explicitly approves bundled commits or bulk update mode;
+- the final response lists all changed files and the shared commit SHA.
 ```
 
 ### Archive / replacement package mode
@@ -219,7 +229,7 @@ Before finalizing a documentation update, verify:
 - future questions are not presented as current defects;
 - planned features are not overclaimed as implemented;
 - selected output mode is explicit;
-- direct GitHub edits use one file per commit by default;
+- direct repository edits use one file per commit by default unless a mechanical bundled commit was approved;
 - archive mode contains complete files, not patches;
 - APPLY.md and MANIFEST.md are present for archive mode;
 - no code/generated changes are included unless explicitly in scope.
@@ -232,10 +242,11 @@ Before finalizing a documentation update, verify:
 - Do not create .client.md sidecars unless concrete client work starts.
 - Do not create full numbered ADRs unless explicitly requested.
 - Do not mix OpenAPI/client implementation with documentation-only updates.
-- Do not update GitHub directly unless explicitly requested.
+- Do not update the repository directly unless explicitly requested.
 - Do not hide uncertainty; record assumptions and questions.
 - Do not leave important local slice questions only in local tables.
 - Do not duplicate full responsibility/placement maps inside workflow files.
 - Do not introduce master-chat, work-register or mandatory status-packet workflow unless explicitly requested.
 - Do not make replacement archives mandatory for every documentation update.
+- Do not bundle unrelated semantic changes into one mechanical link-sync commit.
 ```
