@@ -274,28 +274,26 @@ Notes:
 
 ```text
 ID: PMR-009
-Status: ready
+Status: open
 Area: slice templates
 Task / reminder:
-  Update client/server/cross-cutting slice templates after the slice responsibility map and source/dependency expectations are clear.
+  Finish template alignment after the slice responsibility/source model update.
 Trigger / condition:
-  Slice responsibility map exists. Next step is to add slice draft authoring principles and server implementation principles, then update templates.
+  Slice draft authoring principles and server implementation principles exist and are routed.
 Why it matters:
-  Templates should eventually include the new model: section-level sources where needed, dependencies between draft sections, local/global register sync, and future source/version tracking hooks.
+  Templates should reflect the current model: source sync, scope/boundary, Behavior Coverage, Behavior-to-Test Trace with required assertions and local/global register awareness.
 Owner layer:
   slice
 Target files:
-  planning/slices/client/CLIENT-SLICE-TEMPLATE.md
-  planning/slices/server/SERVER-SLICE-TEMPLATE.md
   planning/slices/cross-cutting/CROSS-CUTTING-UMBRELLA-TEMPLATE.md
 Depends on:
   slice responsibility map, reviewable-agent-output workflow, slice draft authoring principles, server implementation principles
 Do when:
-  After authoring/server principles are created and routed.
+  Review/update cross-cutting umbrella template after client/server template alignment.
 Do not do before:
-  Do not churn templates before owner/register boundaries are clear.
+  Do not churn cross-cutting template before checking which parts of the new model apply to umbrella docs.
 Notes:
-  Keep existing templates as current until this cleanup is explicitly started.
+  Done: SERVER-SLICE-TEMPLATE.md updated, CLIENT-SLICE-TEMPLATE.md updated, slice-test-plan-workflow.md updated with Required assertions. Remaining: review/update CROSS-CUTTING-UMBRELLA-TEMPLATE.md.
 ```
 
 ### PMR-010 — Refactor implemented slice sync workflow under the new model
@@ -319,11 +317,11 @@ Target files:
 Depends on:
   slice responsibility map, source/version model, status reconciliation workflow, slice draft authoring principles
 Do when:
-  After slice draft authoring principles are created, or before broad implemented-slice sync work.
+  Before broad implemented-slice sync work or after source/version model stabilizes.
 Do not do before:
   Do not recreate separate checklist/status/report helper artifacts unless a future workflow proves they are needed.
 Notes:
-  Done so far: deleted helper artifacts, consolidated useful decisions into slice-questions-register.md, modernized workflow references. Remaining work: align workflow with new server template, authoring principles and future source/version model.
+  Done so far: deleted helper artifacts, consolidated useful decisions into slice-questions-register.md, modernized workflow references, added inline Implementation Sync Status and checklist. Remaining work: align workflow with future source/version model if/when that model is created.
 ```
 
 ### PMR-011 — Resolve duplicate slice questions registers
@@ -361,28 +359,56 @@ ID: PMR-012
 Status: open
 Area: slice principles/workflows cleanup
 Task / reminder:
-  Narrow draft-driven-discovery-principles.md to slice-layer scope and decide whether l1-slice-drafting-guide.md still owns useful content after client/server workflows/templates exist.
+  Decide whether l1-slice-drafting-guide.md still owns useful content after client/server workflows/templates exist.
 Trigger / condition:
-  During slice principles cleanup or before rewriting slice drafting workflows.
+  After slice draft authoring principles, client/server templates and server workflow have been updated.
 Why it matters:
-  Some files currently use broader wording than the slice layer or duplicate client/server workflow/template content.
+  l1-slice-drafting-guide.md may now duplicate current authoring principles, client/server workflows or templates.
 Owner layer:
   slice / documentation governance
 Target files:
-  planning/slices/draft-driven-discovery-principles.md
   planning/slices/l1-slice-drafting-guide.md
   planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md
   planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
-  planning/slices/slice-responsibility-map.md
   planning/slices/slice-draft-authoring-principles.md
 Depends on:
-  slice layer audit
+  slice layer audit, slice draft authoring principles, client/server template updates
 Do when:
-  After slice-draft-authoring-principles.md exists.
+  During the next slice principles cleanup pass.
 Do not do before:
   Do not archive l1-slice-drafting-guide.md until its useful short-draft guidance is migrated or explicitly superseded.
 Notes:
-  Candidate target: draft-driven discovery is narrowed to slice-layer discovery; l1 guide remains transitional or becomes a short-draft compatibility pointer.
+  Done: draft-driven-discovery-principles.md narrowed to slice-layer discovery. Remaining: audit l1-slice-drafting-guide.md and either simplify it to a compatibility pointer or supersede it.
+```
+
+### PMR-013 — Audit client/server subfolder rules and move general rules to slice root if needed
+
+```text
+ID: PMR-013
+Status: open
+Area: slice subfolder responsibility cleanup
+Task / reminder:
+  Audit planning/slices/client/ and planning/slices/server/ for rules/principles that should live in the root slice layer instead of subfolders.
+Trigger / condition:
+  Before declaring the slice layer responsibility model clean.
+Why it matters:
+  Subfolders should mostly contain local workflows/templates/drafts. General slice principles should live in planning/slices/ root so agents can find them before choosing client/server-specific work.
+Owner layer:
+  slice / documentation governance
+Target files:
+  planning/slices/client/
+  planning/slices/server/
+  planning/slices/slice-responsibility-map.md
+  planning/slices/README.md
+  planning/slices/SLICE-INDEX.md
+Depends on:
+  slice draft authoring principles, server implementation principles, client/server template updates
+Do when:
+  Next audit pass before moving or renaming any client/server files.
+Do not do before:
+  Do not move files just because they contain rules; first classify whether the rule is general slice-layer, client-specific workflow/template, server-specific implementation principle or draft-local guidance.
+Notes:
+  User preference: avoid hiding general rules inside client/server folders. Candidate question: should server/server-implementation-principles.md stay in server/ as server-specific, or move to root as a slice-layer principle with server-specific scope?
 ```
 
 ## 4. Maintenance Rules
