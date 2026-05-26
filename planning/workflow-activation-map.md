@@ -107,8 +107,12 @@ The preflight is not a permission grant. It only makes the intended workflow pat
 | `planning/documentation/status-reconciliation-workflow.md` | Docs status may differ from code/tests/generated artifacts | `conditional implicit` | No for analysis; yes for edits | Status findings / sync plan |
 | `planning/documentation/reviewable-agent-output-workflow.md` | Non-trivial answer, audit, plan, handoff, or user says level/lvl/ур 1/2/3 | `response-format` | No | Structured reviewable answer |
 | `planning/diagrams/scenario-drafting-workflow.md` | Scenario text/DATA/UI/behavior items/questions/clarifications work | `conditional implicit` | No for draft/analysis; yes for edits | Scenario source workflow |
-| `planning/slices/draft-driven-discovery-principles.md` | Domain/slice/client/cross-cutting/testing/status draft work | `conditional implicit` | No | Draft-driven discovery loop |
-| `planning/slices/l1-slice-drafting-guide.md` | L1/backend/client slice drafting or client sidecar drafting | `conditional implicit` | No for draft/analysis; yes for edits | Slice draft structure |
+| `planning/slices/slice-responsibility-map.md` | Need to place slice-layer information or decide slice file owner | `conditional implicit` | No | Slice-layer owner routing |
+| `planning/slices/slice-draft-authoring-principles.md` | Create/review/refactor slice draft structure or section meaning | `conditional implicit` | No | Slice draft authoring rules |
+| `planning/slices/draft-driven-discovery-principles.md` | Slice-layer discovery for business/server/client/cross-cutting/helper slice drafts | `conditional implicit` | No | Slice discovery loop |
+| `planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Client sidecar drafting | `conditional implicit` | No for draft/analysis; yes for edits | Client drafting process |
+| `planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Server/backend/API slice drafting | `conditional implicit` | No for draft/analysis; yes for edits | Server drafting process |
+| `planning/slices/l1-slice-drafting-guide.md` | Legacy/general L1 slice guidance may be relevant | `transitional` | No for draft/analysis; yes for edits | Transitional guidance only; audit pending |
 | `planning/slices/implemented-slice-sync-workflow.md` | Existing implemented slice draft needs sync against source/domain/code/tests | `transitional` / `conditional implicit` | No for audit; yes for edits | Implemented slice sync report |
 | `planning/repo-grounded-github-line-links-workflow.md` | Explaining concrete repo facts, code/docs/status, or user asks for links | `conditional implicit` | No | Exact GitHub line links |
 | `planning/replacement-file-generation-guide.md` | Archive/replacement output requested or chosen | `conditional implicit` | Usually explicit user request | Replacement package rules |
@@ -168,13 +172,14 @@ local-global-documentation-sync-workflow.md
 reviewable-agent-output-workflow.md
 ```
 
-### Slice or client draft work
+### Slice or client/server draft work
 
 Trigger examples:
 
 ```text
 create/review slice draft;
 create/review client sidecar;
+create/review server/backend/API slice draft;
 review slice questions;
 identify extension/change pressure;
 plan implementation/testing from behavior items.
@@ -186,12 +191,18 @@ Activated workflows:
 planning-agent-protocol.md
 agent-roles-and-required-actions.md
 workflow-activation-map.md
+planning-doc-responsibility-map.md
+slice-responsibility-map.md
+slice-draft-authoring-principles.md
 draft-driven-discovery-principles.md
-l1-slice-drafting-guide.md, when L1/client/backend slice format is relevant
+client/CLIENT-SLICE-DRAFTING-WORKFLOW.md, for client sidecars
+server/SERVER-SLICE-DRAFTING-WORKFLOW.md, for server/backend/API slices
 local-global-documentation-sync-workflow.md
 status-reconciliation-workflow.md, when implementation evidence is involved
 reviewable-agent-output-workflow.md
 ```
+
+Use `l1-slice-drafting-guide.md` only as transitional/legacy guidance until PMR-012 is resolved.
 
 ### Implemented slice sync
 
@@ -218,7 +229,7 @@ reviewable-agent-output-workflow.md
 Caution:
 
 ```text
-implemented-slice-sync-workflow.md is transitional and must be audited before being treated as fully canonical because it references source/domain registry files that may be future/legacy/missing.
+implemented-slice-sync-workflow.md is transitional and should not be treated as fully canonical until PMR-010 is resolved.
 ```
 
 ## 7. Explicit Permission Rules
@@ -260,9 +271,10 @@ Do not pretend these are implemented if no workflow file exists.
 | Topic | Current status | When to revisit |
 |---|---|---|
 | Source/version cascade sync | Principle exists in `planning/documentation/planning-docs-architecture-principles.md`, but full workflow/register system does not exist yet. | After local responsibility maps and at least one source usage register pilot. |
-| Scenario/domain/slice local responsibility maps | Documentation local map exists; other layer maps are future. | During layer refactors. |
+| Scenario/domain local responsibility maps | Documentation and slice local maps exist. Scenario/domain local maps are future. | During scenario/domain layer refactors. |
 | Root map shrink to thin router | Root map is transitional and intentionally detailed. | After local responsibility maps exist for major layers. |
-| Implemented slice sync modernization | Workflow exists but references possibly future/legacy registry names. | Before using it as canonical implemented slice workflow. |
+| Implemented slice sync modernization | Workflow exists and was partially modernized, but remains transitional. | Before using it as canonical implemented slice workflow. |
+| Client/server drafting workflow location | Client/server drafting workflows currently remain local under subfolders. | Resolve together with PMR-012 / l1-slice-drafting-guide audit. |
 
 Longer-term reminders live in:
 
