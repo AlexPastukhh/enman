@@ -28,6 +28,8 @@ Implementation details may appear only as:
 Implementation details must not become the reason the test exists.
 ```
 
+Required assertions belong inside the Behavior-to-Test Trace, not in loose lists after it.
+
 ## 3. Behavior Coverage vs Test Coverage
 
 Behavior Coverage answers:
@@ -53,15 +55,59 @@ Every slice draft must include:
 ```markdown
 ### Behavior-to-Test Trace
 
-| Behavior item | Scenario outcome being proved | Test layer | Implementation used as mechanism | Escape risk | Refactor risk | Planned / actual test |
-|---|---|---|---|---|---|---|
+| Behavior | Outcome proved | Test layer | Setup/action mechanism | Required assertions | Escape risk | Refactor risk | Planned / actual test |
+|---|---|---|---|---|---|---|---|
 ```
 
 For client UI slices use "Visible scenario outcome" wording when clearer.
 
 For server slices use "Server/system outcome" wording when clearer.
 
-## 5. Escape Risk Question
+Required assertions must be concrete enough that another chat or reviewer can check the test strength.
+
+Bad:
+
+```text
+success assertions
+no-mutation assertions
+standard validation assertions
+```
+
+Good:
+
+```text
+HTTP 204; response body empty; proposal count +1; new version = previous +1; previous active proposal is SupersededByCounterProposal; status = AwaitingEmployeeResponse.
+```
+
+## 5. Assertion Profiles
+
+Assertion profiles are allowed only as compression.
+
+Example:
+
+```text
+COMMAND_204:
+  HTTP 204;
+  response body empty.
+
+NO_MUTATION_EXCHANGE:
+  proposal count unchanged;
+  active version unchanged;
+  exchange status unchanged;
+  active proposal state unchanged;
+  no new proposal row created.
+```
+
+Even when profiles are used, each trace row must remain understandable:
+
+```text
+Required assertions:
+  COMMAND_204 + proposal count +1 + author = Client + status = AwaitingEmployeeResponse
+```
+
+Do not hide important proof behind a vague profile name.
+
+## 6. Escape Risk Question
 
 For each planned/actual test, answer:
 
@@ -89,7 +135,7 @@ Low:
   Test calls public endpoint and asserts persisted state/read projection.
 ```
 
-## 6. Refactor Risk Question
+## 7. Refactor Risk Question
 
 For each planned/actual test, answer:
 
@@ -117,7 +163,7 @@ Low:
   Test asserts public endpoint result and persisted/visible behavior.
 ```
 
-## 7. Allowed Implementation Details In Tests
+## 8. Allowed Implementation Details In Tests
 
 Allowed when used only as mechanisms:
 
@@ -134,7 +180,7 @@ fake timers for deferred validation
 test ids only when no semantic query exists
 ```
 
-## 8. Forbidden Primary Test Goals
+## 9. Forbidden Primary Test Goals
 
 Avoid tests whose main purpose is:
 
@@ -150,7 +196,7 @@ private helper call order
 
 These can be acceptable only when the slice explicitly owns that low-level contract.
 
-## 9. Test Layer Selection Guide
+## 10. Test Layer Selection Guide
 
 ### Domain tests
 
@@ -213,7 +259,7 @@ Use for API shape drift prevention.
 
 They support behavior proof but do not replace behavior tests.
 
-## 10. Direct DB Setup Rule
+## 11. Direct DB Setup Rule
 
 ```text
 Direct DB setup is allowed only to arrange scenario preconditions.
@@ -240,7 +286,7 @@ Bad primary proof:
 directly call handler/repository and assert internal call order.
 ```
 
-## 11. No-Mutation Rule
+## 12. No-Mutation Rule
 
 For command behavior, ask:
 
@@ -261,7 +307,9 @@ failed review command does not overwrite existing review result.
 
 A negative test that asserts only `422` may be insufficient for behavior proof.
 
-## 12. Validation Contract Rule
+The no-mutation expectation should appear in the Required assertions cell of the relevant trace row.
+
+## 13. Validation Contract Rule
 
 For validation behavior, at least representative tests should prove external contract:
 
@@ -273,7 +321,9 @@ error code/message shape where stable
 
 Avoid huge validation matrices unless the slice needs them.
 
-## 13. CSRF Smoke vs Full Matrix Rule
+Validation assertions should appear in the Required assertions cell of the relevant trace row.
+
+## 14. CSRF Smoke vs Full Matrix Rule
 
 ```text
 Each unsafe command family may include one CSRF smoke.
@@ -283,37 +333,54 @@ Full CSRF behavior belongs to CC-SEC-CSRF-001 tests.
 Do not duplicate the full CSRF matrix in every feature test file.
 ```
 
-## 14. Server Command Example
+## 15. What Not To Test Here
 
-```markdown
-### Behavior-to-Test Trace
+A slice draft may include a "What not to test here" section after the trace.
 
-| Behavior item | Scenario outcome being proved | Test layer | Implementation used as mechanism | Escape risk | Refactor risk | Planned / actual test |
-|---|---|---|---|---|---|---|
-| `REQ-REVIEW-START-001` | Employee starts review for not-started request | API integration + DB assertion | HTTP POST, auth cookie, DB read, details read endpoint | Low: catches missing persisted Review.Started state | Low: handler/repository refactor should not affect endpoint/state outcome | `StartRequestReview_StartsReviewAndReturnsNoContent` |
-| `REQ-REVIEW-START-002` | Another Employee cannot silently take over started review | API integration + no-mutation DB assertion | DB fixture setup, HTTP POST, DB snapshot after failure | Low if original StartedByEmployeeId is asserted unchanged | Low/Medium: schema/helper refactor may require helper update | `StartRequestReview_WhenStartedByAnotherEmployee_ReturnsValidationProblemAndDoesNotChangeReview` |
+That section is a boundary note, not a replacement for the trace.
+
+Use it for behavior owned by other slices/layers, for example:
+
+```text
+exchange details/list payload in a command slice;
+initial exchange start when current slice only adds a proposal version;
+client accept active proposal when current slice only sends a proposal;
+binary file upload when current command accepts a document reference;
+client UI when current draft is server-only;
+full CSRF matrix when current slice only needs a smoke.
 ```
 
-## 15. Client UI Example
+## 16. Server Command Example
 
 ```markdown
 ### Behavior-to-Test Trace
 
-| Behavior item | Visible scenario outcome | Test layer | Implementation used as mechanism | Escape risk | Refactor risk | Planned / actual test |
-|---|---|---|---|---|---|---|
-| `UI-REQ-DETAILS-START-001` | Employee sees Start Review action when review is not started | Component/page test | Mock API response, render route/page, visible button assertion | Medium: proves UI availability only, not server permission | Low: layout refactor should keep accessible button text | `EmployeeRequestDetailsPage_ShowsStartReviewActionForNotStartedReview` |
-| `UI-REQ-DETAILS-START-002` | After successful Start Review, UI shows Started by you | Component/E2E | User click, mocked mutation success/refetch or real API in E2E | Medium/Low depending whether test uses real API | Medium if over-mocked; Low if visible outcome is asserted | `StartReviewButton_ShowsStartedByCurrentEmployeeAfterSuccess` |
+| Behavior | Outcome proved | Test layer | Setup/action mechanism | Required assertions | Escape risk | Refactor risk | Planned / actual test |
+|---|---|---|---|---|---|---|---|
+| `REQ-REVIEW-START-001` | Employee starts review for not-started request | API integration + DB assertion | HTTP POST, auth cookie, DB read, details read endpoint | HTTP 204; response body empty; Review exists/started; StartedByEmployeeId = current employee; details read shows started review | Low: catches missing persisted Review.Started state | Low: handler/repository refactor should not affect endpoint/state outcome | `StartRequestReview_StartsReviewAndReturnsNoContent` |
+| `REQ-REVIEW-START-002` | Another Employee cannot silently take over started review | API integration + no-mutation DB assertion | DB fixture setup, HTTP POST, DB snapshot after failure | failure response; original StartedByEmployeeId unchanged; review status unchanged; no replacement review created | Low if original StartedByEmployeeId is asserted unchanged | Low/Medium: schema/helper refactor may require helper update | `StartRequestReview_WhenStartedByAnotherEmployee_ReturnsValidationProblemAndDoesNotChangeReview` |
 ```
 
-## 16. Cross-Side Concern Example
+## 17. Client UI Example
 
 ```markdown
 ### Behavior-to-Test Trace
 
-| Behavior item | Scenario outcome being proved | Test layer | Implementation used as mechanism | Escape risk | Refactor risk | Planned / actual test |
-|---|---|---|---|---|---|---|
-| `CC-SEC-CSRF-001-B01` | Unsafe command without token is rejected | Server integration | POST unsafe endpoint without token, assert rejection and no mutation | Low for server-side rejection | Low: internal antiforgery wiring can change if behavior remains | `UnsafeCommand_WithoutCsrfToken_ReturnsBadRequestAndDoesNotMutate` |
-| `CC-SEC-CSRF-001-B04` | Normal app command sends required protection | Client API/unit/component smoke | command wrapper/fetch boundary sends token/header | Medium: client test alone does not prove server rejection | Medium: avoid asserting too much internal fetch shape | `unsafeCommand_includesCsrfToken` |
+| Behavior | Visible scenario outcome | Test layer | Setup/action mechanism | Required assertions | Escape risk | Refactor risk | Planned / actual test |
+|---|---|---|---|---|---|---|---|
+| `UI-REQ-DETAILS-START-001` | Employee sees Start Review action when review is not started | Component/page test | Mock API response, render route/page, visible button assertion | Start Review button is visible and accessible; action is enabled for not-started review | Medium: proves UI availability only, not server permission | Low: layout refactor should keep accessible button text | `EmployeeRequestDetailsPage_ShowsStartReviewActionForNotStartedReview` |
+| `UI-REQ-DETAILS-START-002` | After successful Start Review, UI shows Started by you | Component/E2E | User click, mocked mutation success/refetch or real API in E2E | visible status changes to Started by you; pending state clears; error feedback absent; details/refetch shows started state | Medium/Low depending whether test uses real API | Medium if over-mocked; Low if visible outcome is asserted | `StartReviewButton_ShowsStartedByCurrentEmployeeAfterSuccess` |
+```
+
+## 18. Cross-Side Concern Example
+
+```markdown
+### Behavior-to-Test Trace
+
+| Behavior | Scenario outcome being proved | Test layer | Setup/action mechanism | Required assertions | Escape risk | Refactor risk | Planned / actual test |
+|---|---|---|---|---|---|---|---|
+| `CC-SEC-CSRF-001-B01` | Unsafe command without token is rejected | Server integration | POST unsafe endpoint without token, assert rejection and no mutation | request rejected by CSRF/antiforgery boundary; no command mutation occurs; protected endpoint still accepts valid token in companion test if needed | Low for server-side rejection | Low: internal antiforgery wiring can change if behavior remains | `UnsafeCommand_WithoutCsrfToken_ReturnsBadRequestAndDoesNotMutate` |
+| `CC-SEC-CSRF-001-B04` | Normal app command sends required protection | Client API/unit/component smoke | command wrapper/fetch boundary sends token/header | unsafe command request includes required CSRF token/header according to current client transport contract | Medium: client test alone does not prove server rejection | Medium: avoid asserting too much internal fetch shape | `unsafeCommand_includesCsrfToken` |
 ```
 
 For paired concerns:
