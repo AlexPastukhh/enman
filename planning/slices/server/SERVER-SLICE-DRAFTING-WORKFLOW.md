@@ -204,7 +204,7 @@ If the slice draft already has implementation, do not rewrite it only to match t
 Use:
 
 ```text
-planning/slices/implemented-slice-sync-workflow.md
+planning/documentation/status-reconciliation-workflow.md
 ```
 
 Check current sources, domain docs, existing draft, current implementation files and current tests before updating the draft.
