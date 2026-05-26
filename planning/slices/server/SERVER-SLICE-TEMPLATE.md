@@ -1,7 +1,7 @@
 # Server Slice Template
 
 Status: canonical template for server/backend/API slice drafts  
-Scope: copyable structure for server slice drafts using current slice authoring and server implementation principles
+Scope: copyable structure for server slice drafts using current slice authoring workflow, authoring principles and server implementation principles
 
 Use with:
 
@@ -52,10 +52,47 @@ Behavior items:
 Cross-cutting behavior / concern sources:
   -
 
+API/generated contract sources:
+  -
+
+Testing/source workflow:
+  - planning/slices/slice-test-plan-workflow.md
+
+Current code/tests checked, if implemented sync:
+  -
+
 Source status:
   current / provisional / pending source sync / blocked
 
 Notes:
+
+## 0.1 Section-Level Sources
+
+Use this block only for high-risk or separately reviewed sections.
+
+```text
+Sources:
+  Format:
+    - <workflow/template/principles file>
+  Content:
+    - <scenario/domain/API/slice source file or earlier section>
+  Internal dependencies:
+    - <draft sections this section depends on>
+  Not checked:
+    - <explicitly unchecked evidence/source>
+```
+
+Recommended sections for section-level sources:
+
+```text
+Scenario Sources / Source Sync;
+Scenario Scope / Slice Boundary;
+Domain Methods / Domain Behavior Contract;
+Implementation Flow;
+API Contract;
+Behavior Coverage;
+Test / Verification Plan.
+```
 
 ## 1. Scope
 
@@ -363,7 +400,27 @@ Use only when preparing for implementation or syncing with already implemented c
 [ ] Mark runtime implementation checked yes/no.
 ```
 
-## 16. Guardrail Summary
+## 16. Local / Global Sync Check
+
+After drafting or refactoring, decide whether to update:
+
+```text
+planning/slices/SLICE-INDEX.md
+planning/slices/slice-scenario-flow-behavior-register.md
+planning/slices/slice-questions-register.md
+planning/slices/slice-extension-points-register.md
+planning/slices/slice-implementation-notes-register.md
+planning/slices/slice-responsibility-map.md
+planning/slices/README.md
+```
+
+Sync result:
+
+```text
+Not needed / Updated / Deferred to <register or PMR item>
+```
+
+## 17. Guardrail Summary
 
 ```text
 - Do not broaden scope silently.
