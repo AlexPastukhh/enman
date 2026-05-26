@@ -29,7 +29,9 @@ Direct GitHub edits must still follow scope rules:
 - prefer one file per commit by default.
 ```
 
-## 3. Workflow Activation
+Mechanical multi-file link/path/name synchronization may use a single bundled commit when approved by the user and when no unrelated semantic refactors are mixed in.
+
+## 3. Workflow Activation And Use-Case Navigation
 
 For non-trivial planning/repo work, read:
 
@@ -48,7 +50,29 @@ The workflow activation map explains:
 - which workflows are future/missing or transitional.
 ```
 
-A future chat should not require the user to remember workflow file names. It should read the activation map and disclose activated workflows before continuing.
+For action/use-case based navigation, read:
+
+```text
+planning/planning-use-case-map.md
+```
+
+The use-case map explains:
+
+```text
+- what to do when the user says a concrete action such as "draft slice", "update docs", "recheck", "арх" or "без изм";
+- how to distinguish new work from active-context continuation;
+- traversal depth: full / targeted / reuse / no traversal;
+- read source mode: conversation / canvas / archive / GitHub / uploaded file;
+- expected output and permission boundary for common use cases.
+```
+
+For root layer routing, read:
+
+```text
+planning/planning-doc-responsibility-map.md
+```
+
+A future chat should not require the user to remember workflow file names. It should read the activation map and use-case map, then disclose activated workflows before continuing.
 
 For deferred planning-docs/workflow cleanup tasks and condition-based follow-ups, use:
 
@@ -91,9 +115,12 @@ planning/diagrams/scenario-clarifications/
 Use:
 
 ```text
-planning/slices/
-planning/slices/l2/
-planning/slices/cross-cutting/
+planning/slices/README.md
+planning/slices/slice-responsibility-map.md
+planning/slices/slice-draft-authoring-workflow.md
+planning/slices/slice-draft-authoring-principles.md
+planning/slices/slice-test-plan-workflow.md
+planning/slices/SLICE-INDEX.md
 ```
 
 Slice docs describe intended work and scope. They are not implementation proof.
@@ -130,6 +157,14 @@ Dirty drafts are not source of truth.
 
 ## 5. Task-Based Navigation
 
+For action-to-doc-flow routing, start with:
+
+```text
+planning/planning-use-case-map.md
+```
+
+Use the sections below as broad entry pointers. The use-case map owns detailed command/action traces.
+
 ### For implementation planning
 
 Read:
@@ -137,12 +172,14 @@ Read:
 ```text
 planning/README.md
 planning/workflow-activation-map.md
+planning/planning-use-case-map.md
+planning/planning-doc-responsibility-map.md
 relevant scenario spec
 relevant slice doc
 relevant architecture/API/client/testing doc
 ```
 
-Then inspect the current branch.
+Then inspect the current branch when implementation status matters.
 
 ### For VKR / thesis writing
 
@@ -151,11 +188,12 @@ Read:
 ```text
 planning/README.md
 planning/workflow-activation-map.md
+planning/planning-use-case-map.md
 planning/vkr-clean-reference.md
 relevant scenario/domain/architecture docs
 ```
 
-Then verify implementation from code, tests, screenshots or generated contracts.
+Then verify implementation from code, tests, screenshots or generated contracts when implementation evidence matters.
 
 ### For scenario and diagram work
 
@@ -163,6 +201,7 @@ Read:
 
 ```text
 planning/workflow-activation-map.md
+planning/planning-use-case-map.md
 planning/diagrams/README.md
 planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
 planning/diagrams/scenario-data/00-scenario-data-index.md
@@ -178,13 +217,28 @@ Read:
 
 ```text
 planning/workflow-activation-map.md
+planning/planning-use-case-map.md
+planning/planning-doc-responsibility-map.md
 planning/slices/README.md
-planning/slices/l2/README.md
-planning/slices/l1-slice-drafting-guide.md
+planning/slices/slice-responsibility-map.md
+planning/slices/slice-draft-authoring-workflow.md
+planning/slices/slice-draft-authoring-principles.md
+planning/slices/slice-test-plan-workflow.md
+planning/slices/SLICE-INDEX.md
 planning/slices/slice-scenario-flow-behavior-register.md
 planning/slices/slice-questions-register.md
 planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
+```
+
+Use side-specific workflows/templates after slice type is known:
+
+```text
+planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
+planning/slices/server/SERVER-SLICE-TEMPLATE.md
+planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md
+planning/slices/client/CLIENT-SLICE-TEMPLATE.md
+planning/slices/cross-cutting/cross-cutting-umbrella-template.md
 ```
 
 ### For backend cleanup / legacy boundary work
@@ -193,6 +247,7 @@ Read:
 
 ```text
 planning/workflow-activation-map.md
+planning/planning-use-case-map.md
 planning/architecture/README.md
 planning/architecture/backend-legacy-and-l1-boundaries.md
 planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
@@ -205,6 +260,7 @@ Read:
 
 ```text
 planning/workflow-activation-map.md
+planning/planning-use-case-map.md
 planning/documentation/README.md
 planning/documentation/documentation-update-workflow.md
 planning/documentation/status-reconciliation-workflow.md
@@ -218,6 +274,7 @@ Read:
 
 ```text
 planning/workflow-activation-map.md
+planning/planning-use-case-map.md
 planning/planning-agent-protocol.md
 planning/agent-scope-boundaries-and-prompt-safety.md
 planning/planning-doc-responsibility-map.md
@@ -229,6 +286,7 @@ Read:
 
 ```text
 planning/workflow-activation-map.md
+planning/planning-use-case-map.md
 planning/planning-maintenance-register.md
 planning/planning-doc-responsibility-map.md
 ```
