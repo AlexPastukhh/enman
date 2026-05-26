@@ -1,25 +1,37 @@
 # Server Slice Drafting Workflow
 
-Status: current server workflow / authoring principles and implementation principles synchronized
+Status: current local server workflow / applies root slice draft authoring workflow
 
 ## 1. Purpose
 
 Server slice drafts define backend/API/domain behavior, implementation responsibility and generated contract impact.
 
-This workflow describes how to create or update a server/backend/API slice draft.
+This workflow applies the root slice draft authoring workflow to server/backend/API slice drafts.
 
-Templates define output shape. Principles define rules. This workflow defines the drafting process.
+Use root workflow for the general authoring process:
+
+```text
+planning/slices/slice-draft-authoring-workflow.md
+```
+
+Templates define output shape. Principles define rules. This workflow defines server-specific drafting steps.
 
 ## 2. Required Reads
 
-Before drafting, read:
+Before drafting, read root slice workflow and principles:
 
 ```text
 planning/slices/slice-responsibility-map.md
 planning/slices/slice-draft-authoring-principles.md
+planning/slices/slice-draft-authoring-workflow.md
+planning/slices/slice-test-plan-workflow.md
+```
+
+Then read server-specific docs:
+
+```text
 planning/slices/server-implementation-principles.md
 planning/slices/server/SERVER-SLICE-TEMPLATE.md
-planning/slices/slice-test-plan-workflow.md
 ```
 
 Then identify source inputs:
@@ -41,6 +53,8 @@ planning/slices/slice-scenario-flow-behavior-register.md
 
 ## 3. Drafting Order
 
+Follow the root workflow first, then apply this server-specific order:
+
 ```text
 1. Confirm that the work belongs to the server slice layer.
 2. Identify scenario/source mapping for this slice.
@@ -60,7 +74,8 @@ planning/slices/slice-scenario-flow-behavior-register.md
 16. Define Behavior Coverage.
 17. Define Test / Verification Plan and Behavior-to-Test Trace.
 18. Define implementation checklist only if preparing implementation or syncing existing code.
-19. Finish with Guardrail Summary.
+19. Run local/global sync check from slice-draft-authoring-workflow.md.
+20. Finish with Guardrail Summary.
 ```
 
 ## 4. Source And Scope Rules
