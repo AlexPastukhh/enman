@@ -36,6 +36,7 @@ recheck
 clarify
 keep prev / кип прев
 no ch / изм нет
+use archive / читать архив
 show section separately
 merge section back
 ```
@@ -124,7 +125,7 @@ The preflight is not a permission grant. It only makes the intended workflow pat
 | `planning/documentation/documentation-update-workflow.md` | Applying approved documentation update or planning docs update process | `conditional implicit` | Yes for GitHub writes | Docs update process |
 | `planning/documentation/local-global-documentation-sync-workflow.md` | Local change may affect shared register/index/navigation | `conditional implicit` | No for check; yes for edits | Local/global sync check |
 | `planning/documentation/status-reconciliation-workflow.md` | Docs status may differ from code/tests/generated artifacts | `conditional implicit` | No for analysis; yes for edits | Status findings / sync plan |
-| `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | Non-trivial answer, audit, plan, handoff, level/lvl/ур command, recheck, clarify, keep prev, no ch, section command | `response-format` / `response-command` | No | Structured reviewable answer or response-level command behavior |
+| `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | Non-trivial answer, audit, plan, handoff, level/lvl/ур command, recheck, clarify, keep prev, no ch, use archive, section command | `response-format` / `response-command` | No | Structured reviewable answer or response-level command behavior |
 | `planning/diagrams/scenario-drafting-workflow.md` | Scenario text/DATA/UI/behavior items/questions/clarifications work | `conditional implicit` | No for draft/analysis; yes for edits | Scenario source workflow |
 | `planning/slices/slice-responsibility-map.md` | Need to place slice-layer information or decide slice file owner | `conditional implicit` | No | Slice-layer owner routing |
 | `planning/slices/slice-draft-authoring-principles.md` | Create/review/refactor slice draft structure or section meaning | `conditional implicit` | No | Slice draft authoring rules |
@@ -177,6 +178,7 @@ recheck;
 clarify;
 keep prev / кип прев;
 no ch / изм нет;
+use archive / читать архив;
 show section separately;
 merge section back.
 ```
@@ -295,7 +297,7 @@ The following do not require explicit permission because they are read-only or a
 - do read-only audit/check/review;
 - state assumptions;
 - use Level 1/2/3 answer format;
-- use recheck/clarify/keep-prev/no-ch style response commands.
+- use recheck/clarify/keep-prev/no-ch/use-archive style response commands.
 ```
 
 ## 8. Future / Missing Workflows
@@ -309,6 +311,7 @@ Do not pretend these are implemented if no workflow file exists.
 | Root map shrink to thin router | Root map is transitional and intentionally detailed. | After local responsibility maps exist for major layers. |
 | Server/client/cross-cutting drafting workflow split | Root slice authoring workflow exists; server/client local workflows exist; cross-cutting workflow is deferred. | After section-level source/source-version model stabilizes or real draft refactors prove repeated side-specific algorithm steps. |
 | Slice test plan workflow split | Unified slice test workflow exists. | After testing layer audit. |
+| Reviewable output vs response commands split | Output templates and response commands currently live in one workflow. | After response-command vocabulary stabilizes or if the combined file becomes too large/confusing. |
 
 Longer-term reminders live in:
 
@@ -327,6 +330,7 @@ planning/planning-maintenance-register.md
 - Do not activate only the top-level workflow when a nested workflow is clearly required.
 - Do not apply a workflow silently when its activation would change scope or require user approval.
 - Do not treat `no ch` as permission to skip targeted checks required before writes, deletes, renames or current-state claims.
+- Do not treat `use archive` as remote/current proof when archive freshness is uncertain.
 ```
 
 ## 10. Success Criteria
