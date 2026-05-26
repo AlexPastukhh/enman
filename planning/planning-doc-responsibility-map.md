@@ -39,7 +39,7 @@ Until local responsibility maps exist for all layers, this file keeps transition
 
 | Layer | Belongs here | Local responsibility entry |
 |---|---|---|
-| Documentation | Planning-doc architecture, docs update workflows, documentation-layer placement, agent output rules, documentation prompts and scoped sync notes. | `planning/documentation/documentation-responsibility-map.md` |
+| Documentation | Planning-doc architecture, docs update workflows, documentation-layer placement, agent output rules, response-level commands, documentation prompts and scoped sync notes. | `planning/documentation/documentation-responsibility-map.md` |
 | Scenario | Scenario text specs, UI specs, DATA sources, behavior items, clarifications and scenario questions. | `planning/diagrams/README.md` now; future scenario responsibility map. |
 | Domain | Domain drafts, invariants, value objects, aggregate boundaries, accepted domain decisions and domain implementation cuts. | `planning/tables/README.md` now; future domain responsibility map. |
 | Slice | Slice drafts, slice source mapping, slice questions, extension points, implementation notes, client/server/cross-cutting sidecars and slice workflows/templates/principles. | `planning/slices/slice-responsibility-map.md` |
@@ -60,7 +60,7 @@ planning/documentation/planning-docs-architecture-principles.md
 | File / folder | Responsibility |
 |---|---|
 | `planning/README.md` | Stable planning navigation and source-of-truth map; must not duplicate detailed current implementation status |
-| `planning/workflow-activation-map.md` | Root workflow activation router: which workflows exist, when they activate, implicit vs explicit activation and Workflow Preflight format |
+| `planning/workflow-activation-map.md` | Root workflow activation router: which workflows exist, when they activate, implicit vs explicit activation, response command discoverability and Workflow Preflight format |
 | `planning/planning-maintenance-register.md` | Root register for deferred planning-docs/workflow maintenance tasks and condition-based follow-ups |
 | `planning/planning-workflow-current.md` | Workflow rules, repository-edit workflow and historical/current-state reminders; concrete inventory sections are not implementation truth |
 | `planning/vkr-clean-reference.md` | Clean VKR/thesis terminology, internal-to-clean mapping and evidence map for VKR-facing materials |
@@ -80,7 +80,7 @@ planning/documentation/planning-docs-architecture-principles.md
 | `planning/documentation/documentation-update-plan-workflow.md` | Required preflight plan format for broad docs/navigation/status/register updates |
 | `planning/documentation/documentation-update-workflow.md` | Documentation update process, output modes, quality checks and direct-edit/archive rules |
 | `planning/documentation/planning-docs-architecture-principles.md` | Architecture principles for planning documentation itself, not runtime application architecture |
-| `planning/documentation/reviewable-agent-output-workflow.md` | Response-level workflow for reviewable AI/agent outputs: answer detail levels, sources/coverage blocks, handoff/review format, recheck/clarify/section commands and section-level source expectations for major draft sections |
+| `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | Response-level workflow for reviewable AI/agent outputs and commands: answer detail levels, sources/coverage blocks, handoff/review format, recheck/clarify/keep prev/no ch/section commands and section-level source expectations for major draft sections |
 | `planning/documentation/local-global-documentation-sync-workflow.md` | Local detail to shared navigation/register synchronization rules |
 | `planning/documentation/status-reconciliation-workflow.md` | Status reconciliation between current implementation evidence and planning docs |
 | `planning/documentation/documentation-update-agent-prompt.md` | Derived prompt template for documentation update chats/agents; canonical docs win if there is conflict |
@@ -98,7 +98,7 @@ VKR-facing materials must not use internal planning labels such as `L1`, `L2`, `
 
 Direct GitHub edits from ChatGPT are preferred for small scoped documentation changes because they create visible commits that can be inspected and reverted independently.
 
-By default, use one commit per file when reasonable. Large generated replacement archives should be reserved for broad file/package generation when direct scoped commits are less practical.
+By default, use one file per commit when reasonable. Large generated replacement archives should be reserved for broad file/package generation when direct scoped commits are less practical.
 
 Direct GitHub edits, file creation, file deletion, moves and commits require explicit user instruction.
 
@@ -140,6 +140,7 @@ Transitional overview:
 | `planning/slices/slice-responsibility-map.md` | Local responsibility map for slice-layer placement/routing |
 | `planning/slices/SLICE-INDEX.md` | Concrete catalog of slice docs, workflows, templates, registers and drafts |
 | `planning/slices/slice-draft-authoring-principles.md` | General slice draft authoring principles: scope, boundary, coverage, drift and trace |
+| `planning/slices/slice-draft-authoring-workflow.md` | Root slice draft authoring process |
 | `planning/slices/server-implementation-principles.md` | Server/backend implementation boundary principles |
 | `planning/slices/client-implementation-principles.md` | Client layering and read/command/API ownership principles |
 | `planning/slices/client-css-architecture-rules.md` | Client CSS ownership rules |
@@ -147,7 +148,7 @@ Transitional overview:
 | `planning/slices/client-a11y-implementation-principles.md` | Client accessibility/ARIA implementation and test contract |
 | `planning/slices/client-ui-style-workflow.md` | Client UI/style workflow |
 | `planning/slices/slice-scenario-flow-behavior-register.md` | Maps slices/client sidecars to scenario text, DATA, UI and behavior item sources |
-| `planning/slices/slice-questions-register.md` | Shared overview of currently relevant local questions, including implemented slices |
+| `planning/slices/slice-questions-register.md` | Shared overview of currently relevant local questions |
 | `planning/slices/slice-extension-points-register.md` | Cross-slice extension points and change pressure |
 | `planning/slices/slice-implementation-notes-register.md` | Concrete future implementation/client/testing notes |
 | `planning/slices/client/` | Client templates, client-specific handoff docs and client slice drafts |
@@ -207,7 +208,7 @@ Use this file first to choose the layer. Then use the local responsibility map o
 ```text
 1. workflow activation routing -> planning/workflow-activation-map.md
 2. planning maintenance follow-up -> planning/planning-maintenance-register.md
-3. documentation architecture/process/prompt/sync note -> planning/documentation/documentation-responsibility-map.md
+3. documentation architecture/process/commands/prompt/sync note -> planning/documentation/documentation-responsibility-map.md
 4. scenario text/DATA/UI/behavior source -> planning/diagrams/scenario-*/
 5. domain concepts/drafts/decisions -> planning/tables/ now, future domain layer responsibility map
 6. slice-layer placement/routing -> planning/slices/slice-responsibility-map.md
@@ -231,7 +232,7 @@ Use this file first to choose the layer. Then use the local responsibility map o
 24. raw non-canonical recovery wording -> planning/dirty-drafts/
 25. broad docs/navigation/status/register update plan -> planning/documentation/documentation-update-plan-workflow.md
 26. planning documentation architecture principle -> planning/documentation/planning-docs-architecture-principles.md
-27. reviewable AI/agent response format -> planning/documentation/reviewable-agent-output-workflow.md
+27. reviewable AI/agent response format and commands -> planning/documentation/reviewable-agent-output-and-commands-workflow.md
 28. documentation local/global sync rule -> planning/documentation/local-global-documentation-sync-workflow.md
 ```
 
