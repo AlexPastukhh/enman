@@ -1,6 +1,6 @@
 # Slice Index
 
-Status: working index / root principles and testing workflow synchronized
+Status: working index / target slice draft files collected
 
 This file is the common navigation index for server, client and cross-cutting slice docs.
 
@@ -25,7 +25,6 @@ planning/slices/slice-responsibility-map.md
 | CLIENT-FORM-VALIDATION-IMPLEMENTATION-PRINCIPLES | Client Form Validation Implementation Principles | principles | current | `planning/slices/client-form-validation-implementation-principles.md` | Applies deferred validation cross-cutting behavior in client implementation |
 | CLIENT-A11Y-IMPLEMENTATION-PRINCIPLES | Client Accessibility / ARIA Implementation Principles | principles | current | `planning/slices/client-a11y-implementation-principles.md` | Accessibility/ARIA implementation and user-visible test contract |
 | CLIENT-UI-STYLE-WORKFLOW | Client UI / Style Workflow | workflow | current | `planning/slices/client-ui-style-workflow.md` | Client UI/style implementation process |
-| SLICE-FOLDER-MAP | Slice Folder Map | folder map | transitional | `planning/slices/SLICE-FOLDER-MAP.md` | Folder placement map kept during migration; placement authority is moving to responsibility map |
 | SLICE-INDEX | Slice Index | index/catalog | current | `planning/slices/SLICE-INDEX.md` | Concrete catalog of slice docs/files while old and new paths coexist |
 
 ## Slice register docs
@@ -63,11 +62,11 @@ Historical L1/L2 paths are legacy only.
 | ID | Title | Type | Status | Current path | Notes |
 |---|---|---|---|---|---|
 | SLICE-TEST-PLAN-WORKFLOW | Slice Test Plan Workflow | workflow | current | `planning/slices/slice-test-plan-workflow.md` | Required Behavior-to-Test Trace for slice drafts |
-| CLIENT-SLICE-DRAFTING-WORKFLOW | Client Slice Drafting Workflow | workflow | current/local | `planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Applies root authoring workflow; candidate for later move to root |
-| SERVER-SLICE-DRAFTING-WORKFLOW | Server Slice Drafting Workflow | workflow | current/local | `planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Applies root authoring workflow; candidate for later move to root |
-| CLIENT-SLICE-TEMPLATE | Client Slice Template | template | current | `planning/slices/client/CLIENT-SLICE-TEMPLATE.md` | Includes scenario sources and test trace |
-| SERVER-SLICE-TEMPLATE | Server Slice Template | template | current | `planning/slices/server/SERVER-SLICE-TEMPLATE.md` | Includes scenario sources and test trace |
-| CROSS-CUTTING-UMBRELLA-TEMPLATE | Cross-Cutting Umbrella Template | template | current | `planning/slices/cross-cutting/CROSS-CUTTING-UMBRELLA-TEMPLATE.md` | Includes cross-side test trace |
+| CLIENT-SLICE-DRAFTING-WORKFLOW | Client Slice Drafting Workflow | workflow | current/local-needs-audit | `planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Client drafting algorithm; review later against current root workflow and client template |
+| SERVER-SLICE-DRAFTING-WORKFLOW | Server Slice Drafting Workflow | workflow | current/local-needs-audit | `planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Server drafting algorithm; review later against current root workflow and server template |
+| CLIENT-SLICE-TEMPLATE | Client Slice Template | template | current | `planning/slices/client/CLIENT-SLICE-TEMPLATE.md` | Target form for new `.client.md` drafts |
+| SERVER-SLICE-TEMPLATE | Server Slice Template | template | current | `planning/slices/server/SERVER-SLICE-TEMPLATE.md` | Target form for server/backend/API slice drafts |
+| CROSS-CUTTING-UMBRELLA-TEMPLATE | Cross-Cutting Umbrella Template | template | current | `planning/slices/cross-cutting/cross-cutting-umbrella-template.md` | Target form for cross-cutting umbrella/coordination docs |
 
 ## Legacy/current slice index
 
@@ -116,9 +115,3 @@ Historical L1/L2 paths are legacy only.
 | ARCHIVE-PLAN-TEMPLATE | Archive Plan Template | template | current | `planning/archive-workflow/ARCHIVE-PLAN-TEMPLATE.md` | Required before creating replacement archive |
 | POST-APPLY-MERGE-REVIEW-WORKFLOW | Post-Apply Merge Review Workflow | workflow | current | `planning/archive-workflow/POST-APPLY-MERGE-REVIEW-WORKFLOW.md` | Compare applied files with archived originals, then create smaller correction archive |
 | ARCHIVE-REVIEW-FOLDER-RULES | Archive Review Folder Rules | workflow | current | `planning/archive-workflow/ARCHIVE-REVIEW-FOLDER-RULES.md` | Unique `_archive-review/<slug>/` folder rule |
-
-## Implemented slice sync docs
-
-| ID | Title | Type | Status | Current path | Notes |
-|---|---|---|---|---|---|
-| IMPLEMENTED-SLICE-SYNC-WORKFLOW | Implemented Slice Draft Sync Workflow | workflow | transitional | `planning/slices/implemented-slice-sync-workflow.md` | Useful sync workflow; needs refactor before canonical use |
