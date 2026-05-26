@@ -58,7 +58,7 @@ ID: PMR-001
 Status: waiting-for-condition
 Area: workflow activation
 Task / reminder:
-  Update planning/workflow-activation-map.md after local responsibility maps are added for scenario/domain/slice layers.
+  Keep planning/workflow-activation-map.md synchronized as local responsibility maps are added for scenario/domain/slice layers.
 Trigger / condition:
   scenario-responsibility-map.md, domain-responsibility-map.md and slice-responsibility-map.md exist, or equivalent README sections are stable enough to use as local responsibility entries.
 Why it matters:
@@ -76,7 +76,8 @@ Do when:
 Do not do before:
   Do not remove root fallback routing before equivalent local maps exist.
 Notes:
-  Keep the workflow activation map honest about future/missing workflows.
+  Done: workflow activation was refreshed for the current slice responsibility map and slice-root rule model.
+  Remaining: revisit after scenario/domain local maps exist.
 ```
 
 ### PMR-002 — Create source/version cascade sync workflow after pilot
@@ -378,14 +379,14 @@ Do when:
 Do not do before:
   Do not archive l1-slice-drafting-guide.md until its useful short-draft guidance is migrated or explicitly superseded.
 Notes:
-  Done: draft-driven-discovery-principles.md narrowed to slice-layer discovery. Remaining: audit l1-slice-drafting-guide.md and either simplify it to a compatibility pointer or supersede it.
+  Done: draft-driven-discovery-principles.md narrowed to slice-layer discovery. Remaining: audit l1-slice-drafting-guide.md and decide whether client/server drafting workflows should remain local or move to slice root.
 ```
 
 ### PMR-013 — Audit client/server subfolder rules and move general rules to slice root if needed
 
 ```text
 ID: PMR-013
-Status: open
+Status: done
 Area: slice subfolder responsibility cleanup
 Task / reminder:
   Audit planning/slices/client/ and planning/slices/server/ for rules/principles that should live in the root slice layer instead of subfolders.
@@ -404,11 +405,11 @@ Target files:
 Depends on:
   slice draft authoring principles, server implementation principles, client/server template updates
 Do when:
-  Next audit pass before moving or renaming any client/server files.
+  Done.
 Do not do before:
-  Do not move files just because they contain rules; first classify whether the rule is general slice-layer, client-specific workflow/template, server-specific implementation principle or draft-local guidance.
+  n/a
 Notes:
-  User preference: avoid hiding general rules inside client/server folders. Candidate question: should server/server-implementation-principles.md stay in server/ as server-specific, or move to root as a slice-layer principle with server-specific scope?
+  Done: reusable server/client principles, CSS rules, form validation principles, accessibility principles and UI/style workflow were moved to the slice root. client/README.md and server/README.md are now thin local pointers. Remaining separate decision: whether CLIENT-SLICE-DRAFTING-WORKFLOW.md and SERVER-SLICE-DRAFTING-WORKFLOW.md should stay local or move to root; tracked by PMR-012.
 ```
 
 ## 4. Maintenance Rules
