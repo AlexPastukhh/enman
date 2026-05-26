@@ -45,7 +45,6 @@ planning/diagrams/scenario-clarifications/README.md
 planning/diagrams/scenario-clarifications/L2-validation-and-agreement-exchange-source-cleanup.md
 planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
 planning/slices/README.md
-planning/slices/l2/README.md
 planning/slices/slice-scenario-flow-behavior-register.md
 planning/slices/slice-questions-register.md
 ```
