@@ -1,20 +1,39 @@
 # Client Slice Drafting Workflow
 
-Status: current workflow for drafting client sidecars / scenario source and test trace synchronized
+Status: current local workflow for drafting client sidecars / applies root slice draft authoring workflow
 
-## 1. Before Drafting
+## 1. Purpose
 
-Read:
+This workflow applies the root slice draft authoring workflow to client sidecar drafts.
+
+Use root workflow for the general authoring process:
 
 ```text
-CLIENT-API-PLACEMENT-DECISION.md
-CLIENT-LAYERING-FOR-READ-AND-COMMAND-SLICES.md
-CLIENT-UI-STYLE-WORKFLOW.md
-CLIENT-CSS-ARCHITECTURE-RULES.md
-CLIENT-FORM-VALIDATION-WORKFLOW.md
-CLIENT-A11Y-WORKFLOW.md
+planning/slices/slice-draft-authoring-workflow.md
+```
+
+Use this file for client-specific source checks, visual/UI flow, CSS ownership, client contract, validation, feedback and accessibility drafting.
+
+## 2. Before Drafting
+
+Read root slice workflow and principles first:
+
+```text
+planning/slices/slice-responsibility-map.md
+planning/slices/slice-draft-authoring-principles.md
+planning/slices/slice-draft-authoring-workflow.md
 planning/slices/slice-test-plan-workflow.md
-CLIENT-SLICE-TEMPLATE.md
+```
+
+Then read client-specific rules/template:
+
+```text
+planning/slices/client-implementation-principles.md
+planning/slices/client-css-architecture-rules.md
+planning/slices/client-form-validation-implementation-principles.md
+planning/slices/client-a11y-implementation-principles.md
+planning/slices/client-ui-style-workflow.md
+planning/slices/client/CLIENT-SLICE-TEMPLATE.md
 ```
 
 Then identify scenario sources:
@@ -28,7 +47,7 @@ behavior items:
 concern umbrella:
 ```
 
-## 2. UI Scenario Source Check
+## 3. UI Scenario Source Check
 
 Before writing `Visual UI / Scenario Flow`:
 
@@ -40,7 +59,7 @@ Before writing `Visual UI / Scenario Flow`:
 5. Do not invent UI requirements only inside the client slice draft.
 ```
 
-## 3. Cross-Cutting Behavior Source Check
+## 4. Cross-Cutting Behavior Source Check
 
 If the slice implements common client behavior used by many scenarios:
 
@@ -59,7 +78,9 @@ flow navigation
 loading/empty/error visibility
 ```
 
-## 4. Drafting Order
+## 5. Drafting Order
+
+Follow the root workflow first, then apply this client-specific order:
 
 ```text
 1. Identify scenario sources.
@@ -74,9 +95,10 @@ loading/empty/error visibility
 10. Define validation/feedback/a11y.
 11. Define behavior coverage.
 12. Define Behavior-to-Test Trace and verification plan.
+13. Run local/global sync check from slice-draft-authoring-workflow.md.
 ```
 
-## 5. Visual Client Implementation Flow Rule
+## 6. Visual Client Implementation Flow Rule
 
 Use `needed to`, not `does`.
 
@@ -117,7 +139,7 @@ visual: card with 16px padding, green status badge, button radius and internal b
 
 That describes child internals and belongs in the child owner's styling rules.
 
-## 6. Test / Verification Plan Rule
+## 7. Test / Verification Plan Rule
 
 Use:
 
@@ -141,7 +163,7 @@ Component/page tests prove visible client behavior for a given server response o
 
 Server behavior must be proven by server/API tests. E2E can connect the flow but does not replace all matrix tests.
 
-## 7. Paired/Single Naming
+## 8. Paired/Single Naming
 
 If no server counterpart is expected, use `SINGLE-` prefix in the client draft file name:
 
@@ -155,9 +177,10 @@ If a server counterpart is expected or possible, do not use `SINGLE-`; use match
 CC-SEC-CSRF-001-unsafe-command-protection.client.md
 ```
 
-## 8. Drafting Checklist
+## 9. Drafting Checklist
 
 ```text
+[ ] I used planning/slices/slice-draft-authoring-workflow.md.
 [ ] I used CLIENT-SLICE-TEMPLATE.md.
 [ ] I identified scenario sources.
 [ ] I checked UI scenario source/readiness when UI behavior is involved.
@@ -176,4 +199,5 @@ CC-SEC-CSRF-001-unsafe-command-protection.client.md
 [ ] I added Behavior Coverage.
 [ ] I added Behavior-to-Test Trace.
 [ ] I separated Behavior Coverage from Test / Verification Plan.
+[ ] I checked whether registers/index/navigation need sync.
 ```
