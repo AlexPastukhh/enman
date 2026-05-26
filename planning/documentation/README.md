@@ -203,20 +203,25 @@ planning/documentation/l2-scenario-status-marker-sync-note.md
 
 Do not treat scoped sync notes as canonical workflow files. If a scoped sync note contains a reusable rule, promote that rule into the correct workflow or architecture file through a normal documentation update.
 
-## 11. Draft-Driven Discovery Link
+## 11. Draft-Driven Discovery Scope Note
 
-All slice families use draft-driven discovery:
+Draft-driven discovery is currently a slice-layer discovery loop.
 
-```text
-domain drafts
-business slice drafts
-client sidecar drafts
-cross-cutting/helper slice drafts
-documentation/status reconciliation drafts
-```
-
-Primary source:
+Use:
 
 ```text
 planning/slices/draft-driven-discovery-principles.md
 ```
+
+for:
+
+```text
+business slice drafts;
+server/backend/API slice drafts;
+client sidecar drafts;
+cross-cutting/helper slice drafts;
+slice verification/test planning inside a slice draft;
+implemented-slice draft sync when a slice already has code/tests.
+```
+
+Do not use that file as the owner for domain drafting, scenario drafting or documentation/status reconciliation. Those areas use their own layer owners and workflows.
