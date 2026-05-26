@@ -1,8 +1,14 @@
 # Server Slice Planning
 
-Status: server slice planning entry point / cross-cutting behavior and testing workflow synchronized
+Status: local server slice folder entry point
 
-This folder owns server/backend/API slice drafting rules, templates, examples and server slice drafts.
+This folder contains server slice templates and server/backend/API slice drafts.
+
+Reusable server rules and principles live in the root slice folder:
+
+```text
+planning/slices/
+```
 
 New server drafts should go directly under:
 
@@ -16,10 +22,21 @@ Until migration is complete, some existing server drafts may still live in older
 
 ## Required read order
 
+Before drafting or updating a server slice, start from the root slice docs:
+
+```text
+planning/slices/README.md
+planning/slices/slice-responsibility-map.md
+planning/slices/slice-draft-authoring-principles.md
+planning/slices/server-implementation-principles.md
+planning/slices/slice-test-plan-workflow.md
+```
+
+Then use local server docs:
+
 ```text
 planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
 planning/slices/server/SERVER-SLICE-TEMPLATE.md
-planning/slices/slice-test-plan-workflow.md
 ```
 
 ## Scenario source requirement
@@ -42,7 +59,7 @@ planning/diagrams/scenario-cross-cutting/server-client/
 planning/diagrams/scenario-cross-cutting/security/
 ```
 
-## Cross-cutting server drafts
+## Draft locations
 
 Server-side cross-cutting implementation drafts go here:
 
@@ -60,18 +77,4 @@ If a client counterpart is expected or possible, use paired logical ID and `.ser
 
 ```text
 CC-SEC-CSRF-001-unsafe-command-protection.server.md
-```
-
-## Server slice docs should cover
-
-```text
-domain behavior
-application handler/service boundary
-FluentValidation boundary
-persistence/read model
-API contract
-OpenAPI generation
-integration tests
-generated artifacts
-Test / Verification Plan with Behavior-to-Test Trace
 ```
