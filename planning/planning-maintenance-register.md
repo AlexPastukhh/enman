@@ -567,6 +567,37 @@ Notes:
   Search terms: l1-slice-drafting-guide.md, implemented-slice-sync-workflow.md, CROSS-CUTTING-UMBRELLA-TEMPLATE.md, reviewable-agent-output-workflow.md, planning/slices/l2/README.md.
 ```
 
+### PMR-019 — Align domain workflows after source/version/cascade model
+
+```text
+ID: PMR-019
+Status: waiting-for-condition
+Area: domain documentation / source-version alignment
+Task / reminder:
+  Align domain discovery, aggregate drafting, value object drafting, scenario-to-aggregate map and domain templates with the source/version/cascade model after that model stabilizes.
+Trigger / condition:
+  After source/version/cascade pilot exists and scenario/domain/slice dependency model is audited.
+Why it matters:
+  The new domain layer starts with aggregate-based structure, but source metadata may need to change after source/version tracking becomes current.
+Owner layer:
+  domain / documentation governance
+Target files:
+  planning/domain/domain-discovery-workflow.md
+  planning/domain/aggregate-drafting-workflow.md
+  planning/domain/value-object-drafting-workflow.md
+  planning/domain/scenario-to-aggregate-map.md
+  planning/domain/aggregate-draft-template.md
+  planning/domain/value-object-draft-template.md
+Depends on:
+  source/version/cascade model, domain scaffold, scenario/domain/slice dependency audit
+Do when:
+  After source/version/cascade model is introduced and at least one domain aggregate extraction has been tested.
+Do not do before:
+  Do not overfit domain source metadata before the source/version/cascade model is stable.
+Notes:
+  Current scaffold intentionally uses simple source sections and should be revisited later.
+```
+
 ## 4. Maintenance Rules
 
 ```text

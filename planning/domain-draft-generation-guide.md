@@ -1,15 +1,28 @@
 # Domain Draft Generation Guide
 
-Status: current guide for gradual domain discovery  
-Scope: how to create iterative domain drafts from scenario behavior coverage baseline
+Status: transitional legacy guide for monolithic domain discovery drafts  
+Scope: how older whole-domain drafts were created from scenario behavior coverage baseline
 
 ## 1. Purpose
 
-This guide describes how to create domain drafts.
+This guide describes the legacy monolithic domain draft mode.
 
-The goal is gradual domain discovery, not comparison of competing alternatives.
+The current target model for new domain work is aggregate-based and lives in:
 
-Each draft is a complete snapshot of current domain understanding.
+```text
+planning/domain/domain-discovery-workflow.md
+planning/domain/scenario-to-aggregate-map.md
+planning/domain/aggregate-drafting-workflow.md
+planning/domain/value-object-drafting-workflow.md
+planning/domain/aggregate-draft-template.md
+planning/domain/value-object-draft-template.md
+```
+
+Use this guide as historical/transitional source material when converting older whole-domain drafts into aggregate/value-object/decision files.
+
+The legacy goal was gradual domain discovery, not comparison of competing alternatives.
+
+In this legacy mode, each draft is a complete snapshot of current domain understanding.
 
 Each next draft should:
 

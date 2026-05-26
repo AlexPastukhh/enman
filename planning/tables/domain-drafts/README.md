@@ -1,20 +1,42 @@
 # Domain Drafts Index
 
-Status: current folder for gradual domain discovery drafts
+Status: historical / transitional monolithic domain discovery snapshots  
+Scope: old whole-domain draft files used as source material for aggregate-based extraction
 
 ## 1. Purpose
 
-This folder stores iterative domain drafts.
+This folder stores older monolithic domain drafts.
 
-A domain draft is a complete snapshot of current domain understanding.
+A monolithic domain draft is a complete snapshot of domain understanding at the time it was written.
 
-A domain draft is not a competing alternative design.
+The current target model is no longer one large domain draft per iteration. New domain work should use:
 
-Each next draft should refine the same domain direction and improve coverage and reduce open questions.
+```text
+planning/domain/README.md
+planning/domain/domain-responsibility-map.md
+planning/domain/domain-discovery-workflow.md
+planning/domain/scenario-to-aggregate-map.md
+planning/domain/aggregate-drafting-workflow.md
+planning/domain/value-object-drafting-workflow.md
+```
 
-## 2. Inputs
+## 2. How To Use These Files
 
-Each draft must use:
+Use these files as:
+
+```text
+historical discovery snapshots;
+source material for aggregate extraction;
+cross-checks for scenario-to-aggregate mapping;
+source material for value object candidates;
+source material for domain decisions.
+```
+
+Do not treat them as the current target shape for new domain docs.
+
+## 3. Inputs Used By Historical Drafts
+
+Historical drafts used sources such as:
 
 ```text
 planning/diagrams/scenario-text-specs/
@@ -26,93 +48,37 @@ planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 planning/domain-draft-generation-guide.md
 ```
 
-## 3. Current draft files
+Current domain discovery should prefer per-scenario behavior items where available.
+
+## 4. Current Files
 
 | File | Status | Purpose |
 |---|---|---|
-| `domain-draft-01.md` | current first saved draft | ApplicantParty-centric domain model snapshot with coverage against scenario behavior baseline. |
+| `domain-draft-01.md` | historical monolithic discovery snapshot | ApplicantParty-centric / request-related domain model snapshot with behavior coverage. |
+| `domain-draft-02.md` | historical monolithic discovery snapshot | Later domain model snapshot with account/employee and agreement proposal exchange direction. |
+| `domain-draft-02-account-employee-tph-decision.md` | transitional decision candidate | Candidate source for `planning/domain/decisions/account-employee-tph-decision.md`. |
 
-Expected future files:
-
-```text
-domain-draft-02.md
-domain-draft-03.md
-...
-final-domain-model-candidate.md
-```
-
-## 4. Required draft sections
-
-Each draft should include:
-
-```text
-1. Draft Goal
-2. Source Inputs
-3. Current Domain Direction
-4. Aggregate / Class Candidates
-5. Class-By-Class Model
-6. Class / Aggregate State Machines
-7. Impossible States Covered By Current Model
-8. Value Objects / Value Integrity Coverage
-9. Use-Case Coordination Decisions
-10. Coverage Against Scenario Behavior Baseline
-11. Cross-Layer Placement Notes
-12. Scenario Questions / Gaps For Next Draft
-13. What Changed Since Previous Draft
-```
-
-## 5. Coverage rule
-
-Each draft must reference stable item IDs from:
-
-```text
-planning/tables/pre-domain-variants-input.md
-planning/tables/scenario-behavior-baseline-account-activation-addendum.md
-```
-
-Coverage statuses:
-
-```text
-Missing
-Partial
-Covered
-Resolved outside current domain model
-Deferred
-Question
-```
-
-Coverage tables should include both:
-
-```text
-- stable item ID;
-- readable requirement / invariant explanation.
-```
-
-## 6. Account activation coverage
+## 5. Migration Direction
 
 Current direction:
 
 ```text
-- current core registration creates Active account;
-- protected client/employee functionality requires activated account;
-- current implementation: application service guard + Account.EnsureActivated;
-- future implementation: AccountActivated authorization policy, possibly backed by account_activated claim.
+old monolithic drafts
+  -> scenario-to-aggregate-map.md
+  -> one aggregate draft per aggregate boundary
+  -> value object drafts for reusable/non-trivial value concepts
+  -> decisions/ for accepted domain decisions
 ```
 
-Business aggregates such as Request, AgreementProposal and ApplicantParty should not duplicate account activation checks internally unless the draft explicitly justifies that decision.
+Do not delete or move historical drafts until their useful content is extracted or linked from current domain files.
 
-## 7. Current next step
+## 6. Future Cleanup
 
-```text
-Review / refine planning/tables/domain-drafts/domain-draft-01.md for L1 implementation readiness.
-```
-
-Then:
+After aggregate extraction stabilizes, decide whether to:
 
 ```text
-planning/l1-domain-implementation-cut.md
--> L1 domain classes + unit tests
--> coverage review
--> domain-draft-02.md if more domain refinement is needed
--> final-domain-model-candidate.md later
+- keep this folder as historical archive;
+- move old drafts into an archive subfolder;
+- extract accepted decisions into planning/domain/decisions/;
+- update or remove stale references from old drafts.
 ```

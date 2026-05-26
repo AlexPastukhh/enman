@@ -33,7 +33,7 @@ folder README / index
   = navigation and read order.
 ```
 
-Until local responsibility maps exist for all layers, this file keeps transitional fallback routing for scenario, API/testing, architecture and VKR responsibilities. Slice-specific placement now starts from `planning/slices/slice-responsibility-map.md`.
+Until local responsibility maps exist for all layers, this file keeps transitional fallback routing for scenario, API/testing, architecture and VKR responsibilities. Domain-specific placement now starts from `planning/domain/domain-responsibility-map.md`. Slice-specific placement now starts from `planning/slices/slice-responsibility-map.md`.
 
 ## 2. Layer Router
 
@@ -41,7 +41,7 @@ Until local responsibility maps exist for all layers, this file keeps transition
 |---|---|---|
 | Documentation | Planning-doc architecture, docs update workflows, documentation-layer placement, agent output rules, response-level commands, documentation prompts and scoped sync notes. | `planning/documentation/documentation-responsibility-map.md` |
 | Scenario | Scenario text specs, UI specs, DATA sources, behavior items, clarifications and scenario questions. | `planning/diagrams/README.md` now; future scenario responsibility map. |
-| Domain | Domain drafts, invariants, value objects, aggregate boundaries, accepted domain decisions and domain implementation cuts. | `planning/tables/README.md` now; future domain responsibility map. |
+| Domain | Domain discovery, scenario-to-aggregate mapping, aggregate drafts, value object drafts, aggregate boundaries, accepted domain decisions and domain notes. | `planning/domain/domain-responsibility-map.md` |
 | Slice | Slice drafts, slice source mapping, behavior coverage, Behavior-to-Test Trace inside slice drafts, slice questions, extension points, implementation notes, client/server/cross-cutting sidecars and slice workflows/templates/principles. | `planning/slices/slice-responsibility-map.md` |
 | API | API contract rules, OpenAPI generation rules, client/server contract rules, API error contracts and generated artifact rules. | `planning/api/README.md` |
 | Testing | Cross-slice testing principles, E2E workflows, test object patterns, test tooling workflows and reusable verification rules. Concrete slice behavior proof and assertions live in slice drafts/templates/workflows. | `planning/testing/README.md` |
@@ -125,7 +125,37 @@ Architecture docs do not replace slice docs, scenario sources, API contract docs
 | `planning/diagrams/scenario-behavior-items/` | Scenario-derived, UI-scenario-derived and concern-derived behavior items |
 | `planning/diagrams/scenario-questions-register.md` | Scenario/domain questions that can change scenario behavior, DATA, UI requirements or diagrams |
 
-## 9. Slice Discovery Responsibility
+## 9. Domain Responsibility
+
+Detailed domain-layer placement now belongs to:
+
+```text
+planning/domain/domain-responsibility-map.md
+```
+
+Transitional overview:
+
+| File / folder | Responsibility |
+|---|---|
+| `planning/domain/README.md` | Domain-layer navigation and read order for the aggregate-based target model |
+| `planning/domain/domain-responsibility-map.md` | Local responsibility map for domain-layer placement/routing |
+| `planning/domain/domain-discovery-workflow.md` | Scenario behavior sources to aggregate/value-object discovery workflow |
+| `planning/domain/scenario-to-aggregate-map.md` | Working bridge from scenario behavior items to aggregate candidates, value object candidates and cross-aggregate relations |
+| `planning/domain/aggregate-drafting-workflow.md` | Workflow for creating/updating one aggregate draft |
+| `planning/domain/value-object-drafting-workflow.md` | Workflow for creating/updating one value object draft |
+| `planning/domain/aggregate-draft-template.md` | Template for one aggregate-boundary draft |
+| `planning/domain/value-object-draft-template.md` | Template for one value object draft |
+| `planning/domain/domain-modeling-principles.md` | Aggregate, value object, cross-aggregate and persistence-boundary principles |
+| `planning/domain/domain-notes-register.md` | Domain notes not yet owned by a specific aggregate, value object or decision |
+| `planning/domain/aggregates/` | Aggregate draft files, one aggregate boundary per file |
+| `planning/domain/value-objects/` | Reusable/non-trivial value object draft files |
+| `planning/domain/decisions/` | Accepted/proposed domain decisions |
+| `planning/tables/domain-drafts/` | Historical monolithic domain discovery snapshots during migration |
+| `planning/tables/` | Compiled/historical baselines and pre-domain source snapshots |
+
+`planning/tables/` is not the current domain-layer entrypoint. It remains useful as historical/cross-check source material.
+
+## 10. Slice Discovery Responsibility
 
 Detailed slice-layer placement now belongs to:
 
@@ -161,7 +191,7 @@ Scenario Flow and Behavior Items for slices come from `slice-scenario-flow-behav
 
 Questions/extension/implementation registers do not replace scenario source files.
 
-## 10. Client Planning Responsibility
+## 11. Client Planning Responsibility
 
 Client-wide reusable rules/principles now live in the slice root, not under the client subfolder:
 
@@ -183,7 +213,7 @@ Current client slice folder:
 
 Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 
-## 11. API / Testing / ADR Responsibility
+## 12. API / Testing / ADR Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -192,7 +222,7 @@ Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 | `planning/testing/` | Cross-slice testing principles, E2E workflow, test object patterns |
 | `planning/adr/` | ADR workflow, architecture decision notes and ADR candidates |
 
-## 12. Evidence Link Responsibility
+## 13. Evidence Link Responsibility
 
 Repo-grounded line-link rules belong in:
 
@@ -202,7 +232,7 @@ planning/repo-grounded-github-line-links-workflow.md
 
 Other workflow docs may link to that file, but should not duplicate detailed line-link mechanics unless needed for a local role checklist.
 
-## 13. Responsibility Decision Heuristic
+## 14. Responsibility Decision Heuristic
 
 Use this file first to choose the layer. Then use the local responsibility map or README for that layer.
 
@@ -212,7 +242,7 @@ Use this file first to choose the layer. Then use the local responsibility map o
 3. planning maintenance follow-up -> planning/planning-maintenance-register.md
 4. documentation architecture/process/commands/prompt/sync note -> planning/documentation/documentation-responsibility-map.md
 5. scenario text/DATA/UI/behavior source -> planning/diagrams/scenario-*/
-6. domain concepts/drafts/decisions -> planning/tables/ now, future domain layer responsibility map
+6. domain discovery/aggregate/value-object/decision placement -> planning/domain/domain-responsibility-map.md
 7. slice-layer placement/routing -> planning/slices/slice-responsibility-map.md
 8. slice-to-source mapping -> planning/slices/slice-scenario-flow-behavior-register.md
 9. slice draft authoring principles -> planning/slices/slice-draft-authoring-principles.md
@@ -238,7 +268,7 @@ Use this file first to choose the layer. Then use the local responsibility map o
 29. documentation local/global sync rule -> planning/documentation/local-global-documentation-sync-workflow.md
 ```
 
-## 14. Future Cleanup Rule
+## 15. Future Cleanup Rule
 
 When local responsibility maps exist for documentation, scenario, domain, slice, API/testing and VKR layers, shrink this root map to a thin router.
 
