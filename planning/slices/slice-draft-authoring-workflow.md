@@ -23,6 +23,12 @@ planning/slices/server-implementation-principles.md
 planning/slices/client-implementation-principles.md
 ```
 
+For user-action/use-case traces, active context continuation, traversal depth and read source mode, use:
+
+```text
+planning/planning-use-case-map.md
+```
+
 ## 2. When To Use
 
 Use this workflow for:
@@ -36,17 +42,23 @@ Use this workflow for:
 - preparing a cross-cutting/helper slice plan.
 ```
 
-Do not use this workflow as a replacement for implemented-slice synchronization. If implementation already exists and the draft may be stale, switch to:
+Do not use this workflow as a replacement for current implementation/status reconciliation.
+
+If implementation already exists and the draft may be stale, use:
 
 ```text
-planning/slices/implemented-slice-sync-workflow.md
+planning/documentation/status-reconciliation-workflow.md
 ```
+
+and check current code/tests/generated artifacts before making implementation/current-state claims.
 
 ## 3. Required Reads
 
 Start with:
 
 ```text
+planning/workflow-activation-map.md
+planning/planning-use-case-map.md
 planning/slices/README.md
 planning/slices/slice-responsibility-map.md
 planning/slices/slice-draft-authoring-principles.md
@@ -72,29 +84,31 @@ Client sidecar:
 
 Cross-cutting/paired concern:
   planning/slices/cross-cutting/README.md
-  planning/slices/cross-cutting/CROSS-CUTTING-UMBRELLA-TEMPLATE.md
+  planning/slices/cross-cutting/cross-cutting-umbrella-template.md
 ```
 
 ## 4. Workflow Steps
 
 ```text
 1. Confirm the work belongs to the slice layer.
-2. Identify slice type: server / client / cross-cutting / implemented sync.
-3. Collect scenario/source files.
-4. Collect DATA / behavior items / cross-cutting behavior sources.
-5. Collect domain/API/testing/client/server implementation sources if relevant.
-6. Mark source status: current / provisional / pending source sync / blocked.
-7. Draft Scenario Scope / Slice Boundary.
-8. List behavior not implemented by this slice and assign owner/destination.
-9. Identify cross-cutting concerns and delegated owners.
-10. Run Future-Change Check without expanding current scope.
-11. Draft implementation responsibilities and boundaries.
-12. Draft Implementation Flow by responsibility owner.
-13. Draft Behavior Coverage.
-14. Draft Behavior-to-Test Trace using slice-test-plan-workflow.md.
-15. Check local/global sync needs: registers, index, responsibility map, README.
-16. If implementation already exists, switch to implemented-slice-sync-workflow.md.
-17. Produce reviewable output with assumptions, not-checked items and next actions.
+2. Identify whether this is new slice draft work or active draft continuation.
+3. Identify slice type: server / client / cross-cutting / status reconciliation.
+4. Select traversal depth and read source mode using planning-use-case-map.md.
+5. Collect scenario/source files.
+6. Collect DATA / behavior items / cross-cutting behavior sources.
+7. Collect domain/API/testing/client/server implementation sources if relevant.
+8. Mark source status: current / provisional / pending source sync / blocked.
+9. Draft Scenario Scope / Slice Boundary.
+10. List behavior not implemented by this slice and assign owner/destination.
+11. Identify cross-cutting concerns and delegated owners.
+12. Run Future-Change Check without expanding current scope.
+13. Draft implementation responsibilities and boundaries.
+14. Draft Implementation Flow by responsibility owner.
+15. Draft Behavior Coverage.
+16. Draft Behavior-to-Test Trace using slice-test-plan-workflow.md.
+17. Check local/global sync needs: registers, index, responsibility map, README.
+18. If implementation already exists, use status-reconciliation-workflow.md before status/current implementation claims.
+19. Produce reviewable output with assumptions, not-checked items and next actions.
 ```
 
 ## 5. Source Collection Checklist
@@ -110,10 +124,14 @@ A slice draft should identify the sources that shape it:
 - domain source/draft, if domain model or invariants are central;
 - API/generated contract source, if endpoint/DTO/generated artifacts change;
 - testing/source workflow, if verification model is non-trivial;
-- current code/tests, only when syncing an implemented slice.
+- current code/tests, only when reconciling an implemented/current slice.
 ```
 
 Do not invent behavior locally inside a slice draft when source files exist.
+
+Default/expected sources belong in templates, source blocks or section definitions. Sources actually used in a particular chat pass belong in that chat answer/update report.
+
+Additional sources named by the user do not automatically become default sources. Promote a source to default only through explicit docs/template/workflow update.
 
 ## 6. Section-Level Sources
 
@@ -133,6 +151,8 @@ Sources:
     - <explicitly unchecked evidence/source>
 ```
 
+Use Source Delta in the chat answer when a draft/section changes because of a new source, user correction, recheck, self-correction or active draft update.
+
 Section-level sources are especially useful for:
 
 ```text
@@ -147,7 +167,34 @@ Test / Verification Plan.
 
 Do not add heavy source blocks to every small section when they do not help review.
 
-## 7. Output Checklist
+## 7. Active Draft Continuation
+
+If there is an active slice draft in the current conversation, short commands such as:
+
+```text
+драфт
+давай драфт
+покажи драфт
+обнови
+обнови драфт
+актуализируй
+```
+
+mean active draft continuation, not new draft creation.
+
+The chat should:
+
+```text
+- identify the active draft;
+- apply latest discussion deltas since the last shown/updated version;
+- update canvas if the draft lives in canvas;
+- otherwise output the latest actual draft version in chat;
+- do not start a new draft unless the user says `новый драфт` or names another target;
+- do not switch to an older draft unless the user explicitly names it;
+- do not repeat full traversal unless scope/source/workflow changed or recheck/full audit is requested.
+```
+
+## 8. Output Checklist
 
 Before calling a slice draft ready for review, check:
 
@@ -163,10 +210,11 @@ Before calling a slice draft ready for review, check:
 [ ] Local/global sync was checked.
 [ ] New shared questions/notes were routed to the correct register.
 [ ] No source/version claims are invented.
-[ ] Runtime implementation status is not claimed unless current code/tests were checked.
+[ ] Runtime implementation status is not claimed unless current code/tests/generated artifacts were checked.
+[ ] Actual sources used in this pass are visible in the answer when they differ from the default/expected source model.
 ```
 
-## 8. Local / Global Sync Check
+## 9. Local / Global Sync Check
 
 After drafting or refactoring, decide whether to update:
 
@@ -182,14 +230,16 @@ planning/slices/README.md
 
 Local draft details stay in the draft. Shared facts that affect future work should be mirrored into the correct register/index/map.
 
-## 9. Implemented Slice Exception
+## 10. Implemented / Current Slice Exception
 
 If the slice has current implementation/code/tests, do not only rewrite the draft to match the newest template.
 
 Use:
 
 ```text
-planning/slices/implemented-slice-sync-workflow.md
+planning/documentation/status-reconciliation-workflow.md
 ```
 
 Check source files, draft state, current implementation, current tests and generated artifacts before updating status or implementation claims.
+
+Use runtime implementation checked fields in target templates to make the status/evidence boundary visible.
