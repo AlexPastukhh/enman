@@ -56,6 +56,7 @@ This file owns slice-layer placement and responsibility routing.
 | Source mapping register | Mapping from scenario/source artifacts to slice drafts or sidecars. |
 | Workflow | Repeatable process for slice drafting, testing or synchronization. |
 | Principles | Stable rules and reasoning principles used by slice work. |
+| Rules | Narrow conventions for a specific implementation/styling concern. |
 | Template | Copyable shape of a draft, report or section. |
 | Draft | Concrete working slice, sidecar or concern document. |
 
@@ -67,8 +68,8 @@ This file owns slice-layer placement and responsibility routing.
 | Slice-layer placement and responsibility | `slice-responsibility-map.md` | This file. Read before adding new slice-layer information. |
 | Concrete catalog of slice docs/files | `SLICE-INDEX.md` | Index/catalog, not placement authority. |
 | Folder placement / migration paths | `slice-responsibility-map.md` now; `SLICE-FOLDER-MAP.md` transitional | Fold useful placement rules into this map over time. |
-| Current client slice sublayer entry | `client/README.md` | Client sublayer read order and placement inside `client/`. |
-| Current server slice sublayer entry | `server/README.md` | Server sublayer read order and placement inside `server/`. |
+| Current client slice sublayer entry | `client/README.md` | Thin local pointer for client templates/drafts. Reusable client rules live in root `planning/slices/`. |
+| Current server slice sublayer entry | `server/README.md` | Thin local pointer for server templates/drafts. Reusable server rules live in root `planning/slices/`. |
 | Current cross-cutting umbrella entry | `cross-cutting/README.md` | Cross-cutting coordination docs and paired concern placement. |
 
 ## 5. Register Routing Rules
@@ -107,27 +108,31 @@ planning/slices/slice-scenario-flow-behavior-register.md
 
 Future exact source/version usage may need a separate source usage register, but it does not exist yet.
 
-## 7. Principles Owners
+## 7. Principles / Rules Owners
 
-| Principle area | Owner file | Notes |
+| Principle / rule area | Owner file | Notes |
 |---|---|---|
 | Slice draft authoring | `slice-draft-authoring-principles.md` | Scope, scenario boundary, behavior coverage, semantic names, implementation drift and section-authoring rules for slice drafts. |
 | Draft-driven discovery | `draft-driven-discovery-principles.md` | Current slice-layer discovery loop for business/server/client/cross-cutting slice drafts and slice verification planning. |
 | Change/extension points and extension pressure | `change-extension-points-principles.md` | Definitions and rules for change points, extension points, pressure and anti-coupling decisions. |
 | Common slice implementation principles | `implementation-principles.md` | Shared implementation rules near slice planning. |
-| Server implementation principles | `server/server-implementation-principles.md` | Backend/server implementation architecture principles for server slice drafts; location may be revisited during client/server folder rule audit. |
+| Server implementation principles | `server-implementation-principles.md` | Backend/server implementation architecture principles for server slice drafts. |
+| Client implementation principles | `client-implementation-principles.md` | Client layering, read/command ownership, API wrapper placement and generated type usage. |
+| Client CSS architecture rules | `client-css-architecture-rules.md` | Client CSS ownership, forbidden CSS patterns and visual/CSS boundaries. |
+| Client form validation implementation principles | `client-form-validation-implementation-principles.md` | How client slices apply deferred validation behavior from the cross-cutting behavior source. |
+| Client accessibility / ARIA implementation principles | `client-a11y-implementation-principles.md` | Accessibility/ARIA implementation and user-visible test contract. |
+| Client UI/style workflow | `client-ui-style-workflow.md` | Client UI/style implementation process and current visual/navigation direction. |
 
-Do not put long workflow algorithms into principles files unless they are high-level principles.
+Do not put specialized client/server/CSS/a11y rules into `slice-draft-authoring-principles.md` if doing so would blur responsibility.
 
 ## 8. Workflow Owners
 
 | Workflow area | Owner file | Notes |
 |---|---|---|
 | Slice Test / Verification Plan | `slice-test-plan-workflow.md` | Practical workflow for Behavior-to-Test Trace and test planning sections. |
-| Client slice drafting | `client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Client sidecar and client slice drafting process. |
-| Server slice drafting | `server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Server/backend/API slice drafting process. |
+| Client slice drafting | `client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Client sidecar drafting process; candidate for later move to root. |
+| Server slice drafting | `server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Server/backend/API slice drafting process; candidate for later move to root. |
 | Implemented slice draft sync | `implemented-slice-sync-workflow.md` | Implemented sync workflow. Separate checklist/status/report helper artifacts were removed; keep useful process/report/status rules in the workflow and active questions register. |
-| Client UI/style/form/a11y workflows | `client/*-WORKFLOW.md` | Client-specific workflows for UI, style, form validation, accessibility and implementation handoff. |
 
 Workflow rule:
 
@@ -178,6 +183,8 @@ These files are intentionally kept but need later cleanup:
 | `SLICE-FOLDER-MAP.md` | Transitional folder placement map | Fold remaining placement details into this responsibility map, then reduce to pointer or supersede. |
 | `l1-slice-drafting-guide.md` | Transitional/general slice drafting guide | Keep for now; later simplify or migrate useful short-draft guidance. |
 | `implemented-slice-sync-workflow.md` | Implemented sync workflow | Refactor to current source/dependency/status model before treating as fully clean. |
+| `client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Local client drafting workflow | Decide later whether drafting workflows also move to root. |
+| `server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Local server drafting workflow | Decide later whether drafting workflows also move to root. |
 
 Removed/superseded artifacts:
 
@@ -186,13 +193,6 @@ SLICE-QUESTIONS.md
 IMPLEMENTED-SLICE-SYNC-CHECKLIST.md
 IMPLEMENTED-SLICE-SYNC-STATUS-TEMPLATE.md
 IMPLEMENTED-SLICE-SYNC-REPORT-TEMPLATE.md
-```
-
-Their useful content was consolidated into:
-
-```text
-planning/slices/slice-questions-register.md
-planning/slices/implemented-slice-sync-workflow.md, for future workflow refactor
 ```
 
 Deferred cleanup is tracked in:
@@ -249,7 +249,11 @@ If slice-layer files conflict:
 - slice-scenario-flow-behavior-register.md wins for current scenario/source-to-slice mapping.
 - slice-questions-register.md wins for active slice questions and decisions.
 - slice-draft-authoring-principles.md wins for slice draft section-authoring principles.
-- server/server-implementation-principles.md wins for server implementation principle status within server slice drafting.
+- server-implementation-principles.md wins for server implementation principle status within server slice drafting.
+- client-implementation-principles.md wins for client layering/API ownership principles.
+- client-css-architecture-rules.md wins for client CSS ownership and styling boundaries.
+- client-form-validation-implementation-principles.md wins for applying deferred validation behavior in client implementation.
+- client-a11y-implementation-principles.md wins for client accessibility/ARIA implementation and test contract.
 - workflow files win for their own process steps.
 - template files win for output/draft shape.
 - scenario layer files win for scenario meaning.
@@ -265,7 +269,7 @@ Create a new slice-layer file only when:
 - no existing owner file fits;
 - the information is reusable or must remain discoverable;
 - placing it in an existing file would overload that file;
-- the new file has a clear type: workflow, register, template, principle, draft, index or responsibility map;
+- the new file has a clear type: workflow, register, template, principle, draft, index, rule or responsibility map;
 - README and/or SLICE-INDEX can make it discoverable.
 ```
 
@@ -279,6 +283,7 @@ Do not create new files for local-only notes that belong inside one active draft
 - Do not invent scenario behavior inside slice drafts when scenario/behavior sources exist.
 - Do not treat slice-scenario-flow-behavior-register.md as exact source/version tracking.
 - Do not create slice-source-usage-register.md until the source/version model is ready.
+- Do not hide reusable client/server rules inside subfolders when they belong at slice root.
 ```
 
 ## 16. Success Criteria
@@ -290,6 +295,8 @@ Slice layer responsibility is clear when:
 - this file answers where new slice-layer information belongs;
 - SLICE-INDEX catalogs concrete files;
 - registers have clear responsibilities;
+- reusable principles/rules live in root `planning/slices/`;
+- client/server subfolder READMEs are thin local pointers;
 - transitional files are visible and not mistaken for canonical owners;
 - scenario inventory remains in scenario layer;
 - source/version tracking is honestly marked as future;
