@@ -210,9 +210,80 @@ Offer either:
 - use a bulk-capable Git tree/commit workflow if available.
 ```
 
+### Direct GitHub bulk commit mode
+
+Use direct GitHub bulk commit mode for approved shallow mechanical multi-file sync when the available tools support:
+
+```text
+create_tree
+create_commit
+update_ref with force=false
+```
+
+Before using this mode, the assistant must output the commands the user can run locally to get the current base commit SHA and current base tree SHA for the target remote branch.
+
+PowerShell-safe commands:
+
+```powershell
+git fetch origin
+git rev-parse origin/<target-branch>
+git show -s --format=%T origin/<target-branch>
+```
+
+For the current branch example:
+
+```powershell
+git fetch origin
+git rev-parse origin/my-changes
+git show -s --format=%T origin/my-changes
+```
+
+Meanings:
+
+```text
+git rev-parse origin/<target-branch>
+  returns the base commit SHA.
+
+git show -s --format=%T origin/<target-branch>
+  returns the base tree SHA.
+```
+
+Do not ask the user to use `git rev-parse origin/<branch>^{tree}` in PowerShell. It may be parsed incorrectly. Prefer `git show -s --format=%T origin/<branch>`.
+
+Required inputs before write:
+
+```text
+- target repository;
+- target branch;
+- base commit SHA;
+- base tree SHA;
+- commit message;
+- explicit approval to move the target branch through direct GitHub bulk commit mode.
+```
+
+Apply sequence:
+
+```text
+1. Create one tree using base tree SHA and all changed files.
+2. Create one commit using parent = base commit SHA.
+3. Update the branch ref to the new commit with force=false.
+4. Report changed files and the shared commit SHA.
+```
+
+Safety:
+
+```text
+- Do not hardcode base commit/tree SHA values in docs; they are one-use current-state values.
+- The user or assistant must refresh the values after every branch movement.
+- Use force=false for update_ref.
+- If update_ref fails because the branch moved, stop and rebuild from the new HEAD.
+- If base tree SHA cannot be obtained or verified, use archive/local bulk commit or ask the user for the current values.
+- Do not fall back to per-file commits unless the user explicitly accepts per-file commits after the limitation is disclosed.
+```
+
 ### Archive / replacement package mode
 
-Use archive mode when direct repo edits are not requested or when a broad generated package is easier to review manually.
+Use archive mode when direct repo edits are not requested, when direct GitHub bulk commit mode is unavailable, or when a broad generated package is easier to review manually.
 
 Rules:
 
@@ -239,6 +310,7 @@ Before finalizing a documentation update, verify:
 - planned features are not overclaimed as implemented;
 - selected output mode is explicit;
 - direct repository edits use one file per commit for independent semantic edits and bundled/bulk commit for approved shallow mechanical multi-file sync;
+- direct GitHub bulk commit mode outputs base commit/tree SHA commands before asking the user for values;
 - archive mode contains complete files, not patches;
 - APPLY.md and MANIFEST.md are present for archive mode;
 - no code/generated changes are included unless explicitly in scope.
@@ -259,4 +331,6 @@ Before finalizing a documentation update, verify:
 - Do not make replacement archives mandatory for every documentation update.
 - Do not bundle unrelated semantic changes into one mechanical link-sync commit.
 - Do not start per-file commits for an approved mechanical multi-file sync without first checking whether bundled/bulk commit mode is available.
+- Do not attempt direct GitHub bulk commit without current base commit SHA and base tree SHA.
+- Do not use PowerShell-unsafe tree commands when asking the user for base tree SHA; prefer `git show -s --format=%T origin/<branch>`.
 ```
