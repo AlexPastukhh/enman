@@ -22,6 +22,12 @@ For non-trivial planning/repo work, the chat should:
 
 This file is a workflow router. It does not replace the workflow docs it points to.
 
+For user-action/use-case traces, repeated commands, active context, traversal depth and read-source decisions, use:
+
+```text
+planning/planning-use-case-map.md
+```
+
 Response-level commands are documented in:
 
 ```text
@@ -35,8 +41,9 @@ level/lvl/ур
 recheck
 clarify
 keep prev / кип прев
-no ch / изм нет
-use archive / читать архив
+no ch / изм нет / без изм
+use archive / читать архив / арх
+б из арх
 show section separately
 merge section back
 ```
@@ -60,7 +67,7 @@ The preflight is required when the task may involve:
 - workflow or prompt-manager changes.
 ```
 
-The preflight can be skipped or shortened for trivial answers, simple clarifications, casual discussion, or purely local wording that does not affect files/workflows.
+The preflight can be skipped or shortened for trivial answers, simple clarifications, casual discussion, purely local wording that does not affect files/workflows, or active-context continuation that does not need new evidence.
 
 ## 3. Workflow Preflight Format
 
@@ -119,13 +126,14 @@ The preflight is not a permission grant. It only makes the intended workflow pat
 | `planning/planning-agent-protocol.md` | Any non-trivial planning/repo task | `always-on check` | No | Role/scope/safety rules |
 | `planning/agent-roles-and-required-actions.md` | Role must be selected or task crosses roles | `always-on check` | No | Active role and must-read docs |
 | `planning/workflow-activation-map.md` | Non-trivial planning/repo task | `always-on check` | No | Workflow Preflight |
+| `planning/planning-use-case-map.md` | Need to map a user action/short command to docs/workflows/templates/read paths, active context, traversal depth or read source mode | `conditional implicit` / `response-command` | No | Action/use-case trace and traversal/source decision |
 | `planning/planning-doc-responsibility-map.md` | Need to choose planning layer or owner area | `always-on check` | No | Layer routing |
 | `planning/documentation/documentation-responsibility-map.md` | Information already belongs to documentation layer | `conditional implicit` | No | Documentation-layer owner file |
 | `planning/documentation/documentation-update-plan-workflow.md` | Broad docs/navigation/status/register/source-of-truth/multi-file change | `conditional implicit` | No for plan; yes for edits | Documentation Update Plan |
 | `planning/documentation/documentation-update-workflow.md` | Applying approved documentation update or planning docs update process | `conditional implicit` | Yes for GitHub writes | Docs update process |
 | `planning/documentation/local-global-documentation-sync-workflow.md` | Local change may affect shared register/index/navigation | `conditional implicit` | No for check; yes for edits | Local/global sync check |
 | `planning/documentation/status-reconciliation-workflow.md` | Docs status may differ from code/tests/generated artifacts | `conditional implicit` | No for analysis; yes for edits | Status findings / sync plan |
-| `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | Non-trivial answer, audit, plan, handoff, level/lvl/ур command, recheck, clarify, keep prev, no ch, use archive, section command | `response-format` / `response-command` | No | Structured reviewable answer or response-level command behavior |
+| `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | Non-trivial answer, audit, plan, handoff, level/lvl/ур command, recheck, clarify, keep prev, no ch/без изм, use archive/арх, active-context draft/update command, section command | `response-format` / `response-command` | No | Structured reviewable answer or response-level command behavior |
 | `planning/diagrams/scenario-drafting-workflow.md` | Scenario text/DATA/UI/behavior items/questions/clarifications work | `conditional implicit` | No for draft/analysis; yes for edits | Scenario source workflow |
 | `planning/slices/slice-responsibility-map.md` | Need to place slice-layer information or decide slice file owner | `conditional implicit` | No | Slice-layer owner routing |
 | `planning/slices/slice-draft-authoring-principles.md` | Create/review/refactor slice draft structure or section meaning | `conditional implicit` | No | Slice draft authoring rules |
@@ -159,6 +167,7 @@ Activated workflows:
 planning-agent-protocol.md
 agent-roles-and-required-actions.md
 workflow-activation-map.md
+planning-use-case-map.md, when the request is action/command-driven or repeated
 planning-doc-responsibility-map.md
 documentation-responsibility-map.md, if documentation layer is involved
 documentation-update-plan-workflow.md
@@ -177,16 +186,19 @@ level 1 / lvl 2 / ур 3;
 recheck;
 clarify;
 keep prev / кип прев;
-no ch / изм нет;
-use archive / читать архив;
+no ch / изм нет / без изм;
+use archive / читать архив / арх;
+б из арх;
 show section separately;
-merge section back.
+merge section back;
+давай драфт / обнови, when there is active draft context.
 ```
 
 Activated workflows:
 
 ```text
 workflow-activation-map.md
+planning-use-case-map.md, for active context, traversal depth and read source mode
 reviewable-agent-output-and-commands-workflow.md
 ```
 
@@ -210,6 +222,7 @@ Activated workflows:
 planning-agent-protocol.md
 agent-roles-and-required-actions.md
 workflow-activation-map.md
+planning-use-case-map.md, for action/use-case trace if needed
 scenario-drafting-workflow.md
 local-global-documentation-sync-workflow.md
 reviewable-agent-output-and-commands-workflow.md
@@ -225,7 +238,8 @@ create/review client sidecar;
 create/review server/backend/API slice draft;
 review slice questions;
 identify extension/change pressure;
-plan implementation/testing from behavior items.
+plan implementation/testing from behavior items;
+active draft continuation: давай драфт / обнови.
 ```
 
 Activated workflows:
@@ -234,6 +248,7 @@ Activated workflows:
 planning-agent-protocol.md
 agent-roles-and-required-actions.md
 workflow-activation-map.md
+planning-use-case-map.md
 planning-doc-responsibility-map.md
 slice-responsibility-map.md
 slice-draft-authoring-principles.md
@@ -263,6 +278,7 @@ Activated workflows:
 planning-agent-protocol.md
 agent-roles-and-required-actions.md
 workflow-activation-map.md
+planning-use-case-map.md, for traversal/source decision if a response command is used
 status-reconciliation-workflow.md
 local-global-documentation-sync-workflow.md
 reviewable-agent-output-and-commands-workflow.md
@@ -296,8 +312,9 @@ The following do not require explicit permission because they are read-only or a
 - prepare a plan;
 - do read-only audit/check/review;
 - state assumptions;
+- use planning-use-case-map.md to decide action trace/traversal/read source mode;
 - use Level 1/2/3 answer format;
-- use recheck/clarify/keep-prev/no-ch/use-archive style response commands.
+- use recheck/clarify/keep-prev/no-ch/use-archive/active-context style response commands.
 ```
 
 ## 8. Future / Missing Workflows
@@ -331,6 +348,7 @@ planning/planning-maintenance-register.md
 - Do not apply a workflow silently when its activation would change scope or require user approval.
 - Do not treat `no ch` as permission to skip targeted checks required before writes, deletes, renames or current-state claims.
 - Do not treat `use archive` as remote/current proof when archive freshness is uncertain.
+- Do not treat `planning-use-case-map.md` as a replacement for specialized workflows/templates.
 ```
 
 ## 10. Success Criteria
@@ -343,6 +361,7 @@ Workflow activation is working when:
 - implicit checks and explicit permission-required actions are separated;
 - future/missing workflows are called out honestly;
 - response-level commands are discoverable from this map;
+- action/use-case trace is discoverable through planning-use-case-map.md;
 - the user can correct workflow choice before edits or deep work;
 - new workflows can be added to this map without rewriting every prompt.
 ```
