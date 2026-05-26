@@ -188,7 +188,9 @@ planning/planning-agent-protocol.md
 planning/agent-scope-boundaries-and-prompt-safety.md
 planning/repo-grounded-github-line-links-workflow.md
 planning/slices/README.md
-planning/slices/l1-slice-drafting-guide.md
+planning/slices/slice-responsibility-map.md
+planning/slices/slice-draft-authoring-workflow.md
+planning/slices/slice-draft-authoring-principles.md
 planning/slices/slice-scenario-flow-behavior-register.md
 relevant parent slice file
 relevant .client.md sidecar, if client work

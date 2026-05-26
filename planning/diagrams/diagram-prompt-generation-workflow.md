@@ -1,4 +1,4 @@
-﻿# Diagram Request / Prompt And Preflight Workflow
+# Diagram Request / Prompt And Preflight Workflow
 
 Status: current workflow / L2 validation cleanup synchronized  
 Scope: how scenario/documentation/planning work prepares a repo-grounded diagram request, and how the single Diagram Chat runs preflight/generation
@@ -147,7 +147,8 @@ planning/domain-model.md, if exists
 planning/l1-domain-implementation-cut.md, if exists
 planning/l1-domain-testing-rules.md, if exists
 planning/slices/README.md
-planning/slices/l2/README.md, if exists
+planning/slices/slice-scenario-flow-behavior-register.md
+planning/slices/SLICE-INDEX.md
 planning/api/README.md
 planning/api/client-server-contract-principles.md
 planning/api/openapi-contract-generation.md

@@ -139,7 +139,7 @@ Documentation-only agents must:
 - not write directly to GitHub unless explicitly asked.
 ```
 
-Direct GitHub edit mode is allowed only when the user explicitly asks to apply/update/edit repository files. Use small reviewable commits, one file per commit by default.
+Direct GitHub edit mode is allowed only when the user explicitly asks to apply/update/edit repository files. Use small reviewable commits for independent semantic edits. Use one bundled/bulk commit for approved shallow mechanical multi-file link/path/name sync when tool-supported; if bulk mode is unavailable, stop and disclose before creating per-file commits.
 
 Archive/replacement package mode is still valid for manual application, archive output, package output or broad changes that should not be applied directly.
 
@@ -193,8 +193,10 @@ scenario clarifications
 All slice-related planning uses:
 
 ```text
-planning/slices/draft-driven-discovery-principles.md
-planning/slices/l1-slice-drafting-guide.md
+planning/slices/README.md
+planning/slices/slice-responsibility-map.md
+planning/slices/slice-draft-authoring-workflow.md
+planning/slices/slice-draft-authoring-principles.md
 planning/slices/slice-scenario-flow-behavior-register.md
 ```
 

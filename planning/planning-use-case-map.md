@@ -220,7 +220,7 @@ Use a shorter version when the update is simple.
 |---|---|---:|---|---|---|---|---|---|---|
 | “посмотри / распланируй / проверь docs” | Non-trivial planning/docs work | Optional | Full first time; targeted later | GitHub/archive/conversation by context | workflow activation; reviewable output | `planning/README.md`, `workflow-activation-map.md`, `planning-doc-responsibility-map.md` | README + activation map | Reviewable answer/plan | Edits require approval |
 | “обнови docs” | Documentation update | Optional | Targeted/full by scope | GitHub for writes; archive for read-only if requested | docs update plan/workflow; local-global sync | documentation README/map/workflows | activation map + docs workflows | Plan or applied update | GitHub writes require approval |
-| “поправь ссылки во многих файлах” | Mechanical link/path/name sync | Optional | Targeted/broad search | GitHub or archive | docs update workflow; local-global sync | target files/search source | docs update workflow output mode rules | Link-sync plan/commit | Bundled commit needs approval |
+| “поправь ссылки во многих файлах” | Mechanical link/path/name sync | Optional | Targeted/broad search | GitHub or archive | docs update workflow; local-global sync | target files/search source | docs update workflow output mode rules | Link-sync plan/one bundled commit when tool-supported | Bundled/bulk mode should be used when approved; if unavailable, stop and disclose before per-file writes |
 | “задрафти slice” | Slice draft work | Usually new | Full first time | Sources required by slice workflow | slice workflow chain | slice README/map/workflow/principles/test workflow/template | activation map + slice README/map | Slice draft/plan | File writes require approval |
 | “задрафти server slice” | Server slice draft | New/active | Full first time; targeted update | Scenario/domain/API/testing sources | slice + server drafting workflows | server workflow/template/principles | slice README/map | Server/backend/API draft | File writes require approval |
 | “задрафти client sidecar” | Client slice draft | New/active | Full first time; targeted update | UI/scenario/client sources | slice + client drafting workflows | client workflow/template/principles/CSS/a11y/form docs | slice README/map | `.client.md` draft | File writes require approval |
@@ -321,6 +321,35 @@ Algorithm:
 ```
 
 New sources used in one pass do not automatically become default sources.
+
+## 14. Detailed Trace: Mechanical Multi-File Link Sync
+
+User says:
+
+```text
+обнови ссылки везде
+почисти старые ссылки
+поправь current routes
+сделай через bulk
+```
+
+Meaning:
+
+```text
+shallow mechanical synchronization across multiple files
+```
+
+Behavior:
+
+```text
+1. Classify as mechanical multi-file link/path/name sync if the change is shallow and all files participate in one logical sync.
+2. Use targeted/broad search from the selected read source mode.
+3. Do not mix unrelated semantic refactors into the same sync.
+4. Prefer one bundled/bulk commit when the user approved bulk mode and the tool supports it.
+5. If only per-file commit tools are available, stop before writing and disclose the limitation.
+6. Offer replacement/archive package or a bulk-capable Git tree/commit workflow if available.
+7. Final response lists all changed files and the shared commit SHA.
+```
 
 ## 14. Detailed Trace: No Changes + Archive
 

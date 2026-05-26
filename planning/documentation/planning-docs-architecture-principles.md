@@ -388,7 +388,7 @@ Use this when the section is high-risk, reviewed separately, depends on several 
 Detailed answer-level guidance lives in:
 
 ```text
-planning/documentation/reviewable-agent-output-workflow.md
+planning/documentation/reviewable-agent-output-and-commands-workflow.md
 ```
 
 ## 16. Local Detail + Global Visibility
@@ -515,7 +515,7 @@ Docs should support verification by a person and by another context-aware review
 Answer-level structure and commands live in:
 
 ```text
-planning/documentation/reviewable-agent-output-workflow.md
+planning/documentation/reviewable-agent-output-and-commands-workflow.md
 ```
 
 ## 21. VKR / Thesis Separation
@@ -583,7 +583,8 @@ For small scoped repo changes explicitly approved by the user:
 
 ```text
 prefer direct GitHub edits;
-use one file per commit by default;
+use one file per commit for independent semantic edits;
+use one bundled/bulk commit for approved shallow mechanical multi-file link/path/name sync when tool-supported;
 keep commit messages specific;
 report changed files and commit SHAs.
 ```

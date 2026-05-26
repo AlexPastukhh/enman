@@ -1,4 +1,4 @@
-﻿# Scenario / Diagram Planning Index
+# Scenario / Diagram Planning Index
 
 Status: current / near-final L2 Employee Review Agreement scenarios and diagram workflow synchronized  
 Scope: scenario text specs, DATA, UI specs, behavior items, questions, clarifications, diagram prompt workflow and draw.io diagram generation workflow
@@ -74,7 +74,9 @@ planning/tables/domain-drafts/domain-draft-02.md
 planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
 planning/diagrams/scenario-clarifications/L2-validation-and-agreement-exchange-source-cleanup.md
 planning/diagrams/scenario-clarifications/L2-agreement-scenario-slice-followup-cleanup.md
-planning/slices/l2/README.md
+planning/slices/README.md
+planning/slices/slice-scenario-flow-behavior-register.md
+planning/slices/SLICE-INDEX.md
 ```
 
 ## 5. Current Scenario Families

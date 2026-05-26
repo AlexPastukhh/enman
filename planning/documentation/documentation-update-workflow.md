@@ -184,21 +184,30 @@ Rules:
 
 ```text
 - keep the approved scope;
-- use one file per commit by default;
 - use specific commit messages;
 - do not combine unrelated documentation refactors;
 - do not change code or generated artifacts unless explicitly in scope;
-- report changed files and commit SHAs after applying.
+- report changed files and commit SHAs after applying;
+- choose commit mode before writing.
 ```
 
-Bundled commit exception:
+Commit mode rule:
 
 ```text
-A single bundled commit may be better for mechanical multi-file link/path/name synchronization when:
-- every edited file participates in the same logical rename/link sync;
+Use one file per commit by default for semantic documentation edits where each file has its own reviewable meaning.
+
+Use one bundled/bulk commit for mechanical multi-file link/path/name synchronization or shallow navigation routing when:
+- every edited file participates in the same logical sync;
+- the change is shallow and does not require independent semantic review per file;
 - no unrelated semantic refactors are mixed in;
 - the user explicitly approves bundled commits or bulk update mode;
 - the final response lists all changed files and the shared commit SHA.
+
+If the current tool mode cannot create one bundled commit, stop before writing and disclose the limitation.
+Offer either:
+- continue with per-file commits;
+- create a replacement/archive package for manual one-commit application;
+- use a bulk-capable Git tree/commit workflow if available.
 ```
 
 ### Archive / replacement package mode
@@ -229,7 +238,7 @@ Before finalizing a documentation update, verify:
 - future questions are not presented as current defects;
 - planned features are not overclaimed as implemented;
 - selected output mode is explicit;
-- direct repository edits use one file per commit by default unless a mechanical bundled commit was approved;
+- direct repository edits use one file per commit for independent semantic edits and bundled/bulk commit for approved shallow mechanical multi-file sync;
 - archive mode contains complete files, not patches;
 - APPLY.md and MANIFEST.md are present for archive mode;
 - no code/generated changes are included unless explicitly in scope.
@@ -249,4 +258,5 @@ Before finalizing a documentation update, verify:
 - Do not introduce master-chat, work-register or mandatory status-packet workflow unless explicitly requested.
 - Do not make replacement archives mandatory for every documentation update.
 - Do not bundle unrelated semantic changes into one mechanical link-sync commit.
+- Do not start per-file commits for an approved mechanical multi-file sync without first checking whether bundled/bulk commit mode is available.
 ```

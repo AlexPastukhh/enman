@@ -106,18 +106,22 @@ Concrete templates and workflows live in:
 ```text
 planning/slices/server/SERVER-SLICE-TEMPLATE.md
 planning/slices/client/CLIENT-SLICE-TEMPLATE.md
-planning/slices/cross-cutting/CROSS-CUTTING-UMBRELLA-TEMPLATE.md
+planning/slices/cross-cutting/cross-cutting-umbrella-template.md
 planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
 planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md
 ```
 
-Older practical guidance may still exist in:
+Legacy practical guidance has been superseded by:
 
 ```text
-planning/slices/l1-slice-drafting-guide.md
+planning/slices/slice-draft-authoring-workflow.md
+planning/slices/slice-draft-authoring-principles.md
+planning/slices/server/SERVER-SLICE-TEMPLATE.md
+planning/slices/client/CLIENT-SLICE-TEMPLATE.md
+planning/slices/cross-cutting/cross-cutting-umbrella-template.md
 ```
 
-Treat it as transitional when it conflicts with current templates, workflows or `slice-draft-authoring-principles.md`.
+Do not route new work through removed legacy drafting guides.
 
 ## 6. Business / Server Slice Drafts
 
@@ -245,10 +249,10 @@ If a slice draft already has implementation, discovery must include current code
 Use:
 
 ```text
-planning/slices/implemented-slice-sync-workflow.md
+planning/documentation/status-reconciliation-workflow.md
 ```
 
-Do not rewrite an implemented slice draft only to match a newer template without checking source mapping, domain docs, implementation files and tests.
+Do not rewrite an implemented slice draft only to match a newer template without checking source mapping, domain docs, implementation files, generated artifacts and tests.
 
 ## 13. Do Not
 

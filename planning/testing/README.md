@@ -83,8 +83,9 @@ State-changing command slices:
 
 ```text
 planning/client/cross-cutting/CL-A11Y-001-accessibility-and-aria.md
-planning/slices/l1-slice-drafting-guide.md
-planning/slices/implementation-principles.md
+planning/slices/slice-test-plan-workflow.md
+planning/slices/slice-draft-authoring-workflow.md
+planning/slices/server-implementation-principles.md
 planning/api/api-error-contract.md
 planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
 ```

@@ -293,8 +293,10 @@ planning/planning-agent-protocol.md
 planning/workflow-activation-map.md
 planning/repo-grounded-github-line-links-workflow.md
 planning/slices/README.md
+planning/slices/slice-responsibility-map.md
+planning/slices/slice-draft-authoring-workflow.md
+planning/slices/slice-draft-authoring-principles.md
 planning/slices/draft-driven-discovery-principles.md
-planning/slices/l1-slice-drafting-guide.md
 planning/slices/slice-questions-register.md
 planning/slices/slice-extension-points-register.md
 planning/slices/slice-implementation-notes-register.md
