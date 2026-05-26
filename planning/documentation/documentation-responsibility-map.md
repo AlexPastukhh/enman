@@ -54,7 +54,7 @@ This file owns only documentation-layer placement.
 | Preflight plan format for broad docs changes | `documentation-update-plan-workflow.md` | What to show before changing broad docs/navigation/status/registers. |
 | Local detail to shared index/register sync process | `local-global-documentation-sync-workflow.md` | How local notes/questions should become globally discoverable. |
 | Status vs implementation evidence reconciliation | `status-reconciliation-workflow.md` | How to update docs when code/tests/generated artifacts changed. |
-| Reviewable agent answer format | `reviewable-agent-output-workflow.md` | Level 1/2/3 answers, sources/coverage, recheck/clarify/keep prev/section operations. |
+| Reviewable answer format and response-level commands | `reviewable-agent-output-and-commands-workflow.md` | Level 1/2/3 answers, sources/coverage, recheck/clarify/keep prev/no ch/section operations. |
 | Reusable documentation update prompt | `documentation-update-agent-prompt.md` | Derived prompt for other chats. Not canonical if it conflicts with governance docs. |
 | Scoped documentation sync notes | `*sync-note.md` or future `sync-notes/` | Case-specific notes. Not reusable workflows or global principles. |
 
@@ -64,7 +64,7 @@ Classify the new information:
 
 ```text
 1. Information type:
-   architecture principle / workflow step / plan format / prompt / sync note / navigation item / status rule / local-global sync rule.
+   architecture principle / workflow step / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule.
 
 2. Existing owner:
    Which file above already owns this type?
@@ -91,7 +91,7 @@ If documentation-layer files conflict:
 - documentation-responsibility-map.md wins for documentation-layer placement.
 - planning/planning-doc-responsibility-map.md wins for choosing the planning layer.
 - workflow files win for their own process steps.
-- reviewable-agent-output-workflow.md wins for answer format and response-level commands.
+- reviewable-agent-output-and-commands-workflow.md wins for answer format and response-level commands.
 - documentation-update-agent-prompt.md is derived/supporting and does not override canonical docs.
 - scoped sync notes do not override reusable workflow files.
 - README.md is navigation and does not override canonical rules.
