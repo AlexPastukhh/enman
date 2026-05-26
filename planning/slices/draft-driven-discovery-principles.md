@@ -1,19 +1,29 @@
 # Draft-Driven Discovery Principles
 
-Status: current slice discovery principle / scope-safe and validation-aware  
-Scope: domain drafts, business slices, client sidecars, cross-cutting/helper slices and documentation/status drafts
+Status: current slice-layer discovery principle / scope-safe and validation-aware  
+Scope: business slice drafts, server slice drafts, client sidecars, cross-cutting/helper slice drafts and slice verification planning
 
 ## 1. Purpose
 
-Draft-driven discovery means we do not try to fully design implementation in one perfect pass.
+Draft-driven discovery means we do not try to fully design a slice implementation in one perfect pass.
 
-We create a draft, use it to discover missing behavior, questions, assumptions, contract gaps, flow gaps, extension/change pressure and verification gaps, then refine the next draft or move to implementation when the remaining risk is acceptable.
+We create a slice draft, use it to discover missing behavior, questions, assumptions, contract gaps, flow gaps, extension/change pressure and verification gaps, then refine the next draft or move to implementation when the remaining risk is acceptable.
+
+This file owns the discovery loop for slice-layer work only.
+
+Detailed slice draft section-authoring principles live in:
+
+```text
+planning/slices/slice-draft-authoring-principles.md
+```
+
+Domain drafting, scenario drafting and documentation/status reconciliation have their own layer owners and should not be governed by this file.
 
 ## 2. Core Loop
 
 ```text
 source requirements
--> draft
+-> slice draft
 -> open questions and assumptions
 -> visual flow maps
 -> extension/change point review
@@ -21,7 +31,7 @@ source requirements
 -> behavior coverage
 -> implementation direction
 -> test / verification planning
--> status reconciliation
+-> sync/status check when implementation already exists
 -> next draft or implementation step
 ```
 
@@ -41,14 +51,40 @@ A slice implementation prompt may require reading docs, but must not allow chang
 
 ## 4. Applies To
 
+This file applies to slice-layer planning artifacts:
+
 ```text
-domain model drafts
-business slice drafts
-client sidecar drafts
-cross-cutting/helper slice drafts
-testing/support slice drafts
-documentation/status reconciliation drafts
-diagram planning drafts
+business slice drafts;
+server/backend/API slice drafts;
+client sidecar drafts;
+cross-cutting/helper slice drafts;
+slice verification/test planning inside a slice draft;
+implemented-slice draft sync when a slice already has code/tests.
+```
+
+This file does not own:
+
+```text
+domain model drafting;
+scenario text/UI/DATA/behavior item drafting;
+documentation/status reconciliation workflows;
+global planning-doc architecture.
+```
+
+Use these layer owners instead:
+
+```text
+Domain drafting:
+  planning/domain-draft-generation-guide.md
+  planning/tables/domain-drafts/README.md
+
+Scenario drafting:
+  planning/diagrams/scenario-drafting-workflow.md
+  planning/scenario-specification-principles.md
+
+Documentation/status reconciliation:
+  planning/documentation/status-reconciliation-workflow.md
+  planning/documentation/documentation-update-workflow.md
 ```
 
 ## 5. Draft Formats
@@ -62,34 +98,54 @@ shortened working draft
 Full slice format:
 
 ```text
-full backend / business / cross-cutting / client sidecar draft
+full server / business / cross-cutting / client sidecar draft
 ```
 
-The practical slice drafting rules and templates live in:
+Concrete templates and workflows live in:
+
+```text
+planning/slices/server/SERVER-SLICE-TEMPLATE.md
+planning/slices/client/CLIENT-SLICE-TEMPLATE.md
+planning/slices/cross-cutting/CROSS-CUTTING-UMBRELLA-TEMPLATE.md
+planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
+planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md
+```
+
+Older practical guidance may still exist in:
 
 ```text
 planning/slices/l1-slice-drafting-guide.md
 ```
 
-## 6. Business Slice Drafts
+Treat it as transitional when it conflicts with current templates, workflows or `slice-draft-authoring-principles.md`.
 
-Business slice drafts use this discovery chain:
+## 6. Business / Server Slice Drafts
+
+Business and server slice drafts use this discovery chain:
 
 ```text
-scenario-derived behavior items
--> Visual Scenario Flow
--> Scenario Slice Flow
--> Visual Implementation Flow
--> Implementation Flow
--> Extension / Change Points, when relevant
--> Behavior Coverage
--> Test / Verification Plan
+scenario/source mapping
+-> behavior subset implemented by this slice
+-> scenario scope / slice boundary
+-> behavior not implemented by this slice
+-> slice relations and future-change check
+-> domain/application/implementation responsibilities
+-> implementation flow
+-> extension / change points, when relevant
+-> behavior coverage
+-> test / verification plan
 ```
 
-If server API input is involved, include request-level validation planning and read:
+For server/API input validation, read:
 
 ```text
 planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md
+```
+
+For server implementation responsibility boundaries, read:
+
+```text
+planning/slices/server/server-implementation-principles.md
 ```
 
 ## 7. Client Sidecar Drafts
@@ -98,6 +154,7 @@ Client sidecar drafts use this discovery chain:
 
 ```text
 client behavior to implement
+-> source/UI behavior mapping
 -> Visual UI / Scenario Flow
 -> Visual Client Implementation Flow
 -> Questions / Decisions
@@ -139,6 +196,8 @@ concern-derived behavior items
 -> Consumer Rule
 ```
 
+Cross-cutting/helper slices are still slices. They must not skip behavior/flow/test planning just because the concern is technical.
+
 ## 9. Behavior Coverage Rule
 
 Behavior Coverage answers:
@@ -147,7 +206,13 @@ Behavior Coverage answers:
 Does the draft description cover the required source behavior?
 ```
 
-Behavior Coverage is not Test Coverage.
+Behavior Coverage is not Scope and not Test Coverage.
+
+For section-level meaning, use:
+
+```text
+planning/slices/slice-draft-authoring-principles.md
+```
 
 ## 10. Test / Verification Plan Rule
 
@@ -159,6 +224,12 @@ How will implemented code or UI behavior be verified later?
 
 E2E tests assert visible cross-layer outcomes, not internal cache/refetch/query-key mechanics or backend ownership internals.
 
+Use:
+
+```text
+planning/slices/slice-test-plan-workflow.md
+```
+
 ## 11. Visual Flow Rule
 
 Visual flows are diagram-like text maps used to make responsibility, branching and boundaries clear.
@@ -167,18 +238,30 @@ Visual Scenario/UI Flow shows actor/system/user-visible behavior.
 
 Visual Implementation Flow shows technical responsibility boundaries.
 
-## 12. Do Not
+## 12. Implemented Slice Sync Rule
+
+If a slice draft already has implementation, discovery must include current code and tests.
+
+Use:
+
+```text
+planning/slices/implemented-slice-sync-workflow.md
+```
+
+Do not rewrite an implemented slice draft only to match a newer template without checking source mapping, domain docs, implementation files and tests.
+
+## 13. Do Not
 
 ```text
 - Do not treat the first draft as final.
 - Do not hide questions in prose only.
 - Do not leave question status implicit.
 - Do not proceed on an unresolved question without writing the assumption/current direction.
-- Do not implement through unresolved behavior/API questions.
+- Do not implement through unresolved behavior/API/client/testing questions.
 - Do not create client sidecars before client work starts.
 - Do not invent behavior items inside a slice draft.
 - Do not mix Behavior Coverage with Test / Verification Plan.
 - Do not skip server validation planning for API input slices.
-- Do not skip docs/status reconciliation after implementation changes.
+- Do not use this file as the owner for domain drafting, scenario drafting or documentation/status reconciliation.
 - Do not tell another chat it can modify domain/docs/generated artifacts unless that scope is explicit.
 ```
