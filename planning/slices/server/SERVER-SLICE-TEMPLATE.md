@@ -7,7 +7,7 @@ Use with:
 
 ```text
 planning/slices/slice-draft-authoring-principles.md
-planning/slices/server/server-implementation-principles.md
+planning/slices/server-implementation-principles.md
 planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
 planning/slices/slice-test-plan-workflow.md
 ```
