@@ -76,7 +76,7 @@ Do when:
 Do not do before:
   Do not remove root fallback routing before equivalent local maps exist.
 Notes:
-  Done: workflow activation was refreshed for the current slice responsibility map, slice-root rule model and root slice-draft-authoring-workflow.md.
+  Done: workflow activation was refreshed for the current slice responsibility map, slice-root rule model, root slice-draft-authoring-workflow.md and planning-use-case-map.md.
   Remaining: revisit after scenario/domain local maps exist.
 ```
 
@@ -239,7 +239,7 @@ Do when:
 Do not do before:
   n/a
 Notes:
-  Added Use Archive / Archive Source command to reviewable-agent-output-and-commands-workflow.md and workflow-activation-map.md. It distinguishes archive snapshot evidence from remote/current proof.
+  Added Use Archive / Archive Source command to reviewable-agent-output-and-commands-workflow.md and workflow-activation-map.md. It distinguishes archive snapshot evidence from remote/current proof, and now supports short aliases such as арх and б из арх.
 ```
 
 ### PMR-008 — Fold slice folder placement rules into slice responsibility map
@@ -503,7 +503,68 @@ Do when:
 Do not do before:
   Do not split immediately while command vocabulary is still being adjusted.
 Notes:
-  Current direction: keep one combined file for discoverability. It now owns Level 1/2/3 answer formats plus recheck, clarify, keep prev, no ch, use archive and section commands.
+  Current direction: keep one combined file for discoverability. It now owns Level 1/2/3 answer formats plus recheck, clarify, expand, keep prev, no ch/без изм, use archive/арх, б из арх, active draft/update commands, Source Delta and section commands. planning-use-case-map.md now owns action traces, active context, traversal depth and read source mode.
+```
+
+### PMR-017 — Keep planning use-case map routed and current
+
+```text
+ID: PMR-017
+Status: done
+Area: planning use-case navigation
+Task / reminder:
+  Create and route a root planning use-case map for user-action to doc/workflow/template/source paths.
+Trigger / condition:
+  Done during planning-docs use-case routing update.
+Why it matters:
+  README files provide overview/read order, workflow-activation-map.md chooses workflows, and responsibility maps choose ownership. A separate use-case map is needed to show what a chat should do when the user gives a concrete action or short repeated command.
+Owner layer:
+  documentation / workflow governance
+Target files:
+  planning/planning-use-case-map.md
+  planning/README.md
+  planning/workflow-activation-map.md
+  planning/planning-doc-responsibility-map.md
+  planning/documentation/reviewable-agent-output-and-commands-workflow.md
+Depends on:
+  workflow activation map, root responsibility map, reviewable output/commands workflow
+Do when:
+  Done.
+Do not do before:
+  n/a
+Notes:
+  Done: planning-use-case-map.md was created and routed from README, workflow activation map and root responsibility map. It covers active context, traversal depth, read source mode, Source Delta and permission boundaries.
+```
+
+### PMR-018 — Audit remaining legacy planning workflow references
+
+```text
+ID: PMR-018
+Status: open
+Area: stale link cleanup
+Task / reminder:
+  Audit remaining references to legacy/superseded planning workflow files and classify whether each reference is current-route, historical note or removed/superseded artifact.
+Trigger / condition:
+  After planning-use-case-map.md routing and slice authoring workflow link cleanup.
+Why it matters:
+  Some old names may remain valid only in historical/removed-artifact notes. They should not appear as current read/workflow/template routes.
+Owner layer:
+  documentation / workflow governance
+Target files:
+  planning/README.md
+  planning/workflow-activation-map.md
+  planning/planning-doc-responsibility-map.md
+  planning/slices/slice-draft-authoring-workflow.md
+  planning/slices/slice-responsibility-map.md
+  other files found by search
+Depends on:
+  current use-case routing update
+Do when:
+  Next targeted stale-link cleanup pass.
+Do not do before:
+  Do not remove historical references if they are clearly marked as superseded/removed artifacts.
+Notes:
+  Search terms: l1-slice-drafting-guide.md, implemented-slice-sync-workflow.md, CROSS-CUTTING-UMBRELLA-TEMPLATE.md, reviewable-agent-output-workflow.md, planning/slices/l2/README.md.
 ```
 
 ## 4. Maintenance Rules
