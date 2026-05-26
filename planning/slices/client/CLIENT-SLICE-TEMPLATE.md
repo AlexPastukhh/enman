@@ -1,7 +1,7 @@
 # Client Slice Template
 
 Status: canonical template for new `.client.md` drafts  
-Scope: copyable structure for client sidecar drafts using current slice authoring and test-trace principles
+Scope: copyable structure for client sidecar drafts using current slice authoring workflow, authoring principles and test-trace principles
 
 Copy this structure for new client sidecar drafts.
 
@@ -57,6 +57,9 @@ Data source:
 Behavior items:
 Concern umbrella:
 Slice source mapping:
+API/generated contract sources:
+Testing/source workflow:
+Current code/tests checked, if implemented sync:
 Source status:
 ```
 
@@ -70,6 +73,33 @@ Cross-cutting behavior must be filled for shared/common behavior such as deferre
 Behavior items should identify the exact behavior chain covered by this slice.
 Concern umbrella is used for paired server-client/security concerns.
 Source status should say current / provisional / pending source sync / blocked when relevant.
+```
+
+## Section-Level Sources
+
+Use this block only for high-risk or separately reviewed sections.
+
+```text
+Sources:
+  Format:
+    - <workflow/template/principles file>
+  Content:
+    - <scenario/domain/API/slice source file or earlier section>
+  Internal dependencies:
+    - <draft sections this section depends on>
+  Not checked:
+    - <explicitly unchecked evidence/source>
+```
+
+Recommended sections for section-level sources:
+
+```text
+Scenario Sources / Source Sync;
+Scenario Scope / Client Boundary;
+Visual Client Implementation Flow;
+Client API / Server Contract;
+Behavior Coverage;
+Test / Verification Plan.
 ```
 
 ## Required Sections
@@ -375,7 +405,27 @@ tests:
 [ ] Confirm local/global sync was checked.
 ```
 
-## 18. Guardrail Summary / Next Step
+## 18. Local / Global Sync Check
+
+After drafting or refactoring, decide whether to update:
+
+```text
+planning/slices/SLICE-INDEX.md
+planning/slices/slice-scenario-flow-behavior-register.md
+planning/slices/slice-questions-register.md
+planning/slices/slice-extension-points-register.md
+planning/slices/slice-implementation-notes-register.md
+planning/slices/slice-responsibility-map.md
+planning/slices/README.md
+```
+
+Sync result:
+
+```text
+Not needed / Updated / Deferred to <register or PMR item>
+```
+
+## 19. Guardrail Summary / Next Step
 
 ```text
 - Do not broaden scope silently.
