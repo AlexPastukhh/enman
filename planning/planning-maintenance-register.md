@@ -219,7 +219,7 @@ Notes:
 
 ```text
 ID: PMR-007
-Status: open
+Status: superseded
 Area: workflow activation / source availability
 Task / reminder:
   Add a rule that chats must ask for an archive or confirm pushed state when the task depends on local files, archive-applied changes, generated replacement packages or unpushed changes that may not be visible on the remote branch.
@@ -231,16 +231,15 @@ Owner layer:
   documentation / workflow governance
 Target files:
   planning/workflow-activation-map.md
-  planning/planning-agent-protocol.md
-  Prompt Manager Rules and Design, if quick prompts are updated
+  planning/documentation/reviewable-agent-output-and-commands-workflow.md
 Depends on:
   none
 Do when:
-  Next workflow-activation cleanup or prompt-manager quick prompt update.
+  Superseded by current response command model.
 Do not do before:
-  Do not make archives mandatory for every task; only require them when local/archive state matters.
+  n/a
 Notes:
-  Rule should distinguish remote branch truth, uploaded archive snapshot and local unpushed state.
+  Added Use Archive / Archive Source command to reviewable-agent-output-and-commands-workflow.md and workflow-activation-map.md. It distinguishes archive snapshot evidence from remote/current proof.
 ```
 
 ### PMR-008 — Fold slice folder placement rules into slice responsibility map
@@ -475,6 +474,36 @@ Do not do before:
   Do not split the test workflow before auditing planning/testing/ and current test principles.
 Notes:
   Current direction: keep slice-test-plan-workflow.md unified for now. Record server/client/cross-side differences inside the workflow and templates until testing architecture is reviewed.
+```
+
+### PMR-016 — Decide whether to split reviewable output templates from response commands
+
+```text
+ID: PMR-016
+Status: open
+Area: response commands / answer templates
+Task / reminder:
+  Decide whether reviewable output templates should be split from response-level command handling.
+Trigger / condition:
+  After response-command vocabulary stabilizes, or if reviewable-agent-output-and-commands-workflow.md becomes too large/confusing.
+Why it matters:
+  The current file intentionally owns both answer format and response commands. A future split may make responsibilities cleaner: one template-like file for Level 1/2/3 answer shapes and one workflow for command handling.
+Owner layer:
+  documentation / workflow governance
+Target files:
+  planning/documentation/reviewable-agent-output-and-commands-workflow.md
+  future planning/documentation/reviewable-agent-output-template.md, if needed
+  future planning/documentation/response-command-workflow.md, if needed
+  planning/workflow-activation-map.md
+  planning/documentation/documentation-responsibility-map.md
+Depends on:
+  response-command vocabulary stability, actual usage feedback
+Do when:
+  Later, only if the combined file becomes hard to navigate or commands grow beyond answer-format concerns.
+Do not do before:
+  Do not split immediately while command vocabulary is still being adjusted.
+Notes:
+  Current direction: keep one combined file for discoverability. It now owns Level 1/2/3 answer formats plus recheck, clarify, keep prev, no ch, use archive and section commands.
 ```
 
 ## 4. Maintenance Rules
