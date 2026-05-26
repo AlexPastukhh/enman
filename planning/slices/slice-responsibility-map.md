@@ -129,9 +129,10 @@ Do not put specialized client/server/CSS/a11y rules into `slice-draft-authoring-
 
 | Workflow area | Owner file | Notes |
 |---|---|---|
+| Slice draft authoring process | `slice-draft-authoring-workflow.md` | Root workflow for creating, reviewing and refactoring slice drafts before side-specific workflows. |
 | Slice Test / Verification Plan | `slice-test-plan-workflow.md` | Practical workflow for Behavior-to-Test Trace and test planning sections. |
-| Client slice drafting | `client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Client sidecar drafting process; candidate for later move to root. |
-| Server slice drafting | `server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Server/backend/API slice drafting process; candidate for later move to root. |
+| Client slice drafting | `client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Client sidecar drafting process; applies root authoring workflow and remains local until PMR-012 is resolved. |
+| Server slice drafting | `server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Server/backend/API slice drafting process; applies root authoring workflow and remains local until PMR-012 is resolved. |
 | Implemented slice draft sync | `implemented-slice-sync-workflow.md` | Implemented sync workflow. Separate checklist/status/report helper artifacts were removed; keep useful process/report/status rules in the workflow and active questions register. |
 
 Workflow rule:
@@ -183,8 +184,8 @@ These files are intentionally kept but need later cleanup:
 | `SLICE-FOLDER-MAP.md` | Transitional folder placement map | Fold remaining placement details into this responsibility map, then reduce to pointer or supersede. |
 | `l1-slice-drafting-guide.md` | Transitional/general slice drafting guide | Keep for now; later simplify or migrate useful short-draft guidance. |
 | `implemented-slice-sync-workflow.md` | Implemented sync workflow | Refactor to current source/dependency/status model before treating as fully clean. |
-| `client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Local client drafting workflow | Decide later whether drafting workflows also move to root. |
-| `server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Local server drafting workflow | Decide later whether drafting workflows also move to root. |
+| `client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Local client drafting workflow | Now applies root authoring workflow; decide later whether drafting workflows also move to root. |
+| `server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Local server drafting workflow | Now applies root authoring workflow; decide later whether drafting workflows also move to root. |
 
 Removed/superseded artifacts:
 
@@ -249,6 +250,7 @@ If slice-layer files conflict:
 - slice-scenario-flow-behavior-register.md wins for current scenario/source-to-slice mapping.
 - slice-questions-register.md wins for active slice questions and decisions.
 - slice-draft-authoring-principles.md wins for slice draft section-authoring principles.
+- slice-draft-authoring-workflow.md wins for root slice draft authoring process.
 - server-implementation-principles.md wins for server implementation principle status within server slice drafting.
 - client-implementation-principles.md wins for client layering/API ownership principles.
 - client-css-architecture-rules.md wins for client CSS ownership and styling boundaries.
