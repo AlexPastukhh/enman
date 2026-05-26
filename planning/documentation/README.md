@@ -1,7 +1,7 @@
 # Documentation Update Workflow Index
 
 Status: current documentation layer index / read order  
-Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs and navigation updates
+Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs, response-level commands and navigation updates
 
 ## 1. Purpose
 
@@ -35,7 +35,7 @@ planning/documentation/documentation-update-plan-workflow.md
 planning/documentation/documentation-update-workflow.md
 planning/documentation/status-reconciliation-workflow.md
 planning/documentation/local-global-documentation-sync-workflow.md
-planning/documentation/reviewable-agent-output-workflow.md
+planning/documentation/reviewable-agent-output-and-commands-workflow.md
 planning/documentation/documentation-update-agent-prompt.md
 ```
 
@@ -81,10 +81,10 @@ For broad documentation updates:
 13. relevant domain/API/testing/slice/client/scenario docs for the requested area
 ```
 
-For answer-format or reviewable-output work:
+For answer-format, reviewable-output or response-command work:
 
 ```text
-planning/documentation/reviewable-agent-output-workflow.md
+planning/documentation/reviewable-agent-output-and-commands-workflow.md
 ```
 
 ## 4. Responsibility Routing Rule
@@ -110,7 +110,7 @@ docs update process -> documentation-update-workflow.md
 preflight docs update plan format -> documentation-update-plan-workflow.md
 local/global sync process -> local-global-documentation-sync-workflow.md
 status reconciliation process -> status-reconciliation-workflow.md
-agent answer/review format -> reviewable-agent-output-workflow.md
+agent answer/review format and response-level commands -> reviewable-agent-output-and-commands-workflow.md
 reusable prompt -> documentation-update-agent-prompt.md
 ```
 
@@ -179,15 +179,15 @@ planning/documentation/planning-docs-architecture-principles.md
 
 The key rule is that docs must be navigable, source-of-truth aware, type-explicit and safe to update in small scoped changes.
 
-## 9. Reviewable Agent Output Link
+## 9. Reviewable Output And Commands Link
 
-For non-trivial answers, audits, plans, reviews or handoffs, use:
+For non-trivial answers, audits, plans, reviews, handoffs or response-level commands, use:
 
 ```text
-planning/documentation/reviewable-agent-output-workflow.md
+planning/documentation/reviewable-agent-output-and-commands-workflow.md
 ```
 
-This workflow defines response levels, sources/coverage blocks, section-level sources and commands such as recheck, clarify and keep prev.
+This workflow defines response levels, sources/coverage blocks, section-level sources and commands such as recheck, clarify, keep prev and no ch.
 
 ## 10. Scoped Sync Notes
 
@@ -220,8 +220,7 @@ business slice drafts;
 server/backend/API slice drafts;
 client sidecar drafts;
 cross-cutting/helper slice drafts;
-slice verification/test planning inside a slice draft;
-implemented-slice draft sync when a slice already has code/tests.
+slice verification/test planning inside a slice draft.
 ```
 
 Do not use that file as the owner for domain drafting, scenario drafting or documentation/status reconciliation. Those areas use their own layer owners and workflows.
