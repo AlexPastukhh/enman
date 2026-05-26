@@ -76,7 +76,7 @@ Do when:
 Do not do before:
   Do not remove root fallback routing before equivalent local maps exist.
 Notes:
-  Done: workflow activation was refreshed for the current slice responsibility map and slice-root rule model.
+  Done: workflow activation was refreshed for the current slice responsibility map, slice-root rule model and root slice-draft-authoring-workflow.md.
   Remaining: revisit after scenario/domain local maps exist.
 ```
 
@@ -288,13 +288,13 @@ Owner layer:
 Target files:
   planning/slices/cross-cutting/CROSS-CUTTING-UMBRELLA-TEMPLATE.md
 Depends on:
-  slice responsibility map, reviewable-agent-output workflow, slice draft authoring principles, server implementation principles
+  slice responsibility map, reviewable-agent-output workflow, slice draft authoring principles, server implementation principles, slice draft authoring workflow
 Do when:
   Review/update cross-cutting umbrella template after client/server template alignment.
 Do not do before:
   Do not churn cross-cutting template before checking which parts of the new model apply to umbrella docs.
 Notes:
-  Done: SERVER-SLICE-TEMPLATE.md updated, CLIENT-SLICE-TEMPLATE.md updated, slice-test-plan-workflow.md updated with Required assertions. Remaining: review/update CROSS-CUTTING-UMBRELLA-TEMPLATE.md.
+  Done: SERVER-SLICE-TEMPLATE.md updated, CLIENT-SLICE-TEMPLATE.md updated, slice-test-plan-workflow.md updated with Required assertions, slice-draft-authoring-workflow.md added and linked. Remaining: review/update CROSS-CUTTING-UMBRELLA-TEMPLATE.md.
 ```
 
 ### PMR-010 — Refactor implemented slice sync workflow under the new model
@@ -342,7 +342,6 @@ Owner layer:
 Target files:
   planning/slices/slice-questions-register.md
   planning/slices/slice-responsibility-map.md
-  planning/slices/README.md
 Depends on:
   slice layer audit
 Do when:
@@ -360,11 +359,11 @@ ID: PMR-012
 Status: open
 Area: slice principles/workflows cleanup
 Task / reminder:
-  Decide whether l1-slice-drafting-guide.md still owns useful content after client/server workflows/templates exist.
+  Decide whether l1-slice-drafting-guide.md still owns useful content after root authoring workflow, client/server workflows and templates exist.
 Trigger / condition:
-  After slice draft authoring principles, client/server templates and server workflow have been updated.
+  After slice draft authoring principles, slice-draft-authoring-workflow.md, client/server templates and client/server workflows have been updated.
 Why it matters:
-  l1-slice-drafting-guide.md may now duplicate current authoring principles, client/server workflows or templates.
+  l1-slice-drafting-guide.md may now duplicate current authoring principles, root authoring workflow, client/server workflows or templates.
 Owner layer:
   slice / documentation governance
 Target files:
@@ -372,14 +371,15 @@ Target files:
   planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md
   planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
   planning/slices/slice-draft-authoring-principles.md
+  planning/slices/slice-draft-authoring-workflow.md
 Depends on:
-  slice layer audit, slice draft authoring principles, client/server template updates
+  slice layer audit, slice draft authoring principles, slice draft authoring workflow, client/server template updates
 Do when:
-  During the next slice principles cleanup pass.
+  During the next slice principles/workflows cleanup pass.
 Do not do before:
   Do not archive l1-slice-drafting-guide.md until its useful short-draft guidance is migrated or explicitly superseded.
 Notes:
-  Done: draft-driven-discovery-principles.md narrowed to slice-layer discovery. Remaining: audit l1-slice-drafting-guide.md and decide whether client/server drafting workflows should remain local or move to slice root.
+  Done: draft-driven-discovery-principles.md narrowed to slice-layer discovery; slice-draft-authoring-workflow.md created and linked; client/server drafting workflows now apply root authoring workflow. Remaining: audit l1-slice-drafting-guide.md and decide whether client/server drafting workflows should remain local or move to slice root.
 ```
 
 ### PMR-013 — Audit client/server subfolder rules and move general rules to slice root if needed
