@@ -97,12 +97,60 @@ Required order:
 
 ```text
 1. Pull the current target branch state into the local repository.
-2. Extract the archive into the local repository root.
+2. Apply replacement files from the archive to the local repository root.
 3. Check git status.
 4. Review and commit locally.
 ```
 
-For PowerShell on Windows, include commands in this shape:
+## 8. Archive Layouts And Apply Commands
+
+There are two supported archive layouts.
+
+### Package layout
+
+Use package layout by default for reviewable replacement packages:
+
+```text
+MANIFEST.md
+APPLY.md
+replacement-files/<repository-relative-path>
+```
+
+For package layout, do not instruct the user to extract the zip directly into the repository root as the apply step. Direct extraction would create `replacement-files/` instead of replacing repository files.
+
+Use a temporary directory and then copy `replacement-files/*` into the repository root.
+
+PowerShell shape:
+
+```powershell
+# Run from the local repository root.
+git fetch origin
+git checkout <target-branch>
+git pull --ff-only origin <target-branch>
+
+$archive = "C:\Users\alexa\Downloads\<archive-name>.zip"
+$tmp = Join-Path $env:TEMP "<archive-name>-apply"
+Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
+New-Item -ItemType Directory -Path $tmp | Out-Null
+Expand-Archive -Path $archive -DestinationPath $tmp -Force
+Copy-Item -Path (Join-Path $tmp "replacement-files\*") -DestinationPath . -Recurse -Force
+
+git status
+```
+
+### Direct-root layout
+
+Use direct-root layout only when the archive is intentionally generated for direct extraction into the repository root:
+
+```text
+<repository-relative-path>
+<repository-relative-path>
+...
+```
+
+In direct-root layout, `MANIFEST.md` and `APPLY.md` should not be placed at repository root unless they are intended repository files. Put package metadata somewhere outside the direct-root zip, or use package layout instead.
+
+PowerShell shape:
 
 ```powershell
 # Run from the local repository root.
@@ -121,9 +169,9 @@ git checkout my-changes
 git pull --ff-only origin my-changes
 ```
 
-The final assistant response that provides the archive should also show the same apply commands, not only hide them inside `APPLY.md`.
+The final assistant response that provides the archive should show the correct command for the archive layout actually used, not only hide it inside `APPLY.md`.
 
-## 8. Scope Statement
+## 9. Scope Statement
 
 Every final response with an archive should state:
 
@@ -136,7 +184,7 @@ Every final response with an archive should state:
 
 When the archive is intended for one local bulk commit, the final response should also include a suggested `git add` and `git commit` command.
 
-## 9. Status Reconciliation Rule
+## 10. Status Reconciliation Rule
 
 When an archive updates planning docs after implementation changes, use:
 
@@ -146,7 +194,7 @@ planning/documentation/status-reconciliation-workflow.md
 
 Do not leave docs saying `planned` when current repo evidence shows `implemented` or `first-stage implemented`.
 
-## 10. Do Not
+## 11. Do Not
 
 ```text
 - Do not mix workflow cleanup with code implementation.
@@ -156,4 +204,5 @@ Do not leave docs saying `planned` when current repo evidence shows `implemented
 - Do not generate partial snippets when full replacement files are expected.
 - Do not directly change GitHub when the user asked for an archive.
 - Do not provide archive apply instructions without a pull/current-state step first.
+- Do not tell the user to extract a package-layout archive directly into the repo root as the apply step.
 ```
