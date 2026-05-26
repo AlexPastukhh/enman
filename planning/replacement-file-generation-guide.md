@@ -91,12 +91,37 @@ Replace
 Delete
 ```
 
-`APPLY.md` should include the Windows PowerShell apply command:
+`APPLY.md` should include local repository application commands.
+
+Required order:
+
+```text
+1. Pull the current target branch state into the local repository.
+2. Extract the archive into the local repository root.
+3. Check git status.
+4. Review and commit locally.
+```
+
+For PowerShell on Windows, include commands in this shape:
 
 ```powershell
+# Run from the local repository root.
+git fetch origin
+git checkout <target-branch>
+git pull --ff-only origin <target-branch>
+
 Expand-Archive -Path "C:\Users\alexa\Downloads\<archive-name>.zip" -DestinationPath . -Force
 git status
 ```
+
+If the target branch is known, replace `<target-branch>` with the branch name, for example:
+
+```powershell
+git checkout my-changes
+git pull --ff-only origin my-changes
+```
+
+The final assistant response that provides the archive should also show the same apply commands, not only hide them inside `APPLY.md`.
 
 ## 8. Scope Statement
 
@@ -108,6 +133,8 @@ Every final response with an archive should state:
 - next step after applying;
 - any blocking questions.
 ```
+
+When the archive is intended for one local bulk commit, the final response should also include a suggested `git add` and `git commit` command.
 
 ## 9. Status Reconciliation Rule
 
@@ -128,4 +155,5 @@ Do not leave docs saying `planned` when current repo evidence shows `implemented
 - Do not change API/domain/test behavior in documentation-only archives.
 - Do not generate partial snippets when full replacement files are expected.
 - Do not directly change GitHub when the user asked for an archive.
+- Do not provide archive apply instructions without a pull/current-state step first.
 ```
