@@ -47,7 +47,9 @@ Future slice/client planning should prefer per-scenario behavior item files and 
 7. planning/tables/scenario-behavior-baseline-account-activation-addendum.md
 8. planning/tables/domain-drafts/domain-draft-01.md
 9. planning/slices/README.md
-10. planning/slices/l1-slice-drafting-guide.md
+10. planning/slices/slice-responsibility-map.md
+11. planning/slices/slice-draft-authoring-workflow.md
+12. planning/slices/slice-draft-authoring-principles.md
 ```
 
 ## 4. Behavior Items Position
