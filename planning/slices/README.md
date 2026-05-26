@@ -20,7 +20,7 @@ Use:
 planning/slices/SLICE-INDEX.md
 ```
 
-for the concrete catalog of current, transitional and legacy slice files.
+for the concrete catalog of current and legacy slice files.
 
 ## Start Here
 
@@ -33,12 +33,60 @@ planning/slices/slice-questions-register.md
 planning/slices/slice-test-plan-workflow.md
 ```
 
+## How To Draft A Slice
+
+Algorithm / process:
+
+```text
+planning/slices/slice-draft-authoring-workflow.md
+```
+
+General rules and section meaning:
+
+```text
+planning/slices/slice-draft-authoring-principles.md
+```
+
+Server draft algorithm and shape:
+
+```text
+planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
+planning/slices/server/SERVER-SLICE-TEMPLATE.md
+```
+
+Client draft algorithm and shape:
+
+```text
+planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md
+planning/slices/client/CLIENT-SLICE-TEMPLATE.md
+```
+
+Cross-cutting umbrella shape:
+
+```text
+planning/slices/cross-cutting/cross-cutting-umbrella-template.md
+```
+
+Test / verification plan:
+
+```text
+planning/slices/slice-test-plan-workflow.md
+```
+
+Implementation/current-state evidence:
+
+```text
+planning/documentation/status-reconciliation-workflow.md
+```
+
+## Server / Client / Cross-Cutting Reads
+
 For server/backend/API slice work, also read:
 
 ```text
 planning/slices/server-implementation-principles.md
-planning/slices/server/SERVER-SLICE-TEMPLATE.md
 planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
+planning/slices/server/SERVER-SLICE-TEMPLATE.md
 ```
 
 For client slice work, also read:
@@ -49,15 +97,15 @@ planning/slices/client-css-architecture-rules.md
 planning/slices/client-form-validation-implementation-principles.md
 planning/slices/client-a11y-implementation-principles.md
 planning/slices/client-ui-style-workflow.md
-planning/slices/client/CLIENT-SLICE-TEMPLATE.md
 planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md
+planning/slices/client/CLIENT-SLICE-TEMPLATE.md
 ```
 
 For cross-cutting/paired concerns, also read:
 
 ```text
 planning/slices/cross-cutting/README.md
-planning/slices/cross-cutting/CROSS-CUTTING-UMBRELLA-TEMPLATE.md
+planning/slices/cross-cutting/cross-cutting-umbrella-template.md
 ```
 
 ## Core Rule
@@ -97,7 +145,7 @@ workflow
 principles/rules file
 template
 concrete slice draft
-transitional legacy file
+legacy file awaiting migration
 ```
 
 ## Root Principles / Rules / Workflows
