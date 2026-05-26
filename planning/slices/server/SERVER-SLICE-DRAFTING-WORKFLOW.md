@@ -17,7 +17,7 @@ Before drafting, read:
 ```text
 planning/slices/slice-responsibility-map.md
 planning/slices/slice-draft-authoring-principles.md
-planning/slices/server/server-implementation-principles.md
+planning/slices/server-implementation-principles.md
 planning/slices/server/SERVER-SLICE-TEMPLATE.md
 planning/slices/slice-test-plan-workflow.md
 ```
@@ -84,7 +84,7 @@ Do not turn the server slice draft into a full scenario registry or domain model
 Before writing Implementation Components Overview or Implementation Flow, read:
 
 ```text
-planning/slices/server/server-implementation-principles.md
+planning/slices/server-implementation-principles.md
 ```
 
 Use it to classify:
