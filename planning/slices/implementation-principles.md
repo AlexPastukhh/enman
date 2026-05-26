@@ -1,9 +1,42 @@
 # Slice Implementation Principles
 
-Status: current common implementation principles  
-Scope: general implementation rules near slice planning
+Status: current common slice implementation principles  
+Scope: general implementation rules near slice planning; not a template and not the full server implementation architecture owner
 
-## 1. Same Format Principle
+## 1. Responsibility
+
+This file owns common implementation principles that apply across slice planning.
+
+It does not own:
+
+```text
+slice draft section-authoring rules;
+server/backend-specific implementation architecture;
+client-specific UI/CSS/form/a11y drafting rules;
+copyable slice draft structure;
+step-by-step drafting workflow.
+```
+
+Use these files for those responsibilities:
+
+```text
+Slice draft authoring principles:
+  planning/slices/slice-draft-authoring-principles.md
+
+Server/backend implementation principles:
+  planning/slices/server/server-implementation-principles.md
+
+Server drafting workflow:
+  planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
+
+Client drafting workflow:
+  planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md
+
+Slice test/verification workflow:
+  planning/slices/slice-test-plan-workflow.md
+```
+
+## 2. Same Format Principle
 
 Business, cross-cutting and helper slices use the same planning discipline:
 
@@ -18,7 +51,7 @@ source requirements
 
 Cross-cutting/helper slices are not allowed to skip behavior/flow just because the concern is technical.
 
-## 2. Draft-Driven Discovery Principle
+## 3. Draft-Driven Discovery Principle
 
 Use:
 
@@ -26,22 +59,24 @@ Use:
 planning/slices/draft-driven-discovery-principles.md
 ```
 
-Draft-driven discovery applies to all slice implementation work:
+Draft-driven discovery applies to slice-layer implementation work:
 
 ```text
-domain
 business slices
+server/backend/API slices
 client sidecars
 cross-cutting/helper slices
-testing/support slices
-documentation/status reconciliation drafts
+testing/support planning inside slice work
+implemented-slice sync when code/tests already exist
 ```
+
+Domain drafting, scenario drafting and documentation/status reconciliation have separate layer owners and should not be governed by this file.
 
 A draft is allowed to reveal questions and gaps.
 
 Do not push implementation through unresolved behavior/API/client/testing questions.
 
-## 3. Client / Server Contract Principle
+## 4. Client / Server Contract Principle
 
 Before implementing missing client slices:
 
@@ -60,7 +95,7 @@ planning/slices/cross-cutting/CC-API-001-openapi-contract-artifacts-and-type-gen
 planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md
 ```
 
-## 4. OpenAPI And Constants Split
+## 5. OpenAPI And Constants Split
 
 ```text
 OpenAPI = structural contract:
@@ -73,7 +108,7 @@ Generated shared constants JSON = semantic constants:
 
 Do not use one artifact to replace the other.
 
-## 5. Optional Result / Maybe Principle
+## 6. Optional Result / Maybe Principle
 
 Use:
 
@@ -131,7 +166,7 @@ The Maybe convention is the target for new/refactored repository APIs.
 Do not claim the nullable-to-Maybe refactor is already implemented unless repo evidence shows it.
 ```
 
-## 6. Testing Responsibility
+## 7. Testing Responsibility
 
 Use:
 
@@ -156,7 +191,13 @@ E2E tests
 
 Do not make E2E duplicate the full client/component test matrix.
 
-## 7. Cross-Cutting And Helper Slices
+Slice-specific Behavior-to-Test Trace rules live in:
+
+```text
+planning/slices/slice-test-plan-workflow.md
+```
+
+## 8. Cross-Cutting And Helper Slices
 
 Cross-cutting/helper slices are allowed.
 
@@ -180,7 +221,7 @@ Use:
 planning/slices/cross-cutting/
 ```
 
-## 8. Implementation Flow Detail Filter
+## 9. Implementation Flow Detail Filter
 
 Implementation flow is behavior-first.
 
@@ -192,7 +233,19 @@ If flow becomes too noisy, extract detailed class/method reference into a siblin
 
 Do not create `.impl.md` files in advance.
 
-## 9. Constants Generation / Testing
+For semantic first-pass names and implementation drift rules, use:
+
+```text
+planning/slices/slice-draft-authoring-principles.md
+```
+
+For server-specific controller/application/domain/validator/persistence boundaries, use:
+
+```text
+planning/slices/server/server-implementation-principles.md
+```
+
+## 10. Constants Generation / Testing
 
 Primary source:
 
@@ -211,7 +264,7 @@ Core rules:
 - Route constants are temporary during OpenAPI migration.
 ```
 
-## 10. OpenAPI Contract Artifacts
+## 11. OpenAPI Contract Artifacts
 
 Primary source:
 
@@ -230,7 +283,7 @@ Core rules:
 - no generated artifacts are written during normal server startup.
 ```
 
-## 11. Antiforgery / CSRF
+## 12. Antiforgery / CSRF
 
 Primary source:
 
