@@ -1,19 +1,34 @@
 # Client Slice Planning
 
-Status: canonical client slice planning entry point / cross-cutting behavior and testing workflow synchronized
+Status: local client slice folder entry point
 
-This folder owns client slice drafting rules, UI/CSS workflow, client implementation handoff rules, examples and client sidecar drafts.
+This folder contains client slice templates, client-specific handoff docs and client slice drafts.
+
+Reusable client rules, principles and workflows live in the root slice folder:
+
+```text
+planning/slices/
+```
 
 ## Required read order
 
+Before drafting or updating a client slice, start from the root slice docs:
+
 ```text
-planning/slices/client/CLIENT-API-PLACEMENT-DECISION.md
-planning/slices/client/CLIENT-LAYERING-FOR-READ-AND-COMMAND-SLICES.md
-planning/slices/client/CLIENT-UI-STYLE-WORKFLOW.md
-planning/slices/client/CLIENT-CSS-ARCHITECTURE-RULES.md
-planning/slices/client/CLIENT-FORM-VALIDATION-WORKFLOW.md
-planning/slices/client/CLIENT-A11Y-WORKFLOW.md
+planning/slices/README.md
+planning/slices/slice-responsibility-map.md
+planning/slices/slice-draft-authoring-principles.md
+planning/slices/client-implementation-principles.md
+planning/slices/client-css-architecture-rules.md
+planning/slices/client-form-validation-implementation-principles.md
+planning/slices/client-a11y-implementation-principles.md
+planning/slices/client-ui-style-workflow.md
 planning/slices/slice-test-plan-workflow.md
+```
+
+Then use local client docs:
+
+```text
 planning/slices/client/CLIENT-SLICE-TEMPLATE.md
 planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md
 planning/slices/client/CLIENT-SLICE-IMPLEMENTATION-HANDOFF.md
@@ -44,73 +59,6 @@ If the slice implements common client behavior used across scenarios, check:
 ```text
 planning/diagrams/scenario-cross-cutting/client-behavior/
 ```
-
-## Client slice placement
-
-Read slices use:
-
-```text
-pages + entities + shared transport/generated infrastructure
-```
-
-Command/user-action slices use:
-
-```text
-pages + features + entities + shared transport/generated infrastructure
-```
-
-Widgets may be used for larger reusable composed UI blocks shared across pages.
-
-## API wrapper ownership
-
-```text
-entities/*/api
-  read endpoint wrappers
-
-features/*/api
-  command endpoint wrappers
-
-shared/api
-  fetchJson, ProblemDetails/ApiError, CSRF helpers, generated OpenAPI types only
-```
-
-Do not add business-specific endpoint wrappers to `shared/api`.
-
-## Cross-cutting client drafts
-
-Client-side cross-cutting implementation drafts go here:
-
-```text
-planning/slices/client/cross-cutting/
-```
-
-If no server counterpart is expected, use `SINGLE-` prefix:
-
-```text
-SINGLE-CC-CLIENT-FORM-VALIDATION-001-deferred-validation.client.md
-```
-
-If a server counterpart is expected or possible, use paired logical ID and `.client.md` suffix:
-
-```text
-CC-SEC-CSRF-001-unsafe-command-protection.client.md
-```
-
-## UI/CSS requirement
-
-Client slice drafts must describe:
-
-```text
-Visual UI / Scenario Flow
-Visual Layout / Screen Composition
-Visual Client Implementation Flow
-Styling / CSS Ownership
-Validation / Feedback / Error UI
-Accessibility / ARIA Contract
-Test / Verification Plan with Behavior-to-Test Trace
-```
-
-CSS is part of client slice implementation ownership.
 
 ## Draft locations
 
