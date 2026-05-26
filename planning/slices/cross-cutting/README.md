@@ -6,6 +6,12 @@ This folder owns umbrella/coordination docs for concerns that connect client/ser
 
 It is not a dump for implementation details.
 
+Use the current umbrella template:
+
+```text
+planning/slices/cross-cutting/cross-cutting-umbrella-template.md
+```
+
 ## Use this folder for
 
 ```text
@@ -74,11 +80,8 @@ Use:
 planning/slices/slice-test-plan-workflow.md
 ```
 
-Umbrella docs for paired concerns should include:
+Umbrella docs for paired concerns should include cross-side behavior proof. Use:
 
-```markdown
-## Cross-Side Behavior-to-Test Trace
-
-| Behavior item | Server proof | Client proof | E2E/user proof if needed | Gap |
-|---|---|---|---|---|
+```text
+planning/slices/cross-cutting/cross-cutting-umbrella-template.md
 ```
