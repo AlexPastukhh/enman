@@ -1,6 +1,6 @@
 # Slice Index
 
-Status: working index / taxonomy and testing workflow synchronized
+Status: working index / root principles and testing workflow synchronized
 
 This file is the common navigation index for server, client and cross-cutting slice docs.
 
@@ -12,13 +12,18 @@ This file is a concrete catalog, not the slice-layer responsibility map. For pla
 planning/slices/slice-responsibility-map.md
 ```
 
-## Slice governance docs
+## Slice governance / principles / rules docs
 
 | ID | Title | Type | Status | Current path | Notes |
 |---|---|---|---|---|---|
 | SLICE-RESPONSIBILITY-MAP | Slice Responsibility Map | responsibility map | current | `planning/slices/slice-responsibility-map.md` | Local placement/routing owner for slice-layer information |
 | SLICE-DRAFT-AUTHORING-PRINCIPLES | Slice Draft Authoring Principles | principles | current | `planning/slices/slice-draft-authoring-principles.md` | Explains slice draft scope, boundary, coverage, drift and section-authoring rules |
-| SERVER-IMPLEMENTATION-PRINCIPLES | Server Implementation Principles | principles | current | `planning/slices/server/server-implementation-principles.md` | Backend/server implementation architecture principles for server slice drafts |
+| SERVER-IMPLEMENTATION-PRINCIPLES | Server Implementation Principles | principles | current | `planning/slices/server-implementation-principles.md` | Backend/server implementation architecture principles for server slice drafts |
+| CLIENT-IMPLEMENTATION-PRINCIPLES | Client Implementation Principles | principles | current | `planning/slices/client-implementation-principles.md` | Client layering and read/command/API ownership |
+| CLIENT-CSS-ARCHITECTURE-RULES | Client CSS Architecture Rules | rules | current | `planning/slices/client-css-architecture-rules.md` | Client CSS ownership and styling boundaries |
+| CLIENT-FORM-VALIDATION-IMPLEMENTATION-PRINCIPLES | Client Form Validation Implementation Principles | principles | current | `planning/slices/client-form-validation-implementation-principles.md` | Applies deferred validation cross-cutting behavior in client implementation |
+| CLIENT-A11Y-IMPLEMENTATION-PRINCIPLES | Client Accessibility / ARIA Implementation Principles | principles | current | `planning/slices/client-a11y-implementation-principles.md` | Accessibility/ARIA implementation and user-visible test contract |
+| CLIENT-UI-STYLE-WORKFLOW | Client UI / Style Workflow | workflow | current | `planning/slices/client-ui-style-workflow.md` | Client UI/style implementation process |
 | SLICE-FOLDER-MAP | Slice Folder Map | folder map | transitional | `planning/slices/SLICE-FOLDER-MAP.md` | Folder placement map kept during migration; placement authority is moving to responsibility map |
 | SLICE-INDEX | Slice Index | index/catalog | current | `planning/slices/SLICE-INDEX.md` | Concrete catalog of slice docs/files while old and new paths coexist |
 
@@ -52,11 +57,13 @@ Umbrella cross-cutting docs:
 
 Historical L1/L2 paths are legacy only.
 
-## Workflow docs
+## Workflow / template docs
 
 | ID | Title | Type | Status | Current path | Notes |
 |---|---|---|---|---|---|
 | SLICE-TEST-PLAN-WORKFLOW | Slice Test Plan Workflow | workflow | current | `planning/slices/slice-test-plan-workflow.md` | Required Behavior-to-Test Trace for slice drafts |
+| CLIENT-SLICE-DRAFTING-WORKFLOW | Client Slice Drafting Workflow | workflow | current/local | `planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Candidate for later move to root |
+| SERVER-SLICE-DRAFTING-WORKFLOW | Server Slice Drafting Workflow | workflow | current/local | `planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Candidate for later move to root |
 | CLIENT-SLICE-TEMPLATE | Client Slice Template | template | current | `planning/slices/client/CLIENT-SLICE-TEMPLATE.md` | Includes scenario sources and test trace |
 | SERVER-SLICE-TEMPLATE | Server Slice Template | template | current | `planning/slices/server/SERVER-SLICE-TEMPLATE.md` | Includes scenario sources and test trace |
 | CROSS-CUTTING-UMBRELLA-TEMPLATE | Cross-Cutting Umbrella Template | template | current | `planning/slices/cross-cutting/CROSS-CUTTING-UMBRELLA-TEMPLATE.md` | Includes cross-side test trace |
@@ -92,7 +99,7 @@ Historical L1/L2 paths are legacy only.
 
 | ID | Title | Source/Draft type | Status | Current path | Notes |
 |---|---|---|---|---|---|
-| CC-CLIENT-FORM-VALIDATION-001 | Deferred Form Validation | cross-cutting client behavior source | current first pass | `planning/diagrams/scenario-cross-cutting/client-behavior/CC-CLIENT-FORM-VALIDATION-001-deferred-validation.behavior.md` | Source for future `SINGLE-...client.md` draft |
+| CC-CLIENT-FORM-VALIDATION-001 | Deferred Form Validation | cross-cutting client behavior source | current first pass | `planning/diagrams/scenario-cross-cutting/client-behavior/CC-CLIENT-FORM-VALIDATION-001-deferred-validation.behavior.md` | Source for future `SINGLE-...client.md` draft; implementation principles live in `planning/slices/client-form-validation-implementation-principles.md` |
 | CC-CLIENT-FEEDBACK-001 | Client Error / Feedback Visibility | cross-cutting client behavior source | current first pass | `planning/diagrams/scenario-cross-cutting/client-behavior/CC-CLIENT-FEEDBACK-001-error-feedback.behavior.md` | Source for feedback behavior used by many UI scenarios |
 | CC-SEC-CSRF-001 | Unsafe Command Protection | security/server-client behavior source | current first pass | `planning/diagrams/scenario-cross-cutting/security/CC-SEC-CSRF-001-unsafe-command-protection.behavior.md` | Source for umbrella + server/client slices |
 | CC-SEC-CSRF-001 | Unsafe Command Protection | umbrella concern | draft | `planning/slices/cross-cutting/CC-SEC-CSRF-001-unsafe-command-protection.md` | Coordinates server/client slice drafts and cross-side proof |
