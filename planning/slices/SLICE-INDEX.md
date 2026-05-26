@@ -18,6 +18,7 @@ planning/slices/slice-responsibility-map.md
 |---|---|---|---|---|---|
 | SLICE-RESPONSIBILITY-MAP | Slice Responsibility Map | responsibility map | current | `planning/slices/slice-responsibility-map.md` | Local placement/routing owner for slice-layer information |
 | SLICE-DRAFT-AUTHORING-PRINCIPLES | Slice Draft Authoring Principles | principles | current | `planning/slices/slice-draft-authoring-principles.md` | Explains slice draft scope, boundary, coverage, drift and section-authoring rules |
+| SLICE-DRAFT-AUTHORING-WORKFLOW | Slice Draft Authoring Workflow | workflow | current | `planning/slices/slice-draft-authoring-workflow.md` | Root process for creating, reviewing and refactoring slice drafts before side-specific workflows |
 | SERVER-IMPLEMENTATION-PRINCIPLES | Server Implementation Principles | principles | current | `planning/slices/server-implementation-principles.md` | Backend/server implementation architecture principles for server slice drafts |
 | CLIENT-IMPLEMENTATION-PRINCIPLES | Client Implementation Principles | principles | current | `planning/slices/client-implementation-principles.md` | Client layering and read/command/API ownership |
 | CLIENT-CSS-ARCHITECTURE-RULES | Client CSS Architecture Rules | rules | current | `planning/slices/client-css-architecture-rules.md` | Client CSS ownership and styling boundaries |
@@ -62,8 +63,8 @@ Historical L1/L2 paths are legacy only.
 | ID | Title | Type | Status | Current path | Notes |
 |---|---|---|---|---|---|
 | SLICE-TEST-PLAN-WORKFLOW | Slice Test Plan Workflow | workflow | current | `planning/slices/slice-test-plan-workflow.md` | Required Behavior-to-Test Trace for slice drafts |
-| CLIENT-SLICE-DRAFTING-WORKFLOW | Client Slice Drafting Workflow | workflow | current/local | `planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Candidate for later move to root |
-| SERVER-SLICE-DRAFTING-WORKFLOW | Server Slice Drafting Workflow | workflow | current/local | `planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Candidate for later move to root |
+| CLIENT-SLICE-DRAFTING-WORKFLOW | Client Slice Drafting Workflow | workflow | current/local | `planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Applies root authoring workflow; candidate for later move to root |
+| SERVER-SLICE-DRAFTING-WORKFLOW | Server Slice Drafting Workflow | workflow | current/local | `planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Applies root authoring workflow; candidate for later move to root |
 | CLIENT-SLICE-TEMPLATE | Client Slice Template | template | current | `planning/slices/client/CLIENT-SLICE-TEMPLATE.md` | Includes scenario sources and test trace |
 | SERVER-SLICE-TEMPLATE | Server Slice Template | template | current | `planning/slices/server/SERVER-SLICE-TEMPLATE.md` | Includes scenario sources and test trace |
 | CROSS-CUTTING-UMBRELLA-TEMPLATE | Cross-Cutting Umbrella Template | template | current | `planning/slices/cross-cutting/CROSS-CUTTING-UMBRELLA-TEMPLATE.md` | Includes cross-side test trace |
