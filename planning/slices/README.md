@@ -27,6 +27,7 @@ for the concrete catalog of current, transitional and legacy slice files.
 ```text
 planning/slices/slice-responsibility-map.md
 planning/slices/slice-draft-authoring-principles.md
+planning/slices/slice-draft-authoring-workflow.md
 planning/slices/SLICE-INDEX.md
 planning/slices/slice-questions-register.md
 planning/slices/slice-test-plan-workflow.md
@@ -99,7 +100,7 @@ concrete slice draft
 transitional legacy file
 ```
 
-## Root Principles / Rules
+## Root Principles / Rules / Workflows
 
 Root `planning/slices/` owns reusable slice-layer principles, rules and workflows.
 
@@ -108,6 +109,9 @@ Important root files:
 ```text
 slice-draft-authoring-principles.md
   general slice draft authoring: scope, boundary, coverage, drift, trace
+
+slice-draft-authoring-workflow.md
+  root workflow for creating, reviewing and refactoring slice drafts
 
 client-implementation-principles.md
   client layering and read/command/API ownership
