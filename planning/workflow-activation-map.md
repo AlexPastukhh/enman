@@ -22,6 +22,24 @@ For non-trivial planning/repo work, the chat should:
 
 This file is a workflow router. It does not replace the workflow docs it points to.
 
+Response-level commands are documented in:
+
+```text
+planning/documentation/reviewable-agent-output-and-commands-workflow.md
+```
+
+Examples:
+
+```text
+level/lvl/ур
+recheck
+clarify
+keep prev / кип прев
+no ch / изм нет
+show section separately
+merge section back
+```
+
 ## 2. Core Rule
 
 Before non-trivial planning/repo work, output a short `Workflow Preflight`.
@@ -87,6 +105,7 @@ The preflight is not a permission grant. It only makes the intended workflow pat
 | `always-on check` | Should be used automatically for non-trivial planning/repo work. |
 | `conditional implicit` | Should be used automatically when the trigger matches. |
 | `response-format` | Controls answer/review format; not a repo action. |
+| `response-command` | Controls answer operation/checking behavior; not a repo action. |
 | `explicit-only` | Use only when the user directly requests this workflow/action. |
 | `approval-required action` | Requires explicit user permission before executing the action. |
 | `future / missing` | Principle or need exists, but no full workflow exists yet. |
@@ -105,16 +124,14 @@ The preflight is not a permission grant. It only makes the intended workflow pat
 | `planning/documentation/documentation-update-workflow.md` | Applying approved documentation update or planning docs update process | `conditional implicit` | Yes for GitHub writes | Docs update process |
 | `planning/documentation/local-global-documentation-sync-workflow.md` | Local change may affect shared register/index/navigation | `conditional implicit` | No for check; yes for edits | Local/global sync check |
 | `planning/documentation/status-reconciliation-workflow.md` | Docs status may differ from code/tests/generated artifacts | `conditional implicit` | No for analysis; yes for edits | Status findings / sync plan |
-| `planning/documentation/reviewable-agent-output-workflow.md` | Non-trivial answer, audit, plan, handoff, or user says level/lvl/ур 1/2/3 | `response-format` | No | Structured reviewable answer |
+| `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | Non-trivial answer, audit, plan, handoff, level/lvl/ур command, recheck, clarify, keep prev, no ch, section command | `response-format` / `response-command` | No | Structured reviewable answer or response-level command behavior |
 | `planning/diagrams/scenario-drafting-workflow.md` | Scenario text/DATA/UI/behavior items/questions/clarifications work | `conditional implicit` | No for draft/analysis; yes for edits | Scenario source workflow |
 | `planning/slices/slice-responsibility-map.md` | Need to place slice-layer information or decide slice file owner | `conditional implicit` | No | Slice-layer owner routing |
 | `planning/slices/slice-draft-authoring-principles.md` | Create/review/refactor slice draft structure or section meaning | `conditional implicit` | No | Slice draft authoring rules |
 | `planning/slices/slice-draft-authoring-workflow.md` | Create/review/refactor a slice draft or prepare slice draft plan | `conditional implicit` | No for draft/analysis; yes for edits | Root slice draft authoring process |
 | `planning/slices/draft-driven-discovery-principles.md` | Slice-layer discovery for business/server/client/cross-cutting/helper slice drafts | `conditional implicit` | No | Slice discovery loop |
-| `planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Client sidecar drafting | `conditional implicit` | No for draft/analysis; yes for edits | Client-specific application of root authoring workflow |
-| `planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Server/backend/API slice drafting | `conditional implicit` | No for draft/analysis; yes for edits | Server-specific application of root authoring workflow |
-| `planning/slices/l1-slice-drafting-guide.md` | Legacy/general L1 slice guidance may be relevant | `transitional` | No for draft/analysis; yes for edits | Transitional guidance only; audit pending |
-| `planning/slices/implemented-slice-sync-workflow.md` | Existing implemented slice draft needs sync against source/domain/code/tests | `transitional` / `conditional implicit` | No for audit; yes for edits | Implemented slice sync report |
+| `planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Client sidecar drafting | `conditional implicit` | No for draft/analysis; yes for edits | Client-specific slice drafting algorithm |
+| `planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Server/backend/API slice drafting | `conditional implicit` | No for draft/analysis; yes for edits | Server-specific slice drafting algorithm |
 | `planning/repo-grounded-github-line-links-workflow.md` | Explaining concrete repo facts, code/docs/status, or user asks for links | `conditional implicit` | No | Exact GitHub line links |
 | `planning/replacement-file-generation-guide.md` | Archive/replacement output requested or chosen | `conditional implicit` | Usually explicit user request | Replacement package rules |
 | GitHub direct edits / commits | User asks apply/update/create/delete in repo | `approval-required action` | Yes | GitHub commits |
@@ -147,8 +164,31 @@ documentation-update-plan-workflow.md
 documentation-update-workflow.md
 local-global-documentation-sync-workflow.md
 status-reconciliation-workflow.md, if implementation/status evidence is involved
-reviewable-agent-output-workflow.md, for structured plan/audit/handoff
+reviewable-agent-output-and-commands-workflow.md, for structured plan/audit/handoff or response commands
 ```
+
+### Response command work
+
+Trigger examples:
+
+```text
+level 1 / lvl 2 / ур 3;
+recheck;
+clarify;
+keep prev / кип прев;
+no ch / изм нет;
+show section separately;
+merge section back.
+```
+
+Activated workflows:
+
+```text
+workflow-activation-map.md
+reviewable-agent-output-and-commands-workflow.md
+```
+
+Response commands do not grant permission to edit files, commit changes, delete files, move files or skip evidence required for current-state claims.
 
 ### Scenario source work
 
@@ -170,7 +210,7 @@ agent-roles-and-required-actions.md
 workflow-activation-map.md
 scenario-drafting-workflow.md
 local-global-documentation-sync-workflow.md
-reviewable-agent-output-workflow.md
+reviewable-agent-output-and-commands-workflow.md
 ```
 
 ### Slice or client/server draft work
@@ -201,19 +241,18 @@ client/CLIENT-SLICE-DRAFTING-WORKFLOW.md, for client sidecars
 server/SERVER-SLICE-DRAFTING-WORKFLOW.md, for server/backend/API slices
 local-global-documentation-sync-workflow.md
 status-reconciliation-workflow.md, when implementation evidence is involved
-reviewable-agent-output-workflow.md
+reviewable-agent-output-and-commands-workflow.md
 ```
 
-Use `l1-slice-drafting-guide.md` only as transitional/legacy guidance until PMR-012 is resolved.
-
-### Implemented slice sync
+### Current implementation / status reconciliation
 
 Trigger examples:
 
 ```text
 old implemented slice draft looks stale;
 implemented code/tests exist but draft is missing current structure/status;
-draft, source, code and tests may disagree.
+draft, source, code and tests may disagree;
+planning docs claim implemented/current state.
 ```
 
 Activated workflows:
@@ -222,16 +261,9 @@ Activated workflows:
 planning-agent-protocol.md
 agent-roles-and-required-actions.md
 workflow-activation-map.md
-implemented-slice-sync-workflow.md
 status-reconciliation-workflow.md
 local-global-documentation-sync-workflow.md
-reviewable-agent-output-workflow.md
-```
-
-Caution:
-
-```text
-implemented-slice-sync-workflow.md is transitional and should not be treated as fully canonical until PMR-010 is resolved.
+reviewable-agent-output-and-commands-workflow.md
 ```
 
 ## 7. Explicit Permission Rules
@@ -263,7 +295,7 @@ The following do not require explicit permission because they are read-only or a
 - do read-only audit/check/review;
 - state assumptions;
 - use Level 1/2/3 answer format;
-- use recheck/clarify/keep-prev style response commands.
+- use recheck/clarify/keep-prev/no-ch style response commands.
 ```
 
 ## 8. Future / Missing Workflows
@@ -275,8 +307,8 @@ Do not pretend these are implemented if no workflow file exists.
 | Source/version cascade sync | Principle exists in `planning/documentation/planning-docs-architecture-principles.md`, but full workflow/register system does not exist yet. | After local responsibility maps and at least one source usage register pilot. |
 | Scenario/domain local responsibility maps | Documentation and slice local maps exist. Scenario/domain local maps are future. | During scenario/domain layer refactors. |
 | Root map shrink to thin router | Root map is transitional and intentionally detailed. | After local responsibility maps exist for major layers. |
-| Implemented slice sync modernization | Workflow exists and was partially modernized, but remains transitional. | Before using it as canonical implemented slice workflow. |
-| Client/server drafting workflow location | Client/server drafting workflows currently remain local under subfolders and apply root authoring workflow. | Resolve together with PMR-012 / l1-slice-drafting-guide audit. |
+| Server/client/cross-cutting drafting workflow split | Root slice authoring workflow exists; server/client local workflows exist; cross-cutting workflow is deferred. | After section-level source/source-version model stabilizes or real draft refactors prove repeated side-specific algorithm steps. |
+| Slice test plan workflow split | Unified slice test workflow exists. | After testing layer audit. |
 
 Longer-term reminders live in:
 
@@ -289,11 +321,12 @@ planning/planning-maintenance-register.md
 ```text
 - Do not skip Workflow Preflight for non-trivial repo/planning work.
 - Do not hide activated workflows from the user.
-- Do not treat response-format workflows as permission to edit files.
+- Do not treat response-format/response-command workflows as permission to edit files.
 - Do not use GitHub mutation tools unless the user explicitly requested repository changes.
 - Do not pretend future/missing workflows already exist.
 - Do not activate only the top-level workflow when a nested workflow is clearly required.
 - Do not apply a workflow silently when its activation would change scope or require user approval.
+- Do not treat `no ch` as permission to skip targeted checks required before writes, deletes, renames or current-state claims.
 ```
 
 ## 10. Success Criteria
@@ -305,6 +338,7 @@ Workflow activation is working when:
 - all relevant activated workflows are mentioned;
 - implicit checks and explicit permission-required actions are separated;
 - future/missing workflows are called out honestly;
+- response-level commands are discoverable from this map;
 - the user can correct workflow choice before edits or deep work;
 - new workflows can be added to this map without rewriting every prompt.
 ```
