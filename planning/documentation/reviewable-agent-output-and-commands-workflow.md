@@ -29,7 +29,13 @@ A reviewable answer should make clear:
 - what should happen next.
 ```
 
-Response-level commands such as `level 2`, `recheck`, `clarify`, `keep prev`, `no ch` and `use archive` change how the answer should be produced or checked. They do not grant permission to edit files or change repository state.
+Response-level commands such as `level 2`, `recheck`, `clarify`, `keep prev`, `no ch`, `без изм`, `use archive`, `арх`, `б из арх`, `давай драфт` and `обнови` change how the answer should be produced, checked or continued. They do not grant permission to edit files or change repository state.
+
+For action/use-case traces, active context, traversal depth and read source mode, use:
+
+```text
+planning/planning-use-case-map.md
+```
 
 ## 2. Core Rule
 
@@ -428,7 +434,7 @@ Do not add this heavy block to every section by default.
 
 The user may ask the same chat or another chat to perform response-level operations.
 
-Response-level commands affect answer format, checking behavior or reuse of previous context. They do not grant permission to edit files, commit changes, delete files, move files, create PRs or skip necessary evidence checks for claims that require current proof.
+Response-level commands affect answer format, checking behavior, active context or reuse of previous context. They do not grant permission to edit files, commit changes, delete files, move files, create PRs or skip necessary evidence checks for claims that require current proof.
 
 ### Recheck
 
@@ -468,6 +474,36 @@ The answer should cover:
 - sharper risks;
 - updated wording.
 ```
+
+### Expand
+
+Aliases:
+
+```text
+expand
+расширь
+добавь подробнее
+добавь примеры
+```
+
+Purpose:
+
+```text
+Add depth, examples, edge cases or explanation while preserving the current scope unless the user explicitly changes it.
+```
+
+The agent should state which dimension is being expanded when useful:
+
+```text
+- explanation depth;
+- examples;
+- edge cases;
+- source coverage;
+- algorithm steps;
+- template content.
+```
+
+If expansion would change scope, say so instead of silently broadening the answer or draft.
 
 ### Keep Previous
 
@@ -517,22 +553,39 @@ The agent should not:
 - treat `keep prev` as approval to ignore the new correction.
 ```
 
-Recommended mini-format when useful:
+### Active Draft / Active Answer Continuation
+
+Aliases:
 
 ```text
-Applied change:
-- ...
-
-Previous answer preserved:
-- structure: yes/no
-- scope: yes/no
-- important limits: yes/no
-
-Updated answer:
-...
+драфт
+давай драфт
+покажи драфт
+обнови
+обнови драфт
+актуализируй
+continue
+продолжи
 ```
 
-If the previous answer is too long to fully repeat, the agent may say that it is preserving the previous structure and then provide only the updated sections, unless the user explicitly asks to output the full updated answer.
+Purpose:
+
+```text
+Continue the active draft/answer/plan instead of starting a new one.
+```
+
+If there is an active draft in the current conversation, then `драфт`, `давай драфт`, `покажи драфт`, `обнови`, `обнови драфт` and `актуализируй` mean:
+
+```text
+- identify the active draft;
+- apply latest discussion deltas since the last shown/updated version;
+- if the draft is in canvas, update or verify the canvas;
+- if no canvas is used, output the latest actual draft version in chat;
+- do not start a new draft unless the user says `новый драфт` or names another target;
+- do not switch back to an older draft unless the user explicitly names it.
+```
+
+If there is no active draft/answer/plan, ask for the target unless the target is obvious from the current message.
 
 ### No Changes / No Ch
 
@@ -545,6 +598,8 @@ state unchanged
 изм нет
 изменений нет
 ничего не менялось
+без изм
+б изм
 ```
 
 Purpose:
@@ -568,7 +623,7 @@ Effect:
 Limits:
 
 ```text
-- `no ch` reduces unnecessary checks; it does not remove evidence requirements.
+- `no ch` / `без изм` reduces unnecessary checks; it does not remove evidence requirements.
 - Do not claim current implementation/repo truth without evidence when the task requires proof.
 - Do not use `no ch` to skip source checks for new scope, new files or high-risk claims.
 - Do not treat `no ch` as permission to edit files.
@@ -595,6 +650,9 @@ archive src
 используй архив
 репо = архив
 repo equals archive
+арх
+из арх
+из архива
 ```
 
 Purpose:
@@ -609,14 +667,17 @@ Effect:
 - when repository information is needed for a read-only answer, prefer reading/searching the uploaded archive over remote GitHub fetch/search;
 - treat the archive as the current repo snapshot only within the scope explicitly stated by the user;
 - use the archive for broad text/link/path checks when the user says it matches the repo state;
+- if user says `арх` without attaching a new archive, use the latest uploaded archive in the current conversation as the archive source;
 - record in the answer that archive snapshot was used as the read source;
-- combine with `no ch` when the user asserts both unchanged state and archive/repo equivalence.
+- combine with `no ch` / `без изм` when the user asserts both unchanged state and archive/repo equivalence.
 ```
 
 Limits:
 
 ```text
+- `use archive` / `арх` does not decide how much to check; it only chooses read source when checks are needed.
 - `use archive` does not prove remote branch state if another chat/user may have pushed changes after the archive was created.
+- A new chat cannot know an old archive unless it is uploaded again.
 - Before GitHub writes, still fetch the exact target file from GitHub to get current content and SHA.
 - Before a final claim that remote links/references are clean, either search the whole archive snapshot or run a targeted GitHub search when the claim is about the remote branch.
 - Do not use an archive as implementation truth when the task requires current runtime/code/test evidence and the archive may be stale.
@@ -630,6 +691,68 @@ Recommended response behavior:
 - state whether archive is being treated as authoritative or only supporting evidence;
 - say which archive/source snapshot was searched when relevant;
 - fall back to targeted GitHub checks only for writes, remote-cleanliness claims or uncertainty about archive freshness.
+```
+
+### No Changes + Archive Compound Command
+
+Aliases:
+
+```text
+без изм, арх
+б изм, арх
+изм нет, арх
+no ch, archive
+б из арх
+```
+
+Meaning:
+
+```text
+Unchanged state + archive read source.
+```
+
+Behavior:
+
+```text
+- skip broad re-audit;
+- reuse previous traversal/context where valid;
+- read archive only for needed targeted checks;
+- use the latest uploaded archive in the current conversation if no new archive is attached;
+- do not use GitHub unless write/SHA or remote-cleanliness claim requires it.
+```
+
+### Source Delta For Updates
+
+Use Source Delta when an answer/draft changes because of:
+
+```text
+- user correction;
+- new source;
+- recheck;
+- self-correction;
+- source coverage change;
+- active draft update.
+```
+
+Short shape:
+
+```text
+Source Delta:
+- Previous basis:
+- Newly used this pass:
+- User-provided sources/constraints:
+- Not rechecked:
+- Impact:
+- Default source model changed? yes/no
+```
+
+Rules:
+
+```text
+- Default/expected sources belong in templates, source blocks or section definitions.
+- Sources used this pass belong in the chat answer/update report.
+- Additional sources named by user do not automatically become default sources.
+- Promote a source to default only through explicit docs/template/workflow update.
 ```
 
 ### Show Section Separately
@@ -695,7 +818,8 @@ Instead:
 - use the specialized format;
 - keep sources/coverage visible;
 - add section-level sources for major sections when needed;
-- add handoff/reviewer notes if another chat should review the output.
+- add handoff/reviewer notes if another chat should review the output;
+- use planning-use-case-map.md for active-context, traversal-depth and read-source decisions.
 ```
 
 ## 12. Do Not
@@ -709,8 +833,10 @@ Instead:
 - Do not make another chat guess what was checked.
 - Do not use section-level source blocks as a substitute for actually checking sources.
 - Do not ignore a `keep prev` correction by rewriting the answer from scratch without preserving the useful previous structure/content.
-- Do not use `no ch` to skip targeted checks that are required before writes, deletes, renames or current-state claims.
-- Do not use `use archive` to overclaim remote branch truth when archive freshness is uncertain.
+- Do not use `no ch` / `без изм` to skip targeted checks that are required before writes, deletes, renames or current-state claims.
+- Do not use `use archive` / `арх` to overclaim remote branch truth when archive freshness is uncertain.
+- Do not treat `драфт` / `обнови` as a new draft request when there is an active draft context.
+- Do not silently promote a one-pass additional source into a default template/source requirement.
 ```
 
 ## 13. Success Criteria
@@ -725,7 +851,9 @@ This workflow works when:
 - assumptions and risks are not hidden;
 - important draft sections can be extracted, reviewed and merged back safely;
 - small corrections can be applied with `keep prev` without losing useful prior structure or caveats;
-- unchanged-state hints can be applied with `no ch` without repeating broad audits or skipping required evidence checks;
-- archive snapshot hints can be applied with `use archive` without confusing archive evidence with remote/current proof;
+- unchanged-state hints can be applied with `no ch` / `без изм` without repeating broad audits or skipping required evidence checks;
+- archive snapshot hints can be applied with `use archive` / `арх` without confusing archive evidence with remote/current proof;
+- active draft/update commands continue the active work instead of restarting from scratch;
+- Source Delta makes newly used sources and not-rechecked sources visible when an answer/draft changes;
 - response structure helps verification without adding unnecessary bureaucracy.
 ```
