@@ -112,10 +112,10 @@ Future exact source/version usage may need a separate source usage register, but
 | Principle area | Owner file | Notes |
 |---|---|---|
 | Slice draft authoring | `slice-draft-authoring-principles.md` | Scope, scenario boundary, behavior coverage, semantic names, implementation drift and section-authoring rules for slice drafts. |
-| Draft-driven discovery | `draft-driven-discovery-principles.md` | Current practical discovery loop; should be narrowed to slice-layer scope after authoring principles are routed. |
+| Draft-driven discovery | `draft-driven-discovery-principles.md` | Current slice-layer discovery loop for business/server/client/cross-cutting slice drafts and slice verification planning. |
 | Change/extension points and extension pressure | `change-extension-points-principles.md` | Definitions and rules for change points, extension points, pressure and anti-coupling decisions. |
 | Common slice implementation principles | `implementation-principles.md` | Shared implementation rules near slice planning. |
-| Server implementation principles | `server/server-implementation-principles.md` | Backend/server implementation architecture principles for server slice drafts. |
+| Server implementation principles | `server/server-implementation-principles.md` | Backend/server implementation architecture principles for server slice drafts; location may be revisited during client/server folder rule audit. |
 
 Do not put long workflow algorithms into principles files unless they are high-level principles.
 
@@ -140,11 +140,11 @@ They should not be the main owner for layer-wide placement/routing rules.
 
 | Template area | Owner file | Notes |
 |---|---|---|
-| Client slice draft | `client/CLIENT-SLICE-TEMPLATE.md` | Current canonical template for new `.client.md` drafts. |
-| Server/backend/API slice draft | `server/SERVER-SLICE-TEMPLATE.md` | Current canonical template for server slice drafts. |
-| Cross-cutting umbrella/coordination doc | `cross-cutting/CROSS-CUTTING-UMBRELLA-TEMPLATE.md` | Current canonical template for umbrella docs. |
+| Client slice draft | `client/CLIENT-SLICE-TEMPLATE.md` | Current canonical template for new `.client.md` drafts; aligned with slice draft authoring principles and required assertions trace. |
+| Server/backend/API slice draft | `server/SERVER-SLICE-TEMPLATE.md` | Current canonical template for server slice drafts; aligned with slice draft authoring principles and server implementation principles. |
+| Cross-cutting umbrella/coordination doc | `cross-cutting/CROSS-CUTTING-UMBRELLA-TEMPLATE.md` | Current canonical template for umbrella docs; still needs later review against the new authoring/test-trace model. |
 
-Current client/server/cross-cutting templates stay as-is until a dedicated template update task.
+Current client/server templates are aligned with the new model. Cross-cutting umbrella template remains a follow-up review item.
 
 ## 10. Draft Placement Rules
 
@@ -278,7 +278,6 @@ Do not create new files for local-only notes that belong inside one active draft
 - Do not use SLICE-FOLDER-MAP.md as the long-term placement authority once this map exists.
 - Do not invent scenario behavior inside slice drafts when scenario/behavior sources exist.
 - Do not treat slice-scenario-flow-behavior-register.md as exact source/version tracking.
-- Do not update templates as part of basic responsibility-map cleanup.
 - Do not create slice-source-usage-register.md until the source/version model is ready.
 ```
 
