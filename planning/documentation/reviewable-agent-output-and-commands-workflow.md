@@ -29,7 +29,7 @@ A reviewable answer should make clear:
 - what should happen next.
 ```
 
-Response-level commands such as `level 2`, `recheck`, `clarify`, `keep prev` and `no ch` change how the answer should be produced or checked. They do not grant permission to edit files or change repository state.
+Response-level commands such as `level 2`, `recheck`, `clarify`, `keep prev`, `no ch` and `use archive` change how the answer should be produced or checked. They do not grant permission to edit files or change repository state.
 
 ## 2. Core Rule
 
@@ -583,6 +583,55 @@ Recommended response behavior:
 - be explicit when a minimal check is still required before an edit or a cleanup claim.
 ```
 
+### Use Archive / Archive Source
+
+Aliases:
+
+```text
+use archive
+archive source
+archive src
+читать архив
+используй архив
+репо = архив
+repo equals archive
+```
+
+Purpose:
+
+```text
+Let the user assert that an uploaded archive should be used as the repository/document snapshot for read-only checks and analysis.
+```
+
+Effect:
+
+```text
+- when repository information is needed for a read-only answer, prefer reading/searching the uploaded archive over remote GitHub fetch/search;
+- treat the archive as the current repo snapshot only within the scope explicitly stated by the user;
+- use the archive for broad text/link/path checks when the user says it matches the repo state;
+- record in the answer that archive snapshot was used as the read source;
+- combine with `no ch` when the user asserts both unchanged state and archive/repo equivalence.
+```
+
+Limits:
+
+```text
+- `use archive` does not prove remote branch state if another chat/user may have pushed changes after the archive was created.
+- Before GitHub writes, still fetch the exact target file from GitHub to get current content and SHA.
+- Before a final claim that remote links/references are clean, either search the whole archive snapshot or run a targeted GitHub search when the claim is about the remote branch.
+- Do not use an archive as implementation truth when the task requires current runtime/code/test evidence and the archive may be stale.
+- Do not treat `use archive` as permission to edit files.
+```
+
+Recommended response behavior:
+
+```text
+- acknowledge that archive snapshot will be used for read checks;
+- state whether archive is being treated as authoritative or only supporting evidence;
+- say which archive/source snapshot was searched when relevant;
+- fall back to targeted GitHub checks only for writes, remote-cleanliness claims or uncertainty about archive freshness.
+```
+
 ### Show Section Separately
 
 Purpose:
@@ -661,6 +710,7 @@ Instead:
 - Do not use section-level source blocks as a substitute for actually checking sources.
 - Do not ignore a `keep prev` correction by rewriting the answer from scratch without preserving the useful previous structure/content.
 - Do not use `no ch` to skip targeted checks that are required before writes, deletes, renames or current-state claims.
+- Do not use `use archive` to overclaim remote branch truth when archive freshness is uncertain.
 ```
 
 ## 13. Success Criteria
@@ -676,5 +726,6 @@ This workflow works when:
 - important draft sections can be extracted, reviewed and merged back safely;
 - small corrections can be applied with `keep prev` without losing useful prior structure or caveats;
 - unchanged-state hints can be applied with `no ch` without repeating broad audits or skipping required evidence checks;
+- archive snapshot hints can be applied with `use archive` without confusing archive evidence with remote/current proof;
 - response structure helps verification without adding unnecessary bureaucracy.
 ```
