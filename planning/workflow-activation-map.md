@@ -109,9 +109,10 @@ The preflight is not a permission grant. It only makes the intended workflow pat
 | `planning/diagrams/scenario-drafting-workflow.md` | Scenario text/DATA/UI/behavior items/questions/clarifications work | `conditional implicit` | No for draft/analysis; yes for edits | Scenario source workflow |
 | `planning/slices/slice-responsibility-map.md` | Need to place slice-layer information or decide slice file owner | `conditional implicit` | No | Slice-layer owner routing |
 | `planning/slices/slice-draft-authoring-principles.md` | Create/review/refactor slice draft structure or section meaning | `conditional implicit` | No | Slice draft authoring rules |
+| `planning/slices/slice-draft-authoring-workflow.md` | Create/review/refactor a slice draft or prepare slice draft plan | `conditional implicit` | No for draft/analysis; yes for edits | Root slice draft authoring process |
 | `planning/slices/draft-driven-discovery-principles.md` | Slice-layer discovery for business/server/client/cross-cutting/helper slice drafts | `conditional implicit` | No | Slice discovery loop |
-| `planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Client sidecar drafting | `conditional implicit` | No for draft/analysis; yes for edits | Client drafting process |
-| `planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Server/backend/API slice drafting | `conditional implicit` | No for draft/analysis; yes for edits | Server drafting process |
+| `planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` | Client sidecar drafting | `conditional implicit` | No for draft/analysis; yes for edits | Client-specific application of root authoring workflow |
+| `planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md` | Server/backend/API slice drafting | `conditional implicit` | No for draft/analysis; yes for edits | Server-specific application of root authoring workflow |
 | `planning/slices/l1-slice-drafting-guide.md` | Legacy/general L1 slice guidance may be relevant | `transitional` | No for draft/analysis; yes for edits | Transitional guidance only; audit pending |
 | `planning/slices/implemented-slice-sync-workflow.md` | Existing implemented slice draft needs sync against source/domain/code/tests | `transitional` / `conditional implicit` | No for audit; yes for edits | Implemented slice sync report |
 | `planning/repo-grounded-github-line-links-workflow.md` | Explaining concrete repo facts, code/docs/status, or user asks for links | `conditional implicit` | No | Exact GitHub line links |
@@ -194,6 +195,7 @@ workflow-activation-map.md
 planning-doc-responsibility-map.md
 slice-responsibility-map.md
 slice-draft-authoring-principles.md
+slice-draft-authoring-workflow.md
 draft-driven-discovery-principles.md
 client/CLIENT-SLICE-DRAFTING-WORKFLOW.md, for client sidecars
 server/SERVER-SLICE-DRAFTING-WORKFLOW.md, for server/backend/API slices
@@ -274,7 +276,7 @@ Do not pretend these are implemented if no workflow file exists.
 | Scenario/domain local responsibility maps | Documentation and slice local maps exist. Scenario/domain local maps are future. | During scenario/domain layer refactors. |
 | Root map shrink to thin router | Root map is transitional and intentionally detailed. | After local responsibility maps exist for major layers. |
 | Implemented slice sync modernization | Workflow exists and was partially modernized, but remains transitional. | Before using it as canonical implemented slice workflow. |
-| Client/server drafting workflow location | Client/server drafting workflows currently remain local under subfolders. | Resolve together with PMR-012 / l1-slice-drafting-guide audit. |
+| Client/server drafting workflow location | Client/server drafting workflows currently remain local under subfolders and apply root authoring workflow. | Resolve together with PMR-012 / l1-slice-drafting-guide audit. |
 
 Longer-term reminders live in:
 
