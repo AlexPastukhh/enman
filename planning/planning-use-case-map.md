@@ -351,7 +351,7 @@ Behavior:
 7. Final response lists all changed files and the shared commit SHA.
 ```
 
-## 14. Detailed Trace: No Changes + Archive
+## 15. Detailed Trace: No Changes + Archive
 
 User says:
 
@@ -386,7 +386,7 @@ Limits:
 - response commands do not grant edit permission.
 ```
 
-## 15. Permission Boundaries
+## 16. Permission Boundaries
 
 Response commands do not permit:
 
@@ -410,7 +410,7 @@ Explicit approval is required for:
 - implementation changes.
 ```
 
-## 16. Known Gaps
+## 17. Known Gaps
 
 Known cleanup/future work:
 
