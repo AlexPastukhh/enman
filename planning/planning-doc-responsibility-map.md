@@ -60,6 +60,7 @@ planning/documentation/planning-docs-architecture-principles.md
 | File / folder | Responsibility |
 |---|---|
 | `planning/README.md` | Stable planning navigation and source-of-truth map; must not duplicate detailed current implementation status |
+| `planning/planning-use-case-map.md` | Root action/use-case map: maps user actions and repeated commands to docs/workflows/templates/read paths, active context, traversal depth, read source mode, expected output and permission boundaries |
 | `planning/workflow-activation-map.md` | Root workflow activation router: which workflows exist, when they activate, implicit vs explicit activation, response command discoverability and Workflow Preflight format |
 | `planning/planning-maintenance-register.md` | Root register for deferred planning-docs/workflow maintenance tasks and condition-based follow-ups |
 | `planning/planning-workflow-current.md` | Workflow rules, repository-edit workflow and historical/current-state reminders; concrete inventory sections are not implementation truth |
@@ -80,7 +81,7 @@ planning/documentation/planning-docs-architecture-principles.md
 | `planning/documentation/documentation-update-plan-workflow.md` | Required preflight plan format for broad docs/navigation/status/register updates |
 | `planning/documentation/documentation-update-workflow.md` | Documentation update process, output modes, quality checks and direct-edit/archive rules |
 | `planning/documentation/planning-docs-architecture-principles.md` | Architecture principles for planning documentation itself, not runtime application architecture |
-| `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | Response-level workflow for reviewable AI/agent outputs and commands: answer detail levels, sources/coverage blocks, handoff/review format, recheck/clarify/keep prev/no ch/section commands and section-level source expectations for major draft sections |
+| `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | Response-level workflow for reviewable AI/agent outputs and commands: answer detail levels, sources/coverage blocks, handoff/review format, recheck/clarify/keep prev/no ch/use archive/active-context commands and section-level source expectations for major draft sections |
 | `planning/documentation/local-global-documentation-sync-workflow.md` | Local detail to shared navigation/register synchronization rules |
 | `planning/documentation/status-reconciliation-workflow.md` | Status reconciliation between current implementation evidence and planning docs |
 | `planning/documentation/documentation-update-agent-prompt.md` | Derived prompt template for documentation update chats/agents; canonical docs win if there is conflict |
@@ -206,34 +207,35 @@ Other workflow docs may link to that file, but should not duplicate detailed lin
 Use this file first to choose the layer. Then use the local responsibility map or README for that layer.
 
 ```text
-1. workflow activation routing -> planning/workflow-activation-map.md
-2. planning maintenance follow-up -> planning/planning-maintenance-register.md
-3. documentation architecture/process/commands/prompt/sync note -> planning/documentation/documentation-responsibility-map.md
-4. scenario text/DATA/UI/behavior source -> planning/diagrams/scenario-*/
-5. domain concepts/drafts/decisions -> planning/tables/ now, future domain layer responsibility map
-6. slice-layer placement/routing -> planning/slices/slice-responsibility-map.md
-7. slice-to-source mapping -> planning/slices/slice-scenario-flow-behavior-register.md
-8. slice draft authoring principles -> planning/slices/slice-draft-authoring-principles.md
-9. server implementation principles -> planning/slices/server-implementation-principles.md
-10. client implementation/CSS/a11y/form/UI rules -> planning/slices/client-*.md
-11. active parent backend/business slice file -> planning/slices/SL-*.md now or planning/slices/server/ for new drafts
-12. client sidecar file -> planning/slices/client/ for new drafts; legacy sidecars may still live in planning/slices/l1 or planning/slices/l2
-13. slice-wide question overview -> planning/slices/slice-questions-register.md
-14. extension/change pressure -> planning/slices/slice-extension-points-register.md
-15. future implementation/client/testing note -> planning/slices/slice-implementation-notes-register.md
-16. architecture-level cleanup / legacy-current boundary -> planning/architecture/
-17. agent scope/prompt safety rule -> planning/agent-scope-boundaries-and-prompt-safety.md
-18. repo-grounded evidence line links -> planning/repo-grounded-github-line-links-workflow.md
-19. client/server contract split -> planning/api/client-server-contract-principles.md
-20. test layer boundaries / E2E workflow -> planning/testing/
-21. accepted/current architecture decision -> architecture-decision-notes.md
-22. possible future full ADR -> adr-candidates.md
-23. VKR/presentation/defense clean wording -> planning/vkr-clean-reference.md
-24. raw non-canonical recovery wording -> planning/dirty-drafts/
-25. broad docs/navigation/status/register update plan -> planning/documentation/documentation-update-plan-workflow.md
-26. planning documentation architecture principle -> planning/documentation/planning-docs-architecture-principles.md
-27. reviewable AI/agent response format and commands -> planning/documentation/reviewable-agent-output-and-commands-workflow.md
-28. documentation local/global sync rule -> planning/documentation/local-global-documentation-sync-workflow.md
+1. action/use-case routing -> planning/planning-use-case-map.md
+2. workflow activation routing -> planning/workflow-activation-map.md
+3. planning maintenance follow-up -> planning/planning-maintenance-register.md
+4. documentation architecture/process/commands/prompt/sync note -> planning/documentation/documentation-responsibility-map.md
+5. scenario text/DATA/UI/behavior source -> planning/diagrams/scenario-*/
+6. domain concepts/drafts/decisions -> planning/tables/ now, future domain layer responsibility map
+7. slice-layer placement/routing -> planning/slices/slice-responsibility-map.md
+8. slice-to-source mapping -> planning/slices/slice-scenario-flow-behavior-register.md
+9. slice draft authoring principles -> planning/slices/slice-draft-authoring-principles.md
+10. server implementation principles -> planning/slices/server-implementation-principles.md
+11. client implementation/CSS/a11y/form/UI rules -> planning/slices/client-*.md
+12. active parent backend/business slice file -> planning/slices/SL-*.md now or planning/slices/server/ for new drafts
+13. client sidecar file -> planning/slices/client/ for new drafts; legacy sidecars may still live in planning/slices/l1 or planning/slices/l2
+14. slice-wide question overview -> planning/slices/slice-questions-register.md
+15. extension/change pressure -> planning/slices/slice-extension-points-register.md
+16. future implementation/client/testing note -> planning/slices/slice-implementation-notes-register.md
+17. architecture-level cleanup / legacy-current boundary -> planning/architecture/
+18. agent scope/prompt safety rule -> planning/agent-scope-boundaries-and-prompt-safety.md
+19. repo-grounded evidence line links -> planning/repo-grounded-github-line-links-workflow.md
+20. client/server contract split -> planning/api/client-server-contract-principles.md
+21. test layer boundaries / E2E workflow -> planning/testing/
+22. accepted/current architecture decision -> architecture-decision-notes.md
+23. possible future full ADR -> adr-candidates.md
+24. VKR/presentation/defense clean wording -> planning/vkr-clean-reference.md
+25. raw non-canonical recovery wording -> planning/dirty-drafts/
+26. broad docs/navigation/status/register update plan -> planning/documentation/documentation-update-plan-workflow.md
+27. planning documentation architecture principle -> planning/documentation/planning-docs-architecture-principles.md
+28. reviewable AI/agent response format and commands -> planning/documentation/reviewable-agent-output-and-commands-workflow.md
+29. documentation local/global sync rule -> planning/documentation/local-global-documentation-sync-workflow.md
 ```
 
 ## 14. Future Cleanup Rule
