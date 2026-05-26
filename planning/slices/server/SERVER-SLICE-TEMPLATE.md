@@ -7,9 +7,19 @@ Use with:
 
 ```text
 planning/slices/slice-draft-authoring-principles.md
+planning/slices/slice-draft-authoring-workflow.md
 planning/slices/server-implementation-principles.md
 planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
 planning/slices/slice-test-plan-workflow.md
+```
+
+Authoring notes:
+
+```text
+- Use planning/slices/slice-draft-authoring-workflow.md for the process.
+- Use this template for output shape.
+- Compact mode is allowed for small/simple slices when scope, boundary and proof remain clear.
+- For high-risk or separately reviewed sections, include section-level sources using the shape from slice-draft-authoring-workflow.md.
 ```
 
 ````markdown
@@ -349,6 +359,7 @@ Use only when preparing for implementation or syncing with already implemented c
 [ ] Confirm application/domain responsibilities match draft.
 [ ] Confirm persistence boundary and no-partial-write behavior.
 [ ] Confirm tests assert required outcomes.
+[ ] Confirm local/global sync was checked.
 [ ] Mark runtime implementation checked yes/no.
 ```
 
