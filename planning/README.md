@@ -110,6 +110,28 @@ planning/diagrams/scenario-behavior-items/
 planning/diagrams/scenario-clarifications/
 ```
 
+### Domain discovery and aggregate draft truth
+
+Use:
+
+```text
+planning/domain/README.md
+planning/domain/domain-responsibility-map.md
+planning/domain/domain-discovery-workflow.md
+planning/domain/scenario-to-aggregate-map.md
+planning/domain/aggregate-drafting-workflow.md
+planning/domain/value-object-drafting-workflow.md
+```
+
+For historical/cross-check source material, use:
+
+```text
+planning/tables/domain-drafts/
+planning/tables/pre-domain-variants-input.md
+```
+
+Domain docs describe intended domain model and draft structure. They are not implementation proof.
+
 ### Slice scope truth
 
 Use:
@@ -210,6 +232,37 @@ planning/diagrams/scenario-clarifications/README.md
 planning/diagrams/diagram-prompt-generation-workflow.md
 planning/diagrams/drawio-diagram-generation-workflow.md
 ```
+
+### For domain work
+
+Read:
+
+```text
+planning/workflow-activation-map.md
+planning/planning-use-case-map.md
+planning/planning-doc-responsibility-map.md
+planning/domain/README.md
+planning/domain/domain-responsibility-map.md
+planning/domain/domain-discovery-workflow.md
+planning/domain/scenario-to-aggregate-map.md
+planning/domain/domain-modeling-principles.md
+```
+
+For aggregate drafting, also read:
+
+```text
+planning/domain/aggregate-drafting-workflow.md
+planning/domain/aggregate-draft-template.md
+```
+
+For value object drafting, also read:
+
+```text
+planning/domain/value-object-drafting-workflow.md
+planning/domain/value-object-draft-template.md
+```
+
+Use `planning/tables/domain-drafts/` only as historical/cross-check source material unless a task explicitly asks about old monolithic drafts.
 
 ### For slice work
 

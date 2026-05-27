@@ -135,6 +135,10 @@ The preflight is not a permission grant. It only makes the intended workflow pat
 | `planning/documentation/status-reconciliation-workflow.md` | Docs status may differ from code/tests/generated artifacts | `conditional implicit` | No for analysis; yes for edits | Status findings / sync plan |
 | `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | Non-trivial answer, audit, plan, handoff, level/lvl/ур command, recheck, clarify, keep prev, no ch/без изм, use archive/арх, active-context draft/update command, section command | `response-format` / `response-command` | No | Structured reviewable answer or response-level command behavior |
 | `planning/diagrams/scenario-drafting-workflow.md` | Scenario text/DATA/UI/behavior items/questions/clarifications work | `conditional implicit` | No for draft/analysis; yes for edits | Scenario source workflow |
+| `planning/domain/domain-responsibility-map.md` | Need to place domain-layer information or decide domain file owner | `conditional implicit` | No | Domain-layer owner routing |
+| `planning/domain/domain-discovery-workflow.md` | Scenario behavior sources need to be converted into aggregate/value-object candidates or scenario-to-aggregate map | `conditional implicit` | No for analysis/draft; yes for edits | Domain discovery workflow |
+| `planning/domain/aggregate-drafting-workflow.md` | Create/review/update one aggregate draft or extract one aggregate from historical domain sources | `conditional implicit` | No for draft/analysis; yes for edits | Aggregate draft workflow |
+| `planning/domain/value-object-drafting-workflow.md` | Create/review/update one value object draft from VI behavior items or aggregate usage | `conditional implicit` | No for draft/analysis; yes for edits | Value object draft workflow |
 | `planning/slices/slice-responsibility-map.md` | Need to place slice-layer information or decide slice file owner | `conditional implicit` | No | Slice-layer owner routing |
 | `planning/slices/slice-draft-authoring-principles.md` | Create/review/refactor slice draft structure or section meaning | `conditional implicit` | No | Slice draft authoring rules |
 | `planning/slices/slice-draft-authoring-workflow.md` | Create/review/refactor a slice draft or prepare slice draft plan | `conditional implicit` | No for draft/analysis; yes for edits | Root slice draft authoring process |
@@ -224,6 +228,35 @@ agent-roles-and-required-actions.md
 workflow-activation-map.md
 planning-use-case-map.md, for action/use-case trace if needed
 scenario-drafting-workflow.md
+local-global-documentation-sync-workflow.md
+reviewable-agent-output-and-commands-workflow.md
+```
+
+### Domain discovery / aggregate draft work
+
+Trigger examples:
+
+```text
+analyze domain draft;
+create/update scenario-to-aggregate map;
+extract aggregate from old domain draft;
+create/review aggregate draft;
+create/review value object draft;
+review cross-aggregate coordination.
+```
+
+Activated workflows:
+
+```text
+planning-agent-protocol.md
+agent-roles-and-required-actions.md
+workflow-activation-map.md
+planning-use-case-map.md
+planning-doc-responsibility-map.md
+domain/domain-responsibility-map.md
+domain/domain-discovery-workflow.md, for scenario -> aggregate/value-object discovery
+domain/aggregate-drafting-workflow.md, for one aggregate draft
+domain/value-object-drafting-workflow.md, for one value object draft
 local-global-documentation-sync-workflow.md
 reviewable-agent-output-and-commands-workflow.md
 ```
