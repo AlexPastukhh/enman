@@ -5,7 +5,7 @@ Scope: reusable/non-trivial value objects and value-integrity concepts
 
 ## 1. Purpose
 
-This folder will contain value object drafts.
+This folder contains value object drafts.
 
 Create a value object draft when the candidate is:
 
@@ -18,7 +18,17 @@ Create a value object draft when the candidate is:
 
 Do not create a value object file for every primitive wrapper by default.
 
-## 2. Drafting
+## 2. Current Drafts
+
+| File | Value object | Status | Used by |
+|---|---|---|---|
+| `agreement-proposal-version.md` | `AgreementProposalVersion` | draft / extracted pilot | `AgreementProposalExchange` |
+| `agreement-proposal-author.md` | `AgreementProposalAuthor` | draft / extracted pilot | `AgreementProposalExchange` |
+| `agreement-document-ref.md` | `AgreementDocumentRef` | draft / extracted pilot | `AgreementProposalExchange` |
+| `proposal-comment.md` | `ProposalComment` | draft / extracted pilot | `AgreementProposalExchange` |
+| `final-refusal-reason.md` | `FinalRefusalReason` | draft / extracted pilot | `AgreementProposalExchange` |
+
+## 3. Drafting
 
 Use:
 
@@ -28,7 +38,7 @@ planning/domain/value-object-draft-template.md
 planning/domain/scenario-to-aggregate-map.md
 ```
 
-## 3. Relationship To Aggregates
+## 4. Relationship To Aggregates
 
 Aggregate drafts should reference value object files in their `Value Objects Used` section.
 

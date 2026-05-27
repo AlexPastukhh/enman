@@ -57,14 +57,30 @@ Do not do before: before domain scaffold and source/version model are both stabl
 
 ```text
 ID: DN-002
-Status: candidate
+Status: extracted
 Area: aggregate extraction
-Note: AgreementProposalExchange is preferred as the first aggregate extraction pilot because it has child entities, value object candidates and cross-aggregate coordination with Request.
-Source: domain layer conversion planning and existing L2 agreement/domain sources
+Note: AgreementProposalExchange was extracted as the first aggregate pilot with value object draft files for proposal version, proposal author, document reference, proposal comment and final refusal reason.
+Source: domain layer conversion planning, SC-13D behavior items, L2 agreement behavior items, Domain Draft 02 and current AgreementProposal implementation sources in archive
 Likely owner: planning/domain/aggregates/agreement-proposal-exchange.md
 Target file: planning/domain/aggregates/agreement-proposal-exchange.md
-Trigger: first aggregate extraction batch
-Decision needed: exact source set for pilot extraction
-Do when: after scaffold and scenario-to-aggregate map exist
-Do not do before: before aggregate template/workflow exist
+Trigger: completed by first aggregate extraction batch
+Decision needed: none for scaffold; scenario open questions remain in scenario-to-aggregate-map.md
+Do when: done
+Do not do before: n/a
+```
+
+### DN-003 — Resolve SC-13D proposal comment and supersede wording questions
+
+```text
+ID: DN-003
+Status: open
+Area: scenario/domain source synchronization
+Note: The pilot extraction follows current domain direction: proposal replacement uses SupersededByCounterProposal, and ProposalComment is optional but non-empty when present. Scenario questions Q-SC-13D-001 and Q-SC-13D-002 should be resolved/synchronized later.
+Source: planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+Likely owner: scenario layer + domain layer
+Target file: planning/diagrams/scenario-questions-register.md and planning/domain/scenario-to-aggregate-map.md
+Trigger: next scenario/domain sync pass
+Decision needed: close or update the two SC-13D questions
+Do when: before treating SC-13D as fully synchronized
+Do not do before: before reviewing current scenario question register
 ```
