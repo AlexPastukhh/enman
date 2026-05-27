@@ -225,6 +225,8 @@ Read:
 planning/workflow-activation-map.md
 planning/planning-use-case-map.md
 planning/diagrams/README.md
+planning/diagrams/scenario-responsibility-map.md
+planning/diagrams/scenario-artifact-map.md
 planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
 planning/diagrams/scenario-data/00-scenario-data-index.md
 planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md

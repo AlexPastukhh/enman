@@ -33,14 +33,14 @@ folder README / index
   = navigation and read order.
 ```
 
-Until local responsibility maps exist for all layers, this file keeps transitional fallback routing for scenario, API/testing, architecture and VKR responsibilities. Domain-specific placement now starts from `planning/domain/domain-responsibility-map.md`. Slice-specific placement now starts from `planning/slices/slice-responsibility-map.md`.
+Until local responsibility maps exist for all layers, this file keeps transitional fallback routing for API/testing, architecture and VKR responsibilities. Scenario-specific placement now starts from `planning/diagrams/scenario-responsibility-map.md`. Domain-specific placement now starts from `planning/domain/domain-responsibility-map.md`. Slice-specific placement now starts from `planning/slices/slice-responsibility-map.md`.
 
 ## 2. Layer Router
 
 | Layer | Belongs here | Local responsibility entry |
 |---|---|---|
 | Documentation | Planning-doc architecture, docs update workflows, documentation-layer placement, agent output rules, response-level commands, documentation prompts and scoped sync notes. | `planning/documentation/documentation-responsibility-map.md` |
-| Scenario | Scenario text specs, UI specs, DATA sources, behavior items, clarifications and scenario questions. | `planning/diagrams/README.md` now; future scenario responsibility map. |
+| Scenario | Scenario text specs, UI specs, DATA sources, behavior items, clarifications, scenario questions and scenario artifact mapping. | `planning/diagrams/scenario-responsibility-map.md` |
 | Domain | Domain discovery, scenario-to-aggregate mapping, aggregate drafts, value object drafts, aggregate boundaries, accepted domain decisions and domain notes. | `planning/domain/domain-responsibility-map.md` |
 | Slice | Slice drafts, slice source mapping, behavior coverage, Behavior-to-Test Trace inside slice drafts, slice questions, extension points, implementation notes, client/server/cross-cutting sidecars and slice workflows/templates/principles. | `planning/slices/slice-responsibility-map.md` |
 | API | API contract rules, OpenAPI generation rules, client/server contract rules, API error contracts and generated artifact rules. | `planning/api/README.md` |
@@ -114,8 +114,19 @@ Architecture docs do not replace slice docs, scenario sources, API contract docs
 
 ## 8. Scenario Source Responsibility
 
+Detailed scenario-layer placement now belongs to:
+
+```text
+planning/diagrams/scenario-responsibility-map.md
+```
+
+Transitional overview:
+
 | File / folder | Responsibility |
 |---|---|
+| `planning/diagrams/README.md` | Scenario-layer entrypoint and read order |
+| `planning/diagrams/scenario-responsibility-map.md` | Local responsibility map for scenario-layer placement/routing |
+| `planning/diagrams/scenario-artifact-map.md` | Currentness and artifact mapping across text/DATA/UI/behavior/clarification files |
 | `planning/scenario-specification-principles.md` | Scenario specification principles and source-of-truth rules |
 | `planning/scenario-domain-validation-principles.md` | Client-side vs server/domain validation distinction and domain-design input rules |
 | `planning/diagrams/scenario-drafting-workflow.md` | Practical scenario draft workflow |
@@ -123,6 +134,7 @@ Architecture docs do not replace slice docs, scenario sources, API contract docs
 | `planning/diagrams/scenario-data/` | Scenario DATA files: entered/seen/selected/filtered/attached/referenced data only |
 | `planning/diagrams/scenario-ui-specs/` | `[UI-SCENARIO]` UI-visible requirements and accepted UI decisions, not React implementation |
 | `planning/diagrams/scenario-behavior-items/` | Scenario-derived, UI-scenario-derived and concern-derived behavior items |
+| `planning/diagrams/scenario-clarifications/` | Temporary scenario-level clarification/guardrail files |
 | `planning/diagrams/scenario-questions-register.md` | Scenario/domain questions that can change scenario behavior, DATA, UI requirements or diagrams |
 
 ## 9. Domain Responsibility
@@ -241,7 +253,7 @@ Use this file first to choose the layer. Then use the local responsibility map o
 2. workflow activation routing -> planning/workflow-activation-map.md
 3. planning maintenance follow-up -> planning/planning-maintenance-register.md
 4. documentation architecture/process/commands/prompt/sync note -> planning/documentation/documentation-responsibility-map.md
-5. scenario text/DATA/UI/behavior source -> planning/diagrams/scenario-*/
+5. scenario text/DATA/UI/behavior/source placement -> planning/diagrams/scenario-responsibility-map.md
 6. domain discovery/aggregate/value-object/decision placement -> planning/domain/domain-responsibility-map.md
 7. slice-layer placement/routing -> planning/slices/slice-responsibility-map.md
 8. slice-to-source mapping -> planning/slices/slice-scenario-flow-behavior-register.md

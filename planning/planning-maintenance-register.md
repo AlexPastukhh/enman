@@ -598,6 +598,36 @@ Notes:
   Current scaffold intentionally uses simple source sections and should be revisited later.
 ```
 
+### PMR-020 — Finish scenario stale source and diagram report cleanup
+
+```text
+ID: PMR-020
+Status: waiting-for-condition
+Area: scenario documentation / stale source cleanup
+Task / reminder:
+  After scenario responsibility/artifact maps are accepted, finish cleanup of stale scenario variants, deprecated validation addendum references and scenario diagram consistency report wording.
+Trigger / condition:
+  scenario-responsibility-map.md and scenario-artifact-map.md exist and have been used for at least one scenario cleanup or downstream draft.
+Why it matters:
+  Scenario layer now has current routing, but some old scenario variants and diagram reports may still contain stale current-source wording.
+Owner layer:
+  scenario / documentation governance
+Target files:
+  planning/diagrams/scenario-artifact-map.md
+  planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
+  planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
+  planning/diagrams/scenario-diagram-consistency-report.md
+  planning/diagrams/diagram-prompt-generation-workflow.md
+Depends on:
+  scenario responsibility/artifact map scaffold
+Do when:
+  Before the next broad diagram generation or before treating scenario indexes as final.
+Do not do before:
+  Do not delete or move old scenario variants until currentness and downstream references are checked.
+Notes:
+  Keep deprecated global validation addendum as historical source only; do not reintroduce it as current source of truth.
+```
+
 ## 4. Maintenance Rules
 
 ```text

@@ -1,26 +1,62 @@
-﻿# Scenario Text Specifications Index
+# Scenario Text Specifications Index
 
-Status: current / L1 foundation + near-final L2 Employee Review Agreement scenarios synchronized
+Status: current scenario text-spec index / first-pass currentness cleanup  
+Scope: current, variant, historical and deprecated scenario text specs
 
-Current relevant scenarios:
+## 1. Current Primary Scenario Text Specs
 
-```text
-SC-04   Client Request Creation
-SC-05   My Requests / Own Request Details
-SC-06   Employee Request Dashboard
-SC-07A  Employee Request Details
-SC-07B  Employee Request Review
-SC-10   Applicant Data
-SC-10B  Applicant Parties Future Same-Page Management
-SC-13A  Client Agreements
-SC-13B  Client Agreement Proposal Details / Response
-SC-13C  Employee Agreements
-SC-13D  Employee Agreement Proposal Create / Send Version
-SC-13E  Agreement Final Refusal
-SC-14   Agreement Documents
-```
+| Scenario | Current primary file | Status | Notes |
+|---|---|---|---|
+| SC-01 Guest Registration | `SC-01-guest-registration.md` | current | Auth/account source. |
+| SC-02 Login | `SC-02-login.md` | current | Auth/session source. |
+| SC-03A Password Recovery Request | `SC-03A-password-recovery-request.md` | current | Auth recovery source. |
+| SC-03B Account Owner Verified | `SC-03B-account-owner-verified.md` | current | Account activation/verification source. |
+| SC-04 Client Request Creation | `SC-04-client-request-creation.md` | current primary | Uses explicit Existing/New applicant context. |
+| SC-05 My Requests / Own Request Details | `SC-05-my-requests-own-request-details.md` | current primary | Own request list/details source. |
+| SC-06 Employee Request Dashboard | `SC-06-employee-request-dashboard.md` | current | Employee request list/dashboard. |
+| SC-07A Employee Request Details | `SC-07A-employee-request-details.md` | current | Employee read/details scenario. |
+| SC-07B Employee Request Review | `SC-07B-employee-request-review.md` | current | Employee approve/reject review scenario. |
+| SC-10 Applicant Data | `SC-10-applicant-data.md` | current | ApplicantParty/default applicant source. |
+| SC-10B My Applicant Parties | `SC-10B-my-applicant-parties.md` | future/current design | Same-page applicant party management. |
+| SC-11 Request Documents | `SC-11-request-documents.md` | planned/future | Request documents source. |
+| SC-13A My Agreements | `SC-13A-my-agreements.md` | current primary | Preferred over older client-agreements naming. |
+| SC-13B Agreement Proposal Details / Response | `SC-13B-agreement-proposal-details-response.md` | current primary | Preferred over older client-agreement naming. |
+| SC-13C Employee Agreements | `SC-13C-employee-agreements.md` | current | Employee agreement list/source. |
+| SC-13D Employee Agreement Proposal Create / Send Version | `SC-13D-employee-agreement-proposal-create-response.md` | current primary | Preferred current file; send-version file is terminology variant/context. |
+| SC-13E Agreement Final Refusal | `SC-13E-agreement-final-refusal.md` | current | Final refusal is exchange state. |
+| SC-14 Agreement Documents | `SC-14-agreement-documents.md` | current primary | SC-14 means Agreement Documents / AgreementDocumentRef. |
+| SC-15 Security | `SC-15-security-text-specification.md` | current cross-cutting | Security behavior source. |
+| SC-17 Anonymous Request | `SC-17-anonymous-request.md` | future/deferred | Anonymous request source. |
+| SC-18 Archive/Audit Deferred | `SC-18-archive-audit-deferred.md` | future/deferred | Archive/audit deferred source. |
 
-## Current L1 applicant decision
+## 2. Merged / Historical Text Specs
+
+| File | Status | Notes |
+|---|---|---|
+| `SC-08-merged-approved-result.md` | merged/historical | Approved result behavior is covered by request/review sources. |
+| `SC-09-merged-rejected-result.md` | merged/historical | Rejected result behavior is covered by request/review sources. |
+| `SC-12-merged-review-feedback-correction-navigation.md` | merged/future | Review feedback/correction navigation context. |
+| `SC-13-pending-agreement-proposal-model.md` | historical/pending context | Early agreement proposal model source. |
+| `SC-16-removed-notification-navigation.md` | historical/removed | Removed notification navigation. |
+
+## 3. Variant / Legacy Naming Files
+
+| File | Status | Current route |
+|---|---|---|
+| `SC-13A-client-agreements.md` | legacy naming variant | Prefer `SC-13A-my-agreements.md`. |
+| `SC-13B-client-agreement-proposal-details-response.md` | legacy naming variant | Prefer `SC-13B-agreement-proposal-details-response.md`. |
+| `SC-13D-employee-agreement-proposal-create-send-version.md` | terminology variant/context | Prefer `SC-13D-employee-agreement-proposal-create-response.md` until explicitly renamed/superseded. |
+| `SC-14-client-data-verification.md` | stale/deferred old meaning | Current SC-14 is `SC-14-agreement-documents.md`. |
+
+## 4. Addenda / Deprecated Context
+
+| File | Status | Current route |
+|---|---|---|
+| `scenario-account-activation-security-addendum.md` | context/current where relevant | Use with auth/account scenarios. |
+| `scenario-browser-security-addendum.md` | context/current where relevant | Use with browser/security scenarios. |
+| `deprecated/scenario-server-domain-validation-addendum.deprecated.md` | deprecated historical source | Use `planning/scenario-domain-validation-principles.md`, scenario-local behavior items, clarifications and domain docs instead. |
+
+## 5. Current L1 Applicant Decision
 
 ```text
 many saved ApplicantParties;
@@ -29,34 +65,7 @@ current/default is prefill/default only;
 request creation uses explicit Existing/New applicant context.
 ```
 
-## L2 scenario source direction
-
-Primary L2 domain source:
-
-```text
-planning/tables/domain-drafts/domain-draft-02.md
-```
-
-Current L2 planning status:
-
-```text
-planning/l2-current-planning-status.md
-```
-
-L2 scenario family:
-
-```text
-Employee / employee-side request review;
-AgreementProposalExchange;
-AgreementProposal versions;
-AgreementDocumentRef metadata references;
-ProposalComment;
-Client accept active proposal;
-Employee final refusal;
-Request AgreementExchangeFailed result.
-```
-
-Naming guardrail:
+## 6. Current L2 / Agreement Guardrails
 
 ```text
 Use Employee, Start/Started, StartReview, StartByEmployee,
@@ -64,57 +73,20 @@ EmployeeSendNewVersion, AwaitingEmployeeResponse.
 
 Do not use Worker, Open/Opened, EmployeeRef, WorkerRef,
 StartByWorker or AwaitingWorkerResponse.
-```
 
-Agreement terminology guardrail:
-
-```text
 Counter-proposal replacement is SupersededByCounterProposal,
 not ordinary Rejected.
 
 Rejected is only explicit rejection/decline.
-```
 
-SC-14 guardrail:
-
-```text
 Current SC-14 is Agreement Documents / AgreementDocumentRef.
 Do not use stale SC-14 Client Data Verification wording for current agreement diagrams.
 ```
 
-## Current L2 slice alignment
+## 7. Artifact Map
+
+For full currentness and cross-layer mapping, read:
 
 ```text
-SC-06  -> SL-EMP-REQ-001 / L2-EMP-DASH-001.client
-SC-07A -> SL-EMP-REQ-002 / L2-EMP-DETAILS-001.client
-SC-07B -> SL-EMP-REQ-003..005 / L2-REVIEW-START/APPROVE/REJECT sidecars
-SC-13A -> SL-AGR-EXCH-003 / L2-AGR-EXCH-LIST-001.client
-SC-13B -> SL-AGR-EXCH-002,005 / send-proposal + accept sidecars
-SC-13C -> SL-AGR-EXCH-003,004 / employee list/details views for existing exchanges
-SC-13D -> SL-AGR-EXCH-001,002 / start initial proposal + employee counter-proposal
-SC-13E -> SL-AGR-EXCH-006 / final refusal sidecar
-SC-14  -> SL-DOC-* future document/reference family and AgreementDocumentRef usage in agreement slices
+planning/diagrams/scenario-artifact-map.md
 ```
-
-## Scenario-local Diagram Markers
-
-Marker: SCENARIO-STATUS-MARKERS-2026-05
-
-L2 scenario specs may include `## Diagram / Implementation Markers` sections so diagrams can show planned/future/deferred items uniformly.
-
-Use:
-
-```text
-planning/diagrams/scenario-status-marker-rules.md
-```
-
-Interpretation:
-
-```text
-[PLANNED] = future implementation work in the current L2 plan.
-[DEFERRED] = future extension outside current L2 cut.
-[DESIGNED] = accepted domain/scenario target.
-[QUESTION] = unresolved source/contract question.
-[IMPLEMENTED] = only with current repo evidence.
-```
-

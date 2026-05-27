@@ -19,6 +19,7 @@ validation/security addendum
 scenario behavior items
 scenario questions register
 scenario clarifications
+scenario artifact map when currentness or file routing changes
 diagram request/prompt, when diagrams are requested
 ```
 
@@ -33,6 +34,8 @@ planning/agent-roles-and-required-actions.md
 planning/scenario-specification-principles.md
 planning/scenario-domain-validation-principles.md
 planning/diagrams/README.md
+planning/diagrams/scenario-responsibility-map.md
+planning/diagrams/scenario-artifact-map.md
 planning/diagrams/scenario-text-specs/README.md
 planning/diagrams/scenario-data/README.md
 planning/diagrams/scenario-ui-specs/README.md, if exists

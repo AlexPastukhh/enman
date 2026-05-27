@@ -1,37 +1,97 @@
 # Scenario / Diagram Planning Index
 
-Status: current / near-final L2 Employee Review Agreement scenarios and diagram workflow synchronized  
-Scope: scenario text specs, DATA, UI specs, behavior items, questions, clarifications, diagram prompt workflow and draw.io diagram generation workflow
+Status: current scenario-layer entrypoint / source routing and diagram workflow index  
+Scope: scenario text specs, DATA, UI specs, behavior items, questions, clarifications, scenario artifact map and diagram-generation workflows
 
 ## 1. Purpose
 
-This folder contains scenario and specification source artifacts and diagram-generation workflow docs.
+This folder contains scenario/source artifacts and diagram-generation workflow docs.
 
 It supports:
 
 ```text
 scenario/specification drafting
+scenario source cleanup
+scenario artifact discovery
 repo-grounded diagram prompt preparation
 repo-grounded draw.io diagram generation for VKR-clean artifacts
 ```
 
-## 2. Main Artifact Types
+## 2. Local Routing
+
+Use the local responsibility map for placement decisions:
+
+```text
+planning/diagrams/scenario-responsibility-map.md
+```
+
+Use the artifact map to see which SC files are current, variant, stale or historical:
+
+```text
+planning/diagrams/scenario-artifact-map.md
+```
+
+## 3. Main Artifact Types
 
 ```text
 scenario drafting workflow
+scenario artifact map
 scenario text specs
 scenario DATA files
 scenario UI specs
 scenario questions register
 scenario behavior items
 scenario clarifications
+scenario cross-cutting behavior
 diagram request/prompt and preflight workflow
 draw.io diagram-generation workflow
 ```
 
-Validation/domain rules should now live in scenario-local, behavior, clarification or slice-local docs. Do not treat old global server-domain validation addenda as source of truth.
+Validation/domain rules should live in scenario-local behavior items, clarifications, domain docs or slice-local docs. Do not treat old global server-domain validation addenda as source of truth.
 
-## 3. Scenario Drafting Workflow
+## 4. Scenario Source Read Order
+
+For scenario/diagram work, read:
+
+```text
+planning/scenario-specification-principles.md
+planning/scenario-domain-validation-principles.md
+planning/diagrams/scenario-responsibility-map.md
+planning/diagrams/scenario-drafting-workflow.md
+planning/diagrams/scenario-artifact-map.md
+planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
+planning/diagrams/scenario-data/00-scenario-data-index.md
+planning/diagrams/scenario-ui-specs/00-scenario-ui-specs-index.md
+planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
+planning/diagrams/scenario-clarifications/README.md
+planning/diagrams/scenario-questions-register.md
+```
+
+For domain downstream interpretation, also read:
+
+```text
+planning/domain/README.md
+planning/domain/scenario-to-aggregate-map.md
+planning/domain/domain-model-overview.md
+```
+
+For slice downstream interpretation, also read:
+
+```text
+planning/slices/README.md
+planning/slices/slice-scenario-flow-behavior-register.md
+planning/slices/SLICE-INDEX.md
+```
+
+For diagrams, also read:
+
+```text
+planning/diagrams/diagram-prompt-generation-workflow.md
+planning/diagrams/drawio-diagram-generation-workflow.md
+planning/diagrams/scenario-status-marker-rules.md
+```
+
+## 5. Scenario Drafting Workflow
 
 Use:
 
@@ -48,40 +108,17 @@ scenario UI spec, when relevant
 scenario behavior items
 scenario questions register
 scenario clarifications, when needed
-slice source registers when slice mapping changes
+scenario artifact map when currentness or file routing changes
+domain/slice source maps when downstream mapping changes
 ```
 
-## 4. Scenario Source Read Order
-
-For scenario/diagram work, read:
+## 6. Current Scenario Families
 
 ```text
-planning/scenario-specification-principles.md
-planning/scenario-domain-validation-principles.md
-planning/diagrams/scenario-drafting-workflow.md
-planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
-planning/diagrams/scenario-data/00-scenario-data-index.md
-planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
-planning/diagrams/scenario-clarifications/README.md
-planning/diagrams/scenario-questions-register.md
-```
-
-For L2 Employee/Review/Agreement scenarios also read:
-
-```text
-planning/l2-current-planning-status.md
-planning/tables/domain-drafts/domain-draft-02.md
-planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
-planning/diagrams/scenario-clarifications/L2-validation-and-agreement-exchange-source-cleanup.md
-planning/diagrams/scenario-clarifications/L2-agreement-scenario-slice-followup-cleanup.md
-planning/slices/README.md
-planning/slices/slice-scenario-flow-behavior-register.md
-planning/slices/SLICE-INDEX.md
-```
-
-## 5. Current Scenario Families
-
-```text
+SC-01  Guest Registration
+SC-02  Login
+SC-03A Password Recovery Request
+SC-03B Account Owner Verified
 SC-04  Client Request Creation
 SC-05  My Requests / Own Request Details
 SC-06  Employee Request Dashboard
@@ -89,27 +126,30 @@ SC-07A Employee Request Details
 SC-07B Employee Request Review
 SC-10  Applicant Data
 SC-10B Applicant Parties Future Same-Page Management
-SC-13A Client Agreements
-SC-13B Client Agreement Proposal Details / Response
+SC-11  Request Documents
+SC-13A Client/My Agreements
+SC-13B Agreement Proposal Details / Response
 SC-13C Employee Agreements
 SC-13D Employee Agreement Proposal Create / Send Version
 SC-13E Agreement Final Refusal
 SC-14  Agreement Documents
+SC-15  Security
+SC-17  Anonymous Request
+SC-18  Archive/Audit Deferred
 ```
 
-Important SC-14 rule:
+For exact file mapping and variant status, use:
 
 ```text
-Current SC-14 means Agreement Documents / AgreementDocumentRef.
-Old Client Data Verification wording under SC-14 is stale/deprecated/deferred and must not be used for current agreement-document diagrams.
+planning/diagrams/scenario-artifact-map.md
 ```
 
-## 6. Current L2 Scenario Guardrails
+## 7. Current Guardrails
 
 ```text
 Use Employee, not Worker.
 Request owns RequestReview.
-Review is not aggregate and has no repository.
+Review is not an aggregate and has no repository.
 RejectReview feedback is optional unless implementation intentionally changes it.
 ApproveReview enables later agreement exchange start but does not create exchange.
 AgreementProposalExchange and Request are separate aggregates.
@@ -120,9 +160,10 @@ AgreementProposalVersion is local per exchange and generated by exchange.
 Counter-proposal replacement is SupersededByCounterProposal, not ordinary Rejected.
 Final refusal is exchange state, not separate entity and not proposal version.
 AgreementDocumentRef is document metadata reference, not file bytes/storage adapter.
+Current SC-14 means Agreement Documents / AgreementDocumentRef, not Client Data Verification.
 ```
 
-## 7. Diagram Workflow Files
+## 8. Diagram Workflow Files
 
 ```text
 planning/diagrams/diagram-prompt-generation-workflow.md
@@ -141,46 +182,7 @@ Diagram Chat phases:
 
 Do not generate all diagrams at once by default.
 
-## 8. Status Markers For Diagrams
-
-```text
-[CORE]
-[IMPLEMENTED]
-[DESIGNED]
-[PLANNED]
-[DEFERRED]
-[QUESTION]
-```
-
-Do not overclaim implementation status. `[IMPLEMENTED]` requires current repo evidence.
-
-## 9. Recommended Diagram Batches
-
-```text
-Part 1 вЂ” Core request/domain:
-  01 Use Case Overview
-  04 Request Lifecycle
-  06 Domain Model Overview
-  08 Request Creation Sequence
-  09 Request Review Sequence
-
-Part 2 вЂ” Client/employee/security/architecture:
-  02 Client Use Cases
-  03 Employee Use Cases
-  05 Account Activation Lifecycle
-  07 High-Level Architecture
-
-Part 3 вЂ” Agreement:
-  10 Agreement Use Cases
-  11 Agreement Proposal Lifecycle
-  12 Agreement Proposal Sequence
-```
-
-## Scenario Status Markers
-
-Marker: SCENARIO-STATUS-MARKERS-2026-05
-
-For post-L1/L2 diagrams, scenario files may contain `## Diagram / Implementation Markers` sections.
+## 9. Status Markers For Diagrams
 
 Read:
 
@@ -188,7 +190,7 @@ Read:
 planning/diagrams/scenario-status-marker-rules.md
 ```
 
-Use the same marker vocabulary as diagram generation:
+Use:
 
 ```text
 [CORE]
@@ -199,11 +201,26 @@ Use the same marker vocabulary as diagram generation:
 [QUESTION]
 ```
 
-Important:
+Scenario markers help diagrams distinguish current target, planned implementation and deferred extensions. They do not prove implementation status.
+
+## 10. Recommended Diagram Batches
 
 ```text
-Scenario markers help diagrams distinguish current target, planned implementation and deferred extensions.
-They do not prove implementation status.
-Diagram preflight must still inspect current repo evidence before using [IMPLEMENTED].
-```
+Part 1 — Core request/domain:
+  01 Use Case Overview
+  04 Request Lifecycle
+  06 Domain Model Overview
+  08 Request Creation Sequence
+  09 Request Review Sequence
 
+Part 2 — Client/employee/security/architecture:
+  02 Client Use Cases
+  03 Employee Use Cases
+  05 Account Activation Lifecycle
+  07 High-Level Architecture
+
+Part 3 — Agreement:
+  10 Agreement Use Cases
+  11 Agreement Proposal Lifecycle
+  12 Agreement Proposal Sequence
+```
