@@ -27,6 +27,8 @@ Do not create a value object file for every primitive wrapper by default.
 | `agreement-document-ref.md` | `AgreementDocumentRef` | draft / extracted pilot | `AgreementProposalExchange` |
 | `proposal-comment.md` | `ProposalComment` | draft / extracted pilot | `AgreementProposalExchange` |
 | `final-refusal-reason.md` | `FinalRefusalReason` | draft / extracted pilot | `AgreementProposalExchange` |
+| `object-address.md` | `ObjectAddress` / current `Address` implementation | draft / extracted with Request | `ConnectionRequest` |
+| `rejection-feedback.md` | `RejectionFeedback` | draft / extracted with Request | `ConnectionRequest` / `RequestReview` |
 
 ## 3. Drafting
 

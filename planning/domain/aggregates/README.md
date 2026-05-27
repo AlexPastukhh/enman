@@ -27,6 +27,7 @@ behavior coverage.
 | File | Aggregate root | Status | Notes |
 |---|---|---|---|
 | `agreement-proposal-exchange.md` | `AgreementProposalExchange` | draft / first extraction pilot | Extracted from SC-13D/L2 agreement behavior, Domain Draft 02 and current AgreementProposal implementation sources. |
+| `connection-request.md` | `ConnectionRequest` | draft / second extraction pilot | Extracted from SC-04 request creation, SC-07B request review, Domain Draft 02 and current Request implementation sources. |
 
 ## 3. Historical Source Snapshots
 

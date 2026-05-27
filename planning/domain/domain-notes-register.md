@@ -84,3 +84,35 @@ Decision needed: close or update the two SC-13D questions
 Do when: before treating SC-13D as fully synchronized
 Do not do before: before reviewing current scenario question register
 ```
+
+### DN-004 — ConnectionRequest extraction and ApplicantParty snapshot question
+
+```text
+ID: DN-004
+Status: extracted / open follow-up
+Area: aggregate extraction / applicant relation
+Note: ConnectionRequest was extracted as the second aggregate. It currently stores ApplicantPartyId/ClientAccountId and does not own ApplicantParty creation or immutable applicant snapshot data. Whether request details should include immutable applicant snapshot data remains open.
+Source: SC-04 request creation sources, SC-07B request review sources, Domain Draft 02, current Request implementation sources
+Likely owner: planning/domain/aggregates/connection-request.md and future ApplicantParty aggregate draft
+Target file: planning/domain/aggregates/connection-request.md; future planning/domain/aggregates/applicant-party.md
+Trigger: ApplicantParty extraction or request details/read-model review
+Decision needed: ApplicantParty reference vs request-local immutable snapshot policy
+Do when: before treating request read/detail model as fully synchronized
+Do not do before: before ApplicantParty extraction/source review
+```
+
+### DN-005 — AgreementExchangeFailed metadata follow-up
+
+```text
+ID: DN-005
+Status: open
+Area: cross-aggregate coordination
+Note: ConnectionRequest can be marked AgreementExchangeFailed after final refusal coordination, but current extracted Request draft treats it as status-only. Future review should decide whether to store AgreementProposalExchangeId and failed-at metadata as a value object or child record.
+Source: Domain Draft 02, current ConnectionRequest.MarkAgreementExchangeFailed implementation, AgreementProposalExchange aggregate draft
+Likely owner: ConnectionRequest aggregate draft and possible future value object
+Target file: planning/domain/aggregates/connection-request.md
+Trigger: agreement final refusal implementation/status audit or domain-model-overview creation
+Decision needed: status-only vs metadata-bearing failure reference
+Do when: before finalizing domain overview for request/exchange relationship
+Do not do before: before final refusal scenario/application flow is reviewed
+```
