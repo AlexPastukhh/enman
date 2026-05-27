@@ -26,12 +26,14 @@ behavior coverage.
 
 | File | Aggregate root | Status | Notes |
 |---|---|---|---|
-| `agreement-proposal-exchange.md` | `AgreementProposalExchange` | draft / first extraction pilot | Extracted from SC-13D/L2 agreement behavior, Domain Draft 02 and current AgreementProposal implementation sources. |
-| `connection-request.md` | `ConnectionRequest` | draft / second extraction pilot | Extracted from SC-04 request creation, SC-07B request review, Domain Draft 02 and current Request implementation sources. |
+| `account.md` | `Account` | draft / first-pass extraction | Extracted from account/client/employee hierarchy decision and current Account/ClientAccount/Employee implementation sources. |
+| `applicant-party.md` | `ApplicantParty` | draft / first-pass extraction | Extracted from ApplicantParty-centric domain drafts, applicant scenarios and current ApplicantParty implementation sources. |
+| `connection-request.md` | `ConnectionRequest` | draft / extraction pilot | Extracted from SC-04 request creation, SC-07B request review, Domain Draft 02 and current Request implementation sources. |
+| `agreement-proposal-exchange.md` | `AgreementProposalExchange` | draft / extraction pilot | Extracted from SC-13D/L2 agreement behavior, Domain Draft 02 and current AgreementProposal implementation sources. |
 
 ## 3. Historical Source Snapshots
 
-Use historical source snapshots while extracting more aggregates:
+Use historical source snapshots while validating or extending aggregate drafts:
 
 ```text
 planning/tables/domain-drafts/domain-draft-01.md

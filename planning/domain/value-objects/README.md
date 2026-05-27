@@ -22,15 +22,28 @@ Do not create a value object file for every primitive wrapper by default.
 
 | File | Value object | Status | Used by |
 |---|---|---|---|
-| `agreement-proposal-version.md` | `AgreementProposalVersion` | draft / extracted pilot | `AgreementProposalExchange` |
-| `agreement-proposal-author.md` | `AgreementProposalAuthor` | draft / extracted pilot | `AgreementProposalExchange` |
-| `agreement-document-ref.md` | `AgreementDocumentRef` | draft / extracted pilot | `AgreementProposalExchange` |
-| `proposal-comment.md` | `ProposalComment` | draft / extracted pilot | `AgreementProposalExchange` |
-| `final-refusal-reason.md` | `FinalRefusalReason` | draft / extracted pilot | `AgreementProposalExchange` |
-| `object-address.md` | `ObjectAddress` / current `Address` implementation | draft / extracted with Request | `ConnectionRequest` |
-| `rejection-feedback.md` | `RejectionFeedback` | draft / extracted with Request | `ConnectionRequest` / `RequestReview` |
+| `agreement-proposal-version.md` | `AgreementProposalVersion` | draft / extracted | `AgreementProposalExchange` |
+| `agreement-proposal-author.md` | `AgreementProposalAuthor` | draft / extracted | `AgreementProposalExchange` |
+| `agreement-document-ref.md` | `AgreementDocumentRef` | draft / extracted | `AgreementProposalExchange` |
+| `proposal-comment.md` | `ProposalComment` | draft / extracted | `AgreementProposalExchange` |
+| `final-refusal-reason.md` | `FinalRefusalReason` | draft / extracted | `AgreementProposalExchange` |
+| `object-address.md` | `ObjectAddress` / current `Address` implementation | draft / extracted | `ConnectionRequest` |
+| `rejection-feedback.md` | `RejectionFeedback` | draft / extracted | `ConnectionRequest` / `RequestReview` |
+| `applicant-identity.md` | `ApplicantIdentity` | draft / first-pass extracted | `ApplicantParty` |
+| `applicant-contact.md` | `ApplicantContact` | draft / first-pass extracted | `ApplicantParty` |
 
-## 3. Drafting
+## 3. Existing Implementation Value Objects Not Split Into Separate Domain Docs Yet
+
+```text
+Email
+PasswordHash
+FullName
+PhoneNumber
+```
+
+These may stay as implementation/common value objects until there is enough source-backed reason to give them separate domain draft files.
+
+## 4. Drafting
 
 Use:
 
@@ -40,7 +53,7 @@ planning/domain/value-object-draft-template.md
 planning/domain/scenario-to-aggregate-map.md
 ```
 
-## 4. Relationship To Aggregates
+## 5. Relationship To Aggregates
 
 Aggregate drafts should reference value object files in their `Value Objects Used` section.
 

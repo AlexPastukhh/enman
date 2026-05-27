@@ -19,7 +19,13 @@ Use it for decisions such as:
 
 If a decision becomes a broader architecture decision, promote or mirror it to ADR files.
 
-## 2. Decision Note Shape
+## 2. Current Decisions
+
+| File | Status | Decision |
+|---|---|---|
+| `account-employee-tph-decision.md` | accepted | Employee is a concrete Account subtype; target persistence direction is Account/ClientAccount/Employee TPH. |
+
+## 3. Decision Note Shape
 
 ```text
 # Domain Decision — <Decision Name>
@@ -38,12 +44,12 @@ Scope:
 ## 9. Change Log
 ```
 
-## 3. Transitional Candidates
+## 4. Historical Source Material
 
-Candidate source material:
+Extracted source material:
 
 ```text
 planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
 ```
 
-Do not move transitional decision files until the domain layer routing is stable.
+The historical source file remains in place for traceability.

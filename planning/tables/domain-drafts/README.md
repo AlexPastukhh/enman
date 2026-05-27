@@ -16,6 +16,7 @@ planning/domain/README.md
 planning/domain/domain-responsibility-map.md
 planning/domain/domain-discovery-workflow.md
 planning/domain/scenario-to-aggregate-map.md
+planning/domain/domain-model-overview.md
 planning/domain/aggregate-drafting-workflow.md
 planning/domain/value-object-drafting-workflow.md
 ```
@@ -54,9 +55,9 @@ Current domain discovery should prefer per-scenario behavior items where availab
 
 | File | Status | Purpose |
 |---|---|---|
-| `domain-draft-01.md` | historical monolithic discovery snapshot | ApplicantParty-centric / request-related domain model snapshot with behavior coverage. |
-| `domain-draft-02.md` | historical monolithic discovery snapshot | Later domain model snapshot with account/employee and agreement proposal exchange direction. |
-| `domain-draft-02-account-employee-tph-decision.md` | transitional decision candidate | Candidate source for `planning/domain/decisions/account-employee-tph-decision.md`. |
+| `domain-draft-01.md` | historical monolithic discovery snapshot / partially extracted | ApplicantParty-centric / request-related domain model snapshot. Useful content is now partially extracted into `planning/domain/aggregates/applicant-party.md`, `planning/domain/aggregates/connection-request.md`, applicant value-object drafts and scenario-to-aggregate map. |
+| `domain-draft-02.md` | historical monolithic discovery snapshot / partially extracted | Later domain model snapshot with account/employee, request and agreement proposal exchange direction. Useful content is now partially extracted into `planning/domain/aggregates/account.md`, `planning/domain/aggregates/connection-request.md`, `planning/domain/aggregates/agreement-proposal-exchange.md` and related value-object drafts. |
+| `domain-draft-02-account-employee-tph-decision.md` | extracted historical decision source | Extracted into `planning/domain/decisions/account-employee-tph-decision.md`; keep source file for traceability. |
 
 ## 5. Migration Direction
 
@@ -68,6 +69,7 @@ old monolithic drafts
   -> one aggregate draft per aggregate boundary
   -> value object drafts for reusable/non-trivial value concepts
   -> decisions/ for accepted domain decisions
+  -> domain-model-overview.md for high-level current map
 ```
 
 Do not delete or move historical drafts until their useful content is extracted or linked from current domain files.
@@ -79,6 +81,6 @@ After aggregate extraction stabilizes, decide whether to:
 ```text
 - keep this folder as historical archive;
 - move old drafts into an archive subfolder;
-- extract accepted decisions into planning/domain/decisions/;
+- extract more accepted decisions into planning/domain/decisions/;
 - update or remove stale references from old drafts.
 ```

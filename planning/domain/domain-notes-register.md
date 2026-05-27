@@ -43,9 +43,9 @@ Do not do before:
 ID: DN-001
 Status: future review
 Area: source/version/cascade alignment
-Note: After source/version/cascade model is introduced, align domain-discovery-workflow.md, aggregate-drafting-workflow.md, value-object-drafting-workflow.md, scenario-to-aggregate-map.md and templates with source metadata conventions.
+Note: After source/version/cascade model is introduced, align domain-discovery-workflow.md, aggregate-drafting-workflow.md, value-object-drafting-workflow.md, scenario-to-aggregate-map.md, domain-model-overview.md and templates with source metadata conventions.
 Source: domain layer conversion planning
-Likely owner: planning/domain/ workflows and templates
+Likely owner: planning/domain/ workflows, maps and templates
 Target file: planning/planning-maintenance-register.md may track the durable follow-up
 Trigger: source/version/cascade model becomes current
 Decision needed: exact source metadata fields for aggregate/value-object drafts
@@ -93,26 +93,42 @@ Status: extracted / open follow-up
 Area: aggregate extraction / applicant relation
 Note: ConnectionRequest was extracted as the second aggregate. It currently stores ApplicantPartyId/ClientAccountId and does not own ApplicantParty creation or immutable applicant snapshot data. Whether request details should include immutable applicant snapshot data remains open.
 Source: SC-04 request creation sources, SC-07B request review sources, Domain Draft 02, current Request implementation sources
-Likely owner: planning/domain/aggregates/connection-request.md and future ApplicantParty aggregate draft
-Target file: planning/domain/aggregates/connection-request.md; future planning/domain/aggregates/applicant-party.md
-Trigger: ApplicantParty extraction or request details/read-model review
-Decision needed: ApplicantParty reference vs request-local immutable snapshot policy
-Do when: before treating request read/detail model as fully synchronized
-Do not do before: before ApplicantParty extraction/source review
+Likely owner: planning/domain/aggregates/connection-request.md and future domain-model-overview.md
+Target file: planning/domain/aggregates/connection-request.md
+Trigger: request/applicant boundary review or source/version alignment pass
+Decision needed: applicant snapshot vs ApplicantPartyId-only model
+Do when: before treating request applicant data as final
+Do not do before: before ApplicantParty extraction and scenario source review
 ```
 
-### DN-005 — AgreementExchangeFailed metadata follow-up
+### DN-005 — ApplicantParty edit/archive/versioning policy
 
 ```text
 ID: DN-005
-Status: open
-Area: cross-aggregate coordination
-Note: ConnectionRequest can be marked AgreementExchangeFailed after final refusal coordination, but current extracted Request draft treats it as status-only. Future review should decide whether to store AgreementProposalExchangeId and failed-at metadata as a value object or child record.
-Source: Domain Draft 02, current ConnectionRequest.MarkAgreementExchangeFailed implementation, AgreementProposalExchange aggregate draft
-Likely owner: ConnectionRequest aggregate draft and possible future value object
-Target file: planning/domain/aggregates/connection-request.md
-Trigger: agreement final refusal implementation/status audit or domain-model-overview creation
-Decision needed: status-only vs metadata-bearing failure reference
-Do when: before finalizing domain overview for request/exchange relationship
-Do not do before: before final refusal scenario/application flow is reviewed
+Status: open follow-up
+Area: applicant party lifecycle
+Note: ApplicantParty was extracted first-pass, but verified edit behavior, delete/archive policy and possible future versioning remain open.
+Source: ApplicantParty domain drafts, SC-10/SC-10B behavior sources and current ApplicantParty implementation
+Likely owner: planning/domain/aggregates/applicant-party.md
+Target file: planning/domain/aggregates/applicant-party.md
+Trigger: applicant edit/archive/versioning slice or source/version alignment pass
+Decision needed: edit-in-place vs new version, delete/archive rules, request-referenced applicant policy
+Do when: before implementing broader applicant lifecycle changes
+Do not do before: before source behavior is reviewed with current UI/API requirements
+```
+
+### DN-006 — Account activation/auth boundary audit
+
+```text
+ID: DN-006
+Status: future review
+Area: account/auth/domain boundary
+Note: Account was extracted first-pass from current Account/ClientAccount/Employee implementation and TPH decision, but full activation/session/auth implementation was not audited.
+Source: account scenarios, account activation addendum, Account implementation, account-employee decision
+Likely owner: planning/domain/aggregates/account.md and auth/API docs if needed
+Target file: planning/domain/aggregates/account.md
+Trigger: account activation/auth cleanup or thesis-facing implementation proof
+Decision needed: which activation/security rules are domain-owned vs auth infrastructure/application-owned
+Do when: before making implementation-status claims about account activation domain behavior
+Do not do before: before current auth/session code is checked
 ```

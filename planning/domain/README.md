@@ -1,7 +1,7 @@
 # Domain Planning Index
 
-Status: current domain-layer entrypoint / aggregate-based target model  
-Scope: domain discovery, aggregate drafts, value object drafts, domain notes and domain decisions
+Status: current domain-layer entrypoint / first-pass aggregate-based model  
+Scope: domain discovery, aggregate drafts, value object drafts, domain overview, domain notes and domain decisions
 
 ## 1. Purpose
 
@@ -10,7 +10,7 @@ This folder owns the current target documentation model for domain planning.
 Use it for:
 
 ```text
-scenario behavior sources -> domain discovery -> scenario-to-aggregate map -> aggregate/value-object drafts
+scenario behavior sources -> domain discovery -> scenario-to-aggregate map -> aggregate/value-object drafts -> domain overview
 ```
 
 This folder does not own scenario specs, slice drafts, API contracts, testing workflows or implementation code.
@@ -22,6 +22,9 @@ The target domain model is aggregate-based:
 ```text
 planning/domain/scenario-to-aggregate-map.md
   scenario behavior sources -> aggregate/value-object candidates and cross-aggregate relations.
+
+planning/domain/domain-model-overview.md
+  high-level first-pass aggregate/value-object relationship map.
 
 planning/domain/aggregates/
   one file per aggregate boundary.
@@ -36,7 +39,38 @@ planning/domain/domain-notes-register.md
   loose domain notes that should not be lost but are not yet owned by a specific file.
 ```
 
-## 3. Transitional Sources
+## 3. Current First-Pass Drafts
+
+Aggregates:
+
+```text
+planning/domain/aggregates/account.md
+planning/domain/aggregates/applicant-party.md
+planning/domain/aggregates/connection-request.md
+planning/domain/aggregates/agreement-proposal-exchange.md
+```
+
+Value objects:
+
+```text
+planning/domain/value-objects/agreement-proposal-version.md
+planning/domain/value-objects/agreement-proposal-author.md
+planning/domain/value-objects/agreement-document-ref.md
+planning/domain/value-objects/proposal-comment.md
+planning/domain/value-objects/final-refusal-reason.md
+planning/domain/value-objects/object-address.md
+planning/domain/value-objects/rejection-feedback.md
+planning/domain/value-objects/applicant-identity.md
+planning/domain/value-objects/applicant-contact.md
+```
+
+Decisions:
+
+```text
+planning/domain/decisions/account-employee-tph-decision.md
+```
+
+## 4. Transitional Sources
 
 Older domain files remain source material during migration:
 
@@ -51,7 +85,7 @@ planning/tables/pre-domain-variants-input.md
 
 Older monolithic domain drafts are historical discovery snapshots, not the target current shape for new domain docs.
 
-## 4. Read Order
+## 5. Read Order
 
 For domain discovery:
 
@@ -84,7 +118,15 @@ For value object drafting:
 3. related aggregate drafts and VI behavior items
 ```
 
-## 5. Related Layers
+For current overview:
+
+```text
+1. planning/domain/scenario-to-aggregate-map.md
+2. planning/domain/domain-model-overview.md
+3. detailed aggregate/value-object/decision files
+```
+
+## 6. Related Layers
 
 ```text
 planning/diagrams/

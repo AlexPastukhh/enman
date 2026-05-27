@@ -1,13 +1,13 @@
 # Scenario To Aggregate Map
 
-Status: draft / two aggregate extractions applied  
+Status: draft / first-pass aggregate-based domain map  
 Scope: scenario behavior sources -> domain aggregate/value-object discovery
 
 ## 1. Purpose
 
 This file maps scenario-layer behavior sources to domain aggregate candidates, value object candidates, cross-aggregate relations and next domain draft files.
 
-This file is not the final domain model. It is the domain discovery bridge.
+This file is not the final domain model. It is the domain discovery bridge and current first-pass scenario-to-domain map.
 
 ## 2. Source Model
 
@@ -35,6 +35,9 @@ planning/scenario-domain-validation-principles.md
 Existing implementation sources checked for extraction passes:
 
 ```text
+Domain.EnergyManagement/Accounts/
+Domain.EnergyManagement/Applicants/
+Domain.EnergyManagement/Employees/
 Domain.EnergyManagement/AgreementProposals/
 Domain.EnergyManagement/Requests/
 Domain.EnergyManagement/DocumentManaging/Address.cs
@@ -47,9 +50,9 @@ Tests.EnergyManagement/Integration/App/EmployeeRequests/
 Not checked:
 
 ```text
-Full scenario-by-scenario discovery pass is not done yet.
-Full source/version/cascade alignment is deferred.
-Full UI sidecar coverage for request creation/review was not audited in the Request extraction pass.
+Full scenario-by-scenario source/version/cascade alignment is deferred.
+Full UI sidecar coverage for all domain flows was not audited in these extraction passes.
+Full auth/session/EF mapping implementation audit is not done.
 ```
 
 ## 3. Behavior Item Category Mapping
@@ -70,116 +73,132 @@ Full UI sidecar coverage for request creation/review was not audited in the Requ
 
 | Scenario / behavior source | Key behavior categories | Aggregate candidates | Value object candidates | Coordination notes | Status |
 |---|---|---|---|---|---|
-| `SC-04` Client Request Creation | CMD, LC, IBS, VI, UCQ, NW | `ConnectionRequest`, `ApplicantParty` | `ObjectAddress` | existing ApplicantParty branch references saved ApplicantParty; new applicant branch is application transaction creating ApplicantParty + Request | Request extracted; ApplicantParty remains candidate |
-| `SC-07B` Employee Request Review | CMD, LC, IBS, NW, UCQ | `ConnectionRequest` | `RejectionFeedback` | approval enables but does not create AgreementProposalExchange | Request extracted |
+| `SC-01` Client registration | CMD, VI, auth/account | `Account` / `ClientAccount` | existing Email / PasswordHash implementation VOs | registration orchestration and password hashing are application/auth concerns | Account extracted first-pass |
+| `SC-02` Login | auth/session, READ | `Account` | existing Email / PasswordHash implementation VOs | auth/session is application/infrastructure; aggregate only owns account identity/state | Account mapped, not full auth extraction |
+| `SC-03B` Account owner verified / activation | LC, IBS, security | `Account` | TBD | activation lifecycle needs later deeper audit | Account first-pass only |
+| `SC-04` Client Request Creation | CMD, LC, IBS, VI, UCQ, NW | `ApplicantParty`, `ConnectionRequest`, `Account` | `ObjectAddress`, `ApplicantIdentity`, `ApplicantContact` | new applicant branch creates ApplicantParty + Request in application transaction; existing applicant branch references ApplicantParty | ApplicantParty and Request extracted first-pass |
 | `SC-05` My Requests / own request details | READ | `ConnectionRequest` as read source | TBD | list/details are read-model/API/client placement, not aggregate methods | read behavior mapped; not aggregate-owned |
-| `SC-06` / `SC-07A` Employee dashboard/details | READ | `ConnectionRequest` as read source | TBD | employee list/details and action availability are read/application/API/client placement | read behavior mapped; not aggregate-owned |
-| `SC-13D` Employee Agreement Proposal Create / Send Version | CMD, LC, IBS, VI, UCQ | `AgreementProposalExchange` | `AgreementProposalVersion`, `AgreementProposalAuthor`, `AgreementDocumentRef`, `ProposalComment` | start exchange requires Approved Request; exchange does not mutate Request | exchange extracted |
-| `L2-employee-review-agreement` agreement exchange items | CMD, LC, VI, boundary, final refusal | `AgreementProposalExchange`, `ConnectionRequest` | `AgreementDocumentRef`, `ProposalComment`, `FinalRefusalReason`, `RejectionFeedback` | final refusal requires application coordination with Request | exchange + request extracted for current scope |
-| `SC-13B` Client proposal response | CMD, LC, IBS, VI | `AgreementProposalExchange` | `AgreementDocumentRef`, `ProposalComment` | Client can send counter proposal only against active Employee proposal | related source, not fully extracted in this pass |
+| `SC-06` / `SC-07A` Employee dashboard/details | READ | `ConnectionRequest`, `Account` / `Employee` | TBD | employee list/details and action availability are read/application/API/client placement | read behavior mapped; not aggregate-owned |
+| `SC-07B` Employee Request Review | CMD, LC, IBS, NW, UCQ | `ConnectionRequest`, `Account` / `Employee`, `ApplicantParty` | `RejectionFeedback` | approval verifies ApplicantParty by application coordination; rejection stays in request review | Request and Account extracted; Applicant coordination noted |
+| `SC-10` Applicant Data | CMD, VI, LC | `ApplicantParty` | `ApplicantIdentity`, `ApplicantContact` | verified edit/versioning remains open | ApplicantParty extracted first-pass |
+| `SC-10B` My Applicant Parties | READ, CMD, LC, UCQ | `ApplicantParty` | `ApplicantIdentity`, `ApplicantContact` | current/default uniqueness is application/persistence coordination | ApplicantParty extracted first-pass |
+| `SC-13D` Employee Agreement Proposal Create / Send Version | CMD, LC, IBS, VI, UCQ | `AgreementProposalExchange`, `ConnectionRequest`, `Account` / `Employee` | `AgreementProposalVersion`, `AgreementProposalAuthor`, `AgreementDocumentRef`, `ProposalComment` | start exchange requires Approved Request; exchange does not directly mutate Request | exchange extracted |
+| `L2-employee-review-agreement` agreement exchange items | CMD, LC, VI, boundary, final refusal | `AgreementProposalExchange`, `ConnectionRequest`, `Account` / `Employee` | `FinalRefusalReason`, agreement proposal VOs | final refusal may coordinate Request AgreementExchangeFailed outside exchange aggregate | exchange/request relation mapped |
 
-## 5. Aggregate Candidate Register
+## 5. Aggregate Register
 
-| Aggregate candidate | Root | Child entities | Source scenarios/items | Draft file | Status |
+| Aggregate | Root | Child entities / concrete types | Source scenarios/items | Draft file | Status |
 |---|---|---|---|---|---|
-| AgreementProposalExchange | AgreementProposalExchange | AgreementProposal | SC-13D, L2 agreement items, Domain Draft 02, current AgreementProposal implementation | `planning/domain/aggregates/agreement-proposal-exchange.md` | extracted pilot draft |
-| Request / ConnectionRequest | ConnectionRequest | RequestReview | SC-04, SC-07B, SC-05/06/07A read sources, L2 agreement coordination, Domain Draft 02, current Request implementation | `planning/domain/aggregates/connection-request.md` | extracted draft |
-| ApplicantParty | ApplicantParty / concrete applicant party type | IndividualApplicantParty and future concrete applicant parties | historical Domain Draft 01/02, SC-04, SC-10/10B, request creation sources | TBD | candidate / next extraction |
-| Account / ClientAccount / Employee | Account / ClientAccount / Employee | TBD | L2 account/employee clarification, domain decision candidate | TBD | candidate / decision-dependent |
+| Account | Account | ClientAccount, Employee | SC-01, SC-02, SC-03B, employee command actor sources | `planning/domain/aggregates/account.md` | extracted first-pass |
+| ApplicantParty | ApplicantParty | IndividualApplicantParty | SC-10, SC-10B, SC-04, old domain drafts | `planning/domain/aggregates/applicant-party.md` | extracted first-pass |
+| ConnectionRequest | ConnectionRequest | RequestReview | SC-04, SC-05, SC-06, SC-07A, SC-07B, SC-13D coordination | `planning/domain/aggregates/connection-request.md` | extracted |
+| AgreementProposalExchange | AgreementProposalExchange | AgreementProposal | SC-13D, L2 agreement behavior items | `planning/domain/aggregates/agreement-proposal-exchange.md` | extracted |
 
-## 6. Value Object Candidate Register
+## 6. Value Object Register
 
-| Value object candidate | Source VI/items | Used by aggregates | Draft file | Status |
+| Value object | Source VI items / source area | Used by aggregates | Draft file | Status |
 |---|---|---|---|---|
-| AgreementProposalVersion | `L2-AGR-VERSION-001`, `L2-AGR-EMP-START-002` | AgreementProposalExchange | `planning/domain/value-objects/agreement-proposal-version.md` | extracted pilot draft |
-| AgreementProposalAuthor | `AGR-IBS-001`, `L2-AGR-AUTHOR-001` | AgreementProposalExchange | `planning/domain/value-objects/agreement-proposal-author.md` | extracted pilot draft |
-| AgreementDocumentRef | `AGR-VI-001`, `AGR-IBS-002`, `L2-AGR-DOC-001`, `L2-AGR-DOC-002` | AgreementProposalExchange | `planning/domain/value-objects/agreement-document-ref.md` | extracted pilot draft |
-| ProposalComment | `AGR-VI-002`, `L2-AGR-COMMENT-001` | AgreementProposalExchange | `planning/domain/value-objects/proposal-comment.md` | extracted pilot draft |
-| FinalRefusalReason | `L2-AGR-FINAL-002` | AgreementProposalExchange | `planning/domain/value-objects/final-refusal-reason.md` | extracted pilot draft |
-| ObjectAddress / Address | `REQ-IBS-003`, `REQ-VI-001`, `SC-04-BI-002` | ConnectionRequest | `planning/domain/value-objects/object-address.md` | extracted draft |
-| RejectionFeedback | `REQ-IBS-002`, `REQ-CMD-REJECT-001`, `L2-REVIEW-REJECT-002` | ConnectionRequest / RequestReview | `planning/domain/value-objects/rejection-feedback.md` | extracted draft |
+| AgreementProposalVersion | SC-13D / agreement versioning | AgreementProposalExchange | `planning/domain/value-objects/agreement-proposal-version.md` | extracted |
+| AgreementProposalAuthor | SC-13D / employee-client proposal authors | AgreementProposalExchange | `planning/domain/value-objects/agreement-proposal-author.md` | extracted |
+| AgreementDocumentRef | SC-13D / proposal document reference | AgreementProposalExchange | `planning/domain/value-objects/agreement-document-ref.md` | extracted |
+| ProposalComment | SC-13D / optional proposal comment | AgreementProposalExchange | `planning/domain/value-objects/proposal-comment.md` | extracted |
+| FinalRefusalReason | L2 agreement final refusal | AgreementProposalExchange | `planning/domain/value-objects/final-refusal-reason.md` | extracted |
+| ObjectAddress | SC-04 request object address | ConnectionRequest | `planning/domain/value-objects/object-address.md` | extracted |
+| RejectionFeedback | SC-07B rejection feedback | ConnectionRequest / RequestReview | `planning/domain/value-objects/rejection-feedback.md` | extracted |
+| ApplicantIdentity | SC-10 applicant identity data | ApplicantParty | `planning/domain/value-objects/applicant-identity.md` | extracted first-pass |
+| ApplicantContact | SC-10 applicant contact data | ApplicantParty | `planning/domain/value-objects/applicant-contact.md` | extracted first-pass |
+| Email / PasswordHash / FullName / PhoneNumber | common implementation VOs | Account / ApplicantParty | no separate domain draft yet | implementation VO only for now |
 
 ## 7. Cross-Aggregate Relations
 
 | From aggregate | To aggregate | Relation | Owner / coordination boundary | Notes |
 |---|---|---|---|---|
-| ConnectionRequest | ApplicantParty | Request uses one ApplicantParty context | Application loads/creates ApplicantParty; Request stores scalar ids | New ApplicantParty + request is one app transaction; Request does not own ApplicantParty creation. |
-| ConnectionRequest | Employee | Employee starts/completes review | Application/auth resolves Employee; RequestReview stores scalar ids | Employee capability is checked through Employee object. |
-| AgreementProposalExchange | Request / ConnectionRequest | Exchange exists for approved request | Application coordination + exchange start precheck | Exchange stores `RequestId`; Request does not own exchange. |
-| AgreementProposalExchange | Request / ConnectionRequest | Final refusal can mark approved request as AgreementExchangeFailed | Application service coordinates; Request owns its status change | Exchange does not directly mutate Request. |
-| AgreementProposalExchange | Employee | Employee starts exchange, sends employee versions and final-refuses | Application/auth resolves Employee; exchange stores scalar ids | Do not use EmployeeRef in proposal author. |
-| AgreementProposalExchange | ClientAccount | Client accepts/sends proposal; exchange stores `ClientAccountId` | Application/auth resolves ClientAccount; exchange stores scalar ids | Client visibility/query remains outside aggregate. |
-| AgreementProposalExchange | File/blob storage | Proposal document file metadata becomes AgreementDocumentRef | Application/infrastructure owns storage; value object owns metadata integrity | Domain does not upload/read/delete bytes. |
+| ApplicantParty | Account / ClientAccount | belongs to client account | scalar ClientAccountId | Applicant contact email is separate from account auth email. |
+| ConnectionRequest | ApplicantParty | request created from selected applicant | scalar ApplicantPartyId | Request does not mutate/relink applicant party when default changes. |
+| ConnectionRequest | Account / ClientAccount | client owner | scalar ClientAccountId | Current implementation also stores client account id. |
+| ConnectionRequest.RequestReview | Account / Employee | review actor | scalar employee ids | Employee actor is Account subtype. |
+| AgreementProposalExchange | ConnectionRequest | exchange for approved request | scalar RequestId + app coordination | Exchange should not directly mutate Request. |
+| AgreementProposalExchange | Account / Employee | employee proposal/final refusal actor | scalar employee ids | Employee capability checks live on Employee. |
+| AgreementProposalExchange | Account / ClientAccount | client participant/proposal author | scalar client id | Client acceptance/proposal author data stays local to exchange. |
 
 ## 8. Application Coordination Notes
 
 Rules that should not be owned by a single aggregate:
-- creating a new ApplicantParty and ConnectionRequest atomically;
-- resolving/authorizing existing ApplicantParty ownership before request creation;
-- resolving Employee from auth/account context before review commands;
-- creating AgreementProposalExchange after request approval;
-- final refusal impact on Request status;
-- loading current Employee/ClientAccount from auth context;
-- file upload/storage before agreement document value object creation;
-- read/list/dashboard filtering.
+
+```text
+- first-of-type ApplicantParty current/default selection;
+- switching current/default ApplicantParty per ClientAccountId + ApplicantPartyType;
+- creating ApplicantParty and ConnectionRequest in one request creation use case;
+- marking ApplicantParty verified after request approval;
+- starting AgreementProposalExchange only from Approved ConnectionRequest;
+- marking an approved request as AgreementExchangeFailed after exchange final refusal, if that status remains accepted;
+- resolving employee actor from authenticated Account.Id.
+```
 
 Rules that are likely aggregate-owned:
-- request creation validation for persisted ApplicantParty reference, details and object address presence;
-- request review lifecycle status transitions;
-- review starter/completer constraints;
-- request Approved/Rejected status changes;
-- AgreementExchangeFailed transition guard;
-- exchange lifecycle status transitions;
-- active proposal version changes;
-- proposal supersede/accept state transitions;
-- proposal author/document/value invariants;
-- final refusal exchange state.
+
+```text
+- ApplicantParty minimum identity/contact data and verification marker;
+- ConnectionRequest review lifecycle and request status transitions;
+- AgreementProposalExchange proposal version lifecycle and final refusal;
+- Account/Employee role, activation and command capability checks.
+```
 
 Rules intentionally outside domain:
-- physical file storage;
-- UI step ordering;
-- DTO/multipart transport validation;
-- dashboard/read model joins;
-- client-side branch form state.
+
+```text
+- dashboard/list/read shape;
+- DTO validation and UI field presentation;
+- file/blob storage;
+- auth token/session mechanics.
+```
 
 ## 9. Discovery Questions
 
 Open:
-- `Q-SC-13D-001`: source question still asks whether replaced proposal version should be named Superseded/Replaced instead of Rejected. Current extracted domain direction uses `SupersededByCounterProposal`; scenario question should be resolved/synchronized later.
-- `Q-SC-13D-002`: source question asks whether proposal text details/comment are required or optional. Current extracted domain direction treats comment as optional; if present, it must be non-empty and max-length constrained.
-- Should Request store immutable applicant snapshot data, or is `ApplicantPartyId` reference sufficient for all current read/detail scenarios?
-- Should `AgreementExchangeFailed` store `AgreementProposalExchangeId` / failed-at metadata in a future value object, or remain status-only for now?
-- Which old domain draft decisions should move into `planning/domain/decisions/` first? Current candidate: account/employee TPH decision.
-- Whether `domain-model-overview.md` should be created after ApplicantParty extraction or after 2-3 aggregate drafts.
+
+```text
+- Should ConnectionRequest store immutable applicant snapshot data in addition to ApplicantPartyId?
+- What is the final ApplicantParty edit/archive/versioning model after verification or request reference?
+- Should Email / PasswordHash / FullName / PhoneNumber receive separate domain value-object docs later?
+- How should account activation/suspension/deactivation become explicit domain commands later?
+- Which source/version fields should be added after source/version/cascade model stabilizes?
+```
 
 Accepted:
+
+```text
 - New target model is aggregate-based.
 - Old monolithic domain drafts are historical discovery snapshots until extracted.
-- `AgreementProposalExchange` was the first pilot aggregate extraction.
-- `ConnectionRequest` was the second aggregate extraction.
-- `AgreementProposalExchange` and Request are separate aggregates.
-- `RequestReview` is child entity of `ConnectionRequest`, not aggregate.
-- `AgreementProposal` is child entity of `AgreementProposalExchange`, not aggregate.
-- Agreement proposal document/comment/version/author/final refusal reason are extracted as value object drafts for the exchange pilot.
-- Object address and rejection feedback are extracted as value object drafts for Request.
+- Employee is a concrete Account subtype.
+- ApplicantParty is separate from ConnectionRequest.
+- AgreementProposalExchange is separate from ConnectionRequest.
+```
 
-## 10. Next Aggregate Drafts To Create
+## 10. Next Domain Work
 
 Priority:
-1. ApplicantParty
-2. Account / ClientAccount / Employee
 
-Blocked / deferred:
-- Full source/version/cascade alignment.
-- `domain-model-overview.md` until the map has more accepted aggregate coverage.
-- Immutable applicant snapshot decision until ApplicantParty extraction/source review.
+```text
+1. Validate first-pass aggregate docs against source/version/cascade model later.
+2. Revisit ApplicantParty edit/archive/versioning questions.
+3. Revisit request applicant snapshot question.
+4. Audit Account activation/auth-session boundary if needed.
+5. Add or refine domain-model-overview.md as aggregate docs evolve.
+```
+
+Blocked/deferred:
+
+```text
+Full source/version/cascade alignment is deferred.
+```
 
 ## 11. Source Delta / Change Log
 
 ```text
-- Added first pilot extraction for AgreementProposalExchange.
-- Added value object draft references for AgreementProposalVersion, AgreementProposalAuthor, AgreementDocumentRef, ProposalComment and FinalRefusalReason.
-- Added second extraction for ConnectionRequest / Request and RequestReview child entity.
-- Added ObjectAddress and RejectionFeedback value object draft references.
-- Kept old monolithic domain drafts as historical source snapshots.
+- AgreementProposalExchange extracted as first pilot.
+- ConnectionRequest extracted as second pilot.
+- ApplicantParty and Account extracted to complete first-pass aggregate-based domain layer.
+- Account/Employee TPH decision extracted into planning/domain/decisions/.
+- Domain model overview added as first-pass map.
 ```
