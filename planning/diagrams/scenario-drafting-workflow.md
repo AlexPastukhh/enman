@@ -69,20 +69,28 @@ Do not update only one artifact when the change affects the others.
 
 ## 4. Default Scenario Draft Flow
 
+Scenario drafting is iterative, not a strict post-processing sequence.
+
 Use this loop:
 
 ```text
-source request / user idea
--> identify scenario scope
--> draft scenario text
--> draft/update DATA
--> draft/update UI-visible behavior, if relevant
--> draft/update validation/security notes, if relevant
--> derive/update behavior items
--> record questions with assumptions
--> sync scenario questions register / clarifications
--> identify downstream domain/slice/client/diagram impact
+1. Identify source request and scenario scope.
+2. Classify statement status:
+   direct requirement / accepted direction / assumption / open question / future / deferred / stale.
+3. Draft or update core business scenario text.
+4. Draft/update DATA in parallel.
+5. Draft/update UI scenario in parallel when visual/UX presentation matters.
+6. Derive/update business behavior items in parallel.
+7. Add UI/UX presentation notes to DATA items when needed.
+8. Add UI/UX projection notes to business behavior items when needed.
+9. Add UI-only behavior entries only when the requirement is independently presentation/interaction-specific.
+10. Use DATA gaps and behavior gaps to refine core scenario text.
+11. Use UI scenario to check presentation consistency, not to create business behavior silently.
+12. Update questions, clarifications, indexes and scenario-artifact-map.md.
+13. Record downstream impact for domain/slice/client/testing when relevant.
 ```
+
+Do not wait until the core scenario is “final” before drafting DATA and behavior items. DATA and behavior items are analysis artifacts used during scenario drafting to expose unclear branches, missing information, weak outcomes and downstream drafting gaps.
 
 ## 5. Scenario Text Spec Rules
 
@@ -175,6 +183,22 @@ final layout implementation
 
 Detailed client implementation belongs in `.client.md` sidecars when concrete client work starts.
 
+
+
+### Core / DATA / UI Relationship
+
+```text
+Core scenario
+  owns business capability and business meaning.
+
+DATA
+  owns scenario information: entered, seen, selected, attached, referenced or received information.
+
+UI scenario
+  owns presentation and UX projection over DATA and business behavior.
+```
+
+A UI scenario must stay consistent with the core scenario and DATA. If UI wording appears to introduce new business behavior, record a question, accepted decision, correction or future/deferred extension instead of silently changing core business scope.
 ## 8. Behavior Items Rule
 
 Behavior items must be derived from scenario/spec sources.

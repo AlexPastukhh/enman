@@ -1,4 +1,4 @@
-﻿# Scenario Specification Principles
+# Scenario Specification Principles
 
 Status: current source of truth for scenario specification principles  
 Scope: textual scenario specs, scenario DATA blocks, scenario UI specs, validation addenda, behavior items, scenario questions and diagram prompt handoff
@@ -28,6 +28,60 @@ If scenario work may lead to diagrams, also read:
 planning/diagrams/diagram-prompt-generation-workflow.md
 planning/diagrams/drawio-diagram-generation-workflow.md
 ```
+
+## 1A. Core Scenario / DATA / UI Scenario Model
+
+Use this model when drafting or reviewing scenario artifacts:
+
+```text
+Core / business scenario
+  Defines system capability and business meaning:
+  actor, goal, preconditions, business flow, branches, outcomes, accepted directions and open questions.
+
+DATA
+  Defines scenario information:
+  what the actor enters, sees, selects, filters/searches by, attaches/uploads, references or receives as result/feedback.
+  DATA is not a DTO, API contract, UI layout, DB schema or domain model.
+
+Business behavior items
+  Process the core scenario and DATA into smaller classified behavior units.
+  They are used by domain, slice and testing drafts.
+
+UI scenario
+  Defines presentation / UX projection:
+  how DATA and business behavior are shown, entered, selected, confirmed, visually validated, animated or made accessible.
+```
+
+UI scenarios are scenario-level requirements for presentation and interaction. They are not implementation plans and they are not independent sources of business behavior.
+
+If a UI scenario appears to introduce new business meaning, treat it as a consistency issue:
+
+```text
+- correct the UI scenario;
+- or update the core scenario only through an accepted decision;
+- or record an open question;
+- or mark it as future/deferred extension.
+```
+
+Do not silently promote UI presentation detail into current core business scope.
+
+## 1B. Scenario Statement Status
+
+Scenario statements should be clear about status when the source is not a direct current requirement.
+
+Use:
+
+```text
+direct requirement
+accepted direction / accepted decision
+assumption
+open question
+future extension
+deferred
+stale / deprecated / historical
+```
+
+Only direct requirements and accepted directions drive current domain/slice/testing drafts by default. Future, deferred, open, stale and deprecated statements must stay explicitly marked.
 
 ## 2. Scenario Specs
 
@@ -131,6 +185,15 @@ Behavior items and UI behavior items must not invent new behavior.
 
 They are derived from scenario text, DATA, UI, validation/security and clarification sources.
 
+
+
+### UI / UX Projection Rule
+
+Behavior items are primarily processed business scenario requirements.
+
+UI/UX details should usually be recorded as projection notes on DATA items or business behavior items, not as a separate parallel source of business truth.
+
+Separate UI-only behavior entries are allowed only when the requirement is independently presentation/interaction-specific and cannot be attached cleanly to one business behavior item. They must reference a core scenario, DATA item, UI scenario section or accepted clarification.
 ## 8. DATA
 
 DATA means only what actor enters, sees, selects, filters/searches by, attaches/uploads, or references as visible/selectable business item.
@@ -197,8 +260,8 @@ Do not use stale generated diagram package summaries or stale `.drawio` pages as
 ## 13. Current Downstream Planning Step
 
 ```text
-scenario specs / DATA / UI specs / validation
--> behavior items / UI behavior items / questions register / clarifications
+core scenario specs / DATA / UI specs / validation
+-> business behavior items with optional UI/UX projection notes / questions register / clarifications
 -> domain draft / slice boundary / parent slice / client sidecar workflow
 -> diagram prompt workflow, when diagrams are requested
 ```

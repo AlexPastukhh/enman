@@ -1,166 +1,113 @@
 # Scenario Diagram Consistency Report
 
-Status: current consistency gate before domain variant generation  
-Branch: `my-changes`  
-Scope: scenario text specs, scenario DATA specs, validation addendum, generated package summaries, and domain-variant readiness
+Status: current diagram/source consistency note  
+Scope: scenario source currentness, diagram source preflight and domain-aware diagram readiness
 
 ## 1. Purpose
 
-This report records the current scenario source-of-truth state after semantic correction.
+This report records the current scenario source route for diagram work.
 
-It prevents planning agents from using stale diagram package summaries or stale `.drawio` pages as source of truth.
+It prevents planning/diagram agents from using stale diagram package summaries, stale `.drawio` pages, deprecated validation addenda or old pre-domain wording as current source truth.
 
-## 2. Current Source Of Truth
+## 2. Current Source Route
 
-Use these as semantic source of truth:
+Before diagram work, read:
 
 ```text
+planning/README.md
+planning/workflow-activation-map.md
+planning/planning-use-case-map.md
+planning/planning-doc-responsibility-map.md
+
 planning/scenario-specification-principles.md
 planning/scenario-domain-validation-principles.md
-planning/diagram-scenario-spec.md
+
+planning/diagrams/README.md
+planning/diagrams/scenario-responsibility-map.md
+planning/diagrams/scenario-artifact-map.md
+planning/diagrams/scenario-drafting-workflow.md
+```
+
+Then read selected scenario artifacts:
+
+```text
 planning/diagrams/scenario-text-specs/
 planning/diagrams/scenario-data/
-planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-planning/diagrams/scenario-diagram-consistency-report.md
-planning/tables/pre-domain-variants-input.md
+planning/diagrams/scenario-ui-specs/
+planning/diagrams/scenario-behavior-items/
+planning/diagrams/scenario-clarifications/
+planning/diagrams/scenario-questions-register.md
 ```
 
-Do not use old generated package summaries as semantic source of truth.
-
-## 3. Current Scenario Text Specs
-
-Active:
+For domain-aware diagrams, read:
 
 ```text
-SC-01  Guest Registration
-SC-02  Login
-SC-03A Password Recovery Request
-SC-03B Account Owner Verified / Password Reset Choice
-SC-04  Client Request Creation
-SC-05  My Requests / Own Request Details
-SC-06  Employee Request Dashboard
-SC-07A Employee Request Details
-SC-07B Employee Request Review
-SC-10  Applicant Data
-SC-11  Request Documents
-SC-13A My Agreements
-SC-13B Agreement Proposal Details / Response
-SC-13C Employee Agreements
-SC-13D Employee Agreement Proposal Create / Send Version
-SC-14  Client Data Verification
-SC-15  Security Text Specification
-SC-17  Anonymous Request
+planning/domain/README.md
+planning/domain/scenario-to-aggregate-map.md
+planning/domain/domain-model-overview.md
+planning/domain/aggregates/
+planning/domain/value-objects/
+planning/domain/decisions/
 ```
 
-Merged / removed / deferred:
+## 3. Deprecated / Historical Sources
 
-```text
-SC-08  Approved Result — merged into SC-07B + SC-05 + SC-13A/SC-13B/SC-13C/SC-13D
-SC-09  Rejected Result — merged into SC-07B + SC-05
-SC-12  Review Feedback / Correction Navigation — merged into SC-05 + SC-04
-SC-16  Removed standalone notification scenario
-SC-18  Archive / Audit — deferred / low priority
-```
+The deprecated global validation addendum is historical context only.
 
-## 4. DATA Specs Status
-
-DATA files are current when they include:
-
-```text
-SC-04 request creation applicant prefill/inline behavior
-SC-10 applicant DATA
-SC-13A client agreement proposal list DATA
-SC-13B client agreement proposal details/response DATA
-SC-13C employee agreement proposal list DATA
-SC-13D employee agreement proposal create/send version DATA
-```
-
-## 5. Validation Status
-
-Server/domain validation is tracked in:
+Current validation/domain route is:
 
 ```text
 planning/scenario-domain-validation-principles.md
-planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
+scenario-local behavior items
+scenario clarifications/questions
+planning/domain/, when domain interpretation is needed
 ```
 
-Validation source-of-truth direction:
+Do not reintroduce old global validation addenda as current source of truth.
+
+## 4. Scenario Artifact Currentness
+
+Use:
 
 ```text
-value object construction / domain method
--> validation result
--> server validation response
+planning/diagrams/scenario-artifact-map.md
 ```
 
-Client-side validation is UX feedback only.
-
-## 6. Pre-Domain Variant Readiness
-
-The active post-scenario bridge file is:
+for:
 
 ```text
-planning/tables/pre-domain-variants-input.md
+- current primary scenario text/DATA/UI/behavior files;
+- legacy/compat variants;
+- deprecated/stale variants;
+- merged scenarios;
+- downstream domain/slice links.
 ```
 
-It collects:
+Do not infer currentness from filenames only.
+
+## 5. Diagram Responsibility Boundary
+
+Diagram generation is a separate responsibility from scenario source drafting.
+
+During migration, diagram workflows still live under `planning/diagrams/`, but they do not own scenario source truth.
+
+Use:
 
 ```text
-- invariants;
-- persisted/write state;
-- state/status values;
-- state-changing actions;
-- state-dependent allowed/forbidden actions;
-- no-write behavior;
-- method pressure.
+planning/diagrams/diagram-prompt-generation-workflow.md
+planning/diagrams/drawio-diagram-generation-workflow.md
 ```
 
-Next artifact:
+only for diagram request/preflight/output behavior.
 
-```text
-domain model variant 1
-```
+## 6. Stale Package Summary Status
 
-Use these inputs for domain variants:
+Old generated package summaries and old draw.io pages are output artifacts, not semantic source truth.
 
-```text
-1. planning/diagrams/scenario-text-specs/
-2. planning/diagrams/scenario-data/
-3. planning/diagrams/scenario-text-specs/scenario-server-domain-validation-addendum.md
-4. planning/tables/pre-domain-variants-input.md
-```
+If a generated diagram conflicts with current scenario/domain docs, the current docs win and the diagram should be marked stale or regenerated.
 
-## 7. Superseded Domain-Planning Path
+## 7. Visual Diagram Note
 
-Do not use this as the current workflow:
+Diagram pages should show unresolved questions or accepted clarifications where they affect interpretation.
 
-```text
-scenario-domain-design-input-core.md
--> domain-discovery-core.md
--> aggregate-boundary-candidates-core.md
--> domain-model-options-core.md
-```
-
-Those names are too fragmented for the current workflow and are superseded by:
-
-```text
-pre-domain-variants-input.md
--> domain model variants
-```
-
-## 8. Stale Package Summary Status
-
-The following generated package summaries were based on older scenario semantics and must not be used as source of truth for domain planning:
-
-```text
-planning/diagrams/scenario-core-package.md
-planning/diagrams/scenario-extension-package.md
-planning/diagrams/scenario-advanced-package.md
-```
-
-Existing `.drawio`, `.png`, `.svg` files may still be visually useful, but if they represent old SC-08/SC-09/SC-12/SC-13/SC-16 semantics, they are stale for domain-variant generation.
-
-## 9. Visual Diagram Note
-
-Visual diagram packages still need regeneration if they are expected to match corrected text specs.
-
-Until regenerated, diagrams are secondary visual references only.
+Do not make diagrams look more complete than current scenario/domain evidence supports.

@@ -34,28 +34,36 @@ Those belong to client slice drafts.
 ## 2. Canonical chain
 
 ```text
-scenario text / data / behavior / UI scenario
+core business scenario + DATA + business behavior items
         ↓
-client slice draft
+UI scenario as presentation / UX projection
+        ↓
+client slice draft / UI tests / E2E / a11y
         ↓
 implementation archive
 ```
 
 Do not update a serious client UI slice draft without checking its scenario UI source.
 
-## 3. UI scenario vs client slice draft
+UI scenario must stay consistent with core scenario and DATA. It must not silently create or change business behavior.
 
-| Concern | UI scenario source | Client slice draft |
-|---|---|---|
-| User goal | yes | references/implements |
-| Screen composition | yes | translates into page/widget composition |
-| Visible data | yes | maps to read model/components |
-| Actions from user's view | yes | maps to features/action slots |
-| Loading/empty/error states | yes | implements and tests |
-| CSS ownership | no | yes |
-| React hooks/components | no | yes |
-| API wrappers/query keys | no | yes |
-| Implementation checklist | no | yes |
+## 3. UI scenario vs core scenario / DATA / client slice draft
+
+| Concern | Core scenario | DATA | Behavior items | UI scenario source | Client slice draft |
+|---|---|---|---|---|---|
+| Business capability | yes | references | processed | presents only | implements |
+| Scenario information | references | yes | references | presents | maps to read/forms |
+| User goal | yes | references | references | yes, from UI point of view | implements |
+| Visible data | no/light | yes | references | presentation/UX | maps to components |
+| Actions from user's view | business action | references | behavior unit | visible action/availability | feature/action slot |
+| Loading/empty/error states | no | sometimes feedback data | projection note / UI-only entry | yes | implements and tests |
+| Deferred validation / feedback | business/validation boundary | feedback information | projection note | yes | implements |
+| CSS ownership | no | no | no | no | yes |
+| React hooks/components | no | no | no | no | yes |
+| API wrappers/query keys | no | no | no | no | yes |
+| Implementation checklist | no | no | no | no | yes |
+
+If a UI scenario appears to add business meaning, record a consistency issue or accepted decision instead of treating UI wording as a new core requirement.
 
 ## 4. Status values
 

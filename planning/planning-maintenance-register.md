@@ -55,7 +55,7 @@ superseded
 
 ```text
 ID: PMR-001
-Status: waiting-for-condition
+Status: done
 Area: workflow activation
 Task / reminder:
   Keep planning/workflow-activation-map.md synchronized as local responsibility maps are added for scenario/domain/slice layers.
@@ -72,12 +72,11 @@ Target files:
 Depends on:
   scenario/domain/slice responsibility map work
 Do when:
-  After at least scenario/domain/slice local routing has been stabilized.
+  Done for current scenario/domain/slice routing model.
 Do not do before:
-  Do not remove root fallback routing before equivalent local maps exist.
+  n/a
 Notes:
-  Done: workflow activation was refreshed for the current slice responsibility map, slice-root rule model, root slice-draft-authoring-workflow.md and planning-use-case-map.md.
-  Remaining: revisit after scenario/domain local maps exist.
+  Workflow activation now routes through scenario responsibility/artifact maps, domain responsibility/workflows and slice responsibility/workflows. Reopen only if a new major layer map is introduced.
 ```
 
 ### PMR-002 — Create source/version cascade sync workflow after pilot
@@ -192,27 +191,28 @@ Notes:
 
 ```text
 ID: PMR-006
-Status: open
+Status: done
 Area: local responsibility maps
 Task / reminder:
   Add local responsibility maps or stable local responsibility sections for scenario and domain layers.
 Trigger / condition:
   Before root map can be simplified and before source/version sync can become reliable.
 Why it matters:
-  Root routing is currently transitional. Local maps are needed to know exactly where questions, registers, source usage and drafts belong inside each layer.
+  Root routing was transitional. Local maps are needed to know exactly where questions, registers, source usage and drafts belong inside each layer.
 Owner layer:
   documentation / scenario / domain
 Target files:
-  future scenario-responsibility-map.md or diagrams README section
-  future domain-responsibility-map.md or tables/domain README section
+  planning/diagrams/scenario-responsibility-map.md
+  planning/domain/domain-responsibility-map.md
+  planning/slices/slice-responsibility-map.md
 Depends on:
   layer audits
 Do when:
-  Next layer cleanup phases.
+  Done for current scope.
 Do not do before:
-  Do not rename/move large folders before auditing current responsibility and stale files.
+  n/a
 Notes:
-  Slice responsibility map now exists. Scenario/domain maps remain future work. Domain/tables is important for thesis/domain architecture.
+  Scenario, domain and slice responsibility maps now exist. Future cleanup is PMR-004 root-map shrink and source/version/cascade alignment.
 ```
 
 ### PMR-007 — Add archive/local-state availability rule
@@ -602,30 +602,117 @@ Notes:
 
 ```text
 ID: PMR-020
-Status: waiting-for-condition
+Status: done-current-scope
 Area: scenario documentation / stale source cleanup
 Task / reminder:
   After scenario responsibility/artifact maps are accepted, finish cleanup of stale scenario variants, deprecated validation addendum references and scenario diagram consistency report wording.
 Trigger / condition:
   scenario-responsibility-map.md and scenario-artifact-map.md exist and have been used for at least one scenario cleanup or downstream draft.
 Why it matters:
-  Scenario layer now has current routing, but some old scenario variants and diagram reports may still contain stale current-source wording.
+  Scenario layer now has current routing, but old scenario variants and diagram reports can otherwise look like current sources.
 Owner layer:
   scenario / documentation governance
 Target files:
   planning/diagrams/scenario-artifact-map.md
-  planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
-  planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
   planning/diagrams/scenario-diagram-consistency-report.md
   planning/diagrams/diagram-prompt-generation-workflow.md
+  planning/diagrams/drawio-diagram-generation-workflow.md
 Depends on:
   scenario responsibility/artifact map scaffold
 Do when:
-  Before the next broad diagram generation or before treating scenario indexes as final.
+  Done for current safe scope.
 Do not do before:
   Do not delete or move old scenario variants until currentness and downstream references are checked.
 Notes:
-  Keep deprecated global validation addendum as historical source only; do not reintroduce it as current source of truth.
+  Deprecated global validation addendum is now treated as historical context only. Diagram workflows now route through scenario-responsibility-map.md and scenario-artifact-map.md. Physical moves/renames remain out of scope.
+```
+
+### PMR-021 — Review behavior item taxonomy for downstream drafting
+
+```text
+ID: PMR-021
+Status: waiting-for-condition
+Area: scenario behavior item taxonomy
+Task / reminder:
+  Review behavior item categories and fields after scenario/domain/slice/testing layers stabilize.
+Trigger / condition:
+  After at least one scenario-to-domain and scenario-to-slice flow has been tested with current docs.
+Why it matters:
+  Behavior items should be useful for domain aggregate drafting, value object drafting, slice drafting, client sidecars and testing without becoming implementation details.
+Owner layer:
+  scenario / documentation governance
+Target files:
+  planning/diagrams/scenario-behavior-items/README.md
+  planning/diagrams/scenario-drafting-workflow.md
+  planning/domain/domain-discovery-workflow.md
+  planning/slices/slice-draft-authoring-workflow.md
+Depends on:
+  scenario/domain/slice/testing layer stabilization
+Do when:
+  After current scenario source model is used on real updates.
+Do not do before:
+  Do not overfit taxonomy before testing layer and source/version/cascade rules are clearer.
+Notes:
+  Review CMD / LC / IBS / VI / UCQ / READ / INT / FUT / NW plus UI/UX projection notes and UI-only behavior entries.
+```
+
+### PMR-022 — Add source/version/cascade rules for scenario artifacts
+
+```text
+ID: PMR-022
+Status: waiting-for-condition
+Area: scenario source/version/cascade
+Task / reminder:
+  Add explicit cascade rules for core scenario, DATA, UI scenario, behavior item and scenario-artifact-map changes.
+Trigger / condition:
+  After source/version/cascade model is introduced and scenario/domain/slice dependency model is audited.
+Why it matters:
+  Core scenario, DATA, UI presentation and behavior items are linked but have different ownership and downstream impact.
+Owner layer:
+  documentation / scenario governance
+Target files:
+  future source/version/cascade workflow
+  planning/diagrams/scenario-drafting-workflow.md
+  planning/diagrams/scenario-artifact-map.md
+  planning/domain/scenario-to-aggregate-map.md
+  planning/slices/slice-scenario-flow-behavior-register.md
+Depends on:
+  source/version/cascade model
+Do when:
+  After source/version/cascade pilot stabilizes.
+Do not do before:
+  Do not create the full cascade workflow only from abstract assumptions.
+Notes:
+  UI scenario changes should check consistency with core scenario and DATA, but must not directly change business scope without an accepted decision.
+```
+
+### PMR-023 — Decide physical diagram-layer separation
+
+```text
+ID: PMR-023
+Status: waiting-for-condition
+Area: diagram workflow placement
+Task / reminder:
+  Decide whether diagram prompt/workflow/artifacts should remain under planning/diagrams/ or move to a separate diagramming layer/folder.
+Trigger / condition:
+  After scenario source model stabilizes and before major diagram workflow refactors.
+Why it matters:
+  planning/diagrams/ currently contains both scenario source files and diagram-generation workflow/artifact files. Responsibilities are conceptually separate even if physical files stay together for now.
+Owner layer:
+  documentation / diagram governance
+Target files:
+  planning/diagrams/diagram-prompt-generation-workflow.md
+  planning/diagrams/drawio-diagram-generation-workflow.md
+  planning/diagrams/scenario-diagram-consistency-report.md
+  future planning/diagramming/ or planning/diagrams/workflows/ if created
+Depends on:
+  scenario layer stabilization
+Do when:
+  Before any physical move/rename of diagram files.
+Do not do before:
+  Do not move files before current links and artifact references are audited.
+Notes:
+  Current package only clarifies responsibility. It does not move diagram files.
 ```
 
 ## 4. Maintenance Rules

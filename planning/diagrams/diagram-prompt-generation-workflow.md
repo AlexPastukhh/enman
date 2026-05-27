@@ -1,6 +1,6 @@
 # Diagram Request / Prompt And Preflight Workflow
 
-Status: current workflow / L2 validation cleanup synchronized  
+Status: current diagram request/preflight workflow / scenario-map synchronized  
 Scope: how scenario/documentation/planning work prepares a repo-grounded diagram request, and how the single Diagram Chat runs preflight/generation
 
 ## 1. Purpose
@@ -82,7 +82,10 @@ Then it must require reading diagram/source navigation:
 
 ```text
 planning/diagrams/README.md
+planning/diagrams/scenario-responsibility-map.md
+planning/diagrams/scenario-artifact-map.md
 planning/diagrams/scenario-drafting-workflow.md
+planning/diagrams/scenario-diagram-consistency-report.md
 planning/diagrams/diagram-prompt-generation-workflow.md
 planning/diagrams/drawio-diagram-generation-workflow.md
 planning/diagrams/scenario-text-specs/README.md
@@ -114,6 +117,27 @@ Do not assume alternative names such as:
 
 unless the current repository actually contains them.
 
+
+
+### Scenario / UI / DATA source model
+
+Diagram prompts must treat:
+
+```text
+core scenario
+  as business capability source;
+
+DATA
+  as scenario information source;
+
+UI scenario
+  as presentation / UX projection over DATA and business behavior;
+
+behavior items
+  as processed behavior units with optional UI/UX projection notes.
+```
+
+If UI wording appears to add business meaning, the prompt must flag a consistency issue instead of silently using it as core business scope.
 ## 4. Required Source Coverage
 
 The Diagram Chat must inspect sources relevant to the selected batch.
@@ -125,6 +149,8 @@ scenario text specs
 scenario DATA specs
 scenario UI specs, if present
 scenario behavior items
+scenario-responsibility-map.md
+scenario-artifact-map.md
 API/security addenda
 scenario clarifications
 scenario questions register

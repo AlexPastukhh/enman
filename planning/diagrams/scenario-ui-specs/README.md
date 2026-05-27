@@ -1,24 +1,37 @@
 # Scenario UI Specs
 
-Status: canonical scenario-level UI requirements source / UI template and readiness synchronized
+Status: canonical scenario-level UI presentation / UX requirements source
 
-This folder owns scenario-level UI requirements.
+This folder owns scenario-level UI presentation and UX requirements.
 
-UI scenario specs describe visible user outcomes and accepted UI behavior. They do not define React component placement, query keys, CSS file ownership or HTTP wrapper implementation.
+UI scenario specs describe how core scenario business behavior and DATA are presented to the user. They do not define business capability/content, React component placement, query keys, CSS file ownership or HTTP wrapper implementation.
 
 ## Current rule
 
 ```text
-[UI-SCENARIO] = scenario-level UI source:
-  user goal
+[CORE / BUSINESS SCENARIO] = business capability source:
+  actor
+  goal
+  business flow
+  business branches
+  business outcomes
+
+[DATA] = scenario information source:
+  entered data
+  visible data
+  selected/referenced data
+  attached/uploaded data
+  result/feedback information
+
+[UI-SCENARIO] = scenario-level presentation / UX source:
   screen entry points
   screen composition
-  visible data
-  actions
-  visible states
-  actor-specific differences
-  validation/feedback requirements
+  visual presentation of DATA
+  available actions from user's point of view
+  empty/loading/error/success states
+  deferred validation and feedback
   accessibility notes
+  mockup/layout/color/animation requirements when relevant
 
 [CLIENT-SLICE] = client implementation translation:
   page/entity/widget/feature ownership
@@ -34,6 +47,8 @@ UI scenario specs describe visible user outcomes and accepted UI behavior. They 
   accessibility workflow
   handoff rules
 ```
+
+UI scenarios must be consistent with core scenario and DATA. If a UI scenario appears to add business behavior, treat it as a consistency issue: correct it, record a question, or update the core scenario only through an accepted decision.
 
 ## Required UI scenario docs
 
@@ -82,7 +97,8 @@ as the canonical ApplicantParty UI scenario source.
 ## Rules
 
 ```text
-- UI specs define visible outcomes, not React implementation details.
+- UI specs define presentation/UX outcomes, not React implementation details.
+- UI specs present core scenario behavior and DATA; they do not create independent business behavior.
 - E2E asserts visible user outcome, not cache/refetch mechanics.
 - Client-side route/query ownership belongs to client sidecars unless needed to describe visible URL behavior.
 - Before updating a client slice draft, check whether its UI scenario source exists and is complete enough.

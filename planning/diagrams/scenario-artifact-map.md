@@ -1,6 +1,6 @@
 # Scenario Artifact Map
 
-Status: current scenario artifact map / first-pass cleanup scaffold  
+Status: current scenario artifact map / currentness and source relationship map  
 Scope: map scenario IDs to text, DATA, UI, behavior, clarification, domain and slice sources
 
 ## 1. Purpose
@@ -9,6 +9,28 @@ This file shows which scenario artifacts exist, which variants are current, and 
 
 It is not a replacement for scenario files. It is a map for discovery and cleanup.
 
+
+
+## 1A. Artifact Relationship Model
+
+This map owns artifact currentness and relationships, not full scenario content.
+
+Use this model:
+
+```text
+core/business scenario text
+  -> DATA
+  -> business behavior items
+  -> domain/slice/testing downstream
+
+core/business scenario text + DATA + business behavior items
+  -> UI scenario as presentation / UX projection
+  -> client sidecars / UI tests / E2E / a11y
+```
+
+UI scenario is not an independent business source. It presents DATA and business behavior. If UI wording appears to introduce business meaning, record a consistency issue, accepted decision, future/deferred item or correction.
+
+Labels such as `legacy`, `compat`, `deprecated`, `stale`, `merged` and `future` apply to UI variants as well as text/DATA/behavior variants.
 ## 2. Source Model
 
 Primary scenario artifacts:
@@ -92,12 +114,20 @@ Deprecated global validation addendum:
   Current validation/domain route is scenario-local behavior items + clarifications + `planning/scenario-domain-validation-principles.md` + domain docs.
 ```
 
-## 5. Next Cleanup Tasks
+## 5. Remaining Cleanup Tasks
 
 ```text
-- Merge/supersede duplicate SC-04 and SC-05 behavior item variants.
-- Decide whether SC-13A/13B/13D legacy naming files should be renamed, archived or kept as historical variants.
-- Replace current references to deprecated global validation addendum with current route wording.
-- Currentize or mark historical scenario-diagram-consistency-report.md.
+- Merge/supersede duplicate SC-04 and SC-05 behavior item variants later.
+- Decide whether SC-13A/13B/13D legacy naming files should be renamed, archived or kept as historical variants later.
 - Fill UI specs for SC-06/07A/07B/13A/13B/13C/13D when client planning needs them.
+- Review behavior item taxonomy after domain/slice/testing usage stabilizes.
 ```
+
+Already currentized in this scope:
+
+```text
+- Deprecated global validation addendum is historical only.
+- Scenario diagram consistency report uses current scenario/domain routes.
+- Diagram workflows read scenario-responsibility-map.md and scenario-artifact-map.md.
+```
+

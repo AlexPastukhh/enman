@@ -169,18 +169,37 @@ Do not make diagrams look more complete than the repository evidence supports.
 
 Before drawing, the diagram-generation chat must inspect current sources for the selected batch.
 
+Read current routing first:
+
+```text
+planning/diagrams/scenario-responsibility-map.md
+planning/diagrams/scenario-artifact-map.md
+planning/diagrams/scenario-diagram-consistency-report.md
+```
+
 Source families:
 
 ```text
-scenario text specs
+core scenario text specs
 scenario DATA specs
 scenario UI specs, if present
 scenario behavior items
-security/API addenda
 scenario clarifications
 scenario questions register
-current implementation evidence
+current domain overview / aggregate docs, for domain-aware diagrams
+current implementation evidence, when implementation status is shown
 ```
+
+Use this source model:
+
+```text
+core scenario = business capability;
+DATA = scenario information;
+UI scenario = presentation / UX projection;
+behavior items = processed behavior units with optional UI/UX projection notes.
+```
+
+Deprecated global validation addenda and old generated diagram packages are historical context only, not current source truth.
 
 The diagram-generation chat must detect and report conflicts before generating XML.
 
