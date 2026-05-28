@@ -199,18 +199,35 @@ When the assistant provides a replacement archive, the chat response should incl
 
 The command block should avoid paged terminal diff output and should avoid PowerShell pipeline encoding problems with Cyrillic text.
 
+It must also make expected new files visible in the review diff. Untracked files are not shown by `git diff` by default.
+
 Required shape:
 
 ```powershell
 $files = @(
   "path/to/changed-file-1.md",
-  "path/to/changed-file-2.md"
+  "path/to/changed-file-2.md",
+  "path/to/new-file.md"
 )
+
+$newFiles = @(
+  "path/to/new-file.md"
+)
+
+# Use @() when the package does not add files.
+# Make expected new files visible in git diff without staging their contents.
+foreach ($file in $newFiles) {
+  if (Test-Path $file) {
+    git add -N -- $file
+  } else {
+    Write-Host "Missing expected new file: $file"
+  }
+}
 
 $pkgName = "real-package-name-without-angle-brackets"
 $diffFile = Join-Path (Get-Location) "$pkgName.diff"
 
-git status --short
+git status --short -- $files
 git diff --stat -- $files
 
 git --no-pager diff --no-color --output="$diffFile" -- $files
@@ -224,6 +241,11 @@ Rules:
 
 ```text
 - Use a real package name in `$pkgName`; do not leave placeholders such as `<ARCHIVE_NAME>` in runnable commands.
+- `$files` must include all expected changed and added files.
+- `$newFiles` must include every expected added file; use `$newFiles = @()` when the package does not add files.
+- Run `git add -N -- <new-file>` before generating the review diff for packages that add files.
+- `git add -N` is used only to make untracked files visible in `git diff`; the final commit command must still explicitly stage only intended files.
+- If an expected new file is missing, treat that as a review blocker until resolved.
 - Use `git --no-pager diff --no-color --output="$diffFile" -- $files` to write the diff file.
 - Copy the saved diff with `Get-Content -Raw -Encoding UTF8 | Set-Clipboard`.
 - Do not rely on `git diff | Tee-Object | Set-Clipboard` for reviewable diff transfer when non-ASCII text may be present.
