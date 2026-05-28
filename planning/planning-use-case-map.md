@@ -58,12 +58,13 @@ For non-trivial planning/repo work, use this path:
 5. Use layer README / responsibility map for local routing.
 6. Select traversal depth.
 7. Select read source mode.
-8. Read workflows for algorithms.
-9. Read templates for output shape.
-10. Read sources/evidence needed for this pass.
-11. Report sources used this pass and relevant not-checked sources.
-12. Separate implicit checks from explicit-permission actions.
-13. Produce answer/update/plan/draft.
+8. Select output mode when the user asks for a deliverable such as an archive/package.
+9. Read workflows for algorithms.
+10. Read templates for output shape.
+11. Read sources/evidence needed for this pass.
+12. Report sources used this pass and relevant not-checked sources.
+13. Separate implicit checks from explicit-permission actions.
+14. Produce answer/update/plan/draft/package.
 ```
 
 ## 4. Active Context Rule
@@ -136,6 +137,33 @@ GitHub/repo source mode is still required when:
 - the answer claims remote/current branch cleanliness and archive freshness is not enough;
 - current implementation/status evidence must be checked from the current branch.
 ```
+
+## 6A. Output Modes
+
+Read source mode and output mode are different.
+
+```text
+Read source mode
+  = where the chat reads from.
+
+Output mode
+  = what the chat produces.
+```
+
+Archive wording can mean two different things:
+
+| User wording | Meaning | Required action |
+|---|---|---|
+| `арх`, `из архива`, `use archive` | Archive as read source. | Use archive snapshot for read-only checks when needed. |
+| `давай архив`, `собери архив`, `replacement package`, `archive for manual apply` | Archive as output package. | Use `planning/replacement-file-generation-guide.md` and produce a replacement package. |
+
+When the user asks for an archive/package output, the chat must read:
+
+```text
+planning/replacement-file-generation-guide.md
+```
+
+Replacement package output must contain complete replacement/add files under `replacement-files/<repo-relative-path>`, plus `MANIFEST.md` and `APPLY.md`. Do not emit patch scripts or diff-only packages unless the user explicitly asks for patch proposal mode.
 
 ## 7. Source Model
 
@@ -213,6 +241,7 @@ Use a shorter version when the update is simple.
 | `без изм`, `б изм`, `no ch` | Reuse recent context and avoid broad re-audit. | Weak without prior context; ask what state is unchanged if needed. | Reuse / targeted. | Previous context plus targeted reads. | Answer/update with minimal checks. |
 | `арх`, `из арх`, `из архива`, `use archive` | Use latest/current archive as read source when checks are needed. | Use latest uploaded archive in current conversation, or ask for archive in a new chat. | Does not decide depth. | Archive snapshot. | Read-only answer/check based on archive. |
 | `б из арх`, `без изм, арх`, `изм нет, арх` | No changes + archive source mode. | Use if latest archive exists; otherwise ask for archive. | Reuse / targeted. | Latest uploaded archive. | No broad audit; targeted archive checks only. |
+| `давай архив`, `собери архив`, `replacement package`, `archive for manual apply` | Produce archive/package for the active approved plan/scope. | Build archive plan from obvious target or ask only blocking target questions. | Targeted/full by package scope. | GitHub/archive/conversation by context. | Replacement package ZIP with `MANIFEST.md`, `APPLY.md`, `replacement-files/`. |
 
 ## 10. Primary Use Case Table
 
@@ -220,6 +249,7 @@ Use a shorter version when the update is simple.
 |---|---|---:|---|---|---|---|---|---|---|
 | “посмотри / распланируй / проверь docs” | Non-trivial planning/docs work | Optional | Full first time; targeted later | GitHub/archive/conversation by context | workflow activation; reviewable output | `planning/README.md`, `workflow-activation-map.md`, `planning-doc-responsibility-map.md` | README + activation map | Reviewable answer/plan | Edits require approval |
 | “обнови docs” | Documentation update | Optional | Targeted/full by scope | GitHub for writes; archive for read-only if requested | docs update plan/workflow; local-global sync | documentation README/map/workflows | activation map + docs workflows | Plan or applied update | GitHub writes require approval |
+| “давай архив”, “собери архив”, “replacement package”, “archive for manual apply” | Replacement archive/package generation | Optional | Targeted/full by package scope | GitHub/archive/conversation by context | replacement file generation guide; docs update workflow when docs change; reviewable output | `planning/replacement-file-generation-guide.md`, target files, docs update workflow when docs are changed | replacement guide + workflow activation | ZIP package with `MANIFEST.md`, `APPLY.md`, `replacement-files/<repo-relative-path>` complete files | Direct repo edits not allowed unless separately approved |
 | “поправь ссылки во многих файлах” | Mechanical link/path/name sync | Optional | Targeted/broad search | GitHub or archive | docs update workflow; local-global sync | target files/search source | docs update workflow output mode rules | Link-sync plan/one bundled commit when tool-supported | Bundled/bulk mode should be used when approved; if unavailable, stop and disclose before per-file writes |
 | “задрафти slice” | Slice draft work | Usually new | Full first time | Sources required by slice workflow | slice workflow chain; testing selector when needed | slice README/map/workflow/principles/test workflow/template; `planning/testing/testing-responsibility-map.md` when test-layer-specific guidance is needed | activation map + slice README/map | Slice draft/plan | File writes require approval |
 | “задрафти server slice” | Server slice draft | New/active | Full first time; targeted update | Scenario/domain/API/testing sources | slice + server drafting workflows; testing selector when needed | server workflow/template/principles; `planning/slices/slice-test-plan-workflow.md`; `planning/testing/testing-responsibility-map.md`; `planning/testing/server-slice-test-plan-rules.md` when server/API test guidance is needed | slice README/map | Server/backend/API draft | File writes require approval |
@@ -260,170 +290,26 @@ If no active draft exists:
 - start a new draft workflow only if the target is obvious.
 ```
 
-Do not switch to an older draft unless the user names it.
-
-## 12. Detailed Trace: New Slice Draft
+## 12. Detailed Trace: Replacement Archive / Package Output
 
 User says:
 
 ```text
-задрафти slice
+давай архив / собери архив / создай replacement package / archive for manual apply
 ```
 
-Path:
+Steps:
 
 ```text
-planning/workflow-activation-map.md
-planning/planning-doc-responsibility-map.md
-planning/slices/README.md
-planning/slices/slice-responsibility-map.md
-planning/slices/slice-draft-authoring-workflow.md
-planning/slices/slice-draft-authoring-principles.md
-planning/slices/slice-test-plan-workflow.md
-side-specific workflow/template
-```
-
-Expected behavior:
-
-```text
-- classify slice type;
-- collect scenario/source/behavior/domain/API/testing sources;
-- use workflow for algorithm;
-- use template for output shape;
-- report checked/not checked sources;
-- do not invent behavior locally when source files exist.
-```
-
-## 13. Detailed Trace: Update / Clarify / Expand
-
-Update types:
-
-```text
-- user correction;
-- clarification;
-- expansion;
-- self-correction;
-- recheck;
-- new source introduced;
-- latest-version request.
-```
-
-Algorithm:
-
-```text
-1. Identify target: active answer, draft, canvas, section, plan or named old item.
-2. Identify update type.
-3. Decide traversal depth.
-4. Decide read source mode.
-5. Identify Source Delta.
-6. Apply update without silently broadening scope.
-7. Preserve useful previous caveats/sources/risks unless superseded.
-8. Report changed / already current / blocked.
-```
-
-New sources used in one pass do not automatically become default sources.
-
-## 14. Detailed Trace: Mechanical Multi-File Link Sync
-
-User says:
-
-```text
-обнови ссылки везде
-почисти старые ссылки
-поправь current routes
-сделай через bulk
-```
-
-Meaning:
-
-```text
-shallow mechanical synchronization across multiple files
-```
-
-Behavior:
-
-```text
-1. Classify as mechanical multi-file link/path/name sync if the change is shallow and all files participate in one logical sync.
-2. Use targeted/broad search from the selected read source mode.
-3. Do not mix unrelated semantic refactors into the same sync.
-4. Prefer one bundled/bulk commit when the user approved bulk mode and the tool supports it.
-5. If only per-file commit tools are available, stop before writing and disclose the limitation.
-6. Offer replacement/archive package or a bulk-capable Git tree/commit workflow if available.
-7. Final response lists all changed files and the shared commit SHA.
-```
-
-## 15. Detailed Trace: No Changes + Archive
-
-User says:
-
-```text
-без изм, арх
-б из арх
-изм нет, арх
-no ch, archive
-```
-
-Meaning:
-
-```text
-unchanged state + archive read source
-```
-
-Behavior:
-
-```text
-- skip broad re-audit;
-- reuse previous traversal/context;
-- read archive only for needed targeted checks;
-- use the latest uploaded archive in the current conversation if no new archive is attached;
-- do not use GitHub unless write/SHA or remote-cleanliness claim requires it.
-```
-
-Limits:
-
-```text
-- a new chat cannot know an old archive unless it is uploaded again;
-- archive evidence is not remote/current proof if freshness is uncertain;
-- response commands do not grant edit permission.
-```
-
-## 16. Permission Boundaries
-
-Response commands do not permit:
-
-```text
-- GitHub writes;
-- deletes;
-- renames;
-- commits;
-- PRs;
-- generated artifact changes;
-- implementation changes.
-```
-
-Explicit approval is required for:
-
-```text
-- create/update/delete files;
-- bulk/bundled commits;
-- archive package creation;
-- code/generated changes;
-- implementation changes.
-```
-
-## 17. Known Gaps
-
-Known cleanup/future work:
-
-```text
-- server/client/cross-cutting drafting workflow split is deferred;
-- testing workflow split is deferred;
-- source/version cascade sync workflow is future;
-- response output templates vs response command workflow split is deferred.
-```
-
-Do not hide these gaps in chat memory. Track durable follow-ups in:
-
-```text
-planning/planning-maintenance-register.md
+1. Treat this as output mode, not archive read-source mode.
+2. Use workflow-activation-map.md to disclose activated workflows when non-trivial.
+3. Read planning/replacement-file-generation-guide.md.
+4. Read documentation-update-workflow.md if the package updates planning docs.
+5. Read current target files from GitHub/repo or the accepted archive source.
+6. Generate complete replacement/add files under replacement-files/<repo-relative-path>.
+7. Include MANIFEST.md and APPLY.md.
+8. Include PowerShell apply commands using temporary extraction and Copy-Item -Destination.
+9. Include exact git add and commit commands for the intended changed files.
+10. Do not include patch scripts, diff-only files or partial snippets.
+11. If complete replacement files cannot be produced safely, stop and say so instead of switching to patch mode.
 ```

@@ -3,6 +3,46 @@
 Status: current replacement package guide  
 Scope: how to generate archives/files for manual application to repository
 
+## 0. Quick Rule For New Chats
+
+When the user asks for an archive, replacement package or files to apply locally, use this guide before generating the archive.
+
+Default meaning:
+
+```text
+"давай архив" / "собери архив" / "replacement package" / "archive for manual apply"
+  = output mode: replacement archive/package.
+```
+
+This is different from archive read-source commands:
+
+```text
+"арх" / "из архива" / "use archive"
+  = read source mode: use an uploaded archive snapshot for analysis.
+```
+
+If both apply, state both explicitly:
+
+```text
+Read source mode:
+- archive snapshot / GitHub / conversation
+
+Output mode:
+- replacement archive/package
+```
+
+Replacement archive/package mode means:
+
+```text
+- complete replacement/add files;
+- repository-relative paths under replacement-files/;
+- MANIFEST.md;
+- APPLY.md;
+- no patch scripts, diff-only files or generated apply scripts.
+```
+
+If complete replacement files cannot be produced safely, stop and say so. Do not silently switch to patch-script mode.
+
 ## 1. Purpose
 
 Use this guide when the user asks to create an archive or replacement package for the repository.
@@ -18,7 +58,18 @@ Use this guide when the user asks to create an archive or replacement package fo
 - Do not create branches, commits, PRs or GitHub comments unless explicitly asked.
 - Do not include unrelated implementation changes.
 - Keep archive scope focused.
+- Do not include patch scripts or script-based patch applicators in replacement archive mode.
 ```
+
+Patch scripts, unified diffs, generated apply scripts and partial snippets are **not** replacement files.
+
+If the intended output is a patch or script, label the mode as:
+
+```text
+patch proposal only
+```
+
+Do not call it a replacement archive/package.
 
 ## 3. GitHub Mutation Rule
 
@@ -75,12 +126,12 @@ If the question is future-only and does not affect the archive, record it elsewh
 
 ## 7. Archive Contents
 
-Each archive should contain:
+Each replacement archive should contain:
 
 ```text
 MANIFEST.md
 APPLY.md
-repository-relative replacement/add files
+replacement-files/<repository-relative-path>
 ```
 
 `MANIFEST.md` should list:
@@ -98,7 +149,7 @@ Required order:
 ```text
 1. Pull the current target branch state into the local repository.
 2. Apply replacement files from the archive to the local repository root.
-3. Check git status.
+3. Check git status and diff.
 4. Review and commit locally.
 ```
 
@@ -177,7 +228,27 @@ git pull --ff-only origin my-changes
 
 The final assistant response that provides the archive should show the correct command for the archive layout actually used, not only hide it inside `APPLY.md`.
 
-## 9. Scope Statement
+## 9. Patch / Script Artifacts Are Not Replacement Packages
+
+Do not use any of these inside replacement archive mode:
+
+```text
+patch-files/
+*.patch
+*.diff
+apply_*.py
+apply_*.ps1 that rewrites files by search/replace
+APPLY.md that tells the user to run a generated patch script
+partial snippets that must be manually inserted
+```
+
+These are patch proposal artifacts, not replacement package artifacts.
+
+If the user explicitly asks for a patch proposal, it may be provided separately, but the final response must label it as patch mode and must not claim it is a replacement archive.
+
+If the target file is large, still generate the complete replacement file. If that is not safe, stop and report the limitation instead of producing a patch-script archive.
+
+## 10. Scope Statement
 
 Every final response with an archive should state:
 
@@ -190,7 +261,7 @@ Every final response with an archive should state:
 
 When the archive is intended for one local bulk commit, the final response should also include a suggested `git add` and `git commit` command.
 
-## 10. Status Reconciliation Rule
+## 11. Status Reconciliation Rule
 
 When an archive updates planning docs after implementation changes, use:
 
@@ -200,7 +271,7 @@ planning/documentation/status-reconciliation-workflow.md
 
 Do not leave docs saying `planned` when current repo evidence shows `implemented` or `first-stage implemented`.
 
-## 11. Do Not
+## 12. Do Not
 
 ```text
 - Do not mix workflow cleanup with code implementation.
@@ -208,6 +279,7 @@ Do not leave docs saying `planned` when current repo evidence shows `implemented
 - Do not migrate behavior items inside unrelated archives.
 - Do not change API/domain/test behavior in documentation-only archives.
 - Do not generate partial snippets when full replacement files are expected.
+- Do not generate patch scripts when replacement files are expected.
 - Do not directly change GitHub when the user asked for an archive.
 - Do not provide archive apply instructions without a pull/current-state step first.
 - Do not tell the user to extract a package-layout archive directly into the repo root as the apply step.
