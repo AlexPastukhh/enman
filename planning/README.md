@@ -66,6 +66,14 @@ The use-case map explains:
 - expected output and permission boundary for common use cases.
 ```
 
+For a new chat, first planning/repo pass, restored context, or no reliable active context, start with the New Chat Onboarding use case in:
+
+```text
+planning/planning-use-case-map.md
+```
+
+Do not ask the user to name workflow files. Use the onboarding use case to choose the initial read path, then switch to the specific task/use-case route.
+
 For root layer routing, read:
 
 ```text
