@@ -278,6 +278,62 @@ Write-Host "Suspect file contents saved to: $suspectDump"
 Write-Host "Suspect file contents copied to clipboard. Paste it into chat."
 ```
 
+## 7C. Replacement Archive Conversation Review Loop
+
+Replacement archive work is a review loop between the assistant and the user.
+
+Use this loop when the assistant creates a replacement archive and the user applies it locally:
+
+```text
+1. Assistant creates a replacement archive/package.
+2. Assistant response includes:
+   - archive link;
+   - intended changed files;
+   - intended new files, if any;
+   - PowerShell apply commands;
+   - full diff capture commands from §7B;
+   - mojibake/suspect-file fallback commands when relevant;
+   - scoped commit commands, clearly marked as after-review only.
+3. User applies the archive locally and sends the copied diff.
+4. Assistant reviews the diff before telling the user to commit.
+5. If the diff is OK, assistant gives scoped `git add`, `git commit` and `git push` commands.
+6. User commits and pushes.
+7. When user says `проверь`, assistant checks the remote branch/files and confirms what landed.
+```
+
+Diff review must check:
+
+```text
+- only intended files appear in the scoped diff;
+- all expected new files appear in the diff, using `git add -N` when needed;
+- no expected file is missing;
+- no unrelated sections, register entries, examples, routing rows or source-of-truth rules were removed;
+- package intent matches the diff;
+- service files such as MANIFEST.md and APPLY.md were not added to the repository unless they are intended repository files;
+- final commit commands stage only intended files and do not use `git add .`.
+```
+
+If the user's diff is incomplete:
+
+```text
+- do not approve commit yet;
+- explain what is missing;
+- provide the exact command needed to regenerate the full diff;
+- for missing added files, provide the `$newFiles` / `git add -N` command from §7B;
+- for mojibake, provide the suspect-file content copy command from §7B.
+```
+
+If the diff is correct:
+
+```text
+- state that the diff is complete enough for review;
+- summarize what was checked;
+- give only scoped commit commands for the intended files;
+- remind not to use `git add .` when unrelated local changes may exist.
+```
+
+This loop is not a new output mode. It is the review procedure for replacement archive/package output mode.
+
 ## 8. Archive Layouts And Apply Commands
 
 There are two supported archive layouts.
