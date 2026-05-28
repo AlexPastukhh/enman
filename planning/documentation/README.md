@@ -1,7 +1,7 @@
 # Documentation Update Workflow Index
 
 Status: current documentation layer index / read order  
-Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs, response-level commands and navigation updates
+Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs, response-level commands, working example coverage and navigation updates
 
 ## 1. Purpose
 
@@ -19,6 +19,7 @@ A documentation update agent must:
 - reconcile docs with implemented/planned/deferred status;
 - synchronize local docs with shared indexes/registers;
 - update navigation/responsibility maps together with new docs;
+- decide whether a working example is needed when templates, output shapes, commands or draft formats change;
 - use direct GitHub edits only when explicitly asked to apply changes;
 - use one file per commit by default for direct GitHub edits;
 - use archive/replacement packages when manual application or broad generated replacement is more practical.
@@ -36,6 +37,8 @@ planning/documentation/documentation-update-workflow.md
 planning/documentation/status-reconciliation-workflow.md
 planning/documentation/local-global-documentation-sync-workflow.md
 planning/documentation/reviewable-agent-output-and-commands-workflow.md
+planning/documentation/example-coverage-workflow.md
+planning/documentation/examples/README.md
 planning/documentation/documentation-update-agent-prompt.md
 ```
 
@@ -46,6 +49,7 @@ planning/README.md
 planning/planning-doc-responsibility-map.md
 planning/planning-agent-protocol.md
 planning/planning-workflow-current.md
+planning/planning-use-case-map.md
 planning/replacement-file-generation-guide.md
 planning/vkr-clean-reference.md
 ```
@@ -77,8 +81,9 @@ For broad documentation updates:
 9. planning/documentation/documentation-update-workflow.md
 10. planning/documentation/status-reconciliation-workflow.md
 11. planning/documentation/local-global-documentation-sync-workflow.md
-12. planning/replacement-file-generation-guide.md, if archive/replacement mode is relevant
-13. relevant domain/API/testing/slice/client/scenario docs for the requested area
+12. planning/documentation/example-coverage-workflow.md, if the update changes templates, output shapes, response commands, output modes, draft formats or example coverage
+13. planning/replacement-file-generation-guide.md, if archive/replacement mode is relevant
+14. relevant domain/API/testing/slice/client/scenario docs for the requested area
 ```
 
 For answer-format, reviewable-output or response-command work:
@@ -86,6 +91,15 @@ For answer-format, reviewable-output or response-command work:
 ```text
 planning/documentation/reviewable-agent-output-and-commands-workflow.md
 ```
+
+For working example coverage decisions:
+
+```text
+planning/documentation/example-coverage-workflow.md
+planning/documentation/examples/README.md
+```
+
+Use this when adding or changing templates, workflows with expected output, response commands, output modes, draft formats or example indexes.
 
 ## 4. Responsibility Routing Rule
 
@@ -111,6 +125,8 @@ preflight docs update plan format -> documentation-update-plan-workflow.md
 local/global sync process -> local-global-documentation-sync-workflow.md
 status reconciliation process -> status-reconciliation-workflow.md
 agent answer/review format and response-level commands -> reviewable-agent-output-and-commands-workflow.md
+example coverage decision process -> example-coverage-workflow.md
+documentation-layer examples navigation -> examples/README.md
 reusable prompt -> documentation-update-agent-prompt.md
 ```
 
@@ -187,9 +203,25 @@ For non-trivial answers, audits, plans, reviews, handoffs or response-level comm
 planning/documentation/reviewable-agent-output-and-commands-workflow.md
 ```
 
-This workflow defines response levels, sources/coverage blocks, section-level sources and commands such as recheck, clarify, keep prev and no ch.
+This workflow defines response levels, sources/coverage, section-level sources and commands such as recheck, clarify, keep prev and no ch.
 
-## 10. Scoped Sync Notes
+## 10. Example Coverage And Examples Index
+
+For reusable templates, workflows with expected output, response commands, output modes, draft formats or repeated chat failures caused by missing examples, use:
+
+```text
+planning/documentation/example-coverage-workflow.md
+```
+
+For documentation-layer working example navigation, use:
+
+```text
+planning/documentation/examples/README.md
+```
+
+Examples are supporting artifacts. They should demonstrate correct output or usage shape, but must not duplicate routing, source-mode, output-mode, permission or workflow activation logic owned by use-case maps and workflow files.
+
+## 11. Scoped Sync Notes
 
 Scoped sync notes are case-specific documentation synchronization notes. They are useful for trace/audit/context, but they are not reusable workflows or global architecture principles.
 
@@ -203,7 +235,7 @@ planning/documentation/l2-scenario-status-marker-sync-note.md
 
 Do not treat scoped sync notes as canonical workflow files. If a scoped sync note contains a reusable rule, promote that rule into the correct workflow or architecture file through a normal documentation update.
 
-## 11. Draft-Driven Discovery Scope Note
+## 12. Draft-Driven Discovery Scope Note
 
 Draft-driven discovery is currently a slice-layer discovery loop.
 
