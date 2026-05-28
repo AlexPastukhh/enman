@@ -690,10 +690,10 @@ Notes:
 
 ```text
 ID: PMR-023
-Status: waiting-for-condition
+Status: done-conceptual-layer / physical move deferred
 Area: diagram workflow placement
 Task / reminder:
-  Decide whether diagram prompt/workflow/artifacts should remain under planning/diagrams/ or move to a separate diagramming layer/folder.
+  Create a separate diagramming responsibility layer and decide whether diagram prompt/workflow/artifacts should remain under planning/diagrams/ or move to a separate diagramming layer/folder.
 Trigger / condition:
   After scenario source model stabilizes and before major diagram workflow refactors.
 Why it matters:
@@ -701,18 +701,19 @@ Why it matters:
 Owner layer:
   documentation / diagram governance
 Target files:
+  planning/diagramming/README.md
+  planning/diagramming/diagramming-responsibility-map.md
   planning/diagrams/diagram-prompt-generation-workflow.md
   planning/diagrams/drawio-diagram-generation-workflow.md
   planning/diagrams/scenario-diagram-consistency-report.md
-  future planning/diagramming/ or planning/diagrams/workflows/ if created
 Depends on:
   scenario layer stabilization
 Do when:
-  Before any physical move/rename of diagram files.
+  Conceptual layer is done. Physical move should be handled by a dedicated mechanical move/link-update package.
 Do not do before:
   Do not move files before current links and artifact references are audited.
 Notes:
-  Current package only clarifies responsibility. It does not move diagram files.
+  Current package creates planning/diagramming/ as the responsibility/routing layer. It does not physically move diagram files.
 ```
 
 ### PMR-024 — Reclassify existing scenario DATA sidecars
@@ -828,6 +829,66 @@ Do not do before:
   Do not treat historical cleanup notes as current repo state without verification.
 Notes:
   Keep as historical/planned note until checked.
+```
+
+### PMR-028 — Move scenario and diagramming docs to dedicated folders
+
+```text
+ID: PMR-028
+Status: waiting-for-condition
+Area: scenario / diagramming physical placement
+Task / reminder:
+  Decide and execute the physical move from planning/diagrams/ to separate scenario and diagramming folders.
+Trigger / condition:
+  After planning/diagramming/ responsibility layer is accepted and link references are audited.
+Why it matters:
+  The target model is scenario source ownership separate from diagram generation ownership. Current physical colocation is transitional.
+Owner layer:
+  documentation / scenario / diagramming governance
+Target files:
+  planning/diagrams/
+  future planning/scenarios/
+  planning/diagramming/
+Depends on:
+  planning/diagramming/README.md
+  planning/diagramming/diagramming-responsibility-map.md
+  scenario responsibility map and artifact map
+Do when:
+  During a dedicated mechanical move/link-update package.
+Do not do before:
+  Do not combine with scenario content migration or generated diagram artifact cleanup.
+Notes:
+  A compatibility pointer at planning/diagrams/ may be needed after the move.
+```
+
+### PMR-029 — Classify legacy and generated diagram artifacts
+
+```text
+ID: PMR-029
+Status: waiting-for-condition
+Area: diagram artifact cleanup
+Task / reminder:
+  Classify root-level diagram notes, generated .drawio packages, UML files and old diagram examples as current workflow, example, generated artifact, legacy or historical.
+Trigger / condition:
+  After diagramming responsibility layer exists and before deleting/moving old diagram artifacts.
+Why it matters:
+  Historical/generated diagram outputs should not look like current scenario/domain source truth.
+Owner layer:
+  diagramming / documentation governance
+Target files:
+  planning/diagram-*.md
+  planning/*.drawio
+  planning/diagrams/*.drawio
+  planning/diagrams/uml/
+  future planning/diagramming/generated/ or legacy/ if created
+Depends on:
+  planning/diagramming responsibility routing
+Do when:
+  During a dedicated diagram artifact classification package.
+Do not do before:
+  Do not mix generated artifact classification with scenario source folder move.
+Notes:
+  Keep generated diagrams until classified; do not delete as part of routing cleanup.
 ```
 
 ## 4. Maintenance Rules

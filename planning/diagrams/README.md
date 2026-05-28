@@ -1,20 +1,20 @@
-# Scenario / Diagram Planning Index
+# Scenario Planning Index
 
-Status: current scenario-layer entrypoint / source routing and diagram workflow index  
-Scope: scenario text specs, DATA, UI specs, behavior items, questions, clarifications, scenario artifact map and diagram-generation workflows
+Status: current scenario-layer entrypoint / source routing index  
+Scope: scenario text specs, inline/reusable DATA, UI specs, behavior items, questions, clarifications and scenario artifact map
 
 ## 1. Purpose
 
-This folder contains scenario/source artifacts and diagram-generation workflow docs.
+This folder contains scenario/source artifacts.
 
-It supports:
+Diagram-generation workflow files are still physically colocated here during migration, but diagramming responsibility is owned by `planning/diagramming/`.
+
+This folder supports:
 
 ```text
 scenario/specification drafting
 scenario source cleanup
 scenario artifact discovery
-repo-grounded diagram prompt preparation
-repo-grounded draw.io diagram generation for VKR-clean artifacts
 ```
 
 ## 2. Local Routing
@@ -43,15 +43,21 @@ scenario questions register
 scenario behavior items
 scenario clarifications
 scenario cross-cutting behavior
-diagram request/prompt and preflight workflow
-draw.io diagram-generation workflow
+```
+
+Temporary colocated diagram workflow files are routed by:
+
+```text
+planning/diagramming/README.md
+planning/diagramming/diagramming-responsibility-map.md
+```
 ```
 
 Validation/domain rules should live in scenario-local behavior items, clarifications, domain docs or slice-local docs. Do not treat old global server-domain validation addenda as source of truth.
 
 ## 4. Scenario Source Read Order
 
-For scenario/diagram work, read:
+For scenario source work, read:
 
 ```text
 planning/scenario-specification-principles.md
@@ -83,9 +89,17 @@ planning/slices/slice-scenario-flow-behavior-register.md
 planning/slices/SLICE-INDEX.md
 ```
 
-For diagrams, also read:
+For diagramming work, use the diagramming layer first:
 
 ```text
+planning/diagramming/README.md
+planning/diagramming/diagramming-responsibility-map.md
+```
+
+Current physical diagram workflow files during migration:
+
+```text
+planning/diagrams/scenario-diagram-consistency-report.md
 planning/diagrams/diagram-prompt-generation-workflow.md
 planning/diagrams/drawio-diagram-generation-workflow.md
 planning/diagrams/scenario-status-marker-rules.md
@@ -163,22 +177,24 @@ AgreementDocumentRef is document metadata reference, not file bytes/storage adap
 Current SC-14 means Agreement Documents / AgreementDocumentRef, not Client Data Verification.
 ```
 
-## 8. Diagram Workflow Files
+## 8. Diagram Workflow Boundary
+
+Diagramming responsibility is now routed through:
 
 ```text
+planning/diagramming/README.md
+planning/diagramming/diagramming-responsibility-map.md
+```
+
+Current physical workflow files remain here until the move batch:
+
+```text
+planning/diagrams/scenario-diagram-consistency-report.md
 planning/diagrams/diagram-prompt-generation-workflow.md
 planning/diagrams/drawio-diagram-generation-workflow.md
 ```
 
-Scenario/documentation/prompt chat does not draw diagrams itself.
-
-Diagram Chat phases:
-
-```text
-1. preflight / source reconciliation / batch plan;
-2. selected draw.io XML generation;
-3. archive packaging.
-```
+Scenario/documentation/prompt chat does not draw diagrams itself unless the user explicitly asks for an artifact package and the draw.io workflow is active.
 
 Do not generate all diagrams at once by default.
 

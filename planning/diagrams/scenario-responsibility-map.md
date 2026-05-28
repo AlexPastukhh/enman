@@ -19,8 +19,9 @@ scenario behavior items;
 scenario questions;
 scenario clarifications;
 scenario cross-cutting behavior;
-diagram workflows and diagram readiness;
 historical/deprecated scenario sources.
+
+Diagram workflows are currently colocated under `planning/diagrams/`, but their responsibility is routed through `planning/diagramming/`.
 ```
 
 ## 2. Routing Table
@@ -46,9 +47,9 @@ historical/deprecated scenario sources.
 | Cross-cutting scenario behavior | `planning/diagrams/scenario-cross-cutting/` or behavior item files with `CC-*` IDs | one scenario file unless scenario-local only |
 | Scenario questions that can change behavior/DATA/UI/domain interpretation | `planning/diagrams/scenario-questions-register.md` | local prose only |
 | Temporary accepted clarifications / diagram guardrails | `planning/diagrams/scenario-clarifications/` | permanent scenario specs after correction |
-| Diagram prompt workflow | `planning/diagrams/diagram-prompt-generation-workflow.md` | scenario text specs |
-| Draw.io XML generation workflow | `planning/diagrams/drawio-diagram-generation-workflow.md` | scenario text specs |
-| Status marker vocabulary | `planning/diagrams/scenario-status-marker-rules.md` | individual diagrams only |
+| Diagram prompt/preflight workflow responsibility | `planning/diagramming/diagramming-responsibility-map.md` routes it; current physical file `planning/diagrams/diagram-prompt-generation-workflow.md` during migration | scenario text specs |
+| Draw.io XML generation workflow responsibility | `planning/diagramming/diagramming-responsibility-map.md` routes it; current physical file `planning/diagrams/drawio-diagram-generation-workflow.md` during migration | scenario text specs |
+| Diagram status marker vocabulary | `planning/diagramming/diagramming-responsibility-map.md` routes it; current physical file `planning/diagrams/scenario-status-marker-rules.md` during migration | individual diagrams only |
 | Deprecated global validation addendum | `planning/diagrams/scenario-text-specs/deprecated/` | current source read order |
 
 ## 3. Source Priority
@@ -109,3 +110,22 @@ If they conflict, record a reconciliation question; do not silently override the
 Do not move stale/legacy files or rewrite concrete scenario sources in a routing/policy batch.
 
 Existing `scenario-data/*.md` files remain transitional until PMR-driven reclassification.
+
+
+## 7. Diagramming Boundary During Migration
+
+```text
+Scenario layer owns scenario source truth.
+Diagramming layer owns diagram workflow and artifact governance.
+```
+
+Current physical colocation under `planning/diagrams/` is temporary. Use:
+
+```text
+planning/diagramming/README.md
+planning/diagramming/diagramming-responsibility-map.md
+```
+
+for diagram prompt, draw.io generation, diagram source consistency and diagram artifact classification decisions.
+
+Do not move diagram workflow files or generated diagram artifacts in ordinary scenario-source updates.

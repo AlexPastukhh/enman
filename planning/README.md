@@ -104,11 +104,29 @@ Do not use planning status files as proof that a feature is implemented.
 Use:
 
 ```text
+planning/diagrams/scenario-responsibility-map.md
+planning/diagrams/scenario-artifact-map.md
 planning/diagrams/scenario-text-specs/
 planning/diagrams/scenario-data/
 planning/diagrams/scenario-behavior-items/
 planning/diagrams/scenario-clarifications/
 ```
+
+Scenario source files are still physically under `planning/diagrams/` during migration. They are scenario sources, not generated diagram truth.
+
+### Diagramming workflow truth
+
+Use:
+
+```text
+planning/diagramming/README.md
+planning/diagramming/diagramming-responsibility-map.md
+planning/diagrams/scenario-diagram-consistency-report.md
+planning/diagrams/diagram-prompt-generation-workflow.md
+planning/diagrams/drawio-diagram-generation-workflow.md
+```
+
+Diagramming docs describe how to prepare, check and generate diagrams. Generated diagrams are not scenario/domain/slice source truth.
 
 ### Domain discovery and aggregate draft truth
 
@@ -217,7 +235,7 @@ relevant scenario/domain/architecture docs
 
 Then verify implementation from code, tests, screenshots or generated contracts when implementation evidence matters.
 
-### For scenario and diagram work
+### For scenario work
 
 Read:
 
@@ -229,11 +247,27 @@ planning/diagrams/scenario-responsibility-map.md
 planning/diagrams/scenario-artifact-map.md
 planning/diagrams/scenario-text-specs/00-scenario-text-specs-index.md
 planning/diagrams/scenario-data/00-scenario-data-index.md
+planning/diagrams/scenario-ui-specs/00-scenario-ui-specs-index.md
 planning/diagrams/scenario-behavior-items/00-scenario-behavior-items-index.md
 planning/diagrams/scenario-clarifications/README.md
+```
+
+### For diagramming work
+
+Read:
+
+```text
+planning/workflow-activation-map.md
+planning/planning-use-case-map.md
+planning/planning-doc-responsibility-map.md
+planning/diagramming/README.md
+planning/diagramming/diagramming-responsibility-map.md
+planning/diagrams/scenario-diagram-consistency-report.md
 planning/diagrams/diagram-prompt-generation-workflow.md
 planning/diagrams/drawio-diagram-generation-workflow.md
 ```
+
+Then read source layers required by the requested diagram pages: scenarios, domain, slices, testing or thesis.
 
 ### For domain work
 

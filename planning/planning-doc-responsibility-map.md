@@ -33,14 +33,15 @@ folder README / index
   = navigation and read order.
 ```
 
-Until local responsibility maps exist for all layers, this file keeps transitional fallback routing for API, architecture and VKR responsibilities. Scenario-specific placement now starts from `planning/diagrams/scenario-responsibility-map.md`. Domain-specific placement now starts from `planning/domain/domain-responsibility-map.md`. Slice-specific placement now starts from `planning/slices/slice-responsibility-map.md`.
+Until local responsibility maps exist for all layers, this file keeps transitional fallback routing for API, architecture and VKR responsibilities. Scenario-specific placement now starts from `planning/diagrams/scenario-responsibility-map.md`. Diagramming-specific placement now starts from `planning/diagramming/diagramming-responsibility-map.md`. Domain-specific placement now starts from `planning/domain/domain-responsibility-map.md`. Slice-specific placement now starts from `planning/slices/slice-responsibility-map.md`.
 
 ## 2. Layer Router
 
 | Layer | Belongs here | Local responsibility entry |
 |---|---|---|
 | Documentation | Planning-doc architecture, docs update workflows, documentation-layer placement, agent output rules, response-level commands, documentation prompts and scoped sync notes. | `planning/documentation/documentation-responsibility-map.md` |
-| Scenario | Scenario text specs, UI specs, DATA sources, behavior items, clarifications, scenario questions and scenario artifact mapping. | `planning/diagrams/scenario-responsibility-map.md` |
+| Scenario | Scenario text specs, UI specs, inline/reusable DATA, behavior items, clarifications, scenario questions and scenario artifact mapping. Current scenario files are still physically under `planning/diagrams/` during migration. | `planning/diagrams/scenario-responsibility-map.md` |
+| Diagramming | Diagram prompt/preflight workflows, draw.io generation workflow, diagram source consistency, status marker rules and diagram artifact governance. Current workflow files may still physically live under `planning/diagrams/` until the move batch. | `planning/diagramming/diagramming-responsibility-map.md` |
 | Domain | Domain discovery, scenario-to-aggregate mapping, aggregate drafts, value object drafts, aggregate boundaries, accepted domain decisions and domain notes. | `planning/domain/domain-responsibility-map.md` |
 | Slice | Slice drafts, slice source mapping, behavior coverage, Behavior-to-Test Trace inside slice drafts, slice questions, extension points, implementation notes, client/server/cross-cutting sidecars and slice workflows/templates/principles. | `planning/slices/slice-responsibility-map.md` |
 | API | API contract rules, OpenAPI generation rules, client/server contract rules, API error contracts and generated artifact rules. | `planning/api/README.md` |

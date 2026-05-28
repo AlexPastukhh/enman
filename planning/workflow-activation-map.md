@@ -137,6 +137,11 @@ The preflight is not a permission grant. It only makes the intended workflow pat
 | `planning/diagrams/scenario-drafting-workflow.md` | Scenario text/DATA/UI/behavior items/questions/clarifications work | `conditional implicit` | No for draft/analysis; yes for edits | Scenario source workflow |
 | `planning/diagrams/scenario-responsibility-map.md` | Need to place scenario-layer information or decide scenario file owner | `conditional implicit` | No | Scenario-layer owner routing |
 | `planning/diagrams/scenario-artifact-map.md` | Need to identify current scenario artifact files, stale variants or downstream source mapping | `conditional implicit` | No for analysis; yes for edits | Scenario artifact currentness map |
+| `planning/diagramming/README.md` | Diagramming work, diagram prompt/preflight, draw.io generation or diagram source consistency is in scope | `conditional implicit` | No | Diagramming-layer entrypoint |
+| `planning/diagramming/diagramming-responsibility-map.md` | Need to route diagramming information, classify diagram task type or select diagram workflow/source reads | `conditional implicit` | No | Diagramming-layer owner routing |
+| `planning/diagrams/scenario-diagram-consistency-report.md` | Need to check diagram source currentness/stale risks before prompt or generation | `conditional implicit` | No | Diagram source consistency route |
+| `planning/diagrams/diagram-prompt-generation-workflow.md` | Need to prepare diagram request, prompt, source preflight or batch plan | `conditional implicit` | No for plan; yes for artifact/package edits | Diagram prompt/preflight workflow |
+| `planning/diagrams/drawio-diagram-generation-workflow.md` | Need to generate or update draw.io XML artifact | `conditional implicit` | Yes for file output/edit | Draw.io generation workflow |
 | `planning/domain/domain-responsibility-map.md` | Need to place domain-layer information or decide domain file owner | `conditional implicit` | No | Domain-layer owner routing |
 | `planning/domain/domain-discovery-workflow.md` | Scenario behavior sources need to be converted into aggregate/value-object candidates or scenario-to-aggregate map | `conditional implicit` | No for analysis/draft; yes for edits | Domain discovery workflow |
 | `planning/domain/aggregate-drafting-workflow.md` | Create/review/update one aggregate draft or extract one aggregate from historical domain sources | `conditional implicit` | No for draft/analysis; yes for edits | Aggregate draft workflow |
@@ -223,8 +228,7 @@ Trigger examples:
 create/update scenario text;
 update DATA;
 derive/update behavior items;
-resolve scenario ambiguity;
-prepare diagram request from scenario sources.
+resolve scenario ambiguity.
 ```
 
 Activated workflows:
@@ -236,6 +240,34 @@ workflow-activation-map.md
 planning-use-case-map.md, for action/use-case trace if needed
 scenario-drafting-workflow.md
 local-global-documentation-sync-workflow.md
+reviewable-agent-output-and-commands-workflow.md
+```
+
+### Diagramming work
+
+Trigger examples:
+
+```text
+prepare diagram request / prompt / batch plan;
+check diagram source consistency;
+generate or update draw.io XML;
+review current/stale diagram sources;
+classify diagram artifacts.
+```
+
+Activated workflows:
+
+```text
+planning-agent-protocol.md
+agent-roles-and-required-actions.md
+workflow-activation-map.md
+planning-use-case-map.md, for action/use-case trace if needed
+planning-doc-responsibility-map.md
+planning/diagramming/README.md
+planning/diagramming/diagramming-responsibility-map.md
+planning/diagrams/scenario-diagram-consistency-report.md
+planning/diagrams/diagram-prompt-generation-workflow.md, for prompt/preflight/batch plan
+planning/diagrams/drawio-diagram-generation-workflow.md, for draw.io output
 reviewable-agent-output-and-commands-workflow.md
 ```
 
