@@ -193,6 +193,69 @@ The post-apply review should check:
 
 If the user asks `проверь` after applying a replacement archive, treat it as this post-apply preservation check, not only as a file-name/status check.
 
+## 7B. Diff Capture And Clipboard Commands
+
+When the assistant provides a replacement archive, the chat response should include ready-to-run PowerShell commands for post-apply review, not only instructions hidden inside `APPLY.md`.
+
+The command block should avoid paged terminal diff output and should avoid PowerShell pipeline encoding problems with Cyrillic text.
+
+Required shape:
+
+```powershell
+$files = @(
+  "path/to/changed-file-1.md",
+  "path/to/changed-file-2.md"
+)
+
+$pkgName = "real-package-name-without-angle-brackets"
+$diffFile = Join-Path (Get-Location) "$pkgName.diff"
+
+git status --short
+git diff --stat -- $files
+
+git --no-pager diff --no-color --output="$diffFile" -- $files
+Get-Content -Path $diffFile -Raw -Encoding UTF8 | Set-Clipboard
+
+Write-Host "Diff saved to: $diffFile"
+Write-Host "Diff copied to clipboard. Paste it into chat for review before committing."
+```
+
+Rules:
+
+```text
+- Use a real package name in `$pkgName`; do not leave placeholders such as `<ARCHIVE_NAME>` in runnable commands.
+- Use `git --no-pager diff --no-color --output="$diffFile" -- $files` to write the diff file.
+- Copy the saved diff with `Get-Content -Raw -Encoding UTF8 | Set-Clipboard`.
+- Do not rely on `git diff | Tee-Object | Set-Clipboard` for reviewable diff transfer when non-ASCII text may be present.
+- Do not ask the user to manually scroll through paged diff output.
+```
+
+If the pasted diff shows mojibake or suspicious broken Cyrillic, do not conclude from the diff alone that the repository file is corrupted. Ask for or provide a suspect-file content copy command.
+
+Fallback command shape:
+
+```powershell
+$suspectFiles = @(
+  "path/to/suspect-file-1.md",
+  "path/to/suspect-file-2.md"
+)
+
+$pkgName = "real-package-name-without-angle-brackets"
+$suspectDump = Join-Path (Get-Location) "$pkgName.suspect-files.txt"
+
+$bundle = foreach ($file in $suspectFiles) {
+  "===== $file ====="
+  Get-Content -Path $file -Raw -Encoding UTF8
+  ""
+}
+
+$bundle -join "`r`n" | Set-Content -Path $suspectDump -Encoding UTF8
+Get-Content -Path $suspectDump -Raw -Encoding UTF8 | Set-Clipboard
+
+Write-Host "Suspect file contents saved to: $suspectDump"
+Write-Host "Suspect file contents copied to clipboard. Paste it into chat."
+```
+
 ## 8. Archive Layouts And Apply Commands
 
 There are two supported archive layouts.

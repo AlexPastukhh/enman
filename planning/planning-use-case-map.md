@@ -290,7 +290,7 @@ Use a shorter version when the update is simple.
 | `арх`, `из арх`, `из архива`, `use archive` | Use latest/current archive as read source when checks are needed. | Use latest uploaded archive in current conversation, or ask for archive in a new chat. | Does not decide depth. | Archive snapshot. | Read-only answer/check based on archive. |
 | `б из арх`, `без изм, арх`, `изм нет, арх` | No changes + archive source mode. | Use if latest archive exists; otherwise ask for archive. | Reuse / targeted. | Latest uploaded archive. | No broad audit; targeted archive checks only. |
 | `давай архив`, `собери архив`, `replacement package`, `archive for manual apply` | Produce archive/package for the active approved plan/scope. | Build archive plan from obvious target or ask only blocking target questions. | Targeted/full by package scope. | GitHub/archive/conversation by context. | Replacement package ZIP with `MANIFEST.md`, `APPLY.md`, `replacement-files/`. |
-| `проверь` after replacement archive/package application | Verify the active archive application result. | Ask for status/diff or target archive if not available. | Targeted. | Applied repo state / user-provided diff. | Post-apply verification: expected files changed, no unexpected files in commit scope, diff matches package intent, no unrelated sections/register entries/routing rules were removed. |
+| `проверь` after replacement archive/package application | Verify the active archive application result. | Ask for status/diff or target archive if not available. | Targeted. | Applied repo state / user-provided diff. | Post-apply verification: expected files changed, no unexpected files in commit scope, diff matches package intent, no unrelated sections/register entries/routing rules were removed; if pasted diff shows mojibake, request/copy full suspect file contents before judging file corruption. |
 
 ## 10. Primary Use Case Table
 
@@ -390,5 +390,7 @@ Steps:
 9. Include exact git add and commit commands for the intended changed files.
 10. Do not include patch scripts, diff-only files or partial snippets.
 11. If complete replacement files cannot be produced safely, stop and say so instead of switching to patch mode.
-12. Include post-apply verification commands and preservation/no-loss checks in APPLY.md.
+12. Include post-apply verification commands and preservation/no-loss checks in the final chat response and APPLY.md.
+13. Include full diff capture commands that save diff to a file through `git --no-pager diff --no-color --output` and copy UTF-8 text from that file to clipboard.
+14. If copied diff shows mojibake or suspicious broken Cyrillic, provide suspect-file content copy commands from `planning/replacement-file-generation-guide.md#7b-diff-capture-and-clipboard-commands`.
 ```
