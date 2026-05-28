@@ -1,6 +1,6 @@
 # Testing Principles
 
-Status: current testing responsibility map  
+Status: current testing principles / test layer boundary matrix  
 Scope: domain, server/API, client/component and E2E test boundaries
 
 ## 1. Purpose

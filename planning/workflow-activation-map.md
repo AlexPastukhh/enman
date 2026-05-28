@@ -141,6 +141,11 @@ The preflight is not a permission grant. It only makes the intended workflow pat
 | `planning/domain/domain-discovery-workflow.md` | Scenario behavior sources need to be converted into aggregate/value-object candidates or scenario-to-aggregate map | `conditional implicit` | No for analysis/draft; yes for edits | Domain discovery workflow |
 | `planning/domain/aggregate-drafting-workflow.md` | Create/review/update one aggregate draft or extract one aggregate from historical domain sources | `conditional implicit` | No for draft/analysis; yes for edits | Aggregate draft workflow |
 | `planning/domain/value-object-drafting-workflow.md` | Create/review/update one value object draft from VI behavior items or aggregate usage | `conditional implicit` | No for draft/analysis; yes for edits | Value object draft workflow |
+| `planning/testing/testing-responsibility-map.md` | Need to route testing-layer information or select testing docs for slice Test / Verification Plan | `conditional implicit` | No | Testing-layer owner routing and read selector |
+| `planning/testing/testing-principles.md` | Need to decide test-layer boundary or general test responsibility | `conditional implicit` | No | Test-layer boundary matrix |
+| `planning/testing/server-slice-test-plan-rules.md` | Server/API slice needs server-specific test plan buckets or no-mutation/DB assertion guidance | `conditional implicit` | No | Server slice test planning rules |
+| `planning/testing/e2e-testing-workflow.md` | E2E/browser-real-API verification is needed | `conditional implicit` | No | Current E2E workflow |
+| `planning/testing/test-object-patterns.md` | Page Object / Component Object pattern matters for client/E2E tests | `conditional implicit` | No | Test object pattern guidance |
 | `planning/slices/slice-responsibility-map.md` | Need to place slice-layer information or decide slice file owner | `conditional implicit` | No | Slice-layer owner routing |
 | `planning/slices/slice-draft-authoring-principles.md` | Create/review/refactor slice draft structure or section meaning | `conditional implicit` | No | Slice draft authoring rules |
 | `planning/slices/slice-draft-authoring-workflow.md` | Create/review/refactor a slice draft or prepare slice draft plan | `conditional implicit` | No for draft/analysis; yes for edits | Root slice draft authoring process |

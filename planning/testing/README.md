@@ -1,7 +1,7 @@
 # Testing Planning Index
 
-Status: current testing planning index / server read-slice and command test-plan rules synchronized  
-Scope: testing responsibilities, server slice test-plan separation, E2E/Playwright workflow, test object patterns, Playwright cleanup plan
+Status: current testing planning index  
+Scope: testing-layer navigation, slice test-plan support, test-layer boundaries, server/E2E/test-object workflows and transitional screenshot/evidence notes
 
 ## 1. Purpose
 
@@ -14,19 +14,44 @@ domain unit tests
 server integration/API tests
 client/component tests
 end-to-end tests
+screenshot/evidence tooling
 ```
+
+This layer supports slice drafting, but does not replace:
+
+```text
+planning/slices/slice-test-plan-workflow.md
+```
+
+Slice drafts own concrete `Test / Verification Plan` and `Behavior-to-Test Trace` content.
 
 ## 2. Files
 
+| File | Responsibility |
+|---|---|
+| `testing-responsibility-map.md` | Testing-layer routing and read selector. |
+| `testing-principles.md` | Test-layer boundaries and general principles. |
+| `server-slice-test-plan-rules.md` | Server/API slice test-plan buckets and server-specific test planning rules. |
+| `e2e-testing-workflow.md` | Current Playwright/E2E workflow. |
+| `test-object-patterns.md` | Page Object and Component Object patterns. |
+| `e2e-playwright-workflow.md` | Legacy alias pointing to the current E2E workflow. |
+| `playwright-e2e-cleanup-plan.md` | Historical/planned cleanup note; verify currentness before use. |
+| `playwright-e2e-and-screenshot-plan.md` | Transitional mixed Playwright E2E + screenshot/evidence plan; screenshot placement review is separate. |
+
+## 3. Read Order For Slice Test / Verification Plan
+
+When drafting the testing section of a slice:
+
 ```text
-planning/testing/testing-principles.md
-planning/testing/server-slice-test-plan-rules.md
-planning/testing/e2e-testing-workflow.md
-planning/testing/test-object-patterns.md
-planning/testing/playwright-e2e-cleanup-plan.md
+1. planning/slices/slice-test-plan-workflow.md
+2. planning/testing/testing-responsibility-map.md
+3. planning/testing/testing-principles.md
+4. Specific testing file selected by testing-responsibility-map.md
 ```
 
-## 3. Current Testing Direction
+Use the testing layer only as supporting guidance after the slice draft workflow has defined the Behavior-to-Test Trace shape.
+
+## 4. Current Testing Direction
 
 ```text
 E2E tests verify cross-layer browser -> client -> HTTP API -> server -> persistence/session -> visible outcome wiring.
@@ -57,7 +82,7 @@ State-changing command slices:
   no repository/handler mocks as primary behavior proof.
 ```
 
-## 4. Current Playwright Direction
+## 5. Current Playwright / E2E Direction
 
 ```text
 - Playwright config should be repository-level.
@@ -68,23 +93,30 @@ State-changing command slices:
 - Vite proxy forwards /api to backend.
 ```
 
-## 5. Read Order
+Current E2E workflow:
 
 ```text
-1. planning/testing/README.md
-2. planning/testing/testing-principles.md
-3. planning/testing/server-slice-test-plan-rules.md
-4. planning/testing/e2e-testing-workflow.md
-5. planning/testing/test-object-patterns.md
-6. planning/testing/playwright-e2e-cleanup-plan.md
+planning/testing/e2e-testing-workflow.md
 ```
 
-## 6. Related Docs
+## 6. Screenshot / Evidence Note
+
+Screenshot runner and reproducible screenshot evidence are related to Playwright tooling, but they are not ordinary slice behavior proof.
+
+Use screenshot planning only when the task explicitly includes VKR/thesis screenshots, evidence artifacts or screenshot runner work.
+
+Screenshot/evidence placement is tracked as a future review item in:
 
 ```text
-planning/client/cross-cutting/CL-A11Y-001-accessibility-and-aria.md
+planning/planning-maintenance-register.md
+```
+
+## 7. Related Docs
+
+```text
 planning/slices/slice-test-plan-workflow.md
 planning/slices/slice-draft-authoring-workflow.md
+planning/client/cross-cutting/CL-A11Y-001-accessibility-and-aria.md
 planning/slices/server-implementation-principles.md
 planning/api/api-error-contract.md
 planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contract-testing.md

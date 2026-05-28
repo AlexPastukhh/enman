@@ -744,6 +744,92 @@ Notes:
   Possible outcomes per file: merge into scenario text, keep as reusable DATA concept, keep transitional, split into concepts, mark historical.
 ```
 
+### PMR-025 — Decide screenshot/evidence placement
+
+```text
+ID: PMR-025
+Status: waiting-for-condition
+Area: testing / VKR evidence / screenshot tooling
+Task / reminder:
+  Decide where screenshot runner and reproducible screenshot evidence docs belong.
+Trigger / condition:
+  After testing responsibility map exists and diagramming/VKR evidence responsibilities are clearer.
+Why it matters:
+  planning/testing/playwright-e2e-and-screenshot-plan.md mixes E2E regression testing and VKR screenshot/evidence generation. Screenshot evidence is related to Playwright tooling, but it is not ordinary Behavior-to-Test proof.
+Owner layer:
+  testing / thesis / documentation governance
+Target files:
+  planning/testing/playwright-e2e-and-screenshot-plan.md
+  planning/testing/testing-responsibility-map.md
+  planning/thesis/
+  future diagramming/evidence docs if created
+Depends on:
+  testing responsibility map and diagramming/thesis evidence routing
+Do when:
+  Before moving screenshot runner docs or treating screenshots as a default testing workflow.
+Do not do before:
+  Do not mix screenshot runner placement cleanup into ordinary testing responsibility-map work.
+Notes:
+  Current testing docs should warn that screenshot runner/evidence is not ordinary slice behavior proof.
+```
+
+### PMR-026 — Decide client/component testing workflow need
+
+```text
+ID: PMR-026
+Status: waiting-for-condition
+Area: testing / client
+Task / reminder:
+  Decide whether planning/testing needs a dedicated client/component testing workflow.
+Trigger / condition:
+  After client slice drafting stabilizes and at least one client-side Test / Verification Plan needs more detail than testing-principles.md and test-object-patterns.md provide.
+Why it matters:
+  testing-principles.md defines client/component boundaries, but there is no dedicated workflow parallel to server-slice-test-plan-rules.md.
+Owner layer:
+  testing / client slice planning
+Target files:
+  future planning/testing/client-component-testing-workflow.md, if needed
+  planning/testing/testing-principles.md
+  planning/testing/test-object-patterns.md
+  planning/slices/client/CLIENT-SLICE-TEMPLATE.md
+Depends on:
+  client slice drafting stabilization and real client test-plan usage
+Do when:
+  When real client drafts show repeated uncertainty.
+Do not do before:
+  Do not create speculative client testing workflow before there is concrete pressure.
+Notes:
+  Until then, use testing-principles.md and test-object-patterns.md as supporting docs.
+```
+
+### PMR-027 — Verify Playwright cleanup plan currentness
+
+```text
+ID: PMR-027
+Status: waiting-for-condition
+Area: testing / historical cleanup
+Task / reminder:
+  Verify whether planning/testing/playwright-e2e-cleanup-plan.md is historical, completed, stale or still actionable.
+Trigger / condition:
+  Before using the cleanup plan as current guidance or before deleting/superseding it.
+Why it matters:
+  The file may contain useful history, but current E2E workflow is planning/testing/e2e-testing-workflow.md.
+Owner layer:
+  testing / documentation governance
+Target files:
+  planning/testing/playwright-e2e-cleanup-plan.md
+  planning/testing/README.md
+  planning/testing/testing-responsibility-map.md
+Depends on:
+  testing responsibility map
+Do when:
+  During a testing docs cleanup pass.
+Do not do before:
+  Do not treat historical cleanup notes as current repo state without verification.
+Notes:
+  Keep as historical/planned note until checked.
+```
+
 ## 4. Maintenance Rules
 
 ```text

@@ -14,6 +14,38 @@ This file is the practical bridge for slice authors.
 
 Every slice draft must include a Test / Verification Plan that proves behavior items and scenario outcomes.
 
+
+## 1.1 Testing Layer Read Selector
+
+This workflow owns the `Test / Verification Plan` shape inside slice drafts.
+
+For testing-layer-specific guidance, read:
+
+```text
+planning/testing/testing-responsibility-map.md
+```
+
+Then select additional testing docs by need:
+
+```text
+Server/API slice behavior
+  -> planning/testing/server-slice-test-plan-rules.md
+
+General test-layer boundaries
+  -> planning/testing/testing-principles.md
+
+E2E / browser-real-API proof
+  -> planning/testing/e2e-testing-workflow.md
+
+Page Object / Component Object pattern
+  -> planning/testing/test-object-patterns.md
+
+Screenshot/evidence generation
+  -> not ordinary slice proof; use only when evidence/screenshots are explicitly in scope.
+```
+
+Do not use `planning/testing/` as a replacement for this workflow. The testing layer provides supporting principles and layer-specific rules after the slice test trace is shaped here.
+
 ## 2. Primary Rule
 
 ```text

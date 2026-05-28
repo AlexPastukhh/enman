@@ -33,7 +33,7 @@ folder README / index
   = navigation and read order.
 ```
 
-Until local responsibility maps exist for all layers, this file keeps transitional fallback routing for API/testing, architecture and VKR responsibilities. Scenario-specific placement now starts from `planning/diagrams/scenario-responsibility-map.md`. Domain-specific placement now starts from `planning/domain/domain-responsibility-map.md`. Slice-specific placement now starts from `planning/slices/slice-responsibility-map.md`.
+Until local responsibility maps exist for all layers, this file keeps transitional fallback routing for API, architecture and VKR responsibilities. Scenario-specific placement now starts from `planning/diagrams/scenario-responsibility-map.md`. Domain-specific placement now starts from `planning/domain/domain-responsibility-map.md`. Slice-specific placement now starts from `planning/slices/slice-responsibility-map.md`.
 
 ## 2. Layer Router
 
@@ -44,7 +44,7 @@ Until local responsibility maps exist for all layers, this file keeps transition
 | Domain | Domain discovery, scenario-to-aggregate mapping, aggregate drafts, value object drafts, aggregate boundaries, accepted domain decisions and domain notes. | `planning/domain/domain-responsibility-map.md` |
 | Slice | Slice drafts, slice source mapping, behavior coverage, Behavior-to-Test Trace inside slice drafts, slice questions, extension points, implementation notes, client/server/cross-cutting sidecars and slice workflows/templates/principles. | `planning/slices/slice-responsibility-map.md` |
 | API | API contract rules, OpenAPI generation rules, client/server contract rules, API error contracts and generated artifact rules. | `planning/api/README.md` |
-| Testing | Cross-slice testing principles, E2E workflows, test object patterns, test tooling workflows and reusable verification rules. Concrete slice behavior proof and assertions live in slice drafts/templates/workflows. | `planning/testing/README.md` |
+| Testing | Cross-slice testing principles, E2E workflows, test object patterns, test tooling workflows and reusable verification rules. Concrete slice behavior proof and assertions live in slice drafts/templates/workflows. | `planning/testing/testing-responsibility-map.md` |
 | Architecture / ADR | Cross-slice architecture boundaries, accepted/candidate decisions and ADR workflow. | `planning/architecture/README.md`, `planning/adr/README.md` |
 | VKR / Thesis | Clean thesis wording, evidence maps, thesis resources and presentation/defense-safe wording. | `planning/thesis/README.md`, `planning/vkr-clean-reference.md` |
 | Archive / Recovery | Archive/replacement workflows, dirty drafts and non-canonical recovery notes. | `planning/archive-workflow/README.md`, `planning/dirty-drafts/` |
@@ -231,7 +231,8 @@ Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 |---|---|
 | `planning/api/` | API contract principles, OpenAPI structural contract, API error contract and constants relationship |
 | `planning/slices/cross-cutting/CC-VALIDATION-001-server-request-validation-and-fluentvalidation.md` | Server request validation / FluentValidation boundary rules for slices |
-| `planning/testing/` | Cross-slice testing principles, E2E workflow, test object patterns |
+| `planning/testing/testing-responsibility-map.md` | Testing-layer routing, read selector and current/legacy testing file ownership |
+| `planning/testing/` | Cross-slice testing principles, E2E workflow, test object patterns and testing support docs |
 | `planning/adr/` | ADR workflow, architecture decision notes and ADR candidates |
 
 ## 13. Evidence Link Responsibility
@@ -269,7 +270,7 @@ Use this file first to choose the layer. Then use the local responsibility map o
 18. agent scope/prompt safety rule -> planning/agent-scope-boundaries-and-prompt-safety.md
 19. repo-grounded evidence line links -> planning/repo-grounded-github-line-links-workflow.md
 20. client/server contract split -> planning/api/client-server-contract-principles.md
-21. test layer boundaries / E2E workflow -> planning/testing/
+21. testing-layer routing / test layer boundaries / E2E workflow -> planning/testing/testing-responsibility-map.md
 22. accepted/current architecture decision -> architecture-decision-notes.md
 23. possible future full ADR -> adr-candidates.md
 24. VKR/presentation/defense clean wording -> planning/vkr-clean-reference.md
