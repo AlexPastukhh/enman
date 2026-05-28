@@ -23,9 +23,9 @@ Diagram Chat
 The Diagram Chat owns:
 
 ```text
-Phase 1 вЂ” preflight / source reconciliation / batch plan
-Phase 2 вЂ” selected draw.io XML generation
-Phase 3 вЂ” archive packaging
+Phase 1 — preflight / source reconciliation / batch plan
+Phase 2 — selected draw.io XML generation
+Phase 3 — archive packaging
 ```
 
 Scenario Draft Chat may prepare the request/prompt when diagrams are requested from scenario sources, but it does not draw diagrams.
@@ -320,7 +320,7 @@ Internal planning files may describe request/prompt and workflow because they ar
 
 ## 8. Diagram Chat Phases
 
-### Phase 1 вЂ” Preflight only
+### Phase 1 — Preflight only
 
 The Diagram Chat must:
 
@@ -360,7 +360,7 @@ Preflight output must include:
 |---|---|---|
 ```
 
-### Phase 2 вЂ” Generate selected batch
+### Phase 2 — Generate selected batch
 
 Only after the user selects a batch or explicitly asks for generation, the Diagram Chat generates diagrams.
 
@@ -374,7 +374,7 @@ Rules:
 - do not generate all diagrams at once by default.
 ```
 
-### Phase 3 вЂ” Archive
+### Phase 3 — Archive
 
 The Diagram Chat packages complete repo-relative files:
 
@@ -395,7 +395,7 @@ Do not generate all diagrams at once by default.
 
 Recommended batches:
 
-### Batch 1 вЂ” core request/domain
+### Batch 1 — core request/domain
 
 ```text
 use-case-overview
@@ -407,7 +407,7 @@ diagram-open-questions
 diagram-generation-plan
 ```
 
-### Batch 2 вЂ” client/employee/security/architecture
+### Batch 2 — client/employee/security/architecture
 
 ```text
 use-case-client
@@ -416,7 +416,7 @@ account-activation-lifecycle
 high-level-architecture
 ```
 
-### Batch 3 вЂ” agreement
+### Batch 3 — agreement
 
 ```text
 use-case-agreement-flow

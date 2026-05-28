@@ -3,6 +3,19 @@
 Status: current scenario text-spec index / first-pass currentness cleanup  
 Scope: current, variant, historical and deprecated scenario text specs
 
+## 0. Template / Policy
+
+Use the canonical template for new core/business scenario specs and intentional rewrites:
+
+```text
+SCENARIO-TEXT-SPEC-TEMPLATE.md
+```
+
+The template uses inline DATA by default.
+
+Existing scenario specs may keep older structures during migration. Do not rewrite existing files only to match the template.
+
+
 ## 1. Current Primary Scenario Text Specs
 
 | Scenario | Current primary file | Status | Notes |

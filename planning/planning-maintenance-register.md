@@ -715,6 +715,35 @@ Notes:
   Current package only clarifies responsibility. It does not move diagram files.
 ```
 
+### PMR-024 — Reclassify existing scenario DATA sidecars
+
+```text
+ID: PMR-024
+Status: waiting-for-condition
+Area: scenario documentation / DATA migration
+Task / reminder:
+  Review existing planning/diagrams/scenario-data/*.md files and decide for each whether it should be merged into core scenario text, kept as a reusable DATA concept, kept as a transitional sidecar, split into reusable concepts or marked historical.
+Trigger / condition:
+  After SCENARIO-TEXT-SPEC-TEMPLATE.md exists and inline DATA policy is current.
+Why it matters:
+  Scenario DATA now starts inline in core/business scenario text specs by default. Existing DATA sidecars should not be deleted or rewritten blindly; they need reclassification.
+Owner layer:
+  scenario documentation
+Target files:
+  planning/diagrams/scenario-data/
+  planning/diagrams/scenario-text-specs/
+  planning/diagrams/scenario-artifact-map.md
+  planning/diagrams/scenario-behavior-items/
+Depends on:
+  scenario inline DATA policy and template
+Do when:
+  During a dedicated scenario DATA content migration audit.
+Do not do before:
+  Do not mass-edit concrete scenario specs or DATA files in policy/template batches.
+Notes:
+  Possible outcomes per file: merge into scenario text, keep as reusable DATA concept, keep transitional, split into concepts, mark historical.
+```
+
 ## 4. Maintenance Rules
 
 ```text

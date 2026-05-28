@@ -10,8 +10,25 @@ This file shows which scenario artifacts exist, which variants are current, and 
 It is not a replacement for scenario files. It is a map for discovery and cleanup.
 
 
+## 1A. DATA Location Model
 
-## 1A. Artifact Relationship Model
+`DATA` in this map means DATA location / reusable DATA concepts, not a mandatory per-scenario DATA file.
+
+Allowed values include:
+
+```text
+inline in scenario
+inline + reusable DATA concept
+transitional sidecar
+historical sidecar
+needs merge/reclassification
+missing / needs extraction
+```
+
+Existing `scenario-data/*.md` entries are transitional sidecars until reclassified. Do not rewrite every matrix row in policy-only updates.
+
+
+## 1B. Artifact Relationship Model
 
 This map owns artifact currentness and relationships, not full scenario content.
 
@@ -19,11 +36,12 @@ Use this model:
 
 ```text
 core/business scenario text
-  -> DATA
+  -> inline DATA by default
+  -> reusable DATA concepts only when extracted
   -> business behavior items
   -> domain/slice/testing downstream
 
-core/business scenario text + DATA + business behavior items
+core/business scenario text + inline/reusable DATA + business behavior items
   -> UI scenario as presentation / UX projection
   -> client sidecars / UI tests / E2E / a11y
 ```
@@ -37,7 +55,7 @@ Primary scenario artifacts:
 
 ```text
 planning/diagrams/scenario-text-specs/
-planning/diagrams/scenario-data/
+planning/diagrams/scenario-data/ (reusable DATA concepts and transitional sidecars)
 planning/diagrams/scenario-ui-specs/
 planning/diagrams/scenario-behavior-items/
 planning/diagrams/scenario-clarifications/
@@ -61,7 +79,7 @@ planning/tables/domain-drafts/
 
 ## 3. Scenario Artifact Matrix
 
-| Scenario | Current text spec | DATA | UI spec | Behavior items | Clarifications / notes | Domain / slice link | Status |
+| Scenario | Current text spec | DATA location / concepts | UI spec | Behavior items | Clarifications / notes | Domain / slice link | Status |
 |---|---|---|---|---|---|---|---|
 | SC-01 Guest Registration | `scenario-text-specs/SC-01-guest-registration.md` | `scenario-data/SC-01-registration-data.md` | planned | `scenario-behavior-items/SC-01-guest-registration-behavior-items.md` | account/security addenda as context | Account/auth later | current source |
 | SC-02 Login | `scenario-text-specs/SC-02-login.md` | `scenario-data/SC-02-login-data.md` | planned | `scenario-behavior-items/SC-02-login-behavior-items.md` | browser/security addenda as context | Account/auth later | current source |

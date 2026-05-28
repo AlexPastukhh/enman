@@ -13,7 +13,7 @@ Scenario drafting must keep these artifacts synchronized when relevant:
 
 ```text
 scenario text spec
-scenario DATA spec
+inline scenario DATA / reusable DATA concept sidecar
 scenario UI spec
 validation/security addendum
 scenario behavior items
@@ -58,7 +58,8 @@ For each active scenario, maintain the source set together when relevant:
 | Artifact | Responsibility |
 |---|---|
 | Scenario text spec | User/system behavior, actors, goal, preconditions, main flow, branches, observable outcomes, scenario questions |
-| Scenario DATA spec | Data entered, seen, selected, filtered, attached or referenced by actor/system |
+| Scenario inline DATA | Data entered, seen, selected, filtered, attached or referenced by actor/system; owned by the scenario text spec by default |
+| Reusable DATA concept sidecar | Shared/large/audited scenario DATA concept under `scenario-data/`, only when extraction criteria are met |
 | Scenario UI spec | UI-visible requirements and accepted UI decisions, not component implementation |
 | Validation/security addendum | Cross-scenario validation/security rules that should not be duplicated into every scenario |
 | Scenario behavior items | Required behavior items derived from scenario/source docs |
@@ -78,23 +79,32 @@ Use this loop:
 2. Classify statement status:
    direct requirement / accepted direction / assumption / open question / future / deferred / stale.
 3. Draft or update core business scenario text.
-4. Draft/update DATA in parallel.
-5. Draft/update UI scenario in parallel when visual/UX presentation matters.
-6. Derive/update business behavior items in parallel.
-7. Add UI/UX presentation notes to DATA items when needed.
-8. Add UI/UX projection notes to business behavior items when needed.
-9. Add UI-only behavior entries only when the requirement is independently presentation/interaction-specific.
-10. Use DATA gaps and behavior gaps to refine core scenario text.
-11. Use UI scenario to check presentation consistency, not to create business behavior silently.
-12. Update questions, clarifications, indexes and scenario-artifact-map.md.
-13. Record downstream impact for domain/slice/client/testing when relevant.
+4. Draft/update DATA inline inside the core scenario.
+5. Extract reusable DATA sidecar only when extraction criteria are met.
+6. Draft/update UI scenario in parallel when visual/UX presentation matters.
+7. Derive/update business behavior items from core scenario + inline DATA + reusable DATA concept references.
+8. Add UI/UX presentation notes to DATA items only when needed.
+9. Add UI/UX projection notes to business behavior items only when needed.
+10. Add UI-only behavior entries only when independently presentation/interaction-specific and source-linked.
+11. Use DATA gaps and behavior gaps to refine core scenario text.
+12. Use UI scenario to check presentation consistency, not to create business behavior silently.
+13. Update questions, clarifications, indexes and scenario-artifact-map.md.
+14. Record downstream impact for domain/slice/client/testing when relevant.
 ```
 
-Do not wait until the core scenario is “final” before drafting DATA and behavior items. DATA and behavior items are analysis artifacts used during scenario drafting to expose unclear branches, missing information, weak outcomes and downstream drafting gaps.
+Do not wait until the core scenario is “final” before drafting DATA and behavior items. Inline DATA and behavior items are analysis artifacts used during scenario drafting to expose unclear branches, missing information, weak outcomes and downstream drafting gaps.
+
+Do not create a separate DATA file mechanically for every scenario.
 
 ## 5. Scenario Text Spec Rules
 
 Scenario specs describe user-facing behavior and planning semantics.
+
+New or meaningfully updated core/business scenario specs should use:
+
+```text
+planning/diagrams/scenario-text-specs/SCENARIO-TEXT-SPEC-TEMPLATE.md
+```
 
 They may include:
 
@@ -130,7 +140,9 @@ final visual design
 
 ## 6. DATA Rules
 
-DATA files must say only what actor/system:
+Scenario DATA starts inline in the core/business scenario text spec.
+
+DATA says only what actor/system:
 
 ```text
 enters
@@ -139,9 +151,20 @@ selects
 filters/searches by
 attaches/uploads
 references as a visible/selectable business item
+receives as result/feedback information
 ```
 
-DATA files must not contain:
+Use a separate `scenario-data/` sidecar only when:
+
+```text
+- the same business data concept appears in multiple scenarios;
+- the DATA concept is too large for one scenario text spec;
+- the DATA concept needs separate review/audit;
+- downstream domain/slice/client/testing drafts need a stable reusable reference;
+- an existing sidecar already exists and has not yet been merged/reclassified.
+```
+
+DATA sections and DATA sidecars must not contain:
 
 ```text
 validation/rules sections
@@ -155,7 +178,9 @@ layout choices
 component placement
 ```
 
-If a scenario change adds/removes visible or entered data, update the DATA file in the same pass.
+If a scenario change adds/removes visible or entered data, update the inline DATA section in the same pass. Update or create a reusable DATA sidecar only when the extraction criteria are met.
+
+Existing `scenario-data/*.md` files remain transitional until reclassified.
 
 ## 7. UI Spec Rules
 
@@ -294,7 +319,8 @@ When a local scenario file changes, check whether shared files must be updated.
 | Local change | Shared update |
 |---|---|
 | New or changed scenario file | scenario text specs README/index |
-| New or changed DATA file | scenario DATA README/index |
+| New or changed inline DATA section | scenario text spec only; update artifact map when DATA location/currentness changes |
+| New or changed reusable DATA sidecar | scenario DATA README/index + scenario artifact map |
 | New or changed UI spec | scenario UI specs README/index |
 | New required behavior | scenario behavior items file/index |
 | Open/assumption/future scenario question | scenario questions register |

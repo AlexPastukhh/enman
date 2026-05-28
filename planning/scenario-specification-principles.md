@@ -15,6 +15,7 @@ planning/scenario-domain-validation-principles.md
 planning/diagrams/scenario-drafting-workflow.md
 planning/diagrams/scenario-text-specs/README.md
 planning/diagrams/scenario-data/README.md
+planning/diagrams/scenario-text-specs/SCENARIO-TEXT-SPEC-TEMPLATE.md
 planning/diagrams/scenario-ui-specs/README.md
 planning/diagrams/scenario-questions-register.md
 planning/diagrams/scenario-behavior-items/README.md
@@ -96,15 +97,24 @@ They must not become controller specs, endpoint maps, DB schemas, ORM mappings, 
 For each active scenario, maintain these artifacts together when relevant:
 
 ```text
-1. Scenario text spec.
-2. Scenario DATA spec.
-3. Scenario UI spec, when client-visible behavior is being planned.
+1. Scenario text spec, including inline scenario DATA by default.
+2. Reusable DATA concept sidecar, only when extraction criteria are met.
+3. Scenario UI spec, when client-visible presentation/UX behavior is being planned.
 4. Validation/security addendum entries, when needed.
 5. Per-scenario behavior items file.
 6. Scenario questions register entries, when unresolved or important questions exist.
 7. Scenario clarification file, when accepted clarification resolves source conflict or terminology risk.
 8. Diagram-generation prompt, when diagrams are requested from scenario sources.
 ```
+
+New core/business scenario specs should use:
+
+```text
+planning/diagrams/scenario-text-specs/SCENARIO-TEXT-SPEC-TEMPLATE.md
+```
+
+Existing scenario specs and DATA sidecars remain valid transitional artifacts until explicitly migrated or reclassified.
+
 
 Use the practical workflow:
 
@@ -121,10 +131,10 @@ question appears
 -> if scenario-level, add/update scenario questions register
 -> clarify / choose current direction
 -> update scenario text spec if behavior changed
--> update DATA file if visible/input/selectable/filter/attachment data changed
+-> update inline DATA section, and reusable DATA concept sidecar only if extraction criteria are met
 -> update scenario UI spec if UI-visible requirement changed
 -> update validation/security addendum if needed
--> update behavior items / UI behavior items if required behavior changed
+-> update behavior items / UI/UX projection notes / UI-only behavior entries if required behavior changed
 -> update scenario clarifications if accepted terminology/meaning is clarified
 -> continue downstream planning
 ```
@@ -169,7 +179,7 @@ Scenario UI specs live under:
 planning/diagrams/scenario-ui-specs/
 ```
 
-They capture UI-visible requirements, UI behavior items, accepted UI decisions and UI questions.
+They capture UI-visible presentation/UX requirements, accepted UI decisions and UI questions.
 
 They do not define React components, hooks, API adapters, CSS module filenames or final visual design.
 
@@ -181,7 +191,7 @@ Per-scenario behavior items live under:
 planning/diagrams/scenario-behavior-items/
 ```
 
-Behavior items and UI behavior items must not invent new behavior.
+Behavior items, UI/UX projection notes and UI-only behavior entries must not invent new business behavior.
 
 They are derived from scenario text, DATA, UI, validation/security and clarification sources.
 
@@ -196,9 +206,15 @@ UI/UX details should usually be recorded as projection notes on DATA items or bu
 Separate UI-only behavior entries are allowed only when the requirement is independently presentation/interaction-specific and cannot be attached cleanly to one business behavior item. They must reference a core scenario, DATA item, UI scenario section or accepted clarification.
 ## 8. DATA
 
-DATA means only what actor enters, sees, selects, filters/searches by, attaches/uploads, or references as visible/selectable business item.
+Scenario DATA means what the actor enters, sees, selects, filters/searches by, attaches/uploads, references as visible/selectable business item or receives as result/feedback information.
 
-DATA files must not contain validation/rules sections, testable behavior sections, invariants, preconditions, branches, access rules, security policy or layout choices.
+Core scenario text owns scenario-local DATA by default.
+
+Separate DATA files are extracted reusable DATA concepts or transitional sidecars, not mandatory per-scenario artifacts.
+
+Use `planning/diagrams/scenario-data/` only when DATA is reusable across scenarios, too large for one scenario, needs separate review/audit, needs a stable downstream reference, or already exists as a transitional sidecar.
+
+DATA files and DATA sections must not contain validation/rules sections, testable behavior sections, invariants, preconditions, branches, access rules, security policy or layout choices.
 
 ## 9. Validation
 

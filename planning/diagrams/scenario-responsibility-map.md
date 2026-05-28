@@ -13,7 +13,7 @@ This file separates:
 
 ```text
 scenario text specs;
-scenario DATA specs;
+inline scenario DATA and reusable DATA concepts;
 scenario UI specs;
 scenario behavior items;
 scenario questions;
@@ -30,15 +30,17 @@ historical/deprecated scenario sources.
 | Scenario layer entrypoint and read order | `planning/diagrams/README.md` | individual scenario files |
 | Scenario placement/routing rules | `planning/diagrams/scenario-responsibility-map.md` | root responsibility map details |
 | Scenario artifact inventory/currentness | `planning/diagrams/scenario-artifact-map.md` | scattered README prose only |
-| Core/business scenario capability and business meaning | `planning/diagrams/scenario-text-specs/<SC>.md` | UI specs, DATA specs or behavior indexes |
+| Core/business scenario capability and business meaning | `planning/diagrams/scenario-text-specs/<SC>.md` | UI specs, reusable DATA sidecars or behavior indexes |
 | Scenario statement status: direct requirement / accepted direction / assumption / open question / future / deferred / stale | scenario text spec plus questions/clarifications/artifact map when cross-file | chat memory only |
-| Scenario information entered/seen/selected/attached/referenced | `planning/diagrams/scenario-data/<SC>-data.md` | DTO/API/domain/UI layout docs |
+| Scenario-local DATA entered/seen/selected/attached/referenced | inline DATA section in `planning/diagrams/scenario-text-specs/<SC>.md` | DTO/API/domain/UI layout docs |
+| Reusable scenario DATA concept | `planning/diagrams/scenario-data/<concept>.md` | one-off scenario prose unless extraction criteria are met |
+| Existing per-scenario DATA sidecar | `planning/diagrams/scenario-data/` as transitional sidecar until merged/reclassified | mandatory new sidecar for every scenario |
 | UI/UX presentation of DATA and business behavior | `planning/diagrams/scenario-ui-specs/<SC>-ui.md` | core scenario as new business behavior |
-| UI/UX presentation notes for one DATA item | related DATA file, with reference to UI scenario when needed | full UI scenario details duplicated in DATA |
+| UI/UX presentation notes for one DATA item | inline DATA section or reusable DATA concept, only when it clarifies presentation | full UI scenario details duplicated in DATA |
 | UI/UX projection for a business behavior item | related behavior item file, inside the relevant item | separate business requirement without source |
 | UI-only presentation/interaction behavior | behavior item file or UI scenario, but must reference DATA/core scenario/UI source | domain aggregate docs |
 | User/system behavior, actors, goal, preconditions, main flow, alternatives, outcomes | `planning/diagrams/scenario-text-specs/<SC>.md` | DATA/UI/behavior item indexes |
-| Data entered, seen, selected, filtered, attached or referenced | `planning/diagrams/scenario-data/<SC>-data.md` | scenario text spec prose only |
+| Data entered, seen, selected, filtered, attached or referenced | inline DATA section by default; reusable DATA concept sidecar only when justified | separate DATA sidecar created mechanically for every scenario |
 | UI-visible requirements and accepted UI decisions | `planning/diagrams/scenario-ui-specs/<SC>-ui.md` | React/client implementation files |
 | Scenario-derived behavior items | `planning/diagrams/scenario-behavior-items/<SC>-behavior-items.md` | domain aggregate docs or slice drafts |
 | Cross-cutting scenario behavior | `planning/diagrams/scenario-cross-cutting/` or behavior item files with `CC-*` IDs | one scenario file unless scenario-local only |
@@ -55,7 +57,7 @@ When scenario files conflict, use this priority:
 
 ```text
 1. Accepted clarification / scenario cleanup note, if explicitly current.
-2. Current scenario text spec, DATA spec, UI spec and behavior items.
+2. Current scenario text spec, inline/reusable DATA, UI spec and behavior items.
 3. Scenario artifact map currentness/status notes.
 4. Historical/deprecated sources only as context.
 ```
@@ -94,3 +96,16 @@ Do not promote UI presentation detail into core business scope.
 Do not duplicate full UI scenario details inside DATA or behavior item files.
 Do not create UI-only behavior entries without a core scenario, DATA item, UI scenario section or accepted clarification source.
 ```
+
+
+## 6. Inline DATA / Reusable DATA Guardrails
+
+```text
+Core scenario owns local scenario meaning.
+Reusable DATA sidecar owns shared concept shape.
+If they conflict, record a reconciliation question; do not silently override the scenario.
+```
+
+Do not move stale/legacy files or rewrite concrete scenario sources in a routing/policy batch.
+
+Existing `scenario-data/*.md` files remain transitional until PMR-driven reclassification.

@@ -97,9 +97,25 @@ Behavior items are extracted from:
 
 ```text
 planning/diagrams/scenario-text-specs/
-planning/diagrams/scenario-data/
+inline DATA sections in `planning/diagrams/scenario-text-specs/`
+planning/diagrams/scenario-data/ (reusable DATA concepts and transitional sidecars)
 planning/diagrams/scenario-ui-specs/
 planning/diagrams/scenario-cross-cutting/
 ```
 
 Do not invent behavior items in a slice draft when there is a relevant source file that should own them.
+
+
+## DATA Source Rule
+
+Behavior items may source DATA from:
+
+```text
+- inline DATA section in the core/business scenario text spec;
+- reusable DATA concept file under planning/diagrams/scenario-data/;
+- transitional DATA sidecar during migration.
+```
+
+Behavior item files should not assume every scenario has a separate DATA file.
+
+If a behavior item depends on DATA, identify the source DATA item or reusable concept rather than inventing a new field locally.
