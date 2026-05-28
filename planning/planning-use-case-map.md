@@ -67,6 +67,32 @@ For non-trivial planning/repo work, use this path:
 14. Produce answer/update/plan/draft/package.
 ```
 
+## 3A. Principle Section References
+
+Some use cases require not only reading a workflow, but also re-checking a specific architecture principle.
+
+Use this rule instead of copying principle text into this file:
+
+```text
+- principles own global documentation theory;
+- this use-case map owns action routing;
+- when a use case depends on a principle, link to the principle section;
+- do not copy the principle logic into the use-case row;
+- on repeated/targeted traversal, re-read only the linked principle sections when the full principles file was recently checked and scope did not change.
+```
+
+Common principle references:
+
+| Use case / concern | Read on first use or changed scope | Why |
+|---|---|---|
+| Documentation structure / placement / owner boundaries | `planning/documentation/planning-docs-architecture-principles.md#contents`, `#17-responsibility-ownership`, `#24-no-duplication--authority-rule`, `#24a-link-instead-of-copy--docs-dry-rule` | Prevent misplaced duplicated logic. |
+| Template/workflow/example governance | `planning/documentation/planning-docs-architecture-principles.md#9-template-vs-workflow`, `#24a-link-instead-of-copy--docs-dry-rule` | Keep templates, workflows and examples within their own responsibilities. |
+| Archive/replacement package output | `planning/documentation/planning-docs-architecture-principles.md#23-direct-edits-archives-and-commit-granularity`, plus `planning/replacement-file-generation-guide.md` | Archive output is an output mode and must use replacement files. |
+| Source/version or stale-reference concerns | `planning/documentation/planning-docs-architecture-principles.md#13-source--version-principle`, `#14-dependency-cascade-principle` | Versioned section/source tracking is deferred until the source/version model is strengthened. |
+| Accepted commands / post-apply preservation | `planning/documentation/planning-docs-architecture-principles.md#24b-accepted-command-and-preservation-guardrails`, plus owner workflow/use-case files | Prevent silent reinterpretation and accidental information loss after replacement packages. |
+
+Do not add source-version numbers to this use-case map yet. Section-level principle versions and use-case source-version metadata are deferred until the source/version model is ready.
+
 ## 4. Active Context Rule
 
 Short commands apply to the active context unless the user names another target.
@@ -95,6 +121,28 @@ If the user says `драфт`, `давай драфт`, `покажи драфт
 ```
 
 If no active context exists, ask for the missing target unless the task is obvious from the current message.
+
+## 4A. Accepted Command / No Reinvention Rule
+
+If user wording matches an accepted command or use case, follow the owner use-case/workflow definition.
+
+Do not silently substitute another output mode or process because it seems safer, easier or more convenient.
+
+If the accepted mode cannot be completed safely, stop and explain the blocker. Ask for explicit approval before switching modes.
+
+Examples:
+
+```text
+- `давай архив` means replacement archive/package.
+- It does not mean patch script, diff-only output or partial snippets.
+- `проверь` after archive application means post-apply verification, including preservation/no-loss checks.
+```
+
+Relevant principles:
+
+```text
+planning/documentation/planning-docs-architecture-principles.md#24b-accepted-command-and-preservation-guardrails
+```
 
 ## 5. Traversal Depth
 
@@ -242,6 +290,7 @@ Use a shorter version when the update is simple.
 | `арх`, `из арх`, `из архива`, `use archive` | Use latest/current archive as read source when checks are needed. | Use latest uploaded archive in current conversation, or ask for archive in a new chat. | Does not decide depth. | Archive snapshot. | Read-only answer/check based on archive. |
 | `б из арх`, `без изм, арх`, `изм нет, арх` | No changes + archive source mode. | Use if latest archive exists; otherwise ask for archive. | Reuse / targeted. | Latest uploaded archive. | No broad audit; targeted archive checks only. |
 | `давай архив`, `собери архив`, `replacement package`, `archive for manual apply` | Produce archive/package for the active approved plan/scope. | Build archive plan from obvious target or ask only blocking target questions. | Targeted/full by package scope. | GitHub/archive/conversation by context. | Replacement package ZIP with `MANIFEST.md`, `APPLY.md`, `replacement-files/`. |
+| `проверь` after replacement archive/package application | Verify the active archive application result. | Ask for status/diff or target archive if not available. | Targeted. | Applied repo state / user-provided diff. | Post-apply verification: expected files changed, no unexpected files in commit scope, diff matches package intent, no unrelated sections/register entries/routing rules were removed. |
 
 ## 10. Primary Use Case Table
 
@@ -249,6 +298,7 @@ Use a shorter version when the update is simple.
 |---|---|---:|---|---|---|---|---|---|---|
 | “посмотри / распланируй / проверь docs” | Non-trivial planning/docs work | Optional | Full first time; targeted later | GitHub/archive/conversation by context | workflow activation; reviewable output | `planning/README.md`, `workflow-activation-map.md`, `planning-doc-responsibility-map.md` | README + activation map | Reviewable answer/plan | Edits require approval |
 | “обнови docs” | Documentation update | Optional | Targeted/full by scope | GitHub for writes; archive for read-only if requested | docs update plan/workflow; local-global sync | documentation README/map/workflows | activation map + docs workflows | Plan or applied update | GitHub writes require approval |
+| “добавь template / workflow / command / draft format / пример” | Documentation governance update | Optional | Full first time; targeted later | GitHub/archive/conversation by context | docs update workflow; example coverage decision when template/output shape changes; reviewable output | documentation README/map/workflows; relevant owner workflow/template; principle section references in §3A | docs architecture principles + use-case map | Update plan or replacement package; example coverage decision if applicable | Edits/packages require approval |
 | “давай архив”, “собери архив”, “replacement package”, “archive for manual apply” | Replacement archive/package generation | Optional | Targeted/full by package scope | GitHub/archive/conversation by context | replacement file generation guide; docs update workflow when docs change; reviewable output | `planning/replacement-file-generation-guide.md`, target files, docs update workflow when docs are changed | replacement guide + workflow activation | ZIP package with `MANIFEST.md`, `APPLY.md`, `replacement-files/<repo-relative-path>` complete files | Direct repo edits not allowed unless separately approved |
 | “поправь ссылки во многих файлах” | Mechanical link/path/name sync | Optional | Targeted/broad search | GitHub or archive | docs update workflow; local-global sync | target files/search source | docs update workflow output mode rules | Link-sync plan/one bundled commit when tool-supported | Bundled/bulk mode should be used when approved; if unavailable, stop and disclose before per-file writes |
 | “задрафти slice” | Slice draft work | Usually new | Full first time | Sources required by slice workflow | slice workflow chain; testing selector when needed | slice README/map/workflow/principles/test workflow/template; `planning/testing/testing-responsibility-map.md` when test-layer-specific guidance is needed | activation map + slice README/map | Slice draft/plan | File writes require approval |
@@ -290,7 +340,35 @@ If no active draft exists:
 - start a new draft workflow only if the target is obvious.
 ```
 
-## 12. Detailed Trace: Replacement Archive / Package Output
+## 12. Detailed Trace: Template / Workflow / Command / Example Governance
+
+User says:
+
+```text
+добавь template / workflow / command / draft format / пример
+```
+
+Steps:
+
+```text
+1. Use workflow-activation-map.md and disclose activated workflows when non-trivial.
+2. Use documentation responsibility routing to find the owner file.
+3. Re-read the relevant principle sections from §3A instead of copying their logic here.
+4. Decide whether the change creates or changes a template, output shape, command behavior or draft format.
+5. If there is a template, decide that a working example is needed by default unless the owner file is routing-only or the example would duplicate another example.
+6. If an example is not added, record the reason in the relevant index or plan.
+7. Examples may link to owner use cases/workflows/templates, but must not duplicate routing, source-mode, output-mode or permission logic.
+8. Keep source/output/permission logic in planning-use-case-map.md and owner workflows.
+9. Use replacement archive/package output only when the user asks for an archive/package or after approval.
+```
+
+Deferred:
+
+```text
+Section-level principle versions and source-version metadata for use-case references are not introduced yet. Track that as deferred source/version governance work rather than adding ad hoc version fields to every row.
+```
+
+## 13. Detailed Trace: Replacement Archive / Package Output
 
 User says:
 
@@ -312,4 +390,5 @@ Steps:
 9. Include exact git add and commit commands for the intended changed files.
 10. Do not include patch scripts, diff-only files or partial snippets.
 11. If complete replacement files cannot be produced safely, stop and say so instead of switching to patch mode.
+12. Include post-apply verification commands and preservation/no-loss checks in APPLY.md.
 ```

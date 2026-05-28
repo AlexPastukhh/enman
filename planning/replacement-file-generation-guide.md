@@ -153,6 +153,46 @@ Required order:
 4. Review and commit locally.
 ```
 
+## 7A. Post-Apply Preservation Check
+
+Replacement archive verification has two parts:
+
+```text
+Applied
+  = intended files changed.
+
+Preserved
+  = unrelated information was not lost, removed or overwritten.
+```
+
+Every APPLY.md should tell the user to review both application and preservation before committing.
+
+Include commands like:
+
+```powershell
+git status --short
+
+git diff --stat -- `
+  <changed-file-1> `
+  <changed-file-2>
+
+git --no-pager diff --no-color -- `
+  <changed-file-1> `
+  <changed-file-2>
+```
+
+The post-apply review should check:
+
+```text
+- only intended files changed;
+- diff matches package intent;
+- no unrelated sections, register entries, commands, examples, routing rows or source-of-truth rules were removed;
+- shared-state files such as registers preserve existing entries unless removal was explicit;
+- commit commands add only intended files and never use `git add .`.
+```
+
+If the user asks `проверь` after applying a replacement archive, treat it as this post-apply preservation check, not only as a file-name/status check.
+
 ## 8. Archive Layouts And Apply Commands
 
 There are two supported archive layouts.

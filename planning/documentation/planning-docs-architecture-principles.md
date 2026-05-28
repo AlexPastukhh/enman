@@ -3,6 +3,37 @@
 Status: current documentation architecture principles  
 Scope: how to structure planning documentation so it remains navigable, reviewable and safe for both people and AI-assisted work
 
+## Contents
+
+- [1. Purpose](#1-purpose)
+- [2. Core Goals](#2-core-goals)
+- [3. Fixed Layer Architecture](#3-fixed-layer-architecture)
+- [4. Responsibility Map Model](#4-responsibility-map-model)
+- [5. One Main Entry Point](#5-one-main-entry-point)
+- [6. File Type Responsibility Model](#6-file-type-responsibility-model)
+- [7. Index vs Register vs Source Usage Register](#7-index-vs-register-vs-source-usage-register)
+- [8. Local Notes vs Register](#8-local-notes-vs-register)
+- [9. Template vs Workflow](#9-template-vs-workflow)
+- [10. Separate Current, Target, Draft, Archive And Dirty Draft](#10-separate-current-target-draft-archive-and-dirty-draft)
+- [11. Avoid Heavy Current-State Docs](#11-avoid-heavy-current-state-docs)
+- [12. Source-of-Truth Hierarchy](#12-source-of-truth-hierarchy)
+- [13. Source / Version Principle](#13-source--version-principle)
+- [14. Dependency Cascade Principle](#14-dependency-cascade-principle)
+- [15. Section-Level Sources Principle](#15-section-level-sources-principle)
+- [16. Local Detail + Global Visibility](#16-local-detail--global-visibility)
+- [17. Responsibility Ownership](#17-responsibility-ownership)
+- [18. Safe Rewrite Rule](#18-safe-rewrite-rule)
+- [19. Documentation Update Plans](#19-documentation-update-plans)
+- [20. AI-Checkability Principles](#20-ai-checkability-principles)
+- [21. VKR / Thesis Separation](#21-vkr--thesis-separation)
+- [22. Dirty Draft Policy](#22-dirty-draft-policy)
+- [23. Direct Edits, Archives And Commit Granularity](#23-direct-edits-archives-and-commit-granularity)
+- [24. No-Duplication / Authority Rule](#24-no-duplication--authority-rule)
+- [24A. Link Instead Of Copy / Docs DRY Rule](#24a-link-instead-of-copy--docs-dry-rule)
+- [24B. Accepted Command And Preservation Guardrails](#24b-accepted-command-and-preservation-guardrails)
+- [25. What Not To Add By Default](#25-what-not-to-add-by-default)
+- [26. Success Criteria](#26-success-criteria)
+
 ## 1. Purpose
 
 Planning documentation is a knowledge system, not just a folder of notes.
@@ -210,6 +241,10 @@ A template should usually include:
 
 If examples become large, move them into a separate examples file or examples folder.
 
+When adding or changing a reusable template, workflow with an expected output, response command, output mode or draft format, decide whether a working example is needed. If there is a template, a working example is needed by default unless the example would duplicate another current example or the file is routing-only.
+
+Examples are supporting artifacts. They demonstrate correct application of an owner workflow, template or use case. They do not own routing logic, command aliases, source modes, output modes, permission boundaries or workflow activation. Link to the owner instead of copying that logic into the example.
+
 ## 10. Separate Current, Target, Draft, Archive And Dirty Draft
 
 Do not mix these concepts.
@@ -337,6 +372,8 @@ consumer file / local file
 Use stable repo-relative file paths as source keys. Human labels may be added, but file paths are more stable than informal names.
 
 DATA sets and behavior item sets can have their own versions for the same scenario. They are not merely aliases of the scenario version.
+
+Section-level versions for principles and use-case source references are not introduced yet. They should be designed later through the source/version governance path instead of adding ad hoc version fields to individual use-case rows.
 
 ## 14. Dependency Cascade Principle
 
@@ -642,6 +679,47 @@ local maps beat root map for local placement after they exist;
 workflow docs beat prompts for process steps.
 ```
 
+## 24A. Link Instead Of Copy / Docs DRY Rule
+
+Do not duplicate reusable logic, command meaning, source-mode rules, output-mode rules, permission boundaries, workflow activation details or source/version rules in files that do not own them.
+
+If another file owns the logic, link to that owner file or section instead of copying the logic.
+
+A local file may include a short summary only when it is needed for navigation or readability. The summary must not become a second source of truth.
+
+If changing the owner file would require updating copied text here, the copied text probably does not belong here.
+
+Examples and indexes may link to owner use cases, workflows or templates, but must not copy their routing, source-mode, output-mode or permission logic.
+
+## 24B. Accepted Command And Preservation Guardrails
+
+Accepted user commands and output modes must not be silently reinterpreted.
+
+If a user request matches an accepted command or use case, follow the owner use-case/workflow definition. Do not replace it with another mode because it seems safer, easier or more convenient.
+
+If the accepted mode cannot be completed safely, stop and explain the blocker. Ask for explicit approval before switching modes.
+
+Post-apply verification for replacement archives must check preservation, not only application.
+
+A post-apply check should confirm:
+
+```text
+- only intended files are in scope;
+- diffs match the package intent;
+- no unrelated sections, register entries, commands, examples, routing rows or source-of-truth rules were removed;
+- shared-state files such as registers preserve existing entries unless removal was explicit;
+- commit commands include only intended files.
+```
+
+Command-specific details live in:
+
+```text
+planning/planning-use-case-map.md
+planning/replacement-file-generation-guide.md
+```
+
+This section is the architecture-level guardrail only.
+
 ## 25. What Not To Add By Default
 
 Do not add extra coordination systems unless explicitly needed.
@@ -654,6 +732,7 @@ work register
 mandatory status packets for every answer
 full multi-chat orchestration docs
 universal response format for all answers
+section-level version registries for every principles/use-case reference
 ```
 
 A broad reviewer chat may review another chat output if the output is explicitly provided, but it is not a master/controller and does not become a source of truth.
@@ -672,5 +751,6 @@ The planning docs architecture is working when:
 - local questions that matter globally are visible in shared registers;
 - dirty drafts remain useful but non-canonical;
 - VKR-facing wording uses clean terms;
-- documentation changes can be planned, reviewed and reverted in small scopes.
+- documentation changes can be planned, reviewed and reverted in small scopes;
+- reusable logic has one owner and other files link to it instead of copying it.
 ```
