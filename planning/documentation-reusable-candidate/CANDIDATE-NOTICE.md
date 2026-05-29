@@ -55,3 +55,13 @@ planning/documentation/documentation-responsibility-zone-review-workflow.md
 planning/documentation/planning-docs-architecture-principles.md
 planning/documentation/documentation-responsibility-map.md
 ```
+
+## 6. Candidate Review Artifacts
+
+Current candidate review artifact:
+
+```text
+planning/documentation-reusable-candidate/PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md
+```
+
+Use it before splitting or rewriting the candidate principles file.

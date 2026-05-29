@@ -86,6 +86,28 @@ Next expected migration step:
 Run responsibility-zone classification inside the candidate, starting with planning-docs-architecture-principles.md.
 ```
 
+## 2B. Candidate Principles Classification State
+
+A pre-split responsibility classification artifact is planned/created for the candidate principles file:
+
+```text
+planning/documentation-reusable-candidate/PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md
+```
+
+Purpose:
+
+```text
+- classify every section of planning/documentation-reusable-candidate/planning-docs-architecture-principles.md;
+- separate reusable principles, scenario-driven profile material, Enman/project adapter mappings, examples and workflow/field-kit details;
+- prepare F4 without editing or splitting the candidate principles file yet.
+```
+
+Boundary:
+
+```text
+This classification artifact does not split, rename, rewrite or move the principles file.
+```
+
 ## 3. Principles File Role Decision
 
 The principles file should own high-level documentation architecture invariants.

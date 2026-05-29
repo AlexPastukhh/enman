@@ -529,3 +529,35 @@ Owner sources:
 Notes:
   This change does not split principles, create the scenario-domain-slice profile, create the Enman adapter, move VKR/source-usage pilots/sync notes, or change the copied candidate file contents.
 ```
+
+### 2026-05-30 — Added candidate principles responsibility classification
+
+```text
+Date:
+  2026-05-30
+Action:
+  Added a pre-split responsibility-zone classification artifact for the candidate principles file.
+Type:
+  documentation architecture / portability migration preparation
+Status:
+  applied
+Why:
+  Before splitting or genericizing the reusable candidate principles, every section needs to be classified as reusable-core, scenario-driven profile material, Enman/project adapter mapping, example candidate, workflow detail or field-kit detail.
+Changed files:
+  - planning/documentation-reusable-candidate/PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md
+  - planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  The candidate now has a review artifact that prepares the principles split without changing the principles file itself.
+PMR relation:
+  none
+Follow-ups:
+  Plan F4 candidate principles split/genericization using PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md as the source of truth.
+Owner sources:
+  planning/documentation/documentation-responsibility-zone-review-workflow.md
+  planning/documentation-reusable-candidate/PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md
+  planning/documentation/documentation-layer-portability-migration-plan.md
+Notes:
+  This change does not rewrite or split planning-docs-architecture-principles.md, does not create scenario-domain-slice profile, does not create Enman/project adapter, and does not move VKR/source-usage/sync notes.
+```
