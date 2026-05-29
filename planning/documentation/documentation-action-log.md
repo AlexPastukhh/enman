@@ -561,3 +561,41 @@ Owner sources:
 Notes:
   This change does not rewrite or split planning-docs-architecture-principles.md, does not create scenario-domain-slice profile, does not create Enman/project adapter, and does not move VKR/source-usage/sync notes.
 ```
+
+### 2026-05-30 — Split candidate principles into reusable/profile/adapter outputs
+
+```text
+Date:
+  2026-05-30
+Action:
+  Split/genericized the candidate principles layer into reusable principles, a scenario/domain/slice specialized profile, an Enman adapter and a deferred portability follow-ups file.
+Type:
+  documentation architecture / portability migration candidate work
+Status:
+  applied
+Why:
+  F3 classified the candidate principles sections. F4 applies that classification inside the non-canonical candidate workspace while preserving project-specific Enman mappings outside reusable principles.
+Changed files:
+  - planning/documentation-reusable-candidate/planning-docs-architecture-principles.md
+  - planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
+  - planning/documentation-reusable-candidate/enman-docs-adapter.md
+  - planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+  - planning/documentation-reusable-candidate/README.md
+  - planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Candidate principles are now more reusable, scenario/domain/slice topology is isolated as a specialized profile, Enman-specific paths and VKR mappings are preserved in an adapter, and ambiguous workflow/field-kit/example work is tracked separately.
+PMR relation:
+  none
+Follow-ups:
+  F5 should review candidate status-reconciliation, local-global sync and source-usage cascade governance files. Source usage field-kit extraction is deferred to F5.
+Owner sources:
+  planning/documentation-reusable-candidate/PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md
+  planning/documentation-reusable-candidate/planning-docs-architecture-principles.md
+  planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
+  planning/documentation-reusable-candidate/enman-docs-adapter.md
+  planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+Notes:
+  This change does not touch active planning/documentation/planning-docs-architecture-principles.md, does not switch canonical docs, does not move VKR/source-usage/sync notes, and does not rewrite the status/local-global/source-usage workflows.
+```

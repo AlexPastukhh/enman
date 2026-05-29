@@ -108,6 +108,35 @@ Boundary:
 This classification artifact does not split, rename, rewrite or move the principles file.
 ```
 
+## 2C. Candidate Principles Split / Genericization State
+
+F4 candidate split/genericization created the first split candidate outputs:
+
+```text
+planning/documentation-reusable-candidate/planning-docs-architecture-principles.md
+planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
+planning/documentation-reusable-candidate/enman-docs-adapter.md
+planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+```
+
+Purpose:
+
+```text
+- keep reusable documentation architecture invariants in candidate principles;
+- extract scenario/domain/slice topology into a specialized reusable profile;
+- preserve exact Enman paths, VKR/thesis mappings and register/evidence mappings in a candidate adapter;
+- track source usage/status/local-global/examples/naming follow-ups separately instead of dumping them into the adapter.
+```
+
+Boundary:
+
+```text
+F4 does not switch canonical documentation ownership.
+Active documentation remains under planning/documentation/.
+F4 does not rewrite active planning/documentation/planning-docs-architecture-principles.md.
+F4 does not create the source usage field kit or rewrite status/local-global/source-usage workflows; those are deferred to F5.
+```
+
 ## 3. Principles File Role Decision
 
 The principles file should own high-level documentation architecture invariants.

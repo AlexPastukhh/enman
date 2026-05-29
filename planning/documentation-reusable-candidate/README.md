@@ -66,6 +66,31 @@ planning/replacement-file-generation-guide.md
 planning/vkr-clean-reference.md
 ```
 
+## 2B. Candidate Split Outputs
+
+F4 candidate split/genericization introduced these candidate-only files:
+
+```text
+planning/documentation-reusable-candidate/planning-docs-architecture-principles.md
+planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
+planning/documentation-reusable-candidate/enman-docs-adapter.md
+planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+planning/documentation-reusable-candidate/PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md
+```
+
+Candidate read order for portability/split work:
+
+```text
+1. planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+2. planning/documentation-reusable-candidate/PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md
+3. planning/documentation-reusable-candidate/planning-docs-architecture-principles.md
+4. planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
+5. planning/documentation-reusable-candidate/enman-docs-adapter.md
+6. planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+```
+
+These files are still candidate-only and do not replace the active documentation layer until a later migration/switch batch approves it.
+
 ## 3. Read Order For Documentation-Layer Work
 
 For documentation-layer architecture/routing work:

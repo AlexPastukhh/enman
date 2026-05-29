@@ -65,3 +65,25 @@ planning/documentation-reusable-candidate/PRINCIPLES-RESPONSIBILITY-CLASSIFICATI
 ```
 
 Use it before splitting or rewriting the candidate principles file.
+
+## 7. Candidate Split Outputs
+
+F4 candidate split/genericization introduced:
+
+```text
+planning/documentation-reusable-candidate/planning-docs-architecture-principles.md
+planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
+planning/documentation-reusable-candidate/enman-docs-adapter.md
+planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+```
+
+Meaning:
+
+```text
+- planning-docs-architecture-principles.md = genericized candidate reusable principles;
+- scenario-domain-slice-docs-profile.md = specialized reusable profile for scenario-driven app/product projects;
+- enman-docs-adapter.md = concrete Enman/current-project mapping extracted from candidate principles;
+- PORTABILITY-FOLLOWUPS.md = deferred workflow/field-kit/example/naming work that should not be dumped into the adapter.
+```
+
+These outputs are candidate-only and do not switch canonical documentation ownership.
