@@ -1,7 +1,7 @@
 # Documentation Update Workflow Index
 
 Status: current documentation layer index / read order  
-Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs, response-level commands, working example coverage, source usage cascade governance and navigation updates
+Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs, response-level commands, working example coverage, source usage cascade governance, documentation action logging and navigation updates
 
 ## 1. Purpose
 
@@ -21,6 +21,7 @@ A documentation update agent must:
 - update navigation/responsibility maps together with new docs;
 - decide whether a working example is needed when templates, output shapes, commands or draft formats change;
 - use source usage cascade governance when source/stale-reference/reviewed-upstream-work concerns appear;
+- record significant logical documentation actions in the documentation action log;
 - use direct GitHub edits only when explicitly asked to apply changes;
 - use one file per commit by default for direct GitHub edits;
 - use archive/replacement packages when manual application or broad generated replacement is more practical.
@@ -41,6 +42,7 @@ planning/documentation/reviewable-agent-output-and-commands-workflow.md
 planning/documentation/example-coverage-workflow.md
 planning/documentation/source-usage-cascade-governance-plan.md
 planning/documentation/source-usage-pilots/README.md
+planning/documentation/documentation-action-log.md
 planning/documentation/examples/README.md
 planning/documentation/documentation-update-agent-prompt.md
 ```
@@ -86,8 +88,9 @@ For broad documentation updates:
 11. planning/documentation/local-global-documentation-sync-workflow.md
 12. planning/documentation/example-coverage-workflow.md, if the update changes templates, output shapes, response commands, output modes, draft formats or example coverage
 13. planning/documentation/source-usage-cascade-governance-plan.md, if the update touches source usage, stale references, cascade review, reviewed upstream work or source usage pilots
-14. planning/replacement-file-generation-guide.md, if archive/replacement mode is relevant
-15. relevant domain/API/testing/slice/client/scenario docs for the requested area
+14. planning/documentation/documentation-action-log.md, if the update is a significant logical documentation action
+15. planning/replacement-file-generation-guide.md, if archive/replacement mode is relevant
+16. relevant domain/API/testing/slice/client/scenario docs for the requested area
 ```
 
 For answer-format, reviewable-output or response-command work:
@@ -110,6 +113,7 @@ For source usage cascade governance and pilots:
 ```text
 planning/documentation/source-usage-cascade-governance-plan.md
 planning/documentation/source-usage-pilots/README.md
+planning/documentation/documentation-action-log.md
 ```
 
 Use this when working on source usage relationships, stale downstream references, reviewed-upstream-work concerns, cascade review pilots or the future source usage workflow.
@@ -142,6 +146,7 @@ example coverage decision process -> example-coverage-workflow.md
 documentation-layer examples navigation -> examples/README.md
 source usage cascade pilot governance -> source-usage-cascade-governance-plan.md
 source usage pilot folder navigation -> source-usage-pilots/README.md
+documentation logical action log -> documentation-action-log.md
 reusable prompt -> documentation-update-agent-prompt.md
 ```
 
@@ -252,7 +257,20 @@ planning/documentation/source-usage-pilots/README.md
 
 Pilot registers are experimental review/cascade aids. They do not replace scenario/domain/slice source files, maps, drafts or future permanent source usage registers.
 
-## 12. Scoped Sync Notes
+
+## 12. Documentation Action Log
+
+For significant logical documentation actions and short explanations of why they happened, use:
+
+```text
+planning/documentation/documentation-action-log.md
+```
+
+The action log records completed logical documentation actions. It is not the PMR, not a task register and not the source of truth for rules. Owner files define rules; the action log records what changed, why, affected files/layers and optional PMR relation.
+
+Use it for changes to architecture principles, workflow behavior, accepted command meaning, source-of-truth boundaries, source usage/cascade governance, template/output shapes, onboarding routes, example infrastructure, replacement archive behavior or PMR/task governance.
+
+## 13. Scoped Sync Notes
 
 Scoped sync notes are case-specific documentation synchronization notes. They are useful for trace/audit/context, but they are not reusable workflows or global architecture principles.
 
@@ -266,7 +284,7 @@ planning/documentation/l2-scenario-status-marker-sync-note.md
 
 Do not treat scoped sync notes as canonical workflow files. If a scoped sync note contains a reusable rule, promote that rule into the correct workflow or architecture file through a normal documentation update.
 
-## 13. Draft-Driven Discovery Scope Note
+## 14. Draft-Driven Discovery Scope Note
 
 Draft-driven discovery is currently a slice-layer discovery loop.
 

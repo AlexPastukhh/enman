@@ -44,7 +44,8 @@ plan only
 7. Prepare a Documentation Update Plan when the change is broad or multi-file.
 8. Ask only blocking questions that can change the planned update.
 9. After approval, apply the selected output mode.
-10. Final response includes changed files or archive link, scope, non-goals, commit SHAs when applicable and next step.
+10. Check whether the documentation action log needs an entry.
+11. Final response includes changed files or archive link, scope, non-goals, commit SHAs when applicable and next step.
 ```
 
 ## 3. Required Current-State Check
@@ -294,7 +295,36 @@ Rules:
 - follow planning/replacement-file-generation-guide.md.
 ```
 
-## 11. Documentation Quality Checklist
+## 11. Documentation Action Log Check
+
+Before finalizing a documentation update, decide whether the update is a significant logical documentation action.
+
+Update:
+
+```text
+planning/documentation/documentation-action-log.md
+```
+
+when the change affects:
+
+```text
+- architecture principles;
+- workflow behavior;
+- accepted command semantics;
+- source-of-truth boundaries;
+- source usage/cascade governance;
+- template or output shape;
+- onboarding route;
+- PMR/task governance;
+- documentation-layer examples infrastructure;
+- replacement archive/package behavior.
+```
+
+Do not update it for typo-only edits, minor link fixes or purely mechanical sync already covered by a larger logged action.
+
+The action log records what changed and why. It does not own rules, PMR task state or source truth.
+
+## 12. Documentation Quality Checklist
 
 Before finalizing a documentation update, verify:
 
@@ -313,10 +343,11 @@ Before finalizing a documentation update, verify:
 - direct GitHub bulk commit mode outputs base commit/tree SHA commands before asking the user for values;
 - archive mode contains complete files, not patches;
 - APPLY.md and MANIFEST.md are present for archive mode;
+- significant logical documentation actions are recorded in documentation-action-log.md or explicitly marked as not needing a log entry;
 - no code/generated changes are included unless explicitly in scope.
 ```
 
-## 12. Do Not
+## 13. Do Not
 
 ```text
 - Do not write docs from memory only.

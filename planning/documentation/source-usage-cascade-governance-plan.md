@@ -301,3 +301,22 @@ Create the full source usage/cascade workflow only after:
 - Do not turn slice drafts into source registries.
 - Do not mass-update domain/slice templates before the pilot proves the shape.
 ```
+
+## 17. Maintenance And Action Log Tracking
+
+The full source usage/cascade workflow follow-up is tracked by PMR-002.
+
+This framework introduction should be recorded in:
+
+```text
+planning/documentation/documentation-action-log.md
+```
+
+Rules:
+
+```text
+- Use PMR for future work, waiting conditions and reminders.
+- Use the documentation action log for completed logical documentation actions and why they happened.
+- When a pilot fill proves or rejects this row shape, update the action log.
+- When the pilot creates future work, update PMR and reference the PMR relation from the action log.
+```
