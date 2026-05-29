@@ -57,6 +57,8 @@ This file owns only documentation-layer placement.
 | Reviewable answer format and response-level commands | `reviewable-agent-output-and-commands-workflow.md` | Level 1/2/3 answers, sources/coverage, recheck/clarify/keep prev/no ch/section operations. |
 | File Update Overview process | `file-update-overview-workflow.md` | Owns when and how to produce the final structured file-change summary for non-trivial file/docs/code update answers. |
 | File Update Overview template | `FILE-UPDATE-OVERVIEW-TEMPLATE.md` | Owns the exact reusable File Update Overview block structure. |
+| Use-case map creation/update workflow | `use-case-map-workflow.md` | Owns the reusable process for creating, updating and maintaining use-case maps. |
+| Use-case map template | `USE-CASE-MAP-TEMPLATE.md` | Owns the exact reusable structure for concrete use-case maps. |
 | Working example coverage decision process | `example-coverage-workflow.md` | Decides whether a new/changed template, workflow output, response command, output mode or draft format needs a working example. |
 | Documentation-layer working example index | `examples/README.md` | Navigation and coverage index for documentation-layer examples. It does not own routing/source/output/permission logic. |
 | Source usage cascade governance pilot plan | `source-usage-cascade-governance-plan.md` | Governance plan for source usage relationships, layer encapsulation, attention preservation and cascade-review pilots. Not the full future workflow. |
@@ -110,6 +112,8 @@ If documentation-layer files conflict:
 - workflow files win for their own process steps.
 - file-update-overview-workflow.md wins for File Update Overview process.
 - FILE-UPDATE-OVERVIEW-TEMPLATE.md wins for File Update Overview shape.
+- use-case-map-workflow.md wins for reusable use-case-map maintenance process.
+- USE-CASE-MAP-TEMPLATE.md wins for exact reusable use-case-map shape.
 - example-coverage-workflow.md wins for example coverage decision steps.
 - examples/README.md is an index and does not override owner workflows, templates or use-case rows.
 - source-usage-cascade-governance-plan.md wins for pilot governance until the full cascade workflow exists.
@@ -139,7 +143,7 @@ Suggested suffixes:
 |---|---|
 | Workflow | `*-workflow.md` |
 | Responsibility map | `*-responsibility-map.md` |
-| Template | `*-template.md` |
+| Template | `*-template.md` or uppercase `<THING>-TEMPLATE.md` for reusable exact output shapes |
 | Examples index / examples folder navigation | `examples/README.md` or `*-examples.md` |
 | Source usage pilot folder navigation | `source-usage-pilots/README.md` |
 | Source usage pilot register | `source-usage-pilots/<scope>-source-usage-register.md` |
@@ -156,6 +160,7 @@ Suggested suffixes:
 - Do not duplicate owner tables in multiple files.
 - Do not put command routing, source-mode, output-mode or permission logic into example files.
 - Do not put File Update Overview trigger/shape logic into examples or use-case rows; link to the workflow/template owners.
+- Do not put reusable use-case-map workflow/template logic into a concrete use-case map; link to use-case-map-workflow.md and USE-CASE-MAP-TEMPLATE.md.
 - Do not treat source usage pilot registers as permanent global schema before the pilot is reviewed.
 - Do not use the action log as the source of truth for rules or unresolved tasks.
 - Do not treat reusable prompts as canonical rules.
@@ -174,6 +179,7 @@ The documentation layer is well-routed when:
 - this map handles documentation-layer placement;
 - workflow files stay process-focused;
 - File Update Overview process and shape have clear owners;
+- use-case-map workflow and template responsibilities have clear owners;
 - example coverage decisions are made by the example coverage workflow;
 - examples remain supporting artifacts and link to their owner files instead of copying logic;
 - source usage cascade pilots are discoverable and clearly marked experimental;

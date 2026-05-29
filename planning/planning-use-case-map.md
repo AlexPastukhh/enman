@@ -29,6 +29,8 @@ This file is not:
 
 It is a root action/use-case trace map.
 
+This file is one concrete use-case map instance. Reusable use-case-map maintenance rules are owned by `planning/documentation/use-case-map-workflow.md`; exact reusable map shape is owned by `planning/documentation/USE-CASE-MAP-TEMPLATE.md`.
+
 ## 2. Relationship To Root Files
 
 ```text
@@ -44,6 +46,12 @@ planning/planning-doc-responsibility-map.md
 planning/planning-use-case-map.md
   Action/use-case trace:
   user command -> docs/workflows/templates/sources/output.
+
+planning/documentation/use-case-map-workflow.md
+  Reusable workflow for creating/updating use-case maps.
+
+planning/documentation/USE-CASE-MAP-TEMPLATE.md
+  Reusable template for concrete use-case-map shape.
 ```
 
 ## 3. Universal Chat Algorithm
@@ -452,8 +460,9 @@ Steps:
 5. If there is a template, use planning/documentation/example-coverage-workflow.md and decide that a working example is needed by default unless the owner file is routing-only or the example would duplicate another example.
 6. If an example is not added, record the reason in the relevant index or plan.
 7. Examples may link to owner use cases/workflows/templates, but must not duplicate routing, source-mode, output-mode or permission logic.
-8. Keep source/output/permission logic in planning-use-case-map.md and owner workflows.
-9. Use replacement archive/package output only when the user asks for an archive/package or after approval.
+8. Keep source/output/permission logic in concrete use-case maps and owner workflows.
+9. Use planning/documentation/use-case-map-workflow.md and planning/documentation/USE-CASE-MAP-TEMPLATE.md when creating or restructuring use-case maps.
+10. Use replacement archive/package output only when the user asks for an archive/package or after approval.
 ```
 
 Deferred:

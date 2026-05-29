@@ -423,3 +423,38 @@ Owner sources:
 Notes:
   This change does not add new response commands or alter archive mechanics. It changes output shape and planning visibility.
 ```
+
+### 2026-05-29 — Added reusable use-case-map workflow and template
+
+```text
+Date:
+  2026-05-29
+Action:
+  Added reusable use-case-map workflow and template, and aligned documentation navigation, placement and the root planning use-case map with those owners.
+Type:
+  reusable documentation infrastructure / workflow-template governance
+Status:
+  applied
+Why:
+  Use-case maps are useful beyond the current Enman planning map. The reusable workflow now owns how to create and update use-case maps, while the reusable template owns their exact shape. Concrete maps can link to those owners instead of becoming workflow/template sources of truth.
+Changed files:
+  - planning/documentation/use-case-map-workflow.md
+  - planning/documentation/USE-CASE-MAP-TEMPLATE.md
+  - planning/documentation/README.md
+  - planning/documentation/documentation-responsibility-map.md
+  - planning/planning-use-case-map.md
+  - planning/documentation/examples/README.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Documentation layer now has reusable infrastructure for use-case maps across systems, not only the current root planning use-case map.
+PMR relation:
+  none
+Follow-ups:
+  Use the workflow/template on a future concrete map and then add a filled `USE-CASE-MAP-CREATION-UPDATE-v1` example.
+Owner sources:
+  planning/documentation/use-case-map-workflow.md
+  planning/documentation/USE-CASE-MAP-TEMPLATE.md
+  planning/documentation/documentation-responsibility-map.md
+Notes:
+  This change does not perform the broader documentation-layer decoupling from Enman and does not split the principles file. Those remain separate future architecture batches.
+```

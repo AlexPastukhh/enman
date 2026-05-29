@@ -42,6 +42,8 @@ planning/documentation/local-global-documentation-sync-workflow.md
 planning/documentation/reviewable-agent-output-and-commands-workflow.md
 planning/documentation/file-update-overview-workflow.md
 planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+planning/documentation/use-case-map-workflow.md
+planning/documentation/USE-CASE-MAP-TEMPLATE.md
 planning/documentation/example-coverage-workflow.md
 planning/documentation/source-usage-cascade-governance-plan.md
 planning/documentation/source-usage-pilots/README.md
@@ -112,6 +114,15 @@ planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
 
 Use this when adding or changing the final structured file-change summary for non-trivial file/docs/code update answers.
 
+For use-case-map creation/update work:
+
+```text
+planning/documentation/use-case-map-workflow.md
+planning/documentation/USE-CASE-MAP-TEMPLATE.md
+```
+
+Use this when creating or updating reusable use-case maps, concrete route maps, command rows or expected-output routing tables.
+
 For working example coverage decisions:
 
 ```text
@@ -157,6 +168,8 @@ status reconciliation process -> status-reconciliation-workflow.md
 agent answer/review format and response-level commands -> reviewable-agent-output-and-commands-workflow.md
 file update overview process -> file-update-overview-workflow.md
 file update overview template -> FILE-UPDATE-OVERVIEW-TEMPLATE.md
+use-case map workflow -> use-case-map-workflow.md
+use-case map template -> USE-CASE-MAP-TEMPLATE.md
 example coverage decision process -> example-coverage-workflow.md
 documentation-layer examples navigation -> examples/README.md
 source usage cascade pilot governance -> source-usage-cascade-governance-plan.md
