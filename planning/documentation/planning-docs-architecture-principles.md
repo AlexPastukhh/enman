@@ -17,6 +17,7 @@ Scope: how to structure planning documentation so it remains navigable, reviewab
 - [10. Separate Current, Target, Draft, Archive And Dirty Draft](#10-separate-current-target-draft-archive-and-dirty-draft)
 - [11. Avoid Heavy Current-State Docs](#11-avoid-heavy-current-state-docs)
 - [12. Source-of-Truth Hierarchy](#12-source-of-truth-hierarchy)
+- [12A. Layer Encapsulation And Attention Preservation](#12a-layer-encapsulation-and-attention-preservation)
 - [13. Source / Version Principle](#13-source--version-principle)
 - [14. Dependency Cascade Principle](#14-dependency-cascade-principle)
 - [15. Section-Level Sources Principle](#15-section-level-sources-principle)
@@ -351,6 +352,73 @@ Use only after canonical docs:
 ```text
 planning/dirty-drafts/
 ```
+
+## 12A. Layer Encapsulation And Attention Preservation
+
+Planning layers should behave like encapsulated modules.
+
+When upstream work has already been reviewed, downstream docs should reference the published upstream artifact instead of reconstructing or re-explaining the upstream reasoning.
+
+The goal is to preserve already-reviewed work and human review attention:
+
+```text
+scenario layer
+  owns scenario meaning;
+
+DATA and behavior item layers
+  own normalized source extraction from scenarios, DATA, UI scenarios and cross-cutting behavior;
+
+domain layer
+  owns domain interpretation, aggregate boundaries, value objects, invariants and domain decisions;
+
+slice layer
+  owns implementation slice contracts, boundaries, behavior coverage and draft-to-implementation direction;
+
+testing layer
+  owns verification strategy and proof selection;
+
+diagramming / VKR / thesis layers
+  consume source-layer outputs for visualization or clean wording, without becoming business source truth.
+```
+
+Downstream review should focus on the new decisions owned by the current layer, not on checking whether the assistant correctly reconstructed previous-layer reasoning.
+
+Use strict source usage relationships and section-level source blocks to:
+
+```text
+- prevent duplicated source truth;
+- prevent AI from silently reinterpreting already-reviewed upstream work;
+- preserve human attention for new downstream decisions;
+- make cascade review targeted rather than broad by default;
+- make stale downstream scopes discoverable when upstream sources change.
+```
+
+External dependencies and internal dependencies are different:
+
+```text
+External dependency
+  = a source artifact/scope in another file or layer is consumed by this file/section.
+  Track it through source usage relationships/registers when downstream synchronization matters.
+
+Internal section dependency
+  = a later section in the same file depends on analytical work from an earlier section.
+  Track it locally in section-level source/internal dependency blocks when the section is high-risk or reviewed separately.
+  It normally does not need version markers.
+```
+
+Versions and review markers support this model, but they are not the core model.
+
+The core model is:
+
+```text
+source artifact/scope
+  -> consumer artifact/scope
+  -> reviewed_against / sync_status / review_outcome when needed
+```
+
+Do not copy upstream truth into downstream files just to make them self-contained. Link to the reviewed upstream artifact or source usage row, then document only the new downstream interpretation, decision or contract owned by the current layer.
+
+If upstream work changes, use dependency cascade review to identify affected downstream scopes. If upstream work did not change and the source usage relationship is current, do not force broad re-review of already-reviewed upstream reasoning.
 
 ## 13. Source / Version Principle
 

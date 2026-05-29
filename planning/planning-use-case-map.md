@@ -88,10 +88,10 @@ Common principle references:
 | Documentation structure / placement / owner boundaries | `planning/documentation/planning-docs-architecture-principles.md#contents`, `#17-responsibility-ownership`, `#24-no-duplication--authority-rule`, `#24a-link-instead-of-copy--docs-dry-rule` | Prevent misplaced duplicated logic. |
 | Template/workflow/example governance | `planning/documentation/planning-docs-architecture-principles.md#9-template-vs-workflow`, `#24a-link-instead-of-copy--docs-dry-rule` | Keep templates, workflows and examples within their own responsibilities. |
 | Archive/replacement package output | `planning/documentation/planning-docs-architecture-principles.md#23-direct-edits-archives-and-commit-granularity`, plus `planning/replacement-file-generation-guide.md` | Archive output is an output mode and must use replacement files. |
-| Source/version or stale-reference concerns | `planning/documentation/planning-docs-architecture-principles.md#13-source--version-principle`, `#14-dependency-cascade-principle` | Versioned section/source tracking is deferred until the source/version model is strengthened. |
+| Source usage / stale-reference / cascade / reviewed-work concerns | `planning/documentation/planning-docs-architecture-principles.md#12a-layer-encapsulation-and-attention-preservation`, `#13-source--version-principle`, `#14-dependency-cascade-principle`, `#15-section-level-sources-principle` | Prevent duplicated source truth and preserve attention by referencing reviewed upstream work instead of reconstructing it. |
 | Accepted commands / post-apply preservation | `planning/documentation/planning-docs-architecture-principles.md#24b-accepted-command-and-preservation-guardrails`, plus owner workflow/use-case files | Prevent silent reinterpretation and accidental information loss after replacement packages. |
 
-Do not add source-version numbers to this use-case map yet. Section-level principle versions and use-case source-version metadata are deferred until the source/version model is ready.
+Do not add source-version numbers to this use-case map yet. Section-level principle versions and use-case source-version metadata are deferred until the source/version model is ready. Use the encapsulation/source-usage principle reference to decide when a pilot source usage register or cascade workflow is needed, not to add ad hoc version fields to use-case rows.
 
 ## 4. Active Context Rule
 
