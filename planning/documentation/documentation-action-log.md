@@ -496,3 +496,36 @@ Owner sources:
 Notes:
   This batch intentionally does not split principles, create the scenario-domain-slice profile, create the Enman adapter, move VKR/source-usage pilots/sync notes, or create the reusable candidate copy.
 ```
+
+### 2026-05-30 — Added reusable candidate guardrails
+
+```text
+Date:
+  2026-05-30
+Action:
+  Added guardrails for the reusable documentation candidate baseline after the active documentation layer was copied to planning/documentation-reusable-candidate/.
+Type:
+  documentation architecture / portability migration preparation
+Status:
+  applied
+Why:
+  The candidate copy should exist as a safe migration workspace without becoming a second active source of truth. Future cleanup, classification and split work should happen inside the candidate, while ordinary project documentation updates continue to use planning/documentation/.
+Changed files:
+  - planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/README.md
+  - planning/documentation/documentation-responsibility-map.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  The reusable candidate workspace is now explicitly temporary, non-canonical and limited to portability/genericization work.
+PMR relation:
+  none
+Follow-ups:
+  Use documentation-responsibility-zone-review-workflow.md to classify planning/documentation-reusable-candidate/planning-docs-architecture-principles.md before any principles split.
+Owner sources:
+  planning/documentation/documentation-layer-portability-migration-plan.md
+  planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+  planning/documentation/documentation-responsibility-map.md
+Notes:
+  This change does not split principles, create the scenario-domain-slice profile, create the Enman adapter, move VKR/source-usage pilots/sync notes, or change the copied candidate file contents.
+```

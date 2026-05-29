@@ -49,6 +49,7 @@ This file owns only documentation-layer placement.
 |---|---|---|
 | Global planning-docs architecture principles | `planning-docs-architecture-principles.md` | Stable invariants, file-type theory, source-of-truth boundaries and no-duplication rules. Not workflow steps, concrete paths or project configuration. |
 | Documentation-layer portability migration plan | `documentation-layer-portability-migration-plan.md` | Captures pre-split reusability decisions, migration phases and boundaries before candidate copy / principles split / adapter extraction. |
+| Reusable candidate workspace lifecycle | `documentation-layer-portability-migration-plan.md` and `planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md` | The candidate folder is temporary and non-canonical. Active docs remain under `planning/documentation/` until an explicit migration switch is approved. |
 | Documentation responsibility-zone review process | `documentation-responsibility-zone-review-workflow.md` | How to review existing documentation content and classify reusable principles, specialized profiles, adapter mappings, examples, workflow details and template details. |
 | Documentation-layer placement rules | `documentation-responsibility-map.md` | This file. Use when deciding where documentation-layer information belongs. |
 | Documentation folder navigation / read order | `README.md` | Index only. It should list files and read order, not duplicate full rules. |
@@ -113,6 +114,7 @@ If documentation-layer files conflict:
 ```text
 - planning-docs-architecture-principles.md wins for stable architecture invariants and file-type theory.
 - documentation-layer-portability-migration-plan.md wins for the staged documentation-layer portability migration decision record until a later canonical migration plan replaces it.
+- planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md wins for candidate-folder guardrails inside the temporary candidate workspace.
 - documentation-responsibility-zone-review-workflow.md wins for the process of classifying existing content into responsibility zones.
 - documentation-responsibility-map.md wins for documentation-layer placement.
 - planning/planning-doc-responsibility-map.md wins for choosing the planning layer.
@@ -176,6 +178,7 @@ Suggested suffixes:
 - Do not put reusable use-case-map workflow/template logic into a concrete use-case map; link to use-case-map-workflow.md and USE-CASE-MAP-TEMPLATE.md.
 - Do not move a paragraph into a project adapter only because it contains a concrete path; extract the reusable principle first.
 - Do not split or migrate active docs-layer responsibilities before the approved portability/candidate workflow says to do so.
+- Do not treat `planning/documentation-reusable-candidate/` as active documentation or a normal read-order source until a switch batch approves it.
 - Do not treat source usage pilot registers as permanent global schema before the pilot is reviewed.
 - Do not use the action log as the source of truth for rules or unresolved tasks.
 - Do not treat reusable prompts as canonical rules.

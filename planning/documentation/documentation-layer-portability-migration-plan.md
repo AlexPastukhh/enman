@@ -57,6 +57,35 @@ Candidate guardrail:
 
 > The reusable candidate copy is temporary and non-canonical until the migration is accepted. Ordinary current project documentation updates should continue to use the active `planning/documentation/` layer.
 
+## 2A. Candidate Baseline State
+
+The first reusable candidate baseline has been created as a copy of the active documentation layer:
+
+```text
+planning/documentation-reusable-candidate/
+```
+
+Current status:
+
+```text
+- candidate exists as a temporary non-canonical migration workspace;
+- active documentation remains under planning/documentation/;
+- ordinary project documentation updates should continue to use the active documentation layer;
+- candidate content should be changed only for portability / reusable migration work.
+```
+
+Candidate guardrail file:
+
+```text
+planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+```
+
+Next expected migration step:
+
+```text
+Run responsibility-zone classification inside the candidate, starting with planning-docs-architecture-principles.md.
+```
+
 ## 3. Principles File Role Decision
 
 The principles file should own high-level documentation architecture invariants.

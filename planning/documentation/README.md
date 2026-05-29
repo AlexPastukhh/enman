@@ -66,6 +66,31 @@ planning/replacement-file-generation-guide.md
 planning/vkr-clean-reference.md
 ```
 
+## 2A. Reusable Candidate Workspace
+
+A temporary reusable candidate copy may exist at:
+
+```text
+planning/documentation-reusable-candidate/
+```
+
+This candidate is a migration workspace only.
+
+It is **not** the active documentation layer and should not be used as the normal read-order source for project documentation updates.
+
+Use it only for portability, responsibility-zone review, genericization and future candidate split work. Active documentation remains under:
+
+```text
+planning/documentation/
+```
+
+Candidate lifecycle and guardrails are owned by:
+
+```text
+planning/documentation/documentation-layer-portability-migration-plan.md
+planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+```
+
 ## 3. Read Order For Documentation-Layer Work
 
 For documentation-layer architecture/routing work:
