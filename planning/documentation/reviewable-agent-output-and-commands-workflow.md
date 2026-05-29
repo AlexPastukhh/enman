@@ -29,7 +29,7 @@ A reviewable answer should make clear:
 - what should happen next.
 ```
 
-Response-level commands such as `level 2`, `recheck`, `clarify`, `keep prev`, `no ch`, `без изм`, `use archive`, `арх`, `б из арх`, `давай драфт`, `обнови` and `обс` change how the answer should be produced, checked or continued. They do not grant permission to edit files or change repository state.
+Response-level commands such as `level 2`, `recheck`, `clarify`, `keep prev`, `no ch`, `без изм`, `use archive`, `арх`, `б из арх`, `давай драфт`, `обнови`, `обс`, `кп`, `саммари`, `итог` and `отличия драфта` change how the answer should be produced, checked or continued. They do not grant permission to edit files or change repository state.
 
 For action/use-case traces, active context, traversal depth and read source mode, use:
 
@@ -169,14 +169,17 @@ Rules:
 
 Use Level 2 for non-trivial planning, documentation, repo analysis, draft discussion, file/code update planning, synchronization, diff review, source-of-truth reasoning or architectural reasoning.
 
-Template:
+Level 2 structure must remain reviewable. Extra response blocks such as `Key points first`, `Краткое саммари` and `Итог` do not replace task/scope, sources/coverage, assumptions/risks, verification or next step.
+
+Default analytical/planning template:
 
 ```text
-## 1. Short Conclusion
+## Key points first
 
-...
+1. ...
+2. ...
 
-## 2. Task And Scope
+## 1. Task And Scope
 
 Task understood as:
 ...
@@ -187,7 +190,7 @@ In scope:
 Out of scope:
 - ...
 
-## 3. Sources And Coverage
+## 2. Sources And Coverage
 
 Checked:
 - ...
@@ -204,11 +207,11 @@ Supporting / non-canonical sources:
 Answer limits:
 - ...
 
-## 4. Answer / Result
+## 3. Answer / Result
 
 ...
 
-## 5. Assumptions, Questions And Risks
+## 4. Assumptions, Questions And Risks
 
 Assumptions:
 - ...
@@ -219,7 +222,7 @@ Open questions:
 Risks:
 - ...
 
-## 6. Verification
+## 5. Verification
 
 How to verify:
 - ...
@@ -227,10 +230,33 @@ How to verify:
 What another chat/person should check:
 - ...
 
-## 7. Next Step
+## 6. Next Step
+
+...
+
+## Краткое саммари
+
+**Главное:** ...
+**Контекст:** ...
+**Ключевое решение:** ...
+**Дальше:** ...
+
+## Итог
 
 ...
 ```
+
+`Key points first` is a short numbered preview of the current answer. Use it by default for analytical/planning Level 2 answers, especially when the answer is long or has several decisions.
+
+Do not use `Key points first` by default when the answer is a first draft, a draft update, a strict specialized template, or an already self-evident structured output. In those cases the template/draft structure is the navigation.
+
+For draft updates, use `Отличия от предыдущего драфта` instead of `Key points first` when there is a previous draft version to compare against.
+
+`Краткое саммари` is a contextual human summary of the current answer in the broader discussion context. It appears after the main answer and before `Итог` when useful.
+
+`Итог` is not a general conclusion. It is the final file/change/update overview block for file, documentation or code update planning/review/application contexts.
+
+During planning, `Итог` is the current rolling nearest-batch plan and should be updated as the plan changes until the artifact/diff is produced. After an archive/script/diff/application exists, `Итог` summarizes the actual artifact, diff, application state or commit readiness.
 
 The `Sources And Coverage` section is the most important part of this level.
 
@@ -364,9 +390,9 @@ Level 3 is not mandatory for every answer.
 
 Use it when the answer needs to survive outside the original chat context.
 
-## 6A. File Update Overview For File/Docs/Code Updates
+## 6A. File Update Overview / `Итог` For File/Docs/Code Updates
 
-For Level 2 or Level 3 answers that plan, create, review or verify non-trivial file, documentation or code changes, end the normal reviewable answer with a File Update Overview when a structured file-change summary would help review.
+For Level 2 or Level 3 answers that plan, create, review or verify non-trivial file, documentation or code changes, end the normal reviewable answer with a File Update Overview / `Итог` when a structured file-change summary would help review.
 
 Use:
 
@@ -375,7 +401,32 @@ planning/documentation/file-update-overview-workflow.md
 planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
 ```
 
-The File Update Overview is a final summary block. It does not replace the main answer.
+The File Update Overview / `Итог` is a final summary block. It does not replace the main answer and it does not replace `Краткое саммари`.
+
+Placement:
+
+```text
+main reviewable answer
++
+Краткое саммари, when useful
++
+Итог, when file/change/update context applies
+```
+
+Ownership boundary:
+
+```text
+reviewable-agent-output-and-commands-workflow.md
+  owns when/where `Итог` appears and response-level command semantics.
+
+file-update-overview-workflow.md
+  owns how to produce the `Итог` / File Update Overview content.
+
+FILE-UPDATE-OVERVIEW-TEMPLATE.md
+  owns the exact reusable Markdown shape.
+```
+
+During planning, `Итог` is the current rolling nearest-batch plan. After artifact/diff/application, it summarizes the actual update state.
 
 Use-case rows may reference File Update Overview as an expected output shape, but they do not own its format.
 
@@ -508,6 +559,46 @@ Do not add this heavy block to every section by default.
 The user may ask the same chat or another chat to perform response-level operations.
 
 Response-level commands affect answer format, checking behavior, active context or reuse of previous context. They do not grant permission to edit files, commit changes, delete files, move files, create PRs or skip necessary evidence checks for claims that require current proof.
+
+### Response Block Commands
+
+These commands request or suppress response blocks. They do not change edit permission, source requirements or repository state.
+
+```text
+кп / key points
+  Force `Key points first`.
+
+без кп / без key points
+  Omit `Key points first`.
+
+отличия драфта / draft diff
+  Add `Отличия от предыдущего драфта` for an active draft update.
+
+саммари
+  Add `Краткое саммари`.
+
+без саммари
+  Omit `Краткое саммари`.
+
+итог
+  Add or update the File Update Overview / `Итог` when file/change/update context applies.
+
+без итога
+  Omit `Итог`.
+
+полный конец
+  Add `Краткое саммари` and `Итог` when `Итог` is applicable.
+```
+
+Rules:
+
+```text
+- `Key points first` is a short numbered preview of the current answer.
+- `Краткое саммари` is contextual/human summary, not a file-change register.
+- `Итог` is file/change/update-oriented and must stay last when present.
+- Do not add `Итог` for ordinary drafting, casual explanation or strict-template output unless there is a file/change/update context.
+- If the user requests `итог` without a file/change/update context, explain that `Итог` is not applicable and offer `Краткое саммари`.
+```
 
 ### Obs / Discussion Context Recheck
 
@@ -709,6 +800,8 @@ If there is an active draft in the current conversation, then `драфт`, `д�
 ```
 
 If there is no active draft/answer/plan, ask for the target unless the target is obvious from the current message.
+
+For active draft updates, include `Отличия от предыдущего драфта` when the user asks for it or when the changes are non-trivial enough that the user needs to review what changed before reading the updated draft.
 
 ### No Changes / No Ch
 
@@ -940,6 +1033,8 @@ Instead:
 ```text
 - use the specialized format;
 - keep sources/coverage visible;
+- do not add `Key points first` when the specialized template already provides clear navigation;
+- use `Отличия от предыдущего драфта` for active draft updates instead of forcing key points;
 - add section-level sources for major sections when needed;
 - add handoff/reviewer notes if another chat should review the output;
 - use planning-use-case-map.md for active-context, traversal-depth and read-source decisions.
@@ -962,6 +1057,9 @@ Instead:
 - Do not use `use archive` / `арх` to overclaim remote branch truth when archive freshness is uncertain.
 - Do not treat `драфт` / `обнови` as a new draft request when there is an active draft context.
 - Do not treat `обс` as permission to edit files, skip current evidence checks or reopen accepted decisions without request.
+- Do not use `Key points first` to replace Level 2 task/scope, sources/coverage, risks, verification or next step.
+- Do not add `Итог` as a generic conclusion when there is no file/change/update context.
+- Do not add `Key points first` to draft updates when `Отличия от предыдущего драфта` is the useful review block.
 - Do not silently promote a one-pass additional source into a default template/source requirement.
 ```
 
@@ -983,6 +1081,8 @@ This workflow works when:
 - Source Delta makes newly used sources and not-rechecked sources visible when an answer/draft changes;
 - Level 2/3 escalation happens automatically when task breadth requires reviewability;
 - `обс` can re-check prior discussion without being confused with edit permission or answer level;
-- File Update Overview is used as a final summary block when non-trivial file/docs/code updates need file responsibility/change visibility;
+- `Key points first`, `Краткое саммари` and `Итог` improve navigation without replacing the Level 2/3 reviewable body;
+- draft updates use `Отличия от предыдущего драфта` when that is the useful review block;
+- File Update Overview / `Итог` is used as a final summary block when non-trivial file/docs/code updates need file responsibility/change visibility;
 - response structure helps verification without adding unnecessary bureaucracy.
 ```

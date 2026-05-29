@@ -24,6 +24,7 @@ Scope: how to structure planning documentation so it remains navigable, reviewab
 - [16. Local Detail + Global Visibility](#16-local-detail--global-visibility)
 - [17. Responsibility Ownership](#17-responsibility-ownership)
 - [18. Safe Rewrite Rule](#18-safe-rewrite-rule)
+- [18A. Decomposable File Architecture](#18a-decomposable-file-architecture)
 - [19. Documentation Update Plans](#19-documentation-update-plans)
 - [20. AI-Checkability Principles](#20-ai-checkability-principles)
 - [21. VKR / Thesis Separation](#21-vkr--thesis-separation)
@@ -574,6 +575,35 @@ VKR claim about what was implemented
 Such changes must be explicit in the plan, not hidden as polish.
 
 Do not silently change behavior, scope or source-of-truth rules.
+
+## 18A. Decomposable File Architecture
+
+Prefer smaller owner files over repeated scripted mutation of large shared files.
+
+Large/shared files are acceptable when they have one cohesive responsibility, such as:
+
+```text
+- route map;
+- index;
+- register;
+- action log;
+- canonical table;
+- source usage register.
+```
+
+A file becomes a split/refactor candidate when:
+
+```text
+- it repeatedly needs targeted scripts;
+- unrelated responsibilities change together only because they share one file;
+- one small update makes reviewers re-check a large unrelated surface;
+- a future chat cannot safely produce a complete replacement from current full content;
+- sections have different owners, update cadence or review audiences.
+```
+
+When a large file must be updated, do not choose script mode only because the file is large. First prefer fresh full repo/archive content or current full-file access and use complete replacement when it is safe and reviewable.
+
+If complete replacement remains unsafe, use the local targeted script workflow as a fallback and consider whether the file should be decomposed later.
 
 ## 19. Documentation Update Plans
 

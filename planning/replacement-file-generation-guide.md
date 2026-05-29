@@ -43,6 +43,8 @@ Replacement archive/package mode means:
 
 If complete replacement files cannot be produced safely, stop and say so. Do not silently switch to patch-script mode.
 
+A large file is not automatically excluded from replacement archive mode. If a fresh full repo/archive snapshot or current full file makes complete replacement safe and reviewable, prefer complete replacement over a script.
+
 If only some files cannot be produced safely as complete replacements, use hybrid delivery:
 
 ```text
@@ -143,9 +145,12 @@ Rules:
 
 ```text
 - Do this before package generation.
+- Large file alone is not a reason to switch to script mode.
+- If a large file must change, first check whether fresh full repo/archive content or the current full file makes complete replacement safe.
+- Prefer complete replacement when full current content is available and the diff remains reviewable.
 - Do not let one large/risky file block safe archive delivery for other files.
 - Do not include partial replacements or script patches for large files inside the archive.
-- Use one targeted write script per large/shared file.
+- Use one targeted write script per large/shared file when complete replacement is unsafe.
 - A final combined diff command may review all affected files, but write scripts should stay one large/shared file at a time.
 ```
 
@@ -405,7 +410,7 @@ Do not bundle unrelated work just to reduce archive count.
 
 ## 7E. Hybrid Archive / Script Delivery Rule
 
-Use hybrid delivery when one coherent accepted update contains both safe complete-replacement files and large/shared files that need targeted script edits.
+Use hybrid delivery when one coherent accepted update contains both safe complete-replacement files and large/shared files whose complete replacement is unsafe and therefore need targeted script edits.
 
 Required shape:
 
@@ -427,8 +432,9 @@ Rules:
 - Do not include targeted write scripts inside `replacement-files/`.
 - Do not call a script artifact a replacement file.
 - Do not let one large/risky file block safe archive delivery for other files.
+- Do not choose script mode only because a file is large; prefer complete replacement when fresh full content makes it safe.
 - Do not use one write script for multiple large/shared files.
-- If a large/shared file must be changed, give a separate script link, copy-to-root command and run command.
+- If a large/shared file must be changed and complete replacement is unsafe, give a separate script link, copy-to-root command and run command.
 - Commit commands must stage only intended repository files, not package metadata or helper scripts unless intentionally tracked.
 ```
 
@@ -525,7 +531,7 @@ These are patch proposal artifacts, not replacement package artifacts.
 
 If the user explicitly asks for a patch proposal or targeted local script, it may be provided separately, but the final response must label it correctly and must not claim it is a replacement archive.
 
-If the target file is large, still generate the complete replacement file when it is safe. If that is not safe, exclude that file from the replacement archive and use hybrid archive/script delivery or stop and report the limitation.
+If the target file is large, still generate the complete replacement file when fresh full content makes it safe and reviewable. If that is not safe, exclude that file from the replacement archive and use hybrid archive/script delivery or stop and report the limitation.
 
 ## 10. Scope Statement
 
@@ -563,5 +569,6 @@ Do not leave docs saying `planned` when current repo evidence shows `implemented
 - Do not provide archive apply instructions without a pull/current-state step first.
 - Do not tell the user to extract a package-layout archive directly into the repo root as the apply step.
 - Do not let one large/risky file block safe archive delivery for other files.
+- Do not choose script mode only because a file is large.
 - Do not use one write script for multiple large/shared files.
 ```

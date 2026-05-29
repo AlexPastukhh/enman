@@ -61,7 +61,7 @@ safe complete replacement/archive
   The file is small or medium enough to safely produce as a complete replacement file.
 
 one-file targeted script
-  The file is large, shared, register-like, route-table-like or fragile, and only a small anchor-based edit is needed.
+  Complete replacement is unsafe in the current mode, and a large/shared/register-like/route-table-like/fragile file needs a small anchor-based edit.
 
 direct repository edit
   The user explicitly approved direct repository changes and the tool/mode can safely replace the complete file or perform the requested operation.
@@ -74,11 +74,16 @@ Rules:
 
 ```text
 - Do this classification during planning, before creating artifacts.
+- Large file alone is not a reason to choose script mode.
+- If a large file must change, first check whether a fresh full repo/archive snapshot or current full file makes complete replacement safe and reviewable.
+- Prefer safe complete replacement from full current content when available.
+- Use local targeted script edit only when complete replacement is unsafe in the current mode.
 - Do not let one large/risky file block safe archive delivery for other files.
 - Do not put large/shared files into a replacement archive unless a complete replacement can be produced safely.
 - Do not use one write script to modify multiple large/shared files.
 - If several large/shared files need targeted edits, create one targeted write script per large/shared file.
 - A final combined diff command may include all files for review, but write scripts should stay one large/shared file at a time.
+- Repeated need for scripts against the same file is a split/refactor signal.
 ```
 
 ## 3. Required Current-State Check
@@ -330,7 +335,7 @@ Rules:
 
 ### Local Targeted Script Edit mode
 
-Use local targeted script edit mode when a large/shared file needs a small, explicit, anchor-based edit and complete replacement is unsafe or too heavy for the current delivery mode.
+Use local targeted script edit mode when a large/shared file needs a small, explicit, anchor-based edit and complete replacement is unsafe in the current delivery mode.
 
 Typical targets:
 
@@ -346,6 +351,8 @@ Rules:
 
 ```text
 - Use only after the user approves script mode or when it is the explicitly selected delivery mode.
+- Do not choose script mode only because a file is large.
+- Before script mode, check whether fresh full repo/archive content or a current full file makes complete replacement safe.
 - One large/shared file = one targeted write script.
 - Do not use one write script to modify multiple large/shared files.
 - A script may create a final combined diff command for many files, but write operations should remain one large/shared file at a time.
@@ -430,6 +437,7 @@ Before finalizing a documentation update, verify:
 ```text
 - broad changes had a Documentation Update Plan;
 - every target file was classified by delivery safety before archive/script/direct edit mode was chosen;
+- large/shared files were checked for safe complete replacement from full current content before script mode was chosen;
 - every added file appears in navigation or a folder README;
 - responsibility maps know the new responsibility;
 - local questions that matter later are mirrored into shared registers;
@@ -467,5 +475,6 @@ Before finalizing a documentation update, verify:
 - Do not attempt direct GitHub bulk commit without current base commit SHA and base tree SHA.
 - Do not use PowerShell-unsafe tree commands when asking the user for base tree SHA; prefer `git show -s --format=%T origin/<branch>`.
 - Do not use one local targeted write script to modify multiple large/shared files.
+- Do not choose script mode only because a file is large; prefer safe complete replacement when fresh full content is available.
 - Do not print full diffs to terminal for large/script updates; write diff to file and copy it to clipboard.
 ```

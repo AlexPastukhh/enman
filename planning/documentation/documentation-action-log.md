@@ -351,3 +351,40 @@ Owner sources:
 Notes:
   This action records the workflow lesson from A2: one large/shared file equals one targeted write script; final combined diff review is allowed, but combined multi-large-file write scripts are not.
 ```
+
+### 2026-05-29 — Added response block semantics and large-file archive preference
+
+```text
+Date:
+  2026-05-29
+Action:
+  Added response block semantics for Level 2 answers, draft-update differences, final `Итог` planning/actual modes and large-file archive-first preference.
+Type:
+  response/output behavior / workflow guardrail
+Status:
+  applied
+Why:
+  Level 2 answers need readable key points without losing the reviewable body. Draft updates need differences from the previous draft instead of generic key points. `Краткое саммари` and `Итог` need separate responsibilities: contextual summary versus file/change/update overview. Large files should not automatically trigger scripts when a fresh full repo/archive snapshot makes complete replacement safe.
+Changed files:
+  - planning/documentation/reviewable-agent-output-and-commands-workflow.md
+  - planning/planning-use-case-map.md
+  - planning/documentation/file-update-overview-workflow.md
+  - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+  - planning/documentation/documentation-update-workflow.md
+  - planning/replacement-file-generation-guide.md
+  - planning/documentation/planning-docs-architecture-principles.md
+  - planning/documentation/examples/README.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Documentation layer now has clearer response block ordering, command routing, final overview semantics and large-file delivery preference.
+PMR relation:
+  none
+Follow-ups:
+  Add filled examples after the response block and large-file delivery formats are used cleanly.
+Owner sources:
+  planning/documentation/reviewable-agent-output-and-commands-workflow.md
+  planning/documentation/file-update-overview-workflow.md
+  planning/replacement-file-generation-guide.md
+Notes:
+  `Итог` is not a generic conclusion. During planning it is the rolling nearest-batch plan; after artifact/diff/application it summarizes actual update state.
+```

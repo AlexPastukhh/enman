@@ -1,11 +1,11 @@
 # File Update Overview Workflow
 
 Status: current documentation-layer workflow  
-Scope: when and how to produce the final structured File Update Overview block for non-trivial file, documentation or code update answers
+Scope: when and how to produce the final structured File Update Overview / `Итог` block for non-trivial file, documentation or code update answers
 
 ## 1. Purpose
 
-This workflow owns the process for producing a `File Update Overview`.
+This workflow owns the process for producing a `File Update Overview` / `Итог` block.
 
 A File Update Overview is a final summary block that shows:
 
@@ -33,16 +33,18 @@ Answer levels and response-level commands are owned by:
 planning/documentation/reviewable-agent-output-and-commands-workflow.md
 ```
 
-Use this workflow when the main answer is a non-trivial update plan, archive/package response, diff review, applied-update check or multi-file synchronization/refactor summary and needs a structured final file summary.
+Use this workflow when the main answer is a non-trivial update plan, archive/package response, diff review, applied-update check or multi-file synchronization/refactor summary and needs a structured final file/change summary.
 
-The File Update Overview does not replace the main answer.
+The File Update Overview does not replace the main answer or `Краткое саммари`.
 
 Use:
 
 ```text
 main reviewable answer
 +
-File Update Overview at the end
+Краткое саммари, when useful
++
+File Update Overview / Итог at the end, when file/change/update context applies
 ```
 
 ## 3. When To Use
@@ -65,6 +67,34 @@ Typical cases:
 
 It is especially useful when the change spans multiple responsibilities or when future chats need to continue from the answer.
 
+## 3A. Planned And Actual Modes
+
+A File Update Overview can describe two states of the same file/change work.
+
+```text
+Planned mode
+  Use while the update is still being planned and no artifact/diff has been produced yet.
+  The overview is the rolling nearest-batch plan and should be updated as decisions change.
+
+Actual mode
+  Use after an archive, script, diff, local application, commit or remote verification exists.
+  The overview summarizes the actual artifact/diff/application/commit state.
+```
+
+Do not create separate overview formats for planned and actual mode. Use the same logical groups, responsibility fields, what/why fields, checks and next action.
+
+Use `Статус` in the template to show the current state, for example:
+
+```text
+planned
+archive created
+diff checked
+can commit
+pushed
+blocked
+```
+
+
 ## 4. When Not To Use
 
 Do not use the full File Update Overview for:
@@ -78,6 +108,8 @@ Do not use the full File Update Overview for:
 ```
 
 A short sentence may be enough for narrow tasks.
+
+Do not use File Update Overview as a generic conclusion. Use `Краткое саммари` for contextual/human summary when there is no file/change/update context.
 
 ## 5. Logical Grouping Rule
 
@@ -107,10 +139,10 @@ Use these file line types:
 
 ```text
 Change - New:
-  A new repository file or artifact will be added.
+  A new repository file or artifact will be added, or is planned to be added when `Статус` is `planned`.
 
 Change - Updated:
-  An existing repository file or artifact will be changed.
+  An existing repository file or artifact will be changed, or is planned to be changed when `Статус` is `planned`.
 
 Not changed:
   A relevant existing file is intentionally left unchanged.
@@ -176,6 +208,7 @@ It does not own:
 
 ```text
 - response level selection;
+- response block placement;
 - response command semantics;
 - documentation update mechanics;
 - replacement archive mechanics;
@@ -195,7 +228,8 @@ Examples may demonstrate File Update Overview output, but they must not become t
 Before finalizing an overview, check:
 
 ```text
-- every changed file has a clear responsibility;
+- `Статус` makes clear whether the overview is planned, archive-created, diff-checked, applied, pushed or blocked;
+- every changed/planned file has a clear responsibility;
 - new files and updated files are placed in logical groups;
 - relevant excluded files are listed when their exclusion matters;
 - the overview does not replace the main reviewable answer;
