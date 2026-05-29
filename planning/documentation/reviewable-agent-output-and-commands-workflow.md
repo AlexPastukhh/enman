@@ -29,7 +29,7 @@ A reviewable answer should make clear:
 - what should happen next.
 ```
 
-Response-level commands such as `level 2`, `recheck`, `clarify`, `keep prev`, `no ch`, `без изм`, `use archive`, `арх`, `б из арх`, `давай драфт` and `обнови` change how the answer should be produced, checked or continued. They do not grant permission to edit files or change repository state.
+Response-level commands such as `level 2`, `recheck`, `clarify`, `keep prev`, `no ch`, `без изм`, `use archive`, `арх`, `б из арх`, `давай драфт`, `обнови` and `обс` change how the answer should be produced, checked or continued. They do not grant permission to edit files or change repository state.
 
 For action/use-case traces, active context, traversal depth and read source mode, use:
 
@@ -42,6 +42,10 @@ planning/planning-use-case-map.md
 Use the smallest response format that remains reviewable.
 
 Do not turn every casual answer into a heavy report.
+
+Response levels are primarily about task complexity, breadth and external reviewability. They are not quality levels.
+
+The assistant must still do the reasoning, context recall, source check, web verification, safety check or accepted-decision preservation required by the task even when the final answer is short.
 
 Use more structure when:
 
@@ -76,14 +80,65 @@ If the user does not specify a level, choose the smallest level that remains use
 Default guidance:
 
 ```text
-casual / quick question -> Level 1
+casual / quick question with no Level 2/3 triggers -> Level 1
 non-trivial planning / docs / repo analysis -> Level 2
-handoff / external review / audit / high-risk answer -> Level 3
+handoff / external review / broad audit / high-risk answer -> Level 3
 ```
+
+Level selection changes how explicitly the answer exposes task, scope, sources, risks, verification and next steps. It does not lower the required reasoning quality for lower levels.
+
+### 3A. Automatic Level Escalation
+
+Level 1 is allowed only when the task does not contain Level 2 or Level 3 triggers.
+
+Level 2 triggers are conditions where the task is broad or consequential enough that the answer must expose scope, sources/coverage, assumptions, risks, verification and next step.
+
+Use Level 2 automatically when the task involves any of:
+
+```text
+- planning / documentation / code / file update planning;
+- multi-file checks;
+- synchronization between files, docs or layers;
+- workflow / rule / use-case / responsibility changes;
+- source-of-truth boundary changes;
+- archive / replacement package planning or review;
+- diff review before commit;
+- repo analysis across multiple files;
+- non-trivial audit / check / recheck;
+- source usage / cascade / stale-reference work;
+- any task where a short answer could hide scope, unchecked sources, risks, assumptions or next steps.
+```
+
+Use Level 3 automatically when the answer must survive outside the current chat context or the task is broad/high-risk enough that Level 2 would not preserve enough evidence.
+
+Typical Level 3 triggers:
+
+```text
+- handoff to another chat/person;
+- broad cross-layer audit;
+- high-risk source-of-truth consistency review;
+- major migration or cascade review;
+- external review package;
+- output that must be continued without prior context.
+```
+
+Do not make the user ask for Level 2 when Level 2 triggers are already present.
+
+If unsure between Level 1 and Level 2, use Level 2.
+
+If unsure between Level 2 and Level 3, use Level 2 unless the answer must serve as a standalone handoff/audit artifact.
+
+### 3B. Work Quality Is Not Reduced By Level
+
+A Level 1 answer may still require careful reasoning, relevant context recall, a narrow file/source check or web verification when needed for correctness.
+
+Do not use Level 1 as permission to skip necessary reasoning, context checks, source checks, safety checks or accepted-decision preservation.
+
+When the work itself requires many files, many sources, synchronization, audit or planning, Level 2 or Level 3 normally applies because the work must be exposed for review.
 
 ## 4. Level 1 — Short Answer
 
-Use Level 1 for simple questions or quick decisions.
+Use Level 1 for simple questions, quick decisions, narrow commands or one-step local troubleshooting when the task has no Level 2 or Level 3 triggers.
 
 Template:
 
@@ -106,12 +161,13 @@ Rules:
 ```text
 - Keep it short.
 - Mention major uncertainty if it matters.
+- Do the checks required by the task even if they are summarized briefly.
 - Do not include a full sources block unless the answer depends on specific checked files.
 ```
 
 ## 5. Level 2 — Default Serious Answer
 
-Use Level 2 for non-trivial planning, documentation, repo analysis, draft discussion or architectural reasoning.
+Use Level 2 for non-trivial planning, documentation, repo analysis, draft discussion, file/code update planning, synchronization, diff review, source-of-truth reasoning or architectural reasoning.
 
 Template:
 
@@ -200,7 +256,9 @@ Typical cases:
 - domain/slice/scenario draft review;
 - implementation handoff;
 - post-edit summary needing verification;
-- high-risk repo/doc consistency conclusion.
+- high-risk repo/doc consistency conclusion;
+- broad cross-layer review;
+- major migration/cascade review.
 ```
 
 Template:
@@ -305,6 +363,21 @@ For another chat:
 Level 3 is not mandatory for every answer.
 
 Use it when the answer needs to survive outside the original chat context.
+
+## 6A. File Update Overview For File/Docs/Code Updates
+
+For Level 2 or Level 3 answers that plan, create, review or verify non-trivial file, documentation or code changes, end the normal reviewable answer with a File Update Overview when a structured file-change summary would help review.
+
+Use:
+
+```text
+planning/documentation/file-update-overview-workflow.md
+planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+```
+
+The File Update Overview is a final summary block. It does not replace the main answer.
+
+Use-case rows may reference File Update Overview as an expected output shape, but they do not own its format.
 
 ## 7. Sources And Coverage Rule
 
@@ -435,6 +508,56 @@ Do not add this heavy block to every section by default.
 The user may ask the same chat or another chat to perform response-level operations.
 
 Response-level commands affect answer format, checking behavior, active context or reuse of previous context. They do not grant permission to edit files, commit changes, delete files, move files, create PRs or skip necessary evidence checks for claims that require current proof.
+
+### Obs / Discussion Context Recheck
+
+Canonical command:
+
+```text
+обс
+```
+
+Aliases:
+
+```text
+перепроверь обсуждение
+перепроверь предыдущие обсуждения
+вспомни договорённости
+context recheck
+discussion recheck
+```
+
+Purpose:
+
+```text
+Re-check relevant prior discussion, accepted decisions, rejected options, naming, scope, non-goals, constraints and follow-ups before answering.
+```
+
+`обс` changes prior-discussion coverage. It does not change edit permission and does not by itself force Level 2 or Level 3.
+
+It can combine with any response level:
+
+```text
+обс + narrow task with no Level 2/3 triggers
+  may produce Level 1 after the relevant discussion is checked.
+
+обс + planning / archive / audit / update task
+  normally produces Level 2.
+
+обс + standalone handoff / broad audit
+  may produce Level 3.
+```
+
+The agent should:
+
+```text
+- identify relevant prior discussion available in the current context;
+- preserve accepted decisions unless the user asks to reopen them;
+- distinguish prior discussion from current repo/file evidence;
+- avoid reinventing an already accepted command, mode or boundary;
+- report important prior context that was unavailable or not checked;
+- avoid treating `обс` as permission to edit files or skip current evidence checks.
+```
 
 ### Recheck
 
@@ -826,6 +949,8 @@ Instead:
 
 ```text
 - Do not force a heavy format on every casual answer.
+- Do not treat Level 1 as permission to skip necessary reasoning, context checks, source checks, safety checks or accepted-decision preservation.
+- Do not make the user ask for Level 2 when Level 2 triggers are already present.
 - Do not hide unchecked sources.
 - Do not claim current implementation truth without checking current repo evidence.
 - Do not mix canonical sources with supporting/historical sources without labeling them.
@@ -836,6 +961,7 @@ Instead:
 - Do not use `no ch` / `без изм` to skip targeted checks that are required before writes, deletes, renames or current-state claims.
 - Do not use `use archive` / `арх` to overclaim remote branch truth when archive freshness is uncertain.
 - Do not treat `драфт` / `обнови` as a new draft request when there is an active draft context.
+- Do not treat `обс` as permission to edit files, skip current evidence checks or reopen accepted decisions without request.
 - Do not silently promote a one-pass additional source into a default template/source requirement.
 ```
 
@@ -855,5 +981,8 @@ This workflow works when:
 - archive snapshot hints can be applied with `use archive` / `арх` without confusing archive evidence with remote/current proof;
 - active draft/update commands continue the active work instead of restarting from scratch;
 - Source Delta makes newly used sources and not-rechecked sources visible when an answer/draft changes;
+- Level 2/3 escalation happens automatically when task breadth requires reviewability;
+- `обс` can re-check prior discussion without being confused with edit permission or answer level;
+- File Update Overview is used as a final summary block when non-trivial file/docs/code updates need file responsibility/change visibility;
 - response structure helps verification without adding unnecessary bureaucracy.
 ```
