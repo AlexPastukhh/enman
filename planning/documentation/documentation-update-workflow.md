@@ -20,6 +20,7 @@ After the plan is reviewed, use the output mode explicitly requested or approved
 ```text
 direct repository edits
 replacement archive/package
+local targeted script edit
 patch proposal only
 plan only
 ```
@@ -41,11 +42,43 @@ plan only
    - missing responsibility owner;
    - docs still assuming archive-only output when direct repository edits are approved.
 6. Decide update scope.
-7. Prepare a Documentation Update Plan when the change is broad or multi-file.
-8. Ask only blocking questions that can change the planned update.
-9. After approval, apply the selected output mode.
-10. Check whether the documentation action log needs an entry.
-11. Final response includes changed files or archive link, scope, non-goals, commit SHAs when applicable and next step.
+7. Classify every target file by delivery safety before choosing archive/script/direct edit mode.
+8. Prepare a Documentation Update Plan when the change is broad or multi-file.
+9. Ask only blocking questions that can change the planned update.
+10. After approval, apply the selected output mode.
+11. Check whether the documentation action log needs an entry.
+12. Final response includes changed files or archive/script link, scope, non-goals, commit SHAs when applicable and next step.
+```
+
+## 2A. Target File Delivery Safety Check
+
+Before generating an archive, script or direct edit plan, classify each target file.
+
+Use this classification:
+
+```text
+safe complete replacement/archive
+  The file is small or medium enough to safely produce as a complete replacement file.
+
+one-file targeted script
+  The file is large, shared, register-like, route-table-like or fragile, and only a small anchor-based edit is needed.
+
+direct repository edit
+  The user explicitly approved direct repository changes and the tool/mode can safely replace the complete file or perform the requested operation.
+
+no change
+  The file is relevant to the plan but intentionally left untouched.
+```
+
+Rules:
+
+```text
+- Do this classification during planning, before creating artifacts.
+- Do not let one large/risky file block safe archive delivery for other files.
+- Do not put large/shared files into a replacement archive unless a complete replacement can be produced safely.
+- Do not use one write script to modify multiple large/shared files.
+- If several large/shared files need targeted edits, create one targeted write script per large/shared file.
+- A final combined diff command may include all files for review, but write scripts should stay one large/shared file at a time.
 ```
 
 ## 3. Required Current-State Check
@@ -295,6 +328,71 @@ Rules:
 - follow planning/replacement-file-generation-guide.md.
 ```
 
+### Local Targeted Script Edit mode
+
+Use local targeted script edit mode when a large/shared file needs a small, explicit, anchor-based edit and complete replacement is unsafe or too heavy for the current delivery mode.
+
+Typical targets:
+
+```text
+- large planning registers;
+- shared route/use-case maps;
+- long workflow files when only one bounded section changes;
+- files where complete replacement would risk dropping unrelated entries;
+- files where previous archive/script attempts showed anchor or formatting fragility.
+```
+
+Rules:
+
+```text
+- Use only after the user approves script mode or when it is the explicitly selected delivery mode.
+- One large/shared file = one targeted write script.
+- Do not use one write script to modify multiple large/shared files.
+- A script may create a final combined diff command for many files, but write operations should remain one large/shared file at a time.
+- Do not commit from the script.
+- Do not stage files from the script, except `git add -N` for expected new files when making untracked files visible in diff.
+- Do not print full diffs to the terminal.
+- Save scoped diff with `git --no-pager diff --no-color --output="$diffFile" -- $files`.
+- Copy the saved diff with `Get-Content -Path $diffFile -Raw -Encoding UTF8 | Set-Clipboard`.
+- Give commit commands only after the pasted diff is reviewed.
+```
+
+Required script structure:
+
+```text
+1. Preflight:
+   - read the target file;
+   - verify all anchors/probes;
+   - verify the change is not already applied;
+   - verify the file is not in an unexpected partial state;
+   - stop before writing if any required anchor is missing.
+
+2. Build:
+   - compute the new content in memory;
+   - use robust heading/line anchors where possible;
+   - avoid long exact blocks when a shorter stable heading/line anchor exists.
+
+3. Write:
+   - write the target file only after preflight/build succeed;
+   - write as UTF-8 without BOM for repo markdown unless Windows PowerShell script encoding requires otherwise.
+
+4. Review:
+   - run `git status --short -- $files`;
+   - run `git diff --stat -- $files`;
+   - write full diff to a file;
+   - copy full diff to clipboard;
+   - ask the user to paste the diff before commit.
+```
+
+PowerShell delivery rules:
+
+```text
+- Provide a downloadable `.ps1` file when the script is long, contains here-strings, regex, backticks, Cyrillic or multi-step logic.
+- In chat, provide only the copy-to-root and run commands unless the user asks to see the full script.
+- Save `.ps1` with UTF-8 BOM when Windows PowerShell 5.1 must parse Cyrillic source text.
+- Avoid inline PowerShell one-liners for regex/backticks/Cyrillic edits.
+```
+
 ## 11. Documentation Action Log Check
 
 Before finalizing a documentation update, decide whether the update is a significant logical documentation action.
@@ -317,7 +415,8 @@ when the change affects:
 - onboarding route;
 - PMR/task governance;
 - documentation-layer examples infrastructure;
-- replacement archive/package behavior.
+- replacement archive/package behavior;
+- local targeted script edit behavior.
 ```
 
 Do not update it for typo-only edits, minor link fixes or purely mechanical sync already covered by a larger logged action.
@@ -330,6 +429,7 @@ Before finalizing a documentation update, verify:
 
 ```text
 - broad changes had a Documentation Update Plan;
+- every target file was classified by delivery safety before archive/script/direct edit mode was chosen;
 - every added file appears in navigation or a folder README;
 - responsibility maps know the new responsibility;
 - local questions that matter later are mirrored into shared registers;
@@ -342,6 +442,8 @@ Before finalizing a documentation update, verify:
 - direct repository edits use one file per commit for independent semantic edits and bundled/bulk commit for approved shallow mechanical multi-file sync;
 - direct GitHub bulk commit mode outputs base commit/tree SHA commands before asking the user for values;
 - archive mode contains complete files, not patches;
+- local targeted script edit mode uses one write script per large/shared file;
+- targeted scripts preflight anchors before writing and do not print full diffs to terminal;
 - APPLY.md and MANIFEST.md are present for archive mode;
 - significant logical documentation actions are recorded in documentation-action-log.md or explicitly marked as not needing a log entry;
 - no code/generated changes are included unless explicitly in scope.
@@ -364,4 +466,6 @@ Before finalizing a documentation update, verify:
 - Do not start per-file commits for an approved mechanical multi-file sync without first checking whether bundled/bulk commit mode is available.
 - Do not attempt direct GitHub bulk commit without current base commit SHA and base tree SHA.
 - Do not use PowerShell-unsafe tree commands when asking the user for base tree SHA; prefer `git show -s --format=%T origin/<branch>`.
+- Do not use one local targeted write script to modify multiple large/shared files.
+- Do not print full diffs to terminal for large/script updates; write diff to file and copy it to clipboard.
 ```

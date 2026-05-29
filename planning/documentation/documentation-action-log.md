@@ -319,3 +319,35 @@ Owner sources:
 Notes:
   This action does not yet add the response-level `обс` command or automatic Level escalation triggers. Those belong to the follow-up targeted script for large/shared owner files.
 ```
+
+### 2026-05-29 — Added local targeted script edit and hybrid delivery rules
+
+```text
+Date:
+  2026-05-29
+Action:
+  Added Local Targeted Script Edit mode and hybrid archive/script delivery rules.
+Type:
+  workflow behavior / output mode
+Status:
+  applied
+Why:
+  Batch A2 showed that large/shared files should not be edited by one multi-file script. Future updates need target-file delivery safety classification, one targeted write script per large/shared file, preflight-before-write, diff-to-file/clipboard review and hybrid archive/script delivery when safe files and risky large files appear in one coherent update.
+Changed files:
+  - planning/documentation/documentation-update-workflow.md
+  - planning/replacement-file-generation-guide.md
+  - planning/documentation/examples/README.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Documentation update workflow now has a dedicated local targeted script mode, and replacement archive guidance now supports explicit hybrid archive/script delivery without hiding scripts inside replacement packages.
+PMR relation:
+  none
+Follow-ups:
+  - Add a route/expected-output marker in planning/planning-use-case-map.md if large-file/script requests need explicit routing.
+  - Add filled examples for Local Targeted Script Edit and Hybrid Archive/Script Delivery after a clean use.
+Owner sources:
+  planning/documentation/documentation-update-workflow.md
+  planning/replacement-file-generation-guide.md
+Notes:
+  This action records the workflow lesson from A2: one large/shared file equals one targeted write script; final combined diff review is allowed, but combined multi-large-file write scripts are not.
+```

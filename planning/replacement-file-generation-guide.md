@@ -43,6 +43,15 @@ Replacement archive/package mode means:
 
 If complete replacement files cannot be produced safely, stop and say so. Do not silently switch to patch-script mode.
 
+If only some files cannot be produced safely as complete replacements, use hybrid delivery:
+
+```text
+safe complete files -> replacement archive/package
+each large/shared risky file -> separate Local Targeted Script Edit script
+```
+
+Do not hide script artifacts inside replacement archive/package mode.
+
 ## 1. Purpose
 
 Use this guide when the user asks to create an archive or replacement package for the repository.
@@ -59,6 +68,7 @@ Use this guide when the user asks to create an archive or replacement package fo
 - Do not include unrelated implementation changes.
 - Keep archive scope focused, but do not artificially split one coherent accepted update into many tiny archives.
 - Do not include patch scripts or script-based patch applicators in replacement archive mode.
+- If a coherent update has safe files and large/risky files, split by delivery safety instead of blocking the safe archive.
 ```
 
 Patch scripts, unified diffs, generated apply scripts and partial snippets are **not** replacement files.
@@ -67,6 +77,12 @@ If the intended output is a patch or script, label the mode as:
 
 ```text
 patch proposal only
+```
+
+or, when it is an approved local targeted edit:
+
+```text
+local targeted script edit
 ```
 
 Do not call it a replacement archive/package.
@@ -105,6 +121,33 @@ Use repository connector/API for:
 ```
 
 If repo cannot be checked, say so and generate from known context only.
+
+## 4A. Target File Delivery Safety Check
+
+Before generating an archive, classify every target file by delivery safety.
+
+Use:
+
+```text
+safe complete replacement/archive
+  Include as a complete file in replacement-files/.
+
+one-file targeted script
+  Exclude from the archive and provide a separate targeted script for that one large/shared file.
+
+no change
+  Mention as intentionally not changed when relevant.
+```
+
+Rules:
+
+```text
+- Do this before package generation.
+- Do not let one large/risky file block safe archive delivery for other files.
+- Do not include partial replacements or script patches for large files inside the archive.
+- Use one targeted write script per large/shared file.
+- A final combined diff command may review all affected files, but write scripts should stay one large/shared file at a time.
+```
 
 ## 5. Responsibility Rule
 
@@ -360,6 +403,35 @@ Safety comes from complete replacement files, scoped file lists, full diff captu
 
 Do not bundle unrelated work just to reduce archive count.
 
+## 7E. Hybrid Archive / Script Delivery Rule
+
+Use hybrid delivery when one coherent accepted update contains both safe complete-replacement files and large/shared files that need targeted script edits.
+
+Required shape:
+
+```text
+Replacement archive/package:
+  - safe complete replacement/add files only.
+
+Separate Local Targeted Script Edit file(s):
+  - one `.ps1` per large/shared file that needs targeted writes.
+
+Final review:
+  - one combined scoped diff command may include all affected files.
+```
+
+Rules:
+
+```text
+- Label the delivery as hybrid archive/script mode.
+- Do not include targeted write scripts inside `replacement-files/`.
+- Do not call a script artifact a replacement file.
+- Do not let one large/risky file block safe archive delivery for other files.
+- Do not use one write script for multiple large/shared files.
+- If a large/shared file must be changed, give a separate script link, copy-to-root command and run command.
+- Commit commands must stage only intended repository files, not package metadata or helper scripts unless intentionally tracked.
+```
+
 ## 8. Archive Layouts And Apply Commands
 
 There are two supported archive layouts.
@@ -451,9 +523,9 @@ partial snippets that must be manually inserted
 
 These are patch proposal artifacts, not replacement package artifacts.
 
-If the user explicitly asks for a patch proposal, it may be provided separately, but the final response must label it as patch mode and must not claim it is a replacement archive.
+If the user explicitly asks for a patch proposal or targeted local script, it may be provided separately, but the final response must label it correctly and must not claim it is a replacement archive.
 
-If the target file is large, still generate the complete replacement file. If that is not safe, stop and report the limitation instead of producing a patch-script archive.
+If the target file is large, still generate the complete replacement file when it is safe. If that is not safe, exclude that file from the replacement archive and use hybrid archive/script delivery or stop and report the limitation.
 
 ## 10. Scope Statement
 
@@ -490,4 +562,6 @@ Do not leave docs saying `planned` when current repo evidence shows `implemented
 - Do not directly change GitHub when the user asked for an archive.
 - Do not provide archive apply instructions without a pull/current-state step first.
 - Do not tell the user to extract a package-layout archive directly into the repo root as the apply step.
+- Do not let one large/risky file block safe archive delivery for other files.
+- Do not use one write script for multiple large/shared files.
 ```
