@@ -42,7 +42,7 @@ plan only
    - missing responsibility owner;
    - docs still assuming archive-only output when direct repository edits are approved.
 6. Decide update scope.
-7. Classify every target file by delivery safety before choosing archive/script/direct edit mode.
+7. Classify every target file by delivery safety before choosing archive/script/direct edit mode; treat `арх` as source snapshot, not output-package request.
 8. Prepare a Documentation Update Plan when the change is broad or multi-file.
 9. Ask only blocking questions that can change the planned update.
 10. After approval, apply the selected output mode.
@@ -87,6 +87,28 @@ Rules:
 - A final combined diff command may include all files for review, but write scripts should stay one large/shared file at a time.
 - Repeated need for scripts against the same file is a split/refactor signal.
 ```
+
+## 2B. Archive Source Snapshot Command
+
+`арх` is a read-source/source-state signal.
+
+It means:
+
+```text
+- a fresh archive / repository snapshot has been provided or selected;
+- the archive may be used as current source evidence for planning, review or targeted checks;
+- archive source mode does not decide traversal depth by itself.
+```
+
+It does not mean:
+
+```text
+- generate a replacement archive/package;
+- start file edits;
+- apply a batch automatically.
+```
+
+Only create a replacement archive/package when the user separately asks for archive/package output, for example `давай архив`, `собери архив` or `archive for manual apply`.
 
 ## 3. Required Current-State Check
 

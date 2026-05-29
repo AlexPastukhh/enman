@@ -35,6 +35,8 @@ Core documentation-layer files:
 ```text
 planning/documentation/planning-docs-architecture-principles.md
 planning/documentation/documentation-responsibility-map.md
+planning/documentation/documentation-layer-portability-migration-plan.md
+planning/documentation/documentation-responsibility-zone-review-workflow.md
 planning/documentation/documentation-update-plan-workflow.md
 planning/documentation/documentation-update-workflow.md
 planning/documentation/status-reconciliation-workflow.md
@@ -76,6 +78,20 @@ For documentation-layer architecture/routing work:
 5. planning/documentation/documentation-responsibility-map.md
 6. relevant documentation workflow file
 ```
+
+For documentation-layer portability, responsibility-zone review or reusable migration planning:
+
+```text
+1. planning/README.md
+2. planning/documentation/README.md
+3. planning/documentation/documentation-layer-portability-migration-plan.md
+4. planning/documentation/documentation-responsibility-zone-review-workflow.md
+5. planning/documentation/planning-docs-architecture-principles.md
+6. planning/documentation/documentation-responsibility-map.md
+7. target files being reviewed
+```
+
+Use this when reviewing whether existing documentation-layer content belongs to reusable principles, a specialized profile, a project adapter/profile, a workflow, a field kit, a template or an example.
 
 For broad documentation updates:
 
@@ -132,6 +148,15 @@ planning/documentation/examples/README.md
 
 Use this when adding or changing templates, workflows with expected output, response commands, output modes, draft formats or example indexes.
 
+For documentation responsibility-zone review:
+
+```text
+planning/documentation/documentation-responsibility-zone-review-workflow.md
+planning/documentation/documentation-layer-portability-migration-plan.md
+```
+
+Use this when reviewing existing documentation-layer content for reusable/specialized/project-specific boundaries, owner-zone drift, field-kit candidates or candidate migration planning.
+
 For source usage cascade governance and pilots:
 
 ```text
@@ -161,6 +186,8 @@ Examples:
 ```text
 global docs architecture principle -> planning-docs-architecture-principles.md
 documentation-layer placement rule -> documentation-responsibility-map.md
+documentation-layer portability migration plan -> documentation-layer-portability-migration-plan.md
+documentation responsibility-zone review -> documentation-responsibility-zone-review-workflow.md
 docs update process -> documentation-update-workflow.md
 preflight docs update plan format -> documentation-update-plan-workflow.md
 local/global sync process -> local-global-documentation-sync-workflow.md
@@ -170,6 +197,8 @@ file update overview process -> file-update-overview-workflow.md
 file update overview template -> FILE-UPDATE-OVERVIEW-TEMPLATE.md
 use-case map workflow -> use-case-map-workflow.md
 use-case map template -> USE-CASE-MAP-TEMPLATE.md
+field-kit setup guidance -> relevant `*-field-kit.md` file when created; principles define the type
+project adapter/profile mapping -> project adapter/profile file when created
 example coverage decision process -> example-coverage-workflow.md
 documentation-layer examples navigation -> examples/README.md
 source usage cascade pilot governance -> source-usage-cascade-governance-plan.md

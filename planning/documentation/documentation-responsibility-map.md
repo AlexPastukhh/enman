@@ -47,7 +47,9 @@ This file owns only documentation-layer placement.
 
 | Information type | Owner file | Notes |
 |---|---|---|
-| Global planning-docs architecture principles | `planning-docs-architecture-principles.md` | Theory: layers, file types, source-of-truth boundaries, no-duplication rules. Not workflow steps. |
+| Global planning-docs architecture principles | `planning-docs-architecture-principles.md` | Stable invariants, file-type theory, source-of-truth boundaries and no-duplication rules. Not workflow steps, concrete paths or project configuration. |
+| Documentation-layer portability migration plan | `documentation-layer-portability-migration-plan.md` | Captures pre-split reusability decisions, migration phases and boundaries before candidate copy / principles split / adapter extraction. |
+| Documentation responsibility-zone review process | `documentation-responsibility-zone-review-workflow.md` | How to review existing documentation content and classify reusable principles, specialized profiles, adapter mappings, examples, workflow details and template details. |
 | Documentation-layer placement rules | `documentation-responsibility-map.md` | This file. Use when deciding where documentation-layer information belongs. |
 | Documentation folder navigation / read order | `README.md` | Index only. It should list files and read order, not duplicate full rules. |
 | Broad documentation update process | `documentation-update-workflow.md` | End-to-end process for updating docs after plan/approval. |
@@ -74,7 +76,7 @@ Classify the new information:
 
 ```text
 1. Information type:
-   architecture principle / workflow step / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule / working example / example coverage decision / file update overview process / file update overview template / source usage governance / source usage pilot register / documentation action log entry.
+   architecture principle / workflow step / field-kit setup guidance / adapter-profile mapping / responsibility-zone review / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule / working example / example coverage decision / file update overview process / file update overview template / source usage governance / source usage pilot register / documentation action log entry.
 
 2. Existing owner:
    Which file above already owns this type?
@@ -97,7 +99,10 @@ Classify the new information:
 8. Source usage impact:
    Does this information introduce or change source usage relationships, cascade review, stale-reference handling or pilot register shape?
 
-9. Action log impact:
+9. Responsibility-zone / portability impact:
+   Does this review or move existing content between reusable principles, specialized profiles, project adapters, workflows, field kits, templates or examples?
+
+10. Action log impact:
    Is this a significant logical documentation action that should be recorded in documentation-action-log.md?
 ```
 
@@ -106,10 +111,14 @@ Classify the new information:
 If documentation-layer files conflict:
 
 ```text
-- planning-docs-architecture-principles.md wins for global architecture theory.
+- planning-docs-architecture-principles.md wins for stable architecture invariants and file-type theory.
+- documentation-layer-portability-migration-plan.md wins for the staged documentation-layer portability migration decision record until a later canonical migration plan replaces it.
+- documentation-responsibility-zone-review-workflow.md wins for the process of classifying existing content into responsibility zones.
 - documentation-responsibility-map.md wins for documentation-layer placement.
 - planning/planning-doc-responsibility-map.md wins for choosing the planning layer.
-- workflow files win for their own process steps.
+- workflow files win for their own repeated process steps.
+- field-kit files win for setup guidance in their specific setup area; project-specific workflows/profiles win after they are derived and accepted.
+- adapter/profile files win for concrete project mappings after they are created.
 - file-update-overview-workflow.md wins for File Update Overview process.
 - FILE-UPDATE-OVERVIEW-TEMPLATE.md wins for File Update Overview shape.
 - use-case-map-workflow.md wins for reusable use-case-map maintenance process.
@@ -142,6 +151,8 @@ Suggested suffixes:
 | File type | Suggested suffix |
 |---|---|
 | Workflow | `*-workflow.md` |
+| Field kit | `*-field-kit.md` |
+| Adapter / profile | `*-adapter.md`, `*-profile.md` or project-specific profile file when approved |
 | Responsibility map | `*-responsibility-map.md` |
 | Template | `*-template.md` or uppercase `<THING>-TEMPLATE.md` for reusable exact output shapes |
 | Examples index / examples folder navigation | `examples/README.md` or `*-examples.md` |
@@ -157,10 +168,14 @@ Suggested suffixes:
 ```text
 - Do not put global architecture theory into workflow files.
 - Do not put workflow steps into architecture principles unless they are only high-level principles.
+- Do not put field-kit setup guidance into a repeated workflow unless the workflow explicitly owns setup mode.
+- Do not treat project adapter/profile mappings as universal principles.
 - Do not duplicate owner tables in multiple files.
 - Do not put command routing, source-mode, output-mode or permission logic into example files.
 - Do not put File Update Overview trigger/shape logic into examples or use-case rows; link to the workflow/template owners.
 - Do not put reusable use-case-map workflow/template logic into a concrete use-case map; link to use-case-map-workflow.md and USE-CASE-MAP-TEMPLATE.md.
+- Do not move a paragraph into a project adapter only because it contains a concrete path; extract the reusable principle first.
+- Do not split or migrate active docs-layer responsibilities before the approved portability/candidate workflow says to do so.
 - Do not treat source usage pilot registers as permanent global schema before the pilot is reviewed.
 - Do not use the action log as the source of truth for rules or unresolved tasks.
 - Do not treat reusable prompts as canonical rules.
@@ -175,9 +190,11 @@ The documentation layer is well-routed when:
 ```text
 - a new chat can choose the correct documentation owner file without guessing;
 - README.md shows navigation and read order;
-- architecture principles hold theory;
+- architecture principles hold invariants and file-type theory;
 - this map handles documentation-layer placement;
 - workflow files stay process-focused;
+- field kits stay setup-focused and do not replace accepted project workflows/profiles;
+- responsibility-zone reviews can classify reusable principles, specialized profiles, adapter mappings, examples and workflow/template details;
 - File Update Overview process and shape have clear owners;
 - use-case-map workflow and template responsibilities have clear owners;
 - example coverage decisions are made by the example coverage workflow;

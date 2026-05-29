@@ -6,6 +6,7 @@ Scope: how to structure planning documentation so it remains navigable, reviewab
 ## Contents
 
 - [1. Purpose](#1-purpose)
+- [1A. Principles Responsibility Boundary](#1a-principles-responsibility-boundary)
 - [2. Core Goals](#2-core-goals)
 - [3. Fixed Layer Architecture](#3-fixed-layer-architecture)
 - [4. Responsibility Map Model](#4-responsibility-map-model)
@@ -33,6 +34,7 @@ Scope: how to structure planning documentation so it remains navigable, reviewab
 - [24. No-Duplication / Authority Rule](#24-no-duplication--authority-rule)
 - [24A. Link Instead Of Copy / Docs DRY Rule](#24a-link-instead-of-copy--docs-dry-rule)
 - [24B. Accepted Command And Preservation Guardrails](#24b-accepted-command-and-preservation-guardrails)
+- [24C. Responsibility-Zone Review Guardrail](#24c-responsibility-zone-review-guardrail)
 - [25. What Not To Add By Default](#25-what-not-to-add-by-default)
 - [26. Success Criteria](#26-success-criteria)
 
@@ -53,6 +55,45 @@ It must help a future reader or chat understand:
 ```
 
 These principles are about the architecture of planning documentation, not the runtime architecture of the application.
+
+## 1A. Principles Responsibility Boundary
+
+This file owns documentation architecture principles: stable invariants and design constraints for documentation systems.
+
+It describes:
+
+```text
+- how documentation should be structured;
+- what must remain true;
+- what must not be violated;
+- why source-of-truth and ownership boundaries exist;
+- which file-type responsibilities must stay separate.
+```
+
+It does not own:
+
+```text
+- exact workflow steps;
+- exact template shapes;
+- concrete project paths;
+- concrete use-case or command routes;
+- large example bodies;
+- current project status inventory;
+- project-specific source, evidence, register or output-layer mappings.
+```
+
+Rule:
+
+```text
+Principles explain why a boundary exists.
+Workflows explain how to act.
+Templates define exact shapes.
+Responsibility maps route information to owners.
+Use-case maps route user-visible actions.
+Field kits help derive project-specific artifacts.
+Adapters/profiles hold concrete project configuration.
+Examples demonstrate usage but do not own rules.
+```
 
 ## 2. Core Goals
 
@@ -163,8 +204,8 @@ Every planning document should have an understandable type. If a document type i
 
 | Type | Responsibility |
 |---|---|
-| Architecture principles | Global theory for how planning docs are structured. |
-| Workflow | Algorithm/process for performing a repeated task. |
+| Architecture principles | Stable invariants and design constraints for how documentation is structured; file-type theory and source-of-truth boundaries. |
+| Workflow | Algorithm/process for performing a repeated operational task. |
 | Index / README | Navigation, read order, file overview and short purpose summaries. |
 | Responsibility map | Where to put information; which file/layer owns what. |
 | Source spec / source set | Canonical or derived source content, such as scenario specs, DATA sets or behavior item sets. |
@@ -173,10 +214,12 @@ Every planning document should have an understandable type. If a document type i
 | Extension points register | Future considerations, change pressure and extension points. |
 | Implementation notes register | Shared implementation-related reminders that must stay visible beyond one local draft. |
 | Draft | Working planning/design content for a scenario/domain/slice/documentation task. |
+| Field kit | Reusable setup toolkit for deriving project-specific workflows, profiles, adapters, registers or evidence maps. Not the repeated operational workflow itself. |
 | Template | The shape of a draft, section or output artifact. |
 | Evidence | Code, tests, migrations, generated artifacts, screenshots or other current implementation proof. |
 | Status snapshot | Scoped or historical status note; not implementation truth by itself. |
 | Scoped sync note | Case-specific documentation synchronization note; not a reusable workflow. |
+| Adapter / profile | Concrete project configuration: layer vocabulary, exact paths, source maps, evidence maps, shared visibility maps, output layers and example links. |
 | Derived prompt | Reusable prompt assembled from canonical docs; not a canonical rule source. |
 | Dirty draft | Non-canonical recovery/context note. |
 | VKR clean reference | Clean terminology and evidence map for thesis-facing materials. |
@@ -817,6 +860,27 @@ planning/replacement-file-generation-guide.md
 ```
 
 This section is the architecture-level guardrail only.
+
+## 24C. Responsibility-Zone Review Guardrail
+
+When reviewing existing documentation for placement, portability or split decisions, do not move a paragraph only because it contains a project-specific path, ID or term.
+
+First ask:
+
+```text
+- What is the fundamental purpose of this text?
+- What problem does it prevent?
+- What reusable principle, if any, remains after removing concrete names?
+- Is the remaining content a specialized profile pattern, adapter mapping, workflow detail, template shape or example?
+```
+
+Use the responsibility-zone review workflow for this process:
+
+```text
+planning/documentation/documentation-responsibility-zone-review-workflow.md
+```
+
+The review should classify content into the correct owner zone before moving or splitting it.
 
 ## 25. What Not To Add By Default
 

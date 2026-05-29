@@ -458,3 +458,41 @@ Owner sources:
 Notes:
   This change does not perform the broader documentation-layer decoupling from Enman and does not split the principles file. Those remain separate future architecture batches.
 ```
+
+### 2026-05-30 — Added documentation-layer portability role model and responsibility-zone review
+
+```text
+Date:
+  2026-05-30
+Action:
+  Added a documentation-layer portability migration plan and responsibility-zone review workflow, clarified principles responsibility, introduced Field Kit / Adapter-Profile file-type boundaries, and corrected `арх` command semantics.
+Type:
+  documentation architecture / portability migration preparation
+Status:
+  applied
+Why:
+  The documentation layer is being prepared for a copy-first reusable migration. Before splitting the principles file or extracting a scenario-driven profile / Enman adapter, the repo needs a clear record of current decisions, a repeatable method for reviewing responsibility zones, and explicit source-vs-output archive semantics.
+Changed files:
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/documentation-responsibility-zone-review-workflow.md
+  - planning/documentation/planning-docs-architecture-principles.md
+  - planning/documentation/documentation-responsibility-map.md
+  - planning/documentation/README.md
+  - planning/planning-use-case-map.md
+  - planning/documentation/documentation-update-workflow.md
+  - planning/documentation/examples/README.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Documentation layer now has a pre-split portability plan, a reusable responsibility-zone review method, explicit Field Kit and Adapter/Profile type boundaries, and corrected `арх` source snapshot semantics.
+PMR relation:
+  none
+Follow-ups:
+  Create the reusable candidate copy, then classify and split principles inside the candidate before extracting the scenario-driven profile or Enman/project adapter.
+Owner sources:
+  planning/documentation/documentation-layer-portability-migration-plan.md
+  planning/documentation/documentation-responsibility-zone-review-workflow.md
+  planning/documentation/planning-docs-architecture-principles.md
+  planning/documentation/documentation-responsibility-map.md
+Notes:
+  This batch intentionally does not split principles, create the scenario-domain-slice profile, create the Enman adapter, move VKR/source-usage pilots/sync notes, or create the reusable candidate copy.
+```
