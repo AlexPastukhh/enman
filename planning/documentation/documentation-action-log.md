@@ -284,3 +284,38 @@ Owner sources:
 Notes:
   This entry starts from the current chat history and is not a full historical reconstruction of the entire project.
 ```
+
+### 2026-05-29 — Added File Update Overview workflow and template
+
+```text
+Date:
+  2026-05-29
+Action:
+  Added a reusable File Update Overview workflow and template.
+Type:
+  response/output shape
+Status:
+  applied
+Why:
+  Non-trivial file, documentation and code update answers need a final structured file-change summary that shows logical groups, file responsibilities, what changed, why it changed, checks and next action without replacing the main reviewable answer.
+Changed files:
+  - planning/documentation/file-update-overview-workflow.md
+  - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+  - planning/documentation/README.md
+  - planning/documentation/documentation-responsibility-map.md
+  - planning/documentation/examples/README.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Documentation layer now has a reusable owner for File Update Overview process and shape.
+PMR relation:
+  none
+Follow-ups:
+  - Update reviewable-agent-output-and-commands-workflow.md to link Level 2/3 file update answers to File Update Overview.
+  - Update planning-use-case-map.md expected-output markers where serious routes should reference File Update Overview.
+  - Add a filled File Update Overview example after the format is used on a follow-up update.
+Owner sources:
+  planning/documentation/file-update-overview-workflow.md
+  planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+Notes:
+  This action does not yet add the response-level `обс` command or automatic Level escalation triggers. Those belong to the follow-up targeted script for large/shared owner files.
+```

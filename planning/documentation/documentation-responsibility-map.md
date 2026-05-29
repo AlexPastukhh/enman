@@ -55,6 +55,8 @@ This file owns only documentation-layer placement.
 | Local detail to shared index/register sync process | `local-global-documentation-sync-workflow.md` | How local notes/questions should become globally discoverable. |
 | Status vs implementation evidence reconciliation | `status-reconciliation-workflow.md` | How to update docs when code/tests/generated artifacts changed. |
 | Reviewable answer format and response-level commands | `reviewable-agent-output-and-commands-workflow.md` | Level 1/2/3 answers, sources/coverage, recheck/clarify/keep prev/no ch/section operations. |
+| File Update Overview process | `file-update-overview-workflow.md` | Owns when and how to produce the final structured file-change summary for non-trivial file/docs/code update answers. |
+| File Update Overview template | `FILE-UPDATE-OVERVIEW-TEMPLATE.md` | Owns the exact reusable File Update Overview block structure. |
 | Working example coverage decision process | `example-coverage-workflow.md` | Decides whether a new/changed template, workflow output, response command, output mode or draft format needs a working example. |
 | Documentation-layer working example index | `examples/README.md` | Navigation and coverage index for documentation-layer examples. It does not own routing/source/output/permission logic. |
 | Source usage cascade governance pilot plan | `source-usage-cascade-governance-plan.md` | Governance plan for source usage relationships, layer encapsulation, attention preservation and cascade-review pilots. Not the full future workflow. |
@@ -70,7 +72,7 @@ Classify the new information:
 
 ```text
 1. Information type:
-   architecture principle / workflow step / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule / working example / example coverage decision / source usage governance / source usage pilot register / documentation action log entry.
+   architecture principle / workflow step / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule / working example / example coverage decision / file update overview process / file update overview template / source usage governance / source usage pilot register / documentation action log entry.
 
 2. Existing owner:
    Which file above already owns this type?
@@ -106,6 +108,8 @@ If documentation-layer files conflict:
 - documentation-responsibility-map.md wins for documentation-layer placement.
 - planning/planning-doc-responsibility-map.md wins for choosing the planning layer.
 - workflow files win for their own process steps.
+- file-update-overview-workflow.md wins for File Update Overview process.
+- FILE-UPDATE-OVERVIEW-TEMPLATE.md wins for File Update Overview shape.
 - example-coverage-workflow.md wins for example coverage decision steps.
 - examples/README.md is an index and does not override owner workflows, templates or use-case rows.
 - source-usage-cascade-governance-plan.md wins for pilot governance until the full cascade workflow exists.
@@ -151,6 +155,7 @@ Suggested suffixes:
 - Do not put workflow steps into architecture principles unless they are only high-level principles.
 - Do not duplicate owner tables in multiple files.
 - Do not put command routing, source-mode, output-mode or permission logic into example files.
+- Do not put File Update Overview trigger/shape logic into examples or use-case rows; link to the workflow/template owners.
 - Do not treat source usage pilot registers as permanent global schema before the pilot is reviewed.
 - Do not use the action log as the source of truth for rules or unresolved tasks.
 - Do not treat reusable prompts as canonical rules.
@@ -168,6 +173,7 @@ The documentation layer is well-routed when:
 - architecture principles hold theory;
 - this map handles documentation-layer placement;
 - workflow files stay process-focused;
+- File Update Overview process and shape have clear owners;
 - example coverage decisions are made by the example coverage workflow;
 - examples remain supporting artifacts and link to their owner files instead of copying logic;
 - source usage cascade pilots are discoverable and clearly marked experimental;
