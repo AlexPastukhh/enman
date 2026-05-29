@@ -94,7 +94,6 @@ pushed
 blocked
 ```
 
-
 ## 4. When Not To Use
 
 Do not use the full File Update Overview for:
@@ -133,6 +132,39 @@ Change group: Action log
 
 Inside each group, list the files with their change type.
 
+## 5A. Rendered Shape Rule
+
+Prefer grouped Markdown tables for multi-file or multi-group File Update Overviews.
+
+Use:
+
+```text
+Status line
+Change-group tables
+Boundaries table
+Checks table
+Next action
+```
+
+Do not use one giant table for everything by default. Keep logical groups visible.
+
+Keep table cells short:
+
+```text
+R
+  short responsibility only.
+
+Что
+  short change intent.
+
+Почему
+  short reason this file/artifact is included or excluded.
+```
+
+Put longer explanation, tradeoffs and evidence in the main answer. The overview should make the update scannable, not repeat the whole reasoning.
+
+Vertical entries are allowed only when they are more readable for a very small/narrow answer.
+
 ## 6. File Line Types
 
 Use these file line types:
@@ -159,11 +191,12 @@ Each file entry must include `R`.
 
 `R` means the file responsibility relevant to this change.
 
-Preferred shape:
+Preferred table-cell shape:
 
 ```text
-Change - Updated: path/to/file.md
-  R: owns ...
+| Change | File | R | Что | Почему |
+|---|---|---|---|---|
+| Updated | `path/to/file.md` | owns ... | ... | ... |
 ```
 
 Keep `R` short. It should help the reviewer understand why the file belongs in this change.
@@ -192,10 +225,19 @@ End the overview with:
 
 ```text
 Проверка:
-  - checks performed or planned.
+  table of checks and results.
 
 Следующее действие:
   next concrete action.
+```
+
+For file-update planning, `Проверка` should include delivery safety visibility:
+
+```text
+Delivery safety classified
+Large/shared files
+Fresh full archive needed
+Preferred delivery
 ```
 
 For archive/package work, `Следующее действие` should usually say whether to apply, paste diff, review, commit or continue with a follow-up script/archive.
@@ -231,6 +273,9 @@ Before finalizing an overview, check:
 - `Статус` makes clear whether the overview is planned, archive-created, diff-checked, applied, pushed or blocked;
 - every changed/planned file has a clear responsibility;
 - new files and updated files are placed in logical groups;
+- multi-file overviews use grouped tables unless a vertical shape is more readable;
+- table cells stay short enough to scan;
+- file-update planning overviews expose delivery safety, large/shared files, fresh full archive need and preferred delivery;
 - relevant excluded files are listed when their exclusion matters;
 - the overview does not replace the main reviewable answer;
 - `Что` and `Почему` are specific enough to review;
@@ -244,6 +289,7 @@ Before finalizing an overview, check:
 - Do not use File Update Overview as the whole answer for non-trivial work.
 - Do not hide source or verification limits inside the overview.
 - Do not duplicate complete workflow logic in the overview.
+- Do not hide delivery safety / large-file / fresh-archive requirements from file-update planning overviews.
 - Do not list only changed files when intentionally excluded files are important to understand scope.
 - Do not create a separate standalone overview format when this template is sufficient.
 ```

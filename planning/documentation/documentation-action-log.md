@@ -388,3 +388,38 @@ Owner sources:
 Notes:
   `Итог` is not a generic conclusion. During planning it is the rolling nearest-batch plan; after artifact/diff/application it summarizes actual update state.
 ```
+
+### 2026-05-29 — Switched Итог to grouped tables and exposed delivery safety
+
+```text
+Date:
+  2026-05-29
+Action:
+  Switched the File Update Overview / `Итог` preferred shape to grouped Markdown tables and required visible delivery-safety information in file-update planning answers.
+Type:
+  response/output shape / planning visibility
+Status:
+  applied
+Why:
+  The previous vertical `Итог` format was correct but hard to scan. File-update planning also needs to make large/shared files, fresh full archive need and preferred delivery mode visible up front instead of leaving delivery safety implicit.
+Changed files:
+  - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+  - planning/documentation/file-update-overview-workflow.md
+  - planning/documentation/reviewable-agent-output-and-commands-workflow.md
+  - planning/documentation/documentation-update-workflow.md
+  - planning/documentation/examples/README.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Documentation-layer file-update planning answers now surface delivery safety as a visible planning point, and final `Итог` blocks are easier to scan.
+PMR relation:
+  none
+Follow-ups:
+  Add a filled table-based File Update Overview example after the format is used cleanly.
+Owner sources:
+  planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+  planning/documentation/file-update-overview-workflow.md
+  planning/documentation/reviewable-agent-output-and-commands-workflow.md
+  planning/documentation/documentation-update-workflow.md
+Notes:
+  This change does not add new response commands or alter archive mechanics. It changes output shape and planning visibility.
+```

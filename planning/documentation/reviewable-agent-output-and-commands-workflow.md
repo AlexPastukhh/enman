@@ -248,6 +248,19 @@ What another chat/person should check:
 
 `Key points first` is a short numbered preview of the current answer. Use it by default for analytical/planning Level 2 answers, especially when the answer is long or has several decisions.
 
+For file/docs/code update planning answers, the final `Key points first` item should summarize delivery safety:
+
+```text
+Delivery safety:
+  large/shared files yes/no;
+  fresh full repo/archive needed yes/no;
+  preferred delivery mode;
+  fallback mode if relevant.
+```
+
+This key point is a preview only. The main answer and final `Итог` still need to expose the delivery safety classification when it affects artifact generation.
+
+
 Do not use `Key points first` by default when the answer is a first draft, a draft update, a strict specialized template, or an already self-evident structured output. In those cases the template/draft structure is the navigation.
 
 For draft updates, use `Отличия от предыдущего драфта` instead of `Key points first` when there is a previous draft version to compare against.
@@ -1082,6 +1095,7 @@ This workflow works when:
 - Level 2/3 escalation happens automatically when task breadth requires reviewability;
 - `обс` can re-check prior discussion without being confused with edit permission or answer level;
 - `Key points first`, `Краткое саммари` and `Итог` improve navigation without replacing the Level 2/3 reviewable body;
+- file-update planning answers show delivery safety as the final `Key points first` item when key points are used;
 - draft updates use `Отличия от предыдущего драфта` when that is the useful review block;
 - File Update Overview / `Итог` is used as a final summary block when non-trivial file/docs/code updates need file responsibility/change visibility;
 - response structure helps verification without adding unnecessary bureaucracy.

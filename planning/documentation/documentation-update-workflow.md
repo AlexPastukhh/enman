@@ -74,6 +74,8 @@ Rules:
 
 ```text
 - Do this classification during planning, before creating artifacts.
+- Expose this classification in file-update planning answers, not only internally.
+- When the answer uses `Key points first`, summarize delivery safety as the final key point.
 - Large file alone is not a reason to choose script mode.
 - If a large file must change, first check whether a fresh full repo/archive snapshot or current full file makes complete replacement safe and reviewable.
 - Prefer safe complete replacement from full current content when available.
@@ -437,6 +439,8 @@ Before finalizing a documentation update, verify:
 ```text
 - broad changes had a Documentation Update Plan;
 - every target file was classified by delivery safety before archive/script/direct edit mode was chosen;
+- delivery safety was exposed in the planning answer when artifact generation was planned;
+- `Key points first` included delivery safety as the final item when used for a file-update planning answer;
 - large/shared files were checked for safe complete replacement from full current content before script mode was chosen;
 - every added file appears in navigation or a folder README;
 - responsibility maps know the new responsibility;
