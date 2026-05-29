@@ -1,7 +1,7 @@
 # Documentation Update Workflow Index
 
 Status: current documentation layer index / read order  
-Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs, response-level commands, working example coverage and navigation updates
+Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs, response-level commands, working example coverage, source usage cascade governance and navigation updates
 
 ## 1. Purpose
 
@@ -20,6 +20,7 @@ A documentation update agent must:
 - synchronize local docs with shared indexes/registers;
 - update navigation/responsibility maps together with new docs;
 - decide whether a working example is needed when templates, output shapes, commands or draft formats change;
+- use source usage cascade governance when source/stale-reference/reviewed-upstream-work concerns appear;
 - use direct GitHub edits only when explicitly asked to apply changes;
 - use one file per commit by default for direct GitHub edits;
 - use archive/replacement packages when manual application or broad generated replacement is more practical.
@@ -38,6 +39,8 @@ planning/documentation/status-reconciliation-workflow.md
 planning/documentation/local-global-documentation-sync-workflow.md
 planning/documentation/reviewable-agent-output-and-commands-workflow.md
 planning/documentation/example-coverage-workflow.md
+planning/documentation/source-usage-cascade-governance-plan.md
+planning/documentation/source-usage-pilots/README.md
 planning/documentation/examples/README.md
 planning/documentation/documentation-update-agent-prompt.md
 ```
@@ -82,8 +85,9 @@ For broad documentation updates:
 10. planning/documentation/status-reconciliation-workflow.md
 11. planning/documentation/local-global-documentation-sync-workflow.md
 12. planning/documentation/example-coverage-workflow.md, if the update changes templates, output shapes, response commands, output modes, draft formats or example coverage
-13. planning/replacement-file-generation-guide.md, if archive/replacement mode is relevant
-14. relevant domain/API/testing/slice/client/scenario docs for the requested area
+13. planning/documentation/source-usage-cascade-governance-plan.md, if the update touches source usage, stale references, cascade review, reviewed upstream work or source usage pilots
+14. planning/replacement-file-generation-guide.md, if archive/replacement mode is relevant
+15. relevant domain/API/testing/slice/client/scenario docs for the requested area
 ```
 
 For answer-format, reviewable-output or response-command work:
@@ -100,6 +104,15 @@ planning/documentation/examples/README.md
 ```
 
 Use this when adding or changing templates, workflows with expected output, response commands, output modes, draft formats or example indexes.
+
+For source usage cascade governance and pilots:
+
+```text
+planning/documentation/source-usage-cascade-governance-plan.md
+planning/documentation/source-usage-pilots/README.md
+```
+
+Use this when working on source usage relationships, stale downstream references, reviewed-upstream-work concerns, cascade review pilots or the future source usage workflow.
 
 ## 4. Responsibility Routing Rule
 
@@ -127,6 +140,8 @@ status reconciliation process -> status-reconciliation-workflow.md
 agent answer/review format and response-level commands -> reviewable-agent-output-and-commands-workflow.md
 example coverage decision process -> example-coverage-workflow.md
 documentation-layer examples navigation -> examples/README.md
+source usage cascade pilot governance -> source-usage-cascade-governance-plan.md
+source usage pilot folder navigation -> source-usage-pilots/README.md
 reusable prompt -> documentation-update-agent-prompt.md
 ```
 
@@ -221,7 +236,23 @@ planning/documentation/examples/README.md
 
 Examples are supporting artifacts. They should demonstrate correct output or usage shape, but must not duplicate routing, source-mode, output-mode, permission or workflow activation logic owned by use-case maps and workflow files.
 
-## 11. Scoped Sync Notes
+## 11. Source Usage Cascade Governance
+
+For source usage relationships, layer encapsulation, stale downstream reference concerns and cascade-review pilot planning, use:
+
+```text
+planning/documentation/source-usage-cascade-governance-plan.md
+```
+
+For pilot folder navigation, use:
+
+```text
+planning/documentation/source-usage-pilots/README.md
+```
+
+Pilot registers are experimental review/cascade aids. They do not replace scenario/domain/slice source files, maps, drafts or future permanent source usage registers.
+
+## 12. Scoped Sync Notes
 
 Scoped sync notes are case-specific documentation synchronization notes. They are useful for trace/audit/context, but they are not reusable workflows or global architecture principles.
 
@@ -235,7 +266,7 @@ planning/documentation/l2-scenario-status-marker-sync-note.md
 
 Do not treat scoped sync notes as canonical workflow files. If a scoped sync note contains a reusable rule, promote that rule into the correct workflow or architecture file through a normal documentation update.
 
-## 12. Draft-Driven Discovery Scope Note
+## 13. Draft-Driven Discovery Scope Note
 
 Draft-driven discovery is currently a slice-layer discovery loop.
 

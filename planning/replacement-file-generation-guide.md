@@ -57,7 +57,7 @@ Use this guide when the user asks to create an archive or replacement package fo
 - Do not write directly to the repository unless explicitly asked.
 - Do not create branches, commits, PRs or GitHub comments unless explicitly asked.
 - Do not include unrelated implementation changes.
-- Keep archive scope focused.
+- Keep archive scope focused, but do not artificially split one coherent accepted update into many tiny archives.
 - Do not include patch scripts or script-based patch applicators in replacement archive mode.
 ```
 
@@ -333,6 +333,32 @@ If the diff is correct:
 ```
 
 This loop is not a new output mode. It is the review procedure for replacement archive/package output mode.
+
+## 7D. Replacement Archive Batch Scope Rule
+
+Do not artificially split a coherent accepted update into many tiny archives.
+
+Choose archive scope before generating the package:
+
+```text
+- include all files needed for the coherent accepted update;
+- exclude unrelated files;
+- avoid one-file or two-file splitting when the update is already understood;
+- avoid repeated apply/diff/check cycles when one coherent archive can be reviewed safely.
+```
+
+Prefer one coherent archive when:
+
+```text
+- the direction was already discussed and accepted;
+- files are logically coupled;
+- the same reviewer context is needed for the files;
+- splitting would create extra manual apply/diff/commit/recheck cycles without improving safety.
+```
+
+Safety comes from complete replacement files, scoped file lists, full diff capture, preservation checks and scoped commit commands, not from making every archive artificially tiny.
+
+Do not bundle unrelated work just to reduce archive count.
 
 ## 8. Archive Layouts And Apply Commands
 
