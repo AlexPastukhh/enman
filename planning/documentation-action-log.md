@@ -758,3 +758,34 @@ Follow-ups:
   Apply the same aggregate-local source pattern to ApplicantParty, then ConnectionRequest, then AgreementProposalExchange. After all active aggregate drafts are prepared, derive `planning/domain/domain-source-sync-register.md`.
 Notes:
   This batch keeps implementation evidence marked as previously checked/archive/source-pass evidence unless explicitly rechecked in a later implementation-sync pass.
+
+### 2026-05-31 - Added ApplicantParty aggregate local Sources blocks
+
+Date:
+  2026-05-31
+Action:
+  Applied the aggregate section source template to the ApplicantParty aggregate draft.
+Type:
+  domain aggregate source/version/cascade preparation
+Status:
+  applied
+Why:
+  Active domain aggregate drafts need local section-level Sources blocks before a domain source-sync register can be derived. ApplicantParty is the second aggregate pass because it is the reusable applicant/contact source used by request creation and request approval coordination.
+Changed files:
+  - planning/domain/aggregates/applicant-party.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added `Doc version: v0.1.0` to the ApplicantParty aggregate draft.
+  - Added fenced local `Sources:` blocks to existing ApplicantParty aggregate sections.
+  - Reclassified `## 2. Source Inputs` as aggregate-level overview rather than the only source authority.
+  - Clarified the scenario DATA rule: scenario-specific DATA is expected in scenario text spec `#DATA`; `planning/diagrams/scenario-data/` is reusable/shared/audited/transitional by default.
+  - Added `## 15. Source Delta / Change Log` to record the source-block refactor.
+Not changed:
+  - No domain source-sync register created.
+  - No slice draft edited.
+  - No broad Doc version pass performed.
+  - No ApplicantParty domain behavior semantics intentionally changed.
+Follow-ups:
+  Apply the same aggregate-local source pattern to ConnectionRequest, then AgreementProposalExchange. After all active aggregate drafts are prepared, derive `planning/domain/domain-source-sync-register.md`.
+Notes:
+  This batch keeps implementation evidence marked as previously checked/archive/source-pass evidence unless explicitly rechecked in a later implementation-sync pass.

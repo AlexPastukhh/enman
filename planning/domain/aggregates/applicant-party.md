@@ -1,9 +1,30 @@
 # Domain Aggregate Draft — ApplicantParty
 
 Status: draft / first-pass extraction  
+Doc version: v0.1.0  
 Scope: reusable applicant/contact/template data owned by a client account
 
 ## 1. Purpose
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
+    - planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+    - planning/tables/domain-drafts/domain-draft-01.md
+    - planning/tables/domain-drafts/domain-draft-02.md
+  Internal dependencies:
+    - none
+  Not checked:
+    - full UI sidecar coverage for applicant party management
+    - full source/version/cascade alignment for all applicant/request sources
+```
 
 `ApplicantParty` owns reusable applicant data that a client can maintain and use when creating requests.
 
@@ -22,12 +43,50 @@ It does not own request lifecycle, request review, agreement proposal exchange o
 
 ## 2. Source Inputs
 
-Scenario sources:
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/diagrams/scenario-data/README.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
+    - planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
+    - planning/tables/domain-drafts/domain-draft-01.md
+    - planning/tables/domain-drafts/domain-draft-02.md
+  Internal dependencies:
+    - none
+  Not checked:
+    - full UI sidecar coverage for applicant party management
+    - full source/version/cascade alignment for all applicant/request sources
+```
+
+This section is the aggregate-level reviewed source overview. Section-level `Sources:` blocks below are authoritative for local section work.
+
+Scenario text sources:
 
 ```text
 planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
 planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
 planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+```
+
+Scenario-specific DATA rule:
+
+```text
+Primary scenario-specific DATA belongs in the scenario text spec #DATA section.
+Use planning/diagrams/scenario-data/ only for reusable/shared/audited/transitional DATA sidecars.
+```
+
+Reusable/shared/audited/transitional DATA sidecars checked or referenced by the prior draft:
+
+```text
 planning/diagrams/scenario-data/SC-10-applicant-data.md
 planning/diagrams/scenario-data/SC-10B-my-applicant-parties-data.md
 planning/diagrams/scenario-data/SC-04-request-creation-data.md
@@ -49,7 +108,7 @@ planning/tables/domain-drafts/domain-draft-01.md
 planning/tables/domain-drafts/domain-draft-02.md
 ```
 
-Current implementation sources checked in archive:
+Current implementation sources checked in prior archive/source pass:
 
 ```text
 Domain.EnergyManagement/Applicants/ApplicantParty.cs
@@ -65,9 +124,28 @@ Not checked:
 ```text
 Full UI sidecar coverage for applicant party management was not audited in this pass.
 Full source/version/cascade alignment is still deferred.
+Current implementation files are not treated as freshly rechecked evidence unless explicitly reviewed in a later implementation-sync pass.
 ```
 
 ## 3. Aggregate Boundary
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/domain-discovery-workflow.md
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/domain/aggregates/account.md
+    - planning/domain/aggregates/connection-request.md
+    - planning/tables/domain-drafts/domain-draft-01.md
+    - planning/tables/domain-drafts/domain-draft-02.md
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - current runtime implementation boundary beyond previously checked archive/source pass
+```
 
 Aggregate root:
 
@@ -113,6 +191,28 @@ ClientAccountId
 
 ## 4. Owned State
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
+    - planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/domain/value-objects/applicant-identity.md
+    - planning/domain/value-objects/applicant-contact.md
+  Internal dependencies:
+    - Aggregate Boundary
+  Not checked:
+    - current persistence mapping / EF configuration
+```
+
 Root state:
 
 ```text
@@ -148,6 +248,33 @@ agreement proposal data.
 ```
 
 ## 5. Domain Methods / Commands
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
+    - planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
+    - planning/domain/value-objects/applicant-identity.md
+    - planning/domain/value-objects/applicant-contact.md
+    - planning/domain/aggregates/account.md
+    - planning/domain/aggregates/connection-request.md
+  Internal dependencies:
+    - Aggregate Boundary
+    - Owned State
+  Not checked:
+    - application service orchestration beyond previously checked ApplicantPartyCreationService source pass
+    - current implementation code/tests beyond previously checked archive/source pass
+```
 
 ### `CreateIndividualApplicantParty`
 
@@ -220,6 +347,29 @@ Application coordination:
 
 ## 6. Invariants
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
+    - planning/domain/value-objects/applicant-identity.md
+    - planning/domain/value-objects/applicant-contact.md
+    - planning/domain/aggregates/connection-request.md
+    - Domain Methods / Commands
+    - Owned State
+  Internal dependencies:
+    - Aggregate Boundary
+    - Owned State
+    - Domain Methods / Commands
+  Not checked:
+    - runtime enforcement / tests unless explicitly reviewed
+```
+
 | Invariant | Protected by | Source | Failure/error |
 |---|---|---|---|
 | Applicant party belongs to one client account. | `ClientAccountId` required at creation. | domain drafts / implementation | client account required |
@@ -230,6 +380,27 @@ Application coordination:
 | Verified applicant party edit is blocked for current core. | policy/future method; not fully implemented in this aggregate draft. | domain drafts | open/future decision |
 
 ## 7. Lifecycle / State Machine
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
+    - planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - Domain Methods / Commands
+    - Invariants
+  Internal dependencies:
+    - Domain Methods / Commands
+    - Invariants
+  Not checked:
+    - full edit/archive/versioning implementation and tests
+```
 
 Verification states:
 
@@ -264,6 +435,29 @@ Delete/archive policy remains future review.
 
 ## 8. Impossible States Prevented
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/domain/value-objects/applicant-identity.md
+    - planning/domain/value-objects/applicant-contact.md
+    - planning/domain/aggregates/connection-request.md
+    - Invariants
+    - Lifecycle / State Machine
+    - Domain Methods / Commands
+  Internal dependencies:
+    - Invariants
+    - Lifecycle / State Machine
+    - Domain Methods / Commands
+  Not checked:
+    - current runtime code/tests unless explicitly reviewed
+```
+
 | Impossible state | Prevented by | Source |
 |---|---|---|
 | Individual applicant party without full name. | create validation. | implementation / domain drafts |
@@ -274,12 +468,55 @@ Delete/archive policy remains future review.
 
 ## 9. Value Objects Used
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/domain/value-object-drafting-workflow.md
+    - planning/domain/value-object-draft-template.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/domain/value-objects/applicant-identity.md
+    - planning/domain/value-objects/applicant-contact.md
+    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+  Internal dependencies:
+    - Owned State
+    - Domain Methods / Commands
+    - Invariants
+  Not checked:
+    - future EntrepreneurApplicantParty and LegalEntityApplicantParty value object needs
+```
+
 | Value object | File | Purpose in this aggregate |
 |---|---|---|
 | ApplicantIdentity | `planning/domain/value-objects/applicant-identity.md` | Current individual applicant identity data. |
 | ApplicantContact | `planning/domain/value-objects/applicant-contact.md` | Applicant contact email/phone, separate from account auth email. |
 
 ## 10. Cross-Aggregate Relations
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/domain-discovery-workflow.md
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/domain/aggregates/account.md
+    - planning/domain/aggregates/connection-request.md
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - Aggregate Boundary
+    - Domain Methods / Commands
+  Internal dependencies:
+    - Aggregate Boundary
+    - Domain Methods / Commands
+    - Invariants
+  Not checked:
+    - application service implementation beyond prior ApplicantPartyCreationService source pass
+```
 
 References to other aggregates:
 
@@ -308,6 +545,31 @@ Application coordination needed:
 
 ## 11. Behavior Coverage
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+  Content:
+    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
+    - Domain Methods / Commands
+    - Invariants
+    - Lifecycle / State Machine
+    - Impossible States Prevented
+    - Cross-Aggregate Relations
+  Internal dependencies:
+    - Domain Methods / Commands
+    - Invariants
+    - Lifecycle / State Machine
+    - Impossible States Prevented
+  Not checked:
+    - UI sidecar behavior not audited in this pass
+    - all applicant party tests in current repo state
+```
+
 | Source item | Covered by | Status | Notes |
 |---|---|---|---|
 | Applicant save/create behavior | `IndividualApplicantParty.Create` | covered / first-pass | Future applicant party types deferred. |
@@ -319,12 +581,52 @@ Application coordination needed:
 ## 12. Persistence / EF Notes
 
 ```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - Owned State
+    - Value Objects Used
+    - Aggregate Boundary
+    - Cross-Aggregate Relations
+    - planning/tables/domain-drafts/domain-draft-01.md
+    - planning/tables/domain-drafts/domain-draft-02.md
+  Internal dependencies:
+    - Aggregate Boundary
+    - Owned State
+    - Value Objects Used
+  Not checked:
+    - current EF configuration unless explicitly reviewed
+```
+
+```text
 ApplicantParty inheritance is current direction.
 Only IndividualApplicantParty is current concrete implementation.
 Current/default uniqueness likely needs persistence/application enforcement for ClientAccountId + ApplicantPartyType.
 ```
 
 ## 13. Cross-Layer Placement Notes
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/domain-responsibility-map.md
+    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md
+  Content:
+    - Aggregate Boundary
+    - Domain Methods / Commands
+    - Cross-Aggregate Relations
+    - Behavior Coverage
+    - planning/domain/scenario-to-aggregate-map.md
+  Internal dependencies:
+    - Aggregate Boundary
+    - Cross-Aggregate Relations
+    - Behavior Coverage
+  Not checked:
+    - API/client/slice implementation unless explicitly reviewed
+```
 
 Application layer:
 - owns first-of-type default/current selection;
@@ -342,6 +644,26 @@ Testing:
 - integration tests should cover coordination with request creation/approval.
 
 ## 14. Questions / Decisions
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+  Content:
+    - Source Inputs
+    - Behavior Coverage
+    - Cross-Layer Placement Notes
+    - planning/domain/aggregates/connection-request.md
+    - planning/domain/value-objects/applicant-identity.md
+    - planning/domain/value-objects/applicant-contact.md
+  Internal dependencies:
+    - Source Inputs
+    - Behavior Coverage
+    - Cross-Aggregate Relations
+  Not checked:
+    - sources needed to resolve open edit/archive/versioning policy questions
+```
 
 Open:
 - Should verified applicant data edits create a new applicant party version later?
@@ -362,5 +684,25 @@ Deferred:
 ## 15. Source Delta / Change Log
 
 ```text
-- Extracted as first-pass aggregate draft from old monolithic domain drafts, applicant scenarios, request creation behavior and current ApplicantParty implementation.
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/source-cascade-sync-workflow.md
+  Content:
+    - changed sections in this ApplicantParty aggregate draft
+    - planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md
+  Internal dependencies:
+    - all changed sections in this draft
+  Not checked:
+    - downstream aggregates/slices not reviewed in this pass
+```
+
+```text
+- Added `Doc version: v0.1.0`.
+- Added local section-level fenced `Sources:` blocks for aggregate draft work.
+- Reclassified `## 2. Source Inputs` as overview; section-level `Sources:` blocks are authoritative for local section work.
+- Clarified scenario-specific DATA rule: prefer scenario text spec #DATA; use `planning/diagrams/scenario-data/` only for reusable/shared/audited/transitional sidecars.
+- No ApplicantParty domain behavior semantics changed in this pass.
 ```
