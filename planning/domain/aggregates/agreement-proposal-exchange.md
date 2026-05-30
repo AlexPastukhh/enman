@@ -1,9 +1,32 @@
 # Domain Aggregate Draft — AgreementProposalExchange
 
 Status: draft / first aggregate extraction pilot  
+Doc version: v0.1.0  
 Scope: post-approval agreement proposal exchange, proposal versions, final refusal and cross-aggregate coordination with Request
 
 ## 1. Purpose
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+    - planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
+    - planning/domain/aggregates/connection-request.md
+    - planning/domain/aggregates/account.md
+  Internal dependencies:
+    - none
+  Not checked:
+    - full scenario-by-scenario domain discovery outside AgreementProposalExchange
+    - full source/version/cascade alignment for all agreement/request sources
+```
 
 `AgreementProposalExchange` owns post-approval agreement proposal negotiation between Employee and Client.
 
@@ -25,35 +48,113 @@ It does not own Request review or Request status transitions.
 
 ## 2. Source Inputs
 
-Scenario sources:
-- `planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md`
-- `planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md`
-- `planning/diagrams/scenario-data/SC-13D-employee-agreement-proposal-create-response-data.md`
-- `planning/diagrams/scenario-data/L2-employee-review-agreement-data.md`
-- `planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md`
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/diagrams/scenario-data/README.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md
+    - planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+    - planning/tables/domain-drafts/domain-draft-02.md
+    - planning/domain/aggregates/connection-request.md
+    - planning/domain/aggregates/account.md
+  Internal dependencies:
+    - none
+  Not checked:
+    - full scenario-by-scenario domain discovery outside AgreementProposalExchange
+    - full source/version/cascade alignment
+```
+
+This section is the aggregate-level reviewed source overview. Section-level `Sources:` blocks below are authoritative for local section work.
+
+Scenario text sources:
+
+```text
+planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
+planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md
+```
+
+Scenario-specific DATA rule:
+
+```text
+Primary SC-13D scenario-specific DATA belongs in the scenario text spec #DATA section.
+Use planning/diagrams/scenario-data/ only for reusable/shared/audited/transitional DATA sidecars.
+```
+
+Reusable/shared/audited/transitional DATA sidecars checked or referenced by the prior draft:
+
+```text
+planning/diagrams/scenario-data/SC-13D-employee-agreement-proposal-create-response-data.md
+planning/diagrams/scenario-data/L2-employee-review-agreement-data.md
+```
+
+Scenario clarification sources:
+
+```text
+planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
+```
 
 Behavior items:
-- `planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md`
-- `planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md`
+
+```text
+planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+```
 
 Historical domain sources:
-- `planning/tables/domain-drafts/domain-draft-02.md`
 
-Existing implementation sources checked in archive:
-- `Domain.EnergyManagement/AgreementProposals/AgreementProposalExchange.cs`
-- `Domain.EnergyManagement/AgreementProposals/AgreementProposal.cs`
-- `Domain.EnergyManagement/AgreementProposals/AgreementProposalVersion.cs`
-- `Domain.EnergyManagement/AgreementProposals/AgreementProposalAuthor.cs`
-- `Domain.EnergyManagement/AgreementProposals/AgreementDocumentRef.cs`
-- `Domain.EnergyManagement/AgreementProposals/ProposalComment.cs`
-- `Domain.EnergyManagement/AgreementProposals/FinalRefusalReason.cs`
-- `Tests.EnergyManagement/Domain/AgreementProposals/AgreementProposalExchangeTests.cs`
+```text
+planning/tables/domain-drafts/domain-draft-02.md
+```
+
+Existing implementation sources checked in prior archive/source pass:
+
+```text
+Domain.EnergyManagement/AgreementProposals/AgreementProposalExchange.cs
+Domain.EnergyManagement/AgreementProposals/AgreementProposal.cs
+Domain.EnergyManagement/AgreementProposals/AgreementProposalVersion.cs
+Domain.EnergyManagement/AgreementProposals/AgreementProposalAuthor.cs
+Domain.EnergyManagement/AgreementProposals/AgreementDocumentRef.cs
+Domain.EnergyManagement/AgreementProposals/ProposalComment.cs
+Domain.EnergyManagement/AgreementProposals/FinalRefusalReason.cs
+Tests.EnergyManagement/Domain/AgreementProposals/AgreementProposalExchangeTests.cs
+```
 
 Not checked:
-- Full scenario-by-scenario domain discovery outside AgreementProposalExchange.
-- Full source/version/cascade alignment.
+
+```text
+Full scenario-by-scenario domain discovery outside AgreementProposalExchange was not audited in this pass.
+Full source/version/cascade alignment is still deferred.
+Current implementation files and tests are not treated as freshly rechecked evidence unless explicitly reviewed in a later implementation-sync pass.
+```
 
 ## 3. Aggregate Boundary
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/domain-discovery-workflow.md
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+    - planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
+    - planning/domain/aggregates/connection-request.md
+    - planning/domain/aggregates/account.md
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - current runtime implementation boundary beyond previously checked archive/source pass
+```
 
 Aggregate root:
 - `AgreementProposalExchange`
@@ -84,6 +185,30 @@ External aggregate references:
 - Client identity through `ClientAccount.Id` / proposal sender id
 
 ## 4. Owned State
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+    - planning/domain/value-objects/agreement-proposal-version.md
+    - planning/domain/value-objects/agreement-proposal-author.md
+    - planning/domain/value-objects/agreement-document-ref.md
+    - planning/domain/value-objects/proposal-comment.md
+    - planning/domain/value-objects/final-refusal-reason.md
+    - planning/domain/aggregates/connection-request.md
+    - planning/domain/aggregates/account.md
+  Internal dependencies:
+    - Aggregate Boundary
+  Not checked:
+    - current persistence mapping / EF configuration
+```
 
 Root state:
 - `RequestId`
@@ -118,6 +243,34 @@ Not stored here:
 - UI presentation state
 
 ## 5. Domain Methods / Commands
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+    - planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
+    - planning/domain/value-objects/agreement-proposal-version.md
+    - planning/domain/value-objects/agreement-proposal-author.md
+    - planning/domain/value-objects/agreement-document-ref.md
+    - planning/domain/value-objects/proposal-comment.md
+    - planning/domain/value-objects/final-refusal-reason.md
+    - planning/domain/aggregates/connection-request.md
+    - planning/domain/aggregates/account.md
+  Internal dependencies:
+    - Aggregate Boundary
+    - Owned State
+  Not checked:
+    - application service orchestration beyond previously checked source pass
+    - current implementation code/tests beyond previously checked archive/source pass
+```
 
 ### `StartByEmployee`
 
@@ -310,6 +463,31 @@ Source behavior:
 
 ## 6. Invariants
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+    - planning/domain/value-objects/agreement-proposal-version.md
+    - planning/domain/value-objects/agreement-proposal-author.md
+    - planning/domain/value-objects/agreement-document-ref.md
+    - planning/domain/value-objects/proposal-comment.md
+    - planning/domain/value-objects/final-refusal-reason.md
+    - planning/domain/aggregates/connection-request.md
+    - planning/domain/aggregates/account.md
+    - Domain Methods / Commands
+    - Owned State
+  Internal dependencies:
+    - Aggregate Boundary
+    - Owned State
+    - Domain Methods / Commands
+  Not checked:
+    - runtime enforcement / tests unless explicitly reviewed
+```
+
 | Invariant | Protected by | Source | Failure/error |
 |---|---|---|---|
 | Exchange starts only from Approved request | `StartByEmployee` request status precheck | `AGR-UCQ-001`, `L2-AGR-EMP-START-001` | Agreement exchange requires approved request |
@@ -324,6 +502,26 @@ Source behavior:
 | Exchange does not mutate Request directly | aggregate boundary + application coordination | L2 domain direction | request update belongs to Request/application service |
 
 ## 7. Lifecycle / State Machine
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+    - planning/domain/aggregates/connection-request.md
+    - Domain Methods / Commands
+    - Invariants
+  Internal dependencies:
+    - Domain Methods / Commands
+    - Invariants
+  Not checked:
+    - full agreement exchange implementation and tests
+```
 
 States:
 - `AwaitingClientConfirmation`
@@ -369,6 +567,31 @@ Forbidden transitions:
 
 ## 8. Impossible States Prevented
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+    - planning/domain/value-objects/agreement-proposal-version.md
+    - planning/domain/value-objects/agreement-proposal-author.md
+    - planning/domain/value-objects/agreement-document-ref.md
+    - planning/domain/value-objects/proposal-comment.md
+    - planning/domain/value-objects/final-refusal-reason.md
+    - planning/domain/aggregates/connection-request.md
+    - Invariants
+    - Lifecycle / State Machine
+    - Domain Methods / Commands
+  Internal dependencies:
+    - Invariants
+    - Lifecycle / State Machine
+    - Domain Methods / Commands
+  Not checked:
+    - current runtime code/tests unless explicitly reviewed
+```
+
 | Impossible state | Prevented by | Source |
 |---|---|---|
 | Exchange exists for non-Approved request | `StartByEmployee` approved-request precheck | `AGR-UCQ-001` |
@@ -384,6 +607,30 @@ Forbidden transitions:
 
 ## 9. Value Objects Used
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/domain/value-object-drafting-workflow.md
+    - planning/domain/value-object-draft-template.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/domain/value-objects/agreement-proposal-version.md
+    - planning/domain/value-objects/agreement-proposal-author.md
+    - planning/domain/value-objects/agreement-document-ref.md
+    - planning/domain/value-objects/proposal-comment.md
+    - planning/domain/value-objects/final-refusal-reason.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+  Internal dependencies:
+    - Owned State
+    - Domain Methods / Commands
+    - Invariants
+  Not checked:
+    - whether future agreement exchange metadata needs additional value-object docs
+```
+
 | Value object | File | Purpose in this aggregate |
 |---|---|---|
 | `AgreementProposalVersion` | `planning/domain/value-objects/agreement-proposal-version.md` | Local per-exchange proposal version number. |
@@ -393,6 +640,29 @@ Forbidden transitions:
 | `FinalRefusalReason` | `planning/domain/value-objects/final-refusal-reason.md` | Optional final refusal explanation. |
 
 ## 10. Cross-Aggregate Relations
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/domain-discovery-workflow.md
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/domain/aggregates/connection-request.md
+    - planning/domain/aggregates/account.md
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+    - Aggregate Boundary
+    - Domain Methods / Commands
+  Internal dependencies:
+    - Aggregate Boundary
+    - Domain Methods / Commands
+    - Invariants
+  Not checked:
+    - application service implementation beyond prior source pass
+```
 
 References to other aggregates:
 - `Request / ConnectionRequest` by `RequestId`.
@@ -415,6 +685,29 @@ Application coordination needed:
 - Document upload/storage must occur outside domain before creating `AgreementDocumentRef`.
 
 ## 11. Behavior Coverage
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+  Content:
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+    - Domain Methods / Commands
+    - Invariants
+    - Lifecycle / State Machine
+    - Impossible States Prevented
+    - Cross-Aggregate Relations
+  Internal dependencies:
+    - Domain Methods / Commands
+    - Invariants
+    - Lifecycle / State Machine
+    - Impossible States Prevented
+  Not checked:
+    - behavior items from unrelated scenario branches unless included by mapping
+    - all agreement proposal exchange tests in current repo state
+```
 
 | Source item | Covered by | Status | Notes |
 |---|---|---|---|
@@ -447,6 +740,25 @@ Application coordination needed:
 
 ## 12. Persistence / EF Notes
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - Owned State
+    - Value Objects Used
+    - Aggregate Boundary
+    - Cross-Aggregate Relations
+    - AgreementProposal child entity
+  Internal dependencies:
+    - Aggregate Boundary
+    - Owned State
+    - Value Objects Used
+  Not checked:
+    - current EF configuration unless explicitly reviewed
+```
+
 Only where needed:
 - `AgreementProposal` is an owned child entity of `AgreementProposalExchange`.
 - `AgreementDocumentRef`, `ProposalComment`, `AgreementProposalAuthor`, `AgreementProposalVersion` can be persisted as owned/value-like data.
@@ -455,6 +767,26 @@ Only where needed:
 - File bytes are not stored in the domain aggregate.
 
 ## 13. Cross-Layer Placement Notes
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/domain-responsibility-map.md
+    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md
+  Content:
+    - Aggregate Boundary
+    - Domain Methods / Commands
+    - Cross-Aggregate Relations
+    - Behavior Coverage
+    - planning/domain/scenario-to-aggregate-map.md
+  Internal dependencies:
+    - Aggregate Boundary
+    - Cross-Aggregate Relations
+    - Behavior Coverage
+  Not checked:
+    - API/client/slice implementation unless explicitly reviewed
+```
 
 Application layer:
 - loads Request / Employee / ClientAccount;
@@ -478,6 +810,30 @@ Testing:
 
 ## 14. Questions / Decisions
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+  Content:
+    - Source Inputs
+    - Behavior Coverage
+    - Cross-Layer Placement Notes
+    - planning/domain/value-objects/agreement-proposal-version.md
+    - planning/domain/value-objects/agreement-proposal-author.md
+    - planning/domain/value-objects/agreement-document-ref.md
+    - planning/domain/value-objects/proposal-comment.md
+    - planning/domain/value-objects/final-refusal-reason.md
+    - planning/domain/aggregates/connection-request.md
+    - planning/domain/aggregates/account.md
+  Internal dependencies:
+    - Source Inputs
+    - Behavior Coverage
+    - Cross-Aggregate Relations
+  Not checked:
+    - sources needed to resolve SC-13D source questions Q-SC-13D-001 / Q-SC-13D-002
+```
+
 Open:
 - `Q-SC-13D-001`: scenario question still asks whether replaced proposal should be named Superseded/Replaced instead of Rejected. Current domain direction uses `SupersededByCounterProposal`; source question should be resolved/synchronized later.
 - `Q-SC-13D-002`: source question asks whether proposal text details/comment are required or optional. Current domain direction treats comment as optional; if present, it must be non-empty and max-length constrained.
@@ -499,7 +855,28 @@ Deferred:
 
 ## 15. Source Delta / Change Log
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/source-cascade-sync-workflow.md
+  Content:
+    - changed sections in this AgreementProposalExchange aggregate draft
+    - planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md
+  Internal dependencies:
+    - all changed sections in this draft
+  Not checked:
+    - downstream slices not reviewed in this pass
+```
+
 What changed:
 - Extracted first aggregate draft from monolithic `domain-draft-02.md`, SC-13D behavior items, L2 agreement behavior items and current AgreementProposal implementation sources.
 - Added separate value object draft links for the value concepts used by this aggregate.
 - Kept old monolithic drafts as historical source snapshots rather than moving them.
+- Added `Doc version: v0.1.0`.
+- Added local section-level fenced `Sources:` blocks for aggregate draft work.
+- Reclassified `## 2. Source Inputs` as overview; section-level `Sources:` blocks are authoritative for local section work.
+- Clarified SC-13D DATA rule: primary scenario-specific DATA is scenario text spec #DATA; scenario-data sidecars are reusable/shared/audited/transitional unless explicitly promoted.
+- No AgreementProposalExchange domain behavior semantics changed in this pass.

@@ -819,3 +819,33 @@ Follow-ups:
   Apply the same aggregate-local source pattern to AgreementProposalExchange. After all active aggregate drafts are prepared, derive `planning/domain/domain-source-sync-register.md`.
 Notes:
   This batch keeps implementation evidence marked as previously checked/archive/source-pass evidence unless explicitly rechecked in a later implementation-sync pass.
+
+### 2026-05-31 - Added AgreementProposalExchange aggregate local Sources blocks
+
+Date:
+  2026-05-31
+Action:
+  Applied the aggregate section source template to the AgreementProposalExchange aggregate draft.
+Type:
+  domain aggregate source/version/cascade preparation
+Status:
+  applied
+Why:
+  Active domain aggregate drafts need local section-level Sources blocks before a domain source-sync register can be derived. AgreementProposalExchange is the final active aggregate pass because it owns the post-approval proposal exchange lifecycle and coordinates with ConnectionRequest and Account.
+Changed files:
+  - planning/domain/aggregates/agreement-proposal-exchange.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added `Doc version: v0.1.0` to the AgreementProposalExchange aggregate draft.
+  - Added fenced local `Sources:` blocks to existing AgreementProposalExchange aggregate sections.
+  - Reclassified `## 2. Source Inputs` as aggregate-level overview rather than the only source authority.
+  - Clarified the SC-13D scenario DATA rule: scenario-specific DATA is expected in scenario text spec `#DATA`; `planning/diagrams/scenario-data/` is reusable/shared/audited/transitional by default.
+Not changed:
+  - No domain source-sync register created.
+  - No slice draft edited.
+  - No broad Doc version pass performed.
+  - No AgreementProposalExchange domain behavior semantics intentionally changed.
+Follow-ups:
+  Review all four prepared active aggregate drafts, then derive `planning/domain/domain-source-sync-register.md`. After the domain register is reviewed, decide how to approach the larger slice draft refactor.
+Notes:
+  This batch keeps implementation evidence marked as previously checked/archive/source-pass evidence unless explicitly rechecked in a later implementation-sync pass.
