@@ -354,7 +354,7 @@ Rules:
 - include complete replacement/add files;
 - include MANIFEST.md and APPLY.md;
 - do not include code changes in documentation-only archives;
-- follow planning/replacement-file-generation-guide.md.
+- follow planning/replacement-file-generation-guide.md, including the §7B diff capture rule: save full diff with `--output`, copy it using `ReadAllText + Set-Clipboard`, and do not print full diff to terminal.
 ```
 
 ### Local Targeted Script Edit mode
@@ -384,7 +384,7 @@ Rules:
 - Do not stage files from the script, except `git add -N` for expected new files when making untracked files visible in diff.
 - Do not print full diffs to the terminal.
 - Save scoped diff with `git --no-pager diff --no-color --output="$diffFile" -- $files`.
-- Copy the saved diff with `Get-Content -Path $diffFile -Raw -Encoding UTF8 | Set-Clipboard`.
+- Copy the saved diff with `[System.IO.File]::ReadAllText($diffFile, [System.Text.Encoding]::UTF8)` and `Set-Clipboard -Value $diffText`.
 - Give commit commands only after the pasted diff is reviewed.
 ```
 
@@ -502,5 +502,5 @@ Before finalizing a documentation update, verify:
 - Do not use PowerShell-unsafe tree commands when asking the user for base tree SHA; prefer `git show -s --format=%T origin/<branch>`.
 - Do not use one local targeted write script to modify multiple large/shared files.
 - Do not choose script mode only because a file is large; prefer safe complete replacement when fresh full content is available.
-- Do not print full diffs to terminal for large/script updates; write diff to file and copy it to clipboard.
+- Do not print full diffs to terminal for large/script updates; write diff to file and copy it to clipboard with `ReadAllText + Set-Clipboard`.
 ```

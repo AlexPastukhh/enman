@@ -218,16 +218,15 @@ Every APPLY.md should tell the user to review both application and preservation 
 Include commands like:
 
 ```powershell
-git status --short
+git status --short -- $files
+git diff --stat -- $files
+git --no-pager diff --no-color --output="$diffFile" -- $files
 
-git diff --stat -- `
-  <changed-file-1> `
-  <changed-file-2>
-
-git --no-pager diff --no-color -- `
-  <changed-file-1> `
-  <changed-file-2>
+$diffText = [System.IO.File]::ReadAllText($diffFile, [System.Text.Encoding]::UTF8)
+Set-Clipboard -Value $diffText
 ```
+
+Use the full command shape in §7B for package-specific `$files`, `$newFiles`, `$pkgName` and `$diffFile`. Do not print the full diff to the terminal.
 
 The post-apply review should check:
 
@@ -245,7 +244,7 @@ If the user asks `проверь` after applying a replacement archive, treat it
 
 When the assistant provides a replacement archive, the chat response should include ready-to-run PowerShell commands for post-apply review, not only instructions hidden inside `APPLY.md`.
 
-The command block should avoid paged terminal diff output and should avoid PowerShell pipeline encoding problems with Cyrillic text.
+The command block should avoid paged terminal diff output and should avoid PowerShell pipeline encoding problems with Cyrillic text. It must print only `git status --short`, `git diff --stat` and short `Write-Host` messages. The full diff must be saved to a file and copied from that file to the clipboard without printing it to the terminal.
 
 It must also make expected new files visible in the review diff. Untracked files are not shown by `git diff` by default.
 
@@ -279,7 +278,9 @@ git status --short -- $files
 git diff --stat -- $files
 
 git --no-pager diff --no-color --output="$diffFile" -- $files
-Get-Content -Path $diffFile -Raw -Encoding UTF8 | Set-Clipboard
+
+$diffText = [System.IO.File]::ReadAllText($diffFile, [System.Text.Encoding]::UTF8)
+Set-Clipboard -Value $diffText
 
 Write-Host "Diff saved to: $diffFile"
 Write-Host "Diff copied to clipboard. Paste it into chat for review before committing."
@@ -295,9 +296,10 @@ Rules:
 - `git add -N` is used only to make untracked files visible in `git diff`; the final commit command must still explicitly stage only intended files.
 - If an expected new file is missing, treat that as a review blocker until resolved.
 - Use `git --no-pager diff --no-color --output="$diffFile" -- $files` to write the diff file.
-- Copy the saved diff with `Get-Content -Raw -Encoding UTF8 | Set-Clipboard`.
-- Do not rely on `git diff | Tee-Object | Set-Clipboard` for reviewable diff transfer when non-ASCII text may be present.
+- Copy the saved diff with `[System.IO.File]::ReadAllText($diffFile, [System.Text.Encoding]::UTF8)` and `Set-Clipboard -Value $diffText`.
+- Do not rely on `git diff | Tee-Object | Set-Clipboard`, raw `git diff`, or `Get-Content ... | Set-Clipboard` for reviewable diff transfer when non-ASCII text may be present.
 - Do not ask the user to manually scroll through paged diff output.
+- Do not print the full diff to the terminal; only status/stat and short status messages may be printed.
 ```
 
 If the pasted diff shows mojibake or suspicious broken Cyrillic, do not conclude from the diff alone that the repository file is corrupted. Ask for or provide a suspect-file content copy command.
@@ -320,7 +322,9 @@ $bundle = foreach ($file in $suspectFiles) {
 }
 
 $bundle -join "`r`n" | Set-Content -Path $suspectDump -Encoding UTF8
-Get-Content -Path $suspectDump -Raw -Encoding UTF8 | Set-Clipboard
+
+$suspectText = [System.IO.File]::ReadAllText($suspectDump, [System.Text.Encoding]::UTF8)
+Set-Clipboard -Value $suspectText
 
 Write-Host "Suspect file contents saved to: $suspectDump"
 Write-Host "Suspect file contents copied to clipboard. Paste it into chat."

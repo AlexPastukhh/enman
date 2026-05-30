@@ -355,7 +355,7 @@ This root map remains the concrete Enman route table.
 | `без изм`, `б изм`, `no ch` | Reuse recent context and avoid broad re-audit. | Weak without prior context; ask what state is unchanged if needed. | Reuse / targeted. | Previous context plus targeted reads. | Answer/update with minimal checks. |
 | `арх`, `из арх`, `из архива`, `use archive` | Treat the provided/latest archive as the current source snapshot for reads/checks. | Use latest uploaded archive in current conversation, or ask for archive in a new chat. | Does not decide depth. | Archive snapshot. | Read-only answer/check based on archive; do not generate an output package unless separately requested. |
 | `б из арх`, `без изм, арх`, `изм нет, арх` | No changes + archive source mode. | Use if latest archive exists; otherwise ask for archive. | Reuse / targeted. | Latest uploaded archive. | No broad audit; targeted archive checks only. |
-| `давай архив`, `собери архив`, `replacement package`, `archive for manual apply` | Produce archive/package for the active approved plan/scope. | Build archive plan from obvious target or ask only blocking target questions. | Targeted/full by package scope. | GitHub/archive/conversation by context. | Replacement package ZIP with `MANIFEST.md`, `APPLY.md`, `replacement-files/`. |
+| `давай архив`, `собери архив`, `replacement package`, `archive for manual apply` | Produce archive/package for the active approved plan/scope. | Build archive plan from obvious target or ask only blocking target questions. | Targeted/full by package scope. | GitHub/archive/conversation by context. | Replacement package ZIP with `MANIFEST.md`, `APPLY.md`, `replacement-files/`; post-apply diff saved to file and copied to clipboard without printing full diff. |
 | `проверь` after replacement archive/package application | Verify the active archive application result. | Ask for status/diff or target archive if not available. | Targeted. | Applied repo state / user-provided diff. | Post-apply verification: expected files changed, no unexpected files in commit scope, diff matches package intent, no unrelated sections/register entries/routing rules were removed; if pasted diff shows mojibake, request/copy full suspect file contents before judging file corruption. |
 
 ## 10. Primary Use Case Table
@@ -522,6 +522,6 @@ Steps:
 10. Do not include patch scripts, diff-only files or partial snippets.
 11. If complete replacement files cannot be produced safely, stop and say so instead of switching to patch mode.
 12. Include post-apply verification commands and preservation/no-loss checks in the final chat response and APPLY.md.
-13. Include full diff capture commands that save diff to a file through `git --no-pager diff --no-color --output` and copy UTF-8 text from that file to clipboard.
+13. Include full diff capture commands that save diff to a file through `git --no-pager diff --no-color --output`, copy UTF-8 text from that file to clipboard with `ReadAllText + Set-Clipboard`, and do not print the full diff to the terminal.
 14. If copied diff shows mojibake or suspicious broken Cyrillic, provide suspect-file content copy commands from `planning/replacement-file-generation-guide.md#7b-diff-capture-and-clipboard-commands`.
 ```

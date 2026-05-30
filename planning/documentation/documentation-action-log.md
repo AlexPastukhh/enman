@@ -764,3 +764,35 @@ Owner sources:
 Notes:
   This change does not create a second generic use-case map, does not remove Enman-specific root rows, does not switch the whole docs layer to candidate, and does not delete candidate migration files.
 ```
+
+### 2026-05-30 — Clarified replacement package diff capture commands
+
+```text
+Date:
+  2026-05-30
+Action:
+  Clarified the replacement package post-apply diff capture command standard.
+Type:
+  documentation workflow / replacement package command guardrail
+Status:
+  applied
+Why:
+  Replacement package APPLY commands must save the full diff to a file and copy it to the clipboard without printing the full diff to the terminal. The previous guidance mixed clipboard copying with command forms that could be interpreted as noisy or encoding-fragile.
+Changed files:
+  - planning/replacement-file-generation-guide.md
+  - planning/documentation/documentation-update-workflow.md
+  - planning/planning-use-case-map.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Replacement package generation now has a clearer command invariant: print only status/stat, save the full diff with `--output`, copy with `ReadAllText + Set-Clipboard`, then paste the copied diff for review before commit.
+PMR relation:
+  none
+Follow-ups:
+  Use this command tail in all future replacement archive/package APPLY.md files and chat responses.
+Owner sources:
+  planning/replacement-file-generation-guide.md
+  planning/documentation/documentation-update-workflow.md
+  planning/planning-use-case-map.md
+Notes:
+  This change does not alter replacement archive content format, commit policy or direct edit permissions.
+```
