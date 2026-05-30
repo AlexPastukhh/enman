@@ -69,12 +69,11 @@ planning/documentation/profiles/scenario-domain-slice-docs-profile.md
 planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
 ```
 
-Repeated workflows / bridge owners:
+Repeated workflows / output owners:
 
 ```text
 planning/documentation/status-reconciliation-workflow.md
 planning/documentation/local-global-documentation-sync-workflow.md
-planning/documentation/source-usage-cascade-governance-plan.md
 planning/documentation/example-coverage-workflow.md
 planning/documentation/file-update-overview-workflow.md
 planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
@@ -87,11 +86,13 @@ Examples:
 planning/documentation/examples/README.md
 ```
 
-Tracking:
+Project action tracking:
 
 ```text
-planning/documentation/documentation-action-log.md
+planning/documentation-action-log.md
 ```
+
+This is Enman project history, not reusable starter-kit content.
 
 Migration/support history:
 
@@ -128,10 +129,10 @@ For broad documentation updates:
 9. planning/documentation/documentation-update-workflow.md
 10. planning/documentation/status-reconciliation-workflow.md, when status/current-state claims are involved
 11. planning/documentation/local-global-documentation-sync-workflow.md, when local details need shared visibility
-12. planning/documentation/source-usage-cascade-governance-plan.md, when source usage/cascade/stale-reference work is involved
+12. planning/documentation/field-kits/source-usage-cascade-field-kit.md, when source usage/cascade/stale-reference setup is involved
 13. planning/documentation/example-coverage-workflow.md, when templates, output shapes, commands, output modes, draft formats or examples change
 14. planning/documentation/file-update-overview-workflow.md and planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md, when file/change summary behavior changes
-15. planning/documentation/documentation-action-log.md, when the update is a significant logical documentation action
+15. planning/documentation-action-log.md, when the update is a significant logical documentation action
 16. planning/replacement-file-generation-guide.md, when archive/replacement mode is relevant
 ```
 
@@ -162,8 +163,21 @@ source usage / cascade:
   setup: planning/documentation/field-kits/source-usage-cascade-field-kit.md
   project profile: planning/source-usage-cascade-profile.md
   project pilots: planning/source-usage-pilots/
-  bridge/pilot governance: planning/documentation/source-usage-cascade-governance-plan.md
 ```
+
+## 4A. Portable Starter-Kit Adaptation
+
+For copying/adapting this reusable docs layer into a new project or documentation domain:
+
+```text
+1. planning/documentation/PORTABLE-STARTER-KIT.md
+2. planning/documentation/README.md
+3. planning/documentation/planning-docs-architecture-principles.md
+4. planning/documentation/documentation-responsibility-map.md
+5. relevant field kits/profiles
+```
+
+`PORTABLE-STARTER-KIT.md` is a one-time adaptation guide. It is not a normal read-order source after the target project has its root profiles, root use-case map and active documentation routing.
 
 ## 5. Migration / Legacy State
 
@@ -190,5 +204,7 @@ Do not use `planning/documentation-legacy/` or `planning/documentation-migration
 - Do not move root Enman project profiles into this folder.
 - Do not create a second generic root use-case map inside this folder.
 - Do not treat examples as rule owners.
+- Do not keep Enman project action history inside this reusable layer.
+- Do not keep transitional source-usage governance bridges inside this reusable layer once field kits/profiles own the flow.
 - Do not delete planning/documentation-legacy/ until a post-switch verification batch approves cleanup.
 ```

@@ -21,10 +21,10 @@ Historical origin:
 former reusable candidate workspace
 ```
 
-Active governance / bridge file:
+Project pilot folder:
 
 ```text
-planning/documentation/source-usage-cascade-governance-plan.md
+planning/source-usage-pilots/
 ```
 
 ## 2. Source Categories
@@ -118,7 +118,7 @@ This profile is active project configuration, but the SC-13D pilot itself is **n
 
 A later source-usage review should decide whether to run, revise or archive that pilot.
 
-Detailed candidate example:
+Detailed project-specific example:
 
 ```text
 planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
@@ -136,7 +136,6 @@ planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMA
 ## 8. Related Files
 
 ```text
-planning/documentation/source-usage-cascade-governance-plan.md
 planning/documentation/field-kits/source-usage-cascade-field-kit.md
 planning/documentation/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
 planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md

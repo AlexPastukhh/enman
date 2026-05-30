@@ -1,6 +1,6 @@
 # Source Usage Cascade Governance Plan
 
-Status: active bridge / transitional source-usage governance note  
+Status: migrated bridge / historical transitional source-usage governance note  
 Scope: transition note from the earlier pilot governance plan to the reusable source usage cascade field kit
 
 ## 1. Current Owner
@@ -43,7 +43,7 @@ That content has been moved into the field kit/profile/example structure.
 - Do not add new setup logic here.
 - Do not treat this bridge as the repeated cascade workflow.
 - Do not put Enman-specific source categories here.
-- Do not delete this bridge until a later cleanup confirms the field kit/profile/example are sufficient.
+- Do not use this bridge as active routing; field kit/profile/example own the active source-usage flow.
 ```
 
 ## 4. Next Cleanup

@@ -221,3 +221,11 @@ documentation-update-workflow.md
 ```
 
 Historical note: F7C mirrored active reusable additions into the former candidate workspace before the F7D folder switch. After F7D/F7E, `planning/documentation/` is the active reusable documentation layer.
+
+## Portable Starter-Kit Adaptation Owner
+
+```text
+planning/documentation/PORTABLE-STARTER-KIT.md
+```
+
+Owns one-time guidance for copying/adapting the reusable documentation layer into a new project or documentation domain. It does not own normal daily documentation updates after the target project has its root use-case map and root profiles/maps.

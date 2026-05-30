@@ -490,7 +490,8 @@ Then use the active workflow/governance files:
 ```text
 planning/documentation/status-reconciliation-workflow.md
 planning/documentation/local-global-documentation-sync-workflow.md
-planning/documentation/source-usage-cascade-governance-plan.md
+planning/documentation/field-kits/source-usage-cascade-field-kit.md
+planning/source-usage-cascade-profile.md
 ```
 
 ## 6. Historical / Internal Status Notes
@@ -549,3 +550,11 @@ implementation archives
 chat/prompt notes
 unverified planning text
 ```
+
+Portable reusable documentation setup:
+
+```text
+planning/documentation/PORTABLE-STARTER-KIT.md
+```
+
+Read this only when copying/adapting the reusable documentation layer into a new project or documentation domain.

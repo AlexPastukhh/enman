@@ -1,4 +1,4 @@
-# Documentation Action Log
+﻿# Documentation Action Log
 
 Status: current documentation-layer logical action log  
 Scope: significant completed documentation-architecture, workflow, source-governance and planning-doc actions with short reasons
@@ -607,7 +607,7 @@ Follow-ups:
 Notes:
   This cleanup does not delete planning/documentation-legacy/, does not move root Enman project profiles and does not change use-case routing.
 
-### 2026-05-30 — Marked project-specific examples and planned reusable docs cleanup
+### 2026-05-30 - Marked project-specific examples and planned reusable docs cleanup
 
 Date:
   2026-05-30
@@ -632,7 +632,6 @@ Follow-ups:
   Run a dedicated cleanup/export batch only after reviewing active references. Do not delete planning/documentation-legacy/ in this batch.
 Notes:
   This batch does not create a cleanup-plan file in the repository, does not move root Enman profiles, does not change root use-case routing and does not delete any files.
-
 ### 2026-05-30 - Cleaned reusable docs layer support and project-specific artifacts
 
 Date:
@@ -667,3 +666,36 @@ Follow-ups:
   Later decide whether to keep documentation-action-log.md in active docs or seed/omit it for portable starter-kit export. Do not delete planning/documentation-legacy/ in this batch.
 Notes:
   This cleanup uses moves/reference updates only. It does not delete legacy, does not delete migration history and does not remove source-usage-cascade-governance-plan.md.
+
+### 2026-05-30 - Finalized portable reusable docs layer
+
+Date:
+  2026-05-30
+Action:
+  Moved documentation action log to Enman planning root, moved source usage governance bridge to migration, added portable starter-kit adaptation guide and removed the bridge from active source-usage routing.
+Type:
+  documentation portability / reusable layer finalization
+Status:
+  applied
+Why:
+  The reusable documentation layer should not contain Enman project action history or transitional source-usage bridge ownership. Copy/adaptation into another project needs a clear one-time guide for what to copy, adapt, omit and recreate.
+Changed files:
+  - planning/documentation/README.md
+  - planning/documentation/PORTABLE-STARTER-KIT.md
+  - planning/documentation/documentation-responsibility-map.md
+  - planning/documentation/documentation-update-workflow.md
+  - planning/documentation/documentation-responsibility-zone-review-workflow.md
+  - planning/planning-use-case-map.md
+  - planning/planning-doc-responsibility-map.md
+  - planning/README.md
+  - planning/source-usage-cascade-profile.md
+  - planning/documentation-action-log.md
+Moved files:
+  - planning/documentation/documentation-action-log.md -> planning/documentation-action-log.md
+  - planning/documentation/source-usage-cascade-governance-plan.md -> planning/documentation-migration/source-usage-cascade-governance-plan.md
+Layer impact:
+  planning/documentation/ now contains reusable docs logic, field kits, profiles, examples and the one-time portable starter-kit guide. Enman action history is root project history. Source usage active routing is field kit + root Enman profile + root pilots.
+Follow-ups:
+  Later decide whether to keep or archive planning/documentation-legacy/. For a new project, use PORTABLE-STARTER-KIT.md only during initial adaptation.
+Notes:
+  This batch preserves migrated source-usage bridge history and does not delete legacy or migration folders.

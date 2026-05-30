@@ -323,3 +323,11 @@ Track deferred cleanup in:
 ```text
 planning/planning-maintenance-register.md
 ```
+
+## Portable Starter-Kit Adaptation
+
+```text
+planning/documentation/PORTABLE-STARTER-KIT.md
+```
+
+Use only when copying/adapting the reusable documentation layer into a new project or documentation domain. It is not a normal daily read-order source after adaptation.

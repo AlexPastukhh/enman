@@ -431,7 +431,7 @@ Before finalizing a documentation update, decide whether the update is a signifi
 Update:
 
 ```text
-planning/documentation/documentation-action-log.md
+planning/documentation-action-log.md
 ```
 
 when the change affects:
