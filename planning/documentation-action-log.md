@@ -789,3 +789,33 @@ Follow-ups:
   Apply the same aggregate-local source pattern to ConnectionRequest, then AgreementProposalExchange. After all active aggregate drafts are prepared, derive `planning/domain/domain-source-sync-register.md`.
 Notes:
   This batch keeps implementation evidence marked as previously checked/archive/source-pass evidence unless explicitly rechecked in a later implementation-sync pass.
+
+### 2026-05-31 - Added ConnectionRequest aggregate local Sources blocks
+
+Date:
+  2026-05-31
+Action:
+  Applied the aggregate section source template to the ConnectionRequest aggregate draft.
+Type:
+  domain aggregate source/version/cascade preparation
+Status:
+  applied
+Why:
+  Active domain aggregate drafts need local section-level Sources blocks before a domain source-sync register can be derived. ConnectionRequest is the third aggregate pass because it owns request creation/review lifecycle and coordinates with ApplicantParty, Account and AgreementProposalExchange.
+Changed files:
+  - planning/domain/aggregates/connection-request.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added `Doc version: v0.1.0` to the ConnectionRequest aggregate draft.
+  - Added fenced local `Sources:` blocks to existing ConnectionRequest aggregate sections.
+  - Reclassified `## 2. Source Inputs` as aggregate-level overview rather than the only source authority.
+  - Clarified the scenario DATA rule: scenario-specific DATA is expected in scenario text spec `#DATA`; `planning/diagrams/scenario-data/` is reusable/shared/audited/transitional by default.
+Not changed:
+  - No domain source-sync register created.
+  - No slice draft edited.
+  - No broad Doc version pass performed.
+  - No ConnectionRequest domain behavior semantics intentionally changed.
+Follow-ups:
+  Apply the same aggregate-local source pattern to AgreementProposalExchange. After all active aggregate drafts are prepared, derive `planning/domain/domain-source-sync-register.md`.
+Notes:
+  This batch keeps implementation evidence marked as previously checked/archive/source-pass evidence unless explicitly rechecked in a later implementation-sync pass.

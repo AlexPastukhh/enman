@@ -1,9 +1,33 @@
 # Domain Aggregate Draft — ConnectionRequest
 
 Status: draft / second extraction pilot  
+Doc version: v0.1.0  
 Scope: connection request creation, request review lifecycle and request-to-agreement-exchange coordination
 
 ## 1. Purpose
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+    - planning/diagrams/scenario-text-specs/SC-07B-employee-request-review.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-07B-employee-request-review-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/domain/aggregates/applicant-party.md
+    - planning/domain/aggregates/account.md
+    - planning/domain/aggregates/agreement-proposal-exchange.md
+  Internal dependencies:
+    - none
+  Not checked:
+    - full UI sidecar coverage for request creation/review
+    - full source/version/cascade alignment for all request/review/agreement sources
+```
 
 `ConnectionRequest` owns the lifecycle of a client connection request.
 
@@ -23,11 +47,51 @@ It does not own ApplicantParty creation, AgreementProposalExchange creation, fil
 
 ## 2. Source Inputs
 
-Scenario sources:
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/diagrams/scenario-data/README.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+    - planning/diagrams/scenario-text-specs/SC-07B-employee-request-review.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-05-my-requests-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-06-employee-request-dashboard-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-07A-employee-request-details-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-07B-employee-request-review-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/tables/domain-drafts/domain-draft-02.md
+    - planning/domain/aggregates/agreement-proposal-exchange.md
+  Internal dependencies:
+    - none
+  Not checked:
+    - full UI sidecar coverage for request creation/review
+    - full source/version/cascade model for all request/review/agreement sources
+```
+
+This section is the aggregate-level reviewed source overview. Section-level `Sources:` blocks below are authoritative for local section work.
+
+Scenario text sources:
 
 ```text
 planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
 planning/diagrams/scenario-text-specs/SC-07B-employee-request-review.md
+```
+
+Scenario-specific DATA rule:
+
+```text
+Primary scenario-specific DATA belongs in the scenario text spec #DATA section.
+Use planning/diagrams/scenario-data/ only for reusable/shared/audited/transitional DATA sidecars.
+```
+
+Reusable/shared/audited/transitional DATA sidecars checked or referenced by the prior draft:
+
+```text
 planning/diagrams/scenario-data/SC-04-request-creation-data.md
 planning/diagrams/scenario-data/SC-07B-employee-request-review-data.md
 ```
@@ -52,7 +116,7 @@ planning/domain/aggregates/agreement-proposal-exchange.md
 planning/domain/scenario-to-aggregate-map.md
 ```
 
-Current implementation sources checked:
+Current implementation sources checked in prior archive/source pass:
 
 ```text
 Domain.EnergyManagement/Requests/ClientRequest.cs
@@ -72,9 +136,31 @@ Not checked:
 ```text
 Full UI sidecar coverage for request creation/review was not audited in this pass.
 Full source/version/cascade model is still deferred.
+Current implementation files and tests are not treated as freshly rechecked evidence unless explicitly reviewed in a later implementation-sync pass.
 ```
 
 ## 3. Aggregate Boundary
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/domain-discovery-workflow.md
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+    - planning/diagrams/scenario-text-specs/SC-07B-employee-request-review.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-07B-employee-request-review-behavior-items.md
+    - planning/domain/aggregates/applicant-party.md
+    - planning/domain/aggregates/account.md
+    - planning/domain/aggregates/agreement-proposal-exchange.md
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - current runtime implementation boundary beyond previously checked archive/source pass
+```
 
 Aggregate root:
 
@@ -124,6 +210,28 @@ AgreementProposalExchangeId used only when marking AgreementExchangeFailed
 
 ## 4. Owned State
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+    - planning/diagrams/scenario-text-specs/SC-07B-employee-request-review.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-07B-employee-request-review-behavior-items.md
+    - planning/domain/value-objects/object-address.md
+    - planning/domain/value-objects/rejection-feedback.md
+    - planning/domain/aggregates/applicant-party.md
+    - planning/domain/aggregates/account.md
+  Internal dependencies:
+    - Aggregate Boundary
+  Not checked:
+    - current persistence mapping / EF configuration
+```
+
 Root state:
 
 ```text
@@ -167,6 +275,33 @@ Agreement proposal document bytes.
 ```
 
 ## 5. Domain Methods / Commands
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+    - planning/diagrams/scenario-text-specs/SC-07B-employee-request-review.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-07B-employee-request-review-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/domain/value-objects/object-address.md
+    - planning/domain/value-objects/rejection-feedback.md
+    - planning/domain/aggregates/applicant-party.md
+    - planning/domain/aggregates/account.md
+    - planning/domain/aggregates/agreement-proposal-exchange.md
+  Internal dependencies:
+    - Aggregate Boundary
+    - Owned State
+  Not checked:
+    - application service orchestration beyond previously checked source pass
+    - current implementation code/tests beyond previously checked archive/source pass
+```
 
 ### `Create(applicantParty, details, objectAddress)`
 
@@ -401,6 +536,30 @@ planning/domain/aggregates/agreement-proposal-exchange.md
 
 ## 6. Invariants
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-07B-employee-request-review-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/domain/value-objects/object-address.md
+    - planning/domain/value-objects/rejection-feedback.md
+    - planning/domain/aggregates/applicant-party.md
+    - planning/domain/aggregates/account.md
+    - Domain Methods / Commands
+    - Owned State
+  Internal dependencies:
+    - Aggregate Boundary
+    - Owned State
+    - Domain Methods / Commands
+  Not checked:
+    - runtime enforcement / tests unless explicitly reviewed
+```
+
 | Invariant | Protected by | Source | Failure/error |
 |---|---|---|---|
 | Request cannot be created without persisted ApplicantParty. | `Create` validation | SC-04 / current implementation | `ApplicantPartyIsRequired`, `ApplicantPartyMustBePersisted` |
@@ -418,6 +577,27 @@ planning/domain/aggregates/agreement-proposal-exchange.md
 | AgreementExchangeFailed can only follow Approved. | `MarkAgreementExchangeFailed` | L2 agreement final refusal direction | `OnlyApprovedRequestCanBeMarkedAgreementExchangeFailed` |
 
 ## 7. Lifecycle / State Machine
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+    - planning/diagrams/scenario-text-specs/SC-07B-employee-request-review.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-07B-employee-request-review-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/domain/aggregates/agreement-proposal-exchange.md
+    - Domain Methods / Commands
+    - Invariants
+  Internal dependencies:
+    - Domain Methods / Commands
+    - Invariants
+  Not checked:
+    - full request/review/agreement final-refusal implementation and tests
+```
 
 Request statuses:
 
@@ -459,6 +639,30 @@ MarkAgreementExchangeFailed from InReview or Rejected.
 
 ## 8. Impossible States Prevented
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-07B-employee-request-review-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - planning/domain/value-objects/object-address.md
+    - planning/domain/value-objects/rejection-feedback.md
+    - planning/domain/aggregates/applicant-party.md
+    - planning/domain/aggregates/agreement-proposal-exchange.md
+    - Invariants
+    - Lifecycle / State Machine
+    - Domain Methods / Commands
+  Internal dependencies:
+    - Invariants
+    - Lifecycle / State Machine
+    - Domain Methods / Commands
+  Not checked:
+    - current runtime code/tests unless explicitly reviewed
+```
+
 | Impossible state | Prevented by | Source |
 |---|---|---|
 | Request without object address. | `Create` validation + `Address` value object validation | REQ-IBS-003 / REQ-VI-001 |
@@ -471,12 +675,59 @@ MarkAgreementExchangeFailed from InReview or Rejected.
 
 ## 9. Value Objects Used
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/domain/value-object-drafting-workflow.md
+    - planning/domain/value-object-draft-template.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/domain/value-objects/object-address.md
+    - planning/domain/value-objects/rejection-feedback.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-07B-employee-request-review-behavior-items.md
+  Internal dependencies:
+    - Owned State
+    - Domain Methods / Commands
+    - Invariants
+  Not checked:
+    - whether future request snapshot/refusal metadata needs additional value-object docs
+```
+
 | Value object | File | Purpose in this aggregate |
 |---|---|---|
 | ObjectAddress / Address | `planning/domain/value-objects/object-address.md` | Required object address for request creation. |
 | RejectionFeedback | `planning/domain/value-objects/rejection-feedback.md` | Optional feedback value when an employee rejects review. |
 
 ## 10. Cross-Aggregate Relations
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/domain-discovery-workflow.md
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/domain/aggregates/applicant-party.md
+    - planning/domain/aggregates/account.md
+    - planning/domain/aggregates/agreement-proposal-exchange.md
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+    - planning/diagrams/scenario-text-specs/SC-07B-employee-request-review.md
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-07B-employee-request-review-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - Aggregate Boundary
+    - Domain Methods / Commands
+  Internal dependencies:
+    - Aggregate Boundary
+    - Domain Methods / Commands
+    - Invariants
+  Not checked:
+    - application service implementation beyond prior source pass
+```
 
 References to other aggregates:
 
@@ -506,6 +757,34 @@ Application coordination needed:
 
 ## 11. Behavior Coverage
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+  Content:
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-05-my-requests-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-06-employee-request-dashboard-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-07A-employee-request-details-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-07B-employee-request-review-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
+    - Domain Methods / Commands
+    - Invariants
+    - Lifecycle / State Machine
+    - Impossible States Prevented
+    - Cross-Aggregate Relations
+  Internal dependencies:
+    - Domain Methods / Commands
+    - Invariants
+    - Lifecycle / State Machine
+    - Impossible States Prevented
+  Not checked:
+    - UI sidecar behavior not audited in this pass
+    - all request/review tests in current repo state
+```
+
 | Source item | Covered by | Status | Notes |
 |---|---|---|---|
 | REQ-CMD-CREATE-001 | `Create` | covered | Creates request from valid ApplicantParty/details/address. |
@@ -524,6 +803,25 @@ Application coordination needed:
 ## 12. Persistence / EF Notes
 
 ```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - Owned State
+    - Value Objects Used
+    - Aggregate Boundary
+    - Cross-Aggregate Relations
+    - RequestReview child entity
+  Internal dependencies:
+    - Aggregate Boundary
+    - Owned State
+    - Value Objects Used
+  Not checked:
+    - current EF configuration unless explicitly reviewed
+```
+
+```text
 RequestReview is an owned/child entity of ConnectionRequest for domain purposes.
 Review has no repository.
 Request stores scalar ids for external aggregate/account/employee references.
@@ -531,6 +829,26 @@ Application/repository layer is responsible for loading related ApplicantParty, 
 ```
 
 ## 13. Cross-Layer Placement Notes
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/domain-responsibility-map.md
+    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md
+  Content:
+    - Aggregate Boundary
+    - Domain Methods / Commands
+    - Cross-Aggregate Relations
+    - Behavior Coverage
+    - planning/domain/scenario-to-aggregate-map.md
+  Internal dependencies:
+    - Aggregate Boundary
+    - Cross-Aggregate Relations
+    - Behavior Coverage
+  Not checked:
+    - API/client/slice implementation unless explicitly reviewed
+```
 
 Application layer:
 
@@ -562,6 +880,28 @@ Testing:
 
 ## 14. Questions / Decisions
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+  Content:
+    - Source Inputs
+    - Behavior Coverage
+    - Cross-Layer Placement Notes
+    - planning/domain/value-objects/object-address.md
+    - planning/domain/value-objects/rejection-feedback.md
+    - planning/domain/aggregates/applicant-party.md
+    - planning/domain/aggregates/account.md
+    - planning/domain/aggregates/agreement-proposal-exchange.md
+  Internal dependencies:
+    - Source Inputs
+    - Behavior Coverage
+    - Cross-Aggregate Relations
+  Not checked:
+    - sources needed to resolve open snapshot/failure-metadata/feedback policy questions
+```
+
 Open:
 
 ```text
@@ -592,7 +932,28 @@ Deferred:
 ## 15. Source Delta / Change Log
 
 ```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/source-cascade-sync-workflow.md
+  Content:
+    - changed sections in this ConnectionRequest aggregate draft
+    - planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md
+  Internal dependencies:
+    - all changed sections in this draft
+  Not checked:
+    - downstream aggregates/slices not reviewed in this pass
+```
+
+```text
 - Extracted as second aggregate draft after AgreementProposalExchange pilot.
 - Added ObjectAddress and RejectionFeedback value-object draft references.
 - Mapped SC-04 and SC-07B behavior items to the Request / ConnectionRequest aggregate boundary.
+- Added `Doc version: v0.1.0`.
+- Added local section-level fenced `Sources:` blocks for aggregate draft work.
+- Reclassified `## 2. Source Inputs` as overview; section-level `Sources:` blocks are authoritative for local section work.
+- Clarified scenario-specific DATA rule: prefer scenario text spec #DATA; use `planning/diagrams/scenario-data/` only for reusable/shared/audited/transitional sidecars.
+- No ConnectionRequest domain behavior semantics changed in this pass.
 ```
