@@ -1,0 +1,199 @@
+diff --git a/planning/documentation/README.md b/planning/documentation/README.md
+index e787e52..00bca89 100644
+--- a/planning/documentation/README.md
++++ b/planning/documentation/README.md
+@@ -1,7 +1,7 @@
+ # Documentation Update Workflow Index
+ 
+ Status: current documentation layer index / read order  
+-Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs, response-level commands and navigation updates
++Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs, response-level commands, working example coverage and navigation updates
+ 
+ ## 1. Purpose
+ 
+@@ -19,6 +19,7 @@ A documentation update agent must:
+ - reconcile docs with implemented/planned/deferred status;
+ - synchronize local docs with shared indexes/registers;
+ - update navigation/responsibility maps together with new docs;
++- decide whether a working example is needed when templates, output shapes, commands or draft formats change;
+ - use direct GitHub edits only when explicitly asked to apply changes;
+ - use one file per commit by default for direct GitHub edits;
+ - use archive/replacement packages when manual application or broad generated replacement is more practical.
+@@ -36,6 +37,8 @@ planning/documentation/documentation-update-workflow.md
+ planning/documentation/status-reconciliation-workflow.md
+ planning/documentation/local-global-documentation-sync-workflow.md
+ planning/documentation/reviewable-agent-output-and-commands-workflow.md
++planning/documentation/example-coverage-workflow.md
++planning/documentation/examples/README.md
+ planning/documentation/documentation-update-agent-prompt.md
+ ```
+ 
+@@ -46,6 +49,7 @@ planning/README.md
+ planning/planning-doc-responsibility-map.md
+ planning/planning-agent-protocol.md
+ planning/planning-workflow-current.md
++planning/planning-use-case-map.md
+ planning/replacement-file-generation-guide.md
+ planning/vkr-clean-reference.md
+ ```
+@@ -77,8 +81,9 @@ For broad documentation updates:
+ 9. planning/documentation/documentation-update-workflow.md
+ 10. planning/documentation/status-reconciliation-workflow.md
+ 11. planning/documentation/local-global-documentation-sync-workflow.md
+-12. planning/replacement-file-generation-guide.md, if archive/replacement mode is relevant
+-13. relevant domain/API/testing/slice/client/scenario docs for the requested area
++12. planning/documentation/example-coverage-workflow.md, if the update changes templates, output shapes, response commands, output modes, draft formats or example coverage
++13. planning/replacement-file-generation-guide.md, if archive/replacement mode is relevant
++14. relevant domain/API/testing/slice/client/scenario docs for the requested area
+ ```
+ 
+ For answer-format, reviewable-output or response-command work:
+@@ -87,6 +92,15 @@ For answer-format, reviewable-output or response-command work:
+ planning/documentation/reviewable-agent-output-and-commands-workflow.md
+ ```
+ 
++For working example coverage decisions:
++
++```text
++planning/documentation/example-coverage-workflow.md
++planning/documentation/examples/README.md
++```
++
++Use this when adding or changing templates, workflows with expected output, response commands, output modes, draft formats or example indexes.
++
+ ## 4. Responsibility Routing Rule
+ 
+ If deciding which planning layer information belongs to, start with:
+@@ -111,6 +125,8 @@ preflight docs update plan format -> documentation-update-plan-workflow.md
+ local/global sync process -> local-global-documentation-sync-workflow.md
+ status reconciliation process -> status-reconciliation-workflow.md
+ agent answer/review format and response-level commands -> reviewable-agent-output-and-commands-workflow.md
++example coverage decision process -> example-coverage-workflow.md
++documentation-layer examples navigation -> examples/README.md
+ reusable prompt -> documentation-update-agent-prompt.md
+ ```
+ 
+@@ -187,9 +203,25 @@ For non-trivial answers, audits, plans, reviews, handoffs or response-level comm
+ planning/documentation/reviewable-agent-output-and-commands-workflow.md
+ ```
+ 
+-This workflow defines response levels, sources/coverage blocks, section-level sources and commands such as recheck, clarify, keep prev and no ch.
++This workflow defines response levels, sources/coverage, section-level sources and commands such as recheck, clarify, keep prev and no ch.
++
++## 10. Example Coverage And Examples Index
++
++For reusable templates, workflows with expected output, response commands, output modes, draft formats or repeated chat failures caused by missing examples, use:
++
++```text
++planning/documentation/example-coverage-workflow.md
++```
++
++For documentation-layer working example navigation, use:
++
++```text
++planning/documentation/examples/README.md
++```
++
++Examples are supporting artifacts. They should demonstrate correct output or usage shape, but must not duplicate routing, source-mode, output-mode, permission or workflow activation logic owned by use-case maps and workflow files.
+ 
+-## 10. Scoped Sync Notes
++## 11. Scoped Sync Notes
+ 
+ Scoped sync notes are case-specific documentation synchronization notes. They are useful for trace/audit/context, but they are not reusable workflows or global architecture principles.
+ 
+@@ -203,7 +235,7 @@ planning/documentation/l2-scenario-status-marker-sync-note.md
+ 
+ Do not treat scoped sync notes as canonical workflow files. If a scoped sync note contains a reusable rule, promote that rule into the correct workflow or architecture file through a normal documentation update.
+ 
+-## 11. Draft-Driven Discovery Scope Note
++## 12. Draft-Driven Discovery Scope Note
+ 
+ Draft-driven discovery is currently a slice-layer discovery loop.
+ 
+diff --git a/planning/documentation/documentation-responsibility-map.md b/planning/documentation/documentation-responsibility-map.md
+index 7cbd8eb..1ba1f7a 100644
+--- a/planning/documentation/documentation-responsibility-map.md
++++ b/planning/documentation/documentation-responsibility-map.md
+@@ -55,6 +55,8 @@ This file owns only documentation-layer placement.
+ | Local detail to shared index/register sync process | `local-global-documentation-sync-workflow.md` | How local notes/questions should become globally discoverable. |
+ | Status vs implementation evidence reconciliation | `status-reconciliation-workflow.md` | How to update docs when code/tests/generated artifacts changed. |
+ | Reviewable answer format and response-level commands | `reviewable-agent-output-and-commands-workflow.md` | Level 1/2/3 answers, sources/coverage, recheck/clarify/keep prev/no ch/section operations. |
++| Working example coverage decision process | `example-coverage-workflow.md` | Decides whether a new/changed template, workflow output, response command, output mode or draft format needs a working example. |
++| Documentation-layer working example index | `examples/README.md` | Navigation and coverage index for documentation-layer examples. It does not own routing/source/output/permission logic. |
+ | Reusable documentation update prompt | `documentation-update-agent-prompt.md` | Derived prompt for other chats. Not canonical if it conflicts with governance docs. |
+ | Scoped documentation sync notes | `*sync-note.md` or future `sync-notes/` | Case-specific notes. Not reusable workflows or global principles. |
+ 
+@@ -64,7 +66,7 @@ Classify the new information:
+ 
+ ```text
+ 1. Information type:
+-   architecture principle / workflow step / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule.
++   architecture principle / workflow step / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule / working example / example coverage decision.
+ 
+ 2. Existing owner:
+    Which file above already owns this type?
+@@ -80,6 +82,9 @@ Classify the new information:
+ 
+ 6. Duplication risk:
+    Would this repeat a rule already owned by another file?
++
++7. Example coverage impact:
++   Does adding or changing this information create or change a reusable template, output shape, command behavior or draft format that needs an example coverage decision?
+ ```
+ 
+ ## 5. Conflict Rules
+@@ -91,6 +96,8 @@ If documentation-layer files conflict:
+ - documentation-responsibility-map.md wins for documentation-layer placement.
+ - planning/planning-doc-responsibility-map.md wins for choosing the planning layer.
+ - workflow files win for their own process steps.
++- example-coverage-workflow.md wins for example coverage decision steps.
++- examples/README.md is an index and does not override owner workflows, templates or use-case rows.
+ - reviewable-agent-output-and-commands-workflow.md wins for answer format and response-level commands.
+ - documentation-update-agent-prompt.md is derived/supporting and does not override canonical docs.
+ - scoped sync notes do not override reusable workflow files.
+@@ -116,6 +123,7 @@ Suggested suffixes:
+ | Workflow | `*-workflow.md` |
+ | Responsibility map | `*-responsibility-map.md` |
+ | Template | `*-template.md` |
++| Examples index / examples folder navigation | `examples/README.md` or `*-examples.md` |
+ | Scoped sync note | `*-sync-note.md` |
+ | Reusable prompt | `*-agent-prompt.md` |
+ | Architecture principles | `*-architecture-principles.md` |
+@@ -126,6 +134,7 @@ Suggested suffixes:
+ - Do not put global architecture theory into workflow files.
+ - Do not put workflow steps into architecture principles unless they are only high-level principles.
+ - Do not duplicate owner tables in multiple files.
++- Do not put command routing, source-mode, output-mode or permission logic into example files.
+ - Do not treat reusable prompts as canonical rules.
+ - Do not treat scoped sync notes as reusable workflows.
+ - Do not add a new file without updating README.md when it must be discoverable.
+@@ -141,5 +150,7 @@ The documentation layer is well-routed when:
+ - architecture principles hold theory;
+ - this map handles documentation-layer placement;
+ - workflow files stay process-focused;
++- example coverage decisions are made by the example coverage workflow;
++- examples remain supporting artifacts and link to their owner files instead of copying logic;
+ - prompts and sync notes are clearly supporting/scoped artifacts.
+ ```
+diff --git a/planning/planning-use-case-map.md b/planning/planning-use-case-map.md
+index 904528c..9d5aa1e 100644
+--- a/planning/planning-use-case-map.md
++++ b/planning/planning-use-case-map.md
+@@ -299,7 +299,7 @@ Use a shorter version when the update is simple.
+ | “новый чат”, “вкатись”, “разберись с planning docs”, “first pass”, no reliable active context | New Chat Onboarding / first planning pass | New or uncertain | Full first time; targeted/reuse after checked context exists | GitHub/repo by default; archive only if user requests archive source mode or provides an archive | workflow activation; planning agent protocol; role identification when specialized work is likely; reviewable output | `planning/README.md`, `planning/workflow-activation-map.md`, `planning/planning-use-case-map.md`, `planning/planning-agent-protocol.md`, `planning/planning-doc-responsibility-map.md`; `planning/agent-roles-and-required-actions.md` when role matters | README + use-case map + planning agent protocol | Short onboarding preflight, selected next use case, checked/not-checked sources, next action | No edits/packages unless explicitly requested |
+ | “посмотри / распланируй / проверь docs” | Non-trivial planning/docs work | Optional | Full first time; targeted later | GitHub/archive/conversation by context | workflow activation; reviewable output | `planning/README.md`, `workflow-activation-map.md`, `planning-doc-responsibility-map.md` | README + activation map | Reviewable answer/plan | Edits require approval |
+ | “обнови docs” | Documentation update | Optional | Targeted/full by scope | GitHub for writes; archive for read-only if requested | docs update plan/workflow; local-global sync | documentation README/map/workflows | activation map + docs workflows | Plan or applied update | GitHub writes require approval |
+-| “добавь template / workflow / command / draft format / пример” | Documentation governance update | Optional | Full first time; targeted later | GitHub/archive/conversation by context | docs update workflow; example coverage decision when template/output shape changes; reviewable output | documentation README/map/workflows; relevant owner workflow/template; principle section references in §3A | docs architecture principles + use-case map | Update plan or replacement package; example coverage decision if applicable | Edits/packages require approval |
++| “добавь template / workflow / command / draft format / пример” | Documentation governance update | Optional | Full first time; targeted later | GitHub/archive/conversation by context | docs update workflow; example coverage decision when template/output shape changes; reviewable output | documentation README/map/workflows; `planning/documentation/example-coverage-workflow.md` when template/output/command/draft example coverage matters; relevant owner workflow/template; principle section references in §3A | docs architecture principles + use-case map + example coverage workflow | Update plan or replacement package; example coverage decision if applicable | Edits/packages require approval |
+ | “давай архив”, “собери архив”, “replacement package”, “archive for manual apply” | Replacement archive/package generation | Optional | Targeted/full by package scope | GitHub/archive/conversation by context | replacement file generation guide; docs update workflow when docs change; reviewable output | `planning/replacement-file-generation-guide.md`, target files, docs update workflow when docs are changed | replacement guide + workflow activation | ZIP package with `MANIFEST.md`, `APPLY.md`, `replacement-files/<repo-relative-path>` complete files | Direct repo edits not allowed unless separately approved |
+ | “поправь ссылки во многих файлах” | Mechanical link/path/name sync | Optional | Targeted/broad search | GitHub or archive | docs update workflow; local-global sync | target files/search source | docs update workflow output mode rules | Link-sync plan/one bundled commit when tool-supported | Bundled/bulk mode should be used when approved; if unavailable, stop and disclose before per-file writes |
+ | “задрафти slice” | Slice draft work | Usually new | Full first time | Sources required by slice workflow | slice workflow chain; testing selector when needed | slice README/map/workflow/principles/test workflow/template; `planning/testing/testing-responsibility-map.md` when test-layer-specific guidance is needed | activation map + slice README/map | Slice draft/plan | File writes require approval |
+@@ -409,7 +409,7 @@ Steps:
+ 2. Use documentation responsibility routing to find the owner file.
+ 3. Re-read the relevant principle sections from §3A instead of copying their logic here.
+ 4. Decide whether the change creates or changes a template, output shape, command behavior or draft format.
+-5. If there is a template, decide that a working example is needed by default unless the owner file is routing-only or the example would duplicate another example.
++5. If there is a template, use planning/documentation/example-coverage-workflow.md and decide that a working example is needed by default unless the owner file is routing-only or the example would duplicate another example.
+ 6. If an example is not added, record the reason in the relevant index or plan.
+ 7. Examples may link to owner use cases/workflows/templates, but must not duplicate routing, source-mode, output-mode or permission logic.
+ 8. Keep source/output/permission logic in planning-use-case-map.md and owner workflows.

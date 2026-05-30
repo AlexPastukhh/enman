@@ -52,6 +52,7 @@ export const useCreateConnectionRequestForm = ({
   applicantParties,
   onSuccess,
 }: UseCreateConnectionRequestFormOptions) => {
+  
   const initialApplicantPartyId = useMemo(
     () => findInitialApplicantPartyId(applicantParties),
     [applicantParties],

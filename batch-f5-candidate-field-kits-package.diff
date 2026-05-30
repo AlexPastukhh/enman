@@ -1,0 +1,2006 @@
+diff --git a/planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md b/planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+index 3d5ad92..a702514 100644
+--- a/planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
++++ b/planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+@@ -87,3 +87,23 @@ Meaning:
+ ```
+ 
+ These outputs are candidate-only and do not switch canonical documentation ownership.
++
++## 8. Candidate Field Kit Outputs
++
++F5 candidate field-kit split introduced:
++
++```text
++planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
++planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
++planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
++```
++
++F5 also created candidate Enman project-instance files derived from those kits:
++
++```text
++planning/documentation-reusable-candidate/enman-status-evidence-profile.md
++planning/documentation-reusable-candidate/enman-shared-visibility-map.md
++planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
++```
++
++These files are candidate-only and do not promote project-instance files to active `planning/` root.
+diff --git a/planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md b/planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+index 208b2af..287ee3f 100644
+--- a/planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
++++ b/planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+@@ -1,66 +1,64 @@
+ # Portability Follow-ups
+ 
+ Status: candidate deferred review list  
+-Scope: items intentionally not forced into reusable principles, scenario-driven profile or Enman adapter during F4
++Scope: deferred work that remains after F5 field-kit and project-instance split
+ 
+ > Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It tracks deferred work for later candidate migration batches.
+ 
+ ## 1. Purpose
+ 
+-F4 separates obvious reusable principles, scenario-driven profile material and Enman-specific adapter mappings.
++F4 separated obvious reusable principles, scenario-driven profile material and Enman-specific adapter mappings.
+ 
+-Some material should not be forced into those files yet because it needs workflow, field-kit, template or example review.
++F5 separated the main field-kit/project-instance responsibilities for status reconciliation, shared visibility and source usage cascade.
+ 
+-This file preserves those follow-ups so they are not lost or incorrectly dumped into the Enman adapter.
++This file now tracks what remains after that split.
+ 
+ ## 2. Follow-up Table
+ 
+-| ID | Origin sections | Topic | Why deferred | Likely owner | Target batch |
+-|---|---|---|---|---|---|
+-| PF-001 | 12A, 13, 14, 15 | Source usage / cascade field-kit extraction | Reusable principle is clear, but row model, reviewed_against, sync_status and section-source blocks need setup/tooling review. | `source-usage-cascade-field-kit.md` or revised source usage governance file | F5 |
+-| PF-002 | 10, 11, 20, 26 | Status reconciliation / evidence-current-reality model | Reusable principle is clear, but evidence model differs across software, notes, planning, research and other domains. | `status-reconciliation-workflow.md` + project evidence profile/adapter section | F5 |
+-| PF-003 | 16 | Shared Visibility Map setup | Local/global principle is clear, but reusable setup and Enman exact target map need workflow/adapter alignment. | `local-global-documentation-sync-workflow.md` + adapter shared visibility map | F5 |
+-| PF-004 | 14, 16, 18, 21 | Examples extraction | Concrete examples should be separate, but exact example files are easier after F4/F5 owner docs stabilize. | candidate examples folder / examples README | F6 or after F5 |
+-| PF-005 | F3 open questions | Final naming and canonical switch decisions | Candidate names may change before final reusable layer switch. | migration plan | later switch batch |
+-| PF-006 | 23, 24B | Archive/package and command preservation details | Principles keep the boundary, but detailed output/source command semantics are owned elsewhere. | documentation update workflow / replacement guide / use-case map | later cleanup if needed |
++| ID | Origin sections | Topic | F5 status | Remaining work | Likely owner | Target batch |
++|---|---|---|---|---|---|---|
++| PF-001 | 12A, 13, 14, 15 | Source usage / cascade field-kit extraction | addressed in candidate | Review field kit/profile/example after use; decide whether old governance bridge can be deleted. | `source-usage-cascade-field-kit.md`, Enman source profile | F6 or after pilot |
++| PF-002 | 10, 11, 20, 26 | Status reconciliation / evidence-current-reality model | addressed in candidate | Review Enman profile against real docs/evidence before active promotion. | `status-reconciliation-field-kit.md`, Enman status profile | F6 / active promotion |
++| PF-003 | 16 | Shared Visibility Map setup | addressed in candidate | Review Enman map against active registers before active promotion. | `shared-visibility-map-field-kit.md`, Enman shared visibility map | F6 / active promotion |
++| PF-004 | 14, 16, 18, 21 | Examples extraction | partially addressed | Three starter examples exist; more examples may be added after field-kit usage. | candidate examples folder / examples README | after F5 review |
++| PF-005 | F3 open questions | Final naming and canonical switch decisions | still open | Decide final reusable principles name, adapter naming, active promotion path. | migration plan | later switch batch |
++| PF-006 | 23, 24B | Archive/package and command preservation details | still open if needed | Principles keep the boundary; detailed command/source semantics remain in owner workflows. | documentation update workflow / replacement guide / use-case map | later cleanup if needed |
+ 
+-## 3. F5 Candidates
++## 3. F5 Outputs
+ 
+-F5 should focus on the three key files already discussed:
++F5 candidate outputs:
+ 
+ ```text
++planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+ planning/documentation-reusable-candidate/status-reconciliation-workflow.md
++planning/documentation-reusable-candidate/enman-status-evidence-profile.md
++
++planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+ planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
++planning/documentation-reusable-candidate/enman-shared-visibility-map.md
++
++planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+ planning/documentation-reusable-candidate/source-usage-cascade-governance-plan.md
++planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+ ```
+ 
+-Expected treatment:
+-
+-| File | F5 direction |
+-|---|---|
+-| `status-reconciliation-workflow.md` | Add/clarify applicability gate and domain-specific evidence/current-reality model setup. |
+-| `local-global-documentation-sync-workflow.md` | Keep as reusable workflow, but make Shared Visibility Map project-defined. |
+-| `source-usage-cascade-governance-plan.md` | Likely convert or split toward a source usage/cascade field kit. |
+-
+ ## 4. F6+ Candidates
+ 
+ After F5, consider:
+ 
+ ```text
+-- extracting concrete examples into candidate examples files;
++- reviewing the field kits against actual use;
++- deleting or archiving the source usage governance bridge after review;
++- adding more examples if workflows/templates are used;
+ - deciding final reusable principles filename;
+-- deciding whether Enman adapter becomes `enman-docs-adapter.md` permanently or a generic `project-docs-adapter.md` template is added;
++- deciding whether Enman adapter remains `enman-docs-adapter.md` or a generic project adapter template is added;
+ - deciding canonical switch process;
+-- deciding whether active `planning/documentation/` is replaced, archived or kept as Enman project docs.
++- deciding whether active `planning/documentation/` is replaced, archived or kept as Enman project docs;
++- deciding whether Enman project-instance files should be promoted into active `planning/` root.
+ ```
+ 
+ ## 5. Guardrail
+ 
+-Do not use this file as a substitute for doing the follow-up work.
++Do not treat addressed follow-ups as final active docs.
+ 
+-A follow-up row means:
+-
+-```text
+-This was intentionally not solved in F4.
+-Review it in the target batch with the right owner workflow/field kit/template/adapter.
+-```
++F5 outputs are candidate-only until a later migration/switch batch approves promotion.
+diff --git a/planning/documentation-reusable-candidate/README.md b/planning/documentation-reusable-candidate/README.md
+index 79f291c..e7970bf 100644
+--- a/planning/documentation-reusable-candidate/README.md
++++ b/planning/documentation-reusable-candidate/README.md
+@@ -91,6 +91,34 @@ Candidate read order for portability/split work:
+ 
+ These files are still candidate-only and do not replace the active documentation layer until a later migration/switch batch approves it.
+ 
++## 2C. Candidate Field Kit / Project Instance Outputs
++
++F5 candidate field-kit split introduced these candidate-only files:
++
++```text
++planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
++planning/documentation-reusable-candidate/status-reconciliation-workflow.md
++planning/documentation-reusable-candidate/enman-status-evidence-profile.md
++
++planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
++planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
++planning/documentation-reusable-candidate/enman-shared-visibility-map.md
++
++planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
++planning/documentation-reusable-candidate/source-usage-cascade-governance-plan.md
++planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
++```
++
++Candidate examples added for these kits:
++
++```text
++planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
++planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
++planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
++```
++
++F5 keeps the field kits reusable, Enman answers project-specific and examples demonstrative.
++
+ ## 3. Read Order For Documentation-Layer Work
+ 
+ For documentation-layer architecture/routing work:
+diff --git a/planning/documentation-reusable-candidate/enman-docs-adapter.md b/planning/documentation-reusable-candidate/enman-docs-adapter.md
+index 3cbab6f..ec5d87d 100644
+--- a/planning/documentation-reusable-candidate/enman-docs-adapter.md
++++ b/planning/documentation-reusable-candidate/enman-docs-adapter.md
+@@ -264,6 +264,18 @@ Owner:
+ planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+ ```
+ 
++## 13A. Specific Enman Project-Instance Files
++
++F5 candidate kit split created specific Enman instance files so this adapter can stay an overview instead of becoming a dumping ground.
++
++```text
++planning/documentation-reusable-candidate/enman-status-evidence-profile.md
++planning/documentation-reusable-candidate/enman-shared-visibility-map.md
++planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
++```
++
++Use those files for concrete Enman answers produced by field kits.
++
+ ## 14. Do Not
+ 
+ ```text
+diff --git a/planning/documentation-reusable-candidate/enman-shared-visibility-map.md b/planning/documentation-reusable-candidate/enman-shared-visibility-map.md
+new file mode 100644
+index 0000000..07355ac
+--- /dev/null
++++ b/planning/documentation-reusable-candidate/enman-shared-visibility-map.md
+@@ -0,0 +1,50 @@
++# Enman Shared Visibility Map
++
++Status: candidate Enman project-instance map  
++Scope: concrete local-detail to shared-visibility targets for Enman documentation
++
++> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not active Enman source of truth until a later migration/switch batch approves it.
++
++## 1. Purpose
++
++This file answers the Shared Visibility Map field kit for Enman.
++
++Kit owner:
++
++```text
++planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
++```
++
++Repeated workflow:
++
++```text
++planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
++```
++
++## 2. Shared Visibility Table
++
++| Local detail type | Local owner | Shared visibility target | Mirror condition | Local-only allowed? | Notes |
++|---|---|---|---|---|---|
++| Slice open question | `planning/slices/**` | `planning/slices/slice-questions-register.md` | affects future slice/domain/API/testing work | yes, if truly local to one slice and marked local-only | Exact target may change after active migration. |
++| Slice extension point | `planning/slices/**` | `planning/slices/slice-extension-points-register.md` | future extension or cross-slice reuse likely | yes, with reason | |
++| Slice implementation note | `planning/slices/**` | `planning/slices/slice-implementation-notes-register.md` | affects implementation status/evidence/future work | yes, with reason | |
++| Scenario question | `planning/diagrams/**` | `planning/diagrams/scenario-questions-register.md` | affects scenario behavior, DATA or behavior items | yes, with reason | |
++| ADR candidate | architecture/API/client/testing docs | `planning/adr/adr-candidates.md` | architecture decision may need formal ADR | yes, with reason | |
++| Architecture decision note | architecture/API/client/testing docs | `planning/adr/architecture-decision-notes.md` | decision affects multiple docs/layers | no, unless temporary | |
++| New file/folder | any planning layer | relevant README/index | file should be discoverable | no | update navigation/read order. |
++| External-output wording issue | internal planning docs | `planning/vkr-clean-reference.md` or `planning/thesis/` | affects VKR/thesis/public-facing wording | yes, if not external-facing yet | Candidate mapping only. |
++
++## 3. Do Not
++
++```text
++- Do not mirror every local note automatically.
++- Do not bury cross-file questions only in local files.
++- Do not use this candidate map as active Enman routing before a switch batch.
++```
++
++## 4. Related Files
++
++```text
++planning/documentation-reusable-candidate/enman-docs-adapter.md
++planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
++```
+diff --git a/planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md b/planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+new file mode 100644
+index 0000000..9895486
+--- /dev/null
++++ b/planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+@@ -0,0 +1,92 @@
++# Enman Source Usage Cascade Profile
++
++Status: candidate Enman project-instance profile  
++Scope: concrete Enman source/consumer categories, row conventions and cascade triggers
++
++> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not active Enman source of truth until a later migration/switch batch approves it.
++
++## 1. Purpose
++
++This file answers the source usage cascade field kit for Enman.
++
++Kit owner:
++
++```text
++planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
++```
++
++Generic example:
++
++```text
++planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
++```
++
++## 2. Source Categories
++
++| Source category | Candidate Enman paths |
++|---|---|
++| Scenario text/spec source | `planning/diagrams/scenario-text-specs/` |
++| Scenario DATA source | `planning/diagrams/scenario-data/` |
++| Scenario behavior item source | `planning/diagrams/scenario-behavior-items/` |
++| Scenario clarification source | `planning/diagrams/scenario-clarifications/` |
++| Domain source | domain drafts/decisions where accepted/current |
++| Slice source | `planning/slices/`, `planning/slices/l2/`, `planning/slices/cross-cutting/` |
++| Architecture/API/client/testing source | `planning/architecture/`, `planning/api/`, `planning/client/`, `planning/testing/` |
++| External-output source/consumer | `planning/vkr-clean-reference.md`, `planning/thesis/` |
++
++## 3. Consumer Categories
++
++| Consumer category | Examples |
++|---|---|
++| DATA/behavior consumers | derived scenario DATA and behavior item sets |
++| Domain consumers | domain drafts that use scenario/DATA/behavior source |
++| Slice consumers | slice docs that use scenario/domain/source material |
++| API/testing consumers | contracts, error contracts, testing plans and E2E workflows |
++| External-output consumers | VKR/thesis materials that consume internal planning docs |
++
++## 4. Candidate Row Shape
++
++| Field | Enman convention |
++|---|---|
++| source_id | repo-relative path + optional section/scope |
++| source_scope | scenario/data/behavior/domain/slice/API/testing section or row |
++| source_status | draft, accepted, current, historical, superseded |
++| consumer_id | repo-relative file path |
++| consumer_scope | downstream section/decision/claim |
++| reviewed_against | commit/date/source version or explicit reviewed source state |
++| sync_status | current, stale, needs-review, metadata-only-reviewed, not-applicable |
++| review_outcome | no-change, update-needed, follow-up, superseded, blocked |
++| last_reviewed | date/commit/review marker |
++| notes | short reason only |
++
++## 5. Cascade Triggers
++
++Run cascade review when:
++
++```text
++- scenario/source behavior changes;
++- DATA/behavior items change;
++- domain interpretation changes;
++- slice scope changes;
++- API/testing contract or evidence changes;
++- external-facing VKR/thesis claim depends on changed internal source.
++```
++
++## 6. Pilot Scope
++
++Recommended first pilot:
++
++```text
++one scenario source -> one DATA/behavior item set -> one domain/slice consumer -> one external/evidence-related claim if relevant
++```
++
++Keep the pilot small enough to prove row shape and review value.
++
++## 7. Do Not
++
++```text
++- Do not create broad cascade review for every docs change by default.
++- Do not copy upstream truth into downstream files just for self-containment.
++- Do not treat version markers as source truth by themselves.
++- Do not use this candidate profile as active Enman routing before a switch batch.
++```
+diff --git a/planning/documentation-reusable-candidate/enman-status-evidence-profile.md b/planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+new file mode 100644
+index 0000000..1560741
+--- /dev/null
++++ b/planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+@@ -0,0 +1,108 @@
++# Enman Status Evidence Profile
++
++Status: candidate Enman project-instance profile  
++Scope: concrete evidence/current-reality model and status vocabulary for Enman documentation reconciliation
++
++> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not active Enman source of truth until a later migration/switch batch approves it.
++
++## 1. Purpose
++
++This file answers the status reconciliation field kit for the Enman project.
++
++It defines which evidence sources and status labels should be used when reconciling Enman documentation status claims.
++
++Kit owner:
++
++```text
++planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
++```
++
++Repeated workflow:
++
++```text
++planning/documentation-reusable-candidate/status-reconciliation-workflow.md
++```
++
++## 2. Applicability
++
++Use this profile for Enman software/application documentation claims such as:
++
++```text
++implemented;
++first-stage implemented;
++partially implemented;
++planned;
++deferred;
++historical;
++needs evidence check;
++external-output-ready.
++```
++
++## 3. Evidence Order
++
++Prefer current repo evidence:
++
++```text
++1. current Git branch;
++2. code;
++3. tests;
++4. migrations;
++5. OpenAPI / generated contracts;
++6. runtime screenshots when available;
++7. current planning docs;
++8. recent explicit user decisions;
++9. older archives;
++10. memory only as a last resort and never as sole evidence.
++```
++
++## 4. Status Vocabulary
++
++| Status | Meaning |
++|---|---|
++| implemented | Current evidence shows the behavior/work exists. |
++| first-stage implemented | Core workflow/evidence exists, but hardening, edge cases or broader integration remain. |
++| partially implemented | Some expected scope exists, but meaningful parts are missing. |
++| planned | Target direction exists, but current evidence does not show implementation. |
++| deferred | Intentionally delayed or out of current scope. |
++| historical | Useful past snapshot; not current truth. |
++| needs evidence check | Claim may be true, but evidence was not checked or is conflicting. |
++| not applicable | Status model does not apply to that claim. |
++
++## 5. Enman Evidence Source Categories
++
++```text
++current branch;
++server/client code;
++tests and E2E baselines;
++migrations;
++generated contracts / OpenAPI artifacts;
++runtime screenshots;
++planning/slices/;
++planning/api/;
++planning/testing/;
++planning/architecture/;
++planning/client/;
++planning/diagrams/;
++planning/vkr-clean-reference.md and planning/thesis/ for external-facing claims.
++```
++
++## 6. External Output Notes
++
++VKR/thesis-facing claims should not rely on internal planning status alone.
++
++Use current evidence and clean external-facing wording.
++
++Related adapter:
++
++```text
++planning/documentation-reusable-candidate/enman-docs-adapter.md
++```
++
++## 7. Do Not
++
++```text
++- Do not treat slice docs as proof of implementation.
++- Do not treat old status snapshots as current truth.
++- Do not use memory as sole evidence.
++- Do not mark VKR/thesis claims as ready without evidence and wording review.
++```
+diff --git a/planning/documentation-reusable-candidate/examples/README.md b/planning/documentation-reusable-candidate/examples/README.md
+index e87eaa0..4049204 100644
+--- a/planning/documentation-reusable-candidate/examples/README.md
++++ b/planning/documentation-reusable-candidate/examples/README.md
+@@ -58,6 +58,14 @@ No filled documentation-layer examples are added yet.
+ | `NEW-CHAT-ONBOARDING-v1` | response example | `planning/planning-use-case-map.md` | New Chat Onboarding / first planning pass | deferred | _not created yet_ | Candidate from chat history; should show compact onboarding answer. |
+ | `ACCEPTED-COMMAND-NO-REINVENTION-v1` | guardrail example | `planning/planning-use-case-map.md` | accepted command / no reinvention | deferred | _not created yet_ | Candidate from chat history; should show stop-and-explain instead of silent mode switch. |
+ 
++## 3A. Candidate Field Kit Examples Added In F5
++
++| Example ID | Type | Owner | Related use-case/workflow | Status | File | Notes |
++|---|---|---|---|---|---|---|
++| `STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE` | field-kit example | `planning/documentation-reusable-candidate/status-reconciliation-field-kit.md` | evidence/current-reality model setup for scenario-driven software projects | current candidate | `planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md` | Demonstrates first-stage implemented status and evidence checking. |
++| `SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE` | field-kit example | `planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md` | local detail to shared visibility mapping | current candidate | `planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md` | Demonstrates when a local slice question should be mirrored. |
++| `SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE` | field-kit example | `planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md` | generic source/consumer/cascade review model | current candidate | `planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md` | Demonstrates source usage row and metadata-only review outcome. |
++
+ ## 4. Adding A New Example
+ 
+ Before adding a new example, use:
+diff --git a/planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md b/planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
+new file mode 100644
+index 0000000..a59e6f5
+--- /dev/null
++++ b/planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
+@@ -0,0 +1,41 @@
++# Shared Visibility Scenario Project Example
++
++Status: candidate example  
++Scope: scenario-driven project example for local detail to shared visibility mapping
++
++## 1. Purpose
++
++This example demonstrates how a scenario-driven project can apply:
++
++```text
++planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
++```
++
++It is an example only. It does not own rules.
++
++## 2. Scenario
++
++A local slice file contains this question:
++
++```text
++Should proposal recipient permissions be checked at invitation creation time or only when proposal is accepted?
++```
++
++This question affects:
++
++```text
++- future slice behavior;
++- domain rule;
++- API contract;
++- testing responsibility.
++```
++
++## 3. Shared Visibility Decision
++
++| Local file | Local detail | Detail type | Shared target | Action | Notes |
++|---|---|---|---|---|---|
++| one slice doc | recipient permission timing question | slice open question | slice questions register | mirror | affects domain/API/testing, not local-only |
++
++## 4. Local-Only Counterexample
++
++A wording note that only improves one local paragraph and does not affect future work can stay local-only with no shared register row.
+diff --git a/planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md b/planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
+new file mode 100644
+index 0000000..c5ea0e7
+--- /dev/null
++++ b/planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
+@@ -0,0 +1,52 @@
++# Source Usage Cascade Generic Example
++
++Status: candidate example  
++Scope: generic source/consumer/cascade example for the source usage cascade field kit
++
++## 1. Purpose
++
++This example demonstrates the generic source usage relationship model.
++
++Kit owner:
++
++```text
++planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
++```
++
++It is not Enman-specific.
++
++## 2. Generic Source Relationship
++
++A source artifact changes:
++
++```text
++source artifact: product requirement section A
++source scope: acceptance rule R-12
++```
++
++A downstream consumer uses it:
++
++```text
++consumer artifact: testing plan section B
++consumer scope: test case group T-4
++```
++
++## 3. Source Usage Row
++
++| source_id | source_scope | source_status | consumer_id | consumer_scope | reviewed_against | sync_status | review_outcome | last_reviewed |
++|---|---|---|---|---|---|---|---|---|
++| product-requirements.md | section A / R-12 | current | testing-plan.md | section B / T-4 | req-v3 | needs-review | follow-up | 2026-05-30 |
++
++## 4. Cascade Review Outcome
++
++After review:
++
++```text
++The test plan still covers the rule, but metadata must be updated to reviewed_against=req-v4.
++No content change needed.
++sync_status=metadata-only-reviewed.
++```
++
++## 5. Key Lesson
++
++The source usage row prevents broad re-review while still making downstream synchronization visible.
+diff --git a/planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md b/planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
+new file mode 100644
+index 0000000..0ea62b6
+--- /dev/null
++++ b/planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
+@@ -0,0 +1,43 @@
++# Status Reconciliation Scenario Project Example
++
++Status: candidate example  
++Scope: scenario-driven software project example for using the status reconciliation field kit
++
++## 1. Purpose
++
++This example demonstrates how a scenario-driven software project can apply:
++
++```text
++planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
++```
++
++It is an example only. It does not own rules.
++
++## 2. Scenario
++
++A slice document says:
++
++```text
++Agreement proposal exchange is planned.
++```
++
++Current repo evidence shows:
++
++```text
++- API route exists;
++- generated OpenAPI contract exists;
++- baseline tests exist;
++- hardening and edge cases remain.
++```
++
++## 3. Status Decision
++
++| Area | Claim | Evidence checked | Status | Docs to update | Next action |
++|---|---|---|---|---|---|
++| Agreement proposal exchange | planned | API route, generated contract, baseline tests | first-stage implemented | slice status, related README/register rows | create hardening follow-up |
++
++## 4. Why This Is Not Universal
++
++This example uses software evidence.
++
++A study notes project, research project or day planning system would define a different current-reality model through the field kit.
+diff --git a/planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md b/planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
+index 4d62c11..f191a1c 100644
+--- a/planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
++++ b/planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
+@@ -1,301 +1,98 @@
+ # Local / Global Documentation Synchronization Workflow
+ 
+-Status: current documentation governance workflow  
+-Scope: how local planning files, shared indexes and shared registers stay synchronized
++Status: reusable candidate workflow  
++Scope: repeated process for synchronizing local documentation details with shared visibility targets after a project Shared Visibility Map exists
+ 
+-## 1. Purpose
+-
+-Planning docs must be readable without a long external prompt.
+-
+-A future chat should be able to start from:
+-
+-```text
+-planning/README.md
+-```
+-
+-follow the read order and understand:
+-
+-```text
+-- where local details live;
+-- which shared index/register must know about them;
+-- which questions are local only;
+-- which questions must be visible globally;
+-- which files must be updated together.
+-```
+-
+-This workflow defines the local-to-global sync rule.
+-
+-## 2. Core Rule
+-
+-Local sections are required, but local-only documentation is not enough when the information affects future work.
+-
+-Whenever a local planning file changes, classify whether the change also needs a shared index/register update.
+-
+-```text
+-local file detail
+-        ↓
+-classify responsibility
+-        ↓
+-update local file
+-        ↓
+-update shared index/register if needed
+-        ↓
+-update navigation if files were added/moved/superseded
+-```
+-
+-For broad or multi-file documentation changes, prepare a Documentation Update Plan first:
+-
+-```text
+-planning/documentation/documentation-update-plan-workflow.md
+-```
+-
+-## 3. Local vs Global
+-
+-Local files own detailed context.
+-
+-Examples:
+-
+-```text
+-- one backend slice file;
+-- one .client.md sidecar;
+-- one scenario text spec;
+-- one DATA spec;
+-- one cross-cutting slice;
+-- one ADR candidate note.
+-```
+-
+-Global files own discoverability, shared status and cross-file visibility.
+-
+-Examples:
+-
+-```text
+-- planning/README.md;
+-- folder README.md files;
+-- planning/planning-doc-responsibility-map.md;
+-- planning/slices/slice-questions-register.md;
+-- planning/slices/slice-extension-points-register.md;
+-- planning/slices/slice-implementation-notes-register.md;
+-- planning/diagrams/scenario-questions-register.md;
+-- planning/adr/architecture-decision-notes.md;
+-- planning/adr/adr-candidates.md.
+-```
+-
+-## 4. Question Synchronization Rule
+-
+-Every local `Questions / Decisions` section should put important unresolved items first.
+-
+-Use this order:
+-
+-```text
+-1. open questions;
+-2. blocked or unresolved behavior / contract / design risks;
+-3. future-review questions that can affect later work;
+-4. accepted directions / assumptions that future work must remember;
+-5. resolved or superseded decisions, only when useful as history.
+-```
+-
+-A local question must be mirrored to a shared register when it is still relevant after the local draft and can affect:
+-
+-```text
+-- another slice;
+-- a future slice;
+-- a client sidecar;
+-- scenario meaning;
+-- API contract;
+-- security requirement;
+-- testing/E2E responsibility;
+-- extension/change pressure;
+-- architecture explanation;
+-- diagram interpretation.
+-```
+-
+-The local file keeps detailed context.
++> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not an active Enman source of truth until a later migration/switch batch approves it.
+ 
+-The shared register provides one place to find the question later.
++## 1. Purpose
+ 
+-## 5. Question Status And Assumption Rule
++This workflow keeps local documentation details discoverable when they affect future work outside one local file.
+ 
+-Every non-trivial question entry, local or shared, should carry both a status and an assumption/current direction.
++It is not the setup kit.
+ 
+-Minimum question fields:
++Use the setup kit first when the project has not yet defined a Shared Visibility Map:
+ 
+ ```text
+-ID
+-Question status
+-Question
+-Assumption / current direction
+-Impact
+-Shared register / local-only reason
++planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+ ```
+ 
+-Use these status values unless a local workflow defines a more specific compatible value:
++## 2. Responsibility Split
+ 
+-| Status | Meaning |
++| Owner | Owns |
+ |---|---|
+-| `open` | Needs an answer before related behavior/contract/design can be finalized. |
+-| `blocked` | Cannot be answered until another decision/source/implementation is available. |
+-| `assumption` | A working answer is being used so draft work can continue; the user should confirm, reject or refine it. |
+-| `accepted direction` | The current direction is good enough for planning, but may still be referenced by future work. |
+-| `future review` | Not a current blocker; revisit when the relevant future slice/hardening/client work starts. |
+-| `resolved` | Answered and no longer open. Keep only if useful for traceability. |
+-| `superseded` | Replaced by a newer question/decision/source. |
+-| `local only` | Intentionally not mirrored globally; local file must say why. |
+-
+-Assumption rule:
+-
+-```text
+-If a draft can proceed without a final answer, write a reasonable assumption/current direction.
+-The assumption must be explicit enough for the user to confirm, reject or refine.
+-Do not hide assumptions in prose.
+-Do not mark an assumption as resolved.
+-```
+-
+-For already implemented slices, the assumption can be:
+-
+-```text
+-Current implementation evidence says ...
+-```
+-
+-For early drafts, the assumption can be:
++| Principles | Why local future-impacting details need shared visibility. |
++| Field kit | How to define the project Shared Visibility Map. |
++| Project shared visibility map | Concrete local-detail types and shared targets for one project. |
++| This workflow | Repeated local/global sync process using the configured map. |
++| Examples | Demonstrations only. |
+ 
+-```text
+-Draft assumes ... until user confirms/refines.
+-```
+-
+-## 6. Slice Question Register Rule
+-
+-Use:
+-
+-```text
+-planning/slices/slice-questions-register.md
+-```
+-
+-as the shared overview of currently relevant local slice questions.
+-
+-The register is meant to answer:
+-
+-```text
+-Where are the still-open, future-review or otherwise important questions discovered by local slice/client/cross-cutting docs?
+-```
++## 3. Inputs
+ 
+-It should mirror every currently relevant local slice/client/cross-cutting question that is:
++Before running this workflow, identify:
+ 
+ ```text
+-- open;
+-- blocked;
+-- an assumption waiting for confirmation;
+-- future review;
+-- accepted direction but still important for future work;
+-- unresolved risk;
+-- cross-slice relevant;
+-- needed before starting another slice/client sidecar;
+-- likely to affect API/client/testing/security/architecture.
++- local file(s) changed;
++- local detail type(s) changed;
++- project Shared Visibility Map;
++- shared indexes/registers in scope;
++- whether new files were added/moved/superseded.
+ ```
+ 
+-It does not replace local `Questions / Decisions` sections.
+-
+-It does not need to keep tiny resolved local drafting questions forever.
+-
+-If a local question remains local only, say why:
++For Enman candidate setup:
+ 
+ ```text
+-Local only because:
+-- affects only this slice;
+-- no cross-slice consumer yet;
+-- not an extension/change pressure;
+-- not an architecture decision;
+-- resolved inside this draft and no longer affects future work.
++planning/documentation-reusable-candidate/enman-shared-visibility-map.md
+ ```
+ 
+-## 7. Which Shared File To Update
+-
+-| Local discovery | Shared target |
+-|---|---|
+-| Currently relevant slice/client/cross-cutting question | `planning/slices/slice-questions-register.md` |
+-| Extension point, change pressure, anti-coupling decision | `planning/slices/slice-extension-points-register.md` |
+-| Future implementation/client/testing note not assigned to active file | `planning/slices/slice-implementation-notes-register.md` |
+-| Scenario/domain ambiguity | `planning/diagrams/scenario-questions-register.md` or `scenario-clarifications/` |
+-| New behavior item | `planning/diagrams/scenario-behavior-items/` |
+-| Client-wide convention | `planning/client/cross-cutting/` |
+-| API contract rule | `planning/api/` or relevant `CC-API` / `CC-CONST` slice |
+-| Architecture-wide accepted decision | `planning/adr/architecture-decision-notes.md` |
+-| Possible future full ADR | `planning/adr/adr-candidates.md` |
+-| New/moved/superseded doc | folder README + `planning/README.md` + responsibility map |
+-
+-## 8. Back-Reference Rule
+-
+-When a local question/note is mirrored into a shared register, leave a local back-reference.
+-
+-Example:
++## 4. Core Rule
+ 
+ ```text
+-Shared register:
+-- planning/slices/slice-questions-register.md / Q-SL-REQ-001
+-- planning/slices/slice-extension-points-register.md / EPRESS-REQ-DOCS-001
++local file detail
++        ↓
++classify local detail type
++        ↓
++check project Shared Visibility Map
++        ↓
++update local file
++        ↓
++mirror to shared index/register when required
++        ↓
++update navigation if files were added/moved/superseded
+ ```
+ 
+-The shared register should also point back to local files.
+-
+-## 9. Navigation Rule
+-
+-When adding, moving or superseding docs, update:
++## 5. Sync Process
+ 
+ ```text
+-planning/README.md
+-planning/planning-doc-responsibility-map.md
+-folder README.md
++1. Read the project Shared Visibility Map.
++2. Identify local detail types in the changed local file.
++3. Decide whether each detail is local-only or shared-visible.
++4. If shared-visible, update the mapped shared index/register.
++5. If local-only, record or preserve the reason when useful.
++6. If a mapped shared target does not exist, create a follow-up rather than hiding the detail.
++7. Update navigation/read-order only when files were added, moved, renamed or superseded.
+ ```
+ 
+-Update `planning/planning-agent-protocol.md` only when workflow behavior changes.
+-
+-Do not leave orphan docs.
++## 6. Output Table
+ 
+-Do not add a folder without a README unless the user explicitly asks for a minimal one-file archive.
+-
+-## 10. Status Reconciliation Rule
+-
+-When implementation or generated artifacts changed, local docs and shared navigation/status docs must agree.
+-
+-Check for:
+-
+-```text
+-- local doc says planned but implementation exists;
+-- central README says implemented but local slice says planned;
+-- register says open but local doc says accepted/resolved;
+-- register row has no clear question status;
+-- register row has no assumption/current direction for an unresolved question;
+-- local question was resolved but shared register still says open;
+-- future review item is written like a current defect;
+-- planned work is overclaimed as implemented.
+-```
++Use this table when helpful:
+ 
+-## 11. Preflight Checklist
++| Local file | Local detail | Detail type | Shared target | Action | Notes |
++|---|---|---|---|---|---|
+ 
+-Before applying or finalizing a documentation update, check:
++## 7. Do Not
+ 
+ ```text
+-1. Which local files changed?
+-2. Does a shared index/register need to know?
+-3. Are important open questions first locally?
+-4. Does every non-trivial question have a status?
+-5. Does every unresolved/non-final question have an assumption/current direction?
+-6. Are important local questions mirrored globally?
+-7. Are resolved/shared statuses aligned?
+-8. Are new files visible from README navigation?
+-9. Does the responsibility map know the owner?
+-10. Are local-only questions explicitly justified?
++- Do not assume every local detail needs a global row.
++- Do not leave cross-file/future-impacting questions buried in a local file.
++- Do not invent shared targets during repeated workflow if the project map is missing.
++- Do not make the workflow own project-specific register paths.
+ ```
+ 
+-## 12. Do Not
++## 8. Related Files
+ 
+ ```text
+-- Do not hide important questions only in a local slice table.
+-- Do not leave question status implicit.
+-- Do not leave an unresolved question without an assumption/current direction when draft work proceeds.
+-- Do not mark assumptions as resolved.
+-- Do not duplicate all local prose into registers.
+-- Do not treat the extension register as the only slice question register.
+-- Do not keep stale register rows after local docs resolve a question.
+-- Do not update central README only while detailed docs remain stale.
+-- Do not add docs without navigation/responsibility updates.
++planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
++planning/documentation-reusable-candidate/enman-shared-visibility-map.md
++planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
+ ```
+diff --git a/planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md b/planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+new file mode 100644
+index 0000000..73859ad
+--- /dev/null
++++ b/planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+@@ -0,0 +1,78 @@
++# Shared Visibility Map Field Kit
++
++Status: reusable candidate field kit  
++Scope: setup guidance for deriving a project-specific local-detail to shared-visibility map
++
++> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not an active Enman source of truth until a later migration/switch batch approves it.
++
++## 1. Purpose
++
++This field kit helps a project define where local documentation details become globally discoverable.
++
++It is used before the repeated local/global synchronization workflow.
++
++It answers:
++
++```text
++Which local details can stay local?
++Which local details must be visible globally?
++Which shared indexes/registers own visibility for each detail type?
++Where should the project Shared Visibility Map live?
++```
++
++## 2. Responsibility Split
++
++| Owner | Owns |
++|---|---|
++| Principles | Invariant: local details that affect future work need shared visibility or explicit local-only status. |
++| This field kit | Setup questions and map shape for project-specific local-detail -> shared target routing. |
++| Local/global workflow | Repeated sync process using the configured map. |
++| Project shared visibility map | Concrete detail types, shared targets and project paths. |
++| Examples | Demonstrations only. |
++
++## 3. Setup Questions
++
++Answer these before creating the project map:
++
++```text
++1. What kinds of local files exist?
++2. What local sections commonly contain questions, assumptions, decisions or future reminders?
++3. Which detail types affect more than one local file?
++4. Which detail types affect future files not yet created?
++5. Which shared indexes/registers already exist?
++6. Which shared indexes/registers are missing?
++7. What detail types are safe to keep local-only?
++8. How should local-only reasons be recorded?
++9. Where should the Shared Visibility Map live?
++```
++
++## 4. Candidate Map Shape
++
++Create a project-specific file with this table:
++
++| Local detail type | Local owner | Shared visibility target | Mirror condition | Local-only allowed? | Notes |
++|---|---|---|---|---|---|
++
++For the candidate Enman instance, see:
++
++```text
++planning/documentation-reusable-candidate/enman-shared-visibility-map.md
++```
++
++## 5. Handoff To Workflow
++
++After the project map exists, use the repeated workflow:
++
++```text
++planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
++```
++
++The workflow should apply the project map instead of guessing shared targets every time.
++
++## 6. Example
++
++Scenario/project example:
++
++```text
++planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
++```
+diff --git a/planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md b/planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+new file mode 100644
+index 0000000..858313c
+--- /dev/null
++++ b/planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+@@ -0,0 +1,125 @@
++# Source Usage Cascade Field Kit
++
++Status: reusable candidate field kit  
++Scope: setup guidance for defining source/consumer relationships and cascade review conventions for a project
++
++> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not an active Enman source of truth until a later migration/switch batch approves it.
++
++## 1. Purpose
++
++This field kit helps a project define how upstream sources and downstream consumers are tracked.
++
++It answers:
++
++```text
++What counts as a source artifact/scope?
++What counts as a consumer artifact/scope?
++Which source changes trigger downstream review?
++Which row fields should the project source usage register use?
++When is metadata-only review enough?
++Where should project-specific source usage conventions live?
++```
++
++## 2. Responsibility Split
++
++| Owner | Owns |
++|---|---|
++| Principles | Invariant: source/consumer relationships and cascade review must be visible when downstream docs depend on upstream sources. |
++| This field kit | Setup questions, source/consumer model, row-shape candidates and pilot criteria. |
++| Project source usage profile | Concrete source categories, consumer categories, row fields and cascade conventions for one project. |
++| Workflow | Repeated cascade review after a project profile/register exists. |
++| Examples | Demonstrations only. |
++
++## 3. Core Model
++
++The unit is a source usage relationship:
++
++```text
++source artifact/scope
++  -> consumer artifact/scope
++  -> reviewed_against / sync_status / review_outcome when needed
++```
++
++This is relationship-first, not version-first.
++
++Version markers support review and synchronization. They are not source truth by themselves.
++
++## 4. Setup Questions
++
++```text
++1. What upstream artifacts can affect downstream docs?
++2. How granular should source scopes be?
++3. What downstream consumer files/scopes need review when upstream changes?
++4. What source_status values are needed?
++5. What sync_status values are needed?
++6. What row fields are mandatory?
++7. What row fields are optional?
++8. What changes trigger review?
++9. What review outcomes are allowed?
++10. Where will project source usage profile/registers live?
++11. What pilot proves the row shape before full workflow adoption?
++```
++
++## 5. Candidate Row Shape
++
++Use only the fields that the project needs.
++
++| Field | Meaning |
++|---|---|
++| source_id | Stable source identifier, often repo-relative path + section/scope. |
++| source_scope | The precise source section/table/row/artifact used. |
++| source_status | Whether the source is current, draft, accepted, superseded or historical. |
++| consumer_id | File/section/scope that consumes the source. |
++| consumer_scope | Exact downstream section or decision using the source. |
++| reviewed_against | Source version/date/commit/state reviewed by the consumer. |
++| sync_status | current, stale, needs-review, metadata-only-reviewed, not-applicable. |
++| review_outcome | no-change, update-needed, follow-up, superseded, blocked. |
++| last_reviewed | Date/commit/review marker. |
++| notes | Short context only; owner logic stays in owner docs. |
++
++## 6. Pilot Criteria
++
++Before creating a heavy repeated workflow, run a pilot.
++
++A good pilot should prove:
++
++```text
++- the source/consumer unit is clear enough;
++- the row shape is not too heavy;
++- cascade review can be targeted;
++- metadata-only review cases are understandable;
++- downstream reviewers know when source changes matter;
++- the register/profile is useful enough to maintain.
++```
++
++## 7. Project Profile Shape
++
++Create a project-specific file with this shape:
++
++```text
++# <Project> Source Usage Cascade Profile
++
++## Purpose
++## Source Categories
++## Consumer Categories
++## Row Shape
++## Status Values
++## Cascade Triggers
++## Review Outcomes
++## Pilot Scope
++## Do Not
++```
++
++For the candidate Enman instance, see:
++
++```text
++planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
++```
++
++## 8. Example
++
++Generic reusable example:
++
++```text
++planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
++```
+diff --git a/planning/documentation-reusable-candidate/source-usage-cascade-governance-plan.md b/planning/documentation-reusable-candidate/source-usage-cascade-governance-plan.md
+index 753925f..66c36db 100644
+--- a/planning/documentation-reusable-candidate/source-usage-cascade-governance-plan.md
++++ b/planning/documentation-reusable-candidate/source-usage-cascade-governance-plan.md
+@@ -1,322 +1,60 @@
+ # Source Usage Cascade Governance Plan
+ 
+-Status: pilot framework / not full workflow  
+-Scope: source usage relationships, layer encapsulation, attention preservation and cascade-review pilot planning
++Status: candidate bridge / superseded pilot note  
++Scope: transition note from the earlier pilot governance plan to the reusable source usage cascade field kit
+ 
+-## 1. Purpose
++> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is preserved as bridge context for one migration stage. New setup work should use the field kit.
+ 
+-This plan explains how to pilot source usage and cascade review before creating a full source-version-cascade workflow.
++## 1. Current Owner
+ 
+-It exists because planning docs are built as a layered pipeline:
++The reusable setup owner for source usage/cascade is now:
+ 
+ ```text
+-scenario sources
+-  -> DATA / behavior item sets
+-  -> domain discovery and domain drafts
+-  -> slice discovery and slice drafts
+-  -> testing / verification planning
+-  -> implementation evidence and VKR/thesis output when relevant
++planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+ ```
+ 
+-The goal is not file versioning by itself.
+-
+-The goal is to preserve layer encapsulation and human review attention: when upstream work has already been reviewed, downstream docs should reference published upstream artifacts instead of reconstructing the upstream reasoning.
+-
+-## 2. Current State
+-
+-Current architecture principles already define:
+-
+-```text
+-- layer dependency direction;
+-- source-of-truth hierarchy;
+-- layer encapsulation and attention preservation;
+-- source/version principle;
+-- dependency cascade principle;
+-- section-level sources principle.
+-```
+-
+-The missing part is operational evidence from a real pilot:
+-
+-```text
+-- what a source usage row should contain;
+-- how granular source scopes need to be;
+-- how downstream consumer scopes should be reviewed;
+-- when metadata-only review is enough;
+-- where permanent registers should live.
+-```
+-
+-## 3. Why This Is Not The Full Workflow Yet
+-
+-Do not create or activate a full cascade workflow from abstract assumptions.
+-
+-This file is a governance plan and pilot frame. It does not replace a future workflow such as:
+-
+-```text
+-planning/documentation/source-version-cascade-sync-workflow.md
+-```
+-
+-That workflow should be created only after at least one real source usage register pilot proves the row shape and review process.
+-
+-## 4. Core Model
+-
+-The key unit is not a standalone file version.
+-
+-The key unit is a source usage relationship:
+-
+-```text
+-source artifact/scope
+-  -> consumer artifact/scope
+-  -> reviewed_against / sync_status / review_outcome when needed
+-```
+-
+-This is relationship-first, not version-first.
+-
+-Version markers exist to support review and cascade synchronization. They are not the source of truth by themselves.
+-
+-## 5. Terms
++The Enman candidate project-instance owner is:
+ 
+ ```text
+-Source artifact
+-  Canonical or accepted upstream file, section, table row, register entry, artifact-map row or workflow rule that can affect downstream docs.
+-
+-Source scope
+-  The exact part of the source artifact consumed by a downstream file or section.
+-
+-Source granularity
+-  file / section / table row / register entry / artifact-map row / behavior item group / workflow rule.
+-
+-Source status
+-  State of the source itself: current / draft / transitional / historical / deprecated.
+-
+-Consumer artifact
+-  Downstream file or section that uses, maps, summarizes, derives from, tests, visualizes, formats or is constrained by the source.
+-
+-Consumer scope
+-  The exact section, table, row or local block inside the consumer artifact.
+-
+-Usage type
+-  derives-from / maps-to / summarizes / validates / tests / visualizes / routes / formats / constrains.
+-
+-Reviewed against
+-  Lightweight marker of the source state the consumer was checked against: commit SHA, date, source marker, artifact-map status, source heading or future explicit version.
+-
+-Sync status
+-  State of the consumer relative to the source: current / needs-review / partial / stale / blocked / unknown / not-applicable.
+-
+-Review outcome
+-  What happened during review: not-reviewed / reviewed-no-change / updated / metadata-only / follow-up-needed / blocked.
+-
+-Cascade trigger
+-  Source change type that should cause the consumer scope to be reviewed.
++planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+ ```
+ 
+-## 6. External Dependency Rule
+-
+-External dependencies cross file or layer boundaries.
+-
+-Use source usage rows when downstream synchronization matters:
++Generic example:
+ 
+ ```text
+-SC-13D behavior item
+-  -> domain aggregate draft method section
+-
+-Domain aggregate method section
+-  -> server slice Domain Behavior section
+-
+-Slice Behavior Coverage row
+-  -> Test / Verification Plan row
++planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
+ ```
+ 
+-External dependency rows should help a future chat identify affected downstream scopes without reading every downstream file from scratch.
+-
+-## 7. Internal Section Dependency Rule
+-
+-Internal section dependencies are same-file analytical dependencies.
++## 2. Why This File Remains Temporarily
+ 
+-They normally do not need version markers.
+-
+-Use local section-level source/internal dependency blocks when a section is high-risk, separately reviewed or depends on earlier sections.
+-
+-Example:
++The original governance plan captured useful pilot context:
+ 
+ ```text
+-In a domain aggregate draft:
+-- Domain Methods depend on Aggregate Boundary and Owned State.
+-- Invariants depend on Domain Methods and Value Objects.
+-- Behavior Coverage depends on Methods, Invariants and Lifecycle.
+-```
+-
+-If a foundational section changes, review the whole file. If a later section has explicit internal dependencies, review it when those dependencies change.
+-
+-Do not put internal section dependencies into an external source usage register unless that section is consumed by another file.
+-
+-## 8. Source Usage Row Shape
+-
+-Pilot registers should start with this table shape:
+-
+-```md
+-| ID | Source artifact | Source scope | Source status | Consumer artifact | Consumer scope | Usage type | Reviewed against | Sync status | Review outcome | Cascade trigger | Notes |
+-|---|---|---|---|---|---|---|---|---|---|---|---|
++- source usage is relationship-first, not version-first;
++- row shape should be proven by pilot before full workflow activation;
++- cascade review should preserve attention and avoid broad unnecessary re-review;
++- source_status and sync_status should be separate;
++- metadata-only review can be a valid outcome.
+ ```
+ 
+-The shape is pilot-level. Do not copy it into every template before the pilot proves it.
+-
+-## 9. Source Status vs Sync Status
++That content has been moved into the field kit/profile/example structure.
+ 
+-Source status and sync status are different.
++## 3. Do Not
+ 
+ ```text
+-source_status
+-  describes the source artifact itself.
+-
+-sync_status
+-  describes whether the consumer is current relative to that source.
++- Do not add new setup logic here.
++- Do not treat this bridge as the repeated cascade workflow.
++- Do not put Enman-specific source categories here.
++- Do not delete this bridge until a later cleanup confirms the field kit/profile/example are sufficient.
+ ```
+ 
+-Examples:
+-
+-```text
+-source_status = current
+-sync_status = needs-review
+-
+-source_status = transitional
+-sync_status = current
+-```
+-
+-## 10. Reviewed Against Rule
+-
+-Use `reviewed_against` before inventing heavy semantic versioning.
+-
+-Acceptable pilot markers:
+-
+-```text
+-- commit SHA or short SHA;
+-- source path + section heading;
+-- artifact-map status row;
+-- date + source status;
+-- explicit source marker if one already exists.
+-```
+-
+-Do not add section-level versions everywhere during the pilot.
+-
+-## 11. Source Change Detection Modes
+-
+-Source changes may be detected from:
+-
+-```text
+-GitHub/direct commit source change
+-  Compare changed files/sections from the repository.
+-
+-Replacement archive source change
+-  Use the reviewed archive diff and post-apply preservation check.
+-
+-Local unpushed source change
+-  Do not claim remote/current repo sync until pushed or archive diff is reviewed.
+-
+-Manual/user-described source change
+-  Treat as unverified until the source artifact is read.
+-```
+-
+-## 12. Pilot Scope
+-
+-Initial pilot:
+-
+-```text
+-SC-13D / AgreementProposalExchange source usage pilot
+-```
+-
+-Target chain:
+-
+-```text
+-SC-13D scenario text / DATA / behavior items
+-  -> scenario artifact/currentness map
+-  -> scenario-to-aggregate map
+-  -> AgreementProposalExchange aggregate draft
+-  -> related value object drafts
+-  -> SL-AGR-EXCH-001 server slice draft
+-  -> slice Behavior Coverage and Test / Verification Plan sections
+-```
+-
+-The first skeleton file is:
+-
+-```text
+-planning/documentation/source-usage-pilots/SC-13D-agreement-exchange-source-usage-register.md
+-```
+-
+-## 13. Pilot Review Process
+-
+-For the real pilot fill pass:
+-
+-```text
+-1. Read the source artifacts for the selected SC-13D chain.
+-2. Identify source scopes that are actually consumed downstream.
+-3. Identify consumer artifacts and consumer scopes.
+-4. Add source usage rows only where review/cascade value is real.
+-5. Mark unknowns as unknown/blocked instead of inventing precision.
+-6. Simulate one upstream change and verify whether affected consumers can be found.
+-7. Record whether the table shape was sufficient or too heavy.
+-```
+-
+-Review should not mean reading every downstream file by default.
+-
+-Review starts from source usage rows, then opens only affected consumer scopes and necessary internal dependencies.
+-
+-## 14. Cascade Review Output
+-
+-A cascade review should report:
+-
+-```text
+-- upstream source changed;
+-- source scope affected;
+-- affected consumers;
+-- rows reviewed;
+-- rows updated;
+-- rows marked needs-review / stale / blocked;
+-- content changes required / not required;
+-- follow-up PMR/register tasks;
+-- files intentionally not checked.
+-```
+-
+-## 15. Exit Criteria For Full Workflow
+-
+-Create the full source usage/cascade workflow only after:
+-
+-```text
+-- at least one real pilot register is filled from current repo sources;
+-- at least one cascade review simulation is performed;
+-- row shape is validated or revised;
+-- permanent register placement is decided or narrowed;
+-- domain/slice/template impact is understood.
+-```
+-
+-## 16. What Not To Do Yet
+-
+-```text
+-- Do not create the full source-version-cascade-sync workflow yet.
+-- Do not update workflow-activation-map.md as if the workflow exists.
+-- Do not add source-version fields to every use-case row.
+-- Do not add section-level versions everywhere.
+-- Do not turn scenario-artifact-map.md into a full source usage register.
+-- Do not turn scenario-to-aggregate-map.md into a full cascade register.
+-- Do not turn slice drafts into source registries.
+-- Do not mass-update domain/slice templates before the pilot proves the shape.
+-```
+-
+-## 17. Maintenance And Action Log Tracking
+-
+-The full source usage/cascade workflow follow-up is tracked by PMR-002.
+-
+-This framework introduction should be recorded in:
+-
+-```text
+-planning/documentation/documentation-action-log.md
+-```
++## 4. Next Cleanup
+ 
+-Rules:
++Later cleanup may delete or archive this bridge after:
+ 
+ ```text
+-- Use PMR for future work, waiting conditions and reminders.
+-- Use the documentation action log for completed logical documentation actions and why they happened.
+-- When a pilot fill proves or rejects this row shape, update the action log.
+-- When the pilot creates future work, update PMR and reference the PMR relation from the action log.
++- the field kit is reviewed;
++- Enman source usage profile is accepted;
++- examples are reviewed;
++- candidate README/navigation no longer need the bridge.
+ ```
+diff --git a/planning/documentation-reusable-candidate/status-reconciliation-field-kit.md b/planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+new file mode 100644
+index 0000000..87e687c
+--- /dev/null
++++ b/planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+@@ -0,0 +1,143 @@
++# Status Reconciliation Field Kit
++
++Status: reusable candidate field kit  
++Scope: setup guidance for defining a project's evidence/current-reality model and status vocabulary before running status reconciliation
++
++> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not an active Enman source of truth until a later migration/switch batch approves it.
++
++## 1. Purpose
++
++This field kit helps a project define how documentation status claims should be checked.
++
++It is used before the repeated reconciliation workflow.
++
++It answers:
++
++```text
++Does this documentation domain have current-reality/evidence claims?
++What counts as evidence?
++What status vocabulary should be used?
++Where should the project-specific evidence profile live?
++Which files should be reconciled against that profile?
++```
++
++## 2. Responsibility Split
++
++| Owner | Owns |
++|---|---|
++| Principles | Invariant: current-state claims need a defined evidence/current-reality model when such claims exist. |
++| This field kit | Applicability gate, setup questions, status vocabulary design and project profile shape. |
++| Status reconciliation workflow | Repeated reconciliation process after the evidence/status model exists. |
++| Project profile/adapter | Concrete evidence order, paths, statuses and project-specific examples. |
++| Examples | Demonstrations of applying this kit; not source-of-truth logic. |
++
++## 3. Applicability Gate
++
++Use this kit when docs contain claims like:
++
++```text
++implemented;
++current;
++exists now;
++verified;
++done;
++planned;
++deferred;
++outdated;
++historical;
++external-output-ready.
++```
++
++Do not force implementation-style reconciliation onto documentation domains without implementation evidence.
++
++Instead, define the domain's current-reality model.
++
++Examples:
++
++| Domain | Possible current-reality/evidence model |
++|---|---|
++| Software/app project | code, tests, migrations, generated contracts, runtime screenshots, deployed behavior |
++| Study notes | source notes, review schedule, cards, learning state |
++| Day planning | calendar, task state, completed/blocked items |
++| Research notes | source papers, excerpts, citation map, experiment notes |
++| Documentation-only project | accepted sources, current user decisions, published docs, superseded notes |
++
++## 4. Setup Questions
++
++Answer these before creating the project profile:
++
++```text
++1. What status claims appear in this docs layer?
++2. Which claims can become stale?
++3. What evidence source can verify each claim type?
++4. Which evidence sources win when they conflict?
++5. Which statuses should be allowed?
++6. Which docs should be reconciled regularly?
++7. Which docs are historical snapshots and should not be updated as current truth?
++8. Which external-facing outputs need evidence maps?
++9. Where will the project evidence/status profile live?
++10. Which examples should demonstrate the profile?
++```
++
++## 5. Suggested Status Vocabulary
++
++Start small.
++
++Possible statuses:
++
++```text
++current / verified
++implemented
++first-stage implemented
++partially implemented
++planned
++deferred
++historical
++superseded
++needs evidence check
++not applicable
++```
++
++A project should define which statuses are allowed and what each status requires.
++
++## 6. Project Profile Shape
++
++Create a project-specific file with this shape:
++
++```text
++# <Project> Status Evidence Profile
++
++## Purpose
++## Applicability
++## Status Vocabulary
++## Evidence Order
++## Evidence Source Categories
++## Claims That Need Reconciliation
++## Files/Registers That Use This Profile
++## External-Output Evidence Notes
++## Do Not
++```
++
++For the candidate Enman instance, see:
++
++```text
++planning/documentation-reusable-candidate/enman-status-evidence-profile.md
++```
++
++## 7. Handoff To Workflow
++
++After the project profile exists, use the repeated workflow:
++
++```text
++planning/documentation-reusable-candidate/status-reconciliation-workflow.md
++```
++
++The workflow should not reinvent the evidence model each time. It should apply the project profile.
++
++## 8. Example
++
++Scenario/project example:
++
++```text
++planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
++```
+diff --git a/planning/documentation-reusable-candidate/status-reconciliation-workflow.md b/planning/documentation-reusable-candidate/status-reconciliation-workflow.md
+index b27b3c8..e2032a0 100644
+--- a/planning/documentation-reusable-candidate/status-reconciliation-workflow.md
++++ b/planning/documentation-reusable-candidate/status-reconciliation-workflow.md
+@@ -1,118 +1,109 @@
+ # Status Reconciliation Workflow
+ 
+-Status: current status-reconciliation workflow  
+-Scope: keeping planning docs aligned with current implementation and generated artifacts
++Status: reusable candidate workflow  
++Scope: repeated process for reconciling documentation status claims after a project evidence/current-reality model exists
++
++> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not an active Enman source of truth until a later migration/switch batch approves it.
+ 
+ ## 1. Purpose
+ 
+-Status reconciliation updates docs when implementation moved faster than planning notes.
++This workflow keeps documentation status claims aligned with the project's configured evidence/current-reality model.
++
++It is not the setup kit.
+ 
+-It answers:
++Use the setup kit first when the project has not yet defined evidence sources, status vocabulary or status-owner files:
+ 
+ ```text
+-what is implemented?
+-what is only first-stage implemented?
+-what is partially implemented?
+-what remains planned?
+-what is deferred?
+-what should be a future review item rather than a defect?
++planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+ ```
+ 
+-For broad or multi-file status/navigation documentation changes, prepare a Documentation Update Plan first:
++## 2. Responsibility Split
+ 
+-```text
+-planning/documentation/documentation-update-plan-workflow.md
+-```
++| Owner | Owns |
++|---|---|
++| Principles | Why current-state claims need evidence/current-reality checking. |
++| Field kit | How to define the evidence model and status vocabulary for a project/domain. |
++| Project evidence profile | The concrete evidence order, statuses and status-owner files for one project. |
++| This workflow | Repeated reconciliation process using the configured profile. |
++| Examples | Demonstrations only. |
+ 
+-## 2. When To Run
++## 3. Inputs
+ 
+-Run status reconciliation when:
++Before running this workflow, identify:
+ 
+ ```text
+-- a commit implemented a planned cross-cutting slice;
+-- generated artifacts appeared;
+-- tests or E2E baseline changed;
+-- client/server contract changed;
+-- a slice became partially implemented;
+-- an old doc still says “planned” for implemented behavior;
+-- a prompt for another chat depends on current status.
++- target docs/registers to reconcile;
++- project evidence/status profile;
++- evidence sources to check;
++- status labels allowed by the profile;
++- whether the output is internal, external-facing or historical.
+ ```
+ 
+-## 3. Evidence Order
+-
+-Prefer current repo evidence:
++For Enman candidate setup:
+ 
+ ```text
+-1. code / generated artifacts / tests;
+-2. current planning docs;
+-3. recent user discussion;
+-4. older archives;
+-5. memory.
++planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+ ```
+ 
+-If evidence conflicts, say so and update docs with explicit status/assumption.
+-
+-## 4. Status Table Template
+-
+-Use this table when helpful:
+-
+-| Area | Current evidence | Status | Docs to update | Next action |
+-|---|---|---|---|---|
++## 4. When To Run
+ 
+-Example statuses:
++Run status reconciliation when:
+ 
+ ```text
+-CC-API-001 | generate-openapi + Shared/openapi.json + openapi-types.ts | first-stage implemented | CC-API-001, README, workflow | hardening/future questions
+-CC-CONST-001 | generator/checker/artifacts/tests | implemented baseline | CC-CONST-001 | client usage/API test gaps
+-E2E auth | root Playwright + register/login tests | implemented baseline | e2e-testing-workflow | future L1 migration
++- evidence/current reality changed;
++- generated artifacts changed;
++- tests or verification baselines changed;
++- a planned item became current/verified;
++- a doc still says planned for something now evidenced as current;
++- a doc claims current truth but evidence is missing or conflicting;
++- external-facing output depends on a status claim.
+ ```
+ 
+-## 5. First-Stage Implemented
+-
+-Use `first-stage implemented` when:
++## 5. Reconciliation Process
+ 
+ ```text
+-- the core workflow works;
+-- generated artifacts/checks exist;
+-- first consumers or metadata exist;
+-- known hardening work remains.
++1. Read the project evidence/status profile.
++2. Identify the status claims in scope.
++3. Check the configured evidence sources in profile order.
++4. Compare docs status with evidence/current reality.
++5. Classify each claim as current, planned, deferred, historical, stale, not applicable or needs evidence check according to the profile.
++6. Propose docs updates or follow-up items.
++7. Preserve historical snapshots when they are intentionally historical.
++8. Record evidence checked and evidence not checked.
+ ```
+ 
+-Do not call this merely `planned`.
++## 6. Output Table
++
++Use this table when helpful:
+ 
+-Do not call it fully final if important hardening remains.
++| Area | Claim | Evidence checked | Status | Docs to update | Next action |
++|---|---|---|---|---|---|
+ 
+-## 6. Future Review Items
++## 7. Conflict Handling
+ 
+-Use future review items when:
++If evidence conflicts:
+ 
+ ```text
+-- current implementation works;
+-- concern may matter under CI/scale/consolidation;
+-- changing now would distract from current next step;
+-- question should not be forgotten.
++- say which sources conflict;
++- do not silently choose the convenient source;
++- prefer the profile's evidence order;
++- mark assumptions explicitly;
++- create a follow-up if the conflict cannot be resolved.
+ ```
+ 
+-Future review items are not current defects unless they block the current gate.
+-
+-## 7. Prompt Impact
+-
+-When docs are reconciled, update prompts for other chats:
++## 8. Do Not
+ 
+ ```text
+-- remove instructions to implement already implemented infrastructure;
+-- add “do not redo” rules;
+-- mark current baseline and remaining gaps;
+-- list blockers accurately;
+-- protect working E2E/auth/client/server contract behavior from accidental rewrite.
++- Do not invent project evidence sources during repeated reconciliation.
++- Do not treat old status snapshots as current truth.
++- Do not force software implementation statuses onto non-software docs domains.
++- Do not update external-facing claims without checking the profile's external-output rules.
+ ```
+ 
+-## 8. Do Not
++## 9. Related Files
+ 
+ ```text
+-- Do not overclaim planned code as implemented.
+-- Do not leave old planned wording after implementation is confirmed.
+-- Do not bury status updates in unrelated docs.
+-- Do not update only central README while detailed slice doc remains stale.
+-- Do not skip the Documentation Update Plan for broad status/navigation changes.
++planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
++planning/documentation-reusable-candidate/enman-status-evidence-profile.md
++planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
+ ```
+diff --git a/planning/documentation/documentation-action-log.md b/planning/documentation/documentation-action-log.md
+index 7409876..318ac7a 100644
+--- a/planning/documentation/documentation-action-log.md
++++ b/planning/documentation/documentation-action-log.md
+@@ -599,3 +599,51 @@ Owner sources:
+ Notes:
+   This change does not touch active planning/documentation/planning-docs-architecture-principles.md, does not switch canonical docs, does not move VKR/source-usage/sync notes, and does not rewrite the status/local-global/source-usage workflows.
+ ```
++
++### 2026-05-30 — Split candidate field kits and Enman project-instance files
++
++```text
++Date:
++  2026-05-30
++Action:
++  Split deferred candidate status/local-global/source-usage responsibilities into reusable field kits, repeated workflows, Enman candidate project-instance files and examples.
++Type:
++  documentation architecture / portability migration candidate work
++Status:
++  applied
++Why:
++  F4 intentionally deferred source usage/status/local-global details. F5 separates principles, kit setup, repeated workflow, Enman concrete configuration and examples so Enman adapter does not become a dumping ground.
++Changed files:
++  - planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
++  - planning/documentation-reusable-candidate/status-reconciliation-workflow.md
++  - planning/documentation-reusable-candidate/enman-status-evidence-profile.md
++  - planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
++  - planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
++  - planning/documentation-reusable-candidate/enman-shared-visibility-map.md
++  - planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
++  - planning/documentation-reusable-candidate/source-usage-cascade-governance-plan.md
++  - planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
++  - planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
++  - planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
++  - planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
++  - planning/documentation-reusable-candidate/examples/README.md
++  - planning/documentation-reusable-candidate/enman-docs-adapter.md
++  - planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
++  - planning/documentation-reusable-candidate/README.md
++  - planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
++  - planning/documentation/documentation-layer-portability-migration-plan.md
++  - planning/documentation/documentation-action-log.md
++Layer impact:
++  Candidate now distinguishes reusable field kits, repeated workflows, Enman project-instance answers and examples for the deferred status/local-global/source-usage areas.
++PMR relation:
++  none
++Follow-ups:
++  Review F5 outputs after use; decide later whether to promote Enman project-instance files to active planning/ root and whether to delete/archive the source usage governance bridge.
++Owner sources:
++  planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
++  planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
++  planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
++  planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
++Notes:
++  This change remains candidate-only. It does not switch canonical docs, does not promote Enman files into active planning/ root, and does not rewrite active planning/documentation/ workflows.
++```
+diff --git a/planning/documentation/documentation-layer-portability-migration-plan.md b/planning/documentation/documentation-layer-portability-migration-plan.md
+index d589f52..bcb0b50 100644
+--- a/planning/documentation/documentation-layer-portability-migration-plan.md
++++ b/planning/documentation/documentation-layer-portability-migration-plan.md
+@@ -137,6 +137,42 @@ F4 does not rewrite active planning/documentation/planning-docs-architecture-pri
+ F4 does not create the source usage field kit or rewrite status/local-global/source-usage workflows; those are deferred to F5.
+ ```
+ 
++## 2D. Candidate Field Kit / Project Instance State
++
++F5 candidate field-kit split separated setup, workflow, project-instance and example responsibilities for the deferred status/local-global/source-usage areas.
++
++Created reusable candidate field kits:
++
++```text
++planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
++planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
++planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
++```
++
++Created candidate Enman project-instance files:
++
++```text
++planning/documentation-reusable-candidate/enman-status-evidence-profile.md
++planning/documentation-reusable-candidate/enman-shared-visibility-map.md
++planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
++```
++
++Created candidate examples:
++
++```text
++planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
++planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
++planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
++```
++
++Boundary:
++
++```text
++F5 does not promote Enman project-instance files into active planning/ root.
++F5 does not switch canonical documentation ownership.
++F5 does not rewrite active planning/documentation/ workflows.
++```
++
+ ## 3. Principles File Role Decision
+ 
+ The principles file should own high-level documentation architecture invariants.

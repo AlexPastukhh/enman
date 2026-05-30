@@ -1,20 +1,66 @@
-# APPLY
+# APPLY — ConnectionRequest Domain Aggregate Extraction
 
-This archive is an additive patch for Chapter 3 topic drafts.
+Status: replacement package apply instructions  
+Scope: add the second aggregate extraction and update domain discovery indexes
 
-## Apply order
+## Files
 
-1. Copy the `planning/` folder from this archive into the repository root.
-2. Review the new folder:
+This package adds:
 
 ```text
-planning/thesis/vkr-topic-workbench/04-chapter-3-implementation-and-testing/02-domain-model-implementation/
+planning/domain/aggregates/connection-request.md
+planning/domain/value-objects/object-address.md
+planning/domain/value-objects/rejection-feedback.md
 ```
 
-3. Update navigation files if needed:
-   - `planning/thesis/vkr-topic-workbench/04-chapter-3-implementation-and-testing/README.md`
-   - `planning/thesis/vkr-topic-workbench/04-chapter-3-implementation-and-testing/topic-index.md`
-   - `planning/thesis/VKR-RESOURCE-MAP.md`
+This package replaces:
 
-4. Do not insert these topic drafts directly into the VKR without final repo-check.
-5. Use `Clean text candidate` blocks as candidates for full VKR text.
+```text
+planning/domain/scenario-to-aggregate-map.md
+planning/domain/domain-notes-register.md
+planning/domain/aggregates/README.md
+planning/domain/value-objects/README.md
+```
+
+## Apply from repo root
+
+```powershell
+git fetch origin
+git checkout my-changes
+git pull --ff-only origin my-changes
+
+$archive = "C:\Users\alexa\Downloads\enman-domain-connection-request-extraction-package.zip"
+$tmp = Join-Path $env:TEMP "enman-domain-connection-request-extraction-package-apply"
+Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
+New-Item -ItemType Directory -Path $tmp | Out-Null
+Expand-Archive -Path $archive -DestinationPath $tmp -Force
+Copy-Item -Path (Join-Path $tmp "replacement-files\*") -Destination . -Recurse -Force
+
+git status
+git diff --name-only -- `
+  planning/domain/aggregates/connection-request.md `
+  planning/domain/value-objects/object-address.md `
+  planning/domain/value-objects/rejection-feedback.md `
+  planning/domain/scenario-to-aggregate-map.md `
+  planning/domain/domain-notes-register.md `
+  planning/domain/aggregates/README.md `
+  planning/domain/value-objects/README.md
+```
+
+## Commit
+
+```powershell
+git add `
+  planning/domain/aggregates/connection-request.md `
+  planning/domain/value-objects/object-address.md `
+  planning/domain/value-objects/rejection-feedback.md `
+  planning/domain/scenario-to-aggregate-map.md `
+  planning/domain/domain-notes-register.md `
+  planning/domain/aggregates/README.md `
+  planning/domain/value-objects/README.md
+
+git commit -m "docs: extract connection request domain aggregate"
+git push origin my-changes
+```
+
+Do not use `git add .` if the working tree has unrelated local changes.

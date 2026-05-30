@@ -1,0 +1,66 @@
+diff --git a/planning/documentation/examples/README.md b/planning/documentation/examples/README.md
+index c9b6d9c..5f3fbbe 100644
+--- a/planning/documentation/examples/README.md
++++ b/planning/documentation/examples/README.md
+@@ -41,6 +41,7 @@ No filled documentation-layer examples are added yet.
+ | `REPLACEMENT-ARCHIVE-PACKAGE-v1` | output example | `planning/replacement-file-generation-guide.md` | replacement archive/package generation | deferred | _not created yet_ | Candidate from chat history; add after example infrastructure is committed. |
+ | `POST-APPLY-PRESERVATION-CHECK-v1` | response/check example | `planning/replacement-file-generation-guide.md` and `planning/planning-use-case-map.md` | `проверь` after replacement archive/package application | deferred | _not created yet_ | Candidate from chat history; should show applied + preserved review. |
+ | `DIFF-CAPTURE-UTF8-CLIPBOARD-v1` | command-block example | `planning/replacement-file-generation-guide.md` | diff capture and clipboard commands | deferred | _not created yet_ | Candidate from chat history; should show `git --output` + UTF-8 clipboard + mojibake fallback. |
++| `REPLACEMENT-ARCHIVE-NEW-FILES-DIFF-v1` | command-block example | `planning/replacement-file-generation-guide.md` | replacement archive diff checks for packages that add files | deferred | _not created yet_ | Candidate from chat history; should show `$newFiles`, `git add -N`, and full diff capture for added files. |
+ | `NEW-CHAT-ONBOARDING-v1` | response example | `planning/planning-use-case-map.md` | New Chat Onboarding / first planning pass | deferred | _not created yet_ | Candidate from chat history; should show compact onboarding answer. |
+ | `ACCEPTED-COMMAND-NO-REINVENTION-v1` | guardrail example | `planning/planning-use-case-map.md` | accepted command / no reinvention | deferred | _not created yet_ | Candidate from chat history; should show stop-and-explain instead of silent mode switch. |
+ 
+diff --git a/planning/replacement-file-generation-guide.md b/planning/replacement-file-generation-guide.md
+index 63965cd..ec8c151 100644
+--- a/planning/replacement-file-generation-guide.md
++++ b/planning/replacement-file-generation-guide.md
+@@ -199,18 +199,35 @@ When the assistant provides a replacement archive, the chat response should incl
+ 
+ The command block should avoid paged terminal diff output and should avoid PowerShell pipeline encoding problems with Cyrillic text.
+ 
++It must also make expected new files visible in the review diff. Untracked files are not shown by `git diff` by default.
++
+ Required shape:
+ 
+ ```powershell
+ $files = @(
+   "path/to/changed-file-1.md",
+-  "path/to/changed-file-2.md"
++  "path/to/changed-file-2.md",
++  "path/to/new-file.md"
++)
++
++$newFiles = @(
++  "path/to/new-file.md"
+ )
+ 
++# Use @() when the package does not add files.
++# Make expected new files visible in git diff without staging their contents.
++foreach ($file in $newFiles) {
++  if (Test-Path $file) {
++    git add -N -- $file
++  } else {
++    Write-Host "Missing expected new file: $file"
++  }
++}
++
+ $pkgName = "real-package-name-without-angle-brackets"
+ $diffFile = Join-Path (Get-Location) "$pkgName.diff"
+ 
+-git status --short
++git status --short -- $files
+ git diff --stat -- $files
+ 
+ git --no-pager diff --no-color --output="$diffFile" -- $files
+@@ -224,6 +241,11 @@ Rules:
+ 
+ ```text
+ - Use a real package name in `$pkgName`; do not leave placeholders such as `<ARCHIVE_NAME>` in runnable commands.
++- `$files` must include all expected changed and added files.
++- `$newFiles` must include every expected added file; use `$newFiles = @()` when the package does not add files.
++- Run `git add -N -- <new-file>` before generating the review diff for packages that add files.
++- `git add -N` is used only to make untracked files visible in `git diff`; the final commit command must still explicitly stage only intended files.
++- If an expected new file is missing, treat that as a review blocker until resolved.
+ - Use `git --no-pager diff --no-color --output="$diffFile" -- $files` to write the diff file.
+ - Copy the saved diff with `Get-Content -Raw -Encoding UTF8 | Set-Clipboard`.
+ - Do not rely on `git diff | Tee-Object | Set-Clipboard` for reviewable diff transfer when non-ASCII text may be present.

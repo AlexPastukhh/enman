@@ -1,0 +1,759 @@
+diff --git a/planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md b/planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+index cb58521..da62298 100644
+--- a/planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
++++ b/planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+@@ -1,7 +1,7 @@
+ # File Update Overview Template
+ 
+ Status: current reusable output template  
+-Scope: exact structure for the final File Update Overview block used at the end of non-trivial file, documentation or code update answers
++Scope: exact Markdown structure for the final File Update Overview / `Итог` block used at the end of non-trivial file, documentation or code update answers
+ 
+ Use with:
+ 
+@@ -9,46 +9,54 @@ Use with:
+ planning/documentation/file-update-overview-workflow.md
+ ```
+ 
+-Do not use this block as the whole answer when the task requires a Level 2 or Level 3 reviewable answer. Put it at the end.
++Do not use this block as the whole answer when the task requires a Level 2 or Level 3 reviewable answer. Put it at the end, after `Краткое саммари` when that summary is used.
+ 
+-```text
+-Итог:
+-  Статус:
+-    <plan / archive created / diff checked / can commit / pushed / blocked>
+-
+-  Change group: <logical group>
+-    Change - New: <path>
+-      R: <file responsibility>
+-      Что: <what is added>
+-      Почему: <why it is added>
+-
+-    Change - Updated: <path>
+-      R: <file responsibility>
+-      Что: <what changes>
+-      Почему: <why it changes>
+-
+-  Change group: <logical group>
+-    Change - Updated: <path>
+-      R: <file responsibility>
+-      Что: <what changes>
+-      Почему: <why it changes>
+-
+-  Not changed:
+-    <path>
+-      R: <file responsibility>
+-      Почему: <why it is intentionally not changed>
+-
+-  Not created:
+-    <path>
+-      R: <future responsibility if relevant>
+-      Почему: <why it is intentionally not created>
+-
+-  Проверка:
+-    - <what was checked or should be checked>
+-    - <important limits / not checked items, if any>
+-
+-  Следующее действие:
+-    <next concrete action>
++## Template
++
++```markdown
++## Итог
++
++**Статус:** <planned / archive created / diff checked / can commit / pushed / blocked>
++
++### Change group: <logical group>
++
++**Change - New:** `<path>`  
++**R:** <file responsibility>  
++**Что:** <what is added or planned>  
++**Почему:** <why it is added or planned>
++
++**Change - Updated:** `<path>`  
++**R:** <file responsibility>  
++**Что:** <what changes or is planned to change>  
++**Почему:** <why it changes or is planned>
++
++### Change group: <logical group>
++
++**Change - Updated:** `<path>`  
++**R:** <file responsibility>  
++**Что:** <what changes or is planned to change>  
++**Почему:** <why it changes or is planned>
++
++### Not changed
++
++**Not changed:** `<path>`  
++**R:** <file responsibility>  
++**Почему:** <why it is intentionally not changed>
++
++### Not created
++
++**Not created:** `<path>`  
++**R:** <future responsibility if relevant>  
++**Почему:** <why it is intentionally not created>
++
++### Проверка
++
++- <what was checked or should be checked>
++- <important limits / not checked items, if any>
++
++### Следующее действие
++
++<next concrete action>
+ ```
+ 
+ ## Field Notes
+@@ -56,15 +64,17 @@ Do not use this block as the whole answer when the task requires a Level 2 or Le
+ ```text
+ Статус
+   Current state of the update.
++  Use `planned` while the overview is a rolling nearest-batch plan.
++  Use actual states such as `archive created`, `diff checked`, `can commit`, `pushed` or `blocked` after artifacts/diffs/application exist.
+ 
+ Change group
+   Logical system area, not a New/Updated bucket.
+ 
+ Change - New
+-  New file/artifact being added.
++  New file/artifact being added or planned.
+ 
+ Change - Updated
+-  Existing file/artifact being changed.
++  Existing file/artifact being changed or planned.
+ 
+ Not changed
+   Existing relevant file intentionally excluded.
+@@ -87,3 +97,12 @@ R
+ Следующее действие
+   The next action after this answer.
+ ```
++
++## Rules
++
++```text
++- Use normal Markdown in chat output, not an outer code fence around the final `Итог`.
++- Keep `Итог` as the last block when it is present.
++- Do not use `Итог` as a generic conclusion for answers without file/change/update context.
++- Use `Краткое саммари` before `Итог` when a contextual summary is useful.
++```
+diff --git a/planning/documentation/documentation-action-log.md b/planning/documentation/documentation-action-log.md
+index 8c0c7f9..7eb6836 100644
+--- a/planning/documentation/documentation-action-log.md
++++ b/planning/documentation/documentation-action-log.md
+@@ -351,3 +351,40 @@ Owner sources:
+ Notes:
+   This action records the workflow lesson from A2: one large/shared file equals one targeted write script; final combined diff review is allowed, but combined multi-large-file write scripts are not.
+ ```
++
++### 2026-05-29 — Added response block semantics and large-file archive preference
++
++```text
++Date:
++  2026-05-29
++Action:
++  Added response block semantics for Level 2 answers, draft-update differences, final `Итог` planning/actual modes and large-file archive-first preference.
++Type:
++  response/output behavior / workflow guardrail
++Status:
++  applied
++Why:
++  Level 2 answers need readable key points without losing the reviewable body. Draft updates need differences from the previous draft instead of generic key points. `Краткое саммари` and `Итог` need separate responsibilities: contextual summary versus file/change/update overview. Large files should not automatically trigger scripts when a fresh full repo/archive snapshot makes complete replacement safe.
++Changed files:
++  - planning/documentation/reviewable-agent-output-and-commands-workflow.md
++  - planning/planning-use-case-map.md
++  - planning/documentation/file-update-overview-workflow.md
++  - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
++  - planning/documentation/documentation-update-workflow.md
++  - planning/replacement-file-generation-guide.md
++  - planning/documentation/planning-docs-architecture-principles.md
++  - planning/documentation/examples/README.md
++  - planning/documentation/documentation-action-log.md
++Layer impact:
++  Documentation layer now has clearer response block ordering, command routing, final overview semantics and large-file delivery preference.
++PMR relation:
++  none
++Follow-ups:
++  Add filled examples after the response block and large-file delivery formats are used cleanly.
++Owner sources:
++  planning/documentation/reviewable-agent-output-and-commands-workflow.md
++  planning/documentation/file-update-overview-workflow.md
++  planning/replacement-file-generation-guide.md
++Notes:
++  `Итог` is not a generic conclusion. During planning it is the rolling nearest-batch plan; after artifact/diff/application it summarizes actual update state.
++```
+diff --git a/planning/documentation/documentation-update-workflow.md b/planning/documentation/documentation-update-workflow.md
+index 9221674..cbaee45 100644
+--- a/planning/documentation/documentation-update-workflow.md
++++ b/planning/documentation/documentation-update-workflow.md
+@@ -61,7 +61,7 @@ safe complete replacement/archive
+   The file is small or medium enough to safely produce as a complete replacement file.
+ 
+ one-file targeted script
+-  The file is large, shared, register-like, route-table-like or fragile, and only a small anchor-based edit is needed.
++  Complete replacement is unsafe in the current mode, and a large/shared/register-like/route-table-like/fragile file needs a small anchor-based edit.
+ 
+ direct repository edit
+   The user explicitly approved direct repository changes and the tool/mode can safely replace the complete file or perform the requested operation.
+@@ -74,11 +74,16 @@ Rules:
+ 
+ ```text
+ - Do this classification during planning, before creating artifacts.
++- Large file alone is not a reason to choose script mode.
++- If a large file must change, first check whether a fresh full repo/archive snapshot or current full file makes complete replacement safe and reviewable.
++- Prefer safe complete replacement from full current content when available.
++- Use local targeted script edit only when complete replacement is unsafe in the current mode.
+ - Do not let one large/risky file block safe archive delivery for other files.
+ - Do not put large/shared files into a replacement archive unless a complete replacement can be produced safely.
+ - Do not use one write script to modify multiple large/shared files.
+ - If several large/shared files need targeted edits, create one targeted write script per large/shared file.
+ - A final combined diff command may include all files for review, but write scripts should stay one large/shared file at a time.
++- Repeated need for scripts against the same file is a split/refactor signal.
+ ```
+ 
+ ## 3. Required Current-State Check
+@@ -330,7 +335,7 @@ Rules:
+ 
+ ### Local Targeted Script Edit mode
+ 
+-Use local targeted script edit mode when a large/shared file needs a small, explicit, anchor-based edit and complete replacement is unsafe or too heavy for the current delivery mode.
++Use local targeted script edit mode when a large/shared file needs a small, explicit, anchor-based edit and complete replacement is unsafe in the current delivery mode.
+ 
+ Typical targets:
+ 
+@@ -346,6 +351,8 @@ Rules:
+ 
+ ```text
+ - Use only after the user approves script mode or when it is the explicitly selected delivery mode.
++- Do not choose script mode only because a file is large.
++- Before script mode, check whether fresh full repo/archive content or a current full file makes complete replacement safe.
+ - One large/shared file = one targeted write script.
+ - Do not use one write script to modify multiple large/shared files.
+ - A script may create a final combined diff command for many files, but write operations should remain one large/shared file at a time.
+@@ -430,6 +437,7 @@ Before finalizing a documentation update, verify:
+ ```text
+ - broad changes had a Documentation Update Plan;
+ - every target file was classified by delivery safety before archive/script/direct edit mode was chosen;
++- large/shared files were checked for safe complete replacement from full current content before script mode was chosen;
+ - every added file appears in navigation or a folder README;
+ - responsibility maps know the new responsibility;
+ - local questions that matter later are mirrored into shared registers;
+@@ -467,5 +475,6 @@ Before finalizing a documentation update, verify:
+ - Do not attempt direct GitHub bulk commit without current base commit SHA and base tree SHA.
+ - Do not use PowerShell-unsafe tree commands when asking the user for base tree SHA; prefer `git show -s --format=%T origin/<branch>`.
+ - Do not use one local targeted write script to modify multiple large/shared files.
++- Do not choose script mode only because a file is large; prefer safe complete replacement when fresh full content is available.
+ - Do not print full diffs to terminal for large/script updates; write diff to file and copy it to clipboard.
+ ```
+diff --git a/planning/documentation/examples/README.md b/planning/documentation/examples/README.md
+index 1cb2c09..9d1cf30 100644
+--- a/planning/documentation/examples/README.md
++++ b/planning/documentation/examples/README.md
+@@ -47,6 +47,10 @@ No filled documentation-layer examples are added yet.
+ | `FILE-UPDATE-OVERVIEW-v1` | response/output example | `planning/documentation/file-update-overview-workflow.md` and `planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md` | File Update Overview final summary block | deferred | _not created yet_ | Add after the overview workflow/template is used on at least one follow-up file/docs/code update. |
+ | `LOCAL-TARGETED-SCRIPT-EDIT-v1` | command/script workflow example | `planning/documentation/documentation-update-workflow.md` | local targeted script edit mode | deferred | _not created yet_ | Add after the one-large-file-one-script workflow is used in a clean follow-up; should show `.ps1` file link, copy/run commands, scoped diff capture and no auto-commit. |
+ | `HYBRID-ARCHIVE-SCRIPT-DELIVERY-v1` | output/conversation workflow example | `planning/replacement-file-generation-guide.md` and `planning/documentation/documentation-update-workflow.md` | hybrid archive plus targeted script delivery | deferred | _not created yet_ | Add after a real mixed safe-files archive + one-file script package is reviewed; should show archive for safe files, separate script for large file and combined diff review. |
++| `LEVEL-2-KEY-POINTS-SUMMARY-ITOG-v1` | response/output example | `planning/documentation/reviewable-agent-output-and-commands-workflow.md` and `planning/documentation/file-update-overview-workflow.md` | Level 2 answer with key points, contextual summary and final `Итог` | deferred | _not created yet_ | Add after the format is used cleanly on a follow-up planning/update answer. |
++| `DRAFT-UPDATE-DIFFERENCES-v1` | draft update example | `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | active draft update with differences block | deferred | _not created yet_ | Should show `Отличия от предыдущего драфта` instead of `Key points first`. |
++| `STRICT-TEMPLATE-NO-KEY-POINTS-v1` | response/template example | `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | strict specialized template output | deferred | _not created yet_ | Should show when not to add `Key points first` because the template already provides reviewable structure. |
++| `LARGE-FILE-FULL-ARCHIVE-PREFERENCE-v1` | delivery-planning example | `planning/documentation/documentation-update-workflow.md` and `planning/replacement-file-generation-guide.md` | large-file delivery safety classification | deferred | _not created yet_ | Should show fresh full repo/archive + safe complete replacement preferred before script fallback. |
+ | `DOCUMENTATION-ACTION-LOG-ENTRY-v1` | log-entry example | `planning/documentation/documentation-action-log.md` | documentation action log entries | deferred | _not created yet_ | Add after the action log format is used on at least one follow-up update; should show concise logical action entry with PMR relation. |
+ | `NEW-CHAT-ONBOARDING-v1` | response example | `planning/planning-use-case-map.md` | New Chat Onboarding / first planning pass | deferred | _not created yet_ | Candidate from chat history; should show compact onboarding answer. |
+ | `ACCEPTED-COMMAND-NO-REINVENTION-v1` | guardrail example | `planning/planning-use-case-map.md` | accepted command / no reinvention | deferred | _not created yet_ | Candidate from chat history; should show stop-and-explain instead of silent mode switch. |
+diff --git a/planning/documentation/file-update-overview-workflow.md b/planning/documentation/file-update-overview-workflow.md
+index 1a082be..171d69f 100644
+--- a/planning/documentation/file-update-overview-workflow.md
++++ b/planning/documentation/file-update-overview-workflow.md
+@@ -1,11 +1,11 @@
+ # File Update Overview Workflow
+ 
+ Status: current documentation-layer workflow  
+-Scope: when and how to produce the final structured File Update Overview block for non-trivial file, documentation or code update answers
++Scope: when and how to produce the final structured File Update Overview / `Итог` block for non-trivial file, documentation or code update answers
+ 
+ ## 1. Purpose
+ 
+-This workflow owns the process for producing a `File Update Overview`.
++This workflow owns the process for producing a `File Update Overview` / `Итог` block.
+ 
+ A File Update Overview is a final summary block that shows:
+ 
+@@ -33,16 +33,18 @@ Answer levels and response-level commands are owned by:
+ planning/documentation/reviewable-agent-output-and-commands-workflow.md
+ ```
+ 
+-Use this workflow when the main answer is a non-trivial update plan, archive/package response, diff review, applied-update check or multi-file synchronization/refactor summary and needs a structured final file summary.
++Use this workflow when the main answer is a non-trivial update plan, archive/package response, diff review, applied-update check or multi-file synchronization/refactor summary and needs a structured final file/change summary.
+ 
+-The File Update Overview does not replace the main answer.
++The File Update Overview does not replace the main answer or `Краткое саммари`.
+ 
+ Use:
+ 
+ ```text
+ main reviewable answer
+ +
+-File Update Overview at the end
++Краткое саммари, when useful
+++
++File Update Overview / Итог at the end, when file/change/update context applies
+ ```
+ 
+ ## 3. When To Use
+@@ -65,6 +67,34 @@ Typical cases:
+ 
+ It is especially useful when the change spans multiple responsibilities or when future chats need to continue from the answer.
+ 
++## 3A. Planned And Actual Modes
++
++A File Update Overview can describe two states of the same file/change work.
++
++```text
++Planned mode
++  Use while the update is still being planned and no artifact/diff has been produced yet.
++  The overview is the rolling nearest-batch plan and should be updated as decisions change.
++
++Actual mode
++  Use after an archive, script, diff, local application, commit or remote verification exists.
++  The overview summarizes the actual artifact/diff/application/commit state.
++```
++
++Do not create separate overview formats for planned and actual mode. Use the same logical groups, responsibility fields, what/why fields, checks and next action.
++
++Use `Статус` in the template to show the current state, for example:
++
++```text
++planned
++archive created
++diff checked
++can commit
++pushed
++blocked
++```
++
++
+ ## 4. When Not To Use
+ 
+ Do not use the full File Update Overview for:
+@@ -79,6 +109,8 @@ Do not use the full File Update Overview for:
+ 
+ A short sentence may be enough for narrow tasks.
+ 
++Do not use File Update Overview as a generic conclusion. Use `Краткое саммари` for contextual/human summary when there is no file/change/update context.
++
+ ## 5. Logical Grouping Rule
+ 
+ Group files by logical role in the system, not by `New` versus `Updated`.
+@@ -107,10 +139,10 @@ Use these file line types:
+ 
+ ```text
+ Change - New:
+-  A new repository file or artifact will be added.
++  A new repository file or artifact will be added, or is planned to be added when `Статус` is `planned`.
+ 
+ Change - Updated:
+-  An existing repository file or artifact will be changed.
++  An existing repository file or artifact will be changed, or is planned to be changed when `Статус` is `planned`.
+ 
+ Not changed:
+   A relevant existing file is intentionally left unchanged.
+@@ -176,6 +208,7 @@ It does not own:
+ 
+ ```text
+ - response level selection;
++- response block placement;
+ - response command semantics;
+ - documentation update mechanics;
+ - replacement archive mechanics;
+@@ -195,7 +228,8 @@ Examples may demonstrate File Update Overview output, but they must not become t
+ Before finalizing an overview, check:
+ 
+ ```text
+-- every changed file has a clear responsibility;
++- `Статус` makes clear whether the overview is planned, archive-created, diff-checked, applied, pushed or blocked;
++- every changed/planned file has a clear responsibility;
+ - new files and updated files are placed in logical groups;
+ - relevant excluded files are listed when their exclusion matters;
+ - the overview does not replace the main reviewable answer;
+diff --git a/planning/documentation/planning-docs-architecture-principles.md b/planning/documentation/planning-docs-architecture-principles.md
+index 2b712d9..cd2ae54 100644
+--- a/planning/documentation/planning-docs-architecture-principles.md
++++ b/planning/documentation/planning-docs-architecture-principles.md
+@@ -24,6 +24,7 @@ Scope: how to structure planning documentation so it remains navigable, reviewab
+ - [16. Local Detail + Global Visibility](#16-local-detail--global-visibility)
+ - [17. Responsibility Ownership](#17-responsibility-ownership)
+ - [18. Safe Rewrite Rule](#18-safe-rewrite-rule)
++- [18A. Decomposable File Architecture](#18a-decomposable-file-architecture)
+ - [19. Documentation Update Plans](#19-documentation-update-plans)
+ - [20. AI-Checkability Principles](#20-ai-checkability-principles)
+ - [21. VKR / Thesis Separation](#21-vkr--thesis-separation)
+@@ -575,6 +576,35 @@ Such changes must be explicit in the plan, not hidden as polish.
+ 
+ Do not silently change behavior, scope or source-of-truth rules.
+ 
++## 18A. Decomposable File Architecture
++
++Prefer smaller owner files over repeated scripted mutation of large shared files.
++
++Large/shared files are acceptable when they have one cohesive responsibility, such as:
++
++```text
++- route map;
++- index;
++- register;
++- action log;
++- canonical table;
++- source usage register.
++```
++
++A file becomes a split/refactor candidate when:
++
++```text
++- it repeatedly needs targeted scripts;
++- unrelated responsibilities change together only because they share one file;
++- one small update makes reviewers re-check a large unrelated surface;
++- a future chat cannot safely produce a complete replacement from current full content;
++- sections have different owners, update cadence or review audiences.
++```
++
++When a large file must be updated, do not choose script mode only because the file is large. First prefer fresh full repo/archive content or current full-file access and use complete replacement when it is safe and reviewable.
++
++If complete replacement remains unsafe, use the local targeted script workflow as a fallback and consider whether the file should be decomposed later.
++
+ ## 19. Documentation Update Plans
+ 
+ For broad documentation changes, use:
+diff --git a/planning/documentation/reviewable-agent-output-and-commands-workflow.md b/planning/documentation/reviewable-agent-output-and-commands-workflow.md
+index c804e26..ba4dcf5 100644
+--- a/planning/documentation/reviewable-agent-output-and-commands-workflow.md
++++ b/planning/documentation/reviewable-agent-output-and-commands-workflow.md
+@@ -29,7 +29,7 @@ A reviewable answer should make clear:
+ - what should happen next.
+ ```
+ 
+-Response-level commands such as `level 2`, `recheck`, `clarify`, `keep prev`, `no ch`, `без изм`, `use archive`, `арх`, `б из арх`, `давай драфт`, `обнови` and `обс` change how the answer should be produced, checked or continued. They do not grant permission to edit files or change repository state.
++Response-level commands such as `level 2`, `recheck`, `clarify`, `keep prev`, `no ch`, `без изм`, `use archive`, `арх`, `б из арх`, `давай драфт`, `обнови`, `обс`, `кп`, `саммари`, `итог` and `отличия драфта` change how the answer should be produced, checked or continued. They do not grant permission to edit files or change repository state.
+ 
+ For action/use-case traces, active context, traversal depth and read source mode, use:
+ 
+@@ -169,14 +169,17 @@ Rules:
+ 
+ Use Level 2 for non-trivial planning, documentation, repo analysis, draft discussion, file/code update planning, synchronization, diff review, source-of-truth reasoning or architectural reasoning.
+ 
+-Template:
++Level 2 structure must remain reviewable. Extra response blocks such as `Key points first`, `Краткое саммари` and `Итог` do not replace task/scope, sources/coverage, assumptions/risks, verification or next step.
++
++Default analytical/planning template:
+ 
+ ```text
+-## 1. Short Conclusion
++## Key points first
+ 
+-...
++1. ...
++2. ...
+ 
+-## 2. Task And Scope
++## 1. Task And Scope
+ 
+ Task understood as:
+ ...
+@@ -187,7 +190,7 @@ In scope:
+ Out of scope:
+ - ...
+ 
+-## 3. Sources And Coverage
++## 2. Sources And Coverage
+ 
+ Checked:
+ - ...
+@@ -204,11 +207,11 @@ Supporting / non-canonical sources:
+ Answer limits:
+ - ...
+ 
+-## 4. Answer / Result
++## 3. Answer / Result
+ 
+ ...
+ 
+-## 5. Assumptions, Questions And Risks
++## 4. Assumptions, Questions And Risks
+ 
+ Assumptions:
+ - ...
+@@ -219,7 +222,7 @@ Open questions:
+ Risks:
+ - ...
+ 
+-## 6. Verification
++## 5. Verification
+ 
+ How to verify:
+ - ...
+@@ -227,11 +230,34 @@ How to verify:
+ What another chat/person should check:
+ - ...
+ 
+-## 7. Next Step
++## 6. Next Step
++
++...
++
++## Краткое саммари
++
++**Главное:** ...
++**Контекст:** ...
++**Ключевое решение:** ...
++**Дальше:** ...
++
++## Итог
+ 
+ ...
+ ```
+ 
++`Key points first` is a short numbered preview of the current answer. Use it by default for analytical/planning Level 2 answers, especially when the answer is long or has several decisions.
++
++Do not use `Key points first` by default when the answer is a first draft, a draft update, a strict specialized template, or an already self-evident structured output. In those cases the template/draft structure is the navigation.
++
++For draft updates, use `Отличия от предыдущего драфта` instead of `Key points first` when there is a previous draft version to compare against.
++
++`Краткое саммари` is a contextual human summary of the current answer in the broader discussion context. It appears after the main answer and before `Итог` when useful.
++
++`Итог` is not a general conclusion. It is the final file/change/update overview block for file, documentation or code update planning/review/application contexts.
++
++During planning, `Итог` is the current rolling nearest-batch plan and should be updated as the plan changes until the artifact/diff is produced. After an archive/script/diff/application exists, `Итог` summarizes the actual artifact, diff, application state or commit readiness.
++
+ The `Sources And Coverage` section is the most important part of this level.
+ 
+ It allows another chat to:
+@@ -364,9 +390,9 @@ Level 3 is not mandatory for every answer.
+ 
+ Use it when the answer needs to survive outside the original chat context.
+ 
+-## 6A. File Update Overview For File/Docs/Code Updates
++## 6A. File Update Overview / `Итог` For File/Docs/Code Updates
+ 
+-For Level 2 or Level 3 answers that plan, create, review or verify non-trivial file, documentation or code changes, end the normal reviewable answer with a File Update Overview when a structured file-change summary would help review.
++For Level 2 or Level 3 answers that plan, create, review or verify non-trivial file, documentation or code changes, end the normal reviewable answer with a File Update Overview / `Итог` when a structured file-change summary would help review.
+ 
+ Use:
+ 
+@@ -375,7 +401,32 @@ planning/documentation/file-update-overview-workflow.md
+ planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+ ```
+ 
+-The File Update Overview is a final summary block. It does not replace the main answer.
++The File Update Overview / `Итог` is a final summary block. It does not replace the main answer and it does not replace `Краткое саммари`.
++
++Placement:
++
++```text
++main reviewable answer
+++
++Краткое саммари, when useful
+++
++Итог, when file/change/update context applies
++```
++
++Ownership boundary:
++
++```text
++reviewable-agent-output-and-commands-workflow.md
++  owns when/where `Итог` appears and response-level command semantics.
++
++file-update-overview-workflow.md
++  owns how to produce the `Итог` / File Update Overview content.
++
++FILE-UPDATE-OVERVIEW-TEMPLATE.md
++  owns the exact reusable Markdown shape.
++```
++
++During planning, `Итог` is the current rolling nearest-batch plan. After artifact/diff/application, it summarizes the actual update state.
+ 
+ Use-case rows may reference File Update Overview as an expected output shape, but they do not own its format.
+ 
+@@ -509,6 +560,46 @@ The user may ask the same chat or another chat to perform response-level operati
+ 
+ Response-level commands affect answer format, checking behavior, active context or reuse of previous context. They do not grant permission to edit files, commit changes, delete files, move files, create PRs or skip necessary evidence checks for claims that require current proof.
+ 
++### Response Block Commands
++
++These commands request or suppress response blocks. They do not change edit permission, source requirements or repository state.
++
++```text
++кп / key points
++  Force `Key points first`.
++
++без кп / без key points
++  Omit `Key points first`.
++
++отличия драфта / draft diff
++  Add `Отличия от предыдущего драфта` for an active draft update.
++
++саммари
++  Add `Краткое саммари`.
++
++без саммари
++  Omit `Краткое саммари`.
++
++итог
++  Add or update the File Update Overview / `Итог` when file/change/update context applies.
++
++без итога
++  Omit `Итог`.
++
++полный конец
++  Add `Краткое саммари` and `Итог` when `Итог` is applicable.
++```
++
++Rules:
++
++```text
++- `Key points first` is a short numbered preview of the current answer.
++- `Краткое саммари` is contextual/human summary, not a file-change register.
++- `Итог` is file/change/update-oriented and must stay last when present.
++- Do not add `Итог` for ordinary drafting, casual explanation or strict-template output unless there is a file/change/update context.
++- If the user requests `итог` without a file/change/update context, explain that `Итог` is not applicable and offer `Краткое саммари`.
++```
++
+ ### Obs / Discussion Context Recheck
+ 
+ Canonical command:
+@@ -710,6 +801,8 @@ If there is an active draft in the current conversation, then `драфт`, `д
+ 
+ If there is no active draft/answer/plan, ask for the target unless the target is obvious from the current message.
+ 
++For active draft updates, include `Отличия от предыдущего драфта` when the user asks for it or when the changes are non-trivial enough that the user needs to review what changed before reading the updated draft.
++
+ ### No Changes / No Ch
+ 
+ Aliases:
+@@ -940,6 +1033,8 @@ Instead:
+ ```text
+ - use the specialized format;
+ - keep sources/coverage visible;
++- do not add `Key points first` when the specialized template already provides clear navigation;
++- use `Отличия от предыдущего драфта` for active draft updates instead of forcing key points;
+ - add section-level sources for major sections when needed;
+ - add handoff/reviewer notes if another chat should review the output;
+ - use planning-use-case-map.md for active-context, traversal-depth and read-source decisions.
+@@ -962,6 +1057,9 @@ Instead:
+ - Do not use `use archive` / `арх` to overclaim remote branch truth when archive freshness is uncertain.
+ - Do not treat `драфт` / `обнови` as a new draft request when there is an active draft context.
+ - Do not treat `обс` as permission to edit files, skip current evidence checks or reopen accepted decisions without request.
++- Do not use `Key points first` to replace Level 2 task/scope, sources/coverage, risks, verification or next step.
++- Do not add `Итог` as a generic conclusion when there is no file/change/update context.
++- Do not add `Key points first` to draft updates when `Отличия от предыдущего драфта` is the useful review block.
+ - Do not silently promote a one-pass additional source into a default template/source requirement.
+ ```
+ 
+@@ -983,6 +1081,8 @@ This workflow works when:
+ - Source Delta makes newly used sources and not-rechecked sources visible when an answer/draft changes;
+ - Level 2/3 escalation happens automatically when task breadth requires reviewability;
+ - `обс` can re-check prior discussion without being confused with edit permission or answer level;
+-- File Update Overview is used as a final summary block when non-trivial file/docs/code updates need file responsibility/change visibility;
++- `Key points first`, `Краткое саммари` and `Итог` improve navigation without replacing the Level 2/3 reviewable body;
++- draft updates use `Отличия от предыдущего драфта` when that is the useful review block;
++- File Update Overview / `Итог` is used as a final summary block when non-trivial file/docs/code updates need file responsibility/change visibility;
+ - response structure helps verification without adding unnecessary bureaucracy.
+ ```
+diff --git a/planning/planning-use-case-map.md b/planning/planning-use-case-map.md
+index 30def07..aeb9cfd 100644
+--- a/planning/planning-use-case-map.md
++++ b/planning/planning-use-case-map.md
+@@ -303,6 +303,8 @@ The canonical prior-discussion recheck command is:
+ 
+ `обс` means context/discussion recheck. Its semantics are owned by `reviewable-agent-output-and-commands-workflow.md`.
+ 
++Response block commands such as `кп`, `саммари`, `итог` and `отличия драфта` are routed in this file, but their behavior is owned by `reviewable-agent-output-and-commands-workflow.md`.
++
+ ## 9. Repeated / Continuation Commands
+ 
+ | User says | If active context exists | If no active context exists | Traversal depth | Read source mode | Expected output |
+@@ -311,6 +313,14 @@ The canonical prior-discussion recheck command is:
+ | `обнови`, `обнови драфт`, `актуализируй` | Apply latest discussion deltas to active draft/answer/plan. | Ask target unless obvious. | Reuse / targeted. | Conversation / canvas; source check only if needed. | Updated version or “already current”. |
+ | `уточни` | Same scope, more precise wording/boundary. | Clarify target if ambiguous. | No traversal / reuse / targeted. | Conversation; sources only if precision depends on evidence. | Clarified answer/section. |
+ | `расширь` | Add depth/examples/edge cases without silently changing scope. | Ask what to expand if ambiguous. | Reuse / targeted. | Conversation plus named/new sources if needed. | Expanded section/answer with scope note. |
++| `кп`, `key points` | Force a `Key points first` block for the active answer. | Add key points if the requested answer exists or ask what answer to summarize. | No traversal / reuse. | Conversation; sources only if key points depend on evidence. | `Key points first` block plus normal answer structure. |
++| `без кп`, `без key points` | Suppress `Key points first` for the active answer. | Apply to the current answer if target is obvious. | No traversal / reuse. | Conversation. | Answer without key-points preview. |
++| `саммари` | Add contextual `Краткое саммари`. | Summarize current answer/context or ask target. | No traversal / reuse; targeted if evidence changed. | Conversation plus sources only if needed. | `Краткое саммари`, not file-change `Итог`. |
++| `без саммари` | Suppress `Краткое саммари`. | Apply to current answer if target is obvious. | No traversal / reuse. | Conversation. | Answer without contextual summary. |
++| `итог` | Add or update file/change-oriented `Итог` when update context exists. | If no file/change/update context exists, explain that `Итог` is not applicable and offer `Краткое саммари`. | Reuse / targeted. | Conversation plus target files/diff/archive when needed. | File Update Overview / `Итог`; during planning it is the rolling nearest-batch plan. |
++| `без итога` | Suppress `Итог`. | Apply to current answer if target is obvious. | No traversal / reuse. | Conversation. | Answer without File Update Overview. |
++| `полный конец` | Add `Краткое саммари` and `Итог` when `Итог` is applicable. | Add both ending blocks if target is obvious. | Reuse / targeted. | Conversation plus target files/diff/archive when needed. | Context summary followed by final file/change overview. |
++| `отличия драфта`, `draft diff` | Show how the active draft changed from the previous version. | Ask for the draft target if no active draft is clear. | Reuse / targeted. | Conversation / canvas / draft sources if changed. | `Отличия от предыдущего драфта` plus updated draft when requested. |
+ | `обс`, `перепроверь обсуждение`, `context recheck` | Re-check relevant prior discussion, accepted decisions and constraints before answering. | Re-check available prior discussion or say what context is unavailable. | Reuse / targeted; full only if task requires it. | Conversation plus sources only if needed. | Context/discussion recheck result; combine with Level 1/2/3 by task breadth. |
+ | `перепроверь`, `recheck` | Recheck active answer/draft/source coverage. | Recheck last answer or ask target. | Targeted / full depending risk. | Conversation plus relevant sources. | Findings and corrections/no-change result. |
+ | `учти файл X` | Incorporate explicit new source into active work. | Use X for the requested new answer. | Targeted. | Uploaded/named file. | Updated answer/draft with Source Delta. |
+@@ -330,6 +340,7 @@ The canonical prior-discussion recheck command is:
+ | “добавь template / workflow / command / draft format / пример” | Documentation governance update | Optional | Full first time; targeted later | GitHub/archive/conversation by context | docs update workflow; example coverage decision when template/output shape changes; reviewable output | documentation README/map/workflows; `planning/documentation/example-coverage-workflow.md` when template/output/command/draft example coverage matters; relevant owner workflow/template; principle section references in §3A | docs architecture principles + use-case map + example coverage workflow | Level 2 update plan or replacement package + File Update Overview when files are planned/changed/reviewed; example coverage decision if applicable | Edits/packages require approval |
+ | “source usage”, “source/version”, “каскад зависимостей”, “stale downstream”, “версии сорсов”, “инкапсуляция слоёв” | Source usage / cascade governance or pilot work | Optional | Full first time; targeted later | GitHub/archive/conversation by context | source usage cascade governance plan; principles §12A/13/14/15; PMR-002 until full workflow exists | `planning/documentation/source-usage-cascade-governance-plan.md`; `planning/documentation/source-usage-pilots/README.md`; pilot register if user asks to work on a pilot; relevant source/domain/slice docs only for real pilot fill | layer encapsulation principle + source usage governance plan | Level 2 governance plan, pilot skeleton, pilot fill plan or replacement package + File Update Overview when files are planned/changed/reviewed | Do not pretend full cascade workflow exists; do not add ad hoc version fields |
+ | “давай архив”, “собери архив”, “replacement package”, “archive for manual apply” | Replacement archive/package generation | Optional | Targeted/full by package scope | GitHub/archive/conversation by context | replacement file generation guide; docs update workflow when docs change; reviewable output | `planning/replacement-file-generation-guide.md`, target files, docs update workflow when docs are changed | replacement guide + workflow activation | Level 2 archive/package response + File Update Overview; ZIP package with `MANIFEST.md`, `APPLY.md`, `replacement-files/<repo-relative-path>` complete files | Direct repo edits not allowed unless separately approved |
++| “файл большой”, “дай ps1”, “скрипт для большого файла”, “архив неудобен” | Large/shared file update delivery choice | Optional | Targeted/full by file risk | Fresh archive/current full file preferred; script only if complete replacement unsafe | docs update workflow; replacement guide; local targeted script mode if fallback needed | `planning/documentation/documentation-update-workflow.md`, `planning/replacement-file-generation-guide.md`, target file | delivery safety check + replacement guide | Level 2 delivery plan: prefer fresh full repo/archive + safe complete replacement; one-file targeted script only as fallback | Do not choose script only because file is large; scripts require explicit mode and no auto-commit |
+ | “поправь ссылки во многих файлах” | Mechanical link/path/name sync | Optional | Targeted/broad search | GitHub or archive | docs update workflow; local-global sync | target files/search source | docs update workflow output mode rules | Level 2 link-sync plan + File Update Overview; one bundled commit when tool-supported | Bundled/bulk mode should be used when approved; if unavailable, stop and disclose before per-file writes |
+ | “задрафти slice” | Slice draft work | Usually new | Full first time | Sources required by slice workflow | slice workflow chain; testing selector when needed | slice README/map/workflow/principles/test workflow/template; `planning/testing/testing-responsibility-map.md` when test-layer-specific guidance is needed | activation map + slice README/map | Slice draft/plan | File writes require approval |
+ | “задрафти server slice” | Server slice draft | New/active | Full first time; targeted update | Scenario/domain/API/testing sources | slice + server drafting workflows; testing selector when needed | server workflow/template/principles; `planning/slices/slice-test-plan-workflow.md`; `planning/testing/testing-responsibility-map.md`; `planning/testing/server-slice-test-plan-rules.md` when server/API test guidance is needed | slice README/map | Server/backend/API draft | File writes require approval |
+diff --git a/planning/replacement-file-generation-guide.md b/planning/replacement-file-generation-guide.md
+index b9edf2d..e2fab1b 100644
+--- a/planning/replacement-file-generation-guide.md
++++ b/planning/replacement-file-generation-guide.md
+@@ -43,6 +43,8 @@ Replacement archive/package mode means:
+ 
+ If complete replacement files cannot be produced safely, stop and say so. Do not silently switch to patch-script mode.
+ 
++A large file is not automatically excluded from replacement archive mode. If a fresh full repo/archive snapshot or current full file makes complete replacement safe and reviewable, prefer complete replacement over a script.
++
+ If only some files cannot be produced safely as complete replacements, use hybrid delivery:
+ 
+ ```text
+@@ -143,9 +145,12 @@ Rules:
+ 
+ ```text
+ - Do this before package generation.
++- Large file alone is not a reason to switch to script mode.
++- If a large file must change, first check whether fresh full repo/archive content or the current full file makes complete replacement safe.
++- Prefer complete replacement when full current content is available and the diff remains reviewable.
+ - Do not let one large/risky file block safe archive delivery for other files.
+ - Do not include partial replacements or script patches for large files inside the archive.
+-- Use one targeted write script per large/shared file.
++- Use one targeted write script per large/shared file when complete replacement is unsafe.
+ - A final combined diff command may review all affected files, but write scripts should stay one large/shared file at a time.
+ ```
+ 
+@@ -405,7 +410,7 @@ Do not bundle unrelated work just to reduce archive count.
+ 
+ ## 7E. Hybrid Archive / Script Delivery Rule
+ 
+-Use hybrid delivery when one coherent accepted update contains both safe complete-replacement files and large/shared files that need targeted script edits.
++Use hybrid delivery when one coherent accepted update contains both safe complete-replacement files and large/shared files whose complete replacement is unsafe and therefore need targeted script edits.
+ 
+ Required shape:
+ 
+@@ -427,8 +432,9 @@ Rules:
+ - Do not include targeted write scripts inside `replacement-files/`.
+ - Do not call a script artifact a replacement file.
+ - Do not let one large/risky file block safe archive delivery for other files.
++- Do not choose script mode only because a file is large; prefer complete replacement when fresh full content makes it safe.
+ - Do not use one write script for multiple large/shared files.
+-- If a large/shared file must be changed, give a separate script link, copy-to-root command and run command.
++- If a large/shared file must be changed and complete replacement is unsafe, give a separate script link, copy-to-root command and run command.
+ - Commit commands must stage only intended repository files, not package metadata or helper scripts unless intentionally tracked.
+ ```
+ 
+@@ -525,7 +531,7 @@ These are patch proposal artifacts, not replacement package artifacts.
+ 
+ If the user explicitly asks for a patch proposal or targeted local script, it may be provided separately, but the final response must label it correctly and must not claim it is a replacement archive.
+ 
+-If the target file is large, still generate the complete replacement file when it is safe. If that is not safe, exclude that file from the replacement archive and use hybrid archive/script delivery or stop and report the limitation.
++If the target file is large, still generate the complete replacement file when fresh full content makes it safe and reviewable. If that is not safe, exclude that file from the replacement archive and use hybrid archive/script delivery or stop and report the limitation.
+ 
+ ## 10. Scope Statement
+ 
+@@ -563,5 +569,6 @@ Do not leave docs saying `planned` when current repo evidence shows `implemented
+ - Do not provide archive apply instructions without a pull/current-state step first.
+ - Do not tell the user to extract a package-layout archive directly into the repo root as the apply step.
+ - Do not let one large/risky file block safe archive delivery for other files.
++- Do not choose script mode only because a file is large.
+ - Do not use one write script for multiple large/shared files.
+ ```

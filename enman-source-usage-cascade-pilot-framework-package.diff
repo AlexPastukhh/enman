@@ -1,0 +1,673 @@
+diff --git a/planning/documentation/README.md b/planning/documentation/README.md
+index 00bca89..f5c4d2d 100644
+--- a/planning/documentation/README.md
++++ b/planning/documentation/README.md
+@@ -1,7 +1,7 @@
+ # Documentation Update Workflow Index
+ 
+ Status: current documentation layer index / read order  
+-Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs, response-level commands, working example coverage and navigation updates
++Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs, response-level commands, working example coverage, source usage cascade governance and navigation updates
+ 
+ ## 1. Purpose
+ 
+@@ -20,6 +20,7 @@ A documentation update agent must:
+ - synchronize local docs with shared indexes/registers;
+ - update navigation/responsibility maps together with new docs;
+ - decide whether a working example is needed when templates, output shapes, commands or draft formats change;
++- use source usage cascade governance when source/stale-reference/reviewed-upstream-work concerns appear;
+ - use direct GitHub edits only when explicitly asked to apply changes;
+ - use one file per commit by default for direct GitHub edits;
+ - use archive/replacement packages when manual application or broad generated replacement is more practical.
+@@ -38,6 +39,8 @@ planning/documentation/status-reconciliation-workflow.md
+ planning/documentation/local-global-documentation-sync-workflow.md
+ planning/documentation/reviewable-agent-output-and-commands-workflow.md
+ planning/documentation/example-coverage-workflow.md
++planning/documentation/source-usage-cascade-governance-plan.md
++planning/documentation/source-usage-pilots/README.md
+ planning/documentation/examples/README.md
+ planning/documentation/documentation-update-agent-prompt.md
+ ```
+@@ -82,8 +85,9 @@ For broad documentation updates:
+ 10. planning/documentation/status-reconciliation-workflow.md
+ 11. planning/documentation/local-global-documentation-sync-workflow.md
+ 12. planning/documentation/example-coverage-workflow.md, if the update changes templates, output shapes, response commands, output modes, draft formats or example coverage
+-13. planning/replacement-file-generation-guide.md, if archive/replacement mode is relevant
+-14. relevant domain/API/testing/slice/client/scenario docs for the requested area
++13. planning/documentation/source-usage-cascade-governance-plan.md, if the update touches source usage, stale references, cascade review, reviewed upstream work or source usage pilots
++14. planning/replacement-file-generation-guide.md, if archive/replacement mode is relevant
++15. relevant domain/API/testing/slice/client/scenario docs for the requested area
+ ```
+ 
+ For answer-format, reviewable-output or response-command work:
+@@ -101,6 +105,15 @@ planning/documentation/examples/README.md
+ 
+ Use this when adding or changing templates, workflows with expected output, response commands, output modes, draft formats or example indexes.
+ 
++For source usage cascade governance and pilots:
++
++```text
++planning/documentation/source-usage-cascade-governance-plan.md
++planning/documentation/source-usage-pilots/README.md
++```
++
++Use this when working on source usage relationships, stale downstream references, reviewed-upstream-work concerns, cascade review pilots or the future source usage workflow.
++
+ ## 4. Responsibility Routing Rule
+ 
+ If deciding which planning layer information belongs to, start with:
+@@ -127,6 +140,8 @@ status reconciliation process -> status-reconciliation-workflow.md
+ agent answer/review format and response-level commands -> reviewable-agent-output-and-commands-workflow.md
+ example coverage decision process -> example-coverage-workflow.md
+ documentation-layer examples navigation -> examples/README.md
++source usage cascade pilot governance -> source-usage-cascade-governance-plan.md
++source usage pilot folder navigation -> source-usage-pilots/README.md
+ reusable prompt -> documentation-update-agent-prompt.md
+ ```
+ 
+@@ -221,7 +236,23 @@ planning/documentation/examples/README.md
+ 
+ Examples are supporting artifacts. They should demonstrate correct output or usage shape, but must not duplicate routing, source-mode, output-mode, permission or workflow activation logic owned by use-case maps and workflow files.
+ 
+-## 11. Scoped Sync Notes
++## 11. Source Usage Cascade Governance
++
++For source usage relationships, layer encapsulation, stale downstream reference concerns and cascade-review pilot planning, use:
++
++```text
++planning/documentation/source-usage-cascade-governance-plan.md
++```
++
++For pilot folder navigation, use:
++
++```text
++planning/documentation/source-usage-pilots/README.md
++```
++
++Pilot registers are experimental review/cascade aids. They do not replace scenario/domain/slice source files, maps, drafts or future permanent source usage registers.
++
++## 12. Scoped Sync Notes
+ 
+ Scoped sync notes are case-specific documentation synchronization notes. They are useful for trace/audit/context, but they are not reusable workflows or global architecture principles.
+ 
+@@ -235,7 +266,7 @@ planning/documentation/l2-scenario-status-marker-sync-note.md
+ 
+ Do not treat scoped sync notes as canonical workflow files. If a scoped sync note contains a reusable rule, promote that rule into the correct workflow or architecture file through a normal documentation update.
+ 
+-## 12. Draft-Driven Discovery Scope Note
++## 13. Draft-Driven Discovery Scope Note
+ 
+ Draft-driven discovery is currently a slice-layer discovery loop.
+ 
+diff --git a/planning/documentation/documentation-responsibility-map.md b/planning/documentation/documentation-responsibility-map.md
+index 1ba1f7a..00f6d0e 100644
+--- a/planning/documentation/documentation-responsibility-map.md
++++ b/planning/documentation/documentation-responsibility-map.md
+@@ -57,6 +57,9 @@ This file owns only documentation-layer placement.
+ | Reviewable answer format and response-level commands | `reviewable-agent-output-and-commands-workflow.md` | Level 1/2/3 answers, sources/coverage, recheck/clarify/keep prev/no ch/section operations. |
+ | Working example coverage decision process | `example-coverage-workflow.md` | Decides whether a new/changed template, workflow output, response command, output mode or draft format needs a working example. |
+ | Documentation-layer working example index | `examples/README.md` | Navigation and coverage index for documentation-layer examples. It does not own routing/source/output/permission logic. |
++| Source usage cascade governance pilot plan | `source-usage-cascade-governance-plan.md` | Governance plan for source usage relationships, layer encapsulation, attention preservation and cascade-review pilots. Not the full future workflow. |
++| Source usage pilot folder/index | `source-usage-pilots/README.md` | Navigation and rules for experimental pilot registers. Permanent register placement is deferred. |
++| Source usage pilot registers | `source-usage-pilots/*.md` | Pilot dependency relationship tables used to test source usage row shape and cascade review. Not global final schema. |
+ | Reusable documentation update prompt | `documentation-update-agent-prompt.md` | Derived prompt for other chats. Not canonical if it conflicts with governance docs. |
+ | Scoped documentation sync notes | `*sync-note.md` or future `sync-notes/` | Case-specific notes. Not reusable workflows or global principles. |
+ 
+@@ -66,7 +69,7 @@ Classify the new information:
+ 
+ ```text
+ 1. Information type:
+-   architecture principle / workflow step / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule / working example / example coverage decision.
++   architecture principle / workflow step / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule / working example / example coverage decision / source usage governance / source usage pilot register.
+ 
+ 2. Existing owner:
+    Which file above already owns this type?
+@@ -85,6 +88,9 @@ Classify the new information:
+ 
+ 7. Example coverage impact:
+    Does adding or changing this information create or change a reusable template, output shape, command behavior or draft format that needs an example coverage decision?
++
++8. Source usage impact:
++   Does this information introduce or change source usage relationships, cascade review, stale-reference handling or pilot register shape?
+ ```
+ 
+ ## 5. Conflict Rules
+@@ -98,6 +104,8 @@ If documentation-layer files conflict:
+ - workflow files win for their own process steps.
+ - example-coverage-workflow.md wins for example coverage decision steps.
+ - examples/README.md is an index and does not override owner workflows, templates or use-case rows.
++- source-usage-cascade-governance-plan.md wins for pilot governance until the full cascade workflow exists.
++- source-usage-pilots/*.md are pilot artifacts and do not override source files, maps, drafts or future permanent registers.
+ - reviewable-agent-output-and-commands-workflow.md wins for answer format and response-level commands.
+ - documentation-update-agent-prompt.md is derived/supporting and does not override canonical docs.
+ - scoped sync notes do not override reusable workflow files.
+@@ -124,6 +132,8 @@ Suggested suffixes:
+ | Responsibility map | `*-responsibility-map.md` |
+ | Template | `*-template.md` |
+ | Examples index / examples folder navigation | `examples/README.md` or `*-examples.md` |
++| Source usage pilot folder navigation | `source-usage-pilots/README.md` |
++| Source usage pilot register | `source-usage-pilots/<scope>-source-usage-register.md` |
+ | Scoped sync note | `*-sync-note.md` |
+ | Reusable prompt | `*-agent-prompt.md` |
+ | Architecture principles | `*-architecture-principles.md` |
+@@ -135,6 +145,7 @@ Suggested suffixes:
+ - Do not put workflow steps into architecture principles unless they are only high-level principles.
+ - Do not duplicate owner tables in multiple files.
+ - Do not put command routing, source-mode, output-mode or permission logic into example files.
++- Do not treat source usage pilot registers as permanent global schema before the pilot is reviewed.
+ - Do not treat reusable prompts as canonical rules.
+ - Do not treat scoped sync notes as reusable workflows.
+ - Do not add a new file without updating README.md when it must be discoverable.
+@@ -152,5 +163,6 @@ The documentation layer is well-routed when:
+ - workflow files stay process-focused;
+ - example coverage decisions are made by the example coverage workflow;
+ - examples remain supporting artifacts and link to their owner files instead of copying logic;
++- source usage cascade pilots are discoverable and clearly marked experimental;
+ - prompts and sync notes are clearly supporting/scoped artifacts.
+ ```
+diff --git a/planning/documentation/examples/README.md b/planning/documentation/examples/README.md
+index 642776b..48553ef 100644
+--- a/planning/documentation/examples/README.md
++++ b/planning/documentation/examples/README.md
+@@ -43,6 +43,7 @@ No filled documentation-layer examples are added yet.
+ | `DIFF-CAPTURE-UTF8-CLIPBOARD-v1` | command-block example | `planning/replacement-file-generation-guide.md` | diff capture and clipboard commands | deferred | _not created yet_ | Candidate from chat history; should show `git --output` + UTF-8 clipboard + mojibake fallback. |
+ | `REPLACEMENT-ARCHIVE-NEW-FILES-DIFF-v1` | command-block example | `planning/replacement-file-generation-guide.md` | replacement archive diff checks for packages that add files | deferred | _not created yet_ | Candidate from chat history; should show `$newFiles`, `git add -N`, and full diff capture for added files. |
+ | `REPLACEMENT-ARCHIVE-CONVERSATION-LOOP-v1` | conversation workflow example | `planning/replacement-file-generation-guide.md` | replacement archive conversation review loop | deferred | _not created yet_ | Candidate from chat history; should show assistant archive output, user diff, assistant review, commit command and remote verification. |
++| `SOURCE-USAGE-CASCADE-PILOT-FRAMEWORK-v1` | register/framework example | `planning/documentation/source-usage-cascade-governance-plan.md` | source usage cascade pilot framework | deferred | _not created yet_ | Framework and pilot skeleton are added first; add a filled example after the real SC-13D pilot row set is audited. |
+ | `NEW-CHAT-ONBOARDING-v1` | response example | `planning/planning-use-case-map.md` | New Chat Onboarding / first planning pass | deferred | _not created yet_ | Candidate from chat history; should show compact onboarding answer. |
+ | `ACCEPTED-COMMAND-NO-REINVENTION-v1` | guardrail example | `planning/planning-use-case-map.md` | accepted command / no reinvention | deferred | _not created yet_ | Candidate from chat history; should show stop-and-explain instead of silent mode switch. |
+ 
+diff --git a/planning/documentation/source-usage-cascade-governance-plan.md b/planning/documentation/source-usage-cascade-governance-plan.md
+new file mode 100644
+index 0000000..93261b5
+--- /dev/null
++++ b/planning/documentation/source-usage-cascade-governance-plan.md
+@@ -0,0 +1,303 @@
++# Source Usage Cascade Governance Plan
++
++Status: pilot framework / not full workflow  
++Scope: source usage relationships, layer encapsulation, attention preservation and cascade-review pilot planning
++
++## 1. Purpose
++
++This plan explains how to pilot source usage and cascade review before creating a full source-version-cascade workflow.
++
++It exists because planning docs are built as a layered pipeline:
++
++```text
++scenario sources
++  -> DATA / behavior item sets
++  -> domain discovery and domain drafts
++  -> slice discovery and slice drafts
++  -> testing / verification planning
++  -> implementation evidence and VKR/thesis output when relevant
++```
++
++The goal is not file versioning by itself.
++
++The goal is to preserve layer encapsulation and human review attention: when upstream work has already been reviewed, downstream docs should reference published upstream artifacts instead of reconstructing the upstream reasoning.
++
++## 2. Current State
++
++Current architecture principles already define:
++
++```text
++- layer dependency direction;
++- source-of-truth hierarchy;
++- layer encapsulation and attention preservation;
++- source/version principle;
++- dependency cascade principle;
++- section-level sources principle.
++```
++
++The missing part is operational evidence from a real pilot:
++
++```text
++- what a source usage row should contain;
++- how granular source scopes need to be;
++- how downstream consumer scopes should be reviewed;
++- when metadata-only review is enough;
++- where permanent registers should live.
++```
++
++## 3. Why This Is Not The Full Workflow Yet
++
++Do not create or activate a full cascade workflow from abstract assumptions.
++
++This file is a governance plan and pilot frame. It does not replace a future workflow such as:
++
++```text
++planning/documentation/source-version-cascade-sync-workflow.md
++```
++
++That workflow should be created only after at least one real source usage register pilot proves the row shape and review process.
++
++## 4. Core Model
++
++The key unit is not a standalone file version.
++
++The key unit is a source usage relationship:
++
++```text
++source artifact/scope
++  -> consumer artifact/scope
++  -> reviewed_against / sync_status / review_outcome when needed
++```
++
++This is relationship-first, not version-first.
++
++Version markers exist to support review and cascade synchronization. They are not the source of truth by themselves.
++
++## 5. Terms
++
++```text
++Source artifact
++  Canonical or accepted upstream file, section, table row, register entry, artifact-map row or workflow rule that can affect downstream docs.
++
++Source scope
++  The exact part of the source artifact consumed by a downstream file or section.
++
++Source granularity
++  file / section / table row / register entry / artifact-map row / behavior item group / workflow rule.
++
++Source status
++  State of the source itself: current / draft / transitional / historical / deprecated.
++
++Consumer artifact
++  Downstream file or section that uses, maps, summarizes, derives from, tests, visualizes, formats or is constrained by the source.
++
++Consumer scope
++  The exact section, table, row or local block inside the consumer artifact.
++
++Usage type
++  derives-from / maps-to / summarizes / validates / tests / visualizes / routes / formats / constrains.
++
++Reviewed against
++  Lightweight marker of the source state the consumer was checked against: commit SHA, date, source marker, artifact-map status, source heading or future explicit version.
++
++Sync status
++  State of the consumer relative to the source: current / needs-review / partial / stale / blocked / unknown / not-applicable.
++
++Review outcome
++  What happened during review: not-reviewed / reviewed-no-change / updated / metadata-only / follow-up-needed / blocked.
++
++Cascade trigger
++  Source change type that should cause the consumer scope to be reviewed.
++```
++
++## 6. External Dependency Rule
++
++External dependencies cross file or layer boundaries.
++
++Use source usage rows when downstream synchronization matters:
++
++```text
++SC-13D behavior item
++  -> domain aggregate draft method section
++
++Domain aggregate method section
++  -> server slice Domain Behavior section
++
++Slice Behavior Coverage row
++  -> Test / Verification Plan row
++```
++
++External dependency rows should help a future chat identify affected downstream scopes without reading every downstream file from scratch.
++
++## 7. Internal Section Dependency Rule
++
++Internal section dependencies are same-file analytical dependencies.
++
++They normally do not need version markers.
++
++Use local section-level source/internal dependency blocks when a section is high-risk, separately reviewed or depends on earlier sections.
++
++Example:
++
++```text
++In a domain aggregate draft:
++- Domain Methods depend on Aggregate Boundary and Owned State.
++- Invariants depend on Domain Methods and Value Objects.
++- Behavior Coverage depends on Methods, Invariants and Lifecycle.
++```
++
++If a foundational section changes, review the whole file. If a later section has explicit internal dependencies, review it when those dependencies change.
++
++Do not put internal section dependencies into an external source usage register unless that section is consumed by another file.
++
++## 8. Source Usage Row Shape
++
++Pilot registers should start with this table shape:
++
++```md
++| ID | Source artifact | Source scope | Source status | Consumer artifact | Consumer scope | Usage type | Reviewed against | Sync status | Review outcome | Cascade trigger | Notes |
++|---|---|---|---|---|---|---|---|---|---|---|---|
++```
++
++The shape is pilot-level. Do not copy it into every template before the pilot proves it.
++
++## 9. Source Status vs Sync Status
++
++Source status and sync status are different.
++
++```text
++source_status
++  describes the source artifact itself.
++
++sync_status
++  describes whether the consumer is current relative to that source.
++```
++
++Examples:
++
++```text
++source_status = current
++sync_status = needs-review
++
++source_status = transitional
++sync_status = current
++```
++
++## 10. Reviewed Against Rule
++
++Use `reviewed_against` before inventing heavy semantic versioning.
++
++Acceptable pilot markers:
++
++```text
++- commit SHA or short SHA;
++- source path + section heading;
++- artifact-map status row;
++- date + source status;
++- explicit source marker if one already exists.
++```
++
++Do not add section-level versions everywhere during the pilot.
++
++## 11. Source Change Detection Modes
++
++Source changes may be detected from:
++
++```text
++GitHub/direct commit source change
++  Compare changed files/sections from the repository.
++
++Replacement archive source change
++  Use the reviewed archive diff and post-apply preservation check.
++
++Local unpushed source change
++  Do not claim remote/current repo sync until pushed or archive diff is reviewed.
++
++Manual/user-described source change
++  Treat as unverified until the source artifact is read.
++```
++
++## 12. Pilot Scope
++
++Initial pilot:
++
++```text
++SC-13D / AgreementProposalExchange source usage pilot
++```
++
++Target chain:
++
++```text
++SC-13D scenario text / DATA / behavior items
++  -> scenario artifact/currentness map
++  -> scenario-to-aggregate map
++  -> AgreementProposalExchange aggregate draft
++  -> related value object drafts
++  -> SL-AGR-EXCH-001 server slice draft
++  -> slice Behavior Coverage and Test / Verification Plan sections
++```
++
++The first skeleton file is:
++
++```text
++planning/documentation/source-usage-pilots/SC-13D-agreement-exchange-source-usage-register.md
++```
++
++## 13. Pilot Review Process
++
++For the real pilot fill pass:
++
++```text
++1. Read the source artifacts for the selected SC-13D chain.
++2. Identify source scopes that are actually consumed downstream.
++3. Identify consumer artifacts and consumer scopes.
++4. Add source usage rows only where review/cascade value is real.
++5. Mark unknowns as unknown/blocked instead of inventing precision.
++6. Simulate one upstream change and verify whether affected consumers can be found.
++7. Record whether the table shape was sufficient or too heavy.
++```
++
++Review should not mean reading every downstream file by default.
++
++Review starts from source usage rows, then opens only affected consumer scopes and necessary internal dependencies.
++
++## 14. Cascade Review Output
++
++A cascade review should report:
++
++```text
++- upstream source changed;
++- source scope affected;
++- affected consumers;
++- rows reviewed;
++- rows updated;
++- rows marked needs-review / stale / blocked;
++- content changes required / not required;
++- follow-up PMR/register tasks;
++- files intentionally not checked.
++```
++
++## 15. Exit Criteria For Full Workflow
++
++Create the full source usage/cascade workflow only after:
++
++```text
++- at least one real pilot register is filled from current repo sources;
++- at least one cascade review simulation is performed;
++- row shape is validated or revised;
++- permanent register placement is decided or narrowed;
++- domain/slice/template impact is understood.
++```
++
++## 16. What Not To Do Yet
++
++```text
++- Do not create the full source-version-cascade-sync workflow yet.
++- Do not update workflow-activation-map.md as if the workflow exists.
++- Do not add source-version fields to every use-case row.
++- Do not add section-level versions everywhere.
++- Do not turn scenario-artifact-map.md into a full source usage register.
++- Do not turn scenario-to-aggregate-map.md into a full cascade register.
++- Do not turn slice drafts into source registries.
++- Do not mass-update domain/slice templates before the pilot proves the shape.
++```
+diff --git a/planning/documentation/source-usage-pilots/README.md b/planning/documentation/source-usage-pilots/README.md
+new file mode 100644
+index 0000000..04c06ce
+--- /dev/null
++++ b/planning/documentation/source-usage-pilots/README.md
+@@ -0,0 +1,46 @@
++# Source Usage Pilots
++
++Status: pilot folder / experimental  
++Scope: temporary source usage register pilots for proving source usage and cascade-review shape
++
++## 1. Purpose
++
++This folder stores pilot source usage registers.
++
++Pilots are used to test how source usage relationships should be recorded before creating a full source usage/cascade workflow or permanent register structure.
++
++## 2. Rules
++
++```text
++- Pilot files are experimental.
++- Permanent register placement is deferred.
++- Pilot fields are not global final schema yet.
++- Do not copy pilot fields into all templates before a real pilot proves the shape.
++- Do not treat a pilot skeleton as a filled dependency audit.
++```
++
++## 3. Current Pilots
++
++| Pilot | Status | Scope |
++|---|---|---|
++| `SC-13D-agreement-exchange-source-usage-register.md` | skeleton / not audited | SC-13D scenario/behavior sources -> AgreementProposalExchange -> SL-AGR-EXCH-001 |
++
++## 4. Pilot Exit Questions
++
++After filling a pilot, answer:
++
++```text
++- Did the row shape identify affected downstream scopes?
++- Was source granularity too broad, too detailed or useful?
++- Could cascade review avoid broad re-reading?
++- Which fields were useful?
++- Which fields were noise?
++- Should permanent registers be global, per-layer, per-scenario or per-chain?
++- Which templates/workflows need updates after the pilot?
++```
++
++## 5. Not Source Of Truth
++
++Pilot registers do not override source artifacts, domain drafts, slice drafts, scenario maps or workflow files.
++
++They are review/cascade aids.
+diff --git a/planning/documentation/source-usage-pilots/SC-13D-agreement-exchange-source-usage-register.md b/planning/documentation/source-usage-pilots/SC-13D-agreement-exchange-source-usage-register.md
+new file mode 100644
+index 0000000..9770077
+--- /dev/null
++++ b/planning/documentation/source-usage-pilots/SC-13D-agreement-exchange-source-usage-register.md
+@@ -0,0 +1,69 @@
++# SC-13D Agreement Exchange Source Usage Register
++
++Status: pilot skeleton / not audited  
++Scope: SC-13D -> AgreementProposalExchange -> SL-AGR-EXCH-001 source usage pilot
++
++## 1. Purpose
++
++This file is the first source usage register pilot for the SC-13D agreement exchange chain.
++
++It is intentionally not fully filled yet. Fill it only after reading the real current source files for the pilot chain.
++
++## 2. Pilot Chain
++
++```text
++SC-13D scenario text / DATA / behavior items
++  -> scenario artifact/currentness map
++  -> scenario-to-aggregate map
++  -> AgreementProposalExchange aggregate draft
++  -> related value object drafts
++  -> SL-AGR-EXCH-001 server slice draft
++  -> slice Behavior Coverage and Test / Verification Plan sections
++```
++
++## 3. Source Usage Rows
++
++Rows are intentionally not filled yet.
++
++Use this shape during the real pilot fill pass:
++
++| ID | Source artifact | Source scope | Source status | Consumer artifact | Consumer scope | Usage type | Reviewed against | Sync status | Review outcome | Cascade trigger | Notes |
++|---|---|---|---|---|---|---|---|---|---|---|---|
++
++## 4. Fill Rules
++
++```text
++- Add rows only after reading the source and consumer artifacts.
++- Prefer precise source/consumer scopes over whole-file rows when sections are independently reviewable.
++- Use unknown/blocked when evidence is missing.
++- Do not invent source versions.
++- Use reviewed_against markers that can actually be checked.
++- Do not copy upstream source truth into this register.
++```
++
++## 5. Candidate Sources To Read During Fill
++
++```text
++planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
++planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md
++planning/diagrams/scenario-data/SC-13D-employee-agreement-proposal-create-response-data.md
++planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
++planning/diagrams/scenario-artifact-map.md
++planning/domain/scenario-to-aggregate-map.md
++planning/domain/aggregates/agreement-proposal-exchange.md
++planning/domain/value-objects/
++planning/slices/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.md
++```
++
++Confirm current paths during the fill pass before adding rows.
++
++## 6. Not Checked Yet
++
++```text
++- Current SC-13D source file content.
++- Current scenario-artifact-map row.
++- Current scenario-to-aggregate-map row.
++- Current value object draft links.
++- Current SL-AGR-EXCH-001 source sync status.
++- Current implementation/code/tests.
++```
+diff --git a/planning/planning-use-case-map.md b/planning/planning-use-case-map.md
+index 178475b..6d5d2a3 100644
+--- a/planning/planning-use-case-map.md
++++ b/planning/planning-use-case-map.md
+@@ -300,6 +300,7 @@ Use a shorter version when the update is simple.
+ | “посмотри / распланируй / проверь docs” | Non-trivial planning/docs work | Optional | Full first time; targeted later | GitHub/archive/conversation by context | workflow activation; reviewable output | `planning/README.md`, `workflow-activation-map.md`, `planning-doc-responsibility-map.md` | README + activation map | Reviewable answer/plan | Edits require approval |
+ | “обнови docs” | Documentation update | Optional | Targeted/full by scope | GitHub for writes; archive for read-only if requested | docs update plan/workflow; local-global sync | documentation README/map/workflows | activation map + docs workflows | Plan or applied update | GitHub writes require approval |
+ | “добавь template / workflow / command / draft format / пример” | Documentation governance update | Optional | Full first time; targeted later | GitHub/archive/conversation by context | docs update workflow; example coverage decision when template/output shape changes; reviewable output | documentation README/map/workflows; `planning/documentation/example-coverage-workflow.md` when template/output/command/draft example coverage matters; relevant owner workflow/template; principle section references in §3A | docs architecture principles + use-case map + example coverage workflow | Update plan or replacement package; example coverage decision if applicable | Edits/packages require approval |
++| “source usage”, “source/version”, “каскад зависимостей”, “stale downstream”, “версии сорсов”, “инкапсуляция слоёв” | Source usage / cascade governance or pilot work | Optional | Full first time; targeted later | GitHub/archive/conversation by context | source usage cascade governance plan; principles §12A/13/14/15; PMR-002 until full workflow exists | `planning/documentation/source-usage-cascade-governance-plan.md`; `planning/documentation/source-usage-pilots/README.md`; pilot register if user asks to work on a pilot; relevant source/domain/slice docs only for real pilot fill | layer encapsulation principle + source usage governance plan | Governance plan, pilot skeleton, pilot fill plan or replacement package | Do not pretend full cascade workflow exists; do not add ad hoc version fields |
+ | “давай архив”, “собери архив”, “replacement package”, “archive for manual apply” | Replacement archive/package generation | Optional | Targeted/full by package scope | GitHub/archive/conversation by context | replacement file generation guide; docs update workflow when docs change; reviewable output | `planning/replacement-file-generation-guide.md`, target files, docs update workflow when docs are changed | replacement guide + workflow activation | ZIP package with `MANIFEST.md`, `APPLY.md`, `replacement-files/<repo-relative-path>` complete files | Direct repo edits not allowed unless separately approved |
+ | “поправь ссылки во многих файлах” | Mechanical link/path/name sync | Optional | Targeted/broad search | GitHub or archive | docs update workflow; local-global sync | target files/search source | docs update workflow output mode rules | Link-sync plan/one bundled commit when tool-supported | Bundled/bulk mode should be used when approved; if unavailable, stop and disclose before per-file writes |
+ | “задрафти slice” | Slice draft work | Usually new | Full first time | Sources required by slice workflow | slice workflow chain; testing selector when needed | slice README/map/workflow/principles/test workflow/template; `planning/testing/testing-responsibility-map.md` when test-layer-specific guidance is needed | activation map + slice README/map | Slice draft/plan | File writes require approval |
+diff --git a/planning/replacement-file-generation-guide.md b/planning/replacement-file-generation-guide.md
+index 7d36adf..6a4bc07 100644
+--- a/planning/replacement-file-generation-guide.md
++++ b/planning/replacement-file-generation-guide.md
+@@ -57,7 +57,7 @@ Use this guide when the user asks to create an archive or replacement package fo
+ - Do not write directly to the repository unless explicitly asked.
+ - Do not create branches, commits, PRs or GitHub comments unless explicitly asked.
+ - Do not include unrelated implementation changes.
+-- Keep archive scope focused.
++- Keep archive scope focused, but do not artificially split one coherent accepted update into many tiny archives.
+ - Do not include patch scripts or script-based patch applicators in replacement archive mode.
+ ```
+ 
+@@ -334,6 +334,32 @@ If the diff is correct:
+ 
+ This loop is not a new output mode. It is the review procedure for replacement archive/package output mode.
+ 
++## 7D. Replacement Archive Batch Scope Rule
++
++Do not artificially split a coherent accepted update into many tiny archives.
++
++Choose archive scope before generating the package:
++
++```text
++- include all files needed for the coherent accepted update;
++- exclude unrelated files;
++- avoid one-file or two-file splitting when the update is already understood;
++- avoid repeated apply/diff/check cycles when one coherent archive can be reviewed safely.
++```
++
++Prefer one coherent archive when:
++
++```text
++- the direction was already discussed and accepted;
++- files are logically coupled;
++- the same reviewer context is needed for the files;
++- splitting would create extra manual apply/diff/commit/recheck cycles without improving safety.
++```
++
++Safety comes from complete replacement files, scoped file lists, full diff capture, preservation checks and scoped commit commands, not from making every archive artificially tiny.
++
++Do not bundle unrelated work just to reduce archive count.
++
+ ## 8. Archive Layouts And Apply Commands
+ 
+ There are two supported archive layouts.

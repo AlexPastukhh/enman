@@ -1,0 +1,322 @@
+diff --git a/planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md b/planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+index da62298..58fc4be 100644
+--- a/planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
++++ b/planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+@@ -20,39 +20,33 @@ Do not use this block as the whole answer when the task requires a Level 2 or Le
+ 
+ ### Change group: <logical group>
+ 
+-**Change - New:** `<path>`  
+-**R:** <file responsibility>  
+-**Что:** <what is added or planned>  
+-**Почему:** <why it is added or planned>
+-
+-**Change - Updated:** `<path>`  
+-**R:** <file responsibility>  
+-**Что:** <what changes or is planned to change>  
+-**Почему:** <why it changes or is planned>
++| Change | File | R | Что | Почему |
++|---|---|---|---|---|
++| New | `<path>` | <file responsibility> | <what is added or planned> | <why it is added or planned> |
++| Updated | `<path>` | <file responsibility> | <what changes or is planned to change> | <why it changes or is planned> |
+ 
+ ### Change group: <logical group>
+ 
+-**Change - Updated:** `<path>`  
+-**R:** <file responsibility>  
+-**Что:** <what changes or is planned to change>  
+-**Почему:** <why it changes or is planned>
+-
+-### Not changed
+-
+-**Not changed:** `<path>`  
+-**R:** <file responsibility>  
+-**Почему:** <why it is intentionally not changed>
++| Change | File | R | Что | Почему |
++|---|---|---|---|---|
++| Updated | `<path>` | <file responsibility> | <what changes or is planned to change> | <why it changes or is planned> |
+ 
+-### Not created
++### Boundaries
+ 
+-**Not created:** `<path>`  
+-**R:** <future responsibility if relevant>  
+-**Почему:** <why it is intentionally not created>
++| Type | File / artifact | R | Почему |
++|---|---|---|---|
++| Not changed | `<path>` | <file responsibility> | <why it is intentionally not changed> |
++| Not created | `<path>` | <future responsibility if relevant> | <why it is intentionally not created> |
+ 
+ ### Проверка
+ 
+-- <what was checked or should be checked>
+-- <important limits / not checked items, if any>
++| Check | Result |
++|---|---|
++| Delivery safety classified | <yes/no> |
++| Large/shared files | <yes/no + names if relevant> |
++| Fresh full archive needed | <yes/no + reason> |
++| Preferred delivery | <replacement archive / direct edit / targeted script fallback / no artifact> |
++| <other check> | <result> |
+ 
+ ### Следующее действие
+ 
+@@ -70,11 +64,11 @@ Do not use this block as the whole answer when the task requires a Level 2 or Le
+ Change group
+   Logical system area, not a New/Updated bucket.
+ 
+-Change - New
+-  New file/artifact being added or planned.
++Change
++  Table value for the file entry. Use `New` or `Updated` in change-group tables.
+ 
+-Change - Updated
+-  Existing file/artifact being changed or planned.
++Type
++  Table value for boundary entries. Use `Not changed` or `Not created`.
+ 
+ Not changed
+   Existing relevant file intentionally excluded.
+@@ -93,6 +87,8 @@ R
+ 
+ Проверка
+   Checks performed, planned or still needed.
++  For file-update planning, include delivery safety rows:
++  delivery safety classified, large/shared files, fresh full archive needed and preferred delivery.
+ 
+ Следующее действие
+   The next action after this answer.
+@@ -102,6 +98,10 @@ R
+ 
+ ```text
+ - Use normal Markdown in chat output, not an outer code fence around the final `Итог`.
++- Prefer grouped Markdown tables for multi-file or multi-group overviews.
++- Do not use one giant table for everything by default; preserve logical groups.
++- Keep table cells short. Put detailed reasoning in the main answer.
++- Include delivery-safety rows in `Проверка` for file-update planning.
+ - Keep `Итог` as the last block when it is present.
+ - Do not use `Итог` as a generic conclusion for answers without file/change/update context.
+ - Use `Краткое саммари` before `Итог` when a contextual summary is useful.
+diff --git a/planning/documentation/documentation-action-log.md b/planning/documentation/documentation-action-log.md
+index 7eb6836..ddc9300 100644
+--- a/planning/documentation/documentation-action-log.md
++++ b/planning/documentation/documentation-action-log.md
+@@ -388,3 +388,38 @@ Owner sources:
+ Notes:
+   `Итог` is not a generic conclusion. During planning it is the rolling nearest-batch plan; after artifact/diff/application it summarizes actual update state.
+ ```
++
++### 2026-05-29 — Switched Итог to grouped tables and exposed delivery safety
++
++```text
++Date:
++  2026-05-29
++Action:
++  Switched the File Update Overview / `Итог` preferred shape to grouped Markdown tables and required visible delivery-safety information in file-update planning answers.
++Type:
++  response/output shape / planning visibility
++Status:
++  applied
++Why:
++  The previous vertical `Итог` format was correct but hard to scan. File-update planning also needs to make large/shared files, fresh full archive need and preferred delivery mode visible up front instead of leaving delivery safety implicit.
++Changed files:
++  - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
++  - planning/documentation/file-update-overview-workflow.md
++  - planning/documentation/reviewable-agent-output-and-commands-workflow.md
++  - planning/documentation/documentation-update-workflow.md
++  - planning/documentation/examples/README.md
++  - planning/documentation/documentation-action-log.md
++Layer impact:
++  Documentation-layer file-update planning answers now surface delivery safety as a visible planning point, and final `Итог` blocks are easier to scan.
++PMR relation:
++  none
++Follow-ups:
++  Add a filled table-based File Update Overview example after the format is used cleanly.
++Owner sources:
++  planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
++  planning/documentation/file-update-overview-workflow.md
++  planning/documentation/reviewable-agent-output-and-commands-workflow.md
++  planning/documentation/documentation-update-workflow.md
++Notes:
++  This change does not add new response commands or alter archive mechanics. It changes output shape and planning visibility.
++```
+diff --git a/planning/documentation/documentation-update-workflow.md b/planning/documentation/documentation-update-workflow.md
+index cbaee45..65c2069 100644
+--- a/planning/documentation/documentation-update-workflow.md
++++ b/planning/documentation/documentation-update-workflow.md
+@@ -74,6 +74,8 @@ Rules:
+ 
+ ```text
+ - Do this classification during planning, before creating artifacts.
++- Expose this classification in file-update planning answers, not only internally.
++- When the answer uses `Key points first`, summarize delivery safety as the final key point.
+ - Large file alone is not a reason to choose script mode.
+ - If a large file must change, first check whether a fresh full repo/archive snapshot or current full file makes complete replacement safe and reviewable.
+ - Prefer safe complete replacement from full current content when available.
+@@ -437,6 +439,8 @@ Before finalizing a documentation update, verify:
+ ```text
+ - broad changes had a Documentation Update Plan;
+ - every target file was classified by delivery safety before archive/script/direct edit mode was chosen;
++- delivery safety was exposed in the planning answer when artifact generation was planned;
++- `Key points first` included delivery safety as the final item when used for a file-update planning answer;
+ - large/shared files were checked for safe complete replacement from full current content before script mode was chosen;
+ - every added file appears in navigation or a folder README;
+ - responsibility maps know the new responsibility;
+diff --git a/planning/documentation/examples/README.md b/planning/documentation/examples/README.md
+index 9d1cf30..0066bae 100644
+--- a/planning/documentation/examples/README.md
++++ b/planning/documentation/examples/README.md
+@@ -44,10 +44,10 @@ No filled documentation-layer examples are added yet.
+ | `REPLACEMENT-ARCHIVE-NEW-FILES-DIFF-v1` | command-block example | `planning/replacement-file-generation-guide.md` | replacement archive diff checks for packages that add files | deferred | _not created yet_ | Candidate from chat history; should show `$newFiles`, `git add -N`, and full diff capture for added files. |
+ | `REPLACEMENT-ARCHIVE-CONVERSATION-LOOP-v1` | conversation workflow example | `planning/replacement-file-generation-guide.md` | replacement archive conversation review loop | deferred | _not created yet_ | Candidate from chat history; should show assistant archive output, user diff, assistant review, commit command and remote verification. |
+ | `SOURCE-USAGE-CASCADE-PILOT-FRAMEWORK-v1` | register/framework example | `planning/documentation/source-usage-cascade-governance-plan.md` | source usage cascade pilot framework | deferred | _not created yet_ | Framework and pilot skeleton are added first; add a filled example after the real SC-13D pilot row set is audited. |
+-| `FILE-UPDATE-OVERVIEW-v1` | response/output example | `planning/documentation/file-update-overview-workflow.md` and `planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md` | File Update Overview final summary block | deferred | _not created yet_ | Add after the overview workflow/template is used on at least one follow-up file/docs/code update. |
++| `FILE-UPDATE-OVERVIEW-v1` | response/output example | `planning/documentation/file-update-overview-workflow.md` and `planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md` | table-based File Update Overview / final `Итог` block | deferred | _not created yet_ | Add after the grouped-table overview/template is used on at least one follow-up file/docs/code update; should include delivery-safety check rows. |
+ | `LOCAL-TARGETED-SCRIPT-EDIT-v1` | command/script workflow example | `planning/documentation/documentation-update-workflow.md` | local targeted script edit mode | deferred | _not created yet_ | Add after the one-large-file-one-script workflow is used in a clean follow-up; should show `.ps1` file link, copy/run commands, scoped diff capture and no auto-commit. |
+ | `HYBRID-ARCHIVE-SCRIPT-DELIVERY-v1` | output/conversation workflow example | `planning/replacement-file-generation-guide.md` and `planning/documentation/documentation-update-workflow.md` | hybrid archive plus targeted script delivery | deferred | _not created yet_ | Add after a real mixed safe-files archive + one-file script package is reviewed; should show archive for safe files, separate script for large file and combined diff review. |
+-| `LEVEL-2-KEY-POINTS-SUMMARY-ITOG-v1` | response/output example | `planning/documentation/reviewable-agent-output-and-commands-workflow.md` and `planning/documentation/file-update-overview-workflow.md` | Level 2 answer with key points, contextual summary and final `Итог` | deferred | _not created yet_ | Add after the format is used cleanly on a follow-up planning/update answer. |
++| `LEVEL-2-KEY-POINTS-SUMMARY-ITOG-v1` | response/output example | `planning/documentation/reviewable-agent-output-and-commands-workflow.md` and `planning/documentation/file-update-overview-workflow.md` | Level 2 answer with key points, contextual summary and final table-based `Итог` | deferred | _not created yet_ | Add after the format is used cleanly on a follow-up planning/update answer; final key point should show delivery safety for file updates. |
+ | `DRAFT-UPDATE-DIFFERENCES-v1` | draft update example | `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | active draft update with differences block | deferred | _not created yet_ | Should show `Отличия от предыдущего драфта` instead of `Key points first`. |
+ | `STRICT-TEMPLATE-NO-KEY-POINTS-v1` | response/template example | `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | strict specialized template output | deferred | _not created yet_ | Should show when not to add `Key points first` because the template already provides reviewable structure. |
+ | `LARGE-FILE-FULL-ARCHIVE-PREFERENCE-v1` | delivery-planning example | `planning/documentation/documentation-update-workflow.md` and `planning/replacement-file-generation-guide.md` | large-file delivery safety classification | deferred | _not created yet_ | Should show fresh full repo/archive + safe complete replacement preferred before script fallback. |
+diff --git a/planning/documentation/file-update-overview-workflow.md b/planning/documentation/file-update-overview-workflow.md
+index 171d69f..d8c991c 100644
+--- a/planning/documentation/file-update-overview-workflow.md
++++ b/planning/documentation/file-update-overview-workflow.md
+@@ -94,7 +94,6 @@ pushed
+ blocked
+ ```
+ 
+-
+ ## 4. When Not To Use
+ 
+ Do not use the full File Update Overview for:
+@@ -133,6 +132,39 @@ Change group: Action log
+ 
+ Inside each group, list the files with their change type.
+ 
++## 5A. Rendered Shape Rule
++
++Prefer grouped Markdown tables for multi-file or multi-group File Update Overviews.
++
++Use:
++
++```text
++Status line
++Change-group tables
++Boundaries table
++Checks table
++Next action
++```
++
++Do not use one giant table for everything by default. Keep logical groups visible.
++
++Keep table cells short:
++
++```text
++R
++  short responsibility only.
++
++Что
++  short change intent.
++
++Почему
++  short reason this file/artifact is included or excluded.
++```
++
++Put longer explanation, tradeoffs and evidence in the main answer. The overview should make the update scannable, not repeat the whole reasoning.
++
++Vertical entries are allowed only when they are more readable for a very small/narrow answer.
++
+ ## 6. File Line Types
+ 
+ Use these file line types:
+@@ -159,11 +191,12 @@ Each file entry must include `R`.
+ 
+ `R` means the file responsibility relevant to this change.
+ 
+-Preferred shape:
++Preferred table-cell shape:
+ 
+ ```text
+-Change - Updated: path/to/file.md
+-  R: owns ...
++| Change | File | R | Что | Почему |
++|---|---|---|---|---|
++| Updated | `path/to/file.md` | owns ... | ... | ... |
+ ```
+ 
+ Keep `R` short. It should help the reviewer understand why the file belongs in this change.
+@@ -192,12 +225,21 @@ End the overview with:
+ 
+ ```text
+ Проверка:
+-  - checks performed or planned.
++  table of checks and results.
+ 
+ Следующее действие:
+   next concrete action.
+ ```
+ 
++For file-update planning, `Проверка` should include delivery safety visibility:
++
++```text
++Delivery safety classified
++Large/shared files
++Fresh full archive needed
++Preferred delivery
++```
++
+ For archive/package work, `Следующее действие` should usually say whether to apply, paste diff, review, commit or continue with a follow-up script/archive.
+ 
+ ## 10. Source-Of-Truth Boundaries
+@@ -231,6 +273,9 @@ Before finalizing an overview, check:
+ - `Статус` makes clear whether the overview is planned, archive-created, diff-checked, applied, pushed or blocked;
+ - every changed/planned file has a clear responsibility;
+ - new files and updated files are placed in logical groups;
++- multi-file overviews use grouped tables unless a vertical shape is more readable;
++- table cells stay short enough to scan;
++- file-update planning overviews expose delivery safety, large/shared files, fresh full archive need and preferred delivery;
+ - relevant excluded files are listed when their exclusion matters;
+ - the overview does not replace the main reviewable answer;
+ - `Что` and `Почему` are specific enough to review;
+@@ -244,6 +289,7 @@ Before finalizing an overview, check:
+ - Do not use File Update Overview as the whole answer for non-trivial work.
+ - Do not hide source or verification limits inside the overview.
+ - Do not duplicate complete workflow logic in the overview.
++- Do not hide delivery safety / large-file / fresh-archive requirements from file-update planning overviews.
+ - Do not list only changed files when intentionally excluded files are important to understand scope.
+ - Do not create a separate standalone overview format when this template is sufficient.
+ ```
+diff --git a/planning/documentation/reviewable-agent-output-and-commands-workflow.md b/planning/documentation/reviewable-agent-output-and-commands-workflow.md
+index ba4dcf5..da009a6 100644
+--- a/planning/documentation/reviewable-agent-output-and-commands-workflow.md
++++ b/planning/documentation/reviewable-agent-output-and-commands-workflow.md
+@@ -248,6 +248,19 @@ What another chat/person should check:
+ 
+ `Key points first` is a short numbered preview of the current answer. Use it by default for analytical/planning Level 2 answers, especially when the answer is long or has several decisions.
+ 
++For file/docs/code update planning answers, the final `Key points first` item should summarize delivery safety:
++
++```text
++Delivery safety:
++  large/shared files yes/no;
++  fresh full repo/archive needed yes/no;
++  preferred delivery mode;
++  fallback mode if relevant.
++```
++
++This key point is a preview only. The main answer and final `Итог` still need to expose the delivery safety classification when it affects artifact generation.
++
++
+ Do not use `Key points first` by default when the answer is a first draft, a draft update, a strict specialized template, or an already self-evident structured output. In those cases the template/draft structure is the navigation.
+ 
+ For draft updates, use `Отличия от предыдущего драфта` instead of `Key points first` when there is a previous draft version to compare against.
+@@ -1082,6 +1095,7 @@ This workflow works when:
+ - Level 2/3 escalation happens automatically when task breadth requires reviewability;
+ - `обс` can re-check prior discussion without being confused with edit permission or answer level;
+ - `Key points first`, `Краткое саммари` and `Итог` improve navigation without replacing the Level 2/3 reviewable body;
++- file-update planning answers show delivery safety as the final `Key points first` item when key points are used;
+ - draft updates use `Отличия от предыдущего драфта` when that is the useful review block;
+ - File Update Overview / `Итог` is used as a final summary block when non-trivial file/docs/code updates need file responsibility/change visibility;
+ - response structure helps verification without adding unnecessary bureaucracy.

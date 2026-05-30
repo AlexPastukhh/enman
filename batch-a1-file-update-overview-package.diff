@@ -1,0 +1,545 @@
+diff --git a/planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md b/planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+new file mode 100644
+index 0000000..cb58521
+--- /dev/null
++++ b/planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+@@ -0,0 +1,89 @@
++# File Update Overview Template
++
++Status: current reusable output template  
++Scope: exact structure for the final File Update Overview block used at the end of non-trivial file, documentation or code update answers
++
++Use with:
++
++```text
++planning/documentation/file-update-overview-workflow.md
++```
++
++Do not use this block as the whole answer when the task requires a Level 2 or Level 3 reviewable answer. Put it at the end.
++
++```text
++Итог:
++  Статус:
++    <plan / archive created / diff checked / can commit / pushed / blocked>
++
++  Change group: <logical group>
++    Change - New: <path>
++      R: <file responsibility>
++      Что: <what is added>
++      Почему: <why it is added>
++
++    Change - Updated: <path>
++      R: <file responsibility>
++      Что: <what changes>
++      Почему: <why it changes>
++
++  Change group: <logical group>
++    Change - Updated: <path>
++      R: <file responsibility>
++      Что: <what changes>
++      Почему: <why it changes>
++
++  Not changed:
++    <path>
++      R: <file responsibility>
++      Почему: <why it is intentionally not changed>
++
++  Not created:
++    <path>
++      R: <future responsibility if relevant>
++      Почему: <why it is intentionally not created>
++
++  Проверка:
++    - <what was checked or should be checked>
++    - <important limits / not checked items, if any>
++
++  Следующее действие:
++    <next concrete action>
++```
++
++## Field Notes
++
++```text
++Статус
++  Current state of the update.
++
++Change group
++  Logical system area, not a New/Updated bucket.
++
++Change - New
++  New file/artifact being added.
++
++Change - Updated
++  Existing file/artifact being changed.
++
++Not changed
++  Existing relevant file intentionally excluded.
++
++Not created
++  Plausible new file intentionally not created.
++
++R
++  Short responsibility statement for the file.
++
++Что
++  Specific change in this file.
++
++Почему
++  Reason this file is included or excluded.
++
++Проверка
++  Checks performed, planned or still needed.
++
++Следующее действие
++  The next action after this answer.
++```
+diff --git a/planning/documentation/README.md b/planning/documentation/README.md
+index aa029fa..0feb78b 100644
+--- a/planning/documentation/README.md
++++ b/planning/documentation/README.md
+@@ -1,7 +1,7 @@
+ # Documentation Update Workflow Index
+ 
+ Status: current documentation layer index / read order  
+-Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs, response-level commands, working example coverage, source usage cascade governance, documentation action logging and navigation updates
++Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs, response-level commands, file update overview summaries, working example coverage, source usage cascade governance, documentation action logging and navigation updates
+ 
+ ## 1. Purpose
+ 
+@@ -20,6 +20,7 @@ A documentation update agent must:
+ - synchronize local docs with shared indexes/registers;
+ - update navigation/responsibility maps together with new docs;
+ - decide whether a working example is needed when templates, output shapes, commands or draft formats change;
++- use File Update Overview when a non-trivial file/docs/code update answer needs a final structured file-change summary;
+ - use source usage cascade governance when source/stale-reference/reviewed-upstream-work concerns appear;
+ - record significant logical documentation actions in the documentation action log;
+ - use direct GitHub edits only when explicitly asked to apply changes;
+@@ -39,6 +40,8 @@ planning/documentation/documentation-update-workflow.md
+ planning/documentation/status-reconciliation-workflow.md
+ planning/documentation/local-global-documentation-sync-workflow.md
+ planning/documentation/reviewable-agent-output-and-commands-workflow.md
++planning/documentation/file-update-overview-workflow.md
++planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+ planning/documentation/example-coverage-workflow.md
+ planning/documentation/source-usage-cascade-governance-plan.md
+ planning/documentation/source-usage-pilots/README.md
+@@ -87,10 +90,11 @@ For broad documentation updates:
+ 10. planning/documentation/status-reconciliation-workflow.md
+ 11. planning/documentation/local-global-documentation-sync-workflow.md
+ 12. planning/documentation/example-coverage-workflow.md, if the update changes templates, output shapes, response commands, output modes, draft formats or example coverage
+-13. planning/documentation/source-usage-cascade-governance-plan.md, if the update touches source usage, stale references, cascade review, reviewed upstream work or source usage pilots
+-14. planning/documentation/documentation-action-log.md, if the update is a significant logical documentation action
+-15. planning/replacement-file-generation-guide.md, if archive/replacement mode is relevant
+-16. relevant domain/API/testing/slice/client/scenario docs for the requested area
++13. planning/documentation/file-update-overview-workflow.md and planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md, if the update changes File Update Overview behavior or template shape
++14. planning/documentation/source-usage-cascade-governance-plan.md, if the update touches source usage, stale references, cascade review, reviewed upstream work or source usage pilots
++15. planning/documentation/documentation-action-log.md, if the update is a significant logical documentation action
++16. planning/replacement-file-generation-guide.md, if archive/replacement mode is relevant
++17. relevant domain/API/testing/slice/client/scenario docs for the requested area
+ ```
+ 
+ For answer-format, reviewable-output or response-command work:
+@@ -99,6 +103,15 @@ For answer-format, reviewable-output or response-command work:
+ planning/documentation/reviewable-agent-output-and-commands-workflow.md
+ ```
+ 
++For File Update Overview work:
++
++```text
++planning/documentation/file-update-overview-workflow.md
++planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
++```
++
++Use this when adding or changing the final structured file-change summary for non-trivial file/docs/code update answers.
++
+ For working example coverage decisions:
+ 
+ ```text
+@@ -142,6 +155,8 @@ preflight docs update plan format -> documentation-update-plan-workflow.md
+ local/global sync process -> local-global-documentation-sync-workflow.md
+ status reconciliation process -> status-reconciliation-workflow.md
+ agent answer/review format and response-level commands -> reviewable-agent-output-and-commands-workflow.md
++file update overview process -> file-update-overview-workflow.md
++file update overview template -> FILE-UPDATE-OVERVIEW-TEMPLATE.md
+ example coverage decision process -> example-coverage-workflow.md
+ documentation-layer examples navigation -> examples/README.md
+ source usage cascade pilot governance -> source-usage-cascade-governance-plan.md
+@@ -225,7 +240,18 @@ planning/documentation/reviewable-agent-output-and-commands-workflow.md
+ 
+ This workflow defines response levels, sources/coverage, section-level sources and commands such as recheck, clarify, keep prev and no ch.
+ 
+-## 10. Example Coverage And Examples Index
++## 10. File Update Overview
++
++For the reusable final structured summary of file/docs/code update plans, archives, diff reviews and applied-update checks, use:
++
++```text
++planning/documentation/file-update-overview-workflow.md
++planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
++```
++
++File Update Overview is a final summary block. It does not replace the main reviewable answer.
++
++## 11. Example Coverage And Examples Index
+ 
+ For reusable templates, workflows with expected output, response commands, output modes, draft formats or repeated chat failures caused by missing examples, use:
+ 
+@@ -241,7 +267,7 @@ planning/documentation/examples/README.md
+ 
+ Examples are supporting artifacts. They should demonstrate correct output or usage shape, but must not duplicate routing, source-mode, output-mode, permission or workflow activation logic owned by use-case maps and workflow files.
+ 
+-## 11. Source Usage Cascade Governance
++## 12. Source Usage Cascade Governance
+ 
+ For source usage relationships, layer encapsulation, stale downstream reference concerns and cascade-review pilot planning, use:
+ 
+@@ -258,7 +284,7 @@ planning/documentation/source-usage-pilots/README.md
+ Pilot registers are experimental review/cascade aids. They do not replace scenario/domain/slice source files, maps, drafts or future permanent source usage registers.
+ 
+ 
+-## 12. Documentation Action Log
++## 13. Documentation Action Log
+ 
+ For significant logical documentation actions and short explanations of why they happened, use:
+ 
+@@ -270,7 +296,7 @@ The action log records completed logical documentation actions. It is not the PM
+ 
+ Use it for changes to architecture principles, workflow behavior, accepted command meaning, source-of-truth boundaries, source usage/cascade governance, template/output shapes, onboarding routes, example infrastructure, replacement archive behavior or PMR/task governance.
+ 
+-## 13. Scoped Sync Notes
++## 14. Scoped Sync Notes
+ 
+ Scoped sync notes are case-specific documentation synchronization notes. They are useful for trace/audit/context, but they are not reusable workflows or global architecture principles.
+ 
+@@ -284,7 +310,7 @@ planning/documentation/l2-scenario-status-marker-sync-note.md
+ 
+ Do not treat scoped sync notes as canonical workflow files. If a scoped sync note contains a reusable rule, promote that rule into the correct workflow or architecture file through a normal documentation update.
+ 
+-## 14. Draft-Driven Discovery Scope Note
++## 15. Draft-Driven Discovery Scope Note
+ 
+ Draft-driven discovery is currently a slice-layer discovery loop.
+ 
+diff --git a/planning/documentation/documentation-action-log.md b/planning/documentation/documentation-action-log.md
+index 458f35e..e6aac6c 100644
+--- a/planning/documentation/documentation-action-log.md
++++ b/planning/documentation/documentation-action-log.md
+@@ -284,3 +284,38 @@ Owner sources:
+ Notes:
+   This entry starts from the current chat history and is not a full historical reconstruction of the entire project.
+ ```
++
++### 2026-05-29 — Added File Update Overview workflow and template
++
++```text
++Date:
++  2026-05-29
++Action:
++  Added a reusable File Update Overview workflow and template.
++Type:
++  response/output shape
++Status:
++  applied
++Why:
++  Non-trivial file, documentation and code update answers need a final structured file-change summary that shows logical groups, file responsibilities, what changed, why it changed, checks and next action without replacing the main reviewable answer.
++Changed files:
++  - planning/documentation/file-update-overview-workflow.md
++  - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
++  - planning/documentation/README.md
++  - planning/documentation/documentation-responsibility-map.md
++  - planning/documentation/examples/README.md
++  - planning/documentation/documentation-action-log.md
++Layer impact:
++  Documentation layer now has a reusable owner for File Update Overview process and shape.
++PMR relation:
++  none
++Follow-ups:
++  - Update reviewable-agent-output-and-commands-workflow.md to link Level 2/3 file update answers to File Update Overview.
++  - Update planning-use-case-map.md expected-output markers where serious routes should reference File Update Overview.
++  - Add a filled File Update Overview example after the format is used on a follow-up update.
++Owner sources:
++  planning/documentation/file-update-overview-workflow.md
++  planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
++Notes:
++  This action does not yet add the response-level `обс` command or automatic Level escalation triggers. Those belong to the follow-up targeted script for large/shared owner files.
++```
+diff --git a/planning/documentation/documentation-responsibility-map.md b/planning/documentation/documentation-responsibility-map.md
+index d71b977..4c7303e 100644
+--- a/planning/documentation/documentation-responsibility-map.md
++++ b/planning/documentation/documentation-responsibility-map.md
+@@ -55,6 +55,8 @@ This file owns only documentation-layer placement.
+ | Local detail to shared index/register sync process | `local-global-documentation-sync-workflow.md` | How local notes/questions should become globally discoverable. |
+ | Status vs implementation evidence reconciliation | `status-reconciliation-workflow.md` | How to update docs when code/tests/generated artifacts changed. |
+ | Reviewable answer format and response-level commands | `reviewable-agent-output-and-commands-workflow.md` | Level 1/2/3 answers, sources/coverage, recheck/clarify/keep prev/no ch/section operations. |
++| File Update Overview process | `file-update-overview-workflow.md` | Owns when and how to produce the final structured file-change summary for non-trivial file/docs/code update answers. |
++| File Update Overview template | `FILE-UPDATE-OVERVIEW-TEMPLATE.md` | Owns the exact reusable File Update Overview block structure. |
+ | Working example coverage decision process | `example-coverage-workflow.md` | Decides whether a new/changed template, workflow output, response command, output mode or draft format needs a working example. |
+ | Documentation-layer working example index | `examples/README.md` | Navigation and coverage index for documentation-layer examples. It does not own routing/source/output/permission logic. |
+ | Source usage cascade governance pilot plan | `source-usage-cascade-governance-plan.md` | Governance plan for source usage relationships, layer encapsulation, attention preservation and cascade-review pilots. Not the full future workflow. |
+@@ -70,7 +72,7 @@ Classify the new information:
+ 
+ ```text
+ 1. Information type:
+-   architecture principle / workflow step / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule / working example / example coverage decision / source usage governance / source usage pilot register / documentation action log entry.
++   architecture principle / workflow step / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule / working example / example coverage decision / file update overview process / file update overview template / source usage governance / source usage pilot register / documentation action log entry.
+ 
+ 2. Existing owner:
+    Which file above already owns this type?
+@@ -106,6 +108,8 @@ If documentation-layer files conflict:
+ - documentation-responsibility-map.md wins for documentation-layer placement.
+ - planning/planning-doc-responsibility-map.md wins for choosing the planning layer.
+ - workflow files win for their own process steps.
++- file-update-overview-workflow.md wins for File Update Overview process.
++- FILE-UPDATE-OVERVIEW-TEMPLATE.md wins for File Update Overview shape.
+ - example-coverage-workflow.md wins for example coverage decision steps.
+ - examples/README.md is an index and does not override owner workflows, templates or use-case rows.
+ - source-usage-cascade-governance-plan.md wins for pilot governance until the full cascade workflow exists.
+@@ -151,6 +155,7 @@ Suggested suffixes:
+ - Do not put workflow steps into architecture principles unless they are only high-level principles.
+ - Do not duplicate owner tables in multiple files.
+ - Do not put command routing, source-mode, output-mode or permission logic into example files.
++- Do not put File Update Overview trigger/shape logic into examples or use-case rows; link to the workflow/template owners.
+ - Do not treat source usage pilot registers as permanent global schema before the pilot is reviewed.
+ - Do not use the action log as the source of truth for rules or unresolved tasks.
+ - Do not treat reusable prompts as canonical rules.
+@@ -168,6 +173,7 @@ The documentation layer is well-routed when:
+ - architecture principles hold theory;
+ - this map handles documentation-layer placement;
+ - workflow files stay process-focused;
++- File Update Overview process and shape have clear owners;
+ - example coverage decisions are made by the example coverage workflow;
+ - examples remain supporting artifacts and link to their owner files instead of copying logic;
+ - source usage cascade pilots are discoverable and clearly marked experimental;
+diff --git a/planning/documentation/examples/README.md b/planning/documentation/examples/README.md
+index be1cb75..1c4e586 100644
+--- a/planning/documentation/examples/README.md
++++ b/planning/documentation/examples/README.md
+@@ -44,6 +44,7 @@ No filled documentation-layer examples are added yet.
+ | `REPLACEMENT-ARCHIVE-NEW-FILES-DIFF-v1` | command-block example | `planning/replacement-file-generation-guide.md` | replacement archive diff checks for packages that add files | deferred | _not created yet_ | Candidate from chat history; should show `$newFiles`, `git add -N`, and full diff capture for added files. |
+ | `REPLACEMENT-ARCHIVE-CONVERSATION-LOOP-v1` | conversation workflow example | `planning/replacement-file-generation-guide.md` | replacement archive conversation review loop | deferred | _not created yet_ | Candidate from chat history; should show assistant archive output, user diff, assistant review, commit command and remote verification. |
+ | `SOURCE-USAGE-CASCADE-PILOT-FRAMEWORK-v1` | register/framework example | `planning/documentation/source-usage-cascade-governance-plan.md` | source usage cascade pilot framework | deferred | _not created yet_ | Framework and pilot skeleton are added first; add a filled example after the real SC-13D pilot row set is audited. |
++| `FILE-UPDATE-OVERVIEW-v1` | response/output example | `planning/documentation/file-update-overview-workflow.md` and `planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md` | File Update Overview final summary block | deferred | _not created yet_ | Add after the overview workflow/template is used on at least one follow-up file/docs/code update. |
+ | `DOCUMENTATION-ACTION-LOG-ENTRY-v1` | log-entry example | `planning/documentation/documentation-action-log.md` | documentation action log entries | deferred | _not created yet_ | Add after the action log format is used on at least one follow-up update; should show concise logical action entry with PMR relation. |
+ | `NEW-CHAT-ONBOARDING-v1` | response example | `planning/planning-use-case-map.md` | New Chat Onboarding / first planning pass | deferred | _not created yet_ | Candidate from chat history; should show compact onboarding answer. |
+ | `ACCEPTED-COMMAND-NO-REINVENTION-v1` | guardrail example | `planning/planning-use-case-map.md` | accepted command / no reinvention | deferred | _not created yet_ | Candidate from chat history; should show stop-and-explain instead of silent mode switch. |
+diff --git a/planning/documentation/file-update-overview-workflow.md b/planning/documentation/file-update-overview-workflow.md
+new file mode 100644
+index 0000000..1a082be
+--- /dev/null
++++ b/planning/documentation/file-update-overview-workflow.md
+@@ -0,0 +1,215 @@
++# File Update Overview Workflow
++
++Status: current documentation-layer workflow  
++Scope: when and how to produce the final structured File Update Overview block for non-trivial file, documentation or code update answers
++
++## 1. Purpose
++
++This workflow owns the process for producing a `File Update Overview`.
++
++A File Update Overview is a final summary block that shows:
++
++```text
++- which files are new;
++- which files are updated;
++- which relevant files are intentionally not changed;
++- which possible files are intentionally not created;
++- each file's responsibility;
++- what changes;
++- why the change is needed;
++- what was checked;
++- what the next action is.
++```
++
++It is meant to help a person or another chat understand the system impact of an update without re-reading the whole answer or diff.
++
++## 2. Relationship To Response Levels
++
++This workflow does not define Level 1, Level 2 or Level 3 answer rules.
++
++Answer levels and response-level commands are owned by:
++
++```text
++planning/documentation/reviewable-agent-output-and-commands-workflow.md
++```
++
++Use this workflow when the main answer is a non-trivial update plan, archive/package response, diff review, applied-update check or multi-file synchronization/refactor summary and needs a structured final file summary.
++
++The File Update Overview does not replace the main answer.
++
++Use:
++
++```text
++main reviewable answer
+++
++File Update Overview at the end
++```
++
++## 3. When To Use
++
++Use a File Update Overview when an answer plans, creates, reviews or verifies meaningful changes to files or file-like artifacts.
++
++Typical cases:
++
++```text
++- documentation update plan;
++- replacement archive/package summary;
++- diff review before commit;
++- post-apply verification;
++- multi-file sync plan;
++- code/file refactor plan;
++- workflow/template/output-shape update;
++- adding new documentation files;
++- explaining why some expected files are intentionally not changed or not created.
++```
++
++It is especially useful when the change spans multiple responsibilities or when future chats need to continue from the answer.
++
++## 4. When Not To Use
++
++Do not use the full File Update Overview for:
++
++```text
++- casual explanations;
++- tiny one-command answers;
++- simple yes/no checks;
++- single-file typo fixes with obvious scope;
++- answers that do not plan, change, review or package files.
++```
++
++A short sentence may be enough for narrow tasks.
++
++## 5. Logical Grouping Rule
++
++Group files by logical role in the system, not by `New` versus `Updated`.
++
++Use:
++
++```text
++Change group: <logical group>
++```
++
++Examples:
++
++```text
++Change group: Response/output governance
++Change group: Documentation navigation
++Change group: Responsibility routing
++Change group: Example coverage
++Change group: Action log
++```
++
++Inside each group, list the files with their change type.
++
++## 6. File Line Types
++
++Use these file line types:
++
++```text
++Change - New:
++  A new repository file or artifact will be added.
++
++Change - Updated:
++  An existing repository file or artifact will be changed.
++
++Not changed:
++  A relevant existing file is intentionally left unchanged.
++
++Not created:
++  A plausible new file is intentionally not created.
++```
++
++Do not group files under separate top-level `New` and `Updated` sections by default. Preserve the logical system structure first.
++
++## 7. Responsibility Field Rule
++
++Each file entry must include `R`.
++
++`R` means the file responsibility relevant to this change.
++
++Preferred shape:
++
++```text
++Change - Updated: path/to/file.md
++  R: owns ...
++```
++
++Keep `R` short. It should help the reviewer understand why the file belongs in this change.
++
++Do not use `R` to restate the whole workflow or duplicate owner rules.
++
++## 8. What / Why Rule
++
++Each changed file entry should include:
++
++```text
++Что:
++  what changes in this file.
++
++Почему:
++  why this file needs the change.
++```
++
++For `Not changed` and `Not created`, include `Почему` and optionally `R`.
++
++This makes the overview show both the diff intent and the boundary of the update.
++
++## 9. Checks And Next Action
++
++End the overview with:
++
++```text
++Проверка:
++  - checks performed or planned.
++
++Следующее действие:
++  next concrete action.
++```
++
++For archive/package work, `Следующее действие` should usually say whether to apply, paste diff, review, commit or continue with a follow-up script/archive.
++
++## 10. Source-Of-Truth Boundaries
++
++File Update Overview is a summary format.
++
++It does not own:
++
++```text
++- response level selection;
++- response command semantics;
++- documentation update mechanics;
++- replacement archive mechanics;
++- use-case routing;
++- permission boundaries;
++- file ownership rules.
++```
++
++Those remain in their owner files.
++
++Use-case maps may reference File Update Overview as an expected output shape, but they must not copy this workflow or template logic.
++
++Examples may demonstrate File Update Overview output, but they must not become the source of truth for the format.
++
++## 11. Quality Checklist
++
++Before finalizing an overview, check:
++
++```text
++- every changed file has a clear responsibility;
++- new files and updated files are placed in logical groups;
++- relevant excluded files are listed when their exclusion matters;
++- the overview does not replace the main reviewable answer;
++- `Что` and `Почему` are specific enough to review;
++- checks and next action are concrete;
++- owner workflow/template/use-case logic is linked or named, not duplicated.
++```
++
++## 12. Do Not
++
++```text
++- Do not use File Update Overview as the whole answer for non-trivial work.
++- Do not hide source or verification limits inside the overview.
++- Do not duplicate complete workflow logic in the overview.
++- Do not list only changed files when intentionally excluded files are important to understand scope.
++- Do not create a separate standalone overview format when this template is sufficient.
++```

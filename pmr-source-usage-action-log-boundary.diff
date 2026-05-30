@@ -1,0 +1,88 @@
+diff --git a/planning/planning-maintenance-register.md b/planning/planning-maintenance-register.md
+index afecaa0..2e3beb3 100644
+--- a/planning/planning-maintenance-register.md
++++ b/planning/planning-maintenance-register.md
+@@ -1,4 +1,4 @@
+-# Planning Maintenance Register
++﻿# Planning Maintenance Register
+ 
+ Status: current planning maintenance register  
+ Scope: deferred planning-docs, workflow and architecture maintenance tasks with explicit trigger conditions
+@@ -20,6 +20,22 @@ Use it for:
+ 
+ Do not use this register for ordinary product feature work, implementation TODOs or one-off local draft notes.
+ 
++This register is not the documentation action log.
++
++Use:
++
++```text
++planning/planning-maintenance-register.md
++  = goals, reminders, deferred work, waiting-for-condition tasks and follow-ups that still need action.
++
++planning/documentation/documentation-action-log.md
++  = significant completed logical documentation actions and short explanations of why they happened.
++```
++
++Not every logical documentation action creates a PMR entry.
++
++If a logged action creates future work, add or update a PMR entry and reference that PMR relation from the action log.
++
+ ## 2. Entry Format
+ 
+ ```text
+@@ -79,34 +95,33 @@ Notes:
+   Workflow activation now routes through scenario responsibility/artifact maps, domain responsibility/workflows and slice responsibility/workflows. Reopen only if a new major layer map is introduced.
+ ```
+ 
+-### PMR-002 — Create source/version cascade sync workflow after pilot
++### PMR-002 — Create source usage cascade workflow after pilot
+ 
+ ```text
+ ID: PMR-002
+ Status: waiting-for-condition
+-Area: source/version sync
++Area: source usage / cascade / layer encapsulation
+ Task / reminder:
+-  Design a source-version-cascade-sync workflow.
++  Design the full source usage cascade workflow after a real pilot proves the relationship model.
+ Trigger / condition:
+-  At least one source usage register pilot exists and scenario/domain/slice dependency model is audited.
++  SC-13D source usage pilot has real audited rows, scenario/domain/slice dependency model is audited, and at least one cascade review simulation is performed.
+ Why it matters:
+-  The source/version principle exists, but full cascade sync is not implemented yet.
++  The goal is not file versioning by itself. The goal is to preserve layer encapsulation, avoid duplicated source truth and let downstream work reference already-reviewed upstream artifacts without forcing the user to re-review reconstructed reasoning.
+ Owner layer:
+   documentation / source architecture
+ Target files:
+-  future planning/documentation/source-version-cascade-sync-workflow.md or equivalent
+-  planning/documentation/planning-docs-architecture-principles.md
+-  source usage registers
++  future planning/documentation/source-version-cascade-sync-workflow.md or renamed equivalent
++  planning/documentation/source-usage-cascade-governance-plan.md
++  source usage registers / permanent register location after pilot
+ Depends on:
+-  local responsibility maps, dependency audit, source usage register pilot
++  source usage cascade governance plan, SC-13D pilot fill, dependency audit, cascade review simulation
+ Do when:
+-  After the first real source usage register proves the shape of source/version data.
++  After the first real source usage register proves the row shape and review process.
+ Do not do before:
+   Do not create a full cascade workflow only from abstract assumptions.
+ Notes:
+-  Current architecture principles already describe source/version concepts; this entry is about the operational workflow.
++  Governance plan and pilot skeleton exist. Full workflow is still not created.
+ ```
+-
+ ### PMR-003 — Audit implemented slice sync workflow before treating it as canonical
+ 
+ ```text
+@@ -898,5 +913,8 @@ Notes:
+ - Include the trigger/condition for when the task should be revisited.
+ - Do not use this as a dumping ground for local draft questions.
+ - If a task belongs to a layer-specific register, put it there instead and add only a root-level reminder here when cross-layer follow-up is needed.
++- Do not use PMR as the general log of all documentation actions.
++- If a completed logical change needs history, record it in planning/documentation/documentation-action-log.md.
++- If a logged action creates future work, add or update a PMR entry and reference it from the action log.
+ - Mark entries done/superseded instead of deleting them when traceability is useful.
+ ```

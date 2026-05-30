@@ -1,0 +1,208 @@
+diff --git a/planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md b/planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+new file mode 100644
+index 0000000..6c5068e
+--- /dev/null
++++ b/planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+@@ -0,0 +1,57 @@
++# Documentation Reusable Candidate Notice
++
++Status: temporary non-canonical migration workspace  
++Scope: guardrail for `planning/documentation-reusable-candidate/`
++
++## 1. Purpose
++
++This folder is a baseline copy of the active documentation layer:
++
++```text
++planning/documentation/
++```
++
++It exists so the documentation layer can be reviewed, cleaned and genericized without breaking the active Enman/project documentation layer.
++
++## 2. Source Of Truth Boundary
++
++This folder is **not** the active documentation layer.
++
++Active documentation remains:
++
++```text
++planning/documentation/
++```
++
++Until an explicit migration/switch batch is approved, ordinary project documentation updates must continue to use the active documentation layer.
++
++## 3. Allowed Use
++
++Use this candidate folder only for:
++
++```text
++- portability review;
++- reusable-layer migration work;
++- responsibility-zone classification;
++- genericization experiments;
++- future principles/profile/adapter split work.
++```
++
++## 4. Do Not
++
++```text
++- Do not treat this folder as the current documentation source of truth.
++- Do not make ordinary Enman/project documentation updates here.
++- Do not update both active documentation and this candidate for routine docs work.
++- Do not delete or move project-specific material from the active docs layer because it exists here.
++- Do not switch canonical references to this folder until a later approved migration batch.
++```
++
++## 5. Related Active Owners
++
++```text
++planning/documentation/documentation-layer-portability-migration-plan.md
++planning/documentation/documentation-responsibility-zone-review-workflow.md
++planning/documentation/planning-docs-architecture-principles.md
++planning/documentation/documentation-responsibility-map.md
++```
+diff --git a/planning/documentation/README.md b/planning/documentation/README.md
+index 275360f..c1b6ac9 100644
+--- a/planning/documentation/README.md
++++ b/planning/documentation/README.md
+@@ -66,6 +66,31 @@ planning/replacement-file-generation-guide.md
+ planning/vkr-clean-reference.md
+ ```
+ 
++## 2A. Reusable Candidate Workspace
++
++A temporary reusable candidate copy may exist at:
++
++```text
++planning/documentation-reusable-candidate/
++```
++
++This candidate is a migration workspace only.
++
++It is **not** the active documentation layer and should not be used as the normal read-order source for project documentation updates.
++
++Use it only for portability, responsibility-zone review, genericization and future candidate split work. Active documentation remains under:
++
++```text
++planning/documentation/
++```
++
++Candidate lifecycle and guardrails are owned by:
++
++```text
++planning/documentation/documentation-layer-portability-migration-plan.md
++planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
++```
++
+ ## 3. Read Order For Documentation-Layer Work
+ 
+ For documentation-layer architecture/routing work:
+diff --git a/planning/documentation/documentation-action-log.md b/planning/documentation/documentation-action-log.md
+index a48b19c..59b5d41 100644
+--- a/planning/documentation/documentation-action-log.md
++++ b/planning/documentation/documentation-action-log.md
+@@ -496,3 +496,36 @@ Owner sources:
+ Notes:
+   This batch intentionally does not split principles, create the scenario-domain-slice profile, create the Enman adapter, move VKR/source-usage pilots/sync notes, or create the reusable candidate copy.
+ ```
++
++### 2026-05-30 — Added reusable candidate guardrails
++
++```text
++Date:
++  2026-05-30
++Action:
++  Added guardrails for the reusable documentation candidate baseline after the active documentation layer was copied to planning/documentation-reusable-candidate/.
++Type:
++  documentation architecture / portability migration preparation
++Status:
++  applied
++Why:
++  The candidate copy should exist as a safe migration workspace without becoming a second active source of truth. Future cleanup, classification and split work should happen inside the candidate, while ordinary project documentation updates continue to use planning/documentation/.
++Changed files:
++  - planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
++  - planning/documentation/documentation-layer-portability-migration-plan.md
++  - planning/documentation/README.md
++  - planning/documentation/documentation-responsibility-map.md
++  - planning/documentation/documentation-action-log.md
++Layer impact:
++  The reusable candidate workspace is now explicitly temporary, non-canonical and limited to portability/genericization work.
++PMR relation:
++  none
++Follow-ups:
++  Use documentation-responsibility-zone-review-workflow.md to classify planning/documentation-reusable-candidate/planning-docs-architecture-principles.md before any principles split.
++Owner sources:
++  planning/documentation/documentation-layer-portability-migration-plan.md
++  planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
++  planning/documentation/documentation-responsibility-map.md
++Notes:
++  This change does not split principles, create the scenario-domain-slice profile, create the Enman adapter, move VKR/source-usage pilots/sync notes, or change the copied candidate file contents.
++```
+diff --git a/planning/documentation/documentation-layer-portability-migration-plan.md b/planning/documentation/documentation-layer-portability-migration-plan.md
+index ca0908e..708f848 100644
+--- a/planning/documentation/documentation-layer-portability-migration-plan.md
++++ b/planning/documentation/documentation-layer-portability-migration-plan.md
+@@ -57,6 +57,35 @@ Candidate guardrail:
+ 
+ > The reusable candidate copy is temporary and non-canonical until the migration is accepted. Ordinary current project documentation updates should continue to use the active `planning/documentation/` layer.
+ 
++## 2A. Candidate Baseline State
++
++The first reusable candidate baseline has been created as a copy of the active documentation layer:
++
++```text
++planning/documentation-reusable-candidate/
++```
++
++Current status:
++
++```text
++- candidate exists as a temporary non-canonical migration workspace;
++- active documentation remains under planning/documentation/;
++- ordinary project documentation updates should continue to use the active documentation layer;
++- candidate content should be changed only for portability / reusable migration work.
++```
++
++Candidate guardrail file:
++
++```text
++planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
++```
++
++Next expected migration step:
++
++```text
++Run responsibility-zone classification inside the candidate, starting with planning-docs-architecture-principles.md.
++```
++
+ ## 3. Principles File Role Decision
+ 
+ The principles file should own high-level documentation architecture invariants.
+diff --git a/planning/documentation/documentation-responsibility-map.md b/planning/documentation/documentation-responsibility-map.md
+index a962b7d..c3e62b1 100644
+--- a/planning/documentation/documentation-responsibility-map.md
++++ b/planning/documentation/documentation-responsibility-map.md
+@@ -49,6 +49,7 @@ This file owns only documentation-layer placement.
+ |---|---|---|
+ | Global planning-docs architecture principles | `planning-docs-architecture-principles.md` | Stable invariants, file-type theory, source-of-truth boundaries and no-duplication rules. Not workflow steps, concrete paths or project configuration. |
+ | Documentation-layer portability migration plan | `documentation-layer-portability-migration-plan.md` | Captures pre-split reusability decisions, migration phases and boundaries before candidate copy / principles split / adapter extraction. |
++| Reusable candidate workspace lifecycle | `documentation-layer-portability-migration-plan.md` and `planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md` | The candidate folder is temporary and non-canonical. Active docs remain under `planning/documentation/` until an explicit migration switch is approved. |
+ | Documentation responsibility-zone review process | `documentation-responsibility-zone-review-workflow.md` | How to review existing documentation content and classify reusable principles, specialized profiles, adapter mappings, examples, workflow details and template details. |
+ | Documentation-layer placement rules | `documentation-responsibility-map.md` | This file. Use when deciding where documentation-layer information belongs. |
+ | Documentation folder navigation / read order | `README.md` | Index only. It should list files and read order, not duplicate full rules. |
+@@ -113,6 +114,7 @@ If documentation-layer files conflict:
+ ```text
+ - planning-docs-architecture-principles.md wins for stable architecture invariants and file-type theory.
+ - documentation-layer-portability-migration-plan.md wins for the staged documentation-layer portability migration decision record until a later canonical migration plan replaces it.
++- planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md wins for candidate-folder guardrails inside the temporary candidate workspace.
+ - documentation-responsibility-zone-review-workflow.md wins for the process of classifying existing content into responsibility zones.
+ - documentation-responsibility-map.md wins for documentation-layer placement.
+ - planning/planning-doc-responsibility-map.md wins for choosing the planning layer.
+@@ -176,6 +178,7 @@ Suggested suffixes:
+ - Do not put reusable use-case-map workflow/template logic into a concrete use-case map; link to use-case-map-workflow.md and USE-CASE-MAP-TEMPLATE.md.
+ - Do not move a paragraph into a project adapter only because it contains a concrete path; extract the reusable principle first.
+ - Do not split or migrate active docs-layer responsibilities before the approved portability/candidate workflow says to do so.
++- Do not treat `planning/documentation-reusable-candidate/` as active documentation or a normal read-order source until a switch batch approves it.
+ - Do not treat source usage pilot registers as permanent global schema before the pilot is reviewed.
+ - Do not use the action log as the source of truth for rules or unresolved tasks.
+ - Do not treat reusable prompts as canonical rules.

@@ -1,0 +1,546 @@
+diff --git a/planning/documentation/README.md b/planning/documentation/README.md
+index f5c4d2d..aa029fa 100644
+--- a/planning/documentation/README.md
++++ b/planning/documentation/README.md
+@@ -1,7 +1,7 @@
+ # Documentation Update Workflow Index
+ 
+ Status: current documentation layer index / read order  
+-Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs, response-level commands, working example coverage, source usage cascade governance and navigation updates
++Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs, response-level commands, working example coverage, source usage cascade governance, documentation action logging and navigation updates
+ 
+ ## 1. Purpose
+ 
+@@ -21,6 +21,7 @@ A documentation update agent must:
+ - update navigation/responsibility maps together with new docs;
+ - decide whether a working example is needed when templates, output shapes, commands or draft formats change;
+ - use source usage cascade governance when source/stale-reference/reviewed-upstream-work concerns appear;
++- record significant logical documentation actions in the documentation action log;
+ - use direct GitHub edits only when explicitly asked to apply changes;
+ - use one file per commit by default for direct GitHub edits;
+ - use archive/replacement packages when manual application or broad generated replacement is more practical.
+@@ -41,6 +42,7 @@ planning/documentation/reviewable-agent-output-and-commands-workflow.md
+ planning/documentation/example-coverage-workflow.md
+ planning/documentation/source-usage-cascade-governance-plan.md
+ planning/documentation/source-usage-pilots/README.md
++planning/documentation/documentation-action-log.md
+ planning/documentation/examples/README.md
+ planning/documentation/documentation-update-agent-prompt.md
+ ```
+@@ -86,8 +88,9 @@ For broad documentation updates:
+ 11. planning/documentation/local-global-documentation-sync-workflow.md
+ 12. planning/documentation/example-coverage-workflow.md, if the update changes templates, output shapes, response commands, output modes, draft formats or example coverage
+ 13. planning/documentation/source-usage-cascade-governance-plan.md, if the update touches source usage, stale references, cascade review, reviewed upstream work or source usage pilots
+-14. planning/replacement-file-generation-guide.md, if archive/replacement mode is relevant
+-15. relevant domain/API/testing/slice/client/scenario docs for the requested area
++14. planning/documentation/documentation-action-log.md, if the update is a significant logical documentation action
++15. planning/replacement-file-generation-guide.md, if archive/replacement mode is relevant
++16. relevant domain/API/testing/slice/client/scenario docs for the requested area
+ ```
+ 
+ For answer-format, reviewable-output or response-command work:
+@@ -110,6 +113,7 @@ For source usage cascade governance and pilots:
+ ```text
+ planning/documentation/source-usage-cascade-governance-plan.md
+ planning/documentation/source-usage-pilots/README.md
++planning/documentation/documentation-action-log.md
+ ```
+ 
+ Use this when working on source usage relationships, stale downstream references, reviewed-upstream-work concerns, cascade review pilots or the future source usage workflow.
+@@ -142,6 +146,7 @@ example coverage decision process -> example-coverage-workflow.md
+ documentation-layer examples navigation -> examples/README.md
+ source usage cascade pilot governance -> source-usage-cascade-governance-plan.md
+ source usage pilot folder navigation -> source-usage-pilots/README.md
++documentation logical action log -> documentation-action-log.md
+ reusable prompt -> documentation-update-agent-prompt.md
+ ```
+ 
+@@ -252,7 +257,20 @@ planning/documentation/source-usage-pilots/README.md
+ 
+ Pilot registers are experimental review/cascade aids. They do not replace scenario/domain/slice source files, maps, drafts or future permanent source usage registers.
+ 
+-## 12. Scoped Sync Notes
++
++## 12. Documentation Action Log
++
++For significant logical documentation actions and short explanations of why they happened, use:
++
++```text
++planning/documentation/documentation-action-log.md
++```
++
++The action log records completed logical documentation actions. It is not the PMR, not a task register and not the source of truth for rules. Owner files define rules; the action log records what changed, why, affected files/layers and optional PMR relation.
++
++Use it for changes to architecture principles, workflow behavior, accepted command meaning, source-of-truth boundaries, source usage/cascade governance, template/output shapes, onboarding routes, example infrastructure, replacement archive behavior or PMR/task governance.
++
++## 13. Scoped Sync Notes
+ 
+ Scoped sync notes are case-specific documentation synchronization notes. They are useful for trace/audit/context, but they are not reusable workflows or global architecture principles.
+ 
+@@ -266,7 +284,7 @@ planning/documentation/l2-scenario-status-marker-sync-note.md
+ 
+ Do not treat scoped sync notes as canonical workflow files. If a scoped sync note contains a reusable rule, promote that rule into the correct workflow or architecture file through a normal documentation update.
+ 
+-## 13. Draft-Driven Discovery Scope Note
++## 14. Draft-Driven Discovery Scope Note
+ 
+ Draft-driven discovery is currently a slice-layer discovery loop.
+ 
+diff --git a/planning/documentation/documentation-action-log.md b/planning/documentation/documentation-action-log.md
+new file mode 100644
+index 0000000..458f35e
+--- /dev/null
++++ b/planning/documentation/documentation-action-log.md
+@@ -0,0 +1,286 @@
++# Documentation Action Log
++
++Status: current documentation-layer logical action log  
++Scope: significant completed documentation-architecture, workflow, source-governance and planning-doc actions with short reasons
++
++## 1. Purpose
++
++This file records significant logical documentation actions that have already been done and why they were done.
++
++It helps future chats understand how the documentation system changed without turning PMR into a general history file.
++
++This file is not:
++
++```text
++- the PMR;
++- a task register;
++- raw Git history;
++- the source of truth for rules;
++- a replacement for owner workflows, templates or principles.
++```
++
++Owner files define the rules. This log records what changed, why, affected files/layers and optional PMR relation.
++
++## 2. PMR Boundary
++
++```text
++PMR
++  = goals, reminders, deferred work, waiting-for-condition tasks and follow-ups that still need action.
++
++Documentation action log
++  = significant completed logical documentation actions and why they happened.
++```
++
++Not every action creates a PMR entry.
++
++Not every technical edit creates an action-log entry.
++
++A logical action may be logged even when it has no PMR relation.
++
++## 3. Entry Format
++
++Use this format for new entries:
++
++```text
++Date:
++Action:
++Type:
++Status:
++Why:
++Changed files:
++Layer impact:
++PMR relation:
++Follow-ups:
++Owner sources:
++Notes:
++```
++
++PMR relation values:
++
++```text
++none
++related to PMR-<id>
++creates PMR-<id>
++partially addresses PMR-<id>
++closes PMR-<id>
++supersedes PMR-<id>
++```
++
++## 4. When To Log
++
++Log an action when it changes or introduces:
++
++```text
++- architecture principles;
++- workflow behavior;
++- accepted command meaning;
++- source-of-truth boundaries;
++- source usage / cascade governance;
++- template or output shape;
++- onboarding route;
++- documentation-layer example infrastructure;
++- replacement archive/package behavior;
++- PMR/task governance.
++```
++
++Do not log:
++
++```text
++- typo-only edits;
++- minor link fixes;
++- raw Git commit details without logical meaning;
++- mechanical navigation sync already covered by a broader logged action;
++- every small local wording cleanup.
++```
++
++## 5. Log Entries
++
++### 2026-05-29 — Added example coverage infrastructure
++
++```text
++Date:
++  2026-05-29
++Action:
++  Added documentation-layer example coverage workflow and examples index.
++Type:
++  governance / example coverage
++Status:
++  applied
++Why:
++  Reusable templates, commands, output modes and draft shapes need working examples or explicit deferred/not-needed decisions so future chats can see correct output shape instead of guessing.
++Changed files:
++  - planning/documentation/example-coverage-workflow.md
++  - planning/documentation/examples/README.md
++  - planning/documentation/README.md
++  - planning/documentation/documentation-responsibility-map.md
++  - planning/planning-use-case-map.md
++Layer impact:
++  Documentation layer now has a route for deciding whether a new/changed template, workflow output, command or draft format needs an example.
++PMR relation:
++  none
++Follow-ups:
++  Add filled examples after the relevant workflows/templates are used and audited.
++Owner sources:
++  planning/documentation/example-coverage-workflow.md
++  planning/documentation/examples/README.md
++Notes:
++  Examples remain supporting artifacts and must not own routing, source-mode, output-mode or permission logic.
++```
++
++### 2026-05-29 — Strengthened replacement archive/package workflow
++
++```text
++Date:
++  2026-05-29
++Action:
++  Strengthened replacement archive/package rules, diff capture, post-apply preservation review and conversation review loop.
++Type:
++  workflow guardrail / replacement archive mode
++Status:
++  applied
++Why:
++  Future chats were at risk of producing patch scripts or incomplete review commands when the accepted command meant replacement archive/package. The workflow now requires complete replacement/add files, scoped diff capture, new-file visibility through git add -N and preservation review before commit.
++Changed files:
++  - planning/replacement-file-generation-guide.md
++  - planning/planning-use-case-map.md
++  - planning/documentation/examples/README.md
++Layer impact:
++  Replacement archive/package output mode is clearer and safer for local manual apply/review.
++PMR relation:
++  none
++Follow-ups:
++  Add filled examples for replacement archive package, post-apply preservation check, diff capture and conversation loop.
++Owner sources:
++  planning/replacement-file-generation-guide.md
++  planning/planning-use-case-map.md
++Notes:
++  Service files such as MANIFEST.md and APPLY.md remain archive metadata unless intentionally added as repository files.
++```
++
++### 2026-05-29 — Added new chat onboarding route
++
++```text
++Date:
++  2026-05-29
++Action:
++  Added a New Chat Onboarding / first planning pass use-case route.
++Type:
++  onboarding / use-case routing
++Status:
++  applied
++Why:
++  A new chat needs a compact way to enter the planning documentation system without asking the user which workflow files to read or starting a broad audit blindly.
++Changed files:
++  - planning/README.md
++  - planning/planning-use-case-map.md
++Layer impact:
++  Root planning navigation now points new/uncertain chats to the right entry docs and use-case route.
++PMR relation:
++  none
++Follow-ups:
++  Add a filled compact onboarding response example.
++Owner sources:
++  planning/README.md
++  planning/planning-use-case-map.md
++Notes:
++  Onboarding is a route/use-case, not a separate global workflow.
++```
++
++### 2026-05-29 — Added layer encapsulation and attention preservation principle
++
++```text
++Date:
++  2026-05-29
++Action:
++  Added the Layer Encapsulation And Attention Preservation principle.
++Type:
++  architecture principle
++Status:
++  applied
++Why:
++  Downstream docs should reference already-reviewed upstream work instead of reconstructing it and forcing the user to re-review AI summaries of previous-layer reasoning.
++Changed files:
++  - planning/documentation/planning-docs-architecture-principles.md
++  - planning/planning-use-case-map.md
++Layer impact:
++  Source usage/cascade work is now framed around preserving reviewed work and human attention, not file versioning by itself.
++PMR relation:
++  related to PMR-002
++Follow-ups:
++  Pilot source usage relationships before creating the full cascade workflow.
++Owner sources:
++  planning/documentation/planning-docs-architecture-principles.md
++  planning/planning-use-case-map.md
++Notes:
++  External dependencies should be tracked through source usage relationships; internal same-file section dependencies normally stay local and usually do not need version markers.
++```
++
++### 2026-05-29 — Added source usage cascade pilot framework
++
++```text
++Date:
++  2026-05-29
++Action:
++  Added a pilot framework and skeleton register for source usage cascade governance.
++Type:
++  source governance / pilot framework
++Status:
++  applied
++Why:
++  Source/version work should be relationship-first, not version-first. The first step is to prove source artifact/scope -> consumer artifact/scope relationships before creating the full cascade workflow.
++Changed files:
++  - planning/documentation/source-usage-cascade-governance-plan.md
++  - planning/documentation/source-usage-pilots/README.md
++  - planning/documentation/source-usage-pilots/SC-13D-agreement-exchange-source-usage-register.md
++  - planning/documentation/README.md
++  - planning/documentation/documentation-responsibility-map.md
++  - planning/documentation/examples/README.md
++  - planning/planning-use-case-map.md
++  - planning/replacement-file-generation-guide.md
++Layer impact:
++  Documentation layer now owns pilot governance for source usage/cascade work. Full source usage/cascade workflow still does not exist.
++PMR relation:
++  partially addresses PMR-002
++Follow-ups:
++  - Update PMR-002 wording to source usage / cascade / layer encapsulation.
++  - Fill the SC-13D source usage pilot with real audited rows.
++  - Create the full workflow only after pilot evidence.
++Owner sources:
++  planning/documentation/source-usage-cascade-governance-plan.md
++  planning/documentation/source-usage-pilots/README.md
++Notes:
++  The SC-13D pilot register is intentionally skeleton / not audited.
++```
++
++### 2026-05-29 — Added documentation action log and PMR boundary
++
++```text
++Date:
++  2026-05-29
++Action:
++  Added documentation action log and clarified the boundary between completed logical actions and PMR follow-ups.
++Type:
++  governance / action logging
++Status:
++  applied
++Why:
++  PMR should store goals, reminders and deferred/waiting tasks, not every completed logical documentation action. A separate action log preserves short explanations of what changed and why without turning PMR into a general history file.
++Changed files:
++  - planning/documentation/documentation-action-log.md
++  - planning/documentation/README.md
++  - planning/documentation/documentation-responsibility-map.md
++  - planning/documentation/documentation-update-workflow.md
++  - planning/documentation/examples/README.md
++  - planning/documentation/source-usage-cascade-governance-plan.md
++Layer impact:
++  Documentation layer now has a dedicated explanatory log for significant completed actions.
++PMR relation:
++  related to PMR-002
++Follow-ups:
++  Update PMR-002 when a safe complete PMR replacement or direct scoped edit is available.
++Owner sources:
++  planning/documentation/documentation-action-log.md
++  planning/documentation/documentation-update-workflow.md
++Notes:
++  This entry starts from the current chat history and is not a full historical reconstruction of the entire project.
++```
+diff --git a/planning/documentation/documentation-responsibility-map.md b/planning/documentation/documentation-responsibility-map.md
+index 00f6d0e..d71b977 100644
+--- a/planning/documentation/documentation-responsibility-map.md
++++ b/planning/documentation/documentation-responsibility-map.md
+@@ -60,6 +60,7 @@ This file owns only documentation-layer placement.
+ | Source usage cascade governance pilot plan | `source-usage-cascade-governance-plan.md` | Governance plan for source usage relationships, layer encapsulation, attention preservation and cascade-review pilots. Not the full future workflow. |
+ | Source usage pilot folder/index | `source-usage-pilots/README.md` | Navigation and rules for experimental pilot registers. Permanent register placement is deferred. |
+ | Source usage pilot registers | `source-usage-pilots/*.md` | Pilot dependency relationship tables used to test source usage row shape and cascade review. Not global final schema. |
++| Documentation logical action log | `documentation-action-log.md` | Records significant completed documentation actions and why they happened. It does not own rules, workflows, task state or source truth. |
+ | Reusable documentation update prompt | `documentation-update-agent-prompt.md` | Derived prompt for other chats. Not canonical if it conflicts with governance docs. |
+ | Scoped documentation sync notes | `*sync-note.md` or future `sync-notes/` | Case-specific notes. Not reusable workflows or global principles. |
+ 
+@@ -69,7 +70,7 @@ Classify the new information:
+ 
+ ```text
+ 1. Information type:
+-   architecture principle / workflow step / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule / working example / example coverage decision / source usage governance / source usage pilot register.
++   architecture principle / workflow step / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule / working example / example coverage decision / source usage governance / source usage pilot register / documentation action log entry.
+ 
+ 2. Existing owner:
+    Which file above already owns this type?
+@@ -91,6 +92,9 @@ Classify the new information:
+ 
+ 8. Source usage impact:
+    Does this information introduce or change source usage relationships, cascade review, stale-reference handling or pilot register shape?
++
++9. Action log impact:
++   Is this a significant logical documentation action that should be recorded in documentation-action-log.md?
+ ```
+ 
+ ## 5. Conflict Rules
+@@ -106,6 +110,7 @@ If documentation-layer files conflict:
+ - examples/README.md is an index and does not override owner workflows, templates or use-case rows.
+ - source-usage-cascade-governance-plan.md wins for pilot governance until the full cascade workflow exists.
+ - source-usage-pilots/*.md are pilot artifacts and do not override source files, maps, drafts or future permanent registers.
++- documentation-action-log.md is historical/explanatory and does not override owner docs, workflows, templates, use-case rows or PMR entries.
+ - reviewable-agent-output-and-commands-workflow.md wins for answer format and response-level commands.
+ - documentation-update-agent-prompt.md is derived/supporting and does not override canonical docs.
+ - scoped sync notes do not override reusable workflow files.
+@@ -134,6 +139,7 @@ Suggested suffixes:
+ | Examples index / examples folder navigation | `examples/README.md` or `*-examples.md` |
+ | Source usage pilot folder navigation | `source-usage-pilots/README.md` |
+ | Source usage pilot register | `source-usage-pilots/<scope>-source-usage-register.md` |
++| Documentation action log | `documentation-action-log.md` |
+ | Scoped sync note | `*-sync-note.md` |
+ | Reusable prompt | `*-agent-prompt.md` |
+ | Architecture principles | `*-architecture-principles.md` |
+@@ -146,6 +152,7 @@ Suggested suffixes:
+ - Do not duplicate owner tables in multiple files.
+ - Do not put command routing, source-mode, output-mode or permission logic into example files.
+ - Do not treat source usage pilot registers as permanent global schema before the pilot is reviewed.
++- Do not use the action log as the source of truth for rules or unresolved tasks.
+ - Do not treat reusable prompts as canonical rules.
+ - Do not treat scoped sync notes as reusable workflows.
+ - Do not add a new file without updating README.md when it must be discoverable.
+@@ -164,5 +171,6 @@ The documentation layer is well-routed when:
+ - example coverage decisions are made by the example coverage workflow;
+ - examples remain supporting artifacts and link to their owner files instead of copying logic;
+ - source usage cascade pilots are discoverable and clearly marked experimental;
++- significant logical documentation actions have concise action-log entries;
+ - prompts and sync notes are clearly supporting/scoped artifacts.
+ ```
+diff --git a/planning/documentation/documentation-update-workflow.md b/planning/documentation/documentation-update-workflow.md
+index 154fc7d..6894bd1 100644
+--- a/planning/documentation/documentation-update-workflow.md
++++ b/planning/documentation/documentation-update-workflow.md
+@@ -44,7 +44,8 @@ plan only
+ 7. Prepare a Documentation Update Plan when the change is broad or multi-file.
+ 8. Ask only blocking questions that can change the planned update.
+ 9. After approval, apply the selected output mode.
+-10. Final response includes changed files or archive link, scope, non-goals, commit SHAs when applicable and next step.
++10. Check whether the documentation action log needs an entry.
++11. Final response includes changed files or archive link, scope, non-goals, commit SHAs when applicable and next step.
+ ```
+ 
+ ## 3. Required Current-State Check
+@@ -294,7 +295,36 @@ Rules:
+ - follow planning/replacement-file-generation-guide.md.
+ ```
+ 
+-## 11. Documentation Quality Checklist
++## 11. Documentation Action Log Check
++
++Before finalizing a documentation update, decide whether the update is a significant logical documentation action.
++
++Update:
++
++```text
++planning/documentation/documentation-action-log.md
++```
++
++when the change affects:
++
++```text
++- architecture principles;
++- workflow behavior;
++- accepted command semantics;
++- source-of-truth boundaries;
++- source usage/cascade governance;
++- template or output shape;
++- onboarding route;
++- PMR/task governance;
++- documentation-layer examples infrastructure;
++- replacement archive/package behavior.
++```
++
++Do not update it for typo-only edits, minor link fixes or purely mechanical sync already covered by a larger logged action.
++
++The action log records what changed and why. It does not own rules, PMR task state or source truth.
++
++## 12. Documentation Quality Checklist
+ 
+ Before finalizing a documentation update, verify:
+ 
+@@ -313,10 +343,11 @@ Before finalizing a documentation update, verify:
+ - direct GitHub bulk commit mode outputs base commit/tree SHA commands before asking the user for values;
+ - archive mode contains complete files, not patches;
+ - APPLY.md and MANIFEST.md are present for archive mode;
++- significant logical documentation actions are recorded in documentation-action-log.md or explicitly marked as not needing a log entry;
+ - no code/generated changes are included unless explicitly in scope.
+ ```
+ 
+-## 12. Do Not
++## 13. Do Not
+ 
+ ```text
+ - Do not write docs from memory only.
+diff --git a/planning/documentation/examples/README.md b/planning/documentation/examples/README.md
+index 48553ef..be1cb75 100644
+--- a/planning/documentation/examples/README.md
++++ b/planning/documentation/examples/README.md
+@@ -44,6 +44,7 @@ No filled documentation-layer examples are added yet.
+ | `REPLACEMENT-ARCHIVE-NEW-FILES-DIFF-v1` | command-block example | `planning/replacement-file-generation-guide.md` | replacement archive diff checks for packages that add files | deferred | _not created yet_ | Candidate from chat history; should show `$newFiles`, `git add -N`, and full diff capture for added files. |
+ | `REPLACEMENT-ARCHIVE-CONVERSATION-LOOP-v1` | conversation workflow example | `planning/replacement-file-generation-guide.md` | replacement archive conversation review loop | deferred | _not created yet_ | Candidate from chat history; should show assistant archive output, user diff, assistant review, commit command and remote verification. |
+ | `SOURCE-USAGE-CASCADE-PILOT-FRAMEWORK-v1` | register/framework example | `planning/documentation/source-usage-cascade-governance-plan.md` | source usage cascade pilot framework | deferred | _not created yet_ | Framework and pilot skeleton are added first; add a filled example after the real SC-13D pilot row set is audited. |
++| `DOCUMENTATION-ACTION-LOG-ENTRY-v1` | log-entry example | `planning/documentation/documentation-action-log.md` | documentation action log entries | deferred | _not created yet_ | Add after the action log format is used on at least one follow-up update; should show concise logical action entry with PMR relation. |
+ | `NEW-CHAT-ONBOARDING-v1` | response example | `planning/planning-use-case-map.md` | New Chat Onboarding / first planning pass | deferred | _not created yet_ | Candidate from chat history; should show compact onboarding answer. |
+ | `ACCEPTED-COMMAND-NO-REINVENTION-v1` | guardrail example | `planning/planning-use-case-map.md` | accepted command / no reinvention | deferred | _not created yet_ | Candidate from chat history; should show stop-and-explain instead of silent mode switch. |
+ 
+diff --git a/planning/documentation/source-usage-cascade-governance-plan.md b/planning/documentation/source-usage-cascade-governance-plan.md
+index 93261b5..753925f 100644
+--- a/planning/documentation/source-usage-cascade-governance-plan.md
++++ b/planning/documentation/source-usage-cascade-governance-plan.md
+@@ -301,3 +301,22 @@ Create the full source usage/cascade workflow only after:
+ - Do not turn slice drafts into source registries.
+ - Do not mass-update domain/slice templates before the pilot proves the shape.
+ ```
++
++## 17. Maintenance And Action Log Tracking
++
++The full source usage/cascade workflow follow-up is tracked by PMR-002.
++
++This framework introduction should be recorded in:
++
++```text
++planning/documentation/documentation-action-log.md
++```
++
++Rules:
++
++```text
++- Use PMR for future work, waiting conditions and reminders.
++- Use the documentation action log for completed logical documentation actions and why they happened.
++- When a pilot fill proves or rejects this row shape, update the action log.
++- When the pilot creates future work, update PMR and reference the PMR relation from the action log.
++```

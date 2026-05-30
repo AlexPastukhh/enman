@@ -1,0 +1,103 @@
+diff --git a/planning/documentation/planning-docs-architecture-principles.md b/planning/documentation/planning-docs-architecture-principles.md
+index 58c44c8..2b712d9 100644
+--- a/planning/documentation/planning-docs-architecture-principles.md
++++ b/planning/documentation/planning-docs-architecture-principles.md
+@@ -17,6 +17,7 @@ Scope: how to structure planning documentation so it remains navigable, reviewab
+ - [10. Separate Current, Target, Draft, Archive And Dirty Draft](#10-separate-current-target-draft-archive-and-dirty-draft)
+ - [11. Avoid Heavy Current-State Docs](#11-avoid-heavy-current-state-docs)
+ - [12. Source-of-Truth Hierarchy](#12-source-of-truth-hierarchy)
++- [12A. Layer Encapsulation And Attention Preservation](#12a-layer-encapsulation-and-attention-preservation)
+ - [13. Source / Version Principle](#13-source--version-principle)
+ - [14. Dependency Cascade Principle](#14-dependency-cascade-principle)
+ - [15. Section-Level Sources Principle](#15-section-level-sources-principle)
+@@ -352,6 +353,73 @@ Use only after canonical docs:
+ planning/dirty-drafts/
+ ```
+ 
++## 12A. Layer Encapsulation And Attention Preservation
++
++Planning layers should behave like encapsulated modules.
++
++When upstream work has already been reviewed, downstream docs should reference the published upstream artifact instead of reconstructing or re-explaining the upstream reasoning.
++
++The goal is to preserve already-reviewed work and human review attention:
++
++```text
++scenario layer
++  owns scenario meaning;
++
++DATA and behavior item layers
++  own normalized source extraction from scenarios, DATA, UI scenarios and cross-cutting behavior;
++
++domain layer
++  owns domain interpretation, aggregate boundaries, value objects, invariants and domain decisions;
++
++slice layer
++  owns implementation slice contracts, boundaries, behavior coverage and draft-to-implementation direction;
++
++testing layer
++  owns verification strategy and proof selection;
++
++diagramming / VKR / thesis layers
++  consume source-layer outputs for visualization or clean wording, without becoming business source truth.
++```
++
++Downstream review should focus on the new decisions owned by the current layer, not on checking whether the assistant correctly reconstructed previous-layer reasoning.
++
++Use strict source usage relationships and section-level source blocks to:
++
++```text
++- prevent duplicated source truth;
++- prevent AI from silently reinterpreting already-reviewed upstream work;
++- preserve human attention for new downstream decisions;
++- make cascade review targeted rather than broad by default;
++- make stale downstream scopes discoverable when upstream sources change.
++```
++
++External dependencies and internal dependencies are different:
++
++```text
++External dependency
++  = a source artifact/scope in another file or layer is consumed by this file/section.
++  Track it through source usage relationships/registers when downstream synchronization matters.
++
++Internal section dependency
++  = a later section in the same file depends on analytical work from an earlier section.
++  Track it locally in section-level source/internal dependency blocks when the section is high-risk or reviewed separately.
++  It normally does not need version markers.
++```
++
++Versions and review markers support this model, but they are not the core model.
++
++The core model is:
++
++```text
++source artifact/scope
++  -> consumer artifact/scope
++  -> reviewed_against / sync_status / review_outcome when needed
++```
++
++Do not copy upstream truth into downstream files just to make them self-contained. Link to the reviewed upstream artifact or source usage row, then document only the new downstream interpretation, decision or contract owned by the current layer.
++
++If upstream work changes, use dependency cascade review to identify affected downstream scopes. If upstream work did not change and the source usage relationship is current, do not force broad re-review of already-reviewed upstream reasoning.
++
+ ## 13. Source / Version Principle
+ 
+ Source versions should be tracked where downstream synchronization matters.
+diff --git a/planning/planning-use-case-map.md b/planning/planning-use-case-map.md
+index 9d5aa1e..178475b 100644
+--- a/planning/planning-use-case-map.md
++++ b/planning/planning-use-case-map.md
+@@ -88,10 +88,10 @@ Common principle references:
+ | Documentation structure / placement / owner boundaries | `planning/documentation/planning-docs-architecture-principles.md#contents`, `#17-responsibility-ownership`, `#24-no-duplication--authority-rule`, `#24a-link-instead-of-copy--docs-dry-rule` | Prevent misplaced duplicated logic. |
+ | Template/workflow/example governance | `planning/documentation/planning-docs-architecture-principles.md#9-template-vs-workflow`, `#24a-link-instead-of-copy--docs-dry-rule` | Keep templates, workflows and examples within their own responsibilities. |
+ | Archive/replacement package output | `planning/documentation/planning-docs-architecture-principles.md#23-direct-edits-archives-and-commit-granularity`, plus `planning/replacement-file-generation-guide.md` | Archive output is an output mode and must use replacement files. |
+-| Source/version or stale-reference concerns | `planning/documentation/planning-docs-architecture-principles.md#13-source--version-principle`, `#14-dependency-cascade-principle` | Versioned section/source tracking is deferred until the source/version model is strengthened. |
++| Source usage / stale-reference / cascade / reviewed-work concerns | `planning/documentation/planning-docs-architecture-principles.md#12a-layer-encapsulation-and-attention-preservation`, `#13-source--version-principle`, `#14-dependency-cascade-principle`, `#15-section-level-sources-principle` | Prevent duplicated source truth and preserve attention by referencing reviewed upstream work instead of reconstructing it. |
+ | Accepted commands / post-apply preservation | `planning/documentation/planning-docs-architecture-principles.md#24b-accepted-command-and-preservation-guardrails`, plus owner workflow/use-case files | Prevent silent reinterpretation and accidental information loss after replacement packages. |
+ 
+-Do not add source-version numbers to this use-case map yet. Section-level principle versions and use-case source-version metadata are deferred until the source/version model is ready.
++Do not add source-version numbers to this use-case map yet. Section-level principle versions and use-case source-version metadata are deferred until the source/version model is ready. Use the encapsulation/source-usage principle reference to decide when a pilot source usage register or cascade workflow is needed, not to add ad hoc version fields to use-case rows.
+ 
+ ## 4. Active Context Rule
+ 

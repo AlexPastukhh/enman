@@ -1,0 +1,111 @@
+diff --git a/planning/README.md b/planning/README.md
+index 7f951f6..ba7a3d3 100644
+--- a/planning/README.md
++++ b/planning/README.md
+@@ -66,6 +66,14 @@ The use-case map explains:
+ - expected output and permission boundary for common use cases.
+ ```
+ 
++For a new chat, first planning/repo pass, restored context, or no reliable active context, start with the New Chat Onboarding use case in:
++
++```text
++planning/planning-use-case-map.md
++```
++
++Do not ask the user to name workflow files. Use the onboarding use case to choose the initial read path, then switch to the specific task/use-case route.
++
+ For root layer routing, read:
+ 
+ ```text
+diff --git a/planning/planning-use-case-map.md b/planning/planning-use-case-map.md
+index 39dd30c..904528c 100644
+--- a/planning/planning-use-case-map.md
++++ b/planning/planning-use-case-map.md
+@@ -296,6 +296,7 @@ Use a shorter version when the update is simple.
+ 
+ | User says | Task type | Active context? | Traversal depth | Read source mode | Activated workflows | Required reads | Source of obligation | Expected output | Permission boundary |
+ |---|---|---:|---|---|---|---|---|---|---|
++| “новый чат”, “вкатись”, “разберись с planning docs”, “first pass”, no reliable active context | New Chat Onboarding / first planning pass | New or uncertain | Full first time; targeted/reuse after checked context exists | GitHub/repo by default; archive only if user requests archive source mode or provides an archive | workflow activation; planning agent protocol; role identification when specialized work is likely; reviewable output | `planning/README.md`, `planning/workflow-activation-map.md`, `planning/planning-use-case-map.md`, `planning/planning-agent-protocol.md`, `planning/planning-doc-responsibility-map.md`; `planning/agent-roles-and-required-actions.md` when role matters | README + use-case map + planning agent protocol | Short onboarding preflight, selected next use case, checked/not-checked sources, next action | No edits/packages unless explicitly requested |
+ | “посмотри / распланируй / проверь docs” | Non-trivial planning/docs work | Optional | Full first time; targeted later | GitHub/archive/conversation by context | workflow activation; reviewable output | `planning/README.md`, `workflow-activation-map.md`, `planning-doc-responsibility-map.md` | README + activation map | Reviewable answer/plan | Edits require approval |
+ | “обнови docs” | Documentation update | Optional | Targeted/full by scope | GitHub for writes; archive for read-only if requested | docs update plan/workflow; local-global sync | documentation README/map/workflows | activation map + docs workflows | Plan or applied update | GitHub writes require approval |
+ | “добавь template / workflow / command / draft format / пример” | Documentation governance update | Optional | Full first time; targeted later | GitHub/archive/conversation by context | docs update workflow; example coverage decision when template/output shape changes; reviewable output | documentation README/map/workflows; relevant owner workflow/template; principle section references in §3A | docs architecture principles + use-case map | Update plan or replacement package; example coverage decision if applicable | Edits/packages require approval |
+@@ -313,7 +314,60 @@ Use a shorter version when the update is simple.
+ | “обнови API/OpenAPI rules” | API planning work | Optional | Targeted/full by scope | API docs/generated artifacts if status claims | API/docs workflows | `planning/api/README.md` | root responsibility map | API docs plan/update | Generated changes need explicit scope |
+ | “сделай VKR текст” | VKR/thesis wording | Optional | Targeted | Clean docs + evidence as needed | reviewable output | `planning/vkr-clean-reference.md` | planning README | Clean thesis wording | Do not use internal labels |
+ 
+-## 11. Detailed Trace: Active Draft Continuation
++## 11. Detailed Trace: New Chat Onboarding
++
++User says:
++
++```text
++новый чат / вкатись / разберись с planning docs / first pass / restored context / no reliable active context
++```
++
++This is a use-case route, not a new global workflow. After onboarding selects the concrete task, switch to the specific use-case row and traversal depth.
++
++Steps:
++
++```text
++1. Read planning/README.md.
++2. Read planning/workflow-activation-map.md.
++3. Read planning/planning-use-case-map.md.
++4. Read planning/planning-agent-protocol.md.
++5. Read planning/agent-roles-and-required-actions.md when a specialized role may be needed.
++6. Read planning/planning-doc-responsibility-map.md to choose the layer.
++7. For documentation-layer work, read documentation README/map/workflows as required by planning-agent-protocol.md.
++8. Select traversal depth:
++   - full for first use / new chat / changed scope;
++   - targeted or reuse only after recent checked context exists.
++9. Select read source mode:
++   - GitHub/repo for current remote docs;
++   - archive only if user explicitly wants archive source mode or provides archive;
++   - conversation only for user corrections/discussion deltas.
++10. Select output mode:
++   - answer/plan by default;
++   - replacement archive only when user says “давай архив” / package output;
++   - direct edits only when explicitly approved.
++11. Use accepted command / no reinvention rule.
++12. Use Docs DRY: link to owner files, do not copy owner logic.
++13. Produce compact reviewable answer:
++   - mode/source;
++   - selected use case;
++   - checked sources;
++   - not checked / limits;
++   - next action.
++```
++
++Do not:
++
++```text
++- perform broad audit unless user asks or first-pass scope requires it;
++- ask the user to name workflow files;
++- treat planning docs as implementation proof;
++- change files without explicit permission;
++- create archive/package unless requested;
++- use stale L1/L2 terminology as user-facing routing;
++- copy owner logic into the onboarding row.
++```
++
++## 12. Detailed Trace: Active Draft Continuation
+ 
+ User says:
+ 
+@@ -340,7 +394,7 @@ If no active draft exists:
+ - start a new draft workflow only if the target is obvious.
+ ```
+ 
+-## 12. Detailed Trace: Template / Workflow / Command / Example Governance
++## 13. Detailed Trace: Template / Workflow / Command / Example Governance
+ 
+ User says:
+ 
+@@ -368,7 +422,7 @@ Deferred:
+ Section-level principle versions and source-version metadata for use-case references are not introduced yet. Track that as deferred source/version governance work rather than adding ad hoc version fields to every row.
+ ```
+ 
+-## 13. Detailed Trace: Replacement Archive / Package Output
++## 14. Detailed Trace: Replacement Archive / Package Output
+ 
+ User says:
+ 

@@ -1,0 +1,1248 @@
+diff --git a/planning/documentation/README.md b/planning/documentation/README.md
+index 7d5fb55..275360f 100644
+--- a/planning/documentation/README.md
++++ b/planning/documentation/README.md
+@@ -35,6 +35,8 @@ Core documentation-layer files:
+ ```text
+ planning/documentation/planning-docs-architecture-principles.md
+ planning/documentation/documentation-responsibility-map.md
++planning/documentation/documentation-layer-portability-migration-plan.md
++planning/documentation/documentation-responsibility-zone-review-workflow.md
+ planning/documentation/documentation-update-plan-workflow.md
+ planning/documentation/documentation-update-workflow.md
+ planning/documentation/status-reconciliation-workflow.md
+@@ -77,6 +79,20 @@ For documentation-layer architecture/routing work:
+ 6. relevant documentation workflow file
+ ```
+ 
++For documentation-layer portability, responsibility-zone review or reusable migration planning:
++
++```text
++1. planning/README.md
++2. planning/documentation/README.md
++3. planning/documentation/documentation-layer-portability-migration-plan.md
++4. planning/documentation/documentation-responsibility-zone-review-workflow.md
++5. planning/documentation/planning-docs-architecture-principles.md
++6. planning/documentation/documentation-responsibility-map.md
++7. target files being reviewed
++```
++
++Use this when reviewing whether existing documentation-layer content belongs to reusable principles, a specialized profile, a project adapter/profile, a workflow, a field kit, a template or an example.
++
+ For broad documentation updates:
+ 
+ ```text
+@@ -132,6 +148,15 @@ planning/documentation/examples/README.md
+ 
+ Use this when adding or changing templates, workflows with expected output, response commands, output modes, draft formats or example indexes.
+ 
++For documentation responsibility-zone review:
++
++```text
++planning/documentation/documentation-responsibility-zone-review-workflow.md
++planning/documentation/documentation-layer-portability-migration-plan.md
++```
++
++Use this when reviewing existing documentation-layer content for reusable/specialized/project-specific boundaries, owner-zone drift, field-kit candidates or candidate migration planning.
++
+ For source usage cascade governance and pilots:
+ 
+ ```text
+@@ -161,6 +186,8 @@ Examples:
+ ```text
+ global docs architecture principle -> planning-docs-architecture-principles.md
+ documentation-layer placement rule -> documentation-responsibility-map.md
++documentation-layer portability migration plan -> documentation-layer-portability-migration-plan.md
++documentation responsibility-zone review -> documentation-responsibility-zone-review-workflow.md
+ docs update process -> documentation-update-workflow.md
+ preflight docs update plan format -> documentation-update-plan-workflow.md
+ local/global sync process -> local-global-documentation-sync-workflow.md
+@@ -170,6 +197,8 @@ file update overview process -> file-update-overview-workflow.md
+ file update overview template -> FILE-UPDATE-OVERVIEW-TEMPLATE.md
+ use-case map workflow -> use-case-map-workflow.md
+ use-case map template -> USE-CASE-MAP-TEMPLATE.md
++field-kit setup guidance -> relevant `*-field-kit.md` file when created; principles define the type
++project adapter/profile mapping -> project adapter/profile file when created
+ example coverage decision process -> example-coverage-workflow.md
+ documentation-layer examples navigation -> examples/README.md
+ source usage cascade pilot governance -> source-usage-cascade-governance-plan.md
+diff --git a/planning/documentation/documentation-action-log.md b/planning/documentation/documentation-action-log.md
+index 942ee8f..a48b19c 100644
+--- a/planning/documentation/documentation-action-log.md
++++ b/planning/documentation/documentation-action-log.md
+@@ -458,3 +458,41 @@ Owner sources:
+ Notes:
+   This change does not perform the broader documentation-layer decoupling from Enman and does not split the principles file. Those remain separate future architecture batches.
+ ```
++
++### 2026-05-30 — Added documentation-layer portability role model and responsibility-zone review
++
++```text
++Date:
++  2026-05-30
++Action:
++  Added a documentation-layer portability migration plan and responsibility-zone review workflow, clarified principles responsibility, introduced Field Kit / Adapter-Profile file-type boundaries, and corrected `арх` command semantics.
++Type:
++  documentation architecture / portability migration preparation
++Status:
++  applied
++Why:
++  The documentation layer is being prepared for a copy-first reusable migration. Before splitting the principles file or extracting a scenario-driven profile / Enman adapter, the repo needs a clear record of current decisions, a repeatable method for reviewing responsibility zones, and explicit source-vs-output archive semantics.
++Changed files:
++  - planning/documentation/documentation-layer-portability-migration-plan.md
++  - planning/documentation/documentation-responsibility-zone-review-workflow.md
++  - planning/documentation/planning-docs-architecture-principles.md
++  - planning/documentation/documentation-responsibility-map.md
++  - planning/documentation/README.md
++  - planning/planning-use-case-map.md
++  - planning/documentation/documentation-update-workflow.md
++  - planning/documentation/examples/README.md
++  - planning/documentation/documentation-action-log.md
++Layer impact:
++  Documentation layer now has a pre-split portability plan, a reusable responsibility-zone review method, explicit Field Kit and Adapter/Profile type boundaries, and corrected `арх` source snapshot semantics.
++PMR relation:
++  none
++Follow-ups:
++  Create the reusable candidate copy, then classify and split principles inside the candidate before extracting the scenario-driven profile or Enman/project adapter.
++Owner sources:
++  planning/documentation/documentation-layer-portability-migration-plan.md
++  planning/documentation/documentation-responsibility-zone-review-workflow.md
++  planning/documentation/planning-docs-architecture-principles.md
++  planning/documentation/documentation-responsibility-map.md
++Notes:
++  This batch intentionally does not split principles, create the scenario-domain-slice profile, create the Enman adapter, move VKR/source-usage pilots/sync notes, or create the reusable candidate copy.
++```
+diff --git a/planning/documentation/documentation-layer-portability-migration-plan.md b/planning/documentation/documentation-layer-portability-migration-plan.md
+new file mode 100644
+index 0000000..ca0908e
+--- /dev/null
++++ b/planning/documentation/documentation-layer-portability-migration-plan.md
+@@ -0,0 +1,643 @@
++# Documentation Layer Portability Migration Plan
++
++Status: active migration plan / pre-split decision capture  
++Scope: documentation-layer portability decisions before reusable candidate copy, principles split or project adapter extraction.
++
++> This file is a repo-visible migration decision capture. It preserves the current pre-split agreements and boundaries before any reusable candidate copy, principles split or project adapter extraction.
++
++## 1. Command Semantics Decision
++
++### 1.1 `арх`
++
++`арх` means:
++
++- a fresh archive / repository snapshot has been provided;
++- the archive should be treated as the current source-state reference;
++- the archive is available for reading/planning/review.
++
++`арх` does **not** mean:
++
++- create an output archive;
++- generate a replacement package;
++- start file edits;
++- apply a batch automatically.
++
++Artifact/package generation still requires an explicit command such as:
++
++- `давай архив`;
++- `сделай архив`;
++- `архив для батча`;
++- `собери package`.
++
++Guardrail:
++
++> Do not start artifact/package generation merely because the user says `арх`. Use it as source-mode information only.
++
++## 2. Copy-First Migration Decision
++
++The active `planning/documentation/` layer should not be refactored in place first.
++
++Preferred migration strategy:
++
++1. Keep the current documentation layer as the active working Enman/project-specific baseline.
++2. Create a temporary reusable candidate copy.
++3. Clean/genericize the candidate copy.
++4. Compare the candidate against the active layer.
++5. Extract project-specific logic into project adapter/profile and examples.
++6. Switch canonical references only after review.
++7. Remove or archive the old Enman-specific copy only after verification.
++
++Candidate workspace idea:
++
++```text
++planning/documentation-reusable-candidate/
++```
++
++Candidate guardrail:
++
++> The reusable candidate copy is temporary and non-canonical until the migration is accepted. Ordinary current project documentation updates should continue to use the active `planning/documentation/` layer.
++
++## 3. Principles File Role Decision
++
++The principles file should own high-level documentation architecture invariants.
++
++Principles describe:
++
++- how the documentation system should be structured;
++- what must remain true;
++- what must not be violated;
++- why ownership and source-of-truth boundaries exist;
++- what file-type responsibilities are and why they must stay separate.
++
++Principles should not own:
++
++- exact workflow steps;
++- exact template shapes;
++- exact concrete project paths;
++- exact use-case or command routes;
++- large examples;
++- current project status inventory;
++- project-specific source/evidence/register mappings.
++
++Short definition:
++
++> Principles own stable architecture constraints and design invariants. Workflows own repeated processes. Templates own exact shapes. Responsibility maps own placement. Adapters/profiles own concrete project configuration. Examples demonstrate usage but do not own rules.
++
++## 4. File-Type Taxonomy Decision
++
++The reusable documentation layer should explicitly distinguish these file types.
++
++| File type | Owns | Does not own |
++|---|---|---|
++| Principles | stable invariants, design constraints, file-type theory | workflow steps, concrete paths, example bodies |
++| Workflow | repeated operational process | exact template shape, project-specific config unless it is a project workflow |
++| Field Kit | setup toolkit for deriving project-specific workflows/profiles/adapters | ordinary repeated operational process after setup is done |
++| Template | exact artifact/output shape | process or routing logic |
++| Responsibility map | ownership and placement routing | detailed process or examples |
++| README / index | navigation, read order, short file purpose summaries | deep logic, current-state inventory |
++| Use-case map | user action/command route, expected output, permission boundary | full workflow logic |
++| Adapter / profile | concrete project configuration | universal principles |
++| Example | demonstrated application | source-of-truth logic or routing |
++| Action log | completed logical documentation actions | future tasks |
++| PMR / task register | deferred/waiting tasks and reminders | completed action history |
++
++## 5. Field Kit Decision
++
++`Field Kit` should become a separate file type.
++
++A field kit is not the same as a workflow.
++
++Workflow:
++
++- used repeatedly for an operational process;
++- tells the agent/person how to do a recurring task.
++
++Field Kit:
++
++- used to set up project-specific artifacts;
++- contains setup questions, decision tables, candidate shapes and checks;
++- helps derive a project-specific workflow/profile/adapter/register;
++- should usually be used once per project or when project architecture changes.
++
++Example distinction:
++
++| Artifact | Type | Role |
++|---|---|---|
++| `source-usage-cascade-field-kit.md` | Field Kit | helps define source/consumer model, cascade triggers and register shape for a project |
++| `project-source-usage-cascade-workflow.md` | Project workflow | repeated cascade review process for a specific project |
++| `SOURCE-USAGE-REGISTER-TEMPLATE.md` | Template | exact table/row shape |
++| `project-docs-adapter.md` | Adapter/profile | concrete project sources, paths and mappings |
++
++Guardrail:
++
++> A field kit may contain setup questions and candidate shapes, but once a project-specific workflow/profile exists, ordinary project work should use the project-specific artifact, not re-run the field kit by default.
++
++## 6. Reusable vs Specialized vs Project-Specific Classification
++
++Do not move text to a project adapter merely because it contains a project path or Enman term.
++
++First extract the reusable idea.
++
++Classification levels:
++
++| Level | Meaning | Example |
++|---|---|---|
++| Fully reusable principle | applies to any documentation system or AI-assisted docs layer | local details that affect future work must be globally discoverable |
++| Specialized reusable profile | applies to a class of projects, but not all docs systems | scenario → DATA/behavior → domain → slice → tests/evidence |
++| Project adapter/profile | exact project mapping/configuration | in Enman, scenario specs live under `planning/diagrams/...` |
++| Example | concrete demonstration | SC-13D / AgreementProposalExchange cascade example |
++| Workflow detail | operational steps | how to perform reconciliation or sync |
++| Template detail | exact shape | exact table columns |
++
++Review rule:
++
++> If a paragraph contains Enman paths or terms, extract the underlying reusable principle first. Then decide whether the remaining concrete mapping belongs to a specialized profile, project adapter or example.
++
++## 7. Scenario/Domain/Slice Decision
++
++Scenario/domain/slice architecture is not fully universal, but it is also not necessarily Enman-only.
++
++Target classification:
++
++| Content | Target |
++|---|---|
++| “A docs system should define layers and dependency direction.” | fully reusable principles |
++| scenario → DATA/behavior → domain → slice → testing/evidence | scenario-driven reusable profile |
++| exact Enman folders, IDs, scenario names and domain concepts | Enman/project adapter or examples |
++
++Potential specialized profile:
++
++```text
++scenario-domain-slice-docs-profile.md
++```
++
++Purpose:
++
++> Reusable profile for app/product projects where documentation flows from scenario/source behavior into normalized data/behavior items, domain interpretation, implementation slices, verification and external output.
++
++## 8. Enman Adapter Meaning
++
++The project adapter is not a dumping ground for every paragraph containing an Enman reference.
++
++It owns concrete project configuration:
++
++- repo/provider/branch conventions;
++- project layer vocabulary;
++- exact source paths;
++- evidence path map;
++- shared visibility map;
++- source usage profile;
++- project-specific output layers;
++- example links.
++
++Example split:
++
++```text
++Original concrete statement:
++Use planning/slices/ for slice scope truth.
++
++Reusable principle:
++A project must define where implementation-planning scope truth lives.
++
++Scenario-driven profile:
++Scenario-driven app projects may use slice/scope docs for implementation planning.
++
++Enman adapter:
++In Enman, slice scope docs live in planning/slices/.
++```
++
++## 9. VKR Decision
++
++VKR/thesis is Enman-specific and should not remain as a named universal reusable layer.
++
++Reusable layer keeps only the generic principle:
++
++> Internal working documentation may use internal workflow terms, but external/public-facing outputs need clean audience-safe wording.
++
++Scenario-driven profile may mention:
++
++> Some projects have external/public-facing output layers that consume internal planning docs.
++
++Enman adapter owns:
++
++- VKR/thesis wording rules;
++- `planning/vkr-clean-reference.md`;
++- `planning/thesis/`;
++- any VKR-specific mapping.
++
++## 10. Treatment Of Three Key Files
++
++### 10.1 `status-reconciliation-workflow.md`
++
++Reusable role:
++
++- should become a status/evidence reconciliation setup workflow or field-kit-like workflow;
++- applicable only when the documentation domain has implementation/current evidence;
++- if no implementation/evidence layer exists, mark not applicable or define another evidence model.
++
++Principles should keep:
++
++> Current-state claims must be evidence-checkable when the documentation domain has evidence.
++
++Workflow/field kit should own:
++
++- applicability gate;
++- evidence order;
++- status labels;
++- reconciliation steps;
++- prompt/update impact.
++
++Project adapter should own:
++
++- exact evidence paths;
++- generated artifacts;
++- test paths;
++- project-specific status examples.
++
++### 10.2 `local-global-documentation-sync-workflow.md`
++
++Reusable role:
++
++- should remain a reusable workflow;
++- local/global visibility is relevant to nearly any documentation system.
++
++Principles should keep:
++
++> Local details that affect future work must become globally discoverable or be explicitly marked local-only.
++
++Workflow should own:
++
++- local vs global classification;
++- question/assumption/status fields;
++- local-only reasons;
++- back-reference rule;
++- preflight checklist.
++
++Project adapter should own:
++
++- Shared Visibility Map:
++  - local discovery type → shared index/register/navigation target.
++
++### 10.3 `source-usage-cascade-governance-plan.md`
++
++Reusable role:
++
++- should probably become a field kit, not a full workflow yet;
++- source/consumer/cascade concepts are broadly reusable;
++- concrete scenario/domain/slice cascade is a specialized profile/example.
++
++Principles should keep:
++
++> Downstream docs that consume upstream sources need visible source/consumer relationships for targeted cascade review.
++
++Field kit should own:
++
++- source artifact/scope;
++- consumer artifact/scope;
++- reviewed_against;
++- source_status vs sync_status;
++- cascade trigger;
++- review outcome;
++- candidate row shape;
++- pilot/exit criteria.
++
++Scenario-driven profile should own:
++
++- scenario → DATA/behavior → domain → slice → testing/evidence as one reusable topology.
++
++Enman adapter/examples should own:
++
++- SC-13D;
++- AgreementProposalExchange;
++- exact pilot register paths;
++- concrete Enman cascade examples.
++
++## 11. Responsibility-Zone Review Workflow Decision
++
++A reusable responsibility-zone review workflow should own this process:
++
++```text
++documentation-responsibility-zone-review-workflow.md
++```
++
++It should own the repeatable process for:
++
++- reviewing an existing documentation layer;
++- separating universal reusable principles from specialized profiles and project-specific adapters;
++- extracting principles before moving concrete text;
++- avoiding adapter dumping;
++- preserving examples;
++- planning candidate-copy migration.
++
++Expected output:
++
++- classification table;
++- proposed moves;
++- profile/adapter/example boundaries;
++- unresolved questions;
++- delivery safety classification.
++
++This can become a use-case route in use-case maps, but the logic belongs in the workflow.
++
++## 12. Near-Term Plan Without Splitting Principles Yet
++
++Do not split principles yet.
++
++First changes should be limited to what can be done before the principles split:
++
++1. Create a preservation note / decision capture file.
++2. Update or plan the principles role definition.
++3. Add Field Kit to file-type taxonomy.
++4. Add Field Kit / Adapter/Profile boundaries to responsibility guidance.
++5. Add the responsibility-zone review workflow as the owner for portability/reusable migration review.
++6. Clarify command semantics for `арх`.
++7. Mark VKR as Enman-specific in migration plan, but do not move active docs yet.
++8. Plan candidate-copy migration.
++
++## 13. Suggested Next Batch Scope
++
++Suggested next batch name:
++
++```text
++Batch F1 — Documentation layer migration decisions and field-kit role model
++```
++
++Scope:
++
++- capture long decisions in a repo document;
++- clarify `арх` semantics if command owner is updated;
++- define Principles responsibility;
++- introduce Field Kit file type;
++- add the responsibility-zone review workflow;
++- no active principles split;
++- no scenario/domain/slice profile extraction yet;
++- no Enman adapter extraction yet.
++
++## 14. Open Questions
++
++1. Where should this preservation note live?
++   - Candidate: `planning/documentation/documentation-layer-reusability-decisions.md`
++   - Candidate: `planning/documentation/documentation-layer-portability-migration-plan.md`
++   - Candidate: outside active docs, inside future candidate workspace.
++
++2. Should the review workflow be narrow portability-only or general responsibility-zone review?
++   - Decision: use the general `documentation-responsibility-zone-review-workflow.md`.
++   - Reason: the same method applies to portability migration, owner-boundary review and future responsibility-zone audits.
++
++3. Should `Field Kit` file type be added to active docs now?
++   - Pro: needed before source usage/status/local-global files are reshaped.
++   - Con: if we only change candidate later, active docs remain unchanged until migration.
++
++4. Should `арх` semantics be fixed immediately in the active command/use-case map?
++   - Pro: prevents future misunderstanding.
++   - Con: touches active response/command routing again.
++
++## 15. Current Preferred Direction
++
++Preferred order:
++
++1. Create this decision capture file as a standalone discussion artifact.
++2. Plan a small repo batch that adds:
++   - principles role clarification;
++   - Field Kit file type;
++   - adapter/profile type clarification;
++   - responsibility-zone review workflow;
++   - `арх` semantics correction.
++3. After that, create candidate copy / migration workspace.
++4. Then classify and split principles inside the candidate.
++
++## 16. Post-Review Additions / Strengthened Agreements
++
++This section records points that were present in the discussion but needed to be made more explicit in this preservation file.
++
++### 16.1 Documentation-Layer Review Boundary
++
++The portability review is about the **documentation layer architecture**, not about reviewing scenario, slice, domain, API or diagram content itself.
++
++When a reusable docs-layer file references paths such as:
++
++```text
++planning/slices/
++planning/diagrams/
++planning/api/
++planning/testing/
++```
++
++the review question is not:
++
++```text
++Is the slice/scenario/API content correct?
++```
++
++The review question is:
++
++```text
++Why does the documentation layer reference this path?
++Is the reference:
++- a reusable principle?
++- a scenario-driven profile concept?
++- a project adapter mapping?
++- an example link?
++- workflow detail?
++```
++
++Guardrail:
++
++> Do not drift into reviewing project content while reviewing documentation-layer portability. Only classify why the docs layer depends on or mentions that content.
++
++### 16.2 Full Candidate Copy Baseline
++
++For copy-first migration, the initial candidate should be a **full baseline copy** of the active documentation layer unless explicitly narrowed later.
++
++Preferred first migration step:
++
++```text
++copy planning/documentation/
++  -> planning/documentation-reusable-candidate/
++```
++
++Reason:
++
++- preserves all current knowledge;
++- enables diff-based cleanup;
++- avoids silently losing project-specific or historical information;
++- lets us classify before moving/removing anything.
++
++The candidate can later remove, relabel, split or move project-specific files, but the first copy should preserve the whole baseline.
++
++### 16.3 Where To Record The Principles Role
++
++The principles role should be recorded in more than one place, with different depth:
++
++| Place | What it should record |
++|---|---|
++| Principles file itself | self-definition: principles own invariants, constraints, what must/must not happen |
++| Documentation responsibility map | placement rule: principles own file-type theory/invariants, not steps/templates/project config |
++| Responsibility-zone review workflow | process: how to classify text as reusable/specialized/project-specific/workflow/detail |
++| Use-case map | optional route: if user asks to review docs for portability, activate the responsibility-zone review workflow |
++
++This avoids putting the whole classification algorithm into the principles file.
++
++### 16.4 Principles May Define File Types, But Not Concrete Placement Rows
++
++The principles file may define the general taxonomy of file types:
++
++- principles;
++- workflow;
++- field kit;
++- template;
++- responsibility map;
++- README/index;
++- use-case map;
++- adapter/profile;
++- example;
++- action log;
++- task/maintenance register.
++
++But the principles file should not own concrete placement rows.
++
++Correct split:
++
++```text
++Principles:
++  defines what a workflow is and why it differs from a field kit.
++
++Responsibility map:
++  says which concrete file owns a given workflow/field-kit/template/responsibility area.
++
++Workflow:
++  says how to perform the process.
++
++Template:
++  defines exact shape.
++
++Adapter:
++  defines concrete project configuration.
++```
++
++### 16.5 Examples Should Be Separate, Not Embedded
++
++Reusable principles, workflows and field kits should avoid embedding large Enman examples directly.
++
++Preferred pattern:
++
++```text
++Reusable owner file:
++  - defines principle/process/setup questions
++  - links to examples
++
++Example file:
++  - shows Enman/current-project application
++
++Project adapter/profile:
++  - stores exact project mapping and paths
++```
++
++This applies especially to:
++
++- status reconciliation examples;
++- local/global sync examples;
++- source usage/cascade examples;
++- scenario/domain/slice profile examples.
++
++### 16.6 Status Reconciliation Evidence Is Domain-Specific
++
++Status reconciliation is not always “implementation vs docs.”
++
++For software/application projects, evidence may be:
++
++- code;
++- tests;
++- generated artifacts;
++- migrations;
++- runtime screenshots;
++- deployed behavior.
++
++For other documentation domains, evidence may be different:
++
++| Domain | Possible evidence/current reality |
++|---|---|
++| study notes / repetition system | source notes, repetition schedule, learning state, reviewed cards |
++| day planning | calendar, task state, completed/blocked items |
++| research notes | source papers, excerpts, citation map, experiment notes |
++| non-implementation docs | accepted sources, current user decisions, published notes |
++
++Reusable rule:
++
++> If a documentation domain has current-state claims, it must define the evidence/current-reality model that can verify those claims. If there is no such model, implementation-style status reconciliation is not applicable.
++
++### 16.7 Do Not Split Principles Before Candidate Classification
++
++The principles split should happen only after candidate classification.
++
++Order:
++
++1. Copy active docs layer to reusable candidate.
++2. Preserve decisions and role model.
++3. Add/prepare responsibility-zone review workflow.
++4. Classify principles sections at paragraph/section level.
++5. Only then split into:
++   - fully reusable principles;
++   - scenario-driven profile;
++   - project adapter/profile;
++   - examples or workflow/field-kit details.
++
++Guardrail:
++
++> Do not split the active principles file directly before the candidate copy and classification pass.
++
++### 16.8 `арх` Must Be Treated As Source-State Even During Planning
++
++If the user says `арх` while asking for planning or review, it means:
++
++- use the provided archive as the latest repo state;
++- do not infer that a deliverable package is requested;
++- do not say “I will generate archive” unless separately asked.
++
++This applies even when the next logical work might eventually be archive-based.
++
++### 16.9 Near-Term Batch Should Avoid Scenario/Profile Split
++
++The next small repo batch should stay pre-split.
++
++It may include:
++
++- decision capture file;
++- principles role clarification;
++- Field Kit file type;
++- adapter/profile type clarification;
++- responsibility-zone review workflow;
++- `арх` command semantics correction.
++
++It should not yet include:
++
++- scenario/domain/slice profile extraction;
++- Enman adapter extraction;
++- principles file split;
++- moving VKR files;
++- moving source usage pilots or sync notes.
++
++### 16.10 VKR Handling
++
++The current decision is stronger than just “genericize VKR wording.”
++
++VKR/thesis as a named layer, folder or output model is Enman-specific.
++
++Reusable layer keeps only:
++
++```text
++Internal working documentation should be separated from external/public-facing output wording.
++```
++
++Scenario-driven profile may say:
++
++```text
++Some projects have external-facing output layers that consume internal planning docs.
++```
++
++Enman adapter/profile owns:
++
++- VKR/thesis as the concrete external output layer for Enman;
++- `planning/vkr-clean-reference.md`;
++- `planning/thesis/`;
++- Enman-specific wording rules.
+diff --git a/planning/documentation/documentation-responsibility-map.md b/planning/documentation/documentation-responsibility-map.md
+index e29ce0c..a962b7d 100644
+--- a/planning/documentation/documentation-responsibility-map.md
++++ b/planning/documentation/documentation-responsibility-map.md
+@@ -47,7 +47,9 @@ This file owns only documentation-layer placement.
+ 
+ | Information type | Owner file | Notes |
+ |---|---|---|
+-| Global planning-docs architecture principles | `planning-docs-architecture-principles.md` | Theory: layers, file types, source-of-truth boundaries, no-duplication rules. Not workflow steps. |
++| Global planning-docs architecture principles | `planning-docs-architecture-principles.md` | Stable invariants, file-type theory, source-of-truth boundaries and no-duplication rules. Not workflow steps, concrete paths or project configuration. |
++| Documentation-layer portability migration plan | `documentation-layer-portability-migration-plan.md` | Captures pre-split reusability decisions, migration phases and boundaries before candidate copy / principles split / adapter extraction. |
++| Documentation responsibility-zone review process | `documentation-responsibility-zone-review-workflow.md` | How to review existing documentation content and classify reusable principles, specialized profiles, adapter mappings, examples, workflow details and template details. |
+ | Documentation-layer placement rules | `documentation-responsibility-map.md` | This file. Use when deciding where documentation-layer information belongs. |
+ | Documentation folder navigation / read order | `README.md` | Index only. It should list files and read order, not duplicate full rules. |
+ | Broad documentation update process | `documentation-update-workflow.md` | End-to-end process for updating docs after plan/approval. |
+@@ -74,7 +76,7 @@ Classify the new information:
+ 
+ ```text
+ 1. Information type:
+-   architecture principle / workflow step / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule / working example / example coverage decision / file update overview process / file update overview template / source usage governance / source usage pilot register / documentation action log entry.
++   architecture principle / workflow step / field-kit setup guidance / adapter-profile mapping / responsibility-zone review / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule / working example / example coverage decision / file update overview process / file update overview template / source usage governance / source usage pilot register / documentation action log entry.
+ 
+ 2. Existing owner:
+    Which file above already owns this type?
+@@ -97,7 +99,10 @@ Classify the new information:
+ 8. Source usage impact:
+    Does this information introduce or change source usage relationships, cascade review, stale-reference handling or pilot register shape?
+ 
+-9. Action log impact:
++9. Responsibility-zone / portability impact:
++   Does this review or move existing content between reusable principles, specialized profiles, project adapters, workflows, field kits, templates or examples?
++
++10. Action log impact:
+    Is this a significant logical documentation action that should be recorded in documentation-action-log.md?
+ ```
+ 
+@@ -106,10 +111,14 @@ Classify the new information:
+ If documentation-layer files conflict:
+ 
+ ```text
+-- planning-docs-architecture-principles.md wins for global architecture theory.
++- planning-docs-architecture-principles.md wins for stable architecture invariants and file-type theory.
++- documentation-layer-portability-migration-plan.md wins for the staged documentation-layer portability migration decision record until a later canonical migration plan replaces it.
++- documentation-responsibility-zone-review-workflow.md wins for the process of classifying existing content into responsibility zones.
+ - documentation-responsibility-map.md wins for documentation-layer placement.
+ - planning/planning-doc-responsibility-map.md wins for choosing the planning layer.
+-- workflow files win for their own process steps.
++- workflow files win for their own repeated process steps.
++- field-kit files win for setup guidance in their specific setup area; project-specific workflows/profiles win after they are derived and accepted.
++- adapter/profile files win for concrete project mappings after they are created.
+ - file-update-overview-workflow.md wins for File Update Overview process.
+ - FILE-UPDATE-OVERVIEW-TEMPLATE.md wins for File Update Overview shape.
+ - use-case-map-workflow.md wins for reusable use-case-map maintenance process.
+@@ -142,6 +151,8 @@ Suggested suffixes:
+ | File type | Suggested suffix |
+ |---|---|
+ | Workflow | `*-workflow.md` |
++| Field kit | `*-field-kit.md` |
++| Adapter / profile | `*-adapter.md`, `*-profile.md` or project-specific profile file when approved |
+ | Responsibility map | `*-responsibility-map.md` |
+ | Template | `*-template.md` or uppercase `<THING>-TEMPLATE.md` for reusable exact output shapes |
+ | Examples index / examples folder navigation | `examples/README.md` or `*-examples.md` |
+@@ -157,10 +168,14 @@ Suggested suffixes:
+ ```text
+ - Do not put global architecture theory into workflow files.
+ - Do not put workflow steps into architecture principles unless they are only high-level principles.
++- Do not put field-kit setup guidance into a repeated workflow unless the workflow explicitly owns setup mode.
++- Do not treat project adapter/profile mappings as universal principles.
+ - Do not duplicate owner tables in multiple files.
+ - Do not put command routing, source-mode, output-mode or permission logic into example files.
+ - Do not put File Update Overview trigger/shape logic into examples or use-case rows; link to the workflow/template owners.
+ - Do not put reusable use-case-map workflow/template logic into a concrete use-case map; link to use-case-map-workflow.md and USE-CASE-MAP-TEMPLATE.md.
++- Do not move a paragraph into a project adapter only because it contains a concrete path; extract the reusable principle first.
++- Do not split or migrate active docs-layer responsibilities before the approved portability/candidate workflow says to do so.
+ - Do not treat source usage pilot registers as permanent global schema before the pilot is reviewed.
+ - Do not use the action log as the source of truth for rules or unresolved tasks.
+ - Do not treat reusable prompts as canonical rules.
+@@ -175,9 +190,11 @@ The documentation layer is well-routed when:
+ ```text
+ - a new chat can choose the correct documentation owner file without guessing;
+ - README.md shows navigation and read order;
+-- architecture principles hold theory;
++- architecture principles hold invariants and file-type theory;
+ - this map handles documentation-layer placement;
+ - workflow files stay process-focused;
++- field kits stay setup-focused and do not replace accepted project workflows/profiles;
++- responsibility-zone reviews can classify reusable principles, specialized profiles, adapter mappings, examples and workflow/template details;
+ - File Update Overview process and shape have clear owners;
+ - use-case-map workflow and template responsibilities have clear owners;
+ - example coverage decisions are made by the example coverage workflow;
+diff --git a/planning/documentation/documentation-responsibility-zone-review-workflow.md b/planning/documentation/documentation-responsibility-zone-review-workflow.md
+new file mode 100644
+index 0000000..ce93682
+--- /dev/null
++++ b/planning/documentation/documentation-responsibility-zone-review-workflow.md
+@@ -0,0 +1,177 @@
++# Documentation Responsibility-Zone Review Workflow
++
++Status: current reusable responsibility-zone review workflow  
++Scope: how to review existing documentation-layer content and decide which owner/type/zone should own each piece
++
++## 1. Purpose
++
++This workflow preserves the method used to review existing documentation-layer files for responsibility boundaries.
++
++It answers:
++
++```text
++What is this existing paragraph/section trying to do?
++Which responsibility zone should own it?
++Is it a reusable principle, workflow detail, field-kit setup question, template shape, adapter mapping, example, or navigation/placement row?
++What can be extracted before moving or splitting the text?
++```
++
++Use this workflow when reviewing existing docs for:
++
++```text
++- responsibility-zone drift;
++- portability / reusable-layer migration;
++- principles vs workflow vs adapter confusion;
++- overloaded files;
++- project-specific paths embedded in reusable files;
++- possible extraction into profiles, adapters, examples or field kits.
++```
++
++## 2. What This Workflow Owns
++
++This workflow owns the **review method** for assigning existing documentation content to the correct responsibility zone.
++
++It does not own:
++
++```text
++- the principles themselves;
++- exact templates;
++- project adapter contents;
++- example bodies;
++- command routing;
++- the final target folder structure for a migration.
++```
++
++Those are owned by their specific owner files.
++
++## 3. Core Review Method
++
++Review existing content as a claim, not as text to move mechanically.
++
++For each paragraph, section, table row or rule:
++
++```text
++1. Identify the fundamental purpose.
++2. Ask what problem this text prevents.
++3. Ask what responsibility boundary it protects.
++4. Mentally remove concrete project names, paths, IDs and examples.
++5. Extract the reusable core, if one exists.
++6. Classify the remaining specialized or project-specific material.
++7. Assign the correct owner type.
++8. Record the move/keep/split action.
++```
++
++Do not move text to an adapter merely because it contains a concrete project path.
++
++First extract the reusable principle or profile pattern.
++
++## 4. Classification Buckets
++
++Use these buckets:
++
++| Bucket | Meaning | Typical owner |
++|---|---|---|
++| Reusable principle / invariant | Stable rule about how documentation should or should not work. | principles file |
++| Specialized reusable profile | Pattern for a class of projects, but not all docs systems. | profile file |
++| Project adapter mapping | Concrete project path, source map, evidence map, register map or layer vocabulary. | project adapter/profile |
++| Workflow detail | Repeatable operational steps. | workflow file |
++| Field-kit setup detail | Setup questions/tools used to derive project-specific artifacts. | field kit |
++| Template detail | Exact artifact/output/file shape. | template |
++| Responsibility placement | Where an information type belongs. | responsibility map |
++| Navigation/read order | How to discover or read files. | README/index |
++| Use-case route | User wording -> workflow/output/permission route. | use-case map |
++| Example candidate | Concrete demonstration of a rule/workflow/profile. | example file/index |
++| Historical/action note | What changed and why. | action log |
++| Deferred/waiting task | Future task or waiting condition. | PMR/task register |
++
++## 5. Portability / Reusable Migration Mode
++
++When the review is for reusable-layer migration, use this specific split:
++
++```text
++reusable core
++  = applicable to any documentation system or AI-assisted docs layer;
++
++specialized profile
++  = reusable for a class of projects, such as scenario-driven app/product projects;
++
++project adapter mapping
++  = exact current project terms, paths, IDs, evidence sources and output layers;
++
++example candidate
++  = concrete current-project demonstration that should not be embedded in reusable owner docs.
++```
++
++Common trap:
++
++```text
++A paragraph mentions an Enman path.
++Wrong: move the whole paragraph to the Enman adapter.
++Right: extract the reusable principle first, then move only the concrete mapping/example.
++```
++
++## 6. Documentation-Layer Boundary
++
++When reviewing documentation-layer portability, do not drift into reviewing project content itself.
++
++If the reviewed text mentions:
++
++```text
++planning/slices/
++planning/diagrams/
++planning/api/
++planning/testing/
++```
++
++ask:
++
++```text
++Why does the documentation layer reference this path?
++Is this reference a reusable principle, specialized profile pattern, adapter mapping, example link or workflow detail?
++```
++
++Do not review whether the slice/scenario/API content itself is correct unless a separate task asks for it.
++
++## 7. Output Shape
++
++Use this table for non-trivial reviews:
++
++| Original section / text | Fundamental purpose | Reusable core | Specialized profile | Adapter mapping | Example candidate | Correct owner | Action |
++|---|---|---|---|---|---|---|---|
++
++Use short cells. Put longer reasoning below the table when needed.
++
++## 8. Checks Before Finalizing
++
++| Check | Question |
++|---|---|
++| Purpose checked | Did we identify what problem the text prevents? |
++| Path trap avoided | Did we avoid moving text only because it contains a concrete path? |
++| Reusable core extracted | Did we extract a reusable rule before assigning project-specific leftovers? |
++| Owner type selected | Did we decide principle/workflow/field-kit/template/adapter/example/etc.? |
++| Project content boundary | Did we avoid reviewing non-documentation-layer content by accident? |
++| Examples separated | Are concrete examples linked or planned separately instead of embedded in reusable owners? |
++| Split safety | Are active docs preserved unless an approved migration batch changes them? |
++| Delivery safety | Are large/shared files and archive/source needs visible if file updates are planned? |
++
++## 9. Do Not
++
++```text
++- Do not use this workflow as a replacement for the responsibility map.
++- Do not put exact project mappings into reusable principles.
++- Do not leave process steps in principles when a workflow owns them.
++- Do not turn examples into owner docs.
++- Do not review scenario/slice/domain/API content when the task is docs-layer responsibility review.
++- Do not split active files before the candidate-copy/classification plan says to do so.
++- Do not treat a field kit as the repeated project workflow after project-specific artifacts exist.
++```
++
++## 10. Related Files
++
++```text
++planning/documentation/documentation-layer-portability-migration-plan.md
++planning/documentation/planning-docs-architecture-principles.md
++planning/documentation/documentation-responsibility-map.md
++planning/documentation/use-case-map-workflow.md
++planning/documentation/USE-CASE-MAP-TEMPLATE.md
++```
+diff --git a/planning/documentation/documentation-update-workflow.md b/planning/documentation/documentation-update-workflow.md
+index 65c2069..e4e0521 100644
+--- a/planning/documentation/documentation-update-workflow.md
++++ b/planning/documentation/documentation-update-workflow.md
+@@ -42,7 +42,7 @@ plan only
+    - missing responsibility owner;
+    - docs still assuming archive-only output when direct repository edits are approved.
+ 6. Decide update scope.
+-7. Classify every target file by delivery safety before choosing archive/script/direct edit mode.
++7. Classify every target file by delivery safety before choosing archive/script/direct edit mode; treat `арх` as source snapshot, not output-package request.
+ 8. Prepare a Documentation Update Plan when the change is broad or multi-file.
+ 9. Ask only blocking questions that can change the planned update.
+ 10. After approval, apply the selected output mode.
+@@ -88,6 +88,28 @@ Rules:
+ - Repeated need for scripts against the same file is a split/refactor signal.
+ ```
+ 
++## 2B. Archive Source Snapshot Command
++
++`арх` is a read-source/source-state signal.
++
++It means:
++
++```text
++- a fresh archive / repository snapshot has been provided or selected;
++- the archive may be used as current source evidence for planning, review or targeted checks;
++- archive source mode does not decide traversal depth by itself.
++```
++
++It does not mean:
++
++```text
++- generate a replacement archive/package;
++- start file edits;
++- apply a batch automatically.
++```
++
++Only create a replacement archive/package when the user separately asks for archive/package output, for example `давай архив`, `собери архив` or `archive for manual apply`.
++
+ ## 3. Required Current-State Check
+ 
+ Before changing docs, check whether the relevant implementation/status changed.
+diff --git a/planning/documentation/examples/README.md b/planning/documentation/examples/README.md
+index a808f91..e87eaa0 100644
+--- a/planning/documentation/examples/README.md
++++ b/planning/documentation/examples/README.md
+@@ -52,6 +52,8 @@ No filled documentation-layer examples are added yet.
+ | `STRICT-TEMPLATE-NO-KEY-POINTS-v1` | response/template example | `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | strict specialized template output | deferred | _not created yet_ | Should show when not to add `Key points first` because the template already provides reviewable structure. |
+ | `LARGE-FILE-FULL-ARCHIVE-PREFERENCE-v1` | delivery-planning example | `planning/documentation/documentation-update-workflow.md` and `planning/replacement-file-generation-guide.md` | large-file delivery safety classification | deferred | _not created yet_ | Should show fresh full repo/archive + safe complete replacement preferred before script fallback. |
+ | `USE-CASE-MAP-CREATION-UPDATE-v1` | workflow/template example | `planning/documentation/use-case-map-workflow.md` and `planning/documentation/USE-CASE-MAP-TEMPLATE.md` | reusable use-case-map creation/update | deferred | _not created yet_ | Add after the workflow/template is used to create or update a concrete use-case map cleanly; should show owner linking without copying workflow/template logic. |
++| `DOCUMENTATION-RESPONSIBILITY-ZONE-REVIEW-v1` | review workflow example | `planning/documentation/documentation-responsibility-zone-review-workflow.md` | existing doc content classification into reusable principle / specialized profile / adapter mapping / example / workflow detail | deferred | _not created yet_ | Add after the workflow is used on a real candidate migration or responsibility-boundary review. |
++| `FIELD-KIT-SETUP-v1` | setup example | future field-kit owner file | deriving project-specific workflow/profile/adapter from a field kit | deferred | _not created yet_ | Add after the first field kit is created and used to derive project-specific artifacts. |
+ | `DOCUMENTATION-ACTION-LOG-ENTRY-v1` | log-entry example | `planning/documentation/documentation-action-log.md` | documentation action log entries | deferred | _not created yet_ | Add after the action log format is used on at least one follow-up update; should show concise logical action entry with PMR relation. |
+ | `NEW-CHAT-ONBOARDING-v1` | response example | `planning/planning-use-case-map.md` | New Chat Onboarding / first planning pass | deferred | _not created yet_ | Candidate from chat history; should show compact onboarding answer. |
+ | `ACCEPTED-COMMAND-NO-REINVENTION-v1` | guardrail example | `planning/planning-use-case-map.md` | accepted command / no reinvention | deferred | _not created yet_ | Candidate from chat history; should show stop-and-explain instead of silent mode switch. |
+diff --git a/planning/documentation/planning-docs-architecture-principles.md b/planning/documentation/planning-docs-architecture-principles.md
+index cd2ae54..a5fbd6e 100644
+--- a/planning/documentation/planning-docs-architecture-principles.md
++++ b/planning/documentation/planning-docs-architecture-principles.md
+@@ -6,6 +6,7 @@ Scope: how to structure planning documentation so it remains navigable, reviewab
+ ## Contents
+ 
+ - [1. Purpose](#1-purpose)
++- [1A. Principles Responsibility Boundary](#1a-principles-responsibility-boundary)
+ - [2. Core Goals](#2-core-goals)
+ - [3. Fixed Layer Architecture](#3-fixed-layer-architecture)
+ - [4. Responsibility Map Model](#4-responsibility-map-model)
+@@ -33,6 +34,7 @@ Scope: how to structure planning documentation so it remains navigable, reviewab
+ - [24. No-Duplication / Authority Rule](#24-no-duplication--authority-rule)
+ - [24A. Link Instead Of Copy / Docs DRY Rule](#24a-link-instead-of-copy--docs-dry-rule)
+ - [24B. Accepted Command And Preservation Guardrails](#24b-accepted-command-and-preservation-guardrails)
++- [24C. Responsibility-Zone Review Guardrail](#24c-responsibility-zone-review-guardrail)
+ - [25. What Not To Add By Default](#25-what-not-to-add-by-default)
+ - [26. Success Criteria](#26-success-criteria)
+ 
+@@ -54,6 +56,45 @@ It must help a future reader or chat understand:
+ 
+ These principles are about the architecture of planning documentation, not the runtime architecture of the application.
+ 
++## 1A. Principles Responsibility Boundary
++
++This file owns documentation architecture principles: stable invariants and design constraints for documentation systems.
++
++It describes:
++
++```text
++- how documentation should be structured;
++- what must remain true;
++- what must not be violated;
++- why source-of-truth and ownership boundaries exist;
++- which file-type responsibilities must stay separate.
++```
++
++It does not own:
++
++```text
++- exact workflow steps;
++- exact template shapes;
++- concrete project paths;
++- concrete use-case or command routes;
++- large example bodies;
++- current project status inventory;
++- project-specific source, evidence, register or output-layer mappings.
++```
++
++Rule:
++
++```text
++Principles explain why a boundary exists.
++Workflows explain how to act.
++Templates define exact shapes.
++Responsibility maps route information to owners.
++Use-case maps route user-visible actions.
++Field kits help derive project-specific artifacts.
++Adapters/profiles hold concrete project configuration.
++Examples demonstrate usage but do not own rules.
++```
++
+ ## 2. Core Goals
+ 
+ Planning docs should be:
+@@ -163,8 +204,8 @@ Every planning document should have an understandable type. If a document type i
+ 
+ | Type | Responsibility |
+ |---|---|
+-| Architecture principles | Global theory for how planning docs are structured. |
+-| Workflow | Algorithm/process for performing a repeated task. |
++| Architecture principles | Stable invariants and design constraints for how documentation is structured; file-type theory and source-of-truth boundaries. |
++| Workflow | Algorithm/process for performing a repeated operational task. |
+ | Index / README | Navigation, read order, file overview and short purpose summaries. |
+ | Responsibility map | Where to put information; which file/layer owns what. |
+ | Source spec / source set | Canonical or derived source content, such as scenario specs, DATA sets or behavior item sets. |
+@@ -173,10 +214,12 @@ Every planning document should have an understandable type. If a document type i
+ | Extension points register | Future considerations, change pressure and extension points. |
+ | Implementation notes register | Shared implementation-related reminders that must stay visible beyond one local draft. |
+ | Draft | Working planning/design content for a scenario/domain/slice/documentation task. |
++| Field kit | Reusable setup toolkit for deriving project-specific workflows, profiles, adapters, registers or evidence maps. Not the repeated operational workflow itself. |
+ | Template | The shape of a draft, section or output artifact. |
+ | Evidence | Code, tests, migrations, generated artifacts, screenshots or other current implementation proof. |
+ | Status snapshot | Scoped or historical status note; not implementation truth by itself. |
+ | Scoped sync note | Case-specific documentation synchronization note; not a reusable workflow. |
++| Adapter / profile | Concrete project configuration: layer vocabulary, exact paths, source maps, evidence maps, shared visibility maps, output layers and example links. |
+ | Derived prompt | Reusable prompt assembled from canonical docs; not a canonical rule source. |
+ | Dirty draft | Non-canonical recovery/context note. |
+ | VKR clean reference | Clean terminology and evidence map for thesis-facing materials. |
+@@ -818,6 +861,27 @@ planning/replacement-file-generation-guide.md
+ 
+ This section is the architecture-level guardrail only.
+ 
++## 24C. Responsibility-Zone Review Guardrail
++
++When reviewing existing documentation for placement, portability or split decisions, do not move a paragraph only because it contains a project-specific path, ID or term.
++
++First ask:
++
++```text
++- What is the fundamental purpose of this text?
++- What problem does it prevent?
++- What reusable principle, if any, remains after removing concrete names?
++- Is the remaining content a specialized profile pattern, adapter mapping, workflow detail, template shape or example?
++```
++
++Use the responsibility-zone review workflow for this process:
++
++```text
++planning/documentation/documentation-responsibility-zone-review-workflow.md
++```
++
++The review should classify content into the correct owner zone before moving or splitting it.
++
+ ## 25. What Not To Add By Default
+ 
+ Do not add extra coordination systems unless explicitly needed.
+diff --git a/planning/planning-use-case-map.md b/planning/planning-use-case-map.md
+index c3b3e13..923a4ce 100644
+--- a/planning/planning-use-case-map.md
++++ b/planning/planning-use-case-map.md
+@@ -93,7 +93,7 @@ Common principle references:
+ 
+ | Use case / concern | Read on first use or changed scope | Why |
+ |---|---|---|
+-| Documentation structure / placement / owner boundaries | `planning/documentation/planning-docs-architecture-principles.md#contents`, `#17-responsibility-ownership`, `#24-no-duplication--authority-rule`, `#24a-link-instead-of-copy--docs-dry-rule` | Prevent misplaced duplicated logic. |
++| Documentation structure / placement / owner boundaries | `planning/documentation/planning-docs-architecture-principles.md#contents`, `#1a-principles-responsibility-boundary`, `#17-responsibility-ownership`, `#24-no-duplication--authority-rule`, `#24a-link-instead-of-copy--docs-dry-rule`, `#24c-responsibility-zone-review-guardrail` | Prevent misplaced duplicated logic and classify existing content by owner zone before moving it. |
+ | Template/workflow/example governance | `planning/documentation/planning-docs-architecture-principles.md#9-template-vs-workflow`, `#24a-link-instead-of-copy--docs-dry-rule` | Keep templates, workflows and examples within their own responsibilities. |
+ | Archive/replacement package output | `planning/documentation/planning-docs-architecture-principles.md#23-direct-edits-archives-and-commit-granularity`, plus `planning/replacement-file-generation-guide.md` | Archive output is an output mode and must use replacement files. |
+ | Source usage / stale-reference / cascade / reviewed-work concerns | `planning/documentation/planning-docs-architecture-principles.md#12a-layer-encapsulation-and-attention-preservation`, `#13-source--version-principle`, `#14-dependency-cascade-principle`, `#15-section-level-sources-principle` | Prevent duplicated source truth and preserve attention by referencing reviewed upstream work instead of reconstructing it. |
+@@ -180,6 +180,8 @@ Read source mode answers: where should the chat read from if reading is needed?
+ Archive source mode:
+ 
+ ```text
++- means a fresh archive/source snapshot has been provided or selected for reading;
++- does not request archive/package generation by itself;
+ - does not decide how much to check;
+ - only decides where to read from if checks are needed;
+ - can combine with full / targeted / reuse traversal;
+@@ -333,7 +335,7 @@ Response block commands such as `кп`, `саммари`, `итог` and `отл
+ | `перепроверь`, `recheck` | Recheck active answer/draft/source coverage. | Recheck last answer or ask target. | Targeted / full depending risk. | Conversation plus relevant sources. | Findings and corrections/no-change result. |
+ | `учти файл X` | Incorporate explicit new source into active work. | Use X for the requested new answer. | Targeted. | Uploaded/named file. | Updated answer/draft with Source Delta. |
+ | `без изм`, `б изм`, `no ch` | Reuse recent context and avoid broad re-audit. | Weak without prior context; ask what state is unchanged if needed. | Reuse / targeted. | Previous context plus targeted reads. | Answer/update with minimal checks. |
+-| `арх`, `из арх`, `из архива`, `use archive` | Use latest/current archive as read source when checks are needed. | Use latest uploaded archive in current conversation, or ask for archive in a new chat. | Does not decide depth. | Archive snapshot. | Read-only answer/check based on archive. |
++| `арх`, `из арх`, `из архива`, `use archive` | Treat the provided/latest archive as the current source snapshot for reads/checks. | Use latest uploaded archive in current conversation, or ask for archive in a new chat. | Does not decide depth. | Archive snapshot. | Read-only answer/check based on archive; do not generate an output package unless separately requested. |
+ | `б из арх`, `без изм, арх`, `изм нет, арх` | No changes + archive source mode. | Use if latest archive exists; otherwise ask for archive. | Reuse / targeted. | Latest uploaded archive. | No broad audit; targeted archive checks only. |
+ | `давай архив`, `собери архив`, `replacement package`, `archive for manual apply` | Produce archive/package for the active approved plan/scope. | Build archive plan from obvious target or ask only blocking target questions. | Targeted/full by package scope. | GitHub/archive/conversation by context. | Replacement package ZIP with `MANIFEST.md`, `APPLY.md`, `replacement-files/`. |
+ | `проверь` after replacement archive/package application | Verify the active archive application result. | Ask for status/diff or target archive if not available. | Targeted. | Applied repo state / user-provided diff. | Post-apply verification: expected files changed, no unexpected files in commit scope, diff matches package intent, no unrelated sections/register entries/routing rules were removed; if pasted diff shows mojibake, request/copy full suspect file contents before judging file corruption. |
+@@ -346,6 +348,7 @@ Response block commands such as `кп`, `саммари`, `итог` and `отл
+ | “посмотри / распланируй / проверь docs” | Non-trivial planning/docs work | Optional | Full first time; targeted later | GitHub/archive/conversation by context | workflow activation; reviewable output | `planning/README.md`, `workflow-activation-map.md`, `planning-doc-responsibility-map.md` | README + activation map | Level 2 reviewable answer/plan | Edits require approval |
+ | “обнови docs” | Documentation update | Optional | Targeted/full by scope | GitHub for writes; archive for read-only if requested | docs update plan/workflow; local-global sync | documentation README/map/workflows | activation map + docs workflows | Level 2 update plan or applied update + File Update Overview when files are planned/changed/reviewed | GitHub writes require approval |
+ | “добавь template / workflow / command / draft format / пример” | Documentation governance update | Optional | Full first time; targeted later | GitHub/archive/conversation by context | docs update workflow; example coverage decision when template/output shape changes; reviewable output | documentation README/map/workflows; `planning/documentation/example-coverage-workflow.md` when template/output/command/draft example coverage matters; relevant owner workflow/template; principle section references in §3A | docs architecture principles + use-case map + example coverage workflow | Level 2 update plan or replacement package + File Update Overview when files are planned/changed/reviewed; example coverage decision if applicable | Edits/packages require approval |
++| “ревью зон ответственности”, “что куда относится”, “generic vs project-specific”, “portability review”, “док слой реюзабл” | Documentation responsibility-zone / portability review | Optional | Full first time; targeted later | GitHub/archive/conversation by context; `арх` means source snapshot only | responsibility-zone review workflow; docs architecture principles; documentation responsibility map | `planning/documentation/documentation-responsibility-zone-review-workflow.md`, `planning/documentation/documentation-layer-portability-migration-plan.md`, `planning/documentation/planning-docs-architecture-principles.md`, `planning/documentation/documentation-responsibility-map.md`; target docs under review | responsibility-zone review workflow + portability migration plan | Level 2 classification table: reusable core, specialized profile, adapter mapping, example candidate, correct owner/action + File Update Overview if file changes are planned | Do not review scenario/slice/domain/API content itself unless separately requested; edits/packages require approval |
+ | “source usage”, “source/version”, “каскад зависимостей”, “stale downstream”, “версии сорсов”, “инкапсуляция слоёв” | Source usage / cascade governance or pilot work | Optional | Full first time; targeted later | GitHub/archive/conversation by context | source usage cascade governance plan; principles §12A/13/14/15; PMR-002 until full workflow exists | `planning/documentation/source-usage-cascade-governance-plan.md`; `planning/documentation/source-usage-pilots/README.md`; pilot register if user asks to work on a pilot; relevant source/domain/slice docs only for real pilot fill | layer encapsulation principle + source usage governance plan | Level 2 governance plan, pilot skeleton, pilot fill plan or replacement package + File Update Overview when files are planned/changed/reviewed | Do not pretend full cascade workflow exists; do not add ad hoc version fields |
+ | “давай архив”, “собери архив”, “replacement package”, “archive for manual apply” | Replacement archive/package generation | Optional | Targeted/full by package scope | GitHub/archive/conversation by context | replacement file generation guide; docs update workflow when docs change; reviewable output | `planning/replacement-file-generation-guide.md`, target files, docs update workflow when docs are changed | replacement guide + workflow activation | Level 2 archive/package response + File Update Overview; ZIP package with `MANIFEST.md`, `APPLY.md`, `replacement-files/<repo-relative-path>` complete files | Direct repo edits not allowed unless separately approved |
+ | “файл большой”, “дай ps1”, “скрипт для большого файла”, “архив неудобен” | Large/shared file update delivery choice | Optional | Targeted/full by file risk | Fresh archive/current full file preferred; script only if complete replacement unsafe | docs update workflow; replacement guide; local targeted script mode if fallback needed | `planning/documentation/documentation-update-workflow.md`, `planning/replacement-file-generation-guide.md`, target file | delivery safety check + replacement guide | Level 2 delivery plan: prefer fresh full repo/archive + safe complete replacement; one-file targeted script only as fallback | Do not choose script only because file is large; scripts require explicit mode and no auto-commit |

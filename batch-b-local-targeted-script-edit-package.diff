@@ -1,0 +1,350 @@
+diff --git a/planning/documentation/documentation-action-log.md b/planning/documentation/documentation-action-log.md
+index e6aac6c..8c0c7f9 100644
+--- a/planning/documentation/documentation-action-log.md
++++ b/planning/documentation/documentation-action-log.md
+@@ -319,3 +319,35 @@ Owner sources:
+ Notes:
+   This action does not yet add the response-level `обс` command or automatic Level escalation triggers. Those belong to the follow-up targeted script for large/shared owner files.
+ ```
++
++### 2026-05-29 — Added local targeted script edit and hybrid delivery rules
++
++```text
++Date:
++  2026-05-29
++Action:
++  Added Local Targeted Script Edit mode and hybrid archive/script delivery rules.
++Type:
++  workflow behavior / output mode
++Status:
++  applied
++Why:
++  Batch A2 showed that large/shared files should not be edited by one multi-file script. Future updates need target-file delivery safety classification, one targeted write script per large/shared file, preflight-before-write, diff-to-file/clipboard review and hybrid archive/script delivery when safe files and risky large files appear in one coherent update.
++Changed files:
++  - planning/documentation/documentation-update-workflow.md
++  - planning/replacement-file-generation-guide.md
++  - planning/documentation/examples/README.md
++  - planning/documentation/documentation-action-log.md
++Layer impact:
++  Documentation update workflow now has a dedicated local targeted script mode, and replacement archive guidance now supports explicit hybrid archive/script delivery without hiding scripts inside replacement packages.
++PMR relation:
++  none
++Follow-ups:
++  - Add a route/expected-output marker in planning/planning-use-case-map.md if large-file/script requests need explicit routing.
++  - Add filled examples for Local Targeted Script Edit and Hybrid Archive/Script Delivery after a clean use.
++Owner sources:
++  planning/documentation/documentation-update-workflow.md
++  planning/replacement-file-generation-guide.md
++Notes:
++  This action records the workflow lesson from A2: one large/shared file equals one targeted write script; final combined diff review is allowed, but combined multi-large-file write scripts are not.
++```
+diff --git a/planning/documentation/documentation-update-workflow.md b/planning/documentation/documentation-update-workflow.md
+index 6894bd1..9221674 100644
+--- a/planning/documentation/documentation-update-workflow.md
++++ b/planning/documentation/documentation-update-workflow.md
+@@ -20,6 +20,7 @@ After the plan is reviewed, use the output mode explicitly requested or approved
+ ```text
+ direct repository edits
+ replacement archive/package
++local targeted script edit
+ patch proposal only
+ plan only
+ ```
+@@ -41,11 +42,43 @@ plan only
+    - missing responsibility owner;
+    - docs still assuming archive-only output when direct repository edits are approved.
+ 6. Decide update scope.
+-7. Prepare a Documentation Update Plan when the change is broad or multi-file.
+-8. Ask only blocking questions that can change the planned update.
+-9. After approval, apply the selected output mode.
+-10. Check whether the documentation action log needs an entry.
+-11. Final response includes changed files or archive link, scope, non-goals, commit SHAs when applicable and next step.
++7. Classify every target file by delivery safety before choosing archive/script/direct edit mode.
++8. Prepare a Documentation Update Plan when the change is broad or multi-file.
++9. Ask only blocking questions that can change the planned update.
++10. After approval, apply the selected output mode.
++11. Check whether the documentation action log needs an entry.
++12. Final response includes changed files or archive/script link, scope, non-goals, commit SHAs when applicable and next step.
++```
++
++## 2A. Target File Delivery Safety Check
++
++Before generating an archive, script or direct edit plan, classify each target file.
++
++Use this classification:
++
++```text
++safe complete replacement/archive
++  The file is small or medium enough to safely produce as a complete replacement file.
++
++one-file targeted script
++  The file is large, shared, register-like, route-table-like or fragile, and only a small anchor-based edit is needed.
++
++direct repository edit
++  The user explicitly approved direct repository changes and the tool/mode can safely replace the complete file or perform the requested operation.
++
++no change
++  The file is relevant to the plan but intentionally left untouched.
++```
++
++Rules:
++
++```text
++- Do this classification during planning, before creating artifacts.
++- Do not let one large/risky file block safe archive delivery for other files.
++- Do not put large/shared files into a replacement archive unless a complete replacement can be produced safely.
++- Do not use one write script to modify multiple large/shared files.
++- If several large/shared files need targeted edits, create one targeted write script per large/shared file.
++- A final combined diff command may include all files for review, but write scripts should stay one large/shared file at a time.
+ ```
+ 
+ ## 3. Required Current-State Check
+@@ -295,6 +328,71 @@ Rules:
+ - follow planning/replacement-file-generation-guide.md.
+ ```
+ 
++### Local Targeted Script Edit mode
++
++Use local targeted script edit mode when a large/shared file needs a small, explicit, anchor-based edit and complete replacement is unsafe or too heavy for the current delivery mode.
++
++Typical targets:
++
++```text
++- large planning registers;
++- shared route/use-case maps;
++- long workflow files when only one bounded section changes;
++- files where complete replacement would risk dropping unrelated entries;
++- files where previous archive/script attempts showed anchor or formatting fragility.
++```
++
++Rules:
++
++```text
++- Use only after the user approves script mode or when it is the explicitly selected delivery mode.
++- One large/shared file = one targeted write script.
++- Do not use one write script to modify multiple large/shared files.
++- A script may create a final combined diff command for many files, but write operations should remain one large/shared file at a time.
++- Do not commit from the script.
++- Do not stage files from the script, except `git add -N` for expected new files when making untracked files visible in diff.
++- Do not print full diffs to the terminal.
++- Save scoped diff with `git --no-pager diff --no-color --output="$diffFile" -- $files`.
++- Copy the saved diff with `Get-Content -Path $diffFile -Raw -Encoding UTF8 | Set-Clipboard`.
++- Give commit commands only after the pasted diff is reviewed.
++```
++
++Required script structure:
++
++```text
++1. Preflight:
++   - read the target file;
++   - verify all anchors/probes;
++   - verify the change is not already applied;
++   - verify the file is not in an unexpected partial state;
++   - stop before writing if any required anchor is missing.
++
++2. Build:
++   - compute the new content in memory;
++   - use robust heading/line anchors where possible;
++   - avoid long exact blocks when a shorter stable heading/line anchor exists.
++
++3. Write:
++   - write the target file only after preflight/build succeed;
++   - write as UTF-8 without BOM for repo markdown unless Windows PowerShell script encoding requires otherwise.
++
++4. Review:
++   - run `git status --short -- $files`;
++   - run `git diff --stat -- $files`;
++   - write full diff to a file;
++   - copy full diff to clipboard;
++   - ask the user to paste the diff before commit.
++```
++
++PowerShell delivery rules:
++
++```text
++- Provide a downloadable `.ps1` file when the script is long, contains here-strings, regex, backticks, Cyrillic or multi-step logic.
++- In chat, provide only the copy-to-root and run commands unless the user asks to see the full script.
++- Save `.ps1` with UTF-8 BOM when Windows PowerShell 5.1 must parse Cyrillic source text.
++- Avoid inline PowerShell one-liners for regex/backticks/Cyrillic edits.
++```
++
+ ## 11. Documentation Action Log Check
+ 
+ Before finalizing a documentation update, decide whether the update is a significant logical documentation action.
+@@ -317,7 +415,8 @@ when the change affects:
+ - onboarding route;
+ - PMR/task governance;
+ - documentation-layer examples infrastructure;
+-- replacement archive/package behavior.
++- replacement archive/package behavior;
++- local targeted script edit behavior.
+ ```
+ 
+ Do not update it for typo-only edits, minor link fixes or purely mechanical sync already covered by a larger logged action.
+@@ -330,6 +429,7 @@ Before finalizing a documentation update, verify:
+ 
+ ```text
+ - broad changes had a Documentation Update Plan;
++- every target file was classified by delivery safety before archive/script/direct edit mode was chosen;
+ - every added file appears in navigation or a folder README;
+ - responsibility maps know the new responsibility;
+ - local questions that matter later are mirrored into shared registers;
+@@ -342,6 +442,8 @@ Before finalizing a documentation update, verify:
+ - direct repository edits use one file per commit for independent semantic edits and bundled/bulk commit for approved shallow mechanical multi-file sync;
+ - direct GitHub bulk commit mode outputs base commit/tree SHA commands before asking the user for values;
+ - archive mode contains complete files, not patches;
++- local targeted script edit mode uses one write script per large/shared file;
++- targeted scripts preflight anchors before writing and do not print full diffs to terminal;
+ - APPLY.md and MANIFEST.md are present for archive mode;
+ - significant logical documentation actions are recorded in documentation-action-log.md or explicitly marked as not needing a log entry;
+ - no code/generated changes are included unless explicitly in scope.
+@@ -364,4 +466,6 @@ Before finalizing a documentation update, verify:
+ - Do not start per-file commits for an approved mechanical multi-file sync without first checking whether bundled/bulk commit mode is available.
+ - Do not attempt direct GitHub bulk commit without current base commit SHA and base tree SHA.
+ - Do not use PowerShell-unsafe tree commands when asking the user for base tree SHA; prefer `git show -s --format=%T origin/<branch>`.
++- Do not use one local targeted write script to modify multiple large/shared files.
++- Do not print full diffs to terminal for large/script updates; write diff to file and copy it to clipboard.
+ ```
+diff --git a/planning/documentation/examples/README.md b/planning/documentation/examples/README.md
+index 1c4e586..1cb2c09 100644
+--- a/planning/documentation/examples/README.md
++++ b/planning/documentation/examples/README.md
+@@ -45,6 +45,8 @@ No filled documentation-layer examples are added yet.
+ | `REPLACEMENT-ARCHIVE-CONVERSATION-LOOP-v1` | conversation workflow example | `planning/replacement-file-generation-guide.md` | replacement archive conversation review loop | deferred | _not created yet_ | Candidate from chat history; should show assistant archive output, user diff, assistant review, commit command and remote verification. |
+ | `SOURCE-USAGE-CASCADE-PILOT-FRAMEWORK-v1` | register/framework example | `planning/documentation/source-usage-cascade-governance-plan.md` | source usage cascade pilot framework | deferred | _not created yet_ | Framework and pilot skeleton are added first; add a filled example after the real SC-13D pilot row set is audited. |
+ | `FILE-UPDATE-OVERVIEW-v1` | response/output example | `planning/documentation/file-update-overview-workflow.md` and `planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md` | File Update Overview final summary block | deferred | _not created yet_ | Add after the overview workflow/template is used on at least one follow-up file/docs/code update. |
++| `LOCAL-TARGETED-SCRIPT-EDIT-v1` | command/script workflow example | `planning/documentation/documentation-update-workflow.md` | local targeted script edit mode | deferred | _not created yet_ | Add after the one-large-file-one-script workflow is used in a clean follow-up; should show `.ps1` file link, copy/run commands, scoped diff capture and no auto-commit. |
++| `HYBRID-ARCHIVE-SCRIPT-DELIVERY-v1` | output/conversation workflow example | `planning/replacement-file-generation-guide.md` and `planning/documentation/documentation-update-workflow.md` | hybrid archive plus targeted script delivery | deferred | _not created yet_ | Add after a real mixed safe-files archive + one-file script package is reviewed; should show archive for safe files, separate script for large file and combined diff review. |
+ | `DOCUMENTATION-ACTION-LOG-ENTRY-v1` | log-entry example | `planning/documentation/documentation-action-log.md` | documentation action log entries | deferred | _not created yet_ | Add after the action log format is used on at least one follow-up update; should show concise logical action entry with PMR relation. |
+ | `NEW-CHAT-ONBOARDING-v1` | response example | `planning/planning-use-case-map.md` | New Chat Onboarding / first planning pass | deferred | _not created yet_ | Candidate from chat history; should show compact onboarding answer. |
+ | `ACCEPTED-COMMAND-NO-REINVENTION-v1` | guardrail example | `planning/planning-use-case-map.md` | accepted command / no reinvention | deferred | _not created yet_ | Candidate from chat history; should show stop-and-explain instead of silent mode switch. |
+diff --git a/planning/replacement-file-generation-guide.md b/planning/replacement-file-generation-guide.md
+index 6a4bc07..b9edf2d 100644
+--- a/planning/replacement-file-generation-guide.md
++++ b/planning/replacement-file-generation-guide.md
+@@ -43,6 +43,15 @@ Replacement archive/package mode means:
+ 
+ If complete replacement files cannot be produced safely, stop and say so. Do not silently switch to patch-script mode.
+ 
++If only some files cannot be produced safely as complete replacements, use hybrid delivery:
++
++```text
++safe complete files -> replacement archive/package
++each large/shared risky file -> separate Local Targeted Script Edit script
++```
++
++Do not hide script artifacts inside replacement archive/package mode.
++
+ ## 1. Purpose
+ 
+ Use this guide when the user asks to create an archive or replacement package for the repository.
+@@ -59,6 +68,7 @@ Use this guide when the user asks to create an archive or replacement package fo
+ - Do not include unrelated implementation changes.
+ - Keep archive scope focused, but do not artificially split one coherent accepted update into many tiny archives.
+ - Do not include patch scripts or script-based patch applicators in replacement archive mode.
++- If a coherent update has safe files and large/risky files, split by delivery safety instead of blocking the safe archive.
+ ```
+ 
+ Patch scripts, unified diffs, generated apply scripts and partial snippets are **not** replacement files.
+@@ -69,6 +79,12 @@ If the intended output is a patch or script, label the mode as:
+ patch proposal only
+ ```
+ 
++or, when it is an approved local targeted edit:
++
++```text
++local targeted script edit
++```
++
+ Do not call it a replacement archive/package.
+ 
+ ## 3. GitHub Mutation Rule
+@@ -106,6 +122,33 @@ Use repository connector/API for:
+ 
+ If repo cannot be checked, say so and generate from known context only.
+ 
++## 4A. Target File Delivery Safety Check
++
++Before generating an archive, classify every target file by delivery safety.
++
++Use:
++
++```text
++safe complete replacement/archive
++  Include as a complete file in replacement-files/.
++
++one-file targeted script
++  Exclude from the archive and provide a separate targeted script for that one large/shared file.
++
++no change
++  Mention as intentionally not changed when relevant.
++```
++
++Rules:
++
++```text
++- Do this before package generation.
++- Do not let one large/risky file block safe archive delivery for other files.
++- Do not include partial replacements or script patches for large files inside the archive.
++- Use one targeted write script per large/shared file.
++- A final combined diff command may review all affected files, but write scripts should stay one large/shared file at a time.
++```
++
+ ## 5. Responsibility Rule
+ 
+ Before deciding where a replacement file belongs, check:
+@@ -360,6 +403,35 @@ Safety comes from complete replacement files, scoped file lists, full diff captu
+ 
+ Do not bundle unrelated work just to reduce archive count.
+ 
++## 7E. Hybrid Archive / Script Delivery Rule
++
++Use hybrid delivery when one coherent accepted update contains both safe complete-replacement files and large/shared files that need targeted script edits.
++
++Required shape:
++
++```text
++Replacement archive/package:
++  - safe complete replacement/add files only.
++
++Separate Local Targeted Script Edit file(s):
++  - one `.ps1` per large/shared file that needs targeted writes.
++
++Final review:
++  - one combined scoped diff command may include all affected files.
++```
++
++Rules:
++
++```text
++- Label the delivery as hybrid archive/script mode.
++- Do not include targeted write scripts inside `replacement-files/`.
++- Do not call a script artifact a replacement file.
++- Do not let one large/risky file block safe archive delivery for other files.
++- Do not use one write script for multiple large/shared files.
++- If a large/shared file must be changed, give a separate script link, copy-to-root command and run command.
++- Commit commands must stage only intended repository files, not package metadata or helper scripts unless intentionally tracked.
++```
++
+ ## 8. Archive Layouts And Apply Commands
+ 
+ There are two supported archive layouts.
+@@ -451,9 +523,9 @@ partial snippets that must be manually inserted
+ 
+ These are patch proposal artifacts, not replacement package artifacts.
+ 
+-If the user explicitly asks for a patch proposal, it may be provided separately, but the final response must label it as patch mode and must not claim it is a replacement archive.
++If the user explicitly asks for a patch proposal or targeted local script, it may be provided separately, but the final response must label it correctly and must not claim it is a replacement archive.
+ 
+-If the target file is large, still generate the complete replacement file. If that is not safe, stop and report the limitation instead of producing a patch-script archive.
++If the target file is large, still generate the complete replacement file when it is safe. If that is not safe, exclude that file from the replacement archive and use hybrid archive/script delivery or stop and report the limitation.
+ 
+ ## 10. Scope Statement
+ 
+@@ -490,4 +562,6 @@ Do not leave docs saying `planned` when current repo evidence shows `implemented
+ - Do not directly change GitHub when the user asked for an archive.
+ - Do not provide archive apply instructions without a pull/current-state step first.
+ - Do not tell the user to extract a package-layout archive directly into the repo root as the apply step.
++- Do not let one large/risky file block safe archive delivery for other files.
++- Do not use one write script for multiple large/shared files.
+ ```
