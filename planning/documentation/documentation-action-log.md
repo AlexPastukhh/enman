@@ -648,3 +648,36 @@ Owner sources:
 Notes:
   This change remains candidate-only. It does not switch canonical docs, does not promote Enman files into active planning/ root, and does not rewrite active planning/documentation/ workflows.
 ```
+
+### 2026-05-30 — Cleaned candidate navigation and read order
+
+```text
+Date:
+  2026-05-30
+Action:
+  Reworked the reusable candidate README/navigation after the F4/F5 candidate split.
+Type:
+  documentation architecture / portability migration candidate cleanup
+Status:
+  applied
+Why:
+  The candidate folder had real reusable/profile/adapter/field-kit structure, but its README still looked like the copied active documentation README. F6A makes the candidate workspace navigable as a candidate and separates candidate read order from related active owners.
+Changed files:
+  - planning/documentation-reusable-candidate/README.md
+  - planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+  - planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Candidate navigation/read order now points to candidate files first, while active documentation references are clearly marked as related active owners.
+PMR relation:
+  none
+Follow-ups:
+  Plan active promotion strategy separately. Re-check candidate navigation if files are later promoted, renamed, archived or switched to canonical.
+Owner sources:
+  planning/documentation-reusable-candidate/README.md
+  planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+  planning/documentation/documentation-layer-portability-migration-plan.md
+Notes:
+  This change remains candidate-only. It does not switch canonical docs, does not promote Enman files into active planning/ root, does not delete the source usage bridge and does not create new field kits/examples.
+```

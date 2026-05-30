@@ -23,6 +23,7 @@ This file now tracks what remains after that split.
 | PF-004 | 14, 16, 18, 21 | Examples extraction | partially addressed | Four starter examples exist, including a preserved Enman SC-13D source-usage pilot example; more examples may be added after field-kit usage. | candidate examples folder / examples README | after F5 review |
 | PF-005 | F3 open questions | Final naming and canonical switch decisions | still open | Decide final reusable principles name, adapter naming, active promotion path. | migration plan | later switch batch |
 | PF-006 | 23, 24B | Archive/package and command preservation details | still open if needed | Principles keep the boundary; detailed command/source semantics remain in owner workflows. | documentation update workflow / replacement guide / use-case map | later cleanup if needed |
+| PF-007 | F6A | Candidate README/read-order cleanup | addressed in candidate | Re-check after any future promotion/switch batch. | `planning/documentation-reusable-candidate/README.md` | later switch batch |
 
 ## 3. F5 Outputs
 
@@ -62,3 +63,5 @@ After F5, consider:
 Do not treat addressed follow-ups as final active docs.
 
 F5 outputs are candidate-only until a later migration/switch batch approves promotion.
+
+F6A candidate cleanup addressed the immediate README/read-order inconsistency. Future promotion/switch work must re-check candidate navigation after any files move into active locations.

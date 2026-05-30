@@ -174,6 +174,33 @@ F5 does not switch canonical documentation ownership.
 F5 does not rewrite active planning/documentation/ workflows.
 ```
 
+## 2E. Candidate Navigation / Read-Order Cleanup State
+
+F6A cleaned candidate navigation/read order after F4/F5.
+
+Changed meaning:
+
+```text
+- planning/documentation-reusable-candidate/README.md is now a candidate index, not a copied active docs index;
+- candidate read order routes to candidate files first;
+- active docs references are marked as related active owners;
+- F6A does not promote Enman project-instance files into active planning/ root;
+- F6A does not switch canonical documentation ownership;
+- F6A does not delete the source usage governance bridge.
+```
+
+Primary candidate navigation is now:
+
+```text
+planning/documentation-reusable-candidate/README.md
+```
+
+Candidate guardrail remains:
+
+```text
+planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+```
+
 ## 3. Principles File Role Decision
 
 The principles file should own high-level documentation architecture invariants.

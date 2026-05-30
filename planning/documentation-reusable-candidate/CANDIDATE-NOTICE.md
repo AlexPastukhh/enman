@@ -107,3 +107,25 @@ planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
 ```
 
 These files are candidate-only and do not promote project-instance files to active `planning/` root.
+
+## 9. Current Candidate Navigation
+
+Primary candidate navigation:
+
+```text
+planning/documentation-reusable-candidate/README.md
+```
+
+Guardrail:
+
+```text
+planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+```
+
+Active migration state owner:
+
+```text
+planning/documentation/documentation-layer-portability-migration-plan.md
+```
+
+F6A cleaned the candidate README/read order so the candidate workspace is navigable as a candidate, not as a copied active documentation README.
