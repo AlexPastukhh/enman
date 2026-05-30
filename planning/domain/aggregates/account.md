@@ -1,9 +1,29 @@
 # Domain Aggregate Draft — Account
 
 Status: draft / first-pass extraction  
+Doc version: v0.1.0  
 Scope: account identity, client account identity, employee account identity and activation/capability boundary
 
 ## 1. Purpose
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-01-register-client.md
+    - planning/diagrams/scenario-text-specs/SC-02-login.md
+    - planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md
+    - planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+  Internal dependencies:
+    - none
+  Not checked:
+    - full auth/session implementation and all account tests in current repo state
+```
 
 `Account` owns authenticated system identity and account-level capability state.
 
@@ -22,13 +42,49 @@ It does not own ApplicantParty data, Request lifecycle, RequestReview lifecycle 
 
 ## 2. Source Inputs
 
-Scenario sources:
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/diagrams/scenario-data/README.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-01-register-client.md
+    - planning/diagrams/scenario-text-specs/SC-02-login.md
+    - planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md
+    - planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
+    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-02-login-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+  Internal dependencies:
+    - none
+  Not checked:
+    - full source/version/cascade alignment for all account/auth/session sources
+```
+
+This section is the aggregate-level reviewed source overview. Section-level `Sources:` blocks below are authoritative for local section work.
+
+Scenario text sources:
 
 ```text
 planning/diagrams/scenario-text-specs/SC-01-register-client.md
 planning/diagrams/scenario-text-specs/SC-02-login.md
 planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md
 planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
+```
+
+Scenario-specific DATA rule:
+
+```text
+Primary scenario-specific DATA belongs in the scenario text spec #DATA section.
+Use planning/diagrams/scenario-data/ only for reusable/shared/audited/transitional DATA sidecars.
+```
+
+Reusable/shared/audited/transitional DATA sidecars checked or referenced by the prior draft:
+
+```text
 planning/diagrams/scenario-data/SC-03B-account-owner-verified-data.md
 ```
 
@@ -41,7 +97,7 @@ planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior
 planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
 ```
 
-Current implementation sources checked in archive:
+Current implementation sources checked in prior archive/source pass:
 
 ```text
 Domain.EnergyManagement/Accounts/Account.cs
@@ -56,9 +112,28 @@ Not checked:
 ```text
 Full auth/session implementation and all account tests were not audited in this pass.
 Full source/version/cascade alignment is still deferred.
+Current implementation files are not treated as freshly rechecked evidence unless explicitly reviewed in a later implementation-sync pass.
 ```
 
 ## 3. Aggregate Boundary
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/domain-discovery-workflow.md
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+    - planning/domain/aggregates/applicant-party.md
+    - planning/domain/aggregates/connection-request.md
+    - planning/domain/aggregates/agreement-proposal-exchange.md
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - current runtime implementation boundary beyond previously checked archive/source pass
+```
 
 Aggregate root / base type:
 
@@ -97,6 +172,25 @@ Other aggregates store scalar Account/Employee/ClientAccount ids when actor owne
 ```
 
 ## 4. Owned State
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-01-register-client.md
+    - planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md
+    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+  Internal dependencies:
+    - Aggregate Boundary
+  Not checked:
+    - current persistence mapping / EF configuration
+```
 
 Shared account state:
 
@@ -138,6 +232,30 @@ JWT/session token state.
 ```
 
 ## 5. Domain Methods / Commands
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/diagrams/scenario-text-specs/SC-01-register-client.md
+    - planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md
+    - planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
+    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+    - planning/domain/aggregates/connection-request.md
+    - planning/domain/aggregates/agreement-proposal-exchange.md
+  Internal dependencies:
+    - Aggregate Boundary
+    - Owned State
+  Not checked:
+    - application service orchestration
+    - current implementation code/tests beyond previously checked archive/source pass
+```
 
 ### `ClientAccount.Register`
 
@@ -210,6 +328,26 @@ Failure:
 
 ## 6. Invariants
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-02-login-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+    - Domain Methods / Commands
+    - Owned State
+  Internal dependencies:
+    - Aggregate Boundary
+    - Owned State
+    - Domain Methods / Commands
+  Not checked:
+    - runtime enforcement / tests unless explicitly reviewed
+```
+
 | Invariant | Protected by | Source | Failure/error |
 |---|---|---|---|
 | Account email is required. | `ClientAccount.Register`, `Employee.Create`. | implementation / auth scenarios | email required |
@@ -220,6 +358,25 @@ Failure:
 | Employee command capability requires active employee account. | employee capability checks. | implementation / decision | employee not active / required |
 
 ## 7. Lifecycle / State Machine
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md
+    - planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
+    - planning/diagrams/scenario-data/SC-03B-account-owner-verified-data.md
+    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md
+    - Domain Methods / Commands
+    - Invariants
+  Internal dependencies:
+    - Domain Methods / Commands
+    - Invariants
+  Not checked:
+    - full activation/suspension/deactivation implementation and tests
+```
 
 Current activation state direction:
 
@@ -246,6 +403,26 @@ reactivation.
 
 ## 8. Impossible States Prevented
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+    - Invariants
+    - Lifecycle / State Machine
+    - Domain Methods / Commands
+  Internal dependencies:
+    - Invariants
+    - Lifecycle / State Machine
+    - Domain Methods / Commands
+  Not checked:
+    - current runtime code/tests unless explicitly reviewed
+```
+
 | Impossible state | Prevented by | Source |
 |---|---|---|
 | ClientAccount without email/password hash. | register validation. | implementation |
@@ -255,6 +432,26 @@ reactivation.
 
 ## 9. Value Objects Used
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/domain/value-object-drafting-workflow.md
+    - planning/domain/value-object-draft-template.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - Domain Methods / Commands
+    - Owned State
+    - Invariants
+  Internal dependencies:
+    - Owned State
+    - Domain Methods / Commands
+    - Invariants
+  Not checked:
+    - whether Email / PasswordHash / FullName should become separate domain value-object docs
+```
+
 | Value object | File | Purpose in this aggregate |
 |---|---|---|
 | Email | existing implementation value object; no separate domain file yet | Account auth email. |
@@ -262,6 +459,27 @@ reactivation.
 | FullName | existing implementation value object; no separate domain file yet | Employee name. |
 
 ## 10. Cross-Aggregate Relations
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/domain-discovery-workflow.md
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - planning/domain/scenario-to-aggregate-map.md
+    - planning/domain/aggregates/applicant-party.md
+    - planning/domain/aggregates/connection-request.md
+    - planning/domain/aggregates/agreement-proposal-exchange.md
+    - Aggregate Boundary
+    - Domain Methods / Commands
+  Internal dependencies:
+    - Aggregate Boundary
+    - Domain Methods / Commands
+    - Invariants
+  Not checked:
+    - application service implementation
+```
 
 References from other aggregates:
 
@@ -291,6 +509,30 @@ Application coordination needed:
 
 ## 11. Behavior Coverage
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+  Content:
+    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-02-login-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md
+    - Domain Methods / Commands
+    - Invariants
+    - Lifecycle / State Machine
+    - Impossible States Prevented
+    - Cross-Aggregate Relations
+  Internal dependencies:
+    - Domain Methods / Commands
+    - Invariants
+    - Lifecycle / State Machine
+    - Impossible States Prevented
+  Not checked:
+    - unrelated scenario branches not mapped to Account
+    - all account tests in current repo state
+```
+
 | Source item | Covered by | Status | Notes |
 |---|---|---|---|
 | Client registration | `ClientAccount.Register` | first-pass covered | Full auth flow not audited here. |
@@ -300,6 +542,24 @@ Application coordination needed:
 | Employee agreement exchange actor | `Employee` capability checks | covered / first-pass | AgreementProposalExchange stores actor scalar ids. |
 
 ## 12. Persistence / EF Notes
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-modeling-principles.md
+  Content:
+    - Owned State
+    - Value Objects Used
+    - Aggregate Boundary
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+  Internal dependencies:
+    - Aggregate Boundary
+    - Owned State
+    - Value Objects Used
+  Not checked:
+    - current EF configuration unless explicitly reviewed
+```
 
 Accepted target:
 
@@ -324,6 +584,26 @@ EmployeeProfile(AccountId)
 
 ## 13. Cross-Layer Placement Notes
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/domain-responsibility-map.md
+    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md
+  Content:
+    - Aggregate Boundary
+    - Domain Methods / Commands
+    - Cross-Aggregate Relations
+    - Behavior Coverage
+    - planning/domain/scenario-to-aggregate-map.md
+  Internal dependencies:
+    - Aggregate Boundary
+    - Cross-Aggregate Relations
+    - Behavior Coverage
+  Not checked:
+    - API/client/slice implementation unless explicitly reviewed
+```
+
 Application layer:
 - owns registration orchestration, password hashing and auth/session resolution;
 - resolves current employee/client actor for command handlers.
@@ -339,6 +619,25 @@ Testing:
 - integration tests cover auth/session/authorization boundaries.
 
 ## 14. Questions / Decisions
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+  Content:
+    - Source Inputs
+    - Behavior Coverage
+    - Cross-Layer Placement Notes
+    - planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+  Internal dependencies:
+    - Source Inputs
+    - Behavior Coverage
+    - Cross-Aggregate Relations
+  Not checked:
+    - sources needed to resolve open activation/auth boundary questions
+```
 
 Open:
 - Should activation/suspension/deactivation become explicit domain commands later?
@@ -358,5 +657,26 @@ Deferred:
 ## 15. Source Delta / Change Log
 
 ```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/aggregate-draft-template.md
+    - planning/source-cascade-sync-workflow.md
+  Content:
+    - changed sections in this Account aggregate draft
+    - planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md
+  Internal dependencies:
+    - all changed sections in this draft
+  Not checked:
+    - downstream aggregates/slices not reviewed in this pass
+```
+
+```text
 - Extracted first-pass Account aggregate draft from accepted account/employee hierarchy decision and current Account/ClientAccount/Employee implementation sources.
+- Added `Doc version: v0.1.0`.
+- Added local section-level fenced `Sources:` blocks for aggregate draft work.
+- Reclassified `## 2. Source Inputs` as overview; section-level `Sources:` blocks are authoritative for local section work.
+- Clarified scenario-specific DATA rule: prefer scenario text spec #DATA; use `planning/diagrams/scenario-data/` only for reusable/shared/audited/transitional sidecars.
+- No Account domain behavior semantics changed in this pass.
 ```
