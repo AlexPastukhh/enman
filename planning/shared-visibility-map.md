@@ -9,11 +9,16 @@ This file defines where local Enman documentation details should be mirrored whe
 
 It is a project-level map.
 
-Reusable/candidate origin:
+Reusable setup owner:
 
 ```text
-planning/documentation-reusable-candidate/enman-shared-visibility-map.md
-planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+planning/documentation/field-kits/shared-visibility-map-field-kit.md
+```
+
+Historical origin:
+
+```text
+former reusable candidate workspace
 ```
 
 Active repeated workflow:
@@ -48,7 +53,6 @@ planning/documentation/local-global-documentation-sync-workflow.md
 
 ```text
 planning/documentation/local-global-documentation-sync-workflow.md
-planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
-planning/documentation-reusable-candidate/enman-shared-visibility-map.md
-planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
+planning/documentation/field-kits/shared-visibility-map-field-kit.md
+planning/documentation/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
 ```

@@ -9,11 +9,16 @@ This file defines which evidence sources and status labels should be used when r
 
 It is a project-level profile.
 
-Reusable/candidate origin:
+Reusable setup owner:
 
 ```text
-planning/documentation-reusable-candidate/enman-status-evidence-profile.md
-planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+planning/documentation/field-kits/status-reconciliation-field-kit.md
+```
+
+Historical origin:
+
+```text
+former reusable candidate workspace
 ```
 
 Active repeated workflow:
@@ -110,6 +115,5 @@ planning/vkr-clean-reference.md
 
 ```text
 planning/documentation/status-reconciliation-workflow.md
-planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
-planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+planning/documentation/field-kits/status-reconciliation-field-kit.md
 ```

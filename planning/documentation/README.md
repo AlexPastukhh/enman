@@ -91,18 +91,15 @@ Tracking:
 
 ```text
 planning/documentation/documentation-action-log.md
-planning/documentation/documentation-layer-portability-migration-plan.md
 ```
 
-Scoped sync notes:
+Migration/support history:
 
 ```text
-planning/documentation/cc-doc-001-upload-agreement-proposal-document-sync-note.md
-planning/documentation/l2-final-readme-doc-sync-note.md
-planning/documentation/l2-scenario-status-marker-sync-note.md
+planning/documentation-migration/sync-notes/
 ```
 
-These sync notes are scoped historical/supporting notes, not reusable workflows.
+These migration/support files are not reusable workflows and are not active read-order sources for ordinary documentation updates.
 
 ## 4. Read Order
 
@@ -164,6 +161,7 @@ shared visibility:
 source usage / cascade:
   setup: planning/documentation/field-kits/source-usage-cascade-field-kit.md
   project profile: planning/source-usage-cascade-profile.md
+  project pilots: planning/source-usage-pilots/
   bridge/pilot governance: planning/documentation/source-usage-cascade-governance-plan.md
 ```
 

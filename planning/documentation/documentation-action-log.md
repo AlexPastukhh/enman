@@ -632,3 +632,38 @@ Follow-ups:
   Run a dedicated cleanup/export batch only after reviewing active references. Do not delete planning/documentation-legacy/ in this batch.
 Notes:
   This batch does not create a cleanup-plan file in the repository, does not move root Enman profiles, does not change root use-case routing and does not delete any files.
+
+### 2026-05-30 - Cleaned reusable docs layer support and project-specific artifacts
+
+Date:
+  2026-05-30
+Action:
+  Moved migration/support notes and source-usage pilot artifacts out of the active reusable documentation layer, and moved the Enman-specific source usage example under project-specific examples.
+Type:
+  documentation portability / reusable layer cleanup
+Status:
+  applied
+Why:
+  The active reusable documentation layer should contain reusable owner files, field kits, profiles, generic examples, explicitly marked project-specific examples and active bridge/workflow files. Migration plans, scoped sync notes and Enman project pilots should not sit in the active reusable docs root.
+Changed files:
+  - planning/documentation/README.md
+  - planning/documentation/source-usage-cascade-governance-plan.md
+  - planning/documentation/examples/README.md
+  - planning/documentation/field-kits/source-usage-cascade-field-kit.md
+  - planning/documentation/documentation-responsibility-zone-review-workflow.md
+  - planning/documentation/documentation-action-log.md
+  - planning/planning-use-case-map.md
+  - planning/status-evidence-profile.md
+  - planning/shared-visibility-map.md
+  - planning/source-usage-cascade-profile.md
+Moved files:
+  - planning/documentation/documentation-layer-portability-migration-plan.md -> planning/documentation-migration/documentation-layer-portability-migration-plan.md
+  - planning/documentation/*sync-note.md -> planning/documentation-migration/sync-notes/
+  - planning/documentation/source-usage-pilots/ -> planning/source-usage-pilots/
+  - planning/documentation/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md -> planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
+Layer impact:
+  planning/documentation/ is cleaner as a reusable docs layer. Enman source-usage pilots are root project artifacts. Migration/support notes are in documentation-migration. The Enman-specific example remains in the docs layer only under an explicit project-specific examples path.
+Follow-ups:
+  Later decide whether to keep documentation-action-log.md in active docs or seed/omit it for portable starter-kit export. Do not delete planning/documentation-legacy/ in this batch.
+Notes:
+  This cleanup uses moves/reference updates only. It does not delete legacy, does not delete migration history and does not remove source-usage-cascade-governance-plan.md.

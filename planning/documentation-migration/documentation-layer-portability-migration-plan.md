@@ -415,7 +415,7 @@ Scope:
 
 1. Where should this preservation note live?
    - Candidate: `planning/documentation/documentation-layer-reusability-decisions.md`
-   - Candidate: `planning/documentation/documentation-layer-portability-migration-plan.md`
+   - Candidate: `planning/documentation-migration/documentation-layer-portability-migration-plan.md`
    - Candidate: outside active docs, inside future candidate workspace.
 
 2. Should the review workflow be narrow portability-only or general responsibility-zone review?

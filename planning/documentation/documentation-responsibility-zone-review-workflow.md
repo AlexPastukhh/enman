@@ -169,7 +169,7 @@ Use short cells. Put longer reasoning below the table when needed.
 ## 10. Related Files
 
 ```text
-planning/documentation/documentation-layer-portability-migration-plan.md
+planning/documentation-migration/documentation-layer-portability-migration-plan.md
 planning/documentation/planning-docs-architecture-principles.md
 planning/documentation/documentation-responsibility-map.md
 planning/documentation/use-case-map-workflow.md

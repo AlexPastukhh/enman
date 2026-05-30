@@ -125,7 +125,7 @@ planning/documentation/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
 Project-specific scenario/application example:
 
 ```text
-planning/documentation/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
+planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
 ```
 
 The Enman example demonstrates one project-specific scenario/application architecture instantiation. Do not copy it as reusable rule logic or active project configuration.

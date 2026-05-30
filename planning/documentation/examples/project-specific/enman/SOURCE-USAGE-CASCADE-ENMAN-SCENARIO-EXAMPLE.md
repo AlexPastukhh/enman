@@ -36,10 +36,10 @@ SC-13D / AgreementProposalExchange source usage pilot
 Earlier skeleton register path:
 
 ```text
-planning/documentation/source-usage-pilots/SC-13D-agreement-exchange-source-usage-register.md
+planning/source-usage-pilots/SC-13D-agreement-exchange-source-usage-register.md
 ```
 
-F5 preserved this as project-specific example knowledge. A later cleanup batch should decide whether to keep it in place, move it under a project-specific examples subfolder, or omit it from a portable starter-kit export.
+F5 preserved this as project-specific example knowledge. A later cleanup/export batch should decide whether to keep this project-specific example in Enman only or omit it from a portable starter-kit export.
 
 ## 3. Target Chain
 

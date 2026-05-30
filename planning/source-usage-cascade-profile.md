@@ -9,11 +9,16 @@ This file defines Enman source/consumer categories, source usage row conventions
 
 It is a project-level profile.
 
-Reusable/candidate origin:
+Reusable setup owner:
 
 ```text
-planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
-planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+planning/documentation/field-kits/source-usage-cascade-field-kit.md
+```
+
+Historical origin:
+
+```text
+former reusable candidate workspace
 ```
 
 Active governance / bridge file:
@@ -45,7 +50,7 @@ planning/documentation/source-usage-cascade-governance-plan.md
 | API/testing consumers | contracts, error contracts, testing plans and E2E workflows |
 | External-output consumers | VKR/thesis materials that consume internal planning docs |
 
-## 4. Candidate Row Shape
+## 4. Source Usage Row Shape
 
 | Field | Enman convention |
 |---|---|
@@ -106,7 +111,7 @@ SC-13D scenario text / DATA / behavior items
 Earlier skeleton register path:
 
 ```text
-planning/documentation/source-usage-pilots/SC-13D-agreement-exchange-source-usage-register.md
+planning/source-usage-pilots/SC-13D-agreement-exchange-source-usage-register.md
 ```
 
 This profile is active project configuration, but the SC-13D pilot itself is **not** an active filled register yet.
@@ -116,7 +121,7 @@ A later source-usage review should decide whether to run, revise or archive that
 Detailed candidate example:
 
 ```text
-planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
+planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
 ```
 
 ## 7. Do Not
@@ -132,8 +137,8 @@ planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-ENMAN-SC
 
 ```text
 planning/documentation/source-usage-cascade-governance-plan.md
-planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
-planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
-planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
-planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
+planning/documentation/field-kits/source-usage-cascade-field-kit.md
+planning/documentation/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
+planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
+planning/source-usage-pilots/README.md
 ```
