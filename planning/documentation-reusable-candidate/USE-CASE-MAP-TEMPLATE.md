@@ -6,10 +6,25 @@ Scope: exact reusable Markdown shape for concrete use-case maps
 Use with:
 
 ```text
-planning/documentation/use-case-map-workflow.md
+planning/documentation-reusable-candidate/use-case-map-workflow.md
 ```
 
 This template is generic. Replace system-specific owner files, layer names and permission boundaries for the target system.
+
+
+Reusable setup field kit:
+
+```text
+planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
+```
+
+Profile-specific route setup, when applicable:
+
+```text
+planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
+```
+
+This template defines shape only. It is not a second use-case map.
 
 ## Template
 
@@ -59,11 +74,12 @@ This file is not:
   User command/action -> docs/workflows/templates/sources/output/permission route.
 ```
 
-Reusable use-case-map maintenance is owned by:
+Reusable use-case-map setup, maintenance and shape are owned by:
 
 ```text
-planning/documentation/use-case-map-workflow.md
-planning/documentation/USE-CASE-MAP-TEMPLATE.md
+planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
+planning/documentation-reusable-candidate/use-case-map-workflow.md
+planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
 ```
 
 ## 3. Universal Algorithm
@@ -197,3 +213,11 @@ Permission boundary
 - Keep exact reusable shape in this template.
 - Adapt concrete maps to their system; do not copy project-specific owner files into unrelated systems.
 ```
+
+## Root Map Rule
+
+A concrete project should normally have one root use-case map.
+
+The reusable documentation layer owns setup guidance, workflow and template shape. The project root map owns concrete command routing.
+
+Do not create a generic reusable use-case map inside the documentation layer.

@@ -24,6 +24,8 @@ This file now tracks what remains after that split.
 | PF-005 | F3 open questions | Final naming and canonical switch decisions | still open | Decide final reusable principles name, adapter naming, active promotion path. | migration plan | later switch batch |
 | PF-006 | 23, 24B | Archive/package and command preservation details | still open if needed | Principles keep the boundary; detailed command/source semantics remain in owner workflows. | documentation update workflow / replacement guide / use-case map | later cleanup if needed |
 | PF-007 | F6A | Candidate README/read-order cleanup | addressed in candidate | Re-check after any future promotion/switch batch. | `planning/documentation-reusable-candidate/README.md` | later switch batch |
+| PF-008 | F7A/F7B | Active-only reusable overlay into candidate | addressed in candidate | Re-check after final folder-switch planning; make sure active UCM kits and diff-command guardrails are preserved. | candidate overlay files + active docs layer | F7C / later switch verification |
+
 
 ## 3. F5 Outputs
 
@@ -56,6 +58,29 @@ After F5, consider:
 - deciding canonical switch process;
 - deciding whether active `planning/documentation/` is replaced, archived or kept as Enman project docs;
 - reviewing active promoted Enman project-instance files after real use.
+```
+
+## 4A. F7C Overlay Outputs
+
+F7C mirrors active reusable additions into candidate so a later folder-switch plan does not lose active F7A/F7B work.
+
+Candidate overlay files:
+
+```text
+planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
+planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
+planning/documentation-reusable-candidate/use-case-map-workflow.md
+planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
+planning/documentation-reusable-candidate/documentation-update-workflow.md
+planning/documentation-reusable-candidate/documentation-action-log.md
+```
+
+Boundary:
+
+```text
+F7C does not make candidate canonical.
+F7C does not copy root project files into candidate.
+F7C does not rename or swap folders.
 ```
 
 ## 5. Guardrail

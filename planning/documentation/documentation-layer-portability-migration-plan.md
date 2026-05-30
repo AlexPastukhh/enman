@@ -275,6 +275,49 @@ F7A does not move scenario/domain/slice content out of the root Enman use-case m
 F7A keeps `planning/planning-use-case-map.md` as the concrete Enman root router.
 ```
 
+## 2H. Candidate Overlay Sync State
+
+F7C mirrors active reusable additions into the candidate workspace before any future folder-switch or swap planning.
+
+Mirrored candidate files:
+
+```text
+planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
+planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
+planning/documentation-reusable-candidate/use-case-map-workflow.md
+planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
+planning/documentation-reusable-candidate/documentation-update-workflow.md
+planning/documentation-reusable-candidate/documentation-action-log.md
+```
+
+Reason:
+
+```text
+Active planning/documentation/ gained reusable F7A/F7B additions after the candidate copy.
+A future folder switch must not lose those active reusable additions.
+The candidate folder should become a merge-ready source, not a stale pre-F7A copy.
+```
+
+Boundary:
+
+```text
+F7C does not make planning/documentation-reusable-candidate/ canonical.
+F7C does not copy root project files into candidate.
+F7C does not rename planning/documentation/ to legacy.
+F7C does not rename candidate to active documentation.
+F7C does not delete migration-only candidate files.
+```
+
+Next step:
+
+```text
+Plan candidate final-shape normalization:
+- what stays in final planning/documentation/;
+- what moves to field-kits/ and profiles/;
+- what becomes migration/archive history;
+- what old active docs become legacy or are deleted after verification.
+```
+
 ## 3. Principles File Role Decision
 
 The principles file should own high-level documentation architecture invariants.

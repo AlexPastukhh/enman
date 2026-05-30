@@ -86,6 +86,8 @@ source usage / cascade:
 | Status / evidence | `status-reconciliation-field-kit.md` | `status-reconciliation-workflow.md` | `enman-status-evidence-profile.md` |
 | Shared visibility | `shared-visibility-map-field-kit.md` | `local-global-documentation-sync-workflow.md` | `enman-shared-visibility-map.md` |
 | Source usage / cascade | `source-usage-cascade-field-kit.md` | `source-usage-cascade-governance-plan.md` | `enman-source-usage-cascade-profile.md` |
+| Root use-case map setup | `field-kits/root-use-case-map-field-kit.md` | `use-case-map-workflow.md` + `USE-CASE-MAP-TEMPLATE.md` | root `planning/planning-use-case-map.md` stays outside candidate |
+| Scenario/domain/slice route setup | `profiles/scenario-domain-slice-use-case-field-kit.md` | root use-case map workflow/template | scenario/domain/slice project route rows stay in the project root use-case map |
 
 Responsibility split:
 
@@ -173,6 +175,38 @@ Remaining future decisions include:
 - whether active planning/documentation/ is replaced, archived or kept as Enman-specific docs;
 - whether to create a generic project adapter template.
 ```
+
+## 7A. Active-Only Reusable Overlay Synced Into Candidate
+
+F7C mirrors active reusable additions created after the original candidate copy into this candidate workspace.
+
+Synced candidate files:
+
+```text
+planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
+planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
+planning/documentation-reusable-candidate/use-case-map-workflow.md
+planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
+planning/documentation-reusable-candidate/documentation-update-workflow.md
+planning/documentation-reusable-candidate/documentation-action-log.md
+```
+
+Root use-case-map setup read order:
+
+```text
+planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
+planning/documentation-reusable-candidate/use-case-map-workflow.md
+planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
+```
+
+Scenario/domain/slice route setup read order:
+
+```text
+planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
+planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
+```
+
+This overlay does not make the candidate folder canonical. It only prevents active reusable additions from being lost during future folder-switch planning.
 
 ## 8A. Active Project-Instance Promotion State
 

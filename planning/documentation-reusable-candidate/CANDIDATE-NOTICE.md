@@ -88,6 +88,23 @@ Meaning:
 
 These outputs are candidate-only and do not switch canonical documentation ownership.
 
+## 7A. Active Reusable Overlay Mirror
+
+Some reusable documentation-layer additions that were first created in active `planning/documentation/` are mirrored here for future folder-switch readiness.
+
+Current mirrored active additions:
+
+```text
+planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
+planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
+planning/documentation-reusable-candidate/use-case-map-workflow.md
+planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
+planning/documentation-reusable-candidate/documentation-update-workflow.md
+planning/documentation-reusable-candidate/documentation-action-log.md
+```
+
+This mirror does not make the candidate folder canonical and does not change ordinary active documentation routing.
+
 ## 8. Candidate Field Kit Outputs
 
 F5 candidate field-kit split introduced:

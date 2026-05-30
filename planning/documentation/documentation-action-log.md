@@ -796,3 +796,45 @@ Owner sources:
 Notes:
   This change does not alter replacement archive content format, commit policy or direct edit permissions.
 ```
+
+### 2026-05-30 — Mirrored active reusable additions into candidate workspace
+
+```text
+Date:
+  2026-05-30
+Action:
+  Mirrored active reusable use-case-map and replacement-command additions into the candidate reusable documentation workspace.
+Type:
+  documentation architecture / candidate overlay sync
+Status:
+  applied
+Why:
+  Active documentation gained reusable F7A/F7B files and command guardrails after the candidate copy. The candidate workspace needs those active reusable additions before any future folder-switch or swap planning, otherwise a blind candidate promotion could lose current reusable work.
+Changed files:
+  - planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
+  - planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
+  - planning/documentation-reusable-candidate/use-case-map-workflow.md
+  - planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
+  - planning/documentation-reusable-candidate/documentation-update-workflow.md
+  - planning/documentation-reusable-candidate/documentation-action-log.md
+  - planning/documentation-reusable-candidate/README.md
+  - planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+  - planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+  - planning/documentation-reusable-candidate/documentation-responsibility-map.md
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Candidate now contains the active-only reusable UCM field kit, scenario/domain/slice UCM route setup kit, active-latest UCM workflow/template and active-latest documentation update diff-command guardrails. Candidate remains non-canonical.
+PMR relation:
+  none
+Follow-ups:
+  Plan candidate final-shape normalization and controlled folder-switch strategy. Do not perform blind rename of candidate to active docs because candidate still contains migration-only artifacts and active docs still own current routing.
+Owner sources:
+  planning/documentation-reusable-candidate/README.md
+  planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+  planning/documentation/field-kits/root-use-case-map-field-kit.md
+  planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+  planning/replacement-file-generation-guide.md
+Notes:
+  This change does not copy root project files into candidate, does not make the candidate folder canonical, does not rename folders and does not delete active or candidate documentation files.
+```
