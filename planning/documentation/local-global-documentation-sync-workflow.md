@@ -25,6 +25,18 @@ follow the read order and understand:
 
 This workflow defines the local-to-global sync rule.
 
+## 1A. Enman Shared Visibility Map
+
+Use the active Enman project map when deciding whether a local detail needs shared visibility:
+
+```text
+planning/shared-visibility-map.md
+```
+
+That map owns Enman-specific local-detail types and shared targets.
+
+This workflow owns the repeated synchronization process.
+
 ## 2. Core Rule
 
 Local sections are required, but local-only documentation is not enough when the information affects future work.

@@ -13,6 +13,33 @@ For scenario behavior, use scenario specs and behavior items.
 
 For VKR/thesis wording, use `planning/vkr-clean-reference.md`.
 
+
+## 1A. Project-Wide Planning Profiles
+
+These root planning profiles define Enman project configuration used by multiple planning layers:
+
+```text
+planning/status-evidence-profile.md
+planning/shared-visibility-map.md
+planning/source-usage-cascade-profile.md
+```
+
+Use them when a task involves:
+
+```text
+- implementation/status evidence;
+- local-detail to shared-register visibility;
+- source/consumer/cascade review relationships.
+```
+
+They are active Enman project profiles, not reusable documentation workflows.
+
+Reusable candidate origins remain under:
+
+```text
+planning/documentation-reusable-candidate/
+```
+
 ## 2. Repository Editing Workflow
 
 When documentation changes are small and well-scoped, prefer direct GitHub file edits from ChatGPT over manual replacement archives.
@@ -91,6 +118,18 @@ planning/planning-maintenance-register.md
 This register is for future documentation/workflow maintenance, not for ordinary feature TODOs.
 
 ## 4. Source-of-Truth Model
+
+### Project-wide profiles
+
+Use these project-level profiles when the task touches status, shared visibility or source usage:
+
+```text
+planning/status-evidence-profile.md
+planning/shared-visibility-map.md
+planning/source-usage-cascade-profile.md
+```
+
+These profiles provide Enman-specific answers. They do not replace the reusable documentation workflows.
 
 ### Implementation truth
 
@@ -399,6 +438,24 @@ planning/dirty-drafts/README.md
 ```
 
 Dirty drafts are recovery/context notes, not implementation truth and not final VKR wording.
+
+### For status, shared visibility or source usage work
+
+Read the relevant active root profile before changing status-sensitive docs, shared registers or source usage/cascade material:
+
+```text
+planning/status-evidence-profile.md
+planning/shared-visibility-map.md
+planning/source-usage-cascade-profile.md
+```
+
+Then use the active workflow/governance files:
+
+```text
+planning/documentation/status-reconciliation-workflow.md
+planning/documentation/local-global-documentation-sync-workflow.md
+planning/documentation/source-usage-cascade-governance-plan.md
+```
 
 ## 6. Historical / Internal Status Notes
 

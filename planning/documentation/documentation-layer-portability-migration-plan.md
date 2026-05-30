@@ -201,6 +201,45 @@ Candidate guardrail remains:
 planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
 ```
 
+## 2F. Active Root Project-Instance Promotion State
+
+F6C promotes the Enman project-instance files derived from candidate field kits into active planning root.
+
+Created active project profiles:
+
+```text
+planning/status-evidence-profile.md
+planning/shared-visibility-map.md
+planning/source-usage-cascade-profile.md
+```
+
+Source candidate files:
+
+```text
+planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+planning/documentation-reusable-candidate/enman-shared-visibility-map.md
+planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+```
+
+Routing updates:
+
+```text
+planning/README.md
+planning/planning-doc-responsibility-map.md
+planning/documentation/status-reconciliation-workflow.md
+planning/documentation/local-global-documentation-sync-workflow.md
+planning/documentation/source-usage-cascade-governance-plan.md
+```
+
+Boundary:
+
+```text
+F6C promotes only Enman project-instance configuration files.
+F6C does not promote reusable candidate principles, field kits, workflows or examples.
+F6C does not switch canonical documentation ownership.
+F6C does not delete candidate migration artifacts or the source usage governance bridge.
+```
+
 ## 3. Principles File Role Decision
 
 The principles file should own high-level documentation architecture invariants.

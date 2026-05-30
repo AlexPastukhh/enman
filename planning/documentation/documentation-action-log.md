@@ -681,3 +681,46 @@ Owner sources:
 Notes:
   This change remains candidate-only. It does not switch canonical docs, does not promote Enman files into active planning/ root, does not delete the source usage bridge and does not create new field kits/examples.
 ```
+
+### 2026-05-30 — Promoted Enman project-instance profiles to active planning root
+
+```text
+Date:
+  2026-05-30
+Action:
+  Promoted the Enman candidate project-instance status, shared visibility and source usage profiles into active planning root.
+Type:
+  documentation architecture / active project profile promotion
+Status:
+  applied
+Why:
+  F5 created candidate Enman project-instance files from reusable field kits. F6C makes those concrete Enman answers active project-level configuration while keeping reusable candidate principles, kits and workflows candidate-only.
+Changed files:
+  - planning/status-evidence-profile.md
+  - planning/shared-visibility-map.md
+  - planning/source-usage-cascade-profile.md
+  - planning/README.md
+  - planning/planning-doc-responsibility-map.md
+  - planning/documentation/status-reconciliation-workflow.md
+  - planning/documentation/local-global-documentation-sync-workflow.md
+  - planning/documentation/source-usage-cascade-governance-plan.md
+  - planning/documentation-reusable-candidate/README.md
+  - planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Active planning root now has project-wide profiles for status/evidence, shared visibility and source usage cascade. Active documentation workflows link to those profiles, but reusable candidate docs remain non-canonical.
+PMR relation:
+  none
+Follow-ups:
+  Review the promoted profiles after real status reconciliation, local/global sync and source usage/cascade work. Decide later whether reusable candidate field kits/workflows should be promoted and whether the source usage governance bridge can be deleted or archived after a pilot.
+Owner sources:
+  planning/status-evidence-profile.md
+  planning/shared-visibility-map.md
+  planning/source-usage-cascade-profile.md
+  planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+  planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+  planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+Notes:
+  This change does not promote candidate reusable principles, field kits, workflows or examples. It does not switch canonical documentation ownership and does not delete candidate migration files or the source usage governance bridge.
+```

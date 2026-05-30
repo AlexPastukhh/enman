@@ -61,6 +61,9 @@ planning/documentation/planning-docs-architecture-principles.md
 | File / folder | Responsibility |
 |---|---|
 | `planning/README.md` | Stable planning navigation and source-of-truth map; must not duplicate detailed current implementation status |
+| `planning/status-evidence-profile.md` | Active Enman project profile for evidence/current-reality model and status vocabulary; not a reusable workflow |
+| `planning/shared-visibility-map.md` | Active Enman project map for local-detail to shared index/register visibility; not a reusable workflow |
+| `planning/source-usage-cascade-profile.md` | Active Enman project profile for source/consumer categories, row conventions and cascade triggers; not a reusable workflow |
 | `planning/planning-use-case-map.md` | Root action/use-case map: maps user actions and repeated commands to docs/workflows/templates/read paths, active context, traversal depth, read source mode, expected output and permission boundaries |
 | `planning/workflow-activation-map.md` | Root workflow activation router: which workflows exist, when they activate, implicit vs explicit activation, response command discoverability and Workflow Preflight format |
 | `planning/planning-maintenance-register.md` | Root register for deferred planning-docs/workflow maintenance tasks and condition-based follow-ups |
@@ -72,6 +75,9 @@ planning/documentation/planning-docs-architecture-principles.md
 | `planning/repo-grounded-github-line-links-workflow.md` | User-facing GitHub line-link rules for repo-grounded code/docs/status explanations |
 | `planning/planning-doc-responsibility-map.md` | Transitional root layer router for planning documentation; detailed local placement should move to local responsibility maps over time |
 | `planning/replacement-file-generation-guide.md` | Archive/package generation rules for manual repo application |
+
+
+Project-wide profiles are concrete Enman configuration files. Reusable field-kit/workflow logic remains in documentation-layer owner files or candidate reusable docs until a later migration/switch batch.
 
 ## 4. Documentation Workflow Responsibility
 

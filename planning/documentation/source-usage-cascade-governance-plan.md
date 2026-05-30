@@ -22,6 +22,16 @@ The goal is not file versioning by itself.
 
 The goal is to preserve layer encapsulation and human review attention: when upstream work has already been reviewed, downstream docs should reference published upstream artifacts instead of reconstructing the upstream reasoning.
 
+## 1A. Enman Source Usage Cascade Profile
+
+Use the active Enman project profile for concrete source categories, consumer categories, row conventions and cascade triggers:
+
+```text
+planning/source-usage-cascade-profile.md
+```
+
+This governance plan owns the active pilot/governance framing. The profile owns Enman-specific configuration.
+
 ## 2. Current State
 
 Current architecture principles already define:

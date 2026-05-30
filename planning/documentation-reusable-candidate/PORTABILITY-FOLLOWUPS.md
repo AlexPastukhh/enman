@@ -17,9 +17,9 @@ This file now tracks what remains after that split.
 
 | ID | Origin sections | Topic | F5 status | Remaining work | Likely owner | Target batch |
 |---|---|---|---|---|---|---|
-| PF-001 | 12A, 13, 14, 15 | Source usage / cascade field-kit extraction | addressed in candidate | Review field kit/profile/example after use; decide whether old governance bridge can be deleted. | `source-usage-cascade-field-kit.md`, Enman source profile | F6 or after pilot |
-| PF-002 | 10, 11, 20, 26 | Status reconciliation / evidence-current-reality model | addressed in candidate | Review Enman profile against real docs/evidence before active promotion. | `status-reconciliation-field-kit.md`, Enman status profile | F6 / active promotion |
-| PF-003 | 16 | Shared Visibility Map setup | addressed in candidate | Review Enman map against active registers before active promotion. | `shared-visibility-map-field-kit.md`, Enman shared visibility map | F6 / active promotion |
+| PF-001 | 12A, 13, 14, 15 | Source usage / cascade field-kit extraction | active project profile promoted | Review field kit/profile/example after use; decide whether old governance bridge can be deleted. | active `planning/source-usage-cascade-profile.md` + candidate field kit/profile/example | after pilot |
+| PF-002 | 10, 11, 20, 26 | Status reconciliation / evidence-current-reality model | active project profile promoted | Use active `planning/status-evidence-profile.md`; review after real reconciliation use. | active status profile + candidate field kit | after use |
+| PF-003 | 16 | Shared Visibility Map setup | active project map promoted | Use active `planning/shared-visibility-map.md`; review after real local/global sync use. | active shared visibility map + candidate field kit | after use |
 | PF-004 | 14, 16, 18, 21 | Examples extraction | partially addressed | Four starter examples exist, including a preserved Enman SC-13D source-usage pilot example; more examples may be added after field-kit usage. | candidate examples folder / examples README | after F5 review |
 | PF-005 | F3 open questions | Final naming and canonical switch decisions | still open | Decide final reusable principles name, adapter naming, active promotion path. | migration plan | later switch batch |
 | PF-006 | 23, 24B | Archive/package and command preservation details | still open if needed | Principles keep the boundary; detailed command/source semantics remain in owner workflows. | documentation update workflow / replacement guide / use-case map | later cleanup if needed |
@@ -55,7 +55,7 @@ After F5, consider:
 - deciding whether Enman adapter remains `enman-docs-adapter.md` or a generic project adapter template is added;
 - deciding canonical switch process;
 - deciding whether active `planning/documentation/` is replaced, archived or kept as Enman project docs;
-- deciding whether Enman project-instance files should be promoted into active `planning/` root.
+- reviewing active promoted Enman project-instance files after real use.
 ```
 
 ## 5. Guardrail
@@ -65,3 +65,5 @@ Do not treat addressed follow-ups as final active docs.
 F5 outputs are candidate-only until a later migration/switch batch approves promotion.
 
 F6A candidate cleanup addressed the immediate README/read-order inconsistency. Future promotion/switch work must re-check candidate navigation after any files move into active locations.
+
+F6C promoted active root project-instance files for status evidence, shared visibility and source usage cascade. Candidate files remain as migration history/candidate references.

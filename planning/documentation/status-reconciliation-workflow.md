@@ -24,6 +24,18 @@ For broad or multi-file status/navigation documentation changes, prepare a Docum
 planning/documentation/documentation-update-plan-workflow.md
 ```
 
+## 1A. Enman Status Evidence Profile
+
+Use the active Enman project profile before reconciling status-sensitive docs:
+
+```text
+planning/status-evidence-profile.md
+```
+
+That profile owns the Enman evidence order and status vocabulary.
+
+This workflow owns the repeated reconciliation process.
+
 ## 2. When To Run
 
 Run status reconciliation when:
@@ -39,6 +51,14 @@ Run status reconciliation when:
 ```
 
 ## 3. Evidence Order
+
+For detailed Enman evidence order and status labels, use:
+
+```text
+planning/status-evidence-profile.md
+```
+
+Quick summary:
 
 Prefer current repo evidence:
 

@@ -167,12 +167,32 @@ F6A: candidate navigation and read-order cleanup
 Remaining future decisions include:
 
 ```text
-- whether to promote Enman project-instance files to active planning/ root;
+- Enman project-instance files were promoted to active planning/ root in F6C;
 - whether to delete/archive the source usage governance bridge;
 - whether to rename candidate principles before final reusable switch;
 - whether active planning/documentation/ is replaced, archived or kept as Enman-specific docs;
 - whether to create a generic project adapter template.
 ```
+
+## 8A. Active Project-Instance Promotion State
+
+F6C promotes the three Enman project-instance files from candidate into active planning root:
+
+```text
+planning/status-evidence-profile.md
+planning/shared-visibility-map.md
+planning/source-usage-cascade-profile.md
+```
+
+Candidate source files remain in this folder as migration history and reusable-candidate references:
+
+```text
+planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+planning/documentation-reusable-candidate/enman-shared-visibility-map.md
+planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+```
+
+F6C does not promote reusable field kits, candidate workflows, candidate principles or examples.
 
 ## 9. Do Not
 
