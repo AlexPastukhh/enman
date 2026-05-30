@@ -26,6 +26,34 @@ Use the template for exact shape:
 planning/documentation/USE-CASE-MAP-TEMPLATE.md
 ```
 
+Setup field kit:
+
+```text
+planning/documentation/field-kits/root-use-case-map-field-kit.md
+```
+
+Use the field kit when creating or restructuring a root use-case map. Use this workflow for repeated maintenance after the map exists.
+
+## 1A. Setup vs Maintenance Boundary
+
+```text
+Field kit
+  -> one-time / rare setup for deriving a project root use-case map.
+
+Workflow
+  -> repeated maintenance after the project map exists.
+
+Template
+  -> exact reusable Markdown shape.
+
+Root use-case map
+  -> concrete project routes and commands.
+```
+
+A project should normally have one concrete root use-case map.
+
+Do not create a generic reusable use-case map inside the documentation layer. Put reusable setup guidance in the field kit and keep concrete routing in the project root map.
+
 ## 2. What A Use-Case Map Owns
 
 A use-case map owns routing for a concrete system or planning surface.
@@ -179,21 +207,24 @@ Do not make command aliases silently change permissions, source requirements or 
 
 ## 10. Cross-System Reuse Rule
 
-Reusable use-case maps should avoid project-specific assumptions unless the map is explicitly for that project.
-
-A generic use-case-map workflow or template should not assume Enman-specific layers such as scenario/domain/slice. A concrete Enman or planning map may reference those layers where appropriate.
-
-When creating a map for another system, adapt:
+Reusable material should be extracted as:
 
 ```text
-- system-specific owner docs;
-- read source modes;
-- permission boundaries;
-- expected outputs;
-- command aliases.
+- field kits for setup choices;
+- workflows for repeated maintenance;
+- templates for exact shape;
+- examples for demonstrations.
 ```
 
-Do not copy a concrete Enman route table into another system without replacing owner files and permission boundaries.
+Do not extract a concrete root use-case map into a generic reusable map.
+
+Each project should keep one concrete root map that imports/adapts reusable setup guidance.
+
+For scenario/domain/slice route families, use:
+
+```text
+planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+```
 
 ## 11. Synchronization With Navigation And Examples
 

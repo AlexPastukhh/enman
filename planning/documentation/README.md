@@ -91,6 +91,26 @@ planning/documentation/documentation-layer-portability-migration-plan.md
 planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
 ```
 
+## 2B. Active Field Kits And Profiles
+
+Reusable field kits:
+
+```text
+planning/documentation/field-kits/root-use-case-map-field-kit.md
+```
+
+Profile-specific field kits:
+
+```text
+planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+```
+
+Use these as setup guidance. They do not replace the concrete project root use-case map:
+
+```text
+planning/planning-use-case-map.md
+```
+
 ## 3. Read Order For Documentation-Layer Work
 
 For documentation-layer architecture/routing work:

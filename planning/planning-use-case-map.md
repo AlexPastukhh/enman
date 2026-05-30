@@ -29,7 +29,7 @@ This file is not:
 
 It is a root action/use-case trace map.
 
-This file is one concrete use-case map instance. Reusable use-case-map maintenance rules are owned by `planning/documentation/use-case-map-workflow.md`; exact reusable map shape is owned by `planning/documentation/USE-CASE-MAP-TEMPLATE.md`.
+This file is the concrete Enman root use-case map. Reusable setup guidance is owned by `planning/documentation/field-kits/root-use-case-map-field-kit.md`; reusable maintenance rules are owned by `planning/documentation/use-case-map-workflow.md`; exact reusable map shape is owned by `planning/documentation/USE-CASE-MAP-TEMPLATE.md`.
 
 ## 2. Relationship To Root Files
 
@@ -52,6 +52,14 @@ planning/documentation/use-case-map-workflow.md
 
 planning/documentation/USE-CASE-MAP-TEMPLATE.md
   Reusable template for concrete use-case-map shape.
+
+
+planning/documentation/field-kits/root-use-case-map-field-kit.md
+  Reusable setup kit for deriving one project root use-case map and common command clusters.
+
+planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+  Reusable profile-specific setup kit for adding scenario/domain/slice route families to the project root map.
+
 ```
 
 ## 3. Universal Chat Algorithm
@@ -64,6 +72,7 @@ For non-trivial planning/repo work, use this path:
 3. Output Workflow Preflight when required.
 4. Use planning/planning-doc-responsibility-map.md to choose the planning layer.
 5. Use layer README / responsibility map for local routing.
+5a. Use project root profiles when status/shared visibility/source usage is relevant.
 6. Select traversal depth.
 7. Select read source mode.
 8. Select output mode when the user asks for a deliverable such as an archive/package.
@@ -98,6 +107,7 @@ Common principle references:
 | Archive/replacement package output | `planning/documentation/planning-docs-architecture-principles.md#23-direct-edits-archives-and-commit-granularity`, plus `planning/replacement-file-generation-guide.md` | Archive output is an output mode and must use replacement files. |
 | Source usage / stale-reference / cascade / reviewed-work concerns | `planning/documentation/planning-docs-architecture-principles.md#12a-layer-encapsulation-and-attention-preservation`, `#13-source--version-principle`, `#14-dependency-cascade-principle`, `#15-section-level-sources-principle` | Prevent duplicated source truth and preserve attention by referencing reviewed upstream work instead of reconstructing it. |
 | Accepted commands / post-apply preservation | `planning/documentation/planning-docs-architecture-principles.md#24b-accepted-command-and-preservation-guardrails`, plus owner workflow/use-case files | Prevent silent reinterpretation and accidental information loss after replacement packages. |
+| Use-case map setup / common command extraction | `planning/documentation/field-kits/root-use-case-map-field-kit.md`, `planning/documentation/use-case-map-workflow.md`, `planning/documentation/USE-CASE-MAP-TEMPLATE.md` | Keep one concrete root UCM per project while reusing setup/workflow/template logic. |
 
 Do not add source-version numbers to this use-case map yet. Section-level principle versions and use-case source-version metadata are deferred until the source/version model is ready. Use the encapsulation/source-usage principle reference to decide when a pilot source usage register or cascade workflow is needed, not to add ad hoc version fields to use-case rows.
 
@@ -317,6 +327,14 @@ Response block commands such as `кп`, `саммари`, `итог` and `отл
 
 ## 9. Repeated / Continuation Commands
 
+Reusable command setup owner:
+
+```text
+planning/documentation/field-kits/root-use-case-map-field-kit.md
+```
+
+This root map remains the concrete Enman route table.
+
 | User says | If active context exists | If no active context exists | Traversal depth | Read source mode | Expected output |
 |---|---|---|---|---|---|
 | `драфт`, `давай драфт`, `покажи драфт` | Show/update active draft. | Ask target or start draft workflow if target is obvious. | Reuse / targeted. | Conversation / canvas / sources if changed. | Latest draft version or canvas update. |
@@ -342,14 +360,21 @@ Response block commands such as `кп`, `саммари`, `итог` and `отл
 
 ## 10. Primary Use Case Table
 
+Scenario/domain/slice use-case setup note:
+
+```text
+Use planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md when adding or changing scenario/domain/slice route rows in this root map.
+Do not treat that field kit as an activated workflow for ordinary scenario/slice/domain work.
+```
+
 | User says | Task type | Active context? | Traversal depth | Read source mode | Activated workflows | Required reads | Source of obligation | Expected output | Permission boundary |
 |---|---|---:|---|---|---|---|---|---|---|
 | “новый чат”, “вкатись”, “разберись с planning docs”, “first pass”, no reliable active context | New Chat Onboarding / first planning pass | New or uncertain | Full first time; targeted/reuse after checked context exists | GitHub/repo by default; archive only if user requests archive source mode or provides an archive | workflow activation; planning agent protocol; role identification when specialized work is likely; reviewable output | `planning/README.md`, `planning/workflow-activation-map.md`, `planning/planning-use-case-map.md`, `planning/planning-agent-protocol.md`, `planning/planning-doc-responsibility-map.md`; `planning/agent-roles-and-required-actions.md` when role matters | README + use-case map + planning agent protocol | Short onboarding preflight, selected next use case, checked/not-checked sources, next action | No edits/packages unless explicitly requested |
 | “посмотри / распланируй / проверь docs” | Non-trivial planning/docs work | Optional | Full first time; targeted later | GitHub/archive/conversation by context | workflow activation; reviewable output | `planning/README.md`, `workflow-activation-map.md`, `planning-doc-responsibility-map.md` | README + activation map | Level 2 reviewable answer/plan | Edits require approval |
-| “обнови docs” | Documentation update | Optional | Targeted/full by scope | GitHub for writes; archive for read-only if requested | docs update plan/workflow; local-global sync | documentation README/map/workflows | activation map + docs workflows | Level 2 update plan or applied update + File Update Overview when files are planned/changed/reviewed | GitHub writes require approval |
-| “добавь template / workflow / command / draft format / пример” | Documentation governance update | Optional | Full first time; targeted later | GitHub/archive/conversation by context | docs update workflow; example coverage decision when template/output shape changes; reviewable output | documentation README/map/workflows; `planning/documentation/example-coverage-workflow.md` when template/output/command/draft example coverage matters; relevant owner workflow/template; principle section references in §3A | docs architecture principles + use-case map + example coverage workflow | Level 2 update plan or replacement package + File Update Overview when files are planned/changed/reviewed; example coverage decision if applicable | Edits/packages require approval |
+| “обнови docs” | Documentation update | Optional | Targeted/full by scope | GitHub for writes; archive for read-only if requested | docs update plan/workflow; local-global sync | documentation README/map/workflows; `planning/shared-visibility-map.md` when shared visibility is involved | activation map + docs workflows | Level 2 update plan or applied update + File Update Overview when files are planned/changed/reviewed | GitHub writes require approval |
+| “добавь template / workflow / command / draft format / пример” | Documentation governance update | Optional | Full first time; targeted later | GitHub/archive/conversation by context | docs update workflow; example coverage decision when template/output shape changes; reviewable output | documentation README/map/workflows; `planning/documentation/field-kits/root-use-case-map-field-kit.md` when command/use-case routes change; `planning/documentation/example-coverage-workflow.md` when template/output/command/draft example coverage matters; relevant owner workflow/template; principle section references in §3A | docs architecture principles + use-case map + example coverage workflow | Level 2 update plan or replacement package + File Update Overview when files are planned/changed/reviewed; example coverage decision if applicable | Edits/packages require approval |
 | “ревью зон ответственности”, “что куда относится”, “generic vs project-specific”, “portability review”, “док слой реюзабл” | Documentation responsibility-zone / portability review | Optional | Full first time; targeted later | GitHub/archive/conversation by context; `арх` means source snapshot only | responsibility-zone review workflow; docs architecture principles; documentation responsibility map | `planning/documentation/documentation-responsibility-zone-review-workflow.md`, `planning/documentation/documentation-layer-portability-migration-plan.md`, `planning/documentation/planning-docs-architecture-principles.md`, `planning/documentation/documentation-responsibility-map.md`; target docs under review | responsibility-zone review workflow + portability migration plan | Level 2 classification table: reusable core, specialized profile, adapter mapping, example candidate, correct owner/action + File Update Overview if file changes are planned | Do not review scenario/slice/domain/API content itself unless separately requested; edits/packages require approval |
-| “source usage”, “source/version”, “каскад зависимостей”, “stale downstream”, “версии сорсов”, “инкапсуляция слоёв” | Source usage / cascade governance or pilot work | Optional | Full first time; targeted later | GitHub/archive/conversation by context | source usage cascade governance plan; principles §12A/13/14/15; PMR-002 until full workflow exists | `planning/documentation/source-usage-cascade-governance-plan.md`; `planning/documentation/source-usage-pilots/README.md`; pilot register if user asks to work on a pilot; relevant source/domain/slice docs only for real pilot fill | layer encapsulation principle + source usage governance plan | Level 2 governance plan, pilot skeleton, pilot fill plan or replacement package + File Update Overview when files are planned/changed/reviewed | Do not pretend full cascade workflow exists; do not add ad hoc version fields |
+| “source usage”, “source/version”, “каскад зависимостей”, “stale downstream”, “версии сорсов”, “инкапсуляция слоёв” | Source usage / cascade governance or pilot work | Optional | Full first time; targeted later | GitHub/archive/conversation by context | source usage cascade governance plan; principles §12A/13/14/15; PMR-002 until full workflow exists | `planning/source-usage-cascade-profile.md`; `planning/documentation/source-usage-cascade-governance-plan.md`; `planning/documentation/source-usage-pilots/README.md`; pilot register if user asks to work on a pilot; relevant source/domain/slice docs only for real pilot fill | layer encapsulation principle + source usage governance plan | Level 2 governance plan, pilot skeleton, pilot fill plan or replacement package + File Update Overview when files are planned/changed/reviewed | Do not pretend full cascade workflow exists; do not add ad hoc version fields |
 | “давай архив”, “собери архив”, “replacement package”, “archive for manual apply” | Replacement archive/package generation | Optional | Targeted/full by package scope | GitHub/archive/conversation by context | replacement file generation guide; docs update workflow when docs change; reviewable output | `planning/replacement-file-generation-guide.md`, target files, docs update workflow when docs are changed | replacement guide + workflow activation | Level 2 archive/package response + File Update Overview; ZIP package with `MANIFEST.md`, `APPLY.md`, `replacement-files/<repo-relative-path>` complete files | Direct repo edits not allowed unless separately approved |
 | “файл большой”, “дай ps1”, “скрипт для большого файла”, “архив неудобен” | Large/shared file update delivery choice | Optional | Targeted/full by file risk | Fresh archive/current full file preferred; script only if complete replacement unsafe | docs update workflow; replacement guide; local targeted script mode if fallback needed | `planning/documentation/documentation-update-workflow.md`, `planning/replacement-file-generation-guide.md`, target file | delivery safety check + replacement guide | Level 2 delivery plan: prefer fresh full repo/archive + safe complete replacement; one-file targeted script only as fallback | Do not choose script only because file is large; scripts require explicit mode and no auto-commit |
 | “поправь ссылки во многих файлах” | Mechanical link/path/name sync | Optional | Targeted/broad search | GitHub or archive | docs update workflow; local-global sync | target files/search source | docs update workflow output mode rules | Level 2 link-sync plan + File Update Overview; one bundled commit when tool-supported | Bundled/bulk mode should be used when approved; if unavailable, stop and disclose before per-file writes |
@@ -357,7 +382,7 @@ Response block commands such as `кп`, `саммари`, `итог` and `отл
 | “задрафти server slice” | Server slice draft | New/active | Full first time; targeted update | Scenario/domain/API/testing sources | slice + server drafting workflows; testing selector when needed | server workflow/template/principles; `planning/slices/slice-test-plan-workflow.md`; `planning/testing/testing-responsibility-map.md`; `planning/testing/server-slice-test-plan-rules.md` when server/API test guidance is needed | slice README/map | Server/backend/API draft | File writes require approval |
 | “задрафти client sidecar” | Client slice draft | New/active | Full first time; targeted update | UI/scenario/client/testing sources | slice + client drafting workflows; testing selector when needed | client workflow/template/principles/CSS/a11y/form docs; `planning/slices/slice-test-plan-workflow.md`; `planning/testing/testing-responsibility-map.md`; `planning/testing/test-object-patterns.md` when client/E2E object patterns matter | slice README/map | `.client.md` draft | File writes require approval |
 | “сделай cross-cutting umbrella” | Cross-cutting coordination doc | New/active | Full first time | Cross-cutting behavior and side draft sources | slice workflow + cross-cutting template | cross-cutting README/template | slice README/map | Umbrella coordination draft | File writes require approval |
-| “проверь current/implemented status” | Status reconciliation | Optional | Targeted/full by claim | Current branch evidence unless archive explicitly accepted | status reconciliation | status workflow + code/tests/generated artifacts | activation map status chain | Level 2 status findings/sync plan | Current-state claims need evidence |
+| “проверь current/implemented status” | Status reconciliation | Optional | Targeted/full by claim | Current branch evidence unless archive explicitly accepted | status reconciliation | `planning/status-evidence-profile.md`; status workflow + code/tests/generated artifacts | activation map status chain | Level 2 status findings/sync plan | Current-state claims need evidence |
 | “сделай сценарий / DATA / UI scenario / behavior items” | Scenario source work | Optional | Full first time; targeted update later | Scenario/source files or archive | scenario responsibility map; artifact map; scenario drafting workflow | `planning/diagrams/README.md`, `scenario-responsibility-map.md`, `scenario-artifact-map.md`, `scenario-drafting-workflow.md`, `planning/scenario-specification-principles.md`, relevant text/DATA/UI/behavior/clarification files | activation map + use-case map + scenario responsibility map | Scenario text / DATA / UI scenario / behavior item draft or update plan | Edits require approval |
 | “сделай диаграммы / обнови draw.io / подготовь diagram prompt / проверь диаграммы” | Diagramming work | Optional | Full first time; targeted update later | Diagramming docs plus scenario/domain/testing/thesis sources as needed | diagramming responsibility map; diagram source consistency; diagram prompt/draw.io workflows | `planning/diagramming/README.md`, `planning/diagramming/diagramming-responsibility-map.md`, `planning/diagrams/scenario-diagram-consistency-report.md`, `planning/diagrams/diagram-prompt-generation-workflow.md` or `planning/diagrams/drawio-diagram-generation-workflow.md`; source layers required by requested pages | activation map + use-case map + diagramming responsibility map | Diagram source audit / diagram prompt / batch plan / draw.io artifact plan or package | File/artifact writes require approval |
 | “разбери domain draft / domain discovery / aggregate draft” | Domain work | Optional | Full first time; targeted later | Domain docs/scenario sources/current code if needed | domain responsibility/discovery/aggregate/value-object workflows by scope | `planning/domain/README.md`, `planning/domain/domain-responsibility-map.md`, `planning/domain/scenario-to-aggregate-map.md`; old `planning/tables/domain-drafts/` only as historical/cross-check source | root responsibility map + domain responsibility map | Domain discovery map / aggregate draft / value-object draft / review plan | Edits require approval |

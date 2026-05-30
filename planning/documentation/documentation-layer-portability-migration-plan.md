@@ -240,6 +240,41 @@ F6C does not switch canonical documentation ownership.
 F6C does not delete candidate migration artifacts or the source usage governance bridge.
 ```
 
+## 2G. Root Use-Case Map / Command Field-Kit State
+
+F7A separates concrete project use-case routing from reusable setup guidance.
+
+Created active reusable setup files:
+
+```text
+planning/documentation/field-kits/root-use-case-map-field-kit.md
+planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+```
+
+Updated concrete Enman root map:
+
+```text
+planning/planning-use-case-map.md
+```
+
+Responsibility decision:
+
+```text
+Each project should have one concrete root use-case map.
+The reusable documentation layer should provide field kits, workflow and template shape.
+The scenario/domain/slice profile should provide setup guidance for scenario-driven route families.
+Do not create a generic reusable use-case map inside the documentation layer.
+```
+
+Boundary:
+
+```text
+F7A does not switch the whole documentation layer to the reusable candidate model.
+F7A does not delete candidate migration files.
+F7A does not move scenario/domain/slice content out of the root Enman use-case map.
+F7A keeps `planning/planning-use-case-map.md` as the concrete Enman root router.
+```
+
 ## 3. Principles File Role Decision
 
 The principles file should own high-level documentation architecture invariants.

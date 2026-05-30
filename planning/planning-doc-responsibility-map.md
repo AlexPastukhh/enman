@@ -60,6 +60,8 @@ planning/documentation/planning-docs-architecture-principles.md
 
 | File / folder | Responsibility |
 |---|---|
+| `planning/documentation/field-kits/root-use-case-map-field-kit.md` | Reusable setup kit for deriving one concrete project root use-case map and common command clusters; not a runtime router |
+| `planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md` | Profile-specific setup kit for adding scenario/domain/slice route families to a project root use-case map; not a second map |
 | `planning/README.md` | Stable planning navigation and source-of-truth map; must not duplicate detailed current implementation status |
 | `planning/status-evidence-profile.md` | Active Enman project profile for evidence/current-reality model and status vocabulary; not a reusable workflow |
 | `planning/shared-visibility-map.md` | Active Enman project map for local-detail to shared index/register visibility; not a reusable workflow |
@@ -78,6 +80,28 @@ planning/documentation/planning-docs-architecture-principles.md
 
 
 Project-wide profiles are concrete Enman configuration files. Reusable field-kit/workflow logic remains in documentation-layer owner files or candidate reusable docs until a later migration/switch batch.
+
+
+Use-case map responsibility rule:
+
+```text
+planning/planning-use-case-map.md
+  = concrete Enman root router.
+
+planning/documentation/field-kits/root-use-case-map-field-kit.md
+  = reusable setup kit.
+
+planning/documentation/use-case-map-workflow.md
+  = repeated maintenance workflow.
+
+planning/documentation/USE-CASE-MAP-TEMPLATE.md
+  = exact reusable shape.
+
+planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+  = profile-specific route setup for scenario/domain/slice projects.
+```
+
+Do not create a second generic use-case map inside the documentation layer.
 
 ## 4. Documentation Workflow Responsibility
 

@@ -724,3 +724,43 @@ Owner sources:
 Notes:
   This change does not promote candidate reusable principles, field kits, workflows or examples. It does not switch canonical documentation ownership and does not delete candidate migration files or the source usage governance bridge.
 ```
+
+### 2026-05-30 — Split root use-case map setup into reusable field kits
+
+```text
+Date:
+  2026-05-30
+Action:
+  Added reusable field-kit guidance for creating/maintaining a single project root use-case map and for adding scenario/domain/slice route families.
+Type:
+  documentation architecture / use-case map routing setup
+Status:
+  applied
+Why:
+  Enman should keep one concrete root use-case map while the reusable documentation layer provides setup kits, maintenance workflow and template shape. Reusable common commands should not become a second generic use-case map.
+Changed files:
+  - planning/documentation/field-kits/root-use-case-map-field-kit.md
+  - planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+  - planning/documentation/use-case-map-workflow.md
+  - planning/documentation/USE-CASE-MAP-TEMPLATE.md
+  - planning/planning-use-case-map.md
+  - planning/README.md
+  - planning/planning-doc-responsibility-map.md
+  - planning/documentation/README.md
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  `planning/planning-use-case-map.md` remains the concrete Enman root router. The documentation layer now owns reusable UCM setup guidance, maintenance process and template shape.
+PMR relation:
+  none
+Follow-ups:
+  Continue F7 reusable docs layer switch planning. Keep scenario/domain/slice rows concrete in the root map while using the profile-specific field kit when adding/changing those routes.
+Owner sources:
+  planning/planning-use-case-map.md
+  planning/documentation/field-kits/root-use-case-map-field-kit.md
+  planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+  planning/documentation/use-case-map-workflow.md
+  planning/documentation/USE-CASE-MAP-TEMPLATE.md
+Notes:
+  This change does not create a second generic use-case map, does not remove Enman-specific root rows, does not switch the whole docs layer to candidate, and does not delete candidate migration files.
+```

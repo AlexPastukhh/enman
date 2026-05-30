@@ -439,6 +439,30 @@ planning/dirty-drafts/README.md
 
 Dirty drafts are recovery/context notes, not implementation truth and not final VKR wording.
 
+### For root use-case map or command-routing work
+
+The concrete Enman root use-case map is:
+
+```text
+planning/planning-use-case-map.md
+```
+
+Reusable setup/maintenance owners:
+
+```text
+planning/documentation/field-kits/root-use-case-map-field-kit.md
+planning/documentation/use-case-map-workflow.md
+planning/documentation/USE-CASE-MAP-TEMPLATE.md
+```
+
+For scenario/domain/slice route families, also use:
+
+```text
+planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+```
+
+Do not create a second generic use-case map inside the documentation layer.
+
 ### For status, shared visibility or source usage work
 
 Read the relevant active root profile before changing status-sensitive docs, shared registers or source usage/cascade material:
