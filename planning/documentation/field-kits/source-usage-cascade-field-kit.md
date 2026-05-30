@@ -114,10 +114,18 @@ For the active Enman project profile, see:
 planning/source-usage-cascade-profile.md
 ```
 
-## 8. Example
+## 8. Examples
 
 Generic reusable example:
 
 ```text
 planning/documentation/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
 ```
+
+Project-specific scenario/application example:
+
+```text
+planning/documentation/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
+```
+
+The Enman example demonstrates one project-specific scenario/application architecture instantiation. Do not copy it as reusable rule logic or active project configuration.

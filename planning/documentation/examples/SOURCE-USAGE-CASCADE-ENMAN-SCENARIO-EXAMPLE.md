@@ -1,11 +1,13 @@
 # Source Usage Cascade Enman Scenario Example
 
-Status: active reusable example  
-Scope: Enman-specific source usage/cascade pilot example preserved from earlier governance notes
+Status: active Enman-specific scenario/application-architecture example / demonstration only  
+Scope: Enman-specific source usage/cascade pilot example that demonstrates how a reusable field kit can be instantiated for one scenario-driven application architecture
 
 ## 1. Purpose
 
 This example preserves the concrete Enman source usage pilot candidate that existed before F5 split the source-usage governance material into a reusable field kit and project profile.
+
+This example is intentionally Enman-specific. It is kept inside the reusable documentation layer only as a worked example for scenario-driven application architecture documentation. It is not reusable rule logic, not an active Enman register, and not portable project configuration.
 
 It demonstrates how the generic source usage model can be instantiated for a scenario/domain/slice project.
 
@@ -37,7 +39,7 @@ Earlier skeleton register path:
 planning/documentation/source-usage-pilots/SC-13D-agreement-exchange-source-usage-register.md
 ```
 
-F5 preserves this as candidate knowledge. A later batch should decide whether to run, revise or archive the pilot.
+F5 preserved this as project-specific example knowledge. A later cleanup batch should decide whether to keep it in place, move it under a project-specific examples subfolder, or omit it from a portable starter-kit export.
 
 ## 3. Target Chain
 
@@ -51,7 +53,7 @@ SC-13D scenario text / DATA / behavior items
   -> slice Behavior Coverage and Test / Verification Plan sections
 ```
 
-## 4. Candidate Source Usage Rows
+## 4. Preserved Example Source Usage Rows
 
 | source_id | source_scope | source_status | consumer_id | consumer_scope | reviewed_against | sync_status | review_outcome | notes |
 |---|---|---|---|---|---|---|---|---|

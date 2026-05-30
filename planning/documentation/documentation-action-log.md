@@ -606,3 +606,29 @@ Follow-ups:
   Keep planning/documentation-legacy/ for now. Later run a dedicated verification batch before deciding whether to delete or archive legacy.
 Notes:
   This cleanup does not delete planning/documentation-legacy/, does not move root Enman project profiles and does not change use-case routing.
+
+### 2026-05-30 — Marked project-specific examples and planned reusable docs cleanup
+
+Date:
+  2026-05-30
+Action:
+  Marked the Enman source-usage example as project-specific demonstration-only material and recorded the follow-up cleanup direction for the reusable documentation layer.
+Type:
+  documentation portability / example boundary / cleanup planning
+Status:
+  applied
+Why:
+  The reusable documentation layer is active, but portability requires project-specific examples and transition/support files to be clearly separated from reusable owner logic before any future cleanup or starter-kit export.
+Changed files:
+  - planning/documentation/examples/README.md
+  - planning/documentation/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
+  - planning/documentation/field-kits/source-usage-cascade-field-kit.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Enman-specific material remains allowed only as a clearly marked scenario/application example. Reusable owner logic stays in workflows, templates, field kits, profiles and responsibility maps.
+Cleanup planning fixed in chat/package manifest:
+  Future cleanup should audit tracking/migration/support files inside planning/documentation/ before moving or omitting them from a portable starter kit. Candidate cleanup targets include documentation-action-log.md, documentation-layer-portability-migration-plan.md, scoped sync notes and source-usage pilot artifacts. No files are deleted in this batch.
+Follow-ups:
+  Run a dedicated cleanup/export batch only after reviewing active references. Do not delete planning/documentation-legacy/ in this batch.
+Notes:
+  This batch does not create a cleanup-plan file in the repository, does not move root Enman profiles, does not change root use-case routing and does not delete any files.
