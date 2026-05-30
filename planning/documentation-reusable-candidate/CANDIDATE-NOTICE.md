@@ -87,3 +87,23 @@ Meaning:
 ```
 
 These outputs are candidate-only and do not switch canonical documentation ownership.
+
+## 8. Candidate Field Kit Outputs
+
+F5 candidate field-kit split introduced:
+
+```text
+planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+```
+
+F5 also created candidate Enman project-instance files derived from those kits:
+
+```text
+planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+planning/documentation-reusable-candidate/enman-shared-visibility-map.md
+planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+```
+
+These files are candidate-only and do not promote project-instance files to active `planning/` root.

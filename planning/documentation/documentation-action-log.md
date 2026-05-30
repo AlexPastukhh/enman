@@ -599,3 +599,52 @@ Owner sources:
 Notes:
   This change does not touch active planning/documentation/planning-docs-architecture-principles.md, does not switch canonical docs, does not move VKR/source-usage/sync notes, and does not rewrite the status/local-global/source-usage workflows.
 ```
+
+### 2026-05-30 — Split candidate field kits and Enman project-instance files
+
+```text
+Date:
+  2026-05-30
+Action:
+  Split deferred candidate status/local-global/source-usage responsibilities into reusable field kits, repeated workflows, Enman candidate project-instance files and examples.
+Type:
+  documentation architecture / portability migration candidate work
+Status:
+  applied
+Why:
+  F4 intentionally deferred source usage/status/local-global details. F5 separates principles, kit setup, repeated workflow, Enman concrete configuration and examples so Enman adapter does not become a dumping ground.
+Changed files:
+  - planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+  - planning/documentation-reusable-candidate/status-reconciliation-workflow.md
+  - planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+  - planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+  - planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
+  - planning/documentation-reusable-candidate/enman-shared-visibility-map.md
+  - planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+  - planning/documentation-reusable-candidate/source-usage-cascade-governance-plan.md
+  - planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+  - planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
+  - planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
+  - planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
+  - planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
+  - planning/documentation-reusable-candidate/examples/README.md
+  - planning/documentation-reusable-candidate/enman-docs-adapter.md
+  - planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+  - planning/documentation-reusable-candidate/README.md
+  - planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Candidate now distinguishes reusable field kits, repeated workflows, Enman project-instance answers and examples for the deferred status/local-global/source-usage areas.
+PMR relation:
+  none
+Follow-ups:
+  Review F5 outputs after use; decide later whether to promote Enman project-instance files to active planning/ root and whether to delete/archive the source usage governance bridge.
+Owner sources:
+  planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+  planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+  planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+  planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+Notes:
+  This change remains candidate-only. It does not switch canonical docs, does not promote Enman files into active planning/ root, and does not rewrite active planning/documentation/ workflows.
+```

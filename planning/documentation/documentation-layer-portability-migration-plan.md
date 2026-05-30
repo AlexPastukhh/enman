@@ -137,6 +137,43 @@ F4 does not rewrite active planning/documentation/planning-docs-architecture-pri
 F4 does not create the source usage field kit or rewrite status/local-global/source-usage workflows; those are deferred to F5.
 ```
 
+## 2D. Candidate Field Kit / Project Instance State
+
+F5 candidate field-kit split separated setup, workflow, project-instance and example responsibilities for the deferred status/local-global/source-usage areas.
+
+Created reusable candidate field kits:
+
+```text
+planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+```
+
+Created candidate Enman project-instance files:
+
+```text
+planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+planning/documentation-reusable-candidate/enman-shared-visibility-map.md
+planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+```
+
+Created candidate examples:
+
+```text
+planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
+planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
+planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
+planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
+```
+
+Boundary:
+
+```text
+F5 does not promote Enman project-instance files into active planning/ root.
+F5 does not switch canonical documentation ownership.
+F5 does not rewrite active planning/documentation/ workflows.
+```
+
 ## 3. Principles File Role Decision
 
 The principles file should own high-level documentation architecture invariants.

@@ -264,6 +264,18 @@ Owner:
 planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
 ```
 
+## 13A. Specific Enman Project-Instance Files
+
+F5 candidate kit split created specific Enman instance files so this adapter can stay an overview instead of becoming a dumping ground.
+
+```text
+planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+planning/documentation-reusable-candidate/enman-shared-visibility-map.md
+planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+```
+
+Use those files for concrete Enman answers produced by field kits.
+
 ## 14. Do Not
 
 ```text

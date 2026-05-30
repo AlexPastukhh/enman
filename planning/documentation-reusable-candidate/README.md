@@ -91,6 +91,35 @@ Candidate read order for portability/split work:
 
 These files are still candidate-only and do not replace the active documentation layer until a later migration/switch batch approves it.
 
+## 2C. Candidate Field Kit / Project Instance Outputs
+
+F5 candidate field-kit split introduced these candidate-only files:
+
+```text
+planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+planning/documentation-reusable-candidate/status-reconciliation-workflow.md
+planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+
+planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
+planning/documentation-reusable-candidate/enman-shared-visibility-map.md
+
+planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+planning/documentation-reusable-candidate/source-usage-cascade-governance-plan.md
+planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+```
+
+Candidate examples added for these kits:
+
+```text
+planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
+planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
+planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
+planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
+```
+
+F5 keeps the field kits reusable, Enman answers project-specific and examples demonstrative.
+
 ## 3. Read Order For Documentation-Layer Work
 
 For documentation-layer architecture/routing work:
