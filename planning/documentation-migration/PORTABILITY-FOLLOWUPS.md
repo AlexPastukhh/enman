@@ -3,7 +3,7 @@
 Status: candidate deferred review list  
 Scope: deferred work that remains after F5 field-kit and project-instance split
 
-> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It tracks deferred work for later candidate migration batches.
+> Candidate note: this file belongs to `planning/documentation-migration/`. It tracks deferred work for later candidate migration batches.
 
 ## 1. Purpose
 
@@ -23,26 +23,26 @@ This file now tracks what remains after that split.
 | PF-004 | 14, 16, 18, 21 | Examples extraction | partially addressed | Four starter examples exist, including a preserved Enman SC-13D source-usage pilot example; more examples may be added after field-kit usage. | candidate examples folder / examples README | after F5 review |
 | PF-005 | F3 open questions | Final naming and canonical switch decisions | still open | Decide final reusable principles name, adapter naming, active promotion path. | migration plan | later switch batch |
 | PF-006 | 23, 24B | Archive/package and command preservation details | still open if needed | Principles keep the boundary; detailed command/source semantics remain in owner workflows. | documentation update workflow / replacement guide / use-case map | later cleanup if needed |
-| PF-007 | F6A | Candidate README/read-order cleanup | addressed in candidate | Re-check after any future promotion/switch batch. | `planning/documentation-reusable-candidate/README.md` | later switch batch |
+| PF-007 | F6A | Candidate README/read-order cleanup | addressed in candidate | Re-check after any future promotion/switch batch. | `planning/documentation-migration/README.md` | later switch batch |
 | PF-008 | F7A/F7B | Active-only reusable overlay into candidate | addressed in candidate | Re-check after final folder-switch planning; make sure active UCM kits and diff-command guardrails are preserved. | candidate overlay files + active docs layer | F7C / later switch verification |
 
 
 ## 3. F5 Outputs
 
-F5 candidate outputs:
+F5 reusable outputs, now active or migrated:
 
 ```text
-planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
-planning/documentation-reusable-candidate/status-reconciliation-workflow.md
-planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+planning/documentation/field-kits/status-reconciliation-field-kit.md
+planning/documentation/status-reconciliation-workflow.md
+planning/documentation-migration/enman-status-evidence-profile.md
 
-planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
-planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
-planning/documentation-reusable-candidate/enman-shared-visibility-map.md
+planning/documentation/field-kits/shared-visibility-map-field-kit.md
+planning/documentation/local-global-documentation-sync-workflow.md
+planning/documentation-migration/enman-shared-visibility-map.md
 
-planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
-planning/documentation-reusable-candidate/source-usage-cascade-governance-plan.md
-planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+planning/documentation/field-kits/source-usage-cascade-field-kit.md
+planning/documentation/source-usage-cascade-governance-plan.md
+planning/documentation-migration/enman-source-usage-cascade-profile.md
 ```
 
 ## 4. F6+ Candidates
@@ -62,17 +62,17 @@ After F5, consider:
 
 ## 4A. F7C Overlay Outputs
 
-F7C mirrors active reusable additions into candidate so a later folder-switch plan does not lose active F7A/F7B work.
+F7C mirrored active reusable additions into the former candidate so the later folder switch did not lose active F7A/F7B work.
 
-Candidate overlay files:
+Former candidate overlay files, now active:
 
 ```text
-planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
-planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
-planning/documentation-reusable-candidate/use-case-map-workflow.md
-planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
-planning/documentation-reusable-candidate/documentation-update-workflow.md
-planning/documentation-reusable-candidate/documentation-action-log.md
+planning/documentation/field-kits/root-use-case-map-field-kit.md
+planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+planning/documentation/use-case-map-workflow.md
+planning/documentation/USE-CASE-MAP-TEMPLATE.md
+planning/documentation/documentation-update-workflow.md
+planning/documentation/documentation-action-log.md
 ```
 
 Boundary:

@@ -1,9 +1,7 @@
 # Root Use-Case Map Field Kit
 
-Status: candidate reusable documentation-layer field kit  
+Status: active reusable documentation-layer field kit  
 Scope: one-time / rare setup guidance for deriving a single project root use-case map
-
-Candidate note: this file mirrors the active F7A reusable root use-case-map setup kit into the candidate workspace for future folder-switch readiness. It does not make the candidate folder canonical.
 
 ## 1. Purpose
 
@@ -11,7 +9,7 @@ This field kit helps a project create or restructure one concrete root use-case 
 
 A project should usually have exactly one root use-case map.
 
-For Enman, the concrete project instance is:
+Example: in Enman, the concrete project instance is:
 
 ```text
 planning/planning-use-case-map.md
@@ -103,7 +101,7 @@ A concrete root map should normally include:
 Exact shape belongs to:
 
 ```text
-planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
+planning/documentation/USE-CASE-MAP-TEMPLATE.md
 ```
 
 ## 7. Row Creation Checklist
@@ -126,7 +124,7 @@ For each command or use case row:
 Maintenance workflow:
 
 ```text
-planning/documentation-reusable-candidate/use-case-map-workflow.md
+planning/documentation/use-case-map-workflow.md
 ```
 
 ## 8. Profile-Specific Route Kits
@@ -136,7 +134,7 @@ If a project has a specialized structure, use a profile-specific field kit to de
 For scenario/domain/slice projects, use:
 
 ```text
-planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
+planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
 ```
 
 The profile kit suggests route families. The project root map still owns the concrete rows.

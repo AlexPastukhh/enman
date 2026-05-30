@@ -47,15 +47,53 @@ Preferred migration strategy:
 6. Switch canonical references only after review.
 7. Remove or archive the old Enman-specific copy only after verification.
 
-Candidate workspace idea:
+Historical candidate workspace idea:
 
 ```text
-planning/documentation-reusable-candidate/
+former planning/documentation-reusable-candidate/
 ```
 
-Candidate guardrail:
+Historical candidate guardrail:
 
-> The reusable candidate copy is temporary and non-canonical until the migration is accepted. Ordinary current project documentation updates should continue to use the active `planning/documentation/` layer.
+> Before the F7D/F7E switch, the reusable candidate copy was temporary and non-canonical. Ordinary current project documentation updates continued to use the then-active `planning/documentation/` layer.
+
+## 2I. Active Reusable Documentation Layer Cleanup State
+
+F7D/F7E completes the practical switch from the non-canonical reusable candidate path to the active documentation path.
+
+Current state:
+
+```text
+planning/documentation/
+  = active reusable documentation layer
+
+planning/documentation-legacy/
+  = previous active documentation folder, preserved temporarily
+
+planning/documentation-migration/
+  = candidate guardrails, classification artifacts, portability followups and Enman adapter/profile history
+```
+
+F7E cleanup decisions:
+
+```text
+- candidate/non-canonical wording is removed from active reusable owner files;
+- runtime paths use `planning/documentation/` rather than the former `planning/documentation-reusable-candidate/` path;
+- reusable field kits live under planning/documentation/field-kits/;
+- specialized profiles live under planning/documentation/profiles/;
+- Enman project configuration remains in root planning/ profiles;
+- migration-only candidate artifacts are not active docs rules.
+```
+
+Boundary:
+
+```text
+F7E does not delete planning/documentation-legacy/.
+F7E does not move root Enman profiles into planning/documentation/.
+F7E does not remove source-usage-cascade-governance-plan.md.
+F7E does not create a second generic use-case map.
+```
+
 
 ## 3. Principles File Role Decision
 
@@ -452,8 +490,8 @@ For copy-first migration, the initial candidate should be a **full baseline copy
 Preferred first migration step:
 
 ```text
-copy planning/documentation/
-  -> planning/documentation-reusable-candidate/
+copy old active planning/documentation/
+  -> former planning/documentation-reusable-candidate/
 ```
 
 Reason:

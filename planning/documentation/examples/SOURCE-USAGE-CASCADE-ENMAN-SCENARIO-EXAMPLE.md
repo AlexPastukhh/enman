@@ -1,6 +1,6 @@
 # Source Usage Cascade Enman Scenario Example
 
-Status: candidate example  
+Status: active reusable example  
 Scope: Enman-specific source usage/cascade pilot example preserved from earlier governance notes
 
 ## 1. Purpose
@@ -12,13 +12,13 @@ It demonstrates how the generic source usage model can be instantiated for a sce
 Kit owner:
 
 ```text
-planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+planning/documentation/field-kits/source-usage-cascade-field-kit.md
 ```
 
 Enman profile:
 
 ```text
-planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+planning/source-usage-cascade-profile.md
 ```
 
 This is an example only. It is not an active Enman register and does not switch canonical documentation ownership.

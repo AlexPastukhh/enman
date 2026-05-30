@@ -3,7 +3,7 @@
 Status: candidate Enman project-instance map  
 Scope: concrete local-detail to shared-visibility targets for Enman documentation
 
-> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not active Enman source of truth until a later migration/switch batch approves it.
+> Candidate note: this file belongs to `planning/documentation-migration/`. It is not active Enman source of truth until a later migration/switch batch approves it.
 
 ## 1. Purpose
 
@@ -12,13 +12,13 @@ This file answers the Shared Visibility Map field kit for Enman.
 Kit owner:
 
 ```text
-planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+planning/documentation/field-kits/shared-visibility-map-field-kit.md
 ```
 
 Repeated workflow:
 
 ```text
-planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
+planning/documentation/local-global-documentation-sync-workflow.md
 ```
 
 ## 2. Shared Visibility Table
@@ -45,6 +45,6 @@ planning/documentation-reusable-candidate/local-global-documentation-sync-workfl
 ## 4. Related Files
 
 ```text
-planning/documentation-reusable-candidate/enman-docs-adapter.md
-planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
+planning/documentation-migration/enman-docs-adapter.md
+planning/documentation/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
 ```

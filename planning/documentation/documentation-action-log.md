@@ -511,16 +511,16 @@ Status:
 Why:
   Active documentation gained reusable F7A/F7B files and command guardrails after the candidate copy. The candidate workspace needs those active reusable additions before any future folder-switch or swap planning, otherwise a blind candidate promotion could lose current reusable work.
 Changed files:
-  - planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
-  - planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
-  - planning/documentation-reusable-candidate/use-case-map-workflow.md
-  - planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
-  - planning/documentation-reusable-candidate/documentation-update-workflow.md
-  - planning/documentation-reusable-candidate/documentation-action-log.md
-  - planning/documentation-reusable-candidate/README.md
-  - planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
-  - planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
-  - planning/documentation-reusable-candidate/documentation-responsibility-map.md
+  - planning/documentation/field-kits/root-use-case-map-field-kit.md
+  - planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+  - planning/documentation/use-case-map-workflow.md
+  - planning/documentation/USE-CASE-MAP-TEMPLATE.md
+  - planning/documentation/documentation-update-workflow.md
+  - planning/documentation/documentation-action-log.md
+  - planning/documentation/README.md
+  - planning/documentation-migration/CANDIDATE-NOTICE.md
+  - planning/documentation-migration/PORTABILITY-FOLLOWUPS.md
+  - planning/documentation/documentation-responsibility-map.md
 Layer impact:
   Candidate now contains the active-only reusable UCM field kit, scenario/domain/slice UCM route setup kit, active-latest UCM workflow/template and active-latest documentation update diff-command guardrails. Candidate remains non-canonical.
 PMR relation:
@@ -528,10 +528,54 @@ PMR relation:
 Follow-ups:
   Plan candidate final-shape normalization and controlled folder-switch strategy. Do not perform blind rename of candidate to active docs because candidate still contains migration-only artifacts and active docs still own current routing.
 Owner sources:
-  planning/documentation-reusable-candidate/README.md
-  planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
-  planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
-  planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
+  planning/documentation/README.md
+  planning/documentation-migration/CANDIDATE-NOTICE.md
+  planning/documentation/field-kits/root-use-case-map-field-kit.md
+  planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
 Notes:
   This candidate-local entry intentionally does not import active action-log history. This change does not copy root project files into candidate, does not make the candidate folder canonical, does not rename folders and does not delete active or candidate documentation files.
+```
+
+### 2026-05-30 — Cleaned active reusable documentation layer after folder switch
+
+```text
+Date:
+  2026-05-30
+Action:
+  Made planning/documentation/ self-consistent as the active reusable documentation layer after the folder rename switch.
+Type:
+  documentation architecture / post-switch cleanup
+Status:
+  applied
+Why:
+  The folder switch promoted the reusable candidate contents into planning/documentation/, but active files still contained candidate/non-canonical wording, stale former `planning/documentation-reusable-candidate/` paths and migration-only Enman adapter/project-instance artifacts.
+Changed files:
+  - planning/documentation/README.md
+  - planning/documentation/documentation-responsibility-map.md
+  - planning/documentation/documentation-update-workflow.md
+  - planning/documentation/status-reconciliation-workflow.md
+  - planning/documentation/local-global-documentation-sync-workflow.md
+  - planning/documentation/source-usage-cascade-governance-plan.md
+  - planning/documentation/field-kits/root-use-case-map-field-kit.md
+  - planning/documentation/field-kits/status-reconciliation-field-kit.md
+  - planning/documentation/field-kits/shared-visibility-map-field-kit.md
+  - planning/documentation/field-kits/source-usage-cascade-field-kit.md
+  - planning/documentation/profiles/scenario-domain-slice-docs-profile.md
+  - planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+  - planning/documentation/examples/README.md
+  - planning/documentation-migration/
+  - planning/README.md
+  - planning/planning-doc-responsibility-map.md
+Layer impact:
+  planning/documentation/ is now the active reusable documentation layer. Candidate-only guardrails/classification/followups and Enman adapter/profile history are outside the active docs root under planning/documentation-migration/. Root Enman profiles remain at planning/ root.
+PMR relation:
+  none
+Follow-ups:
+  Verify there are no runtime references to the former `planning/documentation-reusable-candidate/` path. Later decide when planning/documentation-legacy/ can be deleted.
+Owner sources:
+  planning/documentation/README.md
+  planning/documentation/documentation-responsibility-map.md
+  planning/planning-use-case-map.md
+Notes:
+  This cleanup does not delete planning/documentation-legacy/, does not move root Enman project profiles into planning/documentation/, does not delete the source-usage governance bridge and does not create a second generic root use-case map.
 ```

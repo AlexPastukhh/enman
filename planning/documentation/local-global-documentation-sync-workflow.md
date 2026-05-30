@@ -1,9 +1,7 @@
 # Local / Global Documentation Synchronization Workflow
 
-Status: reusable candidate workflow  
+Status: active reusable workflow  
 Scope: repeated process for synchronizing local documentation details with shared visibility targets after a project Shared Visibility Map exists
-
-> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not an active Enman source of truth until a later migration/switch batch approves it.
 
 ## 1. Purpose
 
@@ -14,7 +12,7 @@ It is not the setup kit.
 Use the setup kit first when the project has not yet defined a Shared Visibility Map:
 
 ```text
-planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+planning/documentation/field-kits/shared-visibility-map-field-kit.md
 ```
 
 ## 2. Responsibility Split
@@ -42,7 +40,7 @@ Before running this workflow, identify:
 For Enman candidate setup:
 
 ```text
-planning/documentation-reusable-candidate/enman-shared-visibility-map.md
+planning/shared-visibility-map.md
 ```
 
 ## 4. Core Rule
@@ -163,7 +161,7 @@ Use this table when helpful:
 ## 8. Related Files
 
 ```text
-planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
-planning/documentation-reusable-candidate/enman-shared-visibility-map.md
-planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
+planning/documentation/field-kits/shared-visibility-map-field-kit.md
+planning/shared-visibility-map.md
+planning/documentation/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
 ```

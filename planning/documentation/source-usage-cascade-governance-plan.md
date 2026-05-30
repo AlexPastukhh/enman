@@ -1,28 +1,26 @@
 # Source Usage Cascade Governance Plan
 
-Status: candidate bridge / superseded pilot note  
+Status: active bridge / transitional source-usage governance note  
 Scope: transition note from the earlier pilot governance plan to the reusable source usage cascade field kit
-
-> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is preserved as bridge context for one migration stage. New setup work should use the field kit.
 
 ## 1. Current Owner
 
-The reusable setup owner for source usage/cascade is now:
+The reusable setup owner for source usage/cascade is:
 
 ```text
-planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+planning/documentation/field-kits/source-usage-cascade-field-kit.md
 ```
 
-The Enman candidate project-instance owner is:
+The Enman project-instance owner is:
 
 ```text
-planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+planning/source-usage-cascade-profile.md
 ```
 
 Generic example:
 
 ```text
-planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
+planning/documentation/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
 ```
 
 ## 2. Why This File Remains Temporarily

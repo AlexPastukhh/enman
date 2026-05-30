@@ -1,9 +1,7 @@
 # Shared Visibility Map Field Kit
 
-Status: reusable candidate field kit  
+Status: active reusable field kit  
 Scope: setup guidance for deriving a project-specific local-detail to shared-visibility map
-
-> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not an active Enman source of truth until a later migration/switch batch approves it.
 
 ## 1. Purpose
 
@@ -56,7 +54,7 @@ Create a project-specific file with this table:
 For the candidate Enman instance, see:
 
 ```text
-planning/documentation-reusable-candidate/enman-shared-visibility-map.md
+planning/shared-visibility-map.md
 ```
 
 ## 5. Handoff To Workflow
@@ -64,7 +62,7 @@ planning/documentation-reusable-candidate/enman-shared-visibility-map.md
 After the project map exists, use the repeated workflow:
 
 ```text
-planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
+planning/documentation/local-global-documentation-sync-workflow.md
 ```
 
 The workflow should apply the project map instead of guessing shared targets every time.
@@ -74,5 +72,5 @@ The workflow should apply the project map instead of guessing shared targets eve
 Scenario/project example:
 
 ```text
-planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
+planning/documentation/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
 ```

@@ -1,9 +1,7 @@
 # Status Reconciliation Workflow
 
-Status: reusable candidate workflow  
+Status: active reusable workflow  
 Scope: repeated process for reconciling documentation status claims after a project evidence/current-reality model exists
-
-> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not an active Enman source of truth until a later migration/switch batch approves it.
 
 ## 1. Purpose
 
@@ -14,7 +12,7 @@ It is not the setup kit.
 Use the setup kit first when the project has not yet defined evidence sources, status vocabulary or status-owner files:
 
 ```text
-planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+planning/documentation/field-kits/status-reconciliation-field-kit.md
 ```
 
 ## 2. Responsibility Split
@@ -42,7 +40,7 @@ Before running this workflow, identify:
 For Enman candidate setup:
 
 ```text
-planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+planning/status-evidence-profile.md
 ```
 
 ## 4. When To Run
@@ -103,7 +101,7 @@ If evidence conflicts:
 ## 9. Related Files
 
 ```text
-planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
-planning/documentation-reusable-candidate/enman-status-evidence-profile.md
-planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
+planning/documentation/field-kits/status-reconciliation-field-kit.md
+planning/status-evidence-profile.md
+planning/documentation/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
 ```

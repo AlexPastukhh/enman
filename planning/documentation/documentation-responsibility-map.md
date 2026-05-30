@@ -26,7 +26,7 @@ planning/planning-doc-responsibility-map.md
 Canonical documentation architecture theory:
 
 ```text
-planning/documentation-reusable-candidate/planning-docs-architecture-principles.md
+planning/documentation/planning-docs-architecture-principles.md
 ```
 
 Root layer routing:
@@ -38,7 +38,7 @@ planning/planning-doc-responsibility-map.md
 Documentation layer navigation:
 
 ```text
-planning/documentation-reusable-candidate/README.md
+planning/documentation/README.md
 ```
 
 This file owns only documentation-layer placement.
@@ -61,8 +61,8 @@ This file owns only documentation-layer placement.
 | File Update Overview template | `FILE-UPDATE-OVERVIEW-TEMPLATE.md` | Owns the exact reusable File Update Overview block structure. |
 | Use-case map creation/update workflow | `use-case-map-workflow.md` | Owns the reusable process for creating, updating and maintaining use-case maps. |
 | Use-case map template | `USE-CASE-MAP-TEMPLATE.md` | Owns the exact reusable structure for concrete use-case maps. |
-| Root use-case map setup field kit | `field-kits/root-use-case-map-field-kit.md` | Candidate reusable setup kit for deriving one concrete project root use-case map and common command clusters. Not a runtime router. |
-| Scenario/domain/slice route setup field kit | `profiles/scenario-domain-slice-use-case-field-kit.md` | Candidate profile-specific setup kit for adding scenario/domain/slice route families to a project root use-case map. Not a second map. |
+| Root use-case map setup field kit | `field-kits/root-use-case-map-field-kit.md` | Active reusable setup kit for deriving one concrete project root use-case map and common command clusters. Not a runtime router. |
+| Scenario/domain/slice route setup field kit | `profiles/scenario-domain-slice-use-case-field-kit.md` | Active profile-specific setup kit for adding scenario/domain/slice route families to a project root use-case map. Not a second map. |
 | Working example coverage decision process | `example-coverage-workflow.md` | Decides whether a new/changed template, workflow output, response command, output mode or draft format needs a working example. |
 | Documentation-layer working example index | `examples/README.md` | Navigation and coverage index for documentation-layer examples. It does not own routing/source/output/permission logic. |
 | Source usage cascade governance pilot plan | `source-usage-cascade-governance-plan.md` | Governance plan for source usage relationships, layer encapsulation, attention preservation and cascade-review pilots. Not the full future workflow. |
@@ -220,6 +220,4 @@ USE-CASE-MAP-TEMPLATE.md
 documentation-update-workflow.md
 ```
 
-They are included to prevent active reusable additions from being lost during future folder-switch planning.
-
-They do not make `planning/documentation-reusable-candidate/` canonical.
+Historical note: F7C mirrored active reusable additions into the former candidate workspace before the F7D folder switch. After F7D/F7E, `planning/documentation/` is the active reusable documentation layer.

@@ -1,6 +1,6 @@
 # Status Reconciliation Scenario Project Example
 
-Status: candidate example  
+Status: active reusable example  
 Scope: scenario-driven software project example for using the status reconciliation field kit
 
 ## 1. Purpose
@@ -8,7 +8,7 @@ Scope: scenario-driven software project example for using the status reconciliat
 This example demonstrates how a scenario-driven software project can apply:
 
 ```text
-planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+planning/documentation/field-kits/status-reconciliation-field-kit.md
 ```
 
 It is an example only. It does not own rules.

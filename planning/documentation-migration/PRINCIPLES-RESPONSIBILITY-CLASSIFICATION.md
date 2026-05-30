@@ -1,7 +1,7 @@
 # Principles Responsibility Classification
 
 Status: candidate review artifact / pre-split classification  
-Scope: section-by-section responsibility-zone classification for `planning/documentation-reusable-candidate/planning-docs-architecture-principles.md`
+Scope: section-by-section responsibility-zone classification for `planning/documentation/planning-docs-architecture-principles.md`
 
 ## 1. Purpose
 
@@ -10,7 +10,7 @@ This artifact classifies every section of the candidate principles file before a
 Target file:
 
 ```text
-planning/documentation-reusable-candidate/planning-docs-architecture-principles.md
+planning/documentation/planning-docs-architecture-principles.md
 ```
 
 Method owner:

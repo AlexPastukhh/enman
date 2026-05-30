@@ -79,7 +79,7 @@ planning/documentation/planning-docs-architecture-principles.md
 | `planning/replacement-file-generation-guide.md` | Archive/package generation rules for manual repo application |
 
 
-Project-wide profiles are concrete Enman configuration files. Reusable field-kit/workflow logic remains in documentation-layer owner files or candidate reusable docs until a later migration/switch batch.
+Project-wide profiles are concrete Enman configuration files. Reusable field-kit/workflow logic now lives in the active reusable documentation layer under `planning/documentation/`. Previous active docs are preserved temporarily under `planning/documentation-legacy/`; migration-only switch history is preserved under `planning/documentation-migration/`.
 
 
 Use-case map responsibility rule:

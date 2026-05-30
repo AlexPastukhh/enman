@@ -1,9 +1,7 @@
 # Status Reconciliation Field Kit
 
-Status: reusable candidate field kit  
+Status: active reusable field kit  
 Scope: setup guidance for defining a project's evidence/current-reality model and status vocabulary before running status reconciliation
-
-> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not an active Enman source of truth until a later migration/switch batch approves it.
 
 ## 1. Purpose
 
@@ -121,7 +119,7 @@ Create a project-specific file with this shape:
 For the candidate Enman instance, see:
 
 ```text
-planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+planning/status-evidence-profile.md
 ```
 
 ## 7. Handoff To Workflow
@@ -129,7 +127,7 @@ planning/documentation-reusable-candidate/enman-status-evidence-profile.md
 After the project profile exists, use the repeated workflow:
 
 ```text
-planning/documentation-reusable-candidate/status-reconciliation-workflow.md
+planning/documentation/status-reconciliation-workflow.md
 ```
 
 The workflow should not reinvent the evidence model each time. It should apply the project profile.
@@ -139,5 +137,5 @@ The workflow should not reinvent the evidence model each time. It should apply t
 Scenario/project example:
 
 ```text
-planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
+planning/documentation/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
 ```

@@ -34,10 +34,22 @@ Use them when a task involves:
 
 They are active Enman project profiles, not reusable documentation workflows.
 
-Reusable candidate origins remain under:
+The reusable documentation layer is active under:
 
 ```text
-planning/documentation-reusable-candidate/
+planning/documentation/
+```
+
+The previous active documentation folder is temporarily preserved under:
+
+```text
+planning/documentation-legacy/
+```
+
+Migration-only reusable-candidate history is preserved under:
+
+```text
+planning/documentation-migration/
 ```
 
 ## 2. Repository Editing Workflow

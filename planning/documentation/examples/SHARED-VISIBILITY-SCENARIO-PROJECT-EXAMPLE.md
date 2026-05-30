@@ -1,6 +1,6 @@
 # Shared Visibility Scenario Project Example
 
-Status: candidate example  
+Status: active reusable example  
 Scope: scenario-driven project example for local detail to shared visibility mapping
 
 ## 1. Purpose
@@ -8,7 +8,7 @@ Scope: scenario-driven project example for local detail to shared visibility map
 This example demonstrates how a scenario-driven project can apply:
 
 ```text
-planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+planning/documentation/field-kits/shared-visibility-map-field-kit.md
 ```
 
 It is an example only. It does not own rules.

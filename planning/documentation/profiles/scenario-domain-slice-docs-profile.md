@@ -1,9 +1,7 @@
 # Scenario / Domain / Slice Documentation Profile
 
-Status: reusable specialized candidate profile  
+Status: active reusable specialized profile  
 Scope: reusable profile for scenario-driven app/product projects; not universal documentation architecture
-
-> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not an active Enman source of truth until a later migration/switch batch approves it.
 
 ## 1. Purpose
 
@@ -99,7 +97,7 @@ Exact file paths belong in the project adapter.
 For Enman candidate mappings, see:
 
 ```text
-planning/documentation-reusable-candidate/enman-docs-adapter.md
+planning/documentation-migration/enman-docs-adapter.md
 ```
 
 ## 7. Source Usage / Cascade Pattern
@@ -129,7 +127,7 @@ needs follow-up.
 Detailed source usage row models and field-kit setup are deferred to:
 
 ```text
-planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+planning/documentation-migration/PORTABILITY-FOLLOWUPS.md
 ```
 
 ## 8. Local-Global Visibility Pattern

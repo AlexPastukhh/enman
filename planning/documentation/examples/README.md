@@ -34,7 +34,7 @@ If an example needs command/source/output/permission logic, link to the owner fi
 
 ## 3. Example Coverage Table
 
-The original copied active example coverage rows remain deferred. Candidate F5 field-kit examples are listed separately below.
+The original copied active example coverage rows remain deferred. Field-kit examples are listed separately below.
 
 | Example ID | Type | Owner | Related use-case/workflow | Status | File | Missing/deferred reason |
 |---|---|---|---|---|---|---|
@@ -62,10 +62,10 @@ The original copied active example coverage rows remain deferred. Candidate F5 f
 
 | Example ID | Type | Owner | Related use-case/workflow | Status | File | Notes |
 |---|---|---|---|---|---|---|
-| `STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE` | field-kit example | `planning/documentation-reusable-candidate/status-reconciliation-field-kit.md` | evidence/current-reality model setup for scenario-driven software projects | current candidate | `planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md` | Demonstrates first-stage implemented status and evidence checking. |
-| `SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE` | field-kit example | `planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md` | local detail to shared visibility mapping | current candidate | `planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md` | Demonstrates when a local slice question should be mirrored. |
-| `SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE` | field-kit example | `planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md` | generic source/consumer/cascade review model | current candidate | `planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md` | Demonstrates source usage row and metadata-only review outcome. |
-| `SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE` | field-kit example | `planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md` and `planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md` | Enman-specific source/consumer/cascade pilot preservation | current candidate | `planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md` | Preserves SC-13D / AgreementProposalExchange pilot knowledge from earlier governance notes. |
+| `STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE` | field-kit example | `planning/documentation/field-kits/status-reconciliation-field-kit.md` | evidence/current-reality model setup for scenario-driven software projects | current example | `planning/documentation/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md` | Demonstrates first-stage implemented status and evidence checking. |
+| `SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE` | field-kit example | `planning/documentation/field-kits/shared-visibility-map-field-kit.md` | local detail to shared visibility mapping | current example | `planning/documentation/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md` | Demonstrates when a local slice question should be mirrored. |
+| `SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE` | field-kit example | `planning/documentation/field-kits/source-usage-cascade-field-kit.md` | generic source/consumer/cascade review model | current example | `planning/documentation/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md` | Demonstrates source usage row and metadata-only review outcome. |
+| `SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE` | field-kit example | `planning/documentation/field-kits/source-usage-cascade-field-kit.md` and `planning/source-usage-cascade-profile.md` | Enman-specific source/consumer/cascade pilot preservation | current example | `planning/documentation/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md` | Preserves SC-13D / AgreementProposalExchange pilot knowledge from earlier governance notes. |
 
 ## 4. Adding A New Example
 

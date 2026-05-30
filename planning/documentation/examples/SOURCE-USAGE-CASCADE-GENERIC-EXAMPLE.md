@@ -1,6 +1,6 @@
 # Source Usage Cascade Generic Example
 
-Status: candidate example  
+Status: active reusable example  
 Scope: generic source/consumer/cascade example for the source usage cascade field kit
 
 ## 1. Purpose
@@ -10,7 +10,7 @@ This example demonstrates the generic source usage relationship model.
 Kit owner:
 
 ```text
-planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+planning/documentation/field-kits/source-usage-cascade-field-kit.md
 ```
 
 It is not Enman-specific.

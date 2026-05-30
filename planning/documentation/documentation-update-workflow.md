@@ -1,6 +1,6 @@
 # Documentation Update Workflow
 
-Status: candidate reusable documentation-only workflow  
+Status: active reusable documentation-only workflow  
 Scope: how to update planning docs accurately without touching code or generated artifacts
 
 ## 1. Core Principle
@@ -12,7 +12,7 @@ A documentation update is not a place to implement behavior.
 For broad docs/navigation/status/register changes, prepare a `Documentation Update Plan` first:
 
 ```text
-planning/documentation-reusable-candidate/documentation-update-plan-workflow.md
+planning/documentation/documentation-update-plan-workflow.md
 ```
 
 After the plan is reviewed, use the output mode explicitly requested or approved by the user:
@@ -132,7 +132,7 @@ Before applying or finalizing a documentation update, check whether local change
 Use:
 
 ```text
-planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
+planning/documentation/local-global-documentation-sync-workflow.md
 ```
 
 Typical sync targets:
@@ -202,7 +202,7 @@ planning/planning-doc-responsibility-map.md
 For documentation-layer placement, use:
 
 ```text
-planning/documentation-reusable-candidate/documentation-responsibility-map.md
+planning/documentation/documentation-responsibility-map.md
 ```
 
 Do not duplicate full placement tables in this workflow. This workflow describes the update process; responsibility maps own placement decisions.
@@ -431,7 +431,7 @@ Before finalizing a documentation update, decide whether the update is a signifi
 Update:
 
 ```text
-planning/documentation-reusable-candidate/documentation-action-log.md
+planning/documentation/documentation-action-log.md
 ```
 
 when the change affects:

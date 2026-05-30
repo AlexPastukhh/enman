@@ -3,7 +3,7 @@
 Status: reusable candidate architecture principles  
 Scope: reusable documentation architecture invariants for docs systems, with project-specific and scenario-driven material split into profile/adapter files
 
-> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not the active Enman documentation source until a later migration/switch batch approves it.
+> Candidate note: this file belongs to `planning/documentation/`. It is not the active Enman documentation source until a later migration/switch batch approves it.
 
 ## Contents
 
@@ -137,13 +137,13 @@ Projects should define their own:
 For scenario-driven app/product projects, see:
 
 ```text
-planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
+planning/documentation/profiles/scenario-domain-slice-docs-profile.md
 ```
 
 For the current Enman project mapping extracted from the candidate copy, see:
 
 ```text
-planning/documentation-reusable-candidate/enman-docs-adapter.md
+planning/documentation-migration/enman-docs-adapter.md
 ```
 
 ## 4. Responsibility Map Model
@@ -384,7 +384,7 @@ source artifact/scope
 Detailed field-kit extraction for this model is deferred to:
 
 ```text
-planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+planning/documentation-migration/PORTABILITY-FOLLOWUPS.md
 ```
 
 ## 13. Source / Version Principle
@@ -427,7 +427,7 @@ planning/documentation/reviewable-agent-output-and-commands-workflow.md
 Reusable/candidate source-usage field-kit extraction is deferred to:
 
 ```text
-planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+planning/documentation-migration/PORTABILITY-FOLLOWUPS.md
 ```
 
 ## 16. Local Detail + Shared Visibility
@@ -568,7 +568,7 @@ Concrete external output layers and wording rules are project adapter/profile co
 For the current Enman candidate mapping, see:
 
 ```text
-planning/documentation-reusable-candidate/enman-docs-adapter.md
+planning/documentation-migration/enman-docs-adapter.md
 ```
 
 ## 22. Dirty Draft / Recovery Note Policy

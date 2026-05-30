@@ -3,7 +3,7 @@
 Status: candidate Enman project-instance profile  
 Scope: concrete Enman source/consumer categories, row conventions and cascade triggers
 
-> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not active Enman source of truth until a later migration/switch batch approves it.
+> Candidate note: this file belongs to `planning/documentation-migration/`. It is not active Enman source of truth until a later migration/switch batch approves it.
 
 ## 1. Purpose
 
@@ -12,13 +12,13 @@ This file answers the source usage cascade field kit for Enman.
 Kit owner:
 
 ```text
-planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+planning/documentation/field-kits/source-usage-cascade-field-kit.md
 ```
 
 Generic example:
 
 ```text
-planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
+planning/documentation/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
 ```
 
 ## 2. Source Categories
@@ -113,7 +113,7 @@ F5 does not activate this as an active Enman register. It preserves the pilot ca
 Detailed candidate example:
 
 ```text
-planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
+planning/documentation/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
 ```
 
 ## 7. Do Not

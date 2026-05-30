@@ -1,240 +1,196 @@
-# Documentation Reusable Candidate Index
+# Documentation Reusable Layer Index
 
-Status: temporary non-canonical reusable candidate index  
-Scope: candidate navigation, read order and owner links for reusable documentation-layer migration
+Status: active reusable documentation layer index / transitional post-switch cleanup  
+Scope: documentation architecture, documentation update workflows, responsibility routing, reusable field kits, specialized profiles, examples, source-usage governance and action logging
 
 ## 1. Purpose
 
-This folder is a temporary reusable candidate workspace for the documentation layer.
-
-It is used to review, split, genericize and prepare reusable documentation architecture without changing the active Enman documentation source of truth.
-
-Active documentation remains under:
+This folder is the active documentation layer:
 
 ```text
 planning/documentation/
 ```
 
-until a later explicit migration/switch batch approves otherwise.
+It now contains the reusable documentation layer that was promoted during the folder switch.
 
-## 2. Candidate Source-Of-Truth Boundary
-
-This README is candidate navigation only.
-
-It does not make the candidate folder canonical.
-
-Use this folder for:
+The previous active documentation folder is preserved temporarily at:
 
 ```text
-- portability review;
-- reusable-layer migration work;
-- responsibility-zone classification;
-- candidate principles/profile/adapter cleanup;
-- candidate field-kit/project-instance review;
-- examples and follow-up tracking for future migration batches.
+planning/documentation-legacy/
 ```
 
-Do not use this folder for ordinary active Enman documentation updates.
-
-## 3. Candidate Read Order
-
-For candidate portability/split work, read:
+Migration-only candidate/history artifacts are preserved at:
 
 ```text
-1. planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
-2. planning/documentation-reusable-candidate/PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md
-3. planning/documentation-reusable-candidate/planning-docs-architecture-principles.md
-4. planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
-5. planning/documentation-reusable-candidate/enman-docs-adapter.md
-6. planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+planning/documentation-migration/
 ```
 
-For candidate field-kit/project-instance review, read the relevant kit group:
+## 2. Core Rule
+
+This folder owns reusable documentation-layer logic.
+
+It does not own concrete Enman project configuration. Concrete Enman project routing/profile files stay at planning root:
 
 ```text
-status:
-  planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
-  planning/documentation-reusable-candidate/status-reconciliation-workflow.md
-  planning/documentation-reusable-candidate/enman-status-evidence-profile.md
-
-shared visibility:
-  planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
-  planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
-  planning/documentation-reusable-candidate/enman-shared-visibility-map.md
-
-source usage / cascade:
-  planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
-  planning/documentation-reusable-candidate/source-usage-cascade-governance-plan.md
-  planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
-```
-
-## 4. Candidate Core Architecture Files
-
-| File | Candidate role |
-|---|---|
-| `CANDIDATE-NOTICE.md` | Guardrail: candidate is temporary, non-canonical and not active source of truth. |
-| `PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md` | F3 section-by-section classification artifact for candidate principles. |
-| `planning-docs-architecture-principles.md` | Genericized candidate reusable documentation architecture principles. |
-| `scenario-domain-slice-docs-profile.md` | Specialized reusable profile for scenario/domain/slice app/product projects. |
-| `enman-docs-adapter.md` | Candidate Enman/current-project adapter preserving concrete project mappings. |
-| `PORTABILITY-FOLLOWUPS.md` | Deferred migration/follow-up tracking after F4/F5/F6A. |
-
-## 5. Candidate Field Kits, Workflows And Project Instances
-
-| Area | Field kit / setup owner | Repeated workflow / bridge | Candidate Enman project instance |
-|---|---|---|---|
-| Status / evidence | `status-reconciliation-field-kit.md` | `status-reconciliation-workflow.md` | `enman-status-evidence-profile.md` |
-| Shared visibility | `shared-visibility-map-field-kit.md` | `local-global-documentation-sync-workflow.md` | `enman-shared-visibility-map.md` |
-| Source usage / cascade | `source-usage-cascade-field-kit.md` | `source-usage-cascade-governance-plan.md` | `enman-source-usage-cascade-profile.md` |
-| Root use-case map setup | `field-kits/root-use-case-map-field-kit.md` | `use-case-map-workflow.md` + `USE-CASE-MAP-TEMPLATE.md` | root `planning/planning-use-case-map.md` stays outside candidate |
-| Scenario/domain/slice route setup | `profiles/scenario-domain-slice-use-case-field-kit.md` | root use-case map workflow/template | scenario/domain/slice project route rows stay in the project root use-case map |
-
-Responsibility split:
-
-```text
-principles
-  -> invariant / why the boundary exists;
-
-field kit
-  -> setup questions, applicability gate and project artifact shape;
-
-workflow
-  -> repeated process after project config exists;
-
-project instance / adapter
-  -> concrete Enman answers, paths and mappings;
-
-examples
-  -> demonstrations only.
-```
-
-## 6. Candidate Examples
-
-Candidate examples index:
-
-```text
-planning/documentation-reusable-candidate/examples/README.md
-```
-
-Current candidate F5 examples:
-
-```text
-planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
-planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
-planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
-planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
-```
-
-Examples do not own rules. They demonstrate how field kits, workflows, profiles or adapters are used.
-
-## 7. Related Active Owners
-
-The active documentation layer still owns current project documentation behavior.
-
-Related active files:
-
-```text
-planning/documentation/README.md
-planning/documentation/documentation-layer-portability-migration-plan.md
-planning/documentation/documentation-responsibility-zone-review-workflow.md
-planning/documentation/planning-docs-architecture-principles.md
-planning/documentation/documentation-responsibility-map.md
-planning/documentation/documentation-action-log.md
-```
-
-Related active/root files:
-
-```text
-planning/README.md
-planning/planning-doc-responsibility-map.md
 planning/planning-use-case-map.md
-planning/replacement-file-generation-guide.md
-```
-
-Use active owners for ordinary Enman documentation updates until a migration/switch batch says otherwise.
-
-## 8. Current Candidate Migration State
-
-Completed candidate migration steps:
-
-```text
-F1: reusable responsibility model and long-decision capture
-F2: candidate baseline copy and guardrails
-F3: candidate principles responsibility classification
-F4: candidate principles/profile/adapter split
-F5: candidate field kits / Enman project-instance files / examples split
-F6A: candidate navigation and read-order cleanup
-```
-
-Remaining future decisions include:
-
-```text
-- Enman project-instance files were promoted to active planning/ root in F6C;
-- whether to delete/archive the source usage governance bridge;
-- whether to rename candidate principles before final reusable switch;
-- whether active planning/documentation/ is replaced, archived or kept as Enman-specific docs;
-- whether to create a generic project adapter template.
-```
-
-## 7A. Active-Only Reusable Overlay Synced Into Candidate
-
-F7C mirrors active reusable additions created after the original candidate copy into this candidate workspace.
-
-Synced candidate files:
-
-```text
-planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
-planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
-planning/documentation-reusable-candidate/use-case-map-workflow.md
-planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
-planning/documentation-reusable-candidate/documentation-update-workflow.md
-planning/documentation-reusable-candidate/documentation-action-log.md
-```
-
-Root use-case-map setup read order:
-
-```text
-planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
-planning/documentation-reusable-candidate/use-case-map-workflow.md
-planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
-```
-
-Scenario/domain/slice route setup read order:
-
-```text
-planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
-planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
-```
-
-This overlay does not make the candidate folder canonical. It only prevents active reusable additions from being lost during future folder-switch planning.
-
-## 8A. Active Project-Instance Promotion State
-
-F6C promotes the three Enman project-instance files from candidate into active planning root:
-
-```text
 planning/status-evidence-profile.md
 planning/shared-visibility-map.md
 planning/source-usage-cascade-profile.md
+planning/replacement-file-generation-guide.md
 ```
 
-Candidate source files remain in this folder as migration history and reusable-candidate references:
+## 3. Active Structure
+
+Core reusable documentation files:
 
 ```text
-planning/documentation-reusable-candidate/enman-status-evidence-profile.md
-planning/documentation-reusable-candidate/enman-shared-visibility-map.md
-planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+planning/documentation/planning-docs-architecture-principles.md
+planning/documentation/documentation-responsibility-map.md
+planning/documentation/documentation-update-workflow.md
+planning/documentation/documentation-update-plan-workflow.md
+planning/documentation/documentation-responsibility-zone-review-workflow.md
+planning/documentation/use-case-map-workflow.md
+planning/documentation/USE-CASE-MAP-TEMPLATE.md
 ```
 
-F6C does not promote reusable field kits, candidate workflows, candidate principles or examples.
-
-## 9. Do Not
+Reusable field kits:
 
 ```text
-- Do not treat this candidate folder as active documentation.
-- Do not make routine Enman docs updates here.
-- Do not update both active docs and candidate docs for ordinary changes.
-- Do not promote Enman project-instance files to active planning/ root without an explicit migration batch.
-- Do not switch canonical references to this folder without an explicit migration/switch batch.
-- Do not delete bridge/historical candidate files just because newer field kits exist.
+planning/documentation/field-kits/root-use-case-map-field-kit.md
+planning/documentation/field-kits/status-reconciliation-field-kit.md
+planning/documentation/field-kits/shared-visibility-map-field-kit.md
+planning/documentation/field-kits/source-usage-cascade-field-kit.md
+```
+
+Specialized reusable profiles:
+
+```text
+planning/documentation/profiles/scenario-domain-slice-docs-profile.md
+planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+```
+
+Repeated workflows / bridge owners:
+
+```text
+planning/documentation/status-reconciliation-workflow.md
+planning/documentation/local-global-documentation-sync-workflow.md
+planning/documentation/source-usage-cascade-governance-plan.md
+planning/documentation/example-coverage-workflow.md
+planning/documentation/file-update-overview-workflow.md
+planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+planning/documentation/reviewable-agent-output-and-commands-workflow.md
+```
+
+Examples:
+
+```text
+planning/documentation/examples/README.md
+```
+
+Tracking:
+
+```text
+planning/documentation/documentation-action-log.md
+planning/documentation/documentation-layer-portability-migration-plan.md
+```
+
+Scoped sync notes:
+
+```text
+planning/documentation/cc-doc-001-upload-agreement-proposal-document-sync-note.md
+planning/documentation/l2-final-readme-doc-sync-note.md
+planning/documentation/l2-scenario-status-marker-sync-note.md
+```
+
+These sync notes are scoped historical/supporting notes, not reusable workflows.
+
+## 4. Read Order
+
+For documentation-layer architecture/routing work:
+
+```text
+1. planning/README.md
+2. planning/documentation/README.md
+3. planning/documentation/planning-docs-architecture-principles.md
+4. planning/planning-doc-responsibility-map.md
+5. planning/documentation/documentation-responsibility-map.md
+6. relevant documentation workflow / field kit / profile
+```
+
+For broad documentation updates:
+
+```text
+1. planning/README.md
+2. planning/planning-workflow-current.md
+3. planning/planning-agent-protocol.md
+4. planning/planning-doc-responsibility-map.md
+5. planning/documentation/README.md
+6. planning/documentation/planning-docs-architecture-principles.md
+7. planning/documentation/documentation-responsibility-map.md
+8. planning/documentation/documentation-update-plan-workflow.md
+9. planning/documentation/documentation-update-workflow.md
+10. planning/documentation/status-reconciliation-workflow.md, when status/current-state claims are involved
+11. planning/documentation/local-global-documentation-sync-workflow.md, when local details need shared visibility
+12. planning/documentation/source-usage-cascade-governance-plan.md, when source usage/cascade/stale-reference work is involved
+13. planning/documentation/example-coverage-workflow.md, when templates, output shapes, commands, output modes, draft formats or examples change
+14. planning/documentation/file-update-overview-workflow.md and planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md, when file/change summary behavior changes
+15. planning/documentation/documentation-action-log.md, when the update is a significant logical documentation action
+16. planning/replacement-file-generation-guide.md, when archive/replacement mode is relevant
+```
+
+For root use-case map or command-routing work:
+
+```text
+1. planning/planning-use-case-map.md
+2. planning/documentation/field-kits/root-use-case-map-field-kit.md
+3. planning/documentation/use-case-map-workflow.md
+4. planning/documentation/USE-CASE-MAP-TEMPLATE.md
+5. planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md, when scenario/domain/slice route rows are added or changed
+```
+
+For status/shared visibility/source-usage setup or repeated use:
+
+```text
+status:
+  setup: planning/documentation/field-kits/status-reconciliation-field-kit.md
+  project profile: planning/status-evidence-profile.md
+  repeated workflow: planning/documentation/status-reconciliation-workflow.md
+
+shared visibility:
+  setup: planning/documentation/field-kits/shared-visibility-map-field-kit.md
+  project map: planning/shared-visibility-map.md
+  repeated workflow: planning/documentation/local-global-documentation-sync-workflow.md
+
+source usage / cascade:
+  setup: planning/documentation/field-kits/source-usage-cascade-field-kit.md
+  project profile: planning/source-usage-cascade-profile.md
+  bridge/pilot governance: planning/documentation/source-usage-cascade-governance-plan.md
+```
+
+## 5. Migration / Legacy State
+
+After the folder switch:
+
+```text
+planning/documentation/
+  active reusable documentation layer
+
+planning/documentation-legacy/
+  previous active documentation folder preserved for verification
+
+planning/documentation-migration/
+  migration-only candidate guardrails, classification artifacts and Enman adapter/profile history
+```
+
+Do not use `planning/documentation-legacy/` or `planning/documentation-migration/` as active read-order sources unless the task is explicitly about migration/history verification.
+
+## 6. Do Not
+
+```text
+- Do not recreate a separate reusable-candidate folder after the switch.
+- Do not treat planning/documentation-legacy/ as active.
+- Do not move root Enman project profiles into this folder.
+- Do not create a second generic root use-case map inside this folder.
+- Do not treat examples as rule owners.
+- Do not delete planning/documentation-legacy/ until a post-switch verification batch approves cleanup.
 ```

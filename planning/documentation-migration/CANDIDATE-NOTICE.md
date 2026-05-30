@@ -1,11 +1,11 @@
 # Documentation Reusable Candidate Notice
 
-Status: temporary non-canonical migration workspace  
-Scope: guardrail for `planning/documentation-reusable-candidate/`
+Status: migration-only historical workspace  
+Scope: guardrail for `planning/documentation-migration/`
 
 ## 1. Purpose
 
-This folder is a baseline copy of the active documentation layer:
+This folder preserves migration-only artifacts from the reusable candidate workspace after the F7D/F7E folder switch.
 
 ```text
 planning/documentation/
@@ -58,10 +58,10 @@ planning/documentation/documentation-responsibility-map.md
 
 ## 6. Candidate Review Artifacts
 
-Current candidate review artifact:
+Migration review artifact:
 
 ```text
-planning/documentation-reusable-candidate/PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md
+planning/documentation-migration/PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md
 ```
 
 Use it before splitting or rewriting the candidate principles file.
@@ -71,10 +71,10 @@ Use it before splitting or rewriting the candidate principles file.
 F4 candidate split/genericization introduced:
 
 ```text
-planning/documentation-reusable-candidate/planning-docs-architecture-principles.md
-planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
-planning/documentation-reusable-candidate/enman-docs-adapter.md
-planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+planning/documentation/planning-docs-architecture-principles.md
+planning/documentation/profiles/scenario-domain-slice-docs-profile.md
+planning/documentation-migration/enman-docs-adapter.md
+planning/documentation-migration/PORTABILITY-FOLLOWUPS.md
 ```
 
 Meaning:
@@ -95,48 +95,48 @@ Some reusable documentation-layer additions that were first created in active `p
 Current mirrored active additions:
 
 ```text
-planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
-planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
-planning/documentation-reusable-candidate/use-case-map-workflow.md
-planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
-planning/documentation-reusable-candidate/documentation-update-workflow.md
-planning/documentation-reusable-candidate/documentation-action-log.md
+planning/documentation/field-kits/root-use-case-map-field-kit.md
+planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+planning/documentation/use-case-map-workflow.md
+planning/documentation/USE-CASE-MAP-TEMPLATE.md
+planning/documentation/documentation-update-workflow.md
+planning/documentation/documentation-action-log.md
 ```
 
-This mirror does not make the candidate folder canonical and does not change ordinary active documentation routing.
+Those mirrored files are now promoted into the active reusable documentation layer under planning/documentation/.
 
 ## 8. Candidate Field Kit Outputs
 
 F5 candidate field-kit split introduced:
 
 ```text
-planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
-planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
-planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+planning/documentation/field-kits/status-reconciliation-field-kit.md
+planning/documentation/field-kits/shared-visibility-map-field-kit.md
+planning/documentation/field-kits/source-usage-cascade-field-kit.md
 ```
 
 F5 also created candidate Enman project-instance files derived from those kits:
 
 ```text
-planning/documentation-reusable-candidate/enman-status-evidence-profile.md
-planning/documentation-reusable-candidate/enman-shared-visibility-map.md
-planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+planning/documentation-migration/enman-status-evidence-profile.md
+planning/documentation-migration/enman-shared-visibility-map.md
+planning/documentation-migration/enman-source-usage-cascade-profile.md
 ```
 
-These files are candidate-only and do not promote project-instance files to active `planning/` root.
+These files are migration history. Current active Enman project-instance profiles live at planning/ root.
 
 ## 9. Current Candidate Navigation
 
-Primary candidate navigation:
+Migration history navigation:
 
 ```text
-planning/documentation-reusable-candidate/README.md
+planning/documentation-migration/README.md
 ```
 
 Guardrail:
 
 ```text
-planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+planning/documentation-migration/CANDIDATE-NOTICE.md
 ```
 
 Active migration state owner:

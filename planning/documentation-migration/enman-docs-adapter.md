@@ -1,9 +1,9 @@
 # Enman Docs Adapter
 
-Status: candidate project adapter / non-canonical preservation mapping  
+Status: migration-only Enman adapter / historical preservation mapping  
 Scope: concrete Enman/current-project documentation mappings extracted from candidate principles
 
-> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It preserves project-specific knowledge for migration review. It is not the active Enman source of truth until a later migration/switch batch approves it.
+> Candidate note: this file belongs to `planning/documentation-migration/`. It preserves project-specific knowledge for migration review. It is not the active Enman source of truth until a later migration/switch batch approves it.
 
 ## 1. Purpose
 
@@ -24,7 +24,7 @@ This adapter is not a dumping ground. If a paragraph has reusable value, the reu
 Project: Enman
 Repository scope: current `my-changes` planning documentation layer
 Active docs layer: planning/documentation/
-Reusable candidate workspace: planning/documentation-reusable-candidate/
+Former reusable candidate workspace: planning/documentation-reusable-candidate/ (renamed during F7D)
 ```
 
 ## 3. Candidate Status Boundary
@@ -47,17 +47,17 @@ Active documentation layer:
 planning/documentation/
 ```
 
-Candidate reusable layer:
+Current active reusable layer:
 
 ```text
-planning/documentation-reusable-candidate/
+planning/documentation/
 ```
 
-Candidate guardrails:
+Migration guardrails:
 
 ```text
-planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
-planning/documentation-reusable-candidate/PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md
+planning/documentation-migration/CANDIDATE-NOTICE.md
+planning/documentation-migration/PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md
 ```
 
 ## 5. Responsibility Map / Entry Point Paths
@@ -80,10 +80,10 @@ Current documentation-layer responsibility map:
 planning/documentation/documentation-responsibility-map.md
 ```
 
-Candidate documentation-layer responsibility map copy:
+Current active documentation-layer responsibility map:
 
 ```text
-planning/documentation-reusable-candidate/documentation-responsibility-map.md
+planning/documentation/documentation-responsibility-map.md
 ```
 
 ## 6. Enman Layer Vocabulary
@@ -168,7 +168,7 @@ This evidence profile should be refined through the status reconciliation workfl
 Deferred follow-up:
 
 ```text
-planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+planning/documentation-migration/PORTABILITY-FOLLOWUPS.md
 ```
 
 ## 9. Shared Visibility Map Candidates
@@ -241,7 +241,7 @@ This adapter instantiates that topology for Enman with exact paths and layer voc
 Profile:
 
 ```text
-planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
+planning/documentation/profiles/scenario-domain-slice-docs-profile.md
 ```
 
 ## 13. Deferred Items
@@ -261,7 +261,7 @@ final naming and canonical switch decisions.
 Owner:
 
 ```text
-planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+planning/documentation-migration/PORTABILITY-FOLLOWUPS.md
 ```
 
 ## 13A. Specific Enman Project-Instance Files
@@ -269,9 +269,9 @@ planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
 F5 candidate kit split created specific Enman instance files so this adapter can stay an overview instead of becoming a dumping ground.
 
 ```text
-planning/documentation-reusable-candidate/enman-status-evidence-profile.md
-planning/documentation-reusable-candidate/enman-shared-visibility-map.md
-planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+planning/documentation-migration/enman-status-evidence-profile.md
+planning/documentation-migration/enman-shared-visibility-map.md
+planning/documentation-migration/enman-source-usage-cascade-profile.md
 ```
 
 Use those files for concrete Enman answers produced by field kits.

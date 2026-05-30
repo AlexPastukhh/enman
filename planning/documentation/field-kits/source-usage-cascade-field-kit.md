@@ -1,9 +1,7 @@
 # Source Usage Cascade Field Kit
 
-Status: reusable candidate field kit  
+Status: active reusable field kit  
 Scope: setup guidance for defining source/consumer relationships and cascade review conventions for a project
-
-> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not an active Enman source of truth until a later migration/switch batch approves it.
 
 ## 1. Purpose
 
@@ -113,7 +111,7 @@ Create a project-specific file with this shape:
 For the candidate Enman instance, see:
 
 ```text
-planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+planning/source-usage-cascade-profile.md
 ```
 
 ## 8. Example
@@ -121,5 +119,5 @@ planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
 Generic reusable example:
 
 ```text
-planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
+planning/documentation/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
 ```

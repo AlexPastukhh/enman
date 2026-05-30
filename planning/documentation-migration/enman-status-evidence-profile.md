@@ -3,7 +3,7 @@
 Status: candidate Enman project-instance profile  
 Scope: concrete evidence/current-reality model and status vocabulary for Enman documentation reconciliation
 
-> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not active Enman source of truth until a later migration/switch batch approves it.
+> Candidate note: this file belongs to `planning/documentation-migration/`. It is not active Enman source of truth until a later migration/switch batch approves it.
 
 ## 1. Purpose
 
@@ -14,13 +14,13 @@ It defines which evidence sources and status labels should be used when reconcil
 Kit owner:
 
 ```text
-planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+planning/documentation/field-kits/status-reconciliation-field-kit.md
 ```
 
 Repeated workflow:
 
 ```text
-planning/documentation-reusable-candidate/status-reconciliation-workflow.md
+planning/documentation/status-reconciliation-workflow.md
 ```
 
 ## 2. Applicability
@@ -95,7 +95,7 @@ Use current evidence and clean external-facing wording.
 Related adapter:
 
 ```text
-planning/documentation-reusable-candidate/enman-docs-adapter.md
+planning/documentation-migration/enman-docs-adapter.md
 ```
 
 ## 7. Do Not
