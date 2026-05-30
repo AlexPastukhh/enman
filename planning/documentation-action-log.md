@@ -699,3 +699,32 @@ Follow-ups:
   Later decide whether to keep or archive planning/documentation-legacy/. For a new project, use PORTABLE-STARTER-KIT.md only during initial adaptation.
 Notes:
   This batch preserves migrated source-usage bridge history and does not delete legacy or migration folders.
+
+### 2026-05-31 - Routed section source templates into drafting use cases
+
+Date:
+  2026-05-31
+Action:
+  Connected Enman source cascade workflow and domain/server slice section source templates to drafting-related use-case routing.
+Type:
+  source/version/cascade routing / drafting templates
+Status:
+  applied
+Why:
+  Local section-level Sources blocks are part of domain and server slice drafting, not only standalone source-usage governance. Use-case routing must activate the source cascade workflow and section source templates when aggregate or server slice drafts add/review local Sources blocks.
+Changed files:
+  - planning/source-cascade-sync-workflow.md
+  - planning/source-usage-cascade-profile.md
+  - planning/planning-use-case-map.md
+  - planning/documentation-action-log.md
+Routing impact:
+  Source/version/cascade tasks now route to the Enman source cascade workflow, base Sources block template, aggregate section source template and server slice section source template. Domain aggregate and server slice drafting rows now mention these files when local section Sources blocks or doc-version/source-cascade work are in scope.
+Not changed:
+  - No aggregate draft edited.
+  - No slice draft edited.
+  - No layer source-sync registers created.
+  - No broad Doc version pass performed.
+Follow-ups:
+  Apply the aggregate section source template to planning/domain/aggregates/agreement-proposal-exchange.md, then apply the server slice section source template to SL-AGR-EXCH-001.
+Notes:
+  This batch only routes already-created templates into the workflow/use-case system.

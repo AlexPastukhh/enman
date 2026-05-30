@@ -27,6 +27,17 @@ Project pilot folder:
 planning/source-usage-pilots/
 ```
 
+Operational drafting workflow/templates:
+
+```text
+planning/source-cascade-sync-workflow.md
+planning/SOURCE-SECTION-SOURCES-TEMPLATE.md
+planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md
+planning/slices/SERVER-SLICE-SECTION-SOURCES-TEMPLATE.md
+```
+
+Use the domain/server slice section source templates when adding local `Sources:` blocks during aggregate or server slice draft work.
+
 ## 2. Source Categories
 
 | Source category | Enman paths |
@@ -35,6 +46,7 @@ planning/source-usage-pilots/
 | Scenario DATA source | `planning/diagrams/scenario-data/` |
 | Scenario behavior item source | `planning/diagrams/scenario-behavior-items/` |
 | Scenario clarification source | `planning/diagrams/scenario-clarifications/` |
+| Drafting workflow/template/process source | `planning/source-cascade-sync-workflow.md`, `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md`, `planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md`, `planning/slices/SERVER-SLICE-SECTION-SOURCES-TEMPLATE.md` |
 | Domain source | domain drafts/decisions where accepted/current |
 | Slice source | `planning/slices/`, `planning/slices/l2/`, `planning/slices/cross-cutting/` |
 | Architecture/API/client/testing source | `planning/architecture/`, `planning/api/`, `planning/client/`, `planning/testing/` |

@@ -56,6 +56,8 @@ For Enman source cascade work, read:
 ```text
 planning/source-cascade-sync-workflow.md
 planning/SOURCE-SECTION-SOURCES-TEMPLATE.md
+planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md when adding/reviewing aggregate draft section Sources blocks
+planning/slices/SERVER-SLICE-SECTION-SOURCES-TEMPLATE.md when adding/reviewing server/backend/API slice draft section Sources blocks
 planning/source-usage-cascade-profile.md
 planning/documentation/field-kits/source-usage-cascade-field-kit.md
 planning/planning-use-case-map.md
@@ -72,6 +74,7 @@ planning/domain/domain-modeling-principles.md
 planning/domain/domain-discovery-workflow.md
 planning/domain/aggregate-drafting-workflow.md
 planning/domain/aggregate-draft-template.md
+planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md
 planning/domain/scenario-to-aggregate-map.md
 ```
 
@@ -99,6 +102,7 @@ For server slice drafts:
 ```text
 planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
 planning/slices/server/SERVER-SLICE-TEMPLATE.md
+planning/slices/SERVER-SLICE-SECTION-SOURCES-TEMPLATE.md
 planning/slices/server-implementation-principles.md
 planning/slices/slice-test-plan-workflow.md
 planning/testing/server-slice-test-plan-rules.md
