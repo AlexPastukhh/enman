@@ -1,420 +1,240 @@
-# Documentation Update Workflow Index
+# Documentation Reusable Candidate Index
 
-Status: current documentation layer index / read order  
-Scope: documentation update planning, documentation architecture, local responsibility routing, status reconciliation, local/global synchronization, reviewable agent outputs, response-level commands, file update overview summaries, working example coverage, source usage cascade governance, documentation action logging and navigation updates
+Status: temporary non-canonical reusable candidate index  
+Scope: candidate navigation, read order and owner links for reusable documentation-layer migration
 
 ## 1. Purpose
 
-This folder defines how documentation-only chats/agents should understand and update planning docs.
+This folder is a temporary reusable candidate workspace for the documentation layer.
 
-This README is navigation and read order only. It should not duplicate full architecture principles, responsibility maps or workflow details.
+It is used to review, split, genericize and prepare reusable documentation architecture without changing the active Enman documentation source of truth.
 
-A documentation update agent must:
-
-```text
-- read current repo state before changing docs;
-- use the root responsibility map to choose the planning layer;
-- use the documentation responsibility map for documentation-layer placement;
-- prepare a Documentation Update Plan for broad docs/navigation/status/register changes;
-- reconcile docs with implemented/planned/deferred status;
-- synchronize local docs with shared indexes/registers;
-- update navigation/responsibility maps together with new docs;
-- decide whether a working example is needed when templates, output shapes, commands or draft formats change;
-- use File Update Overview when a non-trivial file/docs/code update answer needs a final structured file-change summary;
-- use source usage cascade governance when source/stale-reference/reviewed-upstream-work concerns appear;
-- record significant logical documentation actions in the documentation action log;
-- use direct GitHub edits only when explicitly asked to apply changes;
-- use one file per commit by default for direct GitHub edits;
-- use archive/replacement packages when manual application or broad generated replacement is more practical.
-```
-
-## 2. Files
-
-Core documentation-layer files:
-
-```text
-planning/documentation/planning-docs-architecture-principles.md
-planning/documentation/documentation-responsibility-map.md
-planning/documentation/documentation-layer-portability-migration-plan.md
-planning/documentation/documentation-responsibility-zone-review-workflow.md
-planning/documentation/documentation-update-plan-workflow.md
-planning/documentation/documentation-update-workflow.md
-planning/documentation/status-reconciliation-workflow.md
-planning/documentation/local-global-documentation-sync-workflow.md
-planning/documentation/reviewable-agent-output-and-commands-workflow.md
-planning/documentation/file-update-overview-workflow.md
-planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
-planning/documentation/use-case-map-workflow.md
-planning/documentation/USE-CASE-MAP-TEMPLATE.md
-planning/documentation/example-coverage-workflow.md
-planning/documentation/source-usage-cascade-governance-plan.md
-planning/documentation/source-usage-pilots/README.md
-planning/documentation/documentation-action-log.md
-planning/documentation/examples/README.md
-planning/documentation/documentation-update-agent-prompt.md
-```
-
-Related root/global docs:
-
-```text
-planning/README.md
-planning/planning-doc-responsibility-map.md
-planning/planning-agent-protocol.md
-planning/planning-workflow-current.md
-planning/planning-use-case-map.md
-planning/replacement-file-generation-guide.md
-planning/vkr-clean-reference.md
-```
-
-## 2A. Reusable Candidate Workspace
-
-A temporary reusable candidate copy may exist at:
-
-```text
-planning/documentation-reusable-candidate/
-```
-
-This candidate is a migration workspace only.
-
-It is **not** the active documentation layer and should not be used as the normal read-order source for project documentation updates.
-
-Use it only for portability, responsibility-zone review, genericization and future candidate split work. Active documentation remains under:
+Active documentation remains under:
 
 ```text
 planning/documentation/
 ```
 
-Candidate lifecycle and guardrails are owned by:
+until a later explicit migration/switch batch approves otherwise.
+
+## 2. Candidate Source-Of-Truth Boundary
+
+This README is candidate navigation only.
+
+It does not make the candidate folder canonical.
+
+Use this folder for:
 
 ```text
+- portability review;
+- reusable-layer migration work;
+- responsibility-zone classification;
+- candidate principles/profile/adapter cleanup;
+- candidate field-kit/project-instance review;
+- examples and follow-up tracking for future migration batches.
+```
+
+Do not use this folder for ordinary active Enman documentation updates.
+
+## 3. Candidate Read Order
+
+For candidate portability/split work, read:
+
+```text
+1. planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+2. planning/documentation-reusable-candidate/PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md
+3. planning/documentation-reusable-candidate/planning-docs-architecture-principles.md
+4. planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
+5. planning/documentation-reusable-candidate/enman-docs-adapter.md
+6. planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+```
+
+For candidate field-kit/project-instance review, read the relevant kit group:
+
+```text
+status:
+  planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+  planning/documentation-reusable-candidate/status-reconciliation-workflow.md
+  planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+
+shared visibility:
+  planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+  planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
+  planning/documentation-reusable-candidate/enman-shared-visibility-map.md
+
+source usage / cascade:
+  planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+  planning/documentation-reusable-candidate/source-usage-cascade-governance-plan.md
+  planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+```
+
+## 4. Candidate Core Architecture Files
+
+| File | Candidate role |
+|---|---|
+| `CANDIDATE-NOTICE.md` | Guardrail: candidate is temporary, non-canonical and not active source of truth. |
+| `PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md` | F3 section-by-section classification artifact for candidate principles. |
+| `planning-docs-architecture-principles.md` | Genericized candidate reusable documentation architecture principles. |
+| `scenario-domain-slice-docs-profile.md` | Specialized reusable profile for scenario/domain/slice app/product projects. |
+| `enman-docs-adapter.md` | Candidate Enman/current-project adapter preserving concrete project mappings. |
+| `PORTABILITY-FOLLOWUPS.md` | Deferred migration/follow-up tracking after F4/F5/F6A. |
+
+## 5. Candidate Field Kits, Workflows And Project Instances
+
+| Area | Field kit / setup owner | Repeated workflow / bridge | Candidate Enman project instance |
+|---|---|---|---|
+| Status / evidence | `status-reconciliation-field-kit.md` | `status-reconciliation-workflow.md` | `enman-status-evidence-profile.md` |
+| Shared visibility | `shared-visibility-map-field-kit.md` | `local-global-documentation-sync-workflow.md` | `enman-shared-visibility-map.md` |
+| Source usage / cascade | `source-usage-cascade-field-kit.md` | `source-usage-cascade-governance-plan.md` | `enman-source-usage-cascade-profile.md` |
+| Root use-case map setup | `field-kits/root-use-case-map-field-kit.md` | `use-case-map-workflow.md` + `USE-CASE-MAP-TEMPLATE.md` | root `planning/planning-use-case-map.md` stays outside candidate |
+| Scenario/domain/slice route setup | `profiles/scenario-domain-slice-use-case-field-kit.md` | root use-case map workflow/template | scenario/domain/slice project route rows stay in the project root use-case map |
+
+Responsibility split:
+
+```text
+principles
+  -> invariant / why the boundary exists;
+
+field kit
+  -> setup questions, applicability gate and project artifact shape;
+
+workflow
+  -> repeated process after project config exists;
+
+project instance / adapter
+  -> concrete Enman answers, paths and mappings;
+
+examples
+  -> demonstrations only.
+```
+
+## 6. Candidate Examples
+
+Candidate examples index:
+
+```text
+planning/documentation-reusable-candidate/examples/README.md
+```
+
+Current candidate F5 examples:
+
+```text
+planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
+planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
+planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
+planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
+```
+
+Examples do not own rules. They demonstrate how field kits, workflows, profiles or adapters are used.
+
+## 7. Related Active Owners
+
+The active documentation layer still owns current project documentation behavior.
+
+Related active files:
+
+```text
+planning/documentation/README.md
 planning/documentation/documentation-layer-portability-migration-plan.md
-planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
-```
-
-## 2B. Active Field Kits And Profiles
-
-Reusable field kits:
-
-```text
-planning/documentation/field-kits/root-use-case-map-field-kit.md
-```
-
-Profile-specific field kits:
-
-```text
-planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
-```
-
-Use these as setup guidance. They do not replace the concrete project root use-case map:
-
-```text
-planning/planning-use-case-map.md
-```
-
-## 3. Read Order For Documentation-Layer Work
-
-For documentation-layer architecture/routing work:
-
-```text
-1. planning/README.md
-2. planning/documentation/README.md
-3. planning/documentation/planning-docs-architecture-principles.md
-4. planning/planning-doc-responsibility-map.md
-5. planning/documentation/documentation-responsibility-map.md
-6. relevant documentation workflow file
-```
-
-For documentation-layer portability, responsibility-zone review or reusable migration planning:
-
-```text
-1. planning/README.md
-2. planning/documentation/README.md
-3. planning/documentation/documentation-layer-portability-migration-plan.md
-4. planning/documentation/documentation-responsibility-zone-review-workflow.md
-5. planning/documentation/planning-docs-architecture-principles.md
-6. planning/documentation/documentation-responsibility-map.md
-7. target files being reviewed
-```
-
-Use this when reviewing whether existing documentation-layer content belongs to reusable principles, a specialized profile, a project adapter/profile, a workflow, a field kit, a template or an example.
-
-For broad documentation updates:
-
-```text
-1. planning/README.md
-2. planning/planning-workflow-current.md
-3. planning/planning-agent-protocol.md
-4. planning/planning-doc-responsibility-map.md
-5. planning/documentation/README.md
-6. planning/documentation/planning-docs-architecture-principles.md
-7. planning/documentation/documentation-responsibility-map.md
-8. planning/documentation/documentation-update-plan-workflow.md
-9. planning/documentation/documentation-update-workflow.md
-10. planning/documentation/status-reconciliation-workflow.md
-11. planning/documentation/local-global-documentation-sync-workflow.md
-12. planning/documentation/example-coverage-workflow.md, if the update changes templates, output shapes, response commands, output modes, draft formats or example coverage
-13. planning/documentation/file-update-overview-workflow.md and planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md, if the update changes File Update Overview behavior or template shape
-14. planning/documentation/source-usage-cascade-governance-plan.md, if the update touches source usage, stale references, cascade review, reviewed upstream work or source usage pilots
-15. planning/documentation/documentation-action-log.md, if the update is a significant logical documentation action
-16. planning/replacement-file-generation-guide.md, if archive/replacement mode is relevant
-17. relevant domain/API/testing/slice/client/scenario docs for the requested area
-```
-
-For answer-format, reviewable-output or response-command work:
-
-```text
-planning/documentation/reviewable-agent-output-and-commands-workflow.md
-```
-
-For File Update Overview work:
-
-```text
-planning/documentation/file-update-overview-workflow.md
-planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
-```
-
-Use this when adding or changing the final structured file-change summary for non-trivial file/docs/code update answers.
-
-For use-case-map creation/update work:
-
-```text
-planning/documentation/use-case-map-workflow.md
-planning/documentation/USE-CASE-MAP-TEMPLATE.md
-```
-
-Use this when creating or updating reusable use-case maps, concrete route maps, command rows or expected-output routing tables.
-
-For working example coverage decisions:
-
-```text
-planning/documentation/example-coverage-workflow.md
-planning/documentation/examples/README.md
-```
-
-Use this when adding or changing templates, workflows with expected output, response commands, output modes, draft formats or example indexes.
-
-For documentation responsibility-zone review:
-
-```text
 planning/documentation/documentation-responsibility-zone-review-workflow.md
-planning/documentation/documentation-layer-portability-migration-plan.md
-```
-
-Use this when reviewing existing documentation-layer content for reusable/specialized/project-specific boundaries, owner-zone drift, field-kit candidates or candidate migration planning.
-
-For source usage cascade governance and pilots:
-
-```text
-planning/documentation/source-usage-cascade-governance-plan.md
-planning/documentation/source-usage-pilots/README.md
-planning/documentation/documentation-action-log.md
-```
-
-Use this when working on source usage relationships, stale downstream references, reviewed-upstream-work concerns, cascade review pilots or the future source usage workflow.
-
-## 4. Responsibility Routing Rule
-
-If deciding which planning layer information belongs to, start with:
-
-```text
-planning/planning-doc-responsibility-map.md
-```
-
-If the information already belongs to the documentation layer, use:
-
-```text
-planning/documentation/documentation-responsibility-map.md
-```
-
-Examples:
-
-```text
-global docs architecture principle -> planning-docs-architecture-principles.md
-documentation-layer placement rule -> documentation-responsibility-map.md
-documentation-layer portability migration plan -> documentation-layer-portability-migration-plan.md
-documentation responsibility-zone review -> documentation-responsibility-zone-review-workflow.md
-docs update process -> documentation-update-workflow.md
-preflight docs update plan format -> documentation-update-plan-workflow.md
-local/global sync process -> local-global-documentation-sync-workflow.md
-status reconciliation process -> status-reconciliation-workflow.md
-agent answer/review format and response-level commands -> reviewable-agent-output-and-commands-workflow.md
-file update overview process -> file-update-overview-workflow.md
-file update overview template -> FILE-UPDATE-OVERVIEW-TEMPLATE.md
-use-case map workflow -> use-case-map-workflow.md
-use-case map template -> USE-CASE-MAP-TEMPLATE.md
-field-kit setup guidance -> relevant `*-field-kit.md` file when created; principles define the type
-project adapter/profile mapping -> project adapter/profile file when created
-example coverage decision process -> example-coverage-workflow.md
-documentation-layer examples navigation -> examples/README.md
-source usage cascade pilot governance -> source-usage-cascade-governance-plan.md
-source usage pilot folder navigation -> source-usage-pilots/README.md
-documentation logical action log -> documentation-action-log.md
-reusable prompt -> documentation-update-agent-prompt.md
-```
-
-## 5. Documentation Update Plan Rule
-
-Before broad documentation changes, prepare a `Documentation Update Plan`.
-
-Use:
-
-```text
-planning/documentation/documentation-update-plan-workflow.md
-```
-
-A plan is required when the task affects:
-
-```text
-planning navigation
-folder README/index files
-source-of-truth rules
-responsibility boundaries
-status labels
-shared registers
-multiple planning files
-VKR/thesis clean wording
-```
-
-A full plan is usually not required for small typo fixes, read-only analysis or narrow local wording changes that do not affect navigation/source-of-truth/registers.
-
-## 6. Documentation-Only Agent Rule
-
-Documentation-only work must not:
-
-```text
-- change code;
-- change generated artifacts;
-- implement backend/client/API behavior;
-- silently rewrite unrelated docs;
-- silently change scenario/domain/API/testing meaning;
-- overclaim planned work as implemented;
-- treat dirty drafts as source of truth.
-```
-
-Direct GitHub writes are allowed only when the user explicitly asks to apply repository changes. For direct GitHub edits, use one file per commit by default.
-
-If direct repository writes are not requested or the update is better reviewed manually, output an archive with complete replacement/add files.
-
-## 7. Local / Global Sync Rule
-
-Documentation-only work must check whether local changes need shared index/register updates.
-
-Use:
-
-```text
-planning/documentation/local-global-documentation-sync-workflow.md
-```
-
-Important local slice questions should not remain discoverable only from one slice file when they can affect other work.
-
-## 8. Documentation Architecture Link
-
-Planning docs should follow the architecture principles in:
-
-```text
 planning/documentation/planning-docs-architecture-principles.md
-```
-
-The key rule is that docs must be navigable, source-of-truth aware, type-explicit and safe to update in small scoped changes.
-
-## 9. Reviewable Output And Commands Link
-
-For non-trivial answers, audits, plans, reviews, handoffs or response-level commands, use:
-
-```text
-planning/documentation/reviewable-agent-output-and-commands-workflow.md
-```
-
-This workflow defines response levels, sources/coverage, section-level sources and commands such as recheck, clarify, keep prev and no ch.
-
-## 10. File Update Overview
-
-For the reusable final structured summary of file/docs/code update plans, archives, diff reviews and applied-update checks, use:
-
-```text
-planning/documentation/file-update-overview-workflow.md
-planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
-```
-
-File Update Overview is a final summary block. It does not replace the main reviewable answer.
-
-## 11. Example Coverage And Examples Index
-
-For reusable templates, workflows with expected output, response commands, output modes, draft formats or repeated chat failures caused by missing examples, use:
-
-```text
-planning/documentation/example-coverage-workflow.md
-```
-
-For documentation-layer working example navigation, use:
-
-```text
-planning/documentation/examples/README.md
-```
-
-Examples are supporting artifacts. They should demonstrate correct output or usage shape, but must not duplicate routing, source-mode, output-mode, permission or workflow activation logic owned by use-case maps and workflow files.
-
-## 12. Source Usage Cascade Governance
-
-For source usage relationships, layer encapsulation, stale downstream reference concerns and cascade-review pilot planning, use:
-
-```text
-planning/documentation/source-usage-cascade-governance-plan.md
-```
-
-For pilot folder navigation, use:
-
-```text
-planning/documentation/source-usage-pilots/README.md
-```
-
-Pilot registers are experimental review/cascade aids. They do not replace scenario/domain/slice source files, maps, drafts or future permanent source usage registers.
-
-
-## 13. Documentation Action Log
-
-For significant logical documentation actions and short explanations of why they happened, use:
-
-```text
+planning/documentation/documentation-responsibility-map.md
 planning/documentation/documentation-action-log.md
 ```
 
-The action log records completed logical documentation actions. It is not the PMR, not a task register and not the source of truth for rules. Owner files define rules; the action log records what changed, why, affected files/layers and optional PMR relation.
-
-Use it for changes to architecture principles, workflow behavior, accepted command meaning, source-of-truth boundaries, source usage/cascade governance, template/output shapes, onboarding routes, example infrastructure, replacement archive behavior or PMR/task governance.
-
-## 14. Scoped Sync Notes
-
-Scoped sync notes are case-specific documentation synchronization notes. They are useful for trace/audit/context, but they are not reusable workflows or global architecture principles.
-
-Current scoped sync notes in this folder:
+Related active/root files:
 
 ```text
-planning/documentation/cc-doc-001-upload-agreement-proposal-document-sync-note.md
-planning/documentation/l2-final-readme-doc-sync-note.md
-planning/documentation/l2-scenario-status-marker-sync-note.md
+planning/README.md
+planning/planning-doc-responsibility-map.md
+planning/planning-use-case-map.md
+planning/replacement-file-generation-guide.md
 ```
 
-Do not treat scoped sync notes as canonical workflow files. If a scoped sync note contains a reusable rule, promote that rule into the correct workflow or architecture file through a normal documentation update.
+Use active owners for ordinary Enman documentation updates until a migration/switch batch says otherwise.
 
-## 15. Draft-Driven Discovery Scope Note
+## 8. Current Candidate Migration State
 
-Draft-driven discovery is currently a slice-layer discovery loop.
-
-Use:
+Completed candidate migration steps:
 
 ```text
-planning/slices/draft-driven-discovery-principles.md
+F1: reusable responsibility model and long-decision capture
+F2: candidate baseline copy and guardrails
+F3: candidate principles responsibility classification
+F4: candidate principles/profile/adapter split
+F5: candidate field kits / Enman project-instance files / examples split
+F6A: candidate navigation and read-order cleanup
 ```
 
-for:
+Remaining future decisions include:
 
 ```text
-business slice drafts;
-server/backend/API slice drafts;
-client sidecar drafts;
-cross-cutting/helper slice drafts;
-slice verification/test planning inside a slice draft.
+- Enman project-instance files were promoted to active planning/ root in F6C;
+- whether to delete/archive the source usage governance bridge;
+- whether to rename candidate principles before final reusable switch;
+- whether active planning/documentation/ is replaced, archived or kept as Enman-specific docs;
+- whether to create a generic project adapter template.
 ```
 
-Do not use that file as the owner for domain drafting, scenario drafting or documentation/status reconciliation. Those areas use their own layer owners and workflows.
+## 7A. Active-Only Reusable Overlay Synced Into Candidate
+
+F7C mirrors active reusable additions created after the original candidate copy into this candidate workspace.
+
+Synced candidate files:
+
+```text
+planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
+planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
+planning/documentation-reusable-candidate/use-case-map-workflow.md
+planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
+planning/documentation-reusable-candidate/documentation-update-workflow.md
+planning/documentation-reusable-candidate/documentation-action-log.md
+```
+
+Root use-case-map setup read order:
+
+```text
+planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
+planning/documentation-reusable-candidate/use-case-map-workflow.md
+planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
+```
+
+Scenario/domain/slice route setup read order:
+
+```text
+planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
+planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
+```
+
+This overlay does not make the candidate folder canonical. It only prevents active reusable additions from being lost during future folder-switch planning.
+
+## 8A. Active Project-Instance Promotion State
+
+F6C promotes the three Enman project-instance files from candidate into active planning root:
+
+```text
+planning/status-evidence-profile.md
+planning/shared-visibility-map.md
+planning/source-usage-cascade-profile.md
+```
+
+Candidate source files remain in this folder as migration history and reusable-candidate references:
+
+```text
+planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+planning/documentation-reusable-candidate/enman-shared-visibility-map.md
+planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+```
+
+F6C does not promote reusable field kits, candidate workflows, candidate principles or examples.
+
+## 9. Do Not
+
+```text
+- Do not treat this candidate folder as active documentation.
+- Do not make routine Enman docs updates here.
+- Do not update both active docs and candidate docs for ordinary changes.
+- Do not promote Enman project-instance files to active planning/ root without an explicit migration batch.
+- Do not switch canonical references to this folder without an explicit migration/switch batch.
+- Do not delete bridge/historical candidate files just because newer field kits exist.
+```

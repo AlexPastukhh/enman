@@ -1,37 +1,35 @@
 # Planning Docs Architecture Principles
 
-Status: reusable candidate architecture principles  
-Scope: reusable documentation architecture invariants for docs systems, with project-specific and scenario-driven material split into profile/adapter files
-
-> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not the active Enman documentation source until a later migration/switch batch approves it.
+Status: current documentation architecture principles  
+Scope: how to structure planning documentation so it remains navigable, reviewable and safe for both people and AI-assisted work
 
 ## Contents
 
 - [1. Purpose](#1-purpose)
 - [1A. Principles Responsibility Boundary](#1a-principles-responsibility-boundary)
 - [2. Core Goals](#2-core-goals)
-- [3. Project-Defined Layer Architecture](#3-project-defined-layer-architecture)
+- [3. Fixed Layer Architecture](#3-fixed-layer-architecture)
 - [4. Responsibility Map Model](#4-responsibility-map-model)
 - [5. One Main Entry Point](#5-one-main-entry-point)
 - [6. File Type Responsibility Model](#6-file-type-responsibility-model)
 - [7. Index vs Register vs Source Usage Register](#7-index-vs-register-vs-source-usage-register)
 - [8. Local Notes vs Register](#8-local-notes-vs-register)
 - [9. Template vs Workflow](#9-template-vs-workflow)
-- [10. Current Reality, Target, Draft, Archive And Recovery Notes](#10-current-reality-target-draft-archive-and-recovery-notes)
+- [10. Separate Current, Target, Draft, Archive And Dirty Draft](#10-separate-current-target-draft-archive-and-dirty-draft)
 - [11. Avoid Heavy Current-State Docs](#11-avoid-heavy-current-state-docs)
-- [12. Source-of-Truth / Evidence Hierarchy](#12-source-of-truth--evidence-hierarchy)
+- [12. Source-of-Truth Hierarchy](#12-source-of-truth-hierarchy)
 - [12A. Layer Encapsulation And Attention Preservation](#12a-layer-encapsulation-and-attention-preservation)
 - [13. Source / Version Principle](#13-source--version-principle)
 - [14. Dependency Cascade Principle](#14-dependency-cascade-principle)
 - [15. Section-Level Sources Principle](#15-section-level-sources-principle)
-- [16. Local Detail + Shared Visibility](#16-local-detail--shared-visibility)
+- [16. Local Detail + Global Visibility](#16-local-detail--global-visibility)
 - [17. Responsibility Ownership](#17-responsibility-ownership)
 - [18. Safe Rewrite Rule](#18-safe-rewrite-rule)
 - [18A. Decomposable File Architecture](#18a-decomposable-file-architecture)
 - [19. Documentation Update Plans](#19-documentation-update-plans)
 - [20. AI-Checkability Principles](#20-ai-checkability-principles)
-- [21. Internal vs External-Facing Output Separation](#21-internal-vs-external-facing-output-separation)
-- [22. Dirty Draft / Recovery Note Policy](#22-dirty-draft--recovery-note-policy)
+- [21. VKR / Thesis Separation](#21-vkr--thesis-separation)
+- [22. Dirty Draft Policy](#22-dirty-draft-policy)
 - [23. Direct Edits, Archives And Commit Granularity](#23-direct-edits-archives-and-commit-granularity)
 - [24. No-Duplication / Authority Rule](#24-no-duplication--authority-rule)
 - [24A. Link Instead Of Copy / Docs DRY Rule](#24a-link-instead-of-copy--docs-dry-rule)
@@ -42,21 +40,21 @@ Scope: reusable documentation architecture invariants for docs systems, with pro
 
 ## 1. Purpose
 
-Documentation is a knowledge system, not just a folder of notes.
+Planning documentation is a knowledge system, not just a folder of notes.
 
-It must help a future reader or AI-assisted review understand:
+It must help a future reader or chat understand:
 
 ```text
 - where to start;
-- which layer or responsibility zone owns the information;
+- which layer owns the information;
 - which files are canonical;
 - which files are local details;
 - which files are historical, scoped or non-canonical;
-- how to verify current evidence/current reality when the domain has one;
+- how to verify current implementation state;
 - how to update docs without losing context or changing meaning silently.
 ```
 
-These principles are about documentation architecture, not runtime application architecture.
+These principles are about the architecture of planning documentation, not the runtime architecture of the application.
 
 ## 1A. Principles Responsibility Boundary
 
@@ -99,65 +97,73 @@ Examples demonstrate usage but do not own rules.
 
 ## 2. Core Goals
 
-Documentation should be:
+Planning docs should be:
 
 ```text
 navigable for the user;
 reviewable by another chat or person;
 safe to update in small scoped changes;
 clear about source-of-truth boundaries;
-clear about current vs target vs draft vs archive/recovery notes;
+clear about current vs target vs draft vs archive;
 clear about where new information belongs;
-clear about internal working wording vs external-facing output wording when the project has external/public deliverables.
+useful for VKR/thesis wording without leaking internal workflow terms.
 ```
 
-## 3. Project-Defined Layer Architecture
+## 3. Fixed Layer Architecture
 
-A documentation system should define its layers and dependency direction before deciding file placement.
+Planning docs are organized as layers. A new piece of information should first be classified by layer, then by file type inside that layer.
 
-Reusable principle:
+Core layers:
+
+| Layer | Owns |
+|---|---|
+| Documentation layer | Planning-doc architecture, docs update workflows, responsibility maps, agent-output workflows and documentation governance. |
+| Scenario layer | Scenario text, UI specs, clarifications and behavior source. |
+| DATA set layer | Per-scenario DATA sets: what actors enter, see, select, filter, attach or reference. |
+| Behavior items set layer | Per-scenario behavior item sets derived from scenario/DATA/UI/cross-cutting sources. |
+| Domain layer | Domain concepts, value objects, invariants, aggregate boundaries, domain decisions and domain drafts. |
+| Slice layer | Slice drafts, slice boundaries, scenario/source mapping, questions, extension points and implementation notes. |
+| API / testing layer | API contract rules, generated contract rules, error contracts, testing principles and E2E workflows. |
+| Implementation evidence layer | Current branch, code, tests, migrations, generated artifacts and runtime screenshots. |
+| VKR / thesis layer | Clean thesis wording, thesis resources, evidence maps and presentation/defense-safe wording. |
+
+Layer dependency direction:
 
 ```text
-information should first be classified by responsibility layer, then by file type inside that layer.
+scenario sources
+  -> DATA sets / behavior item sets
+  -> domain layer
+  -> slice layer
+  -> API/testing plans and implementation evidence
+  -> VKR/thesis clean output
 ```
 
-This principles file does not define one universal layer stack for every project.
-
-Projects should define their own:
-
-```text
-- layer vocabulary;
-- dependency direction;
-- canonical sources per layer;
-- local vs shared visibility targets;
-- evidence/current-reality model;
-- external-output layer if any.
-```
-
-For scenario-driven app/product projects, see:
-
-```text
-planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
-```
-
-For the current Enman project mapping extracted from the candidate copy, see:
-
-```text
-planning/documentation-reusable-candidate/enman-docs-adapter.md
-```
+Documentation layer is the meta-layer that defines how the planning docs themselves are structured and updated.
 
 ## 4. Responsibility Map Model
 
 Responsibility maps are routing tools.
 
-There are two reusable levels:
+There are two levels:
 
 ```text
-root responsibility map
-  -> chooses the documentation/project layer and points to local responsibility maps;
+Root responsibility map
+  -> chooses the planning layer and points to local responsibility maps.
 
-local layer responsibility map
+Local layer responsibility map
   -> decides where information belongs inside that layer.
+```
+
+Root router:
+
+```text
+planning/planning-doc-responsibility-map.md
+```
+
+Documentation layer local map:
+
+```text
+planning/documentation/documentation-responsibility-map.md
 ```
 
 Target rule:
@@ -171,52 +177,52 @@ Target rule:
 - drafts/source files contain actual working content.
 ```
 
-Concrete map file paths are project configuration. They belong in the project adapter/profile.
+Until local maps exist for every layer, the root responsibility map may keep transitional fallback routing. Once local maps exist, detailed layer-specific placement should move out of the root map.
 
 ## 5. One Main Entry Point
 
-A documentation system should have one main entry point.
+`planning/README.md` is the main entry point.
 
 Its responsibility is navigation and source-of-truth routing, not detailed current-state inventory.
 
 It should answer:
 
 ```text
-- where to start;
-- where canonical source categories live;
-- which indexes/registers are global;
-- where non-canonical recovery notes live;
-- how to verify current evidence/current reality when applicable;
-- where project-specific adapter/profile mappings are defined.
+where to read scenario behavior;
+where to read slice scope;
+where to read architecture/API/client/testing docs;
+where to read VKR clean wording;
+where non-canonical recovery notes live;
+how to verify current implementation state.
 ```
 
-The exact entrypoint path is project configuration.
+It should not duplicate detailed implementation status that must be updated after every code change.
 
 ## 6. File Type Responsibility Model
 
-Every documentation file should have an understandable type. If a document type is unclear, future readers or chats may use it incorrectly.
+Every planning document should have an understandable type. If a document type is unclear, future chats may use it incorrectly.
 
 | Type | Responsibility |
 |---|---|
 | Architecture principles | Stable invariants and design constraints for how documentation is structured; file-type theory and source-of-truth boundaries. |
 | Workflow | Algorithm/process for performing a repeated operational task. |
-| Field kit | Reusable setup toolkit for deriving project-specific workflows, profiles, adapters, registers or evidence maps. Not the repeated operational workflow itself. |
-| Template | Exact shape of a draft, section, row, response block or output artifact. |
 | Index / README | Navigation, read order, file overview and short purpose summaries. |
 | Responsibility map | Where to put information; which file/layer owns what. |
-| Source spec / source set | Canonical or derived source content for a specific domain/project layer. |
-| Source usage register | Dependency map showing which consumer files/scopes use which source files/scopes and review versions. |
+| Source spec / source set | Canonical or derived source content, such as scenario specs, DATA sets or behavior item sets. |
+| Source usage register | Which local files use which external source files/versions. |
 | Questions register | Shared open/accepted questions, assumptions and decisions. |
 | Extension points register | Future considerations, change pressure and extension points. |
-| Implementation/evidence notes register | Shared evidence-related reminders that must stay visible beyond one local draft. |
-| Draft | Working planning/design content for a project/documentation task. |
-| Evidence | Current proof/current reality for a documentation domain, such as code/tests/artifacts, source notes, calendar/task state, research sources or other domain-specific evidence. |
-| Status snapshot | Scoped or historical status note; not current truth by itself. |
+| Implementation notes register | Shared implementation-related reminders that must stay visible beyond one local draft. |
+| Draft | Working planning/design content for a scenario/domain/slice/documentation task. |
+| Field kit | Reusable setup toolkit for deriving project-specific workflows, profiles, adapters, registers or evidence maps. Not the repeated operational workflow itself. |
+| Template | The shape of a draft, section or output artifact. |
+| Evidence | Code, tests, migrations, generated artifacts, screenshots or other current implementation proof. |
+| Status snapshot | Scoped or historical status note; not implementation truth by itself. |
 | Scoped sync note | Case-specific documentation synchronization note; not a reusable workflow. |
 | Adapter / profile | Concrete project configuration: layer vocabulary, exact paths, source maps, evidence maps, shared visibility maps, output layers and example links. |
 | Derived prompt | Reusable prompt assembled from canonical docs; not a canonical rule source. |
-| Recovery note / dirty draft | Non-canonical recovery/context note. |
-| External-output reference | Clean terminology or evidence map for project-specific external-facing deliverables, when they exist. |
+| Dirty draft | Non-canonical recovery/context note. |
+| VKR clean reference | Clean terminology and evidence map for thesis-facing materials. |
 
 ## 7. Index vs Register vs Source Usage Register
 
@@ -230,23 +236,23 @@ Register
   = shared cross-file collection of questions, decisions, extension points or notes that must remain discoverable.
 
 Source usage register
-  = dependency map showing which local files/scopes use which source files/scopes and review versions.
+  = dependency map showing which local files use which external source files and versions.
 ```
 
-A file may combine roles only when its scope says so explicitly. Otherwise, keep navigation/indexes separate from shared state tracking.
+A file may combine roles only when its scope says so explicitly. Otherwise, keep index/navigation separate from shared state tracking.
 
 ## 8. Local Notes vs Register
 
 Local notes belong inside one local file when they affect only that file.
 
-Use a shared register/index when information:
+Use a register when information:
 
 ```text
 - is unclear where it belongs yet;
 - affects multiple files or future files;
-- belongs to a future owner file that does not exist yet;
+- belongs to a future slice/domain/scenario that does not exist yet;
 - is a shared accepted direction;
-- is a future-use reminder that must remain visible;
+- is a future-use implementation reminder;
 - must be discoverable without reading every local draft.
 ```
 
@@ -280,27 +286,29 @@ A template should usually include:
 
 If examples become large, move them into a separate examples file or examples folder.
 
-Examples are supporting artifacts. They demonstrate correct application of an owner workflow, template or use case. They do not own routing logic, command aliases, source modes, output modes, permission boundaries or workflow activation.
+When adding or changing a reusable template, workflow with an expected output, response command, output mode or draft format, decide whether a working example is needed. If there is a template, a working example is needed by default unless the example would duplicate another current example or the file is routing-only.
 
-## 10. Current Reality, Target, Draft, Archive And Recovery Notes
+Examples are supporting artifacts. They demonstrate correct application of an owner workflow, template or use case. They do not own routing logic, command aliases, source modes, output modes, permission boundaries or workflow activation. Link to the owner instead of copying that logic into the example.
+
+## 10. Separate Current, Target, Draft, Archive And Dirty Draft
 
 Do not mix these concepts.
 
 | Category | Meaning | Source of truth? |
 |---|---|---|
-| Current reality / evidence | What is currently true in the relevant evidence layer for the documentation domain. | Yes, but only from the domain's defined evidence/current-reality model. |
-| Target direction | Where the design, plan or interpretation is intended to go. | Planning truth, not current evidence proof. |
+| Current implementation | What exists in the current branch/runtime. | Yes, but only from code/tests/migrations/generated contracts/screenshots. |
+| Target direction | Where the design is intended to go. | Planning truth, not implementation proof. |
 | Draft | Working planning hypothesis. | No, unless promoted. |
-| Archive / handoff | Historical application or transfer artifact. | No, unless verified against current evidence. |
-| Recovery note / dirty draft | Raw recovery/context note. | No. |
+| Archive / handoff | Historical application or transfer artifact. | No, unless verified against current branch. |
+| Dirty draft | Raw recovery/context note. | No. |
 
-A draft can describe intended behavior or target direction before it is proven/current.
+A domain or slice draft can describe intended behavior before it is implemented.
 
 A status snapshot can be useful historically, but it becomes stale if treated as permanent current truth.
 
 ## 11. Avoid Heavy Current-State Docs
 
-Do not maintain large global current-state documents that duplicate volatile current reality in detail.
+Do not maintain large global current-state documents that duplicate the implementation in detail.
 
 They become high-maintenance and can go stale faster than they are updated.
 
@@ -310,46 +318,116 @@ Prefer:
 stable navigation;
 source-of-truth rules;
 small historical/status notes when useful;
-domain-specific evidence/current-reality sources for current truth;
-evidence maps only where they serve a clear external/review purpose.
+current branch/code/tests/generated contracts/screenshots for implementation truth;
+evidence maps for thesis-facing claims.
 ```
 
-If a current-state note exists, mark whether it is historical/internal and remind readers how to verify it against the relevant evidence model.
+If a current-state note exists, mark whether it is historical/internal and remind readers to verify against current branch evidence.
 
-## 12. Source-of-Truth / Evidence Hierarchy
+## 12. Source-of-Truth Hierarchy
 
 Use the right source for the question.
 
-Every project or documentation domain should define:
+### Implementation truth
+
+Use:
 
 ```text
-- source categories;
-- evidence/current-reality categories;
-- target/draft categories;
-- recovery/historical categories;
-- authority order between them;
-- where concrete paths or source identifiers live.
+current Git branch
+code
+tests
+migrations
+OpenAPI / generated contracts
+runtime screenshots
 ```
 
-Reusable principle:
+### Scenario behavior truth
+
+Use:
 
 ```text
-canonical sources and evidence must be explicit enough that a future reader can verify a claim without relying on hidden chat memory.
+planning/diagrams/scenario-text-specs/
+planning/diagrams/scenario-data/
+planning/diagrams/scenario-behavior-items/
+planning/diagrams/scenario-clarifications/
 ```
 
-Concrete source paths are project adapter/profile content.
+### Domain direction
 
-Implementation-specific evidence models are not universal. For software projects they may include code, tests and generated artifacts. For other domains they may include source notes, schedules, task state, research sources or other evidence.
+Use domain drafts, accepted domain decisions and implementation cuts. Historical/background domain notes do not override current target domain drafts or accepted decisions.
+
+### Slice scope truth
+
+Use:
+
+```text
+planning/slices/
+planning/slices/l2/
+planning/slices/cross-cutting/
+```
+
+Slice docs describe scope and intended work. They are not proof that work is implemented.
+
+### Architecture/API/client/testing decisions
+
+Use:
+
+```text
+planning/architecture/
+planning/api/
+planning/client/
+planning/testing/
+planning/adr/
+```
+
+### VKR / thesis clean wording
+
+Use:
+
+```text
+planning/vkr-clean-reference.md
+planning/thesis/
+```
+
+### Recovery material
+
+Use only after canonical docs:
+
+```text
+planning/dirty-drafts/
+```
 
 ## 12A. Layer Encapsulation And Attention Preservation
 
-Documentation layers should behave like encapsulated modules.
+Planning layers should behave like encapsulated modules.
 
 When upstream work has already been reviewed, downstream docs should reference the published upstream artifact instead of reconstructing or re-explaining the upstream reasoning.
 
-The goal is to preserve already-reviewed work and human review attention.
+The goal is to preserve already-reviewed work and human review attention:
 
-Use source usage relationships and section-level source blocks to:
+```text
+scenario layer
+  owns scenario meaning;
+
+DATA and behavior item layers
+  own normalized source extraction from scenarios, DATA, UI scenarios and cross-cutting behavior;
+
+domain layer
+  owns domain interpretation, aggregate boundaries, value objects, invariants and domain decisions;
+
+slice layer
+  owns implementation slice contracts, boundaries, behavior coverage and draft-to-implementation direction;
+
+testing layer
+  owns verification strategy and proof selection;
+
+diagramming / VKR / thesis layers
+  consume source-layer outputs for visualization or clean wording, without becoming business source truth.
+```
+
+Downstream review should focus on the new decisions owned by the current layer, not on checking whether the assistant correctly reconstructed previous-layer reasoning.
+
+Use strict source usage relationships and section-level source blocks to:
 
 ```text
 - prevent duplicated source truth;
@@ -369,6 +447,7 @@ External dependency
 Internal section dependency
   = a later section in the same file depends on analytical work from an earlier section.
   Track it locally in section-level source/internal dependency blocks when the section is high-risk or reviewed separately.
+  It normally does not need version markers.
 ```
 
 Versions and review markers support this model, but they are not the core model.
@@ -381,25 +460,47 @@ source artifact/scope
   -> reviewed_against / sync_status / review_outcome when needed
 ```
 
-Detailed field-kit extraction for this model is deferred to:
+Do not copy upstream truth into downstream files just to make them self-contained. Link to the reviewed upstream artifact or source usage row, then document only the new downstream interpretation, decision or contract owned by the current layer.
 
-```text
-planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
-```
+If upstream work changes, use dependency cascade review to identify affected downstream scopes. If upstream work did not change and the source usage relationship is current, do not force broad re-review of already-reviewed upstream reasoning.
 
 ## 13. Source / Version Principle
 
 Source versions should be tracked where downstream synchronization matters.
 
-The principle lives here. Exact rows live in source usage registers or field-kit/register templates.
+The principle lives here. Exact rows live in source usage registers.
 
-Use stable source identifiers where possible. In repo-backed projects, repo-relative file paths are usually more stable than informal labels.
+Typical model:
 
-Do not introduce section-level version registries everywhere by default. Design them through source/version governance when the need is proven.
+```text
+source file path
+content_version
+reviewed_against / derived_from
+sync_status
+last_reviewed
+consumer file / local file
+```
+
+Use stable repo-relative file paths as source keys. Human labels may be added, but file paths are more stable than informal names.
+
+DATA sets and behavior item sets can have their own versions for the same scenario. They are not merely aliases of the scenario version.
+
+Section-level versions for principles and use-case source references are not introduced yet. They should be designed later through the source/version governance path instead of adding ad hoc version fields to individual use-case rows.
 
 ## 14. Dependency Cascade Principle
 
 When an upstream source changes, downstream files that use it must be reviewed.
+
+Example:
+
+```text
+scenario spec changes
+  -> review related DATA set
+  -> review related behavior items set
+  -> review domain drafts using those sources
+  -> review slice drafts using those sources
+  -> review tests/status/VKR claims when relevant
+```
 
 A downstream review does not always require content changes. It may result in:
 
@@ -410,11 +511,26 @@ sync metadata updated;
 needs follow-up.
 ```
 
-Concrete cascade examples belong in specialized profiles or examples, not in reusable principles.
-
 ## 15. Section-Level Sources Principle
 
 For important drafts, major sections should make their basis reviewable.
+
+Minimal major-section source block:
+
+```text
+Sources:
+  Format:
+  - ...
+
+  Content:
+  - ...
+
+  Internal dependencies:
+  - ...
+
+  Not checked:
+  - ...
+```
 
 Use this when the section is high-risk, reviewed separately, depends on several upstream sources, or may become input for another draft.
 
@@ -424,21 +540,38 @@ Detailed answer-level guidance lives in:
 planning/documentation/reviewable-agent-output-and-commands-workflow.md
 ```
 
-Reusable/candidate source-usage field-kit extraction is deferred to:
-
-```text
-planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
-```
-
-## 16. Local Detail + Shared Visibility
+## 16. Local Detail + Global Visibility
 
 Local docs own detailed context.
 
-Shared indexes and registers own discoverability.
+Examples:
+
+```text
+one slice file
+one client sidecar
+one scenario spec
+one DATA spec
+one cross-cutting slice
+one ADR candidate note
+```
+
+Global indexes and registers own discoverability.
+
+Examples:
+
+```text
+planning/README.md
+folder README files
+planning/planning-doc-responsibility-map.md
+planning/slices/slice-questions-register.md
+planning/slices/slice-extension-points-register.md
+planning/slices/slice-implementation-notes-register.md
+planning/diagrams/scenario-questions-register.md
+planning/adr/architecture-decision-notes.md
+planning/adr/adr-candidates.md
+```
 
 If a local detail affects future work outside that local file, it should be mirrored into the relevant shared index/register or explicitly marked local-only.
-
-The exact local-detail type -> shared visibility target map is project adapter/profile content.
 
 Detailed process lives in:
 
@@ -450,28 +583,41 @@ planning/documentation/local-global-documentation-sync-workflow.md
 
 A file should contain only content that belongs to its responsibility zone.
 
-Before adding or moving content:
+Before adding or moving content, first choose the layer using:
 
 ```text
-1. choose the layer / responsibility zone;
-2. choose the file type;
-3. use the relevant responsibility map, README or adapter/profile;
-4. avoid copying owner logic into non-owner files.
+planning/planning-doc-responsibility-map.md
 ```
 
-Concrete responsibility map paths are project configuration.
+Then use the local responsibility map or README for that layer.
+
+For documentation-layer information, use:
+
+```text
+planning/documentation/documentation-responsibility-map.md
+```
 
 ## 18. Safe Rewrite Rule
 
 A documentation update is not safe just because it changes only Markdown.
 
-If a wording change can affect behavior, scope, evidence, source-of-truth rules, external claims, responsibilities or project commitments, it is not a simple wording edit.
+If a wording change can affect any of these, it is not a simple wording edit:
+
+```text
+scenario behavior
+API contract
+domain rule
+security requirement
+testing responsibility
+architecture boundary
+slice scope
+status of implemented vs planned work
+VKR claim about what was implemented
+```
 
 Such changes must be explicit in the plan, not hidden as polish.
 
 Do not silently change behavior, scope or source-of-truth rules.
-
-Concrete examples belong in specialized profiles or project adapters/examples.
 
 ## 18A. Decomposable File Architecture
 
@@ -525,7 +671,7 @@ This keeps the update reviewable before files are changed.
 
 ## 20. AI-Checkability Principles
 
-Documentation should make AI-assisted work checkable.
+Planning docs should make AI-assisted work checkable.
 
 A future chat should be able to tell:
 
@@ -534,10 +680,10 @@ which files were checked;
 which files were not checked;
 which source is canonical;
 which assumptions are being used;
-which items are current, planned, deferred or historical according to the domain's status model;
+which items are implemented, planned, deferred or historical;
 which files are in scope;
 which files must not be changed;
-how to verify current evidence/current reality.
+how to verify current implementation evidence.
 ```
 
 Docs that require hidden chat memory are fragile.
@@ -550,30 +696,34 @@ Answer-level structure and commands live in:
 planning/documentation/reviewable-agent-output-and-commands-workflow.md
 ```
 
-## 21. Internal vs External-Facing Output Separation
+## 21. VKR / Thesis Separation
 
-Internal working documentation may use internal workflow terms.
-
-External-facing outputs need wording that fits their audience and purpose.
-
-Reusable rule:
+Internal planning docs may mention:
 
 ```text
-Do not copy internal workflow wording directly into external/public-facing deliverables.
-Rewrite useful internal material into clean audience-appropriate wording before external use.
+chat
+agent
+prompt
+workflow
+archive
+handoff
+L1/L2 internal labels
 ```
 
-Concrete external output layers and wording rules are project adapter/profile content.
+VKR-facing materials must use clean domain wording.
 
-For the current Enman candidate mapping, see:
+Use:
 
 ```text
-planning/documentation-reusable-candidate/enman-docs-adapter.md
+planning/vkr-clean-reference.md
+planning/thesis/
 ```
 
-## 22. Dirty Draft / Recovery Note Policy
+Do not copy dirty drafts or internal workflow wording directly into VKR, presentation, defense speech or practice-report text.
 
-Recovery notes and dirty drafts are useful preservation areas, not a problem by themselves.
+## 22. Dirty Draft Policy
+
+Dirty drafts are useful preservation areas, not a problem by themselves.
 
 They are useful for:
 
@@ -589,21 +739,19 @@ They are dangerous when:
 ```text
 they are read before canonical docs;
 they are treated as current truth;
-stale terms are copied into external-facing outputs;
-old decisions override newer canonical docs or current evidence.
+stale terms are copied into VKR;
+old decisions override newer scenario/slice/domain docs.
 ```
 
 Rules:
 
 ```text
-- recovery notes are never source of truth;
-- canonical docs and current evidence win;
-- use recovery notes only after canonical docs were checked;
-- rewrite any useful wording into clean terminology before external use;
-- promote stable useful decisions into canonical docs through normal documentation sync.
+- dirty drafts are never source of truth;
+- canonical docs and current code win;
+- use dirty drafts only after canonical docs were checked;
+- rewrite any useful wording into clean terminology before VKR use;
+- promote stable useful decisions into canonical docs through a normal documentation sync.
 ```
-
-Concrete recovery locations are project adapter/profile content.
 
 ## 23. Direct Edits, Archives And Commit Granularity
 
@@ -612,7 +760,7 @@ Documentation architecture must support both direct edits and replacement packag
 For small scoped repo changes explicitly approved by the user:
 
 ```text
-prefer direct edits when tool-supported and safe;
+prefer direct GitHub edits;
 use one file per commit for independent semantic edits;
 use one bundled/bulk commit for approved shallow mechanical multi-file link/path/name sync when tool-supported;
 keep commit messages specific;
@@ -635,22 +783,19 @@ When the same topic is mentioned in several files, each file must keep its own l
 
 ```text
 architecture principles
-  = reusable invariants and design constraints.
+  = global theory.
 
-responsibility maps
-  = placement and owner routing.
+root responsibility map
+  = layer routing and transitional fallback.
+
+local responsibility maps
+  = placement inside one layer.
 
 README/index
   = navigation and read order.
 
 workflow
   = process steps.
-
-field kit
-  = setup guidance for deriving project-specific artifacts.
-
-adapter/profile
-  = concrete project configuration.
 
 register
   = shared state.
@@ -672,8 +817,7 @@ canonical docs beat prompts;
 architecture principles beat summaries;
 responsibility maps beat workflow summaries for placement;
 local maps beat root map for local placement after they exist;
-workflow docs beat prompts for process steps;
-adapter/profile files beat examples for concrete project mapping.
+workflow docs beat prompts for process steps.
 ```
 
 ## 24A. Link Instead Of Copy / Docs DRY Rule
@@ -757,17 +901,18 @@ A broad reviewer chat may review another chat output if the output is explicitly
 
 ## 26. Success Criteria
 
-The documentation architecture is working when:
+The planning docs architecture is working when:
 
 ```text
-- a future reader can find the main entry point;
+- a future reader can start from planning/README.md;
 - source-of-truth boundaries are visible;
-- current evidence/current reality is verified from the domain's evidence model, not stale snapshots;
+- current implementation is verified from repo evidence, not stale snapshots;
 - new docs are discoverable from navigation;
-- responsibility maps can route information to the correct owner;
+- root responsibility map can choose the layer;
+- local responsibility maps can place information inside layers;
 - local questions that matter globally are visible in shared registers;
-- recovery notes remain useful but non-canonical;
-- external-facing outputs use audience-appropriate wording;
+- dirty drafts remain useful but non-canonical;
+- VKR-facing wording uses clean terms;
 - documentation changes can be planned, reviewed and reverted in small scopes;
 - reusable logic has one owner and other files link to it instead of copying it.
 ```

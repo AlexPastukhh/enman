@@ -34,7 +34,7 @@ If an example needs command/source/output/permission logic, link to the owner fi
 
 ## 3. Example Coverage Table
 
-The original copied active example coverage rows remain deferred. Candidate F5 field-kit examples are listed separately below.
+No filled documentation-layer examples are added yet.
 
 | Example ID | Type | Owner | Related use-case/workflow | Status | File | Missing/deferred reason |
 |---|---|---|---|---|---|---|
@@ -57,15 +57,6 @@ The original copied active example coverage rows remain deferred. Candidate F5 f
 | `DOCUMENTATION-ACTION-LOG-ENTRY-v1` | log-entry example | `planning/documentation/documentation-action-log.md` | documentation action log entries | deferred | _not created yet_ | Add after the action log format is used on at least one follow-up update; should show concise logical action entry with PMR relation. |
 | `NEW-CHAT-ONBOARDING-v1` | response example | `planning/planning-use-case-map.md` | New Chat Onboarding / first planning pass | deferred | _not created yet_ | Candidate from chat history; should show compact onboarding answer. |
 | `ACCEPTED-COMMAND-NO-REINVENTION-v1` | guardrail example | `planning/planning-use-case-map.md` | accepted command / no reinvention | deferred | _not created yet_ | Candidate from chat history; should show stop-and-explain instead of silent mode switch. |
-
-## 3A. Candidate Field Kit Examples Added In F5
-
-| Example ID | Type | Owner | Related use-case/workflow | Status | File | Notes |
-|---|---|---|---|---|---|---|
-| `STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE` | field-kit example | `planning/documentation-reusable-candidate/status-reconciliation-field-kit.md` | evidence/current-reality model setup for scenario-driven software projects | current candidate | `planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md` | Demonstrates first-stage implemented status and evidence checking. |
-| `SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE` | field-kit example | `planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md` | local detail to shared visibility mapping | current candidate | `planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md` | Demonstrates when a local slice question should be mirrored. |
-| `SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE` | field-kit example | `planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md` | generic source/consumer/cascade review model | current candidate | `planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md` | Demonstrates source usage row and metadata-only review outcome. |
-| `SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE` | field-kit example | `planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md` and `planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md` | Enman-specific source/consumer/cascade pilot preservation | current candidate | `planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md` | Preserves SC-13D / AgreementProposalExchange pilot knowledge from earlier governance notes. |
 
 ## 4. Adding A New Example
 

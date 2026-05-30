@@ -6,7 +6,7 @@ Scope: exact reusable Markdown shape for concrete use-case maps
 Use with:
 
 ```text
-planning/documentation/use-case-map-workflow.md
+planning/documentation-reusable-candidate/use-case-map-workflow.md
 ```
 
 This template is generic. Replace system-specific owner files, layer names and permission boundaries for the target system.
@@ -15,13 +15,13 @@ This template is generic. Replace system-specific owner files, layer names and p
 Reusable setup field kit:
 
 ```text
-planning/documentation/field-kits/root-use-case-map-field-kit.md
+planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
 ```
 
 Profile-specific route setup, when applicable:
 
 ```text
-planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
 ```
 
 This template defines shape only. It is not a second use-case map.
@@ -77,9 +77,9 @@ This file is not:
 Reusable use-case-map setup, maintenance and shape are owned by:
 
 ```text
-planning/documentation/field-kits/root-use-case-map-field-kit.md
-planning/documentation/use-case-map-workflow.md
-planning/documentation/USE-CASE-MAP-TEMPLATE.md
+planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
+planning/documentation-reusable-candidate/use-case-map-workflow.md
+planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
 ```
 
 ## 3. Universal Algorithm

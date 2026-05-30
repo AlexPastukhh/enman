@@ -1,138 +1,109 @@
 # Status Reconciliation Workflow
 
-Status: current status-reconciliation workflow  
-Scope: keeping planning docs aligned with current implementation and generated artifacts
+Status: reusable candidate workflow  
+Scope: repeated process for reconciling documentation status claims after a project evidence/current-reality model exists
+
+> Candidate note: this file belongs to `planning/documentation-reusable-candidate/`. It is not an active Enman source of truth until a later migration/switch batch approves it.
 
 ## 1. Purpose
 
-Status reconciliation updates docs when implementation moved faster than planning notes.
+This workflow keeps documentation status claims aligned with the project's configured evidence/current-reality model.
 
-It answers:
+It is not the setup kit.
 
-```text
-what is implemented?
-what is only first-stage implemented?
-what is partially implemented?
-what remains planned?
-what is deferred?
-what should be a future review item rather than a defect?
-```
-
-For broad or multi-file status/navigation documentation changes, prepare a Documentation Update Plan first:
+Use the setup kit first when the project has not yet defined evidence sources, status vocabulary or status-owner files:
 
 ```text
-planning/documentation/documentation-update-plan-workflow.md
+planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
 ```
 
-## 1A. Enman Status Evidence Profile
+## 2. Responsibility Split
 
-Use the active Enman project profile before reconciling status-sensitive docs:
+| Owner | Owns |
+|---|---|
+| Principles | Why current-state claims need evidence/current-reality checking. |
+| Field kit | How to define the evidence model and status vocabulary for a project/domain. |
+| Project evidence profile | The concrete evidence order, statuses and status-owner files for one project. |
+| This workflow | Repeated reconciliation process using the configured profile. |
+| Examples | Demonstrations only. |
+
+## 3. Inputs
+
+Before running this workflow, identify:
 
 ```text
-planning/status-evidence-profile.md
+- target docs/registers to reconcile;
+- project evidence/status profile;
+- evidence sources to check;
+- status labels allowed by the profile;
+- whether the output is internal, external-facing or historical.
 ```
 
-That profile owns the Enman evidence order and status vocabulary.
+For Enman candidate setup:
 
-This workflow owns the repeated reconciliation process.
+```text
+planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+```
 
-## 2. When To Run
+## 4. When To Run
 
 Run status reconciliation when:
 
 ```text
-- a commit implemented a planned cross-cutting slice;
-- generated artifacts appeared;
-- tests or E2E baseline changed;
-- client/server contract changed;
-- a slice became partially implemented;
-- an old doc still says “planned” for implemented behavior;
-- a prompt for another chat depends on current status.
+- evidence/current reality changed;
+- generated artifacts changed;
+- tests or verification baselines changed;
+- a planned item became current/verified;
+- a doc still says planned for something now evidenced as current;
+- a doc claims current truth but evidence is missing or conflicting;
+- external-facing output depends on a status claim.
 ```
 
-## 3. Evidence Order
-
-For detailed Enman evidence order and status labels, use:
+## 5. Reconciliation Process
 
 ```text
-planning/status-evidence-profile.md
+1. Read the project evidence/status profile.
+2. Identify the status claims in scope.
+3. Check the configured evidence sources in profile order.
+4. Compare docs status with evidence/current reality.
+5. Classify each claim as current, planned, deferred, historical, stale, not applicable or needs evidence check according to the profile.
+6. Propose docs updates or follow-up items.
+7. Preserve historical snapshots when they are intentionally historical.
+8. Record evidence checked and evidence not checked.
 ```
 
-Quick summary:
-
-Prefer current repo evidence:
-
-```text
-1. code / generated artifacts / tests;
-2. current planning docs;
-3. recent user discussion;
-4. older archives;
-5. memory.
-```
-
-If evidence conflicts, say so and update docs with explicit status/assumption.
-
-## 4. Status Table Template
+## 6. Output Table
 
 Use this table when helpful:
 
-| Area | Current evidence | Status | Docs to update | Next action |
-|---|---|---|---|---|
+| Area | Claim | Evidence checked | Status | Docs to update | Next action |
+|---|---|---|---|---|---|
 
-Example statuses:
+## 7. Conflict Handling
 
-```text
-CC-API-001 | generate-openapi + Shared/openapi.json + openapi-types.ts | first-stage implemented | CC-API-001, README, workflow | hardening/future questions
-CC-CONST-001 | generator/checker/artifacts/tests | implemented baseline | CC-CONST-001 | client usage/API test gaps
-E2E auth | root Playwright + register/login tests | implemented baseline | e2e-testing-workflow | future L1 migration
-```
-
-## 5. First-Stage Implemented
-
-Use `first-stage implemented` when:
+If evidence conflicts:
 
 ```text
-- the core workflow works;
-- generated artifacts/checks exist;
-- first consumers or metadata exist;
-- known hardening work remains.
-```
-
-Do not call this merely `planned`.
-
-Do not call it fully final if important hardening remains.
-
-## 6. Future Review Items
-
-Use future review items when:
-
-```text
-- current implementation works;
-- concern may matter under CI/scale/consolidation;
-- changing now would distract from current next step;
-- question should not be forgotten.
-```
-
-Future review items are not current defects unless they block the current gate.
-
-## 7. Prompt Impact
-
-When docs are reconciled, update prompts for other chats:
-
-```text
-- remove instructions to implement already implemented infrastructure;
-- add “do not redo” rules;
-- mark current baseline and remaining gaps;
-- list blockers accurately;
-- protect working E2E/auth/client/server contract behavior from accidental rewrite.
+- say which sources conflict;
+- do not silently choose the convenient source;
+- prefer the profile's evidence order;
+- mark assumptions explicitly;
+- create a follow-up if the conflict cannot be resolved.
 ```
 
 ## 8. Do Not
 
 ```text
-- Do not overclaim planned code as implemented.
-- Do not leave old planned wording after implementation is confirmed.
-- Do not bury status updates in unrelated docs.
-- Do not update only central README while detailed slice doc remains stale.
-- Do not skip the Documentation Update Plan for broad status/navigation changes.
+- Do not invent project evidence sources during repeated reconciliation.
+- Do not treat old status snapshots as current truth.
+- Do not force software implementation statuses onto non-software docs domains.
+- Do not update external-facing claims without checking the profile's external-output rules.
+```
+
+## 9. Related Files
+
+```text
+planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
 ```

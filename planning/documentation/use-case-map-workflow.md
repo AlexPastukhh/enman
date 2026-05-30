@@ -1,6 +1,6 @@
 # Use-Case Map Workflow
 
-Status: current reusable documentation-layer workflow  
+Status: candidate reusable documentation-layer workflow  
 Scope: how to create, update and maintain use-case maps as reusable routing artifacts across systems
 
 ## 1. Purpose
@@ -23,13 +23,13 @@ Use this workflow for:
 Use the template for exact shape:
 
 ```text
-planning/documentation/USE-CASE-MAP-TEMPLATE.md
+planning/documentation-reusable-candidate/USE-CASE-MAP-TEMPLATE.md
 ```
 
 Setup field kit:
 
 ```text
-planning/documentation/field-kits/root-use-case-map-field-kit.md
+planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
 ```
 
 Use the field kit when creating or restructuring a root use-case map. Use this workflow for repeated maintenance after the map exists.
@@ -223,7 +223,7 @@ Each project should keep one concrete root map that imports/adapts reusable setu
 For scenario/domain/slice route families, use:
 
 ```text
-planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
 ```
 
 ## 11. Synchronization With Navigation And Examples
@@ -240,9 +240,9 @@ When adding a new reusable use-case-map workflow, template or map:
 For documentation-layer maps and templates, use:
 
 ```text
-planning/documentation/documentation-responsibility-map.md
-planning/documentation/example-coverage-workflow.md
-planning/documentation/documentation-action-log.md
+planning/documentation-reusable-candidate/documentation-responsibility-map.md
+planning/documentation-reusable-candidate/example-coverage-workflow.md
+planning/documentation-reusable-candidate/documentation-action-log.md
 ```
 
 ## 12. Checks Before Finalizing

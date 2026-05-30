@@ -497,6 +497,306 @@ Notes:
   This batch intentionally does not split principles, create the scenario-domain-slice profile, create the Enman adapter, move VKR/source-usage pilots/sync notes, or create the reusable candidate copy.
 ```
 
+### 2026-05-30 — Added reusable candidate guardrails
+
+```text
+Date:
+  2026-05-30
+Action:
+  Added guardrails for the reusable documentation candidate baseline after the active documentation layer was copied to planning/documentation-reusable-candidate/.
+Type:
+  documentation architecture / portability migration preparation
+Status:
+  applied
+Why:
+  The candidate copy should exist as a safe migration workspace without becoming a second active source of truth. Future cleanup, classification and split work should happen inside the candidate, while ordinary project documentation updates continue to use planning/documentation/.
+Changed files:
+  - planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/README.md
+  - planning/documentation/documentation-responsibility-map.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  The reusable candidate workspace is now explicitly temporary, non-canonical and limited to portability/genericization work.
+PMR relation:
+  none
+Follow-ups:
+  Use documentation-responsibility-zone-review-workflow.md to classify planning/documentation-reusable-candidate/planning-docs-architecture-principles.md before any principles split.
+Owner sources:
+  planning/documentation/documentation-layer-portability-migration-plan.md
+  planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+  planning/documentation/documentation-responsibility-map.md
+Notes:
+  This change does not split principles, create the scenario-domain-slice profile, create the Enman adapter, move VKR/source-usage pilots/sync notes, or change the copied candidate file contents.
+```
+
+### 2026-05-30 — Added candidate principles responsibility classification
+
+```text
+Date:
+  2026-05-30
+Action:
+  Added a pre-split responsibility-zone classification artifact for the candidate principles file.
+Type:
+  documentation architecture / portability migration preparation
+Status:
+  applied
+Why:
+  Before splitting or genericizing the reusable candidate principles, every section needs to be classified as reusable-core, scenario-driven profile material, Enman/project adapter mapping, example candidate, workflow detail or field-kit detail.
+Changed files:
+  - planning/documentation-reusable-candidate/PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md
+  - planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  The candidate now has a review artifact that prepares the principles split without changing the principles file itself.
+PMR relation:
+  none
+Follow-ups:
+  Plan F4 candidate principles split/genericization using PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md as the source of truth.
+Owner sources:
+  planning/documentation/documentation-responsibility-zone-review-workflow.md
+  planning/documentation-reusable-candidate/PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md
+  planning/documentation/documentation-layer-portability-migration-plan.md
+Notes:
+  This change does not rewrite or split planning-docs-architecture-principles.md, does not create scenario-domain-slice profile, does not create Enman/project adapter, and does not move VKR/source-usage/sync notes.
+```
+
+### 2026-05-30 — Split candidate principles into reusable/profile/adapter outputs
+
+```text
+Date:
+  2026-05-30
+Action:
+  Split/genericized the candidate principles layer into reusable principles, a scenario/domain/slice specialized profile, an Enman adapter and a deferred portability follow-ups file.
+Type:
+  documentation architecture / portability migration candidate work
+Status:
+  applied
+Why:
+  F3 classified the candidate principles sections. F4 applies that classification inside the non-canonical candidate workspace while preserving project-specific Enman mappings outside reusable principles.
+Changed files:
+  - planning/documentation-reusable-candidate/planning-docs-architecture-principles.md
+  - planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
+  - planning/documentation-reusable-candidate/enman-docs-adapter.md
+  - planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+  - planning/documentation-reusable-candidate/README.md
+  - planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Candidate principles are now more reusable, scenario/domain/slice topology is isolated as a specialized profile, Enman-specific paths and VKR mappings are preserved in an adapter, and ambiguous workflow/field-kit/example work is tracked separately.
+PMR relation:
+  none
+Follow-ups:
+  F5 should review candidate status-reconciliation, local-global sync and source-usage cascade governance files. Source usage field-kit extraction is deferred to F5.
+Owner sources:
+  planning/documentation-reusable-candidate/PRINCIPLES-RESPONSIBILITY-CLASSIFICATION.md
+  planning/documentation-reusable-candidate/planning-docs-architecture-principles.md
+  planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
+  planning/documentation-reusable-candidate/enman-docs-adapter.md
+  planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+Notes:
+  This change does not touch active planning/documentation/planning-docs-architecture-principles.md, does not switch canonical docs, does not move VKR/source-usage/sync notes, and does not rewrite the status/local-global/source-usage workflows.
+```
+
+### 2026-05-30 — Split candidate field kits and Enman project-instance files
+
+```text
+Date:
+  2026-05-30
+Action:
+  Split deferred candidate status/local-global/source-usage responsibilities into reusable field kits, repeated workflows, Enman candidate project-instance files and examples.
+Type:
+  documentation architecture / portability migration candidate work
+Status:
+  applied
+Why:
+  F4 intentionally deferred source usage/status/local-global details. F5 separates principles, kit setup, repeated workflow, Enman concrete configuration and examples so Enman adapter does not become a dumping ground.
+Changed files:
+  - planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+  - planning/documentation-reusable-candidate/status-reconciliation-workflow.md
+  - planning/documentation-reusable-candidate/enman-status-evidence-profile.md
+  - planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+  - planning/documentation-reusable-candidate/local-global-documentation-sync-workflow.md
+  - planning/documentation-reusable-candidate/enman-shared-visibility-map.md
+  - planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+  - planning/documentation-reusable-candidate/source-usage-cascade-governance-plan.md
+  - planning/documentation-reusable-candidate/enman-source-usage-cascade-profile.md
+  - planning/documentation-reusable-candidate/examples/STATUS-RECONCILIATION-SCENARIO-PROJECT-EXAMPLE.md
+  - planning/documentation-reusable-candidate/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md
+  - planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
+  - planning/documentation-reusable-candidate/examples/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
+  - planning/documentation-reusable-candidate/examples/README.md
+  - planning/documentation-reusable-candidate/enman-docs-adapter.md
+  - planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+  - planning/documentation-reusable-candidate/README.md
+  - planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Candidate now distinguishes reusable field kits, repeated workflows, Enman project-instance answers and examples for the deferred status/local-global/source-usage areas.
+PMR relation:
+  none
+Follow-ups:
+  Review F5 outputs after use; decide later whether to promote Enman project-instance files to active planning/ root and whether to delete/archive the source usage governance bridge.
+Owner sources:
+  planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+  planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+  planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+  planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+Notes:
+  This change remains candidate-only. It does not switch canonical docs, does not promote Enman files into active planning/ root, and does not rewrite active planning/documentation/ workflows.
+```
+
+### 2026-05-30 — Cleaned candidate navigation and read order
+
+```text
+Date:
+  2026-05-30
+Action:
+  Reworked the reusable candidate README/navigation after the F4/F5 candidate split.
+Type:
+  documentation architecture / portability migration candidate cleanup
+Status:
+  applied
+Why:
+  The candidate folder had real reusable/profile/adapter/field-kit structure, but its README still looked like the copied active documentation README. F6A makes the candidate workspace navigable as a candidate and separates candidate read order from related active owners.
+Changed files:
+  - planning/documentation-reusable-candidate/README.md
+  - planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+  - planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Candidate navigation/read order now points to candidate files first, while active documentation references are clearly marked as related active owners.
+PMR relation:
+  none
+Follow-ups:
+  Plan active promotion strategy separately. Re-check candidate navigation if files are later promoted, renamed, archived or switched to canonical.
+Owner sources:
+  planning/documentation-reusable-candidate/README.md
+  planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
+  planning/documentation/documentation-layer-portability-migration-plan.md
+Notes:
+  This change remains candidate-only. It does not switch canonical docs, does not promote Enman files into active planning/ root, does not delete the source usage bridge and does not create new field kits/examples.
+```
+
+### 2026-05-30 — Promoted Enman project-instance profiles to active planning root
+
+```text
+Date:
+  2026-05-30
+Action:
+  Promoted the Enman candidate project-instance status, shared visibility and source usage profiles into active planning root.
+Type:
+  documentation architecture / active project profile promotion
+Status:
+  applied
+Why:
+  F5 created candidate Enman project-instance files from reusable field kits. F6C makes those concrete Enman answers active project-level configuration while keeping reusable candidate principles, kits and workflows candidate-only.
+Changed files:
+  - planning/status-evidence-profile.md
+  - planning/shared-visibility-map.md
+  - planning/source-usage-cascade-profile.md
+  - planning/README.md
+  - planning/planning-doc-responsibility-map.md
+  - planning/documentation/status-reconciliation-workflow.md
+  - planning/documentation/local-global-documentation-sync-workflow.md
+  - planning/documentation/source-usage-cascade-governance-plan.md
+  - planning/documentation-reusable-candidate/README.md
+  - planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Active planning root now has project-wide profiles for status/evidence, shared visibility and source usage cascade. Active documentation workflows link to those profiles, but reusable candidate docs remain non-canonical.
+PMR relation:
+  none
+Follow-ups:
+  Review the promoted profiles after real status reconciliation, local/global sync and source usage/cascade work. Decide later whether reusable candidate field kits/workflows should be promoted and whether the source usage governance bridge can be deleted or archived after a pilot.
+Owner sources:
+  planning/status-evidence-profile.md
+  planning/shared-visibility-map.md
+  planning/source-usage-cascade-profile.md
+  planning/documentation-reusable-candidate/status-reconciliation-field-kit.md
+  planning/documentation-reusable-candidate/shared-visibility-map-field-kit.md
+  planning/documentation-reusable-candidate/source-usage-cascade-field-kit.md
+Notes:
+  This change does not promote candidate reusable principles, field kits, workflows or examples. It does not switch canonical documentation ownership and does not delete candidate migration files or the source usage governance bridge.
+```
+
+### 2026-05-30 — Split root use-case map setup into reusable field kits
+
+```text
+Date:
+  2026-05-30
+Action:
+  Added reusable field-kit guidance for creating/maintaining a single project root use-case map and for adding scenario/domain/slice route families.
+Type:
+  documentation architecture / use-case map routing setup
+Status:
+  applied
+Why:
+  Enman should keep one concrete root use-case map while the reusable documentation layer provides setup kits, maintenance workflow and template shape. Reusable common commands should not become a second generic use-case map.
+Changed files:
+  - planning/documentation/field-kits/root-use-case-map-field-kit.md
+  - planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+  - planning/documentation/use-case-map-workflow.md
+  - planning/documentation/USE-CASE-MAP-TEMPLATE.md
+  - planning/planning-use-case-map.md
+  - planning/README.md
+  - planning/planning-doc-responsibility-map.md
+  - planning/documentation/README.md
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  `planning/planning-use-case-map.md` remains the concrete Enman root router. The documentation layer now owns reusable UCM setup guidance, maintenance process and template shape.
+PMR relation:
+  none
+Follow-ups:
+  Continue F7 reusable docs layer switch planning. Keep scenario/domain/slice rows concrete in the root map while using the profile-specific field kit when adding/changing those routes.
+Owner sources:
+  planning/planning-use-case-map.md
+  planning/documentation/field-kits/root-use-case-map-field-kit.md
+  planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+  planning/documentation/use-case-map-workflow.md
+  planning/documentation/USE-CASE-MAP-TEMPLATE.md
+Notes:
+  This change does not create a second generic use-case map, does not remove Enman-specific root rows, does not switch the whole docs layer to candidate, and does not delete candidate migration files.
+```
+
+### 2026-05-30 — Clarified replacement package diff capture commands
+
+```text
+Date:
+  2026-05-30
+Action:
+  Clarified the replacement package post-apply diff capture command standard.
+Type:
+  documentation workflow / replacement package command guardrail
+Status:
+  applied
+Why:
+  Replacement package APPLY commands must save the full diff to a file and copy it to the clipboard without printing the full diff to the terminal. The previous guidance mixed clipboard copying with command forms that could be interpreted as noisy or encoding-fragile.
+Changed files:
+  - planning/replacement-file-generation-guide.md
+  - planning/documentation/documentation-update-workflow.md
+  - planning/planning-use-case-map.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Replacement package generation now has a clearer command invariant: print only status/stat, save the full diff with `--output`, copy with `ReadAllText + Set-Clipboard`, then paste the copied diff for review before commit.
+PMR relation:
+  none
+Follow-ups:
+  Use this command tail in all future replacement archive/package APPLY.md files and chat responses.
+Owner sources:
+  planning/replacement-file-generation-guide.md
+  planning/documentation/documentation-update-workflow.md
+  planning/planning-use-case-map.md
+Notes:
+  This change does not alter replacement archive content format, commit policy or direct edit permissions.
+```
+
 ### 2026-05-30 — Mirrored active reusable additions into candidate workspace
 
 ```text
@@ -521,6 +821,8 @@ Changed files:
   - planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
   - planning/documentation-reusable-candidate/PORTABILITY-FOLLOWUPS.md
   - planning/documentation-reusable-candidate/documentation-responsibility-map.md
+  - planning/documentation/documentation-layer-portability-migration-plan.md
+  - planning/documentation/documentation-action-log.md
 Layer impact:
   Candidate now contains the active-only reusable UCM field kit, scenario/domain/slice UCM route setup kit, active-latest UCM workflow/template and active-latest documentation update diff-command guardrails. Candidate remains non-canonical.
 PMR relation:
@@ -530,8 +832,9 @@ Follow-ups:
 Owner sources:
   planning/documentation-reusable-candidate/README.md
   planning/documentation-reusable-candidate/CANDIDATE-NOTICE.md
-  planning/documentation-reusable-candidate/field-kits/root-use-case-map-field-kit.md
-  planning/documentation-reusable-candidate/profiles/scenario-domain-slice-use-case-field-kit.md
+  planning/documentation/field-kits/root-use-case-map-field-kit.md
+  planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
+  planning/replacement-file-generation-guide.md
 Notes:
-  This candidate-local entry intentionally does not import active action-log history. This change does not copy root project files into candidate, does not make the candidate folder canonical, does not rename folders and does not delete active or candidate documentation files.
+  This change does not copy root project files into candidate, does not make the candidate folder canonical, does not rename folders and does not delete active or candidate documentation files.
 ```

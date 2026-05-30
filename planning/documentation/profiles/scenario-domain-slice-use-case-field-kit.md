@@ -1,7 +1,9 @@
 # Scenario / Domain / Slice Use-Case Field Kit
 
-Status: active reusable profile-specific field kit  
+Status: candidate reusable profile-specific field kit  
 Scope: setup guidance for adding scenario/domain/slice route rows to a project's single root use-case map
+
+Candidate note: this file mirrors the active F7A scenario/domain/slice route setup kit into the candidate workspace for future folder-switch readiness. It does not make the candidate folder canonical.
 
 ## 1. Purpose
 
@@ -35,7 +37,7 @@ Related reusable profile candidate:
 planning/documentation-reusable-candidate/scenario-domain-slice-docs-profile.md
 ```
 
-That profile is still pending active promotion in a later reusable docs-layer switch batch. Do not reference `planning/documentation/profiles/scenario-domain-slice-docs-profile.md` until that active profile exists.
+This candidate profile is the related candidate documentation topology profile. During a later folder-switch batch it should become an active profile under `planning/documentation/profiles/`.
 
 If the project does not use this topology, do not force these routes into the root map.
 
