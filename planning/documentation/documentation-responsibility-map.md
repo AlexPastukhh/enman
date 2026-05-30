@@ -206,11 +206,11 @@ The documentation layer is well-routed when:
 - prompts and sync notes are clearly supporting/scoped artifacts.
 ```
 
-## 3A. Candidate Overlay Responsibility Note
+## 8A. Historical F7C Overlay Note
 
-F7C mirrors active reusable use-case-map and command-routing additions into candidate.
+F7C historically mirrored active reusable use-case-map and command-routing additions into the former candidate workspace before the F7D/F7E switch.
 
-These files are candidate copies of reusable setup/workflow/template logic:
+These files are now active reusable setup/workflow/template owners:
 
 ```text
 field-kits/root-use-case-map-field-kit.md

@@ -1,9 +1,9 @@
 # Planning Docs Architecture Principles
 
-Status: reusable candidate architecture principles  
+Status: active reusable documentation architecture principles  
 Scope: reusable documentation architecture invariants for docs systems, with project-specific and scenario-driven material split into profile/adapter files
 
-> Candidate note: this file belongs to `planning/documentation/`. It is not the active Enman documentation source until a later migration/switch batch approves it.
+> Active boundary: this file owns reusable documentation architecture invariants. Concrete Enman routing and project-specific configuration remain in `planning/planning-use-case-map.md` and root planning profiles.
 
 ## Contents
 

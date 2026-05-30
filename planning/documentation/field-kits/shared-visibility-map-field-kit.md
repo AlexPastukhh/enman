@@ -51,7 +51,7 @@ Create a project-specific file with this table:
 | Local detail type | Local owner | Shared visibility target | Mirror condition | Local-only allowed? | Notes |
 |---|---|---|---|---|---|
 
-For the candidate Enman instance, see:
+For the active Enman project map, see:
 
 ```text
 planning/shared-visibility-map.md

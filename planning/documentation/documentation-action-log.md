@@ -579,3 +579,30 @@ Owner sources:
 Notes:
   This cleanup does not delete planning/documentation-legacy/, does not move root Enman project profiles into planning/documentation/, does not delete the source-usage governance bridge and does not create a second generic root use-case map.
 ```
+### 2026-05-30 — Cleaned remaining active docs semantic switch wording
+
+Date:
+  2026-05-30
+Action:
+  Cleaned remaining post-switch semantic wording in the active reusable documentation layer.
+Type:
+  documentation architecture / semantic cleanup
+Status:
+  applied
+Why:
+  After F7D/F7E, planning/documentation/ was active and structurally routed correctly, but a few active owner files still used candidate-era wording.
+Changed files:
+  - planning/documentation/planning-docs-architecture-principles.md
+  - planning/documentation/documentation-responsibility-map.md
+  - planning/documentation/status-reconciliation-workflow.md
+  - planning/documentation/local-global-documentation-sync-workflow.md
+  - planning/documentation/field-kits/status-reconciliation-field-kit.md
+  - planning/documentation/field-kits/shared-visibility-map-field-kit.md
+  - planning/documentation/field-kits/source-usage-cascade-field-kit.md
+  - planning/documentation/documentation-action-log.md
+Layer impact:
+  Active reusable docs no longer self-identify as candidate in the architecture principles file or setup handoff wording. Historical F7C overlay text is marked historical. Legacy remains preserved and inactive.
+Follow-ups:
+  Keep planning/documentation-legacy/ for now. Later run a dedicated verification batch before deciding whether to delete or archive legacy.
+Notes:
+  This cleanup does not delete planning/documentation-legacy/, does not move root Enman project profiles and does not change use-case routing.

@@ -37,7 +37,7 @@ Before running this workflow, identify:
 - whether new files were added/moved/superseded.
 ```
 
-For Enman candidate setup:
+For Enman project map:
 
 ```text
 planning/shared-visibility-map.md

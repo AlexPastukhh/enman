@@ -116,7 +116,7 @@ Create a project-specific file with this shape:
 ## Do Not
 ```
 
-For the candidate Enman instance, see:
+For the active Enman project profile, see:
 
 ```text
 planning/status-evidence-profile.md

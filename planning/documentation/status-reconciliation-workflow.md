@@ -37,7 +37,7 @@ Before running this workflow, identify:
 - whether the output is internal, external-facing or historical.
 ```
 
-For Enman candidate setup:
+For Enman project profile:
 
 ```text
 planning/status-evidence-profile.md
