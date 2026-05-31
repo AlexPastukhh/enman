@@ -1,13 +1,13 @@
-# Goal Process Map Example
+# Goal Map Example
 
-Status: current root goal/process map example  
+Status: current root goal-map example  
 Doc version: v0.1.0  
-Scope: demonstrates a Goal Process Map for the command-system and Tampermonkey helper goal
+Scope: demonstrates a Goal Map for the command-system and Tampermonkey helper goal
 
 Owner:
 
 ```text
-planning/goal-process-map.md
+planning/goal-map-principles-workflow-template.md
 ```
 
 This file demonstrates valid use only. It does not own command semantics, routing, source truth, source-cascade rules, output modes or permission boundaries.
@@ -15,7 +15,7 @@ This file demonstrates valid use only. It does not own command semantics, routin
 ## Example Map
 
 ```text
-## Карта процесса достижения цели
+## Карта цели
 
 Финальная картина:
   There is a transferable command system and a Tampermonkey command helper.
@@ -49,9 +49,9 @@ This file demonstrates valid use only. It does not own command semantics, routin
     Status:
       planned.
 
-  SC-3 — User can see the process map
+  SC-3 — User can see the goal map
     Поведение:
-      User says `карта процесса`, `где мы`, `прогресс` or `статус цели`.
+      User says `карта процесса`, `карта цели`, `где мы`, `прогресс` or `статус цели`.
       Chat shows final picture, target scenarios, process slices, acceptance criteria, current state, decision points and next action.
     Acceptance criteria:
       - Final picture is clear.
@@ -74,12 +74,14 @@ This file demonstrates valid use only. It does not own command semantics, routin
   SC-5 — Tampermonkey helps expand commands
     Поведение:
       User selects or types a short command in a browser command palette.
-      Script shows an expanded prompt, allows target/context edits and inserts the prompt into chat input.
+      Script shows an expanded prompt with execution reminders, key boundaries and command-specific details,
+      allows target/context edits and inserts the prompt into chat input.
     Acceptance criteria:
       - Command palette opens.
       - Commands are searchable by alias.
       - Expansion preview is visible before insert.
       - User can add target/context.
+      - Expansion includes execution reminders and key boundaries.
       - No auto-send by default.
       - Script is prompt helper, not source of truth.
     Status:
@@ -100,7 +102,7 @@ This file demonstrates valid use only. It does not own command semantics, routin
       1. [x] Clarify Level 2 / Key points / Краткое саммари.
       2. [x] Add reusable command execution examples.
       3. [ ] Add critical-thinking command.
-      4. [ ] Add Goal Process Map command semantics.
+      4. [ ] Add Goal Map command semantics.
       5. [ ] Add generic action overview command semantics.
     Acceptance criteria:
       - Commands have aliases, meaning, expected behavior and boundaries.
@@ -119,7 +121,7 @@ This file demonstrates valid use only. It does not own command semantics, routin
       - planning/planning-use-case-map.md
     Шаги:
       1. [ ] Route reusable command examples from the root map.
-      2. [ ] Route Goal Process Map commands to planning/goal-process-map.md.
+      2. [ ] Route Goal Map commands to planning/goal-map-principles-workflow-template.md.
       3. [ ] Keep long examples outside the use-case map.
     Acceptance criteria:
       - Use-case map remains router.
@@ -130,12 +132,12 @@ This file demonstrates valid use only. It does not own command semantics, routin
     Status:
       in-progress.
 
-  SL-3 — Goal Process Map format
+  SL-3 — Goal Map format
     Покрывает сценарии:
       - SC-3
     Артефакты / действия:
-      - planning/goal-process-map.md
-      - planning/goal-process-map-example.md
+      - planning/goal-map-principles-workflow-template.md
+      - planning/goal-map-example.md
     Шаги:
       1. [x] Define map as mini-architecture of a goal.
       2. [x] Separate owner file from example file.
@@ -176,7 +178,7 @@ This file demonstrates valid use only. It does not own command semantics, routin
       - optional project profile config
     Шаги:
       1. [ ] Define MVP command list.
-      2. [ ] Define command expansion schema.
+      2. [ ] Define command expansion schema with execution reminders and key boundaries.
       3. [ ] Build floating button / palette UI.
       4. [ ] Add preview/edit before insert.
       5. [ ] Add reusable default commands.
@@ -186,6 +188,7 @@ This file demonstrates valid use only. It does not own command semantics, routin
       - User can pick a command.
       - User can edit the expanded prompt.
       - Prompt inserts into chat input.
+      - Expansion includes command-specific execution reminders and key boundaries.
       - Script does not auto-send by default.
     Проверка:
       - Manual browser test.
@@ -195,7 +198,7 @@ This file demonstrates valid use only. It does not own command semantics, routin
 Текущее состояние:
   Где мы:
     Reusable command examples are done.
-    Goal Process Map owner/example split is being added.
+    Goal Map owner/example split is being added.
     Use-case map routing is the current active slice.
     Critical-thinking command, generic action overview and Tampermonkey MVP are planned.
 
@@ -221,7 +224,7 @@ This file demonstrates valid use only. It does not own command semantics, routin
 
 Точки выбора:
 
-  DEC-1 — Goal Process Map placement
+  DEC-1 — Goal Map placement
     Вопрос:
       Should the map live as one root file first or be split into reusable workflow/template/example immediately?
     Влияет на:
@@ -246,16 +249,17 @@ This file demonstrates valid use only. It does not own command semantics, routin
       - SL-5
     Варианты:
       A. Copy detailed docs into script.
-      B. Use concise expansions that remind the chat of command intent.
+      B. Use concise expansions that remind the chat of command intent, execution reminders and key boundaries.
     Критерии выбора:
       - avoid stale duplicated logic;
       - keep prompts usable;
-      - preserve use-case map/workflow ownership.
+      - preserve use-case map/workflow ownership;
+      - keep enough command detail so long chats do not forget important constraints.
     Текущее решение:
       B preferred for MVP.
 
 Текущий фокус:
-  SL-3 / SL-2: add root Goal Process Map owner/example and route commands from the root use-case map.
+  SL-3 / SL-2: add root Goal Map owner/example and route commands from the root use-case map.
 
 Следующее действие:
   Apply the F7-CMD-3A archive and review the diff before commit.

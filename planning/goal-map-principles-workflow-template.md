@@ -1,12 +1,12 @@
-# Goal Process Map
+# Goal Map Principles / Workflow / Template
 
-Status: current root goal/process mapping aid  
+Status: current root compound starter artifact / goal-map principles-workflow-template  
 Doc version: v0.1.0  
-Scope: how to define, update and review a goal-level process map for long-running work across chats, files, artifacts, decisions and implementation steps
+Scope: principles, workflow and template for defining, updating and reviewing a goal-level map for long-running work across chats, files, artifacts, decisions and implementation steps
 
 ## 1. Purpose
 
-A Goal Process Map / `Карта процесса достижения цели` is a compact architecture of a goal.
+A Goal Map / `Карта цели` is a compact architecture of a goal and its process of achievement.
 
 It shows:
 
@@ -23,17 +23,31 @@ It shows:
 
 It is meant for long-running work where a chat can otherwise lose track of the result, the current position, the route and the verification criteria.
 
-This file owns the root process-map format and workflow. It does not replace specialized project/domain/slice workflows, command workflows, source registers, PMR or action logs.
+This file owns the root goal-map principles, workflow and template. It does not replace specialized project/domain/slice workflows, command workflows, source registers, PMR or action logs.
+
+## 1A. Compound Starter Artifact
+
+This file is a compound starter artifact. It intentionally combines:
+
+```text
+- principles / invariants;
+- workflow / process;
+- template / exact output shape.
+```
+
+Use this combined form while the concept is early and has one cohesive owner. Keep examples in separate files so this owner file does not become too large.
+
+Split this file later only when the concept stabilizes, becomes too large, or its sections get different owners, review cadence or reuse boundaries.
 
 ## 2. Mental Model
 
-Goal Process Map transfers project-architecture thinking to any long-running goal.
+Goal Map transfers project-architecture thinking to any long-running goal.
 
 ```text
 Project architecture:
   scenario -> behavior items -> domain/slice -> implementation -> tests
 
-Goal process map:
+Goal map:
   target scenario -> required behavior/outcome -> process slice -> action/artifact -> acceptance check
 ```
 
@@ -55,11 +69,11 @@ Key points
 File Update Overview / Итог
   file/change/update-specific overview.
 
-Goal Process Map / Карта процесса достижения цели
+Goal Map / Карта цели
   final picture, target scenarios, process slices, current state, steps, acceptance criteria and decision points for a long-running goal.
 ```
 
-Do not use Goal Process Map as a generic summary. Use it when the work has a continuing goal, multiple steps, multiple possible paths or scenario/slice-like behavior to achieve.
+Do not use Goal Map as a generic summary. Use it when the work has a continuing goal, multiple steps, multiple possible paths or scenario/slice-like behavior to achieve.
 
 ## 4. Commands
 
@@ -79,14 +93,14 @@ goal map
 Meaning:
 
 ```text
-Produce, review or update the Goal Process Map for the active or named long-running goal.
+Produce, review or update the Goal Map for the active or named long-running goal.
 ```
 
 The command does not grant permission to edit files, create archives, commit changes or change repository state.
 
 If the active goal is unclear, ask for the goal or mark assumptions explicitly. Do not invent a final picture silently.
 
-If a previous map exists in the conversation, preserve its accepted structure and update statuses, decision points, steps and next action instead of recreating the map from scratch.
+If a previous map exists in the conversation or repo, preserve its accepted structure and update statuses, decision points, steps and next action instead of recreating the map from scratch.
 
 ## 5. Required Map Content
 
@@ -124,7 +138,7 @@ Next action
 ## 6. Default Format
 
 ```text
-## Карта процесса достижения цели
+## Карта цели
 
 Финальная картина:
   <what should exist / work / be possible at the end>
@@ -193,7 +207,7 @@ The map can be shortened for small goals, but it must preserve the core relation
 
 ## 7. Workflow
 
-When building a Goal Process Map:
+When building a Goal Map:
 
 ```text
 1. Identify the active or named goal.
@@ -214,10 +228,10 @@ When building a Goal Process Map:
 When user says `где мы` / `прогресс`:
   show current state, completed items, missing items, current focus and next action.
 
-When user says `карта процесса`:
-  produce or refresh the full Goal Process Map.
+When user says `карта процесса` / `карта цели`:
+  produce or refresh the full Goal Map.
 
-When user says `обнови карту процесса`:
+When user says `обнови карту процесса` / `обнови карту цели`:
   update statuses, steps, decisions and next action using the latest accepted work.
 
 When user says `крит, карта процесса`:
@@ -255,7 +269,7 @@ Use decision points when the user is deciding which step is better, where to sto
 ## 10. Do Not
 
 ```text
-- Do not treat a Goal Process Map as a generic conclusion.
+- Do not treat a Goal Map as a generic conclusion.
 - Do not replace detailed answers, file update overviews or source checks with the map.
 - Do not invent a final picture when the goal is unclear.
 - Do not silently drop accepted scenarios, slices, invariants or decision points during updates.
@@ -263,7 +277,7 @@ Use decision points when the user is deciding which step is better, where to sto
 - Do not use a flat todo list when scenario/slice structure is needed for verification.
 ```
 
-## 11. Living Goal Process Maps
+## 11. Living Goal Maps
 
 Static examples and active living maps are different.
 
@@ -272,7 +286,7 @@ Static example
   Demonstrates a valid shape.
   Does not change during ordinary work.
 
-Living goal-process map
+Living goal map
   Tracks a real active goal/workstream.
   Can be updated as statuses, slices, decisions and next actions change.
 ```
@@ -286,8 +300,10 @@ planning/workstreams/
 Current active command-system/Tampermonkey workstream map:
 
 ```text
-planning/workstreams/command-system-and-tampermonkey-goal-process.md
+planning/workstreams/command-system-and-tampermonkey-goal-map.md
 ```
+
+A living map must be current-state-readable. It should start with `Current Snapshot` so a user or another chat can open the file and immediately see the current goal, focus, active slice, latest completed action, next action and open decisions.
 
 When updating a living map, preserve accepted final picture, scenarios, slices, invariants and decision points unless the user explicitly changes them. Update statuses, steps, current focus and next action instead of recreating the map from scratch.
 
@@ -296,7 +312,7 @@ When updating a living map, preserve accepted final picture, scenarios, slices, 
 Example:
 
 ```text
-planning/goal-process-map-example.md
+planning/goal-map-example.md
 ```
 
 The example demonstrates the command-system and Tampermonkey helper goal. It is demonstration-only and does not own this workflow.

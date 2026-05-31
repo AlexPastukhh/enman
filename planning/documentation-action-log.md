@@ -1144,3 +1144,42 @@ Follow-ups:
   Choose the next slice: route reusable command examples from the root use-case map, add the крит command, or plan the Tampermonkey MVP.
 Notes:
   The active workstream map is mutable project state. The owner format remains planning/goal-process-map.md.
+### 2026-05-31 - Renamed and synchronized Goal Map files
+
+Date:
+  2026-05-31
+Action:
+  Renamed and synchronized Goal Map owner, example and living workstream files after adopting the compound starter artifact naming convention.
+Type:
+  root planning aid / goal-map file naming sync
+Status:
+  applied
+Why:
+  Goal Map is a compound starter artifact that intentionally combines principles, workflow and template. The owner filename should make that combined responsibility explicit while the example and living map stay separate.
+Changed files:
+  - planning/goal-map-principles-workflow-template.md
+  - planning/goal-map-example.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/planning-use-case-map.md
+  - planning/documentation-action-log.md
+Removed / renamed paths:
+  - planning/goal-process-map.md
+  - planning/goal-process-map-example.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-process.md
+Updates:
+  - Renamed the Goal Map owner to reflect principles + workflow + template responsibility.
+  - Renamed the static example and living workstream map to match Goal Map naming.
+  - Added Current Snapshot to the living workstream map so it can be opened at any time to see the current goal and progress.
+  - Synchronized root use-case map links to the new file names.
+  - Recorded that Tampermonkey command expansions must include execution reminders, key boundaries and command-specific details, not only command labels.
+Not changed:
+  - No filename-version migration performed.
+  - No Doc version headers removed.
+  - No critical-thinking command added.
+  - No generic Action Overview added.
+  - No Tampermonkey script added.
+  - No source/domain/slice docs edited.
+Follow-ups:
+  Add reusable architecture policy for compound starter artifacts and filename-version migration in a separate batch. Then choose the next Goal Map slice: route reusable command examples, add critical-thinking command, or plan Tampermonkey MVP.
+Notes:
+  This package uses replacement files for renamed Goal Map files and targeted inline updates for existing root route/action-log files.

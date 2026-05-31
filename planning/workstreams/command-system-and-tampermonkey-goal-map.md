@@ -1,9 +1,9 @@
-# Command System And Tampermonkey Goal Process
+# Command System And Tampermonkey Goal Map
 
-Status: active workstream goal-process map  
+Status: active workstream goal map  
 Doc version: v0.1.0  
-Owner format: `planning/goal-process-map.md`  
-Scope: living process map for transferable command semantics, command examples, goal/process tracking, generic action overview and Tampermonkey prompt-helper work
+Owner format: `planning/goal-map-principles-workflow-template.md`  
+Scope: living goal map for transferable command semantics, command examples, goal/process tracking, generic action overview and Tampermonkey prompt-helper work
 
 This is a living map. Update it when the goal, scenario status, slice status, decision points or next action changes.
 
@@ -12,11 +12,50 @@ This file does not own command semantics, routing, source truth, output modes or
 Owner / routing files:
 
 ```text
-planning/goal-process-map.md
+planning/goal-map-principles-workflow-template.md
 planning/planning-use-case-map.md
 planning/documentation/reviewable-agent-output-and-commands-workflow.md
 planning/documentation/examples/README.md
 ```
+
+## 0. Current Snapshot
+
+Last updated:
+  2026-05-31 / after F7-CMD-3C goal-map rename and synchronization
+
+Current goal:
+  Build a transferable command system and Tampermonkey prompt helper for long-running chats across projects.
+
+Current focus:
+  SL-3 validation is landing; next slice decision is open.
+
+Active slice:
+  SL-3 — Goal Map
+    Status: first pass implemented / validating
+
+Latest completed:
+  - Added root Goal Map owner/example.
+  - Added active living workstream map.
+  - Added living-map storage rule to `planning/goal-map-principles-workflow-template.md`.
+  - Renamed goal-map files to match compound starter artifact naming.
+
+Next action:
+  Choose next slice:
+    A. F7-CMD-1B — route reusable command examples from root use-case map.
+    B. F7-CMD-2 — add critical-thinking command `крит`.
+    C. TM-0 — plan Tampermonkey MVP.
+
+Recommended next action:
+  F7-CMD-1B, because it closes the already-open examples/routing chain.
+
+Open decisions:
+  - DEC-1: next slice after living map.
+  - DEC-2: Tampermonkey command storage.
+  - DEC-3: Generic Action Overview placement.
+  - DEC-4: how much use-case map detail Tampermonkey expansion should repeat.
+
+Update rule:
+  Update this snapshot after every meaningful batch, decision, route change, scenario/slice status change or next-action change.
 
 ## 1. Final Picture
 
@@ -28,10 +67,10 @@ In the final state:
 - short commands are easy to type;
 - each command has clear meaning, aliases, boundaries and expected behavior;
 - root use-case maps route commands to owner workflows and examples;
-- long-running goals can be shown as Goal Process Maps;
+- long-running goals can be shown as Goal Maps;
 - the chat can critically evaluate user proposals instead of agreeing automatically;
 - meaningful non-file actions can be summarized without misusing file-specific `Итог`;
-- Tampermonkey can expand short commands into editable prompt-like instructions;
+- Tampermonkey can expand short commands into editable prompt-like instructions with execution reminders, key boundaries and command-specific details;
 - project-specific command profiles can extend reusable command defaults without becoming source of truth.
 ```
 
@@ -42,8 +81,8 @@ In the final state:
 | Reusable command examples | done | Level 2, plan command and archive source/output examples were added. |
 | Level 2 / Key points / `Краткое саммари` | done | Key points are non-fixed compressed mirrors of the detailed answer; `Краткое саммари` owns fixed traceability order. |
 | Planning command | done | `планируй` means produce a concrete plan now, not “plan later.” |
-| Goal Process Map owner/example | done / validating | Root owner and root example are added; this file is the active living map. |
-| Use-case routing | in progress | Goal Process Map is routed; reusable command examples still need routing from the root map. |
+| Goal Map owner/example | done / validating | Root owner and root example are added; this file is the active living map. |
+| Use-case routing | in progress | Goal Map is routed; reusable command examples still need routing from the root map. |
 | Critical-thinking command | planned | Need `крит` semantics, example and route. |
 | Generic Action Overview | planned | Need generic non-file overview without weakening file-specific `Итог`. |
 | Tampermonkey MVP | planned | Need command palette, expansion model, preview/edit and insert behavior. |
@@ -56,7 +95,7 @@ In the final state:
 | SC-2 | Critical thinking can be requested | User asks for honest evaluation; chat treats the user option as a hypothesis. | strengths, weaknesses, hidden assumptions, risks, alternatives, honest verdict | planned |
 | SC-3 | Process map visible | User asks `карта процесса`, `где мы`, `прогресс`; chat shows final picture, slices, current state and next action. | final picture, current state, scenario/slice statuses, decision points, next action | first pass implemented / validating |
 | SC-4 | Generic action overview works | After meaningful non-file work, user can request a structured action outcome. | action, status, scope, what changed, why, checked/not checked, owner, next action | planned |
-| SC-5 | Tampermonkey helper works | User selects/types short command; script shows expanded editable prompt and inserts it into chat. | palette, alias search, preview/edit, insert, no auto-send, helper-not-source-of-truth | planned |
+| SC-5 | Tampermonkey helper works | User selects/types a short command; script shows an expanded editable prompt with execution reminders, key boundaries and command-specific details, then inserts it into chat. | palette, alias search, preview/edit, insert, no auto-send, execution reminders, helper-not-source-of-truth | planned |
 
 ## 4. Process Slice Matrix
 
@@ -64,7 +103,7 @@ In the final state:
 |---|---|---|---|
 | SL-1 Reusable command semantics | SC-1, SC-2, SC-3, SC-4 | partially implemented | Add `крит`; later add generic action overview command. |
 | SL-2 Root use-case routing | SC-1, SC-3 | in progress | Route reusable command examples and add Enman-specific scenario/domain/slice command example. |
-| SL-3 Goal Process Map | SC-3 | first pass implemented / validating | Validate this living map and update owner rules if needed. |
+| SL-3 Goal Map | SC-3 | first pass implemented / validating | Validate this living map and update owner rules if needed. |
 | SL-4 Critical-thinking command | SC-2 | planned | Define command, aliases, behavior, boundaries and example. |
 | SL-5 Generic Action Overview | SC-4 | planned | Design owner/format/example while preserving File Update Overview. |
 | SL-6 Tampermonkey MVP | SC-5 | planned | Define MVP command list and expansion schema. |
@@ -116,7 +155,7 @@ Artifacts / actions:
 - Enman-specific command example under project-specific examples
 
 Steps:
-- [x] Route Goal Process Map commands.
+- [x] Route Goal Map commands.
 - [ ] Route reusable command examples from root use-case map.
 - [ ] Add Enman-specific scenario/domain/slice command example.
 - [ ] Keep long examples outside the root use-case map.
@@ -134,15 +173,15 @@ Verification:
 Status:
 - in progress.
 
-### SL-3 — Goal Process Map
+### SL-3 — Goal Map
 
 Covers:
 - SC-3
 
 Artifacts / actions:
-- `planning/goal-process-map.md`
-- `planning/goal-process-map-example.md`
-- `planning/workstreams/command-system-and-tampermonkey-goal-process.md`
+- `planning/goal-map-principles-workflow-template.md`
+- `planning/goal-map-example.md`
+- `planning/workstreams/command-system-and-tampermonkey-goal-map.md`
 
 Steps:
 - [x] Define the map as mini-architecture of a goal.
@@ -236,7 +275,7 @@ Artifacts / actions:
 
 Steps:
 - [ ] Define MVP command list.
-- [ ] Define command expansion schema.
+- [ ] Define command expansion schema with execution reminders and key boundaries.
 - [ ] Decide MVP storage: inline userscript vs config/profile.
 - [ ] Build floating button / command palette UI.
 - [ ] Add preview/edit before insert.
@@ -249,6 +288,7 @@ Acceptance criteria:
 - User can edit expanded prompt.
 - Prompt inserts into chat input.
 - No auto-send by default.
+- Expansion includes command-specific execution reminders and key boundaries.
 - Script does not become source of truth.
 - Reusable defaults can later be extended by project-specific profiles.
 
@@ -270,7 +310,7 @@ Status:
 ## 7. Current Focus
 
 SL-3 validation:
-- create and use a living hybrid Goal Process Map in repo;
+- create and use a living hybrid Goal Map in repo;
 - make sure it is easier to update than a long chat-only map.
 
 Secondary focus:
