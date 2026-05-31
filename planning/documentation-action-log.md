@@ -1082,3 +1082,35 @@ Follow-ups:
   Add a separate root use-case map routing batch that links relevant command/use-case rows to these examples and adds the Enman-specific scenario/domain/slice planning example.
 Notes:
   This package was rebuilt after rejecting the previous F7-CMD-1 package that attempted to overwrite most of `planning/documentation-action-log.md`. This entry is appended to the preserved current action log.
+### 2026-05-31 - Added root goal process map
+
+Date:
+  2026-05-31
+Action:
+  Added a root Goal Process Map owner file, separate root example and root use-case routing for goal/process commands.
+Type:
+  root planning aid / long-running goal process tracking
+Status:
+  applied
+Why:
+  Long-running chat work needs a stable way to show final picture, current state, scenario-like target behaviors, process slices, acceptance criteria, decision points and next action. Existing Key points, Краткое саммари and File Update Overview help navigation but do not represent the full process architecture of a goal.
+Changed files:
+  - planning/goal-process-map.md
+  - planning/goal-process-map-example.md
+  - planning/planning-use-case-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added `planning/goal-process-map.md` as the root owner for Goal Process Map principles, format and workflow.
+  - Added `planning/goal-process-map-example.md` as a separate demonstration file so the owner file stays compact.
+  - Routed `карта процесса`, `где мы`, `прогресс`, `статус цели` and related aliases from the root use-case map.
+  - Defined the map as a mini-architecture of a goal: final picture, target scenarios, process slices, acceptance criteria, current state and decision points.
+Not changed:
+  - No Tampermonkey script added.
+  - No critical-thinking command added.
+  - No generic Action Overview added.
+  - No source/domain/slice files edited.
+  - No reusable workflow/template split performed.
+Follow-ups:
+  Add critical-thinking command, generic Action Overview and Tampermonkey command palette planning as separate batches.
+Notes:
+  This package uses targeted inserts for existing root files to avoid overwriting current use-case map or action-log history.

@@ -325,6 +325,20 @@ The canonical prior-discussion recheck command is:
 
 Response block commands such as `кп`, `саммари`, `итог` and `отличия драфта` are routed in this file, but their behavior is owned by `reviewable-agent-output-and-commands-workflow.md`.
 
+Goal Process Map / `Карта процесса` commands are owned by:
+
+```text
+planning/goal-process-map.md
+```
+
+Example:
+
+```text
+planning/goal-process-map-example.md
+```
+
+Use-case rows may reference Goal Process Map as expected output, but they do not own its format or workflow.
+
 ## 9. Repeated / Continuation Commands
 
 Reusable command setup owner:
@@ -344,6 +358,7 @@ This root map remains the concrete Enman route table.
 | `кп`, `key points` | Force a `Key points first` block for the active answer. | Add key points if the requested answer exists or ask what answer to summarize. | No traversal / reuse. | Conversation; sources only if key points depend on evidence. | `Key points first` block plus normal answer structure. |
 | `без кп`, `без key points` | Suppress `Key points first` for the active answer. | Apply to the current answer if target is obvious. | No traversal / reuse. | Conversation. | Answer without key-points preview. |
 | `саммари` | Add contextual `Краткое саммари`. | Summarize current answer/context or ask target. | No traversal / reuse; targeted if evidence changed. | Conversation plus sources only if needed. | `Краткое саммари`, not file-change `Итог`. |
+| `карта процесса`, `карта цели`, `план процесса`, `где мы`, `прогресс`, `статус цели`, `goal process`, `goal map` | Show/update the Goal Process Map for the active or named long-running goal. | Ask for the goal if no active/named goal exists. | Reuse / targeted; full if goal/scope changed. | Conversation plus relevant docs/sources when the map depends on repo state. | Goal Process Map: final picture, target scenarios, process slices, acceptance criteria, current state, decision points, current focus and next action. |
 | `без саммари` | Suppress `Краткое саммари`. | Apply to current answer if target is obvious. | No traversal / reuse. | Conversation. | Answer without contextual summary. |
 | `итог` | Add or update file/change-oriented `Итог` when update context exists. | If no file/change/update context exists, explain that `Итог` is not applicable and offer `Краткое саммари`. | Reuse / targeted. | Conversation plus target files/diff/archive when needed. | File Update Overview / `Итог`; during planning it is the rolling nearest-batch plan. |
 | `без итога` | Suppress `Итог`. | Apply to current answer if target is obvious. | No traversal / reuse. | Conversation. | Answer without File Update Overview. |
