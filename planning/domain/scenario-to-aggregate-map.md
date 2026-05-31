@@ -11,14 +11,30 @@ This file is not the final domain model. It is the domain discovery bridge and c
 
 ## 2. Source Model
 
-Primary sources:
+Primary scenario/domain discovery sources:
 
 ```text
 planning/diagrams/scenario-text-specs/
-planning/diagrams/scenario-data/
 planning/diagrams/scenario-behavior-items/
 planning/diagrams/scenario-clarifications/
 planning/diagrams/scenario-questions-register.md
+```
+
+Scenario-specific DATA source rule:
+
+```text
+Primary scenario-specific DATA belongs in the relevant scenario text spec #DATA section.
+planning/diagrams/scenario-data/ is for reusable/shared/audited/transitional DATA sidecars.
+```
+
+Domain drafting / local source block sources:
+
+```text
+planning/source-cascade-sync-workflow.md
+planning/SOURCE-SECTION-SOURCES-TEMPLATE.md
+planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md
+planning/domain/aggregate-drafting-workflow.md
+planning/domain/aggregate-draft-template.md
 ```
 
 Historical / cross-check sources:
@@ -50,9 +66,10 @@ Tests.EnergyManagement/Integration/App/EmployeeRequests/
 Not checked:
 
 ```text
-Full scenario-by-scenario source/version/cascade alignment is deferred.
+Domain source-sync register has not been derived yet.
 Full UI sidecar coverage for all domain flows was not audited in these extraction passes.
 Full auth/session/EF mapping implementation audit is not done.
+Scenario-data sidecars were not promoted to primary scenario-specific DATA unless explicitly named as reusable/shared/audited/transitional sources in local Sources blocks.
 ```
 
 ## 3. Behavior Item Category Mapping
@@ -89,10 +106,10 @@ Full auth/session/EF mapping implementation audit is not done.
 
 | Aggregate | Root | Child entities / concrete types | Source scenarios/items | Draft file | Status |
 |---|---|---|---|---|---|
-| Account | Account | ClientAccount, Employee | SC-01, SC-02, SC-03B, employee command actor sources | `planning/domain/aggregates/account.md` | extracted first-pass |
-| ApplicantParty | ApplicantParty | IndividualApplicantParty | SC-10, SC-10B, SC-04, old domain drafts | `planning/domain/aggregates/applicant-party.md` | extracted first-pass |
-| ConnectionRequest | ConnectionRequest | RequestReview | SC-04, SC-05, SC-06, SC-07A, SC-07B, SC-13D coordination | `planning/domain/aggregates/connection-request.md` | extracted |
-| AgreementProposalExchange | AgreementProposalExchange | AgreementProposal | SC-13D, L2 agreement behavior items | `planning/domain/aggregates/agreement-proposal-exchange.md` | extracted |
+| Account | Account | ClientAccount, Employee | SC-01, SC-02, SC-03B, employee command actor sources | `planning/domain/aggregates/account.md` | prepared with `Doc version: v0.1.0` and local section `Sources:` blocks |
+| ApplicantParty | ApplicantParty | IndividualApplicantParty | SC-10, SC-10B, SC-04, old domain drafts | `planning/domain/aggregates/applicant-party.md` | prepared with `Doc version: v0.1.0` and local section `Sources:` blocks |
+| ConnectionRequest | ConnectionRequest | RequestReview | SC-04, SC-05, SC-06, SC-07A, SC-07B, SC-13D coordination | `planning/domain/aggregates/connection-request.md` | prepared with `Doc version: v0.1.0` and local section `Sources:` blocks |
+| AgreementProposalExchange | AgreementProposalExchange | AgreementProposal | SC-13D, L2 agreement behavior items | `planning/domain/aggregates/agreement-proposal-exchange.md` | prepared with `Doc version: v0.1.0` and local section `Sources:` blocks |
 
 ## 6. Value Object Register
 
@@ -162,7 +179,7 @@ Open:
 - What is the final ApplicantParty edit/archive/versioning model after verification or request reference?
 - Should Email / PasswordHash / FullName / PhoneNumber receive separate domain value-object docs later?
 - How should account activation/suspension/deactivation become explicit domain commands later?
-- Which source/version fields should be added after source/version/cascade model stabilizes?
+- Which domain sources should receive explicit Doc version markers after the first domain source-sync register is derived?
 ```
 
 Accepted:
@@ -180,17 +197,18 @@ Accepted:
 Priority:
 
 ```text
-1. Validate first-pass aggregate docs against source/version/cascade model later.
-2. Revisit ApplicantParty edit/archive/versioning questions.
-3. Revisit request applicant snapshot question.
-4. Audit Account activation/auth-session boundary if needed.
-5. Add or refine domain-model-overview.md as aggregate docs evolve.
+1. Derive `planning/domain/domain-source-sync-register.md` from local aggregate section `Sources:` blocks.
+2. Review cross-aggregate dependencies in the domain source-sync register before touching slice drafts.
+3. Revisit ApplicantParty edit/archive/versioning questions.
+4. Revisit request applicant snapshot question.
+5. Audit Account activation/auth-session boundary if needed.
+6. Add or refine domain-model-overview.md as aggregate docs evolve.
 ```
 
 Blocked/deferred:
 
 ```text
-Full source/version/cascade alignment is deferred.
+Slice draft refactor is deferred until after the domain source-sync register is created and reviewed.
 ```
 
 ## 11. Source Delta / Change Log
@@ -201,4 +219,7 @@ Full source/version/cascade alignment is deferred.
 - ApplicantParty and Account extracted to complete first-pass aggregate-based domain layer.
 - Account/Employee TPH decision extracted into planning/domain/decisions/.
 - Domain model overview added as first-pass map.
+- Source model cleaned up after F7K-A1..A4: scenario text spec #DATA is primary for scenario-specific DATA; scenario-data sidecars are reusable/shared/audited/transitional by default.
+- Aggregate Register statuses updated to show all four active aggregate drafts are prepared with `Doc version: v0.1.0` and local section `Sources:` blocks.
+- Next domain work updated to derive `planning/domain/domain-source-sync-register.md` before slice refactor.
 ```

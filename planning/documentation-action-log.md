@@ -849,3 +849,33 @@ Follow-ups:
   Review all four prepared active aggregate drafts, then derive `planning/domain/domain-source-sync-register.md`. After the domain register is reviewed, decide how to approach the larger slice draft refactor.
 Notes:
   This batch keeps implementation evidence marked as previously checked/archive/source-pass evidence unless explicitly rechecked in a later implementation-sync pass.
+
+### 2026-05-31 - Cleaned domain source model before source-sync register
+
+Date:
+  2026-05-31
+Action:
+  Cleaned up the scenario-to-aggregate source model after all four active aggregate drafts received local section Sources blocks.
+Type:
+  domain source/version/cascade cleanup
+Status:
+  applied
+Why:
+  The domain discovery bridge still treated `planning/diagrams/scenario-data/` as a primary source bucket. The prepared aggregate drafts now use the newer rule: scenario text spec `#DATA` is primary for scenario-specific DATA, while `planning/diagrams/scenario-data/` is reusable/shared/audited/transitional by default.
+Changed files:
+  - planning/domain/scenario-to-aggregate-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Clarified the domain Source Model DATA rule.
+  - Added domain drafting/local source block process files to the Source Model.
+  - Updated Aggregate Register statuses to show all four active aggregate drafts are prepared with `Doc version: v0.1.0` and local section `Sources:` blocks.
+  - Updated next domain work to derive `planning/domain/domain-source-sync-register.md` before slice draft refactor.
+Not changed:
+  - No aggregate draft edited.
+  - No domain source-sync register created.
+  - No slice draft edited.
+  - No broad Doc version pass performed.
+Follow-ups:
+  Create `planning/domain/domain-source-sync-register.md` from local aggregate section `Sources:` blocks, then review the domain register before planning slice refactor.
+Notes:
+  This cleanup does not change aggregate semantics. It aligns the domain discovery bridge with the source model already applied in Account, ApplicantParty, ConnectionRequest and AgreementProposalExchange.
