@@ -943,3 +943,34 @@ Follow-ups:
   Update `planning/domain/domain-source-sync-register.md` and related source model references so source dependency rows use concrete `Doc version: v0.1.0` for newly versioned scenario/domain sources instead of `version not declared`.
 Notes:
   This is a broad version seed pass. It introduces document versions only; it does not claim all source content was semantically re-audited.
+
+### 2026-05-31 - Synchronized domain register source versions after Doc version seed
+
+Date:
+  2026-05-31
+Action:
+  Updated `planning/domain/domain-source-sync-register.md` after the D2 scenario/domain Doc version seed.
+Type:
+  domain source/version/cascade register sync
+Status:
+  applied
+Why:
+  D2 introduced `Doc version: v0.1.0` across `planning/domain/**/*.md` and `planning/diagrams/**/*.md`. The domain source-sync register needed to stop treating those source groups as `version not declared` and instead reference concrete document versions while still avoiding claims of semantic re-audit.
+Changed files:
+  - planning/domain/domain-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Updated register rules to state that D2 was a document-version seed, not a semantic re-audit.
+  - Updated source category version rules for scenario text specs, scenario behavior items, scenario clarifications, scenario DATA sidecars, domain aggregates and domain value objects.
+  - Updated aggregate source dependency rows to use `Doc version: v0.1.0` for `planning/domain/**` and `planning/diagrams/**` source groups.
+  - Kept `planning/tables/**` sources as historical/cross-check and version-not-declared in this register.
+  - Kept implementation/test evidence as prior archive/source-pass evidence, not current proof.
+Not changed:
+  - No aggregate draft edited.
+  - No scenario/source file edited.
+  - No slice draft edited.
+  - No semantic re-audit claimed.
+Follow-ups:
+  Review the synchronized domain register, then plan the first slice-side source/version/cascade step as a separate batch.
+Notes:
+  Aggregate local section `Sources:` blocks remain authoritative for section-level work. This register remains a navigation/sync index.
