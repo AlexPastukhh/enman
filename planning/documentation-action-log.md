@@ -1,4 +1,4 @@
-﻿# Documentation Action Log
+# Documentation Action Log
 
 Status: current documentation-layer logical action log  
 Scope: significant completed documentation-architecture, workflow, source-governance and planning-doc actions with short reasons
@@ -879,3 +879,34 @@ Follow-ups:
   Create `planning/domain/domain-source-sync-register.md` from local aggregate section `Sources:` blocks, then review the domain register before planning slice refactor.
 Notes:
   This cleanup does not change aggregate semantics. It aligns the domain discovery bridge with the source model already applied in Account, ApplicantParty, ConnectionRequest and AgreementProposalExchange.
+
+### 2026-05-31 - Created domain source-sync register
+
+Date:
+  2026-05-31
+Action:
+  Created `planning/domain/domain-source-sync-register.md` from active aggregate local section `Sources:` blocks.
+Type:
+  domain source/version/cascade register
+Status:
+  applied
+Why:
+  After Account, ApplicantParty, ConnectionRequest and AgreementProposalExchange received `Doc version: v0.1.0` plus local section `Sources:` blocks, the domain layer needed a derived register to index source dependencies and cross-aggregate sync boundaries before any slice draft refactor.
+Changed files:
+  - planning/domain/domain-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added active domain files table for the four prepared aggregate drafts.
+  - Added aggregate source dependency rows grouped by format/process, scenario/content, value-object, historical/cross-check and cross-aggregate source groups.
+  - Added cross-aggregate dependency table and recorded that no semantic re-sync is needed now because F7K-A1..A4 did not intentionally change aggregate behavior semantics.
+  - Added scenario DATA classification table matching the current source model.
+Not changed:
+  - No aggregate draft edited.
+  - No scenario/source file edited.
+  - No slice draft edited.
+  - No broad Doc version pass performed.
+  - No source versions invented for unversioned source files.
+Follow-ups:
+  Review `planning/domain/domain-source-sync-register.md`. Then decide whether to route it from domain README / use-case map before planning the larger slice draft refactor.
+Notes:
+  The register is a navigation/sync index. Aggregate local section `Sources:` blocks remain authoritative for section-level work.
