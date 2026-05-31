@@ -1,18 +1,20 @@
 # Enman Source Cascade Sync Workflow
 
 Status: active Enman project workflow  
-Doc version: v0.1.0  
-Scope: how to add local section-level source blocks, prepare doc version/source synchronization and later derive layer source-sync registers
+Doc version: v0.2.0  
+Scope: how to add local section-level source blocks, use source-sync register skeletons safely, prepare doc version/source synchronization and derive layer source-sync registers
 
 ## 1. Purpose
 
 This workflow explains how Enman tracks source, version and cascade dependencies for active planning drafts.
 
-Primary rule:
+Primary rules:
 
 ```text
 Local section-level Sources blocks are the primary working mechanism.
-Layer source-sync registers are derived from local section-level Sources blocks.
+Layer source-sync registers are navigation/sync indexes.
+A layer register may be skeleton, derived or synchronized.
+A skeleton register is allowed only when it is explicitly marked incomplete and does not claim full source coverage.
 ```
 
 This workflow is Enman-specific. The reusable setup model lives in:
@@ -25,6 +27,12 @@ The Enman project profile lives in:
 
 ```text
 planning/source-usage-cascade-profile.md
+```
+
+Root planning/source-governance dependencies are tracked from:
+
+```text
+planning/root-source-sync-register.md
 ```
 
 ## 2. Core Concepts
@@ -46,7 +54,15 @@ Local Sources block:
   A fenced text block placed immediately after a section heading.
 
 Layer source-sync register:
-  A later aggregate view of source dependencies for one layer, derived from local Sources blocks.
+  A layer-level navigation/sync index of dependencies between files or sections.
+
+Register state:
+  skeleton:
+    Logical register shape and known dependency candidates exist, but full local source coverage has not been proven.
+  derived:
+    Register rows were derived from at least one reviewed local Sources pass.
+  synchronized:
+    Register rows and local Sources blocks were compared and aligned with current source version/status labels.
 ```
 
 ## 3. Required Read Order
@@ -55,6 +71,7 @@ For Enman source cascade work, read:
 
 ```text
 planning/source-cascade-sync-workflow.md
+planning/root-source-sync-register.md when root planning/workflow/router files are involved
 planning/SOURCE-SECTION-SOURCES-TEMPLATE.md
 planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md when adding/reviewing aggregate draft section Sources blocks
 planning/slices/SERVER-SLICE-SECTION-SOURCES-TEMPLATE.md when adding/reviewing server/backend/API slice draft section Sources blocks
@@ -76,6 +93,7 @@ planning/domain/aggregate-drafting-workflow.md
 planning/domain/aggregate-draft-template.md
 planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md
 planning/domain/scenario-to-aggregate-map.md
+planning/domain/domain-source-sync-register.md
 ```
 
 For domain value object drafts:
@@ -85,6 +103,7 @@ planning/domain/value-object-drafting-workflow.md
 planning/domain/value-object-draft-template.md
 planning/domain/domain-modeling-principles.md
 planning/domain/scenario-to-aggregate-map.md
+planning/domain/domain-source-sync-register.md when downstream aggregate/slice sync impact is involved
 ```
 
 For slice drafts:
@@ -95,6 +114,8 @@ planning/slices/slice-draft-authoring-principles.md
 planning/slices/slice-responsibility-map.md
 planning/slices/SLICE-INDEX.md
 planning/slices/slice-scenario-flow-behavior-register.md
+planning/domain/domain-source-sync-register.md when the slice depends on domain aggregate/value-object sources
+planning/slices/slice-source-sync-register.md once created
 ```
 
 For server slice drafts:
@@ -106,30 +127,35 @@ planning/slices/SERVER-SLICE-SECTION-SOURCES-TEMPLATE.md
 planning/slices/server-implementation-principles.md
 planning/slices/slice-test-plan-workflow.md
 planning/testing/server-slice-test-plan-rules.md
+planning/domain/domain-source-sync-register.md when domain dependencies are in scope
+planning/slices/slice-source-sync-register.md once created
 ```
 
 ## 4. Workflow
 
-Use this workflow for one active draft file at a time.
+Use this workflow for one active draft/file at a time.
 
 ```text
-1. Select one active draft file.
+1. Select one active draft/file.
 2. Identify its layer and file type.
 3. Read the file itself.
 4. Read the file-type workflow, template, principles and responsibility map.
-5. Identify which sections should have local Sources blocks.
-6. For each section, identify:
+5. If a layer/root source-sync register exists, read its status/scope before editing.
+6. Identify which sections should have local Sources blocks or which register rows should exist.
+7. For each section/row, identify:
    - format/process sources;
    - content sources;
    - internal dependencies;
-   - explicitly not-checked evidence/sources.
-7. Insert the fenced text Sources block immediately after the section heading.
-8. Update section content only when source review shows a mismatch.
-9. Add or bump Doc version when the active file is materially changed.
-10. Later, derive layer source-sync register rows from local Sources blocks.
+   - explicitly not-checked evidence/sources;
+   - source version/status label when known.
+8. Insert the fenced text Sources block immediately after the section heading when doing local section work.
+9. Update section content only when source review shows a mismatch.
+10. Add or bump Doc version when the active file is materially changed.
+11. Update or create the relevant register row only within the register's declared state/scope.
+12. Later, derive/synchronize layer source-sync register rows from local Sources blocks.
 ```
 
-Do not start with a global register and then guess local dependencies. Start from the draft section, because the workflow/template defines what each section needs.
+Do not start with a global filled register and then guess local dependencies. Start from the file/section and its workflow/template when filling authoritative rows. A skeleton register may exist first, but it must say which rows are provisional and what local source pass is still needed.
 
 ## 5. Local Sources Block Placement
 
@@ -141,9 +167,9 @@ Use this placement:
 ```text
 Sources:
   Format/process:
-    - <workflow/template/principles/responsibility-map file>
+    - <workflow/template/principles/responsibility-map file> @ <Doc version/status>
   Content:
-    - <scenario/domain/slice/testing/API source file or section>
+    - <scenario/domain/slice/testing/API source file or section> @ <Doc version/status>
   Internal dependencies:
     - <section in this same draft>
   Not checked:
@@ -162,6 +188,8 @@ Rules:
 - If a source was not checked but should matter, put it under Not checked.
 - If a source only defines format/process, do not list it as content.
 - If a source provides business/domain/testing meaning, do not list it as format/process.
+- When a source file has a Doc version, include that version/status label in local Sources blocks.
+- When a source file is unversioned or historical, mark that explicitly instead of inventing a version.
 ```
 
 ## 6. Scenario DATA Rule
@@ -210,6 +238,14 @@ The `Source Inputs` section is an overview. It is not the only source authority.
 
 Section-level Sources blocks are authoritative for local section work.
 
+For active aggregate drafts, also check:
+
+```text
+planning/domain/domain-source-sync-register.md
+```
+
+The domain register is the current synchronized dependency index for active aggregate local Sources blocks. It does not replace the local section-level Sources blocks.
+
 ## 8. Slice Draft Application
 
 For slice drafts, local Sources blocks usually belong after sections such as:
@@ -225,7 +261,15 @@ Test / Verification Plan
 Questions / Decisions
 ```
 
-A slice draft may keep a short pointer to the future layer source-sync register, but section-level Sources blocks should remain local to the section.
+A slice draft may keep a short pointer to the slice layer source-sync register once it exists, but section-level Sources blocks should remain local to the section.
+
+When a slice depends on domain aggregate/value-object behavior, check:
+
+```text
+planning/domain/domain-source-sync-register.md
+```
+
+Use the domain register as an upstream dependency index, then read the relevant aggregate/value-object local sources directly.
 
 ## 9. Doc Version Rule
 
@@ -252,38 +296,62 @@ major:
   responsibility, ownership, workflow rule, template shape or source contract changed
 ```
 
-## 10. Register Derivation
+## 10. Register State And Derivation
 
-Later layer registers should be derived from local Sources blocks.
+Current root register:
 
-Planned domain register:
+```text
+planning/root-source-sync-register.md
+  Status: skeleton until root planning/workflow/router files are fully audited and/or local source coverage is added where useful.
+```
+
+Current domain register:
 
 ```text
 planning/domain/domain-source-sync-register.md
+  Status: synchronized with versioned active aggregate local Sources blocks.
 ```
 
 Planned slice register:
 
 ```text
 planning/slices/slice-source-sync-register.md
+  Status: not created yet; create as skeleton before the first broad slice refactor if needed.
 ```
 
 Register row shape should include:
 
 ```text
 consumer file
-consumer doc version
-consumer section
+consumer doc version/status
+consumer section or responsibility scope
 source file
-source doc version used
-source role: format-process / content / internal
+source doc version/status used
+source role: format-process / content / internal / register-index
 sync status
 review outcome
 last reviewed
 notes
 ```
 
-Do not create or fill a layer register until at least one representative draft has local Sources blocks that prove the shape.
+Register state rules:
+
+```text
+Skeleton register:
+  allowed before full local Sources coverage;
+  must be explicitly marked skeleton/incomplete;
+  may list candidate dependencies and planned rows;
+  must not claim source coverage or semantic review.
+
+Derived register:
+  allowed after at least one representative local Sources pass proves row shape;
+  must name the local source blocks/files it was derived from.
+
+Synchronized register:
+  allowed only after local Sources blocks and register rows were compared and aligned with current path/version/status labels.
+```
+
+Do not fill a register as complete/synchronized until local Sources blocks or equivalent file-level audit prove the rows.
 
 ## 11. First Intended Application
 
@@ -295,13 +363,16 @@ SC-13D
   -> SL-AGR-EXCH-001 slice draft
 ```
 
-First practical application should start with:
+Current state:
 
 ```text
-planning/domain/aggregates/agreement-proposal-exchange.md
+- domain aggregate/register part is complete enough for domain-side source/version/cascade review;
+- root register skeleton exists for root workflow/router dependencies;
+- slice register is still planned;
+- first slice-side application should start only after slice read order/template/register skeleton are aligned with the domain register.
 ```
 
-Then apply the same pattern to:
+First slice-side application should target:
 
 ```text
 planning/slices/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.md

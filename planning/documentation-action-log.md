@@ -1010,3 +1010,38 @@ Follow-ups:
   Review the versioned local source blocks and register. Then plan the first slice-side source/version/cascade step separately.
 Notes:
   Aggregate local section `Sources:` blocks remain authoritative for section-level work. This batch changes source references and source status labels only.
+
+### 2026-05-31 - Added root source register skeleton and register-state workflow rules
+
+Date:
+  2026-05-31
+Action:
+  Updated the Enman source cascade workflow/profile to distinguish skeleton, derived and synchronized registers, and created the first root source-sync register skeleton.
+Type:
+  root/source-cascade register architecture
+Status:
+  applied
+Why:
+  Source/version/cascade tracking must cover root workflow/router/source-governance files, not only active domain aggregate drafts. Before slice-side work starts, the workflow needed current wording for the existing domain register and a safe skeleton model for registers that exist before full local Sources coverage.
+Changed files:
+  - planning/source-cascade-sync-workflow.md
+  - planning/source-usage-cascade-profile.md
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Replaced stale planned-domain-register wording with current domain register wording.
+  - Added register state rules: skeleton, derived and synchronized.
+  - Clarified that skeleton registers are allowed only when explicitly marked incomplete and not claiming full source coverage.
+  - Added `planning/root-source-sync-register.md` as a skeleton register for root planning/workflow/router dependencies.
+  - Added `Doc version: v0.1.0` to `planning/source-usage-cascade-profile.md`.
+  - Bumped `planning/source-cascade-sync-workflow.md` to `Doc version: v0.2.0` because register-state workflow rules changed.
+Not changed:
+  - No domain aggregate draft edited.
+  - No scenario/source file edited.
+  - No slice draft edited.
+  - No slice source-sync register created.
+  - No broad root Doc version pass performed.
+Follow-ups:
+  Seed Doc versions for selected root source-cascade/router files, then sync slice README/use-case rows/server section template with the current domain register before creating the slice source-sync register skeleton.
+Notes:
+  `planning/root-source-sync-register.md` is intentionally a skeleton. It lists candidate dependencies and not-checked areas but does not claim full root source coverage.

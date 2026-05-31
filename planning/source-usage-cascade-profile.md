@@ -1,11 +1,12 @@
 # Enman Source Usage Cascade Profile
 
 Status: active Enman source usage cascade profile  
-Scope: concrete Enman source/consumer categories, row conventions and cascade triggers
+Doc version: v0.1.0  
+Scope: concrete Enman source/consumer categories, row conventions, register states and cascade triggers
 
 ## 1. Purpose
 
-This file defines Enman source/consumer categories, source usage row conventions and cascade-review triggers.
+This file defines Enman source/consumer categories, source usage row conventions, register states and cascade-review triggers.
 
 It is a project-level profile.
 
@@ -36,18 +37,27 @@ planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md
 planning/slices/SERVER-SLICE-SECTION-SOURCES-TEMPLATE.md
 ```
 
+Active/source-register files:
+
+```text
+planning/root-source-sync-register.md
+planning/domain/domain-source-sync-register.md
+planning/slices/slice-source-sync-register.md planned
+```
+
 Use the domain/server slice section source templates when adding local `Sources:` blocks during aggregate or server slice draft work.
 
 ## 2. Source Categories
 
 | Source category | Enman paths |
 |---|---|
+| Root planning/router/source-governance source | `planning/README.md`, `planning/workflow-activation-map.md`, `planning/planning-use-case-map.md`, `planning/source-cascade-sync-workflow.md`, `planning/source-usage-cascade-profile.md`, `planning/root-source-sync-register.md` |
 | Scenario text/spec source | `planning/diagrams/scenario-text-specs/` |
-| Scenario DATA source | `planning/diagrams/scenario-data/` |
+| Scenario DATA source | primary scenario-specific DATA in `planning/diagrams/scenario-text-specs/<SCENARIO>.md#DATA`; reusable/shared/audited/transitional sidecars in `planning/diagrams/scenario-data/` |
 | Scenario behavior item source | `planning/diagrams/scenario-behavior-items/` |
 | Scenario clarification source | `planning/diagrams/scenario-clarifications/` |
 | Drafting workflow/template/process source | `planning/source-cascade-sync-workflow.md`, `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md`, `planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md`, `planning/slices/SERVER-SLICE-SECTION-SOURCES-TEMPLATE.md` |
-| Domain source | domain drafts/decisions where accepted/current |
+| Domain source | domain drafts/decisions/registers where accepted/current |
 | Slice source | `planning/slices/`, `planning/slices/l2/`, `planning/slices/cross-cutting/` |
 | Architecture/API/client/testing source | `planning/architecture/`, `planning/api/`, `planning/client/`, `planning/testing/` |
 | External-output source/consumer | `planning/vkr-clean-reference.md`, `planning/thesis/` |
@@ -56,9 +66,10 @@ Use the domain/server slice section source templates when adding local `Sources:
 
 | Consumer category | Examples |
 |---|---|
+| Root/router consumers | planning use-case map, workflow activation map, root/source cascade workflows, replacement package workflow |
 | DATA/behavior consumers | derived scenario DATA and behavior item sets |
-| Domain consumers | domain drafts that use scenario/DATA/behavior source |
-| Slice consumers | slice docs that use scenario/domain/source material |
+| Domain consumers | domain drafts/registers that use scenario/DATA/behavior/domain source |
+| Slice consumers | slice docs/registers that use scenario/domain/source material |
 | API/testing consumers | contracts, error contracts, testing plans and E2E workflows |
 | External-output consumers | VKR/thesis materials that consume internal planning docs |
 
@@ -67,15 +78,39 @@ Use the domain/server slice section source templates when adding local `Sources:
 | Field | Enman convention |
 |---|---|
 | source_id | repo-relative path + optional section/scope |
-| source_scope | scenario/data/behavior/domain/slice/API/testing section or row |
-| source_status | draft, accepted, current, historical, superseded |
+| source_scope | scenario/data/behavior/domain/slice/API/testing/root section or row |
+| source_status | draft, accepted, current, historical, superseded, skeleton, derived, synchronized |
 | consumer_id | repo-relative file path |
-| consumer_scope | downstream section/decision/claim |
+| consumer_scope | downstream section/decision/claim/register row |
 | reviewed_against | commit/date/source version or explicit reviewed source state |
-| sync_status | current, stale, needs-review, metadata-only-reviewed, not-applicable |
-| review_outcome | no-change, update-needed, follow-up, superseded, blocked |
+| sync_status | current, stale, needs-review, metadata-only-reviewed, skeleton, not-applicable |
+| review_outcome | no-change, update-needed, follow-up, superseded, blocked, local-sources-needed |
 | last_reviewed | date/commit/review marker |
 | notes | short reason only |
+
+## 4A. Register Coverage Model
+
+Layer/root source-sync registers may be in one of these states:
+
+```text
+skeleton:
+  Logical register file exists and names known/candidate dependencies.
+  It is incomplete and requires local source passes or file-level audits before it can be treated as derived.
+
+derived:
+  Register rows are derived from local Sources blocks or an explicit file-level dependency audit.
+
+synchronized:
+  Register rows and local Sources blocks were compared and aligned with current source paths and version/status labels.
+```
+
+Coverage rule:
+
+```text
+A register should eventually cover every active file in its layer/root scope that has dependencies on another planning file, workflow, register, scenario, domain, slice, testing, API or implementation-evidence source.
+```
+
+Do not treat a skeleton register as full coverage.
 
 ## 5. Cascade Triggers
 
@@ -86,6 +121,8 @@ Run cascade review when:
 - DATA/behavior items change;
 - domain interpretation changes;
 - slice scope changes;
+- workflow/template/register rules change;
+- root routing/use-case map changes;
 - API/testing contract or evidence changes;
 - external-facing VKR/thesis claim depends on changed internal source.
 ```
@@ -116,6 +153,7 @@ SC-13D scenario text / DATA / behavior items
   -> scenario-to-aggregate map
   -> AgreementProposalExchange aggregate draft
   -> related value object drafts
+  -> domain-source-sync-register
   -> SL-AGR-EXCH-001 server slice draft
   -> slice Behavior Coverage and Test / Verification Plan sections
 ```
@@ -142,12 +180,16 @@ planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMA
 - Do not create broad cascade review for every docs change by default.
 - Do not copy upstream truth into downstream files just for self-containment.
 - Do not treat version markers as source truth by themselves.
+- Do not treat a skeleton register as complete coverage.
 - Do not treat the preserved SC-13D pilot as already run.
 ```
 
 ## 8. Related Files
 
 ```text
+planning/root-source-sync-register.md
+planning/domain/domain-source-sync-register.md
+planning/slices/slice-source-sync-register.md planned
 planning/documentation/field-kits/source-usage-cascade-field-kit.md
 planning/documentation/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
 planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
