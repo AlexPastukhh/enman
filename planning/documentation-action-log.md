@@ -1045,3 +1045,40 @@ Follow-ups:
   Seed Doc versions for selected root source-cascade/router files, then sync slice README/use-case rows/server section template with the current domain register before creating the slice source-sync register skeleton.
 Notes:
   `planning/root-source-sync-register.md` is intentionally a skeleton. It lists candidate dependencies and not-checked areas but does not claim full root source coverage.
+
+### 2026-05-31 - Added reusable command execution examples
+
+Date:
+  2026-05-31
+Action:
+  Added reusable command execution examples and updated Level 2 response-shape guidance.
+Type:
+  reusable response/command examples / response-output workflow clarification
+Status:
+  applied
+Why:
+  Ambiguous or high-risk response commands need compact valid execution examples without embedding long examples inside the root use-case map. Level 2 also needed a clearer rule that Key points are non-fixed compressed mirrors of the detailed answer while `Краткое саммари` owns the fixed traceability order.
+Changed files:
+  - planning/documentation/reviewable-agent-output-and-commands-workflow.md
+  - planning/documentation/examples/README.md
+  - planning/documentation/examples/LEVEL-2-KEY-POINTS-SUMMARY-EXAMPLE.md
+  - planning/documentation/examples/PLAN-COMMAND-VALID-EXECUTION-EXAMPLE.md
+  - planning/documentation/examples/ARCHIVE-SOURCE-VS-OUTPUT-PACKAGE-EXAMPLE.md
+  - planning/documentation-action-log.md
+Updates:
+  - Clarified that Key points have no fixed internal format and mirror the detailed answer in compressed form.
+  - Clarified that Key points do not replace the detailed answer and should be omitted when the answer is already short.
+  - Moved fixed-format Level 2 traceability to `Краткое саммари` with order: Вывод, Следующие действия, Цель понял так, Учтённый контекст, Границы.
+  - Added reusable valid execution examples for Level 2 response shape, planning command execution and archive source/output separation.
+  - Updated the examples index to record these examples and command-example placement rules.
+Not changed:
+  - No planning-use-case-map.md routing update in this batch.
+  - No Enman-specific project example added in this batch.
+  - No separate response-command registry created.
+  - No domain/scenario/slice draft edited.
+  - No source register updated.
+  - No command semantics moved from owner workflows into examples.
+Follow-ups:
+  Add a separate root use-case map routing batch that links relevant command/use-case rows to these examples and adds the Enman-specific scenario/domain/slice planning example.
+Notes:
+  This package was rebuilt after rejecting the previous F7-CMD-1 package that attempted to overwrite most of `planning/documentation-action-log.md`. This entry is appended to the preserved current action log.

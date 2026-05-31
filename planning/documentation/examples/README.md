@@ -32,12 +32,37 @@ Examples demonstrate correct application.
 
 If an example needs command/source/output/permission logic, link to the owner file instead of copying that logic here.
 
+## 2A. Command Examples Placement
+
+Reusable command/output examples live under:
+
+```text
+planning/documentation/examples/
+```
+
+Project-specific command examples live under:
+
+```text
+planning/documentation/examples/project-specific/<project>/
+```
+
+Scenario/domain/slice topology examples for Enman live under:
+
+```text
+planning/documentation/examples/project-specific/enman/
+```
+
+Examples referenced from root use-case rows or detailed traces are part of the required traversal chain for that command/action when the task is non-trivial. They demonstrate valid execution. They do not own command semantics, routing, source truth, output mode or permission boundary.
+
 ## 3. Example Coverage Table
 
 The original copied active example coverage rows remain deferred. Field-kit examples are listed separately below.
 
 | Example ID | Type | Owner | Related use-case/workflow | Status | File | Missing/deferred reason |
 |---|---|---|---|---|---|---|
+| `LEVEL-2-KEY-POINTS-SUMMARY-v1` | response/output example | `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | Level 2 answer with non-fixed Key points and fixed-order `Краткое саммари` | current example | `planning/documentation/examples/LEVEL-2-KEY-POINTS-SUMMARY-EXAMPLE.md` | covered |
+| `PLAN-COMMAND-VALID-EXECUTION-v1` | response/command example | `planning/documentation/reviewable-agent-output-and-commands-workflow.md` and `planning/planning-use-case-map.md` | `планируй` / `спланируй` / `давай план` | current example | `planning/documentation/examples/PLAN-COMMAND-VALID-EXECUTION-EXAMPLE.md` | covered |
+| `ARCHIVE-SOURCE-VS-OUTPUT-PACKAGE-v1` | command/output example | `planning/planning-use-case-map.md` and `planning/replacement-file-generation-guide.md` | `арх` vs `давай архив` | current example | `planning/documentation/examples/ARCHIVE-SOURCE-VS-OUTPUT-PACKAGE-EXAMPLE.md` | covered |
 | `REPLACEMENT-ARCHIVE-PACKAGE-v1` | output example | `planning/replacement-file-generation-guide.md` | replacement archive/package generation | deferred | _not created yet_ | Deferred from prior documentation migration; add after example infrastructure is committed. |
 | `POST-APPLY-PRESERVATION-CHECK-v1` | response/check example | `planning/replacement-file-generation-guide.md` and `planning/planning-use-case-map.md` | `проверь` after replacement archive/package application | deferred | _not created yet_ | Deferred from prior documentation migration; should show applied + preserved review. |
 | `DIFF-CAPTURE-UTF8-CLIPBOARD-v1` | command-block example | `planning/replacement-file-generation-guide.md` | diff capture and clipboard commands | deferred | _not created yet_ | Deferred from prior documentation migration; should show `git --output` + UTF-8 clipboard + mojibake fallback. |

@@ -174,92 +174,69 @@ Level 2 structure must remain reviewable. Extra response blocks such as `Key poi
 Default analytical/planning template:
 
 ```text
-## Key points first
+## Key points first, optional when useful
 
-1. ...
-2. ...
+Short points that mirror the main detailed answer.
+They do not have a fixed internal field format.
+Each point should carry key information plus the conclusion/consequence/practical meaning of that information.
+Omit this block when the whole answer would be no longer than the key points.
 
-## 1. Task And Scope
-
-Task understood as:
-...
-
-In scope:
-- ...
-
-Out of scope:
-- ...
-
-## 2. Sources And Coverage
-
-Checked:
-- ...
-
-Not checked:
-- ...
-
-Valid sources for this task:
-- ...
-
-Supporting / non-canonical sources:
-- ...
-
-Answer limits:
-- ...
-
-## 3. Answer / Result
+## 1. Answer / Result
 
 ...
 
-## 4. Assumptions, Questions And Risks
+## 2. Details / Plan / Review
 
-Assumptions:
-- ...
+...
 
-Open questions:
-- ...
-
-Risks:
-- ...
-
-## 5. Verification
+## 3. Verification, Risks And Limits
 
 How to verify:
 - ...
 
-What another chat/person should check:
+Risks / assumptions / limits:
 - ...
 
-## 6. Next Step
+## 4. Next Step
 
 ...
 
 ## Краткое саммари
 
-**Главное:** ...
-**Контекст:** ...
-**Ключевое решение:** ...
-**Дальше:** ...
+Вывод:
+  ...
+
+Следующие действия:
+  ...
+
+Цель понял так:
+  ...
+
+Учтённый контекст:
+  - ...
+
+Границы:
+  - ...
 
 ## Итог
 
-...
+Only when file/change/update context applies. Use File Update Overview ownership rules.
 ```
 
-`Key points first` is a short numbered preview of the current answer. Use it by default for analytical/planning Level 2 answers, especially when the answer is long or has several decisions.
+`Key points first` is optional navigation for a longer Level 2 answer. It has no fixed internal field format. It should mirror the main detailed-answer points in compressed form.
 
-For file/docs/code update planning answers, the final `Key points first` item should summarize delivery safety:
+Each key point should combine:
 
 ```text
-Delivery safety:
-  large/shared files yes/no;
-  fresh full repo/archive needed yes/no;
-  preferred delivery mode;
-  fallback mode if relevant.
+- key information from a main-answer point;
+- the conclusion, consequence or practical meaning of that information.
 ```
 
-This key point is a preview only. The main answer and final `Итог` still need to expose the delivery safety classification when it affects artifact generation.
+Do not force key points into fixed labels such as Goal, Sources, Conclusion or Next step. The fixed-format block is `Краткое саммари`, not `Key points first`.
 
+Do not use `Key points first` as a substitute for the detailed answer. If the whole answer would be no longer than the key points, omit `Key points first` and answer directly.
+
+For file/docs/code update planning answers, a key point may mention delivery safety when it is one of the main answer points. The main answer and final `Итог` still need to expose delivery safety classification when it affects artifact generation.
 
 Do not use `Key points first` by default when the answer is a first draft, a draft update, a strict specialized template, or an already self-evident structured output. In those cases the template/draft structure is the navigation.
 
@@ -267,20 +244,23 @@ For draft updates, use `Отличия от предыдущего драфта`
 
 `Краткое саммари` is a contextual human summary of the current answer in the broader discussion context. It appears after the main answer and before `Итог` when useful.
 
+Use this order for `Краткое саммари`:
+
+```text
+Вывод:
+Следующие действия:
+Цель понял так:
+Учтённый контекст:
+Границы:
+```
+
+Goal/source/context traceability that previously appeared as a long Level 2 opening preamble should normally move into `Краткое саммари` near the end.
+
 `Итог` is not a general conclusion. It is the final file/change/update overview block for file, documentation or code update planning/review/application contexts.
 
 During planning, `Итог` is the current rolling nearest-batch plan and should be updated as the plan changes until the artifact/diff is produced. After an archive/script/diff/application exists, `Итог` summarizes the actual artifact, diff, application state or commit readiness.
 
-The `Sources And Coverage` section is the most important part of this level.
-
-It allows another chat to:
-
-```text
-- see what the first chat actually checked;
-- inspect sources that were not checked;
-- challenge invalid source choices;
-- verify whether the answer is based on current docs, current code, historical notes or assumptions.
-```
+Sources and coverage must remain reviewable in Level 2, but they do not have to appear as a long opening section. They may be placed in the main body, verification/limits section, Source Delta or `Краткое саммари`, as long as another chat can see what was checked and what was not checked.
 
 ## 6. Level 3 — Review / Handoff Answer
 
@@ -606,7 +586,7 @@ These commands request or suppress response blocks. They do not change edit perm
 Rules:
 
 ```text
-- `Key points first` is a short numbered preview of the current answer.
+- `Key points first` has no fixed internal format; it mirrors the detailed answer in compressed points with key information plus conclusion/practical meaning.
 - `Краткое саммари` is contextual/human summary, not a file-change register.
 - `Итог` is file/change/update-oriented and must stay last when present.
 - Do not add `Итог` for ordinary drafting, casual explanation or strict-template output unless there is a file/change/update context.
@@ -731,6 +711,45 @@ The agent should state which dimension is being expanded when useful:
 ```
 
 If expansion would change scope, say so instead of silently broadening the answer or draft.
+
+### Planning Command
+
+Aliases:
+
+```text
+планируй
+спланируй
+давай план
+распланируй
+plan
+```
+
+Purpose:
+
+```text
+Produce a concrete action plan now for the implied or named future task.
+```
+
+The agent should:
+
+```text
+- reconstruct enough context for the task;
+- identify files/sources/examples to read;
+- define the action sequence;
+- define changed files and not-changed files when file work is likely;
+- define acceptance criteria;
+- define archive/batch boundary when archive generation is the next action.
+```
+
+The agent should not:
+
+```text
+- answer only that the task needs to be planned later;
+- defer planning unless the plan depends on a check/action that must happen first;
+- treat planning as permission to edit files or generate an archive.
+```
+
+If part of the work is intentionally deferred to a later batch/action, state the boundary and why.
 
 ### Keep Previous
 
@@ -1070,7 +1089,7 @@ Instead:
 - Do not use `use archive` / `арх` to overclaim remote branch truth when archive freshness is uncertain.
 - Do not treat `драфт` / `обнови` as a new draft request when there is an active draft context.
 - Do not treat `обс` as permission to edit files, skip current evidence checks or reopen accepted decisions without request.
-- Do not use `Key points first` to replace Level 2 task/scope, sources/coverage, risks, verification or next step.
+- Do not use `Key points first` to replace the detailed answer, source/coverage visibility, risks, verification or next step.
 - Do not add `Итог` as a generic conclusion when there is no file/change/update context.
 - Do not add `Key points first` to draft updates when `Отличия от предыдущего драфта` is the useful review block.
 - Do not silently promote a one-pass additional source into a default template/source requirement.
@@ -1095,7 +1114,9 @@ This workflow works when:
 - Level 2/3 escalation happens automatically when task breadth requires reviewability;
 - `обс` can re-check prior discussion without being confused with edit permission or answer level;
 - `Key points first`, `Краткое саммари` and `Итог` improve navigation without replacing the Level 2/3 reviewable body;
-- file-update planning answers show delivery safety as the final `Key points first` item when key points are used;
+- `Key points first` has no fixed internal format and mirrors the detailed answer points in compressed form;
+- `Краткое саммари` starts with вывод and next actions before goal/context/limits;
+- file-update planning answers expose delivery safety in the main answer and `Итог` when it affects artifact generation;
 - draft updates use `Отличия от предыдущего драфта` when that is the useful review block;
 - File Update Overview / `Итог` is used as a final summary block when non-trivial file/docs/code updates need file responsibility/change visibility;
 - response structure helps verification without adding unnecessary bureaucracy.
