@@ -1,6 +1,7 @@
 # Scenario Text Specifications Index
 
 Status: current scenario text/specification index  
+Doc version: v0.1.0  
 Scope: scenario text specifications, core/business scenario template and cross-scenario addenda
 
 ## 1. Purpose

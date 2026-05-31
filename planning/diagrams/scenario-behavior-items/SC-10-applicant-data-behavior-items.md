@@ -1,6 +1,7 @@
 # SC-10 — Applicant Parties Behavior Items
 
 Status: current scenario/UI behavior items / one Applicant Parties page model
+Doc version: v0.1.0  
 
 ## 1. Scenario Behavior Items
 

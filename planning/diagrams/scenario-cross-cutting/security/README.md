@@ -1,6 +1,7 @@
 # Cross-Cutting Security Behavior Sources
 
 Status: current source folder
+Doc version: v0.1.0  
 
 This folder owns security/protection/abuse scenarios.
 

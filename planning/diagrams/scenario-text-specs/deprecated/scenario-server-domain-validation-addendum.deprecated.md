@@ -1,6 +1,7 @@
-﻿# Deprecated вЂ” Scenario Server Domain Validation Addendum
+# Deprecated вЂ” Scenario Server Domain Validation Addendum
 
 Status: deprecated / archived from active L2 source-of-truth path
+Doc version: v0.1.0  
 
 This file is retained only for historical context.
 

@@ -1,5 +1,6 @@
 # SC-14 — Client Data Verification DATA
 
+Doc version: v0.1.0
 ## SC-14-DATA-01 — Client verification visible DATA
 ```text
 - verification status;

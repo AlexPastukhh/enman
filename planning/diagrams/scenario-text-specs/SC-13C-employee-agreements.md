@@ -1,6 +1,7 @@
-﻿# SC-13C вЂ” Employee Agreements
+# SC-13C вЂ” Employee Agreements
 
 Status: L2 scenario draft / Employee exchange list direction synchronized  
+Doc version: v0.1.0  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
 
 ## 1. Purpose

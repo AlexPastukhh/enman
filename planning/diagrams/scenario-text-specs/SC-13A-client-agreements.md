@@ -1,6 +1,7 @@
-﻿# SC-13A вЂ” Client Agreements
+# SC-13A вЂ” Client Agreements
 
 Status: L2 scenario draft / Agreement Exchange list direction synchronized  
+Doc version: v0.1.0  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
 
 ## 1. Purpose

@@ -1,6 +1,7 @@
 # AGR-001 — Agreement Proposal Replacement Terminology
 
 Status: accepted clarification / source-cleanup guardrail  
+Doc version: v0.1.0  
 Scope: SC-13B / SC-13D agreement proposal lifecycle and diagrams
 
 ## 1. Problem

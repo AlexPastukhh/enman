@@ -1,6 +1,7 @@
 # Domain Value Object Draft — ObjectAddress
 
 Status: draft / extracted with ConnectionRequest aggregate  
+Doc version: v0.1.0  
 Scope: request object address value integrity
 
 ## 1. Purpose

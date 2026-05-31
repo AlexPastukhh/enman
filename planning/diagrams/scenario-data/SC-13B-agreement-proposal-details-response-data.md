@@ -1,5 +1,6 @@
 # SC-13B — Agreement Proposal Details / Response DATA
 
+Doc version: v0.1.0
 ## DATA Blocks
 
 ### SC-13B-DATA-01 — Agreement proposal details visible DATA

@@ -1,7 +1,8 @@
 # SC-03B — Account Owner Verified / Password Reset Choice
 
 ## Status
-Corrected scenario specification draft. Replaces old `SC-03B — Set New Password`.
+Corrected scenario specification draft. Replaces old `SC-03B — Set New Password`.  
+Doc version: v0.1.0
 
 ## Purpose
 Guest follows recovery link from email, becomes account-owner verified for this recovery flow, and chooses whether to set a new password or go to login.

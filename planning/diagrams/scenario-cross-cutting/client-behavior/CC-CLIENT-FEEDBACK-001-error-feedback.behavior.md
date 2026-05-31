@@ -1,6 +1,7 @@
 # CC-CLIENT-FEEDBACK-001 — Client Error / Feedback Visibility Behavior
 
 Status: current first-pass behavior source  
+Doc version: v0.1.0  
 Type: cross-cutting client behavior  
 Applies to: client read and command flows
 

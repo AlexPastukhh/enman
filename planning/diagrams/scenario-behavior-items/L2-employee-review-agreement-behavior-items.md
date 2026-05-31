@@ -1,6 +1,7 @@
 # L2 Employee / Review / Agreement Behavior Items
 
 Status: L2 behavior draft / derived from Domain Draft 02
+Doc version: v0.1.0  
 
 ## Employee dashboard/details
 

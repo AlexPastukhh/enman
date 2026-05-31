@@ -1,6 +1,7 @@
 # Scenario Specification Pre-Diagram Review
 
 Status: review note for later update  
+Doc version: v0.1.0  
 Scope: known scenario clarification work before diagram generation
 
 ## 1. Current Review Result

@@ -1,6 +1,7 @@
 # Scenario Advanced Package — Superseded Summary
 
 Status: superseded / compatibility note  
+Doc version: v0.1.0  
 Scope: previous generated advanced diagram package summary
 
 ## Important

@@ -1,6 +1,7 @@
 # Domain Value Object Draft — FinalRefusalReason
 
 Status: draft / extracted with AgreementProposalExchange pilot  
+Doc version: v0.1.0  
 Scope: optional explanation for Employee final refusal of agreement exchange
 
 ## 1. Purpose

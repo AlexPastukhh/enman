@@ -1,6 +1,7 @@
 # Scenario DATA Index
 
 Status: current scenario DATA navigation index / reusable DATA concept and transitional sidecar owner  
+Doc version: v0.1.0  
 Scope: reusable scenario DATA concepts, extracted DATA sidecars and migration notes
 
 ## 1. Purpose

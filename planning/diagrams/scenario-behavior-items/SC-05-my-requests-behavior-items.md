@@ -1,6 +1,7 @@
 # SC-05 — My Requests Behavior Items
 
 Status: current behavior item source / list-filter-details split  
+Doc version: v0.1.0  
 Scenario: `SC-05 — My Requests / Own Request Details`
 
 ## 1. List Behavior Items

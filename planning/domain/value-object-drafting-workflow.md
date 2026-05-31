@@ -1,6 +1,7 @@
 # Value Object Drafting Workflow
 
 Status: current value object drafting workflow  
+Doc version: v0.1.0  
 Scope: create/update value object drafts from VI behavior items and aggregate usage
 
 ## 1. Purpose

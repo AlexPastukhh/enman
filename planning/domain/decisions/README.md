@@ -1,6 +1,7 @@
 # Domain Decisions Index
 
 Status: current domain decisions folder index  
+Doc version: v0.1.0  
 Scope: accepted/proposed domain modeling decisions
 
 ## 1. Purpose

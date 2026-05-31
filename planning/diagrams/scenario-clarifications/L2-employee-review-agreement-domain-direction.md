@@ -1,6 +1,7 @@
 # L2 Employee / Review / Agreement Domain Direction Clarification
 
 Status: current clarification / derived from Domain Draft 02
+Doc version: v0.1.0  
 
 Primary source:
 

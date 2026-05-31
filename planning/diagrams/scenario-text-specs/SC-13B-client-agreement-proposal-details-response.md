@@ -1,6 +1,7 @@
-﻿# SC-13B вЂ” Client Agreement Proposal Details / Response
+# SC-13B вЂ” Client Agreement Proposal Details / Response
 
 Status: L2 scenario draft / Client ownership and counter-proposal terminology synchronized  
+Doc version: v0.1.0  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
 
 ## 1. Purpose

@@ -1,5 +1,6 @@
 # Use Case диаграммы (PlantUML)
 
+Doc version: v0.1.0
 Файлы диаграмм лежат в папке `planning/diagrams/uml/use-cases/`.
 
 ## Как посмотреть/экспортировать

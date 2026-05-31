@@ -1,6 +1,7 @@
 # Scenario Planning Index
 
 Status: current scenario-layer entrypoint / source routing index  
+Doc version: v0.1.0  
 Scope: scenario text specs, inline/reusable DATA, UI specs, behavior items, questions, clarifications and scenario artifact map
 
 ## 1. Purpose

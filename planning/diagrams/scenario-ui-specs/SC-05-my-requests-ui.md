@@ -1,6 +1,7 @@
 # SC-05 — My Requests UI Scenario
 
 Status: mostly complete / normalized UI scenario source  
+Doc version: v0.1.0  
 Applies to: My Requests list, filters, details entry  
 Actors: Client  
 Related scenario: `SC-05 — My Requests / Own Request Details`  

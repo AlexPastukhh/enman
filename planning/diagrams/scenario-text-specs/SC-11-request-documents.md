@@ -1,7 +1,8 @@
 # SC-11 — Request Documents
 
 ## Status
-Corrected scenario specification draft.
+Corrected scenario specification draft.  
+Doc version: v0.1.0
 
 ## Purpose
 Client attaches or manages request-related documents.

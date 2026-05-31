@@ -1,6 +1,7 @@
 # Scenario Extension Package — Superseded Summary
 
 Status: superseded / compatibility note  
+Doc version: v0.1.0  
 Scope: previous generated extension diagram package summary
 
 ## Important

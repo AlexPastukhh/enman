@@ -1,6 +1,7 @@
 # SC-05 — My Requests DATA
 
 Status: current DATA source / list-filter-details split
+Doc version: v0.1.0  
 
 ## SC-05-DATA-01 — My Requests list visible DATA
 

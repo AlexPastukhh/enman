@@ -1,5 +1,6 @@
 # SC-03A — Password Recovery DATA
 
+Doc version: v0.1.0
 ## SC-03A-DATA-01 — Recovery email DATA
 Type: Input DATA  
 Actor: Guest

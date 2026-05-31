@@ -1,6 +1,7 @@
 # Domain Aggregates Index
 
 Status: current aggregate draft folder index  
+Doc version: v0.1.0  
 Scope: one file per aggregate boundary
 
 ## 1. Purpose

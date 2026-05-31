@@ -1,6 +1,7 @@
-﻿# SC-07A вЂ” Employee Request Details
+# SC-07A вЂ” Employee Request Details
 
 Status: L2 scenario draft / StartReview details entry point synchronized  
+Doc version: v0.1.0  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
 
 ## 1. Purpose

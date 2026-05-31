@@ -1,6 +1,7 @@
 # Domain Value Object Draft — AgreementProposalAuthor
 
 Status: draft / extracted with AgreementProposalExchange pilot  
+Doc version: v0.1.0  
 Scope: proposal author as sender type plus sender id
 
 ## 1. Purpose

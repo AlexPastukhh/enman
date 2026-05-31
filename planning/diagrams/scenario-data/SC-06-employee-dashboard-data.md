@@ -1,5 +1,6 @@
 # SC-06 — Employee Dashboard DATA
 
+Doc version: v0.1.0
 ## SC-06-DATA-01 — Dashboard row visible DATA
 ```text
 - request summary visible enough for employee to identify request;

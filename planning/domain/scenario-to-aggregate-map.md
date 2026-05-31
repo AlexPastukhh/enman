@@ -1,6 +1,7 @@
 # Scenario To Aggregate Map
 
 Status: draft / first-pass aggregate-based domain map  
+Doc version: v0.1.0  
 Scope: scenario behavior sources -> domain aggregate/value-object discovery
 
 ## 1. Purpose

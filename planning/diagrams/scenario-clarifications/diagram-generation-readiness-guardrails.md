@@ -1,6 +1,7 @@
 # Diagram Generation Readiness Guardrails
 
 Status: current guardrail note  
+Doc version: v0.1.0  
 Scope: what to check before generating diagrams from scenario specifications
 
 ## 1. Purpose

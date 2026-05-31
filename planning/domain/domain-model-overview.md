@@ -1,6 +1,7 @@
 # Domain Model Overview
 
 Status: draft / first-pass aggregate-based domain overview  
+Doc version: v0.1.0  
 Scope: current extracted aggregate/value-object map and known cross-aggregate coordination
 
 ## 1. Purpose

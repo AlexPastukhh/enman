@@ -1,6 +1,7 @@
 # SC-10B — My Applicant Parties Behavior Items
 
 Status: future behavior items
+Doc version: v0.1.0  
 
 | ID | Behavior | Status |
 |---|---|---|

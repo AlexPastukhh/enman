@@ -1,6 +1,7 @@
 # UI Scenario Conventions
 
 Status: current UI scenario authoring convention
+Doc version: v0.1.0  
 
 ## 1. Purpose
 

@@ -1,6 +1,7 @@
 # SC-07B — Employee Request Review Behavior Items
 
 Status: current / RejectReview optional feedback synchronized  
+Doc version: v0.1.0  
 Source scenario: `SC-07B`
 
 ## 1. Purpose

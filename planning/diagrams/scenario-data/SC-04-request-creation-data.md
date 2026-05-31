@@ -1,6 +1,7 @@
 # SC-04 — Client Request Creation DATA
 
 Status: current DATA spec / explicit applicant context model
+Doc version: v0.1.0  
 
 ## 1. Request DATA
 

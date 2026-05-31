@@ -1,6 +1,7 @@
 # Scenario Account Activation / Security Addendum
 
 Status: companion addendum to scenario text specifications  
+Doc version: v0.1.0  
 Scope: account activation behavior, protected scenario access, scenario questions
 
 ## 1. Purpose

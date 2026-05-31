@@ -1,7 +1,8 @@
 # SC-03A — Password Recovery Request
 
 ## Status
-Corrected scenario specification draft.
+Corrected scenario specification draft.  
+Doc version: v0.1.0
 
 ## Purpose
 Guest requests password recovery email without revealing whether an account exists.

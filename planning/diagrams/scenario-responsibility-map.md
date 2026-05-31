@@ -1,6 +1,7 @@
 # Scenario Responsibility Map
 
 Status: current scenario-layer responsibility map  
+Doc version: v0.1.0  
 Scope: where scenario-layer information belongs and which files are current vs historical during scenario/source cleanup
 
 ## 1. Purpose

@@ -1,6 +1,7 @@
 # Domain Value Object Draft — AgreementDocumentRef
 
 Status: draft / extracted with AgreementProposalExchange pilot  
+Doc version: v0.1.0  
 Scope: metadata reference to an accepted/stored agreement proposal document
 
 ## 1. Purpose

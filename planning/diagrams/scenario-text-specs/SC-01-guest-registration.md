@@ -1,7 +1,8 @@
 # SC-01 — Guest Registration
 
 ## Status
-Corrected scenario specification draft.
+Corrected scenario specification draft.  
+Doc version: v0.1.0
 
 ## Purpose
 Guest creates a new account.

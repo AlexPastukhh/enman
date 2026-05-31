@@ -1,6 +1,7 @@
-﻿# SC-13E вЂ” Agreement Final Refusal
+# SC-13E вЂ” Agreement Final Refusal
 
 Status: L2 scenario draft / Final refusal optional reason and cross-aggregate orchestration synchronized  
+Doc version: v0.1.0  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
 
 ## 1. Purpose

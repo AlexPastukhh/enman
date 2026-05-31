@@ -1,7 +1,8 @@
 # SC-14 — Client Data Verification
 
 ## Status
-Future / extension scenario specification draft.
+Future / extension scenario specification draft.  
+Doc version: v0.1.0
 
 ## Purpose
 Employee starts client data verification/check in request context so review can use result.

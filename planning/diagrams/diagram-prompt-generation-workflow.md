@@ -1,6 +1,7 @@
 # Diagram Request / Prompt And Preflight Workflow
 
 Status: current diagram request/preflight workflow / scenario-map synchronized  
+Doc version: v0.1.0  
 Scope: how scenario/documentation/planning work prepares a repo-grounded diagram request, and how the single Diagram Chat runs preflight/generation
 
 ## 1. Purpose

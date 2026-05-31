@@ -1,6 +1,7 @@
 # SC-15 — Security Text Specification Behavior Items
 
 Status: migrated v1  
+Doc version: v0.1.0  
 Source scenario: `SC-15`  
 Source baselines: `pre-domain-variants-input.md`, `scenario-behavior-baseline-account-activation-addendum.md` where applicable
 

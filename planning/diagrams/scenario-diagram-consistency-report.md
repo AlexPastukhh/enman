@@ -1,6 +1,7 @@
 # Scenario Diagram Consistency Report
 
 Status: current diagram/source consistency note  
+Doc version: v0.1.0  
 Scope: scenario source currentness, diagram source preflight and domain-aware diagram readiness
 
 ## 1. Purpose

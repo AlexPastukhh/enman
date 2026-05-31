@@ -1,6 +1,7 @@
 # SC-05 — My Requests / Own Request Details
 
 Status: current scenario specification draft  
+Doc version: v0.1.0  
 Scope: client views own requests list, filters own requests and opens own request details
 
 ## 1. Purpose

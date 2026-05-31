@@ -1,6 +1,7 @@
 # Scenario Behavior Items
 
 Status: current behavior-item convention / business behavior with UI/UX projection support
+Doc version: v0.1.0  
 
 ## Purpose
 

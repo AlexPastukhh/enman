@@ -1,6 +1,7 @@
 # SC-04 — Request Creation Behavior Items
 
 Status: current source behavior items / explicit applicant context model
+Doc version: v0.1.0  
 
 ## 1. Scenario Behavior Items
 

@@ -1,6 +1,7 @@
 # Domain Notes Register
 
 Status: current domain notes register  
+Doc version: v0.1.0  
 Scope: domain modeling notes that should not be lost but are not yet placed into a specific aggregate, value-object or decision file
 
 ## 1. Purpose

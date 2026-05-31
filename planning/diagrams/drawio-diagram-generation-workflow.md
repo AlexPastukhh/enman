@@ -1,6 +1,7 @@
 # Draw.io Diagram Generation Workflow
 
 Status: current diagram artifact workflow  
+Doc version: v0.1.0  
 Scope: target diagram format, diagram book structure and archive rules for diagram-generation chats
 
 ## 1. Purpose

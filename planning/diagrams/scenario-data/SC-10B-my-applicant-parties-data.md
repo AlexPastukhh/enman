@@ -1,6 +1,7 @@
 # SC-10B — My Applicant Parties DATA
 
 Status: future DATA spec
+Doc version: v0.1.0  
 
 Visible DATA:
 

@@ -1,6 +1,7 @@
 # Cross-Cutting Server-Client Behavior Sources
 
 Status: current source folder
+Doc version: v0.1.0  
 
 This folder owns common behavior where both server and client participate.
 

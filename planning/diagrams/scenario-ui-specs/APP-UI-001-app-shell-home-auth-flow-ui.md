@@ -1,6 +1,7 @@
 # APP-UI-001 — App Shell / Home / Auth / Flow Navigation UI Scenario
 
 Status: current first-pass UI foundation source  
+Doc version: v0.1.0  
 Applies to: app shell, home page, header navigation, auth/account entry screens  
 Actors: Guest, Client, Employee  
 Related scenario: application flow foundation  

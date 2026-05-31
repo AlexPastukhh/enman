@@ -1,6 +1,7 @@
-﻿# SC-13D вЂ” Employee Agreement Proposal Create / Send Version
+# SC-13D вЂ” Employee Agreement Proposal Create / Send Version
 
 Status: L2 scenario draft / Start exchange and Employee send-version direction synchronized  
+Doc version: v0.1.0  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
 
 ## 1. Purpose

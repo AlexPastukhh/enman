@@ -910,3 +910,36 @@ Follow-ups:
   Review `planning/domain/domain-source-sync-register.md`. Then decide whether to route it from domain README / use-case map before planning the larger slice draft refactor.
 Notes:
   The register is a navigation/sync index. Aggregate local section `Sources:` blocks remain authoritative for section-level work.
+
+### 2026-05-31 - Routed domain register and seeded scenario/domain Doc versions
+
+Date:
+  2026-05-31
+Action:
+  Routed the domain source-sync register into domain/source-cascade read paths and seeded `Doc version: v0.1.0` headers across planning/domain and planning/diagrams markdown files.
+Type:
+  domain/scenario version coverage / source-cascade routing
+Status:
+  applied
+Why:
+  The domain source-sync register can only move from file-path/status references toward concrete source-version references after the scenario and domain source files declare document versions. Future domain and slice refactor work also needs the register to be discoverable from domain README and use-case routing.
+Changed files:
+  - planning/domain/**/*.md
+  - planning/diagrams/**/*.md
+  - planning/domain/README.md
+  - planning/planning-use-case-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added `Doc version: v0.1.0` to scenario-layer markdown files under `planning/diagrams/` where missing.
+  - Added `Doc version: v0.1.0` to domain-layer markdown files under `planning/domain/` where missing.
+  - Routed `planning/domain/domain-source-sync-register.md` from the domain README read order.
+  - Routed `planning/domain/domain-source-sync-register.md` from source-cascade and domain use-case rows.
+Not changed:
+  - No aggregate/domain behavior semantics intentionally changed.
+  - No scenario behavior semantics intentionally changed.
+  - No slice draft edited.
+  - No domain source-sync register source-version rows updated yet.
+Follow-ups:
+  Update `planning/domain/domain-source-sync-register.md` and related source model references so source dependency rows use concrete `Doc version: v0.1.0` for newly versioned scenario/domain sources instead of `version not declared`.
+Notes:
+  This is a broad version seed pass. It introduces document versions only; it does not claim all source content was semantically re-audited.

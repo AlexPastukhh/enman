@@ -1,6 +1,7 @@
 # SC-03B — Account Owner Verified / Password Reset Choice Behavior Items
 
 Status: migrated v1  
+Doc version: v0.1.0  
 Source scenario: `SC-03B`  
 Source baselines: `pre-domain-variants-input.md`, `scenario-behavior-baseline-account-activation-addendum.md` where applicable
 

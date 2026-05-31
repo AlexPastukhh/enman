@@ -1,6 +1,7 @@
 # Domain Planning Index
 
 Status: current domain-layer entrypoint / first-pass aggregate-based model  
+Doc version: v0.1.0  
 Scope: domain discovery, aggregate drafts, value object drafts, domain overview, domain notes and domain decisions
 
 ## 1. Purpose
@@ -22,6 +23,9 @@ The target domain model is aggregate-based:
 ```text
 planning/domain/scenario-to-aggregate-map.md
   scenario behavior sources -> aggregate/value-object candidates and cross-aggregate relations.
+
+planning/domain/domain-source-sync-register.md
+  derived source dependency and cross-aggregate sync index for active aggregate drafts.
 
 planning/domain/domain-model-overview.md
   high-level first-pass aggregate/value-object relationship map.
@@ -98,6 +102,17 @@ For domain discovery:
 6. scenario sources and behavior items
 ```
 
+
+For domain source/version/cascade review:
+
+```text
+1. planning/domain/README.md
+2. planning/domain/domain-responsibility-map.md
+3. planning/domain/scenario-to-aggregate-map.md
+4. planning/domain/domain-source-sync-register.md
+5. relevant aggregate local section `Sources:` blocks
+```
+
 For aggregate drafting:
 
 ```text
@@ -105,9 +120,10 @@ For aggregate drafting:
 2. planning/domain/domain-responsibility-map.md
 3. planning/domain/domain-modeling-principles.md
 4. planning/domain/scenario-to-aggregate-map.md
-5. planning/domain/aggregate-drafting-workflow.md
-6. planning/domain/aggregate-draft-template.md
-7. relevant scenario/domain sources
+5. planning/domain/domain-source-sync-register.md when reviewing existing source dependencies or downstream sync impact
+6. planning/domain/aggregate-drafting-workflow.md
+7. planning/domain/aggregate-draft-template.md
+8. relevant scenario/domain sources
 ```
 
 For value object drafting:

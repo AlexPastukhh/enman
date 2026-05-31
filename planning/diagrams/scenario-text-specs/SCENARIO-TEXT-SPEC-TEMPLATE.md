@@ -1,6 +1,7 @@
 # Scenario Text Spec Template
 
 Status: canonical template for new or meaningfully updated core/business scenario text specs  
+Doc version: v0.1.0  
 Scope: core scenario capability, inline DATA, behavior links and UI/UX alignment
 
 Use this template for new core/business scenario text specs and for intentional rewrites of existing current specs.

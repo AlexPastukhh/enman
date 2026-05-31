@@ -1,6 +1,7 @@
 # Scenario Behavior Items Index
 
 Status: current behavior item index / first-pass currentness cleanup  
+Doc version: v0.1.0  
 Scope: per-scenario and cross-cutting behavior item files
 
 ## 1. Current Behavior Item Files

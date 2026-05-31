@@ -1,7 +1,8 @@
 # SC-17 — Anonymous Request
 
 ## Status
-Future / extension scenario specification draft.
+Future / extension scenario specification draft.  
+Doc version: v0.1.0
 
 ## DATA
 Anonymous request DATA `SC-17-DATA-01`: requested service / request subject information; description/details needed to understand request.

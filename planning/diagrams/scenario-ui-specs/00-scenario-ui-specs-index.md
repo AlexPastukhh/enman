@@ -1,6 +1,7 @@
 # Scenario UI Specs Index
 
 Status: current UI spec index / first-pass currentness cleanup  
+Doc version: v0.1.0  
 Scope: existing and planned per-scenario UI specs
 
 ## 1. Purpose

@@ -1,6 +1,7 @@
 # L2 Employee / Review / Agreement DATA
 
 Status: L2 DATA draft / derived from Domain Draft 02
+Doc version: v0.1.0  
 
 DATA files list what actors enter, see, select, filter by, attach or reference. They do not own validation rules.
 

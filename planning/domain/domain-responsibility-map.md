@@ -1,6 +1,7 @@
 # Domain Responsibility Map
 
 Status: current domain-layer responsibility map  
+Doc version: v0.1.0  
 Scope: where domain-layer information belongs during the aggregate-based domain model migration
 
 ## 1. Purpose

@@ -1,6 +1,7 @@
 # Scenario Core Package — Superseded Summary
 
 Status: superseded / compatibility note  
+Doc version: v0.1.0  
 Scope: previous generated core diagram package summary
 
 ## Important

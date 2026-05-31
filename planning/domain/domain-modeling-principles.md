@@ -1,6 +1,7 @@
 # Domain Modeling Principles
 
 Status: current domain modeling principles  
+Doc version: v0.1.0  
 Scope: aggregate boundaries, child entities, value objects, cross-aggregate relations and persistence boundary notes
 
 ## 1. Purpose

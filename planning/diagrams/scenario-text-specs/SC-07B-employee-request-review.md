@@ -1,6 +1,7 @@
-﻿# SC-07B вЂ” Employee Request Review
+# SC-07B вЂ” Employee Request Review
 
 Status: L2 scenario draft / StartReview two entry points and RejectReview optional feedback synchronized  
+Doc version: v0.1.0  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
 
 ## 1. Purpose

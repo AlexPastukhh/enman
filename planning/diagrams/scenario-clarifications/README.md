@@ -1,6 +1,7 @@
 # Scenario Clarifications Index
 
 Status: current scenario clarification index / diagram and source cleanup guardrails  
+Doc version: v0.1.0  
 Scope: scenario conflicts, terminology guards and non-blocking questions that must be checked before downstream domain/slice/diagram work
 
 ## 1. Purpose

@@ -1,6 +1,7 @@
 # CC-SEC-CSRF-001 — Unsafe Command Protection Behavior
 
 Status: current first-pass security behavior source  
+Doc version: v0.1.0  
 Type: cross-cutting security / server-client behavior  
 Applies to: unsafe state-changing commands
 

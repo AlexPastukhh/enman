@@ -1,6 +1,7 @@
 # Aggregate Drafting Workflow
 
 Status: current aggregate drafting workflow  
+Doc version: v0.1.0  
 Scope: create/update one aggregate draft from scenario-to-aggregate map and source behavior
 
 ## 1. Purpose

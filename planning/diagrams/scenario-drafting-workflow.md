@@ -1,6 +1,7 @@
 # Scenario Drafting Workflow
 
 Status: current scenario-drafting workflow  
+Doc version: v0.1.0  
 Scope: how to create/update scenario text specs, DATA, UI specs, behavior items, scenario questions and diagram requests/prompts
 
 ## 1. Purpose

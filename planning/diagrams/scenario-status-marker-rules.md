@@ -1,6 +1,7 @@
-﻿# Scenario Status Markers For Diagrams
+# Scenario Status Markers For Diagrams
 
 Status: current / diagram-facing scenario marker rule  
+Doc version: v0.1.0  
 Scope: how scenario docs mark current/planned/deferred scenario elements so VKR diagrams can show the project after L1 without implying that every L2 element is already implemented.
 
 ## 1. Purpose

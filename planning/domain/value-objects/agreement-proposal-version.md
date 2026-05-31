@@ -1,6 +1,7 @@
 # Domain Value Object Draft — AgreementProposalVersion
 
 Status: draft / extracted with AgreementProposalExchange pilot  
+Doc version: v0.1.0  
 Scope: local proposal version number inside one AgreementProposalExchange
 
 ## 1. Purpose

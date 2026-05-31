@@ -1,6 +1,7 @@
-﻿# SC-06 вЂ” Employee Request Dashboard
+# SC-06 вЂ” Employee Request Dashboard
 
 Status: L2 scenario draft / StartReview entry point synchronized  
+Doc version: v0.1.0  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
 
 ## 1. Purpose

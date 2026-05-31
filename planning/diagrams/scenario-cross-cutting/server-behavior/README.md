@@ -1,6 +1,7 @@
 # Cross-Cutting Server Behavior Sources
 
 Status: current source folder
+Doc version: v0.1.0  
 
 This folder owns common server behavior required by multiple server/API/domain slices.
 

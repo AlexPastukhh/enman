@@ -1,6 +1,7 @@
 # Scenario Text Specifications Index
 
 Status: current scenario text-spec index / first-pass currentness cleanup  
+Doc version: v0.1.0  
 Scope: current, variant, historical and deprecated scenario text specs
 
 ## 0. Template / Policy

@@ -1,6 +1,7 @@
 # Domain Decision — Account / Employee Hierarchy And TPH
 
 Status: accepted  
+Doc version: v0.1.0  
 Scope: account identity, employee identity, auth claim mapping and employee command actor resolution
 
 ## 1. Decision

@@ -1,6 +1,7 @@
 # SC-10 — Account Applicant Parties UI Scenario
 
 Status: current canonical ApplicantParty UI scenario source / normalized  
+Doc version: v0.1.0  
 Applies to: Account page Applicant Parties section  
 Actors: Client  
 Related scenario: `SC-10 — Applicant Data`, `SC-10B — My Applicant Parties` as deprecated/future wording source only  

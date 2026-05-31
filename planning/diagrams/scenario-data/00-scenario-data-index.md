@@ -1,6 +1,7 @@
 # Scenario DATA Index
 
 Status: current scenario DATA index / first-pass currentness cleanup  
+Doc version: v0.1.0  
 Scope: scenario DATA files and stale/pending DATA variants
 
 ## 1. Current DATA Files

@@ -1,6 +1,7 @@
 # SC-10 — Applicant Parties Page / Applicant Data
 
 Status: current target scenario direction / one Applicant Parties page model  
+Doc version: v0.1.0  
 Source type: scenario text specification  
 Related scenarios: `SC-04 Client Request Creation`, `SC-10B Applicant Parties Future Management`
 

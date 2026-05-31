@@ -1,6 +1,7 @@
 # L2 Validation And Agreement Exchange Source Cleanup
 
 Status: accepted clarification / source-of-truth cleanup guardrail  
+Doc version: v0.1.0  
 Scope: L2 Employee Review and AgreementProposalExchange scenario/spec/diagram wording
 
 ## 1. Purpose

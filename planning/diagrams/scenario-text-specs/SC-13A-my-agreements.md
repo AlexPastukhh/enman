@@ -2,7 +2,8 @@
 
 ## Status
 
-Corrected scenario specification draft.
+Corrected scenario specification draft.  
+Doc version: v0.1.0
 
 ## Purpose
 

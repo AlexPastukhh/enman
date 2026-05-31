@@ -1,6 +1,7 @@
 # CC-CLIENT-FORM-VALIDATION-001 — Deferred Form Validation Behavior
 
 Status: current first-pass behavior source  
+Doc version: v0.1.0  
 Type: cross-cutting client behavior  
 Applies to: client forms across auth, request, applicant, review and agreement flows
 

@@ -1,6 +1,7 @@
 # SC-10B — My Applicant Parties UI Spec
 
 Status: deprecated / replaced by `SC-10-applicant-data-ui.md`  
+Doc version: v0.1.0  
 Marker: `[UI-SCENARIO]`  
 Replacement: `planning/diagrams/scenario-ui-specs/SC-10-applicant-data-ui.md`
 

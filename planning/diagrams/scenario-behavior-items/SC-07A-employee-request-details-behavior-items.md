@@ -1,6 +1,7 @@
 # SC-07A — Employee Request Details Behavior Items
 
 Status: migrated v1  
+Doc version: v0.1.0  
 Source scenario: `SC-07A`  
 Source baselines: `pre-domain-variants-input.md`, `scenario-behavior-baseline-account-activation-addendum.md` where applicable
 

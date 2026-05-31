@@ -1,6 +1,7 @@
-﻿# SC-14 вЂ” Agreement Documents
+# SC-14 вЂ” Agreement Documents
 
 Status: L2 scenario draft / AgreementDocumentRef naming conflict guard synchronized  
+Doc version: v0.1.0  
 Source: `planning/tables/domain-drafts/domain-draft-02.md`
 
 ## 1. Purpose

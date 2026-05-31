@@ -1,6 +1,7 @@
 # Scenario Cross-Cutting Behavior
 
 Status: scenario source area for cross-cutting behavior
+Doc version: v0.1.0  
 
 This folder owns required behavior that applies across multiple scenarios or across client/server boundaries.
 

@@ -1,6 +1,7 @@
 # CC-CSRF-001 — Antiforgery Behavior Items
 
 Status: current security-derived cross-cutting behavior items  
+Doc version: v0.1.0  
 Source type: cross-cutting security requirement, not business scenario  
 Primary slice: `planning/slices/cross-cutting/CC-CSRF-001-antiforgery-token-session-context.md`
 

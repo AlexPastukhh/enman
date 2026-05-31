@@ -1,6 +1,7 @@
 # Domain Value Object Draft — ApplicantContact
 
 Status: draft / first-pass extraction  
+Doc version: v0.1.0  
 Scope: applicant contact data used by ApplicantParty
 
 ## 1. Purpose

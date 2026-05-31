@@ -1,6 +1,7 @@
 # SC-04 — Request Creation UI Scenario
 
 Status: partial / normalized UI scenario source  
+Doc version: v0.1.0  
 Applies to: client request creation screen  
 Actors: Client  
 Related scenario: `SC-04 — Client Request Creation`  

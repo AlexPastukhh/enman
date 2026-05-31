@@ -1,6 +1,7 @@
 # Scenario Browser Security Addendum
 
 Status: cross-cutting companion addendum to scenario text specifications  
+Doc version: v0.1.0  
 Scope: browser security requirements for cookie-authenticated client/API flows
 
 ## 1. Purpose

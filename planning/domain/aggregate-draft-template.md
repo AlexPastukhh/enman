@@ -1,6 +1,7 @@
 # Domain Aggregate Draft Template
 
 Status: current aggregate draft template  
+Doc version: v0.1.0  
 Scope: output shape for one aggregate boundary
 
 ```text

@@ -1,6 +1,7 @@
 # SC-10B — Applicant Parties Future Management
 
 Status: future scenario addendum / same Applicant Parties page management behavior  
+Doc version: v0.1.0  
 Source type: scenario text specification addendum  
 Parent scenario: `SC-10 — Applicant Parties Page / Applicant Data`
 

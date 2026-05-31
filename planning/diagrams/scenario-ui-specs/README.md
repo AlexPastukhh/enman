@@ -1,6 +1,7 @@
 # Scenario UI Specs
 
 Status: canonical scenario-level UI presentation / UX requirements source
+Doc version: v0.1.0  
 
 This folder owns scenario-level UI presentation and UX requirements.
 

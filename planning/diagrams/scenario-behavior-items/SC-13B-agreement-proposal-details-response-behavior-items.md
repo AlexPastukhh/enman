@@ -1,6 +1,7 @@
 # SC-13B — Agreement Proposal Details / Response Behavior Items
 
 Status: migrated v1  
+Doc version: v0.1.0  
 Source scenario: `SC-13B`  
 Source baselines: `pre-domain-variants-input.md`, `scenario-behavior-baseline-account-activation-addendum.md` where applicable
 

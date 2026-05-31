@@ -1,5 +1,6 @@
 # SC-01 — Registration DATA
 
+Doc version: v0.1.0
 ## SC-01-DATA-01 — Registration input DATA
 Type: Input DATA  
 Actor: Guest

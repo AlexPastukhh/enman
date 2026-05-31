@@ -1,6 +1,7 @@
 # SC-10 — Applicant Data DATA
 
 Status: current target DATA spec / applicant-template-per-type model  
+Doc version: v0.1.0  
 Scope: data entered, seen, selected or referenced by Account page Applicant Parties section
 
 ## 1. DATA Blocks

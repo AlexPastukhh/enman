@@ -1,6 +1,7 @@
 # UI Scenario Readiness
 
 Status: current readiness snapshot / update before client slice draft refresh
+Doc version: v0.1.0  
 
 ## Purpose
 

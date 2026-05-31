@@ -1,6 +1,7 @@
 # Domain Discovery Workflow
 
 Status: current domain discovery workflow  
+Doc version: v0.1.0  
 Scope: scenario behavior sources -> aggregate/value-object candidates and scenario-to-aggregate map
 
 ## 1. Purpose

@@ -1,6 +1,7 @@
 # SC-04 — Client Request Creation
 
 Status: current target scenario direction / explicit applicant context model  
+Doc version: v0.1.0  
 Related scenarios: `SC-10 Applicant Data`, `SC-10B My Applicant Parties`, `SC-05 My Requests`
 
 ## 1. Purpose

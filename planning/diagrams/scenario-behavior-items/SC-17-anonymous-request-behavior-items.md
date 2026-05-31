@@ -1,6 +1,7 @@
 # SC-17 — Anonymous Request Behavior Items
 
 Status: migrated v1  
+Doc version: v0.1.0  
 Source scenario: `SC-17`  
 Source baselines: `pre-domain-variants-input.md`, `scenario-behavior-baseline-account-activation-addendum.md` where applicable
 

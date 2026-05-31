@@ -1,6 +1,7 @@
 # L2 Agreement Scenario / Slice Follow-up Cleanup
 
 Status: current clarification / follow-up after validation source cleanup  
+Doc version: v0.1.0  
 Scope: remaining agreement scenario and slice navigation drift after the old validation addendum was removed from active source-of-truth use
 
 ## 1. Purpose

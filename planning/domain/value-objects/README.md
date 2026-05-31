@@ -1,6 +1,7 @@
 # Domain Value Objects Index
 
 Status: current value object draft folder index  
+Doc version: v0.1.0  
 Scope: reusable/non-trivial value objects and value-integrity concepts
 
 ## 1. Purpose

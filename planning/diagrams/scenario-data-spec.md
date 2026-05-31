@@ -1,6 +1,7 @@
 # Scenario DATA Specification
 
 Status: compatibility pointer
+Doc version: v0.1.0  
 
 Scenario DATA is now split by scenario. Use:
 

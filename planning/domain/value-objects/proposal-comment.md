@@ -1,6 +1,7 @@
 # Domain Value Object Draft — ProposalComment
 
 Status: draft / extracted with AgreementProposalExchange pilot  
+Doc version: v0.1.0  
 Scope: optional proposal text/comment attached to a proposal version
 
 ## 1. Purpose

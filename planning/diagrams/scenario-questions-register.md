@@ -1,6 +1,7 @@
 # Scenario Questions Register
 
 Status: active / L1 applicant + L2 review/agreement validation decisions synchronized
+Doc version: v0.1.0  
 
 | ID | Source | Question | Current preference | Status |
 |---|---|---|---|---|

@@ -1,6 +1,7 @@
 # Domain Value Object Draft — RejectionFeedback
 
 Status: draft / extracted with ConnectionRequest aggregate  
+Doc version: v0.1.0  
 Scope: optional rejection feedback value for employee request review
 
 ## 1. Purpose

@@ -1,6 +1,7 @@
 # Scenario Artifact Map
 
 Status: current scenario artifact map / currentness and source relationship map  
+Doc version: v0.1.0  
 Scope: map scenario IDs to text, DATA, UI, behavior, clarification, domain and slice sources
 
 ## 1. Purpose

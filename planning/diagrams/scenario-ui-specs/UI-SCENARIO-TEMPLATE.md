@@ -1,6 +1,7 @@
 # UI Scenario Template
 
 Status: canonical template for scenario-level UI presentation / UX requirements
+Doc version: v0.1.0  
 
 Copy this structure for new UI scenario specs.
 

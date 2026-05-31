@@ -1,7 +1,8 @@
 # SC-13 — Agreement / Proposal Model
 
 ## Status
-Pending agreement/proposal discussion.
+Pending agreement/proposal discussion.  
+Doc version: v0.1.0
 
 Do not finalize SC-13 DATA or split scenarios yet.
 

@@ -1,6 +1,7 @@
 # Domain Value Object Draft Template
 
 Status: current value object draft template  
+Doc version: v0.1.0  
 Scope: output shape for reusable/non-trivial domain value objects
 
 ```text
