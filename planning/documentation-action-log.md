@@ -1114,3 +1114,33 @@ Follow-ups:
   Add critical-thinking command, generic Action Overview and Tampermonkey command palette planning as separate batches.
 Notes:
   This package uses targeted inserts for existing root files to avoid overwriting current use-case map or action-log history.
+### 2026-05-31 - Added active command-system goal process workstream map
+
+Date:
+  2026-05-31
+Action:
+  Added an active root workstream Goal Process Map for the transferable command-system and Tampermonkey helper goal.
+Type:
+  root workstream map / goal process tracking
+Status:
+  applied
+Why:
+  The Goal Process Map owner and static example define the format, but the actual command-system/Tampermonkey goal needs a living repo file that can be updated as scenarios, slices, decisions and next actions change across chats.
+Changed files:
+  - planning/workstreams/command-system-and-tampermonkey-goal-process.md
+  - planning/goal-process-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added a hybrid active workstream map with overview tables and detailed slice sections.
+  - Added a living-map storage rule to planning/goal-process-map.md.
+  - Kept the static example separate from the mutable active workstream map.
+Not changed:
+  - No planning-use-case-map.md routing change in this batch.
+  - No critical-thinking command added.
+  - No generic Action Overview added.
+  - No Tampermonkey script added.
+  - No source/domain/slice files edited.
+Follow-ups:
+  Choose the next slice: route reusable command examples from the root use-case map, add the крит command, or plan the Tampermonkey MVP.
+Notes:
+  The active workstream map is mutable project state. The owner format remains planning/goal-process-map.md.

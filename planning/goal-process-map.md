@@ -263,7 +263,35 @@ Use decision points when the user is deciding which step is better, where to sto
 - Do not use a flat todo list when scenario/slice structure is needed for verification.
 ```
 
-## 11. Related Example
+## 11. Living Goal Process Maps
+
+Static examples and active living maps are different.
+
+```text
+Static example
+  Demonstrates a valid shape.
+  Does not change during ordinary work.
+
+Living goal-process map
+  Tracks a real active goal/workstream.
+  Can be updated as statuses, slices, decisions and next actions change.
+```
+
+Living maps may be stored under:
+
+```text
+planning/workstreams/
+```
+
+Current active command-system/Tampermonkey workstream map:
+
+```text
+planning/workstreams/command-system-and-tampermonkey-goal-process.md
+```
+
+When updating a living map, preserve accepted final picture, scenarios, slices, invariants and decision points unless the user explicitly changes them. Update statuses, steps, current focus and next action instead of recreating the map from scratch.
+
+## 12. Related Example
 
 Example:
 
