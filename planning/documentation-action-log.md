@@ -1183,3 +1183,36 @@ Follow-ups:
   Add reusable architecture policy for compound starter artifacts and filename-version migration in a separate batch. Then choose the next Goal Map slice: route reusable command examples, add critical-thinking command, or plan Tampermonkey MVP.
 Notes:
   This package uses replacement files for renamed Goal Map files and targeted inline updates for existing root route/action-log files.
+### 2026-05-31 - Improved Goal Map roadmap and evidence readability
+
+Date:
+  2026-05-31
+Action:
+  Updated the active command-system/Tampermonkey Goal Map and Goal Map owner rules so roadmap records are more readable, evidence-backed and usable as a planning reference.
+Type:
+  root planning aid / living Goal Map readability and planning-reference update
+Status:
+  applied
+Why:
+  The user needs to open the living Goal Map at any time and clearly understand current goal, progress, roadmap, completed evidence, active work and next action. Planning inside the workstream should consult the living Goal Map instead of improvising a new plan from chat context.
+Changed files:
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/goal-map-principles-workflow-template.md
+  - planning/planning-use-case-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added a roadmap-first structure after Current Snapshot.
+  - Replaced markdown task-list style roadmap records with status labels such as DONE / NOW / NEXT / TODO / BLOCKED.
+  - Added proof-oriented DONE item pattern with Visible evidence and per-evidence details dropdowns.
+  - Clarified that visible evidence should identify added files, renamed paths, changed files, changed sections, route entries and action-log records.
+  - Clarified that slices are work directions: needed behavior -> plan -> artifacts/actions/steps -> verification -> visible evidence.
+  - Added planning-reference rules requiring agents to consult the active living Goal Map when planning inside a long-running workstream.
+Not changed:
+  - No Tampermonkey script added.
+  - No critical-thinking command added.
+  - No generic Action Overview implementation added.
+  - No source/domain/slice docs edited.
+Follow-ups:
+  Choose the next Goal Map slice: route reusable command examples from the root use-case map, add the critical-thinking command `крит`, or plan the Tampermonkey MVP.
+Notes:
+  The living Goal Map stores current state and evidence capsules. The action log remains append-only chronological history and should not be fully merged into the map.

@@ -339,6 +339,12 @@ planning/goal-map-example.md
 
 Use-case rows may reference Goal Map as expected output, but they do not own its format or workflow.
 
+Goal Map planning/reference behavior:
+  When planning inside an active long-running workstream, the chat should read or reuse the relevant living Goal Map before choosing the next slice/step. For the active command-system/Tampermonkey workstream, use:
+    planning/workstreams/command-system-and-tampermonkey-goal-map.md
+
+  The Goal Map should be kept meaningful and representative: update roadmap, readable scenario/slice names, statuses, evidence-backed DONE records, current focus, next action and open decisions when a meaningful batch/decision changes the workstream.
+
 ## 9. Repeated / Continuation Commands
 
 Reusable command setup owner:
@@ -358,6 +364,7 @@ This root map remains the concrete Enman route table.
 | `кп`, `key points` | Force a `Key points first` block for the active answer. | Add key points if the requested answer exists or ask what answer to summarize. | No traversal / reuse. | Conversation; sources only if key points depend on evidence. | `Key points first` block plus normal answer structure. |
 | `без кп`, `без key points` | Suppress `Key points first` for the active answer. | Apply to the current answer if target is obvious. | No traversal / reuse. | Conversation. | Answer without key-points preview. |
 | `саммари` | Add contextual `Краткое саммари`. | Summarize current answer/context or ask target. | No traversal / reuse; targeted if evidence changed. | Conversation plus sources only if needed. | `Краткое саммари`, not file-change `Итог`. |
+| `планируй`, `распланируй`, `plan` | Produce a concrete plan now. If the request belongs to an active long-running workstream, use the relevant living Goal Map to choose the next slice/step and preserve current-state continuity. | Ask for target/scope if no active context exists. | Reuse / targeted; full if goal/scope changed. | Conversation plus living Goal Map and relevant repo docs when planning depends on project state. | Concrete plan with current Goal Map reference, chosen slice/step, batch boundary, expected evidence and next action. |
 | `карта процесса`, `карта цели`, `план процесса`, `где мы`, `прогресс`, `статус цели`, `goal process`, `goal map` | Show/update the Goal Map for the active or named long-running goal. | Ask for the goal if no active/named goal exists. | Reuse / targeted; full if goal/scope changed. | Conversation plus relevant docs/sources when the map depends on repo state. | Goal Map / Карта цели: final picture, target scenarios, process slices, acceptance criteria, current state, decision points, current focus and next action. |
 | `без саммари` | Suppress `Краткое саммари`. | Apply to current answer if target is obvious. | No traversal / reuse. | Conversation. | Answer without contextual summary. |
 | `итог` | Add or update file/change-oriented `Итог` when update context exists. | If no file/change/update context exists, explain that `Итог` is not applicable and offer `Краткое саммари`. | Reuse / targeted. | Conversation plus target files/diff/archive when needed. | File Update Overview / `Итог`; during planning it is the rolling nearest-batch plan. |

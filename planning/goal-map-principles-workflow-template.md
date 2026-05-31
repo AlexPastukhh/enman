@@ -53,7 +53,12 @@ Goal map:
 
 The final picture is not a vague wish. It is a set of observable target scenarios.
 
-A process slice is not just a task. It is a verifiable part of the goal that enables one or more target scenarios.
+A process slice is not just a task. It is a work direction: it starts from needed behavior and turns that behavior into our plan.
+
+```text
+Slice / work direction:
+  needed behavior -> plan -> artifacts/actions/steps -> verification -> visible evidence
+```
 
 Acceptance criteria should be attached to scenarios and slices so the chat can check whether the work is done instead of only saying that progress was made.
 
@@ -107,20 +112,29 @@ If a previous map exists in the conversation or repo, preserve its accepted stru
 A useful map should include:
 
 ```text
-Final picture
-  clear end state / desired capability.
+Current Snapshot
+  current goal, focus, active slice, latest completed, next action and open decisions.
+
+Roadmap
+  phases, work directions/slices, phase verification and evidence-backed progress.
+
+Whole Picture
+  compact view of result areas, scenarios and slices.
 
 Target scenarios
   observable behaviors or states that define the final picture.
 
-Process slices
-  verifiable parts of the work that enable scenarios.
+Process slices / work directions
+  verifiable work directions that enable scenarios.
 
 Acceptance criteria
   checks that prove a scenario or slice is ready.
 
 Current state
   where the work is now relative to the final picture.
+
+Visible evidence
+  artifacts, changed files, changed sections, route entries and action-log records proving completed work.
 
 Invariants
   constraints that must stay true while moving toward the goal.
@@ -135,113 +149,269 @@ Next action
   the next concrete action.
 ```
 
+## 5A. Living Map Planning Reference Rule
+
+When planning inside a long-running workstream that has a living Goal Map, the agent must consult the map before choosing a plan.
+
+The planning answer should use the map to:
+
+```text
+- identify the active goal and current focus;
+- choose the relevant scenario/slice/work direction;
+- preserve accepted decisions and invariants;
+- explain how the proposed plan advances the roadmap;
+- state whether the map needs to be updated after the work;
+- avoid inventing a new plan that ignores current progress.
+```
+
+If the user says `планируй`, `следующий шаг`, `что дальше`, `где мы`, `прогресс`, or asks for planning inside the active workstream, use the living map when it exists.
+
+If the map is stale or incomplete, say that explicitly and update it in the same batch when the user asks to change repo files. If no edit/package permission exists, state what map update is needed.
+
+## 5B. Roadmap And Evidence Rules
+
+Living maps should use a roadmap immediately after `Current Snapshot` when the goal has multiple phases or work directions.
+
+Roadmap records should use status labels instead of markdown task-list checkboxes when completed items must remain readable:
+
+```text
+✅ DONE     completed and backed by visible evidence
+▶ NOW      active work
+⏭ NEXT     next planned work
+⬜ TODO     planned but not active
+⚠ BLOCKED  blocked or needs a decision
+```
+
+DONE items must not be only “done”. They should be reviewable records.
+
+A DONE item should include:
+
+```text
+Result
+  what became possible / what visible outcome exists now
+
+Visible evidence
+  added files, renamed paths, changed files, changed sections,
+  route entries, examples, action-log entries or commit/diff references
+
+Evidence details dropdowns
+  per-evidence explanation: what changed, visible result, why this evidence exists,
+  how to verify and what the evidence does not prove
+
+Action / change overview dropdown
+  overall summary of what was done, why, goal impact, verification and remaining gaps
+```
+
+Do not copy full diffs into the Goal Map unless the diff is small and directly needed for understanding. Prefer short meaningful evidence descriptions and point to files/sections that can be opened for detailed review.
+
+## 5C. Evidence Details Format
+
+Top-level evidence should be a quick proof index:
+
+```text
+Added:
+  - <file>
+Renamed:
+  - <old path> -> <new path>
+Changed:
+  - <file>
+Changed sections:
+  - <file>#<section or visible block>
+Recorded:
+  - <action-log entry>
+```
+
+Each top-level evidence item may include its own `<details>` block.
+
+Inside evidence `<details>`, section labels must be visually distinct. Use bold mini-headings, not plain label lines:
+
+```markdown
+<details>
+<summary>Evidence details</summary>
+
+**What changed**
+
+- ...
+
+**Visible result**
+
+- ...
+
+**Why this evidence exists**
+
+- ...
+
+**How to verify**
+
+- ...
+
+**What this evidence does not prove**
+
+- ...
+
+</details>
+```
+
+The DONE item itself may include a final `<details>` block for the action/change overview:
+
+```markdown
+<details>
+<summary>Action / change overview</summary>
+
+**What was done**
+
+- ...
+
+**Why it was done**
+
+- ...
+
+**Goal impact**
+
+- ...
+
+**Verification**
+
+- ...
+
+**Remaining gaps**
+
+- ...
+
+</details>
+```
+
 ## 6. Default Format
 
 ```text
-## Карта цели
+## 0. Current Snapshot
 
-Финальная картина:
-  <what should exist / work / be possible at the end>
+Current goal:
+  <active goal>
 
-Целевые сценарии:
-  SC-1 — <scenario name>
-    Поведение:
-      <observable behavior or target state>
-    Acceptance criteria:
-      - <checkable criterion>
-    Status:
-      not-started / planned / in-progress / done / verified
-
-Слайсы процесса:
-  SL-1 — <slice name>
-    Покрывает сценарии:
-      - SC-...
-    Артефакты / действия:
-      - <file / script / command / decision / artifact / action>
-    Шаги:
-      1. [ ] <step>
-      2. [ ] <step>
-    Acceptance criteria:
-      - <slice readiness check>
-    Проверка:
-      - <manual check / diff check / example run / test / review>
-    Status:
-      not-started / planned / in-progress / done / verified
-
-Текущее состояние:
-  Где мы:
-    <current position relative to scenarios and slices>
-
-  Готово:
-    - [x] <completed scenario/slice/step>
-
-  Не готово:
-    - [ ] <missing scenario/slice/step>
-
-Инварианты:
-  - <constraint that must remain true>
-
-Точки выбора:
-  DEC-1 — <decision name>
-    Вопрос:
-      <what must be decided>
-    Влияет на:
-      - SC-...
-      - SL-...
-    Варианты:
-      A. <option>
-      B. <option>
-    Критерии выбора:
-      - <criterion>
-    Текущее решение:
-      chosen / deferred / needs critical review
-
-Текущий фокус:
+Current focus:
   <active scenario/slice/step>
 
-Следующее действие:
-  <one concrete next action>
+Already available:
+  - <visible capability or artifact>
+
+Latest completed:
+  - <latest completed work>
+
+Next action:
+  <next action>
+
+Open decisions:
+  - <decision>
+
+## 1. Roadmap / Дорожная карта
+
+| Phase | Phase goal | Work directions / slices | Phase verification | Status |
+|---|---|---|---|---|
+| Phase 1 — <name> | <goal> | <slices> | <verification target> | <status> |
+
+### Phase 1 — <name>
+
+Goal:
+  <what must become true>
+
+Needed behavior:
+  <what should be possible / observable>
+
+Work directions / slices:
+  - SL-1 — <readable slice name>
+
+Phase verification:
+  <how to prove the phase goal is achieved>
+
+#### Progress
+
+##### ✅ DONE — <work item>
+
+Result:
+  <what became possible / what exists>
+
+Visible evidence:
+  - Changed:
+    - <file>
+
+<details>
+<summary>Evidence details</summary>
+
+**What changed**
+
+- ...
+
+**Visible result**
+
+- ...
+
+**Why this evidence exists**
+
+- ...
+
+**How to verify**
+
+- ...
+
+**What this evidence does not prove**
+
+- ...
+
+</details>
+
+##### ▶ NOW — <work item>
+
+Expected result:
+  <expected outcome>
+
+Evidence required:
+  - Changed:
+    - <file>
 ```
 
-The map can be shortened for small goals, but it must preserve the core relationships: final picture -> scenarios -> slices -> acceptance checks -> current state -> next action.
+The map can be shortened for small goals, but it must preserve the core relationships: final picture -> scenarios -> slices/work directions -> acceptance checks -> roadmap evidence -> current state -> next action.
 
 ## 7. Workflow
 
-When building a Goal Map:
+When building or updating a Goal Map:
 
 ```text
 1. Identify the active or named goal.
-2. Define the final picture in observable terms.
-3. Split the final picture into target scenarios / desired behaviors.
-4. Add acceptance criteria for each scenario.
-5. Derive process slices that can be completed and verified separately.
-6. For each slice, list artifacts/actions, steps, checks and status.
-7. Add invariants that must not be violated.
-8. Add decision points where route/order/implementation/ownership is not obvious.
-9. Mark current focus and next action.
-10. On later updates, preserve accepted structure and update the map instead of restarting.
+2. Check whether a living Goal Map exists for this workstream.
+3. Read the Current Snapshot, Roadmap, Decision Points and Next Action.
+4. Define or preserve the final picture in observable terms.
+5. Split the final picture into target scenarios / desired behaviors.
+6. Add acceptance criteria for each scenario.
+7. Derive slices as work directions that turn needed behavior into plan/actions/checks/evidence.
+8. For each slice, list artifacts/actions, steps, checks, visible evidence and status.
+9. Add or update roadmap phases and phase verification targets.
+10. Add invariants that must not be violated.
+11. Add decision points where route/order/implementation/ownership is not obvious.
+12. Mark current focus and next action.
+13. On later updates, preserve accepted structure and update the map instead of restarting.
 ```
 
 ## 8. Update Rules
 
 ```text
 When user says `где мы` / `прогресс`:
-  show current state, completed items, missing items, current focus and next action.
+  show current state, completed items, missing items, current focus and next action from the living Goal Map when one exists.
 
 When user says `карта процесса` / `карта цели`:
   produce or refresh the full Goal Map.
 
 When user says `обнови карту процесса` / `обнови карту цели`:
-  update statuses, steps, decisions and next action using the latest accepted work.
+  update statuses, roadmap evidence, steps, decisions and next action using the latest accepted work.
 
 When user says `крит, карта процесса`:
-  evaluate final picture, scenarios, slices, acceptance criteria and decision points honestly.
+  evaluate final picture, scenarios, slices, acceptance criteria, evidence and decision points honestly.
 
 When user says `планируй` inside an active goal:
-  use the map to choose the next slice/step and explain the batch boundary.
+  use the map to choose the next slice/work direction and explain the batch boundary.
 ```
 
-Do not hide uncertainty. If a scenario, slice, status or acceptance criterion is inferred rather than established, mark it as inferred.
+Do not hide uncertainty. If a scenario, slice, status, evidence item or acceptance criterion is inferred rather than established, mark it as inferred.
 
 ## 9. Decision Points
 
@@ -272,9 +442,10 @@ Use decision points when the user is deciding which step is better, where to sto
 - Do not treat a Goal Map as a generic conclusion.
 - Do not replace detailed answers, file update overviews or source checks with the map.
 - Do not invent a final picture when the goal is unclear.
-- Do not silently drop accepted scenarios, slices, invariants or decision points during updates.
+- Do not silently drop accepted scenarios, slices, invariants, evidence or decision points during updates.
 - Do not treat map commands as permission to edit files, create archives, commit or push.
 - Do not use a flat todo list when scenario/slice structure is needed for verification.
+- Do not let the map become a full duplicate of the action log or full diffs.
 ```
 
 ## 11. Living Goal Maps
@@ -288,7 +459,7 @@ Static example
 
 Living goal map
   Tracks a real active goal/workstream.
-  Can be updated as statuses, slices, decisions and next actions change.
+  Can be updated as statuses, slices, decisions, roadmap evidence and next actions change.
 ```
 
 Living maps may be stored under:
@@ -305,7 +476,7 @@ planning/workstreams/command-system-and-tampermonkey-goal-map.md
 
 A living map must be current-state-readable. It should start with `Current Snapshot` so a user or another chat can open the file and immediately see the current goal, focus, active slice, latest completed action, next action and open decisions.
 
-When updating a living map, preserve accepted final picture, scenarios, slices, invariants and decision points unless the user explicitly changes them. Update statuses, steps, current focus and next action instead of recreating the map from scratch.
+When updating a living map, preserve accepted final picture, scenarios, slices, invariants and decision points unless the user explicitly changes them. Update roadmap evidence, statuses, steps, current focus and next action instead of recreating the map from scratch.
 
 ## 12. Related Example
 
