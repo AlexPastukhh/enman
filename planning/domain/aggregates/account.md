@@ -9,16 +9,16 @@ Scope: account identity, client account identity, employee account identity and 
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/diagrams/scenario-text-specs/SC-01-register-client.md
-    - planning/diagrams/scenario-text-specs/SC-02-login.md
-    - planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md
-    - planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
-    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-01-guest-registration.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-02-login.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md @ Doc version: v0.1.0
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md @ historical/cross-check, version not declared
   Internal dependencies:
     - none
   Not checked:
@@ -45,19 +45,19 @@ It does not own ApplicantParty data, Request lifecycle, RequestReview lifecycle 
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/diagrams/scenario-data/README.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-data/README.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/diagrams/scenario-text-specs/SC-01-register-client.md
-    - planning/diagrams/scenario-text-specs/SC-02-login.md
-    - planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md
-    - planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
-    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-02-login-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md
-    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-01-guest-registration.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-02-login.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-02-login-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md @ Doc version: v0.1.0
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md @ historical/cross-check, version not declared
   Internal dependencies:
     - none
   Not checked:
@@ -69,10 +69,10 @@ This section is the aggregate-level reviewed source overview. Section-level `Sou
 Scenario text sources:
 
 ```text
-planning/diagrams/scenario-text-specs/SC-01-register-client.md
-planning/diagrams/scenario-text-specs/SC-02-login.md
-planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md
-planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
+planning/diagrams/scenario-text-specs/SC-01-guest-registration.md @ Doc version: v0.1.0
+planning/diagrams/scenario-text-specs/SC-02-login.md @ Doc version: v0.1.0
+planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md @ Doc version: v0.1.0
+planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md @ Doc version: v0.1.0
 ```
 
 Scenario-specific DATA rule:
@@ -85,16 +85,16 @@ Use planning/diagrams/scenario-data/ only for reusable/shared/audited/transition
 Reusable/shared/audited/transitional DATA sidecars checked or referenced by the prior draft:
 
 ```text
-planning/diagrams/scenario-data/SC-03B-account-owner-verified-data.md
+planning/diagrams/scenario-data/SC-03B-account-owner-verified-data.md @ Doc version: v0.1.0
 ```
 
 Behavior/domain sources:
 
 ```text
-planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md
-planning/diagrams/scenario-behavior-items/SC-02-login-behavior-items.md
-planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md
-planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md @ Doc version: v0.1.0
+planning/diagrams/scenario-behavior-items/SC-02-login-behavior-items.md @ Doc version: v0.1.0
+planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md @ Doc version: v0.1.0
+planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md @ historical/cross-check, version not declared
 ```
 
 Current implementation sources checked in prior archive/source pass:
@@ -120,15 +120,15 @@ Current implementation files are not treated as freshly rechecked evidence unles
 ```text
 Sources:
   Format/process:
-    - planning/domain/domain-discovery-workflow.md
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/domain-discovery-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
-    - planning/domain/aggregates/applicant-party.md
-    - planning/domain/aggregates/connection-request.md
-    - planning/domain/aggregates/agreement-proposal-exchange.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md @ historical/cross-check, version not declared
+    - planning/domain/aggregates/applicant-party.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/agreement-proposal-exchange.md @ Doc version: v0.1.0
   Internal dependencies:
     - Purpose
   Not checked:
@@ -176,16 +176,16 @@ Other aggregates store scalar Account/Employee/ClientAccount ids when actor owne
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/diagrams/scenario-text-specs/SC-01-register-client.md
-    - planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md
-    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md
-    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-01-guest-registration.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md @ Doc version: v0.1.0
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md @ historical/cross-check, version not declared
   Internal dependencies:
     - Aggregate Boundary
   Not checked:
@@ -236,19 +236,19 @@ JWT/session token state.
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/diagrams/scenario-text-specs/SC-01-register-client.md
-    - planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md
-    - planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
-    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md
-    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
-    - planning/domain/aggregates/connection-request.md
-    - planning/domain/aggregates/agreement-proposal-exchange.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-01-guest-registration.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md @ Doc version: v0.1.0
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md @ historical/cross-check, version not declared
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/agreement-proposal-exchange.md @ Doc version: v0.1.0
   Internal dependencies:
     - Aggregate Boundary
     - Owned State
@@ -331,13 +331,13 @@ Failure:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-02-login-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md
-    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-02-login-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md @ Doc version: v0.1.0
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md @ historical/cross-check, version not declared
     - Domain Methods / Commands
     - Owned State
   Internal dependencies:
@@ -362,13 +362,13 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md
-    - planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
-    - planning/diagrams/scenario-data/SC-03B-account-owner-verified-data.md
-    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md
+    - planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-data/SC-03B-account-owner-verified-data.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md @ Doc version: v0.1.0
     - Domain Methods / Commands
     - Invariants
   Internal dependencies:
@@ -406,12 +406,12 @@ reactivation.
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md
-    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md @ Doc version: v0.1.0
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md @ historical/cross-check, version not declared
     - Invariants
     - Lifecycle / State Machine
     - Domain Methods / Commands
@@ -435,12 +435,12 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/domain/value-object-drafting-workflow.md
-    - planning/domain/value-object-draft-template.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/value-object-draft-template.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
     - Domain Methods / Commands
     - Owned State
     - Invariants
@@ -463,14 +463,14 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/domain/domain-discovery-workflow.md
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/domain-discovery-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/domain/aggregates/applicant-party.md
-    - planning/domain/aggregates/connection-request.md
-    - planning/domain/aggregates/agreement-proposal-exchange.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/applicant-party.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/agreement-proposal-exchange.md @ Doc version: v0.1.0
     - Aggregate Boundary
     - Domain Methods / Commands
   Internal dependencies:
@@ -512,12 +512,12 @@ Application coordination needed:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
   Content:
-    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-02-login-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-01-guest-registration-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-02-login-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-03B-account-owner-verified-behavior-items.md @ Doc version: v0.1.0
     - Domain Methods / Commands
     - Invariants
     - Lifecycle / State Machine
@@ -546,13 +546,13 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
     - Owned State
     - Value Objects Used
     - Aggregate Boundary
-    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md @ historical/cross-check, version not declared
   Internal dependencies:
     - Aggregate Boundary
     - Owned State
@@ -587,15 +587,15 @@ EmployeeProfile(AccountId)
 ```text
 Sources:
   Format/process:
-    - planning/domain/domain-responsibility-map.md
-    - planning/domain/domain-modeling-principles.md
-    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-responsibility-map.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
   Content:
     - Aggregate Boundary
     - Domain Methods / Commands
     - Cross-Aggregate Relations
     - Behavior Coverage
-    - planning/domain/scenario-to-aggregate-map.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
   Internal dependencies:
     - Aggregate Boundary
     - Cross-Aggregate Relations
@@ -623,14 +623,14 @@ Testing:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
   Content:
     - Source Inputs
     - Behavior Coverage
     - Cross-Layer Placement Notes
-    - planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md
-    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md
+    - planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md @ Doc version: v0.1.0
+    - planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md @ historical/cross-check, version not declared
   Internal dependencies:
     - Source Inputs
     - Behavior Coverage
@@ -659,13 +659,13 @@ Deferred:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/source-cascade-sync-workflow.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/source-cascade-sync-workflow.md @ version not confirmed in this batch
   Content:
     - changed sections in this Account aggregate draft
-    - planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md
-    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md
+    - planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ version not confirmed in this batch
   Internal dependencies:
     - all changed sections in this draft
   Not checked:

@@ -9,16 +9,16 @@ Scope: reusable applicant/contact/template data owned by a client account
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
-    - planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
-    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
-    - planning/tables/domain-drafts/domain-draft-01.md
-    - planning/tables/domain-drafts/domain-draft-02.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-10-applicant-data.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md @ Doc version: v0.1.0
+    - planning/tables/domain-drafts/domain-draft-01.md @ historical/cross-check, version not declared
+    - planning/tables/domain-drafts/domain-draft-02.md @ historical/cross-check, version not declared
   Internal dependencies:
     - none
   Not checked:
@@ -46,20 +46,20 @@ It does not own request lifecycle, request review, agreement proposal exchange o
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/diagrams/scenario-data/README.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-data/README.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
-    - planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
-    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
-    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
-    - planning/tables/domain-drafts/domain-draft-01.md
-    - planning/tables/domain-drafts/domain-draft-02.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-10-applicant-data.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md @ Doc version: v0.1.0
+    - planning/tables/domain-drafts/domain-draft-01.md @ historical/cross-check, version not declared
+    - planning/tables/domain-drafts/domain-draft-02.md @ historical/cross-check, version not declared
   Internal dependencies:
     - none
   Not checked:
@@ -72,9 +72,9 @@ This section is the aggregate-level reviewed source overview. Section-level `Sou
 Scenario text sources:
 
 ```text
-planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
-planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
-planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
+planning/diagrams/scenario-text-specs/SC-10-applicant-data.md @ Doc version: v0.1.0
+planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md @ Doc version: v0.1.0
+planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md @ Doc version: v0.1.0
 ```
 
 Scenario-specific DATA rule:
@@ -87,25 +87,25 @@ Use planning/diagrams/scenario-data/ only for reusable/shared/audited/transition
 Reusable/shared/audited/transitional DATA sidecars checked or referenced by the prior draft:
 
 ```text
-planning/diagrams/scenario-data/SC-10-applicant-data.md
-planning/diagrams/scenario-data/SC-10B-my-applicant-parties-data.md
-planning/diagrams/scenario-data/SC-04-request-creation-data.md
+planning/diagrams/scenario-data/SC-10-applicant-data.md @ Doc version: v0.1.0
+planning/diagrams/scenario-data/SC-10B-my-applicant-parties-data.md @ Doc version: v0.1.0
+planning/diagrams/scenario-data/SC-04-request-creation-data.md @ Doc version: v0.1.0
 ```
 
 Behavior items:
 
 ```text
-planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
-planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md
-planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
-planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
+planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md @ Doc version: v0.1.0
+planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md @ Doc version: v0.1.0
+planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md @ Doc version: v0.1.0
+planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md @ Doc version: v0.1.0
 ```
 
 Historical domain sources:
 
 ```text
-planning/tables/domain-drafts/domain-draft-01.md
-planning/tables/domain-drafts/domain-draft-02.md
+planning/tables/domain-drafts/domain-draft-01.md @ historical/cross-check, version not declared
+planning/tables/domain-drafts/domain-draft-02.md @ historical/cross-check, version not declared
 ```
 
 Current implementation sources checked in prior archive/source pass:
@@ -132,15 +132,15 @@ Current implementation files are not treated as freshly rechecked evidence unles
 ```text
 Sources:
   Format/process:
-    - planning/domain/domain-discovery-workflow.md
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/domain-discovery-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/domain/aggregates/account.md
-    - planning/domain/aggregates/connection-request.md
-    - planning/tables/domain-drafts/domain-draft-01.md
-    - planning/tables/domain-drafts/domain-draft-02.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/account.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/tables/domain-drafts/domain-draft-01.md @ historical/cross-check, version not declared
+    - planning/tables/domain-drafts/domain-draft-02.md @ historical/cross-check, version not declared
   Internal dependencies:
     - Purpose
   Not checked:
@@ -194,19 +194,19 @@ ClientAccountId
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
-    - planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
-    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
-    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
-    - planning/domain/value-objects/applicant-identity.md
-    - planning/domain/value-objects/applicant-contact.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-10-applicant-data.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/applicant-identity.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/applicant-contact.md @ Doc version: v0.1.0
   Internal dependencies:
     - Aggregate Boundary
   Not checked:
@@ -252,22 +252,22 @@ agreement proposal data.
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
-    - planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
-    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
-    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
-    - planning/domain/value-objects/applicant-identity.md
-    - planning/domain/value-objects/applicant-contact.md
-    - planning/domain/aggregates/account.md
-    - planning/domain/aggregates/connection-request.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-10-applicant-data.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/applicant-identity.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/applicant-contact.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/account.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
   Internal dependencies:
     - Aggregate Boundary
     - Owned State
@@ -350,16 +350,16 @@ Application coordination:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
-    - planning/domain/value-objects/applicant-identity.md
-    - planning/domain/value-objects/applicant-contact.md
-    - planning/domain/aggregates/connection-request.md
+    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/applicant-identity.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/applicant-contact.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
     - Domain Methods / Commands
     - Owned State
   Internal dependencies:
@@ -384,15 +384,15 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/diagrams/scenario-text-specs/SC-10-applicant-data.md
-    - planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md
-    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
-    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/diagrams/scenario-text-specs/SC-10-applicant-data.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-10B-my-applicant-parties.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md @ Doc version: v0.1.0
     - Domain Methods / Commands
     - Invariants
   Internal dependencies:
@@ -438,15 +438,15 @@ Delete/archive policy remains future review.
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
-    - planning/domain/value-objects/applicant-identity.md
-    - planning/domain/value-objects/applicant-contact.md
-    - planning/domain/aggregates/connection-request.md
+    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/applicant-identity.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/applicant-contact.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
     - Invariants
     - Lifecycle / State Machine
     - Domain Methods / Commands
@@ -471,16 +471,16 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/domain/value-object-drafting-workflow.md
-    - planning/domain/value-object-draft-template.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/value-object-draft-template.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/domain/value-objects/applicant-identity.md
-    - planning/domain/value-objects/applicant-contact.md
-    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/applicant-identity.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/applicant-contact.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md @ Doc version: v0.1.0
   Internal dependencies:
     - Owned State
     - Domain Methods / Commands
@@ -499,15 +499,15 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/domain/domain-discovery-workflow.md
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/domain-discovery-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/domain/aggregates/account.md
-    - planning/domain/aggregates/connection-request.md
-    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md
-    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/account.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md @ Doc version: v0.1.0
     - Aggregate Boundary
     - Domain Methods / Commands
   Internal dependencies:
@@ -548,13 +548,13 @@ Application coordination needed:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
   Content:
-    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-10-applicant-data-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-10B-my-applicant-parties-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-04-client-request-creation-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md @ Doc version: v0.1.0
     - Domain Methods / Commands
     - Invariants
     - Lifecycle / State Machine
@@ -583,15 +583,15 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
     - Owned State
     - Value Objects Used
     - Aggregate Boundary
     - Cross-Aggregate Relations
-    - planning/tables/domain-drafts/domain-draft-01.md
-    - planning/tables/domain-drafts/domain-draft-02.md
+    - planning/tables/domain-drafts/domain-draft-01.md @ historical/cross-check, version not declared
+    - planning/tables/domain-drafts/domain-draft-02.md @ historical/cross-check, version not declared
   Internal dependencies:
     - Aggregate Boundary
     - Owned State
@@ -611,15 +611,15 @@ Current/default uniqueness likely needs persistence/application enforcement for 
 ```text
 Sources:
   Format/process:
-    - planning/domain/domain-responsibility-map.md
-    - planning/domain/domain-modeling-principles.md
-    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-responsibility-map.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
   Content:
     - Aggregate Boundary
     - Domain Methods / Commands
     - Cross-Aggregate Relations
     - Behavior Coverage
-    - planning/domain/scenario-to-aggregate-map.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
   Internal dependencies:
     - Aggregate Boundary
     - Cross-Aggregate Relations
@@ -648,15 +648,15 @@ Testing:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
   Content:
     - Source Inputs
     - Behavior Coverage
     - Cross-Layer Placement Notes
-    - planning/domain/aggregates/connection-request.md
-    - planning/domain/value-objects/applicant-identity.md
-    - planning/domain/value-objects/applicant-contact.md
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/applicant-identity.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/applicant-contact.md @ Doc version: v0.1.0
   Internal dependencies:
     - Source Inputs
     - Behavior Coverage
@@ -686,13 +686,13 @@ Deferred:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/source-cascade-sync-workflow.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/source-cascade-sync-workflow.md @ version not confirmed in this batch
   Content:
     - changed sections in this ApplicantParty aggregate draft
-    - planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md
-    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md
+    - planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ version not confirmed in this batch
   Internal dependencies:
     - all changed sections in this draft
   Not checked:

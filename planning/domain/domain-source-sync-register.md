@@ -1,6 +1,6 @@
 # Domain Source Sync Register
 
-Status: draft / derived register with scenario and domain Doc version references  
+Status: draft / synchronized with versioned active aggregate local Sources blocks  
 Doc version: v0.1.0  
 Scope: source dependency register for active Enman domain aggregate drafts
 
@@ -23,6 +23,7 @@ This register is not the source of truth for a section's local working context. 
 
 ```text
 - Aggregate draft local Sources blocks remain authoritative for section work.
+- Active aggregate local `Sources:` blocks were version-qualified in F7K-LS1; this register should match those local paths/status labels.
 - This register is a navigation/sync index derived from those local Sources blocks.
 - Do not treat a source as checked unless the aggregate local Sources block says it was checked.
 - Do not invent source versions for files that do not declare Doc version.
@@ -72,7 +73,7 @@ not checked / deferred
 | Consumer domain file | Source group | Source files | Used by sections | Source version/status | Sync status |
 |---|---|---|---|---|---|
 | `planning/domain/aggregates/account.md` | Format/process | `planning/domain/aggregate-drafting-workflow.md`; `planning/domain/aggregate-draft-template.md`; `planning/domain/domain-modeling-principles.md`; `planning/source-cascade-sync-workflow.md`; `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md`; `planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md` | all draft/source-block sections | domain process files under `planning/domain/` are Doc version: v0.1.0 after F7K-D2; root source-cascade/template files are outside D2 scope unless separately versioned | current for v0.1.0 aggregate source-block prep |
-| `planning/domain/aggregates/account.md` | Scenario/content | `planning/diagrams/scenario-text-specs/SC-01-register-client.md`; `planning/diagrams/scenario-text-specs/SC-02-login.md`; `planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md`; `planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md`; SC-01/SC-02/SC-03B behavior items | Purpose, Source Inputs, Owned State, Domain Methods, Invariants, Lifecycle, Behavior Coverage | Doc version: v0.1.0 for `planning/diagrams/**/*.md` sources after F7K-D2 | current as local aggregate source |
+| `planning/domain/aggregates/account.md` | Scenario/content | `planning/diagrams/scenario-text-specs/SC-01-guest-registration.md`; `planning/diagrams/scenario-text-specs/SC-02-login.md`; `planning/diagrams/scenario-text-specs/SC-03B-account-owner-verified.md`; `planning/diagrams/scenario-text-specs/scenario-account-activation-security-addendum.md`; SC-01/SC-02/SC-03B behavior items | Purpose, Source Inputs, Owned State, Domain Methods, Invariants, Lifecycle, Behavior Coverage | Doc version: v0.1.0 for `planning/diagrams/**/*.md` sources after F7K-D2 | current as local aggregate source |
 | `planning/domain/aggregates/account.md` | Historical/domain decision | `planning/tables/domain-drafts/domain-draft-02-account-employee-tph-decision.md` | Purpose, Source Inputs, Boundary, Methods, Persistence | historical/cross-check; version not declared in this register unless the source is under `planning/domain/` and declares Doc version | current as accepted account/employee hierarchy source |
 | `planning/domain/aggregates/account.md` | Cross-aggregate | `planning/domain/aggregates/applicant-party.md`; `planning/domain/aggregates/connection-request.md`; `planning/domain/aggregates/agreement-proposal-exchange.md` | Boundary, Cross-Aggregate Relations, Source Delta | Doc version: v0.1.0 for prepared aggregate drafts | no semantic re-sync needed now; later changes must be checked |
 | `planning/domain/aggregates/applicant-party.md` | Format/process | `planning/domain/aggregate-drafting-workflow.md`; `planning/domain/aggregate-draft-template.md`; `planning/domain/domain-modeling-principles.md`; `planning/source-cascade-sync-workflow.md`; `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md`; `planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md` | all draft/source-block sections | domain process files under `planning/domain/` are Doc version: v0.1.0 after F7K-D2; root source-cascade/template files are outside D2 scope unless separately versioned | current for v0.1.0 aggregate source-block prep |
@@ -172,4 +173,7 @@ Still deferred:
 - Replaced version-not-declared wording for planning/domain and planning/diagrams source groups with Doc version: v0.1.0 references.
 - Kept planning/tables and implementation/test evidence as historical/prior evidence, not newly versioned or re-audited.
 - Kept slice refactor deferred until this register is reviewed.
+- Synchronized this register with the versioned active aggregate local `Sources:` blocks.
+- Updated active aggregate local `Sources:` blocks to use version/status-qualified source references.
+- Corrected stale source paths before local source versioning, including SC-01 guest registration source path.
 ```

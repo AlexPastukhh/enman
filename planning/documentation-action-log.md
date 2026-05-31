@@ -974,3 +974,39 @@ Follow-ups:
   Review the synchronized domain register, then plan the first slice-side source/version/cascade step as a separate batch.
 Notes:
   Aggregate local section `Sources:` blocks remain authoritative for section-level work. This register remains a navigation/sync index.
+
+### 2026-05-31 - Versioned active aggregate local Sources blocks
+
+Date:
+  2026-05-31
+Action:
+  Updated local `Sources:` blocks in all four active aggregate drafts to use version/status-qualified source references and synchronized the domain source-sync register.
+Type:
+  domain source/version/cascade local source sync
+Status:
+  applied
+Why:
+  After D2 seeded `Doc version: v0.1.0` across planning/domain and planning/diagrams and D3 synchronized the domain register, the aggregate-local source blocks still contained bare paths. The active aggregate drafts needed local source references to match the register/source-version model before any slice-side source cascade work.
+Changed files:
+  - planning/domain/aggregates/account.md
+  - planning/domain/aggregates/applicant-party.md
+  - planning/domain/aggregates/connection-request.md
+  - planning/domain/aggregates/agreement-proposal-exchange.md
+  - planning/domain/domain-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added `@ Doc version: v0.1.0` to planning/domain and planning/diagrams source references inside active aggregate local `Sources:` blocks.
+  - Marked planning/tables references as historical/cross-check, version not declared.
+  - Kept root source-cascade/template references as version not confirmed in this batch.
+  - Corrected stale source paths found during local source versioning.
+  - Synchronized the domain source-sync register with the versioned local aggregate source model.
+Not changed:
+  - No aggregate/domain behavior semantics intentionally changed.
+  - No scenario behavior semantics intentionally changed.
+  - No scenario/source file edited.
+  - No slice draft edited.
+  - No semantic re-audit claimed.
+Follow-ups:
+  Review the versioned local source blocks and register. Then plan the first slice-side source/version/cascade step separately.
+Notes:
+  Aggregate local section `Sources:` blocks remain authoritative for section-level work. This batch changes source references and source status labels only.

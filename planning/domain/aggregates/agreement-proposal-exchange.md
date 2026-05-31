@@ -9,18 +9,18 @@ Scope: post-approval agreement proposal exchange, proposal versions, final refus
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
-    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md
-    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
-    - planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
-    - planning/domain/aggregates/connection-request.md
-    - planning/domain/aggregates/account.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/account.md @ Doc version: v0.1.0
   Internal dependencies:
     - none
   Not checked:
@@ -51,19 +51,19 @@ It does not own Request review or Request status transitions.
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/diagrams/scenario-data/README.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-data/README.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
-    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md
-    - planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
-    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
-    - planning/tables/domain-drafts/domain-draft-02.md
-    - planning/domain/aggregates/connection-request.md
-    - planning/domain/aggregates/account.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md @ Doc version: v0.1.0
+    - planning/tables/domain-drafts/domain-draft-02.md @ historical/cross-check, version not declared
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/account.md @ Doc version: v0.1.0
   Internal dependencies:
     - none
   Not checked:
@@ -76,8 +76,8 @@ This section is the aggregate-level reviewed source overview. Section-level `Sou
 Scenario text sources:
 
 ```text
-planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
-planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md
+planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md @ Doc version: v0.1.0
+planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md @ Doc version: v0.1.0
 ```
 
 Scenario-specific DATA rule:
@@ -90,27 +90,27 @@ Use planning/diagrams/scenario-data/ only for reusable/shared/audited/transition
 Reusable/shared/audited/transitional DATA sidecars checked or referenced by the prior draft:
 
 ```text
-planning/diagrams/scenario-data/SC-13D-employee-agreement-proposal-create-response-data.md
-planning/diagrams/scenario-data/L2-employee-review-agreement-data.md
+planning/diagrams/scenario-data/SC-13D-employee-agreement-proposal-create-response-data.md @ Doc version: v0.1.0
+planning/diagrams/scenario-data/L2-employee-review-agreement-data.md @ Doc version: v0.1.0
 ```
 
 Scenario clarification sources:
 
 ```text
-planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
+planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md @ Doc version: v0.1.0
 ```
 
 Behavior items:
 
 ```text
-planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
-planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md @ Doc version: v0.1.0
+planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md @ Doc version: v0.1.0
 ```
 
 Historical domain sources:
 
 ```text
-planning/tables/domain-drafts/domain-draft-02.md
+planning/tables/domain-drafts/domain-draft-02.md @ historical/cross-check, version not declared
 ```
 
 Existing implementation sources checked in prior archive/source pass:
@@ -139,17 +139,17 @@ Current implementation files and tests are not treated as freshly rechecked evid
 ```text
 Sources:
   Format/process:
-    - planning/domain/domain-discovery-workflow.md
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/domain-discovery-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
-    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
-    - planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
-    - planning/domain/aggregates/connection-request.md
-    - planning/domain/aggregates/account.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/account.md @ Doc version: v0.1.0
   Internal dependencies:
     - Purpose
   Not checked:
@@ -189,21 +189,21 @@ External aggregate references:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
-    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
-    - planning/domain/value-objects/agreement-proposal-version.md
-    - planning/domain/value-objects/agreement-proposal-author.md
-    - planning/domain/value-objects/agreement-document-ref.md
-    - planning/domain/value-objects/proposal-comment.md
-    - planning/domain/value-objects/final-refusal-reason.md
-    - planning/domain/aggregates/connection-request.md
-    - planning/domain/aggregates/account.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-proposal-version.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-proposal-author.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-document-ref.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/proposal-comment.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/final-refusal-reason.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/account.md @ Doc version: v0.1.0
   Internal dependencies:
     - Aggregate Boundary
   Not checked:
@@ -247,23 +247,23 @@ Not stored here:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
-    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md
-    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
-    - planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md
-    - planning/domain/value-objects/agreement-proposal-version.md
-    - planning/domain/value-objects/agreement-proposal-author.md
-    - planning/domain/value-objects/agreement-document-ref.md
-    - planning/domain/value-objects/proposal-comment.md
-    - planning/domain/value-objects/final-refusal-reason.md
-    - planning/domain/aggregates/connection-request.md
-    - planning/domain/aggregates/account.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-clarifications/L2-employee-review-agreement-domain-direction.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-proposal-version.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-proposal-author.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-document-ref.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/proposal-comment.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/final-refusal-reason.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/account.md @ Doc version: v0.1.0
   Internal dependencies:
     - Aggregate Boundary
     - Owned State
@@ -466,18 +466,18 @@ Source behavior:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
-    - planning/domain/value-objects/agreement-proposal-version.md
-    - planning/domain/value-objects/agreement-proposal-author.md
-    - planning/domain/value-objects/agreement-document-ref.md
-    - planning/domain/value-objects/proposal-comment.md
-    - planning/domain/value-objects/final-refusal-reason.md
-    - planning/domain/aggregates/connection-request.md
-    - planning/domain/aggregates/account.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-proposal-version.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-proposal-author.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-document-ref.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/proposal-comment.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/final-refusal-reason.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/account.md @ Doc version: v0.1.0
     - Domain Methods / Commands
     - Owned State
   Internal dependencies:
@@ -506,14 +506,14 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
-    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md
-    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
-    - planning/domain/aggregates/connection-request.md
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-send-version.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
     - Domain Methods / Commands
     - Invariants
   Internal dependencies:
@@ -570,17 +570,17 @@ Forbidden transitions:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
-    - planning/domain/value-objects/agreement-proposal-version.md
-    - planning/domain/value-objects/agreement-proposal-author.md
-    - planning/domain/value-objects/agreement-document-ref.md
-    - planning/domain/value-objects/proposal-comment.md
-    - planning/domain/value-objects/final-refusal-reason.md
-    - planning/domain/aggregates/connection-request.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-proposal-version.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-proposal-author.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-document-ref.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/proposal-comment.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/final-refusal-reason.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
     - Invariants
     - Lifecycle / State Machine
     - Domain Methods / Commands
@@ -610,19 +610,19 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/domain/value-object-drafting-workflow.md
-    - planning/domain/value-object-draft-template.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/value-object-draft-template.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/domain/value-objects/agreement-proposal-version.md
-    - planning/domain/value-objects/agreement-proposal-author.md
-    - planning/domain/value-objects/agreement-document-ref.md
-    - planning/domain/value-objects/proposal-comment.md
-    - planning/domain/value-objects/final-refusal-reason.md
-    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-proposal-version.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-proposal-author.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-document-ref.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/proposal-comment.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/final-refusal-reason.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md @ Doc version: v0.1.0
   Internal dependencies:
     - Owned State
     - Domain Methods / Commands
@@ -644,16 +644,16 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/domain/domain-discovery-workflow.md
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/domain-discovery-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/domain/aggregates/connection-request.md
-    - planning/domain/aggregates/account.md
-    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md
-    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/account.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-13D-employee-agreement-proposal-create-response.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md @ Doc version: v0.1.0
     - Aggregate Boundary
     - Domain Methods / Commands
   Internal dependencies:
@@ -689,11 +689,11 @@ Application coordination needed:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
   Content:
-    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md
-    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md
+    - planning/diagrams/scenario-behavior-items/SC-13D-employee-agreement-proposal-create-response-behavior-items.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/L2-employee-review-agreement-behavior-items.md @ Doc version: v0.1.0
     - Domain Methods / Commands
     - Invariants
     - Lifecycle / State Machine
@@ -743,8 +743,8 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/domain-modeling-principles.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
   Content:
     - Owned State
     - Value Objects Used
@@ -771,15 +771,15 @@ Only where needed:
 ```text
 Sources:
   Format/process:
-    - planning/domain/domain-responsibility-map.md
-    - planning/domain/domain-modeling-principles.md
-    - planning/domain/aggregate-drafting-workflow.md
+    - planning/domain/domain-responsibility-map.md @ Doc version: v0.1.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
   Content:
     - Aggregate Boundary
     - Domain Methods / Commands
     - Cross-Aggregate Relations
     - Behavior Coverage
-    - planning/domain/scenario-to-aggregate-map.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
   Internal dependencies:
     - Aggregate Boundary
     - Cross-Aggregate Relations
@@ -813,19 +813,19 @@ Testing:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
   Content:
     - Source Inputs
     - Behavior Coverage
     - Cross-Layer Placement Notes
-    - planning/domain/value-objects/agreement-proposal-version.md
-    - planning/domain/value-objects/agreement-proposal-author.md
-    - planning/domain/value-objects/agreement-document-ref.md
-    - planning/domain/value-objects/proposal-comment.md
-    - planning/domain/value-objects/final-refusal-reason.md
-    - planning/domain/aggregates/connection-request.md
-    - planning/domain/aggregates/account.md
+    - planning/domain/value-objects/agreement-proposal-version.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-proposal-author.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-document-ref.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/proposal-comment.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/final-refusal-reason.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/aggregates/account.md @ Doc version: v0.1.0
   Internal dependencies:
     - Source Inputs
     - Behavior Coverage
@@ -858,13 +858,13 @@ Deferred:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/source-cascade-sync-workflow.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/source-cascade-sync-workflow.md @ version not confirmed in this batch
   Content:
     - changed sections in this AgreementProposalExchange aggregate draft
-    - planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md
-    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md
+    - planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ version not confirmed in this batch
   Internal dependencies:
     - all changed sections in this draft
   Not checked:
