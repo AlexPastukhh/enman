@@ -1494,3 +1494,34 @@ Follow-ups:
 Notes:
   `синх карта` output is target-state oriented: the brief shows the expected synchronized map state after applying the archive, not the stale pre-apply file state.
 
+### 2026-06-02 - Deferred Generic Action Overview and selected TM-0 command projection planning
+
+Date:
+  2026-06-02
+Action:
+  Deferred Generic Action Overview and selected TM-0 Tampermonkey command projection planning as the active next slice.
+Type:
+  workstream decision / Tampermonkey planning
+Status:
+  applied
+Why:
+  `План файл-обновление` already covers file/docs/code/archive updates, including code-file updates, so Generic Action Overview is not blocking current file-update work. The next useful step is to plan how Tampermonkey will project existing use-case-map commands into editable prompts with key reminders.
+Changed files:
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/workstreams/tampermonkey-command-projection-plan.md
+  - planning/documentation-action-log.md
+Updates:
+  - Marked Generic Action Overview as deferred / not started.
+  - Marked SL-6 / TM-0 as active planning work.
+  - Added a Tampermonkey command projection planning file with source-of-truth rules, envelope shape, MVP command groups, key reminder profiles, storage decision and UI boundaries.
+Not changed:
+  - No Generic Action Overview implementation added.
+  - No Tampermonkey userscript added.
+  - No archive layout/default changed.
+  - No use-case command semantics changed.
+  - No domain/scenario/slice/source docs edited.
+Follow-ups:
+  Confirm MVP-1 command profiles, then plan the first userscript implementation batch.
+Notes:
+  Tampermonkey profiles are projections from `planning/planning-use-case-map.md` and linked owner workflows. They must not become source of truth.
+
