@@ -209,6 +209,73 @@ Status rules:
 
 A map update is incomplete if `Current Snapshot`, roadmap table, scenario statuses and detailed slice statuses disagree about what is current, done, next or planned.
 
+## 5A.2 Goal Map Sync Archive Command / `синх карта`
+
+`синх карта` is a combined Goal Map maintenance command.
+
+Command aliases:
+
+```text
+синх карта
+синхронизируй карту
+синх карта архив
+карта синх архив
+синхронизируй карту и дай архив
+sync goal map
+sync map archive
+```
+
+Meaning:
+
+```text
+1. Read the relevant living Goal Map.
+2. Check whether Current Snapshot, roadmap, scenario statuses, detailed slice statuses, decisions and next action match the current state.
+3. Identify stale or inconsistent map records.
+4. Prepare a narrow replacement archive that synchronizes the map and any command/example/index records needed for this command.
+5. In the same chat response, show a compact Goal Map Brief in the target synchronized state.
+6. In the same chat response, include the archive link and ready-to-run apply/diff commands.
+```
+
+Output order:
+
+```text
+1. Goal Map Brief / Карта цели
+   Mode: synced target state / целевое состояние после применения архива
+
+2. Archive
+   Link to the replacement archive.
+
+3. Apply commands
+   One ready-to-run PowerShell block that applies the archive, stages expected files, runs diff checks, saves the full diff to file and copies it to clipboard.
+
+4. План файл-обновление
+   Status: archive created
+```
+
+Target-state rule:
+
+```text
+The brief shown in a `синх карта` response must describe the target synchronized state after the archive is applied, even though the repository file is still old until the user applies the archive.
+```
+
+Boundaries:
+
+```text
+- Do not start the next functional slice.
+- Do not implement Generic Action Overview.
+- Do not write Tampermonkey userscript code.
+- Do not change replacement archive layout/default rules.
+- Keep the archive narrow to the living map, command route/example/index and action log required for the sync command.
+- Do not commit or push; the user must apply the archive and paste the diff for review.
+```
+
+Reusable example:
+
+```text
+planning/documentation/examples/GOAL-MAP-SYNC-COMMAND-EXAMPLE.md
+```
+
+
 ## 5B. Roadmap And Evidence Rules
 
 Living maps should use a roadmap immediately after `Current Snapshot` when the goal has multiple phases or work directions.

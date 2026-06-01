@@ -1460,3 +1460,37 @@ Follow-ups:
 Notes:
   `План файл-обновление` is file/update-specific. Future generic action summaries should use a separate command/output family.
 
+### 2026-06-02 - Added Goal Map Sync command and synchronized living map statuses
+
+Date:
+  2026-06-02
+Action:
+  Added the combined Goal Map Sync command `синх карта` and synchronized the command-system/Tampermonkey living Goal Map.
+Type:
+  map-maintenance command / living map synchronization
+Status:
+  applied
+Why:
+  The Current Snapshot and roadmap already showed decision-pending state after `План файл-обновление`, but detailed scenario/slice/decision sections still contained stale statuses such as old `planned` or `partially implemented` rows.
+Changed files:
+  - planning/goal-map-principles-workflow-template.md
+  - planning/planning-use-case-map.md
+  - planning/documentation/examples/README.md
+  - planning/documentation/examples/GOAL-MAP-SYNC-COMMAND-EXAMPLE.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added `синх карта`, `синхронизируй карту`, `синх карта архив`, `карта синх архив`, `синхронизируй карту и дай архив`, `sync goal map` and `sync map archive` as Goal Map synchronization command aliases.
+  - Defined `синх карта` as a combined command: inspect map consistency, prepare a narrow map-sync replacement archive, show synced target-state Goal Map Brief and provide apply/diff commands.
+  - Added a reusable command example for synced brief + archive + commands output.
+  - Synchronized detailed scenario/slice/status/decision rows in the active command-system/Tampermonkey living map.
+Not changed:
+  - No Generic Action Overview implementation added.
+  - No Tampermonkey userscript added.
+  - No archive layout/default changed.
+  - No domain/scenario/slice/source docs edited.
+Follow-ups:
+  After applying and reviewing this sync, choose the next slice: F7-CMD-4 Generic Action Overview or TM-0 Tampermonkey command projection planning.
+Notes:
+  `синх карта` output is target-state oriented: the brief shows the expected synchronized map state after applying the archive, not the stale pre-apply file state.
+
