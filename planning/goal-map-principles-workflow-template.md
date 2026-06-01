@@ -177,6 +177,38 @@ If the user says `планируй`, `следующий шаг`, `что дал
 
 If the map is stale or incomplete, say that explicitly and update it in the same batch when the user asks to change repo files. If no edit/package permission exists, state what map update is needed.
 
+## 5A.1 Status Synchronization Rule
+
+A living Goal Map must not leave stale `NOW` / active markers after a meaningful batch changes the workstream state.
+
+After every meaningful batch, decision, route change, scenario/slice status change, roadmap evidence change or next-action change, synchronize:
+
+```text
+1. Current Snapshot
+2. Current focus
+3. Active slice
+4. Next action
+5. Latest completed
+6. Roadmap phase statuses
+7. Scenario statuses
+8. Detailed slice statuses
+9. Visible evidence
+10. Open decisions / decision-point statuses
+```
+
+Status rules:
+
+```text
+- Use `▶ NOW` only for the actually active slice/work direction.
+- Do not leave completed slices as `▶ NOW`.
+- If no slice is active and the next step is a choice, mark current focus as a decision point / next-slice choice.
+- If phase status and slice status differ, make that explicit; do not copy phase status into the compact slice table.
+- When producing `Goal Map Brief`, use detailed slice statuses, not roadmap phase statuses.
+- If status synchronization is incomplete, say the map is stale and update it in the same approved file batch.
+```
+
+A map update is incomplete if `Current Snapshot`, roadmap table, scenario statuses and detailed slice statuses disagree about what is current, done, next or planned.
+
 ## 5B. Roadmap And Evidence Rules
 
 Living maps should use a roadmap immediately after `Current Snapshot` when the goal has multiple phases or work directions.
@@ -334,9 +366,10 @@ Rules:
 ```text
 - Current slice is expanded.
 - Other slices are status-only.
+- Use detailed slice statuses, not roadmap phase statuses.
 - Do not use `<details>` / collapsible blocks; they are unstable in chat output.
 - Do not copy the full living map into a normal answer.
-- If the living map is stale or was not checked, say so.
+- If the living map is stale, internally inconsistent or was not checked, say so.
 - If the response completes work or changes next action, state whether the living map needs an update.
 ```
 

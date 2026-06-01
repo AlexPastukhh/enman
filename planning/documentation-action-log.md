@@ -1390,3 +1390,36 @@ Follow-ups:
 Notes:
   `крит` does not grant edit/package/commit permission and should not become disagreement for its own sake.
 
+### 2026-06-02 - Synchronized Goal Map statuses after critical review command
+
+Date:
+  2026-06-02
+Action:
+  Added Goal Map status synchronization rules and cleaned up the active command-system/Tampermonkey living map statuses.
+Type:
+  goal-map workflow / living map status cleanup
+Status:
+  applied
+Why:
+  After `F7-CMD-2`, the Current Snapshot said SL-4 was completed, but earlier roadmap phases and detailed slice records could still be read as `NOW` or in progress. This made compact Goal Map Brief output ambiguous.
+Changed files:
+  - planning/goal-map-principles-workflow-template.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added a status synchronization checklist for living Goal Maps.
+  - Clarified that `▶ NOW` should be used only for the actually active slice/work direction.
+  - Clarified that Goal Map Brief should use detailed slice statuses, not roadmap phase statuses.
+  - Normalized command-system/Tampermonkey map statuses after SL-4 completion.
+  - Marked the current focus as a next-slice decision instead of leaving completed work as active.
+Not changed:
+  - No new command semantics added.
+  - No examples added or changed.
+  - No domain/scenario/slice/source docs edited.
+  - No Tampermonkey MVP planning started.
+  - No Generic Action Overview implementation started.
+Follow-ups:
+  Choose the next workstream slice: F7-CMD-4 Generic Action Overview or TM-0 Tampermonkey MVP planning.
+Notes:
+  This cleanup keeps the living map consistent with the current planning state before selecting the next slice.
+
