@@ -29,7 +29,7 @@ A reviewable answer should make clear:
 - what should happen next.
 ```
 
-Response-level commands such as `level 2`, `recheck`, `clarify`, `keep prev`, `no ch`, `без изм`, `use archive`, `арх`, `б из арх`, `давай драфт`, `обнови`, `обс`, `кп`, `саммари`, `кц`, `карта цели кратко`, `goal map brief`, `итог` and `отличия драфта` change how the answer should be produced, checked or continued. They do not grant permission to edit files or change repository state.
+Response-level commands such as `level 2`, `recheck`, `clarify`, `keep prev`, `no ch`, `без изм`, `use archive`, `арх`, `б из арх`, `давай драфт`, `обнови`, `обс`, `кп`, `саммари`, `кц`, `карта цели кратко`, `goal map brief`, `крит`, `критически`, `critical review`, `итог` and `отличия драфта` change how the answer should be produced, checked or continued. They do not grant permission to edit files or change repository state.
 
 For action/use-case traces, active context, traversal depth and read source mode, use:
 
@@ -341,6 +341,100 @@ Example:
 ```text
 planning/documentation/examples/GOAL-MAP-BRIEF-RESPONSE-EXAMPLE.md
 ```
+
+## 5B. Critical Review / `крит`
+
+`крит` is a response-level modifier command for honest evaluation.
+
+Command aliases:
+
+```text
+крит
+критически
+критически оцени
+проверь критически
+оцени честно
+не соглашайся автоматически
+за и против
+адвокат дьявола
+honest review
+critical review
+```
+
+Use this command when:
+
+```text
+- the user asks for critical evaluation;
+- the user asks the assistant not to agree automatically;
+- the user asks whether a plan, decision, draft, route or answer is actually good;
+- the user combines `крит` with another use-case command.
+```
+
+`крит` does not replace the underlying task route. When combined with another command, keep the underlying route and apply critical-review answer mode.
+
+Examples:
+
+```text
+крит план
+  -> planning route + critical review mode
+
+крит архив
+  -> archive/package route or archive plan review + critical review mode;
+     do not create a package unless the user also clearly asks for package output
+
+крит кц
+  -> Goal Map Brief route + critical review of current workstream direction/status
+
+крит этот слайс
+  -> relevant slice/domain/scenario route + critical review mode
+```
+
+If the target is obvious from the conversation, review that target. If the target is not obvious, ask what should be reviewed.
+
+Default output shape:
+
+```text
+Target
+  What is being reviewed.
+
+Verdict
+  Honest conclusion first when helpful.
+
+Strong points
+  What is good, likely correct or worth preserving.
+
+Weak points / risks
+  What can fail, is underspecified, misleading, brittle or too broad.
+
+Hidden assumptions
+  What must be true for the plan/claim to work.
+
+Alternatives / adjustments
+  Better route, narrower batch, safer wording or trade-off if one exists.
+
+Confidence / checks
+  Confidence level, checked/not checked sources and what would change the verdict.
+```
+
+Rules:
+
+```text
+- Do not disagree just to disagree.
+- Do not become hostile or performative.
+- Do not invent evidence.
+- Do not hide uncertainty.
+- Do not override explicit user constraints silently.
+- Do not reopen accepted decisions unless there is a clear reason to re-evaluate them.
+- Do not treat `крит` as permission to edit files, create archives, commit or push.
+- If source checks are needed for a fair verdict, say what was checked and what was not checked.
+```
+
+Reusable example:
+
+```text
+planning/documentation/examples/CRITICAL-REVIEW-COMMAND-EXAMPLE.md
+```
+
 
 ## 6. Level 3 — Review / Handoff Answer
 

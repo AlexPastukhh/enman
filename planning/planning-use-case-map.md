@@ -324,7 +324,15 @@ The canonical prior-discussion recheck command is:
 
 `обс` means context/discussion recheck. Its semantics are owned by `reviewable-agent-output-and-commands-workflow.md`.
 
-Response block commands such as `кп`, `саммари`, `кц`, `карта цели кратко`, `goal map brief`, `итог` and `отличия драфта` are routed in this file, but their behavior is owned by `reviewable-agent-output-and-commands-workflow.md`.
+Response block and response modifier commands such as `кп`, `саммари`, `кц`, `карта цели кратко`, `goal map brief`, `крит`, `критически`, `critical review`, `итог` and `отличия драфта` are routed in this file, but their behavior is owned by `reviewable-agent-output-and-commands-workflow.md`.
+
+Critical review / `крит` command behavior is owned by:
+
+```text
+planning/documentation/reviewable-agent-output-and-commands-workflow.md
+```
+
+`крит` is a modifier command. When combined with another use-case command, keep the underlying route and apply critical-review answer mode. The command does not grant edit, archive/package, commit or push permission.
 
 Goal Map / `Карта цели` commands are owned by:
 
@@ -369,6 +377,7 @@ This root map remains the concrete Enman route table.
 | `планируй`, `распланируй`, `plan` | Produce a concrete plan now. If the request belongs to an active long-running workstream, use the relevant living Goal Map to choose the next slice/step and preserve current-state continuity. | Ask for target/scope if no active context exists. | Reuse / targeted; full if goal/scope changed. | Conversation plus living Goal Map and relevant repo docs when planning depends on project state. | Concrete plan with current Goal Map reference, chosen slice/step, batch boundary, expected evidence and next action. |
 | `карта процесса`, `карта цели`, `план процесса`, `где мы`, `прогресс`, `статус цели`, `goal process`, `goal map` | Show/update the Goal Map for the active or named long-running goal. | Ask for the goal if no active/named goal exists. | Reuse / targeted; full if goal/scope changed. | Conversation plus relevant docs/sources when the map depends on repo state. | Goal Map / Карта цели: final picture, target scenarios, process slices, acceptance criteria, current state, decision points, current focus and next action. |
 | `кц`, `карта цели кратко`, `goal map brief`, `выведи краткую карту цели` | Show compact Goal Map Brief for the active or named long-running goal. | Ask for the goal if no active/named goal exists. | Reuse / targeted; full only if the living map is missing/stale or scope changed. | Conversation plus relevant living Goal Map; repo sources only when current map state depends on repo evidence. | Goal Map Brief after `Краткое саммари`: current goal, current slice, Done/Now/Next/After for the current slice, and compact status table for other slices. |
+| `крит`, `критически`, `критически оцени`, `проверь критически`, `оцени честно`, `не соглашайся автоматически`, `за и против`, `critical review` | Apply critical-review answer mode to the current target or underlying use-case route. | Ask what to review if the target is unclear. | Reuse / targeted; full if a fair verdict needs source checks. | Conversation plus the relevant sources for the underlying task when evidence matters. | Critical review: target, verdict, strong points, weak points/risks, hidden assumptions, alternatives/adjustments, confidence/checks. |
 | `без саммари` | Suppress `Краткое саммари`. | Apply to current answer if target is obvious. | No traversal / reuse. | Conversation. | Answer without contextual summary. |
 | `итог` | Add or update file/change-oriented `Итог` when update context exists. | If no file/change/update context exists, explain that `Итог` is not applicable and offer `Краткое саммари`. | Reuse / targeted. | Conversation plus target files/diff/archive when needed. | File Update Overview / `Итог`; during planning it is the rolling nearest-batch plan. |
 | `без итога` | Suppress `Итог`. | Apply to current answer if target is obvious. | No traversal / reuse. | Conversation. | Answer without File Update Overview. |
@@ -396,6 +405,7 @@ Examples demonstrate valid execution only. They do not own command semantics, ro
 | Archive source vs output package | `арх`, `из архива`, `use archive`, `давай архив`, `собери архив`, `replacement package` | `planning/documentation/examples/ARCHIVE-SOURCE-VS-OUTPUT-PACKAGE-EXAMPLE.md` | Read when archive wording may be confused between read-source mode and package-output mode. | Owner output rules stay in `planning/replacement-file-generation-guide.md` and this root map. |
 | Goal Map / progress navigation | `карта процесса`, `карта цели`, `план процесса`, `где мы`, `прогресс`, `статус цели`, `goal map` | `planning/goal-map-example.md` | Read when the chat needs to show or update the Goal Map shape, not just report a short status. | Owner rules stay in `planning/goal-map-principles-workflow-template.md`; active state lives in the relevant workstream map. |
 | Goal Map Brief / compact progress projection | `кц`, `карта цели кратко`, `goal map brief`, `выведи краткую карту цели` | `planning/documentation/examples/GOAL-MAP-BRIEF-RESPONSE-EXAMPLE.md` | Read when the chat needs the compact in-answer Goal Map projection rather than the full living map. | Owner rules stay in `planning/goal-map-principles-workflow-template.md`; response placement stays in `planning/documentation/reviewable-agent-output-and-commands-workflow.md`. |
+| Critical Review command | `крит`, `критически`, `критически оцени`, `проверь критически`, `не соглашайся автоматически`, `critical review` | `planning/documentation/examples/CRITICAL-REVIEW-COMMAND-EXAMPLE.md` | Read when the chat needs to apply honest critical evaluation to a plan, decision, draft, answer or route. | Owner rules stay in `planning/documentation/reviewable-agent-output-and-commands-workflow.md`; this is a response modifier, not edit/package permission. |
 | Enman scenario/domain/slice route families | `сделай сценарий`, `DATA`, `разбери domain draft`, `задрафти slice`, `server slice`, `client sidecar`, `разбери тестирование` | `planning/documentation/examples/project-specific/enman/SCENARIO-DOMAIN-SLICE-COMMAND-ROUTING-EXAMPLE.md` | Read when updating or reviewing Enman scenario/domain/slice command routes. | Project-specific demonstration only; route logic remains in this root map and reusable setup guidance remains in the profile field kit. |
 
 ## 10. Primary Use Case Table

@@ -1353,3 +1353,40 @@ Follow-ups:
   Use the new Goal Map Brief output rule in future Level 2/3 planning/status/continuation answers for active long-running workstreams, then continue with F7-CMD-2: add the critical-review command `крит`.
 Notes:
   The brief is a response projection of the living map. It does not replace the durable living Goal Map and does not grant edit/package/commit permission.
+
+### 2026-06-02 - Added critical review command
+
+Date:
+  2026-06-02
+Action:
+  Added the response-level critical review command `крит`.
+Type:
+  response command / critical review modifier
+Status:
+  applied
+Why:
+  The command-system workstream needed an explicit command that makes the assistant evaluate a plan, decision, answer, draft or route honestly instead of automatically agreeing.
+Changed files:
+  - planning/documentation/reviewable-agent-output-and-commands-workflow.md
+  - planning/planning-use-case-map.md
+  - planning/documentation/examples/README.md
+  - planning/documentation/examples/CRITICAL-REVIEW-COMMAND-EXAMPLE.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added `крит`, `критически`, `критически оцени`, `проверь критически`, `оцени честно`, `не соглашайся автоматически`, `за и против` and `critical review` as critical-review command aliases.
+  - Defined `крит` as a response-level modifier command that keeps the underlying task route and applies honest critical-review answer mode.
+  - Added output shape: target, verdict, strong points, weak points/risks, hidden assumptions, alternatives/adjustments and confidence/checks.
+  - Added reusable command example for expected behavior and boundaries.
+  - Updated the command-system/Tampermonkey living Goal Map to mark SL-4 as done / validating and move next-action choice to Generic Action Overview vs Tampermonkey MVP planning.
+Not changed:
+  - No project-specific Enman scenario/domain/slice command-routing example updated.
+  - No Goal Map Brief example changed.
+  - No domain/scenario/slice/source docs edited.
+  - No archive/output package command changed.
+  - No files renamed.
+Follow-ups:
+  Choose the next workstream slice: F7-CMD-4 Generic Action Overview or TM-0 Tampermonkey MVP planning.
+Notes:
+  `крит` does not grant edit/package/commit permission and should not become disagreement for its own sake.
+

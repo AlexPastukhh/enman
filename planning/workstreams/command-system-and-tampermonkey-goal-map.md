@@ -21,17 +21,17 @@ planning/documentation/examples/README.md
 ## 0. Current Snapshot
 
 Last updated:
-  2026-05-31 / after F7-CMD-1B reusable command example routing
+  2026-06-02 / after F7-CMD-2 critical review command
 
 Current goal:
   Build a transferable command system and Tampermonkey prompt helper for long-running chats across projects.
 
 Current focus:
-  SL-4 — Critical Review Command is the recommended next slice after routing reusable command examples.
+  SL-4 — Critical Review Command completed; choose the next slice from Generic Action Overview or Tampermonkey MVP planning.
 
 Active slice:
   SL-4 — Critical Review Command
-    Status: next recommended / not started
+    Status: done / validating
 
 Already available:
   - Reusable command examples exist.
@@ -42,6 +42,8 @@ Already available:
   - Living map has a Current Snapshot.
   - Tampermonkey helper requirement includes execution reminders, key boundaries and command-specific details.
   - Roadmap evidence format now uses status labels and `<details>` blocks instead of markdown task-list checkboxes.
+  - Goal Map Brief response output rule exists.
+  - Critical review command `крит` exists with response workflow semantics, root route and reusable command example.
 
 Latest completed:
   - Added root Goal Map owner/example.
@@ -50,14 +52,15 @@ Latest completed:
   - Renamed goal-map files to match compound starter artifact naming.
   - Added roadmap/evidence rules so completed work can show visible proof and explanatory details.
   - Routed reusable command examples from root use-case map and added Enman scenario/domain/slice command-routing example.
+  - Added Goal Map Brief response output rule.
+  - Added critical review command `крит` with route and reusable example.
 
 Next action:
   Choose next slice:
-    A. F7-CMD-2 — add critical-thinking command `крит`.
+    A. F7-CMD-4 — design Generic Action Overview.
     B. TM-0 — plan Tampermonkey MVP.
-    C. F7-CMD-4 — design Generic Action Overview.
 Recommended next action:
-  F7-CMD-2, because the user explicitly needs a command that makes the assistant evaluate honestly instead of automatically agreeing.
+  Decide between Generic Action Overview and Tampermonkey MVP planning, because `крит` is now available and the next priority depends on whether reviewable non-file action summaries or guided command input should come first.
 
 Open decisions:
   - DEC-1: next slice after living map readability/evidence update.
@@ -98,7 +101,7 @@ A completed item must remain readable. Do not use markdown task-list checkboxes 
 |---|---|---|---|---|
 | Phase 1 — Command foundation | Short commands work safely and consistently across projects. | SL-1 — Reusable Command Semantics Foundation; SL-2 — Root Command Routing | User command can be traced to owner workflow/example/boundary without hidden edit/package/commit permission. | ▶ NOW |
 | Phase 2 — Goal navigation | User can open repo state and understand current goal/progress/path. | SL-3 — Goal Map Format And Living Workstream | Living map has snapshot, roadmap, readable scenarios/slices, next action, open decisions and visible evidence. | ▶ NOW |
-| Phase 3 — Critical thinking | User can ask for honest evaluation instead of automatic agreement. | SL-4 — Critical Review Command | `крит` command has semantics, aliases, example, route and honest-verdict behavior. | ⏭ NEXT |
+| Phase 3 — Critical thinking | User can ask for honest evaluation instead of automatic agreement. | SL-4 — Critical Review Command | `крит` command has semantics, aliases, example, route and honest-verdict behavior. | ✅ DONE |
 | Phase 4 — Generic action outcomes | Meaningful non-file actions become reviewable. | SL-5 — Generic Action Overview | Non-file action can be summarized structurally without weakening file-specific `Итог`. | ⬜ TODO |
 | Phase 5 — Guided command input | User can issue short commands without long chat forgetting execution details. | SL-6 — Tampermonkey Guided Prompt Helper | Expansion includes command label, execution reminders, key boundaries and command-specific details. | ⬜ TODO |
 
@@ -599,7 +602,7 @@ Each slice must show:
 | Goal Map owner/example | done / validating | Root owner and root example are added; this file is the active living map. |
 | Use-case routing | done / validating | Goal Map and reusable command examples are routed from the root map; keep future command examples linked when they become current. |
 | Roadmap/evidence readability | done / validating | DONE items include visible evidence plus expandable details; validate readability on the next planning/update pass. |
-| Critical-thinking command | planned | Need `крит` semantics, example and route. |
+| Critical-thinking command | done / validating | `крит` has response workflow semantics, root route and reusable command example. |
 | Generic Action Overview | planned | Need generic non-file overview without weakening file-specific `Итог`. |
 | Tampermonkey MVP | planned | Need command palette, expansion model, preview/edit and insert behavior. |
 
@@ -634,7 +637,7 @@ Acceptance:
   - Chat gives honest verdict.
 
 Status:
-  planned.
+  done / validating.
 
 ### SC-3 — Current Goal Map Is Openable And Useful
 
@@ -704,7 +707,7 @@ Steps:
   - ✅ DONE — Clarify Level 2 / Key points / `Краткое саммари`.
   - ✅ DONE — Clarify `планируй` as immediate planning.
   - ✅ DONE — Add reusable command examples.
-  - ⏭ NEXT — Add critical-thinking command `крит`.
+  - ✅ DONE — Add critical-thinking command `крит`.
   - ⬜ TODO — Add generic action overview command.
 
 Acceptance criteria:
@@ -801,28 +804,46 @@ Work direction:
   Add command behavior for honest critique instead of automatic agreement.
 
 Artifacts / actions:
-  - response workflow command section
-  - critical-thinking example
-  - root use-case route
+  - `planning/documentation/reviewable-agent-output-and-commands-workflow.md`
+  - `planning/planning-use-case-map.md`
+  - `planning/documentation/examples/CRITICAL-REVIEW-COMMAND-EXAMPLE.md`
+  - `planning/documentation/examples/README.md`
+  - `planning/workstreams/command-system-and-tampermonkey-goal-map.md`
+  - `planning/documentation-action-log.md`
 
 Steps:
-  - ⏭ NEXT — Define canonical command `крит`.
-  - ⬜ TODO — Define aliases: `критически`, `за и против`, `адвокат дьявола`, `оцени честно`, `не соглашайся автоматически`.
-  - ⬜ TODO — Define expected behavior and does-not-mean boundary.
-  - ⬜ TODO — Add reusable valid example.
-  - ⬜ TODO — Route command from use-case map.
+  - ✅ DONE — Define canonical command `крит`.
+  - ✅ DONE — Define aliases: `критически`, `критически оцени`, `проверь критически`, `оцени честно`, `не соглашайся автоматически`, `за и против`, `critical review`.
+  - ✅ DONE — Define expected behavior and does-not-mean boundary.
+  - ✅ DONE — Add reusable valid example.
+  - ✅ DONE — Route command from use-case map.
+  - ✅ DONE — Update living Goal Map state and evidence.
+
+Visible evidence:
+  - Changed:
+    - `planning/documentation/reviewable-agent-output-and-commands-workflow.md`
+    - `planning/planning-use-case-map.md`
+    - `planning/documentation/examples/README.md`
+    - `planning/workstreams/command-system-and-tampermonkey-goal-map.md`
+  - Added:
+    - `planning/documentation/examples/CRITICAL-REVIEW-COMMAND-EXAMPLE.md`
+  - Recorded:
+    - `planning/documentation-action-log.md`
 
 Acceptance criteria:
   - Chat evaluates user proposal as hypothesis, not accepted truth.
   - Chat states strengths, weaknesses, hidden assumptions, risks and alternatives.
   - Chat gives honest verdict.
+  - Chat does not disagree just to disagree.
   - Chat does not edit files, create archives or reopen accepted decisions unless asked.
 
 Verification:
   - Ask `крит` on a real plan and check whether the answer challenges weak assumptions.
+  - Check that `planning/planning-use-case-map.md` routes `крит` as a response modifier command.
+  - Check that the reusable example demonstrates expected behavior and boundaries.
 
 Status:
-  planned.
+  done / validating.
 
 ### SL-5 — Generic Action Overview / `Итог действия`
 
