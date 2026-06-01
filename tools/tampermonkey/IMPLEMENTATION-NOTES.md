@@ -63,6 +63,7 @@ tools/tampermonkey/chat-command-palette.user.js
 - The widget opens and closes by clicking anywhere on its header.
 - The widget can be dragged by its header.
 - Header click and drag are separated by a small movement threshold.
+- First userscript skeleton exists as `tools/tampermonkey/chat-command-palette.user.js`.
 ```
 
 ## 4. Implementation Principles
@@ -586,7 +587,56 @@ Record checked external sources here before implementing behavior that depends o
 - How should implementation detect the active ChatGPT input reliably?
 ```
 
-## 12. Future Split Candidates
+## 12. First Userscript Skeleton Notes
+
+File:
+
+```text
+tools/tampermonkey/chat-command-palette.user.js
+```
+
+Implemented in the first skeleton:
+
+```text
+- standard userscript metadata header;
+- ChatGPT page match rules;
+- inline command profile data;
+- ENMAN floating widget;
+- header click-to-open / click-to-close;
+- header drag-to-move with movement threshold;
+- prioritized MVP-1 / MVP-2 command lists;
+- scrollable command list area;
+- command row click-to-insert;
+- no auto-send;
+- safe composer-not-found message.
+```
+
+Explicitly not implemented yet:
+
+```text
+- search;
+- preview/edit inside the helper;
+- external profile loading;
+- persistent widget position;
+- keyboard shortcut;
+- source freshness checks.
+```
+
+Implementation caveat:
+
+```text
+Composer detection is a first-skeleton heuristic. If ChatGPT changes DOM structure or the heuristic chooses the wrong editable element, update `findComposer()` and record the fix here.
+```
+
+External sources checked for this skeleton:
+
+```text
+- Tampermonkey documentation: userscript header metadata, `@match`, `@grant`, `@run-at`.
+- MDN: `dispatchEvent()` behavior for manually dispatched input/change events.
+```
+
+
+## 13. Future Split Candidates
 
 When this file grows, split into:
 

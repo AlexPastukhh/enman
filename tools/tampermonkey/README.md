@@ -74,28 +74,47 @@ MVP helper behavior:
 
 ```text
 current:
-  implementation docs infrastructure
+  first userscript skeleton
+
+implemented:
+  list-only draggable widget
+  prioritized command lists
+  click-to-insert documented command bodies
+  no auto-send
 
 next:
-  convert documented command bodies into userscript profile data
+  manual browser test
+  improve composer detection if needed
 
 later:
-  build command palette UI
-  add preview/edit before insert
-  insert prompt into ChatGPT input
-  manual browser test
+  search
+  preview/edit inside helper
+  optional profile loading
 ```
 
-## 6. Manual Test Checklist Placeholder
+## 6. Installing The First Skeleton
+
+Use Tampermonkey's dashboard to create a new userscript and paste the contents of:
 
 ```text
-- Command palette opens.
+tools/tampermonkey/chat-command-palette.user.js
+```
+
+The script uses a standard userscript header with `@match` entries for ChatGPT pages and `@run-at document-idle`.
+
+## 7. Manual Test Checklist Placeholder
+
+```text
+- ENMAN widget appears on ChatGPT page.
+- Header click opens the widget.
+- Header click closes the widget.
+- Header drag moves the widget without toggling.
+- Command list scrolls.
 - MVP-1 command can be selected.
-- Preview shows compact command body.
-- User target/context can be edited.
-- Prompt inserts into ChatGPT input.
+- Command row click inserts compact command body into ChatGPT composer.
 - Prompt is not auto-sent.
 - Inserted body includes source_of_truth.
 - Inserted body includes route_read_rule.
 - Inserted body includes compact key_reminders.
+- Composer-not-found error is safe and visible.
 ```

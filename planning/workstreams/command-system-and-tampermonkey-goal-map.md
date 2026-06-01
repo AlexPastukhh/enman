@@ -21,13 +21,13 @@ planning/documentation/examples/README.md
 ## 0. Current Snapshot
 
 Last updated:
-  2026-06-02 / after TM-2 list-only draggable widget visual plan
+  2026-06-02 / after TM-3 first userscript skeleton
 
 Current goal:
   Build a transferable command system and Tampermonkey prompt helper for long-running chats across projects.
 
 Current focus:
-  TM-2 — Tampermonkey list-only draggable widget visual plan.
+  TM-3 — Tampermonkey first userscript skeleton.
 
 Active slice:
   SL-6 — Tampermonkey Guided Prompt Helper
@@ -52,6 +52,7 @@ Already available:
   - Tampermonkey implementation docs entrypoint exists.
   - Tampermonkey implementation notes file exists.
   - Tampermonkey list-only draggable widget visual behavior is planned.
+  - Tampermonkey first userscript skeleton exists.
 
 Latest completed:
   - Added root Goal Map owner/example.
@@ -69,12 +70,13 @@ Latest completed:
   - Documented Tampermonkey inserted command bodies and route-read rule.
   - Added Tampermonkey implementation docs infrastructure and implementation notes.
   - Planned list-only draggable Tampermonkey widget visual behavior.
+  - Added first Tampermonkey userscript skeleton.
 
 Next action:
-  Continue TM-2:
-    implement the list-only draggable widget skeleton with inline command profile data.
+  Continue TM-3:
+    manually test the first userscript skeleton in browser and fix composer detection if needed.
 Recommended next action:
-  Apply and review this visual-plan archive, then create the first userscript skeleton.
+  Apply and review this first-script archive, then install the userscript in Tampermonkey for manual browser testing.
 
 Open decisions:
   - DEC-1: resolved — Generic Action Overview deferred; TM-0 selected.
@@ -929,10 +931,10 @@ Steps:
   - ✅ DONE — Document inserted command bodies for MVP-1 and MVP-2.
   - ✅ DONE — Create implementation docs entrypoint and implementation notes.
   - ✅ DONE — Plan list-only draggable widget visual behavior.
-  - ⬜ TODO — Convert documented command bodies into script profile data.
-  - ⬜ TODO — Build list-only draggable command widget UI.
-  - ⬜ TODO — Add preview/edit before insert.
-  - ⬜ TODO — Insert expanded prompt into ChatGPT input.
+  - ✅ DONE — Convert documented command bodies into script profile data.
+  - ✅ DONE — Build list-only draggable command widget UI.
+  - ⬜ DEFERRED — Add preview/edit before insert.
+  - ✅ DONE — Insert expanded prompt into ChatGPT input.
   - ⬜ TODO — Manual browser test.
   - ⬜ TODO — Decide whether project profile config is needed after MVP.
 
@@ -964,12 +966,12 @@ Status:
 
 ## 9. Current Focus
 
-TM-2 — Tampermonkey list-only draggable widget visual plan:
-  - no preview and no search in first userscript MVP;
-  - prioritized command lists with scrollbar;
-  - widget opens/closes by header click;
-  - widget is draggable by header with click-vs-drag threshold;
+TM-3 — Tampermonkey first userscript skeleton:
+  - `tools/tampermonkey/chat-command-palette.user.js` now exists;
+  - it implements a list-only draggable widget;
+  - it uses inline command profile data from documented command bodies;
   - command row click inserts the complete command body into the composer;
+  - no preview, search or external profile loading yet;
   - keep `planning/planning-use-case-map.md` and linked owner workflows as source of truth;
   - keep Generic Action Overview deferred.
 
@@ -978,16 +980,18 @@ Current active slice:
 
 ## 10. Next Action
 
-Use the Tampermonkey implementation notes to create the first userscript skeleton:
+Manually test the first userscript skeleton:
 
 ```text
-1. Convert documented command bodies into inline script profile data.
-2. Build list-only draggable widget.
-3. Add prioritized scrollable command lists.
-4. Add command row click-to-insert behavior.
-5. Create `tools/tampermonkey/chat-command-palette.user.js`.
-6. Manual browser test.
+1. Install `tools/tampermonkey/chat-command-palette.user.js` in Tampermonkey.
+2. Open ChatGPT.
+3. Verify widget appears.
+4. Verify header click toggles open/closed.
+5. Verify header drag moves widget without toggling.
+6. Verify command rows insert bodies into composer.
+7. Verify no auto-send.
+8. Record any composer detection failures.
 ```
 
 Recommended next action:
-  Create the first userscript skeleton without preview, search or external profile loading.
+  Test in browser before adding preview, search or external profile loading.

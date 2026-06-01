@@ -1624,3 +1624,42 @@ Follow-ups:
 Notes:
   Preview and search are explicitly deferred. The user can edit the inserted command body in the ChatGPT composer before sending.
 
+### 2026-06-02 - Added first Tampermonkey userscript skeleton
+
+Date:
+  2026-06-02
+Action:
+  Added the first Tampermonkey userscript skeleton for the Enman Chat Command Helper.
+Type:
+  Tampermonkey userscript skeleton / implementation
+Status:
+  applied
+Why:
+  The implementation notes established a list-only draggable widget MVP with prioritized command lists and click-to-insert behavior. The next step was to convert documented command bodies into inline userscript profile data and create the first runnable skeleton.
+Changed files:
+  - tools/tampermonkey/chat-command-palette.user.js
+  - tools/tampermonkey/README.md
+  - tools/tampermonkey/IMPLEMENTATION-NOTES.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added a standard Tampermonkey userscript header for ChatGPT pages.
+  - Added inline MVP-1 and MVP-2 command profile data using the documented inserted bodies.
+  - Added an ENMAN floating widget.
+  - Added header click-to-open / click-to-close behavior.
+  - Added header drag-to-move behavior with a movement threshold.
+  - Added prioritized scrollable command lists.
+  - Added command row click-to-insert behavior.
+  - Added safe composer-not-found message.
+  - Updated README and implementation notes with installation/manual-test guidance and first-skeleton caveats.
+Not changed:
+  - No command route semantics changed.
+  - No use-case map rows changed.
+  - No Generic Action Overview implementation added.
+  - No preview/search/external profile loading added.
+  - No archive layout/default changed.
+Follow-ups:
+  Manually test the userscript in browser, especially ChatGPT composer detection and input event behavior. Record failures before adding preview/search.
+Notes:
+  Composer detection is intentionally heuristic in the first skeleton. If ChatGPT DOM changes or the wrong editable element is selected, update `findComposer()` and document the fix in implementation notes.
+

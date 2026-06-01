@@ -1,0 +1,595 @@
+// ==UserScript==
+// @name         Enman Chat Command Helper
+// @namespace    https://github.com/AlexPastukhh/enman
+// @version      0.1.0
+// @description  List-only draggable command helper for inserting Enman command prompt bodies into ChatGPT.
+// @author       Enman
+// @match        https://chatgpt.com/*
+// @match        https://chat.openai.com/*
+// @run-at       document-idle
+// @grant        none
+// ==/UserScript==
+
+(function () {
+  'use strict';
+
+  const COMMANDS = [
+  {
+    "id": "replacement_archive.create",
+    "group": "MVP-1",
+    "label": "давай архив",
+    "description": "output package",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  давай архив\n\ncommand_family:\n  `давай архив` / `собери архив` / `replacement package`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Output-package mode, not archive read-source mode.\n  - Use active approved scope; ask only blocking questions.\n  - Do not put apply commands only inside the archive.\n  - Give apply/diff commands in chat.\n  - Save full diff to file and copy it to clipboard.\n  - Ask user to paste diff before commit.\n  - Do not commit or push.\n\nuser_target:\n  <what archive/package should include>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "archive_source.use",
+    "group": "MVP-1",
+    "label": "арх",
+    "description": "archive source",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  арх\n\ncommand_family:\n  `арх` / `из архива` / `use archive`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Read-source mode, not output-package mode.\n  - Use provided/latest archive as source snapshot.\n  - Do not create replacement archive unless separately requested.\n  - State archive freshness/source limits when relevant.\n\nuser_target:\n  <what should be checked from archive>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "goal_map.sync",
+    "group": "MVP-1",
+    "label": "синх карта",
+    "description": "map sync",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  синх карта\n\ncommand_family:\n  `синх карта` / `синхронизируй карту` / `синх карта архив`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Inspect the living Goal Map first.\n  - Output Goal Map Brief in synced target state.\n  - Create narrow map-sync archive in the same response.\n  - Include apply/diff commands in chat.\n  - Do not start the next functional slice.\n  - End with `План файл-обновление`.\n\nuser_target:\n  <goal/map target or current active workstream>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "file_update.plan",
+    "group": "MVP-1",
+    "label": "план файл-обновление",
+    "description": "file plan",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  план файл-обновление\n\ncommand_family:\n  `план файл-обновление` / `спланируй обновление файлов` / `спланируй архив`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Plan file/docs/code/archive update only.\n  - End with `План файл-обновление` in planned mode.\n  - Include files, responsibilities, `Что`, `Почему`, boundaries, checks and next action.\n  - Do not edit files.\n  - Do not create archive unless separately requested.\n\nuser_target:\n  <what update/archive should be planned>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "critical_review.apply",
+    "group": "MVP-1",
+    "label": "крит",
+    "description": "critical review",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  крит\n\ncommand_family:\n  `крит` / `критически оцени` / `critical review`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Treat target as hypothesis, not accepted truth.\n  - Give honest verdict.\n  - Include strong points, weak points, risks, assumptions and alternatives.\n  - Do not disagree just to disagree.\n  - Do not edit files, create archives, commit or push.\n\nuser_target:\n  <what should be critically reviewed>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "plan.now",
+    "group": "MVP-1",
+    "label": "планируй",
+    "description": "plan now",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  планируй\n\ncommand_family:\n  `планируй` / `распланируй` / `plan`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Plan now, do not defer.\n  - Use living Goal Map when active workstream exists.\n  - Choose concrete next slice/step.\n  - State scope, boundary, expected evidence and next action.\n  - Do not edit files or create archive unless separately requested.\n\nuser_target:\n  <what should be planned>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "goal_map.brief",
+    "group": "MVP-1",
+    "label": "кц",
+    "description": "goal brief",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  кц\n\ncommand_family:\n  `кц` / `карта цели кратко` / `goal map brief`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Output compact Goal Map Brief.\n  - Current slice expanded.\n  - Other slices status-only.\n  - Use detailed slice statuses, not roadmap phase statuses.\n  - If map is stale, say so.\n\nuser_target:\n  <goal/map target or current active workstream>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "context_recheck.apply",
+    "group": "MVP-1",
+    "label": "обс",
+    "description": "context recheck",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  обс\n\ncommand_family:\n  `обс` / `перепроверь обсуждение` / `context recheck`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Re-check relevant prior discussion.\n  - Preserve accepted decisions and constraints.\n  - State what was checked and what remains unavailable.\n  - Combine with the underlying task route.\n\nuser_target:\n  <what discussion/context should be rechecked>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "goal_map.full",
+    "group": "MVP-2",
+    "label": "карта цели",
+    "description": "full map",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  карта цели\n\ncommand_family:\n  `карта цели` / `где мы` / `прогресс`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route if needed.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Full Goal Map, not compact brief.\n  - Show current goal, current state, slices, decisions and next action.\n  - Say whether the map needs sync.\n\nuser_target:\n  <goal/map target>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "output.key_points",
+    "group": "MVP-2",
+    "label": "кп",
+    "description": "key points",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  кп\n\ncommand_family:\n  `кп` / `key points`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route if needed.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Add `Key points first`.\n  - Key points mirror the main answer.\n  - Do not replace the detailed answer.\n  - Do not force fixed labels.\n\nuser_target:\n  <answer/context>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "output.summary",
+    "group": "MVP-2",
+    "label": "саммари",
+    "description": "summary",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  саммари\n\ncommand_family:\n  `саммари`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route if needed.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Add `Краткое саммари`.\n  - Use fixed summary order.\n  - This is not `План файл-обновление`.\n\nuser_target:\n  <answer/context>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "draft.show",
+    "group": "MVP-2",
+    "label": "давай драфт",
+    "description": "draft",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  давай драфт\n\ncommand_family:\n  `драфт` / `давай драфт` / `покажи драфт`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route if needed.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Show/update active draft if clear.\n  - Ask target if no active draft is clear.\n  - Do not silently broaden scope.\n\nuser_target:\n  <draft target or current active draft>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "active.update",
+    "group": "MVP-2",
+    "label": "обнови",
+    "description": "update",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  обнови\n\ncommand_family:\n  `обнови` / `обнови драфт` / `актуализируй`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route if needed.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Apply latest discussion deltas.\n  - Target active draft/answer/plan.\n  - Ask target unless obvious.\n  - Say “already current” if nothing changed.\n\nuser_target:\n  <what should be updated>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "active.clarify",
+    "group": "MVP-2",
+    "label": "уточни",
+    "description": "clarify",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  уточни\n\ncommand_family:\n  `уточни`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route if needed.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Same scope.\n  - More precise wording/boundary.\n  - Do not expand or change target silently.\n\nuser_target:\n  <what should be clarified>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "active.expand",
+    "group": "MVP-2",
+    "label": "расширь",
+    "description": "expand",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  расширь\n\ncommand_family:\n  `расширь`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route if needed.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Add depth/examples/edge cases.\n  - Do not silently change scope.\n  - Mention scope note if expansion could be ambiguous.\n\nuser_target:\n  <what should be expanded>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "draft.diff",
+    "group": "MVP-2",
+    "label": "отличия драфта",
+    "description": "draft diff",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  отличия драфта\n\ncommand_family:\n  `отличия драфта` / `draft diff`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route if needed.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Compare active draft with previous version.\n  - Prefer draft diff over key points for draft updates.\n  - Ask target if no active draft is clear.\n\nuser_target:\n  <draft target>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "output.suppress_key_points",
+    "group": "MVP-2",
+    "label": "без кп",
+    "description": "suppress KP",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  без кп\n\ncommand_family:\n  `без кп` / `без key points`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route if needed.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Suppress only `Key points first`.\n  - Do not change task content.\n\nuser_target:\n  <answer/context>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "output.suppress_summary",
+    "group": "MVP-2",
+    "label": "без саммари",
+    "description": "suppress summary",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  без саммари\n\ncommand_family:\n  `без саммари`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route if needed.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Suppress only `Краткое саммари`.\n  - Do not change task content.\n\nuser_target:\n  <answer/context>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "output.suppress_file_update_overview",
+    "group": "MVP-2",
+    "label": "без план файл-обновления",
+    "description": "suppress FU",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  без план файл-обновления\n\ncommand_family:\n  `без план файл-обновления` / `без итога`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route if needed.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Suppress only `План файл-обновление`.\n  - Do not suppress `Краткое саммари` unless separately requested.\n  - Do not change task content.\n\nuser_target:\n  <answer/context>\n\n[/ENMAN_COMMAND]"
+  }
+];
+
+  const WIDGET_ID = 'enman-command-helper-host';
+  const DRAG_THRESHOLD_PX = 6;
+  const INITIAL_WIDTH_PX = 390;
+
+  let isOpen = false;
+  let panelLeft = Math.max(16, window.innerWidth - INITIAL_WIDTH_PX - 24);
+  let panelTop = Math.max(16, window.innerHeight - 520);
+
+  const existing = document.getElementById(WIDGET_ID);
+  if (existing) {
+    existing.remove();
+  }
+
+  const host = document.createElement('div');
+  host.id = WIDGET_ID;
+  document.documentElement.appendChild(host);
+
+  const root = host.attachShadow({ mode: 'open' });
+
+  const style = document.createElement('style');
+  style.textContent = `
+    :host {
+      all: initial;
+    }
+
+    .enman-panel {
+      position: fixed;
+      left: ${panelLeft}px;
+      top: ${panelTop}px;
+      width: min(${INITIAL_WIDTH_PX}px, calc(100vw - 32px));
+      max-height: min(70vh, 720px);
+      z-index: 2147483647;
+      border: 1px solid rgba(125, 125, 125, 0.35);
+      border-radius: 12px;
+      background: rgba(24, 24, 27, 0.96);
+      color: rgb(245, 245, 245);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .enman-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      cursor: grab;
+      background: rgba(39, 39, 42, 0.98);
+      border-bottom: 1px solid rgba(125, 125, 125, 0.28);
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .enman-header:active {
+      cursor: grabbing;
+    }
+
+    .enman-title {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .enman-title-main {
+      font-size: 13px;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    .enman-title-sub {
+      color: rgba(245, 245, 245, 0.65);
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    .enman-indicator {
+      color: rgba(245, 245, 245, 0.7);
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .enman-body {
+      max-height: calc(min(70vh, 720px) - 44px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 8px;
+    }
+
+    .enman-group {
+      margin: 4px 0 10px;
+    }
+
+    .enman-group-title {
+      color: rgba(245, 245, 245, 0.72);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 6px 6px 4px;
+    }
+
+    .enman-command {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 26px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 7px;
+      margin: 2px 0;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: inherit;
+      text-align: left;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .enman-command:hover,
+    .enman-command:focus-visible {
+      outline: none;
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .enman-number {
+      color: rgba(245, 245, 245, 0.45);
+      font-size: 12px;
+      text-align: right;
+    }
+
+    .enman-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 650;
+    }
+
+    .enman-description {
+      color: rgba(245, 245, 245, 0.58);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .enman-status {
+      margin: 8px;
+      padding: 8px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(245, 245, 245, 0.78);
+      line-height: 1.35;
+      white-space: pre-wrap;
+      user-select: text;
+    }
+
+    .enman-closed {
+      width: auto;
+      min-width: 116px;
+    }
+
+    .enman-closed .enman-header {
+      border-bottom: 0;
+    }
+
+    .enman-closed .enman-body {
+      display: none;
+    }
+  `;
+
+  const panel = document.createElement('div');
+  panel.className = 'enman-panel enman-closed';
+
+  root.appendChild(style);
+  root.appendChild(panel);
+
+  function render() {
+    const bodyHtml = isOpen ? renderCommandList() : '';
+    panel.className = `enman-panel${isOpen ? '' : ' enman-closed'}`;
+    panel.style.left = `${panelLeft}px`;
+    panel.style.top = `${panelTop}px`;
+    panel.innerHTML = `
+      <div class="enman-header" title="Click to open/close. Drag to move.">
+        <div class="enman-title">
+          <div class="enman-title-main">${isOpen ? 'ENMAN commands' : 'ENMAN'}</div>
+          <div class="enman-title-sub">${isOpen ? 'Click row to insert. Header toggles/drags.' : 'Click or drag header'}</div>
+        </div>
+        <div class="enman-indicator">${isOpen ? '⇕' : '☰'}</div>
+      </div>
+      <div class="enman-body">
+        ${bodyHtml}
+      </div>
+    `;
+
+    attachHeaderEvents();
+    attachCommandEvents();
+  }
+
+  function renderCommandList() {
+    const mvp1 = COMMANDS.filter((command) => command.group === 'MVP-1');
+    const mvp2 = COMMANDS.filter((command) => command.group === 'MVP-2');
+
+    return `
+      ${renderGroup('MVP-1 / high-risk', mvp1, 1)}
+      ${renderGroup('MVP-2 / helpers', mvp2, mvp1.length + 1)}
+    `;
+  }
+
+  function renderGroup(title, commands, startNumber) {
+    const rows = commands.map((command, index) => `
+      <button class="enman-command" type="button" data-command-id="${escapeAttribute(command.id)}">
+        <span class="enman-number">${startNumber + index}.</span>
+        <span class="enman-label">${escapeHtml(command.label)}</span>
+        <span class="enman-description">${escapeHtml(command.description)}</span>
+      </button>
+    `).join('');
+
+    return `
+      <section class="enman-group">
+        <div class="enman-group-title">${escapeHtml(title)}</div>
+        ${rows}
+      </section>
+    `;
+  }
+
+  function attachHeaderEvents() {
+    const header = panel.querySelector('.enman-header');
+    if (!header) return;
+
+    let pointerId = null;
+    let startX = 0;
+    let startY = 0;
+    let startLeft = 0;
+    let startTop = 0;
+    let dragging = false;
+
+    header.addEventListener('pointerdown', (event) => {
+      if (event.button !== 0) return;
+
+      pointerId = event.pointerId;
+      startX = event.clientX;
+      startY = event.clientY;
+
+      const rect = panel.getBoundingClientRect();
+      startLeft = rect.left;
+      startTop = rect.top;
+      dragging = false;
+
+      header.setPointerCapture(pointerId);
+      event.preventDefault();
+    });
+
+    header.addEventListener('pointermove', (event) => {
+      if (pointerId !== event.pointerId) return;
+
+      const deltaX = event.clientX - startX;
+      const deltaY = event.clientY - startY;
+      const movedFarEnough = Math.hypot(deltaX, deltaY) > DRAG_THRESHOLD_PX;
+
+      if (movedFarEnough) {
+        dragging = true;
+      }
+
+      if (dragging) {
+        const width = panel.offsetWidth || INITIAL_WIDTH_PX;
+        const height = panel.offsetHeight || 44;
+        panelLeft = clamp(startLeft + deltaX, 8, Math.max(8, window.innerWidth - width - 8));
+        panelTop = clamp(startTop + deltaY, 8, Math.max(8, window.innerHeight - height - 8));
+        panel.style.left = `${panelLeft}px`;
+        panel.style.top = `${panelTop}px`;
+        event.preventDefault();
+      }
+    });
+
+    header.addEventListener('pointerup', (event) => {
+      if (pointerId !== event.pointerId) return;
+
+      try {
+        header.releasePointerCapture(pointerId);
+      } catch (error) {
+        // Ignore release failures from browser edge cases.
+      }
+
+      if (!dragging) {
+        isOpen = !isOpen;
+        render();
+      }
+
+      pointerId = null;
+      dragging = false;
+      event.preventDefault();
+    });
+
+    header.addEventListener('pointercancel', () => {
+      pointerId = null;
+      dragging = false;
+    });
+  }
+
+  function attachCommandEvents() {
+    panel.querySelectorAll('.enman-command').forEach((button) => {
+      button.addEventListener('click', () => {
+        const id = button.getAttribute('data-command-id');
+        const command = COMMANDS.find((item) => item.id === id);
+        if (!command) return;
+
+        const inserted = insertCommandBody(command.body);
+        if (inserted) {
+          isOpen = false;
+          render();
+        }
+      });
+    });
+  }
+
+  function insertCommandBody(body) {
+    const composer = findComposer();
+    if (!composer) {
+      showStatus('Could not find ChatGPT input.\nClick into the composer and try again.');
+      return false;
+    }
+
+    const currentText = getComposerText(composer).trim();
+    const nextText = currentText ? `${currentText}\n\n${body}` : body;
+
+    setComposerText(composer, nextText);
+    composer.focus();
+    return true;
+  }
+
+  function findComposer() {
+    const selectors = [
+      'textarea[data-testid="composer-textarea"]',
+      'textarea[placeholder]',
+      'textarea',
+      '#prompt-textarea',
+      '[contenteditable="true"][data-testid="composer-textarea"]',
+      '[contenteditable="true"][role="textbox"]',
+      '[contenteditable="true"]'
+    ];
+
+    const candidates = [];
+    selectors.forEach((selector) => {
+      document.querySelectorAll(selector).forEach((element) => {
+        if (!candidates.includes(element) && isUsableComposerCandidate(element)) {
+          candidates.push(element);
+        }
+      });
+    });
+
+    candidates.sort((a, b) => b.getBoundingClientRect().bottom - a.getBoundingClientRect().bottom);
+    return candidates[0] || null;
+  }
+
+  function isUsableComposerCandidate(element) {
+    if (!element || host.contains(element)) return false;
+
+    const rect = element.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return false;
+
+    const style = window.getComputedStyle(element);
+    if (style.visibility === 'hidden' || style.display === 'none') return false;
+
+    if ('disabled' in element && element.disabled) return false;
+    if ('readOnly' in element && element.readOnly) return false;
+
+    return true;
+  }
+
+  function getComposerText(element) {
+    if (element instanceof HTMLTextAreaElement || element instanceof HTMLInputElement) {
+      return element.value || '';
+    }
+
+    return element.innerText || element.textContent || '';
+  }
+
+  function setComposerText(element, value) {
+    if (element instanceof HTMLTextAreaElement || element instanceof HTMLInputElement) {
+      const valueSetter = Object.getOwnPropertyDescriptor(element.constructor.prototype, 'value')?.set;
+      if (valueSetter) {
+        valueSetter.call(element, value);
+      } else {
+        element.value = value;
+      }
+      dispatchInputEvents(element);
+      return;
+    }
+
+    element.textContent = value;
+    dispatchInputEvents(element);
+  }
+
+  function dispatchInputEvents(element) {
+    try {
+      element.dispatchEvent(new InputEvent('input', {
+        bubbles: true,
+        inputType: 'insertText',
+        data: null
+      }));
+    } catch (error) {
+      element.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    element.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  function showStatus(message) {
+    const body = panel.querySelector('.enman-body');
+    if (!body) return;
+
+    const status = document.createElement('div');
+    status.className = 'enman-status';
+    status.textContent = message;
+    body.prepend(status);
+
+    window.setTimeout(() => {
+      status.remove();
+    }, 4500);
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function escapeAttribute(value) {
+    return escapeHtml(value);
+  }
+
+  function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+  }
+
+  render();
+})();
