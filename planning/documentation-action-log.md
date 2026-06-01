@@ -1216,3 +1216,35 @@ Follow-ups:
   Choose the next Goal Map slice: route reusable command examples from the root use-case map, add the critical-thinking command `крит`, or plan the Tampermonkey MVP.
 Notes:
   The living Goal Map stores current state and evidence capsules. The action log remains append-only chronological history and should not be fully merged into the map.
+
+### 2026-05-31 - Cleaned static Goal Map example
+
+Date:
+  2026-05-31
+Action:
+  Synchronized the static Goal Map example with the current roadmap/evidence/dropdown demonstration format.
+Type:
+  documentation cleanup / goal-map static example sync
+Status:
+  applied
+Why:
+  The Goal Map owner and active living map already define the roadmap/evidence rules. The static example still demonstrated the older checkbox-based shape and stale next-action wording.
+Changed files:
+  - planning/goal-map-example.md
+  - planning/documentation-action-log.md
+Updates:
+  - Replaced the static Goal Map example with a Current Snapshot + Roadmap + Whole Picture + Scenario/Slice Map + Work Directions shape.
+  - Removed stale checkbox-style roadmap records from the example.
+  - Demonstrated status labels, Visible evidence, Evidence required and `<details>` proof blocks.
+Not changed:
+  - No response workflow changes in this safety package.
+  - No active living Goal Map changes in this safety package.
+  - No Tampermonkey script added.
+  - No critical-thinking command added.
+  - No generic Action Overview implementation added.
+  - No reusable command example route update applied.
+Follow-ups:
+  Apply response-workflow planning-reference and living-map DONE evidence in a separate safe package, or choose the next workstream slice: route reusable command examples from the root use-case map, add the critical-thinking command `крит`, or plan the Tampermonkey MVP.
+Notes:
+  This safety package avoids replacing broad shared workflow files after the previous package attempted stale full-file replacement. The static example remains demonstration-only and does not own Goal Map rules.
+
