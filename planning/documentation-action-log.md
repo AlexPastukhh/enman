@@ -1318,3 +1318,38 @@ Follow-ups:
   After this policy is reviewed, continue with the next command-system workstream slice, currently F7-CMD-2: add the critical-review command `крит`.
 Notes:
   This batch records the reusable rule behind the already-applied Goal Map compound owner naming. It does not make filename versions the active repo-wide convention yet.
+
+### 2026-06-02 - Added Goal Map Brief response output rule
+
+Date:
+  2026-06-02
+Action:
+  Added a response-level Goal Map Brief rule, command route and reusable example.
+Type:
+  response output / goal-map command routing
+Status:
+  applied
+Why:
+  Long-running workstreams need a compact in-answer projection of the living Goal Map so the user can see the current goal, current slice, selected work chain and other slice statuses without opening the full living map.
+Changed files:
+  - planning/documentation/reviewable-agent-output-and-commands-workflow.md
+  - planning/goal-map-principles-workflow-template.md
+  - planning/planning-use-case-map.md
+  - planning/documentation/examples/README.md
+  - planning/documentation/examples/GOAL-MAP-BRIEF-RESPONSE-EXAMPLE.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added `кц`, `карта цели кратко` and `goal map brief` as response-level commands for compact Goal Map projection.
+  - Placed Goal Map Brief after `Краткое саммари` and before `Итог` when `Итог` applies.
+  - Defined the brief shape: current slice expanded with Why now / Done / Now / Next / After, and other slices shown only as a compact status table.
+  - Added a reusable example using the current command-system/Tampermonkey Goal Map slice chain.
+Not changed:
+  - No living Goal Map structure changed.
+  - No living Goal Map state updated.
+  - No command-system `крит` implementation added.
+  - No domain/scenario/slice/source docs edited.
+  - No files renamed.
+Follow-ups:
+  Use the new Goal Map Brief output rule in future Level 2/3 planning/status/continuation answers for active long-running workstreams, then continue with F7-CMD-2: add the critical-review command `крит`.
+Notes:
+  The brief is a response projection of the living map. It does not replace the durable living Goal Map and does not grant edit/package/commit permission.

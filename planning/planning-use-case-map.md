@@ -324,7 +324,7 @@ The canonical prior-discussion recheck command is:
 
 `обс` means context/discussion recheck. Its semantics are owned by `reviewable-agent-output-and-commands-workflow.md`.
 
-Response block commands such as `кп`, `саммари`, `итог` and `отличия драфта` are routed in this file, but their behavior is owned by `reviewable-agent-output-and-commands-workflow.md`.
+Response block commands such as `кп`, `саммари`, `кц`, `карта цели кратко`, `goal map brief`, `итог` and `отличия драфта` are routed in this file, but their behavior is owned by `reviewable-agent-output-and-commands-workflow.md`.
 
 Goal Map / `Карта цели` commands are owned by:
 
@@ -332,13 +332,14 @@ Goal Map / `Карта цели` commands are owned by:
 planning/goal-map-principles-workflow-template.md
 ```
 
-Example:
+Examples:
 
 ```text
 planning/goal-map-example.md
+planning/documentation/examples/GOAL-MAP-BRIEF-RESPONSE-EXAMPLE.md
 ```
 
-Use-case rows may reference Goal Map as expected output, but they do not own its format or workflow.
+Use-case rows may reference Goal Map or Goal Map Brief as expected output, but they do not own the full map format, brief format or workflow.
 
 Goal Map planning/reference behavior:
   When planning inside an active long-running workstream, the chat should read or reuse the relevant living Goal Map before choosing the next slice/step. For the active command-system/Tampermonkey workstream, use:
@@ -367,6 +368,7 @@ This root map remains the concrete Enman route table.
 | `саммари` | Add contextual `Краткое саммари`. | Summarize current answer/context or ask target. | No traversal / reuse; targeted if evidence changed. | Conversation plus sources only if needed. | `Краткое саммари`, not file-change `Итог`. |
 | `планируй`, `распланируй`, `plan` | Produce a concrete plan now. If the request belongs to an active long-running workstream, use the relevant living Goal Map to choose the next slice/step and preserve current-state continuity. | Ask for target/scope if no active context exists. | Reuse / targeted; full if goal/scope changed. | Conversation plus living Goal Map and relevant repo docs when planning depends on project state. | Concrete plan with current Goal Map reference, chosen slice/step, batch boundary, expected evidence and next action. |
 | `карта процесса`, `карта цели`, `план процесса`, `где мы`, `прогресс`, `статус цели`, `goal process`, `goal map` | Show/update the Goal Map for the active or named long-running goal. | Ask for the goal if no active/named goal exists. | Reuse / targeted; full if goal/scope changed. | Conversation plus relevant docs/sources when the map depends on repo state. | Goal Map / Карта цели: final picture, target scenarios, process slices, acceptance criteria, current state, decision points, current focus and next action. |
+| `кц`, `карта цели кратко`, `goal map brief`, `выведи краткую карту цели` | Show compact Goal Map Brief for the active or named long-running goal. | Ask for the goal if no active/named goal exists. | Reuse / targeted; full only if the living map is missing/stale or scope changed. | Conversation plus relevant living Goal Map; repo sources only when current map state depends on repo evidence. | Goal Map Brief after `Краткое саммари`: current goal, current slice, Done/Now/Next/After for the current slice, and compact status table for other slices. |
 | `без саммари` | Suppress `Краткое саммари`. | Apply to current answer if target is obvious. | No traversal / reuse. | Conversation. | Answer without contextual summary. |
 | `итог` | Add or update file/change-oriented `Итог` when update context exists. | If no file/change/update context exists, explain that `Итог` is not applicable and offer `Краткое саммари`. | Reuse / targeted. | Conversation plus target files/diff/archive when needed. | File Update Overview / `Итог`; during planning it is the rolling nearest-batch plan. |
 | `без итога` | Suppress `Итог`. | Apply to current answer if target is obvious. | No traversal / reuse. | Conversation. | Answer without File Update Overview. |
@@ -393,6 +395,7 @@ Examples demonstrate valid execution only. They do not own command semantics, ro
 | Planning command | `планируй`, `спланируй`, `давай план`, `распланируй`, `plan` | `planning/documentation/examples/PLAN-COMMAND-VALID-EXECUTION-EXAMPLE.md` | Read when a plan must show how `планируй` means concrete planning now and does not grant edit/package permission. | Combine with living Goal Map when the plan belongs to an active long-running workstream. |
 | Archive source vs output package | `арх`, `из архива`, `use archive`, `давай архив`, `собери архив`, `replacement package` | `planning/documentation/examples/ARCHIVE-SOURCE-VS-OUTPUT-PACKAGE-EXAMPLE.md` | Read when archive wording may be confused between read-source mode and package-output mode. | Owner output rules stay in `planning/replacement-file-generation-guide.md` and this root map. |
 | Goal Map / progress navigation | `карта процесса`, `карта цели`, `план процесса`, `где мы`, `прогресс`, `статус цели`, `goal map` | `planning/goal-map-example.md` | Read when the chat needs to show or update the Goal Map shape, not just report a short status. | Owner rules stay in `planning/goal-map-principles-workflow-template.md`; active state lives in the relevant workstream map. |
+| Goal Map Brief / compact progress projection | `кц`, `карта цели кратко`, `goal map brief`, `выведи краткую карту цели` | `planning/documentation/examples/GOAL-MAP-BRIEF-RESPONSE-EXAMPLE.md` | Read when the chat needs the compact in-answer Goal Map projection rather than the full living map. | Owner rules stay in `planning/goal-map-principles-workflow-template.md`; response placement stays in `planning/documentation/reviewable-agent-output-and-commands-workflow.md`. |
 | Enman scenario/domain/slice route families | `сделай сценарий`, `DATA`, `разбери domain draft`, `задрафти slice`, `server slice`, `client sidecar`, `разбери тестирование` | `planning/documentation/examples/project-specific/enman/SCENARIO-DOMAIN-SLICE-COMMAND-ROUTING-EXAMPLE.md` | Read when updating or reviewing Enman scenario/domain/slice command routes. | Project-specific demonstration only; route logic remains in this root map and reusable setup guidance remains in the profile field kit. |
 
 ## 10. Primary Use Case Table

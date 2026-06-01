@@ -91,14 +91,23 @@ Canonical command family:
 где мы
 прогресс
 статус цели
+кц
+карта цели кратко
 goal process
 goal map
+goal map brief
 ```
 
 Meaning:
 
 ```text
 Produce, review or update the Goal Map for the active or named long-running goal.
+```
+
+Brief command meaning:
+
+```text
+`кц`, `карта цели кратко` and `goal map brief` produce a compact in-answer projection of the living Goal Map. They do not replace or update the durable living map by themselves.
 ```
 
 The command does not grant permission to edit files, create archives, commit changes or change repository state.
@@ -281,6 +290,62 @@ The DONE item itself may include a final `<details>` block for the action/change
 </details>
 ```
 
+## 5D. In-Answer Goal Map Brief
+
+`Goal Map Brief` / `Карта цели` is a compact response projection of the living Goal Map.
+
+Use it when a user asks for `кц`, `карта цели кратко` or `goal map brief`, or when a Level 2/3 answer is planning, status, continuation or next-step work inside an active long-running workstream.
+
+The brief is not the durable map itself. The living map remains the current-state source.
+
+Before output, check:
+
+```text
+- Current Snapshot;
+- active/current slice;
+- roadmap / slice status rows;
+- latest completed work;
+- next action;
+- open decisions if they affect the current slice.
+```
+
+The brief must use this shape:
+
+```text
+Goal
+  current goal
+
+Current slice
+  current slice name and status
+
+Current slice chain
+  Why now
+  Done
+  Now
+  Next
+  After
+
+Other slices
+  compact status table only
+```
+
+Rules:
+
+```text
+- Current slice is expanded.
+- Other slices are status-only.
+- Do not use `<details>` / collapsible blocks; they are unstable in chat output.
+- Do not copy the full living map into a normal answer.
+- If the living map is stale or was not checked, say so.
+- If the response completes work or changes next action, state whether the living map needs an update.
+```
+
+Example:
+
+```text
+planning/documentation/examples/GOAL-MAP-BRIEF-RESPONSE-EXAMPLE.md
+```
+
 ## 6. Default Format
 
 ```text
@@ -397,6 +462,9 @@ When building or updating a Goal Map:
 ```text
 When user says `где мы` / `прогресс`:
   show current state, completed items, missing items, current focus and next action from the living Goal Map when one exists.
+
+When user says `кц` / `карта цели кратко` / `goal map brief`:
+  produce the compact Goal Map Brief in the current answer, using the living Goal Map when one exists.
 
 When user says `карта процесса` / `карта цели`:
   produce or refresh the full Goal Map.

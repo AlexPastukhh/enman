@@ -29,7 +29,7 @@ A reviewable answer should make clear:
 - what should happen next.
 ```
 
-Response-level commands such as `level 2`, `recheck`, `clarify`, `keep prev`, `no ch`, `без изм`, `use archive`, `арх`, `б из арх`, `давай драфт`, `обнови`, `обс`, `кп`, `саммари`, `итог` and `отличия драфта` change how the answer should be produced, checked or continued. They do not grant permission to edit files or change repository state.
+Response-level commands such as `level 2`, `recheck`, `clarify`, `keep prev`, `no ch`, `без изм`, `use archive`, `арх`, `б из арх`, `давай драфт`, `обнови`, `обс`, `кп`, `саммари`, `кц`, `карта цели кратко`, `goal map brief`, `итог` and `отличия драфта` change how the answer should be produced, checked or continued. They do not grant permission to edit files or change repository state.
 
 For action/use-case traces, active context, traversal depth and read source mode, use:
 
@@ -218,6 +218,10 @@ Risks / assumptions / limits:
 Границы:
   - ...
 
+## Goal Map Brief / Карта цели
+
+Only when an active long-running workstream has a living Goal Map, or when the user explicitly requests `кц`, `карта цели кратко` or `goal map brief`. Use the current slice expanded and other slices as a compact status table. See §5A.
+
 ## Итог
 
 Only when file/change/update context applies. Use File Update Overview ownership rules.
@@ -261,6 +265,82 @@ Goal/source/context traceability that previously appeared as a long Level 2 open
 During planning, `Итог` is the current rolling nearest-batch plan and should be updated as the plan changes until the artifact/diff is produced. After an archive/script/diff/application exists, `Итог` summarizes the actual artifact, diff, application state or commit readiness.
 
 Sources and coverage must remain reviewable in Level 2, but they do not have to appear as a long opening section. They may be placed in the main body, verification/limits section, Source Delta or `Краткое саммари`, as long as another chat can see what was checked and what was not checked.
+
+## 5A. Goal Map Brief / `кц` For Active Workstreams
+
+`Goal Map Brief` / `Карта цели` is a short in-answer projection of a living Goal Map.
+
+Command aliases:
+
+```text
+кц
+карта цели кратко
+goal map brief
+выведи краткую карту цели
+```
+
+Placement in Level 2 / Level 3 answers:
+
+```text
+main reviewable answer
++
+Краткое саммари, when useful
++
+Goal Map Brief / Карта цели, when triggered
++
+Итог, when file/change/update context applies
+```
+
+Use this block when:
+
+```text
+- an active long-running workstream exists;
+- a living Goal Map exists or is explicitly named;
+- the answer is planning, status, continuation, review or next-step work inside that workstream;
+- the user explicitly requests `кц`, `карта цели кратко`, `goal map brief` or equivalent wording.
+```
+
+Before producing the block, check the living Goal Map's current snapshot, active slice, roadmap/status rows and next action. If the map is missing, stale or not checked, say so instead of presenting the brief as current truth.
+
+Use this shape:
+
+```text
+## Goal Map Brief / Карта цели
+
+Goal
+  <current goal from the living Goal Map>
+
+Current slice
+  <SL-X — readable name>
+  Status: <NOW / NEXT / not started / in progress / done>
+
+Current slice chain
+  Why now
+  Done
+  Now
+  Next
+  After
+
+Other slices
+  | Slice | Status |
+```
+
+Rules:
+
+```text
+- Expand only the current slice.
+- List other slices only as a compact status table.
+- Do not use `<details>` / collapsible blocks in this response block.
+- Do not copy the full living Goal Map into the answer.
+- Do not treat the command as permission to edit the repo map, create an archive, commit or push.
+- If the answer changes the workstream state, say whether the living Goal Map needs a follow-up update.
+```
+
+Example:
+
+```text
+planning/documentation/examples/GOAL-MAP-BRIEF-RESPONSE-EXAMPLE.md
+```
 
 ## 6. Level 3 — Review / Handoff Answer
 
@@ -394,7 +474,7 @@ planning/documentation/file-update-overview-workflow.md
 planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
 ```
 
-The File Update Overview / `Итог` is a final summary block. It does not replace the main answer and it does not replace `Краткое саммари`.
+The File Update Overview / `Итог` is a final summary block. It does not replace the main answer, `Краткое саммари` or `Goal Map Brief`.
 
 Placement:
 
@@ -402,6 +482,8 @@ Placement:
 main reviewable answer
 +
 Краткое саммари, when useful
++
+Goal Map Brief / Карта цели, when triggered
 +
 Итог, when file/change/update context applies
 ```
