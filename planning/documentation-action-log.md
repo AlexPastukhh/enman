@@ -1590,3 +1590,37 @@ Follow-ups:
 Notes:
   `IMPLEMENTATION-NOTES.md` is intentionally a compound notes file first. It may be split into focused implementation docs after the helper shape stabilizes.
 
+### 2026-06-02 - Planned list-only draggable Tampermonkey widget visual behavior
+
+Date:
+  2026-06-02
+Action:
+  Updated Tampermonkey implementation notes and living map with the first userscript visual/use-case plan.
+Type:
+  Tampermonkey visual planning / implementation notes
+Status:
+  applied
+Why:
+  The first userscript skeleton should stay simple: no preview, no search, prioritized scrollable command lists, header click to open/close, header drag to move, command row click to insert the complete command body.
+Changed files:
+  - tools/tampermonkey/IMPLEMENTATION-NOTES.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Replaced preview/search-first UX with list-only MVP behavior.
+  - Added header click-to-toggle and header drag-to-move behavior.
+  - Added click-vs-drag threshold rule.
+  - Added prioritized MVP-1 and MVP-2 command list visualization.
+  - Added scroll behavior for the command list.
+  - Added click-to-insert behavior and safe composer-not-found error state.
+Not changed:
+  - No Tampermonkey userscript added.
+  - No command body semantics changed.
+  - No use-case map command routes changed.
+  - No Generic Action Overview implementation added.
+  - No archive layout/default changed.
+Follow-ups:
+  Convert documented command bodies into inline userscript profile data and implement the list-only draggable widget skeleton.
+Notes:
+  Preview and search are explicitly deferred. The user can edit the inserted command body in the ChatGPT composer before sending.
+

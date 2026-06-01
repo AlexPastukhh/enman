@@ -58,6 +58,11 @@ tools/tampermonkey/chat-command-palette.user.js
 - MVP storage can be inline userscript profile data first.
 - Later design should allow reusable defaults plus optional project profile config.
 - No auto-send by default.
+- First userscript MVP uses no preview and no search.
+- First userscript MVP uses prioritized command lists with a scrollbar.
+- The widget opens and closes by clicking anywhere on its header.
+- The widget can be dragged by its header.
+- Header click and drag are separated by a small movement threshold.
 ```
 
 ## 4. Implementation Principles
@@ -128,7 +133,124 @@ route_read_rule:
 
 ## 5. Core Use Cases
 
-### UC-1 — User inserts a high-risk command
+### UC-1 — User opens the helper widget
+
+Example:
+
+```text
+User clicks the ENMAN widget header.
+```
+
+Expected helper behavior:
+
+```text
+- closed widget is visible as a small header/button;
+- click anywhere on the header opens the command list;
+- no prompt is inserted on open;
+- no auto-send happens.
+```
+
+Success condition:
+
+```text
+The user can open the helper without changing the ChatGPT composer.
+```
+
+### UC-2 — User closes the helper widget
+
+Example:
+
+```text
+User clicks the open widget header.
+```
+
+Expected helper behavior:
+
+```text
+- click anywhere on the header closes the command list;
+- current open/closed state changes only on click, not on drag;
+- no prompt is inserted.
+```
+
+Success condition:
+
+```text
+The user can close the helper without side effects.
+```
+
+### UC-3 — User drags the helper widget
+
+Example:
+
+```text
+User holds the header and moves the pointer.
+```
+
+Expected helper behavior:
+
+```text
+- pointer down on header starts a possible click-or-drag interaction;
+- if pointer movement stays below threshold, treat release as click toggle;
+- if pointer movement exceeds threshold, treat interaction as drag;
+- drag moves the widget and does not toggle open/closed on release;
+- current open/closed state is preserved during drag.
+```
+
+Success condition:
+
+```text
+The widget can be moved freely without accidental open/close toggles.
+```
+
+### UC-4 — User scans prioritized command lists
+
+Example:
+
+```text
+User opens the widget and scrolls the command list.
+```
+
+Expected helper behavior:
+
+```text
+- commands are shown in priority order;
+- MVP-1 / high-risk commands appear first;
+- MVP-2 helper commands appear after MVP-1;
+- command list area scrolls when content exceeds available height;
+- no search is present in the first MVP.
+```
+
+Success condition:
+
+```text
+The user can reach every command through the scrollbar without search.
+```
+
+### UC-5 — User inserts a command body
+
+Example:
+
+```text
+User clicks `синх карта`.
+```
+
+Expected helper behavior:
+
+```text
+- command row click inserts the complete documented body into the ChatGPT composer;
+- helper focuses the composer after insert;
+- helper does not auto-send;
+- helper closes after insert;
+- user can still edit the inserted body in the ChatGPT input.
+```
+
+Success condition:
+
+```text
+Clicking a command row creates an editable prompt in the composer and leaves sending under user control.
+```
+
+### UC-6 — User inserts a high-risk command
 
 Example:
 
@@ -139,55 +261,19 @@ Example:
 Expected helper behavior:
 
 ```text
-- user opens palette;
-- selects `давай архив`;
-- helper shows preview body;
-- user fills target;
-- helper inserts body into ChatGPT input;
-- user reviews and sends manually.
+- inserted body includes output-package reminders;
+- inserted body reminds that archive source mode is different;
+- inserted body reminds to include apply/diff commands in chat;
+- inserted body reminds not to commit or push.
 ```
 
 Success condition:
 
 ```text
-The chat receives enough reminders to avoid confusing archive source mode with output package mode and to include apply/diff commands.
+The chat receives enough compact reminders to avoid unsafe archive/package behavior.
 ```
 
-### UC-2 — User inserts a map-sync command
-
-Example:
-
-```text
-синх карта
-```
-
-Expected helper behavior:
-
-```text
-- helper inserts compact body;
-- body reminds chat to inspect living map first;
-- body reminds chat to output synced target-state brief;
-- body reminds chat to create map-sync archive and apply/diff commands;
-- body prevents starting the next functional slice.
-```
-
-### UC-3 — User inserts a planning command
-
-Example:
-
-```text
-планируй
-```
-
-Expected helper behavior:
-
-```text
-- body reminds chat that planning means planning now;
-- body reminds chat to consult living Goal Map when active workstream exists;
-- body does not grant edit/archive permission.
-```
-
-### UC-4 — User inserts a simple output modifier
+### UC-7 — User inserts a simple output modifier
 
 Example:
 
@@ -198,30 +284,76 @@ Example:
 Expected helper behavior:
 
 ```text
-- helper still includes route_read_rule;
-- body stays short;
-- body says suppress only that block and do not change task content.
+- inserted body remains compact;
+- inserted body still includes source_of_truth and route_read_rule;
+- inserted body says suppress only the named output block;
+- underlying task content is not changed by the modifier.
+```
+
+Success condition:
+
+```text
+Even simple modifiers preserve source-of-truth and boundary reminders without bloating the UI.
+```
+
+### UC-8 — Chat composer is not found
+
+Example:
+
+```text
+User clicks a command row but the helper cannot find the ChatGPT composer.
+```
+
+Expected helper behavior:
+
+```text
+- show a small error message in the widget;
+- do not auto-send or throw visible JS errors;
+- keep the widget usable so the user can retry.
+```
+
+Success condition:
+
+```text
+Failure to find the composer is safe and recoverable.
 ```
 
 ## 6. What Should Be Possible
 
-MVP should make this possible:
+First userscript MVP should make this possible:
 
 ```text
-- open command palette;
-- search command by alias;
-- select command;
-- see generated body preview;
-- edit user_target;
-- insert body into ChatGPT input;
+- show a small ENMAN widget;
+- open the widget by clicking anywhere on the header;
+- close the widget by clicking anywhere on the header;
+- drag the widget by the header;
+- avoid accidental toggle while dragging by using a click-vs-drag threshold;
+- show prioritized command lists;
+- scroll the command list;
+- click command row to insert the complete command body;
+- focus ChatGPT composer after insert;
+- close the widget after insert;
 - avoid auto-send;
 - support MVP-1 command bodies;
-- support MVP-2 helper bodies if cheap after MVP-1 data model is ready.
+- support MVP-2 command bodies if cheap after the same data model is ready.
+```
+
+Explicitly not in first MVP:
+
+```text
+- no command preview panel;
+- no search input;
+- no external profile loading;
+- no automatic send;
+- no browser/repo source verification;
+- no source-of-truth changes.
 ```
 
 Later should make this possible:
 
 ```text
+- add search by aliases and labels;
+- add preview/edit inside the helper before insert;
 - load optional project profile config;
 - separate reusable defaults from project commands;
 - add keyboard shortcut;
@@ -233,52 +365,155 @@ Later should make this possible:
 
 ## 7. Text UI Visualization
 
-### 7.1 Palette closed
+First MVP is list-only:
 
 ```text
-[ENMAN]
+no preview
+no search
+prioritized command lists
+scrollbar
+click row -> insert body into ChatGPT composer
 ```
 
-A small floating button is visible near the input area.
+### 7.1 Closed widget
 
-### 7.2 Palette open
+```text
+┌───────────────┐
+│ ENMAN         │
+└───────────────┘
+```
+
+Behavior:
+
+```text
+- click header opens the widget;
+- drag header moves the widget;
+- closed widget does not show commands.
+```
+
+### 7.2 Open widget
 
 ```text
 ┌──────────────────────────────────────────────┐
-│ Enman commands                               │
-│ Search: [арх___________________________]     │
+│ ENMAN commands                         [⇕]   │
 ├──────────────────────────────────────────────┤
-│ давай архив          output package          │
-│ арх                  archive source          │
-│ синх карта           map sync + archive      │
-│ план файл-обновление file/update planning    │
-│ крит                 critical review         │
-│ планируй             plan now                │
-│ кц                   goal map brief          │
-│ обс                  context recheck         │
+│ MVP-1 / high-risk                            │
+│  1. давай архив              output package  │
+│  2. арх                      archive source  │
+│  3. синх карта               map sync        │
+│  4. план файл-обновление     file plan       │
+│  5. крит                     critical review │
+│  6. планируй                 plan now        │
+│  7. кц                       goal brief      │
+│  8. обс                      context recheck │
+│                                              │
+│ MVP-2 / helpers                              │
+│  9. карта цели               full map        │
+│ 10. кп                       key points      │
+│ 11. саммари                  summary         │
+│ 12. давай драфт              draft           │
+│ 13. обнови                   update          │
+│ 14. уточни                   clarify         │
+│ 15. расширь                  expand          │
+│ 16. отличия драфта           draft diff      │
+│ 17. без кп                   suppress KP     │
+│ 18. без саммари              suppress sum    │
+│ 19. без план файл-обновления suppress FU     │
 └──────────────────────────────────────────────┘
 ```
 
-### 7.3 Preview before insert
+Behavior:
+
+```text
+- click header closes the widget;
+- drag header moves the widget;
+- command list scrolls if it does not fit;
+- command rows insert bodies directly;
+- no preview panel in first MVP;
+- no search input in first MVP.
+```
+
+### 7.3 Click-vs-drag rule
+
+Header is both toggle control and drag handle.
+
+```text
+pointer down on header:
+  store starting pointer position
+
+pointer move:
+  if movement > drag threshold:
+    enter dragging mode
+    move widget
+    suppress click toggle
+
+pointer up:
+  if dragging:
+    finish drag
+    do not toggle open/closed
+  else:
+    toggle open/closed
+```
+
+Suggested threshold:
+
+```text
+5px or 6px
+```
+
+### 7.4 Scroll behavior
+
+```text
+helper_panel:
+  position: fixed
+  max-height: min(70vh, 720px)
+  overflow: hidden
+
+header:
+  fixed inside widget
+  used for click toggle and drag
+
+command_list_area:
+  overflow-y: auto
+  max-height: calc(panel height - header height)
+```
+
+Acceptance:
+
+```text
+- long command list does not exceed viewport;
+- all commands remain reachable with scrollbar;
+- header stays available for close/drag;
+- no command row is hidden behind a footer.
+```
+
+### 7.5 Insert behavior
+
+```text
+click command row:
+  render complete documented command body
+  insert body into ChatGPT composer
+  focus composer
+  close widget
+  do not auto-send
+```
+
+Acceptance:
+
+```text
+The user can edit the inserted prompt in ChatGPT before sending.
+```
+
+### 7.6 Error state
 
 ```text
 ┌──────────────────────────────────────────────┐
-│ Preview: давай архив                         │
+│ ENMAN commands                         [⇕]   │
 ├──────────────────────────────────────────────┤
-│ [ENMAN_COMMAND]                              │
-│ command:                                     │
-│   давай архив                                │
-│ ...                                          │
-│ user_target:                                 │
-│   [_______________________________]          │
-├──────────────────────────────────────────────┤
-│ [Insert into chat] [Cancel]                  │
+│ Could not find ChatGPT input.                │
+│ Click into the composer and try again.       │
 └──────────────────────────────────────────────┘
 ```
-
-### 7.4 Insert result
-
-The helper inserts the final body into the ChatGPT input. The user can still edit it before sending.
 
 ## 8. Command Profile Data Shape Draft
 
@@ -342,10 +577,10 @@ Record checked external sources here before implementing behavior that depends o
 ## 11. Open Questions
 
 ```text
-- Should MVP have one floating button or keyboard shortcut only?
+- Should first skeleton use only a floating draggable widget, with keyboard shortcut deferred?
 - Should MVP store profiles inline only, or leave a disabled project-profile hook?
-- Should command search match aliases, labels and categories?
-- Should preview be a modal, side panel or inline popover?
+- What exact click-vs-drag threshold should be used: 5px or 6px?
+- Should widget position persist only for the page session or through Tampermonkey storage?
 - Should inserted prompt include empty lines exactly as documented?
 - Should helper remember last user_target text?
 - How should implementation detect the active ChatGPT input reliably?

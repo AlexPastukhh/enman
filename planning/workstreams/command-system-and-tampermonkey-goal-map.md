@@ -21,13 +21,13 @@ planning/documentation/examples/README.md
 ## 0. Current Snapshot
 
 Last updated:
-  2026-06-02 / after TM-1 implementation notes infrastructure
+  2026-06-02 / after TM-2 list-only draggable widget visual plan
 
 Current goal:
   Build a transferable command system and Tampermonkey prompt helper for long-running chats across projects.
 
 Current focus:
-  TM-1 — Tampermonkey implementation docs infrastructure.
+  TM-2 — Tampermonkey list-only draggable widget visual plan.
 
 Active slice:
   SL-6 — Tampermonkey Guided Prompt Helper
@@ -51,6 +51,7 @@ Already available:
   - Tampermonkey inserted command bodies are documented for MVP-1 and MVP-2.
   - Tampermonkey implementation docs entrypoint exists.
   - Tampermonkey implementation notes file exists.
+  - Tampermonkey list-only draggable widget visual behavior is planned.
 
 Latest completed:
   - Added root Goal Map owner/example.
@@ -67,12 +68,13 @@ Latest completed:
   - Deferred Generic Action Overview and selected TM-0 command projection planning.
   - Documented Tampermonkey inserted command bodies and route-read rule.
   - Added Tampermonkey implementation docs infrastructure and implementation notes.
+  - Planned list-only draggable Tampermonkey widget visual behavior.
 
 Next action:
-  Continue TM-1:
-    convert documented command bodies into script profile data and prepare the first userscript skeleton.
+  Continue TM-2:
+    implement the list-only draggable widget skeleton with inline command profile data.
 Recommended next action:
-  Apply and review this implementation-notes archive, then plan the first userscript skeleton.
+  Apply and review this visual-plan archive, then create the first userscript skeleton.
 
 Open decisions:
   - DEC-1: resolved — Generic Action Overview deferred; TM-0 selected.
@@ -926,8 +928,9 @@ Steps:
   - ✅ DONE — Decide MVP storage: inline userscript vs config/profile.
   - ✅ DONE — Document inserted command bodies for MVP-1 and MVP-2.
   - ✅ DONE — Create implementation docs entrypoint and implementation notes.
+  - ✅ DONE — Plan list-only draggable widget visual behavior.
   - ⬜ TODO — Convert documented command bodies into script profile data.
-  - ⬜ TODO — Build floating button / command palette UI.
+  - ⬜ TODO — Build list-only draggable command widget UI.
   - ⬜ TODO — Add preview/edit before insert.
   - ⬜ TODO — Insert expanded prompt into ChatGPT input.
   - ⬜ TODO — Manual browser test.
@@ -961,9 +964,12 @@ Status:
 
 ## 9. Current Focus
 
-TM-1 — Tampermonkey implementation docs infrastructure:
-  - implementation entrypoint and implementation notes are now introduced;
-  - the notes file collects accepted decisions, use cases, UI sketches, possible capabilities, external sources and doc-reading map;
+TM-2 — Tampermonkey list-only draggable widget visual plan:
+  - no preview and no search in first userscript MVP;
+  - prioritized command lists with scrollbar;
+  - widget opens/closes by header click;
+  - widget is draggable by header with click-vs-drag threshold;
+  - command row click inserts the complete command body into the composer;
   - keep `planning/planning-use-case-map.md` and linked owner workflows as source of truth;
   - keep Generic Action Overview deferred.
 
@@ -972,15 +978,16 @@ Current active slice:
 
 ## 10. Next Action
 
-Use the Tampermonkey implementation notes to prepare the first userscript skeleton:
+Use the Tampermonkey implementation notes to create the first userscript skeleton:
 
 ```text
 1. Convert documented command bodies into inline script profile data.
-2. Define minimal command palette UI skeleton.
-3. Define preview/edit/insert behavior.
-4. Create `tools/tampermonkey/chat-command-palette.user.js`.
-5. Manual browser test.
+2. Build list-only draggable widget.
+3. Add prioritized scrollable command lists.
+4. Add command row click-to-insert behavior.
+5. Create `tools/tampermonkey/chat-command-palette.user.js`.
+6. Manual browser test.
 ```
 
 Recommended next action:
-  Plan the first userscript skeleton without adding external profile loading yet.
+  Create the first userscript skeleton without preview, search or external profile loading.
