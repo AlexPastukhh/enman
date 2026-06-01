@@ -461,8 +461,7 @@
 
         const inserted = insertCommandBody(command.body);
         if (inserted) {
-          isOpen = false;
-          render();
+          showStatus(`Inserted: ${command.label}`);
         }
       });
     });

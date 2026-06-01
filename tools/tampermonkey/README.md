@@ -112,6 +112,7 @@ The script uses a standard userscript header with `@match` entries for ChatGPT p
 - Command list scrolls.
 - MVP-1 command can be selected.
 - Command row click inserts compact command body into ChatGPT composer.
+- Command row click keeps the widget open.
 - Prompt is not auto-sent.
 - Inserted body includes source_of_truth.
 - Inserted body includes route_read_rule.

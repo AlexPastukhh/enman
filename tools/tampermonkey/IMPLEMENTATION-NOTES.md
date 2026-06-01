@@ -64,6 +64,7 @@ tools/tampermonkey/chat-command-palette.user.js
 - The widget can be dragged by its header.
 - Header click and drag are separated by a small movement threshold.
 - First userscript skeleton exists as `tools/tampermonkey/chat-command-palette.user.js`.
+- Command row click must not close the widget; only header click toggles open/closed.
 ```
 
 ## 4. Implementation Principles
@@ -241,7 +242,7 @@ Expected helper behavior:
 - command row click inserts the complete documented body into the ChatGPT composer;
 - helper focuses the composer after insert;
 - helper does not auto-send;
-- helper closes after insert;
+- helper stays open after insert;
 - user can still edit the inserted body in the ChatGPT input.
 ```
 
@@ -333,7 +334,7 @@ First userscript MVP should make this possible:
 - scroll the command list;
 - click command row to insert the complete command body;
 - focus ChatGPT composer after insert;
-- close the widget after insert;
+- keep the widget open after insert;
 - avoid auto-send;
 - support MVP-1 command bodies;
 - support MVP-2 command bodies if cheap after the same data model is ready.
@@ -495,7 +496,7 @@ click command row:
   render complete documented command body
   insert body into ChatGPT composer
   focus composer
-  close widget
+  keep widget open
   do not auto-send
 ```
 
@@ -696,6 +697,40 @@ Follow-up manual tests:
 8. Verify no auto-send.
 9. If line breaks collapse in the composer, fix `setComposerText()` / insertion strategy and document the browser behavior here.
 ```
+
+### 2026-06-02 — Command click close behavior bug
+
+Observed behavior:
+
+```text
+Clicking a command row inserts the command body and closes the widget.
+```
+
+Expected behavior:
+
+```text
+Only header click toggles open/closed.
+Command row click inserts the body and keeps the widget open.
+```
+
+Fix:
+
+```text
+`attachCommandEvents()` no longer sets `isOpen = false` after successful insertion.
+After successful insertion, it shows a short `Inserted: <label>` status message instead.
+```
+
+Follow-up test:
+
+```text
+1. Open widget.
+2. Click a command row.
+3. Confirm command body is inserted.
+4. Confirm widget remains open.
+5. Confirm header click still closes the widget.
+6. Confirm header drag still does not toggle the widget.
+```
+
 
 ## 14. Future Split Candidates
 

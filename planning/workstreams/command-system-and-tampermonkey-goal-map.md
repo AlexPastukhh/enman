@@ -21,13 +21,13 @@ planning/documentation/examples/README.md
 ## 0. Current Snapshot
 
 Last updated:
-  2026-06-02 / after TM-4 command insertion smoke test sync
+  2026-06-02 / after TM-5 command click keep-open fix
 
 Current goal:
   Build a transferable command system and Tampermonkey prompt helper for long-running chats across projects.
 
 Current focus:
-  TM-4 — Tampermonkey manual smoke testing.
+  TM-5 — Tampermonkey command click keep-open fix.
 
 Active slice:
   SL-6 — Tampermonkey Guided Prompt Helper
@@ -54,6 +54,7 @@ Already available:
   - Tampermonkey list-only draggable widget visual behavior is planned.
   - Tampermonkey first userscript skeleton exists.
   - First `синх карта` command insertion smoke test is recorded.
+  - Command row click no longer closes the widget.
 
 Latest completed:
   - Added root Goal Map owner/example.
@@ -73,12 +74,13 @@ Latest completed:
   - Planned list-only draggable Tampermonkey widget visual behavior.
   - Added first Tampermonkey userscript skeleton.
   - Recorded first `синх карта` command insertion smoke test.
+  - Fixed command row click so it keeps the widget open.
 
 Next action:
-  Continue TM-4:
-    complete manual browser smoke tests and fix composer detection or multiline insertion if needed.
+  Continue TM-5:
+    retest command row insertion, header close, drag and remaining browser smoke tests.
 Recommended next action:
-  Apply and review this command-test sync archive, then continue manual testing of header toggle, drag, scrolling and more command rows.
+  Apply and review this keep-open fix archive, then retest command click behavior before continuing broader smoke tests.
 
 Open decisions:
   - DEC-1: resolved — Generic Action Overview deferred; TM-0 selected.
@@ -968,11 +970,11 @@ Status:
 
 ## 9. Current Focus
 
-TM-4 — Tampermonkey manual smoke testing:
-  - first `синх карта` command insertion body reached the chat;
-  - implementation notes record the partial test result and remaining checks;
-  - continue testing header open/close, drag, scroll, no-auto-send and more command rows;
-  - if multiline formatting or composer detection fails, fix the userscript and record the browser behavior;
+TM-5 — Tampermonkey command click keep-open fix:
+  - command row click was closing the widget after insertion;
+  - fixed behavior so command row click inserts the body and keeps the widget open;
+  - only header click toggles open/closed;
+  - retest command insertion, header close and drag before continuing broader smoke tests;
   - keep `planning/planning-use-case-map.md` and linked owner workflows as source of truth;
   - keep Generic Action Overview deferred.
 
@@ -981,19 +983,17 @@ Current active slice:
 
 ## 10. Next Action
 
-Continue manual smoke testing:
+Retest the keep-open fix and continue manual smoke testing:
 
 ```text
-1. Verify header click toggles open/closed.
-2. Verify header drag moves widget without accidental toggle.
-3. Verify command list scroll.
-4. Verify one MVP-1 command besides `синх карта`.
-5. Verify one MVP-2 command.
-6. Verify empty-composer insertion.
-7. Verify insertion when composer already has text.
-8. Verify no auto-send.
-9. Record any composer detection or multiline formatting failures.
+1. Open widget.
+2. Click a command row.
+3. Confirm command body is inserted.
+4. Confirm widget remains open.
+5. Confirm header click closes the widget.
+6. Confirm header drag moves widget without accidental toggle.
+7. Continue scroll / MVP-1 / MVP-2 / empty-composer / existing-text / no-auto-send tests.
 ```
 
 Recommended next action:
-  Finish smoke testing before adding preview, search or external profile loading.
+  Retest this fix before adding preview, search or external profile loading.

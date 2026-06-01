@@ -1695,3 +1695,36 @@ Follow-ups:
 Notes:
   The pasted `синх карта` body is treated as a partial insertion smoke test, not proof that all widget behavior works.
 
+### 2026-06-02 - Fixed Tampermonkey command click keep-open behavior
+
+Date:
+  2026-06-02
+Action:
+  Fixed the Tampermonkey helper so clicking a command row inserts the body without closing the widget.
+Type:
+  Tampermonkey bug fix / manual smoke test follow-up
+Status:
+  applied
+Why:
+  Manual testing showed that command row click closed the widget after insertion. The intended MVP behavior is that only header click toggles open/closed; command rows should insert command bodies and keep the widget open for additional actions.
+Changed files:
+  - tools/tampermonkey/chat-command-palette.user.js
+  - tools/tampermonkey/README.md
+  - tools/tampermonkey/IMPLEMENTATION-NOTES.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Removed `isOpen = false` / `render()` after successful command insertion.
+  - Added a short inserted-status message after successful command insertion.
+  - Updated implementation notes and README checklist to state command row click keeps the widget open.
+  - Updated the living Goal Map to track the keep-open fix as current TM-5 work.
+Not changed:
+  - No command body semantics changed.
+  - No use-case map rows changed.
+  - No preview/search/external profile loading added.
+  - No Generic Action Overview implementation added.
+Follow-ups:
+  Retest command row insertion, header click close, header drag and remaining smoke-test cases.
+Notes:
+  The widget should now close only through header click, not through command row click.
+
