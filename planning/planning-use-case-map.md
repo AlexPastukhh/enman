@@ -380,6 +380,20 @@ This root map remains the concrete Enman route table.
 | `давай архив`, `собери архив`, `replacement package`, `archive for manual apply` | Produce archive/package for the active approved plan/scope. | Build archive plan from obvious target or ask only blocking target questions. | Targeted/full by package scope. | GitHub/archive/conversation by context. | Replacement package ZIP with `MANIFEST.md`, `APPLY.md`, `replacement-files/`; post-apply diff saved to file and copied to clipboard without printing full diff. |
 | `проверь` after replacement archive/package application | Verify the active archive application result. | Ask for status/diff or target archive if not available. | Targeted. | Applied repo state / user-provided diff. | Post-apply verification: expected files changed, no unexpected files in commit scope, diff matches package intent, no unrelated sections/register entries/routing rules were removed; if pasted diff shows mojibake, request/copy full suspect file contents before judging file corruption. |
 
+## 9A. Reusable Command Example References
+
+These references keep reusable command examples visible from the root route chain without copying example bodies into the root map.
+
+Examples demonstrate valid execution only. They do not own command semantics, routing, source truth, output mode or permission boundary.
+
+| Route family | User wording / rows | Example | When to read | Notes |
+|---|---|---|---|---|
+| Answer shape / response blocks | `кп`, `key points`, `саммари`, `полный конец`, Level 2 response shape | `planning/documentation/examples/LEVEL-2-KEY-POINTS-SUMMARY-EXAMPLE.md` | Read when Key points / `Краткое саммари` / Level 2 response-shape behavior is non-trivial or disputed. | Owner semantics stay in `planning/documentation/reviewable-agent-output-and-commands-workflow.md`. |
+| Planning command | `планируй`, `спланируй`, `давай план`, `распланируй`, `plan` | `planning/documentation/examples/PLAN-COMMAND-VALID-EXECUTION-EXAMPLE.md` | Read when a plan must show how `планируй` means concrete planning now and does not grant edit/package permission. | Combine with living Goal Map when the plan belongs to an active long-running workstream. |
+| Archive source vs output package | `арх`, `из архива`, `use archive`, `давай архив`, `собери архив`, `replacement package` | `planning/documentation/examples/ARCHIVE-SOURCE-VS-OUTPUT-PACKAGE-EXAMPLE.md` | Read when archive wording may be confused between read-source mode and package-output mode. | Owner output rules stay in `planning/replacement-file-generation-guide.md` and this root map. |
+| Goal Map / progress navigation | `карта процесса`, `карта цели`, `план процесса`, `где мы`, `прогресс`, `статус цели`, `goal map` | `planning/goal-map-example.md` | Read when the chat needs to show or update the Goal Map shape, not just report a short status. | Owner rules stay in `planning/goal-map-principles-workflow-template.md`; active state lives in the relevant workstream map. |
+| Enman scenario/domain/slice route families | `сделай сценарий`, `DATA`, `разбери domain draft`, `задрафти slice`, `server slice`, `client sidecar`, `разбери тестирование` | `planning/documentation/examples/project-specific/enman/SCENARIO-DOMAIN-SLICE-COMMAND-ROUTING-EXAMPLE.md` | Read when updating or reviewing Enman scenario/domain/slice command routes. | Project-specific demonstration only; route logic remains in this root map and reusable setup guidance remains in the profile field kit. |
+
 ## 10. Primary Use Case Table
 
 Scenario/domain/slice use-case setup note:

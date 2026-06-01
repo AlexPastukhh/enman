@@ -21,17 +21,17 @@ planning/documentation/examples/README.md
 ## 0. Current Snapshot
 
 Last updated:
-  2026-05-31 / after F7-CMD-3D Goal Map roadmap and evidence readability update
+  2026-05-31 / after F7-CMD-1B reusable command example routing
 
 Current goal:
   Build a transferable command system and Tampermonkey prompt helper for long-running chats across projects.
 
 Current focus:
-  SL-3 — Goal Map Format And Living Workstream is being refined so this file is intuitive, representative and usable as a planning reference.
+  SL-4 — Critical Review Command is the recommended next slice after routing reusable command examples.
 
 Active slice:
-  SL-3 — Goal Map Format And Living Workstream
-    Status: validating / being improved
+  SL-4 — Critical Review Command
+    Status: next recommended / not started
 
 Already available:
   - Reusable command examples exist.
@@ -49,15 +49,15 @@ Latest completed:
   - Added living-map storage rule to `planning/goal-map-principles-workflow-template.md`.
   - Renamed goal-map files to match compound starter artifact naming.
   - Added roadmap/evidence rules so completed work can show visible proof and explanatory details.
+  - Routed reusable command examples from root use-case map and added Enman scenario/domain/slice command-routing example.
 
 Next action:
   Choose next slice:
-    A. F7-CMD-1B — route reusable command examples from root use-case map.
-    B. F7-CMD-2 — add critical-thinking command `крит`.
-    C. TM-0 — plan Tampermonkey MVP.
-
+    A. F7-CMD-2 — add critical-thinking command `крит`.
+    B. TM-0 — plan Tampermonkey MVP.
+    C. F7-CMD-4 — design Generic Action Overview.
 Recommended next action:
-  F7-CMD-1B, because it closes the already-open examples/routing chain.
+  F7-CMD-2, because the user explicitly needs a command that makes the assistant evaluate honestly instead of automatically agreeing.
 
 Open decisions:
   - DEC-1: next slice after living map readability/evidence update.
@@ -340,30 +340,55 @@ Visible evidence:
 
 </details>
 
-##### ⏭ NEXT — Route reusable command examples from root use-case map
+##### ✅ DONE — Route reusable command examples from root use-case map
 
-Expected result:
-  Relevant command rows reference reusable command example files.
+Result:
+  Root use-case map now exposes the reusable command example traversal chain, and Enman scenario/domain/slice command routing has a project-specific demonstration.
 
-Evidence required:
+Visible evidence:
   - Changed:
     - `planning/planning-use-case-map.md`
+    - `planning/documentation/examples/README.md`
+    - `planning/workstreams/command-system-and-tampermonkey-goal-map.md`
+  - Added:
+    - `planning/documentation/examples/project-specific/enman/SCENARIO-DOMAIN-SLICE-COMMAND-ROUTING-EXAMPLE.md`
   - Recorded:
     - `planning/documentation-action-log.md`
 
 <details>
-<summary>Why this is next</summary>
+<summary>Evidence details</summary>
 
-**Why this matters**
+**What changed**
 
-- The command examples chain is not fully closed until root routes reference the examples.
-- This keeps root use-case map as a router while avoiding embedded long example content.
+- Added `## 9A. Reusable Command Example References` to the root use-case map.
+- Linked answer-shape, planning, archive source/output, Goal Map and Enman scenario/domain/slice route families to current examples.
+- Added an Enman-specific scenario/domain/slice command-routing demonstration.
+- Indexed the new project-specific example.
+- Kept examples demonstration-only and outside root-map rows.
 
-**How to verify later**
+**Visible result**
 
-- Open `planning/planning-use-case-map.md`.
-- Confirm repeated/continuation command rows point to relevant reusable example files.
-- Confirm the action log has an append-only entry for the route update.
+- `planning/planning-use-case-map.md` now points command routes to reusable examples without copying example bodies.
+- `planning/documentation/examples/README.md` lists the new Enman-specific command-routing example.
+- The new example file demonstrates scenario, domain, slice/server/client and testing route traversal.
+
+**Why this evidence exists**
+
+- Existing command examples were useful but not visible enough from the root route chain.
+- The root map should remain the concrete router, while examples demonstrate valid execution.
+
+**How to verify**
+
+- Open `planning/planning-use-case-map.md` and find `## 9A. Reusable Command Example References`.
+- Open `planning/documentation/examples/README.md` and confirm the new Enman-specific example row is indexed.
+- Open the new example file and confirm it is marked demonstration-only.
+- Confirm no workflow/template semantics were rewritten.
+
+**What this evidence does not prove**
+
+- It does not implement `крит`.
+- It does not implement Generic Action Overview.
+- It does not implement Tampermonkey.
 
 </details>
 
@@ -558,7 +583,7 @@ Each slice must show:
 | Slice | Needed behavior it enables | Plan / work direction | Status | Next action |
 |---|---|---|---|---|
 | SL-1 — Reusable Command Semantics Foundation | Commands have stable meaning across projects. | Update reusable workflow/docs/examples so command semantics are explicit. | partially implemented | Add `крит`; later add generic action overview command. |
-| SL-2 — Root Command Routing | The root use-case map routes user commands to owner workflows and examples. | Update root use-case rows and example references without embedding long examples. | in progress | Route reusable command examples and add Enman-specific scenario/domain/slice example. |
+| SL-2 — Root Command Routing | The root use-case map routes user commands to owner workflows and examples. | Update root use-case rows and example references without embedding long examples. | done / validating | Keep future command examples linked from root map when they become current. |
 | SL-3 — Goal Map Format And Living Workstream | User can open the repo file and understand current goal/progress. | Maintain owner/template/example and this living map with snapshot, roadmap, evidence and next action. | validating / being improved | Validate readability and update structure if needed. |
 | SL-4 — Critical Review Command | User can ask the chat not to agree automatically. | Define `крит`, aliases, boundaries, example and root route. | planned | Design command semantics and example. |
 | SL-5 — Generic Action Overview | Meaningful non-file actions can be summarized structurally. | Design generic overview while keeping file-specific `Итог` separate. | planned | Design owner/format/example. |
@@ -572,7 +597,7 @@ Each slice must show:
 | Level 2 / Key points / `Краткое саммари` | done | Key points are non-fixed compressed mirrors of the detailed answer; `Краткое саммари` owns fixed traceability order. |
 | Planning command | done | `планируй` means produce a concrete plan now, not “plan later.” |
 | Goal Map owner/example | done / validating | Root owner and root example are added; this file is the active living map. |
-| Use-case routing | in progress | Goal Map is routed; reusable command examples still need routing from the root map. |
+| Use-case routing | done / validating | Goal Map and reusable command examples are routed from the root map; keep future command examples linked when they become current. |
 | Roadmap/evidence readability | done / validating | DONE items include visible evidence plus expandable details; validate readability on the next planning/update pass. |
 | Critical-thinking command | planned | Need `крит` semantics, example and route. |
 | Generic Action Overview | planned | Need generic non-file overview without weakening file-specific `Итог`. |

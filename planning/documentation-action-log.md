@@ -1248,3 +1248,38 @@ Follow-ups:
 Notes:
   This safety package avoids replacing broad shared workflow files after the previous package attempted stale full-file replacement. The static example remains demonstration-only and does not own Goal Map rules.
 
+
+### 2026-05-31 - Routed reusable command examples from root use-case map
+
+Date:
+  2026-05-31
+Action:
+  Routed current reusable command examples from the root use-case map and added an Enman-specific scenario/domain/slice command-routing example.
+Type:
+  documentation routing / examples traversal chain
+Status:
+  applied
+Why:
+  Reusable command examples already existed and were indexed, but the root use-case map did not yet expose them as part of the traversal chain for non-trivial command work. The scenario/domain/slice route families also needed a project-specific demonstration without moving workflow logic into the root map.
+Changed files:
+  - planning/planning-use-case-map.md
+  - planning/documentation/examples/README.md
+  - planning/documentation/examples/project-specific/enman/SCENARIO-DOMAIN-SLICE-COMMAND-ROUTING-EXAMPLE.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added reusable command example reference table to the root use-case map.
+  - Linked answer-shape, planning, archive/source-vs-output, Goal Map and scenario/domain/slice routes to existing/current examples.
+  - Added Enman-specific scenario/domain/slice command-routing demonstration.
+  - Indexed the new project-specific example.
+  - Updated the active Goal Map with DONE evidence for F7-CMD-1B and next-slice orientation.
+Not changed:
+  - No response workflow semantics changed.
+  - No use-case map workflow/template semantics changed.
+  - No Tampermonkey script added.
+  - No critical-thinking command added.
+  - No generic Action Overview implementation added.
+Follow-ups:
+  Next recommended slice is F7-CMD-2: add the critical-thinking command `крит`, including aliases, honest evaluation behavior, boundaries, example coverage and root route.
+Notes:
+  Examples remain demonstration-only. Root use-case map remains the concrete router. Workflows/templates keep command semantics and output rules.
