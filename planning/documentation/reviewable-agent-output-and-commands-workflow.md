@@ -169,7 +169,7 @@ Rules:
 
 Use Level 2 for non-trivial planning, documentation, repo analysis, draft discussion, file/code update planning, synchronization, diff review, source-of-truth reasoning or architectural reasoning.
 
-Level 2 structure must remain reviewable. Extra response blocks such as `Key points first`, `Краткое саммари` and `Итог` do not replace task/scope, sources/coverage, assumptions/risks, verification or next step.
+Level 2 structure must remain reviewable. Extra response blocks such as `Key points first`, `Краткое саммари` and `План файл-обновление` do not replace task/scope, sources/coverage, assumptions/risks, verification or next step.
 
 Default analytical/planning template:
 
@@ -222,7 +222,7 @@ Risks / assumptions / limits:
 
 Only when an active long-running workstream has a living Goal Map, or when the user explicitly requests `кц`, `карта цели кратко` or `goal map brief`. Use the current slice expanded and other slices as a compact status table. See §5A.
 
-## Итог
+## План файл-обновление
 
 Only when file/change/update context applies. Use File Update Overview ownership rules.
 ```
@@ -240,13 +240,13 @@ Do not force key points into fixed labels such as Goal, Sources, Conclusion or N
 
 Do not use `Key points first` as a substitute for the detailed answer. If the whole answer would be no longer than the key points, omit `Key points first` and answer directly.
 
-For file/docs/code update planning answers, a key point may mention delivery safety when it is one of the main answer points. The main answer and final `Итог` still need to expose delivery safety classification when it affects artifact generation.
+For file/docs/code update planning answers, a key point may mention delivery safety when it is one of the main answer points. The main answer and final `План файл-обновление` still need to expose delivery safety classification when it affects artifact generation.
 
 Do not use `Key points first` by default when the answer is a first draft, a draft update, a strict specialized template, or an already self-evident structured output. In those cases the template/draft structure is the navigation.
 
 For draft updates, use `Отличия от предыдущего драфта` instead of `Key points first` when there is a previous draft version to compare against.
 
-`Краткое саммари` is a contextual human summary of the current answer in the broader discussion context. It appears after the main answer and before `Итог` when useful.
+`Краткое саммари` is a contextual human summary of the current answer in the broader discussion context. It appears after the main answer and before `План файл-обновление` when useful.
 
 Use this order for `Краткое саммари`:
 
@@ -260,9 +260,9 @@ Use this order for `Краткое саммари`:
 
 Goal/source/context traceability that previously appeared as a long Level 2 opening preamble should normally move into `Краткое саммари` near the end.
 
-`Итог` is not a general conclusion. It is the final file/change/update overview block for file, documentation or code update planning/review/application contexts.
+`План файл-обновление` is not a general conclusion. It is the final file/change/update overview block for file, documentation, code or archive update planning/review/application contexts.
 
-During planning, `Итог` is the current rolling nearest-batch plan and should be updated as the plan changes until the artifact/diff is produced. After an archive/script/diff/application exists, `Итог` summarizes the actual artifact, diff, application state or commit readiness.
+During planning, `План файл-обновление` is the current rolling nearest-batch plan and should be updated as the plan changes until the artifact/diff is produced. After an archive/script/diff/application exists, `План файл-обновление` summarizes the actual artifact, diff, application state or commit readiness.
 
 Sources and coverage must remain reviewable in Level 2, but they do not have to appear as a long opening section. They may be placed in the main body, verification/limits section, Source Delta or `Краткое саммари`, as long as another chat can see what was checked and what was not checked.
 
@@ -288,7 +288,7 @@ main reviewable answer
 +
 Goal Map Brief / Карта цели, when triggered
 +
-Итог, when file/change/update context applies
+План файл-обновление, when file/change/update context applies
 ```
 
 Use this block when:
@@ -557,9 +557,24 @@ Level 3 is not mandatory for every answer.
 
 Use it when the answer needs to survive outside the original chat context.
 
-## 6A. File Update Overview / `Итог` For File/Docs/Code Updates
+## 6A. File Update Overview / `План файл-обновление` For File/Docs/Code Updates
 
-For Level 2 or Level 3 answers that plan, create, review or verify non-trivial file, documentation or code changes, end the normal reviewable answer with a File Update Overview / `Итог` when a structured file-change summary would help review.
+For Level 2 or Level 3 answers that plan, create, review or verify non-trivial file, documentation or code changes, end the normal reviewable answer with a File Update Overview / `План файл-обновление` when a structured file-change summary would help review.
+
+Command aliases / triggers:
+
+```text
+план файл-обновление
+спланируй файл-обновление
+спланируй обновление файлов
+спланируй архив
+план архива
+file update plan
+archive plan
+итог  # legacy shorthand only in file/change/update context
+```
+
+These commands request the file/update planning overview. They do not grant edit, archive/package, commit or push permission.
 
 Use:
 
@@ -568,7 +583,7 @@ planning/documentation/file-update-overview-workflow.md
 planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
 ```
 
-The File Update Overview / `Итог` is a final summary block. It does not replace the main answer, `Краткое саммари` or `Goal Map Brief`.
+The File Update Overview / `План файл-обновление` is a final summary block. It does not replace the main answer, `Краткое саммари` or `Goal Map Brief`.
 
 Placement:
 
@@ -579,23 +594,23 @@ main reviewable answer
 +
 Goal Map Brief / Карта цели, when triggered
 +
-Итог, when file/change/update context applies
+План файл-обновление, when file/change/update context applies
 ```
 
 Ownership boundary:
 
 ```text
 reviewable-agent-output-and-commands-workflow.md
-  owns when/where `Итог` appears and response-level command semantics.
+  owns when/where `План файл-обновление` appears and response-level command semantics.
 
 file-update-overview-workflow.md
-  owns how to produce the `Итог` / File Update Overview content.
+  owns how to produce the `План файл-обновление` / File Update Overview content.
 
 FILE-UPDATE-OVERVIEW-TEMPLATE.md
   owns the exact reusable Markdown shape.
 ```
 
-During planning, `Итог` is the current rolling nearest-batch plan. After artifact/diff/application, it summarizes the actual update state.
+During planning, `План файл-обновление` is the current rolling nearest-batch plan. After artifact/diff/application, it summarizes the actual update state.
 
 Use-case rows may reference File Update Overview as an expected output shape, but they do not own its format.
 
@@ -749,14 +764,17 @@ These commands request or suppress response blocks. They do not change edit perm
 без саммари
   Omit `Краткое саммари`.
 
-итог
-  Add or update the File Update Overview / `Итог` when file/change/update context applies.
+план файл-обновление / спланируй файл-обновление / спланируй обновление файлов / спланируй архив / план архива
+  Produce or update the File Update Overview / `План файл-обновление` in planned mode for a file/docs/code/archive update plan. This does not create an archive or edit files by itself.
 
-без итога
-  Omit `Итог`.
+итог
+  Legacy shorthand for `План файл-обновление` only when file/change/update context is active.
+
+без план файл-обновления / без итога
+  Omit `План файл-обновление` / legacy `Итог`.
 
 полный конец
-  Add `Краткое саммари` and `Итог` when `Итог` is applicable.
+  Add `Краткое саммари` and `План файл-обновление` when file/change/update overview is applicable.
 ```
 
 Rules:
@@ -764,9 +782,9 @@ Rules:
 ```text
 - `Key points first` has no fixed internal format; it mirrors the detailed answer in compressed points with key information plus conclusion/practical meaning.
 - `Краткое саммари` is contextual/human summary, not a file-change register.
-- `Итог` is file/change/update-oriented and must stay last when present.
-- Do not add `Итог` for ordinary drafting, casual explanation or strict-template output unless there is a file/change/update context.
-- If the user requests `итог` without a file/change/update context, explain that `Итог` is not applicable and offer `Краткое саммари`.
+- `План файл-обновление` is file/change/update-oriented and must stay last when present.
+- Do not add `План файл-обновление` for ordinary drafting, casual explanation or strict-template output unless there is a file/change/update context.
+- If the user requests `итог` without a file/change/update context, explain that legacy `Итог` / `План файл-обновление` is not applicable and offer `Краткое саммари`.
 ```
 
 ### Obs / Discussion Context Recheck
@@ -1266,7 +1284,7 @@ Instead:
 - Do not treat `драфт` / `обнови` as a new draft request when there is an active draft context.
 - Do not treat `обс` as permission to edit files, skip current evidence checks or reopen accepted decisions without request.
 - Do not use `Key points first` to replace the detailed answer, source/coverage visibility, risks, verification or next step.
-- Do not add `Итог` as a generic conclusion when there is no file/change/update context.
+- Do not add `План файл-обновление` as a generic conclusion when there is no file/change/update context.
 - Do not add `Key points first` to draft updates when `Отличия от предыдущего драфта` is the useful review block.
 - Do not silently promote a one-pass additional source into a default template/source requirement.
 ```
@@ -1289,11 +1307,11 @@ This workflow works when:
 - Source Delta makes newly used sources and not-rechecked sources visible when an answer/draft changes;
 - Level 2/3 escalation happens automatically when task breadth requires reviewability;
 - `обс` can re-check prior discussion without being confused with edit permission or answer level;
-- `Key points first`, `Краткое саммари` and `Итог` improve navigation without replacing the Level 2/3 reviewable body;
+- `Key points first`, `Краткое саммари` and `План файл-обновление` improve navigation without replacing the Level 2/3 reviewable body;
 - `Key points first` has no fixed internal format and mirrors the detailed answer points in compressed form;
 - `Краткое саммари` starts with вывод and next actions before goal/context/limits;
-- file-update planning answers expose delivery safety in the main answer and `Итог` when it affects artifact generation;
+- file-update planning answers expose delivery safety in the main answer and `План файл-обновление` when it affects artifact generation;
 - draft updates use `Отличия от предыдущего драфта` when that is the useful review block;
-- File Update Overview / `Итог` is used as a final summary block when non-trivial file/docs/code updates need file responsibility/change visibility;
+- File Update Overview / `План файл-обновление` is used as a final summary block when non-trivial file/docs/code updates need file responsibility/change visibility;
 - response structure helps verification without adding unnecessary bureaucracy.
 ```

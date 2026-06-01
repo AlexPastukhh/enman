@@ -21,13 +21,13 @@ planning/documentation/examples/README.md
 ## 0. Current Snapshot
 
 Last updated:
-  2026-06-02 / after F7-CMD-GM2 status synchronization cleanup
+  2026-06-02 / after F7-CMD-FU1 plan file-update command naming
 
 Current goal:
   Build a transferable command system and Tampermonkey prompt helper for long-running chats across projects.
 
 Current focus:
-  Decision pending — choose the next slice after completing SL-4.
+  Decision pending — choose the next slice after clarifying file-update planning output naming.
 
 Active slice:
   None selected
@@ -44,6 +44,7 @@ Already available:
   - Roadmap evidence format now uses status labels and `<details>` blocks instead of markdown task-list checkboxes.
   - Goal Map Brief response output rule exists.
   - Critical review command `крит` exists with response workflow semantics, root route and reusable command example.
+  - Plan file-update command `план файл-обновление` exists for file/docs/code/archive update planning.
   - Goal Map status synchronization rule exists.
 
 Latest completed:
@@ -56,13 +57,14 @@ Latest completed:
   - Added Goal Map Brief response output rule.
   - Added critical review command `крит` with route and reusable example.
   - Synchronized Goal Map statuses after SL-4 completion.
+  - Clarified file-update planning output as `План файл-обновление`.
 
 Next action:
   Choose next slice:
     A. F7-CMD-4 — design Generic Action Overview.
     B. TM-0 — plan Tampermonkey MVP.
 Recommended next action:
-  Decide between Generic Action Overview and Tampermonkey MVP planning, because `крит` is now available and the next priority depends on whether reviewable non-file action summaries or guided command input should come first.
+  Decide between Generic Action Overview and Tampermonkey MVP planning, because `крит` is now available and the next priority depends on whether Generic Action Overview or guided command input should come first.
 
 Open decisions:
   - DEC-1: next slice after SL-4 completion.
@@ -104,7 +106,7 @@ A completed item must remain readable. Do not use markdown task-list checkboxes 
 | Phase 1 — Command foundation | Short commands work safely and consistently across projects. | SL-1 — Reusable Command Semantics Foundation; SL-2 — Root Command Routing | User command can be traced to owner workflow/example/boundary without hidden edit/package/commit permission. | ✅ DONE / validating |
 | Phase 2 — Goal navigation | User can open repo state and understand current goal/progress/path. | SL-3 — Goal Map Format And Living Workstream | Living map has snapshot, roadmap, readable scenarios/slices, next action, open decisions and visible evidence. | ✅ DONE / validating |
 | Phase 3 — Critical thinking | User can ask for honest evaluation instead of automatic agreement. | SL-4 — Critical Review Command | `крит` command has semantics, aliases, example, route and honest-verdict behavior. | ✅ DONE / validating |
-| Phase 4 — Generic action outcomes | Meaningful non-file actions become reviewable. | SL-5 — Generic Action Overview | Non-file action can be summarized structurally without weakening file-specific `Итог`. | ⏭ NEXT candidate |
+| Phase 4 — Generic action outcomes | Meaningful non-file actions become reviewable. | SL-5 — Generic Action Overview | Non-file action can be summarized structurally without weakening file-specific `План файл-обновление`. | ⏭ NEXT candidate |
 | Phase 5 — Guided command input | User can issue short commands without long chat forgetting execution details. | SL-6 — Tampermonkey Guided Prompt Helper | Expansion includes command label, execution reminders, key boundaries and command-specific details. | ⏭ NEXT candidate |
 
 ### 1.1 Phase 1 — Command foundation
@@ -552,7 +554,7 @@ Visible evidence:
 | Reliable command understanding | User writes short commands and the chat understands mode, boundaries, expected output and permissions. | partially implemented | SC-1 — Short Command Works With Boundaries | SL-1 — Reusable Command Semantics Foundation; SL-2 — Root Command Routing |
 | Honest critical review | User can ask the chat to evaluate a plan or idea as a hypothesis, not as accepted truth. | planned | SC-2 — Honest Critical Review On Demand | SL-4 — Critical Review Command |
 | Goal navigation | User can open this repo file and immediately see the current goal, progress, active slice, next action and decisions. | validating / being improved | SC-3 — Current Goal Map Is Openable And Useful | SL-3 — Goal Map Format And Living Workstream |
-| Generic action outcome | User can get a structured outcome for meaningful non-file actions without misusing file-specific `Итог`. | planned | SC-4 — Generic Action Outcome Is Available | SL-5 — Generic Action Overview |
+| Generic action outcome | User can get a structured outcome for meaningful non-file actions without misusing file-specific `План файл-обновление`. | planned | SC-4 — Generic Action Outcome Is Available | SL-5 — Generic Action Overview |
 | Guided command prompts | Tampermonkey expands short commands into editable prompts with execution reminders, key boundaries and command-specific details. | planned | SC-5 — Tampermonkey Expands Commands Into Guided Prompts | SL-6 — Tampermonkey Guided Prompt Helper |
 
 ## 3. Scenario And Slice Map
@@ -562,7 +564,7 @@ Visible evidence:
 | SC-1 — Short Command Works With Boundaries | Short command triggers the right working mode without hidden edit/package/commit permission. | aliases, meaning, expected behavior, boundaries and examples exist | SL-1, SL-2 |
 | SC-2 — Honest Critical Review On Demand | Chat challenges plans honestly when asked, including risks and alternatives. | `крит` command has semantics, example and route | SL-4 |
 | SC-3 — Current Goal Map Is Openable And Useful | Opening this file shows current state and route to the goal. | snapshot + roadmap + readable scenarios/slices stay updated | SL-3 |
-| SC-4 — Generic Action Outcome Is Available | Non-file actions can get a structured outcome summary. | generic action overview exists and does not weaken file-specific `Итог` | SL-5 |
+| SC-4 — Generic Action Outcome Is Available | Non-file actions can get a structured outcome summary. | generic action overview exists and does not weaken file-specific `План файл-обновление` | SL-5 |
 | SC-5 — Tampermonkey Expands Commands Into Guided Prompts | Script expands command labels into prompts that preserve execution details. | palette, preview/edit, insert, no auto-send, reminders/boundaries/details | SL-6 |
 
 ## 4. Work Directions / Slices
@@ -591,7 +593,7 @@ Each slice must show:
 | SL-2 — Root Command Routing | The root use-case map routes user commands to owner workflows and examples. | Update root use-case rows and example references without embedding long examples. | done / validating | Keep future command examples linked from root map when they become current. |
 | SL-3 — Goal Map Format And Living Workstream | User can open the repo file and understand current goal/progress. | Maintain owner/template/example and this living map with snapshot, roadmap, evidence and next action. | validating / being improved | Validate readability and update structure if needed. |
 | SL-4 — Critical Review Command | User can ask the chat not to agree automatically. | Define `крит`, aliases, boundaries, example and root route. | planned | Design command semantics and example. |
-| SL-5 — Generic Action Overview | Meaningful non-file actions can be summarized structurally. | Design generic overview while keeping file-specific `Итог` separate. | planned | Design owner/format/example. |
+| SL-5 — Generic Action Overview | Meaningful non-file actions can be summarized structurally. | Design generic overview while keeping file-specific `План файл-обновление` separate. | planned | Design owner/format/example. |
 | SL-6 — Tampermonkey Guided Prompt Helper | Short commands become useful guided prompts for long chats. | Build palette + expansion schema with reminders, boundaries and details. | planned | Define MVP command list and expansion schema. |
 
 ## 5. Current State Overview
@@ -605,7 +607,7 @@ Each slice must show:
 | Use-case routing | done / validating | Goal Map and reusable command examples are routed from the root map; keep future command examples linked when they become current. |
 | Roadmap/evidence readability | done / validating | DONE items include visible evidence plus expandable details; status synchronization rule now prevents stale `NOW` markers. |
 | Critical-thinking command | done / validating | `крит` has response workflow semantics, root route and reusable command example. |
-| Generic Action Overview | next candidate | Need generic non-file overview without weakening file-specific `Итог`. |
+| Generic Action Overview | next candidate | Need generic non-file overview without weakening file-specific `План файл-обновление`. |
 | Tampermonkey MVP | next candidate | Need command palette, expansion model, preview/edit and insert behavior. |
 
 ## 6. Detailed Scenario Definitions
@@ -665,7 +667,7 @@ Desired behavior:
   After meaningful non-file work, user can ask for an action-level overview.
 
 Acceptance:
-  - Generic action overview does not break file-specific `Итог`.
+  - Generic action overview does not break file-specific `План файл-обновление`.
   - Overview states action, status, scope, what changed, why, checked/not checked, owner and next action.
 
 Status:
@@ -871,7 +873,7 @@ Artifacts / actions:
 
 Steps:
   - ⬜ TODO — Design generic action overview format.
-  - ⬜ TODO — Keep File Update Overview / file-specific `Итог` as specialization.
+  - ⬜ TODO — Keep File Update Overview / file-specific `План файл-обновление` as specialization.
   - ⬜ TODO — Add reusable example.
   - ⬜ TODO — Route command/use-case rows.
   - ⬜ TODO — Verify on a non-file decision or critical review.

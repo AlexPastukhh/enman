@@ -1423,3 +1423,40 @@ Follow-ups:
 Notes:
   This cleanup keeps the living map consistent with the current planning state before selecting the next slice.
 
+### 2026-06-02 - Renamed file-update planning output to Plan File Update
+
+Date:
+  2026-06-02
+Action:
+  Clarified the file/docs/code/archive update planning output as `План файл-обновление`.
+Type:
+  response command / file-update planning output naming
+Status:
+  applied
+Why:
+  The previous `Итог` name was too generic and could conflict with future generic action/update summaries. The file-update planning block needed the word `файл` in the user-facing command/name.
+Changed files:
+  - planning/documentation/file-update-overview-workflow.md
+  - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+  - planning/documentation/reviewable-agent-output-and-commands-workflow.md
+  - planning/planning-use-case-map.md
+  - planning/documentation/examples/README.md
+  - planning/documentation/examples/PLAN-FILE-UPDATE-COMMAND-EXAMPLE.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added `план файл-обновление`, `спланируй файл-обновление`, `спланируй обновление файлов`, `спланируй архив`, `план архива`, `file update plan` and `archive plan` as file-update planning command aliases.
+  - Kept `итог` as legacy shorthand only when file/change/update context is active.
+  - Updated the File Update Overview template heading to `## План файл-обновление`.
+  - Added a reusable command example for planned-mode file/archive update planning.
+  - Updated the command-system/Tampermonkey living Goal Map to preserve the future Generic Action Overview boundary.
+Not changed:
+  - No Generic Action Overview implementation added.
+  - No Tampermonkey userscript added.
+  - No archive layout/default changed.
+  - No domain/scenario/slice/source docs edited.
+Follow-ups:
+  Decide whether the next slice is Generic Action Overview or Tampermonkey command projection planning.
+Notes:
+  `План файл-обновление` is file/update-specific. Future generic action summaries should use a separate command/output family.
+

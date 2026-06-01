@@ -1,7 +1,7 @@
 # File Update Overview Template
 
 Status: current reusable output template  
-Scope: exact Markdown structure for the final File Update Overview / `Итог` block used at the end of non-trivial file, documentation or code update answers
+Scope: exact Markdown structure for the final File Update Overview / `План файл-обновление` block used at the end of non-trivial file, documentation, code or archive update planning/review answers
 
 Use with:
 
@@ -14,7 +14,7 @@ Do not use this block as the whole answer when the task requires a Level 2 or Le
 ## Template
 
 ```markdown
-## Итог
+## План файл-обновление
 
 **Статус:** <planned / archive created / diff checked / can commit / pushed / blocked>
 
@@ -97,12 +97,12 @@ R
 ## Rules
 
 ```text
-- Use normal Markdown in chat output, not an outer code fence around the final `Итог`.
+- Use normal Markdown in chat output, not an outer code fence around the final `План файл-обновление`.
 - Prefer grouped Markdown tables for multi-file or multi-group overviews.
 - Do not use one giant table for everything by default; preserve logical groups.
 - Keep table cells short. Put detailed reasoning in the main answer.
 - Include delivery-safety rows in `Проверка` for file-update planning.
-- Keep `Итог` as the last block when it is present.
-- Do not use `Итог` as a generic conclusion for answers without file/change/update context.
-- Use `Краткое саммари` before `Итог` when a contextual summary is useful.
+- Keep `План файл-обновление` as the last file/change/update block when it is present.
+- Do not use `План файл-обновление` or legacy `Итог` as a generic conclusion for answers without file/change/update context.
+- Use `Краткое саммари` before `План файл-обновление` when a contextual summary is useful.
 ```

@@ -1,13 +1,13 @@
-# File Update Overview Workflow
+# Plan File Update Overview Workflow
 
 Status: current documentation-layer workflow  
-Scope: when and how to produce the final structured File Update Overview / `Итог` block for non-trivial file, documentation or code update answers
+Scope: when and how to produce the final structured File Update Overview / `План файл-обновление` block for non-trivial file, documentation, code or archive update planning/review answers
 
 ## 1. Purpose
 
-This workflow owns the process for producing a `File Update Overview` / `Итог` block.
+This workflow owns the process for producing a `File Update Overview` / `План файл-обновление` block.
 
-A File Update Overview is a final summary block that shows:
+A File Update Overview / `План файл-обновление` is a final file-update planning/actual-state block that shows:
 
 ```text
 - which files are new;
@@ -21,7 +21,23 @@ A File Update Overview is a final summary block that shows:
 - what the next action is.
 ```
 
-It is meant to help a person or another chat understand the system impact of an update without re-reading the whole answer or diff.
+It is meant to help a person or another chat understand the system impact of a file/docs/code/archive update without re-reading the whole answer or diff.
+
+Canonical user-facing name:
+
+```text
+План файл-обновление
+```
+
+Use this name for file/docs/code/archive update planning answers and for the same file-update overview after artifacts/diffs exist.
+
+Legacy shorthand:
+
+```text
+итог
+```
+
+`итог` is allowed only as a legacy shorthand when the context is clearly file/change/update-related. For generic human summaries use `Краткое саммари`. For future non-file action summaries, use the separate Generic Action Overview workstream.
 
 ## 2. Relationship To Response Levels
 
@@ -44,12 +60,12 @@ main reviewable answer
 +
 Краткое саммари, when useful
 +
-File Update Overview / Итог at the end, when file/change/update context applies
+File Update Overview / План файл-обновление at the end, when file/change/update context applies
 ```
 
 ## 3. When To Use
 
-Use a File Update Overview when an answer plans, creates, reviews or verifies meaningful changes to files or file-like artifacts.
+Use a File Update Overview / `План файл-обновление` when an answer plans, creates, reviews or verifies meaningful changes to files or file-like artifacts.
 
 Typical cases:
 
@@ -108,7 +124,7 @@ Do not use the full File Update Overview for:
 
 A short sentence may be enough for narrow tasks.
 
-Do not use File Update Overview as a generic conclusion. Use `Краткое саммари` for contextual/human summary when there is no file/change/update context.
+Do not use File Update Overview / `План файл-обновление` as a generic conclusion. Use `Краткое саммари` for contextual/human summary when there is no file/change/update context.
 
 ## 5. Logical Grouping Rule
 
@@ -244,7 +260,7 @@ For archive/package work, `Следующее действие` should usually s
 
 ## 10. Source-Of-Truth Boundaries
 
-File Update Overview is a summary format.
+File Update Overview / `План файл-обновление` is a summary format.
 
 It does not own:
 
@@ -263,7 +279,7 @@ Those remain in their owner files.
 
 Use-case maps may reference File Update Overview as an expected output shape, but they must not copy this workflow or template logic.
 
-Examples may demonstrate File Update Overview output, but they must not become the source of truth for the format.
+Examples may demonstrate File Update Overview / `План файл-обновление` output, but they must not become the source of truth for the format.
 
 ## 11. Quality Checklist
 
@@ -286,7 +302,7 @@ Before finalizing an overview, check:
 ## 12. Do Not
 
 ```text
-- Do not use File Update Overview as the whole answer for non-trivial work.
+- Do not use File Update Overview / `План файл-обновление` as the whole answer for non-trivial work.
 - Do not hide source or verification limits inside the overview.
 - Do not duplicate complete workflow logic in the overview.
 - Do not hide delivery safety / large-file / fresh-archive requirements from file-update planning overviews.
