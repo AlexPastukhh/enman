@@ -17,11 +17,13 @@ Scope: reusable documentation architecture invariants for docs systems, with pro
 - [7. Index vs Register vs Source Usage Register](#7-index-vs-register-vs-source-usage-register)
 - [8. Local Notes vs Register](#8-local-notes-vs-register)
 - [9. Template vs Workflow](#9-template-vs-workflow)
+- [9A. Compound Starter Artifact Principle](#9a-compound-starter-artifact-principle)
 - [10. Current Reality, Target, Draft, Archive And Recovery Notes](#10-current-reality-target-draft-archive-and-recovery-notes)
 - [11. Avoid Heavy Current-State Docs](#11-avoid-heavy-current-state-docs)
 - [12. Source-of-Truth / Evidence Hierarchy](#12-source-of-truth--evidence-hierarchy)
 - [12A. Layer Encapsulation And Attention Preservation](#12a-layer-encapsulation-and-attention-preservation)
 - [13. Source / Version Principle](#13-source--version-principle)
+- [13A. Filename-Version Migration Policy](#13a-filename-version-migration-policy)
 - [14. Dependency Cascade Principle](#14-dependency-cascade-principle)
 - [15. Section-Level Sources Principle](#15-section-level-sources-principle)
 - [16. Local Detail + Shared Visibility](#16-local-detail--shared-visibility)
@@ -202,6 +204,7 @@ Every documentation file should have an understandable type. If a document type 
 | Workflow | Algorithm/process for performing a repeated operational task. |
 | Field kit | Reusable setup toolkit for deriving project-specific workflows, profiles, adapters, registers or evidence maps. Not the repeated operational workflow itself. |
 | Template | Exact shape of a draft, section, row, response block or output artifact. |
+| Compound starter artifact | Early-stage owner file that intentionally combines principles, workflow and template for one cohesive concept. The filename must expose the combined responsibility, and examples must live separately. |
 | Index / README | Navigation, read order, file overview and short purpose summaries. |
 | Responsibility map | Where to put information; which file/layer owns what. |
 | Source spec / source set | Canonical or derived source content for a specific domain/project layer. |
@@ -281,6 +284,57 @@ A template should usually include:
 If examples become large, move them into a separate examples file or examples folder.
 
 Examples are supporting artifacts. They demonstrate correct application of an owner workflow, template or use case. They do not own routing logic, command aliases, source modes, output modes, permission boundaries or workflow activation.
+
+## 9A. Compound Starter Artifact Principle
+
+A new documentation concept does not always need separate principles, workflow and template files on day one.
+
+A compound starter artifact is allowed when:
+
+```text
+- the concept is new or still being stabilized;
+- the same review audience owns the principle, workflow and template parts;
+- splitting into three files would create more navigation overhead than clarity;
+- the file has one cohesive conceptual responsibility;
+- the file name explicitly exposes the combined responsibility.
+```
+
+Preferred naming should make the combined type visible, for example:
+
+```text
+<concept>-principles-workflow-template.md
+<concept>-concept-kit.md
+```
+
+The compound file should include clearly separated internal sections:
+
+```text
+- principles / invariants;
+- workflow / process;
+- strict template / exact shape;
+- split-later conditions.
+```
+
+Examples must stay separate from the compound starter artifact.
+
+```text
+<concept>-principles-workflow-template.md
+<concept>-example.md
+```
+
+The separate example demonstrates valid use. It does not own principles, workflow, routing, source modes, output modes or permission boundaries.
+
+Split the compound starter artifact later when:
+
+```text
+- the file becomes large enough that examples or workflow details obscure the principles;
+- different sections have different owners, update cadence or review audience;
+- downstream files need to cite only the workflow or only the template;
+- the template is stable enough to become a reusable exact-shape file;
+- repeated updates make complete replacement difficult to review.
+```
+
+This principle explains why a compound starter artifact can exist. Concrete project route decisions still belong in the relevant use-case map, responsibility map, README or adapter/profile.
 
 ## 10. Current Reality, Target, Draft, Archive And Recovery Notes
 
@@ -396,6 +450,40 @@ The principle lives here. Exact rows live in source usage registers or field-kit
 Use stable source identifiers where possible. In repo-backed projects, repo-relative file paths are usually more stable than informal labels.
 
 Do not introduce section-level version registries everywhere by default. Design them through source/version governance when the need is proven.
+
+## 13A. Filename-Version Migration Policy
+
+Some projects may choose to make source version identity visible in artifact/file names instead of only in a `Doc version:` header.
+
+This is a target migration policy, not an automatic rewrite rule.
+
+Current convention remains valid until an explicit migration batch changes it:
+
+```text
+Doc version: v0.1.0
+```
+
+A filename-version migration must be planned as a dependency-cascade change because renaming a source file changes the path that downstream local `Sources:` blocks, registers, READMEs, use-case maps and examples may reference.
+
+Do not rename files only to move version identity into the filename unless the migration batch also checks and updates:
+
+```text
+- source usage registers;
+- local section `Sources:` blocks;
+- README/index/read-order references;
+- use-case map rows and example references;
+- action-log / migration notes;
+- any project-specific adapter/profile paths.
+```
+
+When filename versions are introduced, keep a stable routing strategy clear:
+
+```text
+- either stable canonical paths point to the latest accepted artifact;
+- or registers/read-order files explicitly name the versioned artifact in use.
+```
+
+Do not mix both models silently. If a project is in transition, mark the transition explicitly and do not remove `Doc version:` headers until the migration is complete and reviewed.
 
 ## 14. Dependency Cascade Principle
 

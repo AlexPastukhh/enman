@@ -48,6 +48,7 @@ This file owns only documentation-layer placement.
 | Information type | Owner file | Notes |
 |---|---|---|
 | Global planning-docs architecture principles | `planning-docs-architecture-principles.md` | Stable invariants, file-type theory, source-of-truth boundaries and no-duplication rules. Not workflow steps, concrete paths or project configuration. |
+| Compound starter artifact principles / naming / split policy | `planning-docs-architecture-principles.md` | Reusable rule for early combined principles + workflow + template owner files, separate examples and split-later conditions. |
 | Documentation-layer portability migration plan | `documentation-layer-portability-migration-plan.md` | Captures pre-split reusability decisions, migration phases and boundaries before candidate copy / principles split / adapter extraction. |
 | Documentation responsibility-zone review process | `documentation-responsibility-zone-review-workflow.md` | How to review existing documentation content and classify reusable principles, specialized profiles, adapter mappings, examples, workflow details and template details. |
 | Documentation-layer placement rules | `documentation-responsibility-map.md` | This file. Use when deciding where documentation-layer information belongs. |
@@ -64,6 +65,7 @@ This file owns only documentation-layer placement.
 | Root use-case map setup field kit | `field-kits/root-use-case-map-field-kit.md` | Active reusable setup kit for deriving one concrete project root use-case map and common command clusters. Not a runtime router. |
 | Scenario/domain/slice route setup field kit | `profiles/scenario-domain-slice-use-case-field-kit.md` | Active profile-specific setup kit for adding scenario/domain/slice route families to a project root use-case map. Not a second map. |
 | Working example coverage decision process | `example-coverage-workflow.md` | Decides whether a new/changed template, workflow output, response command, output mode or draft format needs a working example. |
+| Concrete compound starter artifact for one documentation concept | `<concept>-principles-workflow-template.md` or `<concept>-concept-kit.md` | Use only when one cohesive early concept intentionally combines principles, workflow and template. The example file remains separate. |
 | Documentation-layer working example index | `examples/README.md` | Navigation and coverage index for documentation-layer examples. It does not own routing/source/output/permission logic. |
 | Source usage cascade governance pilot plan | `source-usage-cascade-governance-plan.md` | Governance plan for source usage relationships, layer encapsulation, attention preservation and cascade-review pilots. Not the full future workflow. |
 | Source usage pilot folder/index | `source-usage-pilots/README.md` | Navigation and rules for experimental pilot registers. Permanent register placement is deferred. |
@@ -78,13 +80,14 @@ Classify the new information:
 
 ```text
 1. Information type:
-   architecture principle / workflow step / field-kit setup guidance / adapter-profile mapping / responsibility-zone review / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule / working example / example coverage decision / file update overview process / file update overview template / source usage governance / source usage pilot register / documentation action log entry.
+   architecture principle / workflow step / compound starter artifact / field-kit setup guidance / adapter-profile mapping / responsibility-zone review / response command / plan format / prompt / sync note / navigation item / status rule / local-global sync rule / working example / example coverage decision / file update overview process / file update overview template / source usage governance / source usage pilot register / documentation action log entry.
 
 2. Existing owner:
    Which file above already owns this type?
 
 3. New file needed?
    Only create a file if no owner exists or the existing owner would become overloaded.
+   If the new information is an early cohesive concept that needs principles, workflow and template together, consider one compound starter artifact plus a separate example before splitting it into multiple files.
 
 4. Navigation impact:
    Does README.md need to list the file or adjust read order?
@@ -157,7 +160,9 @@ Suggested suffixes:
 | Adapter / profile | `*-adapter.md`, `*-profile.md` or project-specific profile file when approved |
 | Responsibility map | `*-responsibility-map.md` |
 | Template | `*-template.md` or uppercase `<THING>-TEMPLATE.md` for reusable exact output shapes |
+| Compound starter artifact | `*-principles-workflow-template.md` or `*-concept-kit.md` when one early cohesive concept intentionally combines principles, workflow and template |
 | Examples index / examples folder navigation | `examples/README.md` or `*-examples.md` |
+| Separate example for a compound starter artifact | `*-example.md` or `examples/<CONCEPT>-EXAMPLE.md`, depending on project placement |
 | Source usage pilot folder navigation | `source-usage-pilots/README.md` |
 | Source usage pilot register | `source-usage-pilots/<scope>-source-usage-register.md` |
 | Documentation action log | `documentation-action-log.md` |
@@ -179,6 +184,8 @@ Suggested suffixes:
 - Do not move a paragraph into a project adapter only because it contains a concrete path; extract the reusable principle first.
 - Do not split or migrate active docs-layer responsibilities before the approved portability/candidate workflow says to do so.
 - Do not treat source usage pilot registers as permanent global schema before the pilot is reviewed.
+- Do not put large examples inside a compound starter artifact; keep the example in a separate file.
+- Do not split a new cohesive concept into separate principles/workflow/template files before the split improves ownership, reviewability or navigation.
 - Do not use the action log as the source of truth for rules or unresolved tasks.
 - Do not treat reusable prompts as canonical rules.
 - Do not treat scoped sync notes as reusable workflows.
@@ -201,6 +208,7 @@ The documentation layer is well-routed when:
 - use-case-map workflow and template responsibilities have clear owners;
 - example coverage decisions are made by the example coverage workflow;
 - examples remain supporting artifacts and link to their owner files instead of copying logic;
+- compound starter artifacts are explicitly named, keep their examples separate and record split-later conditions;
 - source usage cascade pilots are discoverable and clearly marked experimental;
 - significant logical documentation actions have concise action-log entries;
 - prompts and sync notes are clearly supporting/scoped artifacts.

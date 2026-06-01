@@ -1283,3 +1283,38 @@ Follow-ups:
   Next recommended slice is F7-CMD-2: add the critical-thinking command `крит`, including aliases, honest evaluation behavior, boundaries, example coverage and root route.
 Notes:
   Examples remain demonstration-only. Root use-case map remains the concrete router. Workflows/templates keep command semantics and output rules.
+
+### 2026-06-01 - Documented compound starter artifact and filename-version policy
+
+Date:
+  2026-06-01
+Action:
+  Documented the reusable compound starter artifact rule and filename-version migration policy.
+Type:
+  documentation architecture / reusable concept-artifact governance
+Status:
+  applied
+Why:
+  The Goal Map owner already uses a combined principles + workflow + template file, and future concepts such as a goal map or similar planning concepts need a safe way to start with one strict compound owner file while keeping examples separate. The repo also needed to clarify that moving version identity from `Doc version:` headers into filenames is a planned migration, not an incidental rename.
+Changed files:
+  - planning/documentation/planning-docs-architecture-principles.md
+  - planning/documentation/documentation-responsibility-map.md
+  - planning/planning-use-case-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added a compound starter artifact principle for early cohesive concepts that combine principles, workflow and template.
+  - Required compound starter artifact names to expose the combined responsibility and keep examples in separate files.
+  - Added split-later conditions for when a compound starter artifact should become separate principles/workflow/template files.
+  - Added a filename-version migration policy that keeps current `Doc version:` headers valid until an explicit migration updates paths, registers, local Sources blocks, README/read-order references and use-case map links.
+  - Routed new concept / planning file creation through the root use-case map to the architecture principles, documentation responsibility map and example coverage workflow.
+Not changed:
+  - No filename-version migration performed.
+  - No files renamed.
+  - No `Doc version:` headers removed.
+  - No Goal Map files changed.
+  - No domain/scenario/slice/source files edited.
+  - No critical-review command added.
+Follow-ups:
+  After this policy is reviewed, continue with the next command-system workstream slice, currently F7-CMD-2: add the critical-review command `крит`.
+Notes:
+  This batch records the reusable rule behind the already-applied Goal Map compound owner naming. It does not make filename versions the active repo-wide convention yet.
