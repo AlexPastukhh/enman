@@ -21,13 +21,13 @@ planning/documentation/examples/README.md
 ## 0. Current Snapshot
 
 Last updated:
-  2026-06-02 / after TM-0 command projection planning selection
+  2026-06-02 / after TM-0 inserted command body documentation
 
 Current goal:
   Build a transferable command system and Tampermonkey prompt helper for long-running chats across projects.
 
 Current focus:
-  TM-0 — Tampermonkey command projection planning.
+  TM-0 — Tampermonkey command projection planning / implementation docs preparation.
 
 Active slice:
   SL-6 — Tampermonkey Guided Prompt Helper
@@ -48,6 +48,7 @@ Already available:
   - Goal Map status synchronization rule exists.
   - Goal Map sync command `синх карта` exists for synced brief + archive output.
   - Tampermonkey command projection plan exists.
+  - Tampermonkey inserted command bodies are documented for MVP-1 and MVP-2.
 
 Latest completed:
   - Added root Goal Map owner/example.
@@ -62,12 +63,13 @@ Latest completed:
   - Clarified file-update planning output as `План файл-обновление`.
   - Added Goal Map Sync command `синх карта` and synchronized stale map statuses.
   - Deferred Generic Action Overview and selected TM-0 command projection planning.
+  - Documented Tampermonkey inserted command bodies and route-read rule.
 
 Next action:
   Continue TM-0:
-    define MVP command profiles, command envelope fields, route-read rule, storage choice and UI boundaries.
+    create implementation docs under `tools/tampermonkey/` and convert command bodies into script profile data.
 Recommended next action:
-  Apply and review this TM-0 planning sync, then use the new projection plan to design the Tampermonkey helper implementation.
+  Apply and review this command-body documentation update, then create Tampermonkey implementation docs infrastructure.
 
 Open decisions:
   - DEC-1: resolved — Generic Action Overview deferred; TM-0 selected.
@@ -915,9 +917,10 @@ Artifacts / actions:
   - optional project profile config
 
 Steps:
-  - ▶ NOW — Define MVP command list.
-  - ▶ NOW — Define command expansion schema with execution reminders and key boundaries.
-  - ▶ NOW — Decide MVP storage: inline userscript vs config/profile.
+  - ✅ DONE — Define MVP command list.
+  - ✅ DONE — Define command expansion schema with execution reminders and key boundaries.
+  - ✅ DONE — Decide MVP storage: inline userscript vs config/profile.
+  - ✅ DONE — Document inserted command bodies for MVP-1 and MVP-2.
   - ⬜ TODO — Build floating button / command palette UI.
   - ⬜ TODO — Add preview/edit before insert.
   - ⬜ TODO — Insert expanded prompt into ChatGPT input.
@@ -953,7 +956,8 @@ Status:
 ## 9. Current Focus
 
 TM-0 — Tampermonkey command projection planning:
-  - define how the helper projects use-case-map commands into editable prompt envelopes;
+  - command bodies are now documented as compact prompts;
+  - route fields stay as profile metadata, not pasted into the command body;
   - keep `planning/planning-use-case-map.md` and linked owner workflows as source of truth;
   - keep Generic Action Overview deferred.
 
@@ -962,15 +966,14 @@ Current active slice:
 
 ## 10. Next Action
 
-Use the Tampermonkey command projection plan to decide the MVP command list and then plan implementation:
+Use the Tampermonkey command projection plan to create implementation docs:
 
 ```text
-1. Confirm MVP-1 command families.
-2. Confirm command envelope fields.
-3. Confirm route-read rule and key-reminders policy.
-4. Decide storage for MVP: inline command profiles first, later project profile compatibility.
-5. Only then create `tools/tampermonkey/chat-command-palette.user.js`.
+1. Create `tools/tampermonkey/README.md`.
+2. Create `tools/tampermonkey/COMMAND-PROFILES.md`.
+3. Convert documented command bodies into script profile data.
+4. Only then create `tools/tampermonkey/chat-command-palette.user.js`.
 ```
 
 Recommended next action:
-  Start from `planning/workstreams/tampermonkey-command-projection-plan.md` and turn its MVP-1 command profiles into a small implementation plan.
+  Add implementation documentation infrastructure before writing the userscript.

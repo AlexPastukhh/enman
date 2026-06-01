@@ -1525,3 +1525,34 @@ Follow-ups:
 Notes:
   Tampermonkey profiles are projections from `planning/planning-use-case-map.md` and linked owner workflows. They must not become source of truth.
 
+### 2026-06-02 - Documented Tampermonkey inserted command bodies and route-read rule
+
+Date:
+  2026-06-02
+Action:
+  Updated the Tampermonkey command projection plan with a mandatory route-read rule and concrete inserted command bodies for MVP-1 and MVP-2 command groups.
+Type:
+  Tampermonkey planning / command projection documentation
+Status:
+  applied
+Why:
+  The helper should not paste full use-case map route fields into chat. It should insert compact command bodies that remind the chat to read the source-of-truth route and linked owner/example files when needed.
+Changed files:
+  - planning/workstreams/tampermonkey-command-projection-plan.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Made `route_read_rule` explicit for every inserted command body.
+  - Added the shared inserted command body rule: metadata stays in profiles; prompt body stays compact.
+  - Documented inserted bodies for the selected MVP-1 commands: `давай архив`, `арх`, `синх карта`, `план файл-обновление`, `крит`, `планируй`, `кц`, `обс`.
+  - Documented inserted bodies for MVP-2 helper commands, excluding `полный конец` as a standalone Tampermonkey command.
+Not changed:
+  - No Tampermonkey userscript added.
+  - No Generic Action Overview implementation added.
+  - No use-case command semantics changed.
+  - No archive layout/default changed.
+Follow-ups:
+  Create implementation docs under `tools/tampermonkey/` and convert the documented bodies into script profile data.
+Notes:
+  The inserted bodies are projections only. The source of truth remains `planning/planning-use-case-map.md` and linked owner workflows/examples.
+

@@ -47,7 +47,7 @@ source_of_truth:
 
 route_read_rule:
   If you have not read this command route and its linked owner/example files in this chat, read them before answering.
-  If you have read them but do not remember any required rule, reread from `planning/planning-use-case-map.md` before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
   Do not rely only on this prompt when command behavior is uncertain.
 
 key_reminders:
@@ -82,7 +82,6 @@ The envelope should be inserted into chat input, not auto-sent by default.
 карта цели / где мы / прогресс
 кп / key points
 саммари
-полный конец
 давай драфт
 обнови / актуализируй
 уточни
@@ -186,6 +185,662 @@ key_reminders:
   - State what was checked and what remains unavailable.
 ```
 
+## 5A. Inserted Command Body Rule
+
+Tampermonkey stores profile metadata separately from the inserted prompt body.
+
+Keep these outside the inserted body unless the chat explicitly needs them:
+
+```text
+- active_context behavior;
+- no_active_context behavior;
+- traversal_depth;
+- read_source_mode;
+- expected_output;
+- owner file lists;
+- long use-case map row text.
+```
+
+Every inserted command body must stay compact and must include:
+
+```text
+- selected command;
+- short command family;
+- source_of_truth;
+- route_read_rule;
+- key_reminders;
+- user_target.
+```
+
+The `route_read_rule` is mandatory for every command body, including simple modifiers and suppressors.
+
+Canonical rule:
+
+```text
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+```
+
+For simple commands with no dedicated owner/example file, keep the same meaning and use `if needed` in the source-of-truth line.
+
+## 5B. Inserted Command Bodies
+
+These bodies are the first Tampermonkey projection candidates.
+
+They are not source of truth. They are compact prompts that tell the chat where to read the real route and what not to forget.
+
+### MVP-1 — high-risk / high-value commands
+
+#### replacement_archive.create / `давай архив`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  давай архив
+
+command_family:
+  `давай архив` / `собери архив` / `replacement package`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Output-package mode, not archive read-source mode.
+  - Use active approved scope; ask only blocking questions.
+  - Do not put apply commands only inside the archive.
+  - Give apply/diff commands in chat.
+  - Save full diff to file and copy it to clipboard.
+  - Ask user to paste diff before commit.
+  - Do not commit or push.
+
+user_target:
+  <what archive/package should include>
+
+[/ENMAN_COMMAND]
+```
+
+#### archive_source.use / `арх`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  арх
+
+command_family:
+  `арх` / `из архива` / `use archive`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Read-source mode, not output-package mode.
+  - Use provided/latest archive as source snapshot.
+  - Do not create replacement archive unless separately requested.
+  - State archive freshness/source limits when relevant.
+
+user_target:
+  <what should be checked from archive>
+
+[/ENMAN_COMMAND]
+```
+
+#### goal_map.sync / `синх карта`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  синх карта
+
+command_family:
+  `синх карта` / `синхронизируй карту` / `синх карта архив`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Inspect the living Goal Map first.
+  - Output Goal Map Brief in synced target state.
+  - Create narrow map-sync archive in the same response.
+  - Include apply/diff commands in chat.
+  - Do not start the next functional slice.
+  - End with `План файл-обновление`.
+
+user_target:
+  <goal/map target or current active workstream>
+
+[/ENMAN_COMMAND]
+```
+
+#### file_update.plan / `план файл-обновление`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  план файл-обновление
+
+command_family:
+  `план файл-обновление` / `спланируй обновление файлов` / `спланируй архив`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Plan file/docs/code/archive update only.
+  - End with `План файл-обновление` in planned mode.
+  - Include files, responsibilities, `Что`, `Почему`, boundaries, checks and next action.
+  - Do not edit files.
+  - Do not create archive unless separately requested.
+
+user_target:
+  <what update/archive should be planned>
+
+[/ENMAN_COMMAND]
+```
+
+#### critical_review.apply / `крит`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  крит
+
+command_family:
+  `крит` / `критически оцени` / `critical review`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Treat target as hypothesis, not accepted truth.
+  - Give honest verdict.
+  - Include strong points, weak points, risks, assumptions and alternatives.
+  - Do not disagree just to disagree.
+  - Do not edit files, create archives, commit or push.
+
+user_target:
+  <what should be critically reviewed>
+
+[/ENMAN_COMMAND]
+```
+
+#### plan.now / `планируй`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  планируй
+
+command_family:
+  `планируй` / `распланируй` / `plan`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Plan now, do not defer.
+  - Use living Goal Map when active workstream exists.
+  - Choose concrete next slice/step.
+  - State scope, boundary, expected evidence and next action.
+  - Do not edit files or create archive unless separately requested.
+
+user_target:
+  <what should be planned>
+
+[/ENMAN_COMMAND]
+```
+
+#### goal_map.brief / `кц`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  кц
+
+command_family:
+  `кц` / `карта цели кратко` / `goal map brief`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Output compact Goal Map Brief.
+  - Current slice expanded.
+  - Other slices status-only.
+  - Use detailed slice statuses, not roadmap phase statuses.
+  - If map is stale, say so.
+
+user_target:
+  <goal/map target or current active workstream>
+
+[/ENMAN_COMMAND]
+```
+
+#### context_recheck.apply / `обс`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  обс
+
+command_family:
+  `обс` / `перепроверь обсуждение` / `context recheck`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Re-check relevant prior discussion.
+  - Preserve accepted decisions and constraints.
+  - State what was checked and what remains unavailable.
+  - Combine with the underlying task route.
+
+user_target:
+  <what discussion/context should be rechecked>
+
+[/ENMAN_COMMAND]
+```
+
+### MVP-2 — useful command helpers
+
+#### goal_map.full / `карта цели`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  карта цели
+
+command_family:
+  `карта цели` / `где мы` / `прогресс`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route if needed.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Full Goal Map, not compact brief.
+  - Show current goal, current state, slices, decisions and next action.
+  - Say whether the map needs sync.
+
+user_target:
+  <goal/map target>
+
+[/ENMAN_COMMAND]
+```
+
+#### output.key_points / `кп`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  кп
+
+command_family:
+  `кп` / `key points`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route if needed.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Add `Key points first`.
+  - Key points mirror the main answer.
+  - Do not replace the detailed answer.
+  - Do not force fixed labels.
+
+user_target:
+  <answer/context>
+
+[/ENMAN_COMMAND]
+```
+
+#### output.summary / `саммари`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  саммари
+
+command_family:
+  `саммари`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route if needed.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Add `Краткое саммари`.
+  - Use fixed summary order.
+  - This is not `План файл-обновление`.
+
+user_target:
+  <answer/context>
+
+[/ENMAN_COMMAND]
+```
+
+#### draft.show / `давай драфт`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  давай драфт
+
+command_family:
+  `драфт` / `давай драфт` / `покажи драфт`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route if needed.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Show/update active draft if clear.
+  - Ask target if no active draft is clear.
+  - Do not silently broaden scope.
+
+user_target:
+  <draft target or current active draft>
+
+[/ENMAN_COMMAND]
+```
+
+#### active.update / `обнови`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  обнови
+
+command_family:
+  `обнови` / `обнови драфт` / `актуализируй`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route if needed.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Apply latest discussion deltas.
+  - Target active draft/answer/plan.
+  - Ask target unless obvious.
+  - Say “already current” if nothing changed.
+
+user_target:
+  <what should be updated>
+
+[/ENMAN_COMMAND]
+```
+
+#### active.clarify / `уточни`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  уточни
+
+command_family:
+  `уточни`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route if needed.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Same scope.
+  - More precise wording/boundary.
+  - Do not expand or change target silently.
+
+user_target:
+  <what should be clarified>
+
+[/ENMAN_COMMAND]
+```
+
+#### active.expand / `расширь`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  расширь
+
+command_family:
+  `расширь`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route if needed.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Add depth/examples/edge cases.
+  - Do not silently change scope.
+  - Mention scope note if expansion could be ambiguous.
+
+user_target:
+  <what should be expanded>
+
+[/ENMAN_COMMAND]
+```
+
+#### draft.diff / `отличия драфта`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  отличия драфта
+
+command_family:
+  `отличия драфта` / `draft diff`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route if needed.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Compare active draft with previous version.
+  - Prefer draft diff over key points for draft updates.
+  - Ask target if no active draft is clear.
+
+user_target:
+  <draft target>
+
+[/ENMAN_COMMAND]
+```
+
+#### output.suppress_key_points / `без кп`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  без кп
+
+command_family:
+  `без кп` / `без key points`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route if needed.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Suppress only `Key points first`.
+  - Do not change task content.
+
+user_target:
+  <answer/context>
+
+[/ENMAN_COMMAND]
+```
+
+#### output.suppress_summary / `без саммари`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  без саммари
+
+command_family:
+  `без саммари`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route if needed.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Suppress only `Краткое саммари`.
+  - Do not change task content.
+
+user_target:
+  <answer/context>
+
+[/ENMAN_COMMAND]
+```
+
+#### output.suppress_file_update_overview / `без план файл-обновления`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  без план файл-обновления
+
+command_family:
+  `без план файл-обновления` / `без итога`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read the owner / linked files for this command route if needed.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Suppress only `План файл-обновление`.
+  - Do not suppress `Краткое саммари` unless separately requested.
+  - Do not change task content.
+
+user_target:
+  <answer/context>
+
+[/ENMAN_COMMAND]
+```
+
 ## 6. Storage Decision
 
 MVP storage:
@@ -237,9 +892,9 @@ MVP UI should support:
 After this planning file lands:
 
 ```text
-1. Confirm MVP-1 command list.
-2. Convert the MVP-1 profiles into a minimal userscript data structure.
-3. Build command palette / preview / insert behavior.
-4. Add `tools/tampermonkey/README.md`.
+1. Use the documented command bodies as the first profile body source.
+2. Convert MVP-1 profiles into a minimal userscript data structure.
+3. Create implementation infrastructure docs under `tools/tampermonkey/`.
+4. Build command palette / preview / insert behavior.
 5. Manual browser test.
 ```
