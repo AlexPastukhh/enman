@@ -887,14 +887,39 @@ MVP UI should support:
 - The helper only inserts a better prompt for the chat to execute.
 ```
 
-## 9. Next Implementation Step
+## 9. Implementation Documentation Infrastructure
+
+Implementation docs:
+
+```text
+tools/tampermonkey/README.md
+tools/tampermonkey/IMPLEMENTATION-NOTES.md
+```
+
+Responsibility split:
+
+```text
+planning/workstreams/tampermonkey-command-projection-plan.md
+  Owns projection planning and documented inserted command bodies.
+
+tools/tampermonkey/README.md
+  Owns implementation entrypoint and quick orientation.
+
+tools/tampermonkey/IMPLEMENTATION-NOTES.md
+  Owns working implementation notes, accepted decisions, use cases, text UI sketches, external source checks and doc-reading map.
+```
+
+`IMPLEMENTATION-NOTES.md` is intentionally a compound notes file first. It can later be split into smaller implementation files after the helper shape stabilizes.
+
+
+## 10. Next Implementation Step
 
 After this planning file lands:
 
 ```text
 1. Use the documented command bodies as the first profile body source.
-2. Convert MVP-1 profiles into a minimal userscript data structure.
-3. Create implementation infrastructure docs under `tools/tampermonkey/`.
+2. Create implementation infrastructure docs under `tools/tampermonkey/`.
+3. Convert MVP-1 profiles into a minimal userscript data structure.
 4. Build command palette / preview / insert behavior.
 5. Manual browser test.
 ```

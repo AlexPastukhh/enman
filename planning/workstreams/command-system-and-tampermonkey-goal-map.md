@@ -21,13 +21,13 @@ planning/documentation/examples/README.md
 ## 0. Current Snapshot
 
 Last updated:
-  2026-06-02 / after TM-0 inserted command body documentation
+  2026-06-02 / after TM-1 implementation notes infrastructure
 
 Current goal:
   Build a transferable command system and Tampermonkey prompt helper for long-running chats across projects.
 
 Current focus:
-  TM-0 — Tampermonkey command projection planning / implementation docs preparation.
+  TM-1 — Tampermonkey implementation docs infrastructure.
 
 Active slice:
   SL-6 — Tampermonkey Guided Prompt Helper
@@ -49,6 +49,8 @@ Already available:
   - Goal Map sync command `синх карта` exists for synced brief + archive output.
   - Tampermonkey command projection plan exists.
   - Tampermonkey inserted command bodies are documented for MVP-1 and MVP-2.
+  - Tampermonkey implementation docs entrypoint exists.
+  - Tampermonkey implementation notes file exists.
 
 Latest completed:
   - Added root Goal Map owner/example.
@@ -64,12 +66,13 @@ Latest completed:
   - Added Goal Map Sync command `синх карта` and synchronized stale map statuses.
   - Deferred Generic Action Overview and selected TM-0 command projection planning.
   - Documented Tampermonkey inserted command bodies and route-read rule.
+  - Added Tampermonkey implementation docs infrastructure and implementation notes.
 
 Next action:
-  Continue TM-0:
-    create implementation docs under `tools/tampermonkey/` and convert command bodies into script profile data.
+  Continue TM-1:
+    convert documented command bodies into script profile data and prepare the first userscript skeleton.
 Recommended next action:
-  Apply and review this command-body documentation update, then create Tampermonkey implementation docs infrastructure.
+  Apply and review this implementation-notes archive, then plan the first userscript skeleton.
 
 Open decisions:
   - DEC-1: resolved — Generic Action Overview deferred; TM-0 selected.
@@ -912,8 +915,9 @@ Work direction:
 
 Artifacts / actions:
   - `planning/workstreams/tampermonkey-command-projection-plan.md`
-  - `tools/tampermonkey/chat-command-palette.user.js`
   - `tools/tampermonkey/README.md`
+  - `tools/tampermonkey/IMPLEMENTATION-NOTES.md`
+  - `tools/tampermonkey/chat-command-palette.user.js`
   - optional project profile config
 
 Steps:
@@ -921,6 +925,8 @@ Steps:
   - ✅ DONE — Define command expansion schema with execution reminders and key boundaries.
   - ✅ DONE — Decide MVP storage: inline userscript vs config/profile.
   - ✅ DONE — Document inserted command bodies for MVP-1 and MVP-2.
+  - ✅ DONE — Create implementation docs entrypoint and implementation notes.
+  - ⬜ TODO — Convert documented command bodies into script profile data.
   - ⬜ TODO — Build floating button / command palette UI.
   - ⬜ TODO — Add preview/edit before insert.
   - ⬜ TODO — Insert expanded prompt into ChatGPT input.
@@ -955,9 +961,9 @@ Status:
 
 ## 9. Current Focus
 
-TM-0 — Tampermonkey command projection planning:
-  - command bodies are now documented as compact prompts;
-  - route fields stay as profile metadata, not pasted into the command body;
+TM-1 — Tampermonkey implementation docs infrastructure:
+  - implementation entrypoint and implementation notes are now introduced;
+  - the notes file collects accepted decisions, use cases, UI sketches, possible capabilities, external sources and doc-reading map;
   - keep `planning/planning-use-case-map.md` and linked owner workflows as source of truth;
   - keep Generic Action Overview deferred.
 
@@ -966,14 +972,15 @@ Current active slice:
 
 ## 10. Next Action
 
-Use the Tampermonkey command projection plan to create implementation docs:
+Use the Tampermonkey implementation notes to prepare the first userscript skeleton:
 
 ```text
-1. Create `tools/tampermonkey/README.md`.
-2. Create `tools/tampermonkey/COMMAND-PROFILES.md`.
-3. Convert documented command bodies into script profile data.
-4. Only then create `tools/tampermonkey/chat-command-palette.user.js`.
+1. Convert documented command bodies into inline script profile data.
+2. Define minimal command palette UI skeleton.
+3. Define preview/edit/insert behavior.
+4. Create `tools/tampermonkey/chat-command-palette.user.js`.
+5. Manual browser test.
 ```
 
 Recommended next action:
-  Add implementation documentation infrastructure before writing the userscript.
+  Plan the first userscript skeleton without adding external profile loading yet.

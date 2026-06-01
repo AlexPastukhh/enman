@@ -1556,3 +1556,37 @@ Follow-ups:
 Notes:
   The inserted bodies are projections only. The source of truth remains `planning/planning-use-case-map.md` and linked owner workflows/examples.
 
+### 2026-06-02 - Added Tampermonkey implementation notes infrastructure
+
+Date:
+  2026-06-02
+Action:
+  Added Tampermonkey implementation documentation infrastructure and a compound implementation notes file.
+Type:
+  Tampermonkey implementation planning / documentation infrastructure
+Status:
+  applied
+Why:
+  The command projection plan now documents inserted command bodies, but implementation work also needs a place for accepted decisions, detailed use cases, possible capabilities, text UI sketches, external source checks and repo-doc reading guidance before code is written.
+Changed files:
+  - tools/tampermonkey/README.md
+  - tools/tampermonkey/IMPLEMENTATION-NOTES.md
+  - planning/workstreams/tampermonkey-command-projection-plan.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added `tools/tampermonkey/README.md` as the implementation entrypoint.
+  - Added `tools/tampermonkey/IMPLEMENTATION-NOTES.md` as a controlled compound notes file for implementation details and decisions.
+  - Added responsibility split between projection plan, implementation README, implementation notes and future userscript.
+  - Documented implementation principles, use cases, possible capabilities, text UI visualization, command profile data shape, docs-to-read map, external sources to check and future split candidates.
+  - Updated the living Goal Map to show implementation docs infrastructure as the current TM-1 progress.
+Not changed:
+  - No Tampermonkey userscript added.
+  - No Generic Action Overview implementation added.
+  - No use-case command semantics changed.
+  - No archive layout/default changed.
+Follow-ups:
+  Convert documented command bodies into inline userscript profile data and plan the first userscript skeleton.
+Notes:
+  `IMPLEMENTATION-NOTES.md` is intentionally a compound notes file first. It may be split into focused implementation docs after the helper shape stabilizes.
+
