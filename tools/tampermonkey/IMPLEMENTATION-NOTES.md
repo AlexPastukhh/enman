@@ -636,7 +636,68 @@ External sources checked for this skeleton:
 ```
 
 
-## 13. Future Split Candidates
+## 13. Manual Test Log
+
+### 2026-06-02 — `синх карта` command insertion smoke test
+
+Observed input:
+
+```text
+[ENMAN_COMMAND]
+command:
+  синх карта
+...
+[/ENMAN_COMMAND]
+```
+
+Result:
+
+```text
+partial pass
+```
+
+What this proves:
+
+```text
+- A `goal_map.sync` / `синх карта` command body reached the chat.
+- The body contains the expected compact sections:
+  - command
+  - command_family
+  - source_of_truth
+  - route_read_rule
+  - key_reminders
+  - user_target
+- The route-read rule is present.
+- The body does not include full use-case route metadata such as active_context, traversal_depth or expected_output.
+```
+
+What this does not prove:
+
+```text
+- It does not prove all 19 command rows insert correctly.
+- It does not prove header click open/close works.
+- It does not prove header drag behavior works.
+- It does not prove command list scrolling works.
+- It does not prove no-auto-send behavior in every browser state.
+- It does not prove composer detection works after ChatGPT DOM changes.
+- It does not prove multiline formatting is preserved in every insertion path.
+```
+
+Follow-up manual tests:
+
+```text
+1. Test header click open/close.
+2. Test header drag without accidental toggle.
+3. Test command list scroll.
+4. Test one MVP-1 command besides `синх карта`.
+5. Test one MVP-2 command.
+6. Test insertion into an empty composer.
+7. Test insertion when composer already has text.
+8. Verify no auto-send.
+9. If line breaks collapse in the composer, fix `setComposerText()` / insertion strategy and document the browser behavior here.
+```
+
+## 14. Future Split Candidates
 
 When this file grows, split into:
 

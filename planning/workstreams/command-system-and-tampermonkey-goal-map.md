@@ -21,13 +21,13 @@ planning/documentation/examples/README.md
 ## 0. Current Snapshot
 
 Last updated:
-  2026-06-02 / after TM-3 first userscript skeleton
+  2026-06-02 / after TM-4 command insertion smoke test sync
 
 Current goal:
   Build a transferable command system and Tampermonkey prompt helper for long-running chats across projects.
 
 Current focus:
-  TM-3 — Tampermonkey first userscript skeleton.
+  TM-4 — Tampermonkey manual smoke testing.
 
 Active slice:
   SL-6 — Tampermonkey Guided Prompt Helper
@@ -53,6 +53,7 @@ Already available:
   - Tampermonkey implementation notes file exists.
   - Tampermonkey list-only draggable widget visual behavior is planned.
   - Tampermonkey first userscript skeleton exists.
+  - First `синх карта` command insertion smoke test is recorded.
 
 Latest completed:
   - Added root Goal Map owner/example.
@@ -71,12 +72,13 @@ Latest completed:
   - Added Tampermonkey implementation docs infrastructure and implementation notes.
   - Planned list-only draggable Tampermonkey widget visual behavior.
   - Added first Tampermonkey userscript skeleton.
+  - Recorded first `синх карта` command insertion smoke test.
 
 Next action:
-  Continue TM-3:
-    manually test the first userscript skeleton in browser and fix composer detection if needed.
+  Continue TM-4:
+    complete manual browser smoke tests and fix composer detection or multiline insertion if needed.
 Recommended next action:
-  Apply and review this first-script archive, then install the userscript in Tampermonkey for manual browser testing.
+  Apply and review this command-test sync archive, then continue manual testing of header toggle, drag, scrolling and more command rows.
 
 Open decisions:
   - DEC-1: resolved — Generic Action Overview deferred; TM-0 selected.
@@ -935,7 +937,7 @@ Steps:
   - ✅ DONE — Build list-only draggable command widget UI.
   - ⬜ DEFERRED — Add preview/edit before insert.
   - ✅ DONE — Insert expanded prompt into ChatGPT input.
-  - ⬜ TODO — Manual browser test.
+  - ▶ NOW — Manual browser test / smoke testing.
   - ⬜ TODO — Decide whether project profile config is needed after MVP.
 
 Acceptance criteria:
@@ -966,12 +968,11 @@ Status:
 
 ## 9. Current Focus
 
-TM-3 — Tampermonkey first userscript skeleton:
-  - `tools/tampermonkey/chat-command-palette.user.js` now exists;
-  - it implements a list-only draggable widget;
-  - it uses inline command profile data from documented command bodies;
-  - command row click inserts the complete command body into the composer;
-  - no preview, search or external profile loading yet;
+TM-4 — Tampermonkey manual smoke testing:
+  - first `синх карта` command insertion body reached the chat;
+  - implementation notes record the partial test result and remaining checks;
+  - continue testing header open/close, drag, scroll, no-auto-send and more command rows;
+  - if multiline formatting or composer detection fails, fix the userscript and record the browser behavior;
   - keep `planning/planning-use-case-map.md` and linked owner workflows as source of truth;
   - keep Generic Action Overview deferred.
 
@@ -980,18 +981,19 @@ Current active slice:
 
 ## 10. Next Action
 
-Manually test the first userscript skeleton:
+Continue manual smoke testing:
 
 ```text
-1. Install `tools/tampermonkey/chat-command-palette.user.js` in Tampermonkey.
-2. Open ChatGPT.
-3. Verify widget appears.
-4. Verify header click toggles open/closed.
-5. Verify header drag moves widget without toggling.
-6. Verify command rows insert bodies into composer.
-7. Verify no auto-send.
-8. Record any composer detection failures.
+1. Verify header click toggles open/closed.
+2. Verify header drag moves widget without accidental toggle.
+3. Verify command list scroll.
+4. Verify one MVP-1 command besides `синх карта`.
+5. Verify one MVP-2 command.
+6. Verify empty-composer insertion.
+7. Verify insertion when composer already has text.
+8. Verify no auto-send.
+9. Record any composer detection or multiline formatting failures.
 ```
 
 Recommended next action:
-  Test in browser before adding preview, search or external profile loading.
+  Finish smoke testing before adding preview, search or external profile loading.

@@ -1663,3 +1663,35 @@ Follow-ups:
 Notes:
   Composer detection is intentionally heuristic in the first skeleton. If ChatGPT DOM changes or the wrong editable element is selected, update `findComposer()` and document the fix in implementation notes.
 
+### 2026-06-02 - Recorded Tampermonkey command insertion smoke test
+
+Date:
+  2026-06-02
+Action:
+  Recorded the first manual command insertion smoke test for the Tampermonkey helper.
+Type:
+  Tampermonkey manual test / Goal Map synchronization
+Status:
+  applied
+Why:
+  The user pasted the generated `синх карта` command body into chat, showing that at least one command body can reach the composer/chat path. The workstream map and implementation notes needed to distinguish this partial pass from full browser validation.
+Changed files:
+  - tools/tampermonkey/IMPLEMENTATION-NOTES.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added a manual test log entry for the `goal_map.sync` / `синх карта` body.
+  - Marked manual smoke testing as the current TM-4 focus.
+  - Recorded what the test proves and what it does not prove.
+  - Added follow-up test checklist for header toggle, drag, scroll, other command rows, empty/existing composer insertion, no-auto-send and multiline formatting.
+Not changed:
+  - No userscript code changed.
+  - No command body semantics changed.
+  - No use-case map rows changed.
+  - No preview/search/external profile loading added.
+  - No Generic Action Overview implementation added.
+Follow-ups:
+  Finish browser smoke testing and fix `findComposer()` / `setComposerText()` only if the remaining tests reveal failures.
+Notes:
+  The pasted `синх карта` body is treated as a partial insertion smoke test, not proof that all widget behavior works.
+
