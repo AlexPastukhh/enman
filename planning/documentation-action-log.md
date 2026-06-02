@@ -2002,3 +2002,34 @@ Follow-ups:
   Later root passes should cover Goal Map/Tampermonkey files, then prepare the slice source-sync skeleton/read-order before slice-side refactor.
 Notes:
   Default `давай архив` remains saved-diff-to-clipboard replacement-package mode. Review-diff-file mode remains explicit-only.
+
+### 2026-06-02 - Classified root folder source coverage inventory
+
+Date:
+  2026-06-02
+Action:
+  Added an explicit root folder inventory/classification section to the root source sync register.
+Type:
+  Root source coverage / full-folder inventory / classification-only pass
+Status:
+  applied
+Why:
+  After source-governance, router/onboarding, protocol/role and output/archive root cores were covered, full root-folder coverage still could not be claimed because many root files were not classified as active, historical, bridge, helper or deferred. ROOT-FULL-0 inventories root-level planning files, workstream files and Tampermonkey helper files before broad source/version passes.
+Changed files:
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Bumped `planning/root-source-sync-register.md` to Doc version: v0.9.0.
+  - Added `Root Full Folder Inventory / Classification` to distinguish covered active core files, active deferred source passes, evidence/status files, safety/context files, bridge files, diagram files, historical cleanup notes and implementation/helper files.
+  - Preserved the rule that ROOT-FULL-0 is an inventory/classification pass, not a local Sources pass for every deferred file.
+  - Kept full root source coverage deferred until active root files receive local section-level Sources blocks or explicit file-level dependency audits.
+Not changed:
+  - No domain aggregate or value-object semantics changed.
+  - No slice register was created.
+  - No Goal Map/Tampermonkey source pass was performed.
+  - No broad semantic rewrite or deletion of historical root notes was performed.
+  - No full root-folder source coverage was claimed.
+Follow-ups:
+  ROOT-FULL-1 should cover Goal Map/Tampermonkey files. Later passes should cover evidence/status/maintenance, safety/context/VKR, scenario/domain/slice bridge files and diagram root files before final root register sync.
+Notes:
+  Historical, cleanup and superseded files remain visible but should not be treated as current source-of-truth unless explicitly revived and source-covered.
