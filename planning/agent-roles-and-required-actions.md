@@ -1,9 +1,24 @@
 # Agent Roles And Required Actions
 
-Status: current role map / workflow activation synchronized  
+Status: current role map / workflow activation synchronized
+Doc version: v0.1.0
 Scope: reusable chat roles, required read order, mandatory actions, shared register updates and handoff boundaries
 
 ## 1. Purpose
+
+```text
+Sources:
+  Format/process:
+    - planning/README.md @ Doc version: v0.2.0
+    - planning/planning-agent-protocol.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+  Content:
+    - planning/workflow-activation-map.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - none
+  Not checked:
+    - role-specific downstream workflow files outside ROOT-SRC-2B scope
+```
 
 Planning work should be possible without a long external prompt.
 
@@ -29,6 +44,22 @@ This file does not replace detailed workflow docs.
 It points each role to the right workflow docs and defines non-negotiable actions.
 
 ## 2. Universal Rules For All Planning Roles
+
+```text
+Sources:
+  Format/process:
+    - planning/README.md @ Doc version: v0.2.0
+    - planning/planning-agent-protocol.md @ Doc version: v0.1.0
+    - planning/workflow-activation-map.md @ Doc version: v0.2.0
+    - planning/repo-grounded-github-line-links-workflow.md @ version not confirmed
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.2.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - implementation evidence only when the role task requires it
+```
 
 Every planning role must:
 
@@ -99,6 +130,21 @@ If the answer explains current implementation, tests, generated artifacts, docs 
 
 ## 3. Documentation Keeper / Status Reconciliation Chat
 
+```text
+Sources:
+  Format/process:
+    - planning/documentation/README.md @ version not confirmed
+    - planning/documentation/documentation-update-plan-workflow.md @ version not confirmed
+    - planning/documentation/documentation-update-workflow.md @ version not confirmed
+    - planning/documentation/status-reconciliation-workflow.md @ version not confirmed
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+  Internal dependencies:
+    - Universal Rules For All Planning Roles
+  Not checked:
+    - documentation-layer workflow source pass outside ROOT-SRC-2B
+```
+
 ### Role
 
 Keeps planning documentation synchronized with current repo implementation, current generated artifacts, navigation, responsibility maps and shared registers.
@@ -154,6 +200,20 @@ client/server behavior implementation
 ```
 
 ## 4. Scenario Draft Chat
+
+```text
+Sources:
+  Format/process:
+    - planning/diagrams/scenario-drafting-workflow.md @ version not confirmed
+    - planning/diagrams/scenario-responsibility-map.md @ version not confirmed
+    - planning/diagrams/scenario-artifact-map.md @ version not confirmed
+  Content:
+    - planning/diagrams/** @ Doc version: v0.1.0 after F7K-D2 unless declared otherwise
+  Internal dependencies:
+    - Universal Rules For All Planning Roles
+  Not checked:
+    - scenario-layer source audit outside ROOT-SRC-2B
+```
 
 ### Role
 
@@ -228,6 +288,22 @@ slice implementation plans beyond scenario-derived source behavior
 
 ## 5. Domain Draft Chat
 
+```text
+Sources:
+  Format/process:
+    - planning/scenario-specification-principles.md @ version not confirmed
+    - planning/scenario-domain-validation-principles.md @ version not confirmed
+    - planning/domain/domain-discovery-workflow.md @ version not confirmed
+    - planning/domain/aggregate-drafting-workflow.md @ version not confirmed
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.2.0
+  Content:
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Universal Rules For All Planning Roles
+  Not checked:
+    - domain notes/maps/decisions beyond active aggregate/value-object coverage
+```
+
 ### Role
 
 Creates and reconciles domain drafts, aggregate boundaries, value objects, invariants, state transitions and implementation cuts from scenario/DATA/validation sources.
@@ -280,6 +356,24 @@ scenario prose unless scenario meaning must be fixed through scenario workflow
 ```
 
 ## 6. Slice Draft Chat
+
+```text
+Sources:
+  Format/process:
+    - planning/slices/README.md @ version not confirmed
+    - planning/slices/slice-responsibility-map.md @ version not confirmed
+    - planning/slices/slice-draft-authoring-workflow.md @ version not confirmed
+    - planning/slices/slice-draft-authoring-principles.md @ version not confirmed
+    - planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md @ version not confirmed
+    - planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md @ version not confirmed
+  Content:
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+    - planned planning/slices/slice-source-sync-register.md @ not created
+  Internal dependencies:
+    - Universal Rules For All Planning Roles
+  Not checked:
+    - slice source-sync register and slice refactor not started
+```
 
 ### Role
 
@@ -361,6 +455,21 @@ runtime code implementation
 ```
 
 ## 7. Diagram Chat
+
+```text
+Sources:
+  Format/process:
+    - planning/diagramming/README.md @ version not confirmed
+    - planning/diagramming/diagramming-responsibility-map.md @ version not confirmed
+    - planning/diagrams/diagram-prompt-generation-workflow.md @ version not confirmed
+    - planning/diagrams/drawio-diagram-generation-workflow.md @ version not confirmed
+  Content:
+    - planning/diagrams/scenario-diagram-consistency-report.md @ version not confirmed
+  Internal dependencies:
+    - Universal Rules For All Planning Roles
+  Not checked:
+    - diagramming-layer source pass outside ROOT-SRC-2B
+```
 
 ### Role
 
@@ -455,6 +564,23 @@ The Diagram Chat still rereads the repo and runs preflight.
 
 ## 8. Architecture / Implementation Handoff Chat
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-agent-protocol.md @ Doc version: v0.1.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.2.0
+    - planning/architecture/README.md @ version not confirmed
+    - planning/api/README.md @ version not confirmed
+    - planning/slices/README.md @ version not confirmed
+  Content:
+    - current implementation/code/tests/generated artifacts @ not checked in ROOT-SRC-2B
+  Internal dependencies:
+    - Universal Rules For All Planning Roles
+    - Role Handoff Rule
+  Not checked:
+    - implementation handoff target files outside ROOT-SRC-2B
+```
+
 ### Role
 
 Converts approved planning scope into implementation handoff or implementation work when explicitly asked.
@@ -505,6 +631,22 @@ silent planning docs rewrites
 
 ## 9. API / Contract Keeper Gate
 
+```text
+Sources:
+  Format/process:
+    - planning/api/README.md @ version not confirmed
+    - planning/api/client-server-contract-principles.md @ version not confirmed
+    - planning/api/openapi-contract-generation.md @ version not confirmed
+    - planning/api/client-constants-generation.md @ version not confirmed
+    - planning/api/api-error-contract.md @ version not confirmed
+  Content:
+    - generated API/client artifacts @ not checked in ROOT-SRC-2B
+  Internal dependencies:
+    - Universal Rules For All Planning Roles
+  Not checked:
+    - API/generated artifact currentness outside ROOT-SRC-2B
+```
+
 This can be a dedicated chat when API drift is the main task, or a required gate inside slice/client/implementation work.
 
 ### Must read
@@ -534,6 +676,21 @@ planning/slices/cross-cutting/CC-CONST-001-client-constants-generation-and-contr
 
 ## 10. Testing / E2E Keeper Gate
 
+```text
+Sources:
+  Format/process:
+    - planning/testing/README.md @ version not confirmed
+    - planning/testing/testing-principles.md @ version not confirmed
+    - planning/testing/e2e-testing-workflow.md @ version not confirmed
+    - planning/testing/test-object-patterns.md @ version not confirmed
+  Content:
+    - current tests/E2E status @ not checked in ROOT-SRC-2B
+  Internal dependencies:
+    - Universal Rules For All Planning Roles
+  Not checked:
+    - testing source-sync register not created
+```
+
 This can be a dedicated chat when testing strategy is the main task, or a required gate inside slice/client/implementation work.
 
 ### Must read
@@ -559,6 +716,20 @@ planning/testing/playwright-e2e-cleanup-plan.md
 
 ## 11. Role Handoff Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-agent-protocol.md @ Doc version: v0.1.0
+    - planning/workflow-activation-map.md @ Doc version: v0.2.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.2.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+  Internal dependencies:
+    - Universal Rules For All Planning Roles
+  Not checked:
+    - target-role source files checked only when handoff scope requires them
+```
+
 When a role reaches a boundary that belongs to another role, it must not silently continue.
 
 Instead, write:
@@ -581,4 +752,30 @@ Scenario Draft Chat -> Diagram Chat
 Domain Draft Chat -> Slice Draft Chat
 Slice Draft Chat -> Architecture / Implementation Handoff Chat
 Implementation Handoff Chat -> Documentation Keeper Chat
+```
+
+
+## 12. Source Delta / Change Log
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+  Content:
+    - planning/README.md @ Doc version: v0.2.0
+    - planning/planning-agent-protocol.md @ Doc version: v0.1.0
+    - planning/workflow-activation-map.md @ Doc version: v0.2.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Purpose
+    - Universal Rules For All Planning Roles
+    - Role Handoff Rule
+  Not checked:
+    - role-specific downstream workflow files outside ROOT-SRC-2B
+```
+
+```text
+- ROOT-SRC-2B added Doc version: v0.1.0 and local section-level Sources blocks to this role map.
+- ROOT-SRC-2B did not change role boundaries, required read order or permission boundaries.
 ```

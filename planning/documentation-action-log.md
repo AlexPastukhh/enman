@@ -1920,3 +1920,43 @@ Follow-ups:
   ROOT-SRC-2B should cover `planning/planning-agent-protocol.md` and `planning/agent-roles-and-required-actions.md`. Later root passes should cover Goal Map/Tampermonkey and output/archive workflow files.
 Notes:
   The root source register remains partial/skeleton outside the explicitly covered source-governance and router/onboarding rows.
+
+### 2026-06-02 - Added root protocol/role local source coverage
+
+Date:
+  2026-06-02
+Action:
+  Added local section-level source coverage for the root planning protocol and planning role map, then synchronized root router source labels.
+Type:
+  Root source coverage / protocol-role audit / register sync
+Status:
+  applied
+Why:
+  After ROOT-SRC-2A covered the root router/onboarding chain, `planning/planning-agent-protocol.md` and `planning/agent-roles-and-required-actions.md` were still deferred protocol/role inputs. ROOT-SRC-2B gives those root support files explicit source/version coverage and clears stale protocol/role-deferred labels in the router chain without claiming full root-folder coverage.
+Changed files:
+  - planning/README.md
+  - planning/planning-use-case-map.md
+  - planning/workflow-activation-map.md
+  - planning/planning-doc-responsibility-map.md
+  - planning/planning-agent-protocol.md
+  - planning/agent-roles-and-required-actions.md
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added Doc version: v0.1.0 to `planning/planning-agent-protocol.md` and added local section-level `Sources:` blocks.
+  - Added Doc version: v0.1.0 to `planning/agent-roles-and-required-actions.md` and added local section-level `Sources:` blocks.
+  - Refreshed protocol/role source labels in the root router/onboarding files.
+  - Bumped `planning/README.md` to Doc version: v0.2.0.
+  - Bumped `planning/planning-use-case-map.md` to Doc version: v0.3.0.
+  - Bumped `planning/workflow-activation-map.md` to Doc version: v0.2.0.
+  - Bumped `planning/planning-doc-responsibility-map.md` to Doc version: v0.2.0.
+  - Bumped `planning/root-source-sync-register.md` to Doc version: v0.7.0 and marked only ROOT-SRC-2B protocol/role rows as derived/synchronized.
+Not changed:
+  - No domain aggregate or value-object semantics changed.
+  - No slice register was created.
+  - No Goal Map/Tampermonkey/output/archive workflow source passes were claimed.
+  - No full root-folder coverage was claimed.
+Follow-ups:
+  Later root passes should cover Goal Map/Tampermonkey files and output/archive workflow files. Slice-side work should still wait for slice source-sync skeleton/read-order prep.
+Notes:
+  ROOT-SRC-2B closes the protocol/role gap left after ROOT-SRC-2A. It does not audit every downstream role-specific workflow listed by the role map.
