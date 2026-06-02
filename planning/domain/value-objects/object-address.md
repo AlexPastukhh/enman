@@ -4,13 +4,53 @@ Status: draft / extracted with ConnectionRequest aggregate
 Doc version: v0.1.0  
 Scope: request object address value integrity
 
+
 ## 1. Purpose
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.2.0
+    - planning/domain/value-object-draft-template.md @ Doc version: v0.2.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
+  Content:
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - none
+  Not checked:
+    - current implementation/test files are prior extraction evidence, not freshly rechecked in this pass
+    - full API/OpenAPI/UI behavior was not audited in this pass
+    - full EF/persistence mapping was not audited in this pass
+```
 
 `ObjectAddress` / current implementation `Address` protects the required address value used by a connection request.
 
 It ensures a request cannot be created with a missing or structurally invalid object address.
 
 ## 2. Source Inputs
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.2.0
+    - planning/domain/value-object-draft-template.md @ Doc version: v0.2.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+  Content:
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-text-specs/SC-04-client-request-creation.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-data/SC-04-request-creation-data.md @ Doc version: v0.1.0
+    - planning/diagrams/scenario-behavior-items/SC-04-request-creation-behavior-items.md @ Doc version: v0.1.0
+    - Domain.EnergyManagement/DocumentManaging/Address.cs @ implementation evidence from prior extraction/source pass, version not applicable
+  Internal dependencies:
+    - none
+  Not checked:
+    - current implementation/test files are prior extraction evidence, not freshly rechecked in this pass
+    - full API/OpenAPI/UI behavior was not audited in this pass
+    - full EF/persistence mapping was not audited in this pass
+```
 
 Scenario sources:
 
@@ -46,6 +86,22 @@ Full address formatting/localization/persistence requirements are not audited in
 
 ## 3. Used By
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.2.0
+    - planning/domain/value-object-draft-template.md @ Doc version: v0.2.0
+  Content:
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - Domain.EnergyManagement/DocumentManaging/Address.cs @ implementation evidence from prior extraction/source pass, version not applicable
+  Internal dependencies:
+    - Source Inputs
+  Not checked:
+    - current implementation/test files are prior extraction evidence, not freshly rechecked in this pass
+    - full API/OpenAPI/UI behavior was not audited in this pass
+    - full EF/persistence mapping was not audited in this pass
+```
+
 Aggregates:
 
 ```text
@@ -59,6 +115,24 @@ CreateConnectionRequest DTO/application command maps address input into Address 
 ```
 
 ## 4. Shape / Fields
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.2.0
+    - planning/domain/value-object-draft-template.md @ Doc version: v0.2.0
+  Content:
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - Domain.EnergyManagement/DocumentManaging/Address.cs @ implementation evidence from prior extraction/source pass, version not applicable
+  Internal dependencies:
+    - Source Inputs
+    - Used By
+  Not checked:
+    - current implementation/test files are prior extraction evidence, not freshly rechecked in this pass
+    - full API/OpenAPI/UI behavior was not audited in this pass
+    - full EF/persistence mapping was not audited in this pass
+```
 
 Current implementation shape:
 
@@ -91,6 +165,24 @@ Apartment
 
 ## 5. Invariants
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.2.0
+    - planning/domain/value-object-draft-template.md @ Doc version: v0.2.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
+  Content:
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - Domain.EnergyManagement/DocumentManaging/Address.cs @ implementation evidence from prior extraction/source pass, version not applicable
+  Internal dependencies:
+    - Shape / Fields
+  Not checked:
+    - current implementation/test files are prior extraction evidence, not freshly rechecked in this pass
+    - full API/OpenAPI/UI behavior was not audited in this pass
+    - full EF/persistence mapping was not audited in this pass
+```
+
 | Invariant | Source | Failure/error |
 |---|---|---|
 | Address object is required for request creation. | REQ-IBS-003 / REQ-VI-001 | `RequestObjectAddressIsRequired` |
@@ -98,6 +190,24 @@ Apartment
 | Address fields must fit allowed lengths/format. | current Address implementation | address validation errors |
 
 ## 6. Creation / Normalization Rules
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.2.0
+    - planning/domain/value-object-draft-template.md @ Doc version: v0.2.0
+  Content:
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - Domain.EnergyManagement/DocumentManaging/Address.cs @ implementation evidence from prior extraction/source pass, version not applicable
+  Internal dependencies:
+    - Shape / Fields
+    - Invariants
+  Not checked:
+    - current implementation/test files are prior extraction evidence, not freshly rechecked in this pass
+    - full API/OpenAPI/UI behavior was not audited in this pass
+    - full EF/persistence mapping was not audited in this pass
+```
 
 Creation:
 
@@ -122,6 +232,23 @@ invalid postal code according to current Address validation.
 
 ## 7. Equality Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.2.0
+    - planning/domain/value-object-draft-template.md @ Doc version: v0.2.0
+  Content:
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - Domain.EnergyManagement/DocumentManaging/Address.cs @ implementation evidence from prior extraction/source pass, version not applicable
+  Internal dependencies:
+    - Shape / Fields
+  Not checked:
+    - current implementation/test files are prior extraction evidence, not freshly rechecked in this pass
+    - full API/OpenAPI/UI behavior was not audited in this pass
+    - full EF/persistence mapping was not audited in this pass
+```
+
 Current equality rule was not audited in this pass.
 
 Target direction:
@@ -131,6 +258,25 @@ Two object addresses should compare by value when/if address equality becomes do
 ```
 
 ## 8. Validation Boundary
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.2.0
+    - planning/domain/value-object-draft-template.md @ Doc version: v0.2.0
+    - planning/domain/domain-modeling-principles.md @ Doc version: v0.1.0
+  Content:
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - Domain.EnergyManagement/DocumentManaging/Address.cs @ implementation evidence from prior extraction/source pass, version not applicable
+  Internal dependencies:
+    - Invariants
+    - Creation / Normalization Rules
+  Not checked:
+    - current implementation/test files are prior extraction evidence, not freshly rechecked in this pass
+    - full API/OpenAPI/UI behavior was not audited in this pass
+    - full EF/persistence mapping was not audited in this pass
+```
 
 Belongs in value object:
 
@@ -158,11 +304,47 @@ request creation transaction/no-write guarantees.
 ## 9. Persistence / Serialization Notes
 
 ```text
+Sources:
+  Format/process:
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.2.0
+    - planning/domain/value-object-draft-template.md @ Doc version: v0.2.0
+  Content:
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - Domain.EnergyManagement/DocumentManaging/Address.cs @ implementation evidence from prior extraction/source pass, version not applicable
+  Internal dependencies:
+    - Shape / Fields
+    - Used By
+  Not checked:
+    - current implementation/test files are prior extraction evidence, not freshly rechecked in this pass
+    - full API/OpenAPI/UI behavior was not audited in this pass
+    - full EF/persistence mapping was not audited in this pass
+```
+
+```text
 Current implementation uses Domain.EnergyManagement.DocumentManaging.Address.
 The domain concept is object address for ConnectionRequest; future cleanup may rename or move the implementation type.
 ```
 
 ## 10. Invalid Examples
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.2.0
+    - planning/domain/value-object-draft-template.md @ Doc version: v0.2.0
+  Content:
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - Domain.EnergyManagement/DocumentManaging/Address.cs @ implementation evidence from prior extraction/source pass, version not applicable
+  Internal dependencies:
+    - Invariants
+    - Creation / Normalization Rules
+    - Validation Boundary
+  Not checked:
+    - current implementation/test files are prior extraction evidence, not freshly rechecked in this pass
+    - full API/OpenAPI/UI behavior was not audited in this pass
+    - full EF/persistence mapping was not audited in this pass
+```
 
 | Invalid value/state | Why invalid | Source |
 |---|---|---|
@@ -171,6 +353,24 @@ The domain concept is object address for ConnectionRequest; future cleanup may r
 | too-long field | Violates current implementation field limits. | current Address validation |
 
 ## 11. Questions / Decisions
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.2.0
+    - planning/domain/value-object-draft-template.md @ Doc version: v0.2.0
+  Content:
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Source Inputs
+    - Invariants
+    - Validation Boundary
+  Not checked:
+    - current implementation/test files are prior extraction evidence, not freshly rechecked in this pass
+    - full API/OpenAPI/UI behavior was not audited in this pass
+    - full EF/persistence mapping was not audited in this pass
+```
 
 Open:
 
@@ -189,5 +389,22 @@ Accepted:
 ## 12. Source Delta / Change Log
 
 ```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+  Content:
+    - planning/domain/aggregates/connection-request.md @ Doc version: v0.1.0
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - Domain.EnergyManagement/DocumentManaging/Address.cs @ implementation evidence from prior extraction/source pass, version not applicable
+  Internal dependencies:
+    - all changed sections in this file
+  Not checked:
+    - current implementation/test files are prior extraction evidence, not freshly rechecked in this pass
+    - full API/OpenAPI/UI behavior was not audited in this pass
+    - full EF/persistence mapping was not audited in this pass
+```
+
+```text
 - Extracted as value object draft during ConnectionRequest aggregate extraction.
+- Added local section-level Sources blocks in DOM-VO-SRC-ALL-1 without changing domain semantics.
 ```
