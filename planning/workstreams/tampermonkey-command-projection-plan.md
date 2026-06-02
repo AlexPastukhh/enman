@@ -1,25 +1,25 @@
 # Tampermonkey Command Projection Plan
 
 Status: current workstream planning file  
-Doc version: v0.1.0  
+Doc version: v0.2.0
 Scope: planning rules for projecting repository command routes into editable Tampermonkey prompt-helper prompts; not userscript implementation
 
-## 0. Source Sync / ROOT-FULL-1
+## 0. Source Sync / ROOT-FULL-1 / SRC-CMD-1B
 
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.5.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.6.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.5.0
     - planning/goal-map-principles-workflow-template.md @ Doc version: v0.1.0
     - planning/documentation/examples/README.md @ Doc version: v0.1.0
     - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
     - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
-    - tools/tampermonkey/README.md @ Doc version: v0.1.0
-    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.1.0
+    - tools/tampermonkey/README.md @ Doc version: v0.2.0
+    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.2.0
   Internal dependencies:
     - Source Of Truth
     - MVP Command Groups
@@ -32,6 +32,8 @@ Sources:
 ROOT-FULL-1 source pass treats this file as Tampermonkey command projection planning file.
 This section records the files that must be checked when this file is created, updated or used as a source for later work.
 It does not make the Tampermonkey userscript or any example file a source of truth for command semantics.
+
+SRC-CMD-1B source pass updates this file with Tampermonkey profiles for source/version maintenance commands and the explicit `положняк` current-state command.
 
 ## 1. Purpose
 
@@ -105,6 +107,9 @@ The envelope should be inserted into chat input, not auto-sent by default.
 | `plan.now` | `планируй`, `распланируй`, `plan` | Must mean concrete planning now; use Goal Map when active workstream exists |
 | `goal_map.brief` | `кц`, `карта цели кратко`, `goal map brief` | Requires current slice expanded and other slices status-only |
 | `context_recheck.apply` | `обс`, `перепроверь обсуждение`, `context recheck` | Forces prior decisions/context recheck before answering |
+| `source_register.scan_stale_versions` | `стейл версии в регистрах`, `проверь регистры на стейл версии`, `register stale version scan` | Prevents stale source/version claims in registers from surviving unnoticed |
+| `local_sources.scan_stale` | `стейл локальные сорсы`, `проверь локальные сорсы`, `local sources stale scan` | Checks authoritative local `Sources:` blocks in active files/drafts |
+| `source_version.audit_full` | `полная проверка сорсов`, `полная source/version проверка`, `full source/version audit` | Combines register, local Sources, active-file version and register-impact checks |
 
 ### MVP-2 — useful command helpers
 
@@ -121,6 +126,7 @@ The envelope should be inserted into chat input, not auto-sent by default.
 без саммари
 без план файл-обновления
 вспомни структуру репо / структура репо / слои репо
+положняк / текущий положняк / стейт / покажи состояние
 ```
 
 ### Reserved / deferred
@@ -217,6 +223,42 @@ key_reminders:
   - Current slice expanded; other slices status-only.
   - Use detailed slice statuses, not roadmap phase statuses.
   - If map is stale, say so and identify sync need.
+```
+
+### source_register.scan_stale_versions
+
+```text
+key_reminders:
+  - Review/audit mode by default, not edit/package mode.
+  - Use bounded scope; ask for register/layer if no active scope is clear.
+  - Distinguish current register rows from historical Source Delta/action-log notes.
+  - Compare claimed source paths and Doc version labels with current source files.
+  - Report synchronized, needs-review and stale rows with expected fixes.
+  - Do not edit files, create archives, commit or push unless separately requested.
+```
+
+### local_sources.scan_stale
+
+```text
+key_reminders:
+  - Review/audit mode by default, not edit/package mode.
+  - Use bounded target files/layer; ask scope if no active scope is clear.
+  - Check local `Sources:` blocks and file-level Source Sync sections.
+  - Check stale paths, stale version labels, stale source relationships and missing register impact.
+  - Especially check active drafts where local section Sources are authoritative.
+  - Do not edit files, create archives, commit or push unless separately requested.
+```
+
+### source_version.audit_full
+
+```text
+key_reminders:
+  - Combined review/audit mode by default, not edit/package mode.
+  - Ask for scope if unclear; do not default to full repo.
+  - Run register stale-version review + local Sources stale review + active-file Doc version presence check.
+  - Check missing register impact for created/updated active files.
+  - Do not claim full root/domain/slice coverage beyond checked scope.
+  - Do not edit files, create archives, commit or push unless separately requested.
 ```
 
 ### context_recheck.apply
@@ -574,7 +616,142 @@ user_target:
 [/ENMAN_COMMAND]
 ```
 
+#### source_register.scan_stale_versions / `стейл версии в регистрах`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  стейл версии в регистрах
+
+command_family:
+  `стейл версии в регистрах` / `проверь регистры на стейл версии` / `register stale version scan`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+    Then read `planning/source-cascade-sync-workflow.md` and the relevant source-sync register(s).
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Review/audit mode by default, not edit/package mode.
+  - Use bounded scope; ask for register/layer if no active scope is clear.
+  - Distinguish current register rows from historical Source Delta/action-log notes.
+  - Compare claimed source paths and Doc version labels with current source files.
+  - Report synchronized, needs-review and stale rows with expected fixes.
+  - Do not edit files, create archives, commit or push unless separately requested.
+
+user_target:
+  <register/layer/scope to check>
+
+[/ENMAN_COMMAND]
+```
+
+#### local_sources.scan_stale / `стейл локальные сорсы`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  стейл локальные сорсы
+
+command_family:
+  `стейл локальные сорсы` / `проверь локальные сорсы` / `local sources stale scan`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+    Then read `planning/source-cascade-sync-workflow.md`, target active files/drafts and relevant registers.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Review/audit mode by default, not edit/package mode.
+  - Use bounded target files/layer; ask scope if no active scope is clear.
+  - Check local `Sources:` blocks and file-level Source Sync sections.
+  - Check stale paths, stale version labels, stale source relationships and missing register impact.
+  - Especially check active drafts where local section Sources are authoritative.
+  - Do not edit files, create archives, commit or push unless separately requested.
+
+user_target:
+  <files/layer/scope to check>
+
+[/ENMAN_COMMAND]
+```
+
+#### source_version.audit_full / `полная source/version проверка`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  полная source/version проверка
+
+command_family:
+  `полная проверка сорсов` / `полная source/version проверка` / `full source/version audit`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+    Then read `planning/source-cascade-sync-workflow.md`, relevant registers and target local Sources blocks.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Combined review/audit mode by default, not edit/package mode.
+  - Ask for scope if unclear; do not default to full repo.
+  - Run register stale-version review + local Sources stale review + active-file Doc version presence check.
+  - Check missing register impact for created/updated active files.
+  - Do not claim full root/domain/slice coverage beyond checked scope.
+  - Do not edit files, create archives, commit or push unless separately requested.
+
+user_target:
+  <root/domain/slice/all/specific scope>
+
+[/ENMAN_COMMAND]
+```
 ### MVP-2 — useful command helpers
+
+#### current_state.show / `положняк`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  положняк
+
+command_family:
+  `положняк` / `текущий положняк` / `стейт` / `покажи состояние` / `current planning state`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+    Then read `planning/CURRENT-PLANNING-STATE-TEMPLATE.md` and relevant living Goal Map/register/source files if current state depends on repo evidence.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Explicit-only current-state output; do not include implicitly in Level 2 or `кц`.
+  - Output only scope-relevant areas; example Domain/Root/Slices sections are not mandatory.
+  - Use emoji plus words, not emoji alone.
+  - Distinguish current focus, next choices and do-not-claim limits.
+  - This is not Goal Map Brief and does not update files.
+  - Do not create archives, commit or push.
+
+user_target:
+  <current scope / active workstream / state question>
+
+[/ENMAN_COMMAND]
+```
 
 #### goal_map.full / `карта цели`
 
@@ -1031,4 +1208,10 @@ After this planning file lands:
 3. Convert MVP-1 profiles into a minimal userscript data structure.
 4. Build command palette / preview / insert behavior.
 5. Manual browser test.
+```
+
+## 11. Source Delta / Change Log
+
+```text
+- SRC-CMD-1B added Tampermonkey helper profiles for source/version maintenance commands and the explicit `положняк` current-state command; bumped this plan to Doc version: v0.2.0.
 ```

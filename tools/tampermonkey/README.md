@@ -1,22 +1,22 @@
 # Tampermonkey Chat Command Helper
 
 Status: current Tampermonkey helper implementation entrypoint  
-Doc version: v0.1.0  
+Doc version: v0.2.0
 Scope: implementation documentation entrypoint for the Enman Chat Command Helper; not the userscript source code
 
-## 0. Source Sync / ROOT-FULL-1
+## 0. Source Sync / ROOT-FULL-1 / SRC-CMD-1B
 
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.5.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.6.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.1.0
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - tools/tampermonkey/IMPLEMENTATION-NOTES.md @ Doc version: v0.1.0
-    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.1.0
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.2.0
+    - planning/planning-use-case-map.md @ Doc version: v0.5.0
+    - tools/tampermonkey/IMPLEMENTATION-NOTES.md @ Doc version: v0.2.0
+    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.2.0
   Internal dependencies:
     - Purpose
     - MVP Behavior
@@ -29,6 +29,8 @@ Sources:
 ROOT-FULL-1 source pass treats this file as Tampermonkey helper implementation orientation.
 This section records the files that must be checked when this file is created, updated or used as a source for later work.
 It does not make the Tampermonkey userscript or any example file a source of truth for command semantics.
+
+SRC-CMD-1B updates this entrypoint for helper profiles that project source/version maintenance commands and the explicit `положняк` current-state command.
 
 ## 1. Purpose
 
@@ -100,13 +102,15 @@ MVP helper behavior:
 
 ```text
 current:
-  first userscript skeleton
+  userscript profile update
 
 implemented:
   list-only draggable widget
   prioritized command lists
   click-to-insert documented command bodies
   no auto-send
+  source/version maintenance command profiles
+  explicit `положняк` current-state command profile
 
 next:
   manual browser test
@@ -138,6 +142,8 @@ The script uses a standard userscript header with `@match` entries for ChatGPT p
 - Command list scrolls.
 - MVP-1 command can be selected.
 - Command row click inserts compact command body into ChatGPT composer.
+- Click `положняк` and verify the body says scope sections are relevant examples, not mandatory headings.
+- Click one source/version audit command and verify it is review/audit mode, not edit/package mode.
 - Command row click keeps the widget open.
 - Prompt is not auto-sent.
 - Inserted body includes source_of_truth.
@@ -199,3 +205,20 @@ planning/repo-structure-memory.md
 ```
 
 Use it before planning/editing when the chat may have lost track of root areas, documentation layers, workstream files or app/tooling/example areas.
+
+## 10. Available Helper Profile Additions From SRC-CMD-1B
+
+```text
+- стейл версии в регистрах
+- стейл локальные сорсы
+- полная проверка сорсов
+- положняк
+```
+
+These profiles remain editable prompt projections. They do not browse the repo, run automated scans, edit files, create archives, commit or push.
+
+## 11. Source Delta / Change Log
+
+```text
+- SRC-CMD-1B added helper profile documentation for source/version maintenance and current-state commands; bumped this README to Doc version: v0.2.0.
+```

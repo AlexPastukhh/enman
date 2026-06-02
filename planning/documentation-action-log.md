@@ -2117,3 +2117,40 @@ Follow-ups:
   Optionally add Tampermonkey helper profiles for the new commands in a separate SL-6/helper-profile batch. Before broad slice work, create/plan `planning/slices/slice-source-sync-register.md`.
 Notes:
   The new current-state command is explicit-only. It should not be automatically included in Level 2 answers, Goal Map Brief or normal planning responses.
+
+
+### 2026-06-02 - Added Tampermonkey profiles for source/version maintenance commands
+
+Date:
+  2026-06-02
+Action:
+  Added Tampermonkey helper profiles for source/version maintenance commands and the explicit `положняк` current-state command.
+Type:
+  Tampermonkey helper profile update / command projection
+Status:
+  applied
+Why:
+  SRC-CMD-1A added active source/version maintenance routes and the explicit current-state template, but the helper palette did not yet expose these commands. The helper should insert compact editable prompt bodies while keeping repo docs as source of truth.
+Changed files:
+  - planning/workstreams/tampermonkey-command-projection-plan.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - tools/tampermonkey/README.md
+  - tools/tampermonkey/IMPLEMENTATION-NOTES.md
+  - tools/tampermonkey/chat-command-palette.user.js
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added helper profiles for `стейл версии в регистрах`, `стейл локальные сорсы`, `полная проверка сорсов` and `положняк`.
+  - Bumped the userscript metadata version to `@version 0.2.0`.
+  - Updated helper projection plan, README and implementation notes to document the new profiles.
+  - Updated root source register source labels and coverage notes for the helper profile pass.
+Not changed:
+  - No source/version audit automation implemented.
+  - No Tampermonkey external profile loading implemented.
+  - No slice source-sync register created.
+  - No command semantics moved into the userscript.
+  - No repo edit/archive/commit permission granted by helper profiles.
+Follow-ups:
+  Smoke test the four new helper profile rows in the browser and verify that command row clicks keep the widget open and inserted bodies remain editable prompt projections.
+Notes:
+  Userscript command profiles remain last in source-of-truth order. If a helper body conflicts with the use-case map or owner workflow, the repo docs win.

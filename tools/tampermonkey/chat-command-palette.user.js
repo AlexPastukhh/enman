@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Enman Chat Command Helper
 // @namespace    https://github.com/AlexPastukhh/enman
-// @version      0.1.0
+// @version      0.2.0
 // @description  List-only draggable command helper for inserting Enman command prompt bodies into ChatGPT.
 // @author       Enman
 // @match        https://chatgpt.com/*
@@ -13,10 +13,10 @@
 /*
 ROOT-FULL-1 source sync:
   Source-of-truth:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.1.0
-    - tools/tampermonkey/README.md @ Doc version: v0.1.0
-    - tools/tampermonkey/IMPLEMENTATION-NOTES.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.5.0
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.2.0
+    - tools/tampermonkey/README.md @ Doc version: v0.2.0
+    - tools/tampermonkey/IMPLEMENTATION-NOTES.md @ Doc version: v0.2.0
 
   Boundary:
     - This userscript is an implementation/helper projection.
@@ -92,6 +92,34 @@ ROOT-FULL-1 source sync:
     "label": "обс",
     "description": "context recheck",
     "body": "[ENMAN_COMMAND]\n\ncommand:\n  обс\n\ncommand_family:\n  `обс` / `перепроверь обсуждение` / `context recheck`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Re-check relevant prior discussion.\n  - Preserve accepted decisions and constraints.\n  - State what was checked and what remains unavailable.\n  - Combine with the underlying task route.\n\nuser_target:\n  <what discussion/context should be rechecked>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "source_register.scan_stale_versions",
+    "group": "MVP-1",
+    "label": "стейл версии",
+    "description": "register stale",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  стейл версии в регистрах\n\ncommand_family:\n  `стейл версии в регистрах` / `проверь регистры на стейл версии` / `register stale version scan`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n    Then read `planning/source-cascade-sync-workflow.md` and the relevant source-sync register(s).\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Review/audit mode by default, not edit/package mode.\n  - Use bounded scope; ask for register/layer if no active scope is clear.\n  - Distinguish current register rows from historical Source Delta/action-log notes.\n  - Compare claimed source paths and Doc version labels with current source files.\n  - Report synchronized, needs-review and stale rows with expected fixes.\n  - Do not edit files, create archives, commit or push unless separately requested.\n\nuser_target:\n  <register/layer/scope to check>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "local_sources.scan_stale",
+    "group": "MVP-1",
+    "label": "стейл локальные сорсы",
+    "description": "local sources",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  стейл локальные сорсы\n\ncommand_family:\n  `стейл локальные сорсы` / `проверь локальные сорсы` / `local sources stale scan`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n    Then read `planning/source-cascade-sync-workflow.md`, target active files/drafts and relevant registers.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Review/audit mode by default, not edit/package mode.\n  - Use bounded target files/layer; ask scope if no active scope is clear.\n  - Check local `Sources:` blocks and file-level Source Sync sections.\n  - Check stale paths, stale version labels, stale source relationships and missing register impact.\n  - Especially check active drafts where local section Sources are authoritative.\n  - Do not edit files, create archives, commit or push unless separately requested.\n\nuser_target:\n  <files/layer/scope to check>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "source_version.audit_full",
+    "group": "MVP-1",
+    "label": "полная проверка сорсов",
+    "description": "full source audit",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  полная source/version проверка\n\ncommand_family:\n  `полная проверка сорсов` / `полная source/version проверка` / `full source/version audit`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n    Then read `planning/source-cascade-sync-workflow.md`, relevant registers and target local Sources blocks.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Combined review/audit mode by default, not edit/package mode.\n  - Ask for scope if unclear; do not default to full repo.\n  - Run register stale-version review + local Sources stale review + active-file Doc version presence check.\n  - Check missing register impact for created/updated active files.\n  - Do not claim full root/domain/slice coverage beyond checked scope.\n  - Do not edit files, create archives, commit or push unless separately requested.\n\nuser_target:\n  <root/domain/slice/all/specific scope>\n\n[/ENMAN_COMMAND]"
+  },
+  {
+    "id": "current_state.show",
+    "group": "MVP-2",
+    "label": "положняк",
+    "description": "current state",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  положняк\n\ncommand_family:\n  `положняк` / `текущий положняк` / `стейт` / `покажи состояние` / `current planning state`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n    Then read `planning/CURRENT-PLANNING-STATE-TEMPLATE.md` and relevant living Goal Map/register/source files if current state depends on repo evidence.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Explicit-only current-state output; do not include implicitly in Level 2 or `кц`.\n  - Output only scope-relevant areas; example Domain/Root/Slices sections are not mandatory.\n  - Use emoji plus words, not emoji alone.\n  - Distinguish current focus, next choices and do-not-claim limits.\n  - This is not Goal Map Brief and does not update files.\n  - Do not create archives, commit or push.\n\nuser_target:\n  <current scope / active workstream / state question>\n\n[/ENMAN_COMMAND]"
   },
   {
     "id": "goal_map.full",

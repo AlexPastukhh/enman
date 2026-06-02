@@ -1,22 +1,22 @@
 # Tampermonkey Implementation Notes
 
 Status: current implementation notes / compound planning artifact  
-Doc version: v0.1.0  
+Doc version: v0.2.0
 Scope: working notes for Tampermonkey helper implementation details, decisions, use cases, UI sketches, external sources and repo reading map
 
-## 0. Source Sync / ROOT-FULL-1
+## 0. Source Sync / ROOT-FULL-1 / SRC-CMD-1B
 
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.5.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.6.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.1.0
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - tools/tampermonkey/README.md @ Doc version: v0.1.0
-    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.1.0
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.2.0
+    - planning/planning-use-case-map.md @ Doc version: v0.5.0
+    - tools/tampermonkey/README.md @ Doc version: v0.2.0
+    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.2.0
   Internal dependencies:
     - Accepted Decisions So Far
     - Implementation Principles
@@ -29,6 +29,8 @@ Sources:
 ROOT-FULL-1 source pass treats this file as Tampermonkey implementation notes / compound planning artifact.
 This section records the files that must be checked when this file is created, updated or used as a source for later work.
 It does not make the Tampermonkey userscript or any example file a source of truth for command semantics.
+
+SRC-CMD-1B updates these notes for source/version maintenance and explicit current-state helper profiles.
 
 ## 1. Purpose
 
@@ -790,6 +792,30 @@ Follow-up test:
 ```
 
 
+
+### 2026-06-02 — Source/version and `положняк` profile insertion checklist
+
+Expected new profiles:
+
+```text
+- стейл версии в регистрах
+- стейл локальные сорсы
+- полная проверка сорсов
+- положняк
+```
+
+Manual checks:
+
+```text
+1. Open widget and confirm the four new profile rows are visible.
+2. Insert `положняк` and verify the body points to `planning/CURRENT-PLANNING-STATE-TEMPLATE.md`.
+3. Verify `положняк` says scope sections are relevant examples, not mandatory headings.
+4. Insert one source/version audit command and verify it says review/audit mode by default.
+5. Verify source/version audit bodies do not grant edit/archive/commit/push permission.
+6. Verify command row click keeps the widget open.
+7. Verify userscript @version is 0.2.0.
+```
+
 ## 14. Deferred / Far-Future Ideas
 
 Deferred and far-future ideas are owned centrally by:
@@ -828,3 +854,9 @@ tools/tampermonkey/TEST-CHECKLIST.md
 ```
 
 Do not split before the implementation shape stabilizes.
+
+## 16. Source Delta / Change Log
+
+```text
+- SRC-CMD-1B added implementation notes for helper profiles that project source/version maintenance commands and the explicit `положняк` current-state command; bumped these notes to Doc version: v0.2.0.
+```

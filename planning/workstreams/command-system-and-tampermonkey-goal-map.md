@@ -1,7 +1,7 @@
 # Command System And Tampermonkey Goal Map
 
 Status: active workstream goal map  
-Doc version: v0.1.0  
+Doc version: v0.2.0
 Owner format: `planning/goal-map-principles-workflow-template.md`  
 Scope: living goal map for transferable command semantics, command examples, goal/process tracking, generic action overview and Tampermonkey prompt-helper work
 
@@ -30,10 +30,10 @@ Sources:
     - planning/goal-map-principles-workflow-template.md @ Doc version: v0.1.0
     - planning/planning-use-case-map.md @ Doc version: v0.5.0
     - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
-    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.1.0
-    - tools/tampermonkey/README.md @ Doc version: v0.1.0
-    - tools/tampermonkey/IMPLEMENTATION-NOTES.md @ Doc version: v0.1.0
-    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.1.0
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.2.0
+    - tools/tampermonkey/README.md @ Doc version: v0.2.0
+    - tools/tampermonkey/IMPLEMENTATION-NOTES.md @ Doc version: v0.2.0
+    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.2.0
   Internal dependencies:
     - Current Snapshot
     - Roadmap / Дорожная карта
@@ -49,8 +49,8 @@ It does not make the Tampermonkey userscript or any example file a source of tru
 
 ## 0. Current Snapshot
 
-SRC-CMD-1A note:
-  Source/version maintenance command routes and the explicit `положняк` current-state output template are being added as a docs/routes/template batch. This does not change the current functional focus from SL-6 smoke testing unless separately chosen.
+SRC-CMD-1B note:
+  Source/version maintenance commands and the explicit `положняк` current-state command are being added to the Tampermonkey helper palette as prompt projections. This does not make the userscript source of truth and does not replace SL-6 smoke testing.
 
 
 Last updated:
@@ -94,6 +94,7 @@ Already available:
   - Review-diff-file archive transfer is explicit-only.
   - Root responsibility map now includes Goal Map and Tampermonkey command-helper ownership discovery.
   - Tampermonkey helper has an explicit review-diff-file archive command profile in addition to the default clipboard-diff archive command.
+  - Tampermonkey helper has source/version maintenance and `положняк` profiles as prompt projections.
 
 Latest completed:
   - Added root Goal Map owner/example.
@@ -118,10 +119,11 @@ Latest completed:
   - Restored clipboard diff as the default replacement archive review transfer and kept review-diff-file mode explicit-only.
   - Added discovery paths so new chats can find Goal Map maintenance rules and Tampermonkey command-helper ownership.
   - Added explicit Tampermonkey helper profile for `давай архив с review diff file`.
+  - Added Tampermonkey helper profiles for source/version maintenance commands and `положняк`.
 
 Next action:
   Continue SL-6 smoke testing:
-    retest the helper command list, including ordinary `давай архив` and explicit `давай архив с review diff file`, while keeping userscript profiles as projections rather than source of truth.
+    retest the helper command list, including ordinary `давай архив`, explicit `давай архив с review diff file`, source/version audit commands and `положняк`, while keeping userscript profiles as projections rather than source of truth.
 Recommended next action:
   Continue Tampermonkey helper smoke testing before adding preview, search, external profile loading or deferred buffer/stack features.
 
@@ -1039,3 +1041,9 @@ Continue helper smoke testing after the discovery-sync update:
 
 Recommended next action:
   Finish smoke testing before adding preview, search, external profile loading or deferred buffer/stack features.
+
+## Source Delta / Change Log
+
+```text
+- SRC-CMD-1B added Tampermonkey helper profiles for source/version maintenance commands and the explicit `положняк` current-state command; bumped this living map to Doc version: v0.2.0.
+```
