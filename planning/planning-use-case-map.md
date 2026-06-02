@@ -1,6 +1,7 @@
 # Planning Use Case Map
 
-Status: current root use-case map / action-to-doc-flow router  
+Status: current root use-case map / action-to-doc-flow router
+Doc version: v0.1.0
 Scope: maps user-visible actions and commands to planning docs, workflows, templates, sources and permission boundaries
 
 ## 1. Purpose
@@ -260,6 +261,22 @@ Additional sources named by user
 
 Promote a source to default only through explicit docs/template/workflow update.
 
+Source dependency/link commands are routed by this map, but dependency classification and local/register update rules are owned by:
+
+```text
+planning/source-cascade-sync-workflow.md
+planning/SOURCE-SECTION-SOURCES-TEMPLATE.md
+planning/source-usage-cascade-profile.md
+```
+
+When the target file is in a layer/root scope with a register, also read the relevant register before deciding whether a local `Sources:` block or register row must be updated:
+
+```text
+planning/root-source-sync-register.md when root planning/workflow/router files are involved
+planning/domain/domain-source-sync-register.md when domain aggregate/value-object files are involved
+planning/slices/slice-source-sync-register.md once created when slice files are involved
+```
+
 ## 8. Source Delta
 
 Use Source Delta when an answer/draft changes because of:
@@ -427,6 +444,7 @@ This root map remains the concrete Enman route table.
 | `вспомни структуру репо`, `структура репо`, `вспомни репо`, `слои репо`, `где что лежит`, `repo structure`, `repo layers` | Reconstruct repo structure and source-of-truth layers for the active task before planning/editing. | Provide current known repo structure or ask for repo/archive/tree if unavailable. | Targeted; full when structure is stale/unknown or task touches unknown layers. | GitHub/repo tree/archive plus root planning docs and active workstream docs as needed. | Repo Structure Brief: root areas, documentation layers, source-of-truth chain, active workstream files, code/tooling/example areas, known vs uncertain, files to read next. |
 | `проверь review diff file`, `проверь diff file`, `review diff file` | Read the standard repo-stored review diff for an explicitly requested review-diff-file archive flow and review it before real files are committed. | Ask for repo/branch/path if not clear; do not ask for pasted full diff when repo access is available. | Targeted. | GitHub/repo path `_ai-review-diffs/last-archive.diff`. | Diff review verdict; if OK, scoped real commit/push commands for intended files only. |
 | `перепроверь`, `recheck` | Recheck active answer/draft/source coverage. | Recheck last answer or ask target. | Targeted / full depending risk. | Conversation plus relevant sources. | Findings and corrections/no-change result. |
+| `сорс`, `укажи сорс`, `добавь source`, `добавь зависимость`, `ссылка на другой файл`, `этот файл зависит от X`, `эта секция зависит от X`, `source dependency`, `dependency link`, `source link` | Classify and declare a file/section dependency on another source file. | Ask for target file/section or source file only if missing. | Targeted; full if source model/register scope changed. | Conversation plus target file, referenced source file, source-cascade workflow/template/profile and relevant root/domain/slice register. | Source dependency decision: target, referenced source, dependency type, version/status label, local `Sources:` need, register impact, not-checked items and next action. No edit/archive without explicit permission. |
 | `учти файл X` | Incorporate explicit new source into active work. | Use X for the requested new answer. | Targeted. | Uploaded/named file. | Updated answer/draft with Source Delta. |
 | `без изм`, `б изм`, `no ch` | Reuse recent context and avoid broad re-audit. | Weak without prior context; ask what state is unchanged if needed. | Reuse / targeted. | Previous context plus targeted reads. | Answer/update with minimal checks. |
 | `арх`, `из арх`, `из архива`, `use archive` | Treat the provided/latest archive as the current source snapshot for reads/checks. | Use latest uploaded archive in current conversation, or ask for archive in a new chat. | Does not decide depth. | Archive snapshot. | Read-only answer/check based on archive; do not generate an output package unless separately requested. |
@@ -470,6 +488,7 @@ Do not treat that field kit as an activated workflow for ordinary scenario/slice
 | “создай planning file”, “новая концепция”, “введи концепцию”, “concept kit”, “principles/workflow/template в одном”, “пример отдельно” | Documentation file creation / new concept artifact setup | Optional | Full first time; targeted later | GitHub/archive/conversation by context | docs update workflow; documentation responsibility routing; example coverage decision; source-cascade workflow when the new file becomes a source | `planning/documentation/planning-docs-architecture-principles.md#9a-compound-starter-artifact-principle`, `planning/documentation/planning-docs-architecture-principles.md#13a-filename-version-migration-policy`, `planning/documentation/documentation-responsibility-map.md`, `planning/documentation/example-coverage-workflow.md`; relevant owner workflow/template if one already exists | docs architecture principles + documentation responsibility map + example coverage workflow | Placement decision and update plan or replacement package; one compound starter artifact plus a separate example when appropriate; split-later conditions recorded | Edits/packages require approval; do not perform filename-version migration or broad file splits without a separate approved batch |
 | “добавь template / workflow / command / draft format / пример” | Documentation governance update | Optional | Full first time; targeted later | GitHub/archive/conversation by context | docs update workflow; example coverage decision when template/output shape changes; reviewable output | documentation README/map/workflows; `planning/documentation/field-kits/root-use-case-map-field-kit.md` when command/use-case routes change; `planning/documentation/example-coverage-workflow.md` when template/output/command/draft example coverage matters; relevant owner workflow/template; principle section references in §3A, including compound starter artifact policy when a new concept combines principles/workflow/template | docs architecture principles + use-case map + example coverage workflow | Level 2 update plan or replacement package + File Update Overview / `План файл-обновление` when files are planned/changed/reviewed; example coverage decision if applicable; compound starter artifact + separate example decision when introducing a new cohesive concept | Edits/packages require approval |
 | “ревью зон ответственности”, “что куда относится”, “generic vs project-specific”, “portability review”, “док слой реюзабл” | Documentation responsibility-zone / portability review | Optional | Full first time; targeted later | GitHub/archive/conversation by context; `арх` means source snapshot only | responsibility-zone review workflow; docs architecture principles; documentation responsibility map | `planning/documentation/documentation-responsibility-zone-review-workflow.md`, `planning/documentation/PORTABLE-STARTER-KIT.md` when copying/adapting reusable docs into a new project, `planning/documentation-migration/documentation-layer-portability-migration-plan.md`, `planning/documentation/planning-docs-architecture-principles.md`, `planning/documentation/documentation-responsibility-map.md`; target docs under review | responsibility-zone review workflow + portability migration plan | Level 2 classification table: reusable core, specialized profile, adapter mapping, example candidate, correct owner/action + File Update Overview if file changes are planned | Do not review scenario/slice/domain/API content itself unless separately requested; edits/packages require approval |
+| “ссылка на другой файл”, “зависимость от файла”, “этот файл зависит от X”, “эта секция зависит от X”, “укажи сорс”, “добавь source”, “source dependency”, “dependency link”, “source link” | Source dependency declaration / local `Sources:` + register impact check | Optional | Targeted; full if target/source/register scope is unclear or source model changed | GitHub/archive/conversation by context | source cascade sync workflow; source section template; Enman source usage profile; relevant root/domain/slice register; file-type workflow/template for the target file | `planning/source-cascade-sync-workflow.md`, especially explicit link/dependency declaration rule; `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md`; `planning/source-usage-cascade-profile.md`; target file/section; referenced source file; `planning/root-source-sync-register.md` when root files are involved; `planning/domain/domain-source-sync-register.md` when domain files are involved; `planning/slices/slice-source-sync-register.md` once created when slice files are involved; target file-type workflow/template/responsibility map when local section shape is needed | source cascade sync workflow + local Sources template + relevant layer/root register | Level 2 source-dependency decision: target file/section, referenced source, dependency type, source version/status label, local `Sources:` need, register impact, not-checked sources and next action; replacement package only when separately requested | Do not edit files/registers without explicit permission; do not invent source versions; do not claim register synchronization until local `Sources:` blocks or file-level audit prove it |
 | “source usage”, “source/version”, “каскад зависимостей”, “stale downstream”, “версии сорсов”, “инкапсуляция слоёв”, “локальные Sources blocks” | Source usage / cascade governance, local section source drafting or pilot work | Optional | Full first time; targeted later | GitHub/archive/conversation by context | source cascade sync workflow; source usage field kit; Enman source usage profile; aggregate/server slice section source templates when draft sections are involved; principles §12A/13/14/15; PMR-002 until layer registers/full workflow exist | `planning/source-cascade-sync-workflow.md`, `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md`, `planning/source-usage-cascade-profile.md`; `planning/domain/domain-source-sync-register.md` when domain/aggregate source dependencies or downstream sync impact are involved; `planning/documentation/field-kits/source-usage-cascade-field-kit.md` when setting up/reviewing source-usage model; `planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md` when adding/reviewing aggregate section `Sources:` blocks; `planning/slices/SERVER-SLICE-SECTION-SOURCES-TEMPLATE.md` when adding/reviewing server slice section `Sources:` blocks; `planning/source-usage-pilots/README.md`; pilot register if user asks to work on a pilot; relevant source/domain/slice docs only for real pilot fill | layer encapsulation principle + source cascade sync workflow + source usage field kit + Enman source usage profile | Level 2 governance plan, local section source plan, pilot skeleton, pilot fill plan or replacement package + File Update Overview / `План файл-обновление` when files are planned/changed/reviewed | Do not pretend layer registers/full cascade workflow exist before local `Sources:` blocks prove the shape; do not add ad hoc version fields outside the doc-version convention |
 | “давай архив”, “собери архив”, “replacement package”, “archive for manual apply” | Replacement archive/package generation | Optional | Targeted/full by package scope | GitHub/archive/conversation by context | replacement file generation guide; docs update workflow when docs change; reviewable output | `planning/replacement-file-generation-guide.md`, target files, docs update workflow when docs are changed; `planning/documentation/review-diff-file-workflow.md` only for explicit review-diff-file mode | replacement guide + workflow activation | Level 2 archive/package response + File Update Overview / `План файл-обновление`; ZIP package with `MANIFEST.md`, `APPLY.md`, `replacement-files/<repo-relative-path>` complete files; default saved diff copied to clipboard | Direct repo edits not allowed unless separately approved; if complete current file contents cannot be obtained from GitHub/repo access, ask for a fresh archive or full target-file copies before generating replacement files |
 | “файл большой”, “дай ps1”, “скрипт для большого файла”, “архив неудобен” | Large/shared file update delivery choice | Optional | Targeted/full by file risk | Fresh archive/current full file preferred; script only if complete replacement unsafe | docs update workflow; replacement guide; local targeted script mode if fallback needed | `planning/documentation/documentation-update-workflow.md`, `planning/replacement-file-generation-guide.md`, target file | delivery safety check + replacement guide | Level 2 delivery plan: prefer fresh full repo/archive + safe complete replacement; one-file targeted script only as fallback | Do not choose script only because file is large; scripts require explicit mode and no auto-commit |
@@ -626,4 +645,44 @@ Steps:
 14. Include default diff capture commands that save diff to a file through `git --no-pager diff --no-color --output`, copy UTF-8 text from that file to clipboard with `ReadAllText + Set-Clipboard`, and do not print the full diff to the terminal.
 15. Use review-diff-file mode only when explicitly requested; it may push only `_ai-review-diffs/last-archive.diff`.
 16. If copied diff shows mojibake or suspicious broken Cyrillic, provide suspect-file content copy commands from `planning/replacement-file-generation-guide.md#7b-diff-capture-and-clipboard-commands`.
+```
+
+## 15. Detailed Trace: Source Dependency / Link Declaration
+
+User says:
+
+```text
+сорс / укажи сорс / добавь source / добавь зависимость / ссылка на другой файл / этот файл зависит от X / эта секция зависит от X / source dependency / dependency link / source link
+```
+
+Steps:
+
+```text
+1. Identify the target file and, when possible, the exact target section.
+2. Identify the referenced source file or internal section.
+3. Read planning/source-cascade-sync-workflow.md, planning/SOURCE-SECTION-SOURCES-TEMPLATE.md and planning/source-usage-cascade-profile.md.
+4. Read the target file and referenced source file.
+5. Read the relevant layer/root register:
+   - planning/root-source-sync-register.md for root planning/workflow/router files;
+   - planning/domain/domain-source-sync-register.md for domain aggregate/value-object files;
+   - planning/slices/slice-source-sync-register.md once created for slice files.
+6. Read the target file-type workflow/template/responsibility map when local section shape or ownership is unclear.
+7. Classify the dependency as format/process, content, internal, register-index, implementation/evidence or simple navigational link.
+8. Decide whether the target needs a local section-level `Sources:` block, a file-level dependency audit, a register row/status update or only a non-source navigation link.
+9. Use declared Doc version/status labels; if a source has no Doc version, mark version/status explicitly instead of inventing one.
+10. Report register impact and not-checked sources.
+11. Do not edit files or create a package unless the user separately approves update/archive output.
+```
+
+Expected output:
+
+```text
+- target file / section;
+- referenced source;
+- dependency classification;
+- version/status label to use;
+- local `Sources:` block or file-level audit decision;
+- root/domain/slice register impact;
+- not checked / limits;
+- next action or `План файл-обновление` when planning file changes.
 ```

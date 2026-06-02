@@ -9,9 +9,9 @@ Scope: local fenced `Sources:` block format for active planning/domain/slice dra
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
   Content:
-    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Internal dependencies:
     - none
   Not checked:
@@ -43,9 +43,9 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
   Content:
-    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Internal dependencies:
     - Template
   Not checked:
@@ -72,9 +72,9 @@ Not checked:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
   Content:
-    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Internal dependencies:
     - Template
     - Field Meaning
@@ -155,9 +155,9 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
   Content:
-    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Internal dependencies:
     - Template
     - Field Meaning
@@ -171,4 +171,5 @@ Sources:
 ```text
 - SRC-LOCAL-RULE-1 updated this template to require version/status labels and prefer scenario text #DATA for scenario-specific DATA.
 - ROOT-SRC-1 added local section-level Sources blocks to this template without changing the template shape or removing domain/slice examples.
+- SRC-DEP-CMD-1 refreshed source version labels for the source-cascade workflow and Enman source usage profile without changing this template shape.
 ```

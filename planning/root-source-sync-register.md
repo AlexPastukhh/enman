@@ -1,7 +1,7 @@
 # Root Source Sync Register
 
 Status: skeleton / root planning dependency register partially derived for source-governance core
-Doc version: v0.4.0
+Doc version: v0.5.0
 Scope: source dependency skeleton for root planning workflow, routing, source-governance, Goal Map discovery and Tampermonkey command-helper files
 
 ## 1. Purpose
@@ -9,9 +9,9 @@ Scope: source dependency skeleton for root planning workflow, routing, source-go
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
-    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
@@ -47,14 +47,16 @@ planning/source-usage-cascade-profile.md
 planning/root-source-sync-register.md
 ```
 
+After SRC-DEP-CMD-1, this register also records that `planning/planning-use-case-map.md` has an explicit source dependency/link route. The router row remains skeleton until a full root-router local/file-level audit is performed.
+
 ## 2. Register Rules
 
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
-    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
@@ -105,9 +107,9 @@ SRC-LOCAL-RULE-1 updated source/template version candidates for structured local
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
-    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
@@ -120,12 +122,12 @@ Sources:
 
 | Root file | Role | Current version/status | Register coverage state | Notes |
 |---|---|---|---|---|
-| `planning/source-cascade-sync-workflow.md` | source cascade workflow | Doc version: v0.3.0 | derived from local section Sources in ROOT-SRC-1 | Root workflow that defines local `Sources:` blocks, register states, layer register rules and structured-file local Sources requirement. |
-| `planning/source-usage-cascade-profile.md` | Enman project profile | Doc version: v0.1.0 | derived from local section Sources in ROOT-SRC-1 | Project-specific source/consumer categories, row shape and cascade triggers. |
-| `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md` | local section `Sources:` block template | Doc version: v0.2.0 | derived from local section Sources in ROOT-SRC-1 | General fenced `Sources:` block format with version/status labels. |
-| `planning/root-source-sync-register.md` | root dependency register | Doc version: v0.4.0 | self row partially synchronized for ROOT-SRC-1 scope | Still skeleton for full root coverage; source-governance core rows are derived/synchronized. |
+| `planning/source-cascade-sync-workflow.md` | source cascade workflow | Doc version: v0.4.0 | derived from local section Sources in ROOT-SRC-1; rule updated in SRC-DEP-CMD-1 | Root workflow that defines local `Sources:` blocks, register states, layer register rules, structured-file local Sources requirement and explicit source dependency/link declaration rule. |
+| `planning/source-usage-cascade-profile.md` | Enman project profile | Doc version: v0.2.0 | derived from local section Sources in ROOT-SRC-1; triggers updated in SRC-DEP-CMD-1 | Project-specific source/consumer categories, row shape and cascade triggers. |
+| `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md` | local section `Sources:` block template | Doc version: v0.2.0 | derived from local section Sources in ROOT-SRC-1; source labels refreshed in SRC-DEP-CMD-1 | General fenced `Sources:` block format with version/status labels. |
+| `planning/root-source-sync-register.md` | root dependency register | Doc version: v0.5.0 | self row partially synchronized for ROOT-SRC-1/SRC-DEP-CMD-1 scope | Still skeleton for full root coverage; source-governance core rows are derived/synchronized and router source-dependency route is recorded as skeleton. |
 | `planning/README.md` | planning navigation and onboarding entrypoint | version not confirmed in this register | candidate row added | Now points new chats to Goal Map and Tampermonkey command-helper discovery docs. |
-| `planning/planning-use-case-map.md` | root action-to-doc router | version not confirmed in this register | candidate row updated | Owns command routing, including `давай архив`, explicit review-diff-file archive route, Goal Map and Tampermonkey discovery behavior. |
+| `planning/planning-use-case-map.md` | root action-to-doc router | Doc version: v0.1.0 | candidate row updated | Owns command routing, including `давай архив`, explicit review-diff-file archive route, Goal Map, Tampermonkey discovery behavior and source dependency/link declaration routing. |
 | `planning/workflow-activation-map.md` | workflow activation router | version not confirmed in this register | candidate row updated | Activates Goal Map and Tampermonkey command-helper chains. |
 | `planning/planning-doc-responsibility-map.md` | root planning responsibility router | version not confirmed in this register | candidate row updated | Owns root responsibility placement for Goal Map / Tampermonkey files. |
 | `planning/goal-map-principles-workflow-template.md` | Goal Map owner workflow/template | version not confirmed in this register | candidate row added | Owns living Goal Map rules, brief shape and `синх карта`. |
@@ -144,9 +146,9 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
-    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
@@ -158,11 +160,11 @@ Sources:
 
 | Consumer file | Consumer scope | Source files | Source role | Source version/status | Sync status | Review outcome | Notes |
 |---|---|---|---|---|---|---|---|
-| `planning/source-cascade-sync-workflow.md` | source cascade rules and register state model | `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md`; `planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md`; `planning/slices/SERVER-SLICE-SECTION-SOURCES-TEMPLATE.md`; `planning/source-usage-cascade-profile.md`; `planning/root-source-sync-register.md`; `planning/domain/domain-source-sync-register.md`; planned `planning/slices/slice-source-sync-register.md` | format/process + register-index | source workflow Doc version: v0.3.0; general template Doc version: v0.2.0; profile Doc version: v0.1.0; domain register Doc version: v0.2.0; slice register planned | derived/synchronized for ROOT-SRC-1 local Sources scope | no semantic change; source-block metadata added | Workflow has local section Sources blocks and distinguishes current domain/root registers from planned slice register. |
-| `planning/source-usage-cascade-profile.md` | Enman source/consumer categories and row conventions | `planning/documentation/field-kits/source-usage-cascade-field-kit.md`; `planning/source-cascade-sync-workflow.md`; `planning/root-source-sync-register.md`; `planning/domain/domain-source-sync-register.md`; planned `planning/slices/slice-source-sync-register.md`; `planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md` | format/process + project profile/example | source workflow Doc version: v0.3.0; root register Doc version: v0.4.0; domain register Doc version: v0.2.0; field-kit/example versions not confirmed; slice register planned | derived/synchronized for ROOT-SRC-1 local Sources scope | no semantic change; source-block metadata added | Profile has local section Sources blocks for categories, register model, triggers, pilot and related files. |
-| `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md` | fenced `Sources:` block format | `planning/source-cascade-sync-workflow.md`; `planning/source-usage-cascade-profile.md`; local `Sources:` block rules | format/process | source workflow Doc version: v0.3.0; profile Doc version: v0.1.0; template Doc version: v0.2.0 | derived/synchronized for ROOT-SRC-1 local Sources scope | no semantic change; source-block metadata added | Template has minimal local Sources blocks for template, field meaning, rules and source delta sections. |
+| `planning/source-cascade-sync-workflow.md` | source cascade rules and register state model | `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md`; `planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md`; `planning/slices/SERVER-SLICE-SECTION-SOURCES-TEMPLATE.md`; `planning/source-usage-cascade-profile.md`; `planning/root-source-sync-register.md`; `planning/domain/domain-source-sync-register.md`; planned `planning/slices/slice-source-sync-register.md` | format/process + register-index | source workflow Doc version: v0.4.0; general template Doc version: v0.2.0; profile Doc version: v0.2.0; domain register Doc version: v0.2.0; slice register planned | derived/synchronized for ROOT-SRC-1 local Sources scope; rule updated in SRC-DEP-CMD-1 | explicit source dependency/link rule added; source-block metadata refreshed | Workflow has local section Sources blocks, distinguishes current domain/root registers from planned slice register and classifies file-to-file/section-to-file dependencies. |
+| `planning/source-usage-cascade-profile.md` | Enman source/consumer categories and row conventions | `planning/documentation/field-kits/source-usage-cascade-field-kit.md`; `planning/source-cascade-sync-workflow.md`; `planning/root-source-sync-register.md`; `planning/domain/domain-source-sync-register.md`; planned `planning/slices/slice-source-sync-register.md`; `planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md` | format/process + project profile/example | source workflow Doc version: v0.4.0; root register Doc version: v0.5.0; domain register Doc version: v0.2.0; field-kit/example versions not confirmed; slice register planned | derived/synchronized for ROOT-SRC-1 local Sources scope; triggers updated in SRC-DEP-CMD-1 | source dependency/link trigger added; source-block metadata refreshed | Profile has local section Sources blocks for categories, register model, triggers, pilot and related files. |
+| `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md` | fenced `Sources:` block format | `planning/source-cascade-sync-workflow.md`; `planning/source-usage-cascade-profile.md`; local `Sources:` block rules | format/process | source workflow Doc version: v0.4.0; profile Doc version: v0.2.0; template Doc version: v0.2.0 | derived/synchronized for ROOT-SRC-1 local Sources scope; source labels refreshed in SRC-DEP-CMD-1 | no semantic change; source-block metadata refreshed | Template has minimal local Sources blocks for template, field meaning, rules and source delta sections. |
 | `planning/README.md` | onboarding, root navigation and command-helper discovery | `planning/workflow-activation-map.md`; `planning/planning-use-case-map.md`; `planning/planning-doc-responsibility-map.md`; `planning/goal-map-principles-workflow-template.md`; `planning/workstreams/command-system-and-tampermonkey-goal-map.md`; `planning/workstreams/tampermonkey-command-projection-plan.md`; `tools/tampermonkey/README.md` | navigation/process + workstream discovery | mixed; several root files have version not confirmed | skeleton | updated candidate row after DISC-GM-TM1 | New chat discovery now includes living Goal Map and helper projection docs. |
-| `planning/planning-use-case-map.md` | action-to-doc-flow routing and command semantics | `planning/README.md`; `planning/workflow-activation-map.md`; `planning/planning-doc-responsibility-map.md`; `planning/source-cascade-sync-workflow.md`; `planning/source-usage-cascade-profile.md`; `planning/root-source-sync-register.md`; `planning/domain/domain-source-sync-register.md`; `planning/replacement-file-generation-guide.md`; `planning/documentation/review-diff-file-workflow.md`; `planning/documentation/reviewable-agent-output-and-commands-workflow.md`; `planning/goal-map-principles-workflow-template.md`; `planning/workstreams/command-system-and-tampermonkey-goal-map.md`; `planning/workstreams/tampermonkey-command-projection-plan.md`; layer readme/workflow files by use case | routing/process + command source-of-truth | mixed; root/router versions not fully confirmed | skeleton | root router audit needed | Keeps ordinary `давай архив` as clipboard diff and explicit `давай архив с review diff file` as separate route. |
+| `planning/planning-use-case-map.md` | action-to-doc-flow routing and command semantics | `planning/README.md`; `planning/workflow-activation-map.md`; `planning/planning-doc-responsibility-map.md`; `planning/source-cascade-sync-workflow.md`; `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md`; `planning/source-usage-cascade-profile.md`; `planning/root-source-sync-register.md`; `planning/domain/domain-source-sync-register.md`; `planning/replacement-file-generation-guide.md`; `planning/documentation/review-diff-file-workflow.md`; `planning/documentation/reviewable-agent-output-and-commands-workflow.md`; `planning/goal-map-principles-workflow-template.md`; `planning/workstreams/command-system-and-tampermonkey-goal-map.md`; `planning/workstreams/tampermonkey-command-projection-plan.md`; layer readme/workflow files by use case | routing/process + command source-of-truth | Doc version: v0.1.0 for router file; mixed source versions/statuses for linked owners | skeleton | root router audit still needed; SRC-DEP-CMD-1 route added | Keeps ordinary `давай архив` as clipboard diff and explicit `давай архив с review diff file` as separate route; routes source dependency/link commands to source-cascade workflow/template/profile and relevant registers. |
 | `planning/workflow-activation-map.md` | workflow activation and implicit workflow chains | `planning/planning-agent-protocol.md`; `planning/planning-use-case-map.md`; `planning/planning-doc-responsibility-map.md`; `planning/goal-map-principles-workflow-template.md`; `planning/workstreams/command-system-and-tampermonkey-goal-map.md`; `planning/workstreams/tampermonkey-command-projection-plan.md`; `tools/tampermonkey/README.md`; layer workflow files listed in the activation table | workflow routing/process | mixed; not fully version-audited | skeleton | workflow activation audit needed | DISC-GM-TM1 added Goal Map and Tampermonkey command-helper activation chains. |
 | `planning/planning-doc-responsibility-map.md` | root planning responsibility routing | documentation responsibility map; scenario/domain/slice/local responsibility maps; `planning/goal-map-principles-workflow-template.md`; `planning/workstreams/command-system-and-tampermonkey-goal-map.md`; `planning/workstreams/tampermonkey-command-projection-plan.md`; `tools/tampermonkey/README.md`; `tools/tampermonkey/IMPLEMENTATION-NOTES.md`; `tools/tampermonkey/chat-command-palette.user.js` | responsibility routing/process | mixed; not fully version-audited | skeleton | responsibility map audit needed | Now includes command-system / Goal Map / Tampermonkey ownership anchors. |
 | `planning/goal-map-principles-workflow-template.md` | Goal Map rules, brief shape and map sync command | `planning/planning-use-case-map.md`; `planning/documentation/reviewable-agent-output-and-commands-workflow.md`; `planning/goal-map-example.md`; `planning/documentation/examples/GOAL-MAP-BRIEF-RESPONSE-EXAMPLE.md`; `planning/documentation/examples/GOAL-MAP-SYNC-COMMAND-EXAMPLE.md`; relevant living Goal Map files | workflow/template + response-shape sources | mixed; not fully version-audited | skeleton | Goal Map owner audit needed | Added new-chat discovery rule; durable state lives in living Goal Maps, not in brief output. |
@@ -178,8 +180,8 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
-    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
@@ -194,6 +196,7 @@ Sources:
 | `planning/source-cascade-sync-workflow.md` | `planning/domain/domain-source-sync-register.md` | Domain register is current upstream index for aggregate/value-object dependencies. | current / synchronized on domain side | Keep wording current; do not call it planned. |
 | `planning/source-cascade-sync-workflow.md` | `planning/slices/slice-source-sync-register.md` | Slice register is intended future layer register. | planned / not created | Create skeleton before broad slice refactor. |
 | `planning/planning-use-case-map.md` | `planning/domain/domain-source-sync-register.md` | Source-cascade/domain rows should route domain dependency review through the domain register. | already routed for source/domain rows; slice rows still need review | Review slice rows before first slice refactor. |
+| `planning/planning-use-case-map.md` | `planning/source-cascade-sync-workflow.md` / `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md` / `planning/source-usage-cascade-profile.md` | Explicit source dependency/link commands should route through the source-cascade workflow/template/profile and then the relevant layer/root register. | SRC-DEP-CMD-1 route added; root router row still skeleton | Later full root-router audit should derive/synchronize this row from local/file-level source coverage. |
 | `planning/README.md` / `planning/workflow-activation-map.md` / `planning/planning-doc-responsibility-map.md` | Goal Map owner + living command-system Goal Map | New-chat and long-running workstream discovery now depend on these files. | candidate rows added after DISC-GM-TM1 | Later decide whether root docs need file-level source audits or local Sources blocks. |
 | `planning/planning-use-case-map.md` / `planning/workstreams/tampermonkey-command-projection-plan.md` / `tools/tampermonkey/chat-command-palette.user.js` | replacement archive guide + explicit review-diff workflow | Helper command profiles and root routes distinguish default clipboard diff from explicit review-diff-file mode. | candidate rows added after TM12D/DISC-GM-TM1 | Keep ordinary `давай архив` and explicit review-diff-file route separate. |
 | `planning/source-cascade-sync-workflow.md` / `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md` / `planning/domain/value-object-drafting-workflow.md` / `planning/domain/value-object-draft-template.md` | domain value object local section Sources | Structured value-object files now have a declared local section Sources requirement and template shape. | rule/template updated by SRC-LOCAL-RULE-1; value-object files covered by DOM-VO-SRC-ALL-1 | Use domain register v0.2.0 before relying on value objects for first slice-side source coverage. |
@@ -204,8 +207,8 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
-    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
@@ -236,7 +239,7 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
   Content:
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
@@ -258,6 +261,7 @@ Sources:
 - Recorded value-object workflow/template local Sources rule updates without claiming value-object file coverage.
 - DOM-VO-SRC-ALL-1 made the domain register cover active aggregate and active value-object sources before ROOT-SRC-1.
 - ROOT-SRC-1 added local section-level Sources blocks to the source-governance core files and updated those root register rows to derived/synchronized for this narrow scope.
+- SRC-DEP-CMD-1 added the explicit source dependency/link route to `planning/planning-use-case-map.md`, bumped this register to Doc version: v0.5.0 and kept the router row skeleton until a full root-router audit.
 - Kept this register as skeleton / not fully audited for root files outside the source-governance core.
 - Did not add Doc version to unversioned root/router/helper files.
 - Did not edit domain aggregate drafts, value object drafts or slice drafts.

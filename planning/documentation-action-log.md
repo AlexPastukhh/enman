@@ -1845,3 +1845,41 @@ Follow-ups:
   After this discovery sync lands, continue Tampermonkey helper smoke testing and command-list validation.
 Notes:
   Tampermonkey profiles remain projections. `planning/planning-use-case-map.md` and linked owner workflows remain the command source of truth.
+
+### 2026-06-02 - Added explicit source dependency link command route
+
+Date:
+  2026-06-02
+Action:
+  Added an explicit command route and workflow rule for declaring file-to-file and section-to-file source dependencies.
+Type:
+  Source cascade workflow / command routing / root register update
+Status:
+  applied
+Why:
+  When a user says that one file or section depends on another file, the chat must not treat that as a simple markdown link by default. It must classify the dependency, use a declared source version/status label, decide whether a local `Sources:` block or file-level audit is needed, and check the relevant root/domain/slice register impact before any file update.
+Changed files:
+  - planning/planning-use-case-map.md
+  - planning/source-cascade-sync-workflow.md
+  - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md
+  - planning/source-usage-cascade-profile.md
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added `сорс` / `укажи сорс` / `добавь source` / `добавь зависимость` / `source dependency` / `dependency link` routing to the root use-case map.
+  - Added an explicit link/dependency declaration rule to the source cascade workflow.
+  - Refreshed source version labels in the general Source Section Sources template without changing template shape.
+  - Added source dependency/link as an Enman cascade trigger in the source usage profile.
+  - Bumped `planning/source-cascade-sync-workflow.md` to Doc version: v0.4.0.
+  - Bumped `planning/source-usage-cascade-profile.md` to Doc version: v0.2.0.
+  - Added Doc version: v0.1.0 to `planning/planning-use-case-map.md` because this active root router now participates directly in source dependency routing.
+  - Bumped `planning/root-source-sync-register.md` to Doc version: v0.5.0 and recorded the new router route without claiming full root-router coverage.
+Not changed:
+  - No domain aggregate or value-object semantics changed.
+  - No slice register was created.
+  - No full root-router local/file-level audit was claimed.
+  - No broad filename-version migration was performed.
+Follow-ups:
+  Use the new route when a future task says that a file/section depends on another file or needs a source link. Later ROOT-SRC-2 should still audit root routing/onboarding files more broadly.
+Notes:
+  Meaning-bearing dependencies should be recorded through local `Sources:` blocks or file-level/register audit decisions. Simple navigational links do not automatically become source dependencies.

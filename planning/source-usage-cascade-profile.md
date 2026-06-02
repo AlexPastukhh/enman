@@ -1,7 +1,7 @@
 # Enman Source Usage Cascade Profile
 
 Status: active Enman source usage cascade profile
-Doc version: v0.1.0
+Doc version: v0.2.0
 Scope: concrete Enman source/consumer categories, row conventions, register states and cascade triggers
 
 ## 1. Purpose
@@ -10,10 +10,10 @@ Scope: concrete Enman source/consumer categories, row conventions, register stat
 Sources:
   Format/process:
     - planning/documentation/field-kits/source-usage-cascade-field-kit.md @ version not confirmed
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.5.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
     - planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md @ version not confirmed
   Internal dependencies:
@@ -69,10 +69,10 @@ Use the domain/server slice section source templates when adding local `Sources:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.5.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Purpose
@@ -99,10 +99,10 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.5.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Purpose
@@ -127,9 +127,9 @@ Sources:
 Sources:
   Format/process:
     - planning/documentation/field-kits/source-usage-cascade-field-kit.md @ version not confirmed
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.5.0
   Internal dependencies:
     - Source Categories
     - Consumer Categories
@@ -155,10 +155,10 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.5.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Source Usage Row Shape
@@ -194,10 +194,10 @@ Do not treat a skeleton register as full coverage.
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.5.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Source Categories
@@ -216,20 +216,29 @@ Run cascade review when:
 - domain interpretation changes;
 - slice scope changes;
 - workflow/template/register rules change;
+- a file-to-file reference, section dependency, source link or "uses information from X" claim is introduced;
 - root routing/use-case map changes;
 - API/testing contract or evidence changes;
 - external-facing VKR/thesis claim depends on changed internal source.
 ```
+
+For explicit dependency/link work, classify the source before editing:
+
+```text
+simple navigation / format-process / content-source / internal / register-index / implementation-evidence
+```
+
+If the dependency is meaning-bearing, use local `Sources:` blocks or file-level/register audit according to `planning/source-cascade-sync-workflow.md#5a-explicit-link--dependency-declaration-rule`.
 
 ## 6. Pilot Scope
 
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
   Content:
     - planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md @ version not confirmed
-    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.5.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Source Categories
@@ -253,11 +262,11 @@ Keep the pilot small enough to prove row shape and review value.
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
   Content:
     - planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md @ version not confirmed
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
-    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.5.0
   Internal dependencies:
     - Pilot Scope
   Not checked:
@@ -305,9 +314,9 @@ planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMA
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.5.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Source Categories
@@ -331,10 +340,10 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.5.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Purpose
@@ -360,10 +369,10 @@ planning/source-usage-pilots/README.md
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.5.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
     - planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md @ version not confirmed
   Internal dependencies:
@@ -376,4 +385,5 @@ Sources:
 ```text
 - ROOT-SRC-1 added local section-level Sources blocks to this Enman profile without changing profile semantics.
 - DOM-VO-SRC-ALL-1 made the domain register cover active aggregate and active value-object sources before this root pass.
+- SRC-DEP-CMD-1 added explicit source dependency/link triggers and bumped this profile to Doc version: v0.2.0.
 ```
