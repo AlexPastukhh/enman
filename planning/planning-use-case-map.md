@@ -324,6 +324,15 @@ The canonical prior-discussion recheck command is:
 
 `обс` means context/discussion recheck. Its semantics are owned by `reviewable-agent-output-and-commands-workflow.md`.
 
+Repo Structure / `вспомни структуру репо` command behavior is owned by:
+
+```text
+planning/repo-structure-memory.md
+```
+
+The command reconstructs known repository root areas, documentation/source-of-truth layers, active workstream files and next files to read. It does not grant edit, archive/package, commit or push permission.
+
+
 Response block and response modifier commands such as `кп`, `саммари`, `кц`, `карта цели кратко`, `goal map brief`, `крит`, `критически`, `critical review`, `план файл-обновление`, legacy `итог` and `отличия драфта` are routed in this file, but their behavior is owned by `reviewable-agent-output-and-commands-workflow.md`.
 
 Goal Map maintenance commands such as `синх карта` are routed in this file, but their behavior is owned by `planning/goal-map-principles-workflow-template.md`.
@@ -388,6 +397,7 @@ This root map remains the concrete Enman route table.
 | `полный конец` | Add `Краткое саммари` and `План файл-обновление` when file/change/update overview is applicable. | Add both ending blocks if target is obvious. | Reuse / targeted. | Conversation plus target files/diff/archive when needed. | Context summary followed by final file/change overview. |
 | `отличия драфта`, `draft diff` | Show how the active draft changed from the previous version. | Ask for the draft target if no active draft is clear. | Reuse / targeted. | Conversation / canvas / draft sources if changed. | `Отличия от предыдущего драфта` plus updated draft when requested. |
 | `обс`, `перепроверь обсуждение`, `context recheck` | Re-check relevant prior discussion, accepted decisions and constraints before answering. | Re-check available prior discussion or say what context is unavailable. | Reuse / targeted; full only if task requires it. | Conversation plus sources only if needed. | Context/discussion recheck result; combine with Level 1/2/3 by task breadth. |
+| `вспомни структуру репо`, `структура репо`, `вспомни репо`, `слои репо`, `где что лежит`, `repo structure`, `repo layers` | Reconstruct repo structure and source-of-truth layers for the active task before planning/editing. | Provide current known repo structure or ask for repo/archive/tree if unavailable. | Targeted; full when structure is stale/unknown or task touches unknown layers. | GitHub/repo tree/archive plus root planning docs and active workstream docs as needed. | Repo Structure Brief: root areas, documentation layers, source-of-truth chain, active workstream files, code/tooling/example areas, known vs uncertain, files to read next. |
 | `перепроверь`, `recheck` | Recheck active answer/draft/source coverage. | Recheck last answer or ask target. | Targeted / full depending risk. | Conversation plus relevant sources. | Findings and corrections/no-change result. |
 | `учти файл X` | Incorporate explicit new source into active work. | Use X for the requested new answer. | Targeted. | Uploaded/named file. | Updated answer/draft with Source Delta. |
 | `без изм`, `б изм`, `no ch` | Reuse recent context and avoid broad re-audit. | Weak without prior context; ask what state is unchanged if needed. | Reuse / targeted. | Previous context plus targeted reads. | Answer/update with minimal checks. |

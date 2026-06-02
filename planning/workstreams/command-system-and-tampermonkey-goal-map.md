@@ -21,13 +21,13 @@ planning/documentation/examples/README.md
 ## 0. Current Snapshot
 
 Last updated:
-  2026-06-02 / after TM-5 command click keep-open fix
+  2026-06-02 / after TM-7 repo-structure command and deferred-goals owner
 
 Current goal:
   Build a transferable command system and Tampermonkey prompt helper for long-running chats across projects.
 
 Current focus:
-  TM-5 — Tampermonkey command click keep-open fix.
+  TM-7 — Repo-structure command and deferred-goals owner.
 
 Active slice:
   SL-6 — Tampermonkey Guided Prompt Helper
@@ -55,6 +55,8 @@ Already available:
   - Tampermonkey first userscript skeleton exists.
   - First `синх карта` command insertion smoke test is recorded.
   - Command row click no longer closes the widget.
+  - Repo-structure orientation command is documented and available in the helper.
+  - Deferred goals and far-future ideas owner file exists.
 
 Latest completed:
   - Added root Goal Map owner/example.
@@ -75,12 +77,13 @@ Latest completed:
   - Added first Tampermonkey userscript skeleton.
   - Recorded first `синх карта` command insertion smoke test.
   - Fixed command row click so it keeps the widget open.
+  - Added repo-structure orientation command and deferred-goals owner file.
 
 Next action:
-  Continue TM-5:
-    retest command row insertion, header close, drag and remaining browser smoke tests.
+  Continue TM-7:
+    apply/review this docs+helper update, then continue smoke testing without implementing deferred buffer/stack ideas.
 Recommended next action:
-  Apply and review this keep-open fix archive, then retest command click behavior before continuing broader smoke tests.
+  Apply and review this repo-structure/deferred-goals archive, then retest the helper command list and continue smoke testing.
 
 Open decisions:
   - DEC-1: resolved — Generic Action Overview deferred; TM-0 selected.
@@ -970,11 +973,12 @@ Status:
 
 ## 9. Current Focus
 
-TM-5 — Tampermonkey command click keep-open fix:
-  - command row click was closing the widget after insertion;
-  - fixed behavior so command row click inserts the body and keeps the widget open;
-  - only header click toggles open/closed;
-  - retest command insertion, header close and drag before continuing broader smoke tests;
+TM-7 — Repo-structure command and deferred-goals owner:
+  - new command `вспомни структуру репо` is routed and projected into the helper;
+  - new owner file `planning/repo-structure-memory.md` records known repo layers and orientation output;
+  - new owner file `planning/deferred-goals-and-ideas.md` stores deferred/far-future ideas;
+  - Tampermonkey buffer/selected-command-stack/cleanup ideas are recorded as far future, not implemented now;
+  - current near-term work remains smoke testing and small bug fixes;
   - keep `planning/planning-use-case-map.md` and linked owner workflows as source of truth;
   - keep Generic Action Overview deferred.
 
@@ -983,17 +987,15 @@ Current active slice:
 
 ## 10. Next Action
 
-Retest the keep-open fix and continue manual smoke testing:
+Retest the helper after the repo-structure/deferred-goals update:
 
 ```text
-1. Open widget.
-2. Click a command row.
-3. Confirm command body is inserted.
-4. Confirm widget remains open.
-5. Confirm header click closes the widget.
-6. Confirm header drag moves widget without accidental toggle.
-7. Continue scroll / MVP-1 / MVP-2 / empty-composer / existing-text / no-auto-send tests.
+1. Confirm `вспомни структуру репо` appears in the command list.
+2. Click it and confirm its body inserts while the widget stays open.
+3. Confirm header click closes the widget.
+4. Continue scroll / MVP-1 / MVP-2 / empty-composer / existing-text / no-auto-send tests.
+5. Do not implement helper-owned compose buffer or selected-command stack yet.
 ```
 
 Recommended next action:
-  Retest this fix before adding preview, search or external profile loading.
+  Finish smoke testing before adding preview, search, external profile loading or deferred buffer/stack features.

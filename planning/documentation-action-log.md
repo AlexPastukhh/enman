@@ -1728,3 +1728,43 @@ Follow-ups:
 Notes:
   The widget should now close only through header click, not through command row click.
 
+### 2026-06-02 - Added repo-structure command and deferred-goals owner
+
+Date:
+  2026-06-02
+Action:
+  Added a repo-structure orientation command and a central deferred-goals owner file.
+Type:
+  Command routing / Tampermonkey helper update / deferred backlog
+Status:
+  applied
+Why:
+  The chat needs a reusable command to reorient around repository root areas, documentation layers, active workstream files and next files to read before planning or editing. Far-future Tampermonkey ideas also needed a specialized owner file instead of remaining only in implementation notes.
+Changed files:
+  - planning/repo-structure-memory.md
+  - planning/deferred-goals-and-ideas.md
+  - planning/planning-use-case-map.md
+  - planning/workstreams/tampermonkey-command-projection-plan.md
+  - tools/tampermonkey/chat-command-palette.user.js
+  - tools/tampermonkey/README.md
+  - tools/tampermonkey/IMPLEMENTATION-NOTES.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added `planning/repo-structure-memory.md` as the owner/reference for repo structure orientation.
+  - Added `planning/deferred-goals-and-ideas.md` as the central owner for deferred and far-future ideas.
+  - Added the `вспомни структуру репо` / `структура репо` route to the root use-case map.
+  - Added the Tampermonkey inserted body and userscript command profile for repo-structure orientation.
+  - Moved far-future helper-owned compose buffer / selected-command stack / cleanup ideas into the deferred owner.
+  - Updated implementation notes, README and living Goal Map to reference the new owner files and command.
+Not changed:
+  - No existing command semantics changed.
+  - No preview/search/external profile loading added.
+  - No helper-owned compose buffer implemented.
+  - No selected-command stack or cleanup UI implemented.
+  - No Generic Action Overview implementation added.
+Follow-ups:
+  Retest the Tampermonkey command list and the new repo-structure command body, then continue current smoke testing.
+Notes:
+  The repo-structure memory is an orientation map, not proof of a complete current repository tree.
+

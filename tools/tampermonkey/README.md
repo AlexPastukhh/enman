@@ -119,3 +119,21 @@ The script uses a standard userscript header with `@match` entries for ChatGPT p
 - Inserted body includes compact key_reminders.
 - Composer-not-found error is safe and visible.
 ```
+
+
+## 8. Repo Structure Helper Command
+
+The helper includes a repo-orientation command:
+
+```text
+вспомни структуру репо
+```
+
+The command body points the chat to:
+
+```text
+planning/planning-use-case-map.md
+planning/repo-structure-memory.md
+```
+
+Use it before planning/editing when the chat may have lost track of root areas, documentation layers, workstream files or app/tooling/example areas.

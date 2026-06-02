@@ -65,6 +65,8 @@ tools/tampermonkey/chat-command-palette.user.js
 - Header click and drag are separated by a small movement threshold.
 - First userscript skeleton exists as `tools/tampermonkey/chat-command-palette.user.js`.
 - Command row click must not close the widget; only header click toggles open/closed.
+- Deferred and far-future goals live in `planning/deferred-goals-and-ideas.md`.
+- Repo-structure orientation command is available as `вспомни структуру репо`.
 ```
 
 ## 4. Implementation Principles
@@ -320,6 +322,30 @@ Success condition:
 Failure to find the composer is safe and recoverable.
 ```
 
+### UC-9 — User recalls repository structure before planning
+
+Example:
+
+```text
+вспомни структуру репо
+```
+
+Expected helper behavior:
+
+```text
+- inserted body points to `planning/planning-use-case-map.md`;
+- inserted body points to `planning/repo-structure-memory.md`;
+- inserted body reminds the chat to distinguish known vs uncertain structure;
+- inserted body does not grant edit/archive/commit permission.
+```
+
+Success condition:
+
+```text
+The chat produces a Repo Structure Brief and identifies files to read next before planning or editing.
+```
+
+
 ## 6. What Should Be Possible
 
 First userscript MVP should make this possible:
@@ -356,6 +382,9 @@ Later should make this possible:
 ```text
 - add search by aliases and labels;
 - add preview/edit inside the helper before insert;
+- add helper-owned compose buffer for typing user text outside the main ChatGPT input;
+- show selected-command stack before final insertion;
+- remove selected commands and clean malformed/garbage command blocks before insertion;
 - load optional project profile config;
 - separate reusable defaults from project commands;
 - add keyboard shortcut;
@@ -411,16 +440,17 @@ Behavior:
 │                                              │
 │ MVP-2 / helpers                              │
 │  9. карта цели               full map        │
-│ 10. кп                       key points      │
-│ 11. саммари                  summary         │
-│ 12. давай драфт              draft           │
-│ 13. обнови                   update          │
-│ 14. уточни                   clarify         │
-│ 15. расширь                  expand          │
-│ 16. отличия драфта           draft diff      │
-│ 17. без кп                   suppress KP     │
-│ 18. без саммари              suppress sum    │
-│ 19. без план файл-обновления suppress FU     │
+│ 10. вспомни структуру репо    repo layers     │
+│ 11. кп                       key points      │
+│ 12. саммари                  summary         │
+│ 13. давай драфт              draft           │
+│ 14. обнови                   update          │
+│ 15. уточни                   clarify         │
+│ 16. расширь                  expand          │
+│ 17. отличия драфта           draft diff      │
+│ 18. без кп                   suppress KP     │
+│ 19. без саммари              suppress sum    │
+│ 20. без план файл-обновления suppress FU     │
 └──────────────────────────────────────────────┘
 ```
 
@@ -586,6 +616,8 @@ Record checked external sources here before implementing behavior that depends o
 - Should inserted prompt include empty lines exactly as documented?
 - Should helper remember last user_target text?
 - How should implementation detect the active ChatGPT input reliably?
+- Far future: should user text be typed inside a helper-owned compose buffer instead of the main ChatGPT input?
+- Far future: how should selected commands be displayed, removed, cleaned or validated before insertion?
 ```
 
 ## 12. First Userscript Skeleton Notes
@@ -732,7 +764,31 @@ Follow-up test:
 ```
 
 
-## 14. Future Split Candidates
+## 14. Deferred / Far-Future Ideas
+
+Deferred and far-future ideas are owned centrally by:
+
+```text
+planning/deferred-goals-and-ideas.md
+```
+
+Current Tampermonkey deferred ideas include:
+
+```text
+- helper-owned compose buffer;
+- selected-command stack before insertion;
+- removing selected commands before insertion;
+- cleanup/repair for duplicate, malformed, manually damaged or garbage command blocks;
+- multi-command validation and conflict warning.
+```
+
+Boundary:
+
+```text
+Do not implement these during current smoke testing or small bug-fix loops.
+```
+
+## 15. Future Split Candidates
 
 When this file grows, split into:
 

@@ -90,6 +90,7 @@ The envelope should be inserted into chat input, not auto-sent by default.
 без кп
 без саммари
 без план файл-обновления
+вспомни структуру репо / структура репо / слои репо
 ```
 
 ### Reserved / deferred
@@ -837,6 +838,39 @@ key_reminders:
 
 user_target:
   <answer/context>
+
+[/ENMAN_COMMAND]
+```
+
+#### repo_structure.recall / `вспомни структуру репо`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  вспомни структуру репо
+
+command_family:
+  `вспомни структуру репо` / `структура репо` / `слои репо` / `где что лежит`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read `planning/repo-structure-memory.md` and linked files for this command route if needed.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Reconstruct repo root areas and documentation/code/tooling layers before planning or editing.
+  - Distinguish known structure from uncertain or unverified structure.
+  - Identify source-of-truth chain and files to read next.
+  - Do not edit files or create archive unless separately requested.
+  - Do not invent missing root files; ask for repo tree/archive if needed.
+
+user_target:
+  <what task needs repo-structure orientation>
 
 [/ENMAN_COMMAND]
 ```

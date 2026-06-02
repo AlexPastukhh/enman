@@ -78,6 +78,13 @@
     "body": "[ENMAN_COMMAND]\n\ncommand:\n  карта цели\n\ncommand_family:\n  `карта цели` / `где мы` / `прогресс`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route if needed.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Full Goal Map, not compact brief.\n  - Show current goal, current state, slices, decisions and next action.\n  - Say whether the map needs sync.\n\nuser_target:\n  <goal/map target>\n\n[/ENMAN_COMMAND]"
   },
   {
+    "id": "repo_structure.recall",
+    "group": "MVP-2",
+    "label": "вспомни структуру репо",
+    "description": "repo layers",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  вспомни структуру репо\n\ncommand_family:\n  `вспомни структуру репо` / `структура репо` / `слои репо` / `где что лежит`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read `planning/repo-structure-memory.md` and linked files for this command route if needed.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Reconstruct repo root areas and documentation/code/tooling layers before planning or editing.\n  - Distinguish known structure from uncertain or unverified structure.\n  - Identify source-of-truth chain and files to read next.\n  - Do not edit files or create archive unless separately requested.\n  - Do not invent missing root files; ask for repo tree/archive if needed.\n\nuser_target:\n  <what task needs repo-structure orientation>\n\n[/ENMAN_COMMAND]"
+  },
+  {
     "id": "output.key_points",
     "group": "MVP-2",
     "label": "кп",
