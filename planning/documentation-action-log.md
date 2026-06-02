@@ -1768,3 +1768,39 @@ Follow-ups:
 Notes:
   The repo-structure memory is an orientation map, not proof of a complete current repository tree.
 
+
+### 2026-06-02 - Returned archive review default to clipboard diff and kept review diff files explicit-only
+
+Date:
+  2026-06-02
+Action:
+  Restored saved-diff-to-clipboard as the default replacement archive review transfer and kept repo-stored review diff files as an explicit-only mode.
+Type:
+  Archive workflow correction / command routing cleanup
+Status:
+  applied
+Why:
+  Making repo-stored review diff files the default added too much ceremony for ordinary archive review. The default archive flow should stay simple: save the scoped diff to a local `.diff` file and copy it to clipboard. Repo-stored review diff files remain useful only when explicitly requested or when clipboard/paste transfer is not practical and the user approves the switch.
+Changed files:
+  - planning/documentation/review-diff-file-workflow.md
+  - planning/replacement-file-generation-guide.md
+  - planning/planning-use-case-map.md
+  - planning/documentation-action-log.md
+  - _ai-review-diffs/last-archive.diff
+  - _ai-review-diffs/last-archive-summary.md
+Updates:
+  - Added optional review-diff-file workflow documentation.
+  - Restored saved-diff-to-clipboard as the default post-apply archive review transfer.
+  - Added explicit root routes for review-diff-file archive generation and review.
+  - Added the rule that if full current file contents are required and GitHub/repo access cannot provide complete safe files, the chat must stop and ask for a fresh archive or full target-file copies.
+  - Removed stale committed review diff artifacts from the default archive flow.
+  - Rejected `_ai-review-diffs/last-archive-summary.md` as a default artifact.
+Not changed:
+  - No userscript behavior changed.
+  - No helper-owned buffer/stack/cleanup UI implemented.
+  - No domain/scenario/slice source files changed.
+  - No real archive files are committed by the package itself.
+Follow-ups:
+  Use normal replacement archives with saved-diff-to-clipboard review by default. Use review-diff-file mode only by explicit command.
+Notes:
+  This correction supersedes the earlier attempt to make repo-stored review diff files the default archive review transfer.

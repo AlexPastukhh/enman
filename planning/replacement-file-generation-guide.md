@@ -38,10 +38,13 @@ Replacement archive/package mode means:
 - repository-relative paths under replacement-files/;
 - MANIFEST.md;
 - APPLY.md;
-- no patch scripts, diff-only files or generated apply scripts.
+- no patch scripts, diff-only files or generated apply scripts;
+- default post-apply review transfer through a saved diff file copied to clipboard.
 ```
 
 If complete replacement files cannot be produced safely, stop and say so. Do not silently switch to patch-script mode.
+
+If full current file contents are required for a safe replacement archive and GitHub/repo access cannot provide complete, trustworthy file contents, stop and ask the user for a fresh repo/archive snapshot or full target-file copies. Do not generate a replacement archive from truncated connector output, partial snippets, inferred file tails or stale local assumptions.
 
 A large file is not automatically excluded from replacement archive mode. If a fresh full repo/archive snapshot or current full file makes complete replacement safe and reviewable, prefer complete replacement over a script.
 
@@ -70,6 +73,12 @@ Use this guide when the user asks to create an archive or replacement package fo
 - Do not include unrelated implementation changes.
 - Keep archive scope focused, but do not artificially split one coherent accepted update into many tiny archives.
 - Do not include patch scripts or script-based patch applicators in replacement archive mode.
+- Use saved-diff-to-clipboard mode as the default post-apply review transfer.
+- Use review-diff-file mode only when the user explicitly requests repo-stored review diff transfer or clipboard diff transfer is impossible and the user approves the switch.
+- In review-diff-file mode, the apply command itself may create, commit and push only `_ai-review-diffs/last-archive.diff`.
+- Do not create or commit extra review artifacts by default.
+- Do not commit or push real archive replacement files before diff review.
+- If complete current file contents are required and cannot be obtained completely from GitHub/repo access, ask the user for a fresh archive or full file copies before generating replacement files.
 - If a coherent update has safe files and large/risky files, split by delivery safety instead of blocking the safe archive.
 ```
 
@@ -213,42 +222,58 @@ Preserved
   = unrelated information was not lost, removed or overwritten.
 ```
 
-Every APPLY.md should tell the user to review both application and preservation before committing.
+Every APPLY.md and assistant archive response should tell the user to review both application and preservation before committing real archive files.
 
-Include commands like:
+Default post-apply review transfer is:
 
-```powershell
-git status --short -- $files
-git diff --stat -- $files
-git --no-pager diff --no-color --output="$diffFile" -- $files
-
-$diffText = [System.IO.File]::ReadAllText($diffFile, [System.Text.Encoding]::UTF8)
-Set-Clipboard -Value $diffText
+```text
+saved-diff-to-clipboard mode
 ```
 
-Use the full command shape in §7B for package-specific `$files`, `$newFiles`, `$pkgName` and `$diffFile`. Do not print the full diff to the terminal.
+Default review artifact path is package-specific and local, for example:
+
+```text
+<package-name>.diff
+```
 
 The post-apply review should check:
 
 ```text
-- only intended files changed;
+- only intended real files changed;
+- all expected new real files appear in the diff, using `git add -N` when needed;
 - diff matches package intent;
 - no unrelated sections, register entries, commands, examples, routing rows or source-of-truth rules were removed;
 - shared-state files such as registers preserve existing entries unless removal was explicit;
-- commit commands add only intended files and never use `git add .`.
+- real commit commands add only intended real files and never use `git add .`.
 ```
 
-If the user asks `проверь` after applying a replacement archive, treat it as this post-apply preservation check, not only as a file-name/status check.
+If the user asks `проверь` after applying a replacement archive, treat it as this post-apply preservation check. By default, read the pasted/copied diff from chat. If the user explicitly used review-diff-file mode, read `_ai-review-diffs/last-archive.diff` from the active repo/branch.
 
-## 7B. Diff Capture And Clipboard Commands
+## 7B. Diff Capture And Clipboard Commands (Default)
 
-When the assistant provides a replacement archive, the chat response should include ready-to-run PowerShell commands for post-apply review, not only instructions hidden inside `APPLY.md`.
+When the assistant provides a replacement archive, the default chat response should include ready-to-run PowerShell commands that apply the archive, save the scoped diff to a local `.diff` file and copy that diff to the clipboard.
 
-The command block should avoid paged terminal diff output and should avoid PowerShell pipeline encoding problems with Cyrillic text. It must print only `git status --short`, `git diff --stat` and short `Write-Host` messages. The full diff must be saved to a file and copied from that file to the clipboard without printing it to the terminal.
+Default mode:
 
-It must also make expected new files visible in the review diff. Untracked files are not shown by `git diff` by default.
+```text
+saved-diff-to-clipboard mode
+```
 
-Required shape:
+All assistant-provided diff commands in this mode must use `git --no-pager diff`. The full diff must be written to a file with `--output`; it must not be printed to the terminal or opened in a pager.
+
+Required response shape:
+
+```text
+1. Pull the target branch.
+2. Apply archive replacement files.
+3. Make expected new files visible using `$newFiles` and `git add -N`.
+4. Create a package-specific `.diff` with `git --no-pager diff --no-color --output=...`.
+5. Copy the saved diff to clipboard with `[System.IO.File]::ReadAllText(...)`.
+6. Ask the user to paste the diff for review.
+7. Keep real archive replacement files local and uncommitted until review approval.
+```
+
+Required apply/diff command shape:
 
 ```powershell
 $files = @(
@@ -267,7 +292,7 @@ foreach ($file in $newFiles) {
   if (Test-Path $file) {
     git add -N -- $file
   } else {
-    Write-Host "Missing expected new file: $file"
+    throw "Missing expected new file: $file"
   }
 }
 
@@ -275,12 +300,13 @@ $pkgName = "real-package-name-without-angle-brackets"
 $diffFile = Join-Path (Get-Location) "$pkgName.diff"
 
 git status --short -- $files
-git diff --stat -- $files
-
+git --no-pager diff --stat -- $files
 git --no-pager diff --no-color --output="$diffFile" -- $files
 
 $diffText = [System.IO.File]::ReadAllText($diffFile, [System.Text.Encoding]::UTF8)
 Set-Clipboard -Value $diffText
+
+git restore --staged -- $files
 
 Write-Host "Diff saved to: $diffFile"
 Write-Host "Diff copied to clipboard. Paste it into chat for review before committing."
@@ -289,22 +315,25 @@ Write-Host "Diff copied to clipboard. Paste it into chat for review before commi
 Rules:
 
 ```text
-- Use a real package name in `$pkgName`; do not leave placeholders such as `<ARCHIVE_NAME>` in runnable commands.
-- `$files` must include all expected changed and added files.
-- `$newFiles` must include every expected added file; use `$newFiles = @()` when the package does not add files.
+- Use a real package name and branch in runnable commands; do not leave placeholders in final user-facing commands.
+- `$files` must include all expected changed and added real files.
+- `$newFiles` must include every expected added real file; use `$newFiles = @()` when the package does not add files.
 - Run `git add -N -- <new-file>` before generating the review diff for packages that add files.
-- `git add -N` is used only to make untracked files visible in `git diff`; the final commit command must still explicitly stage only intended files.
+- `git add -N` is used only to make untracked files visible in `git diff`.
 - If an expected new file is missing, treat that as a review blocker until resolved.
+- Use `git --no-pager diff --stat -- $files` for stat output.
 - Use `git --no-pager diff --no-color --output="$diffFile" -- $files` to write the diff file.
-- Copy the saved diff with `[System.IO.File]::ReadAllText($diffFile, [System.Text.Encoding]::UTF8)` and `Set-Clipboard -Value $diffText`.
-- Do not rely on `git diff | Tee-Object | Set-Clipboard`, raw `git diff`, or `Get-Content ... | Set-Clipboard` for reviewable diff transfer when non-ASCII text may be present.
 - Do not ask the user to manually scroll through paged diff output.
-- Do not print the full diff to the terminal; only status/stat and short status messages may be printed.
+- Do not print the full diff to terminal.
+- Do not commit or push real archive files before diff review approval.
+- Do not run `git diff --cached --check` on generated `.diff` artifacts; run whitespace checks on real files before real commit when needed.
 ```
+
+Do not rely on `git diff | Tee-Object | Set-Clipboard`, raw `git diff`, or `Get-Content ... | Set-Clipboard` for reviewable diff transfer when non-ASCII text may be present.
 
 If the pasted diff shows mojibake or suspicious broken Cyrillic, do not conclude from the diff alone that the repository file is corrupted. Ask for or provide a suspect-file content copy command.
 
-Fallback command shape:
+Suspect-file fallback command shape:
 
 ```powershell
 $suspectFiles = @(
@@ -330,11 +359,40 @@ Write-Host "Suspect file contents saved to: $suspectDump"
 Write-Host "Suspect file contents copied to clipboard. Paste it into chat."
 ```
 
-## 7C. Replacement Archive Conversation Review Loop
+## 7C. Review Diff File Mode (Explicit Only)
+
+Review diff file mode is not the default archive review transfer.
+
+Use it only when:
+
+```text
+- the user explicitly asks for `review diff file`, repo-stored review diff or similar wording;
+- pasted/clipboard diff transfer is too large or impossible and the user approves the switch;
+- target repo policy allows committing review artifacts;
+- connector/repo access is available for reading review diff files.
+```
+
+Owner workflow:
+
+```text
+planning/documentation/review-diff-file-workflow.md
+```
+
+Explicit review artifact path:
+
+```text
+_ai-review-diffs/last-archive.diff
+```
+
+The explicit apply command may create, commit and push only this review artifact. Real archive replacement files must remain local and uncommitted until diff review approval.
+
+Do not create or commit `_ai-review-diffs/last-archive-summary.md` by default.
+
+## 7D. Replacement Archive Conversation Review Loop
 
 Replacement archive work is a review loop between the assistant and the user.
 
-Use this loop when the assistant creates a replacement archive and the user applies it locally:
+Use this default loop when the assistant creates a replacement archive and the user applies it locally:
 
 ```text
 1. Assistant creates a replacement archive/package.
@@ -342,37 +400,44 @@ Use this loop when the assistant creates a replacement archive and the user appl
    - archive link;
    - intended changed files;
    - intended new files, if any;
-   - PowerShell apply commands;
-   - full diff capture commands from §7B;
-   - mojibake/suspect-file fallback commands when relevant;
-   - scoped commit commands, clearly marked as after-review only.
-3. User applies the archive locally and sends the copied diff.
-4. Assistant reviews the diff before telling the user to commit.
-5. If the diff is OK, assistant gives scoped `git add`, `git commit` and `git push` commands.
-6. User commits and pushes.
-7. When user says `проверь`, assistant checks the remote branch/files and confirms what landed.
+   - PowerShell apply/diff commands that save the diff to a local file and copy it to clipboard;
+   - scoped real commit commands only after review approval.
+3. User runs the apply/diff command locally.
+4. User pastes the copied diff into chat.
+5. Assistant reviews the diff before telling the user to commit real archive files.
+6. If the diff is OK, assistant gives scoped `git add`, `git commit` and `git push` commands for real files.
+7. User commits and pushes real files.
+8. When user says `проверь`, assistant checks the remote branch/files and confirms what landed.
+```
+
+Explicit review-diff-file loop:
+
+```text
+Use only when the user explicitly requested review-diff-file mode.
+The apply command may create and push only `_ai-review-diffs/last-archive.diff`.
+The assistant then reads that repo-stored diff before approving the real commit.
 ```
 
 Diff review must check:
 
 ```text
-- only intended files appear in the scoped diff;
-- all expected new files appear in the diff, using `git add -N` when needed;
+- only intended real files appear in the scoped diff;
+- all expected new real files appear in the diff, using `git add -N` when needed;
 - no expected file is missing;
 - no unrelated sections, register entries, examples, routing rows or source-of-truth rules were removed;
 - package intent matches the diff;
 - service files such as MANIFEST.md and APPLY.md were not added to the repository unless they are intended repository files;
-- final commit commands stage only intended files and do not use `git add .`.
+- final real commit commands stage only intended real files and do not use `git add .`.
 ```
 
-If the user's diff is incomplete:
+If the review diff is incomplete:
 
 ```text
-- do not approve commit yet;
+- do not approve real commit yet;
 - explain what is missing;
-- provide the exact command needed to regenerate the full diff;
-- for missing added files, provide the `$newFiles` / `git add -N` command from §7B;
-- for mojibake, provide the suspect-file content copy command from §7B.
+- provide the exact command needed to regenerate the review diff;
+- for missing added files, provide the `$newFiles` / `git add -N` command from §7B or §7C;
+- for mojibake in pasted diff mode, provide the suspect-file content copy command from §7B.
 ```
 
 If the diff is correct:
@@ -380,13 +445,13 @@ If the diff is correct:
 ```text
 - state that the diff is complete enough for review;
 - summarize what was checked;
-- give only scoped commit commands for the intended files;
+- give only scoped real commit commands for the intended files;
 - remind not to use `git add .` when unrelated local changes may exist.
 ```
 
-This loop is not a new output mode. It is the review procedure for replacement archive/package output mode.
+This loop is not a new output mode. It is the default review procedure for replacement archive/package output mode.
 
-## 7D. Replacement Archive Batch Scope Rule
+## 7E. Replacement Archive Batch Scope Rule
 
 Do not artificially split a coherent accepted update into many tiny archives.
 
@@ -408,11 +473,11 @@ Prefer one coherent archive when:
 - splitting would create extra manual apply/diff/commit/recheck cycles without improving safety.
 ```
 
-Safety comes from complete replacement files, scoped file lists, full diff capture, preservation checks and scoped commit commands, not from making every archive artificially tiny.
+Safety comes from complete replacement files, scoped file lists, saved review diffs, preservation checks and scoped commit commands, not from making every archive artificially tiny.
 
 Do not bundle unrelated work just to reduce archive count.
 
-## 7E. Hybrid Archive / Script Delivery Rule
+## 7F. Hybrid Archive / Script Delivery Rule
 
 Use hybrid delivery when one coherent accepted update contains both safe complete-replacement files and large/shared files whose complete replacement is unsafe and therefore need targeted script edits.
 
@@ -426,7 +491,7 @@ Separate Local Targeted Script Edit file(s):
   - one `.ps1` per large/shared file that needs targeted writes.
 
 Final review:
-  - one combined scoped diff command may include all affected files.
+  - one combined scoped saved diff file may include all affected files.
 ```
 
 Rules:
@@ -548,7 +613,7 @@ Every final response with an archive should state:
 - any blocking questions.
 ```
 
-When the archive is intended for one local bulk commit, the final response should also include a suggested `git add` and `git commit` command.
+When the archive is intended for one local bulk commit, the final response should include real `git add`, `git commit` and `git push` commands only after the saved diff has been reviewed and approved.
 
 ## 11. Status Reconciliation Rule
 
@@ -571,6 +636,9 @@ Do not leave docs saying `planned` when current repo evidence shows `implemented
 - Do not generate patch scripts when replacement files are expected.
 - Do not directly change GitHub when the user asked for an archive.
 - Do not provide archive apply instructions without a pull/current-state step first.
+- Do not ask for terminal/pager diff review; save the diff to a file and copy it to clipboard by default.
+- Do not run `git diff --cached --check` on generated `.diff` artifacts; run checks on real files when needed.
+- Do not generate a replacement archive from truncated GitHub/connector output; ask for a fresh archive or full target-file copies when complete files are required and unavailable.
 - Do not tell the user to extract a package-layout archive directly into the repo root as the apply step.
 - Do not let one large/risky file block safe archive delivery for other files.
 - Do not choose script mode only because a file is large.
