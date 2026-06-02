@@ -11,13 +11,13 @@ This file keeps deferred ideas visible without bloating active implementation no
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.5.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.6.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ Doc version: v0.1.0
     - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.1.0
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.5.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.6.0
   Internal dependencies:
     - Deferred Items
     - Current Active-Work Boundary
@@ -209,7 +209,7 @@ Do not implement cleanup/repair before selected-command stack and helper-owned c
 ### FUT-SRC-VERIFY-1 — Register stale source/version usage command
 
 Status:
-  ⬜ deferred / future command
+  ✅ route/workflow behavior implemented in SRC-CMD-1A; scripted automation deferred
 
 Goal:
   Add a command that checks source-sync registers for stale source paths, stale Doc version labels and register rows that still claim a version/status no longer present in the source file.
@@ -223,12 +223,12 @@ register stale version scan
 ```
 
 Boundary:
-  This is not implemented in ROOT-FULL-1. It is parked here so future command work can add it without mixing it into the Goal Map/Tampermonkey source pass.
+  The command route and workflow behavior are implemented in SRC-CMD-1A. Scripted or automated full-register scanning remains deferred.
 
 ### FUT-SRC-VERIFY-2 — Local Sources stale usage command
 
 Status:
-  ⬜ deferred / future command
+  ✅ route/workflow behavior implemented in SRC-CMD-1A; scripted automation deferred
 
 Goal:
   Add a command that scans local `Sources:` blocks in active files and drafts for stale source versions, stale source paths, stale source relationships and missing source-register updates.
@@ -242,12 +242,12 @@ local sources stale scan
 ```
 
 Boundary:
-  This must check local file sections, not only registers. It should especially cover active drafts where local section `Sources:` blocks are authoritative.
+  The command route and workflow behavior are implemented in SRC-CMD-1A. Future automation must check local file sections, not only registers, and should especially cover active drafts where local section `Sources:` blocks are authoritative.
 
 ### FUT-SRC-VERIFY-3 — Full source/version consistency audit command
 
 Status:
-  ⬜ deferred / future command
+  ✅ route/workflow behavior implemented in SRC-CMD-1A; scripted automation deferred
 
 Goal:
   Add a full audit command that combines:
@@ -265,7 +265,7 @@ full source/version audit
 ```
 
 Boundary:
-  This is a future maintenance command. It should not claim full root/domain/slice coverage until it has checked both registers and local file content.
+  The command route and workflow behavior are implemented in SRC-CMD-1A. Future automation must not claim full root/domain/slice coverage until it has checked both registers and local file content.
 
 ## 4. Current Active-Work Boundary
 

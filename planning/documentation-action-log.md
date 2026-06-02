@@ -2078,3 +2078,42 @@ Follow-ups:
   Continue SL-6 smoke testing or later implement dedicated source/version maintenance commands. Before broad slice work, create/plan `planning/slices/slice-source-sync-register.md`.
 Notes:
   ROOT-FULL-1 covers the active Goal Map/Tampermonkey workstream/helper scope only. It does not replace later ROOT-FULL-2 through ROOT-FULL-6 passes and does not claim full domain-folder or slice coverage.
+### 2026-06-02 - Added source/version maintenance command routes and current-state template
+
+Date:
+  2026-06-02
+Action:
+  Added active route/workflow docs for source/version maintenance commands and created the explicit `положняк` current-state output template.
+Type:
+  root command routing / source-version maintenance / response template
+Status:
+  applied
+Why:
+  After ROOT-FULL-1 added active file creation/update version and register checks, the project needed explicit commands to review stale register version usage, stale local `Sources:` usage and full source/version consistency. It also needed a separate compact current-state command that shows only scope-relevant areas in the emoji status format, without making that block implicit in Level 2 or Goal Map Brief responses.
+Changed files:
+  - planning/source-cascade-sync-workflow.md
+  - planning/planning-use-case-map.md
+  - planning/CURRENT-PLANNING-STATE-TEMPLATE.md
+  - planning/documentation/examples/CURRENT-PLANNING-STATE-RESPONSE-EXAMPLE.md
+  - planning/documentation/examples/README.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/root-source-sync-register.md
+  - planning/deferred-goals-and-ideas.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added active behavior for `стейл версии в регистрах`, `стейл локальные сорсы` and `полная source/version проверка` in the source-cascade workflow.
+  - Added root use-case routes for the three source/version maintenance commands.
+  - Added the explicit `положняк` / current planning-state command route.
+  - Created `planning/CURRENT-PLANNING-STATE-TEMPLATE.md` with a scope rule that example areas such as Root/Domain/Slices are illustrative, not mandatory.
+  - Added a current-state response example with emoji statuses and scope-relevant output rules.
+  - Updated root source register version labels for the changed root command/template files.
+Not changed:
+  - No automated repository-wide scanner implemented.
+  - No Tampermonkey userscript profile changes.
+  - No slice source-sync register created.
+  - No slice source/version refactor started.
+  - No claim of full root/domain/slice coverage.
+Follow-ups:
+  Optionally add Tampermonkey helper profiles for the new commands in a separate SL-6/helper-profile batch. Before broad slice work, create/plan `planning/slices/slice-source-sync-register.md`.
+Notes:
+  The new current-state command is explicit-only. It should not be automatically included in Level 2 answers, Goal Map Brief or normal planning responses.

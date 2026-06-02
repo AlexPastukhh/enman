@@ -23,12 +23,12 @@ planning/documentation/examples/README.md
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.5.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.6.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/goal-map-principles-workflow-template.md @ Doc version: v0.1.0
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.5.0
     - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
     - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.1.0
     - tools/tampermonkey/README.md @ Doc version: v0.1.0
@@ -48,6 +48,10 @@ This section records the files that must be checked when this file is created, u
 It does not make the Tampermonkey userscript or any example file a source of truth for command semantics.
 
 ## 0. Current Snapshot
+
+SRC-CMD-1A note:
+  Source/version maintenance command routes and the explicit `положняк` current-state output template are being added as a docs/routes/template batch. This does not change the current functional focus from SL-6 smoke testing unless separately chosen.
+
 
 Last updated:
   2026-06-02 / after DISC-GM-TM1 Goal Map and Tampermonkey command discovery sync

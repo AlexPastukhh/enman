@@ -1,6 +1,7 @@
 # Documentation Examples Index
 
 Status: current documentation-layer examples index / coverage tracker  
+Doc version: v0.1.0
 Scope: navigation for documentation-layer working examples and explicit missing/deferred example decisions
 
 ## 1. Purpose
@@ -66,6 +67,7 @@ The original copied active example coverage rows remain deferred. Field-kit exam
 | `GOAL-MAP-SYNC-COMMAND-v1` | map-maintenance command + archive-output example | `planning/goal-map-principles-workflow-template.md`, `planning/planning-use-case-map.md` and active living Goal Map files | `синх карта` / `синхронизируй карту` / `синх карта архив` | current example | `planning/documentation/examples/GOAL-MAP-SYNC-COMMAND-EXAMPLE.md` | covered |
 | `CRITICAL-REVIEW-COMMAND-v1` | response/modifier command example | `planning/documentation/reviewable-agent-output-and-commands-workflow.md` and `planning/planning-use-case-map.md` | `крит` / `критически оцени` / `critical review` | current example | `planning/documentation/examples/CRITICAL-REVIEW-COMMAND-EXAMPLE.md` | covered |
 | `PLAN-FILE-UPDATE-COMMAND-v1` | response/command + output example | `planning/documentation/file-update-overview-workflow.md`, `planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md`, `planning/documentation/reviewable-agent-output-and-commands-workflow.md` and `planning/planning-use-case-map.md` | `план файл-обновление` / `спланируй файл-обновление` / `спланируй архив` | current example | `planning/documentation/examples/PLAN-FILE-UPDATE-COMMAND-EXAMPLE.md` | covered |
+| `CURRENT-PLANNING-STATE-RESPONSE-v1` | response/output command example | `planning/CURRENT-PLANNING-STATE-TEMPLATE.md`, `planning/planning-use-case-map.md` and `planning/source-cascade-sync-workflow.md` | `положняк` / `текущий положняк` / `current planning state` | current example | `planning/documentation/examples/CURRENT-PLANNING-STATE-RESPONSE-EXAMPLE.md` | covered |
 | `ARCHIVE-SOURCE-VS-OUTPUT-PACKAGE-v1` | command/output example | `planning/planning-use-case-map.md` and `planning/replacement-file-generation-guide.md` | `арх` vs `давай архив` | current example | `planning/documentation/examples/ARCHIVE-SOURCE-VS-OUTPUT-PACKAGE-EXAMPLE.md` | covered |
 | `REPLACEMENT-ARCHIVE-PACKAGE-v1` | output example | `planning/replacement-file-generation-guide.md` | replacement archive/package generation | deferred | _not created yet_ | Deferred from prior documentation migration; add after example infrastructure is committed. |
 | `POST-APPLY-PRESERVATION-CHECK-v1` | response/check example | `planning/replacement-file-generation-guide.md` and `planning/planning-use-case-map.md` | `проверь` after replacement archive/package application | deferred | _not created yet_ | Deferred from prior documentation migration; should show applied + preserved review. |
