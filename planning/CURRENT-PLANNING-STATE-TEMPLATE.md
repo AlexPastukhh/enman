@@ -1,20 +1,20 @@
 # Current Planning State Template
 
 Status: current root output template / explicit current-state command template
-Doc version: v0.1.0
+Doc version: v0.2.0
 Scope: exact output shape for `положняк` / current planning-state responses; not a Goal Map replacement and not an automatic Level 2 block
 
-## 0. Source Sync / SRC-CMD-1A
+## 0. Source Sync / SRC-CMD-1A / SRC-CMD-1C
 
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.6.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/planning-use-case-map.md @ Doc version: v0.5.0
-    - planning/root-source-sync-register.md @ Doc version: v1.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.6.0
+    - planning/root-source-sync-register.md @ Doc version: v1.3.0
     - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ Doc version: v0.1.0
   Internal dependencies:
     - Purpose
@@ -27,6 +27,8 @@ Sources:
 
 SRC-CMD-1A treats this file as the owner template for explicit current planning-state output.
 This file does not own source/version audit semantics, Goal Map workflow or command routing.
+
+SRC-CMD-1C refreshes this file's current source labels after root register/helper profile coverage. It does not change the `положняк` output shape.
 
 ## 1. Purpose
 
@@ -119,4 +121,10 @@ Do not claim:
 ```text
 - SRC-CMD-1A created this template for the explicit current-state command `положняк`.
 - Domain/Root/Slices sections in the example are illustrative only and must not be treated as mandatory headings.
+```
+
+## Source Delta / Change Log
+
+```text
+- SRC-CMD-1C refreshed current source labels to source-cascade v0.7.0, planning-use-case-map v0.6.0 and root-source-sync-register v1.3.0; bumped this template to Doc version: v0.2.0 without changing output shape.
 ```

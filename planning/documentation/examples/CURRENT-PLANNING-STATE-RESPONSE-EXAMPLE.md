@@ -1,19 +1,19 @@
 # Current Planning State Response Example
 
 Status: current response/output command example / demonstration-only
-Doc version: v0.1.0
+Doc version: v0.2.0
 Scope: demonstrates the `положняк` current planning-state output format; does not own command routing or source/version audit rules
 
-## 0. Source Sync / SRC-CMD-1A
+## 0. Source Sync / SRC-CMD-1A / SRC-CMD-1C
 
 ```text
 Sources:
   Format/process:
-    - planning/CURRENT-PLANNING-STATE-TEMPLATE.md @ Doc version: v0.1.0
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.6.0
+    - planning/CURRENT-PLANNING-STATE-TEMPLATE.md @ Doc version: v0.2.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
   Content:
-    - planning/planning-use-case-map.md @ Doc version: v0.5.0
-    - planning/root-source-sync-register.md @ Doc version: v1.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.6.0
+    - planning/root-source-sync-register.md @ Doc version: v1.3.0
     - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ Doc version: v0.1.0
   Internal dependencies:
     - Example Output
@@ -23,6 +23,8 @@ Sources:
 ```
 
 This example demonstrates output shape only. It does not own Goal Map workflow, source/version audit process, command routing, permission boundaries or current repo state.
+
+SRC-CMD-1C refreshes this example's current source labels after root register/helper profile coverage. It does not change the example output shape.
 
 ## 1. User Command Examples
 
@@ -89,4 +91,10 @@ Do not claim:
 - The block is compact and operational.
 - It does not replace Goal Map Brief.
 - It does not grant permission to update files or create archives.
+```
+
+## Source Delta / Change Log
+
+```text
+- SRC-CMD-1C refreshed current source labels to current planning-state template v0.2.0, source-cascade v0.7.0, planning-use-case-map v0.6.0 and root-source-sync-register v1.3.0; bumped this example to Doc version: v0.2.0 without changing demonstrated output shape.
 ```

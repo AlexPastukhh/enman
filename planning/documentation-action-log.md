@@ -2154,3 +2154,43 @@ Follow-ups:
   Smoke test the four new helper profile rows in the browser and verify that command row clicks keep the widget open and inserted bodies remain editable prompt projections.
 Notes:
   Userscript command profiles remain last in source-of-truth order. If a helper body conflicts with the use-case map or owner workflow, the repo docs win.
+
+
+### 2026-06-02 - Refreshed stale root-register source labels before slice/testing refactor
+
+Date:
+  2026-06-02
+Action:
+  Refreshed current source labels that still pointed at the pre-SRC-CMD-1B root register version before starting slice/testing source-register work.
+Type:
+  source/version cleanup / preflight
+Status:
+  applied
+Why:
+  The next workstream focuses on slice and testing source/register/version refactor. The source-governance and current-state command files must not carry stale current references to `planning/root-source-sync-register.md @ Doc version: v1.1.0` after the register was bumped by SRC-CMD-1B.
+Changed files:
+  - planning/source-cascade-sync-workflow.md
+  - planning/planning-use-case-map.md
+  - planning/CURRENT-PLANNING-STATE-TEMPLATE.md
+  - planning/documentation/examples/CURRENT-PLANNING-STATE-RESPONSE-EXAMPLE.md
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Bumped `planning/source-cascade-sync-workflow.md` to Doc version: v0.7.0.
+  - Bumped `planning/planning-use-case-map.md` to Doc version: v0.6.0.
+  - Bumped `planning/CURRENT-PLANNING-STATE-TEMPLATE.md` to Doc version: v0.2.0.
+  - Bumped `planning/documentation/examples/CURRENT-PLANNING-STATE-RESPONSE-EXAMPLE.md` to Doc version: v0.2.0.
+  - Bumped `planning/root-source-sync-register.md` to Doc version: v1.3.0.
+  - Refreshed current source labels to point at the current source-cascade/use-case/root-register versions.
+  - Refreshed stale current dependency rows inside `planning/root-source-sync-register.md` for root router/onboarding, Goal Map/Tampermonkey and review-diff-file rows.
+Not changed:
+  - No slice source-sync register created.
+  - No testing source-sync register created.
+  - No slice draft refactor started.
+  - No automated scanner implemented.
+  - No command semantics changed.
+Follow-ups:
+  Start `SLICE-TEST-SRC-0` to create slice/testing source-register skeletons and seed versions for active slice/testing owner files.
+Notes:
+  Historical Source Delta notes may still mention earlier versions. This cleanup targets current source labels and register rows only. v3 additionally fixes current dependency-table rows that were missed by exact path/version stale checks in v2.
+

@@ -1,7 +1,7 @@
 # Enman Source Cascade Sync Workflow
 
 Status: active Enman project workflow
-Doc version: v0.6.0
+Doc version: v0.7.0
 Scope: how to add local section-level source blocks, use source-sync register skeletons safely, prepare doc version/source synchronization, derive layer source-sync registers and decide when structured files require local section sources
 
 ## 1. Purpose
@@ -12,7 +12,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.1.0
+    - planning/root-source-sync-register.md @ Doc version: v1.3.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - none
@@ -59,7 +59,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.1.0
+    - planning/root-source-sync-register.md @ Doc version: v1.3.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Purpose
@@ -107,7 +107,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.1.0
+    - planning/root-source-sync-register.md @ Doc version: v1.3.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Purpose
@@ -189,7 +189,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.1.0
+    - planning/root-source-sync-register.md @ Doc version: v1.3.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Purpose
@@ -232,7 +232,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.1.0
+    - planning/root-source-sync-register.md @ Doc version: v1.3.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Core Concepts
@@ -321,7 +321,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.1.0
+    - planning/root-source-sync-register.md @ Doc version: v1.3.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
     - planned planning/slices/slice-source-sync-register.md @ not created
   Internal dependencies:
@@ -571,10 +571,10 @@ Use the domain register as an upstream dependency index, then read the relevant 
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.6.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.1.0
+    - planning/root-source-sync-register.md @ Doc version: v1.3.0
   Internal dependencies:
     - Core Concepts
     - Register State And Derivation
@@ -613,7 +613,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.1.0
+    - planning/root-source-sync-register.md @ Doc version: v1.3.0
   Internal dependencies:
     - Doc Version Rule
     - Register State And Derivation
@@ -653,10 +653,10 @@ Source/version maintenance commands are active route commands when added in the 
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.6.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.1.0
+    - planning/root-source-sync-register.md @ Doc version: v1.3.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
     - planned planning/slices/slice-source-sync-register.md @ not created
   Internal dependencies:
@@ -725,11 +725,11 @@ Next action:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.6.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.1.0
+    - planning/root-source-sync-register.md @ Doc version: v1.3.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
     - planned planning/slices/slice-source-sync-register.md @ not created
   Internal dependencies:
@@ -800,11 +800,11 @@ Next action:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.6.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.1.0
+    - planning/root-source-sync-register.md @ Doc version: v1.3.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
     - planned planning/slices/slice-source-sync-register.md @ not created
   Internal dependencies:
@@ -878,7 +878,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.1.0
+    - planning/root-source-sync-register.md @ Doc version: v1.3.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Core Concepts
@@ -948,7 +948,7 @@ Do not fill a register as complete/synchronized until local Sources blocks or eq
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.6.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
@@ -992,11 +992,11 @@ planning/slices/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-p
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.6.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.1.0
+    - planning/root-source-sync-register.md @ Doc version: v1.3.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Explicit Link / Dependency Declaration Rule
@@ -1012,4 +1012,5 @@ Sources:
 - Bumped this workflow to Doc version: v0.4.0 because the source dependency command route adds an explicit workflow rule.
 - ROOT-FULL-1 added active file creation/update version and register checks and parked future stale register/local Sources scan commands.
 - SRC-CMD-1A added active route-command behavior for register stale version scans, local Sources stale scans and full source/version audits, and bumped this workflow to Doc version: v0.6.0.
+- SRC-CMD-1C refreshed current root register source labels after Tampermonkey helper profile coverage, bumped this workflow to Doc version: v0.7.0 and kept slice/testing source registers deferred.
 ```
