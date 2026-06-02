@@ -1,9 +1,26 @@
 # Reviewable Agent Output And Commands Workflow
 
-Status: current response-quality and response-command workflow  
+Status: current response-quality and response-command workflow
+Doc version: v0.1.0
 Scope: how chats/agents should structure non-trivial answers and interpret response-level user commands so a person or another chat can review, verify and continue the work
 
 ## 1. Purpose
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-3A
+```
 
 This file defines how an agent should format important answers and interpret response-level user commands.
 
@@ -39,6 +56,22 @@ planning/planning-use-case-map.md
 
 ## 2. Core Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-3A
+```
+
 Use the smallest response format that remains reviewable.
 
 Do not turn every casual answer into a heavy report.
@@ -60,6 +93,22 @@ Use more structure when:
 ```
 
 ## 3. Detail Levels
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-3A
+```
 
 The user may request a response level with phrases such as:
 
@@ -138,6 +187,22 @@ When the work itself requires many files, many sources, synchronization, audit o
 
 ## 4. Level 1 — Short Answer
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-3A
+```
+
 Use Level 1 for simple questions, quick decisions, narrow commands or one-step local troubleshooting when the task has no Level 2 or Level 3 triggers.
 
 Template:
@@ -166,6 +231,22 @@ Rules:
 ```
 
 ## 5. Level 2 — Default Serious Answer
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-3A
+```
 
 Use Level 2 for non-trivial planning, documentation, repo analysis, draft discussion, file/code update planning, synchronization, diff review, source-of-truth reasoning or architectural reasoning.
 
@@ -268,6 +349,22 @@ Sources and coverage must remain reviewable in Level 2, but they do not have to 
 
 ## 5A. Goal Map Brief / `кц` For Active Workstreams
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-3A
+```
+
 `Goal Map Brief` / `Карта цели` is a short in-answer projection of a living Goal Map.
 
 Command aliases:
@@ -343,6 +440,22 @@ planning/documentation/examples/GOAL-MAP-BRIEF-RESPONSE-EXAMPLE.md
 ```
 
 ## 5B. Critical Review / `крит`
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-3A
+```
 
 `крит` is a response-level modifier command for honest evaluation.
 
@@ -437,6 +550,22 @@ planning/documentation/examples/CRITICAL-REVIEW-COMMAND-EXAMPLE.md
 
 
 ## 6. Level 3 — Review / Handoff Answer
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-3A
+```
 
 Use Level 3 when the output will be passed to another chat/person for review or continuation.
 
@@ -559,6 +688,22 @@ Use it when the answer needs to survive outside the original chat context.
 
 ## 6A. File Update Overview / `План файл-обновление` For File/Docs/Code Updates
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-3A
+```
+
 For Level 2 or Level 3 answers that plan, create, review or verify non-trivial file, documentation or code changes, end the normal reviewable answer with a File Update Overview / `План файл-обновление` when a structured file-change summary would help review.
 
 Command aliases / triggers:
@@ -616,6 +761,22 @@ Use-case rows may reference File Update Overview as an expected output shape, bu
 
 ## 7. Sources And Coverage Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-3A
+```
+
 For non-trivial tasks, explicitly separate:
 
 ```text
@@ -661,6 +822,22 @@ Do not imply that an answer was repo-grounded if no current repo evidence was ch
 
 ## 8. Section-Level Sources For Drafts
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-3A
+```
+
 For large drafts, the whole-answer source block may not be enough.
 
 Major sections should declare their own sources when a section:
@@ -701,6 +878,22 @@ Use `Not checked` to expose relevant sources that were not checked in this pass.
 
 ## 9. Expanded Section Basis
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-3A
+```
+
 Use an expanded section basis only when needed.
 
 Template:
@@ -739,6 +932,22 @@ Review focus:
 Do not add this heavy block to every section by default.
 
 ## 10. Response-Level Commands
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-3A
+```
 
 The user may ask the same chat or another chat to perform response-level operations.
 
@@ -1239,6 +1448,22 @@ The answer should check:
 
 ## 11. Interaction With Specialized Formats
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-3A
+```
+
 Specialized formats take priority.
 
 Examples:
@@ -1269,6 +1494,22 @@ Instead:
 ## 12. Do Not
 
 ```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-3A
+```
+
+```text
 - Do not force a heavy format on every casual answer.
 - Do not treat Level 1 as permission to skip necessary reasoning, context checks, source checks, safety checks or accepted-decision preservation.
 - Do not make the user ask for Level 2 when Level 2 triggers are already present.
@@ -1290,6 +1531,22 @@ Instead:
 ```
 
 ## 13. Success Criteria
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-3A
+```
 
 This workflow works when:
 
@@ -1314,4 +1571,25 @@ This workflow works when:
 - draft updates use `Отличия от предыдущего драфта` when that is the useful review block;
 - File Update Overview / `План файл-обновление` is used as a final summary block when non-trivial file/docs/code updates need file responsibility/change visibility;
 - response structure helps verification without adding unnecessary bureaucracy.
+```
+
+
+## Source Delta / Change Log
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Goal Map/Tampermonkey and slice source passes outside ROOT-SRC-3A
+```
+
+```text
+- ROOT-SRC-3A added Doc version and local section-level Sources blocks to this output/archive workflow file.
+- ROOT-SRC-3A did not change output semantics or grant edit/commit permission.
 ```

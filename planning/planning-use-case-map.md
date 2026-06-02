@@ -1,7 +1,7 @@
 # Planning Use Case Map
 
 Status: current root use-case map / action-to-doc-flow router
-Doc version: v0.3.0
+Doc version: v0.4.0
 Scope: maps user-visible actions and commands to planning docs, workflows, templates, sources and permission boundaries
 
 ## 1. Purpose
@@ -12,9 +12,9 @@ Sources:
     - planning/documentation/field-kits/root-use-case-map-field-kit.md @ version not confirmed
     - planning/documentation/use-case-map-workflow.md @ version not confirmed
     - planning/documentation/USE-CASE-MAP-TEMPLATE.md @ version not confirmed
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
   Content:
-    - planning/README.md @ Doc version: v0.2.0
+    - planning/README.md @ Doc version: v0.3.0
   Internal dependencies:
     - none
   Not checked:
@@ -52,11 +52,11 @@ This file is the concrete Enman root use-case map. Reusable setup guidance is ow
 ```text
 Sources:
   Format/process:
-    - planning/README.md @ Doc version: v0.2.0
-    - planning/workflow-activation-map.md @ Doc version: v0.2.0
-    - planning/planning-doc-responsibility-map.md @ Doc version: v0.2.0
+    - planning/README.md @ Doc version: v0.3.0
+    - planning/workflow-activation-map.md @ Doc version: v0.3.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
   Internal dependencies:
     - Purpose
   Not checked:
@@ -97,12 +97,12 @@ planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
 ```text
 Sources:
   Format/process:
-    - planning/workflow-activation-map.md @ Doc version: v0.2.0
-    - planning/planning-doc-responsibility-map.md @ Doc version: v0.2.0
+    - planning/workflow-activation-map.md @ Doc version: v0.3.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
   Content:
-    - planning/README.md @ Doc version: v0.2.0
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/README.md @ Doc version: v0.3.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
   Internal dependencies:
     - Relationship To Root Files
   Not checked:
@@ -139,7 +139,7 @@ Sources:
     - planning/documentation/planning-docs-architecture-principles.md @ version not confirmed
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
   Internal dependencies:
     - Universal Chat Algorithm
   Not checked:
@@ -177,9 +177,9 @@ Do not add ad hoc source-version fields to use-case rows. Use accepted `Doc vers
 ```text
 Sources:
   Format/process:
-    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ version not confirmed
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
   Internal dependencies:
     - Universal Chat Algorithm
   Not checked:
@@ -219,9 +219,9 @@ If no active context exists, ask for the missing target unless the task is obvio
 Sources:
   Format/process:
     - planning/documentation/planning-docs-architecture-principles.md#24b-accepted-command-and-preservation-guardrails @ version not confirmed
-    - planning/replacement-file-generation-guide.md @ version not confirmed
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
   Internal dependencies:
     - Active Context Rule
   Not checked:
@@ -253,10 +253,10 @@ planning/documentation/planning-docs-architecture-principles.md#24b-accepted-com
 ```text
 Sources:
   Format/process:
-    - planning/workflow-activation-map.md @ Doc version: v0.2.0
-    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ version not confirmed
+    - planning/workflow-activation-map.md @ Doc version: v0.3.0
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
   Content:
-    - planning/README.md @ Doc version: v0.2.0
+    - planning/README.md @ Doc version: v0.3.0
   Internal dependencies:
     - Universal Chat Algorithm
   Not checked:
@@ -279,10 +279,10 @@ Do not confuse traversal depth with read source mode.
 ```text
 Sources:
   Format/process:
-    - planning/workflow-activation-map.md @ Doc version: v0.2.0
-    - planning/replacement-file-generation-guide.md @ version not confirmed
+    - planning/workflow-activation-map.md @ Doc version: v0.3.0
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
   Content:
-    - planning/README.md @ Doc version: v0.2.0
+    - planning/README.md @ Doc version: v0.3.0
   Internal dependencies:
     - Traversal Depth
   Not checked:
@@ -323,10 +323,10 @@ GitHub/repo source mode is still required when:
 ```text
 Sources:
   Format/process:
-    - planning/replacement-file-generation-guide.md @ version not confirmed
-    - planning/documentation/review-diff-file-workflow.md @ version not confirmed
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
   Internal dependencies:
     - Read Source Modes
   Not checked:
@@ -373,7 +373,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Read Source Modes
@@ -418,10 +418,10 @@ planning/slices/slice-source-sync-register.md once created when slice files are 
 ```text
 Sources:
   Format/process:
-    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ version not confirmed
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
   Internal dependencies:
     - Source Model
   Not checked:
@@ -476,12 +476,12 @@ Use a shorter version when the update is simple.
 ```text
 Sources:
   Format/process:
-    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ version not confirmed
-    - planning/documentation/file-update-overview-workflow.md @ version not confirmed
-    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ version not confirmed
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
     - planning/goal-map-principles-workflow-template.md @ version not confirmed
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
   Internal dependencies:
     - Output Modes
     - Source Delta
@@ -581,12 +581,12 @@ Tampermonkey command-helper discovery behavior:
 Sources:
   Format/process:
     - planning/documentation/field-kits/root-use-case-map-field-kit.md @ version not confirmed
-    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ version not confirmed
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
     - planning/goal-map-principles-workflow-template.md @ version not confirmed
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
-    - planning/replacement-file-generation-guide.md @ version not confirmed
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
   Internal dependencies:
     - Active Context Rule
     - Output Modes
@@ -672,13 +672,13 @@ Examples demonstrate valid execution only. They do not own command semantics, ro
 ```text
 Sources:
   Format/process:
-    - planning/workflow-activation-map.md @ Doc version: v0.2.0
-    - planning/planning-doc-responsibility-map.md @ Doc version: v0.2.0
+    - planning/workflow-activation-map.md @ Doc version: v0.3.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/README.md @ Doc version: v0.2.0
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/README.md @ Doc version: v0.3.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Repeated / Continuation Commands
@@ -724,11 +724,11 @@ Do not treat that field kit as an activated workflow for ordinary scenario/slice
 ```text
 Sources:
   Format/process:
-    - planning/README.md @ Doc version: v0.2.0
-    - planning/workflow-activation-map.md @ Doc version: v0.2.0
-    - planning/planning-doc-responsibility-map.md @ Doc version: v0.2.0
+    - planning/README.md @ Doc version: v0.3.0
+    - planning/workflow-activation-map.md @ Doc version: v0.3.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
   Internal dependencies:
     - Primary Use Case Table
   Not checked:
@@ -793,9 +793,9 @@ Do not:
 ```text
 Sources:
   Format/process:
-    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ version not confirmed
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
   Internal dependencies:
     - Active Context Rule
     - Source Delta
@@ -837,7 +837,7 @@ Sources:
     - planning/documentation/example-coverage-workflow.md @ version not confirmed
     - planning/documentation/use-case-map-workflow.md @ version not confirmed
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
   Internal dependencies:
     - Principle Section References
     - Reusable Command Example References
@@ -879,10 +879,10 @@ Use-case rows do not carry ad hoc source-version fields. Use accepted `Doc versi
 ```text
 Sources:
   Format/process:
-    - planning/replacement-file-generation-guide.md @ version not confirmed
-    - planning/documentation/review-diff-file-workflow.md @ version not confirmed
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
   Internal dependencies:
     - Output Modes
     - Accepted Command / No Reinvention Rule
@@ -926,7 +926,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
     - planned planning/slices/slice-source-sync-register.md @ not created
   Internal dependencies:
@@ -981,11 +981,11 @@ Expected output:
 Sources:
   Format/process:
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
-    - planning/root-source-sync-register.md @ Doc version: v0.7.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
   Content:
-    - planning/README.md @ Doc version: v0.2.0
-    - planning/workflow-activation-map.md @ Doc version: v0.2.0
-    - planning/planning-doc-responsibility-map.md @ Doc version: v0.2.0
+    - planning/README.md @ Doc version: v0.3.0
+    - planning/workflow-activation-map.md @ Doc version: v0.3.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
   Internal dependencies:
     - Relationship To Root Files
     - Primary Use Case Table
@@ -998,4 +998,5 @@ Sources:
 - ROOT-SRC-2A added local section-level Sources blocks to the root use-case map and bumped it to Doc version: v0.2.0.
 - ROOT-SRC-2A preserved existing command routes and did not claim full root-folder coverage.
 - ROOT-SRC-2B refreshed protocol/role source status and bumped this map to Doc version: v0.3.0 without changing command routes.
+- ROOT-SRC-3A refreshed output/archive source status and bumped this file to Doc version: v0.4.0 without changing routing/navigation semantics.
 ```

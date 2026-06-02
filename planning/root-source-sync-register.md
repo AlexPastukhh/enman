@@ -1,7 +1,7 @@
 # Root Source Sync Register
 
-Status: skeleton / root planning dependency register partially derived for source-governance core, root router/onboarding core and protocol/role core
-Doc version: v0.7.0
+Status: skeleton / root planning dependency register partially derived for source-governance core, root router/onboarding core, protocol/role core and output/archive core
+Doc version: v0.8.0
 Scope: source dependency skeleton for root planning workflow, routing, source-governance, Goal Map discovery and Tampermonkey command-helper files
 
 ## 1. Purpose
@@ -17,7 +17,7 @@ Sources:
   Internal dependencies:
     - none
   Not checked:
-    - full root planning file audit outside ROOT-SRC-2B scope
+    - full root planning file audit outside ROOT-SRC-3A scope
     - planned planning/slices/slice-source-sync-register.md does not exist yet
 ```
 
@@ -65,6 +65,17 @@ planning/planning-agent-protocol.md
 planning/agent-roles-and-required-actions.md
 ```
 
+
+After ROOT-SRC-3A, this register records partial derived/synchronized coverage for the root output/archive core only:
+
+```text
+planning/replacement-file-generation-guide.md
+planning/documentation/review-diff-file-workflow.md
+planning/documentation/reviewable-agent-output-and-commands-workflow.md
+planning/documentation/file-update-overview-workflow.md
+planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+```
+
 ## 2. Register Rules
 
 ```text
@@ -78,7 +89,7 @@ Sources:
   Internal dependencies:
     - Purpose
   Not checked:
-    - full root planning file audit outside ROOT-SRC-2B scope
+    - full root planning file audit outside ROOT-SRC-3A scope
     - planned planning/slices/slice-source-sync-register.md does not exist yet
 ```
 
@@ -116,6 +127,7 @@ This file remains skeleton for full root coverage.
 ROOT-SRC-1 makes source-governance core rows partially derived/synchronized.
 ROOT-SRC-2A makes root router/onboarding core rows partially derived/synchronized.
 ROOT-SRC-2B makes protocol/role core rows partially derived/synchronized.
+ROOT-SRC-3A makes output/archive core rows partially derived/synchronized.
 SRC-AUD-ROOT-1 updated candidate rows after DISC-GM-TM1, but does not claim full root coverage.
 SRC-LOCAL-RULE-1 updated source/template version candidates for structured local section Sources rules, but did not perform a root local Sources pass.
 ```
@@ -134,7 +146,7 @@ Sources:
     - Purpose
     - Register Rules
   Not checked:
-    - root output/Goal Map/Tampermonkey rows outside ROOT-SRC-2B scope
+    - root Goal Map/Tampermonkey rows outside ROOT-SRC-3A scope
     - planned planning/slices/slice-source-sync-register.md does not exist yet
 ```
 
@@ -143,19 +155,22 @@ Sources:
 | `planning/source-cascade-sync-workflow.md` | source cascade workflow | Doc version: v0.4.0 | derived from local section Sources in ROOT-SRC-1; rule updated in SRC-DEP-CMD-1 | Root workflow that defines local `Sources:` blocks, register states, layer register rules, structured-file local Sources requirement and explicit source dependency/link declaration rule. |
 | `planning/source-usage-cascade-profile.md` | Enman project profile | Doc version: v0.2.0 | derived from local section Sources in ROOT-SRC-1; triggers updated in SRC-DEP-CMD-1 | Project-specific source/consumer categories, row shape and cascade triggers. |
 | `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md` | local section `Sources:` block template | Doc version: v0.2.0 | derived from local section Sources in ROOT-SRC-1; source labels refreshed in SRC-DEP-CMD-1 | General fenced `Sources:` block format with version/status labels. |
-| `planning/root-source-sync-register.md` | root dependency register | Doc version: v0.7.0 | self row partially synchronized for ROOT-SRC-1/SRC-DEP-CMD-1/ROOT-SRC-2A/ROOT-SRC-2B scope | Still skeleton for full root coverage; source-governance, root router/onboarding and protocol/role core rows are derived/synchronized. |
-| `planning/README.md` | planning navigation and onboarding entrypoint | Doc version: v0.2.0 | derived from local section Sources in ROOT-SRC-2A; source labels refreshed in ROOT-SRC-2B | Points new chats to activation/use-case/responsibility routing, Goal Map and Tampermonkey command-helper discovery docs. |
-| `planning/planning-use-case-map.md` | root action-to-doc router | Doc version: v0.3.0 | derived from local section Sources in ROOT-SRC-2A; source dependency route added in SRC-DEP-CMD-1; source labels refreshed in ROOT-SRC-2B | Owns command routing, including `давай архив`, explicit review-diff-file archive route, Goal Map, Tampermonkey discovery behavior and source dependency/link declaration routing. |
-| `planning/workflow-activation-map.md` | workflow activation router | Doc version: v0.2.0 | derived from local section Sources in ROOT-SRC-2A; protocol/role sources covered by ROOT-SRC-2B | Activates workflow preflight, root routing, Goal Map and Tampermonkey command-helper chains. |
-| `planning/planning-doc-responsibility-map.md` | root planning responsibility router | Doc version: v0.2.0 | derived from local section Sources in ROOT-SRC-2A; source labels refreshed in ROOT-SRC-2B | Owns root layer placement and responsibility routing, including Goal Map / Tampermonkey responsibility anchors. |
+| `planning/root-source-sync-register.md` | root dependency register | Doc version: v0.8.0 | self row partially synchronized for ROOT-SRC-1/SRC-DEP-CMD-1/ROOT-SRC-2A/ROOT-SRC-2B/ROOT-SRC-3A scope | Still skeleton for full root coverage; source-governance, root router/onboarding, protocol/role and output/archive core rows are derived/synchronized. |
+| `planning/README.md` | planning navigation and onboarding entrypoint | Doc version: v0.3.0 | derived from local section Sources in ROOT-SRC-2A; source labels refreshed in ROOT-SRC-2B/ROOT-SRC-3A | Points new chats to activation/use-case/responsibility routing, output/archive rules, Goal Map and Tampermonkey command-helper discovery docs. |
+| `planning/planning-use-case-map.md` | root action-to-doc router | Doc version: v0.4.0 | derived from local section Sources in ROOT-SRC-2A; source dependency route added in SRC-DEP-CMD-1; source labels refreshed in ROOT-SRC-2B/ROOT-SRC-3A | Owns command routing, including `давай архив`, explicit review-diff-file archive route, response commands, Goal Map, Tampermonkey discovery behavior and source dependency/link declaration routing. |
+| `planning/workflow-activation-map.md` | workflow activation router | Doc version: v0.3.0 | derived from local section Sources in ROOT-SRC-2A; protocol/role sources covered by ROOT-SRC-2B; output/archive labels refreshed in ROOT-SRC-3A | Activates workflow preflight, root routing, output/archive flows, Goal Map and Tampermonkey command-helper chains. |
+| `planning/planning-doc-responsibility-map.md` | root planning responsibility router | Doc version: v0.3.0 | derived from local section Sources in ROOT-SRC-2A; source labels refreshed in ROOT-SRC-2B/ROOT-SRC-3A | Owns root layer placement and responsibility routing, including output/archive, Goal Map and Tampermonkey responsibility anchors. |
 | `planning/goal-map-principles-workflow-template.md` | Goal Map owner workflow/template | version not confirmed in this register | candidate row added | Owns living Goal Map rules, brief shape and `синх карта`. |
 | `planning/workstreams/command-system-and-tampermonkey-goal-map.md` | living command-system/Tampermonkey Goal Map | version not confirmed in this register | candidate row added | Workstream state artifact; not a generic workflow. |
 | `planning/workstreams/tampermonkey-command-projection-plan.md` | Tampermonkey command projection plan | version not confirmed in this register | candidate row added | Defines helper prompt body projection model. |
 | `tools/tampermonkey/README.md` | Tampermonkey helper orientation | version not declared / implementation docs | candidate row added | Not command source of truth. |
 | `tools/tampermonkey/IMPLEMENTATION-NOTES.md` | Tampermonkey implementation notes | version not declared / implementation docs | candidate row added | Working notes; not command source of truth. |
 | `tools/tampermonkey/chat-command-palette.user.js` | userscript implementation | implementation/helper source, version not applicable | candidate row added | Last in source-of-truth order; must not invent command semantics. |
-| `planning/replacement-file-generation-guide.md` | replacement package guidance | version not confirmed in this register | candidate row updated | Owns default clipboard diff archive review flow. |
-| `planning/documentation/review-diff-file-workflow.md` | explicit repo-stored review diff workflow | version not confirmed in this register | candidate row added | Used only for explicit review-diff-file archive mode. |
+| `planning/replacement-file-generation-guide.md` | replacement package guidance | Doc version: v0.1.0 | derived from local section Sources in ROOT-SRC-3A | Owns default replacement package generation, complete replacement-files layout, apply commands and clipboard diff archive review flow. |
+| `planning/documentation/review-diff-file-workflow.md` | explicit repo-stored review diff workflow | Doc version: v0.1.0 | derived from local section Sources in ROOT-SRC-3A | Used only for explicit review-diff-file archive mode; default archive flow stays clipboard diff. |
+| `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | response-level output and commands workflow | Doc version: v0.1.0 | derived from local section Sources in ROOT-SRC-3A | Owns answer levels, response-level commands, Goal Map Brief placement and file-update overview placement. |
+| `planning/documentation/file-update-overview-workflow.md` | file update overview workflow | Doc version: v0.1.0 | derived from local section Sources in ROOT-SRC-3A | Owns `План файл-обновление` process and final file/update overview placement. |
+| `planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md` | file update overview template | Doc version: v0.1.0 | derived from local section Sources in ROOT-SRC-3A | Owns exact Markdown shape for `План файл-обновление`. |
 | `planning/documentation-action-log.md` | action log / historical record | version not confirmed in this register | candidate row only | Log is an evidence trail, not a workflow source by itself. |
 | `planning/planning-agent-protocol.md` | planning agent protocol | Doc version: v0.1.0 | derived from local section Sources in ROOT-SRC-2B | Owns core planning protocol, workflow activation rule, role identification rule, line-link rule, scope boundaries and cross-layer planning gates. |
 | `planning/agent-roles-and-required-actions.md` | planning role map and required actions | Doc version: v0.1.0 | derived from local section Sources in ROOT-SRC-2B | Owns planning roles, required read order, mandatory actions and role handoff boundaries. |
@@ -173,7 +188,7 @@ Sources:
   Internal dependencies:
     - Root Files With Source Dependencies
   Not checked:
-    - root output/Goal Map/Tampermonkey rows outside ROOT-SRC-2B scope
+    - root Goal Map/Tampermonkey rows outside ROOT-SRC-3A scope
     - planned planning/slices/slice-source-sync-register.md does not exist yet
 ```
 
@@ -188,6 +203,11 @@ Sources:
 | `planning/planning-doc-responsibility-map.md` | root planning responsibility routing | `planning/README.md`; `planning/planning-use-case-map.md`; `planning/workflow-activation-map.md`; documentation/scenario/domain/slice/local responsibility maps; `planning/goal-map-principles-workflow-template.md`; `planning/workstreams/command-system-and-tampermonkey-goal-map.md`; `planning/workstreams/tampermonkey-command-projection-plan.md`; `tools/tampermonkey/README.md`; `tools/tampermonkey/IMPLEMENTATION-NOTES.md`; `tools/tampermonkey/chat-command-palette.user.js` | responsibility routing/process | responsibility map Doc version: v0.2.0; root router sources versioned; local layer responsibility maps mixed/not fully audited | derived/synchronized for ROOT-SRC-2A local Sources scope | local Sources added; responsibility semantics preserved | Includes command-system / Goal Map / Tampermonkey ownership anchors; local layer responsibility passes remain deferred. |
 | `planning/planning-agent-protocol.md` | planning protocol, workflow activation gate, role identification and scope boundaries | `planning/README.md`; `planning/workflow-activation-map.md`; `planning/planning-use-case-map.md`; `planning/planning-doc-responsibility-map.md`; `planning/agent-roles-and-required-actions.md`; role/layer workflow files by protocol section | protocol/process + permission boundaries | protocol Doc version: v0.1.0; root router sources versioned; downstream role/layer workflows mixed/not fully audited | derived/synchronized for ROOT-SRC-2B local Sources scope | local Sources added; protocol semantics preserved | Protocol owns preflight, role identification, line-link, scope and question-first rules; downstream layer workflows remain checked per task. |
 | `planning/agent-roles-and-required-actions.md` | planning roles, required read order and role handoff boundaries | `planning/README.md`; `planning/planning-agent-protocol.md`; `planning/workflow-activation-map.md`; `planning/planning-doc-responsibility-map.md`; role-specific workflow docs by section | role routing/process + mandatory actions | role map Doc version: v0.1.0; root protocol/router sources versioned; role-specific workflows mixed/not fully audited | derived/synchronized for ROOT-SRC-2B local Sources scope | local Sources added; role boundaries preserved | Role map names role-specific must-reads but does not audit every downstream workflow. |
+| `planning/replacement-file-generation-guide.md` | replacement package rules, apply command shape and diff capture | `planning/planning-use-case-map.md`; `planning/documentation/review-diff-file-workflow.md`; `planning/documentation/file-update-overview-workflow.md`; target files by package scope | output/process + review loop | replacement guide Doc version: v0.1.0; review-diff workflow Doc version: v0.1.0; file-update overview workflow Doc version: v0.1.0 | derived/synchronized for ROOT-SRC-3A local Sources scope | local Sources added; default clipboard diff preserved | Owns `давай архив` replacement-package mode and explicitly separates it from archive read-source mode. |
+| `planning/documentation/review-diff-file-workflow.md` | explicit repo-stored review diff workflow | `planning/replacement-file-generation-guide.md`; `planning/planning-use-case-map.md`; `_ai-review-diffs/last-archive.diff` when explicit mode is used | output/process + review artifact | review-diff workflow Doc version: v0.1.0; replacement guide Doc version: v0.1.0; use-case map Doc version: v0.4.0 | derived/synchronized for ROOT-SRC-3A local Sources scope | local Sources added; explicit-only boundary preserved | Used only when user explicitly requests repo-stored review diff. |
+| `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | response levels and response commands | `planning/planning-use-case-map.md`; `planning/documentation/file-update-overview-workflow.md`; `planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md`; `planning/goal-map-principles-workflow-template.md`; examples as demonstrations | response/process + command output shape | reviewable workflow Doc version: v0.1.0; file-update overview workflow Doc version: v0.1.0; template Doc version: v0.1.0; Goal Map owner version not confirmed | derived/synchronized for ROOT-SRC-3A local Sources scope | local Sources added; response-command semantics preserved | Owns Level 1/2/3, `кц`, `крит`, `Краткое саммари` and `План файл-обновление` placement. |
+| `planning/documentation/file-update-overview-workflow.md` | file update overview workflow | `planning/documentation/reviewable-agent-output-and-commands-workflow.md`; `planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md`; `planning/planning-use-case-map.md`; `planning/replacement-file-generation-guide.md` | output/process + file update overview rules | file-update overview workflow Doc version: v0.1.0; reviewable workflow Doc version: v0.1.0; template Doc version: v0.1.0 | derived/synchronized for ROOT-SRC-3A local Sources scope | local Sources added; overview semantics preserved | Owns final `План файл-обновление` block for plans, archive responses and diff reviews. |
+| `planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md` | file update overview template | `planning/documentation/file-update-overview-workflow.md`; `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | output/template | template Doc version: v0.1.0; workflow Doc version: v0.1.0; reviewable workflow Doc version: v0.1.0 | derived/synchronized for ROOT-SRC-3A local Sources scope | local Sources added; template shape preserved | Exact Markdown shape for `План файл-обновление`. |
 | `planning/goal-map-principles-workflow-template.md` | Goal Map rules, brief shape and map sync command | `planning/planning-use-case-map.md`; `planning/documentation/reviewable-agent-output-and-commands-workflow.md`; `planning/goal-map-example.md`; `planning/documentation/examples/GOAL-MAP-BRIEF-RESPONSE-EXAMPLE.md`; `planning/documentation/examples/GOAL-MAP-SYNC-COMMAND-EXAMPLE.md`; relevant living Goal Map files | workflow/template + response-shape sources | mixed; not fully version-audited | skeleton | Goal Map owner audit needed | Added new-chat discovery rule; durable state lives in living Goal Maps, not in brief output. |
 | `planning/workstreams/command-system-and-tampermonkey-goal-map.md` | living state for command-system/Tampermonkey workstream | `planning/goal-map-principles-workflow-template.md`; `planning/planning-use-case-map.md`; `planning/documentation/examples/README.md`; `planning/workstreams/tampermonkey-command-projection-plan.md`; `tools/tampermonkey/README.md`; `tools/tampermonkey/chat-command-palette.user.js`; `planning/replacement-file-generation-guide.md`; `planning/documentation/review-diff-file-workflow.md` | living-state/workstream source + route/process references | mixed; not fully version-audited | skeleton | workstream map audit needed | Snapshot currently points to SL-6 helper smoke testing after DISC-GM-TM1. |
 | `planning/workstreams/tampermonkey-command-projection-plan.md` | helper command projection and prompt envelope | `planning/planning-use-case-map.md`; `planning/replacement-file-generation-guide.md`; `planning/documentation/review-diff-file-workflow.md`; `planning/goal-map-principles-workflow-template.md`; `planning/documentation/examples/README.md`; `tools/tampermonkey/README.md`; `tools/tampermonkey/chat-command-palette.user.js` | projection/process + command-route references | mixed; not fully version-audited | skeleton | projection plan audit needed | Helper profiles are route hints; UCM and owner workflows remain authoritative. |
@@ -208,7 +228,7 @@ Sources:
   Internal dependencies:
     - Root Dependency Rows
   Not checked:
-    - root output/Goal Map/Tampermonkey rows outside ROOT-SRC-2B scope
+    - root Goal Map/Tampermonkey rows outside ROOT-SRC-3A scope
     - planned planning/slices/slice-source-sync-register.md does not exist yet
 ```
 
@@ -237,17 +257,16 @@ Sources:
     - Root Dependency Rows
     - Cross-Layer Dependency Rows
   Not checked:
-    - root output/Goal Map/Tampermonkey rows outside ROOT-SRC-2B scope
+    - root Goal Map/Tampermonkey rows outside ROOT-SRC-3A scope
     - planned planning/slices/slice-source-sync-register.md does not exist yet
 ```
 
 ```text
 - Full root planning file audit.
 - Full Doc version seed for root planning/router/helper docs.
-- Local section Sources blocks for root planning files outside ROOT-SRC-2B scope.
+- Local section Sources blocks for root planning files outside ROOT-SRC-3A scope.
 - Goal Map owner/workstream map dependency audit.
 - Tampermonkey projection plan and userscript profile audit against every root route.
-- Archive/output workflow source pass.
 - `planning/slices/slice-source-sync-register.md` creation.
 - Slice read order/template sync with the domain register.
 - Testing layer source-sync register.
@@ -267,7 +286,7 @@ Sources:
     - Cross-Layer Dependency Rows
     - Not Checked / Deferred
   Not checked:
-    - root output/Goal Map/Tampermonkey rows outside ROOT-SRC-2B scope
+    - root Goal Map/Tampermonkey rows outside ROOT-SRC-3A scope
 ```
 
 ```text
@@ -281,9 +300,10 @@ Sources:
 - DOM-VO-SRC-ALL-1 made the domain register cover active aggregate and active value-object sources before ROOT-SRC-1.
 - ROOT-SRC-1 added local section-level Sources blocks to the source-governance core files and updated those root register rows to derived/synchronized for this narrow scope.
 - SRC-DEP-CMD-1 added the explicit source dependency/link route to `planning/planning-use-case-map.md`, bumped this register to Doc version: v0.5.0 and kept the router row skeleton until a full root-router audit.
-- ROOT-SRC-2A added local section-level Sources blocks to README/use-case/activation/responsibility router files, bumped this register to Doc version: v0.7.0 and kept full root coverage deferred.
+- ROOT-SRC-2A added local section-level Sources blocks to README/use-case/activation/responsibility router files, bumped this register to Doc version: v0.6.0 and kept full root coverage deferred.
 - ROOT-SRC-2B added local section-level Sources blocks to the protocol/role files, bumped this register to Doc version: v0.7.0 and kept full root coverage deferred.
-- Kept this register as skeleton / not fully audited for root files outside the source-governance, router/onboarding and protocol/role core.
-- Did not add Doc version to Goal Map/Tampermonkey/output/archive/helper files outside ROOT-SRC-2B.
+- Kept this register as skeleton / not fully audited for root files outside the source-governance, router/onboarding, protocol/role and output/archive core.
+- Did not add Doc version to Goal Map/Tampermonkey/helper files outside ROOT-SRC-3A.
 - Did not edit domain aggregate drafts, value object drafts or slice drafts.
+- ROOT-SRC-3A added output/archive workflow source coverage, bumped this register to Doc version: v0.8.0 and kept Goal Map/Tampermonkey rows deferred.
 ```

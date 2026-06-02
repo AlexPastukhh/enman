@@ -1,6 +1,6 @@
 # Documentation Action Log
 
-Status: current documentation-layer logical action log  
+Status: current documentation-layer logical action log
 Scope: significant completed documentation-architecture, workflow, source-governance and planning-doc actions with short reasons
 
 ## 1. Purpose
@@ -1960,3 +1960,45 @@ Follow-ups:
   Later root passes should cover Goal Map/Tampermonkey files and output/archive workflow files. Slice-side work should still wait for slice source-sync skeleton/read-order prep.
 Notes:
   ROOT-SRC-2B closes the protocol/role gap left after ROOT-SRC-2A. It does not audit every downstream role-specific workflow listed by the role map.
+
+### 2026-06-02 - Added root output/archive local source coverage
+
+Date:
+  2026-06-02
+Action:
+  Added local section-level source coverage for output/archive workflow owners and synchronized the root source register.
+Type:
+  Root source coverage / output archive audit / register sync
+Status:
+  applied
+Why:
+  After source-governance, router/onboarding and protocol/role root files were covered, the output/archive workflows that control `давай архив`, review-diff-file mode, response-level commands and `План файл-обновление` still had skeleton register rows. ROOT-SRC-3A gives those output owners explicit source/version coverage before Goal Map/Tampermonkey and slice-side work.
+Changed files:
+  - planning/replacement-file-generation-guide.md
+  - planning/documentation/review-diff-file-workflow.md
+  - planning/documentation/reviewable-agent-output-and-commands-workflow.md
+  - planning/documentation/file-update-overview-workflow.md
+  - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
+  - planning/README.md
+  - planning/planning-use-case-map.md
+  - planning/workflow-activation-map.md
+  - planning/planning-doc-responsibility-map.md
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added Doc version: v0.1.0 and local section-level `Sources:` blocks to the replacement package guide, review-diff-file workflow, reviewable output workflow, file-update overview workflow and file-update overview template.
+  - Refreshed output/archive source labels in the root router/onboarding/responsibility files.
+  - Bumped `planning/README.md` to Doc version: v0.3.0.
+  - Bumped `planning/planning-use-case-map.md` to Doc version: v0.4.0.
+  - Bumped `planning/workflow-activation-map.md` to Doc version: v0.3.0.
+  - Bumped `planning/planning-doc-responsibility-map.md` to Doc version: v0.3.0.
+  - Bumped `planning/root-source-sync-register.md` to Doc version: v0.8.0 and marked only ROOT-SRC-3A output/archive rows as derived/synchronized.
+Not changed:
+  - No domain aggregate or value-object semantics changed.
+  - No slice register was created.
+  - No Goal Map/Tampermonkey source pass was claimed.
+  - No full root-folder coverage was claimed.
+Follow-ups:
+  Later root passes should cover Goal Map/Tampermonkey files, then prepare the slice source-sync skeleton/read-order before slice-side refactor.
+Notes:
+  Default `давай архив` remains saved-diff-to-clipboard replacement-package mode. Review-diff-file mode remains explicit-only.

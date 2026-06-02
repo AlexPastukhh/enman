@@ -1,6 +1,7 @@
 # Review Diff File Workflow
 
 Status: active optional archive review workflow
+Doc version: v0.1.0
 Scope: explicit repo-stored review diff file flow for replacement archive/package application
 
 Use with:
@@ -11,6 +12,20 @@ planning/planning-use-case-map.md
 ```
 
 ## 1. Purpose
+
+```text
+Sources:
+  Format/process:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - _ai-review-diffs/last-archive.diff @ generated review artifact / not present unless explicit mode is used
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - default clipboard diff mode remains owned by replacement-file-generation-guide.md
+```
 
 This workflow defines the optional review-diff-file mode for archive review when the default clipboard diff transfer is not desired or not practical.
 
@@ -39,6 +54,20 @@ The assistant then reviews that repo-stored diff before giving commands to commi
 ## 2. Core Rule
 
 ```text
+Sources:
+  Format/process:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - _ai-review-diffs/last-archive.diff @ generated review artifact / not present unless explicit mode is used
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - default clipboard diff mode remains owned by replacement-file-generation-guide.md
+```
+
+```text
 The apply command may commit and push only `_ai-review-diffs/last-archive.diff`.
 Real archive files must remain local and uncommitted until the review diff is approved.
 ```
@@ -61,6 +90,20 @@ unless a separate reviewed rule explicitly reintroduces it.
 
 ## 3. Required Apply Flow
 
+```text
+Sources:
+  Format/process:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - _ai-review-diffs/last-archive.diff @ generated review artifact / not present unless explicit mode is used
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - default clipboard diff mode remains owned by replacement-file-generation-guide.md
+```
+
 The explicit review-diff-file apply command should:
 
 ```text
@@ -75,6 +118,20 @@ The explicit review-diff-file apply command should:
 ```
 
 ## 4. New File Visibility
+
+```text
+Sources:
+  Format/process:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - _ai-review-diffs/last-archive.diff @ generated review artifact / not present unless explicit mode is used
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - default clipboard diff mode remains owned by replacement-file-generation-guide.md
+```
 
 Untracked new files do not appear in `git diff` by default.
 
@@ -98,6 +155,20 @@ Use `$newFiles = @()` when the archive does not add files.
 
 ## 5. Diff Command Rules
 
+```text
+Sources:
+  Format/process:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - _ai-review-diffs/last-archive.diff @ generated review artifact / not present unless explicit mode is used
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - default clipboard diff mode remains owned by replacement-file-generation-guide.md
+```
+
 Use no-pager diff commands:
 
 ```powershell
@@ -116,6 +187,20 @@ Do not use:
 ```
 
 ## 6. Review Artifact Commit Rules
+
+```text
+Sources:
+  Format/process:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - _ai-review-diffs/last-archive.diff @ generated review artifact / not present unless explicit mode is used
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - default clipboard diff mode remains owned by replacement-file-generation-guide.md
+```
 
 The review artifact commit may stage only:
 
@@ -150,6 +235,20 @@ Run whitespace checks on real files before the real commit, after the review dif
 
 ## 7. Chat Review Command
 
+```text
+Sources:
+  Format/process:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - _ai-review-diffs/last-archive.diff @ generated review artifact / not present unless explicit mode is used
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - default clipboard diff mode remains owned by replacement-file-generation-guide.md
+```
+
 After the apply command pushes the review diff, tell the chat:
 
 ```text
@@ -172,6 +271,20 @@ The chat should read the diff from the repo and check:
 
 ## 8. Approval Boundary
 
+```text
+Sources:
+  Format/process:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - _ai-review-diffs/last-archive.diff @ generated review artifact / not present unless explicit mode is used
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - default clipboard diff mode remains owned by replacement-file-generation-guide.md
+```
+
 Before approval:
 
 ```text
@@ -182,3 +295,24 @@ Before approval:
 ```
 
 After approval, the assistant may provide scoped real-file commit commands.
+
+
+## Source Delta / Change Log
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Goal Map/Tampermonkey and slice source passes outside ROOT-SRC-3A
+```
+
+```text
+- ROOT-SRC-3A added Doc version and local section-level Sources blocks to this output/archive workflow file.
+- ROOT-SRC-3A did not change output semantics or grant edit/commit permission.
+```

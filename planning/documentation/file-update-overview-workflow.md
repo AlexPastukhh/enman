@@ -1,9 +1,25 @@
 # Plan File Update Overview Workflow
 
-Status: current documentation-layer workflow  
+Status: current documentation-layer workflow
+Doc version: v0.1.0
 Scope: when and how to produce the final structured File Update Overview / `План файл-обновление` block for non-trivial file, documentation, code or archive update planning/review answers
 
 ## 1. Purpose
+
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Generic Action Overview workstream not implemented in ROOT-SRC-3A
+```
 
 This workflow owns the process for producing a `File Update Overview` / `План файл-обновление` block.
 
@@ -41,6 +57,21 @@ Legacy shorthand:
 
 ## 2. Relationship To Response Levels
 
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Generic Action Overview workstream not implemented in ROOT-SRC-3A
+```
+
 This workflow does not define Level 1, Level 2 or Level 3 answer rules.
 
 Answer levels and response-level commands are owned by:
@@ -65,6 +96,21 @@ File Update Overview / План файл-обновление at the end, when f
 
 ## 3. When To Use
 
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Generic Action Overview workstream not implemented in ROOT-SRC-3A
+```
+
 Use a File Update Overview / `План файл-обновление` when an answer plans, creates, reviews or verifies meaningful changes to files or file-like artifacts.
 
 Typical cases:
@@ -84,6 +130,21 @@ Typical cases:
 It is especially useful when the change spans multiple responsibilities or when future chats need to continue from the answer.
 
 ## 3A. Planned And Actual Modes
+
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Generic Action Overview workstream not implemented in ROOT-SRC-3A
+```
 
 A File Update Overview can describe two states of the same file/change work.
 
@@ -112,6 +173,21 @@ blocked
 
 ## 4. When Not To Use
 
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Generic Action Overview workstream not implemented in ROOT-SRC-3A
+```
+
 Do not use the full File Update Overview for:
 
 ```text
@@ -127,6 +203,21 @@ A short sentence may be enough for narrow tasks.
 Do not use File Update Overview / `План файл-обновление` as a generic conclusion. Use `Краткое саммари` for contextual/human summary when there is no file/change/update context.
 
 ## 5. Logical Grouping Rule
+
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Generic Action Overview workstream not implemented in ROOT-SRC-3A
+```
 
 Group files by logical role in the system, not by `New` versus `Updated`.
 
@@ -149,6 +240,21 @@ Change group: Action log
 Inside each group, list the files with their change type.
 
 ## 5A. Rendered Shape Rule
+
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Generic Action Overview workstream not implemented in ROOT-SRC-3A
+```
 
 Prefer grouped Markdown tables for multi-file or multi-group File Update Overviews.
 
@@ -183,6 +289,21 @@ Vertical entries are allowed only when they are more readable for a very small/n
 
 ## 6. File Line Types
 
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Generic Action Overview workstream not implemented in ROOT-SRC-3A
+```
+
 Use these file line types:
 
 ```text
@@ -203,6 +324,21 @@ Do not group files under separate top-level `New` and `Updated` sections by defa
 
 ## 7. Responsibility Field Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Generic Action Overview workstream not implemented in ROOT-SRC-3A
+```
+
 Each file entry must include `R`.
 
 `R` means the file responsibility relevant to this change.
@@ -221,6 +357,21 @@ Do not use `R` to restate the whole workflow or duplicate owner rules.
 
 ## 8. What / Why Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Generic Action Overview workstream not implemented in ROOT-SRC-3A
+```
+
 Each changed file entry should include:
 
 ```text
@@ -236,6 +387,21 @@ For `Not changed` and `Not created`, include `Почему` and optionally `R`.
 This makes the overview show both the diff intent and the boundary of the update.
 
 ## 9. Checks And Next Action
+
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Generic Action Overview workstream not implemented in ROOT-SRC-3A
+```
 
 End the overview with:
 
@@ -260,6 +426,21 @@ For archive/package work, `Следующее действие` should usually s
 
 ## 10. Source-Of-Truth Boundaries
 
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Generic Action Overview workstream not implemented in ROOT-SRC-3A
+```
+
 File Update Overview / `План файл-обновление` is a summary format.
 
 It does not own:
@@ -283,6 +464,21 @@ Examples may demonstrate File Update Overview / `План файл-обновл�
 
 ## 11. Quality Checklist
 
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Generic Action Overview workstream not implemented in ROOT-SRC-3A
+```
+
 Before finalizing an overview, check:
 
 ```text
@@ -302,10 +498,46 @@ Before finalizing an overview, check:
 ## 12. Do Not
 
 ```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Generic Action Overview workstream not implemented in ROOT-SRC-3A
+```
+
+```text
 - Do not use File Update Overview / `План файл-обновление` as the whole answer for non-trivial work.
 - Do not hide source or verification limits inside the overview.
 - Do not duplicate complete workflow logic in the overview.
 - Do not hide delivery safety / large-file / fresh-archive requirements from file-update planning overviews.
 - Do not list only changed files when intentionally excluded files are important to understand scope.
 - Do not create a separate standalone overview format when this template is sufficient.
+```
+
+
+## Source Delta / Change Log
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Goal Map/Tampermonkey and slice source passes outside ROOT-SRC-3A
+```
+
+```text
+- ROOT-SRC-3A added Doc version and local section-level Sources blocks to this output/archive workflow file.
+- ROOT-SRC-3A did not change output semantics or grant edit/commit permission.
 ```

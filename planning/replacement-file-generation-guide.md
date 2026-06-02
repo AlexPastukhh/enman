@@ -1,9 +1,26 @@
 # Replacement File Generation Guide
 
-Status: current replacement package guide  
+Status: current replacement package guide
+Doc version: v0.1.0
 Scope: how to generate archives/files for manual application to repository
 
 ## 0. Quick Rule For New Chats
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
 
 When the user asks for an archive, replacement package or files to apply locally, use this guide before generating the archive.
 
@@ -59,9 +76,41 @@ Do not hide script artifacts inside replacement archive/package mode.
 
 ## 1. Purpose
 
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
+
 Use this guide when the user asks to create an archive or replacement package for the repository.
 
 ## 2. Core Rules
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
 
 ```text
 - Generate complete replacement files, not patches.
@@ -100,6 +149,22 @@ Do not call it a replacement archive/package.
 
 ## 3. GitHub Mutation Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
+
 For archive work, do not use GitHub mutation tools.
 
 Forbidden unless the user explicitly asks for direct GitHub changes:
@@ -119,6 +184,22 @@ The normal deliverable is a local zip archive link.
 
 ## 4. Repository Check Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
+
 Before generating an archive, check current repository docs when possible.
 
 Use repository connector/API for:
@@ -134,6 +215,22 @@ Use repository connector/API for:
 If repo cannot be checked, say so and generate from known context only.
 
 ## 4A. Target File Delivery Safety Check
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
 
 Before generating an archive, classify every target file by delivery safety.
 
@@ -165,6 +262,22 @@ Rules:
 
 ## 5. Responsibility Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
+
 Before deciding where a replacement file belongs, check:
 
 ```text
@@ -175,6 +288,22 @@ Do not put global workflow/common rules into local scenario/slice/client files.
 
 ## 6. Relevant Questions Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
+
 Before generating an archive, ask only questions that can change the archive contents.
 
 For every question, include the current assumption/preferred answer.
@@ -182,6 +311,22 @@ For every question, include the current assumption/preferred answer.
 If the question is future-only and does not affect the archive, record it elsewhere or mention it as non-blocking.
 
 ## 7. Archive Contents
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
 
 Each replacement archive should contain:
 
@@ -211,6 +356,22 @@ Required order:
 ```
 
 ## 7A. Post-Apply Preservation Check
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
 
 Replacement archive verification has two parts:
 
@@ -250,6 +411,22 @@ The post-apply review should check:
 If the user asks `проверь` after applying a replacement archive, treat it as this post-apply preservation check. By default, read the pasted/copied diff from chat. If the user explicitly used review-diff-file mode, read `_ai-review-diffs/last-archive.diff` from the active repo/branch.
 
 ## 7B. Diff Capture And Clipboard Commands (Default)
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
 
 When the assistant provides a replacement archive, the default chat response should include ready-to-run PowerShell commands that apply the archive, save the scoped diff to a local `.diff` file and copy that diff to the clipboard.
 
@@ -361,6 +538,22 @@ Write-Host "Suspect file contents copied to clipboard. Paste it into chat."
 
 ## 7C. Review Diff File Mode (Explicit Only)
 
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
+
 Review diff file mode is not the default archive review transfer.
 
 Use it only when:
@@ -389,6 +582,22 @@ The explicit apply command may create, commit and push only this review artifact
 Do not create or commit `_ai-review-diffs/last-archive-summary.md` by default.
 
 ## 7D. Replacement Archive Conversation Review Loop
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
 
 Replacement archive work is a review loop between the assistant and the user.
 
@@ -453,6 +662,22 @@ This loop is not a new output mode. It is the default review procedure for repla
 
 ## 7E. Replacement Archive Batch Scope Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
+
 Do not artificially split a coherent accepted update into many tiny archives.
 
 Choose archive scope before generating the package:
@@ -478,6 +703,22 @@ Safety comes from complete replacement files, scoped file lists, saved review di
 Do not bundle unrelated work just to reduce archive count.
 
 ## 7F. Hybrid Archive / Script Delivery Rule
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
 
 Use hybrid delivery when one coherent accepted update contains both safe complete-replacement files and large/shared files whose complete replacement is unsafe and therefore need targeted script edits.
 
@@ -508,6 +749,22 @@ Rules:
 ```
 
 ## 8. Archive Layouts And Apply Commands
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
 
 There are two supported archive layouts.
 
@@ -584,6 +841,22 @@ The final assistant response that provides the archive should show the correct c
 
 ## 9. Patch / Script Artifacts Are Not Replacement Packages
 
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
+
 Do not use any of these inside replacement archive mode:
 
 ```text
@@ -604,6 +877,22 @@ If the target file is large, still generate the complete replacement file when f
 
 ## 10. Scope Statement
 
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
+
 Every final response with an archive should state:
 
 ```text
@@ -617,6 +906,22 @@ When the archive is intended for one local bulk commit, the final response shoul
 
 ## 11. Status Reconciliation Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
+
 When an archive updates planning docs after implementation changes, use:
 
 ```text
@@ -626,6 +931,22 @@ planning/documentation/status-reconciliation-workflow.md
 Do not leave docs saying `planned` when current repo evidence shows `implemented` or `first-stage implemented`.
 
 ## 12. Do Not
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Quick Rule For New Chats
+  Not checked:
+    - review-diff-file explicit mode checked only by its workflow
+    - direct GitHub write mode not changed in ROOT-SRC-3A
+```
 
 ```text
 - Do not mix workflow cleanup with code implementation.
@@ -643,4 +964,25 @@ Do not leave docs saying `planned` when current repo evidence shows `implemented
 - Do not let one large/risky file block safe archive delivery for other files.
 - Do not choose script mode only because a file is large.
 - Do not use one write script for multiple large/shared files.
+```
+
+
+## Source Delta / Change Log
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Goal Map/Tampermonkey and slice source passes outside ROOT-SRC-3A
+```
+
+```text
+- ROOT-SRC-3A added Doc version and local section-level Sources blocks to this output/archive workflow file.
+- ROOT-SRC-3A did not change output semantics or grant edit/commit permission.
 ```

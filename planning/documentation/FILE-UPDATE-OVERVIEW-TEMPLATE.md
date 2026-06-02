@@ -1,6 +1,7 @@
 # File Update Overview Template
 
-Status: current reusable output template  
+Status: current reusable output template
+Doc version: v0.1.0
 Scope: exact Markdown structure for the final File Update Overview / `План файл-обновление` block used at the end of non-trivial file, documentation, code or archive update planning/review answers
 
 Use with:
@@ -12,6 +13,20 @@ planning/documentation/file-update-overview-workflow.md
 Do not use this block as the whole answer when the task requires a Level 2 or Level 3 reviewable answer. Put it at the end, after `Краткое саммари` when that summary is used.
 
 ## Template
+
+```text
+Sources:
+  Format/process:
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+  Internal dependencies:
+    - Template
+  Not checked:
+    - downstream examples using this template outside ROOT-SRC-3A
+```
 
 ```markdown
 ## План файл-обновление
@@ -56,6 +71,20 @@ Do not use this block as the whole answer when the task requires a Level 2 or Le
 ## Field Notes
 
 ```text
+Sources:
+  Format/process:
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+  Internal dependencies:
+    - Template
+  Not checked:
+    - downstream examples using this template outside ROOT-SRC-3A
+```
+
+```text
 Статус
   Current state of the update.
   Use `planned` while the overview is a rolling nearest-batch plan.
@@ -97,6 +126,20 @@ R
 ## Rules
 
 ```text
+Sources:
+  Format/process:
+    - planning/documentation/file-update-overview-workflow.md @ Doc version: v0.1.0
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+  Internal dependencies:
+    - Template
+  Not checked:
+    - downstream examples using this template outside ROOT-SRC-3A
+```
+
+```text
 - Use normal Markdown in chat output, not an outer code fence around the final `План файл-обновление`.
 - Prefer grouped Markdown tables for multi-file or multi-group overviews.
 - Do not use one giant table for everything by default; preserve logical groups.
@@ -105,4 +148,25 @@ R
 - Keep `План файл-обновление` as the last file/change/update block when it is present.
 - Do not use `План файл-обновление` or legacy `Итог` as a generic conclusion for answers without file/change/update context.
 - Use `Краткое саммари` before `План файл-обновление` when a contextual summary is useful.
+```
+
+
+## Source Delta / Change Log
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+  Content:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - Goal Map/Tampermonkey and slice source passes outside ROOT-SRC-3A
+```
+
+```text
+- ROOT-SRC-3A added Doc version and local section-level Sources blocks to this output/archive workflow file.
+- ROOT-SRC-3A did not change output semantics or grant edit/commit permission.
 ```
