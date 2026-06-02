@@ -4,6 +4,34 @@ Status: current root compound starter artifact / goal-map principles-workflow-te
 Doc version: v0.1.0  
 Scope: principles, workflow and template for defining, updating and reviewing a goal-level map for long-running work across chats, files, artifacts, decisions and implementation steps
 
+## 0. Source Sync / ROOT-FULL-1
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.5.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
+  Content:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
+    - planning/goal-map-example.md @ Doc version: v0.2.0
+    - planning/documentation/examples/GOAL-MAP-BRIEF-RESPONSE-EXAMPLE.md @ Doc version: v0.1.0
+    - planning/documentation/examples/GOAL-MAP-SYNC-COMMAND-EXAMPLE.md @ Doc version: v0.1.0
+    - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Purpose
+    - Relationship To Existing Response Blocks
+    - Goal Map Brief / Карта цели
+  Not checked:
+    - full root coverage outside ROOT-FULL-1 scope
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
+
+ROOT-FULL-1 source pass treats this file as Goal Map owner workflow/template.
+This section records the files that must be checked when this file is created, updated or used as a source for later work.
+It does not make the Tampermonkey userscript or any example file a source of truth for command semantics.
+
 ## 1. Purpose
 
 A Goal Map / `Карта цели` is a compact architecture of a goal and its process of achievement.

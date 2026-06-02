@@ -1,7 +1,7 @@
 # Enman Source Cascade Sync Workflow
 
 Status: active Enman project workflow
-Doc version: v0.4.0
+Doc version: v0.5.0
 Scope: how to add local section-level source blocks, use source-sync register skeletons safely, prepare doc version/source synchronization, derive layer source-sync registers and decide when structured files require local section sources
 
 ## 1. Purpose
@@ -12,7 +12,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.5.0
+    - planning/root-source-sync-register.md @ Doc version: v1.0.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - none
@@ -59,7 +59,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.5.0
+    - planning/root-source-sync-register.md @ Doc version: v1.0.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Purpose
@@ -107,7 +107,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.5.0
+    - planning/root-source-sync-register.md @ Doc version: v1.0.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Purpose
@@ -189,7 +189,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.5.0
+    - planning/root-source-sync-register.md @ Doc version: v1.0.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Purpose
@@ -232,7 +232,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.5.0
+    - planning/root-source-sync-register.md @ Doc version: v1.0.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Core Concepts
@@ -321,7 +321,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.5.0
+    - planning/root-source-sync-register.md @ Doc version: v1.0.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
     - planned planning/slices/slice-source-sync-register.md @ not created
   Internal dependencies:
@@ -571,10 +571,10 @@ Use the domain register as an upstream dependency index, then read the relevant 
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.5.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.5.0
+    - planning/root-source-sync-register.md @ Doc version: v1.0.0
   Internal dependencies:
     - Core Concepts
     - Register State And Derivation
@@ -605,6 +605,60 @@ major:
   responsibility, ownership, workflow rule, template shape or source contract changed
 ```
 
+## 9A. Active File Creation / Update Version And Register Checks
+
+```text
+Sources:
+  Format/process:
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v1.0.0
+  Internal dependencies:
+    - Doc Version Rule
+    - Register State And Derivation
+  Not checked:
+    - repository-wide stale version usage scan
+    - repository-wide local Sources stale-source scan
+```
+
+When creating an active planning/documentation/source file:
+
+```text
+1. Decide whether the file is active, historical, implementation/helper or example-only.
+2. If it is an active planning/documentation source, add a `Doc version:` marker unless the file type has a separate implementation version policy.
+3. Decide whether the file has external source dependencies or meaning-bearing internal dependencies.
+4. If yes, add local section-level `Sources:` blocks or a narrow file-level source sync section.
+5. Check whether the relevant register needs a new row:
+   - planning/root-source-sync-register.md for root planning/workflow/router/helper files;
+   - planning/domain/domain-source-sync-register.md for domain aggregate/value-object sources;
+   - planning/slices/slice-source-sync-register.md once created.
+6. Do not claim synchronized coverage until local source blocks or a file-level dependency audit were actually checked.
+```
+
+When updating an active planning/documentation/source file:
+
+```text
+1. Check whether the update changes source relationships, command semantics, output rules, routes, templates, registers or workflow read order.
+2. If the source relationship changed, update the local `Sources:` block or file-level source sync section.
+3. If a referenced source version changed, refresh the local version label and the relevant register row.
+4. If the file becomes a source for another file, add or update the consumer's local Sources block/register row.
+5. If the update only changes wording without source relationship impact, record that no register change is needed when the batch is reviewed.
+```
+
+Future maintenance commands should be added later, not in this ROOT-FULL-1 batch:
+
+```text
+стейл версии в регистрах:
+  check source-sync registers for stale source/version usage.
+
+стейл локальные сорсы:
+  check local `Sources:` blocks in active files/drafts for stale versions, stale paths and stale source relationships.
+
+полная source/version проверка:
+  combine register scan + local Sources scan + active-file Doc version scan.
+```
+
 ## 10. Register State And Derivation
 
 ```text
@@ -613,7 +667,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.5.0
+    - planning/root-source-sync-register.md @ Doc version: v1.0.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Core Concepts
@@ -683,7 +737,7 @@ Do not fill a register as complete/synchronized until local Sources blocks or eq
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.5.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
@@ -727,11 +781,11 @@ planning/slices/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-p
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.5.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.5.0
+    - planning/root-source-sync-register.md @ Doc version: v1.0.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Explicit Link / Dependency Declaration Rule
@@ -745,4 +799,5 @@ Sources:
 - SRC-DEP-CMD-1 added an explicit link/dependency declaration rule for file-to-file and section-to-file dependencies.
 - SRC-DEP-CMD-1 clarified that meaning-bearing dependencies need a local `Sources:` block or file-level/register audit decision, plus relevant register impact check.
 - Bumped this workflow to Doc version: v0.4.0 because the source dependency command route adds an explicit workflow rule.
+- ROOT-FULL-1 added active file creation/update version and register checks and parked future stale register/local Sources scan commands.
 ```

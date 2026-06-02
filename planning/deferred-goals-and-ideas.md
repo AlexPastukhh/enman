@@ -6,6 +6,31 @@ Scope: parked goals, deferred features, far-future implementation ideas and post
 
 This file keeps deferred ideas visible without bloating active implementation notes or current workstream plans.
 
+## 0. Source Sync / ROOT-FULL-1
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.5.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
+  Content:
+    - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ Doc version: v0.1.0
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.1.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.5.0
+  Internal dependencies:
+    - Deferred Items
+    - Current Active-Work Boundary
+    - How To Promote A Deferred Item
+  Not checked:
+    - full root coverage outside ROOT-FULL-1 scope
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
+
+ROOT-FULL-1 source pass treats this file as active backlog / deferred goal owner.
+This section records the files that must be checked when this file is created, updated or used as a source for later work.
+It does not make the Tampermonkey userscript or any example file a source of truth for command semantics.
+
 ## 1. Purpose
 
 Use this file for ideas that should be remembered but not implemented now:
@@ -180,6 +205,67 @@ Current boundary:
 ```text
 Do not implement cleanup/repair before selected-command stack and helper-owned compose buffer are designed.
 ```
+
+### FUT-SRC-VERIFY-1 — Register stale source/version usage command
+
+Status:
+  ⬜ deferred / future command
+
+Goal:
+  Add a command that checks source-sync registers for stale source paths, stale Doc version labels and register rows that still claim a version/status no longer present in the source file.
+
+Expected command aliases:
+
+```text
+стейл версии в регистрах
+проверь регистры на стейл версии
+register stale version scan
+```
+
+Boundary:
+  This is not implemented in ROOT-FULL-1. It is parked here so future command work can add it without mixing it into the Goal Map/Tampermonkey source pass.
+
+### FUT-SRC-VERIFY-2 — Local Sources stale usage command
+
+Status:
+  ⬜ deferred / future command
+
+Goal:
+  Add a command that scans local `Sources:` blocks in active files and drafts for stale source versions, stale source paths, stale source relationships and missing source-register updates.
+
+Expected command aliases:
+
+```text
+стейл локальные сорсы
+проверь локальные сорсы
+local sources stale scan
+```
+
+Boundary:
+  This must check local file sections, not only registers. It should especially cover active drafts where local section `Sources:` blocks are authoritative.
+
+### FUT-SRC-VERIFY-3 — Full source/version consistency audit command
+
+Status:
+  ⬜ deferred / future command
+
+Goal:
+  Add a full audit command that combines:
+  - register stale version scan;
+  - local Sources stale usage scan;
+  - active-file Doc version presence check;
+  - missing register impact check for created/updated active files.
+
+Expected command aliases:
+
+```text
+полная проверка сорсов
+полная source/version проверка
+full source/version audit
+```
+
+Boundary:
+  This is a future maintenance command. It should not claim full root/domain/slice coverage until it has checked both registers and local file content.
 
 ## 4. Current Active-Work Boundary
 

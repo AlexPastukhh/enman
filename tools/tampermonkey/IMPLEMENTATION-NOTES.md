@@ -4,6 +4,32 @@ Status: current implementation notes / compound planning artifact
 Doc version: v0.1.0  
 Scope: working notes for Tampermonkey helper implementation details, decisions, use cases, UI sketches, external sources and repo reading map
 
+## 0. Source Sync / ROOT-FULL-1
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.5.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
+  Content:
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - tools/tampermonkey/README.md @ Doc version: v0.1.0
+    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.1.0
+  Internal dependencies:
+    - Accepted Decisions So Far
+    - Implementation Principles
+    - Core Use Cases
+  Not checked:
+    - full root coverage outside ROOT-FULL-1 scope
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
+
+ROOT-FULL-1 source pass treats this file as Tampermonkey implementation notes / compound planning artifact.
+This section records the files that must be checked when this file is created, updated or used as a source for later work.
+It does not make the Tampermonkey userscript or any example file a source of truth for command semantics.
+
 ## 1. Purpose
 
 This file is the implementation notes workspace for the Tampermonkey Chat Command Helper.

@@ -18,6 +18,32 @@ repo layers
 
 It is not a complete audited tree. It is a working orientation map. If a task requires exact current files, verify with GitHub/repo tree or an uploaded archive.
 
+## 0. Source Sync / ROOT-FULL-1
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.5.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
+  Content:
+    - planning/README.md @ Doc version: v0.3.0
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.0.0
+  Internal dependencies:
+    - known repository areas
+    - source-of-truth chain
+    - read-next guidance
+  Not checked:
+    - full root coverage outside ROOT-FULL-1 scope
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
+
+ROOT-FULL-1 source pass treats this file as repo-structure orientation owner.
+This section records the files that must be checked when this file is created, updated or used as a source for later work.
+It does not make the Tampermonkey userscript or any example file a source of truth for command semantics.
+
 ## 1. Purpose
 
 Use this file when the chat needs to reorient before planning or editing:

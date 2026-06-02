@@ -10,6 +10,22 @@
 // @grant        none
 // ==/UserScript==
 
+/*
+ROOT-FULL-1 source sync:
+  Source-of-truth:
+    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.1.0
+    - tools/tampermonkey/README.md @ Doc version: v0.1.0
+    - tools/tampermonkey/IMPLEMENTATION-NOTES.md @ Doc version: v0.1.0
+
+  Boundary:
+    - This userscript is an implementation/helper projection.
+    - It is not command source of truth.
+    - Do not assign Doc version to this JS file unless a separate implementation version policy is introduced.
+    - Command semantics must remain owned by planning/planning-use-case-map.md and linked owner workflow/example files.
+*/
+
+
 (function () {
   'use strict';
 

@@ -2033,3 +2033,48 @@ Follow-ups:
   ROOT-FULL-1 should cover Goal Map/Tampermonkey files. Later passes should cover evidence/status/maintenance, safety/context/VKR, scenario/domain/slice bridge files and diagram root files before final root register sync.
 Notes:
   Historical, cleanup and superseded files remain visible but should not be treated as current source-of-truth unless explicitly revived and source-covered.
+
+### 2026-06-02 - Added ROOT-FULL-1 Goal Map / Tampermonkey source pass
+
+Date:
+  2026-06-02
+Action:
+  Added a narrow source/version/register pass for active Goal Map and Tampermonkey helper files.
+Type:
+  root source/version coverage / Goal Map and helper projection source pass
+Status:
+  applied
+Why:
+  Goal Map and Tampermonkey became the active workstream area after ROOT-FULL-0 inventory classification, but their owner/workstream/helper files were still candidate/deferred rows in the root source register. This made it risky to keep changing helper behavior without a synchronized source chain.
+Changed files:
+  - planning/source-cascade-sync-workflow.md
+  - planning/goal-map-principles-workflow-template.md
+  - planning/goal-map-example.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/workstreams/tampermonkey-command-projection-plan.md
+  - planning/deferred-goals-and-ideas.md
+  - planning/repo-structure-memory.md
+  - tools/tampermonkey/README.md
+  - tools/tampermonkey/IMPLEMENTATION-NOTES.md
+  - tools/tampermonkey/chat-command-palette.user.js
+  - planning/root-source-sync-register.md
+  - planning/planning-use-case-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added ROOT-FULL-1 local/file-level source sync sections to active Goal Map, workstream, helper documentation and orientation files.
+  - Added a source sync boundary comment to the Tampermonkey userscript without making the userscript a command source of truth.
+  - Updated the root source register from v0.9.0 to v1.0.0 and changed Goal Map/Tampermonkey active rows from candidate/deferred to narrow ROOT-FULL-1 derived/synchronized coverage.
+  - Added active file creation/update version and register checks to the source-cascade workflow.
+  - Parked future maintenance command ideas for stale register version scans, stale local `Sources:` scans and full source/version consistency audits.
+  - Corrected current source-version labels in ROOT-FULL-1 package so active Sources/register rows point to `planning/source-cascade-sync-workflow.md` v0.5.0 and `planning/root-source-sync-register.md` v1.0.0.
+Not changed:
+  - No slice source-sync register created.
+  - No slice source/version refactor started.
+  - No domain aggregate/value-object semantics changed.
+  - No command semantics changed in the userscript.
+  - No userscript Doc version introduced.
+  - No claim of full root source coverage.
+Follow-ups:
+  Continue SL-6 smoke testing or later implement dedicated source/version maintenance commands. Before broad slice work, create/plan `planning/slices/slice-source-sync-register.md`.
+Notes:
+  ROOT-FULL-1 covers the active Goal Map/Tampermonkey workstream/helper scope only. It does not replace later ROOT-FULL-2 through ROOT-FULL-6 passes and does not claim full domain-folder or slice coverage.
