@@ -1,10 +1,25 @@
 # Enman Source Cascade Sync Workflow
 
-Status: active Enman project workflow  
-Doc version: v0.3.0  
+Status: active Enman project workflow
+Doc version: v0.3.0
 Scope: how to add local section-level source blocks, use source-sync register skeletons safely, prepare doc version/source synchronization, derive layer source-sync registers and decide when structured files require local section sources
 
 ## 1. Purpose
+
+```text
+Sources:
+  Format/process:
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - none
+  Not checked:
+    - full root local/file-level source audit outside ROOT-SRC-1 scope
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
 
 This workflow explains how Enman tracks source, version and cascade dependencies for active planning drafts.
 
@@ -39,6 +54,21 @@ planning/root-source-sync-register.md
 ## 2. Core Concepts
 
 ```text
+Sources:
+  Format/process:
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - full root local/file-level source audit outside ROOT-SRC-1 scope
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
+
+```text
 Doc version:
   The version marker on an active planning/documentation file.
 
@@ -70,6 +100,22 @@ Register state:
 ```
 
 ## 3. Required Read Order
+
+```text
+Sources:
+  Format/process:
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Purpose
+    - Core Concepts
+  Not checked:
+    - full root local/file-level source audit outside ROOT-SRC-1 scope
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
 
 For Enman source cascade work, read:
 
@@ -137,6 +183,23 @@ planning/slices/slice-source-sync-register.md once created
 
 ## 4. Workflow
 
+```text
+Sources:
+  Format/process:
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Purpose
+    - Core Concepts
+    - Required Read Order
+  Not checked:
+    - full root local/file-level source audit outside ROOT-SRC-1 scope
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
+
 Use this workflow for one active draft/file at a time.
 
 ```text
@@ -163,6 +226,22 @@ Do not start with a global filled register and then guess local dependencies. St
 
 ## 4A. Structured File Local Sources Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Core Concepts
+    - Workflow
+  Not checked:
+    - full root local/file-level source audit outside ROOT-SRC-1 scope
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
+
 Use local section-level `Sources:` blocks when all of these are true:
 
 ```text
@@ -185,6 +264,20 @@ This rule applies to:
 A register row alone is not enough for section-level work when a structured file has meaningful section-specific dependencies. A file-level dependency audit can be enough only for flat logs, simple indexes, registers, or files where section-level sources would be artificial noise.
 
 ## 5. Local Sources Block Placement
+
+```text
+Sources:
+  Format/process:
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+  Content:
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Core Concepts
+    - Workflow
+  Not checked:
+    - full root local/file-level source audit outside ROOT-SRC-1 scope
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
 
 Use this placement:
 
@@ -222,6 +315,21 @@ Rules:
 
 ## 6. Scenario DATA Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+  Content:
+    - planning/diagrams/scenario-text-specs/**#DATA @ Doc version: v0.1.0 after F7K-D2
+    - planning/diagrams/scenario-data/** @ Doc version: v0.1.0 after F7K-D2
+  Internal dependencies:
+    - Core Concepts
+    - Local Sources Block Placement
+  Not checked:
+    - scenario files were not re-audited in this pass
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
+
 Scenario-specific DATA starts inline in the core/business scenario text spec.
 
 ```text
@@ -242,6 +350,24 @@ Use `planning/diagrams/scenario-data/` only for:
 Do not treat a scenario DATA sidecar as the primary DATA source unless the scenario or current mapping explicitly makes it the reusable/shared/audited source.
 
 ## 7. Domain Draft Application
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+  Content:
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Required Read Order
+    - Local Sources Block Placement
+    - Register State And Derivation
+  Not checked:
+    - domain aggregate drafts were not edited in this pass
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
 
 For aggregate drafts, local Sources blocks usually belong after these sections:
 
@@ -275,6 +401,23 @@ planning/domain/domain-source-sync-register.md
 The domain register is the current synchronized dependency index for active aggregate local Sources blocks. It does not replace the local section-level Sources blocks.
 
 ## 7A. Domain Value Object Draft Application
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.2.0
+    - planning/domain/value-object-draft-template.md @ Doc version: v0.2.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+  Content:
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Required Read Order
+    - Domain Draft Application
+    - Local Sources Block Placement
+  Not checked:
+    - domain value-object drafts were not edited in this pass
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
 
 For value object drafts, local Sources blocks usually belong after these sections:
 
@@ -315,6 +458,25 @@ When value-object local Sources are added, update `planning/domain/domain-source
 
 ## 8. Slice Draft Application
 
+```text
+Sources:
+  Format/process:
+    - planning/slices/slice-draft-authoring-workflow.md @ version not confirmed
+    - planning/slices/slice-draft-authoring-principles.md @ version not confirmed
+    - planning/slices/SERVER-SLICE-SECTION-SOURCES-TEMPLATE.md @ version not confirmed
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+  Content:
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+    - planned planning/slices/slice-source-sync-register.md @ not created
+  Internal dependencies:
+    - Required Read Order
+    - Domain Draft Application
+    - Domain Value Object Draft Application
+  Not checked:
+    - slice drafts were not edited in this pass
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
+
 For slice drafts, local Sources blocks usually belong after sections such as:
 
 ```text
@@ -339,6 +501,20 @@ planning/domain/domain-source-sync-register.md
 Use the domain register as an upstream dependency index, then read the relevant aggregate/value-object local sources directly.
 
 ## 9. Doc Version Rule
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+  Internal dependencies:
+    - Core Concepts
+    - Register State And Derivation
+  Not checked:
+    - full root Doc version seed was not performed in this pass
+```
 
 Every active planning/documentation file that participates in source cascade should eventually have:
 
@@ -365,6 +541,22 @@ major:
 
 ## 10. Register State And Derivation
 
+```text
+Sources:
+  Format/process:
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Core Concepts
+    - Workflow
+  Not checked:
+    - full root local/file-level source audit outside ROOT-SRC-1 scope
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
+
 Current root register:
 
 ```text
@@ -376,7 +568,7 @@ Current domain register:
 
 ```text
 planning/domain/domain-source-sync-register.md
-  Status: synchronized with versioned active aggregate local Sources blocks.
+  Status: synchronized with versioned active aggregate local Sources blocks and derived value-object local Sources blocks.
 ```
 
 Planned slice register:
@@ -422,6 +614,23 @@ Do not fill a register as complete/synchronized until local Sources blocks or eq
 
 ## 11. First Intended Application
 
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+  Content:
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+    - planned planning/slices/slice-source-sync-register.md @ not created
+  Internal dependencies:
+    - Required Read Order
+    - Domain Draft Application
+    - Domain Value Object Draft Application
+    - Slice Draft Application
+  Not checked:
+    - slice register/read-order/template sync not completed in this pass
+```
+
 First vertical chain:
 
 ```text
@@ -435,7 +644,7 @@ Current state:
 
 ```text
 - domain aggregate/register part is complete enough for domain-side source/version/cascade review;
-- structured value-object local Sources rule is defined, but value-object files still need a local Sources pass;
+- active value-object local Sources pass is complete enough on domain side and reflected in domain register v0.2.0;
 - root register skeleton exists for root workflow/router dependencies;
 - slice register is still planned;
 - first slice-side application should start only after slice read order/template/register skeleton are aligned with the domain register and the relevant value-object sources are covered.

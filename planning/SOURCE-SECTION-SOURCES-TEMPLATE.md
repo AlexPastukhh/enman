@@ -1,10 +1,22 @@
 # Source Section Sources Template
 
-Status: active Enman section-source template  
-Doc version: v0.2.0  
+Status: active Enman section-source template
+Doc version: v0.2.0
 Scope: local fenced `Sources:` block format for active planning/domain/slice draft sections
 
 ## 1. Template
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+  Content:
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - none
+  Not checked:
+    - downstream domain/slice template examples beyond the declared field shape
+```
 
 Place this block immediately after a section heading.
 
@@ -29,6 +41,18 @@ Sources:
 ## 2. Field Meaning
 
 ```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+  Content:
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Template
+  Not checked:
+    - downstream domain/slice template examples beyond the declared field shape
+```
+
+```text
 Format/process:
   Files that define how the section should be shaped, reviewed or owned.
   Usually workflow/template/principles/responsibility-map files.
@@ -37,13 +61,26 @@ Content:
   Files or sections that provide the business, scenario, domain, slice, testing or implementation meaning used by this section.
 
 Internal dependencies:
-  Sections in the same draft that this section depends on.
+  Sections in the same draft that the current section depends on.
 
 Not checked:
   Sources/evidence that should matter but were not reviewed in this pass.
 ```
 
 ## 3. Rules
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+  Content:
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Template
+    - Field Meaning
+  Not checked:
+    - downstream domain/slice template examples beyond the declared field shape
+```
 
 ```text
 - Use repo-relative paths.
@@ -112,3 +149,26 @@ Sources:
 
 <section body>
 ````
+
+## 6. Source Delta / Change Log
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+  Content:
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Template
+    - Field Meaning
+    - Rules
+    - Domain Section Example
+    - Slice Section Example
+  Not checked:
+    - downstream domain/slice template examples beyond the declared field shape
+```
+
+```text
+- SRC-LOCAL-RULE-1 updated this template to require version/status labels and prefer scenario text #DATA for scenario-specific DATA.
+- ROOT-SRC-1 added local section-level Sources blocks to this template without changing the template shape or removing domain/slice examples.
+```

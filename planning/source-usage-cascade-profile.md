@@ -1,10 +1,27 @@
 # Enman Source Usage Cascade Profile
 
-Status: active Enman source usage cascade profile  
-Doc version: v0.1.0  
+Status: active Enman source usage cascade profile
+Doc version: v0.1.0
 Scope: concrete Enman source/consumer categories, row conventions, register states and cascade triggers
 
 ## 1. Purpose
+
+```text
+Sources:
+  Format/process:
+    - planning/documentation/field-kits/source-usage-cascade-field-kit.md @ version not confirmed
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+    - planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md @ version not confirmed
+  Internal dependencies:
+    - none
+  Not checked:
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+    - preserved SC-13D pilot register was not filled in this pass
+```
 
 This file defines Enman source/consumer categories, source usage row conventions, register states and cascade-review triggers.
 
@@ -49,6 +66,21 @@ Use the domain/server slice section source templates when adding local `Sources:
 
 ## 2. Source Categories
 
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - full root/router local source audit outside ROOT-SRC-1 scope
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
+
 | Source category | Enman paths |
 |---|---|
 | Root planning/router/source-governance source | `planning/README.md`, `planning/workflow-activation-map.md`, `planning/planning-use-case-map.md`, `planning/source-cascade-sync-workflow.md`, `planning/source-usage-cascade-profile.md`, `planning/root-source-sync-register.md` |
@@ -64,6 +96,22 @@ Use the domain/server slice section source templates when adding local `Sources:
 
 ## 3. Consumer Categories
 
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Purpose
+    - Source Categories
+  Not checked:
+    - full root/router local source audit outside ROOT-SRC-1 scope
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
+
 | Consumer category | Examples |
 |---|---|
 | Root/router consumers | planning use-case map, workflow activation map, root/source cascade workflows, replacement package workflow |
@@ -74,6 +122,20 @@ Use the domain/server slice section source templates when adding local `Sources:
 | External-output consumers | VKR/thesis materials that consume internal planning docs |
 
 ## 4. Source Usage Row Shape
+
+```text
+Sources:
+  Format/process:
+    - planning/documentation/field-kits/source-usage-cascade-field-kit.md @ version not confirmed
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+  Internal dependencies:
+    - Source Categories
+    - Consumer Categories
+  Not checked:
+    - full root/router local source audit outside ROOT-SRC-1 scope
+```
 
 | Field | Enman convention |
 |---|---|
@@ -89,6 +151,21 @@ Use the domain/server slice section source templates when adding local `Sources:
 | notes | short reason only |
 
 ## 4A. Register Coverage Model
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Source Usage Row Shape
+  Not checked:
+    - full root/router local source audit outside ROOT-SRC-1 scope
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
 
 Layer/root source-sync registers may be in one of these states:
 
@@ -114,6 +191,23 @@ Do not treat a skeleton register as full coverage.
 
 ## 5. Cascade Triggers
 
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Source Categories
+    - Consumer Categories
+    - Register Coverage Model
+  Not checked:
+    - full root/router local source audit outside ROOT-SRC-1 scope
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
+
 Run cascade review when:
 
 ```text
@@ -129,6 +223,23 @@ Run cascade review when:
 
 ## 6. Pilot Scope
 
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+  Content:
+    - planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md @ version not confirmed
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Source Categories
+    - Consumer Categories
+    - Cascade Triggers
+  Not checked:
+    - preserved SC-13D pilot register was not filled in this pass
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
+
 Recommended first pilot:
 
 ```text
@@ -138,6 +249,21 @@ one scenario source -> one DATA/behavior item set -> one domain/slice consumer -
 Keep the pilot small enough to prove row shape and review value.
 
 ## 6A. Preserved Pilot Candidate: SC-13D / AgreementProposalExchange
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+  Content:
+    - planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md @ version not confirmed
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+  Internal dependencies:
+    - Pilot Scope
+  Not checked:
+    - preserved SC-13D pilot register was not filled in this pass
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
 
 Earlier candidate governance notes identified a concrete Enman pilot candidate:
 
@@ -177,6 +303,22 @@ planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMA
 ## 7. Do Not
 
 ```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Source Categories
+    - Consumer Categories
+    - Register Coverage Model
+    - Cascade Triggers
+  Not checked:
+    - full root/router local source audit outside ROOT-SRC-1 scope
+```
+
+```text
 - Do not create broad cascade review for every docs change by default.
 - Do not copy upstream truth into downstream files just for self-containment.
 - Do not treat version markers as source truth by themselves.
@@ -187,6 +329,23 @@ planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMA
 ## 8. Related Files
 
 ```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Purpose
+    - Source Categories
+    - Register Coverage Model
+  Not checked:
+    - full root/router local source audit outside ROOT-SRC-1 scope
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
+
+```text
 planning/root-source-sync-register.md
 planning/domain/domain-source-sync-register.md
 planning/slices/slice-source-sync-register.md planned
@@ -194,4 +353,27 @@ planning/documentation/field-kits/source-usage-cascade-field-kit.md
 planning/documentation/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md
 planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md
 planning/source-usage-pilots/README.md
+```
+
+## 9. Source Delta / Change Log
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.3.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+    - planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md @ version not confirmed
+  Internal dependencies:
+    - all changed sections in this file
+  Not checked:
+    - preserved SC-13D pilot register was not filled in this pass
+    - planned planning/slices/slice-source-sync-register.md does not exist yet
+```
+
+```text
+- ROOT-SRC-1 added local section-level Sources blocks to this Enman profile without changing profile semantics.
+- DOM-VO-SRC-ALL-1 made the domain register cover active aggregate and active value-object sources before this root pass.
 ```
