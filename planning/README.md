@@ -121,6 +121,28 @@ planning/planning-doc-responsibility-map.md
 
 A future chat should not require the user to remember workflow file names. It should read the activation map and use-case map, then disclose activated workflows before continuing.
 
+### Long-running workstreams, Goal Maps and command-helper discovery
+
+When a new chat, restored context or first planning pass touches a long-running workstream, command-system work or the Tampermonkey helper, also check:
+
+```text
+planning/goal-map-principles-workflow-template.md
+planning/workstreams/command-system-and-tampermonkey-goal-map.md
+planning/workstreams/tampermonkey-command-projection-plan.md
+tools/tampermonkey/README.md
+```
+
+Use them to decide:
+
+```text
+- whether a living Goal Map exists and must be consulted before choosing the next step;
+- whether the map's Current Snapshot, active slice, next action and evidence are stale;
+- which Tampermonkey command bodies are only prompt projections;
+- which root route/owner workflow files define the actual command behavior.
+```
+
+Tampermonkey inserted command bodies are not source of truth. They are route hints that tell the chat to start from `planning/planning-use-case-map.md` and then read linked owner workflows/examples before acting.
+
 For deferred planning-docs/workflow cleanup tasks and condition-based follow-ups, use:
 
 ```text

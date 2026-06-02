@@ -68,6 +68,7 @@ The envelope should be inserted into chat input, not auto-sent by default.
 | Command profile | Aliases | Why first |
 |---|---|---|
 | `replacement_archive.create` | `давай архив`, `собери архив`, `replacement package`, `archive for manual apply` | Easy to forget package boundaries, apply/diff commands and commit review |
+| `replacement_archive.review_diff_file` | `давай архив с review diff file`, `давай архив с repo diff`, `archive with review diff file` | Explicit-only alternative when clipboard diff transfer is not desired/practical |
 | `archive_source.use` | `арх`, `из архива`, `use archive` | Prevents confusion between read-source archive and output package |
 | `goal_map.sync` | `синх карта`, `синхронизируй карту`, `синх карта архив` | Combined command: synced brief + archive + apply/diff commands |
 | `file_update.plan` | `план файл-обновление`, `спланируй файл-обновление`, `спланируй архив`, `file update plan`, `archive plan` | Keeps file/docs/code/archive planning tied to `План файл-обновление` |
@@ -114,6 +115,18 @@ key_reminders:
   - Save full diff to file and copy it with ReadAllText(... UTF8) + Set-Clipboard.
   - Ask user to paste diff before commit.
   - Never commit/push without diff review.
+```
+
+### replacement_archive.review_diff_file
+
+```text
+key_reminders:
+  - Explicit-only output-package mode, not default `давай архив`.
+  - Use only when user asks for repo-stored review diff transfer or approves switch from clipboard diff.
+  - Follow review-diff-file workflow.
+  - Apply command may create/commit/push only `_ai-review-diffs/last-archive.diff`.
+  - Do not create `_ai-review-diffs/last-archive-summary.md` by default.
+  - Real archive files remain local until diff review approval.
 ```
 
 ### archive_source.use
@@ -262,6 +275,39 @@ key_reminders:
   - Save full diff to file and copy it to clipboard.
   - Ask user to paste diff before commit.
   - Do not commit or push.
+
+user_target:
+  <what archive/package should include>
+
+[/ENMAN_COMMAND]
+```
+
+#### replacement_archive.review_diff_file / `давай архив с review diff file`
+
+```text
+[ENMAN_COMMAND]
+
+command:
+  давай архив с review diff file
+
+command_family:
+  `давай архив с review diff file` / `давай архив с repo diff` / `archive with review diff file`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read `planning/replacement-file-generation-guide.md` and `planning/documentation/review-diff-file-workflow.md`.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Explicit-only output-package mode, not default `давай архив`.
+  - Use only when repo-stored review diff transfer is requested/approved.
+  - Apply command may create/commit/push only `_ai-review-diffs/last-archive.diff`.
+  - Do not create `_ai-review-diffs/last-archive-summary.md` by default.
+  - Real archive files remain local until diff review approval.
 
 user_target:
   <what archive/package should include>

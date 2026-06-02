@@ -128,6 +128,10 @@ The preflight is not a permission grant. It only makes the intended workflow pat
 | `planning/workflow-activation-map.md` | Non-trivial planning/repo task | `always-on check` | No | Workflow Preflight |
 | `planning/planning-use-case-map.md` | Need to map a user action/short command to docs/workflows/templates/read paths, active context, traversal depth or read source mode | `conditional implicit` / `response-command` | No | Action/use-case trace and traversal/source decision |
 | `planning/planning-doc-responsibility-map.md` | Need to choose planning layer or owner area | `always-on check` | No | Layer routing |
+| `planning/goal-map-principles-workflow-template.md` | Active long-running workstream planning/status/next-step work, Goal Map command, Goal Map Brief or map sync | `conditional implicit` / `response-command` | No for check/brief; yes for edits/archive | Goal Map rules, brief shape and map sync obligations |
+| `planning/workstreams/command-system-and-tampermonkey-goal-map.md` | Command-system/Tampermonkey workstream planning, status, continuation or next-step choice | `conditional implicit` | No for read/check; yes for edits/archive | Living workstream state, current focus and next action |
+| `planning/workstreams/tampermonkey-command-projection-plan.md` | Tampermonkey command-helper/profile/body work or checking what inserted commands mean | `conditional implicit` | No for read/check; yes for implementation edits | Command projection rules and profile reminders |
+| `tools/tampermonkey/README.md` | Tampermonkey helper implementation orientation or helper behavior check | `conditional implicit` | No for read/check; yes for userscript edits | Helper entrypoint, boundaries and test checklist |
 | `planning/documentation/documentation-responsibility-map.md` | Information already belongs to documentation layer | `conditional implicit` | No | Documentation-layer owner file |
 | `planning/documentation/documentation-update-plan-workflow.md` | Broad docs/navigation/status/register/source-of-truth/multi-file change | `conditional implicit` | No for plan; yes for edits | Documentation Update Plan |
 | `planning/documentation/documentation-update-workflow.md` | Applying approved documentation update or planning docs update process | `conditional implicit` | Yes for GitHub writes | Docs update process |
@@ -219,6 +223,56 @@ reviewable-agent-output-and-commands-workflow.md
 ```
 
 Response commands do not grant permission to edit files, commit changes, delete files, move files or skip evidence required for current-state claims.
+
+### Goal Map / active long-running workstream
+
+Trigger examples:
+
+```text
+планируй / следующий шаг / где мы / прогресс;
+карта цели / кц / синх карта;
+continuing command-system or Tampermonkey work;
+new chat needs to recover current long-running workstream state.
+```
+
+Activated workflows:
+
+```text
+workflow-activation-map.md
+planning-use-case-map.md, for command route and traversal/source mode
+planning/goal-map-principles-workflow-template.md, for map rules, brief shape and sync obligations
+relevant living Goal Map file, for current snapshot, active slice and next action
+reviewable-agent-output-and-commands-workflow.md, for answer/brief placement
+```
+
+The chat must not choose the next work slice from memory when a living Goal Map exists. If the map is stale, say so and plan a narrow sync before continuing as if the map were current.
+
+### Tampermonkey command-helper / prompt projection work
+
+Trigger examples:
+
+```text
+Tampermonkey helper;
+command palette;
+inserted command body;
+what does helper command mean;
+add/update helper command profile;
+check userscript command rules.
+```
+
+Activated workflows:
+
+```text
+workflow-activation-map.md
+planning-use-case-map.md, as command source of truth
+planning-doc-responsibility-map.md, for owner placement
+planning/workstreams/tampermonkey-command-projection-plan.md, for projection rules
+planning/workstreams/command-system-and-tampermonkey-goal-map.md, when workstream status/next action matters
+tools/tampermonkey/README.md, for implementation entrypoint and helper boundaries
+tools/tampermonkey/IMPLEMENTATION-NOTES.md, for implementation decisions/use cases when code behavior matters
+```
+
+Tampermonkey command bodies are route hints. The userscript is last in the source-of-truth order and must not invent command semantics.
 
 ### Scenario source work
 

@@ -21,13 +21,13 @@ planning/documentation/examples/README.md
 ## 0. Current Snapshot
 
 Last updated:
-  2026-06-02 / after TM-7 repo-structure command and deferred-goals owner
+  2026-06-02 / after DISC-GM-TM1 Goal Map and Tampermonkey command discovery sync
 
 Current goal:
   Build a transferable command system and Tampermonkey prompt helper for long-running chats across projects.
 
 Current focus:
-  TM-7 — Repo-structure command and deferred-goals owner.
+  SL-6 — Tampermonkey helper smoke testing and command-list validation.
 
 Active slice:
   SL-6 — Tampermonkey Guided Prompt Helper
@@ -57,6 +57,10 @@ Already available:
   - Command row click no longer closes the widget.
   - Repo-structure orientation command is documented and available in the helper.
   - Deferred goals and far-future ideas owner file exists.
+  - Replacement archive default review transfer is restored to saved diff copied to clipboard.
+  - Review-diff-file archive transfer is explicit-only.
+  - Root responsibility map now includes Goal Map and Tampermonkey command-helper ownership discovery.
+  - Tampermonkey helper has an explicit review-diff-file archive command profile in addition to the default clipboard-diff archive command.
 
 Latest completed:
   - Added root Goal Map owner/example.
@@ -78,12 +82,15 @@ Latest completed:
   - Recorded first `синх карта` command insertion smoke test.
   - Fixed command row click so it keeps the widget open.
   - Added repo-structure orientation command and deferred-goals owner file.
+  - Restored clipboard diff as the default replacement archive review transfer and kept review-diff-file mode explicit-only.
+  - Added discovery paths so new chats can find Goal Map maintenance rules and Tampermonkey command-helper ownership.
+  - Added explicit Tampermonkey helper profile for `давай архив с review diff file`.
 
 Next action:
-  Continue TM-7:
-    apply/review this docs+helper update, then continue smoke testing without implementing deferred buffer/stack ideas.
+  Continue SL-6 smoke testing:
+    retest the helper command list, including ordinary `давай архив` and explicit `давай архив с review diff file`, while keeping userscript profiles as projections rather than source of truth.
 Recommended next action:
-  Apply and review this repo-structure/deferred-goals archive, then retest the helper command list and continue smoke testing.
+  Continue Tampermonkey helper smoke testing before adding preview, search, external profile loading or deferred buffer/stack features.
 
 Open decisions:
   - DEC-1: resolved — Generic Action Overview deferred; TM-0 selected.
@@ -973,13 +980,13 @@ Status:
 
 ## 9. Current Focus
 
-TM-7 — Repo-structure command and deferred-goals owner:
-  - new command `вспомни структуру репо` is routed and projected into the helper;
-  - new owner file `planning/repo-structure-memory.md` records known repo layers and orientation output;
-  - new owner file `planning/deferred-goals-and-ideas.md` stores deferred/far-future ideas;
-  - Tampermonkey buffer/selected-command-stack/cleanup ideas are recorded as far future, not implemented now;
-  - current near-term work remains smoke testing and small bug fixes;
-  - keep `planning/planning-use-case-map.md` and linked owner workflows as source of truth;
+SL-6 — Tampermonkey helper smoke testing and command-list validation:
+  - Goal Map maintenance is now discoverable from root onboarding, workflow activation and responsibility routing;
+  - Tampermonkey command bodies are documented as prompt projections, not command authority;
+  - `planning/planning-use-case-map.md` and linked owner workflows remain source of truth;
+  - ordinary `давай архив` stays on saved-diff-to-clipboard review transfer;
+  - `давай архив с review diff file` is available as an explicit-only helper command profile;
+  - current near-term work is helper smoke testing and small command-list cleanup;
   - keep Generic Action Overview deferred.
 
 Current active slice:
@@ -987,12 +994,12 @@ Current active slice:
 
 ## 10. Next Action
 
-Retest the helper after the repo-structure/deferred-goals update:
+Continue helper smoke testing after the discovery-sync update:
 
 ```text
-1. Confirm `вспомни структуру репо` appears in the command list.
-2. Click it and confirm its body inserts while the widget stays open.
-3. Confirm header click closes the widget.
+1. Confirm ordinary `давай архив` still inserts clipboard-diff default reminders.
+2. Confirm explicit `давай архив с review diff file` appears separately and inserts repo-stored review-diff reminders.
+3. Confirm `кц`, `синх карта` and `вспомни структуру репо` still point to route/owner files.
 4. Continue scroll / MVP-1 / MVP-2 / empty-composer / existing-text / no-auto-send tests.
 5. Do not implement helper-owned compose buffer or selected-command stack yet.
 ```

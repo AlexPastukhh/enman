@@ -22,6 +22,13 @@
     "body": "[ENMAN_COMMAND]\n\ncommand:\n  давай архив\n\ncommand_family:\n  `давай архив` / `собери архив` / `replacement package`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Output-package mode, not archive read-source mode.\n  - Use active approved scope; ask only blocking questions.\n  - Do not put apply commands only inside the archive.\n  - Give apply/diff commands in chat.\n  - Save full diff to file and copy it to clipboard.\n  - Ask user to paste diff before commit.\n  - Do not commit or push.\n\nuser_target:\n  <what archive/package should include>\n\n[/ENMAN_COMMAND]"
   },
   {
+    "id": "replacement_archive.review_diff_file",
+    "group": "MVP-1",
+    "label": "давай архив с review diff file",
+    "description": "repo diff package",
+    "body": "[ENMAN_COMMAND]\n\ncommand:\n  давай архив с review diff file\n\ncommand_family:\n  `давай архив с review diff file` / `давай архив с repo diff` / `archive with review diff file`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read `planning/replacement-file-generation-guide.md` and `planning/documentation/review-diff-file-workflow.md`.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Explicit-only output-package mode, not default `давай архив`.\n  - Use only when repo-stored review diff transfer is requested/approved.\n  - Apply command may create/commit/push only `_ai-review-diffs/last-archive.diff`.\n  - Do not create `_ai-review-diffs/last-archive-summary.md` by default.\n  - Real archive files remain local until diff review approval.\n\nuser_target:\n  <what archive/package should include>\n\n[/ENMAN_COMMAND]"
+  },
+  {
     "id": "archive_source.use",
     "group": "MVP-1",
     "label": "арх",

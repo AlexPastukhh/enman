@@ -209,7 +209,33 @@ Status rules:
 
 A map update is incomplete if `Current Snapshot`, roadmap table, scenario statuses and detailed slice statuses disagree about what is current, done, next or planned.
 
-## 5A.2 Goal Map Sync Archive Command / `синх карта`
+## 5A.2 Discovery Rule For New Chats
+
+New chats should be able to discover Goal Map obligations without the user naming this file.
+
+Discovery path:
+
+```text
+planning/README.md
+planning/workflow-activation-map.md
+planning/planning-use-case-map.md
+planning/planning-doc-responsibility-map.md
+relevant living Goal Map file
+```
+
+When any of these indicate an active long-running workstream, the chat must:
+
+```text
+- find the relevant living Goal Map;
+- read Current Snapshot, current focus, active slice, next action and open decisions;
+- check whether statuses/evidence are stale before planning the next step;
+- state map staleness instead of presenting stale state as current truth;
+- use `синх карта` / map-sync archive flow when the user asks to synchronize files.
+```
+
+A Goal Map Brief is an answer projection. The durable living map remains the source for current workstream state.
+
+## 5A.3 Goal Map Sync Archive Command / `синх карта`
 
 `синх карта` is a combined Goal Map maintenance command.
 

@@ -1804,3 +1804,44 @@ Follow-ups:
   Use normal replacement archives with saved-diff-to-clipboard review by default. Use review-diff-file mode only by explicit command.
 Notes:
   This correction supersedes the earlier attempt to make repo-stored review diff files the default archive review transfer.
+
+
+### 2026-06-02 - Added Goal Map and Tampermonkey command discovery routing
+
+Date:
+  2026-06-02
+Action:
+  Added root discovery paths for living Goal Map maintenance and Tampermonkey command-helper prompt projections.
+Type:
+  Documentation discovery / command-helper routing / Goal Map sync
+Status:
+  applied
+Why:
+  A new chat should be able to discover, from the root planning docs and use-case routes, that long-running workstreams require a living Goal Map check and that Tampermonkey inserted command bodies are route hints rather than command authority.
+Changed files:
+  - planning/README.md
+  - planning/workflow-activation-map.md
+  - planning/planning-doc-responsibility-map.md
+  - planning/planning-use-case-map.md
+  - planning/goal-map-principles-workflow-template.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/workstreams/tampermonkey-command-projection-plan.md
+  - tools/tampermonkey/README.md
+  - tools/tampermonkey/chat-command-palette.user.js
+  - planning/documentation-action-log.md
+Updates:
+  - Added onboarding/discovery rules for active long-running workstreams and living Goal Maps.
+  - Added root responsibility-map ownership entries for Goal Map and Tampermonkey helper files.
+  - Added workflow activation chain for Goal Map and Tampermonkey command-helper work.
+  - Added explicit Tampermonkey helper command profile for `давай архив с review diff file`.
+  - Kept ordinary `давай архив` on saved-diff-to-clipboard review transfer.
+  - Synchronized the command-system/Tampermonkey living Goal Map to the discovery-sync state.
+Not changed:
+  - No Generic Action Overview implementation.
+  - No helper-owned buffer, selected-command stack, cleanup UI, search or preview implementation.
+  - No scenario/domain/slice source files changed.
+  - No direct repository commit or push from the package itself.
+Follow-ups:
+  After this discovery sync lands, continue Tampermonkey helper smoke testing and command-list validation.
+Notes:
+  Tampermonkey profiles remain projections. `planning/planning-use-case-map.md` and linked owner workflows remain the command source of truth.

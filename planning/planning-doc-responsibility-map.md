@@ -103,7 +103,30 @@ planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
 
 Do not create a second generic use-case map inside the documentation layer.
 
-## 4. Documentation Workflow Responsibility
+## 4. Command System / Goal Map / Tampermonkey Responsibility
+
+| File / folder | Responsibility |
+|---|---|
+| `planning/goal-map-principles-workflow-template.md` | Root Goal Map owner: principles, workflow, template, `карта цели`, `кц`, `Goal Map Brief`, `синх карта`, map status synchronization and target-state sync archive rules |
+| `planning/goal-map-example.md` | Static example for the Goal Map format; demonstration only, not live state |
+| `planning/workstreams/command-system-and-tampermonkey-goal-map.md` | Living Goal Map for the command-system/Tampermonkey workstream; read it before choosing next steps inside that workstream and update it when meaningful batches/decisions change current state |
+| `planning/workstreams/tampermonkey-command-projection-plan.md` | Planning owner for projecting root use-case map routes into compact editable Tampermonkey prompt bodies |
+| `tools/tampermonkey/README.md` | Tampermonkey helper implementation entrypoint, boundaries and manual test orientation; not command source of truth |
+| `tools/tampermonkey/IMPLEMENTATION-NOTES.md` | Current helper implementation notes, decisions, use cases, UI sketches and future split candidates; not command source of truth |
+| `tools/tampermonkey/chat-command-palette.user.js` | Userscript implementation of the prompt-helper UI and inline command profiles; last in source-of-truth order and must not invent command semantics |
+
+Discovery rule:
+
+```text
+For command-helper or long-running command-system work:
+  1. Start from planning/planning-use-case-map.md.
+  2. If work is long-running, read the relevant living Goal Map.
+  3. For Goal Map behavior, read planning/goal-map-principles-workflow-template.md.
+  4. For Tampermonkey inserted commands, treat userscript bodies as projections only.
+  5. If helper/projection conflicts with the use-case map or owner workflows, the use-case map / owner workflows win.
+```
+
+## 5. Documentation Workflow Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -117,7 +140,7 @@ Do not create a second generic use-case map inside the documentation layer.
 | `planning/documentation/status-reconciliation-workflow.md` | Status reconciliation between current implementation evidence and planning docs |
 | `planning/documentation/documentation-update-agent-prompt.md` | Derived prompt template for documentation update chats/agents; canonical docs win if there is conflict |
 
-## 5. VKR / Thesis Clean Reference Responsibility
+## 6. VKR / Thesis Clean Reference Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -126,7 +149,7 @@ Do not create a second generic use-case map inside the documentation layer.
 
 VKR-facing materials must not use internal planning labels such as `L1`, `L2`, `dirty draft`, `agent`, `prompt` or implementation archive terminology.
 
-## 6. Repository Edit Responsibility
+## 7. Repository Edit Responsibility
 
 Direct GitHub edits from ChatGPT are preferred for small scoped documentation changes because they create visible commits that can be inspected and reverted independently.
 
@@ -134,7 +157,7 @@ By default, use one file per commit when reasonable. Large generated replacement
 
 Direct GitHub edits, file creation, file deletion, moves and commits require explicit user instruction.
 
-## 7. Architecture Responsibility
+## 8. Architecture Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -143,7 +166,7 @@ Direct GitHub edits, file creation, file deletion, moves and commits require exp
 
 Architecture docs do not replace slice docs, scenario sources, API contract docs, testing docs or ADRs.
 
-## 8. Scenario Source Responsibility
+## 9. Scenario Source Responsibility
 
 Detailed scenario-layer placement now belongs to:
 
@@ -168,7 +191,7 @@ Transitional overview:
 | `planning/diagrams/scenario-clarifications/` | Temporary scenario-level clarification/guardrail files |
 | `planning/diagrams/scenario-questions-register.md` | Scenario/domain questions that can change scenario behavior, DATA, UI requirements or diagrams |
 
-## 9. Domain Responsibility
+## 10. Domain Responsibility
 
 Detailed domain-layer placement now belongs to:
 
@@ -198,7 +221,7 @@ Transitional overview:
 
 `planning/tables/` is not the current domain-layer entrypoint. It remains useful as historical/cross-check source material.
 
-## 10. Slice Discovery Responsibility
+## 11. Slice Discovery Responsibility
 
 Detailed slice-layer placement now belongs to:
 
@@ -234,7 +257,7 @@ Scenario Flow and Behavior Items for slices come from `slice-scenario-flow-behav
 
 Questions/extension/implementation registers do not replace scenario source files.
 
-## 11. Client Planning Responsibility
+## 12. Client Planning Responsibility
 
 Client-wide reusable rules/principles now live in the slice root, not under the client subfolder:
 
@@ -256,7 +279,7 @@ Current client slice folder:
 
 Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 
-## 12. API / Testing / ADR Responsibility
+## 13. API / Testing / ADR Responsibility
 
 | File / folder | Responsibility |
 |---|---|
@@ -266,7 +289,7 @@ Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 | `planning/testing/` | Cross-slice testing principles, E2E workflow, test object patterns and testing support docs |
 | `planning/adr/` | ADR workflow, architecture decision notes and ADR candidates |
 
-## 13. Evidence Link Responsibility
+## 14. Evidence Link Responsibility
 
 Repo-grounded line-link rules belong in:
 
@@ -276,7 +299,7 @@ planning/repo-grounded-github-line-links-workflow.md
 
 Other workflow docs may link to that file, but should not duplicate detailed line-link mechanics unless needed for a local role checklist.
 
-## 14. Responsibility Decision Heuristic
+## 15. Responsibility Decision Heuristic
 
 Use this file first to choose the layer. Then use the local responsibility map or README for that layer.
 
@@ -312,7 +335,7 @@ Use this file first to choose the layer. Then use the local responsibility map o
 29. documentation local/global sync rule -> planning/documentation/local-global-documentation-sync-workflow.md
 ```
 
-## 15. Future Cleanup Rule
+## 16. Future Cleanup Rule
 
 When local responsibility maps exist for documentation, scenario, domain, slice, API/testing and VKR layers, shrink this root map to a thin router.
 

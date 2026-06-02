@@ -121,7 +121,43 @@ The script uses a standard userscript header with `@match` entries for ChatGPT p
 ```
 
 
-## 8. Repo Structure Helper Command
+## 8. Interpreting Inserted Commands
+
+Every inserted command body is an editable prompt projection, not command authority.
+
+Interpretation order:
+
+```text
+1. planning/planning-use-case-map.md
+2. owner workflow/template files linked from that route
+3. reusable examples linked from the route/example index
+4. planning/workstreams/tampermonkey-command-projection-plan.md
+5. tools/tampermonkey/IMPLEMENTATION-NOTES.md
+6. tools/tampermonkey/chat-command-palette.user.js
+```
+
+Rules:
+
+```text
+- The helper does not browse the repo or verify freshness.
+- The helper does not decide that a command grants edit/archive/commit/push permission.
+- The chat must read the route/owner files when behavior is uncertain or not checked in the current chat.
+- If the helper body conflicts with the use-case map or owner workflow, the use-case map / owner workflow wins.
+```
+
+Archive command distinction:
+
+```text
+давай архив
+  Default replacement archive/package mode.
+  Post-apply review saves a local .diff and copies it to clipboard.
+
+давай архив с review diff file
+  Explicit-only review-diff-file mode.
+  Apply command may create/push only _ai-review-diffs/last-archive.diff.
+```
+
+## 9. Repo Structure Helper Command
 
 The helper includes a repo-orientation command:
 

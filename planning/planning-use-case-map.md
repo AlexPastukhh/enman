@@ -78,6 +78,8 @@ For non-trivial planning/repo work, use this path:
 8. Select output mode when the user asks for a deliverable such as an archive/package.
 9. Read workflows for algorithms.
 10. Read templates for output shape.
+10a. If the task is inside an active long-running workstream, read the relevant living Goal Map before choosing the next step.
+10b. If the task comes from or changes the Tampermonkey helper, treat inserted command bodies as route hints and verify behavior against this root map plus owner workflows.
 11. Read sources/evidence needed for this pass.
 12. Report sources used this pass and relevant not-checked sources.
 13. Separate implicit checks from explicit-permission actions.
@@ -381,6 +383,16 @@ Goal Map planning/reference behavior:
 
   The Goal Map should be kept meaningful and representative: update roadmap, readable scenario/slice names, statuses, evidence-backed DONE records, current focus, next action and open decisions when a meaningful batch/decision changes the workstream.
 
+Tampermonkey command-helper discovery behavior:
+  Tampermonkey inserted command bodies are not command authority. They are editable route hints that should lead the chat back to this root use-case map and linked owner workflows/examples.
+
+  When a task mentions Tampermonkey, command helper, command palette, inserted command bodies or helper command profiles, read:
+    planning/workstreams/tampermonkey-command-projection-plan.md
+    tools/tampermonkey/README.md
+    tools/tampermonkey/IMPLEMENTATION-NOTES.md, when implementation behavior or UI details matter
+
+  If the userscript or projection plan conflicts with this root map or an owner workflow, this root map / owner workflow wins.
+
 ## 9. Repeated / Continuation Commands
 
 Reusable command setup owner:
@@ -452,7 +464,7 @@ Do not treat that field kit as an activated workflow for ordinary scenario/slice
 
 | User says | Task type | Active context? | Traversal depth | Read source mode | Activated workflows | Required reads | Source of obligation | Expected output | Permission boundary |
 |---|---|---:|---|---|---|---|---|---|---|
-| “новый чат”, “вкатись”, “разберись с planning docs”, “first pass”, no reliable active context | New Chat Onboarding / first planning pass | New or uncertain | Full first time; targeted/reuse after checked context exists | GitHub/repo by default; archive only if user requests archive source mode or provides an archive | workflow activation; planning agent protocol; role identification when specialized work is likely; reviewable output | `planning/README.md`, `planning/workflow-activation-map.md`, `planning/planning-use-case-map.md`, `planning/planning-agent-protocol.md`, `planning/planning-doc-responsibility-map.md`; `planning/agent-roles-and-required-actions.md` when role matters | README + use-case map + planning agent protocol | Short onboarding preflight, selected next use case, checked/not-checked sources, next action | No edits/packages unless explicitly requested |
+| “новый чат”, “вкатись”, “разберись с planning docs”, “first pass”, no reliable active context | New Chat Onboarding / first planning pass | New or uncertain | Full first time; targeted/reuse after checked context exists | GitHub/repo by default; archive only if user requests archive source mode or provides an archive | workflow activation; planning agent protocol; role identification when specialized work is likely; reviewable output | `planning/README.md`, `planning/workflow-activation-map.md`, `planning/planning-use-case-map.md`, `planning/planning-agent-protocol.md`, `planning/planning-doc-responsibility-map.md`; `planning/agent-roles-and-required-actions.md` when role matters; relevant living Goal Map and Tampermonkey projection docs when active workstream/helper context is in scope | README + use-case map + planning agent protocol | Short onboarding preflight, selected next use case, checked/not-checked sources, Goal Map staleness note when applicable, next action | No edits/packages unless explicitly requested |
 | “посмотри / распланируй / проверь docs” | Non-trivial planning/docs work | Optional | Full first time; targeted later | GitHub/archive/conversation by context | workflow activation; reviewable output | `planning/README.md`, `workflow-activation-map.md`, `planning-doc-responsibility-map.md` | README + activation map | Level 2 reviewable answer/plan | Edits require approval |
 | “обнови docs” | Documentation update | Optional | Targeted/full by scope | GitHub for writes; archive for read-only if requested | docs update plan/workflow; local-global sync | documentation README/map/workflows; `planning/shared-visibility-map.md` when shared visibility is involved | activation map + docs workflows | Level 2 update plan or applied update + File Update Overview / `План файл-обновление` when files are planned/changed/reviewed | GitHub writes require approval |
 | “создай planning file”, “новая концепция”, “введи концепцию”, “concept kit”, “principles/workflow/template в одном”, “пример отдельно” | Documentation file creation / new concept artifact setup | Optional | Full first time; targeted later | GitHub/archive/conversation by context | docs update workflow; documentation responsibility routing; example coverage decision; source-cascade workflow when the new file becomes a source | `planning/documentation/planning-docs-architecture-principles.md#9a-compound-starter-artifact-principle`, `planning/documentation/planning-docs-architecture-principles.md#13a-filename-version-migration-policy`, `planning/documentation/documentation-responsibility-map.md`, `planning/documentation/example-coverage-workflow.md`; relevant owner workflow/template if one already exists | docs architecture principles + documentation responsibility map + example coverage workflow | Placement decision and update plan or replacement package; one compound starter artifact plus a separate example when appropriate; split-later conditions recorded | Edits/packages require approval; do not perform filename-version migration or broad file splits without a separate approved batch |
@@ -493,21 +505,23 @@ Steps:
 4. Read planning/planning-agent-protocol.md.
 5. Read planning/agent-roles-and-required-actions.md when a specialized role may be needed.
 6. Read planning/planning-doc-responsibility-map.md to choose the layer.
-7. For documentation-layer work, read documentation README/map/workflows as required by planning-agent-protocol.md.
-8. Select traversal depth:
+7. If the task touches an active long-running workstream, Goal Map command or next-step choice, read the relevant living Goal Map and `planning/goal-map-principles-workflow-template.md`.
+8. If the task touches Tampermonkey helper commands or inserted command bodies, read `planning/workstreams/tampermonkey-command-projection-plan.md` and `tools/tampermonkey/README.md` after the root route is known.
+9. For documentation-layer work, read documentation README/map/workflows as required by planning-agent-protocol.md.
+10. Select traversal depth:
    - full for first use / new chat / changed scope;
    - targeted or reuse only after recent checked context exists.
-9. Select read source mode:
+11. Select read source mode:
    - GitHub/repo for current remote docs;
    - archive only if user explicitly wants archive source mode or provides archive;
    - conversation only for user corrections/discussion deltas.
-10. Select output mode:
+12. Select output mode:
    - answer/plan by default;
    - replacement archive only when user says “давай архив” / package output;
    - direct edits only when explicitly approved.
-11. Use accepted command / no reinvention rule.
-12. Use Docs DRY: link to owner files, do not copy owner logic.
-13. Produce compact reviewable answer:
+13. Use accepted command / no reinvention rule.
+14. Use Docs DRY: link to owner files, do not copy owner logic.
+15. Produce compact reviewable answer:
    - mode/source;
    - selected use case;
    - checked sources;
