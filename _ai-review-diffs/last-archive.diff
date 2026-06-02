@@ -1,0 +1,950 @@
+diff --git a/planning/documentation-action-log.md b/planning/documentation-action-log.md
+index ff73ebd..2d8983d 100644
+--- a/planning/documentation-action-log.md
++++ b/planning/documentation-action-log.md
+@@ -1768,3 +1768,42 @@ Follow-ups:
+ Notes:
+   The repo-structure memory is an orientation map, not proof of a complete current repository tree.
+ 
++### 2026-06-02 - Made review-diff-file mode the default archive review flow
++
++Date:
++  2026-06-02
++Action:
++  Added review-diff-file workflow documentation and made repo-stored review diff files the default archive review transfer.
++Type:
++  Archive workflow / command routing / Tampermonkey helper update
++Status:
++  applied
++Why:
++  Pasting large diffs into chat can turn the diff into an attached file and consume upload/file limits. The default archive workflow should create review diff files in the repository and let the chat read them from repo/branch/path instead.
++Changed files:
++  - planning/documentation/review-diff-file-workflow.md
++  - planning/replacement-file-generation-guide.md
++  - planning/planning-use-case-map.md
++  - planning/workstreams/tampermonkey-command-projection-plan.md
++  - tools/tampermonkey/chat-command-palette.user.js
++  - tools/tampermonkey/README.md
++  - tools/tampermonkey/IMPLEMENTATION-NOTES.md
++  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
++  - planning/documentation-action-log.md
++Updates:
++  - Added owner workflow for review-diff-file mode.
++  - Made review-diff-file mode the default post-apply review transfer for archives.
++  - Added standard paths `_ai-review-diffs/last-archive.diff` and `_ai-review-diffs/last-archive-summary.md`.
++  - Added rule that review-diff-only commit/push may include only review artifact files.
++  - Added rule that real archive files must not be committed or pushed before diff review.
++  - Updated `давай архив` command reminders and helper body to use review-diff-file mode.
++Not changed:
++  - No helper-owned compose buffer implemented.
++  - No selected-command stack or cleanup UI implemented.
++  - No preview/search/external profile loading added.
++  - No Generic Action Overview implementation added.
++Follow-ups:
++  Apply this archive using review-diff-file mode and ask the chat to review the repo-stored diff before committing real files.
++Notes:
++  Clipboard/pasted diff transfer remains a fallback only when repo-stored review diff is not possible.
++
+diff --git a/planning/documentation/review-diff-file-workflow.md b/planning/documentation/review-diff-file-workflow.md
+new file mode 100644
+index 0000000..2cf373e
+--- /dev/null
++++ b/planning/documentation/review-diff-file-workflow.md
+@@ -0,0 +1,202 @@
++# Review Diff File Workflow
++
++Status: current review-diff-file workflow  
++Doc version: v0.1.0  
++Scope: default post-apply review transfer for replacement archives; repo-stored diff artifact workflow
++
++## 1. Purpose
++
++This workflow owns the default archive review transfer mode.
++
++When the assistant gives a replacement archive/package, the user should not have to paste a large diff into chat. The default archive apply commands should create review diff files inside the repository, and the assistant should later read those files from the target repo/branch/path.
++
++## 2. Default Mode
++
++Default archive review mode:
++
++```text
++review-diff-file mode
++```
++
++Standard files:
++
++```text
++_ai-review-diffs/last-archive.diff
++_ai-review-diffs/last-archive-summary.md
++```
++
++Meaning:
++
++```text
++- `_ai-review-diffs/last-archive.diff` contains the scoped diff of the applied archive changes.
++- `_ai-review-diffs/last-archive-summary.md` identifies repo, branch, mode, changed files and the chat review command.
++- These files are review artifacts.
++- The actual archive replacement files remain local and uncommitted until review is complete.
++```
++
++## 3. Command Families
++
++Archive creation commands use this mode by default:
++
++```text
++давай архив
++собери архив
++replacement package
++archive for manual apply
++```
++
++Explicit aliases for the same default mode:
++
++```text
++давай архив с дифф-файлом
++давай архив с review diff file
++архив с дифф-файлом
++архив без вставки диффа
++review-diff archive
++```
++
++Review command:
++
++```text
++проверь review diff file
++проверь diff file
++review diff file
++```
++
++## 4. Required Assistant Response Shape
++
++When the assistant provides an archive, the final response should include:
++
++```text
++1. Archive link.
++2. Apply command.
++3. Separate command to commit and push only review diff files.
++4. Short instruction telling the user what to say after pushing the review diff file.
++5. `План файл-обновление` when applicable.
++```
++
++The apply command creates the review diff files but does not commit them.
++
++The separate commit/push command stages, commits and pushes only:
++
++```text
++_ai-review-diffs/last-archive.diff
++_ai-review-diffs/last-archive-summary.md
++```
++
++## 5. Hard Boundary
++
++Allowed before diff review:
++
++```text
++- commit and push `_ai-review-diffs/last-archive.diff`;
++- commit and push `_ai-review-diffs/last-archive-summary.md`.
++```
++
++Forbidden before diff review:
++
++```text
++- commit real archive replacement files;
++- push real archive replacement files;
++- use `git add .`;
++- stage files outside the review diff artifact list in the review-diff commit.
++```
++
++The review-diff commit is not approval of the real archive changes. It only makes the diff readable from the repository.
++
++## 6. Apply Command Requirements
++
++The archive apply command must:
++
++```text
++1. pull the target branch;
++2. apply replacement files to the local repo;
++3. define `$files` for all real files changed by the archive;
++4. define `$newFiles` for expected new real files;
++5. make expected new files visible in the diff with `git add -N`;
++6. generate `_ai-review-diffs/last-archive.diff`;
++7. generate `_ai-review-diffs/last-archive-summary.md`;
++8. unstage real files after diff generation;
++9. print the review paths and the no-real-commit warning.
++```
++
++It must not:
++
++```text
++- commit real files;
++- push real files;
++- copy the full diff to clipboard by default;
++- ask the user to paste a giant diff into chat by default.
++```
++
++## 7. Review-Diff-Only Commit Command Requirements
++
++The assistant response must include a separate PowerShell block that:
++
++```text
++1. unstages everything;
++2. stages only the two review diff files;
++3. checks that no other file is staged;
++4. runs `git diff --cached --check`;
++5. commits with a review-diff-only message;
++6. pushes the target branch.
++```
++
++Required staged-file guard:
++
++```text
++foreach ($f in $staged) {
++  if ($reviewFiles -notcontains $f) {
++    throw "Unexpected staged file. Refusing review-diff commit: $f"
++  }
++}
++```
++
++## 8. Chat Review Command
++
++After the review diff files are pushed, the user can tell the chat:
++
++```text
++проверь review diff file
++
++Repo: <owner/repo>
++Branch: <branch>
++Path: _ai-review-diffs/last-archive.diff
++```
++
++If the active repo/branch/path are already clear from the current archive context, the user may say only:
++
++```text
++проверь review diff file
++```
++
++If repo, branch or path are unclear, the chat should ask for the missing value. It should not ask the user to paste the full diff unless repo access is unavailable.
++
++## 9. Review Behavior
++
++When reviewing the diff file, the chat should check:
++
++```text
++- only intended real files appear in the diff;
++- all expected new real files appear;
++- no unrelated files or sections are modified;
++- package intent matches the diff;
++- review artifact files are not confused with real archive changes;
++- final real commit commands, if given after approval, stage only intended real files.
++```
++
++If the diff is OK, then and only then the assistant may provide the real commit/push command for the actual archive files.
++
++## 10. Fallback
++
++Clipboard diff transfer is a fallback only when repo-stored review diff is not possible.
++
++Examples:
++
++```text
++- no repo/branch access;
++- user explicitly asks for clipboard/pasted diff;
++- target repo policy forbids committing review artifacts.
++```
++
++In fallback mode, keep the old clipboard-safe rules: save diff to a file, read it with UTF-8, then copy to clipboard. Do not print the full diff to terminal.
+diff --git a/planning/planning-use-case-map.md b/planning/planning-use-case-map.md
+index 166d718..918f036 100644
+--- a/planning/planning-use-case-map.md
++++ b/planning/planning-use-case-map.md
+@@ -1,6 +1,6 @@
+ # Planning Use Case Map
+ 
+-Status: current root use-case map / action-to-doc-flow router  
++Status: current root use-case map / action-to-doc-flow router
+ Scope: maps user-visible actions and commands to planning docs, workflows, templates, sources and permission boundaries
+ 
+ ## 1. Purpose
+@@ -230,9 +230,10 @@ When the user asks for an archive/package output, the chat must read:
+ 
+ ```text
+ planning/replacement-file-generation-guide.md
++planning/documentation/review-diff-file-workflow.md
+ ```
+ 
+-Replacement package output must contain complete replacement/add files under `replacement-files/<repo-relative-path>`, plus `MANIFEST.md` and `APPLY.md`. Do not emit patch scripts or diff-only packages unless the user explicitly asks for patch proposal mode.
++Replacement package output must contain complete replacement/add files under `replacement-files/<repo-relative-path>`, plus `MANIFEST.md` and `APPLY.md`. Default post-apply review transfer is review-diff-file mode: create `_ai-review-diffs/last-archive.diff` and `_ai-review-diffs/last-archive-summary.md`, then give a separate command to commit/push only those review diff files. Do not emit patch scripts or diff-only packages unless the user explicitly asks for patch proposal mode.
+ 
+ ## 7. Source Model
+ 
+@@ -333,6 +334,16 @@ planning/repo-structure-memory.md
+ The command reconstructs known repository root areas, documentation/source-of-truth layers, active workstream files and next files to read. It does not grant edit, archive/package, commit or push permission.
+ 
+ 
++Review Diff File / archive review transfer behavior is owned by:
++
++```text
++planning/documentation/review-diff-file-workflow.md
++```
++
++Default archive output now uses repo-stored review diff files instead of pasted giant diffs. Review-diff-only commits may push `_ai-review-diffs/last-archive.diff` and `_ai-review-diffs/last-archive-summary.md`; real archive files must not be committed or pushed before diff review.
++
++
++
+ Response block and response modifier commands such as `кп`, `саммари`, `кц`, `карта цели кратко`, `goal map brief`, `крит`, `критически`, `critical review`, `план файл-обновление`, legacy `итог` and `отличия драфта` are routed in this file, but their behavior is owned by `reviewable-agent-output-and-commands-workflow.md`.
+ 
+ Goal Map maintenance commands such as `синх карта` are routed in this file, but their behavior is owned by `planning/goal-map-principles-workflow-template.md`.
+@@ -398,6 +409,7 @@ This root map remains the concrete Enman route table.
+ | `отличия драфта`, `draft diff` | Show how the active draft changed from the previous version. | Ask for the draft target if no active draft is clear. | Reuse / targeted. | Conversation / canvas / draft sources if changed. | `Отличия от предыдущего драфта` plus updated draft when requested. |
+ | `обс`, `перепроверь обсуждение`, `context recheck` | Re-check relevant prior discussion, accepted decisions and constraints before answering. | Re-check available prior discussion or say what context is unavailable. | Reuse / targeted; full only if task requires it. | Conversation plus sources only if needed. | Context/discussion recheck result; combine with Level 1/2/3 by task breadth. |
+ | `вспомни структуру репо`, `структура репо`, `вспомни репо`, `слои репо`, `где что лежит`, `repo structure`, `repo layers` | Reconstruct repo structure and source-of-truth layers for the active task before planning/editing. | Provide current known repo structure or ask for repo/archive/tree if unavailable. | Targeted; full when structure is stale/unknown or task touches unknown layers. | GitHub/repo tree/archive plus root planning docs and active workstream docs as needed. | Repo Structure Brief: root areas, documentation layers, source-of-truth chain, active workstream files, code/tooling/example areas, known vs uncertain, files to read next. |
++| `проверь review diff file`, `проверь diff file`, `review diff file` | Read the standard repo-stored review diff for the active archive context and review it before real files are committed. | Ask for repo/branch/path if not clear; do not ask for pasted full diff when repo access is available. | Targeted. | GitHub/repo path `_ai-review-diffs/last-archive.diff` plus summary when needed. | Diff review verdict; if OK, scoped real commit/push commands for intended files only. |
+ | `перепроверь`, `recheck` | Recheck active answer/draft/source coverage. | Recheck last answer or ask target. | Targeted / full depending risk. | Conversation plus relevant sources. | Findings and corrections/no-change result. |
+ | `учти файл X` | Incorporate explicit new source into active work. | Use X for the requested new answer. | Targeted. | Uploaded/named file. | Updated answer/draft with Source Delta. |
+ | `без изм`, `б изм`, `no ch` | Reuse recent context and avoid broad re-audit. | Weak without prior context; ask what state is unchanged if needed. | Reuse / targeted. | Previous context plus targeted reads. | Answer/update with minimal checks. |
+diff --git a/planning/replacement-file-generation-guide.md b/planning/replacement-file-generation-guide.md
+index b2e8825..cbb13cb 100644
+--- a/planning/replacement-file-generation-guide.md
++++ b/planning/replacement-file-generation-guide.md
+@@ -31,6 +31,14 @@ Output mode:
+ - replacement archive/package
+ ```
+ 
++Default post-apply review transfer:
++
++```text
++review-diff-file mode
++```
++
++This means the assistant response creates repo-stored review diff files by default instead of asking the user to paste a large diff into chat.
++
+ Replacement archive/package mode means:
+ 
+ ```text
+@@ -38,7 +46,8 @@ Replacement archive/package mode means:
+ - repository-relative paths under replacement-files/;
+ - MANIFEST.md;
+ - APPLY.md;
+-- no patch scripts, diff-only files or generated apply scripts.
++- no patch scripts, diff-only files or generated apply scripts;
++- default review transfer through `_ai-review-diffs/last-archive.diff` and `_ai-review-diffs/last-archive-summary.md`.
+ ```
+ 
+ If complete replacement files cannot be produced safely, stop and say so. Do not silently switch to patch-script mode.
+@@ -70,6 +79,9 @@ Use this guide when the user asks to create an archive or replacement package fo
+ - Do not include unrelated implementation changes.
+ - Keep archive scope focused, but do not artificially split one coherent accepted update into many tiny archives.
+ - Do not include patch scripts or script-based patch applicators in replacement archive mode.
++- Use review-diff-file mode as the default post-apply review transfer.
++- The apply command must create review diff files; a separate command may commit/push only those review diff files.
++- Do not commit or push real archive replacement files before diff review.
+ - If a coherent update has safe files and large/risky files, split by delivery safety instead of blocking the safe archive.
+ ```
+ 
+@@ -213,20 +225,20 @@ Preserved
+   = unrelated information was not lost, removed or overwritten.
+ ```
+ 
+-Every APPLY.md should tell the user to review both application and preservation before committing.
+-
+-Include commands like:
++Every APPLY.md and assistant response should tell the user to review both application and preservation before committing real archive files.
+ 
+-```powershell
+-git status --short -- $files
+-git diff --stat -- $files
+-git --no-pager diff --no-color --output="$diffFile" -- $files
++Default review transfer is owned by:
+ 
+-$diffText = [System.IO.File]::ReadAllText($diffFile, [System.Text.Encoding]::UTF8)
+-Set-Clipboard -Value $diffText
++```text
++planning/documentation/review-diff-file-workflow.md
+ ```
+ 
+-Use the full command shape in §7B for package-specific `$files`, `$newFiles`, `$pkgName` and `$diffFile`. Do not print the full diff to the terminal.
++Default review artifact paths:
++
++```text
++_ai-review-diffs/last-archive.diff
++_ai-review-diffs/last-archive-summary.md
++```
+ 
+ The post-apply review should check:
+ 
+@@ -235,20 +247,40 @@ The post-apply review should check:
+ - diff matches package intent;
+ - no unrelated sections, register entries, commands, examples, routing rows or source-of-truth rules were removed;
+ - shared-state files such as registers preserve existing entries unless removal was explicit;
+-- commit commands add only intended files and never use `git add .`.
++- commit commands add only intended real files and never use `git add .`;
++- review-diff-only commit commands stage only `_ai-review-diffs/last-archive.diff` and `_ai-review-diffs/last-archive-summary.md`.
+ ```
+ 
+-If the user asks `проверь` after applying a replacement archive, treat it as this post-apply preservation check, not only as a file-name/status check.
++If the user asks `проверь` after applying a replacement archive, treat it as this post-apply preservation check. If a review diff file has been pushed, read the standard review diff path from the active repo/branch instead of asking for a pasted diff.
+ 
+-## 7B. Diff Capture And Clipboard Commands
++## 7B. Review Diff File Mode (Default)
+ 
+ When the assistant provides a replacement archive, the chat response should include ready-to-run PowerShell commands for post-apply review, not only instructions hidden inside `APPLY.md`.
+ 
+-The command block should avoid paged terminal diff output and should avoid PowerShell pipeline encoding problems with Cyrillic text. It must print only `git status --short`, `git diff --stat` and short `Write-Host` messages. The full diff must be saved to a file and copied from that file to the clipboard without printing it to the terminal.
++Default mode:
+ 
+-It must also make expected new files visible in the review diff. Untracked files are not shown by `git diff` by default.
++```text
++review-diff-file mode
++```
+ 
+-Required shape:
++Required response blocks:
++
++```text
++1. Apply archive and create review diff files.
++2. Commit/push review diff files only.
++3. Tell chat to review `_ai-review-diffs/last-archive.diff`.
++```
++
++The apply command must create:
++
++```text
++_ai-review-diffs/last-archive.diff
++_ai-review-diffs/last-archive-summary.md
++```
++
++The review-diff-only commit command may commit and push only these files. Real archive replacement files must remain local and uncommitted until diff review is approved.
++
++Required apply-command shape:
+ 
+ ```powershell
+ $files = @(
+@@ -262,75 +294,151 @@ $newFiles = @(
+ )
+ 
+ # Use @() when the package does not add files.
+-# Make expected new files visible in git diff without staging their contents.
+ foreach ($file in $newFiles) {
+   if (Test-Path $file) {
+     git add -N -- $file
+   } else {
+-    Write-Host "Missing expected new file: $file"
++    throw "Missing expected new file: $file"
+   }
+ }
+ 
+-$pkgName = "real-package-name-without-angle-brackets"
+-$diffFile = Join-Path (Get-Location) "$pkgName.diff"
++$ReviewDir = "_ai-review-diffs"
++$ReviewDiff = "$ReviewDir/last-archive.diff"
++$ReviewSummary = "$ReviewDir/last-archive-summary.md"
++
++New-Item -ItemType Directory -Force $ReviewDir | Out-Null
+ 
+ git status --short -- $files
+ git diff --stat -- $files
++git --no-pager diff --no-color --output="$ReviewDiff" -- $files
+ 
+-git --no-pager diff --no-color --output="$diffFile" -- $files
++$diffText = [System.IO.File]::ReadAllText($ReviewDiff, [System.Text.Encoding]::UTF8)
++if ([string]::IsNullOrWhiteSpace($diffText)) {
++  throw "Review diff is empty."
++}
+ 
+-$diffText = [System.IO.File]::ReadAllText($diffFile, [System.Text.Encoding]::UTF8)
+-Set-Clipboard -Value $diffText
++git restore --staged -- $files
+ 
+-Write-Host "Diff saved to: $diffFile"
+-Write-Host "Diff copied to clipboard. Paste it into chat for review before committing."
++$changedList = ($files | ForEach-Object { "- $_" }) -join "`n"
++
++$summary = @"
++# Last archive review diff
++
++Repo: <owner/repo>
++Branch: <branch>
++
++Diff file:
++$ReviewDiff
++
++Mode:
++review-diff-file
++
++Important:
++This review diff commit contains only diff artifacts.
++The real archive changes remain local and must not be committed or pushed before review.
++
++Changed files included in diff:
++$changedList
++
++Chat review command:
++проверь review diff file
++"@
++
++[System.IO.File]::WriteAllText($ReviewSummary, $summary, [System.Text.UTF8Encoding]::new($false))
++```
++
++Required review-diff-only commit shape:
++
++```powershell
++$ReviewDiff = "_ai-review-diffs/last-archive.diff"
++$ReviewSummary = "_ai-review-diffs/last-archive-summary.md"
++$reviewFiles = @($ReviewDiff, $ReviewSummary)
++
++git restore --staged -- .
++git add -- $reviewFiles
++
++$staged = @(git diff --cached --name-only)
++foreach ($f in $staged) {
++  if ($reviewFiles -notcontains $f) {
++    throw "Unexpected staged file. Refusing review-diff commit: $f"
++  }
++}
++
++foreach ($f in $reviewFiles) {
++  if ($staged -notcontains $f) {
++    throw "Expected review file is not staged: $f"
++  }
++}
++
++git diff --cached --check -- $reviewFiles
++git commit -m "review: update last archive diff"
++git push origin <branch>
+ ```
+ 
+ Rules:
+ 
+ ```text
+-- Use a real package name in `$pkgName`; do not leave placeholders such as `<ARCHIVE_NAME>` in runnable commands.
+-- `$files` must include all expected changed and added files.
+-- `$newFiles` must include every expected added file; use `$newFiles = @()` when the package does not add files.
+-- Run `git add -N -- <new-file>` before generating the review diff for packages that add files.
+-- `git add -N` is used only to make untracked files visible in `git diff`; the final commit command must still explicitly stage only intended files.
+-- If an expected new file is missing, treat that as a review blocker until resolved.
+-- Use `git --no-pager diff --no-color --output="$diffFile" -- $files` to write the diff file.
+-- Copy the saved diff with `[System.IO.File]::ReadAllText($diffFile, [System.Text.Encoding]::UTF8)` and `Set-Clipboard -Value $diffText`.
+-- Do not rely on `git diff | Tee-Object | Set-Clipboard`, raw `git diff`, or `Get-Content ... | Set-Clipboard` for reviewable diff transfer when non-ASCII text may be present.
+-- Do not ask the user to manually scroll through paged diff output.
+-- Do not print the full diff to the terminal; only status/stat and short status messages may be printed.
++- Do not copy full diff to clipboard by default.
++- Do not ask the user to paste a giant diff into chat by default.
++- Do not print the full diff to terminal.
++- The assistant should later read `_ai-review-diffs/last-archive.diff` from the repo/branch.
++- The real archive files must not be committed or pushed before diff review approval.
++- Review-diff-only commit commands must not stage any file outside `_ai-review-diffs/`.
+ ```
+ 
+-If the pasted diff shows mojibake or suspicious broken Cyrillic, do not conclude from the diff alone that the repository file is corrupted. Ask for or provide a suspect-file content copy command.
++## 7C. Legacy Clipboard Diff Commands (Fallback Only)
++
++Clipboard diff transfer is no longer the default archive review mode.
++
++Use it only when:
++
++```text
++- repo-stored review diff is impossible;
++- the user explicitly asks to paste/copy the diff;
++- target repo policy forbids committing review artifacts;
++- connector/repo access is unavailable for reading review diff files.
++```
+ 
+ Fallback command shape:
+ 
+ ```powershell
+-$suspectFiles = @(
+-  "path/to/suspect-file-1.md",
+-  "path/to/suspect-file-2.md"
++$files = @(
++  "path/to/changed-file-1.md",
++  "path/to/changed-file-2.md",
++  "path/to/new-file.md"
+ )
+ 
+-$pkgName = "real-package-name-without-angle-brackets"
+-$suspectDump = Join-Path (Get-Location) "$pkgName.suspect-files.txt"
++$newFiles = @(
++  "path/to/new-file.md"
++)
+ 
+-$bundle = foreach ($file in $suspectFiles) {
+-  "===== $file ====="
+-  Get-Content -Path $file -Raw -Encoding UTF8
+-  ""
++foreach ($file in $newFiles) {
++  if (Test-Path $file) {
++    git add -N -- $file
++  } else {
++    Write-Host "Missing expected new file: $file"
++  }
+ }
+ 
+-$bundle -join "`r`n" | Set-Content -Path $suspectDump -Encoding UTF8
++$pkgName = "real-package-name-without-angle-brackets"
++$diffFile = Join-Path (Get-Location) "$pkgName.diff"
++
++git status --short -- $files
++git diff --stat -- $files
++git --no-pager diff --no-color --output="$diffFile" -- $files
+ 
+-$suspectText = [System.IO.File]::ReadAllText($suspectDump, [System.Text.Encoding]::UTF8)
+-Set-Clipboard -Value $suspectText
++$diffText = [System.IO.File]::ReadAllText($diffFile, [System.Text.Encoding]::UTF8)
++Set-Clipboard -Value $diffText
+ 
+-Write-Host "Suspect file contents saved to: $suspectDump"
+-Write-Host "Suspect file contents copied to clipboard. Paste it into chat."
++Write-Host "Diff saved to: $diffFile"
++Write-Host "Diff copied to clipboard. Paste it into chat for review before committing."
+ ```
+ 
+-## 7C. Replacement Archive Conversation Review Loop
++Do not rely on `git diff | Tee-Object | Set-Clipboard`, raw `git diff`, or `Get-Content ... | Set-Clipboard` for reviewable diff transfer when non-ASCII text may be present.
++
++If the pasted diff shows mojibake or suspicious broken Cyrillic, do not conclude from the diff alone that the repository file is corrupted. Ask for or provide a suspect-file content copy command.
++
++## 7D. Replacement Archive Conversation Review Loop
+ 
+ Replacement archive work is a review loop between the assistant and the user.
+ 
+@@ -342,37 +450,38 @@ Use this loop when the assistant creates a replacement archive and the user appl
+    - archive link;
+    - intended changed files;
+    - intended new files, if any;
+-   - PowerShell apply commands;
+-   - full diff capture commands from §7B;
+-   - mojibake/suspect-file fallback commands when relevant;
+-   - scoped commit commands, clearly marked as after-review only.
+-3. User applies the archive locally and sends the copied diff.
+-4. Assistant reviews the diff before telling the user to commit.
+-5. If the diff is OK, assistant gives scoped `git add`, `git commit` and `git push` commands.
+-6. User commits and pushes.
+-7. When user says `проверь`, assistant checks the remote branch/files and confirms what landed.
++   - PowerShell apply commands that create review diff files;
++   - separate review-diff-only commit/push commands;
++   - scoped real commit commands only after review approval.
++3. User applies the archive locally.
++4. User commits/pushes only review diff files.
++5. User asks the assistant to review the repo-stored review diff file.
++6. Assistant reviews the diff before telling the user to commit real archive files.
++7. If the diff is OK, assistant gives scoped `git add`, `git commit` and `git push` commands for real files.
++8. User commits and pushes real files.
++9. When user says `проверь`, assistant checks the remote branch/files and confirms what landed.
+ ```
+ 
+ Diff review must check:
+ 
+ ```text
+-- only intended files appear in the scoped diff;
+-- all expected new files appear in the diff, using `git add -N` when needed;
++- only intended real files appear in the scoped diff;
++- all expected new real files appear in the diff, using `git add -N` when needed;
+ - no expected file is missing;
+ - no unrelated sections, register entries, examples, routing rows or source-of-truth rules were removed;
+ - package intent matches the diff;
+ - service files such as MANIFEST.md and APPLY.md were not added to the repository unless they are intended repository files;
+-- final commit commands stage only intended files and do not use `git add .`.
++- final real commit commands stage only intended real files and do not use `git add .`.
+ ```
+ 
+-If the user's diff is incomplete:
++If the review diff file is incomplete:
+ 
+ ```text
+-- do not approve commit yet;
++- do not approve real commit yet;
+ - explain what is missing;
+-- provide the exact command needed to regenerate the full diff;
++- provide the exact command needed to regenerate the review diff file;
+ - for missing added files, provide the `$newFiles` / `git add -N` command from §7B;
+-- for mojibake, provide the suspect-file content copy command from §7B.
++- for mojibake in fallback pasted diff mode, provide the suspect-file content copy command from §7C.
+ ```
+ 
+ If the diff is correct:
+@@ -380,13 +489,13 @@ If the diff is correct:
+ ```text
+ - state that the diff is complete enough for review;
+ - summarize what was checked;
+-- give only scoped commit commands for the intended files;
++- give only scoped real commit commands for the intended files;
+ - remind not to use `git add .` when unrelated local changes may exist.
+ ```
+ 
+-This loop is not a new output mode. It is the review procedure for replacement archive/package output mode.
++This loop is not a new output mode. It is the default review procedure for replacement archive/package output mode.
+ 
+-## 7D. Replacement Archive Batch Scope Rule
++## 7E. Replacement Archive Batch Scope Rule
+ 
+ Do not artificially split a coherent accepted update into many tiny archives.
+ 
+@@ -408,11 +517,11 @@ Prefer one coherent archive when:
+ - splitting would create extra manual apply/diff/commit/recheck cycles without improving safety.
+ ```
+ 
+-Safety comes from complete replacement files, scoped file lists, full diff capture, preservation checks and scoped commit commands, not from making every archive artificially tiny.
++Safety comes from complete replacement files, scoped file lists, review diff files, preservation checks and scoped commit commands, not from making every archive artificially tiny.
+ 
+ Do not bundle unrelated work just to reduce archive count.
+ 
+-## 7E. Hybrid Archive / Script Delivery Rule
++## 7F. Hybrid Archive / Script Delivery Rule
+ 
+ Use hybrid delivery when one coherent accepted update contains both safe complete-replacement files and large/shared files whose complete replacement is unsafe and therefore need targeted script edits.
+ 
+@@ -426,7 +535,7 @@ Separate Local Targeted Script Edit file(s):
+   - one `.ps1` per large/shared file that needs targeted writes.
+ 
+ Final review:
+-  - one combined scoped diff command may include all affected files.
++  - one combined scoped review diff file may include all affected files.
+ ```
+ 
+ Rules:
+@@ -548,7 +657,7 @@ Every final response with an archive should state:
+ - any blocking questions.
+ ```
+ 
+-When the archive is intended for one local bulk commit, the final response should also include a suggested `git add` and `git commit` command.
++When the archive is intended for one local bulk commit, the final response should include real `git add`, `git commit` and `git push` commands only after the review diff file has been reviewed and approved.
+ 
+ ## 11. Status Reconciliation Rule
+ 
+@@ -571,6 +680,7 @@ Do not leave docs saying `planned` when current repo evidence shows `implemented
+ - Do not generate patch scripts when replacement files are expected.
+ - Do not directly change GitHub when the user asked for an archive.
+ - Do not provide archive apply instructions without a pull/current-state step first.
++- Do not ask for pasted giant diffs by default; use review-diff-file mode.
+ - Do not tell the user to extract a package-layout archive directly into the repo root as the apply step.
+ - Do not let one large/risky file block safe archive delivery for other files.
+ - Do not choose script mode only because a file is large.
+diff --git a/planning/workstreams/command-system-and-tampermonkey-goal-map.md b/planning/workstreams/command-system-and-tampermonkey-goal-map.md
+index 3b007a4..254a560 100644
+--- a/planning/workstreams/command-system-and-tampermonkey-goal-map.md
++++ b/planning/workstreams/command-system-and-tampermonkey-goal-map.md
+@@ -21,13 +21,13 @@ planning/documentation/examples/README.md
+ ## 0. Current Snapshot
+ 
+ Last updated:
+-  2026-06-02 / after TM-7 repo-structure command and deferred-goals owner
++  2026-06-02 / after TM-8 review-diff-file archive default
+ 
+ Current goal:
+   Build a transferable command system and Tampermonkey prompt helper for long-running chats across projects.
+ 
+ Current focus:
+-  TM-7 — Repo-structure command and deferred-goals owner.
++  TM-8 — Review-diff-file archive default.
+ 
+ Active slice:
+   SL-6 — Tampermonkey Guided Prompt Helper
+@@ -57,6 +57,7 @@ Already available:
+   - Command row click no longer closes the widget.
+   - Repo-structure orientation command is documented and available in the helper.
+   - Deferred goals and far-future ideas owner file exists.
++  - Review-diff-file mode is the default archive review transfer.
+ 
+ Latest completed:
+   - Added root Goal Map owner/example.
+@@ -78,12 +79,13 @@ Latest completed:
+   - Recorded first `синх карта` command insertion smoke test.
+   - Fixed command row click so it keeps the widget open.
+   - Added repo-structure orientation command and deferred-goals owner file.
++  - Made review-diff-file mode the default archive review transfer.
+ 
+ Next action:
+-  Continue TM-7:
+-    apply/review this docs+helper update, then continue smoke testing without implementing deferred buffer/stack ideas.
++  Continue TM-8:
++    apply this archive using review-diff-file mode, commit/push only the review diff files, then ask the chat to review the repo-stored diff.
+ Recommended next action:
+-  Apply and review this repo-structure/deferred-goals archive, then retest the helper command list and continue smoke testing.
++  Apply and review this review-diff-file default archive, then continue smoke testing.
+ 
+ Open decisions:
+   - DEC-1: resolved — Generic Action Overview deferred; TM-0 selected.
+@@ -973,12 +975,12 @@ Status:
+ 
+ ## 9. Current Focus
+ 
+-TM-7 — Repo-structure command and deferred-goals owner:
+-  - new command `вспомни структуру репо` is routed and projected into the helper;
+-  - new owner file `planning/repo-structure-memory.md` records known repo layers and orientation output;
+-  - new owner file `planning/deferred-goals-and-ideas.md` stores deferred/far-future ideas;
+-  - Tampermonkey buffer/selected-command-stack/cleanup ideas are recorded as far future, not implemented now;
+-  - current near-term work remains smoke testing and small bug fixes;
++TM-8 — Review-diff-file archive default:
++  - new owner file `planning/documentation/review-diff-file-workflow.md` defines repo-stored diff review;
++  - `давай архив` now defaults to review-diff-file mode;
++  - apply commands create `_ai-review-diffs/last-archive.diff` and summary;
++  - a separate command commits/pushes only review diff files;
++  - real archive files must not be committed or pushed before diff review;
+   - keep `planning/planning-use-case-map.md` and linked owner workflows as source of truth;
+   - keep Generic Action Overview deferred.
+ 
+@@ -987,15 +989,16 @@ Current active slice:
+ 
+ ## 10. Next Action
+ 
+-Retest the helper after the repo-structure/deferred-goals update:
++Apply this archive using review-diff-file mode:
+ 
+ ```text
+-1. Confirm `вспомни структуру репо` appears in the command list.
+-2. Click it and confirm its body inserts while the widget stays open.
+-3. Confirm header click closes the widget.
+-4. Continue scroll / MVP-1 / MVP-2 / empty-composer / existing-text / no-auto-send tests.
+-5. Do not implement helper-owned compose buffer or selected-command stack yet.
++1. Apply replacement files.
++2. Generate `_ai-review-diffs/last-archive.diff`.
++3. Generate `_ai-review-diffs/last-archive-summary.md`.
++4. Commit/push only review diff files.
++5. Ask chat to review the repo-stored review diff.
++6. Do not commit/push real archive files until review is approved.
+ ```
+ 
+ Recommended next action:
+-  Finish smoke testing before adding preview, search, external profile loading or deferred buffer/stack features.
++  Use the new archive review flow for this batch.
+diff --git a/planning/workstreams/tampermonkey-command-projection-plan.md b/planning/workstreams/tampermonkey-command-projection-plan.md
+index 945e97b..69c4d51 100644
+--- a/planning/workstreams/tampermonkey-command-projection-plan.md
++++ b/planning/workstreams/tampermonkey-command-projection-plan.md
+@@ -110,10 +110,11 @@ key_reminders:
+   - Output-package mode, not archive read-source mode.
+   - Use active approved scope; ask only blocking questions.
+   - Follow replacement archive workflow and current package layout rules.
+-  - Include ready-to-run apply/diff commands directly in chat.
+-  - Save full diff to file and copy it with ReadAllText(... UTF8) + Set-Clipboard.
+-  - Ask user to paste diff before commit.
+-  - Never commit/push without diff review.
++  - Include ready-to-run apply commands directly in chat.
++  - Default to review-diff-file mode, not clipboard diff paste.
++  - Apply command creates `_ai-review-diffs/last-archive.diff` and summary.
++  - Give a separate command to commit/push only review diff files.
++  - Never commit/push real archive files before diff review.
+ ```
+ 
+ ### archive_source.use
+@@ -243,7 +244,7 @@ command:
+   давай архив
+ 
+ command_family:
+-  `давай архив` / `собери архив` / `replacement package`
++  `давай архив` / `собери архив` / `давай архив с дифф-файлом` / `replacement package`
+ 
+ source_of_truth:
+   Start from `planning/planning-use-case-map.md`.
+@@ -258,10 +259,10 @@ key_reminders:
+   - Output-package mode, not archive read-source mode.
+   - Use active approved scope; ask only blocking questions.
+   - Do not put apply commands only inside the archive.
+-  - Give apply/diff commands in chat.
+-  - Save full diff to file and copy it to clipboard.
+-  - Ask user to paste diff before commit.
+-  - Do not commit or push.
++  - Give apply commands and separate review-diff-only commit/push commands in chat.
++  - Default review uses `_ai-review-diffs/last-archive.diff`, not pasted clipboard diff.
++  - Commit/push only review diff files before review.
++  - Do not commit or push real archive files before diff review.
+ 
+ user_target:
+   <what archive/package should include>
+diff --git a/tools/tampermonkey/IMPLEMENTATION-NOTES.md b/tools/tampermonkey/IMPLEMENTATION-NOTES.md
+index a9b4a2b..19a967b 100644
+--- a/tools/tampermonkey/IMPLEMENTATION-NOTES.md
++++ b/tools/tampermonkey/IMPLEMENTATION-NOTES.md
+@@ -65,8 +65,10 @@ tools/tampermonkey/chat-command-palette.user.js
+ - Header click and drag are separated by a small movement threshold.
+ - First userscript skeleton exists as `tools/tampermonkey/chat-command-palette.user.js`.
+ - Command row click must not close the widget; only header click toggles open/closed.
+-- Deferred and far-future goals live in `planning/deferred-goals-and-ideas.md`.
++- Deferred and far-future goals live in `planning/deferred-goals-and-ideas.md
++planning/documentation/review-diff-file-workflow.md`.
+ - Repo-structure orientation command is available as `вспомни структуру репо`.
++- Default archive review transfer uses repo-stored review diff files.
+ ```
+ 
+ ## 4. Implementation Principles
+@@ -346,6 +348,31 @@ The chat produces a Repo Structure Brief and identifies files to read next befor
+ ```
+ 
+ 
++### UC-10 — User creates archive with default review diff file
++
++Example:
++
++```text
++давай архив
++```
++
++Expected helper/chat behavior:
++
++```text
++- archive response still includes archive link and apply commands;
++- apply commands create `_ai-review-diffs/last-archive.diff`;
++- apply commands create `_ai-review-diffs/last-archive-summary.md`;
++- response includes a separate command to commit/push only review diff files;
++- real archive files are not committed or pushed before diff review.
++```
++
++Success condition:
++
++```text
++The chat can later read the review diff file from repo/branch/path without the user pasting a giant diff into chat.
++```
++
++
+ ## 6. What Should Be Possible
+ 
+ First userscript MVP should make this possible:
+@@ -770,6 +797,7 @@ Deferred and far-future ideas are owned centrally by:
+ 
+ ```text
+ planning/deferred-goals-and-ideas.md
++planning/documentation/review-diff-file-workflow.md
+ ```
+ 
+ Current Tampermonkey deferred ideas include:
+diff --git a/tools/tampermonkey/README.md b/tools/tampermonkey/README.md
+index 8c9a1d4..86b3353 100644
+--- a/tools/tampermonkey/README.md
++++ b/tools/tampermonkey/README.md
+@@ -137,3 +137,23 @@ planning/repo-structure-memory.md
+ ```
+ 
+ Use it before planning/editing when the chat may have lost track of root areas, documentation layers, workstream files or app/tooling/example areas.
++
++
++## 9. Default Archive Review Diff File Mode
++
++Archive/package responses now use review-diff-file mode by default.
++
++Standard review files:
++
++```text
++_ai-review-diffs/last-archive.diff
++_ai-review-diffs/last-archive-summary.md
++```
++
++The archive apply command creates these files. A separate command commits and pushes only these review artifacts. Real archive files must not be committed or pushed before diff review.
++
++The chat review command is:
++
++```text
++проверь review diff file
++```
+diff --git a/tools/tampermonkey/chat-command-palette.user.js b/tools/tampermonkey/chat-command-palette.user.js
+index 4531298..7260c31 100644
+--- a/tools/tampermonkey/chat-command-palette.user.js
++++ b/tools/tampermonkey/chat-command-palette.user.js
+@@ -19,7 +19,7 @@
+     "group": "MVP-1",
+     "label": "давай архив",
+     "description": "output package",
+-    "body": "[ENMAN_COMMAND]\n\ncommand:\n  давай архив\n\ncommand_family:\n  `давай архив` / `собери архив` / `replacement package`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Output-package mode, not archive read-source mode.\n  - Use active approved scope; ask only blocking questions.\n  - Do not put apply commands only inside the archive.\n  - Give apply/diff commands in chat.\n  - Save full diff to file and copy it to clipboard.\n  - Ask user to paste diff before commit.\n  - Do not commit or push.\n\nuser_target:\n  <what archive/package should include>\n\n[/ENMAN_COMMAND]"
++    "body": "[ENMAN_COMMAND]\n\ncommand:\n  давай архив\n\ncommand_family:\n  `давай архив` / `собери архив` / `давай архив с дифф-файлом` / `replacement package`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read the owner / linked files for this command route.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Output-package mode, not archive read-source mode.\n  - Use active approved scope; ask only blocking questions.\n  - Do not put apply commands only inside the archive.\n  - Give apply commands and separate review-diff-only commit/push commands in chat.\n  - Default review uses `_ai-review-diffs/last-archive.diff`, not pasted clipboard diff.\n  - Commit/push only review diff files before review.\n  - Do not commit or push real archive files before diff review.\n\nuser_target:\n  <what archive/package should include>\n\n[/ENMAN_COMMAND]"
+   },
+   {
+     "id": "archive_source.use",
