@@ -1,10 +1,25 @@
 # Planning Use Case Map
 
 Status: current root use-case map / action-to-doc-flow router
-Doc version: v0.1.0
+Doc version: v0.2.0
 Scope: maps user-visible actions and commands to planning docs, workflows, templates, sources and permission boundaries
 
 ## 1. Purpose
+
+```text
+Sources:
+  Format/process:
+    - planning/documentation/field-kits/root-use-case-map-field-kit.md @ version not confirmed
+    - planning/documentation/use-case-map-workflow.md @ version not confirmed
+    - planning/documentation/USE-CASE-MAP-TEMPLATE.md @ version not confirmed
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Content:
+    - planning/README.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - none
+  Not checked:
+    - full reusable use-case map layer audit outside ROOT-SRC-2A
+```
 
 This file answers:
 
@@ -33,6 +48,20 @@ It is a root action/use-case trace map.
 This file is the concrete Enman root use-case map. Reusable setup guidance is owned by `planning/documentation/field-kits/root-use-case-map-field-kit.md`; reusable maintenance rules are owned by `planning/documentation/use-case-map-workflow.md`; exact reusable map shape is owned by `planning/documentation/USE-CASE-MAP-TEMPLATE.md`.
 
 ## 2. Relationship To Root Files
+
+```text
+Sources:
+  Format/process:
+    - planning/README.md @ Doc version: v0.1.0
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.1.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - local source coverage for documentation reusable files outside ROOT-SRC-2A
+```
 
 ```text
 planning/README.md
@@ -65,6 +94,21 @@ planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md
 
 ## 3. Universal Chat Algorithm
 
+```text
+Sources:
+  Format/process:
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.1.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+  Content:
+    - planning/README.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Relationship To Root Files
+  Not checked:
+    - role/protocol files deferred to ROOT-SRC-2B
+```
+
 For non-trivial planning/repo work, use this path:
 
 ```text
@@ -88,6 +132,19 @@ For non-trivial planning/repo work, use this path:
 ```
 
 ## 3A. Principle Section References
+
+```text
+Sources:
+  Format/process:
+    - planning/documentation/planning-docs-architecture-principles.md @ version not confirmed
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Universal Chat Algorithm
+  Not checked:
+    - principles file local source audit outside ROOT-SRC-2A
+```
 
 Some use cases require not only reading a workflow, but also re-checking a specific architecture principle.
 
@@ -116,6 +173,18 @@ Common principle references:
 Do not add ad hoc source-version fields to use-case rows. Use accepted `Doc version:` headers, local `Sources:` blocks and source-sync registers where the source-cascade workflow requires them. Filename-version migration is a separate planned migration policy; do not rename files or remove `Doc version:` headers from this map as a side effect of an unrelated use-case update.
 
 ## 4. Active Context Rule
+
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ version not confirmed
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Universal Chat Algorithm
+  Not checked:
+    - response workflow local source pass outside ROOT-SRC-2A
+```
 
 Short commands apply to the active context unless the user names another target.
 
@@ -146,6 +215,19 @@ If no active context exists, ask for the missing target unless the task is obvio
 
 ## 4A. Accepted Command / No Reinvention Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/documentation/planning-docs-architecture-principles.md#24b-accepted-command-and-preservation-guardrails @ version not confirmed
+    - planning/replacement-file-generation-guide.md @ version not confirmed
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Active Context Rule
+  Not checked:
+    - archive/output workflow pass outside ROOT-SRC-2A
+```
+
 If user wording matches an accepted command or use case, follow the owner use-case/workflow definition.
 
 Do not silently substitute another output mode or process because it seems safer, easier or more convenient.
@@ -168,6 +250,19 @@ planning/documentation/planning-docs-architecture-principles.md#24b-accepted-com
 
 ## 5. Traversal Depth
 
+```text
+Sources:
+  Format/process:
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ version not confirmed
+  Content:
+    - planning/README.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Universal Chat Algorithm
+  Not checked:
+    - none
+```
+
 Traversal depth answers: how much should the chat read/check now?
 
 | Mode | Meaning | Use when |
@@ -180,6 +275,19 @@ Traversal depth answers: how much should the chat read/check now?
 Do not confuse traversal depth with read source mode.
 
 ## 6. Read Source Modes
+
+```text
+Sources:
+  Format/process:
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+    - planning/replacement-file-generation-guide.md @ version not confirmed
+  Content:
+    - planning/README.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Traversal Depth
+  Not checked:
+    - implementation evidence not checked unless a route requires it
+```
 
 Read source mode answers: where should the chat read from if reading is needed?
 
@@ -211,6 +319,19 @@ GitHub/repo source mode is still required when:
 ```
 
 ## 6A. Output Modes
+
+```text
+Sources:
+  Format/process:
+    - planning/replacement-file-generation-guide.md @ version not confirmed
+    - planning/documentation/review-diff-file-workflow.md @ version not confirmed
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Read Source Modes
+  Not checked:
+    - archive/output workflow local source pass outside ROOT-SRC-2A
+```
 
 Read source mode and output mode are different.
 
@@ -245,6 +366,21 @@ Replacement package output must contain complete replacement/add files under `re
 
 ## 7. Source Model
 
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Read Source Modes
+  Not checked:
+    - slice source-sync register not created yet
+```
+
 Default/expected sources and sources used in this pass are different.
 
 ```text
@@ -278,6 +414,19 @@ planning/slices/slice-source-sync-register.md once created when slice files are 
 ```
 
 ## 8. Source Delta
+
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ version not confirmed
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Source Model
+  Not checked:
+    - response workflow local source pass outside ROOT-SRC-2A
+```
 
 Use Source Delta when an answer/draft changes because of:
 
@@ -323,6 +472,22 @@ Should any source become default later?
 Use a shorter version when the update is simple.
 
 ## 8A. Response Level And File Update Overview References
+
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ version not confirmed
+    - planning/documentation/file-update-overview-workflow.md @ version not confirmed
+    - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ version not confirmed
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Output Modes
+    - Source Delta
+  Not checked:
+    - Goal Map/output workflow source passes outside ROOT-SRC-2A
+```
 
 Answer depth is governed by:
 
@@ -412,6 +577,24 @@ Tampermonkey command-helper discovery behavior:
 
 ## 9. Repeated / Continuation Commands
 
+```text
+Sources:
+  Format/process:
+    - planning/documentation/field-kits/root-use-case-map-field-kit.md @ version not confirmed
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ version not confirmed
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/replacement-file-generation-guide.md @ version not confirmed
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Active Context Rule
+    - Output Modes
+    - Source Model
+  Not checked:
+    - command example files remain example-only and not command authority
+```
+
 Reusable command setup owner:
 
 ```text
@@ -455,6 +638,19 @@ This root map remains the concrete Enman route table.
 
 ## 9A. Reusable Command Example References
 
+```text
+Sources:
+  Format/process:
+    - planning/documentation/example-coverage-workflow.md @ version not confirmed
+    - planning/documentation/field-kits/root-use-case-map-field-kit.md @ version not confirmed
+  Content:
+    - planning/documentation/examples/** @ mixed versions/statuses
+  Internal dependencies:
+    - Repeated / Continuation Commands
+  Not checked:
+    - full examples index source pass outside ROOT-SRC-2A
+```
+
 These references keep reusable command examples visible from the root route chain without copying example bodies into the root map.
 
 Examples demonstrate valid execution only. They do not own command semantics, routing, source truth, output mode or permission boundary.
@@ -472,6 +668,24 @@ Examples demonstrate valid execution only. They do not own command semantics, ro
 | Enman scenario/domain/slice route families | `сделай сценарий`, `DATA`, `разбери domain draft`, `задрафти slice`, `server slice`, `client sidecar`, `разбери тестирование` | `planning/documentation/examples/project-specific/enman/SCENARIO-DOMAIN-SLICE-COMMAND-ROUTING-EXAMPLE.md` | Read when updating or reviewing Enman scenario/domain/slice command routes. | Project-specific demonstration only; route logic remains in this root map and reusable setup guidance remains in the profile field kit. |
 
 ## 10. Primary Use Case Table
+
+```text
+Sources:
+  Format/process:
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.1.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
+  Content:
+    - planning/README.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Repeated / Continuation Commands
+    - Source Model
+  Not checked:
+    - non-root layer route rows not fully re-audited in ROOT-SRC-2A
+```
 
 Scenario/domain/slice use-case setup note:
 
@@ -506,6 +720,20 @@ Do not treat that field kit as an activated workflow for ordinary scenario/slice
 | “сделай VKR текст” | VKR/thesis wording | Optional | Targeted | Clean docs + evidence as needed | reviewable output | `planning/vkr-clean-reference.md` | planning README | Clean thesis wording | Do not use internal labels |
 
 ## 11. Detailed Trace: New Chat Onboarding
+
+```text
+Sources:
+  Format/process:
+    - planning/README.md @ Doc version: v0.1.0
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.1.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Primary Use Case Table
+  Not checked:
+    - role/protocol files deferred to ROOT-SRC-2B
+```
 
 User says:
 
@@ -562,6 +790,19 @@ Do not:
 
 ## 12. Detailed Trace: Active Draft Continuation
 
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ version not confirmed
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Active Context Rule
+    - Source Delta
+  Not checked:
+    - response workflow source pass outside ROOT-SRC-2A
+```
+
 User says:
 
 ```text
@@ -588,6 +829,21 @@ If no active draft exists:
 ```
 
 ## 13. Detailed Trace: Template / Workflow / Command / Example Governance
+
+```text
+Sources:
+  Format/process:
+    - planning/documentation/planning-docs-architecture-principles.md @ version not confirmed
+    - planning/documentation/example-coverage-workflow.md @ version not confirmed
+    - planning/documentation/use-case-map-workflow.md @ version not confirmed
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Principle Section References
+    - Reusable Command Example References
+  Not checked:
+    - documentation-layer workflow source pass outside ROOT-SRC-2A
+```
 
 User says:
 
@@ -620,6 +876,20 @@ Use-case rows do not carry ad hoc source-version fields. Use accepted `Doc versi
 
 ## 14. Detailed Trace: Replacement Archive / Package Output
 
+```text
+Sources:
+  Format/process:
+    - planning/replacement-file-generation-guide.md @ version not confirmed
+    - planning/documentation/review-diff-file-workflow.md @ version not confirmed
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Output Modes
+    - Accepted Command / No Reinvention Rule
+  Not checked:
+    - archive/output workflow local source pass outside ROOT-SRC-2A
+```
+
 User says:
 
 ```text
@@ -648,6 +918,23 @@ Steps:
 ```
 
 ## 15. Detailed Trace: Source Dependency / Link Declaration
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+    - planned planning/slices/slice-source-sync-register.md @ not created
+  Internal dependencies:
+    - Source Model
+    - Primary Use Case Table
+  Not checked:
+    - slice source-sync register not created yet
+```
 
 User says:
 
@@ -685,4 +972,29 @@ Expected output:
 - root/domain/slice register impact;
 - not checked / limits;
 - next action or `План файл-обновление` when planning file changes.
+```
+
+
+## 16. Source Delta / Change Log
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Content:
+    - planning/README.md @ Doc version: v0.1.0
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Relationship To Root Files
+    - Primary Use Case Table
+    - Detailed Trace: Source Dependency / Link Declaration
+  Not checked:
+    - full response/output/Goal Map/Tampermonkey workflow source passes outside ROOT-SRC-2A
+```
+
+```text
+- ROOT-SRC-2A added local section-level Sources blocks to the root use-case map and bumped it to Doc version: v0.2.0.
+- ROOT-SRC-2A preserved existing command routes and did not claim full root-folder coverage.
 ```

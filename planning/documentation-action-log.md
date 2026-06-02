@@ -1883,3 +1883,40 @@ Follow-ups:
   Use the new route when a future task says that a file/section depends on another file or needs a source link. Later ROOT-SRC-2 should still audit root routing/onboarding files more broadly.
 Notes:
   Meaning-bearing dependencies should be recorded through local `Sources:` blocks or file-level/register audit decisions. Simple navigational links do not automatically become source dependencies.
+
+### 2026-06-02 - Added root router/onboarding local source coverage
+
+Date:
+  2026-06-02
+Action:
+  Added local section-level source coverage for the root router/onboarding chain.
+Type:
+  Root source coverage / router audit / register sync
+Status:
+  applied
+Why:
+  After source-governance and explicit source-dependency routing were covered, the root files that new/restored chats use to enter the planning docs still had skeleton register rows. ROOT-SRC-2A gives the root router chain explicit source/version coverage without claiming full root-folder coverage.
+Changed files:
+  - planning/README.md
+  - planning/planning-use-case-map.md
+  - planning/workflow-activation-map.md
+  - planning/planning-doc-responsibility-map.md
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added Doc version: v0.1.0 to `planning/README.md`.
+  - Bumped `planning/planning-use-case-map.md` to Doc version: v0.2.0 and added local section-level `Sources:` blocks.
+  - Added Doc version: v0.1.0 to `planning/workflow-activation-map.md`.
+  - Added Doc version: v0.1.0 to `planning/planning-doc-responsibility-map.md`.
+  - Added local section-level `Sources:` blocks to the root navigation, use-case routing, workflow activation and responsibility routing files.
+  - Bumped `planning/root-source-sync-register.md` to Doc version: v0.6.0 and marked only ROOT-SRC-2A router/onboarding rows as derived/synchronized.
+Not changed:
+  - No domain aggregate or value-object semantics changed.
+  - No slice register was created.
+  - No Goal Map/Tampermonkey/output workflow source passes were claimed.
+  - No protocol/role source pass was claimed; that remains ROOT-SRC-2B.
+  - No full root-folder coverage was claimed.
+Follow-ups:
+  ROOT-SRC-2B should cover `planning/planning-agent-protocol.md` and `planning/agent-roles-and-required-actions.md`. Later root passes should cover Goal Map/Tampermonkey and output/archive workflow files.
+Notes:
+  The root source register remains partial/skeleton outside the explicitly covered source-governance and router/onboarding rows.

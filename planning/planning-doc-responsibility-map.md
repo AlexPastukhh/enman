@@ -1,9 +1,24 @@
 # Planning Document Responsibility Map
 
-Status: transitional global responsibility map / root layer router  
+Status: transitional global responsibility map / root layer router
+Doc version: v0.1.0
 Scope: routes planning documentation information to the correct layer and, where available, to the layer-local responsibility map
 
 ## 1. Core Rule
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - none
+  Not checked:
+    - local layer responsibility map audits outside ROOT-SRC-2A
+```
 
 A file should contain only content that belongs to its responsibility zone.
 
@@ -37,6 +52,23 @@ Until local responsibility maps exist for all layers, this file keeps transition
 
 ## 2. Layer Router
 
+```text
+Sources:
+  Format/process:
+    - planning/README.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+  Content:
+    - planning/diagrams/scenario-responsibility-map.md @ version not confirmed
+    - planning/diagramming/diagramming-responsibility-map.md @ version not confirmed
+    - planning/domain/domain-responsibility-map.md @ version not confirmed
+    - planning/slices/slice-responsibility-map.md @ version not confirmed
+    - planning/testing/testing-responsibility-map.md @ version not confirmed
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - local layer maps not audited in ROOT-SRC-2A
+```
+
 | Layer | Belongs here | Local responsibility entry |
 |---|---|---|
 | Documentation | Planning-doc architecture, docs update workflows, documentation-layer placement, agent output rules, response-level commands, documentation prompts and scoped sync notes. | `planning/documentation/documentation-responsibility-map.md` |
@@ -57,6 +89,21 @@ planning/documentation/planning-docs-architecture-principles.md
 ```
 
 ## 3. Agent / Workflow Responsibility
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+  Content:
+    - planning/README.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Layer Router
+  Not checked:
+    - protocol/role source pass deferred to ROOT-SRC-2B
+```
 
 | File / folder | Responsibility |
 |---|---|
@@ -105,6 +152,24 @@ Do not create a second generic use-case map inside the documentation layer.
 
 ## 4. Command System / Goal Map / Tampermonkey Responsibility
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ version not confirmed
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ version not confirmed
+    - tools/tampermonkey/README.md @ version not declared
+    - tools/tampermonkey/IMPLEMENTATION-NOTES.md @ version not declared
+    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper source, version not applicable
+  Internal dependencies:
+    - Agent / Workflow Responsibility
+  Not checked:
+    - Goal Map/Tampermonkey source pass outside ROOT-SRC-2A
+```
+
 | File / folder | Responsibility |
 |---|---|
 | `planning/goal-map-principles-workflow-template.md` | Root Goal Map owner: principles, workflow, template, `карта цели`, `кц`, `Goal Map Brief`, `синх карта`, map status synchronization and target-state sync archive rules |
@@ -128,6 +193,19 @@ For command-helper or long-running command-system work:
 
 ## 5. Documentation Workflow Responsibility
 
+```text
+Sources:
+  Format/process:
+    - planning/documentation/documentation-responsibility-map.md @ version not confirmed
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+  Content:
+    - planning/documentation/** @ mixed versions/statuses
+  Internal dependencies:
+    - Layer Router
+  Not checked:
+    - documentation-layer workflow source passes outside ROOT-SRC-2A
+```
+
 | File / folder | Responsibility |
 |---|---|
 | `planning/documentation/README.md` | Documentation workflow navigation and read order |
@@ -142,6 +220,19 @@ For command-helper or long-running command-system work:
 
 ## 6. VKR / Thesis Clean Reference Responsibility
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+  Content:
+    - planning/vkr-clean-reference.md @ version not confirmed
+    - planning/dirty-drafts/** @ non-canonical recovery notes
+  Internal dependencies:
+    - Layer Router
+  Not checked:
+    - VKR/thesis source pass outside ROOT-SRC-2A
+```
+
 | File / folder | Responsibility |
 |---|---|
 | `planning/vkr-clean-reference.md` | Clean terminology and evidence mapping for VKR, presentation, defense speech and practice-report wording |
@@ -151,6 +242,20 @@ VKR-facing materials must not use internal planning labels such as `L1`, `L2`, `
 
 ## 7. Repository Edit Responsibility
 
+```text
+Sources:
+  Format/process:
+    - planning/README.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/replacement-file-generation-guide.md @ version not confirmed
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Agent / Workflow Responsibility
+  Not checked:
+    - archive/output workflow pass outside ROOT-SRC-2A
+```
+
 Direct GitHub edits from ChatGPT are preferred for small scoped documentation changes because they create visible commits that can be inspected and reverted independently.
 
 By default, use one file per commit when reasonable. Large generated replacement archives should be reserved for broad file/package generation when direct scoped commits are less practical.
@@ -158,6 +263,19 @@ By default, use one file per commit when reasonable. Large generated replacement
 Direct GitHub edits, file creation, file deletion, moves and commits require explicit user instruction.
 
 ## 8. Architecture Responsibility
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+  Content:
+    - planning/architecture/README.md @ version not confirmed
+    - planning/adr/README.md @ version not confirmed
+  Internal dependencies:
+    - Layer Router
+  Not checked:
+    - architecture/ADR docs not audited in ROOT-SRC-2A
+```
 
 | File / folder | Responsibility |
 |---|---|
@@ -167,6 +285,19 @@ Direct GitHub edits, file creation, file deletion, moves and commits require exp
 Architecture docs do not replace slice docs, scenario sources, API contract docs, testing docs or ADRs.
 
 ## 9. Scenario Source Responsibility
+
+```text
+Sources:
+  Format/process:
+    - planning/diagrams/scenario-responsibility-map.md @ version not confirmed
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+  Content:
+    - planning/diagrams/** @ Doc version: v0.1.0 after F7K-D2 unless declared otherwise
+  Internal dependencies:
+    - Layer Router
+  Not checked:
+    - scenario layer not re-audited in ROOT-SRC-2A
+```
 
 Detailed scenario-layer placement now belongs to:
 
@@ -192,6 +323,20 @@ Transitional overview:
 | `planning/diagrams/scenario-questions-register.md` | Scenario/domain questions that can change scenario behavior, DATA, UI requirements or diagrams |
 
 ## 10. Domain Responsibility
+
+```text
+Sources:
+  Format/process:
+    - planning/domain/domain-responsibility-map.md @ version not confirmed
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+  Content:
+    - planning/domain/aggregates/** @ Doc version: v0.1.0
+    - planning/domain/value-objects/** @ Doc version: v0.1.0
+  Internal dependencies:
+    - Layer Router
+  Not checked:
+    - domain notes/maps/decisions beyond active aggregate/value objects remain deferred
+```
 
 Detailed domain-layer placement now belongs to:
 
@@ -222,6 +367,20 @@ Transitional overview:
 `planning/tables/` is not the current domain-layer entrypoint. It remains useful as historical/cross-check source material.
 
 ## 11. Slice Discovery Responsibility
+
+```text
+Sources:
+  Format/process:
+    - planning/slices/slice-responsibility-map.md @ version not confirmed
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+  Content:
+    - planned planning/slices/slice-source-sync-register.md @ not created
+  Internal dependencies:
+    - Layer Router
+    - Domain Responsibility
+  Not checked:
+    - slice source-sync register not created yet
+```
 
 Detailed slice-layer placement now belongs to:
 
@@ -259,6 +418,19 @@ Questions/extension/implementation registers do not replace scenario source file
 
 ## 12. Client Planning Responsibility
 
+```text
+Sources:
+  Format/process:
+    - planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md @ version not confirmed
+    - planning/slices/slice-responsibility-map.md @ version not confirmed
+  Content:
+    - planned planning/slices/slice-source-sync-register.md @ not created
+  Internal dependencies:
+    - Slice Discovery Responsibility
+  Not checked:
+    - client slice docs not audited in ROOT-SRC-2A
+```
+
 Client-wide reusable rules/principles now live in the slice root, not under the client subfolder:
 
 ```text
@@ -281,6 +453,21 @@ Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 
 ## 13. API / Testing / ADR Responsibility
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/testing/testing-responsibility-map.md @ version not confirmed
+  Content:
+    - planning/api/README.md @ version not confirmed
+    - planning/testing/** @ mixed versions/statuses
+    - planning/adr/README.md @ version not confirmed
+  Internal dependencies:
+    - Layer Router
+  Not checked:
+    - API/testing/ADR source passes outside ROOT-SRC-2A
+```
+
 | File / folder | Responsibility |
 |---|---|
 | `planning/api/` | API contract principles, OpenAPI structural contract, API error contract and constants relationship |
@@ -291,6 +478,19 @@ Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 
 ## 14. Evidence Link Responsibility
 
+```text
+Sources:
+  Format/process:
+    - planning/repo-grounded-github-line-links-workflow.md @ version not confirmed
+    - planning/status-evidence-profile.md @ version not confirmed
+  Content:
+    - current branch/code/tests @ not checked in ROOT-SRC-2A
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - implementation status evidence not checked in ROOT-SRC-2A
+```
+
 Repo-grounded line-link rules belong in:
 
 ```text
@@ -300,6 +500,20 @@ planning/repo-grounded-github-line-links-workflow.md
 Other workflow docs may link to that file, but should not duplicate detailed line-link mechanics unless needed for a local role checklist.
 
 ## 15. Responsibility Decision Heuristic
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Layer Router
+    - Agent / Workflow Responsibility
+  Not checked:
+    - local layer responsibility maps not audited in ROOT-SRC-2A
+```
 
 Use this file first to choose the layer. Then use the local responsibility map or README for that layer.
 
@@ -337,6 +551,19 @@ Use this file first to choose the layer. Then use the local responsibility map o
 
 ## 16. Future Cleanup Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-maintenance-register.md @ version not confirmed
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Content:
+    - planning/documentation-action-log.md @ version not confirmed / evidence trail
+  Internal dependencies:
+    - Responsibility Decision Heuristic
+  Not checked:
+    - maintenance register source pass outside ROOT-SRC-2A
+```
+
 When local responsibility maps exist for documentation, scenario, domain, slice, API/testing and VKR layers, shrink this root map to a thin router.
 
 Do not remove useful routing rows until an equivalent local map exists and README/navigation points to it.
@@ -350,7 +577,45 @@ planning/planning-maintenance-register.md
 ## Portable Starter-Kit Adaptation
 
 ```text
+Sources:
+  Format/process:
+    - planning/documentation/PORTABLE-STARTER-KIT.md @ version not confirmed
+    - planning/documentation/documentation-responsibility-map.md @ version not confirmed
+  Content:
+    - planning/documentation-migration/** @ migration history / version not confirmed
+  Internal dependencies:
+    - Documentation Workflow Responsibility
+  Not checked:
+    - portable starter kit not audited in ROOT-SRC-2A
+```
+
+```text
 planning/documentation/PORTABLE-STARTER-KIT.md
 ```
 
 Use only when copying/adapting the reusable documentation layer into a new project or documentation domain. It is not a normal daily read-order source after adaptation.
+
+
+## 17. Source Delta / Change Log
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Content:
+    - planning/README.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Layer Router
+    - Agent / Workflow Responsibility
+    - Responsibility Decision Heuristic
+  Not checked:
+    - local layer responsibility map audits outside ROOT-SRC-2A
+```
+
+```text
+- ROOT-SRC-2A added Doc version: v0.1.0 and local section-level Sources blocks to this root responsibility router.
+- ROOT-SRC-2A did not move layer-local responsibility content or claim full root-folder coverage.
+```

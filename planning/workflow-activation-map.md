@@ -1,9 +1,24 @@
 # Workflow Activation Map
 
-Status: current workflow activation map  
+Status: current workflow activation map
+Doc version: v0.1.0
 Scope: how chats select and disclose workflows before non-trivial planning/repo work
 
 ## 1. Purpose
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Content:
+    - planning/README.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - none
+  Not checked:
+    - planning-agent-protocol and role map source pass deferred to ROOT-SRC-2B
+```
 
 This file helps a chat decide which repository workflows apply to the current task.
 
@@ -50,6 +65,20 @@ merge section back
 
 ## 2. Core Rule
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-agent-protocol.md @ version not confirmed
+    - planning/agent-roles-and-required-actions.md @ version not confirmed
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+  Content:
+    - planning/README.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Purpose
+  Not checked:
+    - protocol/role source pass deferred to ROOT-SRC-2B
+```
+
 Before non-trivial planning/repo work, output a short `Workflow Preflight`.
 
 The preflight is required when the task may involve:
@@ -70,6 +99,19 @@ The preflight is required when the task may involve:
 The preflight can be skipped or shortened for trivial answers, simple clarifications, casual discussion, purely local wording that does not affect files/workflows, or active-context continuation that does not need new evidence.
 
 ## 3. Workflow Preflight Format
+
+```text
+Sources:
+  Format/process:
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ version not confirmed
+    - planning/planning-agent-protocol.md @ version not confirmed
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - response workflow local source pass outside ROOT-SRC-2A
+```
 
 Use this format before the main answer or before proposing edits:
 
@@ -108,6 +150,19 @@ The preflight is not a permission grant. It only makes the intended workflow pat
 
 ## 4. Activation Types
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ version not confirmed
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Workflow Preflight Format
+  Not checked:
+    - none
+```
+
 | Activation type | Meaning |
 |---|---|
 | `always-on check` | Should be used automatically for non-trivial planning/repo work. |
@@ -120,6 +175,21 @@ The preflight is not a permission grant. It only makes the intended workflow pat
 | `transitional` | File/workflow exists but needs audit/refactor before being treated as fully canonical. |
 
 ## 5. Workflow Registry
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.1.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+  Content:
+    - planning/README.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Activation Types
+  Not checked:
+    - individual downstream workflow files not re-audited in ROOT-SRC-2A
+```
 
 | Workflow / file | Trigger | Activation type | Requires explicit user command? | Output / result |
 |---|---|---|---|---|
@@ -167,6 +237,21 @@ The preflight is not a permission grant. It only makes the intended workflow pat
 | Source/version cascade sync workflow | Upstream source version changed and downstream review is needed | `future / missing` | Yes before designing/applying | No full workflow yet |
 
 ## 6. Implicit Workflow Chains
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.1.0
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ version not confirmed
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Workflow Registry
+  Not checked:
+    - Goal Map/Tampermonkey source passes outside ROOT-SRC-2A
+```
 
 ### Broad documentation update
 
@@ -412,6 +497,21 @@ reviewable-agent-output-and-commands-workflow.md
 
 ## 7. Explicit Permission Rules
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/replacement-file-generation-guide.md @ version not confirmed
+    - planning/documentation/documentation-update-workflow.md @ version not confirmed
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Core Rule
+    - Workflow Registry
+  Not checked:
+    - archive/output workflows not audited in ROOT-SRC-2A
+```
+
 The following actions require explicit user permission:
 
 ```text
@@ -445,6 +545,19 @@ The following do not require explicit permission because they are read-only or a
 
 ## 8. Future / Missing Workflows
 
+```text
+Sources:
+  Format/process:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+  Content:
+    - planned planning/slices/slice-source-sync-register.md @ not created
+  Internal dependencies:
+    - Workflow Registry
+  Not checked:
+    - future/missing workflows not created in this pass
+```
+
 Do not pretend these are implemented if no workflow file exists.
 
 | Topic | Current status | When to revisit |
@@ -465,6 +578,19 @@ planning/planning-maintenance-register.md
 ## 9. Do Not
 
 ```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/planning-agent-protocol.md @ version not confirmed
+  Content:
+    - planning/README.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Explicit Permission Rules
+  Not checked:
+    - protocol pass deferred to ROOT-SRC-2B
+```
+
+```text
 - Do not skip Workflow Preflight for non-trivial repo/planning work.
 - Do not hide activated workflows from the user.
 - Do not treat response-format/response-command workflows as permission to edit files.
@@ -479,6 +605,19 @@ planning/planning-maintenance-register.md
 
 ## 10. Success Criteria
 
+```text
+Sources:
+  Format/process:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+  Content:
+    - planning/README.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Do Not
+  Not checked:
+    - none
+```
+
 Workflow activation is working when:
 
 ```text
@@ -490,4 +629,28 @@ Workflow activation is working when:
 - action/use-case trace is discoverable through planning-use-case-map.md;
 - the user can correct workflow choice before edits or deep work;
 - new workflows can be added to this map without rewriting every prompt.
+```
+
+
+## 11. Source Delta / Change Log
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Content:
+    - planning/README.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Workflow Registry
+    - Implicit Workflow Chains
+  Not checked:
+    - protocol/role files deferred to ROOT-SRC-2B
+```
+
+```text
+- ROOT-SRC-2A added Doc version: v0.1.0 and local section-level Sources blocks to this workflow activation router.
+- ROOT-SRC-2A preserved workflow registry and implicit workflow chain semantics.
 ```

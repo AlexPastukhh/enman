@@ -1,9 +1,24 @@
 # Planning Documentation
 
-Status: stable navigation / source-of-truth map  
+Status: stable navigation / source-of-truth map
+Doc version: v0.1.0
 Purpose: explain where to read planning materials and how not to confuse planning notes with implementation truth.
 
 ## 1. Core Rule
+
+```text
+Sources:
+  Format/process:
+    - planning/status-evidence-profile.md @ version not confirmed
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+  Content:
+    - current codebase/tests/generated artifacts @ not checked in this docs pass
+  Internal dependencies:
+    - none
+  Not checked:
+    - current branch implementation state outside ROOT-SRC-2A scope
+```
 
 Planning docs are not a replacement for checking the current codebase.
 
@@ -15,6 +30,21 @@ For VKR/thesis wording, use `planning/vkr-clean-reference.md`.
 
 
 ## 1A. Project-Wide Planning Profiles
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Content:
+    - planning/status-evidence-profile.md @ version not confirmed
+    - planning/shared-visibility-map.md @ version not confirmed
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - full local source audit for status/shared-visibility profiles outside ROOT-SRC-2A scope
+```
 
 These root planning profiles define Enman project configuration used by multiple planning layers:
 
@@ -54,6 +84,20 @@ planning/documentation-migration/
 
 ## 2. Repository Editing Workflow
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/replacement-file-generation-guide.md @ version not confirmed
+    - planning/documentation/documentation-update-workflow.md @ version not confirmed
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Workflow Activation And Use-Case Navigation
+  Not checked:
+    - direct GitHub edit policy not re-audited beyond navigation wording
+```
+
 When documentation changes are small and well-scoped, prefer direct GitHub file edits from ChatGPT over manual replacement archives.
 
 By default, use one commit per file. This makes each change easy to inspect and easy to revert.
@@ -71,6 +115,23 @@ Direct GitHub edits must still follow scope rules:
 Mechanical multi-file link/path/name synchronization may use a single bundled commit when approved by the user and when no unrelated semantic refactors are mixed in.
 
 ## 3. Workflow Activation And Use-Case Navigation
+
+```text
+Sources:
+  Format/process:
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.1.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ version not confirmed
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ version not confirmed
+    - tools/tampermonkey/README.md @ version not declared
+  Internal dependencies:
+    - Project-Wide Planning Profiles
+  Not checked:
+    - Goal Map/Tampermonkey files remain skeleton rows outside ROOT-SRC-2A
+```
 
 For non-trivial planning/repo work, read:
 
@@ -123,6 +184,22 @@ A future chat should not require the user to remember workflow file names. It sh
 
 ### Long-running workstreams, Goal Maps and command-helper discovery
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+  Content:
+    - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ version not confirmed
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ version not confirmed
+    - tools/tampermonkey/README.md @ version not declared
+  Internal dependencies:
+    - Workflow Activation And Use-Case Navigation
+  Not checked:
+    - Tampermonkey userscript implementation not audited in ROOT-SRC-2A
+```
+
 When a new chat, restored context or first planning pass touches a long-running workstream, command-system work or the Tampermonkey helper, also check:
 
 ```text
@@ -152,6 +229,22 @@ planning/planning-maintenance-register.md
 This register is for future documentation/workflow maintenance, not for ordinary feature TODOs.
 
 ## 4. Source-of-Truth Model
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.1.0
+  Content:
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Core Rule
+    - Project-Wide Planning Profiles
+  Not checked:
+    - slice source-sync register not created yet
+```
 
 ### Project-wide profiles
 
@@ -277,6 +370,22 @@ planning/dirty-drafts/
 Dirty drafts are not source of truth.
 
 ## 5. Task-Based Navigation
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.1.0
+  Content:
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Workflow Activation And Use-Case Navigation
+    - Source-of-Truth Model
+  Not checked:
+    - full route-table audit for non-root layer docs outside ROOT-SRC-2A
+```
 
 For action-to-doc-flow routing, start with:
 
@@ -518,6 +627,18 @@ planning/source-usage-cascade-profile.md
 
 ## 6. Historical / Internal Status Notes
 
+```text
+Sources:
+  Format/process:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+  Content:
+    - planning/documentation-action-log.md @ version not confirmed / evidence trail
+  Internal dependencies:
+    - Source-of-Truth Model
+  Not checked:
+    - historical status notes not implementation proof
+```
+
 The following files may be useful as historical or internal handoff notes, but they are not implementation truth:
 
 ```text
@@ -529,6 +650,18 @@ planning/planning-workflow-current.md
 Use them only as context. For implementation state, inspect the current branch.
 
 ## 7. Internal Labels and VKR Wording
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.1.0
+  Content:
+    - planning/vkr-clean-reference.md @ version not confirmed
+  Internal dependencies:
+    - Source-of-Truth Model
+  Not checked:
+    - VKR/thesis files not audited in ROOT-SRC-2A
+```
 
 `L1` and `L2` may appear in internal planning history, but they must not be used in VKR, presentation, report or defense speech.
 
@@ -543,6 +676,19 @@ Use clean terms instead:
 | AgreementDocumentRef | document reference and metadata |
 
 ## 8. Scenario / Diagram Status Markers
+
+```text
+Sources:
+  Format/process:
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.1.0
+  Content:
+    - planning/diagrams/scenario-artifact-map.md @ version not confirmed
+    - planning/diagrams/scenario-diagram-consistency-report.md @ version not confirmed
+  Internal dependencies:
+    - Task-Based Navigation
+  Not checked:
+    - scenario/diagram layer source passes outside ROOT-SRC-2A
+```
 
 For post-L1/L2 scenario and diagram work, use:
 
@@ -563,6 +709,19 @@ Scenario docs may mark future implementation and deferred extension points unifo
 
 ## 9. Not Source of Truth
 
+```text
+Sources:
+  Format/process:
+    - planning/status-evidence-profile.md @ version not confirmed
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Internal dependencies:
+    - Core Rule
+  Not checked:
+    - current implementation status not checked in ROOT-SRC-2A
+```
+
 Do not use these as current implementation proof:
 
 ```text
@@ -580,3 +739,26 @@ planning/documentation/PORTABLE-STARTER-KIT.md
 ```
 
 Read this only when copying/adapting the reusable documentation layer into a new project or documentation domain.
+
+## 10. Source Delta / Change Log
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v0.6.0
+  Content:
+    - planning/planning-use-case-map.md @ Doc version: v0.2.0
+    - planning/workflow-activation-map.md @ Doc version: v0.1.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.1.0
+  Internal dependencies:
+    - Workflow Activation And Use-Case Navigation
+    - Source-of-Truth Model
+  Not checked:
+    - Goal Map/Tampermonkey/output workflow source passes outside ROOT-SRC-2A
+```
+
+```text
+- ROOT-SRC-2A added Doc version: v0.1.0 and local section-level Sources blocks to this root navigation entrypoint.
+- ROOT-SRC-2A did not change navigation semantics or claim full root folder coverage.
+```
