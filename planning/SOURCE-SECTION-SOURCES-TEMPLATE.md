@@ -1,7 +1,7 @@
 # Source Section Sources Template
 
 Status: active Enman section-source template  
-Doc version: v0.1.0  
+Doc version: v0.2.0  
 Scope: local fenced `Sources:` block format for active planning/domain/slice draft sections
 
 ## 1. Template
@@ -14,9 +14,9 @@ Place this block immediately after a section heading.
 ```text
 Sources:
   Format/process:
-    - <workflow/template/principles/responsibility-map file>
+    - <workflow/template/principles/responsibility-map file> @ <Doc version/status>
   Content:
-    - <scenario/domain/slice/testing/API source file or section>
+    - <scenario/domain/slice/testing/API source file or section> @ <Doc version/status>
   Internal dependencies:
     - <section in this same draft>
   Not checked:
@@ -53,6 +53,9 @@ Not checked:
 - Keep the block local to the section.
 - Do not copy the same full source universe into every section.
 - Separate format/process sources from content sources.
+- Every Format/process and Content source should include @ Doc version / @ historical / @ version not declared / @ implementation evidence / @ not checked status.
+- Internal dependencies use section names; they do not need source version labels.
+- Do not invent Doc version values for sources that do not declare or inherit one from an explicit version seed/register rule.
 - Prefer scenario text #DATA for scenario-specific DATA.
 - Use scenario-data sidecars only when they are reusable, shared, audited or transitional sources.
 ```
@@ -65,17 +68,17 @@ Not checked:
 ```text
 Sources:
   Format/process:
-    - planning/domain/aggregate-drafting-workflow.md
-    - planning/domain/aggregate-draft-template.md
-    - planning/domain/value-object-drafting-workflow.md
-    - planning/domain/value-object-draft-template.md
+    - planning/domain/aggregate-drafting-workflow.md @ Doc version: v0.1.0
+    - planning/domain/aggregate-draft-template.md @ Doc version: v0.1.0
+    - planning/domain/value-object-drafting-workflow.md @ Doc version: v0.2.0
+    - planning/domain/value-object-draft-template.md @ Doc version: v0.2.0
   Content:
-    - planning/domain/scenario-to-aggregate-map.md
-    - planning/domain/value-objects/agreement-proposal-version.md
-    - planning/domain/value-objects/agreement-proposal-author.md
-    - planning/domain/value-objects/agreement-document-ref.md
-    - planning/domain/value-objects/proposal-comment.md
-    - planning/domain/value-objects/final-refusal-reason.md
+    - planning/domain/scenario-to-aggregate-map.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-proposal-version.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-proposal-author.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/agreement-document-ref.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/proposal-comment.md @ Doc version: v0.1.0
+    - planning/domain/value-objects/final-refusal-reason.md @ Doc version: v0.1.0
   Internal dependencies:
     - Owned State
     - Domain Methods / Commands
@@ -94,10 +97,10 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/slices/slice-test-plan-workflow.md
-    - planning/testing/server-slice-test-plan-rules.md
+    - planning/slices/slice-test-plan-workflow.md @ <Doc version/status>
+    - planning/testing/server-slice-test-plan-rules.md @ <Doc version/status>
   Content:
-    - planning/diagrams/scenario-behavior-items/<scenario-behavior-items>.md
+    - planning/diagrams/scenario-behavior-items/<scenario-behavior-items>.md @ <Doc version/status>
     - Behavior Coverage
     - Domain Methods / Domain Behavior Contract
   Internal dependencies:

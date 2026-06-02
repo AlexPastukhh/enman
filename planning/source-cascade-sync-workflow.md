@@ -1,8 +1,8 @@
 # Enman Source Cascade Sync Workflow
 
 Status: active Enman project workflow  
-Doc version: v0.2.0  
-Scope: how to add local section-level source blocks, use source-sync register skeletons safely, prepare doc version/source synchronization and derive layer source-sync registers
+Doc version: v0.3.0  
+Scope: how to add local section-level source blocks, use source-sync register skeletons safely, prepare doc version/source synchronization, derive layer source-sync registers and decide when structured files require local section sources
 
 ## 1. Purpose
 
@@ -15,6 +15,7 @@ Local section-level Sources blocks are the primary working mechanism.
 Layer source-sync registers are navigation/sync indexes.
 A layer register may be skeleton, derived or synchronized.
 A skeleton register is allowed only when it is explicitly marked incomplete and does not claim full source coverage.
+Structured files with stable semantic sections need local section-level Sources blocks when those sections rely on real external sources or meaning-bearing internal dependencies.
 ```
 
 This workflow is Enman-specific. The reusable setup model lives in:
@@ -49,6 +50,9 @@ Content source:
 
 Internal dependency:
   A section inside the same draft that the current section depends on.
+
+Structured section file:
+  A file with stable semantic sections where different sections may depend on different source sets.
 
 Local Sources block:
   A fenced text block placed immediately after a section heading.
@@ -141,7 +145,7 @@ Use this workflow for one active draft/file at a time.
 3. Read the file itself.
 4. Read the file-type workflow, template, principles and responsibility map.
 5. If a layer/root source-sync register exists, read its status/scope before editing.
-6. Identify which sections should have local Sources blocks or which register rows should exist.
+6. Identify which sections should have local Sources blocks, which files can use file-level source audit and which register rows should exist.
 7. For each section/row, identify:
    - format/process sources;
    - content sources;
@@ -156,6 +160,29 @@ Use this workflow for one active draft/file at a time.
 ```
 
 Do not start with a global filled register and then guess local dependencies. Start from the file/section and its workflow/template when filling authoritative rows. A skeleton register may exist first, but it must say which rows are provisional and what local source pass is still needed.
+
+## 4A. Structured File Local Sources Rule
+
+Use local section-level `Sources:` blocks when all of these are true:
+
+```text
+- the file has stable semantic sections;
+- different sections may rely on different source sets or internal dependencies;
+- the file participates in source/version/cascade work;
+- later downstream work needs to know which source was used for which section.
+```
+
+This rule applies to:
+
+```text
+- active domain aggregate drafts;
+- domain value object drafts with structured sections;
+- slice drafts;
+- structured root workflow/router/template files when section-level sources are meaningful;
+- other structured planning files when they consume scenario/domain/slice/testing/API/implementation evidence.
+```
+
+A register row alone is not enough for section-level work when a structured file has meaningful section-specific dependencies. A file-level dependency audit can be enough only for flat logs, simple indexes, registers, or files where section-level sources would be artificial noise.
 
 ## 5. Local Sources Block Placement
 
@@ -188,8 +215,9 @@ Rules:
 - If a source was not checked but should matter, put it under Not checked.
 - If a source only defines format/process, do not list it as content.
 - If a source provides business/domain/testing meaning, do not list it as format/process.
+- Every listed source should include a source version/status label.
 - When a source file has a Doc version, include that version/status label in local Sources blocks.
-- When a source file is unversioned or historical, mark that explicitly instead of inventing a version.
+- When a source file is unversioned, historical, prior evidence or implementation-only, mark that explicitly instead of inventing a version.
 ```
 
 ## 6. Scenario DATA Rule
@@ -245,6 +273,45 @@ planning/domain/domain-source-sync-register.md
 ```
 
 The domain register is the current synchronized dependency index for active aggregate local Sources blocks. It does not replace the local section-level Sources blocks.
+
+## 7A. Domain Value Object Draft Application
+
+For value object drafts, local Sources blocks usually belong after these sections:
+
+```text
+## 1. Purpose
+## 2. Source Inputs
+## 3. Used By
+## 4. Shape / Fields
+## 5. Invariants
+## 6. Creation / Normalization Rules
+## 7. Equality Rule
+## 8. Validation Boundary
+## 9. Persistence / Serialization Notes
+## 10. Invalid Examples
+## 11. Questions / Decisions
+## 12. Source Delta / Change Log
+```
+
+Use local Sources blocks for value objects because their sections commonly depend on different source sets:
+
+```text
+Purpose / Source Inputs:
+  scenario, behavior, aggregate and historical discovery sources.
+
+Used By:
+  aggregates, entities, API/client references and implementation evidence.
+
+Shape / Invariants / Creation / Equality / Validation:
+  behavior items, aggregate usage, domain modeling principles and implementation evidence when checked.
+
+Persistence / Serialization:
+  aggregate persistence notes, implementation evidence or Not checked when not reviewed.
+```
+
+Do not leave a generic `Full source/version/cascade metadata not checked` note after a value-object source coverage pass. Replace it with explicit `Not checked` items in the relevant local Sources blocks.
+
+When value-object local Sources are added, update `planning/domain/domain-source-sync-register.md` only within an explicitly declared value-object coverage state. Do not claim full domain-folder coverage until all relevant domain files have been reviewed.
 
 ## 8. Slice Draft Application
 
@@ -360,6 +427,7 @@ First vertical chain:
 ```text
 SC-13D
   -> AgreementProposalExchange aggregate draft
+  -> AgreementProposalExchange value objects
   -> SL-AGR-EXCH-001 slice draft
 ```
 
@@ -367,9 +435,10 @@ Current state:
 
 ```text
 - domain aggregate/register part is complete enough for domain-side source/version/cascade review;
+- structured value-object local Sources rule is defined, but value-object files still need a local Sources pass;
 - root register skeleton exists for root workflow/router dependencies;
 - slice register is still planned;
-- first slice-side application should start only after slice read order/template/register skeleton are aligned with the domain register.
+- first slice-side application should start only after slice read order/template/register skeleton are aligned with the domain register and the relevant value-object sources are covered.
 ```
 
 First slice-side application should target:
