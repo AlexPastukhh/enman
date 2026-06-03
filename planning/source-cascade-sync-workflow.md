@@ -1,8 +1,8 @@
 # Enman Source Cascade Sync Workflow
 
 Status: active Enman project workflow
-Doc version: v0.7.0
-Scope: how to add local section-level source blocks, use source-sync register skeletons safely, prepare doc version/source synchronization, derive layer source-sync registers and decide when structured files require local section sources
+Doc version: v0.8.0
+Scope: how to add local section-level source blocks, classify source-impact strength, use source-sync register skeletons safely, prepare doc version/source synchronization, derive layer source-sync registers and decide when structured files require local section sources
 
 ## 1. Purpose
 
@@ -12,7 +12,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - none
@@ -31,6 +31,9 @@ Layer source-sync registers are navigation/sync indexes.
 A layer register may be skeleton, derived or synchronized.
 A skeleton register is allowed only when it is explicitly marked incomplete and does not claim full source coverage.
 Structured files with stable semantic sections need local section-level Sources blocks when those sections rely on real external sources or meaning-bearing internal dependencies.
+Route/read/navigation links are not source/version dependencies by default.
+A version bump alone does not force downstream content changes.
+Downstream cascade review is required only when the consumed meaning, rule, output shape, evidence or source truth changed materially.
 ```
 
 This workflow is Enman-specific. The reusable setup model lives in:
@@ -59,7 +62,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Purpose
@@ -77,6 +80,9 @@ Format/process source:
 
 Content source:
   A scenario, DATA, behavior, domain, slice, testing, API or implementation-evidence file that provides section meaning.
+
+Command/read route link:
+  A file is read or routed to for an action. This is not a source/version dependency by default.
 
 Internal dependency:
   A section inside the same draft that the current section depends on.
@@ -107,7 +113,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Purpose
@@ -189,7 +195,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Purpose
@@ -232,7 +238,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Core Concepts
@@ -320,8 +326,8 @@ Sources:
   Format/process:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
-  Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+  Register/index dependencies:
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
     - planned planning/slices/slice-source-sync-register.md @ not created
   Internal dependencies:
@@ -341,6 +347,11 @@ Use these dependency classes:
 ```text
 simple navigational link:
   The link helps readers find related material but does not provide meaning, rules, evidence or downstream source truth.
+  No source/version cascade by default.
+
+command/read route link:
+  The file is listed as a required read, route target or command-navigation target for an action.
+  No source/version cascade by default.
 
 format/process dependency:
   The source defines workflow, template, ownership, output shape, validation process or drafting rules.
@@ -353,12 +364,16 @@ internal dependency:
 
 register-index dependency:
   The source is a root/layer source-sync register used to discover or synchronize dependencies.
+  A register version bump alone does not force every consumer to update.
 
 implementation/evidence dependency:
   The target uses implementation/test/helper evidence and must say whether that evidence was checked in this pass or is prior evidence.
 ```
 
-If the dependency affects meaning, workflow, template shape, source truth, validation, state, behavior, routing, output mode or downstream sync, record it explicitly in one of these places:
+If the dependency affects meaning, workflow, template shape, source truth, validation, state, behavior, output mode or downstream sync, record it explicitly in one of these places.
+
+A route/read/navigation link requires cascade review only when the target consumes the linked file's current rules, output shape, source truth or evidence. Do not treat route membership itself as a versioned source dependency.
+
 
 ```text
 - local section-level Sources block for structured files with section-specific dependencies;
@@ -378,6 +393,125 @@ Rules:
 - Do not claim a register is synchronized until local Sources blocks or a file-level audit prove the row.
 - If the user only asks to identify the dependency, report the classification and register impact without editing files.
 ```
+
+## 5B. Dependency Strength / Cascade Trigger
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
+  Register/index dependencies:
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+    - planned planning/slices/slice-source-sync-register.md @ not created
+  Internal dependencies:
+    - Core Concepts
+    - Explicit Link / Dependency Declaration Rule
+  Not checked:
+    - local source cleanup for every existing root file outside CASCADE-SRC-1A scope
+    - planned testing source-sync register does not exist yet
+```
+
+Use this decision table before adding or refreshing a local `Sources:` block or register row:
+
+```text
+simple navigational link:
+  cascade: no by default
+  source label: do not add a versioned source reference unless the linked file's content is consumed
+  example: README/index link, related-doc pointer, discovery list
+
+command/read route link:
+  cascade: no by default
+  source label: route target is a required read, not automatically a source dependency
+  example: UCM row says read workflow X for action Y
+
+format/process dependency:
+  cascade: targeted review only
+  trigger: consumed workflow/template/output shape/rule materially changed
+  no trigger: source file version bumped for unrelated wording or unrelated route row
+
+content/source dependency:
+  cascade: strong candidate
+  trigger: scenario/DATA/behavior/domain/slice/testing/API meaning changed
+  no trigger: source file version bumped outside the consumed section/meaning
+
+register-index dependency:
+  cascade: no broad cascade by register bump alone
+  trigger: indexed row that the consumer uses changed meaning, status or source truth
+  no trigger: unrelated register row/version bump
+
+implementation/evidence dependency:
+  cascade: targeted current-state/proof review
+  trigger: evidence used for a current implementation/test/status claim changed or was invalidated
+  no trigger: helper/code file version changed outside checked claim
+
+internal dependency:
+  cascade: local section review
+  trigger: referenced section meaning changed
+```
+
+Strong trusted cascade is preserved:
+
+```text
+scenario / DATA / behavior
+  -> domain aggregate / value-object drafts
+  -> slice drafts
+  -> test plans / API contracts / implementation planning
+```
+
+Do not weaken meaning-bearing source chains. The cleanup target is fake cascade from route/read/navigation links and register version bumps, not real scenario/domain/slice/testing dependencies.
+
+## 5C. Source Impact Classification Output
+
+```text
+Sources:
+  Format/process:
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
+    - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
+    - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
+  Register/index dependencies:
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
+    - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+    - planned planning/slices/slice-source-sync-register.md @ not created
+  Internal dependencies:
+    - Dependency Strength / Cascade Trigger
+  Not checked:
+    - command-intake/action-type model is not added in this batch
+```
+
+For `сорс-импакт` / dependency classification requests, output:
+
+```text
+Source impact decision
+
+Relation found:
+  <target file/section> -> <referenced file/section>
+
+Dependency class:
+  <simple navigational link / command-read route link / format-process dependency / content-source dependency / register-index dependency / implementation-evidence dependency / internal dependency>
+
+Cascade decision:
+  <no cascade by default / targeted review / strong cascade candidate>
+
+Why:
+  <material consumed meaning/rule/shape/evidence/source truth or no material consumption>
+
+Local Sources impact:
+  <add/update/remove/no change>
+
+Register impact:
+  <add/update/remove/no change>
+
+Not checked:
+  - <explicit limits>
+
+Next action:
+  <plan/archive/edit only if separately requested>
+```
+
+This command is review/classification mode by default. It does not edit files, create archives, commit or push unless separately requested.
 
 ## 6. Scenario DATA Rule
 
@@ -571,10 +705,10 @@ Use the domain register as an upstream dependency index, then read the relevant 
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Internal dependencies:
     - Core Concepts
     - Register State And Derivation
@@ -613,7 +747,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Internal dependencies:
     - Doc Version Rule
     - Register State And Derivation
@@ -653,10 +787,10 @@ Source/version maintenance commands are active route commands when added in the 
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
     - planned planning/slices/slice-source-sync-register.md @ not created
   Internal dependencies:
@@ -725,11 +859,11 @@ Next action:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
     - planned planning/slices/slice-source-sync-register.md @ not created
   Internal dependencies:
@@ -800,11 +934,11 @@ Next action:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
     - planned planning/slices/slice-source-sync-register.md @ not created
   Internal dependencies:
@@ -878,7 +1012,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Core Concepts
@@ -948,7 +1082,7 @@ Do not fill a register as complete/synchronized until local Sources blocks or eq
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
@@ -992,11 +1126,11 @@ planning/slices/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-p
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Explicit Link / Dependency Declaration Rule
@@ -1013,4 +1147,5 @@ Sources:
 - ROOT-FULL-1 added active file creation/update version and register checks and parked future stale register/local Sources scan commands.
 - SRC-CMD-1A added active route-command behavior for register stale version scans, local Sources stale scans and full source/version audits, and bumped this workflow to Doc version: v0.6.0.
 - SRC-CMD-1C refreshed current root register source labels after Tampermonkey helper profile coverage, bumped this workflow to Doc version: v0.7.0 and kept slice/testing source registers deferred.
+- CASCADE-SRC-1A added source-impact classification, clarified that route/read/navigation links and register version bumps do not create source/version cascade by default, bumped this workflow to Doc version: v0.8.0 and preserved the strong scenario/domain/slice/testing cascade.
 ```

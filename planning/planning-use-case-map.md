@@ -1,7 +1,7 @@
 # Planning Use Case Map
 
 Status: current root use-case map / action-to-doc-flow router
-Doc version: v0.6.0
+Doc version: v0.7.0
 Scope: maps user-visible actions and commands to planning docs, workflows, templates, sources and permission boundaries
 
 ## 1. Purpose
@@ -12,7 +12,7 @@ Sources:
     - planning/documentation/field-kits/root-use-case-map-field-kit.md @ version not confirmed
     - planning/documentation/use-case-map-workflow.md @ version not confirmed
     - planning/documentation/USE-CASE-MAP-TEMPLATE.md @ version not confirmed
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Content:
     - planning/README.md @ Doc version: v0.3.0
   Internal dependencies:
@@ -56,7 +56,7 @@ Sources:
     - planning/workflow-activation-map.md @ Doc version: v0.3.0
     - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Internal dependencies:
     - Purpose
   Not checked:
@@ -99,10 +99,10 @@ Sources:
   Format/process:
     - planning/workflow-activation-map.md @ Doc version: v0.3.0
     - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
   Content:
     - planning/README.md @ Doc version: v0.3.0
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Internal dependencies:
     - Relationship To Root Files
   Not checked:
@@ -137,9 +137,9 @@ For non-trivial planning/repo work, use this path:
 Sources:
   Format/process:
     - planning/documentation/planning-docs-architecture-principles.md @ version not confirmed
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Internal dependencies:
     - Universal Chat Algorithm
   Not checked:
@@ -179,7 +179,7 @@ Sources:
   Format/process:
     - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Internal dependencies:
     - Universal Chat Algorithm
   Not checked:
@@ -221,7 +221,7 @@ Sources:
     - planning/documentation/planning-docs-architecture-principles.md#24b-accepted-command-and-preservation-guardrails @ version not confirmed
     - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Internal dependencies:
     - Active Context Rule
   Not checked:
@@ -326,7 +326,7 @@ Sources:
     - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
     - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Internal dependencies:
     - Read Source Modes
   Not checked:
@@ -369,11 +369,11 @@ Replacement package output must contain complete replacement/add files under `re
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Read Source Modes
@@ -419,9 +419,9 @@ planning/slices/slice-source-sync-register.md once created when slice files are 
 Sources:
   Format/process:
     - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Internal dependencies:
     - Source Model
   Not checked:
@@ -481,7 +481,7 @@ Sources:
     - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
     - planning/goal-map-principles-workflow-template.md @ version not confirmed
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Internal dependencies:
     - Output Modes
     - Source Delta
@@ -591,10 +591,10 @@ Sources:
     - planning/documentation/field-kits/root-use-case-map-field-kit.md @ version not confirmed
     - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
     - planning/goal-map-principles-workflow-template.md @ version not confirmed
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
     - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Internal dependencies:
     - Active Context Rule
     - Output Modes
@@ -637,6 +637,7 @@ This root map remains the concrete Enman route table.
 | `проверь review diff file`, `проверь diff file`, `review diff file` | Read the standard repo-stored review diff for an explicitly requested review-diff-file archive flow and review it before real files are committed. | Ask for repo/branch/path if not clear; do not ask for pasted full diff when repo access is available. | Targeted. | GitHub/repo path `_ai-review-diffs/last-archive.diff`. | Diff review verdict; if OK, scoped real commit/push commands for intended files only. |
 | `перепроверь`, `recheck` | Recheck active answer/draft/source coverage. | Recheck last answer or ask target. | Targeted / full depending risk. | Conversation plus relevant sources. | Findings and corrections/no-change result. |
 | `сорс`, `укажи сорс`, `добавь source`, `добавь зависимость`, `ссылка на другой файл`, `этот файл зависит от X`, `эта секция зависит от X`, `source dependency`, `dependency link`, `source link` | Classify and declare a file/section dependency on another source file. | Ask for target file/section or source file only if missing. | Targeted; full if source model/register scope changed. | Conversation plus target file, referenced source file, source-cascade workflow/template/profile and relevant root/domain/slice register. | Source dependency decision: target, referenced source, dependency type, version/status label, local `Sources:` need, register impact, not-checked items and next action. No edit/archive without explicit permission. |
+| `сорс-импакт`, `классифицируй зависимость`, `source impact`, `dependency classification` | Classify whether a relation creates source/version cascade or is only navigation/read/route linkage. | Ask for target/referenced file or relation only if missing. | Targeted; full only if dependency model or register scope is unclear. | Conversation plus target relation, `planning/source-cascade-sync-workflow.md`, relevant local `Sources:` block/register row when provided. | Source impact decision: relation found, dependency class, cascade decision, why, local Sources impact, register impact, not-checked items and next action. Review/classification mode only; no edit/archive/commit unless separately requested. |
 | `стейл версии в регистрах`, `проверь регистры на стейл версии`, `register stale version scan` | Check source-sync registers for stale source paths, stale Doc version labels and rows that claim versions/statuses no longer present in source files. | Ask for register/layer scope if no active scope is clear. | Targeted; full only for explicitly requested layer/all scope. | Relevant source-sync register(s), current referenced source files and `planning/source-cascade-sync-workflow.md`. | Register stale version scan: checked registers, synchronized rows, needs-review rows, stale rows, expected fixes and not-checked scope. Does not edit files or create archive without separate request. |
 | `стейл локальные сорсы`, `проверь локальные сорсы`, `local sources stale scan` | Check local `Sources:` blocks and file-level Source Sync sections for stale versions, paths, source relationships and missing register impact. | Ask for target files/layer scope if no active scope is clear. | Targeted; full only for explicitly requested layer/all scope. | Target active files/drafts, their local `Sources:` blocks, referenced source files, relevant registers and `planning/source-cascade-sync-workflow.md`. | Local Sources stale scan: checked files, findings by file/section, stale local sources, register impact and next cleanup plan. Does not edit files or create archive without separate request. |
 | `полная проверка сорсов`, `полная source/version проверка`, `full source/version audit` | Run combined source/version consistency review for a bounded scope. | Ask for scope if not clear; do not default to full repo. | Full only for explicit root/domain/slice/all scope; otherwise targeted. | Relevant registers, local `Sources:` blocks, active file headers, referenced source files and source-cascade workflow. | Full source/version audit: scope, coverage state for scope-relevant areas, synchronized/needs-review/stale findings, recommended fixes and do-not-claim limits. Does not edit files or create archive without separate request. |
@@ -686,11 +687,11 @@ Sources:
   Format/process:
     - planning/workflow-activation-map.md @ Doc version: v0.3.0
     - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/README.md @ Doc version: v0.3.0
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Repeated / Continuation Commands
@@ -715,6 +716,7 @@ Do not treat that field kit as an activated workflow for ordinary scenario/slice
 | “добавь template / workflow / command / draft format / пример” | Documentation governance update | Optional | Full first time; targeted later | GitHub/archive/conversation by context | docs update workflow; example coverage decision when template/output shape changes; reviewable output | documentation README/map/workflows; `planning/documentation/field-kits/root-use-case-map-field-kit.md` when command/use-case routes change; `planning/documentation/example-coverage-workflow.md` when template/output/command/draft example coverage matters; relevant owner workflow/template; principle section references in §3A, including compound starter artifact policy when a new concept combines principles/workflow/template | docs architecture principles + use-case map + example coverage workflow | Level 2 update plan or replacement package + File Update Overview / `План файл-обновление` when files are planned/changed/reviewed; example coverage decision if applicable; compound starter artifact + separate example decision when introducing a new cohesive concept | Edits/packages require approval |
 | “ревью зон ответственности”, “что куда относится”, “generic vs project-specific”, “portability review”, “док слой реюзабл” | Documentation responsibility-zone / portability review | Optional | Full first time; targeted later | GitHub/archive/conversation by context; `арх` means source snapshot only | responsibility-zone review workflow; docs architecture principles; documentation responsibility map | `planning/documentation/documentation-responsibility-zone-review-workflow.md`, `planning/documentation/PORTABLE-STARTER-KIT.md` when copying/adapting reusable docs into a new project, `planning/documentation-migration/documentation-layer-portability-migration-plan.md`, `planning/documentation/planning-docs-architecture-principles.md`, `planning/documentation/documentation-responsibility-map.md`; target docs under review | responsibility-zone review workflow + portability migration plan | Level 2 classification table: reusable core, specialized profile, adapter mapping, example candidate, correct owner/action + File Update Overview if file changes are planned | Do not review scenario/slice/domain/API content itself unless separately requested; edits/packages require approval |
 | “ссылка на другой файл”, “зависимость от файла”, “этот файл зависит от X”, “эта секция зависит от X”, “укажи сорс”, “добавь source”, “source dependency”, “dependency link”, “source link” | Source dependency declaration / local `Sources:` + register impact check | Optional | Targeted; full if target/source/register scope is unclear or source model changed | GitHub/archive/conversation by context | source cascade sync workflow; source section template; Enman source usage profile; relevant root/domain/slice register; file-type workflow/template for the target file | `planning/source-cascade-sync-workflow.md`, especially explicit link/dependency declaration rule; `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md`; `planning/source-usage-cascade-profile.md`; target file/section; referenced source file; `planning/root-source-sync-register.md` when root files are involved; `planning/domain/domain-source-sync-register.md` when domain files are involved; `planning/slices/slice-source-sync-register.md` once created when slice files are involved; target file-type workflow/template/responsibility map when local section shape is needed | source cascade sync workflow + local Sources template + relevant layer/root register | Level 2 source-dependency decision: target file/section, referenced source, dependency type, source version/status label, local `Sources:` need, register impact, not-checked sources and next action; replacement package only when separately requested | Do not edit files/registers without explicit permission; do not invent source versions; do not claim register synchronization until local `Sources:` blocks or file-level audit prove it |
+| “сорс-импакт”, “классифицируй зависимость”, “source impact”, “dependency classification” | Source-impact classification / cascade trigger review | Optional | Targeted; full only if relation or dependency model is unclear | GitHub/archive/conversation by context | source cascade sync workflow; source section template/profile; relevant local `Sources:` block or register row when provided | `planning/source-cascade-sync-workflow.md`, especially Dependency Strength / Cascade Trigger and Source Impact Classification Output; target/referenced files or relation being classified; relevant register only when register impact is in scope | source cascade sync workflow | Level 2 Source impact decision: relation found, dependency class, cascade decision, why, local Sources impact, register impact, not-checked items and next action | Review/classification only; do not edit files/registers, create archives, commit or push unless separately requested |
 | “source usage”, “source/version”, “каскад зависимостей”, “stale downstream”, “версии сорсов”, “инкапсуляция слоёв”, “локальные Sources blocks” | Source usage / cascade governance, local section source drafting or pilot work | Optional | Full first time; targeted later | GitHub/archive/conversation by context | source cascade sync workflow; source usage field kit; Enman source usage profile; aggregate/server slice section source templates when draft sections are involved; principles §12A/13/14/15; PMR-002 until layer registers/full workflow exist | `planning/source-cascade-sync-workflow.md`, `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md`, `planning/source-usage-cascade-profile.md`; `planning/domain/domain-source-sync-register.md` when domain/aggregate source dependencies or downstream sync impact are involved; `planning/documentation/field-kits/source-usage-cascade-field-kit.md` when setting up/reviewing source-usage model; `planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md` when adding/reviewing aggregate section `Sources:` blocks; `planning/slices/SERVER-SLICE-SECTION-SOURCES-TEMPLATE.md` when adding/reviewing server slice section `Sources:` blocks; `planning/source-usage-pilots/README.md`; pilot register if user asks to work on a pilot; relevant source/domain/slice docs only for real pilot fill | layer encapsulation principle + source cascade sync workflow + source usage field kit + Enman source usage profile | Level 2 governance plan, local section source plan, pilot skeleton, pilot fill plan or replacement package + File Update Overview / `План файл-обновление` when files are planned/changed/reviewed | Do not pretend layer registers/full cascade workflow exist before local `Sources:` blocks prove the shape; do not add ad hoc version fields outside the doc-version convention |
 | “давай архив”, “собери архив”, “replacement package”, “archive for manual apply” | Replacement archive/package generation | Optional | Targeted/full by package scope | GitHub/archive/conversation by context | replacement file generation guide; docs update workflow when docs change; reviewable output | `planning/replacement-file-generation-guide.md`, target files, docs update workflow when docs are changed; `planning/documentation/review-diff-file-workflow.md` only for explicit review-diff-file mode | replacement guide + workflow activation | Level 2 archive/package response + File Update Overview / `План файл-обновление`; ZIP package with `MANIFEST.md`, `APPLY.md`, `replacement-files/<repo-relative-path>` complete files; default saved diff copied to clipboard | Direct repo edits not allowed unless separately approved; if complete current file contents cannot be obtained from GitHub/repo access, ask for a fresh archive or full target-file copies before generating replacement files |
 | “файл большой”, “дай ps1”, “скрипт для большого файла”, “архив неудобен” | Large/shared file update delivery choice | Optional | Targeted/full by file risk | Fresh archive/current full file preferred; script only if complete replacement unsafe | docs update workflow; replacement guide; local targeted script mode if fallback needed | `planning/documentation/documentation-update-workflow.md`, `planning/replacement-file-generation-guide.md`, target file | delivery safety check + replacement guide | Level 2 delivery plan: prefer fresh full repo/archive + safe complete replacement; one-file targeted script only as fallback | Do not choose script only because file is large; scripts require explicit mode and no auto-commit |
@@ -740,7 +742,7 @@ Sources:
     - planning/workflow-activation-map.md @ Doc version: v0.3.0
     - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Internal dependencies:
     - Primary Use Case Table
   Not checked:
@@ -807,7 +809,7 @@ Sources:
   Format/process:
     - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Internal dependencies:
     - Active Context Rule
     - Source Delta
@@ -849,7 +851,7 @@ Sources:
     - planning/documentation/example-coverage-workflow.md @ version not confirmed
     - planning/documentation/use-case-map-workflow.md @ version not confirmed
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Internal dependencies:
     - Principle Section References
     - Reusable Command Example References
@@ -894,7 +896,7 @@ Sources:
     - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
     - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Internal dependencies:
     - Output Modes
     - Accepted Command / No Reinvention Rule
@@ -934,11 +936,11 @@ Steps:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
     - planned planning/slices/slice-source-sync-register.md @ not created
   Internal dependencies:
@@ -1003,8 +1005,8 @@ They are review/audit commands by default. They do not edit files, create archiv
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.7.0
-    - planning/root-source-sync-register.md @ Doc version: v1.3.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v1.4.0
   Content:
     - planning/README.md @ Doc version: v0.3.0
     - planning/workflow-activation-map.md @ Doc version: v0.3.0
@@ -1024,4 +1026,5 @@ Sources:
 - ROOT-SRC-3A refreshed output/archive source status and bumped this file to Doc version: v0.4.0 without changing routing/navigation semantics.
 - SRC-CMD-1A added active routes for source/version maintenance commands and explicit `положняк` current-state output, and bumped this map to Doc version: v0.5.0.
 - SRC-CMD-1C refreshed current root register/source-cascade labels after the Tampermonkey helper profile pass, bumped this map to Doc version: v0.6.0 and did not change command semantics.
+- CASCADE-SRC-1A added the narrow `сорс-импакт` route for source-impact classification, clarified review/classification-only output and bumped this map to Doc version: v0.7.0 without adding command-intake/action-type expansion.
 ```

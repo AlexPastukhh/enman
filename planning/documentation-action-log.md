@@ -2194,3 +2194,39 @@ Follow-ups:
 Notes:
   Historical Source Delta notes may still mention earlier versions. This cleanup targets current source labels and register rows only. v3 additionally fixes current dependency-table rows that were missed by exact path/version stale checks in v2.
 
+
+### 2026-06-02 - Added targeted source-impact cascade trigger model
+
+Date:
+  2026-06-02
+Action:
+  Added CASCADE-SRC-1A targeted source-impact / cascade trigger model and cleaned broad route/read/navigation dependency edges from current root register rows.
+Type:
+  source/version dependency model cleanup / root register cleanup
+Status:
+  applied
+Why:
+  Before creating slice/testing source registers or adding further command architecture, the source model needed to stop treating every route/read/navigation link or register version bump as a versioned source dependency.
+Changed files:
+  - planning/source-cascade-sync-workflow.md
+  - planning/planning-use-case-map.md
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added Dependency Strength / Cascade Trigger rules.
+  - Added Source Impact Classification Output rules.
+  - Added narrow `сорс-импакт` / dependency classification route to the use-case map.
+  - Removed broad route/read/navigation source edge lists from current root dependency rows for README, use-case map, workflow activation map and responsibility map.
+  - Preserved strong scenario/DATA/behavior -> domain -> slice -> testing/API/implementation cascade.
+Not changed:
+  - No slice source-sync register created.
+  - No testing source-sync register created.
+  - No workflow-activation-map downgrade performed.
+  - No command-intake/action-type model added.
+  - No docs/source tree commands added.
+  - No Tampermonkey userscript changes.
+  - No repo-backed Goal Map sync.
+Follow-ups:
+  CASCADE-ROUTE-1B should clean route ownership and reduce workflow-activation-map authority without reintroducing fake source/version dependency edges.
+Notes:
+  Route/read/navigation links remain valid routing/discovery evidence. They are just not versioned source dependencies by default.
