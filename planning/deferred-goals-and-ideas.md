@@ -1,7 +1,7 @@
 # Deferred Goals And Ideas
 
 Status: current deferred backlog / far-future idea owner  
-Doc version: v0.1.0  
+Doc version: v0.2.0
 Scope: parked goals, deferred features, far-future implementation ideas and postponed decision points across planning/workstream docs
 
 This file keeps deferred ideas visible without bloating active implementation notes or current workstream plans.
@@ -204,6 +204,46 @@ Current boundary:
 
 ```text
 Do not implement cleanup/repair before selected-command stack and helper-owned compose buffer are designed.
+```
+
+### DG-5 — Plan Detail Recovery Prompt Command
+
+Status:
+  DEFERRED
+
+Goal:
+  Add a future command/prompt that recovers scattered planning details when intermediate decisions were discussed but the Goal Map or repo-backed docs have not yet been updated.
+
+Possible aliases:
+
+```text
+восстанови детали плана
+собери план по крупицам
+не забудь детали плана
+plan detail recovery prompt
+```
+
+The future output should collect:
+
+```text
+- recent intermediate decisions;
+- accepted constraints;
+- active vs deferred items;
+- file scope;
+- boundaries;
+- next action;
+- things not yet reflected in Goal Map/repo docs;
+- unresolved questions;
+- decisions that must not be lost before archive or next step.
+```
+
+Boundary:
+
+```text
+Deferred only.
+Do not implement as an active route now.
+Do not update Goal Map automatically.
+Do not create files/archives unless separately requested.
 ```
 
 ### FUT-SRC-VERIFY-1 — Register stale source/version usage command

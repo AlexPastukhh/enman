@@ -1,6 +1,7 @@
 # Root Use-Case Map Field Kit
 
 Status: active reusable documentation-layer field kit  
+Doc version: v0.1.0
 Scope: one-time / rare setup guidance for deriving a single project root use-case map
 
 ## 1. Purpose
@@ -61,7 +62,23 @@ Before creating or restructuring a root use-case map, answer:
 8. Which actions require explicit user permission?
 9. Which docs layer files own reusable workflow/template logic?
 10. Which profile-specific route kits apply to this project?
+11. Which profile-specific reusable examples appear to fit this project type, workflow style or route family?
 ```
+
+## 4A. Profile-Specific Example Fit Check
+
+When a field kit is used to create or restructure a concrete project root use-case map:
+
+```text
+1. Read `planning/documentation/examples/README.md`.
+2. Identify fully reusable and profile-specific reusable examples that appear to match the project type, workflow style, route families or output modes.
+3. Show those candidate examples to the user.
+4. Ask whether the user considers them a fit for this project.
+5. Only user/project-accepted examples may be referenced from the concrete root use-case map or detailed traces.
+6. Keep examples demonstration-only.
+```
+
+Do not silently decide that a profile-specific reusable example matches the project's spirit. Example fit is a project/user decision.
 
 ## 5. Common Command Clusters
 
@@ -147,4 +164,5 @@ The profile kit suggests route families. The project root map still owns the con
 - Do not put full workflow steps into root map rows.
 - Do not hide scenario/domain/slice command setup in a deep folder where project maintainers will not find it.
 - Do not silently change command meaning when extracting reusable setup logic.
+- Do not silently decide that a profile-specific reusable example fits a concrete project. Show candidates and ask the user/project to accept fit before wiring them into the concrete root map.
 ```

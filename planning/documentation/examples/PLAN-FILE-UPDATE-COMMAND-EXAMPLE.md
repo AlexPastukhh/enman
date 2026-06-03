@@ -1,6 +1,7 @@
 # Plan File Update Command Example
 
 Status: current reusable response-command and output example / demonstration-only
+Doc version: v0.1.0
 Scope: demonstrates `план файл-обновление` / file-update planning command output with the planned-mode File Update Overview
 
 ## 1. Purpose
@@ -50,7 +51,7 @@ If the user later says `давай архив`, that is a separate output-packag
 User:
 
 ```text
-спланируй архив для переименования `Итог` в `План файл-обновление`
+план файл-обновление для documentation-layer example taxonomy / field-kit example fit / deferred plan detail recovery
 ```
 
 ## 5. Example Output Shape
@@ -59,7 +60,7 @@ Main answer:
 
 ```text
 - target and reason;
-- source/owner files to read;
+- owner/source files to read;
 - planned file groups;
 - boundaries / not changed;
 - checks and risks;
@@ -70,42 +71,29 @@ Then end with:
 
 ## План файл-обновление
 
-**Статус:** planned
+Статус: `planned / no files changed`.
 
-### Change group: Response/output governance
+Что:
+  Уточнить documentation-layer example taxonomy and example-fit setup rule; добавить deferred команду для восстановления деталей плана, когда Goal Map ещё не обновлён.
 
-| Change | File | R | Что | Почему |
-|---|---|---|---|---|
-| Updated | `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | owns response placement/commands | Add `план файл-обновление` command aliases and placement | The file-update planning block needs a clear file-specific name |
-| Updated | `planning/documentation/file-update-overview-workflow.md` | owns file-update overview workflow | Rename user-facing block from legacy `Итог` to `План файл-обновление` | Prevents conflict with future generic action/update summaries |
-| Updated | `planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md` | owns exact block shape | Change heading to `## План файл-обновление` | Keeps output shape reusable and explicit |
+Почему:
+  Reusable docs examples должны различать fully reusable examples и project-type/profile-specific reusable examples. Literal current-project-only examples должны жить в project-local/root area. При создании root UCM через field kit чат должен показать candidate profile examples пользователю и спросить fit, а не решать молча. Отдельно нужно не забыть deferred command для восстановления “рассыпанных” деталей плана.
 
-### Boundaries
+Files:
+  `planning/documentation/planning-docs-architecture-principles.md`, `planning/documentation/examples/README.md`, `planning/documentation/field-kits/root-use-case-map-field-kit.md`, `planning/documentation/use-case-map-workflow.md`, `planning/documentation/example-coverage-workflow.md`, `planning/planning-use-case-map.md`, `planning/deferred-goals-and-ideas.md`, `planning/root-source-sync-register.md`, `planning/documentation-action-log.md`.
 
-| Type | File / artifact | R | Почему |
-|---|---|---|---|
-| Not changed | Generic Action Overview files | future non-file action overview | This command restores file-update planning first; generic action summary is separate work |
-| Not created | Archive/package | output artifact | Planning command does not create an archive unless separately requested |
+Checks:
+  No examples-as-authority; no silent profile-fit decision; no new active command; deferred recovery prompt command parked only; no slice/testing register work yet.
 
-### Проверка
-
-| Check | Result |
-|---|---|
-| Delivery safety classified | yes; complete replacement files are expected to be safe |
-| Large/shared files | no large unsafe replacement identified in this example |
-| Fresh full archive needed | no; current repo files are enough for planning |
-| Preferred delivery | no artifact for planning; replacement archive only after `давай архив` |
-
-### Следующее действие
-
-Approve the plan or ask for changes. Say `давай архив` only after the planned file/update scope is accepted.
+Next action:
+  Include this in next `CASCADE-ROUTE-1B` archive scope.
 
 ## 6. Rules Demonstrated
 
 ```text
 - The command produces a plan, not an edit.
 - The final block is `План файл-обновление`, not generic `Итог`.
-- The block uses `Статус: planned`.
-- The block exposes files, responsibilities, what/why, boundaries, checks and next action.
+- The block can be used before files are changed: `planned / no files changed`.
+- The block exposes files, reasons, checks and next action.
 - Archive/package generation remains a separate explicit command.
 ```

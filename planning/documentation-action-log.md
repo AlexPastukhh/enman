@@ -2230,3 +2230,49 @@ Follow-ups:
   CASCADE-ROUTE-1B should clean route ownership and reduce workflow-activation-map authority without reintroducing fake source/version dependency edges.
 Notes:
   Route/read/navigation links remain valid routing/discovery evidence. They are just not versioned source dependencies by default.
+
+### 2026-06-03 - Cleaned root route ownership and example-fit rules before slice/testing registers
+
+Date:
+  2026-06-03
+Action:
+  Applied CASCADE-ROUTE-1B root routing/docs-architecture cleanup before slice/testing source-register work.
+Type:
+  root routing cleanup / documentation example taxonomy / deferred command parking
+Status:
+  applied
+Why:
+  The current chat-local Goal Map selected route/source cleanup before slice/testing registers. CASCADE-SRC-1A had already stopped broad route/read/navigation links from becoming source/version dependencies by default, but UCM/WAM/responsibility-map authority and documentation example-fit rules still needed cleanup before slice/testing register skeletons could be created safely.
+Changed files:
+  - planning/planning-use-case-map.md
+  - planning/workflow-activation-map.md
+  - planning/planning-doc-responsibility-map.md
+  - planning/documentation/planning-docs-architecture-principles.md
+  - planning/documentation/examples/README.md
+  - planning/documentation/field-kits/root-use-case-map-field-kit.md
+  - planning/documentation/use-case-map-workflow.md
+  - planning/documentation/example-coverage-workflow.md
+  - planning/deferred-goals-and-ideas.md
+  - planning/root-source-sync-register.md
+  - planning/documentation/examples/PLAN-FILE-UPDATE-COMMAND-EXAMPLE.md
+  - planning/documentation-action-log.md
+Updates:
+  - Clarified that UCM owns concrete command/action routing.
+  - Clarified that WAM is workflow activation/read-order helper, not command source of truth and not a source/version register.
+  - Clarified that responsibility-map pointers choose ownership/routing and do not create source/version dependencies by default.
+  - Added reusable example taxonomy: fully reusable, project-type/profile-specific reusable and project-local examples.
+  - Added field-kit/setup workflow requirement to show candidate profile-specific examples to the user before wiring them into a concrete root UCM.
+  - Updated the plan-file-update command example with the accepted CASCADE-ROUTE-1B planned/no-files-changed shape.
+  - Parked the plan-detail recovery prompt as deferred only.
+  - Updated root source-sync register rows without claiming full root/source coverage.
+Not changed:
+  - No slice source-sync register created.
+  - No testing source-sync register created.
+  - No slice/testing workflow sync started.
+  - No new active command family implemented.
+  - No Tampermonkey projection added.
+  - No examples made source of truth.
+Follow-ups:
+  Start SLICE-TEST-SRC-0 to create slice/testing source-register skeletons and seed active owner doc versions after this route cleanup is reviewed.
+Notes:
+  Profile-specific reusable examples may support route chains only as demonstration reads after user/project fit is accepted. They do not own command semantics, route logic, source truth, output mode or permission boundary.

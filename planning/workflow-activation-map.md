@@ -1,7 +1,7 @@
 # Workflow Activation Map
 
 Status: current workflow activation map
-Doc version: v0.3.0
+Doc version: v0.4.0
 Scope: how chats select and disclose workflows before non-trivial planning/repo work
 
 ## 1. Purpose
@@ -9,9 +9,9 @@ Scope: how chats select and disclose workflows before non-trivial planning/repo 
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v1.5.0
   Content:
     - planning/README.md @ Doc version: v0.3.0
   Internal dependencies:
@@ -37,6 +37,16 @@ For non-trivial planning/repo work, the chat should:
 
 This file is a workflow router. It does not replace the workflow docs it points to.
 
+Authority boundary:
+
+```text
+This file owns workflow activation, read-order help, Workflow Preflight and implicit/explicit workflow separation.
+It does not own user-visible command/action semantics when `planning/planning-use-case-map.md` owns the concrete route.
+It does not function as a source/version dependency register.
+```
+
+If WAM points to a workflow, that pointer is a routing/read-order link by default. It creates cascade review only when WAM consumes changed workflow meaning that affects activation, preflight, read-order or permission boundaries.
+
 For user-action/use-case traces, repeated commands, active context, traversal depth and read-source decisions, use:
 
 ```text
@@ -48,6 +58,8 @@ Response-level commands are documented in:
 ```text
 planning/documentation/reviewable-agent-output-and-commands-workflow.md
 ```
+
+For command semantics and route rows, the use-case map wins over WAM discovery text. WAM can mention command-related workflow families, but it must not become a parallel command router.
 
 Examples:
 
@@ -70,7 +82,7 @@ Sources:
   Format/process:
     - planning/planning-agent-protocol.md @ Doc version: v0.1.0
     - planning/agent-roles-and-required-actions.md @ Doc version: v0.1.0
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
   Content:
     - planning/README.md @ Doc version: v0.3.0
   Internal dependencies:
@@ -106,7 +118,7 @@ Sources:
     - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
     - planning/planning-agent-protocol.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v1.5.0
   Internal dependencies:
     - Core Rule
   Not checked:
@@ -153,10 +165,10 @@ The preflight is not a permission grant. It only makes the intended workflow pat
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
     - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v1.5.0
   Internal dependencies:
     - Workflow Preflight Format
   Not checked:
@@ -179,12 +191,12 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.4.0
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
   Content:
     - planning/README.md @ Doc version: v0.3.0
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v1.5.0
   Internal dependencies:
     - Activation Types
   Not checked:
@@ -241,12 +253,12 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.4.0
     - planning/goal-map-principles-workflow-template.md @ version not confirmed
     - planning/workstreams/tampermonkey-command-projection-plan.md @ version not confirmed
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v1.5.0
   Internal dependencies:
     - Workflow Registry
   Not checked:
@@ -500,11 +512,11 @@ reviewable-agent-output-and-commands-workflow.md
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
     - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
     - planning/documentation/documentation-update-workflow.md @ version not confirmed
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v1.5.0
   Internal dependencies:
     - Core Rule
     - Workflow Registry
@@ -548,7 +560,7 @@ The following do not require explicit permission because they are read-only or a
 ```text
 Sources:
   Format/process:
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v1.5.0
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
   Content:
     - planned planning/slices/slice-source-sync-register.md @ not created
@@ -580,7 +592,7 @@ planning/planning-maintenance-register.md
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
     - planning/planning-agent-protocol.md @ Doc version: v0.1.0
   Content:
     - planning/README.md @ Doc version: v0.3.0
@@ -608,8 +620,8 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/root-source-sync-register.md @ Doc version: v1.5.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
   Content:
     - planning/README.md @ Doc version: v0.3.0
   Internal dependencies:
@@ -638,11 +650,11 @@ Workflow activation is working when:
 Sources:
   Format/process:
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v1.5.0
   Content:
     - planning/README.md @ Doc version: v0.3.0
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.4.0
   Internal dependencies:
     - Workflow Registry
     - Implicit Workflow Chains
@@ -654,4 +666,6 @@ Sources:
 - ROOT-SRC-2A added Doc version: v0.1.0 and local section-level Sources blocks to this workflow activation router.
 - ROOT-SRC-2A preserved workflow registry and implicit workflow chain semantics.
 - ROOT-SRC-2B refreshed protocol/role source status and bumped this file to Doc version: v0.2.0 without changing activation semantics.
+- ROOT-SRC-3A refreshed output/archive source status and bumped this file to Doc version: v0.3.0 without changing activation semantics.
+- CASCADE-ROUTE-1B bumped this file to Doc version: v0.4.0 and clarified that WAM is an activation/read-order helper, not the owner of command semantics or source/version dependency edges.
 ```

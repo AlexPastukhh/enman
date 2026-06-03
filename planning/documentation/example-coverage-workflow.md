@@ -1,6 +1,7 @@
 # Example Coverage Workflow
 
 Status: current documentation-layer workflow  
+Doc version: v0.1.0
 Scope: decide when reusable workflows, templates, response commands, output modes and draft formats need working examples
 
 ## 1. Purpose
@@ -66,7 +67,7 @@ If no example is added, record the reason in the relevant examples index or upda
 ```text
 1. Identify the changed artifact.
 2. Classify the artifact type:
-   template / workflow / response command / output mode / draft format / index / other.
+   template / workflow / response command / output mode / draft format / index / project-type/profile-specific reusable example / other.
 3. Identify the owner file.
 4. Decide whether the artifact has an expected output shape or reusable behavior.
 5. Decide example coverage:
@@ -106,6 +107,24 @@ planning/documentation/examples/
 ```
 
 Keep examples near the layer that owns the workflow/template/output. Do not create a global top-level examples folder unless a future architecture update explicitly chooses that model.
+
+
+Example reuse placement:
+
+```text
+fully reusable example:
+  planning/documentation/examples/
+
+profile-specific reusable example:
+  planning/documentation/examples/profiles/<profile-name>/
+  or a clearly marked legacy/project-type folder until migrated
+
+project-local example:
+  project/root-local examples area chosen by the concrete project
+```
+
+A profile-specific reusable example may support concrete root routes only after the user/project accepts that the example fits the project type/spirit. Do not silently wire candidate examples into a concrete UCM.
+
 
 ## 7. Example File Responsibility
 
@@ -169,5 +188,6 @@ Example coverage works when:
 - command/output/draft behavior has at least one practical demonstration when useful;
 - examples are discoverable from an examples index;
 - examples do not become second sources of truth;
+- example fit is accepted by the user/project before profile-specific examples are wired into concrete routes;
 - future chats can find the correct output shape without rereading an entire conversation.
 ```

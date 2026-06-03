@@ -1,6 +1,7 @@
 # Use-Case Map Workflow
 
 Status: active reusable documentation-layer workflow  
+Doc version: v0.1.0
 Scope: how to create, update and maintain use-case maps as reusable routing artifacts across systems
 
 ## 1. Purpose
@@ -147,6 +148,21 @@ Before adding or changing a row:
 
 For broad changes, explain why the map itself needs the update and why the owner workflow/template is not the only file changed.
 
+## 6A. Setup-Time Example-Fit Pass
+
+When creating or substantially restructuring a project root use-case map:
+
+```text
+1. Read `planning/documentation/examples/README.md`.
+2. Identify fully reusable examples that clearly apply to the selected routes/output modes.
+3. Identify profile-specific reusable examples that appear to match the project type, workflow style or route families.
+4. Show candidate profile-specific examples to the user/project.
+5. Record only accepted examples in concrete UCM route rows or detailed traces.
+6. Keep examples as demonstration reads only; do not make them command/source/output/permission owners.
+```
+
+For ordinary maintenance of an already-established map, do not reread every example by default. Check examples only when the changed route/output/template behavior needs example coverage or when the user asks to review example fit.
+
 ## 7. Owner Workflow / Template Linking Rule
 
 Use-case rows should name owner files, not duplicate them.
@@ -234,6 +250,7 @@ When adding a new reusable use-case-map workflow, template or map:
 - update the relevant README/navigation file;
 - update the responsibility map if a new owner file is created;
 - decide whether an example coverage entry is needed;
+- confirm profile-specific example fit with the user before wiring a candidate example into concrete route rows;
 - record significant logical documentation actions in the action log.
 ```
 

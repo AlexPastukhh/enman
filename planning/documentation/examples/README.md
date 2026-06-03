@@ -1,7 +1,7 @@
 # Documentation Examples Index
 
 Status: current documentation-layer examples index / coverage tracker  
-Doc version: v0.1.0
+Doc version: v0.2.0
 Scope: navigation for documentation-layer working examples and explicit missing/deferred example decisions
 
 ## 1. Purpose
@@ -33,7 +33,7 @@ Examples demonstrate correct application.
 
 If an example needs command/source/output/permission logic, link to the owner file instead of copying that logic here.
 
-## 2A. Command Examples Placement
+## 2A. Command Examples Placement And Reuse Levels
 
 Reusable command/output examples live under:
 
@@ -41,17 +41,28 @@ Reusable command/output examples live under:
 planning/documentation/examples/
 ```
 
-Project-specific command examples live under:
+The examples index distinguishes these reuse levels:
 
 ```text
-planning/documentation/examples/project-specific/<project>/
+fully reusable example:
+  Works across most projects that use the same workflow/template/output mode.
+
+profile-specific reusable example:
+  Works for a project type/profile, such as a scenario-driven planning app.
+  It may be referenced from a concrete root UCM only after the user/project accepts the example fit.
+
+project-local example:
+  Works only for one concrete current project.
+  It should live in the project/root-local examples area chosen by that project, not as reusable docs-layer rule logic.
 ```
 
-Scenario/domain/slice topology examples for Enman live under:
+Preferred profile-specific reusable example placement:
 
 ```text
-planning/documentation/examples/project-specific/enman/
+planning/documentation/examples/profiles/<profile-name>/
 ```
+
+Legacy paths such as `planning/documentation/examples/project-specific/<project>/` may still exist. Treat them carefully: they can contain profile-specific reusable demonstrations or literal project-local examples. Mark the intended reuse level explicitly before wiring them into concrete root routes.
 
 Examples referenced from root use-case rows or detailed traces are part of the required traversal chain for that command/action when the task is non-trivial. They demonstrate valid execution. They do not own command semantics, routing, source truth, output mode or permission boundary.
 
@@ -97,9 +108,9 @@ The original copied active example coverage rows remain deferred. Field-kit exam
 | `SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE` | field-kit example | `planning/documentation/field-kits/shared-visibility-map-field-kit.md` | local detail to shared visibility mapping | current example | `planning/documentation/examples/SHARED-VISIBILITY-SCENARIO-PROJECT-EXAMPLE.md` | Demonstrates when a local slice question should be mirrored. |
 | `SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE` | field-kit example | `planning/documentation/field-kits/source-usage-cascade-field-kit.md` | generic source/consumer/cascade review model | current example | `planning/documentation/examples/SOURCE-USAGE-CASCADE-GENERIC-EXAMPLE.md` | Demonstrates source usage row and metadata-only review outcome. |
 | `SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE` | Enman-specific scenario/application example | `planning/documentation/field-kits/source-usage-cascade-field-kit.md` and `planning/source-usage-cascade-profile.md` | Enman-specific source/consumer/cascade pilot demonstration | current Enman-specific example / demonstration only | `planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md` | Demonstrates how the reusable source-usage field kit can be instantiated for one Enman scenario/application architecture pilot. Not generic reusable rule logic and not an active register. |
-| `SCENARIO-DOMAIN-SLICE-COMMAND-ROUTING-EXAMPLE` | Enman-specific command-routing example | `planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md` and `planning/planning-use-case-map.md` | Scenario/domain/slice route-family commands in the Enman root use-case map | current Enman-specific example / demonstration only | `planning/documentation/examples/project-specific/enman/SCENARIO-DOMAIN-SLICE-COMMAND-ROUTING-EXAMPLE.md` | Demonstrates valid traversal from root command rows to scenario/domain/slice/testing owner docs without copying workflow logic. |
+| `SCENARIO-DOMAIN-SLICE-COMMAND-ROUTING-EXAMPLE` | profile-specific reusable command-routing example accepted for Enman | `planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md` and `planning/planning-use-case-map.md` | Scenario/domain/slice route-family commands in the Enman root use-case map | current profile-specific reusable example / demonstration only | `planning/documentation/examples/project-specific/enman/SCENARIO-DOMAIN-SLICE-COMMAND-ROUTING-EXAMPLE.md` | Demonstrates valid traversal from root command rows to scenario/domain/slice/testing owner docs without copying workflow logic. The legacy path remains until a dedicated examples-path migration. |
 
-Project-specific examples should live under `planning/documentation/examples/project-specific/` and must be marked as demonstration-only, not reusable rule logic.
+Profile-specific reusable examples should preferably live under `planning/documentation/examples/profiles/<profile-name>/`. Literal project-local examples should live in the project/root-local examples area selected by that project. All examples remain demonstration-only, not reusable rule logic.
 
 ## 4. Adding A New Example
 

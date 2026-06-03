@@ -1,7 +1,7 @@
 # Planning Document Responsibility Map
 
 Status: transitional global responsibility map / root layer router
-Doc version: v0.3.0
+Doc version: v0.4.0
 Scope: routes planning documentation information to the correct layer and, where available, to the layer-local responsibility map
 
 ## 1. Core Rule
@@ -9,11 +9,11 @@ Scope: routes planning documentation information to the correct layer and, where
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - planning/workflow-activation-map.md @ Doc version: v0.3.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
+    - planning/workflow-activation-map.md @ Doc version: v0.4.0
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v1.5.0
   Internal dependencies:
     - none
   Not checked:
@@ -34,6 +34,21 @@ new information
 ```
 
 This file should not become the permanent detailed owner for every file inside every layer.
+
+Ownership/routing link rule:
+
+```text
+Responsibility links choose the owner layer/file.
+They are not source/version dependencies by default.
+```
+
+A responsibility pointer becomes a source dependency only when another file/section actually consumes the owner file's meaning, rule, output shape, evidence or reviewed source truth. Do not build cascade edges from responsibility-map links alone.
+
+Command/action routing remains owned by:
+
+```text
+planning/planning-use-case-map.md
+```
 
 Target model:
 
@@ -56,7 +71,7 @@ Until local responsibility maps exist for all layers, this file keeps transition
 Sources:
   Format/process:
     - planning/README.md @ Doc version: v0.3.0
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
   Content:
     - planning/diagrams/scenario-responsibility-map.md @ version not confirmed
     - planning/diagramming/diagramming-responsibility-map.md @ version not confirmed
@@ -93,12 +108,12 @@ planning/documentation/planning-docs-architecture-principles.md
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - planning/workflow-activation-map.md @ Doc version: v0.3.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
+    - planning/workflow-activation-map.md @ Doc version: v0.4.0
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
   Content:
     - planning/README.md @ Doc version: v0.3.0
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v1.5.0
   Internal dependencies:
     - Layer Router
   Not checked:
@@ -114,7 +129,7 @@ Sources:
 | `planning/shared-visibility-map.md` | Active Enman project map for local-detail to shared index/register visibility; not a reusable workflow |
 | `planning/source-usage-cascade-profile.md` | Active Enman project profile for source/consumer categories, row conventions and cascade triggers; not a reusable workflow |
 | `planning/planning-use-case-map.md` | Root action/use-case map: maps user actions and repeated commands to docs/workflows/templates/read paths, active context, traversal depth, read source mode, expected output and permission boundaries |
-| `planning/workflow-activation-map.md` | Root workflow activation router: which workflows exist, when they activate, implicit vs explicit activation, response command discoverability and Workflow Preflight format |
+| `planning/workflow-activation-map.md` | Root workflow activation/read-order helper: which workflows exist, when they activate, implicit vs explicit activation and Workflow Preflight format; not the owner of command/action semantics when UCM owns the route |
 | `planning/planning-maintenance-register.md` | Root register for deferred planning-docs/workflow maintenance tasks and condition-based follow-ups |
 | `planning/planning-workflow-current.md` | Workflow rules, repository-edit workflow and historical/current-state reminders; concrete inventory sections are not implementation truth |
 | `planning/vkr-clean-reference.md` | Clean VKR/thesis terminology, internal-to-clean mapping and evidence map for VKR-facing materials |
@@ -155,8 +170,8 @@ Do not create a second generic use-case map inside the documentation layer.
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - planning/workflow-activation-map.md @ Doc version: v0.3.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
+    - planning/workflow-activation-map.md @ Doc version: v0.4.0
   Content:
     - planning/goal-map-principles-workflow-template.md @ version not confirmed
     - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ version not confirmed
@@ -197,7 +212,7 @@ For command-helper or long-running command-system work:
 Sources:
   Format/process:
     - planning/documentation/documentation-responsibility-map.md @ version not confirmed
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
   Content:
     - planning/documentation/** @ mixed versions/statuses
   Internal dependencies:
@@ -223,7 +238,7 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
   Content:
     - planning/vkr-clean-reference.md @ version not confirmed
     - planning/dirty-drafts/** @ non-canonical recovery notes
@@ -246,10 +261,10 @@ VKR-facing materials must not use internal planning labels such as `L1`, `L2`, `
 Sources:
   Format/process:
     - planning/README.md @ Doc version: v0.3.0
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
     - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v1.5.0
   Internal dependencies:
     - Agent / Workflow Responsibility
   Not checked:
@@ -267,7 +282,7 @@ Direct GitHub edits, file creation, file deletion, moves and commits require exp
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
   Content:
     - planning/architecture/README.md @ version not confirmed
     - planning/adr/README.md @ version not confirmed
@@ -290,7 +305,7 @@ Architecture docs do not replace slice docs, scenario sources, API contract docs
 Sources:
   Format/process:
     - planning/diagrams/scenario-responsibility-map.md @ version not confirmed
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
   Content:
     - planning/diagrams/** @ Doc version: v0.1.0 after F7K-D2 unless declared otherwise
   Internal dependencies:
@@ -372,7 +387,7 @@ Transitional overview:
 Sources:
   Format/process:
     - planning/slices/slice-responsibility-map.md @ version not confirmed
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
   Content:
     - planned planning/slices/slice-source-sync-register.md @ not created
   Internal dependencies:
@@ -456,7 +471,7 @@ Concrete feature flow and status belongs in the relevant `.client.md` sidecar.
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
     - planning/testing/testing-responsibility-map.md @ version not confirmed
   Content:
     - planning/api/README.md @ version not confirmed
@@ -504,10 +519,10 @@ Other workflow docs may link to that file, but should not duplicate detailed lin
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - planning/workflow-activation-map.md @ Doc version: v0.3.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
+    - planning/workflow-activation-map.md @ Doc version: v0.4.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v1.5.0
   Internal dependencies:
     - Layer Router
     - Agent / Workflow Responsibility
@@ -555,7 +570,7 @@ Use this file first to choose the layer. Then use the local responsibility map o
 Sources:
   Format/process:
     - planning/planning-maintenance-register.md @ version not confirmed
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v1.5.0
   Content:
     - planning/documentation-action-log.md @ version not confirmed / evidence trail
   Internal dependencies:
@@ -602,11 +617,11 @@ Use only when copying/adapting the reusable documentation layer into a new proje
 Sources:
   Format/process:
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v1.5.0
   Content:
     - planning/README.md @ Doc version: v0.3.0
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - planning/workflow-activation-map.md @ Doc version: v0.3.0
+    - planning/planning-use-case-map.md @ Doc version: v0.8.0
+    - planning/workflow-activation-map.md @ Doc version: v0.4.0
   Internal dependencies:
     - Layer Router
     - Agent / Workflow Responsibility
@@ -620,4 +635,5 @@ Sources:
 - ROOT-SRC-2A did not move layer-local responsibility content or claim full root-folder coverage.
 - ROOT-SRC-2B refreshed protocol/role source status and bumped this file to Doc version: v0.2.0 without moving responsibility ownership.
 - ROOT-SRC-3A refreshed output/archive source status and bumped this file to Doc version: v0.3.0 without changing routing/navigation semantics.
+- CASCADE-ROUTE-1B bumped this file to Doc version: v0.4.0 and clarified that responsibility pointers are ownership/routing links, not source/version dependencies by default.
 ```

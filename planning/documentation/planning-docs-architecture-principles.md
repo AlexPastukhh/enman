@@ -1,6 +1,7 @@
 # Planning Docs Architecture Principles
 
 Status: active reusable documentation architecture principles  
+Doc version: v0.1.0
 Scope: reusable documentation architecture invariants for docs systems, with project-specific and scenario-driven material split into profile/adapter files
 
 > Active boundary: this file owns reusable documentation architecture invariants. Concrete Enman routing and project-specific configuration remain in `planning/planning-use-case-map.md` and root planning profiles.
@@ -18,6 +19,7 @@ Scope: reusable documentation architecture invariants for docs systems, with pro
 - [8. Local Notes vs Register](#8-local-notes-vs-register)
 - [9. Template vs Workflow](#9-template-vs-workflow)
 - [9A. Compound Starter Artifact Principle](#9a-compound-starter-artifact-principle)
+- [9B. Example Reuse Level Principle](#9b-example-reuse-level-principle)
 - [10. Current Reality, Target, Draft, Archive And Recovery Notes](#10-current-reality-target-draft-archive-and-recovery-notes)
 - [11. Avoid Heavy Current-State Docs](#11-avoid-heavy-current-state-docs)
 - [12. Source-of-Truth / Evidence Hierarchy](#12-source-of-truth--evidence-hierarchy)
@@ -335,6 +337,30 @@ Split the compound starter artifact later when:
 ```
 
 This principle explains why a compound starter artifact can exist. Concrete project route decisions still belong in the relevant use-case map, responsibility map, README or adapter/profile.
+
+## 9B. Example Reuse Level Principle
+
+Examples demonstrate usage. They do not own command semantics, route logic, source truth, output modes or permission boundaries.
+
+Reusable documentation systems should distinguish three example reuse levels:
+
+```text
+Fully reusable example
+  Demonstrates a workflow/template/output shape that applies across most projects using the documentation system.
+
+Project-type / profile-specific reusable example
+  Demonstrates a workflow/template/route family for a class of projects or profile,
+  such as scenario-driven planning apps.
+  It is reusable for projects of that type after the user/project accepts the fit.
+
+Project-local example
+  Demonstrates something literally specific to one concrete project.
+  It should live near the project/root-local area chosen by that project, not as generic reusable documentation logic.
+```
+
+The reusable documentation examples folder may contain fully reusable examples and profile-specific reusable examples. A profile-specific reusable example is not the same as a current-project-only example.
+
+A field kit or setup workflow must not silently decide that a profile-specific example fits a concrete project. The chat should show candidate examples to the user and ask whether they fit the project type/spirit before wiring them into the concrete root use-case map or detailed traces.
 
 ## 10. Current Reality, Target, Draft, Archive And Recovery Notes
 
