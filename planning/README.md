@@ -124,6 +124,7 @@ Sources:
     - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
   Content:
     - planning/goal-map-principles-workflow-template.md @ version not confirmed
+    - planning/workstreams/vkr-finalization-goal-map.md @ Doc version: v0.1.0
     - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ version not confirmed
     - planning/workstreams/tampermonkey-command-projection-plan.md @ version not confirmed
     - tools/tampermonkey/README.md @ version not declared
@@ -204,6 +205,7 @@ When a new chat, restored context or first planning pass touches a long-running 
 
 ```text
 planning/goal-map-principles-workflow-template.md
+planning/workstreams/vkr-finalization-goal-map.md
 planning/workstreams/command-system-and-tampermonkey-goal-map.md
 planning/workstreams/tampermonkey-command-projection-plan.md
 tools/tampermonkey/README.md
