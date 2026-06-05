@@ -280,7 +280,7 @@ public sealed class AppController : ProjectController
                     dto.ExistingApplicantPartyId,
                     dto.NewApplicantParty is null
                         ? null
-                        : new CreateConnectionRequestNewApplicant(
+                        : new InlineApplicantPartyForRequest(
                             dto.NewApplicantParty.ApplicantPartyType!,
                             dto.NewApplicantParty.FullName?.FirstName,
                             dto.NewApplicantParty.FullName?.MiddleName,

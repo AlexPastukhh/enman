@@ -3739,7 +3739,7 @@
             "nullable": true
           },
           "newApplicantParty": {
-            "$ref": "#/components/schemas/CreateConnectionRequestNewApplicantDto"
+            "$ref": "#/components/schemas/InlineApplicantPartyForRequestDto"
           },
           "details": {
             "type": "string",
@@ -3747,47 +3747,6 @@
           },
           "address": {
             "$ref": "#/components/schemas/AddressDto"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateConnectionRequestNewApplicantDto": {
-        "type": "object",
-        "properties": {
-          "applicantPartyType": {
-            "type": "string",
-            "nullable": true
-          },
-          "fullName": {
-            "$ref": "#/components/schemas/FullNameDto"
-          },
-          "organizationName": {
-            "type": "string",
-            "nullable": true
-          },
-          "inn": {
-            "type": "string",
-            "nullable": true
-          },
-          "kpp": {
-            "type": "string",
-            "nullable": true
-          },
-          "ogrn": {
-            "type": "string",
-            "nullable": true
-          },
-          "ogrnip": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "phoneNumber": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4089,6 +4048,47 @@
             "nullable": true
           },
           "verificationStatus": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "InlineApplicantPartyForRequestDto": {
+        "type": "object",
+        "properties": {
+          "applicantPartyType": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullName": {
+            "$ref": "#/components/schemas/FullNameDto"
+          },
+          "organizationName": {
+            "type": "string",
+            "nullable": true
+          },
+          "inn": {
+            "type": "string",
+            "nullable": true
+          },
+          "kpp": {
+            "type": "string",
+            "nullable": true
+          },
+          "ogrn": {
+            "type": "string",
+            "nullable": true
+          },
+          "ogrnip": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
             "type": "string",
             "nullable": true
           }

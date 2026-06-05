@@ -258,7 +258,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
                 existingApplicantPartyId: null,
                 newApplicantParty: null) with
             {
-                NewApplicantParty = new CreateConnectionRequestNewApplicantDto(
+                NewApplicantParty = new InlineApplicantPartyForRequestDto(
                     ApplicantPartyType: "IndividualEntrepreneur",
                     FullName: new FullNameDto("Ivan", "Ivanovich", "Ivanov"),
                     OrganizationName: null,
@@ -298,7 +298,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
                 existingApplicantPartyId: null,
                 newApplicantParty: null) with
             {
-                NewApplicantParty = new CreateConnectionRequestNewApplicantDto(
+                NewApplicantParty = new InlineApplicantPartyForRequestDto(
                     ApplicantPartyType: "LegalEntity",
                     FullName: null,
                     OrganizationName: "ООО Энергия",

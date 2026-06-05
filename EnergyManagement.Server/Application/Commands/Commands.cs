@@ -64,7 +64,7 @@ public sealed record CreateConnectionRequestCommand(
     long ClientAccountId,
     string? ApplicantContextType,
     long? ExistingApplicantPartyId,
-    CreateConnectionRequestNewApplicant? NewApplicantParty,
+    InlineApplicantPartyForRequest? NewApplicantParty,
     string Details,
     string PostalCode,
     string Region,
@@ -75,7 +75,7 @@ public sealed record CreateConnectionRequestCommand(
     string? Apartment)
     : IRequest<UnitResult<IReadOnlyList<Error>>>;
 
-public sealed record CreateConnectionRequestNewApplicant(
+public sealed record InlineApplicantPartyForRequest(
     string ApplicantPartyType,
     string? FirstName,
     string? MiddleName,

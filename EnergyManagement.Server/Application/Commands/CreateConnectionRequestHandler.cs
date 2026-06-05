@@ -131,7 +131,7 @@ public sealed class CreateConnectionRequestHandler
 
     private async Task<Result<ApplicantParty, IReadOnlyList<Error>>> CreateApplicantPartyAsync(
         long clientAccountId,
-        CreateConnectionRequestNewApplicant newApplicant,
+        InlineApplicantPartyForRequest newApplicant,
         CancellationToken cancellationToken)
     {
         if (!Enum.TryParse<ApplicantPartyType>(

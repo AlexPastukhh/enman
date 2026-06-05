@@ -381,12 +381,12 @@ public abstract class AppIntegrationTestBase
                 phoneNumber: "79237554728"));
     }
 
-    protected static CreateConnectionRequestNewApplicantDto? ToConnectionRequestNewApplicantDto(
+    protected static InlineApplicantPartyForRequestDto? ToConnectionRequestNewApplicantDto(
         CreateIndividualApplicantPartyDto? applicantParty)
     {
         return applicantParty is null
             ? null
-            : new CreateConnectionRequestNewApplicantDto(
+            : new InlineApplicantPartyForRequestDto(
                 "Individual",
                 applicantParty.FullName,
                 OrganizationName: null,

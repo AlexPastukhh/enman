@@ -565,20 +565,9 @@ export interface components {
             applicantContextType?: string | null;
             /** Format: int64 */
             existingApplicantPartyId?: number | null;
-            newApplicantParty?: components["schemas"]["CreateConnectionRequestNewApplicantDto"];
+            newApplicantParty?: components["schemas"]["InlineApplicantPartyForRequestDto"];
             details?: string | null;
             address?: components["schemas"]["AddressDto"];
-        };
-        CreateConnectionRequestNewApplicantDto: {
-            applicantPartyType?: string | null;
-            fullName?: components["schemas"]["FullNameDto"];
-            organizationName?: string | null;
-            inn?: string | null;
-            kpp?: string | null;
-            ogrn?: string | null;
-            ogrnip?: string | null;
-            email?: string | null;
-            phoneNumber?: string | null;
         };
         CreateIndividualApplicantPartyDto: {
             fullName?: components["schemas"]["FullNameDto"];
@@ -670,6 +659,17 @@ export interface components {
             email?: string | null;
             phoneNumber?: string | null;
             verificationStatus?: string | null;
+        };
+        InlineApplicantPartyForRequestDto: {
+            applicantPartyType?: string | null;
+            fullName?: components["schemas"]["FullNameDto"];
+            organizationName?: string | null;
+            inn?: string | null;
+            kpp?: string | null;
+            ogrn?: string | null;
+            ogrnip?: string | null;
+            email?: string | null;
+            phoneNumber?: string | null;
         };
         LoginRequestDto: {
             email?: string | null;

@@ -64,7 +64,7 @@ internal static class ApplicantPartyValidation
     }
 
     public static void ValidateConnectionRequestNewApplicant<T>(
-        CreateConnectionRequestNewApplicantDto? dto,
+        InlineApplicantPartyForRequestDto? dto,
         ValidationContext<T> context,
         string prefix)
     {

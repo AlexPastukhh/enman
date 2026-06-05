@@ -83,11 +83,11 @@ public sealed record FullNameDto(
 public sealed record CreateConnectionRequestDto(
     [property: JsonPropertyName("applicantContextType")] string? ApplicantContextType,
     [property: JsonPropertyName("existingApplicantPartyId")] long? ExistingApplicantPartyId,
-    [property: JsonPropertyName("newApplicantParty")] CreateConnectionRequestNewApplicantDto? NewApplicantParty,
+    [property: JsonPropertyName("newApplicantParty")] InlineApplicantPartyForRequestDto? NewApplicantParty,
     [property: JsonPropertyName("details")] string? Details,
     [property: JsonPropertyName("address")] AddressDto? Address);
 
-public sealed record CreateConnectionRequestNewApplicantDto(
+public sealed record InlineApplicantPartyForRequestDto(
     [property: JsonPropertyName("applicantPartyType")] string? ApplicantPartyType,
     [property: JsonPropertyName("fullName")] FullNameDto? FullName,
     [property: JsonPropertyName("organizationName")] string? OrganizationName,
