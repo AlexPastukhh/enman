@@ -2316,3 +2316,46 @@ Follow-ups:
   Next step is SLICE-TEST-SRC-0B: seed versions for active slice/testing owner workflows/templates. After that, create a local slice-test refactor Goal Map from a full slice/test file audit.
 Notes:
   The new registers are navigation/sync skeletons only. They become meaningful per-slice evidence only after local section Sources or file-level audits are added and reviewed.
+
+
+### 2026-06-05 - Seeded slice/testing owner workflow and template versions before audit
+
+Date:
+  2026-06-05
+Action:
+  Applied SLICE-TEST-SRC-0B owner version seed for active slice/testing workflow, template and rule files.
+Type:
+  slice/testing owner version seed / pre-audit source-of-truth setup
+Status:
+  applied
+Why:
+  The slice/testing skeleton registers existed after SLICE-TEST-SRC-0A, but future slice refactor still needed versioned workflow/template/rule owners. This step seeds those owner versions and records limited register rows before the full slice/test audit and local refactor Goal Map.
+Changed files:
+  - planning/slices/slice-draft-authoring-workflow.md
+  - planning/slices/slice-draft-authoring-principles.md
+  - planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md
+  - planning/slices/server/SERVER-SLICE-TEMPLATE.md
+  - planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md
+  - planning/slices/client/CLIENT-SLICE-TEMPLATE.md
+  - planning/slices/slice-test-plan-workflow.md
+  - planning/testing/testing-principles.md
+  - planning/testing/server-slice-test-plan-rules.md
+  - planning/slices/slice-source-sync-register.md
+  - planning/testing/testing-source-sync-register.md
+  - planning/root-source-sync-register.md
+  - planning/source-cascade-sync-workflow.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added Doc version seed to active slice workflow/template/principles files.
+  - Added Doc version seed to active testing principles/rules and slice test-plan workflow files.
+  - Added limited owner workflow/template/rule rows to slice/testing source-sync skeleton registers.
+  - Updated root/source-cascade registers to know owner version seed exists.
+Not changed:
+  - No concrete `SL-*` slice draft edited.
+  - No local section `Sources:` blocks added inside slice drafts.
+  - No synchronized slice/test coverage claimed.
+  - No local slice-refactor Goal Map created yet.
+Follow-ups:
+  Next step is SLICE-REF-GM-0: audit all slice/test files against the versioned owner workflows/templates, classify gaps and create a local slice-test refactor Goal Map before the first per-slice refactor.
+Notes:
+  This step seeds source-of-truth owner versions only. Concrete slice/test rows become meaningful only after one-slice-at-a-time audit/refactor.

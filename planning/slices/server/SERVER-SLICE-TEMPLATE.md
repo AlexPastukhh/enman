@@ -1,6 +1,7 @@
 # Server Slice Template
 
 Status: canonical template for server/backend/API slice drafts  
+Doc version: v0.1.0
 Scope: copyable structure for server slice drafts using current slice authoring workflow, authoring principles and server implementation principles
 
 Use with:

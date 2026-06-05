@@ -1,6 +1,7 @@
 # Slice Draft Authoring Principles
 
 Status: current slice-layer authoring principles  
+Doc version: v0.1.0
 Scope: explains what a slice draft is and how its scope, boundary, coverage, implementation flow and verification sections should work
 
 ## 1. Purpose

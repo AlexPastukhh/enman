@@ -1,6 +1,7 @@
 # Testing Principles
 
 Status: current testing principles / test layer boundary matrix  
+Doc version: v0.1.0
 Scope: domain, server/API, client/component and E2E test boundaries
 
 ## 1. Purpose

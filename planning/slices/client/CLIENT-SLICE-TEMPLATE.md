@@ -1,6 +1,7 @@
 # Client Slice Template
 
 Status: canonical template for new `.client.md` drafts  
+Doc version: v0.1.0
 Scope: copyable structure for client sidecar drafts using current slice authoring workflow, authoring principles and test-trace principles
 
 Copy this structure for new client sidecar drafts.

@@ -1,7 +1,7 @@
 # Testing Source Sync Register
 
 Status: skeleton / incomplete / not synchronized
-Doc version: v0.1.0
+Doc version: v0.2.0
 Scope: source dependency register for testing workflows, testing rules, slice test plans and future behavior-to-test source-sync rows
 
 ## 1. Purpose
@@ -9,17 +9,19 @@ Scope: source dependency register for testing workflows, testing rules, slice te
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.9.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v1.0.0
     - planning/testing/testing-responsibility-map.md @ Doc version: v0.1.0
-    - planning/slices/slice-test-plan-workflow.md @ version not confirmed
+    - planning/slices/slice-test-plan-workflow.md @ Doc version: v0.1.0
+    - planning/testing/testing-principles.md @ Doc version: v0.1.0
+    - planning/testing/server-slice-test-plan-rules.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v1.6.0
-    - planning/slices/slice-source-sync-register.md @ Doc version: v0.1.0
+    - planning/root-source-sync-register.md @ Doc version: v1.7.0
+    - planning/slices/slice-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - none
   Not checked:
     - concrete slice test plans were not audited in SLICE-TEST-SRC-0A
-    - testing workflow/rules owner versions are not seeded in this step
+    - concrete slice test plans and behavior-to-test traces are still not audited
     - no behavior-to-test rows are synchronized yet
 ```
 
@@ -87,6 +89,8 @@ Do not add a row as `synchronized` unless the relevant test plan/local Sources b
 |---|---|---|---|---|---|
 | `planning/testing/testing-responsibility-map.md` | `planning/testing/testing-source-sync-register.md` | responsibility route | skeleton created | Route testing source-sync/register questions here | Responsibility pointer only; no test coverage claim. |
 | `planning/source-cascade-sync-workflow.md` | this register | source-cascade process | skeleton created | Use before broad testing/slice refactor | Workflow owns register-state rules. |
+| future slice `Test / Verification Plan` sections | `planning/slices/slice-test-plan-workflow.md` | slice-test-plan source | owner version seeded | Use during per-slice audit/refactor | Does not claim any concrete test plan is synchronized. |
+| future server/API slice test plans | `planning/testing/server-slice-test-plan-rules.md` + `planning/testing/testing-principles.md` | testing-layer source | owner versions seeded | Use when server/API slice testing is in scope | No behavior-to-test rows added yet. |
 | future slice `Test / Verification Plan` sections | testing workflow/rules + behavior sources | candidate future rows | not checked | Fill one slice at a time | Must come from reviewed slice/test source pass. |
 | future testing owner docs | testing rules/workflows/principles | candidate future rows | not checked | Version-seed and audit in later step | No owner workflow/template version seed in SLICE-TEST-SRC-0A. |
 
@@ -95,7 +99,7 @@ Do not add a row as `synchronized` unless the relevant test plan/local Sources b
 ```text
 - No concrete slice draft Test / Verification Plan was edited.
 - No Behavior-to-Test Trace was audited.
-- No testing workflow/rule/principles version seed was performed in this step.
+- Testing principles and server slice test-plan rules were version-seeded in SLICE-TEST-SRC-0B; concrete test plans remain unaudited.
 - No test implementation or generated artifacts were checked.
 - No synchronized testing coverage is claimed.
 ```
@@ -104,5 +108,6 @@ Do not add a row as `synchronized` unless the relevant test plan/local Sources b
 
 ```text
 - SLICE-TEST-SRC-0A created this skeleton register at Doc version: v0.1.0 before broad slice/testing refactor.
-- This skeleton exists so later batches can seed testing owner versions, audit test-plan source usage and then synchronize rows one slice at a time.
+- SLICE-TEST-SRC-0B seeded testing owner workflow/rule versions, bumped this register to Doc version: v0.2.0 and kept concrete test plans unsynchronized.
+- This skeleton exists so later batches can audit test-plan source usage and then synchronize rows one slice at a time.
 ```

@@ -1,6 +1,7 @@
 # Slice Draft Authoring Workflow
 
 Status: current root workflow for creating, reviewing and refactoring slice drafts  
+Doc version: v0.1.0
 Scope: process for slice draft work before side-specific server/client/cross-cutting workflows
 
 ## 1. Purpose

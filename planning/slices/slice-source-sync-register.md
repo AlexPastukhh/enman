@@ -1,7 +1,7 @@
 # Slice Source Sync Register
 
 Status: skeleton / incomplete / not synchronized
-Doc version: v0.1.0
+Doc version: v0.2.0
 Scope: source dependency register for slice-layer drafts, slice workflows/templates and future per-slice source-sync rows
 
 ## 1. Purpose
@@ -9,19 +9,26 @@ Scope: source dependency register for slice-layer drafts, slice workflows/templa
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.9.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v1.0.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/slices/SERVER-SLICE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.1.0
     - planning/slices/slice-responsibility-map.md @ Doc version: v0.1.0
     - planning/slices/SLICE-INDEX.md @ Doc version: v0.1.0
+    - planning/slices/slice-draft-authoring-workflow.md @ Doc version: v0.1.0
+    - planning/slices/slice-draft-authoring-principles.md @ Doc version: v0.1.0
+    - planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md @ Doc version: v0.1.0
+    - planning/slices/server/SERVER-SLICE-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md @ Doc version: v0.1.0
+    - planning/slices/client/CLIENT-SLICE-TEMPLATE.md @ Doc version: v0.1.0
+    - planning/slices/slice-test-plan-workflow.md @ Doc version: v0.1.0
   Content:
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
-    - planning/root-source-sync-register.md @ Doc version: v1.6.0
+    - planning/root-source-sync-register.md @ Doc version: v1.7.0
   Internal dependencies:
     - none
   Not checked:
     - concrete slice drafts were not audited in SLICE-TEST-SRC-0A
-    - slice workflow/template owner versions are not seeded in this step
+    - concrete slice drafts still do not have audited file-level/local section source coverage
     - testing source-sync register rows are skeleton-only
 ```
 
@@ -96,6 +103,9 @@ Do not add a row as `synchronized` unless the local slice section `Sources:` blo
 | `planning/slices/slice-responsibility-map.md` | `planning/slices/slice-source-sync-register.md` | responsibility route | skeleton created | Route source-sync/register questions here | Responsibility pointers are not source/version deps by default. |
 | `planning/slices/SLICE-INDEX.md` | `planning/slices/slice-source-sync-register.md` | catalog/register discovery | skeleton created | Link register without marking slice rows checked | Index rows are not source evidence. |
 | `planning/source-cascade-sync-workflow.md` | this register | source-cascade process | skeleton created | Use before broad slice refactor | Workflow owns register-state rules. |
+| future server slice drafts | root slice workflow/principles + server workflow/template + slice test-plan workflow | format-process source-of-truth | owner versions seeded | Use in SLICE-REF-GM-0 audit and per-slice refactor | Does not claim any concrete server slice is synchronized. |
+| future client sidecar drafts | root slice workflow/principles + client workflow/template + slice test-plan workflow | format-process source-of-truth | owner versions seeded | Use in SLICE-REF-GM-0 audit and per-slice refactor | Does not claim any concrete client sidecar is synchronized. |
+| future slice `Test / Verification Plan` sections | `planning/slices/slice-test-plan-workflow.md` + testing register | testing/process source | owner version seeded / testing register skeleton | Coordinate with testing source-sync register | Behavior-to-Test rows are still future per-slice work. |
 | future concrete slice drafts | scenario/domain/testing/source files | candidate future rows | not checked | Audit one slice at a time | Fill from local section `Sources:` blocks after per-slice review. |
 
 ## 6. Not Checked / Deferred
@@ -104,8 +114,8 @@ Do not add a row as `synchronized` unless the local slice section `Sources:` blo
 - No concrete `SL-*` slice draft was edited in SLICE-TEST-SRC-0A.
 - No current slice draft local section `Sources:` blocks were added.
 - No per-slice source chain was audited.
-- No server/client template/workflow owner version seed was performed in this step.
-- No testing source rows were synchronized.
+- Server/client/root slice workflow and template owner versions were seeded in SLICE-TEST-SRC-0B; concrete slice drafts remain unaudited.
+- No concrete testing source rows were synchronized.
 - No synchronized slice coverage is claimed.
 ```
 
@@ -113,5 +123,6 @@ Do not add a row as `synchronized` unless the local slice section `Sources:` blo
 
 ```text
 - SLICE-TEST-SRC-0A created this skeleton register at Doc version: v0.1.0 before broad slice refactor.
-- This skeleton exists so the next work can seed owner workflow/template versions, build a local slice-refactor Goal Map and then refactor one slice at a time.
+- SLICE-TEST-SRC-0B seeded active slice workflow/template owner versions, bumped this register to Doc version: v0.2.0 and kept concrete slice drafts unsynchronized.
+- This skeleton exists so the next work can build a local slice-refactor Goal Map and then refactor one slice at a time.
 ```

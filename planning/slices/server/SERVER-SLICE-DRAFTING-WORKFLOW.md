@@ -1,6 +1,7 @@
 # Server Slice Drafting Workflow
 
 Status: current local server workflow / applies root slice draft authoring workflow
+Doc version: v0.1.0
 
 ## 1. Purpose
 

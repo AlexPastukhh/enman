@@ -1,7 +1,7 @@
 # Root Source Sync Register
 
-Status: skeleton / root planning dependency register partially derived for source-governance core, root router/onboarding core, protocol/role core, output/archive core and Goal Map/Tampermonkey active files, source/version maintenance commands, current-state template, Tampermonkey helper source/version command profiles, stale source-label cleanup and targeted source-impact cleanup, root route/example-fit cleanup and slice/testing source-sync register skeletons; root folder inventory classified
-Doc version: v1.6.0
+Status: skeleton / root planning dependency register partially derived for source-governance core, root router/onboarding core, protocol/role core, output/archive core and Goal Map/Tampermonkey active files, source/version maintenance commands, current-state template, Tampermonkey helper source/version command profiles, stale source-label cleanup and targeted source-impact cleanup, root route/example-fit cleanup and slice/testing source-sync register skeletons and slice/testing owner workflow/template version seed; root folder inventory classified
+Doc version: v1.7.0
 Scope: source dependency skeleton for root planning workflow, routing, source-governance, Goal Map discovery and Tampermonkey command-helper files
 
 ## 1. Purpose
@@ -9,7 +9,7 @@ Scope: source dependency skeleton for root planning workflow, routing, source-go
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.9.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v1.0.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
@@ -18,7 +18,7 @@ Sources:
     - none
   Not checked:
     - active root source passes outside ROOT-FULL-0 classification scope
-    - planning/slices/slice-source-sync-register.md and planning/testing/testing-source-sync-register.md exist as skeleton / incomplete / not synchronized
+    - planning/slices/slice-source-sync-register.md and planning/testing/testing-source-sync-register.md exist as skeleton / incomplete / not synchronized; active owner workflow/template versions are seeded; concrete slice/test coverage remains unsynchronized
 ```
 
 This register tracks root-level planning files whose behavior depends on other planning files, workflows, templates, registers, layer docs or helper projection files.
@@ -93,7 +93,7 @@ After CASCADE-SRC-1A, this register records targeted cleanup of fake source/vers
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.9.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v1.0.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
@@ -102,7 +102,7 @@ Sources:
     - Purpose
   Not checked:
     - active root source passes outside ROOT-FULL-0 classification scope
-    - planning/slices/slice-source-sync-register.md and planning/testing/testing-source-sync-register.md exist as skeleton / incomplete / not synchronized
+    - planning/slices/slice-source-sync-register.md and planning/testing/testing-source-sync-register.md exist as skeleton / incomplete / not synchronized; active owner workflow/template versions are seeded; concrete slice/test coverage remains unsynchronized
 ```
 
 ```text
@@ -151,7 +151,7 @@ SRC-LOCAL-RULE-1 updated source/template version candidates for structured local
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.9.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v1.0.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
@@ -161,7 +161,7 @@ Sources:
     - Register Rules
   Not checked:
     - active root file source passes outside ROOT-FULL-0 classification scope
-    - planning/slices/slice-source-sync-register.md and planning/testing/testing-source-sync-register.md exist as skeleton / incomplete / not synchronized
+    - planning/slices/slice-source-sync-register.md and planning/testing/testing-source-sync-register.md exist as skeleton / incomplete / not synchronized; active owner workflow/template versions are seeded; concrete slice/test coverage remains unsynchronized
 ```
 
 | Root file | Role | Current version/status | Register coverage state | Notes |
@@ -199,7 +199,7 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.9.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v1.0.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
@@ -211,7 +211,7 @@ Sources:
     - Root Files With Source Dependencies
   Not checked:
     - local section-level Sources for active deferred files outside already covered core groups
-    - planning/slices/slice-source-sync-register.md and planning/testing/testing-source-sync-register.md exist as skeleton / incomplete / not synchronized
+    - planning/slices/slice-source-sync-register.md and planning/testing/testing-source-sync-register.md exist as skeleton / incomplete / not synchronized; active owner workflow/template versions are seeded; concrete slice/test coverage remains unsynchronized
 ```
 
 ROOT-FULL-0 classifies root-folder files before broad source/version passes.
@@ -345,7 +345,7 @@ implementation/helper:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.9.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v1.0.0
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
@@ -354,7 +354,7 @@ Sources:
     - Root Files With Source Dependencies
   Not checked:
     - active root file source passes outside ROOT-FULL-0 classification scope
-    - planning/slices/slice-source-sync-register.md and planning/testing/testing-source-sync-register.md exist as skeleton / incomplete / not synchronized
+    - planning/slices/slice-source-sync-register.md and planning/testing/testing-source-sync-register.md exist as skeleton / incomplete / not synchronized; active owner workflow/template versions are seeded; concrete slice/test coverage remains unsynchronized
 ```
 
 | Consumer file | Consumer scope | Source files | Source role | Source version/status | Sync status | Review outcome | Notes |
@@ -384,6 +384,10 @@ Sources:
 | `planning/documentation/use-case-map-workflow.md` | reusable UCM maintenance workflow and setup-time example-fit pass | `planning/documentation/examples/README.md`; `planning/documentation/field-kits/root-use-case-map-field-kit.md`; `planning/documentation/example-coverage-workflow.md`; `planning/planning-use-case-map.md` | workflow/process | workflow Doc version: v0.1.0; examples README Doc version: v0.2.0; field kit/example coverage Doc version: v0.1.0; UCM Doc version: v0.8.0 | skeleton / CASCADE-ROUTE-1B limited file-level sync | setup-time only for broad example-fit pass | Maintenance should not reread every example by default. |
 | `planning/documentation/example-coverage-workflow.md` | example coverage and example placement workflow | `planning/documentation/planning-docs-architecture-principles.md`; `planning/documentation/examples/README.md`; `planning/documentation/use-case-map-workflow.md` | workflow/process | example coverage Doc version: v0.1.0; principles Doc version: v0.1.0; examples README Doc version: v0.2.0; UCM workflow Doc version: v0.1.0 | skeleton / CASCADE-ROUTE-1B limited file-level sync | examples remain non-authoritative | Added profile-specific reusable vs project-local example placement rule. |
 | `planning/deferred-goals-and-ideas.md` | deferred plan-detail recovery prompt parking | active chat-local Goal Map; `planning/planning-use-case-map.md`; `planning/root-source-sync-register.md` | deferred/backlog | deferred goals Doc version: v0.2.0; UCM Doc version: v0.8.0; register Doc version: v1.5.0 | skeleton / CASCADE-ROUTE-1B limited file-level sync | deferred only; no active route | Plan-detail recovery prompt is parked, not implemented. |
+| `planning/slices/slice-draft-authoring-workflow.md` / `planning/slices/slice-draft-authoring-principles.md` | active root slice authoring workflow/principles | `planning/slices/slice-source-sync-register.md`; `planning/source-cascade-sync-workflow.md`; `planning/slices/slice-responsibility-map.md` | slice authoring process | owner docs Doc version: v0.1.0; slice register Doc version: v0.2.0; source-cascade workflow Doc version: v1.0.0 | skeleton / SLICE-TEST-SRC-0B owner version seed | no concrete slice draft coverage claim | Used as source-of-truth for later slice audit/refactor. |
+| `planning/slices/server/SERVER-SLICE-DRAFTING-WORKFLOW.md` / `planning/slices/server/SERVER-SLICE-TEMPLATE.md` | active server slice workflow/template owners | `planning/slices/slice-source-sync-register.md`; `planning/source-cascade-sync-workflow.md`; `planning/testing/testing-source-sync-register.md` | server slice format/process | server owner docs Doc version: v0.1.0; slice/testing registers Doc version: v0.2.0 | skeleton / SLICE-TEST-SRC-0B owner version seed | no server slice draft synchronized | Target sources for later server slice refactor. |
+| `planning/slices/client/CLIENT-SLICE-DRAFTING-WORKFLOW.md` / `planning/slices/client/CLIENT-SLICE-TEMPLATE.md` | active client sidecar workflow/template owners | `planning/slices/slice-source-sync-register.md`; `planning/source-cascade-sync-workflow.md`; `planning/testing/testing-source-sync-register.md` | client slice format/process | client owner docs Doc version: v0.1.0; slice/testing registers Doc version: v0.2.0 | skeleton / SLICE-TEST-SRC-0B owner version seed | no client sidecar synchronized | Target sources for later client slice refactor. |
+| `planning/slices/slice-test-plan-workflow.md` / `planning/testing/testing-principles.md` / `planning/testing/server-slice-test-plan-rules.md` | active slice/testing test-plan workflow/rule owners | `planning/testing/testing-source-sync-register.md`; `planning/slices/slice-source-sync-register.md`; `planning/source-cascade-sync-workflow.md` | testing format/process + behavior-to-test classification | testing owner docs Doc version: v0.1.0; testing register Doc version: v0.2.0; source-cascade workflow Doc version: v1.0.0 | skeleton / SLICE-TEST-SRC-0B owner version seed | no concrete test-plan coverage claim | Target sources for later Behavior-to-Test Trace audit. |
 | `planning/replacement-file-generation-guide.md` | replacement archive/package output rules | `planning/planning-use-case-map.md`; `planning/documentation/review-diff-file-workflow.md`; `planning/documentation/documentation-update-workflow.md`; target files for each package | output/process | mixed; guide version not confirmed in this register | skeleton | archive guide audit needed | Default `давай архив` remains saved diff copied to clipboard. |
 | `planning/documentation/review-diff-file-workflow.md` | explicit repo-stored review diff workflow | `planning/replacement-file-generation-guide.md`; `planning/planning-use-case-map.md`; `_ai-review-diffs/last-archive.diff` when explicit mode is used | output/process + review artifact | review-diff workflow Doc version: v0.1.0; replacement guide Doc version: v0.1.0; use-case map Doc version: v0.7.0 | derived/synchronized for ROOT-SRC-3A local Sources scope; current router label refreshed in SRC-CMD-1C; route/read dependency classification preserved in CASCADE-SRC-1A | local Sources added; explicit-only boundary preserved | Used only when user explicitly requests repo-stored review diff. |
 
@@ -392,7 +396,7 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.9.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v1.0.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
@@ -400,7 +404,7 @@ Sources:
     - Root Dependency Rows
   Not checked:
     - active root file source passes outside ROOT-FULL-0 classification scope
-    - planning/slices/slice-source-sync-register.md and planning/testing/testing-source-sync-register.md exist as skeleton / incomplete / not synchronized
+    - planning/slices/slice-source-sync-register.md and planning/testing/testing-source-sync-register.md exist as skeleton / incomplete / not synchronized; active owner workflow/template versions are seeded; concrete slice/test coverage remains unsynchronized
 ```
 
 | Root file | Layer/source dependency | Meaning | Current status | Next action |
@@ -408,6 +412,8 @@ Sources:
 | `planning/source-cascade-sync-workflow.md` | `planning/domain/domain-source-sync-register.md` | Domain register is current upstream index for aggregate/value-object dependencies. | current / synchronized on domain side | Keep wording current; do not call it planned. |
 | `planning/source-cascade-sync-workflow.md` | `planning/slices/slice-source-sync-register.md` | Slice register is current skeleton layer register. | skeleton / incomplete / not synchronized | Use before broad slice refactor; fill rows only after local slice source review. |
 | `planning/source-cascade-sync-workflow.md` | `planning/testing/testing-source-sync-register.md` | Testing register is current skeleton layer register. | skeleton / incomplete / not synchronized | Use before broad testing/test-plan refactor; fill rows only after behavior-to-test source review. |
+| `planning/slices/slice-source-sync-register.md` | slice authoring workflows/principles and server/client templates | Slice register now knows active owner docs have Doc versions. | owner version seed done / concrete slice coverage unsynchronized | Use these owner versions for SLICE-REF-GM-0 audit. |
+| `planning/testing/testing-source-sync-register.md` | slice test-plan workflow and testing principles/server rules | Testing register now knows active testing owner docs have Doc versions. | owner version seed done / concrete test-plan coverage unsynchronized | Use these owner versions for SLICE-REF-GM-0 and per-slice Behavior-to-Test audit. |
 | `planning/planning-use-case-map.md` | `planning/domain/domain-source-sync-register.md` | Source-cascade/domain rows should route domain dependency review through the domain register. | already routed for source/domain rows; slice rows still need review | Review slice rows before first slice refactor. |
 | `planning/planning-use-case-map.md` | `planning/source-cascade-sync-workflow.md` / `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md` / `planning/source-usage-cascade-profile.md` | Explicit source dependency/link commands should route through the source-cascade workflow/template/profile and then the relevant layer/root register. | derived/synchronized in ROOT-SRC-2A for the router row | Local Sources were added to the use-case map; later non-router root files still need separate audits. |
 | `planning/workflow-activation-map.md` / `planning/planning-use-case-map.md` / `planning/planning-doc-responsibility-map.md` | `planning/planning-agent-protocol.md` / `planning/agent-roles-and-required-actions.md` | Root router files depend on the protocol and role map to select workflow preflight, active role, required read order and permission boundaries. | derived/synchronized in ROOT-SRC-2B for protocol/role rows | Protocol/role files now have local Sources; Goal Map/Tampermonkey/output/archive rows still need separate audits. |
@@ -422,7 +428,7 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.9.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v1.0.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
@@ -431,7 +437,7 @@ Sources:
     - Cross-Layer Dependency Rows
   Not checked:
     - active root file source passes outside ROOT-FULL-0 classification scope
-    - planning/slices/slice-source-sync-register.md and planning/testing/testing-source-sync-register.md exist as skeleton / incomplete / not synchronized
+    - planning/slices/slice-source-sync-register.md and planning/testing/testing-source-sync-register.md exist as skeleton / incomplete / not synchronized; active owner workflow/template versions are seeded; concrete slice/test coverage remains unsynchronized
 ```
 
 ```text
@@ -440,8 +446,8 @@ Sources:
 - Local section Sources blocks for active root planning files outside already covered core groups.
 - Goal Map/Tampermonkey source pass was performed in ROOT-FULL-1 for the active workstream/helper scope; broader root deferred groups remain.
 - Per-slice source-sync rows and synchronized slice coverage.
-- Slice read order/template sync with the domain register.
-- Testing-layer source-sync rows and synchronized test-plan coverage.
+- Concrete slice read order/template sync with the domain register.
+- Testing-layer per-test-plan rows and synchronized test-plan coverage.
 - Plan-detail recovery prompt remains deferred; it is not an active command route.
 ```
 
@@ -450,7 +456,7 @@ Sources:
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.9.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v1.0.0
   Content:
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
@@ -489,3 +495,5 @@ Sources:
 - CASCADE-ROUTE-1B clarified route ownership and example-fit source boundaries, added limited rows for reusable examples/field-kit/workflow files, parked plan-detail recovery as deferred, bumped this register to Doc version: v1.5.0 and kept slice/testing registers deferred.
 
 - SLICE-TEST-SRC-0A created slice/testing source-sync register skeletons, bumped this register to Doc version: v1.6.0 and kept concrete slice/test coverage unsynchronized.
+
+- SLICE-TEST-SRC-0B seeded active slice/testing owner workflow/template versions, bumped this register to Doc version: v1.7.0 and kept concrete slice/test coverage unsynchronized.

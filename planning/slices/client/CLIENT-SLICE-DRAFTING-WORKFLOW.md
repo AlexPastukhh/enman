@@ -1,6 +1,7 @@
 # Client Slice Drafting Workflow
 
 Status: current local workflow for drafting client sidecars / applies root slice draft authoring workflow
+Doc version: v0.1.0
 
 ## 1. Purpose
 

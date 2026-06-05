@@ -1,6 +1,7 @@
 # Slice Test Plan Workflow
 
 Status: current workflow for Test / Verification Plan sections inside slice drafts
+Doc version: v0.1.0
 
 ## 1. Purpose
 

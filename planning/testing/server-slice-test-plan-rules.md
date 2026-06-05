@@ -1,6 +1,7 @@
 # Server Slice Test Plan Rules
 
 Status: current / read-slice and state-changing command test-plan separation synchronized  
+Doc version: v0.1.0
 Scope: backend/server slice drafts, API integration tests, read/query slices, command/state-transition slices, regression guards
 
 ## 1. Purpose
