@@ -1,7 +1,7 @@
 # VKR Finalization Goal Map
 
 Status: active local workstream Goal Map / VKR finalization
-Doc version: v0.1.1
+Doc version: v0.1.2
 Owner format: `planning/goal-map-principles-workflow-template.md`
 Scope: living map for finishing the VKR text, visuals, source references, appendices, and implementation/text consistency for the Enman diploma work.
 
@@ -24,15 +24,26 @@ Latest completed:
   - Root planning source rules were clarified in conversation: legacy/current-like planning files must not be used as primary onboarding/current-state sources.
   - Current VKR focus was redirected to diploma finalization rather than the old L1/L2 implementation cut.
   - Current thesis draft has been inspected in prior chat context for structure, figures, captions, screenshots, code placement, and missing final blocks.
+  - ApplicantParty domain gap was inspected: current implementation supports IndividualApplicantParty, while the VKR narrative and applicant modeling benefit from explicit IndividualEntrepreneur and LegalEntity applicant types.
+  - Applicant type scope was clarified: applicant types should share the same request process; the difference is in fields, validation, and display, not in separate request workflows.
+  - Visual-material additions were collected: current VKR has many useful tables and enough basic UI/code/database/test screenshots, but visual balance is uneven. Chapter 1 needs 1-2 analytical diagrams, chapter 2 needs several design diagrams, and chapter 3 should keep only key screenshots/code evidence while moving excessive code evidence to appendices.
 
 Next action:
   Choose and run the first narrow VKR finalization slice. Recommended first slice: `VKR-1 - Structure Closure And Final Blocks`, because it establishes the missing thesis end blocks and prevents later visual/source work from drifting.
 
+Parallel planning notes:
+  - `VKR-3A - Applicant Party Type Domain Completeness` is identified as the first domain-completeness sub-slice, but it must not start until explicitly selected.
+  - `VKR-4A` through `VKR-4D` detail the visual-material rebalance work, but they must not start from a map-sync/archive command.
+
 Open decisions:
   - DEC-VKR-1: Whether the final chapter 2 should keep 2.8 only or add separate 2.9/2.10 for rezervirovanie and legitimnost if required by the methodical guide.
-  - DEC-VKR-2: Which code screenshots remain in the main chapter 3 and which move to appendices.
-  - DEC-VKR-3: Which missing domain classes are truly required for VKR completeness and which are unnecessary implementation expansion.
+  - DEC-VKR-2: Visual balance and code evidence placement. Decide which code screenshots remain in chapter 3, which are replaced with text listings, and which move to appendices.
+  - DEC-VKR-3: Applicant party type completeness. Decide whether to add IndividualEntrepreneurApplicantParty and LegalEntityApplicantParty at domain/EF/test level, while keeping request creation and review process shared through ApplicantParty.
   - DEC-VKR-4: How many sources are required by final department rules and how to distribute references across chapters.
+  - DEC-VKR-5: Decide whether applicant type support remains domain-only for VKR completeness or is expanded through API/UI forms and screenshots.
+  - DEC-VKR-6: Chapter 1 diagrams. Decide whether to add both analytical diagrams: request processing flow and transition from request decision to agreement stage.
+  - DEC-VKR-7: Chapter 2 design diagrams. Decide final set of project diagrams: application algorithm, architecture, domain model, request lifecycle, agreement exchange lifecycle.
+  - DEC-VKR-8: Additional UI screenshots. Decide whether to add screenshots for applicant management, client request card, employee dashboard, agreement exchange working state, and attached document upload/download evidence.
 
 Invariants:
   - Do not use legacy/current-like planning files as primary source-of-truth for current workflow or implementation state.
@@ -40,6 +51,13 @@ Invariants:
   - Do not start new functional code slices from a map-sync command.
   - Use current VKR document, active thesis workbench docs, scenario/domain/slice docs, repo/code, and tests before changing implementation or writing implementation claims.
   - Long code and auxiliary screenshots should go to appendices when they overload the main text.
+  - Applicant types must not create separate request workflows unless explicitly required; Individual, IndividualEntrepreneur and LegalEntity applicants should share the same request process through ApplicantParty.
+  - Applicant type differences are represented through fields, validation and display name, not through separate ConnectionRequest subclasses.
+  - Tables that work as classifications, mappings, requirements, checks or reference lists should stay as tables and should not be converted into overloaded diagrams.
+  - Chapter 1 should not contain code, database, API or UI screenshots; it should use analytical tables and 1-2 process diagrams.
+  - Chapter 2 should use design diagrams, not implementation screenshots.
+  - Chapter 3 should keep UI screenshots, database evidence, key test evidence and only selected short code evidence.
+  - Do not duplicate the same database relationship diagram in chapter 2 and chapter 3; chapter 2 may contain a project/domain model, while chapter 3 may contain factual DB evidence.
 
 Update rule:
   Update this map after each meaningful VKR finalization batch: final-block insertion, source/reference pass, visual-material pass, domain implementation completeness pass, appendix/code-evidence pass, or final formatting pass.
@@ -64,8 +82,8 @@ BLOCKED  blocked or needs a decision
 | Phase 0 - Map synchronization | Durable living map exists for the current VKR finalization goal. | VKR-0 - Goal Map Sync | Future chats can find this map and see current goal, slices, invariants and next action. | DONE after applying this archive |
 | Phase 1 - Structure closure | VKR has all required final structural blocks. | VKR-1 - Structure Closure And Final Blocks | Document contains introduction, conclusions by chapters, conclusion, sources, appendices plan and consistent contents. | NEXT |
 | Phase 2 - Text consistency | VKR text matches implemented scope and avoids overclaim. | VKR-2 - Text/Implementation Consistency Audit | Claims are marked implemented/designed/deferred and checked against code/tests/screenshots. | TODO |
-| Phase 3 - Domain completeness | Domain model is sufficient for the thesis narrative. | VKR-3 - Domain Completeness / Missing Class Decision | Missing domain classes are either implemented, explicitly deferred or removed from thesis claims. | TODO |
-| Phase 4 - Visual balance | Main text has the right figures/screenshots and appendices hold heavy evidence. | VKR-4 - Visual Materials Rebalance | Chapter 1/2 diagrams are added where needed; excessive code screenshots moved/replaced; figure numbering checked. | TODO |
+| Phase 3 - Domain completeness | Domain model is sufficient for the thesis narrative. | VKR-3 - Domain Completeness / Missing Class Decision; VKR-3A - Applicant Party Type Domain Completeness | Missing domain classes are either implemented, explicitly deferred or removed from thesis claims; applicant party type scope is resolved. | TODO |
+| Phase 4 - Visual balance | Main text has intentional diagrams/screenshots and appendices hold heavy evidence. | VKR-4 - Visual Materials Rebalance; VKR-4A - Chapter 1 Analytical Diagrams; VKR-4B - Chapter 2 Design Diagrams; VKR-4C - Chapter 3 Screenshot And Code Evidence Selection; VKR-4D - Appendix Visual/Listing Relocation | Chapter 1 has 1-2 analytical diagrams; chapter 2 has core design diagrams; chapter 3 keeps essential UI/DB/test/code evidence; excessive code screenshots move to appendices; numbering is checked. | TODO |
 | Phase 5 - Source references | References exist both in text and in bibliography. | VKR-5 - Source/Bibliography Pass | Every non-trivial external claim has `[n]`; bibliography has enough distinct sources and no dead filler. | TODO |
 | Phase 6 - Meaningful volume | Missing volume is filled with relevant content, not filler. | VKR-6 - Content Expansion And Appendix Evidence | Added volume comes from explanations, tables, diagrams, appendices, test evidence and careful conclusions. | TODO |
 | Phase 7 - Final formatting | File is ready for final review. | VKR-7 - Final Formatting And Numbering | Captions, lists, contents, page breaks, styles, appendices and references are consistently formatted. | TODO |
@@ -144,7 +162,41 @@ Target outcomes:
 Acceptance criteria:
   - Each suspected gap has a decision: implement / defer / remove claim.
   - New classes, if added, have tests or clear evidence.
+  - Applicant party type gap is resolved either by implementing VKR-3A or by softening thesis wording.
+  - No unnecessary extra request types, employee roles, notification model or audit trail are added only for volume.
   - No code slice starts without explicit user command after planning.
+
+### VKR-3A - Applicant Party Type Domain Completeness
+
+Status:
+  PLANNED / not started.
+
+Purpose:
+  Complete applicant party modeling for the VKR narrative without creating separate request workflows.
+
+Target outcomes:
+  - ApplicantPartyType includes Individual, IndividualEntrepreneur and LegalEntity.
+  - IndividualEntrepreneurApplicantParty exists for individual entrepreneur applicants.
+  - LegalEntityApplicantParty exists for legal entity applicants.
+  - Common request process remains based on ApplicantParty -> ConnectionRequest.
+  - Differences between applicant types are expressed through fields, validation and display name.
+  - No IndividualConnectionRequest / EntrepreneurConnectionRequest / LegalEntityConnectionRequest subclasses are introduced unless explicitly justified.
+
+Suggested implementation scope:
+  - Add IndividualEntrepreneurApplicantParty.
+  - Add LegalEntityApplicantParty.
+  - Add value objects if missing: Inn, Ogrn, Ogrnip, Kpp, OrganizationName.
+  - Extend ApplicantPartyType.
+  - Extend EF discriminator/mapping.
+  - Add domain tests.
+  - Do not expand frontend/API in the same slice unless explicitly selected.
+
+Acceptance criteria:
+  - Domain model supports three applicant types.
+  - Existing individual applicant scenario remains compatible.
+  - ConnectionRequest still references ApplicantPartyId and does not depend on concrete applicant subtype.
+  - Tests cover creation/display/validation for new applicant types.
+  - VKR text can honestly say that the domain model supports different applicant types.
 
 ### VKR-4 - Visual Materials Rebalance
 
@@ -152,18 +204,101 @@ Status:
   TODO.
 
 Purpose:
-  Improve final visual layout.
+  Improve final visual layout by balancing analytical diagrams, design diagrams, implementation screenshots, code evidence and appendix materials.
 
 Target outcomes:
   - Add 1-2 analytical diagrams to chapter 1 if needed.
   - Add architecture/domain/API/data diagrams to chapter 2 if needed.
   - Keep essential UI screenshots in chapter 3.
-  - Move excessive code screenshots to appendices or replace with short text listings.
+  - Add missing UI screenshots only where they prove user-facing behavior.
+  - Move excessive code screenshots to appendices or replace them with short text listings.
+  - Keep useful classification/mapping/check tables as tables.
 
 Acceptance criteria:
   - Figure list is intentional, not accidental.
   - No missing figure numbers.
   - Main text is not overloaded by small code screenshots.
+  - Tables 2.10 and 2.11 remain tables unless a separate explicit decision changes them.
+  - Role/state/action matrix remains a table.
+
+### VKR-4A - Chapter 1 Analytical Diagrams
+
+Status:
+  TODO.
+
+Purpose:
+  Add minimal analytical process diagrams to chapter 1 without turning it into a technical design chapter.
+
+Target outcomes:
+  - Add Figure 1.1 - High-level client request processing flow.
+  - Add Figure 1.2 - Transition from request decision to agreement-document stage.
+  - Keep existing chapter 1 tables as tables.
+
+Acceptance criteria:
+  - Diagrams explain process and decision branching.
+  - No code/API/database/UI screenshots are added to chapter 1.
+  - Tables 1.1-1.9 remain tables unless a specific formatting issue is found.
+
+### VKR-4B - Chapter 2 Design Diagrams
+
+Status:
+  TODO.
+
+Purpose:
+  Add design-level diagrams to make chapter 2 look like a project/design chapter, not only a set of tables.
+
+Target outcomes:
+  - Add application workflow diagram based on table 2.2.
+  - Add architecture diagram: React frontend -> ASP.NET Core API -> application handlers -> Domain.EnergyManagement -> EF Core / SQL Server -> local document storage.
+  - Add domain model diagram based on table 2.9.
+  - Add request lifecycle diagram.
+  - Add agreement exchange lifecycle diagram.
+  - Keep tables 2.10 and 2.11 as tables.
+
+Acceptance criteria:
+  - Diagrams are design-level, not implementation screenshots.
+  - Tables 2.10 and 2.11 are not duplicated by a second full DB relationship scheme.
+  - Role/state/action matrix remains a table.
+
+### VKR-4C - Chapter 3 Screenshot And Code Evidence Selection
+
+Status:
+  TODO.
+
+Purpose:
+  Keep chapter 3 evidence strong but not overloaded with small code screenshots.
+
+Target outcomes:
+  - Keep key UI screenshots: login/registration, request form, validation error, client request list, employee request review, agreement exchange, final refusal or completion.
+  - Add missing UI screenshots if needed: applicant management, client request card, employee dashboard, agreement exchange with document/version, upload/download evidence.
+  - Keep only 4-8 most important code evidence items in the main text.
+  - Prefer short text listings for code where possible.
+  - Move long code screenshots/listings to appendices.
+
+Acceptance criteria:
+  - Chapter 3 proves implementation through UI, DB, tests and selected code.
+  - Main text is not dominated by small code screenshots.
+  - Each screenshot has a clear reason to exist.
+
+### VKR-4D - Appendix Visual/Listing Relocation
+
+Status:
+  TODO.
+
+Purpose:
+  Move heavy auxiliary evidence out of the main text and into appendices.
+
+Target outcomes:
+  - Appendix for domain code listings.
+  - Appendix for server code listings.
+  - Appendix for client code listings.
+  - Appendix for tests.
+  - Appendix for additional screenshots if needed.
+
+Acceptance criteria:
+  - Main text references appendices where extended evidence is stored.
+  - Long code is not duplicated in both main text and appendices.
+  - Appendix materials support the thesis rather than add filler.
 
 ### VKR-5 - Source/Bibliography Pass
 
@@ -242,6 +377,16 @@ problem and process
 -> final limitations and future development
 ```
 
+Applicant modeling principle:
+
+```text
+ClientAccount
+-> ApplicantParty
+-> ConnectionRequest
+```
+
+ApplicantParty may represent an individual, individual entrepreneur or legal entity. The request lifecycle remains shared; applicant type affects required fields, validation and display only.
+
 ## 4. Source Boundaries
 
 Primary current planning/root onboarding chain:
@@ -269,6 +414,55 @@ scenario specs / behavior items / scenario data;
 active domain/slice docs;
 repo code and tests;
 examples/methodical materials for formatting and structure.
+```
+
+## 4A. Visual-Material Principle
+
+Use each visual type for its strongest role:
+
+```text
+tables:
+  classifications, requirements, mappings, checks, role/action matrices;
+
+diagrams:
+  processes, state transitions, architecture, domain relations, scenario pipelines;
+
+UI screenshots:
+  proof of implemented user-facing behavior;
+
+code listings:
+  short evidence of key implementation decisions;
+
+appendices:
+  long code, auxiliary screenshots, extended tests and heavy evidence.
+```
+
+Chapter-specific target:
+
+```text
+chapter 1:
+  tables + 1-2 analytical diagrams;
+
+chapter 2:
+  tables + 4-5 design diagrams;
+
+chapter 3:
+  UI screenshots + DB evidence + tests + selected short code evidence;
+
+appendices:
+  long code, additional screenshots, extended test materials.
+```
+
+Do not convert these materials into diagrams by default:
+
+```text
+Table 2.10 - data storage structure;
+Table 2.11 - storage relationships;
+role/state/action table;
+requirements tables;
+tools tables;
+testing scenario tables;
+Result/error/exception tables.
 ```
 
 ## 5. Next Action
