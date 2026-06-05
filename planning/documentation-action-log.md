@@ -2359,3 +2359,34 @@ Follow-ups:
   Next step is SLICE-REF-GM-0: audit all slice/test files against the versioned owner workflows/templates, classify gaps and create a local slice-test refactor Goal Map before the first per-slice refactor.
 Notes:
   This step seeds source-of-truth owner versions only. Concrete slice/test rows become meaningful only after one-slice-at-a-time audit/refactor.
+
+### 2026-06-05 - Synchronized slice/test source-refactor Goal Map before first slice refactor
+
+Date:
+  2026-06-05
+Action:
+  Applied SLICE-REF-GM-0 map sync by creating a local living Goal Map for the slice/testing source-refactor workstream.
+Type:
+  Goal Map sync / pre-refactor audit map setup
+Status:
+  applied
+Why:
+  After SLICE-TEST-SRC-0A and SLICE-TEST-SRC-0B, slice/testing skeleton registers and owner workflow/template versions were ready, but concrete slice drafts still needed a local audit/refactor map before any per-slice edits. The new map records source-of-truth files, current gaps, pilot-decision rules and boundaries for one-slice-at-a-time refactor.
+Changed files:
+  - planning/workstreams/slice-test-source-refactor-goal-map.md
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Created local slice/test source-refactor Goal Map at Doc version: v0.1.0.
+  - Recorded current state after CASCADE-SRC-1A, CASCADE-ROUTE-1B, SLICE-TEST-SRC-0A and SLICE-TEST-SRC-0B.
+  - Captured source-of-truth owner docs, preliminary gap categories, pilot candidates and per-file audit-card shape.
+  - Added root register row for the new workstream map.
+Not changed:
+  - No concrete `SL-*` slice draft edited.
+  - No local section `Sources:` blocks added inside slice drafts.
+  - No synchronized slice/test coverage claimed.
+  - No first pilot slice started.
+Follow-ups:
+  Run the SLICE-REF-GM-0 audit-card pass, then choose SLICE-PILOT-1 from the recorded candidate rules.
+Notes:
+  This is a map-sync step only. The new map becomes the current local workstream navigator, while the existing command-system/Tampermonkey map remains scoped to its own paused/deferred workstream.
