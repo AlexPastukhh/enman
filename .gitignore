@@ -68,3 +68,12 @@ _site/
 
 # Visual Studio user files
 *.csproj.user
+
+# Local AI apply artifacts
+/.ai-apply/
+
+# Ignore server-stored document artifacts (generated/uploaded PDFs)
+EnergyManagement.Server/App_Data/Documents/
+
+# Ignore local failed-tests report
+Tests.EnergyManagement/FAILED_TESTS_REPORT.md
