@@ -34,4 +34,29 @@ public static class ValidDomainTestData
             null,
             "Apartment")
         .Value;
+
+
+    public static global::Domain.EnergyManagement.Inn IndividualEntrepreneurInn => global::Domain.EnergyManagement.Inn
+        .Create("123456789012")
+        .Value;
+
+    public static global::Domain.EnergyManagement.Inn LegalEntityInn => global::Domain.EnergyManagement.Inn
+        .Create("1234567890")
+        .Value;
+
+    public static global::Domain.EnergyManagement.Ogrn Ogrn => global::Domain.EnergyManagement.Ogrn
+        .Create("1234567890123")
+        .Value;
+
+    public static global::Domain.EnergyManagement.Ogrnip Ogrnip => global::Domain.EnergyManagement.Ogrnip
+        .Create("123456789012345")
+        .Value;
+
+    public static global::Domain.EnergyManagement.Kpp Kpp => global::Domain.EnergyManagement.Kpp
+        .Create("123456789")
+        .Value;
+
+    public static global::Domain.EnergyManagement.OrganizationName OrganizationName => global::Domain.EnergyManagement.OrganizationName
+        .Create("Test Organization")
+        .Value;
 }

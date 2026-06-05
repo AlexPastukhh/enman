@@ -69,7 +69,12 @@ public sealed class AgreementExchangeReadRepository : IAgreementExchangeReadRepo
                 request.ObjectAddress_Apartment AS Apartment,
                 applicant.FullName_FirstName AS ApplicantFirstName,
                 applicant.FullName_MiddleName AS ApplicantMiddleName,
-                applicant.FullName_LastName AS ApplicantLastName
+                applicant.FullName_LastName AS ApplicantLastName,
+                applicant.ApplicantPartyType,
+                applicant.IndividualEntrepreneurFullName_FirstName AS IndividualEntrepreneurFirstName,
+                applicant.IndividualEntrepreneurFullName_MiddleName AS IndividualEntrepreneurMiddleName,
+                applicant.IndividualEntrepreneurFullName_LastName AS IndividualEntrepreneurLastName,
+                applicant.LegalEntity_OrganizationName AS LegalEntityOrganizationName
             FROM dbo.L1AgreementProposalExchanges AS exchange
             INNER JOIN dbo.L1ClientRequests AS request
                 ON request.Id = exchange.RequestId
@@ -95,7 +100,12 @@ public sealed class AgreementExchangeReadRepository : IAgreementExchangeReadRepo
                 request.ObjectAddress_Apartment,
                 applicant.FullName_FirstName,
                 applicant.FullName_MiddleName,
-                applicant.FullName_LastName;
+                applicant.FullName_LastName,
+                applicant.ApplicantPartyType,
+                applicant.IndividualEntrepreneurFullName_FirstName,
+                applicant.IndividualEntrepreneurFullName_MiddleName,
+                applicant.IndividualEntrepreneurFullName_LastName,
+                applicant.LegalEntity_OrganizationName;
 
             SELECT
                 proposal.Id AS ProposalId,
@@ -172,13 +182,41 @@ public sealed class AgreementExchangeReadRepository : IAgreementExchangeReadRepo
 
     private static string FormatApplicantDisplayName(AgreementExchangeDetailsRow row)
     {
+        if (row.ApplicantPartyType == "IndividualEntrepreneur")
+        {
+            var fullName = FormatFullName(
+                row.IndividualEntrepreneurLastName,
+                row.IndividualEntrepreneurFirstName,
+                row.IndividualEntrepreneurMiddleName);
+
+            return string.IsNullOrWhiteSpace(fullName)
+                ? string.Empty
+                : $"IP {fullName}";
+        }
+
+        if (row.ApplicantPartyType == "LegalEntity")
+        {
+            return row.LegalEntityOrganizationName ?? string.Empty;
+        }
+
+        return FormatFullName(
+            row.ApplicantLastName,
+            row.ApplicantFirstName,
+            row.ApplicantMiddleName);
+    }
+
+    private static string FormatFullName(
+        string? lastName,
+        string? firstName,
+        string? middleName)
+    {
         return string.Join(
                 " ",
                 new[]
                 {
-                    row.ApplicantLastName,
-                    row.ApplicantFirstName,
-                    row.ApplicantMiddleName
+                    lastName,
+                    firstName,
+                    middleName
                 }.Where(value => !string.IsNullOrWhiteSpace(value)))
             .Trim();
     }
@@ -218,6 +256,11 @@ public sealed class AgreementExchangeReadRepository : IAgreementExchangeReadRepo
         public string ApplicantFirstName { get; init; } = string.Empty;
         public string ApplicantMiddleName { get; init; } = string.Empty;
         public string ApplicantLastName { get; init; } = string.Empty;
+        public string ApplicantPartyType { get; init; } = string.Empty;
+        public string? IndividualEntrepreneurFirstName { get; init; }
+        public string? IndividualEntrepreneurMiddleName { get; init; }
+        public string? IndividualEntrepreneurLastName { get; init; }
+        public string? LegalEntityOrganizationName { get; init; }
     }
 
     private sealed class AgreementProposalDetailsRow

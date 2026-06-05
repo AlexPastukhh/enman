@@ -6,6 +6,8 @@ namespace Domain.EnergyManagement.DocumentManaging
 {
 public class FullName :ValueObject
 {
+    public const int MaxPartLength = 50;
+
     /// <summary>Имя.</summary>
     public string FirstName { get; }
     /// <summary>Отчество.</summary>
@@ -55,7 +57,7 @@ public class FullName :ValueObject
         {
             errors.Add(FirstNameIsRequired);
         }
-        else if (firstName.Length > 50)
+        else if (firstName.Length > MaxPartLength)
         {
             errors.Add(FirstNameIsTooLarge);
         }
@@ -69,7 +71,7 @@ public class FullName :ValueObject
         {
             errors.Add(MiddleNameIsRequired);
         }
-        else if (middleName.Length > 50)
+        else if (middleName.Length > MaxPartLength)
         {
             errors.Add(MiddleNameIsTooLarge);
         }
@@ -83,7 +85,7 @@ public class FullName :ValueObject
         {
             errors.Add(LastNameIsRequired);
         }
-        else if (lastName.Length > 50)
+        else if (lastName.Length > MaxPartLength)
         {
             errors.Add(LastNameIsTooLarge);
         }

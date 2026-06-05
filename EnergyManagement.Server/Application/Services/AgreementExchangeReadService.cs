@@ -99,6 +99,11 @@ public sealed class AgreementExchangeReadService : IAgreementExchangeReadService
                 applicant.FullName_FirstName AS ApplicantFirstName,
                 applicant.FullName_MiddleName AS ApplicantMiddleName,
                 applicant.FullName_LastName AS ApplicantLastName,
+                applicant.ApplicantPartyType,
+                applicant.IndividualEntrepreneurFullName_FirstName AS IndividualEntrepreneurFirstName,
+                applicant.IndividualEntrepreneurFullName_MiddleName AS IndividualEntrepreneurMiddleName,
+                applicant.IndividualEntrepreneurFullName_LastName AS IndividualEntrepreneurLastName,
+                applicant.LegalEntity_OrganizationName AS LegalEntityOrganizationName,
                 exchange.CreatedAt,
                 MAX(proposal.CreatedAt) AS LastActivityAt
             FROM dbo.L1AgreementProposalExchanges AS exchange
@@ -130,6 +135,11 @@ public sealed class AgreementExchangeReadService : IAgreementExchangeReadService
                 applicant.FullName_FirstName,
                 applicant.FullName_MiddleName,
                 applicant.FullName_LastName,
+                applicant.ApplicantPartyType,
+                applicant.IndividualEntrepreneurFullName_FirstName,
+                applicant.IndividualEntrepreneurFullName_MiddleName,
+                applicant.IndividualEntrepreneurFullName_LastName,
+                applicant.LegalEntity_OrganizationName,
                 exchange.CreatedAt
             ORDER BY COALESCE(MAX(proposal.CreatedAt), exchange.CreatedAt) DESC, exchange.Id DESC;
             """;
@@ -165,13 +175,41 @@ public sealed class AgreementExchangeReadService : IAgreementExchangeReadService
 
     private static string FormatApplicantDisplayName(AgreementExchangeListRow row)
     {
+        if (row.ApplicantPartyType == ApplicantPartyType.IndividualEntrepreneur.ToString())
+        {
+            var fullName = FormatFullName(
+                row.IndividualEntrepreneurLastName,
+                row.IndividualEntrepreneurFirstName,
+                row.IndividualEntrepreneurMiddleName);
+
+            return string.IsNullOrWhiteSpace(fullName)
+                ? string.Empty
+                : $"IP {fullName}";
+        }
+
+        if (row.ApplicantPartyType == ApplicantPartyType.LegalEntity.ToString())
+        {
+            return row.LegalEntityOrganizationName ?? string.Empty;
+        }
+
+        return FormatFullName(
+            row.ApplicantLastName,
+            row.ApplicantFirstName,
+            row.ApplicantMiddleName);
+    }
+
+    private static string FormatFullName(
+        string? lastName,
+        string? firstName,
+        string? middleName)
+    {
         return string.Join(
                 " ",
                 new[]
                 {
-                    row.ApplicantLastName,
-                    row.ApplicantFirstName,
-                    row.ApplicantMiddleName
+                    lastName,
+                    firstName,
+                    middleName
                 }.Where(value => !string.IsNullOrWhiteSpace(value)))
             .Trim();
     }
@@ -210,6 +248,11 @@ public sealed class AgreementExchangeReadService : IAgreementExchangeReadService
         public string ApplicantFirstName { get; init; } = string.Empty;
         public string ApplicantMiddleName { get; init; } = string.Empty;
         public string ApplicantLastName { get; init; } = string.Empty;
+        public string ApplicantPartyType { get; init; } = string.Empty;
+        public string? IndividualEntrepreneurFirstName { get; init; }
+        public string? IndividualEntrepreneurMiddleName { get; init; }
+        public string? IndividualEntrepreneurLastName { get; init; }
+        public string? LegalEntityOrganizationName { get; init; }
         public DateTimeOffset CreatedAt { get; init; }
         public DateTimeOffset? LastActivityAt { get; init; }
     }

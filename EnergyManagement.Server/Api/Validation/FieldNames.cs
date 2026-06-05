@@ -15,6 +15,12 @@ public static class FieldNames
         public static string FullName => JsonField.Of<CreateIndividualApplicantPartyDto>(x => x.FullName);
         public static string Email => JsonField.Of<CreateIndividualApplicantPartyDto>(x => x.Email);
         public static string PhoneNumber => JsonField.Of<CreateIndividualApplicantPartyDto>(x => x.PhoneNumber);
+        public static string ApplicantPartyType => JsonField.Of<CreateConnectionRequestNewApplicantDto>(x => x.ApplicantPartyType);
+        public static string OrganizationName => JsonField.Of<CreateConnectionRequestNewApplicantDto>(x => x.OrganizationName);
+        public static string Inn => JsonField.Of<CreateConnectionRequestNewApplicantDto>(x => x.Inn);
+        public static string Kpp => JsonField.Of<CreateConnectionRequestNewApplicantDto>(x => x.Kpp);
+        public static string Ogrn => JsonField.Of<CreateConnectionRequestNewApplicantDto>(x => x.Ogrn);
+        public static string Ogrnip => JsonField.Of<CreateConnectionRequestNewApplicantDto>(x => x.Ogrnip);
     }
 
     public static class FullName

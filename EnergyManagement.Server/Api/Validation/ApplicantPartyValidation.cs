@@ -1,5 +1,6 @@
 using Domain.EnergyManagement.Common;
 using Domain.EnergyManagement.DocumentManaging;
+using Domain.EnergyManagement;
 using FluentValidation;
 
 namespace EnergyManagement.Server.Api.Validation;
@@ -20,6 +21,64 @@ internal static class ApplicantPartyValidation
         }
 
         ValidateFullName(dto.FullName, context, Join(prefix, FieldNames.ApplicantParty.FullName));
+
+        var emailResult = Email.Create(dto.Email ?? string.Empty);
+        if (emailResult.IsFailure)
+        {
+            AddFailures(context, Join(prefix, FieldNames.ApplicantParty.Email), emailResult.Error);
+        }
+
+        var phoneResult = PhoneNumber.Create(dto.PhoneNumber ?? string.Empty);
+        if (phoneResult.IsFailure)
+        {
+            AddFailures(context, Join(prefix, FieldNames.ApplicantParty.PhoneNumber), phoneResult.Error);
+        }
+    }
+
+    public static void ValidateConnectionRequestNewApplicant<T>(
+        CreateConnectionRequestNewApplicantDto? dto,
+        ValidationContext<T> context,
+        string prefix)
+    {
+        if (dto is null)
+        {
+            context.AddFailure(
+                Join(prefix, string.Empty),
+                Error.Errors.L1Domain.ApplicantPartyIsRequired.Code);
+            return;
+        }
+
+        if (!Enum.TryParse<ApplicantPartyType>(
+                dto.ApplicantPartyType,
+                ignoreCase: false,
+                out var applicantPartyType)
+            || !Enum.IsDefined(applicantPartyType))
+        {
+            context.AddFailure(
+                Join(prefix, FieldNames.ApplicantParty.ApplicantPartyType),
+                Error.Errors.General.ValueIsInvalid.Code);
+            return;
+        }
+
+        switch (applicantPartyType)
+        {
+            case ApplicantPartyType.Individual:
+                ValidateFullName(dto.FullName, context, Join(prefix, FieldNames.ApplicantParty.FullName));
+                break;
+
+            case ApplicantPartyType.IndividualEntrepreneur:
+                ValidateFullName(dto.FullName, context, Join(prefix, FieldNames.ApplicantParty.FullName));
+                ValidateInn(dto.Inn, context, Join(prefix, FieldNames.ApplicantParty.Inn));
+                ValidateOgrnip(dto.Ogrnip, context, Join(prefix, FieldNames.ApplicantParty.Ogrnip));
+                break;
+
+            case ApplicantPartyType.LegalEntity:
+                ValidateOrganizationName(dto.OrganizationName, context, Join(prefix, FieldNames.ApplicantParty.OrganizationName));
+                ValidateInn(dto.Inn, context, Join(prefix, FieldNames.ApplicantParty.Inn));
+                ValidateKpp(dto.Kpp, context, Join(prefix, FieldNames.ApplicantParty.Kpp));
+                ValidateOgrn(dto.Ogrn, context, Join(prefix, FieldNames.ApplicantParty.Ogrn));
+                break;
+        }
 
         var emailResult = Email.Create(dto.Email ?? string.Empty);
         if (emailResult.IsFailure)
@@ -67,6 +126,66 @@ internal static class ApplicantPartyValidation
         foreach (var error in errors)
         {
             context.AddFailure(fieldName, error.Code);
+        }
+    }
+
+    private static void ValidateOrganizationName<T>(
+        string? organizationName,
+        ValidationContext<T> context,
+        string fieldName)
+    {
+        var result = OrganizationName.Create(organizationName ?? string.Empty);
+        if (result.IsFailure)
+        {
+            AddFailures(context, fieldName, result.Error);
+        }
+    }
+
+    private static void ValidateInn<T>(
+        string? inn,
+        ValidationContext<T> context,
+        string fieldName)
+    {
+        var result = Inn.Create(inn ?? string.Empty);
+        if (result.IsFailure)
+        {
+            AddFailures(context, fieldName, result.Error);
+        }
+    }
+
+    private static void ValidateKpp<T>(
+        string? kpp,
+        ValidationContext<T> context,
+        string fieldName)
+    {
+        var result = Kpp.Create(kpp ?? string.Empty);
+        if (result.IsFailure)
+        {
+            AddFailures(context, fieldName, result.Error);
+        }
+    }
+
+    private static void ValidateOgrn<T>(
+        string? ogrn,
+        ValidationContext<T> context,
+        string fieldName)
+    {
+        var result = Ogrn.Create(ogrn ?? string.Empty);
+        if (result.IsFailure)
+        {
+            AddFailures(context, fieldName, result.Error);
+        }
+    }
+
+    private static void ValidateOgrnip<T>(
+        string? ogrnip,
+        ValidationContext<T> context,
+        string fieldName)
+    {
+        var result = Ogrnip.Create(ogrnip ?? string.Empty);
+        if (result.IsFailure)
+        {
+            AddFailures(context, fieldName, result.Error);
         }
     }
 

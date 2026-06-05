@@ -8,6 +8,8 @@ namespace Domain.EnergyManagement.DocumentManaging
 {
 public class PhoneNumber : ValueObject
 {
+    public const int MaxLength = 12;
+
     /// <summary>
     /// Обёртка для телефонного номера. Содержит валидацию по регулярному выражению.
     /// </summary>

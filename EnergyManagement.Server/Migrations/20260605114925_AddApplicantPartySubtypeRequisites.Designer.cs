@@ -4,16 +4,19 @@ using EnergyManagement.Server.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace EnergyManagement.Server.Migrations
+namespace EnergyManagement.Server.Migrations.L1Db
 {
     [DbContext(typeof(EnergyManagementDbContext))]
-    partial class EnergyManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260605114925_AddApplicantPartySubtypeRequisites")]
+    partial class AddApplicantPartySubtypeRequisites
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,8 +48,8 @@ namespace EnergyManagement.Server.Migrations
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("PasswordHash");
 
                     b.Property<string>("Role")
@@ -358,8 +361,8 @@ namespace EnergyManagement.Server.Migrations
 
                                     b2.Property<string>("StorageKey")
                                         .IsRequired()
-                                        .HasMaxLength(128)
-                                        .HasColumnType("nvarchar(128)")
+                                        .HasMaxLength(500)
+                                        .HasColumnType("nvarchar(500)")
                                         .HasColumnName("DocumentStorageKey");
 
                                     b2.HasKey("AgreementProposalId");
@@ -477,8 +480,8 @@ namespace EnergyManagement.Server.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasMaxLength(12)
-                                .HasColumnType("nvarchar(12)")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)")
                                 .HasColumnName("PhoneNumber");
 
                             b1.HasKey("ApplicantPartyId");
@@ -529,8 +532,8 @@ namespace EnergyManagement.Server.Migrations
 
                             b1.Property<string>("PostalCode")
                                 .IsRequired()
-                                .HasMaxLength(6)
-                                .HasColumnType("nvarchar(6)")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)")
                                 .HasColumnName("ObjectAddress_PostalCode");
 
                             b1.Property<string>("Region")
@@ -575,18 +578,18 @@ namespace EnergyManagement.Server.Migrations
                                 .HasColumnType("bigint");
 
                             b1.Property<string>("FirstName")
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("EmployeeFullName_FirstName");
 
                             b1.Property<string>("LastName")
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("EmployeeFullName_LastName");
 
                             b1.Property<string>("MiddleName")
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("EmployeeFullName_MiddleName");
 
                             b1.HasKey("EmployeeId");
@@ -610,20 +613,20 @@ namespace EnergyManagement.Server.Migrations
 
                             b1.Property<string>("FirstName")
                                 .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("FullName_FirstName");
 
                             b1.Property<string>("LastName")
                                 .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("FullName_LastName");
 
                             b1.Property<string>("MiddleName")
                                 .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("FullName_MiddleName");
 
                             b1.HasKey("IndividualApplicantPartyId");
@@ -647,20 +650,20 @@ namespace EnergyManagement.Server.Migrations
 
                             b1.Property<string>("FirstName")
                                 .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("IndividualEntrepreneurFullName_FirstName");
 
                             b1.Property<string>("LastName")
                                 .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("IndividualEntrepreneurFullName_LastName");
 
                             b1.Property<string>("MiddleName")
                                 .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
                                 .HasColumnName("IndividualEntrepreneurFullName_MiddleName");
 
                             b1.HasKey("IndividualEntrepreneurApplicantPartyId");

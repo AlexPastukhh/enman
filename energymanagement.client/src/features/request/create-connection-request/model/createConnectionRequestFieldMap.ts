@@ -9,6 +9,10 @@ export const createConnectionRequestServerFieldMap: Record<string, string> = {
     createConnectionRequestFieldNames.existingApplicantPartyId,
   NewApplicantParty: createConnectionRequestFieldNames.firstName,
   newApplicantParty: createConnectionRequestFieldNames.firstName,
+  "NewApplicantParty.ApplicantPartyType":
+    createConnectionRequestFieldNames.applicantPartyType,
+  "newApplicantParty.applicantPartyType":
+    createConnectionRequestFieldNames.applicantPartyType,
   "NewApplicantParty.FullName.FirstName":
     createConnectionRequestFieldNames.firstName,
   "newApplicantParty.fullName.firstName":
@@ -25,6 +29,18 @@ export const createConnectionRequestServerFieldMap: Record<string, string> = {
   "newApplicantParty.email": createConnectionRequestFieldNames.email,
   "NewApplicantParty.PhoneNumber": createConnectionRequestFieldNames.phoneNumber,
   "newApplicantParty.phoneNumber": createConnectionRequestFieldNames.phoneNumber,
+  "NewApplicantParty.OrganizationName":
+    createConnectionRequestFieldNames.organizationName,
+  "newApplicantParty.organizationName":
+    createConnectionRequestFieldNames.organizationName,
+  "NewApplicantParty.Inn": createConnectionRequestFieldNames.inn,
+  "newApplicantParty.inn": createConnectionRequestFieldNames.inn,
+  "NewApplicantParty.Kpp": createConnectionRequestFieldNames.kpp,
+  "newApplicantParty.kpp": createConnectionRequestFieldNames.kpp,
+  "NewApplicantParty.Ogrn": createConnectionRequestFieldNames.ogrn,
+  "newApplicantParty.ogrn": createConnectionRequestFieldNames.ogrn,
+  "NewApplicantParty.Ogrnip": createConnectionRequestFieldNames.ogrnip,
+  "newApplicantParty.ogrnip": createConnectionRequestFieldNames.ogrnip,
   Details: createConnectionRequestFieldNames.details,
   details: createConnectionRequestFieldNames.details,
   Address: createConnectionRequestFieldNames.postalCode,

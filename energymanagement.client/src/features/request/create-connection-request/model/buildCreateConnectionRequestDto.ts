@@ -7,6 +7,14 @@ import type {
 
 const required = (label: string) => `${label}${createConnectionRequestConst.requiredSuffix}`;
 
+const applicantRequisiteLabels = {
+  organizationName: "Название организации",
+  inn: "ИНН",
+  kpp: "КПП",
+  ogrn: "ОГРН",
+  ogrnip: "ОГРНИП",
+} as const;
+
 const trimmed = (value: string) => value.trim();
 
 const optionalTrimmed = (value: string) => {
@@ -24,6 +32,12 @@ const requireField = (
     errors[fieldName] = required(label);
   }
 };
+
+const buildFullName = (values: CreateConnectionRequestFormValues) => ({
+  firstName: trimmed(values.firstName),
+  middleName: trimmed(values.middleName),
+  lastName: trimmed(values.lastName),
+});
 
 export const validateCreateConnectionRequestValues = (
   values: CreateConnectionRequestFormValues,
@@ -45,9 +59,32 @@ export const validateCreateConnectionRequestValues = (
   }
 
   if (values.applicantContextType === "New") {
-    requireField(errors, values, "firstName", createConnectionRequestConst.firstNameLabel);
-    requireField(errors, values, "middleName", createConnectionRequestConst.middleNameLabel);
-    requireField(errors, values, "lastName", createConnectionRequestConst.lastNameLabel);
+    if (
+      values.applicantPartyType === "Individual" ||
+      values.applicantPartyType === "IndividualEntrepreneur"
+    ) {
+      requireField(errors, values, "firstName", createConnectionRequestConst.firstNameLabel);
+      requireField(errors, values, "middleName", createConnectionRequestConst.middleNameLabel);
+      requireField(errors, values, "lastName", createConnectionRequestConst.lastNameLabel);
+    }
+
+    if (values.applicantPartyType === "IndividualEntrepreneur") {
+      requireField(errors, values, "inn", applicantRequisiteLabels.inn);
+      requireField(errors, values, "ogrnip", applicantRequisiteLabels.ogrnip);
+    }
+
+    if (values.applicantPartyType === "LegalEntity") {
+      requireField(
+        errors,
+        values,
+        "organizationName",
+        applicantRequisiteLabels.organizationName,
+      );
+      requireField(errors, values, "inn", applicantRequisiteLabels.inn);
+      requireField(errors, values, "kpp", applicantRequisiteLabels.kpp);
+      requireField(errors, values, "ogrn", applicantRequisiteLabels.ogrn);
+    }
+
     requireField(errors, values, "email", createConnectionRequestConst.emailLabel);
     requireField(errors, values, "phoneNumber", createConnectionRequestConst.phoneNumberLabel);
 
@@ -95,11 +132,31 @@ export const buildCreateConnectionRequestDto = (
     applicantContextType: "New",
     existingApplicantPartyId: null,
     newApplicantParty: {
-      fullName: {
-        firstName: trimmed(values.firstName),
-        middleName: trimmed(values.middleName),
-        lastName: trimmed(values.lastName),
-      },
+      applicantPartyType: values.applicantPartyType,
+      fullName:
+        values.applicantPartyType === "LegalEntity"
+          ? undefined
+          : buildFullName(values),
+      organizationName:
+        values.applicantPartyType === "LegalEntity"
+          ? trimmed(values.organizationName)
+          : null,
+      inn:
+        values.applicantPartyType === "Individual"
+          ? null
+          : trimmed(values.inn),
+      kpp:
+        values.applicantPartyType === "LegalEntity"
+          ? trimmed(values.kpp)
+          : null,
+      ogrn:
+        values.applicantPartyType === "LegalEntity"
+          ? trimmed(values.ogrn)
+          : null,
+      ogrnip:
+        values.applicantPartyType === "IndividualEntrepreneur"
+          ? trimmed(values.ogrnip)
+          : null,
       email: trimmed(values.email),
       phoneNumber: trimmed(values.phoneNumber),
     },

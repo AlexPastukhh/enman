@@ -352,7 +352,7 @@ public abstract class AppIntegrationTestBase
         return new CreateConnectionRequestDto(
             applicantContextType,
             existingApplicantPartyId,
-            newApplicantParty,
+            ToConnectionRequestNewApplicantDto(newApplicantParty),
             details,
             new AddressDto(
                 PostalCode,
@@ -379,6 +379,23 @@ public abstract class AppIntegrationTestBase
                 lastName: "Applicant",
                 email: "request.new.applicant@example.com",
                 phoneNumber: "79237554728"));
+    }
+
+    protected static CreateConnectionRequestNewApplicantDto? ToConnectionRequestNewApplicantDto(
+        CreateIndividualApplicantPartyDto? applicantParty)
+    {
+        return applicantParty is null
+            ? null
+            : new CreateConnectionRequestNewApplicantDto(
+                "Individual",
+                applicantParty.FullName,
+                OrganizationName: null,
+                Inn: null,
+                Kpp: null,
+                Ogrn: null,
+                Ogrnip: null,
+                applicantParty.Email,
+                applicantParty.PhoneNumber);
     }
 
     protected async Task<AccountRow?> GetAccountRowAsync(long id)
@@ -410,7 +427,17 @@ public abstract class AppIntegrationTestBase
         await using var reader = await ExecuteReaderAsync(
             """
             SELECT Id, ClientAccountId, Email, PhoneNumber, VerificationStatus, IsCurrentActiveVersion,
-                   FullName_FirstName, FullName_MiddleName, FullName_LastName
+                   ApplicantPartyType,
+                   FullName_FirstName, FullName_MiddleName, FullName_LastName,
+                   IndividualEntrepreneurFullName_FirstName,
+                   IndividualEntrepreneurFullName_MiddleName,
+                   IndividualEntrepreneurFullName_LastName,
+                   IndividualEntrepreneur_Inn,
+                   IndividualEntrepreneur_Ogrnip,
+                   LegalEntity_OrganizationName,
+                   LegalEntity_Inn,
+                   LegalEntity_Kpp,
+                   LegalEntity_Ogrn
             FROM dbo.L1ApplicantParties
             WHERE Id = @id
             """,
@@ -426,9 +453,19 @@ public abstract class AppIntegrationTestBase
             reader.GetInt64("ClientAccountId"),
             reader.GetString("Email"),
             reader.GetString("PhoneNumber"),
-            reader.GetString("FullName_FirstName"),
-            reader.GetString("FullName_MiddleName"),
-            reader.GetString("FullName_LastName"),
+            reader.GetString("ApplicantPartyType"),
+            reader.IsDBNull("FullName_FirstName") ? null : reader.GetString("FullName_FirstName"),
+            reader.IsDBNull("FullName_MiddleName") ? null : reader.GetString("FullName_MiddleName"),
+            reader.IsDBNull("FullName_LastName") ? null : reader.GetString("FullName_LastName"),
+            reader.IsDBNull("IndividualEntrepreneurFullName_FirstName") ? null : reader.GetString("IndividualEntrepreneurFullName_FirstName"),
+            reader.IsDBNull("IndividualEntrepreneurFullName_MiddleName") ? null : reader.GetString("IndividualEntrepreneurFullName_MiddleName"),
+            reader.IsDBNull("IndividualEntrepreneurFullName_LastName") ? null : reader.GetString("IndividualEntrepreneurFullName_LastName"),
+            reader.IsDBNull("IndividualEntrepreneur_Inn") ? null : reader.GetString("IndividualEntrepreneur_Inn"),
+            reader.IsDBNull("IndividualEntrepreneur_Ogrnip") ? null : reader.GetString("IndividualEntrepreneur_Ogrnip"),
+            reader.IsDBNull("LegalEntity_OrganizationName") ? null : reader.GetString("LegalEntity_OrganizationName"),
+            reader.IsDBNull("LegalEntity_Inn") ? null : reader.GetString("LegalEntity_Inn"),
+            reader.IsDBNull("LegalEntity_Kpp") ? null : reader.GetString("LegalEntity_Kpp"),
+            reader.IsDBNull("LegalEntity_Ogrn") ? null : reader.GetString("LegalEntity_Ogrn"),
             reader.GetString("VerificationStatus"),
             reader.GetBoolean("IsCurrentActiveVersion"));
     }
@@ -817,9 +854,19 @@ public abstract class AppIntegrationTestBase
         long ClientAccountId,
         string Email,
         string PhoneNumber,
-        string FirstName,
-        string MiddleName,
-        string LastName,
+        string ApplicantPartyType,
+        string? FirstName,
+        string? MiddleName,
+        string? LastName,
+        string? IndividualEntrepreneurFirstName,
+        string? IndividualEntrepreneurMiddleName,
+        string? IndividualEntrepreneurLastName,
+        string? IndividualEntrepreneurInn,
+        string? IndividualEntrepreneurOgrnip,
+        string? LegalEntityOrganizationName,
+        string? LegalEntityInn,
+        string? LegalEntityKpp,
+        string? LegalEntityOgrn,
         string VerificationStatus,
         bool IsCurrentActiveVersion);
 

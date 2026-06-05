@@ -245,6 +245,87 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
     }
 
     [Fact]
+    public async Task CreateConnectionRequest_WithNewIndividualEntrepreneurApplicantData_CreatesApplicantAndRequest()
+    {
+        var account = await RegisterAccountAsync();
+        var client = AuthenticatedClient(account.AccountId);
+
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
+            "/api/requests",
+            ValidConnectionRequestDto(
+                applicantContextType: "New",
+                existingApplicantPartyId: null,
+                newApplicantParty: null) with
+            {
+                NewApplicantParty = new CreateConnectionRequestNewApplicantDto(
+                    ApplicantPartyType: "IndividualEntrepreneur",
+                    FullName: new FullNameDto("Ivan", "Ivanovich", "Ivanov"),
+                    OrganizationName: null,
+                    Inn: "123456789012",
+                    Kpp: null,
+                    Ogrn: null,
+                    Ogrnip: "123456789012345",
+                    Email: ApplicantEmail,
+                    PhoneNumber: PhoneNumber)
+            });
+
+        await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
+
+        var newApplicantId = await GetLatestApplicantPartyIdForAccountAsync(account.AccountId);
+        var newApplicant = await GetApplicantPartyRowAsync(newApplicantId!.Value);
+        var request = await GetLatestRequestRowForApplicantPartyAsync(newApplicantId.Value);
+
+        newApplicant!.ApplicantPartyType.Should().Be("IndividualEntrepreneur");
+        newApplicant.IndividualEntrepreneurFirstName.Should().Be("Ivan");
+        newApplicant.IndividualEntrepreneurInn.Should().Be("123456789012");
+        newApplicant.IndividualEntrepreneurOgrnip.Should().Be("123456789012345");
+        request.Should().NotBeNull();
+        request!.ApplicantPartyId.Should().Be(newApplicantId.Value);
+    }
+
+    [Fact]
+    public async Task CreateConnectionRequest_WithNewLegalEntityApplicantData_CreatesApplicantAndRequest()
+    {
+        var account = await RegisterAccountAsync();
+        var client = AuthenticatedClient(account.AccountId);
+
+        var response = await PostAsJsonWithCsrfAsync(
+            client,
+            "/api/requests",
+            ValidConnectionRequestDto(
+                applicantContextType: "New",
+                existingApplicantPartyId: null,
+                newApplicantParty: null) with
+            {
+                NewApplicantParty = new CreateConnectionRequestNewApplicantDto(
+                    ApplicantPartyType: "LegalEntity",
+                    FullName: null,
+                    OrganizationName: "ООО Энергия",
+                    Inn: "1234567890",
+                    Kpp: "123456789",
+                    Ogrn: "1234567890123",
+                    Ogrnip: null,
+                    Email: ApplicantEmail,
+                    PhoneNumber: PhoneNumber)
+            });
+
+        await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
+
+        var newApplicantId = await GetLatestApplicantPartyIdForAccountAsync(account.AccountId);
+        var newApplicant = await GetApplicantPartyRowAsync(newApplicantId!.Value);
+        var request = await GetLatestRequestRowForApplicantPartyAsync(newApplicantId.Value);
+
+        newApplicant!.ApplicantPartyType.Should().Be("LegalEntity");
+        newApplicant.LegalEntityOrganizationName.Should().Be("ООО Энергия");
+        newApplicant.LegalEntityInn.Should().Be("1234567890");
+        newApplicant.LegalEntityKpp.Should().Be("123456789");
+        newApplicant.LegalEntityOgrn.Should().Be("1234567890123");
+        request.Should().NotBeNull();
+        request!.ApplicantPartyId.Should().Be(newApplicantId.Value);
+    }
+
+    [Fact]
     public async Task CreateConnectionRequest_WithInvalidNewApplicantData_CreatesNoApplicantAndNoRequest()
     {
         var account = await RegisterAccountAsync();

@@ -6,6 +6,10 @@ namespace Domain.EnergyManagement;
 
 public sealed class AgreementDocumentRef : ValueObject
 {
+    public const int StorageKeyMaxLength = 128;
+    public const int OriginalFileNameMaxLength = 255;
+    public const int ContentTypeMaxLength = 100;
+
     public string StorageKey { get; private set; }
 
     public string OriginalFileName { get; private set; }

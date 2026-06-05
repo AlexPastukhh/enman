@@ -21,7 +21,7 @@ public sealed class CreateConnectionRequestDtoValidator
 
                 if (string.Equals(dto.ApplicantContextType, NewApplicantContext, StringComparison.Ordinal))
                 {
-                    ApplicantPartyValidation.ValidateIndividualApplicant(
+                    ApplicantPartyValidation.ValidateConnectionRequestNewApplicant(
                         dto.NewApplicantParty,
                         context,
                         FieldNames.CreateConnectionRequest.NewApplicantParty);

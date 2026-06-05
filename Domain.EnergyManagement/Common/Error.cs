@@ -144,6 +144,16 @@ public class Error : ValueObject
             public static readonly Error ApplicantPartyIsIncomplete = Create("l1.applicant.party.is.incomplete", 400);
             public static readonly Error ApplicantPartyIsRequired = Create("l1.applicant.party.is.required", 400);
             public static readonly Error ApplicantPartyMustBePersisted = Create("l1.applicant.party.must.be.persisted", 400);
+            public static readonly Error InnIsRequired = Create("l1.applicant.inn.is.required", 400);
+            public static readonly Error InnIsInvalid = Create("l1.applicant.inn.is.invalid", 400);
+            public static readonly Error OgrnIsRequired = Create("l1.applicant.ogrn.is.required", 400);
+            public static readonly Error OgrnIsInvalid = Create("l1.applicant.ogrn.is.invalid", 400);
+            public static readonly Error OgrnipIsRequired = Create("l1.applicant.ogrnip.is.required", 400);
+            public static readonly Error OgrnipIsInvalid = Create("l1.applicant.ogrnip.is.invalid", 400);
+            public static readonly Error KppIsRequired = Create("l1.applicant.kpp.is.required", 400);
+            public static readonly Error KppIsInvalid = Create("l1.applicant.kpp.is.invalid", 400);
+            public static readonly Error OrganizationNameIsRequired = Create("l1.applicant.organization.name.is.required", 400);
+            public static readonly Error OrganizationNameIsTooLong = Create("l1.applicant.organization.name.is.too.long", 400);
             public static readonly Error RequestObjectAddressIsRequired = Create("l1.request.object.address.is.required", 400);
             public static readonly Error ReviewerIsRequired = Create("l1.request.reviewer.is.required", 400);
             public static readonly Error OnlyInReviewRequestCanBeApproved = Create("l1.request.only.in.review.can.be.approved", 400);

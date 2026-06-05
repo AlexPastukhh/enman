@@ -81,6 +81,7 @@ public sealed class TestDatabaseManager
             await EnsureL1ApplicantPartyCurrentVersionColumnAsync(cancellationToken);
             await EnsureL1ApplicantPartyVerificationStatusColumnAsync(cancellationToken);
             await EnsureL1ApplicantPartiesClientAccountIdColumnAsync(cancellationToken);
+            await EnsureL1ApplicantPartySubtypeRequisiteColumnsAsync(cancellationToken);
             await EnsureL1ClientRequestClientAccountIdColumnAsync(cancellationToken);
             await EnsureL1RequestReviewsTableAsync(cancellationToken);
             await EnsureL1AgreementProposalTablesAsync(cancellationToken);
@@ -92,6 +93,7 @@ public sealed class TestDatabaseManager
         var databaseCreator = context.GetService<IRelationalDatabaseCreator>();
         await databaseCreator.CreateTablesAsync(cancellationToken);
         await EnsureL1ApplicantPartiesClientAccountIdColumnAsync(cancellationToken);
+        await EnsureL1ApplicantPartySubtypeRequisiteColumnsAsync(cancellationToken);
         await EnsureL1ClientRequestClientAccountIdColumnAsync(cancellationToken);
         await EnsureL1RequestReviewsTableAsync(cancellationToken);
         await EnsureL1AgreementProposalTablesAsync(cancellationToken);
@@ -165,6 +167,57 @@ public sealed class TestDatabaseManager
             BEGIN
                 EXEC(N'CREATE INDEX IX_L1ClientRequests_ClientAccountId
                     ON dbo.L1ClientRequests(ClientAccountId);');
+            END
+            """;
+
+        await using var connection = new SqlConnection(_connectionString);
+        await connection.OpenAsync(cancellationToken);
+
+        await using var command = new SqlCommand(query, connection)
+        {
+            CommandType = CommandType.Text
+        };
+
+        await command.ExecuteNonQueryAsync(cancellationToken);
+    }
+
+    private async Task EnsureL1ApplicantPartySubtypeRequisiteColumnsAsync(CancellationToken cancellationToken)
+    {
+        const string query = """
+            IF OBJECT_ID(N'dbo.L1ApplicantParties', N'U') IS NOT NULL
+            BEGIN
+                IF COL_LENGTH(N'dbo.L1ApplicantParties', N'ApplicantPartyDiscriminator') IS NOT NULL
+                BEGIN
+                    ALTER TABLE dbo.L1ApplicantParties
+                    ALTER COLUMN ApplicantPartyDiscriminator nvarchar(34) NOT NULL;
+                END
+
+                IF COL_LENGTH(N'dbo.L1ApplicantParties', N'IndividualEntrepreneurFullName_FirstName') IS NULL
+                    ALTER TABLE dbo.L1ApplicantParties ADD IndividualEntrepreneurFullName_FirstName nvarchar(100) NULL;
+
+                IF COL_LENGTH(N'dbo.L1ApplicantParties', N'IndividualEntrepreneurFullName_MiddleName') IS NULL
+                    ALTER TABLE dbo.L1ApplicantParties ADD IndividualEntrepreneurFullName_MiddleName nvarchar(100) NULL;
+
+                IF COL_LENGTH(N'dbo.L1ApplicantParties', N'IndividualEntrepreneurFullName_LastName') IS NULL
+                    ALTER TABLE dbo.L1ApplicantParties ADD IndividualEntrepreneurFullName_LastName nvarchar(100) NULL;
+
+                IF COL_LENGTH(N'dbo.L1ApplicantParties', N'IndividualEntrepreneur_Inn') IS NULL
+                    ALTER TABLE dbo.L1ApplicantParties ADD IndividualEntrepreneur_Inn nvarchar(12) NULL;
+
+                IF COL_LENGTH(N'dbo.L1ApplicantParties', N'IndividualEntrepreneur_Ogrnip') IS NULL
+                    ALTER TABLE dbo.L1ApplicantParties ADD IndividualEntrepreneur_Ogrnip nvarchar(15) NULL;
+
+                IF COL_LENGTH(N'dbo.L1ApplicantParties', N'LegalEntity_OrganizationName') IS NULL
+                    ALTER TABLE dbo.L1ApplicantParties ADD LegalEntity_OrganizationName nvarchar(250) NULL;
+
+                IF COL_LENGTH(N'dbo.L1ApplicantParties', N'LegalEntity_Inn') IS NULL
+                    ALTER TABLE dbo.L1ApplicantParties ADD LegalEntity_Inn nvarchar(10) NULL;
+
+                IF COL_LENGTH(N'dbo.L1ApplicantParties', N'LegalEntity_Kpp') IS NULL
+                    ALTER TABLE dbo.L1ApplicantParties ADD LegalEntity_Kpp nvarchar(9) NULL;
+
+                IF COL_LENGTH(N'dbo.L1ApplicantParties', N'LegalEntity_Ogrn') IS NULL
+                    ALTER TABLE dbo.L1ApplicantParties ADD LegalEntity_Ogrn nvarchar(13) NULL;
             END
             """;
 

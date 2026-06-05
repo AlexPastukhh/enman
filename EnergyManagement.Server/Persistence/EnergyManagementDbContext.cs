@@ -1,6 +1,9 @@
 using Domain.EnergyManagement;
 using Microsoft.EntityFrameworkCore;
+using Email = Domain.EnergyManagement.DocumentManaging.Email;
+using FullName = Domain.EnergyManagement.DocumentManaging.FullName;
 using PasswordHash = Domain.EnergyManagement.DocumentManaging.PasswordHash;
+using PhoneNumber = Domain.EnergyManagement.DocumentManaging.PhoneNumber;
 
 namespace EnergyManagement.Server.Persistence;
 
@@ -49,7 +52,7 @@ public class EnergyManagementDbContext : DbContext
             {
                 email.Property(x => x.Value)
                     .HasColumnName("Email")
-                    .HasMaxLength(100)
+                    .HasMaxLength(Email.MaxLength)
                     .IsRequired();
             });
 
@@ -58,7 +61,7 @@ public class EnergyManagementDbContext : DbContext
                 .HasConversion(
                     passwordHash => passwordHash.Value,
                     value => PasswordHash.ConvertFromString(value))
-                .HasMaxLength(200)
+                .HasMaxLength(PasswordHash.StoredMaxLength)
                 .IsRequired();
 
             account.Property(x => x.Role)
@@ -85,7 +88,9 @@ public class EnergyManagementDbContext : DbContext
             applicantParty.HasKey(x => x.Id);
 
             applicantParty.HasDiscriminator<string>("ApplicantPartyDiscriminator")
-                .HasValue<IndividualApplicantParty>("Individual");
+                .HasValue<IndividualApplicantParty>("Individual")
+                .HasValue<IndividualEntrepreneurApplicantParty>("IndividualEntrepreneur")
+                .HasValue<LegalEntityApplicantParty>("LegalEntity");
 
             applicantParty.Property(x => x.ClientAccountId)
                 .HasColumnName("ClientAccountId")
@@ -113,7 +118,7 @@ public class EnergyManagementDbContext : DbContext
             {
                 email.Property(x => x.Value)
                     .HasColumnName("Email")
-                    .HasMaxLength(100)
+                    .HasMaxLength(Email.MaxLength)
                     .IsRequired();
             });
 
@@ -121,7 +126,7 @@ public class EnergyManagementDbContext : DbContext
             {
                 phoneNumber.Property(x => x.Value)
                     .HasColumnName("PhoneNumber")
-                    .HasMaxLength(50)
+                    .HasMaxLength(PhoneNumber.MaxLength)
                     .IsRequired();
             });
 
@@ -141,17 +146,89 @@ public class EnergyManagementDbContext : DbContext
             {
                 fullName.Property(x => x.FirstName)
                     .HasColumnName("FullName_FirstName")
-                    .HasMaxLength(100)
+                    .HasMaxLength(FullName.MaxPartLength)
                     .IsRequired();
 
                 fullName.Property(x => x.MiddleName)
                     .HasColumnName("FullName_MiddleName")
-                    .HasMaxLength(100)
+                    .HasMaxLength(FullName.MaxPartLength)
                     .IsRequired();
 
                 fullName.Property(x => x.LastName)
                     .HasColumnName("FullName_LastName")
-                    .HasMaxLength(100)
+                    .HasMaxLength(FullName.MaxPartLength)
+                    .IsRequired();
+            });
+        });
+
+        modelBuilder.Entity<IndividualEntrepreneurApplicantParty>(individualEntrepreneur =>
+        {
+            individualEntrepreneur.OwnsOne(x => x.FullName, fullName =>
+            {
+                fullName.Property(x => x.FirstName)
+                    .HasColumnName("IndividualEntrepreneurFullName_FirstName")
+                    .HasMaxLength(FullName.MaxPartLength)
+                    .IsRequired();
+
+                fullName.Property(x => x.MiddleName)
+                    .HasColumnName("IndividualEntrepreneurFullName_MiddleName")
+                    .HasMaxLength(FullName.MaxPartLength)
+                    .IsRequired();
+
+                fullName.Property(x => x.LastName)
+                    .HasColumnName("IndividualEntrepreneurFullName_LastName")
+                    .HasMaxLength(FullName.MaxPartLength)
+                    .IsRequired();
+            });
+
+            individualEntrepreneur.OwnsOne(x => x.Inn, inn =>
+            {
+                inn.Property(x => x.Value)
+                    .HasColumnName("IndividualEntrepreneur_Inn")
+                    .HasMaxLength(12)
+                    .IsRequired();
+            });
+
+            individualEntrepreneur.OwnsOne(x => x.Ogrnip, ogrnip =>
+            {
+                ogrnip.Property(x => x.Value)
+                    .HasColumnName("IndividualEntrepreneur_Ogrnip")
+                    .HasMaxLength(15)
+                    .IsRequired();
+            });
+        });
+
+        modelBuilder.Entity<LegalEntityApplicantParty>(legalEntity =>
+        {
+            legalEntity.OwnsOne(x => x.OrganizationName, organizationName =>
+            {
+                organizationName.Property(x => x.Value)
+                    .HasColumnName("LegalEntity_OrganizationName")
+                    .HasMaxLength(OrganizationName.MaxLength)
+                    .IsRequired();
+            });
+
+            legalEntity.OwnsOne(x => x.Inn, inn =>
+            {
+                inn.Property(x => x.Value)
+                    .HasColumnName("LegalEntity_Inn")
+                    .HasMaxLength(10)
+                    .IsRequired();
+            });
+
+            legalEntity.OwnsOne(x => x.Kpp, kpp =>
+            {
+                kpp.Property(x => x.Value)
+                    .HasColumnName("LegalEntity_Kpp")
+                    .HasMaxLength(9)
+                    .IsRequired();
+            });
+
+            legalEntity.OwnsOne(x => x.Ogrn, ogrn =>
+            {
+                ogrn.Property(x => x.Value)
+                    .HasColumnName("LegalEntity_Ogrn")
+                    .HasMaxLength(13)
                     .IsRequired();
             });
         });
@@ -198,7 +275,7 @@ public class EnergyManagementDbContext : DbContext
             {
                 address.Property(x => x.PostalCode)
                     .HasColumnName("ObjectAddress_PostalCode")
-                    .HasMaxLength(50)
+                    .HasMaxLength(6)
                     .IsRequired();
 
                 address.Property(x => x.Region)
@@ -310,17 +387,17 @@ public class EnergyManagementDbContext : DbContext
             {
                 fullName.Property(x => x.FirstName)
                     .HasColumnName("EmployeeFullName_FirstName")
-                    .HasMaxLength(100)
+                    .HasMaxLength(FullName.MaxPartLength)
                     .IsRequired(false);
 
                 fullName.Property(x => x.MiddleName)
                     .HasColumnName("EmployeeFullName_MiddleName")
-                    .HasMaxLength(100)
+                    .HasMaxLength(FullName.MaxPartLength)
                     .IsRequired(false);
 
                 fullName.Property(x => x.LastName)
                     .HasColumnName("EmployeeFullName_LastName")
-                    .HasMaxLength(100)
+                    .HasMaxLength(FullName.MaxPartLength)
                     .IsRequired(false);
             });
         });
@@ -425,17 +502,17 @@ public class EnergyManagementDbContext : DbContext
                 {
                     document.Property(x => x.StorageKey)
                         .HasColumnName("DocumentStorageKey")
-                        .HasMaxLength(500)
+                        .HasMaxLength(AgreementDocumentRef.StorageKeyMaxLength)
                         .IsRequired();
 
                     document.Property(x => x.OriginalFileName)
                         .HasColumnName("DocumentOriginalFileName")
-                        .HasMaxLength(255)
+                        .HasMaxLength(AgreementDocumentRef.OriginalFileNameMaxLength)
                         .IsRequired();
 
                     document.Property(x => x.ContentType)
                         .HasColumnName("DocumentContentType")
-                        .HasMaxLength(100)
+                        .HasMaxLength(AgreementDocumentRef.ContentTypeMaxLength)
                         .IsRequired();
 
                     document.Property(x => x.SizeBytes)

@@ -7,6 +7,7 @@ import type { CreateConnectionRequestFormValues } from "./createConnectionReques
 
 const baseValues = {
   applicantContextType: "Existing",
+  applicantPartyType: "Individual",
   existingApplicantPartyId: "42",
   details: "Подключение объекта к электрическим сетям",
   postalCode: "658480",
@@ -19,6 +20,11 @@ const baseValues = {
   firstName: "Ivan",
   middleName: "Ivanovich",
   lastName: "Ivanov",
+  organizationName: "ООО Энергия",
+  inn: "1234567890",
+  kpp: "123456789",
+  ogrn: "1234567890123",
+  ogrnip: "123456789012345",
   email: "ivan@example.com",
   phoneNumber: "+79001234567",
 } satisfies CreateConnectionRequestFormValues;
@@ -52,11 +58,17 @@ describe("buildCreateConnectionRequestDto", () => {
       applicantContextType: "New",
       existingApplicantPartyId: null,
       newApplicantParty: {
+        applicantPartyType: "Individual",
         fullName: {
           firstName: "Ivan",
           middleName: "Ivanovich",
           lastName: "Ivanov",
         },
+        organizationName: null,
+        inn: null,
+        kpp: null,
+        ogrn: null,
+        ogrnip: null,
         email: "ivan@example.com",
         phoneNumber: "+79001234567",
       },
@@ -69,6 +81,60 @@ describe("buildCreateConnectionRequestDto", () => {
         house: "10",
         building: null,
         apartment: null,
+      },
+    });
+  });
+
+  it("maps the New individual entrepreneur branch", () => {
+    expect(
+      buildCreateConnectionRequestDto({
+        ...baseValues,
+        applicantContextType: "New",
+        applicantPartyType: "IndividualEntrepreneur",
+        existingApplicantPartyId: "",
+      }),
+    ).toMatchObject({
+      applicantContextType: "New",
+      existingApplicantPartyId: null,
+      newApplicantParty: {
+        applicantPartyType: "IndividualEntrepreneur",
+        fullName: {
+          firstName: "Ivan",
+          middleName: "Ivanovich",
+          lastName: "Ivanov",
+        },
+        organizationName: null,
+        inn: "1234567890",
+        kpp: null,
+        ogrn: null,
+        ogrnip: "123456789012345",
+        email: "ivan@example.com",
+        phoneNumber: "+79001234567",
+      },
+    });
+  });
+
+  it("maps the New legal entity branch", () => {
+    expect(
+      buildCreateConnectionRequestDto({
+        ...baseValues,
+        applicantContextType: "New",
+        applicantPartyType: "LegalEntity",
+        existingApplicantPartyId: "",
+      }),
+    ).toMatchObject({
+      applicantContextType: "New",
+      existingApplicantPartyId: null,
+      newApplicantParty: {
+        applicantPartyType: "LegalEntity",
+        fullName: undefined,
+        organizationName: "ООО Энергия",
+        inn: "1234567890",
+        kpp: "123456789",
+        ogrn: "1234567890123",
+        ogrnip: null,
+        email: "ivan@example.com",
+        phoneNumber: "+79001234567",
       },
     });
   });

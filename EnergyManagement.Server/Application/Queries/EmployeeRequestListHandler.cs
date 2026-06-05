@@ -51,6 +51,11 @@ public sealed class EmployeeRequestListHandler
                 applicant.FullName_FirstName AS ApplicantFirstName,
                 applicant.FullName_MiddleName AS ApplicantMiddleName,
                 applicant.FullName_LastName AS ApplicantLastName,
+                applicant.ApplicantPartyType,
+                applicant.IndividualEntrepreneurFullName_FirstName AS IndividualEntrepreneurFirstName,
+                applicant.IndividualEntrepreneurFullName_MiddleName AS IndividualEntrepreneurMiddleName,
+                applicant.IndividualEntrepreneurFullName_LastName AS IndividualEntrepreneurLastName,
+                applicant.LegalEntity_OrganizationName AS LegalEntityOrganizationName,
                 applicant.VerificationStatus AS ApplicantVerificationStatus,
                 review.Status AS ReviewStatus,
                 review.StartedByEmployeeId
@@ -146,13 +151,41 @@ public sealed class EmployeeRequestListHandler
 
     private static string FormatApplicantDisplayName(EmployeeRequestListRow row)
     {
+        if (row.ApplicantPartyType == ApplicantPartyType.IndividualEntrepreneur.ToString())
+        {
+            var fullName = FormatFullName(
+                row.IndividualEntrepreneurLastName,
+                row.IndividualEntrepreneurFirstName,
+                row.IndividualEntrepreneurMiddleName);
+
+            return string.IsNullOrWhiteSpace(fullName)
+                ? string.Empty
+                : $"IP {fullName}";
+        }
+
+        if (row.ApplicantPartyType == ApplicantPartyType.LegalEntity.ToString())
+        {
+            return row.LegalEntityOrganizationName ?? string.Empty;
+        }
+
+        return FormatFullName(
+            row.ApplicantLastName,
+            row.ApplicantFirstName,
+            row.ApplicantMiddleName);
+    }
+
+    private static string FormatFullName(
+        string? lastName,
+        string? firstName,
+        string? middleName)
+    {
         return string.Join(
                 " ",
                 new[]
                 {
-                    row.ApplicantLastName,
-                    row.ApplicantFirstName,
-                    row.ApplicantMiddleName
+                    lastName,
+                    firstName,
+                    middleName
                 }.Where(value => !string.IsNullOrWhiteSpace(value)))
             .Trim();
     }
@@ -190,6 +223,11 @@ public sealed class EmployeeRequestListHandler
         public string ApplicantFirstName { get; init; } = string.Empty;
         public string ApplicantMiddleName { get; init; } = string.Empty;
         public string ApplicantLastName { get; init; } = string.Empty;
+        public string ApplicantPartyType { get; init; } = string.Empty;
+        public string? IndividualEntrepreneurFirstName { get; init; }
+        public string? IndividualEntrepreneurMiddleName { get; init; }
+        public string? IndividualEntrepreneurLastName { get; init; }
+        public string? LegalEntityOrganizationName { get; init; }
         public string ApplicantVerificationStatus { get; init; } = string.Empty;
         public string? ReviewStatus { get; init; }
         public long? StartedByEmployeeId { get; init; }

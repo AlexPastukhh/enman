@@ -55,9 +55,15 @@ public sealed record CreateConnectionRequestCommand(
     : IRequest<UnitResult<IReadOnlyList<Error>>>;
 
 public sealed record CreateConnectionRequestNewApplicant(
-    string FirstName,
-    string MiddleName,
-    string LastName,
+    string ApplicantPartyType,
+    string? FirstName,
+    string? MiddleName,
+    string? LastName,
+    string? OrganizationName,
+    string? Inn,
+    string? Kpp,
+    string? Ogrn,
+    string? Ogrnip,
     string Email,
     string PhoneNumber);
 
@@ -263,4 +269,3 @@ public enum RunApplicantPartyVerificationFromRequestCommandStatus
     Forbidden = 3,
     Invalid = 4
 }
-

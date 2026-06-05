@@ -49,6 +49,11 @@ public sealed record ApplicantPartySummaryDto(
     [property: JsonPropertyName("applicantPartyType")] string ApplicantPartyType,
     [property: JsonPropertyName("displayName")] string DisplayName,
     [property: JsonPropertyName("fullName")] FullNameDto? FullName,
+    [property: JsonPropertyName("organizationName")] string? OrganizationName,
+    [property: JsonPropertyName("inn")] string? Inn,
+    [property: JsonPropertyName("kpp")] string? Kpp,
+    [property: JsonPropertyName("ogrn")] string? Ogrn,
+    [property: JsonPropertyName("ogrnip")] string? Ogrnip,
     [property: JsonPropertyName("email")] string Email,
     [property: JsonPropertyName("phoneNumber")] string PhoneNumber,
     [property: JsonPropertyName("verificationStatus")] string VerificationStatus,
@@ -63,9 +68,20 @@ public sealed record FullNameDto(
 public sealed record CreateConnectionRequestDto(
     [property: JsonPropertyName("applicantContextType")] string? ApplicantContextType,
     [property: JsonPropertyName("existingApplicantPartyId")] long? ExistingApplicantPartyId,
-    [property: JsonPropertyName("newApplicantParty")] CreateIndividualApplicantPartyDto? NewApplicantParty,
+    [property: JsonPropertyName("newApplicantParty")] CreateConnectionRequestNewApplicantDto? NewApplicantParty,
     [property: JsonPropertyName("details")] string? Details,
     [property: JsonPropertyName("address")] AddressDto? Address);
+
+public sealed record CreateConnectionRequestNewApplicantDto(
+    [property: JsonPropertyName("applicantPartyType")] string? ApplicantPartyType,
+    [property: JsonPropertyName("fullName")] FullNameDto? FullName,
+    [property: JsonPropertyName("organizationName")] string? OrganizationName,
+    [property: JsonPropertyName("inn")] string? Inn,
+    [property: JsonPropertyName("kpp")] string? Kpp,
+    [property: JsonPropertyName("ogrn")] string? Ogrn,
+    [property: JsonPropertyName("ogrnip")] string? Ogrnip,
+    [property: JsonPropertyName("email")] string? Email,
+    [property: JsonPropertyName("phoneNumber")] string? PhoneNumber);
 
 public sealed record MyRequestSummaryDto(
     [property: JsonPropertyName("requestId")] long RequestId,

@@ -4,16 +4,19 @@ using EnergyManagement.Server.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace EnergyManagement.Server.Migrations
+namespace EnergyManagement.Server.Migrations.L1Db
 {
     [DbContext(typeof(EnergyManagementDbContext))]
-    partial class EnergyManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260605123216_TuneDomainFieldMaxLengths")]
+    partial class TuneDomainFieldMaxLengths
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

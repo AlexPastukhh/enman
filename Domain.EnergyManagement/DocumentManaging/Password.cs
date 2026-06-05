@@ -138,6 +138,7 @@ namespace Domain.EnergyManagement.DocumentManaging
 
         private const int SaltSize = 16;
         private const int HashSize = 32;
+        public const int StoredMaxLength = 128;
         private const int Iterations = 100000;
         private static Regex SpecialCharPattern = new Regex(@"(?=.*[!@#$%^&*\(\)])");
         private static readonly HashAlgorithmName AlgorithmName =

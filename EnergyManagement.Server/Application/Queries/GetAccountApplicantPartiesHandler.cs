@@ -48,6 +48,11 @@ public sealed class GetAccountApplicantPartiesHandler
             applicantParty.ApplicantPartyType,
             applicantParty.GetDisplayName(),
             ToFullName(applicantParty),
+            ToOrganizationName(applicantParty),
+            ToInn(applicantParty),
+            ToKpp(applicantParty),
+            ToOgrn(applicantParty),
+            ToOgrnip(applicantParty),
             applicantParty.Email.Value,
             applicantParty.PhoneNumber.Value,
             applicantParty.VerificationStatus,
@@ -57,14 +62,56 @@ public sealed class GetAccountApplicantPartiesHandler
 
     private static ApplicantPartyFullNameResponse? ToFullName(ApplicantParty applicantParty)
     {
-        if (applicantParty is not IndividualApplicantParty individualApplicantParty)
+        var fullName = applicantParty switch
         {
-            return null;
-        }
+            IndividualApplicantParty individualApplicantParty => individualApplicantParty.FullName,
+            IndividualEntrepreneurApplicantParty individualEntrepreneurApplicantParty => individualEntrepreneurApplicantParty.FullName,
+            _ => null
+        };
 
-        return new ApplicantPartyFullNameResponse(
-            individualApplicantParty.FullName.FirstName,
-            individualApplicantParty.FullName.MiddleName,
-            individualApplicantParty.FullName.LastName);
+        return fullName is null
+            ? null
+            : new ApplicantPartyFullNameResponse(
+                fullName.FirstName,
+                fullName.MiddleName,
+                fullName.LastName);
+    }
+
+    private static string? ToOrganizationName(ApplicantParty applicantParty)
+    {
+        return applicantParty is LegalEntityApplicantParty legalEntity
+            ? legalEntity.OrganizationName.Value
+            : null;
+    }
+
+    private static string? ToInn(ApplicantParty applicantParty)
+    {
+        return applicantParty switch
+        {
+            IndividualEntrepreneurApplicantParty individualEntrepreneur => individualEntrepreneur.Inn.Value,
+            LegalEntityApplicantParty legalEntity => legalEntity.Inn.Value,
+            _ => null
+        };
+    }
+
+    private static string? ToKpp(ApplicantParty applicantParty)
+    {
+        return applicantParty is LegalEntityApplicantParty legalEntity
+            ? legalEntity.Kpp.Value
+            : null;
+    }
+
+    private static string? ToOgrn(ApplicantParty applicantParty)
+    {
+        return applicantParty is LegalEntityApplicantParty legalEntity
+            ? legalEntity.Ogrn.Value
+            : null;
+    }
+
+    private static string? ToOgrnip(ApplicantParty applicantParty)
+    {
+        return applicantParty is IndividualEntrepreneurApplicantParty individualEntrepreneur
+            ? individualEntrepreneur.Ogrnip.Value
+            : null;
     }
 }

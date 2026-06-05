@@ -7,6 +7,8 @@ namespace Domain.EnergyManagement.DocumentManaging
 {
 public class Email:ValueObject
 {
+    public const int MaxLength = 100;
+
     private static readonly Regex EmailRegex = new(
         @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
         RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -31,7 +33,7 @@ public class Email:ValueObject
             return Result.Failure<Email, IReadOnlyList<Error>>(errors);
         }
 
-        if (!IsValidEmail(userEmail))
+        if (userEmail.Length > MaxLength || !IsValidEmail(userEmail))
         {
             errors.Add(EmailIsInvalid);
             return Result.Failure<Email, IReadOnlyList<Error>>(errors);

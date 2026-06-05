@@ -96,13 +96,9 @@ public sealed class CreateConnectionRequestHandler
         CancellationToken cancellationToken)
     {
         var newApplicant = command.NewApplicantParty!;
-        var createdApplicant = await _applicantPartyCreation.CreateIndividualAsync(
+        var createdApplicant = await CreateApplicantPartyAsync(
             command.ClientAccountId,
-            newApplicant.FirstName,
-            newApplicant.MiddleName,
-            newApplicant.LastName,
-            newApplicant.Email,
-            newApplicant.PhoneNumber,
+            newApplicant,
             cancellationToken);
 
         if (createdApplicant.IsFailure)
@@ -131,5 +127,79 @@ public sealed class CreateConnectionRequestHandler
         await transaction.CommitAsync(cancellationToken);
 
         return UnitResult.Success<IReadOnlyList<Error>>();
+    }
+
+    private async Task<Result<ApplicantParty, IReadOnlyList<Error>>> CreateApplicantPartyAsync(
+        long clientAccountId,
+        CreateConnectionRequestNewApplicant newApplicant,
+        CancellationToken cancellationToken)
+    {
+        if (!Enum.TryParse<ApplicantPartyType>(
+                newApplicant.ApplicantPartyType,
+                ignoreCase: false,
+                out var applicantPartyType)
+            || !Enum.IsDefined(applicantPartyType))
+        {
+            return Result.Failure<ApplicantParty, IReadOnlyList<Error>>(
+                [Errors.General.ValueIsInvalid]);
+        }
+
+        switch (applicantPartyType)
+        {
+            case ApplicantPartyType.Individual:
+            {
+                var result = await _applicantPartyCreation.CreateIndividualAsync(
+                    clientAccountId,
+                    newApplicant.FirstName!,
+                    newApplicant.MiddleName!,
+                    newApplicant.LastName!,
+                    newApplicant.Email,
+                    newApplicant.PhoneNumber,
+                    cancellationToken);
+
+                return result.IsSuccess
+                    ? Result.Success<ApplicantParty, IReadOnlyList<Error>>(result.Value)
+                    : Result.Failure<ApplicantParty, IReadOnlyList<Error>>(result.Error);
+            }
+
+            case ApplicantPartyType.IndividualEntrepreneur:
+            {
+                var result = await _applicantPartyCreation.CreateIndividualEntrepreneurAsync(
+                    clientAccountId,
+                    newApplicant.FirstName!,
+                    newApplicant.MiddleName!,
+                    newApplicant.LastName!,
+                    newApplicant.Inn!,
+                    newApplicant.Ogrnip!,
+                    newApplicant.Email,
+                    newApplicant.PhoneNumber,
+                    cancellationToken);
+
+                return result.IsSuccess
+                    ? Result.Success<ApplicantParty, IReadOnlyList<Error>>(result.Value)
+                    : Result.Failure<ApplicantParty, IReadOnlyList<Error>>(result.Error);
+            }
+
+            case ApplicantPartyType.LegalEntity:
+            {
+                var result = await _applicantPartyCreation.CreateLegalEntityAsync(
+                    clientAccountId,
+                    newApplicant.OrganizationName!,
+                    newApplicant.Inn!,
+                    newApplicant.Kpp!,
+                    newApplicant.Ogrn!,
+                    newApplicant.Email,
+                    newApplicant.PhoneNumber,
+                    cancellationToken);
+
+                return result.IsSuccess
+                    ? Result.Success<ApplicantParty, IReadOnlyList<Error>>(result.Value)
+                    : Result.Failure<ApplicantParty, IReadOnlyList<Error>>(result.Error);
+            }
+
+            default:
+                return Result.Failure<ApplicantParty, IReadOnlyList<Error>>(
+                    [Errors.General.ValueIsInvalid]);
+        }
     }
 }
