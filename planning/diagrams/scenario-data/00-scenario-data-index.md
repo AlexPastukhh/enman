@@ -24,6 +24,7 @@ Scope: scenario DATA files and stale/pending DATA variants
 | SC-13B Proposal Details / Response | `SC-13B-agreement-proposal-details-response-data.md` | current | Proposal response DATA. |
 | SC-13C Employee Agreements | `SC-13C-employee-agreements-data.md` | current | Employee agreement list DATA. |
 | SC-13D Create / Send Proposal Version | `SC-13D-employee-agreement-proposal-create-response-data.md` | current | Proposal create/send version DATA. |
+| DOCGEN Document Template | `DOCGEN-document-template-data.md` | future/planned reusable concept | Shared DATA for SC-19, SC-20 and SC-21 document template / generated proposal document scenarios. |
 
 ## 2. Pending / Stale / Deferred DATA Files
 
@@ -39,6 +40,7 @@ Scope: scenario DATA files and stale/pending DATA variants
 SC-05-DATA-02 status is the first My Requests filter data item.
 Future request type/date/search filters must be added to SC-05 DATA before client sidecars implement them.
 L2 employee/review/agreement DATA is derived from L2 scenario/domain sources and should be replaced by per-scenario DATA where available.
+DOCGEN-document-template-data.md is a future reusable concept only; it does not mean template generation is currently implemented.
 ```
 
 ## 4. Artifact Map

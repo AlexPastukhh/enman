@@ -29,6 +29,9 @@ Scope: per-scenario and cross-cutting behavior item files
 | `SC-14-client-data-verification-behavior-items.md` | SC-14 old Client Data Verification | stale/deferred context | Current SC-14 is Agreement Documents / AgreementDocumentRef; do not use this as current agreement-document behavior. |
 | `SC-15-security-text-specification-behavior-items.md` | SC-15 Security | current cross-cutting | Security behavior. |
 | `SC-17-anonymous-request-behavior-items.md` | SC-17 Anonymous Request | future/deferred | Anonymous request behavior. |
+| `SC-19-document-template-management-behavior-items.md` | SC-19 Document Template Management | future/planned | Employee template creation MVP and future governance boundary. |
+| `SC-20-employee-proposal-document-generation-from-template-behavior-items.md` | SC-20 Employee Proposal Document Generation From Template | future/planned | Employee generates proposal document from active template; upload remains alternative. |
+| `SC-21-admin-controlled-document-templates-behavior-items.md` | SC-21 Admin-Controlled Document Templates | future/deferred | Admin governance and client-visible options after employee MVP. |
 | `L2-employee-review-agreement-behavior-items.md` | L2 employee review/agreement family | current derived / cross-scenario | Derived from L2 scenario/domain sources; use until per-scenario files fully split. |
 | `CC-CSRF-001-antiforgery-behavior-items.md` | CSRF / unsafe command protection | current cross-cutting | Cross-cutting security behavior. |
 

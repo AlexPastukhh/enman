@@ -42,6 +42,9 @@ Existing scenario specs may keep older structures during migration. Do not rewri
 | SC-15 Security | `SC-15-security-text-specification.md` | current cross-cutting | Security behavior source. |
 | SC-17 Anonymous Request | `SC-17-anonymous-request.md` | future/deferred | Anonymous request source. |
 | SC-18 Archive/Audit Deferred | `SC-18-archive-audit-deferred.md` | future/deferred | Archive/audit deferred source. |
+| SC-19 Document Template Management | `SC-19-document-template-management.md` | future/planned | Employee template creation MVP; future admin ownership. |
+| SC-20 Employee Proposal Document Generation From Template | `SC-20-employee-proposal-document-generation-from-template.md` | future/planned | Employee chooses active template when sending proposal version; upload remains alternative. |
+| SC-21 Admin-Controlled Document Templates And Client-Visible Options | `SC-21-admin-controlled-document-templates.md` | future/deferred | Admin controls official templates; client-visible options are later and restricted. |
 
 ## 2. Merged / Historical Text Specs
 
@@ -95,6 +98,11 @@ Rejected is only explicit rejection/decline.
 
 Current SC-14 is Agreement Documents / AgreementDocumentRef.
 Do not use stale SC-14 Client Data Verification wording for current agreement diagrams.
+
+Document generation future scenarios:
+SC-19/SC-20/SC-21 are future/planned sources only. They do not mean template generation is implemented.
+FUT-DOCGEN-1 is employee template creation/use MVP; FUT-DOCGEN-2 is later admin governance; FUT-DOCGEN-3 is later client-visible options.
+Client must not create templates; client template/option selection is deferred and must be admin-controlled.
 ```
 
 ## 7. Artifact Map
