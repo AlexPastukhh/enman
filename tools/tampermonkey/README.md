@@ -1,7 +1,7 @@
 # Tampermonkey Chat Command Helper
 
 Status: current Tampermonkey helper implementation entrypoint  
-Doc version: v0.2.0
+Doc version: v0.3.0
 Scope: implementation documentation entrypoint for the Enman Chat Command Helper; not the userscript source code
 
 ## 0. Source Sync / ROOT-FULL-1 / SRC-CMD-1B
@@ -13,10 +13,10 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.2.0
-    - planning/planning-use-case-map.md @ Doc version: v0.5.0
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.3.0
+    - planning/planning-use-case-map.md @ Doc version: v1.0.0
     - tools/tampermonkey/IMPLEMENTATION-NOTES.md @ Doc version: v0.2.0
-    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.2.0
+    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.3.0
   Internal dependencies:
     - Purpose
     - MVP Behavior
@@ -170,6 +170,15 @@ Interpretation order:
 
 Rules:
 
+Every inserted `[ENMAN_COMMAND]` body starts with:
+
+```text
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
+```
+
+These two lines are intentionally short. Detailed conflict/stop and honesty rules stay in `planning/workflow-activation-map.md` and `planning/planning-use-case-map.md`.
+
 ```text
 - The helper does not browse the repo or verify freshness.
 - The helper does not decide that a command grants edit/archive/commit/push permission.
@@ -181,7 +190,8 @@ Archive command distinction:
 
 ```text
 давай архив
-  Default replacement archive/package mode.
+  Default full replacement archive/package mode.
+  No patches, no patch files, no partial snippets and no planning-only response.
   Post-apply review saves a local .diff and copies it to clipboard.
 
 давай архив с review diff file
@@ -221,4 +231,5 @@ These profiles remain editable prompt projections. They do not browse the repo, 
 
 ```text
 - SRC-CMD-1B added helper profile documentation for source/version maintenance and current-state commands; bumped this README to Doc version: v0.2.0.
+- CASCADE-CMD-PREFLIGHT-0 added the two-line inserted command-body guardrail, clarified `давай архив` as full replacement archive only, and bumped this README to Doc version: v0.3.0.
 ```

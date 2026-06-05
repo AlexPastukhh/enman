@@ -1,7 +1,7 @@
 # Tampermonkey Command Projection Plan
 
 Status: current workstream planning file  
-Doc version: v0.2.0
+Doc version: v0.3.0
 Scope: planning rules for projecting repository command routes into editable Tampermonkey prompt-helper prompts; not userscript implementation
 
 ## 0. Source Sync / ROOT-FULL-1 / SRC-CMD-1B
@@ -13,13 +13,13 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/planning-use-case-map.md @ Doc version: v0.5.0
+    - planning/planning-use-case-map.md @ Doc version: v1.0.0
     - planning/goal-map-principles-workflow-template.md @ Doc version: v0.1.0
     - planning/documentation/examples/README.md @ Doc version: v0.1.0
     - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
     - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
-    - tools/tampermonkey/README.md @ Doc version: v0.2.0
-    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.2.0
+    - tools/tampermonkey/README.md @ Doc version: v0.3.0
+    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.3.0
   Internal dependencies:
     - Source Of Truth
     - MVP Command Groups
@@ -65,6 +65,8 @@ Use this editable envelope shape:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   <selected user alias>
@@ -91,6 +93,15 @@ user_target:
 ```
 
 The envelope should be inserted into chat input, not auto-sent by default.
+
+Every inserted command body must begin with exactly these two reminder lines immediately after `[ENMAN_COMMAND]`:
+
+```text
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
+```
+
+Do not add a longer `command_body_rule` block to every command body; conflict/stop and honesty rules belong to Workflow Preflight / UCM owner docs.
 
 ## 4. MVP Command Groups
 
@@ -145,11 +156,17 @@ Generic Action Overview is deferred. Do not add it to the MVP command list until
 key_reminders:
   - Output-package mode, not archive read-source mode.
   - Use active approved scope; ask only blocking questions.
-  - Follow replacement archive workflow and current package layout rules.
-  - Include ready-to-run apply/diff commands directly in chat.
-  - Save full diff to file and copy it with ReadAllText(... UTF8) + Set-Clipboard.
+  - Produce a full replacement archive.
+  - Do not use patches.
+  - Do not use patch files.
+  - Do not use scripts as the primary application mechanism.
+  - Do not provide a planning-only answer instead of the archive.
+  - Any response without a full replacement archive is incorrect for this command.
+  - Do not put apply commands only inside the archive.
+  - Give apply/diff commands in chat.
+  - Save full diff to file and copy it to clipboard.
   - Ask user to paste diff before commit.
-  - Never commit/push without diff review.
+  - Do not commit or push.
 ```
 
 ### replacement_archive.review_diff_file
@@ -322,6 +339,8 @@ They are not source of truth. They are compact prompts that tell the chat where 
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   давай архив
@@ -341,6 +360,12 @@ route_read_rule:
 key_reminders:
   - Output-package mode, not archive read-source mode.
   - Use active approved scope; ask only blocking questions.
+  - Produce a full replacement archive.
+  - Do not use patches.
+  - Do not use patch files.
+  - Do not use scripts as the primary application mechanism.
+  - Do not provide a planning-only answer instead of the archive.
+  - Any response without a full replacement archive is incorrect for this command.
   - Do not put apply commands only inside the archive.
   - Give apply/diff commands in chat.
   - Save full diff to file and copy it to clipboard.
@@ -357,6 +382,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   давай архив с review diff file
@@ -390,6 +417,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   арх
@@ -422,6 +451,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   синх карта
@@ -456,6 +487,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   план файл-обновление
@@ -489,6 +522,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   крит
@@ -522,6 +557,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   планируй
@@ -555,6 +592,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   кц
@@ -588,6 +627,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   обс
@@ -620,6 +661,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   стейл версии в регистрах
@@ -654,6 +697,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   стейл локальные сорсы
@@ -688,6 +733,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   полная source/version проверка
@@ -723,6 +770,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   положняк
@@ -757,6 +806,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   карта цели
@@ -788,6 +839,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   кп
@@ -820,6 +873,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   саммари
@@ -851,6 +906,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   давай драфт
@@ -882,6 +939,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   обнови
@@ -914,6 +973,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   уточни
@@ -945,6 +1006,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   расширь
@@ -976,6 +1039,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   отличия драфта
@@ -1007,6 +1072,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   без кп
@@ -1037,6 +1104,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   без саммари
@@ -1067,6 +1136,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   без план файл-обновления
@@ -1098,6 +1169,8 @@ user_target:
 
 ```text
 [ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
 
 command:
   вспомни структуру репо

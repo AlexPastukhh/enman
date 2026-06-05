@@ -2499,3 +2499,43 @@ Follow-ups:
   Create a concrete parallel workspace only when a specific parallel agent/workstream target is requested. Use a separate narrow register-sync if these new reusable docs must be added to root source-sync register coverage.
 Notes:
   The new workflow keeps workspace files staging-only. Canonical docs still require explicit sync and the main documentation action log is updated only after real canonical changed files are known.
+
+### 2026-06-05 - Hardened command-aware Workflow Preflight and Tampermonkey command bodies
+
+Date:
+  2026-06-05
+Action:
+  Added command-aware Workflow Preflight fields, conflict/stop and honesty rules, and short Tampermonkey command-body guardrails.
+Type:
+  command routing / workflow preflight / helper projection hardening
+Status:
+  applied
+Why:
+  Command bodies can carry important `key_reminders`, but those reminders were easy to ignore or duplicate in the wrong preflight section. The workflow now separates explicit commands accepted, implicit command/task modes and command/task considerations, and requires stopping on command/doc/source conflicts instead of silently guessing. The Tampermonkey helper now inserts a short two-line reminder at the top of every command body.
+Changed files:
+  - planning/workflow-activation-map.md
+  - planning/planning-use-case-map.md
+  - planning/workstreams/tampermonkey-command-projection-plan.md
+  - tools/tampermonkey/README.md
+  - tools/tampermonkey/chat-command-palette.user.js
+  - planning/deferred-goals-and-ideas.md
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added `Explicit commands accepted`, `Implicit commands / task modes` and `Command/task considerations` to Workflow Preflight.
+  - Kept `key_reminders` under `Command/task considerations` only.
+  - Added conflict/stop and honesty rules for command-routed planning/repo work.
+  - Added exactly two guard lines to inserted `[ENMAN_COMMAND]` bodies.
+  - Strengthened `давай архив` as full replacement archive output: no patches, no patch files, no planning-only answer.
+  - Parked the larger full command preflight / action type framework as deferred instead of implementing it now.
+Not changed:
+  - No existing slice/testing register, owner-version seed, slice-test refactor Goal Map, AUD1 inventory or parallel-work action-log history removed.
+  - No new command family introduced.
+  - No full command preflight/action-type framework implemented.
+  - No slice/testing/domain files changed.
+  - No Tampermonkey helper UI redesign.
+  - No files committed or pushed by this package.
+Follow-ups:
+  Review the applied diff, then continue with the selected next planning slice after confirming the preflight hardening is accepted.
+Notes:
+  Tampermonkey command bodies remain helper projections. `planning/planning-use-case-map.md` and linked owner docs remain command source of truth.

@@ -1,7 +1,7 @@
 # Deferred Goals And Ideas
 
 Status: current deferred backlog / far-future idea owner  
-Doc version: v0.2.0
+Doc version: v0.3.0
 Scope: parked goals, deferred features, far-future implementation ideas and postponed decision points across planning/workstream docs
 
 This file keeps deferred ideas visible without bloating active implementation notes or current workstream plans.
@@ -16,7 +16,7 @@ Sources:
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ Doc version: v0.1.0
-    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.1.0
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.3.0
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.6.0
   Internal dependencies:
     - Deferred Items
@@ -244,6 +244,31 @@ Deferred only.
 Do not implement as an active route now.
 Do not update Goal Map automatically.
 Do not create files/archives unless separately requested.
+```
+
+### DG-6 — Full command preflight / action type framework
+
+Status:
+  DEFERRED
+
+Goal:
+  Add a future full command-intake framework that classifies named commands, action types, permission boundaries, evidence requirements and required answer levels before work begins.
+
+Possible scope:
+
+```text
+- named command vs action type distinction;
+- multi-file review -> Level 2 minimum;
+- repo-state claim -> evidence/not-checked requirements;
+- visible command preflight / командный префлайт;
+- permission boundary display before risky work.
+```
+
+Current boundary:
+
+```text
+Do not implement as part of command-body hardening.
+Current active work only strengthens existing Workflow Preflight and Tampermonkey command body guardrails.
 ```
 
 ### FUT-SRC-VERIFY-1 — Register stale source/version usage command
