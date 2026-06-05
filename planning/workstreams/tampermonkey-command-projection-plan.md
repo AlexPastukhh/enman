@@ -35,6 +35,8 @@ It does not make the Tampermonkey userscript or any example file a source of tru
 
 SRC-CMD-1B source pass updates this file with Tampermonkey profiles for source/version maintenance commands and the explicit `положняк` current-state command.
 
+CMD-CREATE-1 adds command creation and parallel-work start profiles as helper projections. The root use-case map and owner workflows remain command authority.
+
 ## 1. Purpose
 
 This file plans how the Tampermonkey prompt helper should turn short commands into editable prompts that preserve command route, boundaries and key reminders.
@@ -116,6 +118,8 @@ Do not add a longer `command_body_rule` block to every command body; conflict/st
 | `file_update.plan` | `план файл-обновление`, `спланируй файл-обновление`, `спланируй архив`, `file update plan`, `archive plan` | Keeps file/docs/code/archive planning tied to `План файл-обновление` |
 | `critical_review.apply` | `крит`, `критически оцени`, `critical review` | Ensures honest critique without becoming hostile or editing files |
 | `plan.now` | `планируй`, `распланируй`, `plan` | Must mean concrete planning now; use Goal Map when active workstream exists |
+| `command.create` | `создай команду`, `создай новую команду`, `добавь команду`, `спланируй команду`, `new command`, `create command` | Keeps new command creation tied to UCM row template, owner workflow and Tampermonkey decision gate |
+| `parallel_workspace.start` | `параллельный агент`, `работай параллельно`, `начни параллельную работу`, `start parallel workflow` | Starts staging-only workspaces safely without creating placeholder workspaces or sync plans |
 | `goal_map.brief` | `кц`, `карта цели кратко`, `goal map brief` | Requires current slice expanded and other slices status-only |
 | `context_recheck.apply` | `обс`, `перепроверь обсуждение`, `context recheck` | Forces prior decisions/context recheck before answering |
 | `source_register.scan_stale_versions` | `стейл версии в регистрах`, `проверь регистры на стейл версии`, `register stale version scan` | Prevents stale source/version claims in registers from surviving unnoticed |
@@ -230,6 +234,29 @@ key_reminders:
   - If active long-running workstream exists, consult living Goal Map.
   - Include chosen slice/step, boundary, evidence and next action.
   - Does not edit files or create archive unless separately requested.
+```
+
+### command.create
+
+```text
+key_reminders:
+  - Create command semantics in UCM/owner docs first; Tampermonkey is projection, not source of truth.
+  - Define command family, command type, owner files, expected output and permission boundary.
+  - Use the UCM row template; do not copy a similar row blindly.
+  - Decide example coverage and Goal Map/workstream impact.
+  - Add/update Tampermonkey only when explicitly in scope.
+  - Do not edit files or create archive unless separately requested.
+```
+
+### parallel_workspace.start
+
+```text
+key_reminders:
+  - Start one staging-only workspace only for a concrete agent/workstream target.
+  - Record base snapshot, responsibility map, local action log and shadow copies.
+  - Do not create placeholder workspace or sync plan.
+  - Do not edit shared canonical docs directly from workspace phase.
+  - Canonical changes require later aggregate sync.
 ```
 
 ### goal_map.brief
@@ -765,6 +792,77 @@ user_target:
 [/ENMAN_COMMAND]
 ```
 ### MVP-2 — useful command helpers
+#### command.create / `создай команду`
+
+```text
+[ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
+
+command:
+  создай команду
+
+command_family:
+  `создай команду` / `создай новую команду` / `добавь команду` / `спланируй команду` / `new command` / `create command`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read `planning/documentation/command-creation-workflow.md`, `planning/documentation/reviewable-agent-output-and-commands-workflow.md`, `planning/documentation/examples/README.md` and `planning/workstreams/tampermonkey-command-projection-plan.md` when Tampermonkey projection is in scope.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Create command semantics in UCM/owner docs first; Tampermonkey is projection, not source of truth.
+  - Define command family, command type, owner files, expected output and permission boundary.
+  - Use the UCM row template; do not copy a similar row blindly.
+  - Decide example coverage and Goal Map/workstream impact.
+  - Add/update Tampermonkey only when explicitly in scope.
+  - Do not edit files or create archive unless separately requested.
+
+user_target:
+  <what command should be created or planned>
+
+[/ENMAN_COMMAND]
+```
+
+#### parallel_workspace.start / `начни параллельную работу`
+
+```text
+[ENMAN_COMMAND]
+Read this whole command body before answering.
+Do not ignore `key_reminders`.
+
+command:
+  начни параллельную работу
+
+command_family:
+  `параллельный агент` / `работай параллельно` / `parallel workspace` / `parallel work` / `создай parallel workspace` / `начни параллельную работу` / `старт параллельной работы` / `создай параллельный воркфлоу` / `start parallel workflow`
+
+source_of_truth:
+  Start from `planning/planning-use-case-map.md`.
+  Then read `planning/documentation/parallel-work/README.md`, `planning/documentation/parallel-work/parallel-workflow.md` and `planning/documentation/parallel-work/PARALLEL-WORKSPACE-TEMPLATE.md`.
+
+route_read_rule:
+  If you have not read this command route and its linked owner/example files in this chat, read them before answering.
+  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.
+  Do not rely only on this prompt when command behavior is uncertain.
+
+key_reminders:
+  - Start one staging-only workspace only for a concrete agent/workstream target.
+  - Record base snapshot, responsibility map, local action log and shadow copies.
+  - Do not create placeholder workspace or sync plan.
+  - Do not edit shared canonical docs directly from workspace phase.
+  - Canonical changes require later aggregate sync.
+
+user_target:
+  <parallel agent/workstream target>
+
+[/ENMAN_COMMAND]
+```
+
 
 #### current_state.show / `положняк`
 

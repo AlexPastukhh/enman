@@ -52,9 +52,11 @@ It does not make the Tampermonkey userscript or any example file a source of tru
 SRC-CMD-1B note:
   Source/version maintenance commands and the explicit `положняк` current-state command are being added to the Tampermonkey helper palette as prompt projections. This does not make the userscript source of truth and does not replace SL-6 smoke testing.
 
+CMD-CREATE-1 note:
+  Command creation workflow and explicit parallel-work start helper profiles are being added as command-system infrastructure. Tampermonkey remains a projection layer; UCM and owner workflow files remain source of truth.
 
 Last updated:
-  2026-06-02 / after DISC-GM-TM1 Goal Map and Tampermonkey command discovery sync
+  2026-06-06 / after CMD-CREATE-1 command creation workflow and helper projection update
 
 Current goal:
   Build a transferable command system and Tampermonkey prompt helper for long-running chats across projects.
@@ -95,6 +97,8 @@ Already available:
   - Root responsibility map now includes Goal Map and Tampermonkey command-helper ownership discovery.
   - Tampermonkey helper has an explicit review-diff-file archive command profile in addition to the default clipboard-diff archive command.
   - Tampermonkey helper has source/version maintenance and `положняк` profiles as prompt projections.
+  - Command creation workflow exists for creating/changing commands by rules and UCM row template.
+  - Tampermonkey helper has `создай команду` and `начни параллельную работу` profiles as prompt projections.
 
 Latest completed:
   - Added root Goal Map owner/example.
@@ -120,10 +124,11 @@ Latest completed:
   - Added discovery paths so new chats can find Goal Map maintenance rules and Tampermonkey command-helper ownership.
   - Added explicit Tampermonkey helper profile for `давай архив с review diff file`.
   - Added Tampermonkey helper profiles for source/version maintenance commands and `положняк`.
+  - Added command creation workflow and Tampermonkey helper profiles for `создай команду` and `начни параллельную работу`.
 
 Next action:
   Continue SL-6 smoke testing:
-    retest the helper command list, including ordinary `давай архив`, explicit `давай архив с review diff file`, source/version audit commands and `положняк`, while keeping userscript profiles as projections rather than source of truth.
+    retest the helper command list, including ordinary `давай архив`, explicit `давай архив с review diff file`, source/version audit commands, `положняк`, `создай команду` and `начни параллельную работу`, while keeping userscript profiles as projections rather than source of truth.
 Recommended next action:
   Continue Tampermonkey helper smoke testing before adding preview, search, external profile loading or deferred buffer/stack features.
 

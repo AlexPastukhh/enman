@@ -78,6 +78,7 @@ planning/documentation/example-coverage-workflow.md
 planning/documentation/file-update-overview-workflow.md
 planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
 planning/documentation/reviewable-agent-output-and-commands-workflow.md
+planning/documentation/command-creation-workflow.md
 ```
 
 
@@ -154,7 +155,8 @@ For root use-case map or command-routing work:
 2. planning/documentation/field-kits/root-use-case-map-field-kit.md
 3. planning/documentation/use-case-map-workflow.md
 4. planning/documentation/USE-CASE-MAP-TEMPLATE.md
-5. planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md, when scenario/domain/slice route rows are added or changed
+5. planning/documentation/command-creation-workflow.md, when a command route is created or changed
+6. planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md, when scenario/domain/slice route rows are added or changed
 ```
 
 For status/shared visibility/source-usage setup or repeated use:

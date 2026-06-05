@@ -58,6 +58,7 @@ This file owns only documentation-layer placement.
 | Local detail to shared index/register sync process | `local-global-documentation-sync-workflow.md` | How local notes/questions should become globally discoverable. |
 | Status vs implementation evidence reconciliation | `status-reconciliation-workflow.md` | How to update docs when code/tests/generated artifacts changed. |
 | Reviewable answer format and response-level commands | `reviewable-agent-output-and-commands-workflow.md` | Level 1/2/3 answers, sources/coverage, recheck/clarify/keep prev/no ch/section operations. |
+| Command creation/change workflow | `command-creation-workflow.md` | Rules-based process for adding or changing command routes, owner semantics, example coverage and Tampermonkey projection decisions. |
 | File Update Overview process | `file-update-overview-workflow.md` | Owns when and how to produce the final structured file-change summary for non-trivial file/docs/code update answers. |
 | File Update Overview template | `FILE-UPDATE-OVERVIEW-TEMPLATE.md` | Owns the exact reusable File Update Overview block structure. |
 | Use-case map creation/update workflow | `use-case-map-workflow.md` | Owns the reusable process for creating, updating and maintaining use-case maps. |
@@ -140,6 +141,7 @@ If documentation-layer files conflict:
 - source-usage-pilots/*.md are pilot artifacts and do not override source files, maps, drafts or future permanent registers.
 - documentation-action-log.md is historical/explanatory and does not override owner docs, workflows, templates, use-case rows or PMR entries.
 - reviewable-agent-output-and-commands-workflow.md wins for answer format and response-level commands.
+- command-creation-workflow.md wins for the process of creating/changing command routes and deciding Tampermonkey projection gates.
 - documentation-update-agent-prompt.md is derived/supporting and does not override canonical docs.
 - scoped sync notes do not override reusable workflow files.
 - README.md is navigation and does not override canonical rules.

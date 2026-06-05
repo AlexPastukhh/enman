@@ -2539,3 +2539,44 @@ Follow-ups:
   Review the applied diff, then continue with the selected next planning slice after confirming the preflight hardening is accepted.
 Notes:
   Tampermonkey command bodies remain helper projections. `planning/planning-use-case-map.md` and linked owner docs remain command source of truth.
+
+### 2026-06-05 - Added command creation workflow and Tampermonkey command projections
+
+Date:
+  2026-06-05
+Action:
+  Added a reusable command creation workflow, routed the new command-creation command, clarified the parallel-work start command aliases and added both command profiles to the Tampermonkey helper projection.
+Type:
+  command-system documentation / Tampermonkey projection update
+Status:
+  applied
+Why:
+  The project had many concrete command rows and examples, but no compact reusable workflow for creating a new command by rule/template. The new workflow records how to define command family, command type, owner files, UCM row, examples, Goal Map impact and Tampermonkey projection. The parallel-work route also needed explicit start aliases and helper exposure.
+Changed files:
+  - planning/documentation/command-creation-workflow.md
+  - planning/documentation/README.md
+  - planning/documentation/documentation-responsibility-map.md
+  - planning/documentation/examples/README.md
+  - planning/documentation/reviewable-agent-output-and-commands-workflow.md
+  - planning/planning-use-case-map.md
+  - planning/workflow-activation-map.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/workstreams/tampermonkey-command-projection-plan.md
+  - tools/tampermonkey/chat-command-palette.user.js
+  - planning/documentation-action-log.md
+Updates:
+  - Added `planning/documentation/command-creation-workflow.md` as the reusable owner for creating/changing command routes by rule/template.
+  - Added UCM route for `создай команду` / `создай новую команду` / `добавь команду` / `спланируй команду` / `new command` / `create command`.
+  - Clarified explicit aliases for starting a parallel workflow: `начни параллельную работу`, `старт параллельной работы`, `создай параллельный воркфлоу`, `start parallel workflow`.
+  - Added Tampermonkey projection profiles and inserted command bodies for `command.create` and `parallel_workspace.start`.
+  - Recorded that Tampermonkey remains a projection/helper and not command source of truth.
+Not changed:
+  - No concrete parallel workspace created.
+  - No aggregate sync plan created.
+  - No slice/testing/domain files changed.
+  - No broad command-system redesign started.
+  - No root-source-sync-register update included.
+Follow-ups:
+  Use `создай команду` for future command additions. Create a command-creation example only after the workflow is used on a clean real follow-up command.
+Notes:
+  This batch intentionally adds the two requested Tampermonkey profiles because the user explicitly included Tampermonkey in scope. Future command creation should still treat Tampermonkey projection as a separate decision gate.

@@ -283,6 +283,7 @@ Sources:
 | `planning/documentation/local-global-documentation-sync-workflow.md` | Local change may affect shared register/index/navigation | `conditional implicit` | No for check; yes for edits | Local/global sync check |
 | `planning/documentation/status-reconciliation-workflow.md` | Docs status may differ from code/tests/generated artifacts | `conditional implicit` | No for analysis; yes for edits | Status findings / sync plan |
 | `planning/documentation/reviewable-agent-output-and-commands-workflow.md` | Non-trivial answer, audit, plan, handoff, level/lvl/ур command, recheck, clarify, keep prev, no ch/без изм, use archive/арх, active-context draft/update command, section command | `response-format` / `response-command` | No | Structured reviewable answer or response-level command behavior |
+| `planning/documentation/command-creation-workflow.md` | Creating or changing a command route, command family, command owner semantics, command example coverage or Tampermonkey command projection decision | `conditional implicit` / `response-command` | No for plan; yes for edits/archive/Tampermonkey implementation | Command creation plan, route/update plan or archive when separately requested |
 | `planning/diagrams/scenario-drafting-workflow.md` | Scenario text/DATA/UI/behavior items/questions/clarifications work | `conditional implicit` | No for draft/analysis; yes for edits | Scenario source workflow |
 | `planning/diagrams/scenario-responsibility-map.md` | Need to place scenario-layer information or decide scenario file owner | `conditional implicit` | No | Scenario-layer owner routing |
 | `planning/diagrams/scenario-artifact-map.md` | Need to identify current scenario artifact files, stale variants or downstream source mapping | `conditional implicit` | No for analysis; yes for edits | Scenario artifact currentness map |
@@ -362,6 +363,12 @@ reviewable-agent-output-and-commands-workflow.md, for structured plan/audit/hand
 Trigger examples:
 
 ```text
+создай команду;
+создай новую команду;
+добавь команду;
+спланируй команду;
+new command;
+create command;
 level 1 / lvl 2 / ур 3;
 recheck;
 clarify;
@@ -380,6 +387,7 @@ Activated workflows:
 workflow-activation-map.md
 planning-use-case-map.md, for active context, traversal depth and read source mode
 reviewable-agent-output-and-commands-workflow.md
+command-creation-workflow.md, when the command itself is being created or changed
 ```
 
 Response commands do not grant permission to edit files, commit changes, delete files, move files or skip evidence required for current-state claims.

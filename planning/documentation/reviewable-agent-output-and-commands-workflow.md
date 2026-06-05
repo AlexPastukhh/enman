@@ -46,13 +46,21 @@ A reviewable answer should make clear:
 - what should happen next.
 ```
 
-Response-level commands such as `level 2`, `recheck`, `clarify`, `keep prev`, `no ch`, `без изм`, `use archive`, `арх`, `б из арх`, `давай драфт`, `обнови`, `обс`, `кп`, `саммари`, `кц`, `карта цели кратко`, `goal map brief`, `крит`, `критически`, `critical review`, `итог` and `отличия драфта` change how the answer should be produced, checked or continued. They do not grant permission to edit files or change repository state.
+Response-level commands such as `level 2`, `recheck`, `clarify`, `keep prev`, `no ch`, `без изм`, `use archive`, `арх`, `б из арх`, `давай драфт`, `обнови`, `обс`, `кп`, `саммари`, `кц`, `карта цели кратко`, `goal map brief`, `крит`, `критически`, `critical review`, `создай команду`, `итог` and `отличия драфта` change how the answer should be produced, checked or continued. They do not grant permission to edit files or change repository state.
 
 For action/use-case traces, active context, traversal depth and read source mode, use:
 
 ```text
 planning/planning-use-case-map.md
 ```
+
+For creating or changing command routes, use:
+
+```text
+planning/documentation/command-creation-workflow.md
+```
+
+The command-creation workflow does not grant edit/archive/commit permission by itself; it routes and plans command changes unless the user separately requests an update/archive.
 
 ## 2. Core Rule
 
