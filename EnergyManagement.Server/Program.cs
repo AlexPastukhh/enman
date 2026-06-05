@@ -63,7 +63,17 @@ builder.Services.AddTransient<IAgreementExchangeApplicationService, AgreementExc
 builder.Services.AddTransient<IDocumentStorage, LocalDocumentStorage>();
 builder.Services.Configure<SmtpEmailOptions>(
     builder.Configuration.GetSection(SmtpEmailOptions.SectionName));
-builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
+// If running tests or SMTP is not configured, use a noop sender to avoid failing tests.
+var smtpSection = builder.Configuration.GetSection(SmtpEmailOptions.SectionName);
+var smtpHost = smtpSection.GetValue<string>("Host");
+if (builder.Environment.IsEnvironment("Test") || string.IsNullOrWhiteSpace(smtpHost))
+{
+    builder.Services.AddSingleton<IEmailSender, NoopEmailSender>();
+}
+else
+{
+    builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
+}
 builder.Services.AddTransient<IRegistrationEmailNotificationService, RegistrationEmailNotificationService>();
 builder.Services.AddSingleton<ClaimsPrincipalFactory>();
 
