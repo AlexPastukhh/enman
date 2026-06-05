@@ -75,12 +75,12 @@ public sealed class AgreementExchangeReadRepository : IAgreementExchangeReadRepo
                 applicant.IndividualEntrepreneurFullName_MiddleName AS IndividualEntrepreneurMiddleName,
                 applicant.IndividualEntrepreneurFullName_LastName AS IndividualEntrepreneurLastName,
                 applicant.LegalEntity_OrganizationName AS LegalEntityOrganizationName
-            FROM dbo.L1AgreementProposalExchanges AS exchange
-            INNER JOIN dbo.L1ClientRequests AS request
+            FROM dbo.AgreementProposalExchanges AS exchange
+            INNER JOIN dbo.ClientRequests AS request
                 ON request.Id = exchange.RequestId
-            INNER JOIN dbo.L1ApplicantParties AS applicant
+            INNER JOIN dbo.ApplicantParties AS applicant
                 ON applicant.Id = request.ApplicantPartyId
-            LEFT JOIN dbo.L1AgreementProposals AS proposal
+            LEFT JOIN dbo.AgreementProposals AS proposal
                 ON proposal.AgreementProposalExchangeId = exchange.Id
             WHERE exchange.Id = @ExchangeId
                 AND (@EmployeeView = 1 OR exchange.ClientAccountId = @ClientAccountId)
@@ -119,7 +119,7 @@ public sealed class AgreementExchangeReadRepository : IAgreementExchangeReadRepo
                 proposal.DocumentSizeBytes AS SizeBytes,
                 proposal.Comment,
                 proposal.CreatedAt
-            FROM dbo.L1AgreementProposals AS proposal
+            FROM dbo.AgreementProposals AS proposal
             WHERE proposal.AgreementProposalExchangeId = @ExchangeId
             ORDER BY proposal.Version ASC;
             """;

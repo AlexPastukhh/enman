@@ -1,7 +1,7 @@
 # VKR Finalization Goal Map
 
 Status: active local workstream Goal Map / VKR finalization
-Doc version: v0.1.4
+Doc version: v0.1.5
 Owner format: `planning/goal-map-principles-workflow-template.md`
 Scope: living map for finishing the VKR text, visuals, source references, appendices, and implementation/text consistency for the Enman diploma work.
 
@@ -15,10 +15,10 @@ Current goal:
   Finish the VKR final version for the Enman project while keeping implementation evidence truthful: complete missing thesis blocks, align text with current implementation, keep applicant-party support accurate, rebalance visuals, move excessive code evidence to appendices, strengthen testing evidence, clarify terminology, check appendices and references, and increase volume with meaningful material.
 
 Current focus:
-  Applicant-party implementation and refactor support are synchronized in the living map. The current narrow package closes goal-map sync, test-only email sender cleanup and helper naming cleanup. No DB rename, frontend refactor or thesis DOCX edit is started by this package.
+  Applicant-party implementation, refactor support and database table naming are synchronized in the living map. The current narrow package closes REF-DB-1 by renaming L1* database table names through EF mapping, migration, raw SQL, test DB and seed/demo updates. No frontend, error-code cleanup or thesis DOCX edit is started by this package.
 
 Active slice:
-  TEST-INFRA-1 plus goal-map/helper cleanup package.
+  REF-DB-1 - Rename L1 Database Tables.
 
 Latest completed:
   - Root planning source rules were clarified in conversation: legacy/current-like planning files must not be used as primary onboarding/current-state sources.
@@ -32,14 +32,15 @@ Latest completed:
   - REF-0 through REF-2 were completed: accidental diff artifact was removed, ApplicantPartiesController was extracted, and create applicant response naming was made type-neutral.
   - REF-SMALL-1 through REF-SMALL-3 were completed: CreateApplicantPartyResponseDto includes applicantPartyType, the legacy frontend create-individual feature was removed, and inline request applicant DTO naming was clarified.
   - REF-APP-1 was completed: applicant-party API contracts, validators, commands, handlers and queries were moved into applicant-party feature folders.
-  - TEST-INFRA-1 was prepared in this package: integration tests use a test-only NoopEmailSender through WebAppFactory instead of production Program.cs fallback.
+  - TEST-INFRA-1 was completed: integration tests use a test-only NoopEmailSender through WebAppFactory instead of production Program.cs fallback.
+  - REF-DB-1 was prepared in this package: L1* active database table names are renamed to clean names through EF mapping, migration, raw SQL, test DB and seed/demo updates.
 
 Next action:
-  Apply this narrow package, run backend build and Tests.EnergyManagement, verify that Program.cs still registers SmtpEmailSender, and paste the diff before commit. After this package, choose either VKR-1A for thesis text structure, REF-DB-1 for L1 database table renaming, or stop and stabilize.
+  Apply this narrow REF-DB-1 package, run backend build and Tests.EnergyManagement, verify that no active L1* table references remain outside historical migrations, and paste the diff before commit. After this package, choose VKR-1A for thesis text structure or stop and stabilize.
 
 Parallel planning notes:
-  - `REF-DB-1 - Rename L1 database tables` remains open and must be a separate migration/refactor slice.
-  - `TEST-INFRA-1 - NoopEmailSender in integration tests` is closed only if the test-only WebAppFactory replacement is applied and tests pass. Production Program.cs must keep SmtpEmailSender.
+  - `REF-DB-1 - Rename L1 database tables` is closed only if the rename migration, raw SQL, test DB reset and seed/demo updates are applied and tests pass.
+  - `TEST-INFRA-1 - NoopEmailSender in integration tests` is closed. Production Program.cs must keep SmtpEmailSender.
   - VKR visual/source/testing/terminology work remains separate and must not be mixed into code cleanup packages.
 
 Resolved decisions:
@@ -58,7 +59,6 @@ Open decisions:
   - DEC-VKR-11: Terminology cleanup. Decide final wording for client/user/account/applicant and agreement exchange/proposal/version/document/file terms.
   - DEC-VKR-12: Appendix structure. Decide whether Appendix A is missing and how to organize appendices A-E.
   - DEC-VKR-13: Source/reference consistency. Decide final pass for in-text references and bibliography numbering.
-  - DEC-REF-DB-1: Whether to rename L1* database tables before final code/DB screenshots. If selected, it must be a dedicated migration/refactor slice.
 
 Invariants:
   - Do not use legacy/current-like planning files as primary source-of-truth for current workflow or implementation state.
@@ -82,6 +82,7 @@ Invariants:
   - Appendices should contain heavy code/listing/testing material and must be referenced from the main text.
   - English technical terms should be either translated or explained at first use.
   - Production email configuration must stay strict: Program.cs uses SmtpEmailSender. NoopEmailSender is test-only and belongs in integration test DI.
+  - Database table rename must not affect API routes, JSON fields, frontend generated types, domain classes or l1.* error-code strings.
 
 Update rule:
   Update this map after each meaningful VKR finalization batch: final-block insertion, source/reference pass, visual-material pass, domain implementation completeness pass, appendix/code-evidence pass, testing-evidence pass, terminology pass, implementation cleanup pass, or final formatting pass.
@@ -345,7 +346,7 @@ Purpose:
 ### TEST-INFRA-1 - NoopEmailSender In Integration Tests
 
 Status:
-  DONE after this package is applied and tests pass.
+  DONE.
 
 Purpose:
   Remove SMTP configuration log noise from integration tests by replacing `IEmailSender` in test DI only.
@@ -358,15 +359,22 @@ Acceptance criteria:
 ### REF-DB-1 - Rename L1 Database Tables
 
 Status:
-  TODO.
+  DONE after this package is applied and tests pass.
 
 Purpose:
   Rename `L1*` database tables to clean table names for implementation clarity and final evidence.
 
+Implemented scope:
+  - EF table mappings use clean table names.
+  - A dedicated rename migration transitions existing databases from `L1*` names to clean names.
+  - Current EF snapshot uses clean table names.
+  - Active raw SQL/read-side queries use clean table names.
+  - Test database reset/schema patch and e2e seed/demo SQL use clean table names.
+
 Boundaries:
-  - Must be a separate migration/refactor slice.
-  - Use table renames where possible, not drop/create.
-  - Update EF mapping, migrations, raw SQL, test DB patches and seed/demo tools together.
+  - API routes, JSON fields, frontend and OpenAPI schema are not changed.
+  - Domain class names are not changed.
+  - `l1.*` error-code strings are not changed.
 
 ### VKR-4 - Visual Materials Rebalance
 
@@ -780,7 +788,7 @@ snapshot -> object state before operation.
 Recommended next action:
 
 ```text
-Apply and verify the current narrow package: goal-map sync, test-only NoopEmailSender, and helper rename. After that, choose either VKR-1A for thesis text structure or REF-DB-1 for L1 database table renaming.
+Apply and verify the current REF-DB-1 package: table rename migration, EF mapping/snapshot, raw SQL, test DB and seed/demo updates. After that, choose VKR-1A for thesis text structure or stop and stabilize.
 ```
 
 Suggested first batch boundary:

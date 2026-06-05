@@ -166,14 +166,14 @@ public sealed class RunApplicantPartyVerificationIntegrationTests : AppIntegrati
         await connection.OpenAsync();
 
         await using var command = new SqlCommand(
-            "SELECT COUNT(*) FROM dbo.L1AgreementProposalExchanges",
+            "SELECT COUNT(*) FROM dbo.AgreementProposalExchanges",
             connection)
         {
             CommandType = CommandType.Text
         };
 
         var scalar = await command.ExecuteScalarAsync()
-            ?? throw new InvalidOperationException("Could not read L1AgreementProposalExchanges count.");
+            ?? throw new InvalidOperationException("Could not read AgreementProposalExchanges count.");
 
         return (int)scalar;
     }

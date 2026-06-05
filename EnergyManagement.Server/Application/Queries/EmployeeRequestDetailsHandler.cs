@@ -53,10 +53,10 @@ public sealed class EmployeeRequestDetailsHandler
                 applicant.VerificationStatus AS ApplicantVerificationStatus,
                 review.Status AS ReviewStatus,
                 review.StartedByEmployeeId
-            FROM dbo.L1ClientRequests AS request
-            INNER JOIN dbo.L1ApplicantParties AS applicant
+            FROM dbo.ClientRequests AS request
+            INNER JOIN dbo.ApplicantParties AS applicant
                 ON applicant.Id = request.ApplicantPartyId
-            LEFT JOIN dbo.L1RequestReviews AS review
+            LEFT JOIN dbo.RequestReviews AS review
                 ON review.RequestId = request.Id
             WHERE request.Id = @RequestId;
             """;

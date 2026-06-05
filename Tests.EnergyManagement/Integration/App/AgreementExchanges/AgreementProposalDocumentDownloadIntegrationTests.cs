@@ -189,7 +189,7 @@ public sealed class AgreementProposalDocumentDownloadIntegrationTests : AppInteg
 
         await using var exchangeCommand = new SqlCommand(
             """
-            INSERT INTO dbo.L1AgreementProposalExchanges
+            INSERT INTO dbo.AgreementProposalExchanges
                 (RequestId, ClientAccountId, Status, ActiveProposalVersion,
                  FinalRefusedByEmployeeId, FinalRefusedAt, FinalRefusalReason, CreatedAt)
             OUTPUT INSERTED.Id
@@ -211,7 +211,7 @@ public sealed class AgreementProposalDocumentDownloadIntegrationTests : AppInteg
 
         await using var proposalCommand = new SqlCommand(
             """
-            INSERT INTO dbo.L1AgreementProposals
+            INSERT INTO dbo.AgreementProposals
                 (AgreementProposalExchangeId, Version, Sender, SenderId, State,
                  DocumentStorageKey, DocumentOriginalFileName, DocumentContentType, DocumentSizeBytes,
                  Comment, CreatedAt)

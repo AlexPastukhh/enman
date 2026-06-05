@@ -210,7 +210,7 @@ public sealed class AgreementExchangeStartIntegrationTests : AppIntegrationTestB
         await using var reader = await ExecuteReaderAsync(
             """
             SELECT Id, RequestId, ClientAccountId, Status, ActiveProposalVersion
-            FROM dbo.L1AgreementProposalExchanges
+            FROM dbo.AgreementProposalExchanges
             WHERE RequestId = @id
             """,
             requestId);
@@ -234,7 +234,7 @@ public sealed class AgreementExchangeStartIntegrationTests : AppIntegrationTestB
         await using var reader = await ExecuteReaderAsync(
             """
             SELECT Version, Sender, SenderId, State, DocumentStorageKey, Comment
-            FROM dbo.L1AgreementProposals
+            FROM dbo.AgreementProposals
             WHERE AgreementProposalExchangeId = @id
             ORDER BY Version
             """,

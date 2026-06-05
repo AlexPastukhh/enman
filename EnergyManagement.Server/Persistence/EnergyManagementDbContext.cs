@@ -41,7 +41,7 @@ public class EnergyManagementDbContext : DbContext
     {
         modelBuilder.Entity<Account>(account =>
         {
-            account.ToTable("L1Accounts");
+            account.ToTable("Accounts");
             account.HasKey(x => x.Id);
 
             account.HasDiscriminator<string>("AccountType")
@@ -84,7 +84,7 @@ public class EnergyManagementDbContext : DbContext
     {
         modelBuilder.Entity<ApplicantParty>(applicantParty =>
         {
-            applicantParty.ToTable("L1ApplicantParties");
+            applicantParty.ToTable("ApplicantParties");
             applicantParty.HasKey(x => x.Id);
 
             applicantParty.HasDiscriminator<string>("ApplicantPartyDiscriminator")
@@ -238,7 +238,7 @@ public class EnergyManagementDbContext : DbContext
     {
         modelBuilder.Entity<ClientRequest>(clientRequest =>
         {
-            clientRequest.ToTable("L1ClientRequests");
+            clientRequest.ToTable("ClientRequests");
             clientRequest.HasKey(x => x.Id);
 
             clientRequest.HasDiscriminator<string>("ClientRequestDiscriminator")
@@ -328,7 +328,7 @@ public class EnergyManagementDbContext : DbContext
         {
             connectionRequest.OwnsOne(x => x.Review, review =>
             {
-                review.ToTable("L1RequestReviews");
+                review.ToTable("RequestReviews");
                 review.WithOwner().HasForeignKey(x => x.RequestId);
                 review.HasKey(x => x.RequestId);
 
@@ -407,7 +407,7 @@ public class EnergyManagementDbContext : DbContext
     {
         modelBuilder.Entity<AgreementProposalExchange>(exchange =>
         {
-            exchange.ToTable("L1AgreementProposalExchanges");
+            exchange.ToTable("AgreementProposalExchanges");
             exchange.HasKey(x => x.Id);
 
             exchange.Property(x => x.RequestId)
@@ -460,7 +460,7 @@ public class EnergyManagementDbContext : DbContext
 
             exchange.OwnsMany(x => x.Proposals, proposal =>
             {
-                proposal.ToTable("L1AgreementProposals");
+                proposal.ToTable("AgreementProposals");
                 proposal.WithOwner().HasForeignKey(x => x.AgreementProposalExchangeId);
                 proposal.HasKey(x => x.Id);
 

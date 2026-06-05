@@ -405,7 +405,7 @@ public abstract class AppIntegrationTestBase
         await using var reader = await ExecuteReaderAsync(
             """
             SELECT Id, AccountType, Email, PasswordHash, Role, IsActive
-            FROM dbo.L1Accounts
+            FROM dbo.Accounts
             WHERE Id = @id
             """,
             id);
@@ -440,7 +440,7 @@ public abstract class AppIntegrationTestBase
                    LegalEntity_Inn,
                    LegalEntity_Kpp,
                    LegalEntity_Ogrn
-            FROM dbo.L1ApplicantParties
+            FROM dbo.ApplicantParties
             WHERE Id = @id
             """,
             id);
@@ -477,7 +477,7 @@ public abstract class AppIntegrationTestBase
         await using var reader = await ExecuteReaderAsync(
             """
             SELECT TOP (1) Id
-            FROM dbo.L1ApplicantParties
+            FROM dbo.ApplicantParties
             WHERE ClientAccountId = @id
             ORDER BY Id DESC
             """,
@@ -497,7 +497,7 @@ public abstract class AppIntegrationTestBase
         await connection.OpenAsync();
 
         await using var command = new SqlCommand(
-            "SELECT COUNT(*) FROM dbo.L1ApplicantParties WHERE ClientAccountId = @id",
+            "SELECT COUNT(*) FROM dbo.ApplicantParties WHERE ClientAccountId = @id",
             connection)
         {
             CommandType = CommandType.Text
@@ -505,7 +505,7 @@ public abstract class AppIntegrationTestBase
         command.Parameters.AddWithValue("@id", accountId);
 
         var scalar = await command.ExecuteScalarAsync()
-            ?? throw new InvalidOperationException("Could not read L1ApplicantParties count.");
+            ?? throw new InvalidOperationException("Could not read ApplicantParties count.");
 
         return (int)scalar;
     }
@@ -516,7 +516,7 @@ public abstract class AppIntegrationTestBase
             """
             SELECT Id, ApplicantPartyId, Status, Details,
                    ObjectAddress_City, ObjectAddress_Street
-            FROM dbo.L1ClientRequests
+            FROM dbo.ClientRequests
             WHERE Id = @id
             """,
             id);
@@ -541,7 +541,7 @@ public abstract class AppIntegrationTestBase
             """
             SELECT TOP (1) Id, ApplicantPartyId, Status, Details,
                    ObjectAddress_City, ObjectAddress_Street
-            FROM dbo.L1ClientRequests
+            FROM dbo.ClientRequests
             WHERE ApplicantPartyId = @id
             ORDER BY Id DESC
             """,
@@ -567,14 +567,14 @@ public abstract class AppIntegrationTestBase
         await connection.OpenAsync();
 
         await using var command = new SqlCommand(
-            "SELECT COUNT(*) FROM dbo.L1ClientRequests",
+            "SELECT COUNT(*) FROM dbo.ClientRequests",
             connection)
         {
             CommandType = CommandType.Text
         };
 
         var scalar = await command.ExecuteScalarAsync()
-            ?? throw new InvalidOperationException("Could not read L1ClientRequests count.");
+            ?? throw new InvalidOperationException("Could not read ClientRequests count.");
 
         return (int)scalar;
     }
@@ -583,7 +583,7 @@ public abstract class AppIntegrationTestBase
     {
         await ExecuteNonQueryAsync(
             """
-            UPDATE dbo.L1ClientRequests
+            UPDATE dbo.ClientRequests
             SET Status = @value
             WHERE Id = @id
             """,
@@ -595,7 +595,7 @@ public abstract class AppIntegrationTestBase
     {
         await ExecuteNonQueryAsync(
             """
-            UPDATE dbo.L1ApplicantParties
+            UPDATE dbo.ApplicantParties
             SET IsCurrentActiveVersion = @value
             WHERE Id = @id
             """,
@@ -609,7 +609,7 @@ public abstract class AppIntegrationTestBase
     {
         await ExecuteNonQueryAsync(
             """
-            UPDATE dbo.L1ApplicantParties
+            UPDATE dbo.ApplicantParties
             SET VerificationStatus = @value
             WHERE Id = @id
             """,
@@ -621,7 +621,7 @@ public abstract class AppIntegrationTestBase
     {
         await ExecuteNonQueryAsync(
             """
-            UPDATE dbo.L1ClientRequests
+            UPDATE dbo.ClientRequests
             SET CreatedAt = @value
             WHERE Id = @id
             """,
@@ -644,18 +644,18 @@ public abstract class AppIntegrationTestBase
 
         await using var command = new SqlCommand(
             """
-            IF NOT EXISTS (SELECT 1 FROM dbo.L1Accounts WHERE Id = @employeeId)
+            IF NOT EXISTS (SELECT 1 FROM dbo.Accounts WHERE Id = @employeeId)
             BEGIN
-                SET IDENTITY_INSERT dbo.L1Accounts ON;
+                SET IDENTITY_INSERT dbo.Accounts ON;
 
-                INSERT INTO dbo.L1Accounts
+                INSERT INTO dbo.Accounts
                     (Id, Email, PasswordHash, Role, IsActive, CreatedAt, AccountType, WindowsLogin,
                      EmployeeFullName_FirstName, EmployeeFullName_MiddleName, EmployeeFullName_LastName)
                 VALUES
                     (@employeeId, @email, @passwordHash, N'Employee', @isActive, @createdAt, N'Employee', @windowsLogin,
                      @firstName, @middleName, @lastName);
 
-                SET IDENTITY_INSERT dbo.L1Accounts OFF;
+                SET IDENTITY_INSERT dbo.Accounts OFF;
             END
             """,
             connection)
@@ -681,7 +681,7 @@ public abstract class AppIntegrationTestBase
         await using var reader = await ExecuteReaderAsync(
             """
             SELECT RequestId, Status, StartedByEmployeeId, StartedAt, CompletedByEmployeeId, CompletedAt, RejectionReason
-            FROM dbo.L1RequestReviews
+            FROM dbo.RequestReviews
             WHERE RequestId = @id
             """,
             requestId);
@@ -715,7 +715,7 @@ public abstract class AppIntegrationTestBase
 
         await using var command = new SqlCommand(
             """
-            INSERT INTO dbo.L1RequestReviews
+            INSERT INTO dbo.RequestReviews
                 (RequestId, Status, StartedByEmployeeId, StartedAt, CompletedByEmployeeId, CompletedAt, RejectionReason)
             VALUES
                 (@requestId, @reviewStatus, @startedByEmployeeId, @startedAt, @completedByEmployeeId, @completedAt, @rejectionFeedback)
@@ -751,11 +751,11 @@ public abstract class AppIntegrationTestBase
 
         await using var command = new SqlCommand(
             """
-            UPDATE dbo.L1ClientRequests
+            UPDATE dbo.ClientRequests
             SET Status = @status
             WHERE Id = @id;
 
-            MERGE dbo.L1RequestReviews AS target
+            MERGE dbo.RequestReviews AS target
             USING (SELECT @id AS RequestId) AS source
                 ON target.RequestId = source.RequestId
             WHEN MATCHED THEN

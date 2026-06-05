@@ -43,8 +43,8 @@ public sealed class ClientRequestRepository : IClientRequestRepository
                 request.ObjectAddress_House AS House,
                 request.ObjectAddress_Building AS Building,
                 request.ObjectAddress_Apartment AS Apartment
-            FROM dbo.L1ClientRequests AS request
-            INNER JOIN dbo.L1ApplicantParties AS applicantParty
+            FROM dbo.ClientRequests AS request
+            INNER JOIN dbo.ApplicantParties AS applicantParty
                 ON request.ApplicantPartyId = applicantParty.Id
             WHERE applicantParty.ClientAccountId = @ClientAccountId
               AND (@Status IS NULL OR request.Status = @Status)
@@ -101,10 +101,10 @@ public sealed class ClientRequestRepository : IClientRequestRepository
                 review.Status AS ReviewStatus,
                 review.CompletedAt AS ReviewCompletedAt,
                 review.RejectionReason
-            FROM dbo.L1ClientRequests AS request
-            INNER JOIN dbo.L1ApplicantParties AS applicantParty
+            FROM dbo.ClientRequests AS request
+            INNER JOIN dbo.ApplicantParties AS applicantParty
                 ON request.ApplicantPartyId = applicantParty.Id
-            LEFT JOIN dbo.L1RequestReviews AS review
+            LEFT JOIN dbo.RequestReviews AS review
                 ON review.RequestId = request.Id
             WHERE request.Id = @RequestId
               AND applicantParty.ClientAccountId = @ClientAccountId;

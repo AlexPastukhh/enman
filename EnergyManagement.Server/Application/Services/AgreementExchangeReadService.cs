@@ -106,15 +106,15 @@ public sealed class AgreementExchangeReadService : IAgreementExchangeReadService
                 applicant.LegalEntity_OrganizationName AS LegalEntityOrganizationName,
                 exchange.CreatedAt,
                 MAX(proposal.CreatedAt) AS LastActivityAt
-            FROM dbo.L1AgreementProposalExchanges AS exchange
-            INNER JOIN dbo.L1ClientRequests AS request
+            FROM dbo.AgreementProposalExchanges AS exchange
+            INNER JOIN dbo.ClientRequests AS request
                 ON request.Id = exchange.RequestId
-            INNER JOIN dbo.L1ApplicantParties AS applicant
+            INNER JOIN dbo.ApplicantParties AS applicant
                 ON applicant.Id = request.ApplicantPartyId
-            INNER JOIN dbo.L1AgreementProposals AS activeProposal
+            INNER JOIN dbo.AgreementProposals AS activeProposal
                 ON activeProposal.AgreementProposalExchangeId = exchange.Id
                 AND activeProposal.Version = exchange.ActiveProposalVersion
-            LEFT JOIN dbo.L1AgreementProposals AS proposal
+            LEFT JOIN dbo.AgreementProposals AS proposal
                 ON proposal.AgreementProposalExchangeId = exchange.Id
             WHERE (@EmployeeView = 1 OR exchange.ClientAccountId = @ClientAccountId)
                 AND (@Status IS NULL OR exchange.Status = @Status)

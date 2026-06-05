@@ -56,50 +56,50 @@ public sealed class SeedE2eDemoDataCommand
         const string sql = """
             BEGIN TRANSACTION;
 
-            DELETE FROM dbo.L1AgreementProposals
+            DELETE FROM dbo.AgreementProposals
             WHERE AgreementProposalExchangeId IN (
-                SELECT Id FROM dbo.L1AgreementProposalExchanges
+                SELECT Id FROM dbo.AgreementProposalExchanges
                 WHERE RequestId IN (@reviewRequestId, @agreementRequestId)
             );
 
-            DELETE FROM dbo.L1AgreementProposalExchanges
+            DELETE FROM dbo.AgreementProposalExchanges
             WHERE RequestId IN (@reviewRequestId, @agreementRequestId);
 
-            DELETE FROM dbo.L1RequestReviews
+            DELETE FROM dbo.RequestReviews
             WHERE RequestId IN (@reviewRequestId, @agreementRequestId);
 
-            DELETE FROM dbo.L1ClientRequests
+            DELETE FROM dbo.ClientRequests
             WHERE Id IN (@reviewRequestId, @agreementRequestId)
                OR ClientAccountId = @clientAccountId;
 
-            DELETE FROM dbo.L1ApplicantParties
+            DELETE FROM dbo.ApplicantParties
             WHERE Id = @applicantPartyId
                OR ClientAccountId = @clientAccountId;
 
-            DELETE FROM dbo.L1Accounts
+            DELETE FROM dbo.Accounts
             WHERE Id IN (@employeeId, @clientAccountId);
 
-            SET IDENTITY_INSERT dbo.L1Accounts ON;
+            SET IDENTITY_INSERT dbo.Accounts ON;
 
-            INSERT INTO dbo.L1Accounts
+            INSERT INTO dbo.Accounts
                 (Id, Email, PasswordHash, Role, IsActive, CreatedAt, AccountType, WindowsLogin,
                  EmployeeFullName_FirstName, EmployeeFullName_MiddleName, EmployeeFullName_LastName)
             VALUES
                 (@employeeId, @employeeEmail, @passwordHash, N'Employee', 1, @now, N'Employee', N'E2E\employee',
                  N'Employee', N'Demo', N'Reviewer');
 
-            INSERT INTO dbo.L1Accounts
+            INSERT INTO dbo.Accounts
                 (Id, Email, PasswordHash, Role, IsActive, CreatedAt, AccountType, WindowsLogin,
                  EmployeeFullName_FirstName, EmployeeFullName_MiddleName, EmployeeFullName_LastName)
             VALUES
                 (@clientAccountId, @clientEmail, @passwordHash, N'Client', 1, @now, N'Client', NULL,
                  NULL, NULL, NULL);
 
-            SET IDENTITY_INSERT dbo.L1Accounts OFF;
+            SET IDENTITY_INSERT dbo.Accounts OFF;
 
-            SET IDENTITY_INSERT dbo.L1ApplicantParties ON;
+            SET IDENTITY_INSERT dbo.ApplicantParties ON;
 
-            INSERT INTO dbo.L1ApplicantParties
+            INSERT INTO dbo.ApplicantParties
                 (Id, ClientAccountId, ApplicantPartyType, Email, PhoneNumber, CreatedAt,
                  ApplicantPartyDiscriminator, FullName_FirstName, FullName_MiddleName, FullName_LastName,
                  IsCurrentActiveVersion, VerificationStatus)
@@ -107,11 +107,11 @@ public sealed class SeedE2eDemoDataCommand
                 (@applicantPartyId, @clientAccountId, N'Individual', @clientEmail, N'+79001234567', @now,
                  N'Individual', N'Demo', N'Client', N'Applicant', 1, N'Unverified');
 
-            SET IDENTITY_INSERT dbo.L1ApplicantParties OFF;
+            SET IDENTITY_INSERT dbo.ApplicantParties OFF;
 
-            SET IDENTITY_INSERT dbo.L1ClientRequests ON;
+            SET IDENTITY_INSERT dbo.ClientRequests ON;
 
-            INSERT INTO dbo.L1ClientRequests
+            INSERT INTO dbo.ClientRequests
                 (Id, ApplicantPartyId, ClientAccountId, RequestType, Status, Details, CreatedAt,
                  ClientRequestDiscriminator, ObjectAddress_PostalCode, ObjectAddress_Region,
                  ObjectAddress_City, ObjectAddress_Street, ObjectAddress_House,
@@ -121,7 +121,7 @@ public sealed class SeedE2eDemoDataCommand
                  N'E2E employee review request.', @now, N'Connection', N'658480', N'Алтайский край',
                  N'Заринск', N'Ленина', N'10', NULL, NULL);
 
-            INSERT INTO dbo.L1ClientRequests
+            INSERT INTO dbo.ClientRequests
                 (Id, ApplicantPartyId, ClientAccountId, RequestType, Status, Details, CreatedAt,
                  ClientRequestDiscriminator, ObjectAddress_PostalCode, ObjectAddress_Region,
                  ObjectAddress_City, ObjectAddress_Street, ObjectAddress_House,
@@ -131,9 +131,9 @@ public sealed class SeedE2eDemoDataCommand
                  N'E2E agreement exchange request.', @now, N'Connection', N'658480', N'Алтайский край',
                  N'Заринск', N'Ленина', N'12', NULL, NULL);
 
-            SET IDENTITY_INSERT dbo.L1ClientRequests OFF;
+            SET IDENTITY_INSERT dbo.ClientRequests OFF;
 
-            INSERT INTO dbo.L1RequestReviews
+            INSERT INTO dbo.RequestReviews
                 (RequestId, Status, StartedByEmployeeId, StartedAt,
                  CompletedByEmployeeId, CompletedAt, RejectionReason)
             VALUES
@@ -163,28 +163,28 @@ public sealed class SeedE2eDemoDataCommand
     private static async Task EnsureSeedSchemaAsync(string connectionString, CancellationToken cancellationToken)
     {
         const string sql = """
-            IF OBJECT_ID(N'dbo.L1ApplicantParties', N'U') IS NOT NULL
-               AND COL_LENGTH(N'dbo.L1ApplicantParties', N'ClientAccountId') IS NULL
+            IF OBJECT_ID(N'dbo.ApplicantParties', N'U') IS NOT NULL
+               AND COL_LENGTH(N'dbo.ApplicantParties', N'ClientAccountId') IS NULL
             BEGIN
-                ALTER TABLE dbo.L1ApplicantParties
+                ALTER TABLE dbo.ApplicantParties
                 ADD ClientAccountId bigint NOT NULL
-                    CONSTRAINT DF_L1ApplicantParties_ClientAccountId_E2ESeed DEFAULT(0);
+                    CONSTRAINT DF_ApplicantParties_ClientAccountId_E2ESeed DEFAULT(0);
             END;
 
-            IF OBJECT_ID(N'dbo.L1ClientRequests', N'U') IS NOT NULL
-               AND COL_LENGTH(N'dbo.L1ClientRequests', N'ClientAccountId') IS NULL
+            IF OBJECT_ID(N'dbo.ClientRequests', N'U') IS NOT NULL
+               AND COL_LENGTH(N'dbo.ClientRequests', N'ClientAccountId') IS NULL
             BEGIN
-                ALTER TABLE dbo.L1ClientRequests
+                ALTER TABLE dbo.ClientRequests
                 ADD ClientAccountId bigint NOT NULL
-                    CONSTRAINT DF_L1ClientRequests_ClientAccountId_E2ESeed DEFAULT(0);
+                    CONSTRAINT DF_ClientRequests_ClientAccountId_E2ESeed DEFAULT(0);
             END;
 
-            IF OBJECT_ID(N'dbo.L1AgreementProposalExchanges', N'U') IS NOT NULL
-               AND COL_LENGTH(N'dbo.L1AgreementProposalExchanges', N'ClientAccountId') IS NULL
+            IF OBJECT_ID(N'dbo.AgreementProposalExchanges', N'U') IS NOT NULL
+               AND COL_LENGTH(N'dbo.AgreementProposalExchanges', N'ClientAccountId') IS NULL
             BEGIN
-                ALTER TABLE dbo.L1AgreementProposalExchanges
+                ALTER TABLE dbo.AgreementProposalExchanges
                 ADD ClientAccountId bigint NOT NULL
-                    CONSTRAINT DF_L1AgreementProposalExchanges_ClientAccountId_E2ESeed DEFAULT(0);
+                    CONSTRAINT DF_AgreementProposalExchanges_ClientAccountId_E2ESeed DEFAULT(0);
             END;
             """;
 

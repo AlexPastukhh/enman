@@ -365,7 +365,7 @@ public sealed class AgreementProposalVersionSendIntegrationTests : AppIntegratio
 
         await using var command = new SqlCommand(
             """
-            INSERT INTO dbo.L1AgreementProposalExchanges
+            INSERT INTO dbo.AgreementProposalExchanges
                 (RequestId, ClientAccountId, Status, ActiveProposalVersion,
                  FinalRefusedByEmployeeId, FinalRefusedAt, FinalRefusalReason, CreatedAt)
             OUTPUT INSERTED.Id
@@ -403,7 +403,7 @@ public sealed class AgreementProposalVersionSendIntegrationTests : AppIntegratio
     {
         await using var command = new SqlCommand(
             """
-            INSERT INTO dbo.L1AgreementProposals
+            INSERT INTO dbo.AgreementProposals
                 (AgreementProposalExchangeId, Version, Sender, SenderId, State,
                  DocumentStorageKey, DocumentOriginalFileName, DocumentContentType, DocumentSizeBytes,
                  Comment, CreatedAt)
@@ -436,7 +436,7 @@ public sealed class AgreementProposalVersionSendIntegrationTests : AppIntegratio
         await using var reader = await ExecuteReaderAsync(
             """
             SELECT Id, Status, ActiveProposalVersion
-            FROM dbo.L1AgreementProposalExchanges
+            FROM dbo.AgreementProposalExchanges
             WHERE Id = @id
             """,
             exchangeId);
@@ -459,7 +459,7 @@ public sealed class AgreementProposalVersionSendIntegrationTests : AppIntegratio
         await using var reader = await ExecuteReaderAsync(
             """
             SELECT Version, Sender, SenderId, State, DocumentStorageKey, Comment
-            FROM dbo.L1AgreementProposals
+            FROM dbo.AgreementProposals
             WHERE AgreementProposalExchangeId = @id
             ORDER BY Version
             """,

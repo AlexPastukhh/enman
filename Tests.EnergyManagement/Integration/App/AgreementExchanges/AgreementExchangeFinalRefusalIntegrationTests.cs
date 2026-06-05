@@ -32,9 +32,9 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
     [Fact]
     public async Task Final_refuse_without_csrf_returns_bad_request()
     {
-        const long employeeId = 930;
+        const long employeeId = 900_930;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedClient(employeeId, "employee-930@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-900930@example.com", role: "Employee");
 
         var response = await employeeClient.PostAsync(
             "/api/agreement-exchanges/1/final-refuse",
@@ -64,11 +64,11 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
         var exchangeId = await InsertExchangeWithSingleEmployeeProposalAsync(
             requestId,
             account.AccountId,
-            employeeSenderId: 931);
+            employeeSenderId: 900_931);
 
-        const long employeeId = 932;
+        const long employeeId = 900_932;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedClient(employeeId, "employee-932@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-900932@example.com", role: "Employee");
 
         var beforeProposals = await GetProposalRowsAsync(exchangeId);
 
@@ -108,9 +108,9 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
             account.AccountId,
             clientSenderId: account.AccountId);
 
-        const long employeeId = 933;
+        const long employeeId = 900_933;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedClient(employeeId, "employee-933@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-900933@example.com", role: "Employee");
 
         var response = await FinalRefuseRequestAsync(employeeClient, exchangeId);
 
@@ -136,11 +136,11 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
         var exchangeId = await InsertExchangeWithSingleEmployeeProposalAsync(
             requestId,
             account.AccountId,
-            employeeSenderId: 934);
+            employeeSenderId: 900_934);
 
-        const long employeeId = 935;
+        const long employeeId = 900_935;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedClient(employeeId, "employee-935@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-900935@example.com", role: "Employee");
 
         var response = await FinalRefuseRequestAsync(
             employeeClient,
@@ -170,11 +170,11 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
         var exchangeId = await InsertExchangeWithSingleEmployeeProposalAsync(
             requestId,
             account.AccountId,
-            employeeSenderId: 936);
+            employeeSenderId: 900_936);
 
-        const long employeeId = 937;
+        const long employeeId = 900_937;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedClient(employeeId, "employee-937@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-900937@example.com", role: "Employee");
 
         var response = await FinalRefuseRequestAsync(
             employeeClient,
@@ -202,11 +202,11 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
         var exchangeId = await InsertAcceptedExchangeAsync(
             requestId,
             account.AccountId,
-            employeeSenderId: 938);
+            employeeSenderId: 900_938);
 
-        const long employeeId = 939;
+        const long employeeId = 900_939;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedClient(employeeId, "employee-939@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-900939@example.com", role: "Employee");
 
         var response = await FinalRefuseRequestAsync(
             employeeClient,
@@ -237,11 +237,11 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
         var exchangeId = await InsertExchangeWithSingleEmployeeProposalAsync(
             request.Id,
             account.AccountId,
-            employeeSenderId: 940);
+            employeeSenderId: 900_940);
 
-        const long employeeId = 941;
+        const long employeeId = 900_941;
         await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedClient(employeeId, "employee-941@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employeeId, "employee-900941@example.com", role: "Employee");
 
         var response = await FinalRefuseRequestAsync(
             employeeClient,
@@ -398,7 +398,7 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
 
         await using var command = new SqlCommand(
             """
-            INSERT INTO dbo.L1AgreementProposalExchanges
+            INSERT INTO dbo.AgreementProposalExchanges
                 (RequestId, ClientAccountId, Status, ActiveProposalVersion,
                  FinalRefusedByEmployeeId, FinalRefusedAt, FinalRefusalReason, CreatedAt)
             OUTPUT INSERTED.Id
@@ -432,7 +432,7 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
     {
         await using var command = new SqlCommand(
             """
-            INSERT INTO dbo.L1AgreementProposals
+            INSERT INTO dbo.AgreementProposals
                 (AgreementProposalExchangeId, Version, Sender, SenderId, State,
                  DocumentStorageKey, DocumentOriginalFileName, DocumentContentType, DocumentSizeBytes,
                  Comment, CreatedAt)
@@ -466,7 +466,7 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
             """
             SELECT Id, Status, ActiveProposalVersion,
                    FinalRefusedByEmployeeId, FinalRefusedAt, FinalRefusalReason
-            FROM dbo.L1AgreementProposalExchanges
+            FROM dbo.AgreementProposalExchanges
             WHERE Id = @id
             """,
             exchangeId);
@@ -492,7 +492,7 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
         await using var reader = await ExecuteReaderAsync(
             """
             SELECT Version, Sender, SenderId, State
-            FROM dbo.L1AgreementProposals
+            FROM dbo.AgreementProposals
             WHERE AgreementProposalExchangeId = @id
             ORDER BY Version
             """,
