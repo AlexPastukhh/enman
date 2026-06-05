@@ -38,17 +38,14 @@ vi.mock(
   }),
 );
 
-vi.mock(
-  "../../features/applicant-party/create-individual/ui/CreateIndividualApplicantPartyForm",
-  () => ({
-    CreateIndividualApplicantPartyForm: () => (
-      <form aria-label="Создание заявителя">
-        <button type="submit">Сохранить данные заявителя</button>
-      </form>
-    ),
-    __esModule: true,
-  }),
-);
+vi.mock("../../features/applicant-party/create/ui/CreateApplicantPartyForm", () => ({
+  CreateApplicantPartyForm: () => (
+    <form aria-label="Создание заявителя">
+      <button type="submit">Сохранить данные заявителя</button>
+    </form>
+  ),
+  __esModule: true,
+}));
 
 vi.mock("../../shared/ui/layout/Header", () => ({
   Header: () => <header>Header</header>,

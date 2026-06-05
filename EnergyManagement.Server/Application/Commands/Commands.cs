@@ -35,6 +35,27 @@ public sealed record CreateIndividualApplicantPartyCommand(
     string PhoneNumber)
     : IRequest<Result<CreateIndividualApplicantPartyResponse, IReadOnlyList<Error>>>;
 
+public sealed record CreateIndividualEntrepreneurApplicantPartyCommand(
+    long ClientAccountId,
+    string FirstName,
+    string MiddleName,
+    string LastName,
+    string Inn,
+    string Ogrnip,
+    string Email,
+    string PhoneNumber)
+    : IRequest<Result<CreateIndividualApplicantPartyResponse, IReadOnlyList<Error>>>;
+
+public sealed record CreateLegalEntityApplicantPartyCommand(
+    long ClientAccountId,
+    string OrganizationName,
+    string Inn,
+    string Kpp,
+    string Ogrn,
+    string Email,
+    string PhoneNumber)
+    : IRequest<Result<CreateIndividualApplicantPartyResponse, IReadOnlyList<Error>>>;
+
 public sealed record CreateIndividualApplicantPartyResponse(
     long ApplicantPartyId,
     long ClientAccountId);

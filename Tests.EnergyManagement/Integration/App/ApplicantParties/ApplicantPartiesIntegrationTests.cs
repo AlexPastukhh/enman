@@ -375,6 +375,123 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
     }
 
     [Fact]
+    public async Task CreateIndividualEntrepreneurApplicantParty_StoresSubtypeRequisites()
+    {
+        var account = await RegisterAccountAsync();
+        var client = AuthenticatedClient(account.AccountId);
+        var applicantEmail = UniqueEmail();
+
+        var httpResponse = await PostAsJsonWithCsrfAsync(
+            client,
+            "/api/applicant-parties/individual-entrepreneur",
+            new CreateIndividualEntrepreneurApplicantPartyDto(
+                new FullNameDto("Ivan", "Ivanovich", "Petrov"),
+                "123456789012",
+                "123456789012345",
+                applicantEmail,
+                PhoneNumber));
+
+        await HttpResponseAssertions.For(httpResponse, _output).ShouldBeSuccess();
+        var response = await httpResponse.Content.ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
+            ?? throw new InvalidOperationException("Applicant party response body was empty.");
+
+        var row = await GetApplicantPartyRowAsync(response.ApplicantPartyId);
+
+        response.ClientAccountId.Should().Be(account.AccountId);
+        row.Should().NotBeNull();
+        row!.ApplicantPartyType.Should().Be("IndividualEntrepreneur");
+        row.IndividualEntrepreneurFirstName.Should().Be("Ivan");
+        row.IndividualEntrepreneurMiddleName.Should().Be("Ivanovich");
+        row.IndividualEntrepreneurLastName.Should().Be("Petrov");
+        row.IndividualEntrepreneurInn.Should().Be("123456789012");
+        row.IndividualEntrepreneurOgrnip.Should().Be("123456789012345");
+        row.Email.Should().Be(applicantEmail);
+        row.PhoneNumber.Should().Be(PhoneNumber);
+        row.IsCurrentActiveVersion.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task CreateLegalEntityApplicantParty_StoresSubtypeRequisites()
+    {
+        var account = await RegisterAccountAsync();
+        var client = AuthenticatedClient(account.AccountId);
+        var applicantEmail = UniqueEmail();
+
+        var httpResponse = await PostAsJsonWithCsrfAsync(
+            client,
+            "/api/applicant-parties/legal-entity",
+            new CreateLegalEntityApplicantPartyDto(
+                "OOO Energy Client",
+                "1234567890",
+                "123456789",
+                "1234567890123",
+                applicantEmail,
+                PhoneNumber));
+
+        await HttpResponseAssertions.For(httpResponse, _output).ShouldBeSuccess();
+        var response = await httpResponse.Content.ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
+            ?? throw new InvalidOperationException("Applicant party response body was empty.");
+
+        var row = await GetApplicantPartyRowAsync(response.ApplicantPartyId);
+
+        response.ClientAccountId.Should().Be(account.AccountId);
+        row.Should().NotBeNull();
+        row!.ApplicantPartyType.Should().Be("LegalEntity");
+        row.LegalEntityOrganizationName.Should().Be("OOO Energy Client");
+        row.LegalEntityInn.Should().Be("1234567890");
+        row.LegalEntityKpp.Should().Be("123456789");
+        row.LegalEntityOgrn.Should().Be("1234567890123");
+        row.Email.Should().Be(applicantEmail);
+        row.PhoneNumber.Should().Be(PhoneNumber);
+        row.IsCurrentActiveVersion.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task ListAccountApplicantParties_WithSubtypeApplicantParties_ReturnsRequisites()
+    {
+        var account = await RegisterAccountAsync();
+        var client = AuthenticatedClient(account.AccountId);
+
+        var entrepreneurCreateResponse = await PostAsJsonWithCsrfAsync(
+            client,
+            "/api/applicant-parties/individual-entrepreneur",
+            new CreateIndividualEntrepreneurApplicantPartyDto(
+                new FullNameDto("Ivan", "Ivanovich", "Petrov"),
+                "123456789012",
+                "123456789012345",
+                UniqueEmail(),
+                PhoneNumber));
+        await HttpResponseAssertions.For(entrepreneurCreateResponse, _output).ShouldBeSuccess();
+
+        var legalEntityCreateResponse = await PostAsJsonWithCsrfAsync(
+            client,
+            "/api/applicant-parties/legal-entity",
+            new CreateLegalEntityApplicantPartyDto(
+                "OOO Energy Client",
+                "1234567890",
+                "123456789",
+                "1234567890123",
+                UniqueEmail(),
+                PhoneNumber));
+        await HttpResponseAssertions.For(legalEntityCreateResponse, _output).ShouldBeSuccess();
+
+        var response = await GetAccountApplicantPartiesAsync(client);
+
+        response.ApplicantParties.Should().HaveCount(2);
+        var entrepreneur = response.ApplicantParties.Single(x => x.ApplicantPartyType == "IndividualEntrepreneur");
+        entrepreneur.FullName.Should().NotBeNull();
+        entrepreneur.FullName!.FirstName.Should().Be("Ivan");
+        entrepreneur.Inn.Should().Be("123456789012");
+        entrepreneur.Ogrnip.Should().Be("123456789012345");
+
+        var legalEntity = response.ApplicantParties.Single(x => x.ApplicantPartyType == "LegalEntity");
+        legalEntity.OrganizationName.Should().Be("OOO Energy Client");
+        legalEntity.Inn.Should().Be("1234567890");
+        legalEntity.Kpp.Should().Be("123456789");
+        legalEntity.Ogrn.Should().Be("1234567890123");
+    }
+
+    [Fact]
     public async Task CreateIndividualApplicantParty_WithInvalidData_ReturnsValidationProblemAndCreatesNoApplicant()
     {
         var account = await RegisterAccountAsync();

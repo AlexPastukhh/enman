@@ -3,7 +3,7 @@ import type { ApplicantPartySummary } from "../../entities/applicant-party/model
 import { useAccountApplicantPartiesQuery } from "../../entities/applicant-party/model/useAccountApplicantPartiesQuery";
 import { ApplicantPartiesList } from "../../entities/applicant-party/ui/ApplicantPartiesList";
 import { useSession } from "../../entities/session/model/useSession";
-import { CreateIndividualApplicantPartyForm } from "../../features/applicant-party/create-individual/ui/CreateIndividualApplicantPartyForm";
+import { CreateApplicantPartyForm } from "../../features/applicant-party/create/ui/CreateApplicantPartyForm";
 import { useMakeApplicantPartyCurrentDefaultMutation } from "../../features/applicant-party/make-current-default/model/useMakeApplicantPartyCurrentDefaultMutation";
 import { MakeCurrentDefaultButton } from "../../features/applicant-party/make-current-default/ui/MakeCurrentDefaultButton";
 import { makeCurrentDefaultButtonConst } from "../../features/applicant-party/make-current-default/ui/makeCurrentDefaultButtonConst";
@@ -107,9 +107,7 @@ const AccountPage = () => {
             />
           )}
 
-          <CreateIndividualApplicantPartyForm
-            onSuccess={handleApplicantPartyCreated}
-          />
+          <CreateApplicantPartyForm onSuccess={handleApplicantPartyCreated} />
         </section>
       )}
     </main>

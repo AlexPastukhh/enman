@@ -21,18 +21,46 @@ internal static class ApplicantPartyValidation
         }
 
         ValidateFullName(dto.FullName, context, Join(prefix, FieldNames.ApplicantParty.FullName));
+        ValidateContact(dto.Email, dto.PhoneNumber, context, prefix);
+    }
 
-        var emailResult = Email.Create(dto.Email ?? string.Empty);
-        if (emailResult.IsFailure)
+    public static void ValidateIndividualEntrepreneurApplicant<T>(
+        CreateIndividualEntrepreneurApplicantPartyDto? dto,
+        ValidationContext<T> context,
+        string prefix)
+    {
+        if (dto is null)
         {
-            AddFailures(context, Join(prefix, FieldNames.ApplicantParty.Email), emailResult.Error);
+            context.AddFailure(
+                Join(prefix, string.Empty),
+                Error.Errors.L1Domain.ApplicantPartyIsRequired.Code);
+            return;
         }
 
-        var phoneResult = PhoneNumber.Create(dto.PhoneNumber ?? string.Empty);
-        if (phoneResult.IsFailure)
+        ValidateFullName(dto.FullName, context, Join(prefix, FieldNames.ApplicantParty.FullName));
+        ValidateInn(dto.Inn, context, Join(prefix, FieldNames.ApplicantParty.Inn));
+        ValidateOgrnip(dto.Ogrnip, context, Join(prefix, FieldNames.ApplicantParty.Ogrnip));
+        ValidateContact(dto.Email, dto.PhoneNumber, context, prefix);
+    }
+
+    public static void ValidateLegalEntityApplicant<T>(
+        CreateLegalEntityApplicantPartyDto? dto,
+        ValidationContext<T> context,
+        string prefix)
+    {
+        if (dto is null)
         {
-            AddFailures(context, Join(prefix, FieldNames.ApplicantParty.PhoneNumber), phoneResult.Error);
+            context.AddFailure(
+                Join(prefix, string.Empty),
+                Error.Errors.L1Domain.ApplicantPartyIsRequired.Code);
+            return;
         }
+
+        ValidateOrganizationName(dto.OrganizationName, context, Join(prefix, FieldNames.ApplicantParty.OrganizationName));
+        ValidateInn(dto.Inn, context, Join(prefix, FieldNames.ApplicantParty.Inn));
+        ValidateKpp(dto.Kpp, context, Join(prefix, FieldNames.ApplicantParty.Kpp));
+        ValidateOgrn(dto.Ogrn, context, Join(prefix, FieldNames.ApplicantParty.Ogrn));
+        ValidateContact(dto.Email, dto.PhoneNumber, context, prefix);
     }
 
     public static void ValidateConnectionRequestNewApplicant<T>(
@@ -80,13 +108,22 @@ internal static class ApplicantPartyValidation
                 break;
         }
 
-        var emailResult = Email.Create(dto.Email ?? string.Empty);
+        ValidateContact(dto.Email, dto.PhoneNumber, context, prefix);
+    }
+
+    private static void ValidateContact<T>(
+        string? email,
+        string? phoneNumber,
+        ValidationContext<T> context,
+        string prefix)
+    {
+        var emailResult = Email.Create(email ?? string.Empty);
         if (emailResult.IsFailure)
         {
             AddFailures(context, Join(prefix, FieldNames.ApplicantParty.Email), emailResult.Error);
         }
 
-        var phoneResult = PhoneNumber.Create(dto.PhoneNumber ?? string.Empty);
+        var phoneResult = PhoneNumber.Create(phoneNumber ?? string.Empty);
         if (phoneResult.IsFailure)
         {
             AddFailures(context, Join(prefix, FieldNames.ApplicantParty.PhoneNumber), phoneResult.Error);

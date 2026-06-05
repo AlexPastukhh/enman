@@ -71,6 +71,8 @@ builder.Services.AddMediatR(c=>c.RegisterServicesFromAssembly(typeof(Program).As
 builder.Services.AddTransient<IValidator<RegisterClientAccountDto>, RegisterClientAccountDtoValidator>();
 builder.Services.AddTransient<IValidator<LoginRequestDto>, LoginRequestDtoValidator>();
 builder.Services.AddTransient<IValidator<CreateIndividualApplicantPartyDto>, CreateIndividualApplicantPartyDtoValidator>();
+builder.Services.AddTransient<IValidator<CreateIndividualEntrepreneurApplicantPartyDto>, CreateIndividualEntrepreneurApplicantPartyDtoValidator>();
+builder.Services.AddTransient<IValidator<CreateLegalEntityApplicantPartyDto>, CreateLegalEntityApplicantPartyDtoValidator>();
 builder.Services.AddTransient<IValidator<CreateConnectionRequestDto>, CreateConnectionRequestDtoValidator>();
 builder.Services.AddTransient<IValidator<ListMyRequestsQueryDto>, ListMyRequestsQueryDtoValidator>();
 builder.Services.AddTransient<IValidator<EmployeeRequestListQueryDto>, EmployeeRequestListQueryDtoValidator>();

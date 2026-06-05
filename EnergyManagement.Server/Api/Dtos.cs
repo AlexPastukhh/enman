@@ -27,6 +27,21 @@ public sealed record CreateIndividualApplicantPartyDto(
     [property: JsonPropertyName("email")] string? Email,
     [property: JsonPropertyName("phoneNumber")] string? PhoneNumber);
 
+public sealed record CreateIndividualEntrepreneurApplicantPartyDto(
+    [property: JsonPropertyName("fullName")] FullNameDto? FullName,
+    [property: JsonPropertyName("inn")] string? Inn,
+    [property: JsonPropertyName("ogrnip")] string? Ogrnip,
+    [property: JsonPropertyName("email")] string? Email,
+    [property: JsonPropertyName("phoneNumber")] string? PhoneNumber);
+
+public sealed record CreateLegalEntityApplicantPartyDto(
+    [property: JsonPropertyName("organizationName")] string? OrganizationName,
+    [property: JsonPropertyName("inn")] string? Inn,
+    [property: JsonPropertyName("kpp")] string? Kpp,
+    [property: JsonPropertyName("ogrn")] string? Ogrn,
+    [property: JsonPropertyName("email")] string? Email,
+    [property: JsonPropertyName("phoneNumber")] string? PhoneNumber);
+
 public sealed record CreateIndividualApplicantPartyResponseDto(
     [property: JsonPropertyName("applicantPartyId")] long ApplicantPartyId,
     [property: JsonPropertyName("clientAccountId")] long ClientAccountId);

@@ -75,6 +75,36 @@ export const ApplicantPartySummaryCard = ({
             </div>
           </>
         )}
+        {applicantParty.organizationName && (
+          <div className="applicantPartyCard__row">
+            <dt>Наименование организации</dt>
+            <dd>{valueOrUnknown(applicantParty.organizationName)}</dd>
+          </div>
+        )}
+        {applicantParty.inn && (
+          <div className="applicantPartyCard__row">
+            <dt>ИНН</dt>
+            <dd>{valueOrUnknown(applicantParty.inn)}</dd>
+          </div>
+        )}
+        {applicantParty.kpp && (
+          <div className="applicantPartyCard__row">
+            <dt>КПП</dt>
+            <dd>{valueOrUnknown(applicantParty.kpp)}</dd>
+          </div>
+        )}
+        {applicantParty.ogrn && (
+          <div className="applicantPartyCard__row">
+            <dt>ОГРН</dt>
+            <dd>{valueOrUnknown(applicantParty.ogrn)}</dd>
+          </div>
+        )}
+        {applicantParty.ogrnip && (
+          <div className="applicantPartyCard__row">
+            <dt>ОГРНИП</dt>
+            <dd>{valueOrUnknown(applicantParty.ogrnip)}</dd>
+          </div>
+        )}
         <div className="applicantPartyCard__row">
           <dt>{applicantPartiesListConst.emailLabel}</dt>
           <dd>{valueOrUnknown(applicantParty.email)}</dd>

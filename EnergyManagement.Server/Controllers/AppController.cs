@@ -27,6 +27,8 @@ public sealed class AppController : ProjectController
     private readonly IValidator<RegisterClientAccountDto> _registerValidator;
     private readonly IValidator<LoginRequestDto> _loginValidator;
     private readonly IValidator<CreateIndividualApplicantPartyDto> _createIndividualApplicantPartyValidator;
+    private readonly IValidator<CreateIndividualEntrepreneurApplicantPartyDto> _createIndividualEntrepreneurApplicantPartyValidator;
+    private readonly IValidator<CreateLegalEntityApplicantPartyDto> _createLegalEntityApplicantPartyValidator;
     private readonly IValidator<CreateConnectionRequestDto> _createConnectionRequestValidator;
     private readonly IValidator<ListMyRequestsQueryDto> _listMyRequestsQueryValidator;
     private readonly ClaimsPrincipalFactory _claimsPrincipalFactory;
@@ -37,6 +39,8 @@ public sealed class AppController : ProjectController
         IValidator<RegisterClientAccountDto> registerValidator,
         IValidator<LoginRequestDto> loginValidator,
         IValidator<CreateIndividualApplicantPartyDto> createIndividualApplicantPartyValidator,
+        IValidator<CreateIndividualEntrepreneurApplicantPartyDto> createIndividualEntrepreneurApplicantPartyValidator,
+        IValidator<CreateLegalEntityApplicantPartyDto> createLegalEntityApplicantPartyValidator,
         IValidator<CreateConnectionRequestDto> createConnectionRequestValidator,
         IValidator<ListMyRequestsQueryDto> listMyRequestsQueryValidator,
         ClaimsPrincipalFactory claimsPrincipalFactory)
@@ -46,6 +50,8 @@ public sealed class AppController : ProjectController
         _registerValidator = registerValidator;
         _loginValidator = loginValidator;
         _createIndividualApplicantPartyValidator = createIndividualApplicantPartyValidator;
+        _createIndividualEntrepreneurApplicantPartyValidator = createIndividualEntrepreneurApplicantPartyValidator;
+        _createLegalEntityApplicantPartyValidator = createLegalEntityApplicantPartyValidator;
         _createConnectionRequestValidator = createConnectionRequestValidator;
         _listMyRequestsQueryValidator = listMyRequestsQueryValidator;
         _claimsPrincipalFactory = claimsPrincipalFactory;
@@ -215,6 +221,117 @@ public sealed class AppController : ProjectController
         catch (Exception ex)
         {
             _logger.LogError(ex, "Create individual applicant party failed.");
+            return ProblemDetailsWithExceptionDev(ex);
+        }
+    }
+
+    [Authorize]
+    [HttpPost("applicant-parties/individual-entrepreneur", Name = "CreateIndividualEntrepreneurApplicantParty")]
+    [RequireAntiforgeryToken]
+    [ProducesResponseType(typeof(CreateIndividualApplicantPartyResponseDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> CreateIndividualEntrepreneurApplicantParty(
+        [FromBody] CreateIndividualEntrepreneurApplicantPartyDto? dto,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var validationProblem = await ValidateBodyAsync(
+                dto,
+                _createIndividualEntrepreneurApplicantPartyValidator,
+                cancellationToken);
+            if (validationProblem is not null)
+            {
+                return validationProblem;
+            }
+
+            if (!TryGetCurrentAccountId(out var accountId))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _sender.Send(
+                new CreateIndividualEntrepreneurApplicantPartyCommand(
+                    accountId,
+                    dto!.FullName!.FirstName!,
+                    dto.FullName.MiddleName!,
+                    dto.FullName.LastName!,
+                    dto.Inn!,
+                    dto.Ogrnip!,
+                    dto.Email!,
+                    dto.PhoneNumber!),
+                cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return ProblemDetailsFromValidation(result.Error);
+            }
+
+            return Ok(new CreateIndividualApplicantPartyResponseDto(
+                result.Value.ApplicantPartyId,
+                result.Value.ClientAccountId));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Create individual entrepreneur applicant party failed.");
+            return ProblemDetailsWithExceptionDev(ex);
+        }
+    }
+
+    [Authorize]
+    [HttpPost("applicant-parties/legal-entity", Name = "CreateLegalEntityApplicantParty")]
+    [RequireAntiforgeryToken]
+    [ProducesResponseType(typeof(CreateIndividualApplicantPartyResponseDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> CreateLegalEntityApplicantParty(
+        [FromBody] CreateLegalEntityApplicantPartyDto? dto,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var validationProblem = await ValidateBodyAsync(
+                dto,
+                _createLegalEntityApplicantPartyValidator,
+                cancellationToken);
+            if (validationProblem is not null)
+            {
+                return validationProblem;
+            }
+
+            if (!TryGetCurrentAccountId(out var accountId))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _sender.Send(
+                new CreateLegalEntityApplicantPartyCommand(
+                    accountId,
+                    dto!.OrganizationName!,
+                    dto.Inn!,
+                    dto.Kpp!,
+                    dto.Ogrn!,
+                    dto.Email!,
+                    dto.PhoneNumber!),
+                cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return ProblemDetailsFromValidation(result.Error);
+            }
+
+            return Ok(new CreateIndividualApplicantPartyResponseDto(
+                result.Value.ApplicantPartyId,
+                result.Value.ClientAccountId));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Create legal entity applicant party failed.");
             return ProblemDetailsWithExceptionDev(ex);
         }
     }
