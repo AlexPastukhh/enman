@@ -1,6 +1,7 @@
 # Slice Responsibility Map
 
 Status: current local responsibility map for slice layer  
+Doc version: v0.1.0
 Scope: routes slice-layer information to the correct owner file, register, workflow, template or draft
 
 ## 1. Purpose
@@ -124,6 +125,7 @@ planning/documentation/status-reconciliation-workflow.md
 
 | Information type | Owner register | Notes |
 |---|---|---|
+| Source dependencies, source version labels and local/global sync status | `slice-source-sync-register.md` | Skeleton/incomplete register for future per-slice source-sync rows. It is not proof that current slice drafts are synchronized. |
 | Scenario/source artifact to slice/sidecar mapping | `slice-scenario-flow-behavior-register.md` | Maps scenario text/DATA/UI/behavior sources to slices. It is not the scenario inventory owner and not full version tracking. |
 | Active slice questions / decisions | `slice-questions-register.md` | Canonical active slice questions/decisions register. Historical `SLICE-QUESTIONS.md` content was consolidated here. |
 | Extension points, change pressure, anti-coupling decisions | `slice-extension-points-register.md` | Use when the item can affect future slices or current implementation seams. |
@@ -154,7 +156,7 @@ Current owner:
 planning/slices/slice-scenario-flow-behavior-register.md
 ```
 
-Future exact source/version usage may need a separate source usage register, but it does not exist yet.
+Exact source/version usage now starts in `planning/slices/slice-source-sync-register.md` as a skeleton / incomplete register. It does not claim current slice drafts are synchronized until local section `Sources:` blocks or file-level source audits are added and reviewed.
 
 ## 8. Principles / Rules Owners
 
@@ -355,3 +357,15 @@ Slice layer responsibility is clear when:
 - source/version tracking is honestly marked as future;
 - future cleanup is tracked instead of hidden in chat memory.
 ```
+
+## 17. Source Sync Register Boundary
+
+```text
+planning/slices/slice-source-sync-register.md
+  owns slice-layer source-sync register rows and future per-slice dependency status.
+
+Current state:
+  skeleton / incomplete / not synchronized.
+```
+
+Do not use `slice-source-sync-register.md` as synchronized proof for a concrete slice until that slice draft has reviewed local section `Sources:` blocks or a documented file-level source audit.

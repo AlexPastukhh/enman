@@ -1,6 +1,7 @@
 # Slice Planning Index
 
 Status: canonical slice planning entry point / current root navigation
+Doc version: v0.1.0
 
 This folder owns slice-layer navigation for server, client and cross-cutting slice work.
 
@@ -26,12 +27,29 @@ for the concrete catalog of current and legacy slice files.
 
 ```text
 planning/slices/slice-responsibility-map.md
+planning/slices/slice-source-sync-register.md
 planning/slices/slice-draft-authoring-principles.md
 planning/slices/slice-draft-authoring-workflow.md
 planning/slices/SLICE-INDEX.md
 planning/slices/slice-questions-register.md
 planning/slices/slice-test-plan-workflow.md
 ```
+
+## Source Sync / Register
+
+Slice-layer source dependency state starts from:
+
+```text
+planning/slices/slice-source-sync-register.md
+```
+
+Current status:
+
+```text
+skeleton / incomplete / not synchronized
+```
+
+Use the register before broad slice refactor, but do not treat it as proof that current slice drafts are synchronized. Concrete slice drafts remain authoritative only after their local section `Sources:` blocks or file-level source audit are added and reviewed.
 
 ## How To Draft A Slice
 

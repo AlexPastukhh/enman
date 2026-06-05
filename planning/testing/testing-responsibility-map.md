@@ -1,6 +1,7 @@
 # Testing Responsibility Map
 
 Status: current testing-layer responsibility map  
+Doc version: v0.1.0
 Scope: routes testing-layer guidance for slice Test / Verification Plans, E2E workflows, test object patterns and transitional screenshot/evidence notes
 
 ## 1. Purpose
@@ -26,6 +27,9 @@ planning/testing/testing-responsibility-map.md
 
 planning/testing/testing-principles.md
   owns test-layer boundaries and general principles.
+
+planning/testing/testing-source-sync-register.md
+  owns testing-layer source-sync register rows and future behavior-to-test dependency status.
 ```
 
 Do not duplicate the full slice test-plan workflow in testing-layer files.
@@ -37,6 +41,7 @@ Do not duplicate the full slice test-plan workflow in testing-layer files.
 | Slice draft `Test / Verification Plan` shape | `planning/slices/slice-test-plan-workflow.md` | A generic testing README |
 | Test-layer boundary decision | `planning/testing/testing-principles.md` | Server-only rules |
 | Server/API slice test buckets | `planning/testing/server-slice-test-plan-rules.md` | E2E workflow |
+| Testing source-sync status | `planning/testing/testing-source-sync-register.md` | Behavior proof or current coverage claim |
 | E2E browser + real API workflow | `planning/testing/e2e-testing-workflow.md` | Component test workflow |
 | Page Object / Component Object rules | `planning/testing/test-object-patterns.md` | Slice draft template |
 | Legacy Playwright workflow alias | `planning/testing/e2e-playwright-workflow.md` | Current workflow source |
@@ -150,13 +155,26 @@ Do not select screenshot runner as a `Test layer` in the ordinary Behavior-to-Te
 |---|---|---|
 | `testing-principles.md` | current principles | Test-layer boundaries and general selection principles. |
 | `server-slice-test-plan-rules.md` | current server-specific rules | Server/API read/query vs command slice test plan buckets. |
+| `testing-source-sync-register.md` | skeleton / incomplete / not synchronized | Testing-layer source-sync register for future behavior-to-test rows. |
 | `e2e-testing-workflow.md` | current E2E workflow | Current Playwright/E2E workflow. |
 | `test-object-patterns.md` | current object pattern rules | Page Object and Component Object rules. |
 | `e2e-playwright-workflow.md` | legacy alias | Keep as compatibility pointer to current E2E workflow. |
 | `playwright-e2e-cleanup-plan.md` | historical/planned cleanup note | Needs currentness verification before use as actionable plan. |
 | `playwright-e2e-and-screenshot-plan.md` | transitional mixed file | Contains E2E support notes and screenshot/evidence notes; screenshot placement review is separate. |
 
-## 6. Guardrails
+## 6. Source Sync Register Boundary
+
+```text
+planning/testing/testing-source-sync-register.md
+  owns testing-layer source-sync register rows and future behavior-to-test dependency status.
+
+Current state:
+  skeleton / incomplete / not synchronized.
+```
+
+Do not use `testing-source-sync-register.md` as synchronized proof for a concrete slice test plan until that test plan or behavior-to-test trace has been reviewed.
+
+## 7. Guardrails
 
 ```text
 Do not let planning/testing/ replace slice-test-plan-workflow.md for slice drafts.

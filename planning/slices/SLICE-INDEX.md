@@ -1,6 +1,7 @@
 # Slice Index
 
 Status: working index / target slice draft files collected
+Doc version: v0.1.0
 
 This file is the common navigation index for server, client and cross-cutting slice docs.
 
@@ -31,10 +32,19 @@ planning/slices/slice-responsibility-map.md
 
 | ID | Title | Type | Status | Current path | Notes |
 |---|---|---|---|---|---|
+| SLICE-SOURCE-SYNC-REGISTER | Slice Source Sync Register | source sync register | skeleton / incomplete / not synchronized | `planning/slices/slice-source-sync-register.md` | Created before broad slice refactor; does not claim current slice drafts are synchronized |
 | SLICE-SCENARIO-FLOW-BEHAVIOR-REGISTER | Slice Scenario Flow / Behavior Register | source mapping register | current | `planning/slices/slice-scenario-flow-behavior-register.md` | Maps scenario/source artifacts to slice drafts and sidecars |
 | SLICE-QUESTIONS-REGISTER | Slice Questions Register | questions / decisions register | current | `planning/slices/slice-questions-register.md` | Canonical active slice-layer questions and decisions register |
 | SLICE-EXTENSION-POINTS-REGISTER | Slice Extension Points Register | extension register | current | `planning/slices/slice-extension-points-register.md` | Extension points, change pressure and future seams |
 | SLICE-IMPLEMENTATION-NOTES-REGISTER | Slice Implementation Notes Register | implementation notes register | current | `planning/slices/slice-implementation-notes-register.md` | Shared future/current implementation notes that must remain visible |
+
+Source-sync note:
+
+```text
+The source-sync register is a skeleton / incomplete / not synchronized register.
+Do not mark individual slice rows synchronized from this index alone.
+Per-slice rows must be added after local Sources/file-level review.
+```
 
 ## Current file-location rule
 

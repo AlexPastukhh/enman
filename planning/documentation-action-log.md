@@ -2276,3 +2276,43 @@ Follow-ups:
   Start SLICE-TEST-SRC-0 to create slice/testing source-register skeletons and seed active owner doc versions after this route cleanup is reviewed.
 Notes:
   Profile-specific reusable examples may support route chains only as demonstration reads after user/project fit is accepted. They do not own command semantics, route logic, source truth, output mode or permission boundary.
+
+### 2026-06-05 - Created slice/testing source-sync skeleton registers before slice refactor
+
+Date:
+  2026-06-05
+Action:
+  Applied SLICE-TEST-SRC-0A skeleton step for slice/testing source-sync preparation.
+Type:
+  slice/testing source-register skeleton / pre-refactor layer setup
+Status:
+  applied
+Why:
+  Concrete slice refactor should not start before the slice and testing layers have explicit source-sync register skeletons. The skeletons provide row shapes, boundaries and honest incomplete status so later work can audit all slice/test files, create a local refactor Goal Map and then refactor one slice at a time without reintroducing broad fake dependencies.
+Changed files:
+  - planning/slices/slice-source-sync-register.md
+  - planning/testing/testing-source-sync-register.md
+  - planning/slices/README.md
+  - planning/slices/SLICE-INDEX.md
+  - planning/slices/slice-responsibility-map.md
+  - planning/testing/testing-responsibility-map.md
+  - planning/source-cascade-sync-workflow.md
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Created slice source-sync register as skeleton / incomplete / not synchronized.
+  - Created testing source-sync register as skeleton / incomplete / not synchronized.
+  - Added slice-layer navigation and responsibility pointers to the new slice register.
+  - Added testing-layer routing pointer to the new testing register.
+  - Updated source-cascade workflow to treat the registers as existing skeletons, not missing planned files.
+  - Updated root source-sync register with limited cross-layer rows for the new skeleton registers.
+Not changed:
+  - No concrete `SL-*` slice draft edited.
+  - No slice/test local section `Sources:` blocks added.
+  - No synchronized coverage claimed for slice or testing layer.
+  - No owner workflow/template version seed performed yet.
+  - No local slice-refactor Goal Map created yet.
+Follow-ups:
+  Next step is SLICE-TEST-SRC-0B: seed versions for active slice/testing owner workflows/templates. After that, create a local slice-test refactor Goal Map from a full slice/test file audit.
+Notes:
+  The new registers are navigation/sync skeletons only. They become meaningful per-slice evidence only after local section Sources or file-level audits are added and reviewed.
