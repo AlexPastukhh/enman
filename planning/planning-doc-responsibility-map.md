@@ -1,7 +1,7 @@
 # Planning Document Responsibility Map
 
 Status: transitional global responsibility map / root layer router
-Doc version: v0.4.0
+Doc version: v0.5.0
 Scope: routes planning documentation information to the correct layer and, where available, to the layer-local responsibility map
 
 ## 1. Core Rule
@@ -139,6 +139,7 @@ Sources:
 | `planning/repo-grounded-github-line-links-workflow.md` | User-facing GitHub line-link rules for repo-grounded code/docs/status explanations |
 | `planning/planning-doc-responsibility-map.md` | Transitional root layer router for planning documentation; detailed local placement should move to local responsibility maps over time |
 | `planning/replacement-file-generation-guide.md` | Archive/package generation rules for manual repo application |
+| `planning/documentation/parallel-work/` | Reusable documentation-layer owner for parallel-agent staging workspaces and aggregate sync plans; not a concrete project workspace by itself |
 
 
 Project-wide profiles are concrete Enman configuration files. Reusable field-kit/workflow logic now lives in the active reusable documentation layer under `planning/documentation/`. Previous active docs are preserved temporarily under `planning/documentation-legacy/`; migration-only switch history is preserved under `planning/documentation-migration/`.
@@ -562,6 +563,7 @@ Use this file first to choose the layer. Then use the local responsibility map o
 27. planning documentation architecture principle -> planning/documentation/planning-docs-architecture-principles.md
 28. reviewable AI/agent response format and commands -> planning/documentation/reviewable-agent-output-and-commands-workflow.md
 29. documentation local/global sync rule -> planning/documentation/local-global-documentation-sync-workflow.md
+30. parallel-agent staging workspace / aggregate sync architecture -> planning/documentation/parallel-work/README.md and planning/documentation/documentation-responsibility-map.md
 ```
 
 ## 16. Future Cleanup Rule
@@ -636,4 +638,5 @@ Sources:
 - ROOT-SRC-2B refreshed protocol/role source status and bumped this file to Doc version: v0.2.0 without moving responsibility ownership.
 - ROOT-SRC-3A refreshed output/archive source status and bumped this file to Doc version: v0.3.0 without changing routing/navigation semantics.
 - CASCADE-ROUTE-1B bumped this file to Doc version: v0.4.0 and clarified that responsibility pointers are ownership/routing links, not source/version dependencies by default.
+- PAR-WORK-1 bumped this file to Doc version: v0.5.0 and routed reusable parallel-agent workspace/sync architecture to the documentation layer.
 ```

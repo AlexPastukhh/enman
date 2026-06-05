@@ -1,7 +1,7 @@
 # Documentation Reusable Layer Index
 
 Status: active reusable documentation layer index / transitional post-switch cleanup  
-Scope: documentation architecture, documentation update workflows, responsibility routing, reusable field kits, specialized profiles, examples, source-usage governance and action logging
+Scope: documentation architecture, documentation update workflows, responsibility routing, reusable field kits, specialized profiles, examples, source-usage governance, parallel-agent work staging and action logging
 
 ## 1. Purpose
 
@@ -78,6 +78,17 @@ planning/documentation/example-coverage-workflow.md
 planning/documentation/file-update-overview-workflow.md
 planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
 planning/documentation/reviewable-agent-output-and-commands-workflow.md
+```
+
+
+Parallel work reusable owners:
+
+```text
+planning/documentation/parallel-work/README.md
+planning/documentation/parallel-work/parallel-workflow.md
+planning/documentation/parallel-work/parallel-sync-workflow.md
+planning/documentation/parallel-work/PARALLEL-WORKSPACE-TEMPLATE.md
+planning/documentation/parallel-work/PARALLEL-SYNC-PLAN-TEMPLATE.md
 ```
 
 Examples:
@@ -165,6 +176,20 @@ source usage / cascade:
   project pilots: planning/source-usage-pilots/
 ```
 
+
+For parallel-agent workspace or aggregate sync work:
+
+```text
+1. planning/README.md
+2. planning/documentation/README.md
+3. planning/documentation/planning-docs-architecture-principles.md
+4. planning/documentation/documentation-responsibility-map.md
+5. planning/documentation/parallel-work/README.md
+6. planning/documentation/parallel-work/parallel-workflow.md, for one staging workspace
+7. planning/documentation/parallel-work/parallel-sync-workflow.md, for aggregate sync from one or more workspaces
+8. the relevant template under planning/documentation/parallel-work/
+```
+
 ## 4A. Portable Starter-Kit Adaptation
 
 For copying/adapting this reusable docs layer into a new project or documentation domain:
@@ -205,6 +230,8 @@ Do not use `planning/documentation-legacy/` or `planning/documentation-migration
 - Do not create a second generic root use-case map inside this folder.
 - Do not treat examples as rule owners.
 - Do not keep Enman project action history inside this reusable layer.
+- Do not treat parallel-work workspace copies as canonical documentation.
+- Do not create sync plans inside each workspace by default; aggregate sync plans belong under `parallel-work/syncs/`.
 - Do not keep transitional source-usage governance bridges inside this reusable layer once field kits/profiles own the flow.
 - Do not delete planning/documentation-legacy/ until a post-switch verification batch approves cleanup.
 ```

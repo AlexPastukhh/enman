@@ -1,7 +1,7 @@
 # Planning Docs Architecture Principles
 
 Status: active reusable documentation architecture principles  
-Doc version: v0.1.0
+Doc version: v0.2.0
 Scope: reusable documentation architecture invariants for docs systems, with project-specific and scenario-driven material split into profile/adapter files
 
 > Active boundary: this file owns reusable documentation architecture invariants. Concrete Enman routing and project-specific configuration remain in `planning/planning-use-case-map.md` and root planning profiles.
@@ -27,6 +27,7 @@ Scope: reusable documentation architecture invariants for docs systems, with pro
 - [13. Source / Version Principle](#13-source--version-principle)
 - [13A. Filename-Version Migration Policy](#13a-filename-version-migration-policy)
 - [14. Dependency Cascade Principle](#14-dependency-cascade-principle)
+- [14A. Parallel Staging Workspace Principle](#14a-parallel-staging-workspace-principle)
 - [15. Section-Level Sources Principle](#15-section-level-sources-principle)
 - [16. Local Detail + Shared Visibility](#16-local-detail--shared-visibility)
 - [17. Responsibility Ownership](#17-responsibility-ownership)
@@ -211,6 +212,7 @@ Every documentation file should have an understandable type. If a document type 
 | Responsibility map | Where to put information; which file/layer owns what. |
 | Source spec / source set | Canonical or derived source content for a specific domain/project layer. |
 | Source usage register | Dependency map showing which consumer files/scopes use which source files/scopes and review versions. |
+| Parallel staging workspace | Non-canonical workspace area for one agent/workstream to stage shadow copies, local notes and local history before reviewed sync into canonical docs. |
 | Questions register | Shared open/accepted questions, assumptions and decisions. |
 | Extension points register | Future considerations, change pressure and extension points. |
 | Implementation/evidence notes register | Shared evidence-related reminders that must stay visible beyond one local draft. |
@@ -525,6 +527,42 @@ needs follow-up.
 ```
 
 Concrete cascade examples belong in specialized profiles or examples, not in reusable principles.
+
+## 14A. Parallel Staging Workspace Principle
+
+Canonical documentation remains the source of truth.
+
+A parallel workspace is a staging-only area for one agent or workstream. It may contain shadow copies, local notes, base snapshots, responsibility maps and local action history, but it does not override canonical docs.
+
+Use a parallel workspace when several chats may work in parallel and direct edits to shared canonical files would create race conditions, ambiguous ordering or unsafe action-log updates.
+
+The reusable owner for this model is:
+
+```text
+planning/documentation/parallel-work/
+```
+
+Parallel workspace contents are not canonical by themselves:
+
+```text
+workspaces/<workspace-id>/README.md
+workspaces/<workspace-id>/base-snapshot.md
+workspaces/<workspace-id>/responsibility-map.md
+workspaces/<workspace-id>/local-action-log.md
+workspaces/<workspace-id>/copies/
+workspaces/<workspace-id>/notes/
+```
+
+Canonical updates happen only through an explicit aggregate sync plan that may include one or more workspaces:
+
+```text
+syncs/<sync-id>/README.md
+syncs/<sync-id>/sync-plan.md
+```
+
+Local action logs do not establish canonical ordering. Canonical ordering starts when the reviewed sync is applied and recorded in the main project action log.
+
+Do not use this principle to skip current-canonical rereads. Sync must compare workspace base snapshots with current canonical files before applying changes.
 
 ## 15. Section-Level Sources Principle
 

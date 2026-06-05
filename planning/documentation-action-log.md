@@ -2455,3 +2455,47 @@ Follow-ups:
   Record the pilot decision or run a narrow source-chain preflight for the AgreementProposalExchange candidate before starting SLICE-PILOT-1.
 Notes:
   AUD1 is an inventory and candidate-card sync only. It does not replace per-slice source review and does not make index rows authoritative when the referenced file is missing from the archive snapshot.
+
+### 2026-06-05 - Added reusable parallel-work documentation architecture
+
+Date:
+  2026-06-05
+Action:
+  Added reusable documentation-layer workflows and templates for parallel-agent staging workspaces and aggregate sync plans.
+Type:
+  documentation architecture / parallel-agent workflow setup
+Status:
+  applied
+Why:
+  Parallel command/docs chats and slice/source chats can conflict on shared canonical root files and action logs. The reusable documentation layer now defines staging-only workspaces, base snapshots, local action logs, shadow copies and aggregate sync plans so parallel agents can prepare work without overwriting canonical docs or creating ambiguous action-log ordering.
+Changed files:
+  - planning/documentation/parallel-work/README.md
+  - planning/documentation/parallel-work/parallel-workflow.md
+  - planning/documentation/parallel-work/parallel-sync-workflow.md
+  - planning/documentation/parallel-work/PARALLEL-WORKSPACE-TEMPLATE.md
+  - planning/documentation/parallel-work/PARALLEL-SYNC-PLAN-TEMPLATE.md
+  - planning/documentation/README.md
+  - planning/documentation/documentation-responsibility-map.md
+  - planning/documentation/planning-docs-architecture-principles.md
+  - planning/planning-use-case-map.md
+  - planning/workflow-activation-map.md
+  - planning/planning-doc-responsibility-map.md
+  - planning/workstreams/parallel-work-goal-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added `planning/documentation/parallel-work/` as the reusable owner area for parallel workspace and aggregate sync workflows/templates.
+  - Added workflow rules for one staging-only workspace and for aggregate sync across one or more workspaces.
+  - Added exact templates for workspace shape and sync-plan lifecycle shape.
+  - Added the Parallel Staging Workspace principle to reusable documentation architecture principles.
+  - Routed parallel work and parallel sync through the root use-case map, workflow activation map and responsibility maps.
+  - Updated the Parallel Work Goal Map to mark PAR-WORK-1 as applied and PAR-WORK-2 as the next possible concrete workspace step.
+Not changed:
+  - No real parallel workspace created.
+  - No aggregate sync folder or sync-plan created.
+  - No root-source-sync-register update included.
+  - No slice/testing/domain files changed.
+  - No command expansion or Tampermonkey work started.
+Follow-ups:
+  Create a concrete parallel workspace only when a specific parallel agent/workstream target is requested. Use a separate narrow register-sync if these new reusable docs must be added to root source-sync register coverage.
+Notes:
+  The new workflow keeps workspace files staging-only. Canonical docs still require explicit sync and the main documentation action log is updated only after real canonical changed files are known.

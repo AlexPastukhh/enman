@@ -62,6 +62,12 @@ This file owns only documentation-layer placement.
 | File Update Overview template | `FILE-UPDATE-OVERVIEW-TEMPLATE.md` | Owns the exact reusable File Update Overview block structure. |
 | Use-case map creation/update workflow | `use-case-map-workflow.md` | Owns the reusable process for creating, updating and maintaining use-case maps. |
 | Use-case map template | `USE-CASE-MAP-TEMPLATE.md` | Owns the exact reusable structure for concrete use-case maps. |
+| Parallel staging workspace principle | `planning-docs-architecture-principles.md` | Reusable invariant that canonical docs remain source of truth, parallel workspaces are staging-only and canonical ordering starts at reviewed sync. |
+| Parallel work folder navigation | `parallel-work/README.md` | Index and read order for reusable parallel-work workflows and templates. |
+| Parallel workspace process | `parallel-work/parallel-workflow.md` | How to create and run one staging-only workspace for one parallel agent/workstream. |
+| Parallel aggregate sync process | `parallel-work/parallel-sync-workflow.md` | How to sync one or more parallel workspaces into canonical docs. |
+| Parallel workspace template | `parallel-work/PARALLEL-WORKSPACE-TEMPLATE.md` | Exact reusable shape for concrete workspace folders. |
+| Parallel sync-plan template | `parallel-work/PARALLEL-SYNC-PLAN-TEMPLATE.md` | Exact reusable shape for aggregate sync folders and lifecycle `sync-plan.md`. |
 | Root use-case map setup field kit | `field-kits/root-use-case-map-field-kit.md` | Active reusable setup kit for deriving one concrete project root use-case map and common command clusters. Not a runtime router. |
 | Scenario/domain/slice route setup field kit | `profiles/scenario-domain-slice-use-case-field-kit.md` | Active profile-specific setup kit for adding scenario/domain/slice route families to a project root use-case map. Not a second map. |
 | Working example coverage decision process | `example-coverage-workflow.md` | Decides whether a new/changed template, workflow output, response command, output mode or draft format needs a working example. |
@@ -167,6 +173,9 @@ Suggested suffixes:
 | Source usage pilot register | `source-usage-pilots/<scope>-source-usage-register.md` |
 | Documentation action log | `documentation-action-log.md` |
 | Scoped sync note | `*-sync-note.md` |
+| Parallel-work folder navigation | `parallel-work/README.md` |
+| Parallel workspace template | `PARALLEL-WORKSPACE-TEMPLATE.md` |
+| Parallel sync-plan template | `PARALLEL-SYNC-PLAN-TEMPLATE.md` |
 | Reusable prompt | `*-agent-prompt.md` |
 | Architecture principles | `*-architecture-principles.md` |
 
@@ -187,6 +196,8 @@ Suggested suffixes:
 - Do not put large examples inside a compound starter artifact; keep the example in a separate file.
 - Do not split a new cohesive concept into separate principles/workflow/template files before the split improves ownership, reviewability or navigation.
 - Do not use the action log as the source of truth for rules or unresolved tasks.
+- Do not treat parallel-work workspaces, local action logs or shadow copies as canonical documentation.
+- Do not put per-workspace sync plans in every workspace by default; aggregate sync plans belong under `parallel-work/syncs/`.
 - Do not treat reusable prompts as canonical rules.
 - Do not treat scoped sync notes as reusable workflows.
 - Do not add a new file without updating README.md when it must be discoverable.

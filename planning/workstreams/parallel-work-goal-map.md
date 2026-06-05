@@ -1,7 +1,7 @@
 # Parallel Work Goal Map
 
-Status: chat-local living Goal Map synced to repo / active planning workstream
-Doc version: v0.1.0
+Status: repo-backed living Goal Map / active planning workstream
+Doc version: v0.2.0
 Scope: reusable documentation-layer parallel-agent workspace architecture, aggregate sync planning and safe parallel work boundaries
 
 ## 0. Source Sync / Map Origin
@@ -61,29 +61,29 @@ not in a root-level `planning/parallel-work/` folder.
 
 | Slice | Goal | Status | Next action |
 |---|---|---|---|
-| PAR-WORK-1 — parallel workspace architecture | Add reusable docs-layer workflow/templates for parallel agent staging and aggregate sync plans. | ▶ NOW / planning | Create narrow docs architecture batch. |
-| PAR-WORK-2 — first real parallel workspace | Create the first concrete staging workspace after the architecture exists. | ⬜ PLANNED | Wait for PAR-WORK-1. |
+| PAR-WORK-1 — parallel workspace architecture | Add reusable docs-layer workflow/templates for parallel agent staging and aggregate sync plans. | ✅ DONE / applied | Use as architecture foundation for future workspaces. |
+| PAR-WORK-2 — first real parallel workspace | Create the first concrete staging workspace after the architecture exists. | ⏭ NEXT / not started | Choose concrete agent/workstream scope only when requested. |
 | PAR-SYNC-1 — first aggregate sync-plan | Create one sync plan that can integrate one or more parallel workspaces. | ⬜ PLANNED | Wait for at least one sync-candidate workspace. |
 | SLICE-TEST-SRC-0 — slice/testing source-register skeletons | Continue slice/testing source-register work in other chats without racing shared docs. | parallel / other chats | Keep separate from PAR-WORK-1. |
 | Command expansion | Expand command system/Tampermonkey behavior. | ⬜ DEFERRED | Do not start in PAR-WORK-1. |
 
 ## 4. Current Slice
 
-### PAR-WORK-1 — parallel workspace architecture
+### PAR-WORK-2 — first real parallel workspace
 
 Status:
-  ▶ NOW / planning
+  ⏭ NEXT / not started
 
 Why now:
-  Parallel command/docs chats and slice/source chats can conflict on shared root docs and action logs. The project needs a staging model before real parallel command work starts.
+  PAR-WORK-1 creates the reusable architecture. A real workspace should be created only when a concrete parallel agent/workstream needs staging before canonical sync.
 
-Target owner area:
+Available reusable owner area:
 
 ```text
 planning/documentation/parallel-work/
 ```
 
-Planned new reusable files:
+Reusable files added by PAR-WORK-1:
 
 ```text
 planning/documentation/parallel-work/README.md
@@ -93,7 +93,7 @@ planning/documentation/parallel-work/PARALLEL-WORKSPACE-TEMPLATE.md
 planning/documentation/parallel-work/PARALLEL-SYNC-PLAN-TEMPLATE.md
 ```
 
-Planned canonical integration files:
+Canonical integration files updated by PAR-WORK-1:
 
 ```text
 planning/documentation/README.md
@@ -105,10 +105,10 @@ planning/planning-doc-responsibility-map.md
 planning/documentation-action-log.md
 ```
 
-Maybe, only with narrow register scope:
+Register scope:
 
 ```text
-planning/root-source-sync-register.md
+planning/root-source-sync-register.md not updated in PAR-WORK-1; use a separate narrow register-sync if needed.
 ```
 
 ## 5. Accepted Workspace Shape
@@ -206,11 +206,11 @@ Local workspace history stays in:
 workspaces/<workspace-id>/local-action-log.md
 ```
 
-## 8. Do Not Do In PAR-WORK-1
+## 8. Do Not Do After PAR-WORK-1
 
 ```text
-- Do not create a real parallel workspace yet.
-- Do not create an imaginary sync-plan.md yet.
+- Do not create a real parallel workspace unless there is a concrete agent/workstream scope.
+- Do not create an aggregate sync-plan.md until at least one workspace is sync-candidate.
 - Do not add standalone proposed-main-action-log-entry.md.
 - Do not start command expansion.
 - Do not edit slice/testing/domain files.
@@ -224,8 +224,8 @@ Goal:
   Create reusable docs-layer architecture for safe parallel agent work.
 
 Current slice:
-  PAR-WORK-1 — parallel workspace architecture
-  Status: NOW / planning
+  PAR-WORK-2 — first real parallel workspace
+  Status: NEXT / not started
 
 Current slice chain:
 
@@ -234,17 +234,18 @@ Done:
   - accepted documentation-layer owner path;
   - accepted required workspace files;
   - accepted aggregate syncs under `syncs/<sync-id>/`;
-  - removed v1 need for standalone `sync-review.md` and `proposed-main-action-log-entry.md`.
+  - removed v1 need for standalone `sync-review.md` and `proposed-main-action-log-entry.md`;
+  - added reusable parallel-work workflow/template docs in `planning/documentation/parallel-work/`;
+  - updated architecture principles and routing/activation owners.
 
 Now:
-  - implement reusable workflow/template docs in `planning/documentation/parallel-work/`;
-  - update architecture principles and responsibility routing;
-  - add root use-case/activation routing;
-  - record map sync and later PAR-WORK-1 in action log.
+  - choose whether a concrete parallel workspace is actually needed;
+  - if needed, create it from `PARALLEL-WORKSPACE-TEMPLATE.md`;
+  - keep slice/testing work in other chats separate unless an explicit sync is planned.
 
 Next:
-  - create PAR-WORK-1 replacement archive when requested;
-  - after PAR-WORK-1, create first real parallel workspace only if needed.
+  - PAR-WORK-2 only after a concrete workspace target exists;
+  - otherwise continue other active workstreams without creating placeholder workspaces.
 
 After:
   - create first aggregate sync-plan when one or more workspaces are sync-candidate.
@@ -257,11 +258,11 @@ Other slices:
 | CASCADE-ROUTE-1B — root routing cleanup | DONE |
 | SLICE-TEST-SRC-0 — slice/testing source-register skeletons | parallel / other chats |
 | Command expansion | DEFERRED |
-| PAR-WORK-2 — first real parallel workspace | PLANNED after PAR-WORK-1 |
+| PAR-WORK-2 — first real parallel workspace | NEXT / not started |
 | PAR-SYNC-1 — first aggregate sync-plan | PLANNED after workspace candidate exists |
 
 ## 10. Next Action
 
-Prepare PAR-WORK-1 only after user asks for an archive or file update.
+Use the reusable parallel-work architecture only when a concrete parallel workspace is needed.
 
-PAR-WORK-1 should add the reusable docs-layer architecture and should not create a real workspace yet.
+Do not create placeholder workspaces or sync plans. The next real step is PAR-WORK-2 only after the user identifies a parallel agent/workstream target.

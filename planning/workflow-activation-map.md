@@ -1,7 +1,7 @@
 # Workflow Activation Map
 
 Status: current workflow activation map
-Doc version: v0.4.0
+Doc version: v0.5.0
 Scope: how chats select and disclose workflows before non-trivial planning/repo work
 
 ## 1. Purpose
@@ -343,6 +343,35 @@ reviewable-agent-output-and-commands-workflow.md, for answer/brief placement
 ```
 
 The chat must not choose the next work slice from memory when a living Goal Map exists. If the map is stale, say so and plan a narrow sync before continuing as if the map were current.
+
+### Parallel agent workspace / aggregate sync work
+
+Trigger examples:
+
+```text
+параллельный агент;
+работай параллельно;
+parallel workspace;
+sync parallel work;
+синх параллельной работы;
+aggregate sync from parallel workspaces.
+```
+
+Activated workflows:
+
+```text
+workflow-activation-map.md
+planning-use-case-map.md, for command/action route and permission boundary
+planning-doc-responsibility-map.md, for layer placement
+planning/documentation/README.md, for reusable documentation-layer read order
+planning/documentation/parallel-work/README.md
+planning/documentation/parallel-work/parallel-workflow.md, for one staging workspace
+planning/documentation/parallel-work/parallel-sync-workflow.md, for aggregate sync from one or more workspaces
+planning/documentation/parallel-work/PARALLEL-WORKSPACE-TEMPLATE.md, when creating a workspace
+planning/documentation/parallel-work/PARALLEL-SYNC-PLAN-TEMPLATE.md, when creating a sync plan
+```
+
+Parallel workspace commands do not grant permission to edit shared canonical files directly. Canonical changes require explicit sync planning or a separately requested archive/package.
 
 ### Tampermonkey command-helper / prompt projection work
 
