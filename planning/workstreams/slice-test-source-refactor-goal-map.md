@@ -1,7 +1,7 @@
 # Slice/Test Source Refactor Goal Map
 
 Status: active local workstream Goal Map / pre-refactor audit map
-Doc version: v0.1.0
+Doc version: v0.2.0
 Owner format: `planning/goal-map-principles-workflow-template.md`
 Scope: local living map for slice/testing source-register refactor after slice/testing skeleton registers and owner workflow/template versions are seeded
 
@@ -19,7 +19,7 @@ planning/slices/slice-source-sync-register.md
 planning/testing/testing-source-sync-register.md
 ```
 
-## 0. Source Sync / SLICE-REF-GM-0
+## 0. Source Sync / SLICE-REF-GM-0-AUD1
 
 ```text
 Sources:
@@ -41,13 +41,14 @@ Sources:
     - planning/slices/slice-test-plan-workflow.md @ Doc version: v0.1.0
     - planning/testing/testing-principles.md @ Doc version: v0.1.0
     - planning/testing/server-slice-test-plan-rules.md @ Doc version: v0.1.0
-    - planning/root-source-sync-register.md @ Doc version: v1.8.0
+    - planning/root-source-sync-register.md @ Doc version: v1.9.0
   Internal dependencies:
     - Current Snapshot
     - Roadmap / Work Chain
     - Audit Summary
     - Gap Categories
     - Pilot Candidate Decision
+    - AUD1 Inventory And Gap Findings
   Not checked:
     - concrete slice drafts were not edited in SLICE-REF-GM-0
     - per-slice local section Sources blocks are not added yet
@@ -57,10 +58,12 @@ Sources:
 
 SLICE-REF-GM-0 creates this local Goal Map after the slice/testing skeleton registers and owner workflow/template versions exist. The map is an audit/refactor navigator only. It does not claim that concrete slice drafts or test plans are synchronized.
 
+SLICE-REF-GM-0-AUD1 records the first archive-level inventory/gap audit. It adds preliminary counts, missing-index findings and candidate audit cards, but still does not start the first concrete slice refactor.
+
 ## 0. Current Snapshot
 
 Last updated:
-  2026-06-05 / after SLICE-TEST-SRC-0B owner workflow/template version seed and SLICE-REF-GM-0 map sync
+  2026-06-05 / after SLICE-REF-GM-0-AUD1 archive-level inventory/gap audit
 
 Current goal:
   Prepare a controlled one-slice-at-a-time refactor of slice/testing planning files using source-sync registers, versioned owner workflows/templates and local section/file-level source evidence.
@@ -70,7 +73,7 @@ Current focus:
 
 Active slice:
   SLICE-REF-GM-0 — Audit And Local Goal Map Before First Slice Refactor
-    Status: ▶ NOW / map created, full per-file card audit still pending
+    Status: ▶ NOW / AUD1 inventory and candidate cards captured; pilot decision still pending
 
 Already available:
   - CASCADE-SRC-1A source-impact / targeted cascade foundation is done.
@@ -80,23 +83,27 @@ Already available:
   - `planning/slices/slice-source-sync-register.md` exists as skeleton / incomplete / not synchronized.
   - `planning/testing/testing-source-sync-register.md` exists as skeleton / incomplete / not synchronized.
   - Active server/client slice templates and slice/test-plan owner workflows have Doc versions.
+  - SLICE-REF-GM-0 map exists as local workstream navigator.
+  - SLICE-REF-GM-0-AUD1 archive-level inventory and candidate cards are recorded below.
 
 Latest completed:
   - Created slice/testing source-sync skeleton registers.
   - Seeded active slice/testing owner workflow/template/rule versions.
+  - Created this local Goal Map.
+  - Recorded AUD1 inventory summary, gap stats, missing index rows and two pilot candidate cards.
   - Verified that concrete slice drafts still need per-file audit/refactor and should not be treated as synchronized.
 
 Now:
-  - Keep this local map current.
-  - Use it to drive the full slice/test file audit.
-  - Classify gaps before choosing the first concrete pilot slice.
+  - Use this map to drive the next audit-card/detail pass.
+  - Decide whether the first pilot should be the safer structural client sidecar or the real AgreementProposalExchange cascade pilot.
+  - Keep concrete slice/test coverage unsynchronized until a per-slice source review happens.
 
 Next action:
-  Run SLICE-REF-GM-0 audit pass:
-    collect per-file cards for concrete slice/test artifacts, compare them with the target server/client/testing models, then choose the first pilot slice.
+  Run SLICE-REF-GM-0-AUD2 or choose a narrow pilot-decision pass:
+    validate candidate source chains, decide SLICE-PILOT-1, then plan the first concrete slice refactor.
 
 Recommended next action:
-  Do not start `SLICE-PILOT-1` until the audit cards and pilot decision are recorded in this map.
+  Do not start `SLICE-PILOT-1` until the pilot decision is explicitly recorded in this map. AUD1 recorded candidate cards, but did not choose the pilot.
 
 Open decisions:
   - DEC-1: First pilot slice: safer structural pilot vs real cascade pilot.
@@ -128,7 +135,7 @@ Status labels:
 | CASCADE-ROUTE-1B | Clean root route ownership and example-fit rules before slice/testing work. | UCM owns concrete command/action routing; WAM is activation/read-order helper; example-fit confirmation exists. | ✅ DONE |
 | SLICE-TEST-SRC-0A | Create slice/testing source-sync register skeletons. | Slice/testing registers exist as skeleton / incomplete / not synchronized. | ✅ DONE |
 | SLICE-TEST-SRC-0B | Seed active slice/testing owner workflow/template/rule versions. | Core slice/testing owner docs are versioned at v0.1.0 and registers know the owner-version seed exists. | ✅ DONE |
-| SLICE-REF-GM-0 | Audit all slice/test files and maintain this local refactor Goal Map. | This map exists; per-file audit cards and pilot decision are pending. | ▶ NOW |
+| SLICE-REF-GM-0 | Audit all slice/test files and maintain this local refactor Goal Map. | Map exists; AUD1 inventory/gap stats and two candidate cards are recorded; pilot decision is pending. | ▶ NOW |
 | SLICE-PILOT-1 | Refactor the first concrete slice with local Sources/source-register evidence. | Not started; wait for audit cards and pilot decision. | ⏭ NEXT |
 | Per-slice batches | Continue refactor one slice at a time. | Not started. | ⬜ PLANNED |
 | Command-system/Tampermonkey expansion | Command helper evolution outside slice/test source refactor. | Parked while slice/testing source work is active. | ⬜ DEFERRED |
@@ -201,20 +208,88 @@ Do not mark a concrete slice as synchronized until the slice file local Sources 
 
 ## 4. Audit Summary / Current Layer State
 
-Preliminary archive-level inventory before per-file cards:
+AUD1 source:
+  archive-level scan of `planning/slices/**/*.md`, `planning/testing/**/*.md` and `planning/slices/SLICE-INDEX.md` in the latest snapshot used for this workstream.
 
-| Area | Current observation |
-|---|---|
-| Concrete-ish slice artifacts | about 80 filename/path-based candidates need classification |
-| Concrete slice `Doc version:` | missing across checked candidates |
-| Target `Scenario Sources / Source Sync` heading | absent across checked candidates |
-| Legacy `Scenario Sources` heading | present in part of the set |
-| Section-level Sources | essentially absent from concrete slice drafts |
-| Local / Global Sync Check | absent across checked candidates |
-| Behavior-to-Test Trace | present in some drafts, but not normalized to target source model |
-| Test / Verification Plan | present in many drafts, but not yet synchronized with testing register |
+AUD1 status:
+  preliminary inventory/gap audit recorded; not a final per-slice synchronization proof.
 
-This is an audit starting point, not final per-file evidence. SLICE-REF-GM-0 must produce concrete file cards before the first slice refactor.
+### 4.1 Inventory Summary
+
+| Area | Count / status |
+|---|---:|
+| `planning/slices/**/*.md` total markdown files | 135 |
+| Filename/path-based concrete-ish slice artifacts | 84 |
+| `planning/testing/**/*.md` markdown files | 10 |
+| Concrete artifacts with `Doc version:` | 0 / 84 |
+| Concrete artifacts with exact `## 0. Scenario Sources / Source Sync` | 0 / 84 |
+| Concrete artifacts with legacy `## 0. Scenario Sources` | 26 / 84 |
+| Concrete artifacts with `Section-Level Sources` heading | 0 / 84 |
+| Concrete artifacts with any standalone `Sources:` block | 1 / 84 |
+| Concrete artifacts with `Local / Global Sync Check` | 0 / 84 |
+| Concrete artifacts with `Behavior-to-Test Trace` | 26 / 84 |
+| Concrete artifacts with `Test / Verification Plan` | 46 / 84 |
+| Concrete artifacts with `Behavior Coverage` | 60 / 84 |
+| Concrete artifacts with `Guardrail Summary` | 24 / 84 |
+| Concrete artifacts with `Questions / Decisions` | 50 / 84 |
+
+Interpretation:
+  the slice layer has many behavior/test sections already, but concrete slice artifacts are still before the target source-sync/version model.
+
+### 4.2 Concrete-ish Artifact Groups
+
+| Group | Count | Notes |
+|---|---:|---|
+| Root slice files under `planning/slices/SL-*` | 35 | Main legacy/current server/client/root slice pool. |
+| Legacy `planning/slices/l2/*` | 20 | Needs active/legacy/sidecar/sync-note classification before refactor. |
+| Cross-cutting `planning/slices/cross-cutting/*` | 9 | Needs separate cross-cutting treatment. |
+| Legacy `planning/slices/l1/*` | 7 | Needs active/legacy classification. |
+| Client folder concrete/example artifacts | 4 | Includes one real client sidecar and client examples. |
+| Server folder concrete artifacts | 3 | Activation server slice family. |
+| Examples | 4 | Must not be treated as active source-of-truth slices. |
+| Implementation prompt | 1 | Helper/prompt artifact, not canonical source-of-truth. |
+| Other root legacy client artifact | 1 | Needs classification. |
+
+### 4.3 Testing Layer State
+
+Versioned core testing owners:
+
+```text
+planning/testing/testing-source-sync-register.md @ Doc version: v0.2.0
+planning/testing/testing-responsibility-map.md @ Doc version: v0.1.0
+planning/testing/testing-principles.md @ Doc version: v0.1.0
+planning/testing/server-slice-test-plan-rules.md @ Doc version: v0.1.0
+```
+
+Conditional/unversioned testing support docs:
+
+```text
+planning/testing/README.md
+planning/testing/e2e-testing-workflow.md
+planning/testing/e2e-playwright-workflow.md
+planning/testing/test-object-patterns.md
+planning/testing/playwright-e2e-cleanup-plan.md
+planning/testing/playwright-e2e-and-screenshot-plan.md
+```
+
+Use the conditional support docs only when the selected slice consumes E2E/object-pattern/screenshot/evidence behavior. Do not globally version them in this audit step.
+
+### 4.4 SLICE-INDEX Missing-File Finding
+
+`planning/slices/SLICE-INDEX.md` contains rows for files that were not present in the archive snapshot:
+
+```text
+planning/slices/l2/L2-REVIEW-APPROVE-001-approve-request-review.client.md
+planning/slices/l2/L2-REVIEW-REJECT-001-reject-request-review.client.md
+planning/slices/server/cross-cutting/CC-SEC-CSRF-001-unsafe-command-protection.server.md
+planning/slices/client/cross-cutting/CC-SEC-CSRF-001-unsafe-command-protection.client.md
+```
+
+Treat this as `GAP-11: index row points to missing file`. Do not silently create these files. First classify whether each row is stale, planned, renamed or intentionally absent.
+
+### 4.5 Candidate Audit Cards Recorded In AUD1
+
+AUD1 records two pilot candidates. The cards are enough to compare pilot direction, but not enough to start refactor without a final pilot decision.
 
 ## 5. Gap Categories
 
@@ -230,23 +305,97 @@ This is an audit starting point, not final per-file evidence. SLICE-REF-GM-0 mus
 | GAP-8 | Support owner docs unversioned | Treat as conditional preflight sources per slice type. |
 | GAP-9 | E2E/object-pattern owner dependency unclear | Version or mark as `version not confirmed` only when selected slice consumes these. |
 | GAP-10 | Implementation/evidence claims need reconciliation | Use status reconciliation before turning implementation claims into proof. |
+| GAP-11 | `SLICE-INDEX` row points to file missing from archive snapshot | Classify as stale/planned/renamed/absent before creating or refactoring anything. |
+
+AUD1 confirmed GAP-1, GAP-2, GAP-3 and GAP-4 as broad concrete-slice-layer gaps. GAP-11 is a concrete index consistency finding.
 
 ## 6. Pilot Candidate Decision
 
-Do not start a pilot until per-file cards exist. Current candidates:
+Do not start a pilot until the pilot decision is explicitly recorded. AUD1 records candidate cards but keeps the decision pending.
 
-| Candidate | Why it is useful | Risk |
-|---|---|---|
-| `planning/slices/client/SL-AUTH-ACT-001-email-activation-ui-and-protected-gate.client.md` | Safer structural client sidecar pilot; likely closer to target shape. | May not exercise the full scenario/domain/slice/testing cascade. |
-| `planning/slices/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.md` | Real cascade pilot through AgreementProposalExchange / scenario-domain-slice-testing chain. | Bigger, likely needs more upstream source checks and related sidecar review. |
+### 6.1 Candidate A — safer structural client sidecar pilot
 
-Preferred decision rule:
+| Field | Value |
+|---|---|
+| File | `planning/slices/client/SL-AUTH-ACT-001-email-activation-ui-and-protected-gate.client.md` |
+| Type | client sidecar |
+| Current status | draft / ready for implementation planning |
+| Target template | `planning/slices/client/CLIENT-SLICE-TEMPLATE.md @ Doc version: v0.1.0` |
+| Doc version | missing |
+| Source Sync block | legacy `## 0. Scenario Sources` |
+| Section-level Sources | missing |
+| Testing trace | present |
+| Test / Verification Plan | present |
+| Behavior Coverage | present |
+| Local / Global Sync Check | missing |
+| Guardrail Summary | missing |
+| Register impact | slice + testing |
+| Risk | medium-low |
+| Recommended action | good structural pilot candidate if we want to validate target shape/process first |
+
+Related activation family files:
 
 ```text
-1. Build per-file audit cards for both candidates.
-2. If the cascade candidate has manageable source gaps, choose it as SLICE-PILOT-1.
-3. If not, run the safer client sidecar pilot first to validate target shape and register process.
+planning/slices/server/SL-AUTH-ACT-001-register-pending-and-send-activation-email.server.md
+planning/slices/server/SL-AUTH-ACT-002-activate-client-account.server.md
+planning/slices/server/SL-AUTH-ACT-003-active-account-guard.server.md
+planning/slices/cross-cutting/CC-AUTH-ACT-001-email-activation-flow.md
 ```
+
+Boundary:
+  if this client sidecar is chosen, do not silently refactor the whole activation family in the same batch.
+
+### 6.2 Candidate B — real cascade pilot
+
+| Field | Value |
+|---|---|
+| File | `planning/slices/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.md` |
+| Type | server command slice |
+| Current status | implemented slice draft refactor / implementation not rechecked |
+| Target template | `planning/slices/server/SERVER-SLICE-TEMPLATE.md @ Doc version: v0.1.0` |
+| Doc version | missing |
+| Source Sync block | legacy `## 0. Scenario Sources` plus source/domain/slice coverage snapshot |
+| Section-level Sources | missing |
+| Testing trace | present |
+| Test / Verification Plan | present |
+| Behavior Coverage | present |
+| Local / Global Sync Check | missing |
+| Guardrail Summary | present |
+| Register impact | slice + testing + domain/scenario source chain |
+| Risk | higher |
+| Recommended action | best real cascade pilot if source-chain gaps remain manageable |
+
+Known attractive source chain:
+
+```text
+SC-13D scenario text/spec/data/behavior files
+planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
+planning/domain/aggregates/agreement-proposal-exchange.md @ Doc version: v0.1.0
+planning/slices/slice-source-sync-register.md @ Doc version: v0.2.0 / skeleton
+planning/testing/testing-source-sync-register.md @ Doc version: v0.2.0 / skeleton
+```
+
+Related sidecar/prompt artifacts:
+
+```text
+planning/slices/l2/L2-AGR-EXCH-START-001-start-agreement-exchange-with-initial-employee-proposal.client.md
+planning/slices/implementation-prompts/SL-AGR-EXCH-001-start-agreement-exchange-with-initial-employee-proposal.prompt.md
+```
+
+Boundary:
+  the L2 sidecar and prompt are not automatically part of the first server-slice pilot. Treat the prompt as helper/non-canonical unless separately promoted.
+
+### 6.3 Preferred decision rule after AUD1
+
+```text
+1. If the goal is process/shape validation with lower risk, choose Candidate A.
+2. If the goal is validating the real scenario -> domain -> slice -> testing cascade, choose Candidate B.
+3. Before choosing Candidate B, perform a narrow source-chain preflight for SC-13D and AgreementProposalExchange.
+4. Whichever pilot is selected, keep the batch to one concrete slice file unless explicitly approved otherwise.
+```
+
+Current recommendation:
+  lean toward Candidate B as the real cascade pilot, but run/record one narrow source-chain preflight before starting `SLICE-PILOT-1`.
 
 ## 7. Per-File Audit Card Template
 
@@ -273,7 +422,7 @@ Do not:
   - edit concrete `SL-*` slice drafts in SLICE-REF-GM-0;
   - add local section `Sources:` blocks to slice drafts yet;
   - claim synchronized coverage for concrete slice/test files;
-  - run first pilot before audit cards and pilot decision are recorded;
+  - run first pilot before AUD1 findings, pilot decision and required source-chain preflight are recorded;
   - make support owner docs globally versioned unless a separate step chooses that.
 
 Allowed:
@@ -288,5 +437,6 @@ Allowed:
 ```text
 - SLICE-REF-GM-0 created this local Goal Map at Doc version: v0.1.0 after SLICE-TEST-SRC-0A/0B.
 - The map records current slice/testing refactor state, target sources, preliminary gaps and pilot decision rules.
+- SLICE-REF-GM-0-AUD1 recorded archive-level inventory/gap stats, missing SLICE-INDEX file rows and two candidate audit cards, bumped this map to Doc version: v0.2.0 and kept pilot decision pending.
 - Concrete slice drafts and test plans remain untouched and unsynchronized.
 ```

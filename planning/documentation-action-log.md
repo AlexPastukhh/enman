@@ -2423,3 +2423,35 @@ Follow-ups:
   Prepare PAR-WORK-1 to add the reusable documentation-layer parallel-work workflow/templates and routing when requested.
 Notes:
   This is a map-sync batch only. PAR-WORK-1 remains planned and should be implemented separately.
+
+### 2026-06-05 - Recorded slice/test refactor AUD1 inventory and pilot candidate cards
+
+Date:
+  2026-06-05
+Action:
+  Applied SLICE-REF-GM-0-AUD1 map sync by recording archive-level slice/test inventory, gap statistics, missing index rows and pilot candidate cards in the local slice/test refactor Goal Map.
+Type:
+  Goal Map audit sync / pre-pilot inventory and candidate-card update
+Status:
+  applied
+Why:
+  The local Goal Map existed after SLICE-REF-GM-0, but it still needed concrete audit findings before the first per-slice refactor. AUD1 records the current mismatch between concrete slice artifacts and the target source-sync/version model, while keeping pilot selection and concrete slice edits deferred.
+Changed files:
+  - planning/workstreams/slice-test-source-refactor-goal-map.md
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Bumped the local slice/test refactor Goal Map to Doc version: v0.2.0.
+  - Added inventory/gap statistics for concrete-ish slice artifacts and testing docs.
+  - Added `SLICE-INDEX` missing-file finding as `GAP-11`.
+  - Added candidate cards for `SL-AUTH-ACT-001.client` and `SL-AGR-EXCH-001`.
+  - Updated the root register row for the Goal Map to point to the AUD1 state.
+Not changed:
+  - No concrete `SL-*` slice draft edited.
+  - No local section `Sources:` blocks added inside slice drafts.
+  - No synchronized slice/test coverage claimed.
+  - No first pilot slice selected or started.
+Follow-ups:
+  Record the pilot decision or run a narrow source-chain preflight for the AgreementProposalExchange candidate before starting SLICE-PILOT-1.
+Notes:
+  AUD1 is an inventory and candidate-card sync only. It does not replace per-slice source review and does not make index rows authoritative when the referenced file is missing from the archive snapshot.
