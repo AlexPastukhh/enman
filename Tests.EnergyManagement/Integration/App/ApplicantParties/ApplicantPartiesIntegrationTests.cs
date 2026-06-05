@@ -32,7 +32,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
-        var applicantParty = await response.Content.ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
+        var applicantParty = await response.Content.ReadFromJsonAsync<CreateApplicantPartyResponse>()
             ?? throw new InvalidOperationException("Applicant party response body was empty.");
 
         applicantParty.ClientAccountId.Should().Be(account.AccountId);
@@ -164,7 +164,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
                 email: UniqueEmail(),
                 phoneNumber: "79237554727"));
         await HttpResponseAssertions.For(secondResponse, _output).ShouldBeSuccess();
-        var second = await secondResponse.Content.ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
+        var second = await secondResponse.Content.ReadFromJsonAsync<CreateApplicantPartyResponse>()
             ?? throw new InvalidOperationException("Applicant party response body was empty.");
 
         var client = AuthenticatedClient(account.AccountId, account.Email);
@@ -392,7 +392,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
                 PhoneNumber));
 
         await HttpResponseAssertions.For(httpResponse, _output).ShouldBeSuccess();
-        var response = await httpResponse.Content.ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
+        var response = await httpResponse.Content.ReadFromJsonAsync<CreateApplicantPartyResponse>()
             ?? throw new InvalidOperationException("Applicant party response body was empty.");
 
         var row = await GetApplicantPartyRowAsync(response.ApplicantPartyId);
@@ -429,7 +429,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
                 PhoneNumber));
 
         await HttpResponseAssertions.For(httpResponse, _output).ShouldBeSuccess();
-        var response = await httpResponse.Content.ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
+        var response = await httpResponse.Content.ReadFromJsonAsync<CreateApplicantPartyResponse>()
             ?? throw new InvalidOperationException("Applicant party response body was empty.");
 
         var row = await GetApplicantPartyRowAsync(response.ApplicantPartyId);
@@ -529,7 +529,7 @@ public sealed class ApplicantPartiesIntegrationTests : AppIntegrationTestBase
                 email: "second.applicant.l1@example.com",
                 phoneNumber: "79237554727"));
         await HttpResponseAssertions.For(secondResponse, _output).ShouldBeSuccess();
-        var second = await secondResponse.Content.ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
+        var second = await secondResponse.Content.ReadFromJsonAsync<CreateApplicantPartyResponse>()
             ?? throw new InvalidOperationException("Applicant party response body was empty.");
 
         var firstRow = await GetApplicantPartyRowAsync(first.ApplicantPartyId);

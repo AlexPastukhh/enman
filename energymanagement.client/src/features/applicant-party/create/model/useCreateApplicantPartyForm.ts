@@ -91,9 +91,14 @@ export const useCreateApplicantPartyForm = (
       applyApiErrorToForm(error, setError, createApplicantPartyServerFieldMap);
     },
     onSuccess: async (_data, values) => {
-      await queryClient.invalidateQueries({
-        queryKey: applicantPartyQueryKeys.currentIndividual,
-      });
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: applicantPartyQueryKeys.currentIndividual,
+        }),
+        queryClient.invalidateQueries({
+          queryKey: applicantPartyQueryKeys.accountList,
+        }),
+      ]);
       reset({
         ...defaultValues,
         applicantPartyType: values.applicantPartyType,

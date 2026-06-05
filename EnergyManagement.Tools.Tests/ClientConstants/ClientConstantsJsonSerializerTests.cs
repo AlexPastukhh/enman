@@ -24,9 +24,9 @@ public sealed class ClientConstantsJsonSerializerTests
         var artifacts = new ClientConstantsJsonSerializer()
             .Serialize(new ClientConstantsSnapshotFactory().Create());
 
-        artifacts.ConstantsJson.Should().Contain("\"L1AuthConstants\"");
+        artifacts.ConstantsJson.Should().Contain("\"AuthConstants\"");
         artifacts.ConstantsJson.Should().Contain("\"RegisterClientAccount\"");
-        artifacts.ConstantsJson.Should().Contain("\"L1ApplicantPartyConstants\"");
+        artifacts.ConstantsJson.Should().Contain("\"ApplicantPartyConstants\"");
         artifacts.ConstantsJson.Should().Contain("\"FieldName\"");
         artifacts.ConstantsJson.Should().Contain("\"DtoFieldName\"");
         artifacts.ErrorCodesJson.Should().Contain("\"ServerValidationError\"");

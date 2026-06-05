@@ -213,12 +213,12 @@ public abstract class AppIntegrationTestBase
             ?? throw new InvalidOperationException("My request details response body was empty.");
     }
 
-    protected async Task<CreateIndividualApplicantPartyResponse> CreateApplicantPartyAsync(long accountId)
+    protected async Task<CreateApplicantPartyResponse> CreateApplicantPartyAsync(long accountId)
     {
         return await CreateApplicantPartyAsync(accountId, ValidApplicantPartyDto());
     }
 
-    protected async Task<CreateIndividualApplicantPartyResponse> CreateApplicantPartyAsync(
+    protected async Task<CreateApplicantPartyResponse> CreateApplicantPartyAsync(
         long accountId,
         CreateIndividualApplicantPartyDto dto)
     {
@@ -229,7 +229,7 @@ public abstract class AppIntegrationTestBase
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
 
-        return await response.Content.ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
+        return await response.Content.ReadFromJsonAsync<CreateApplicantPartyResponse>()
             ?? throw new InvalidOperationException("Applicant party response body was empty.");
     }
 

@@ -70,6 +70,29 @@ describe("createApplicantParty", () => {
       phoneNumber: "+79001234567",
     });
   });
+
+  it("posts individual values to the subtype endpoint", async () => {
+    const fetchMock = mockSuccessfulFetch();
+    vi.stubGlobal("fetch", fetchMock);
+
+    await createApplicantParty({
+      ...baseValues,
+      applicantPartyType: "Individual",
+    });
+
+    expect(fetchMock.mock.calls[1]?.[0]).toBe(
+      "/api/applicant-parties/individual",
+    );
+    expect(JSON.parse(fetchMock.mock.calls[1]?.[1]?.body as string)).toEqual({
+      fullName: {
+        firstName: "Ivan",
+        middleName: "Ivanovich",
+        lastName: "Petrov",
+      },
+      email: "ivan@example.com",
+      phoneNumber: "+79001234567",
+    });
+  });
 });
 
 const mockSuccessfulFetch = () =>

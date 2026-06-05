@@ -212,6 +212,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ListMyRequests"];
+        put?: never;
+        post: operations["CreateConnectionRequest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/requests/{requestId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetMyRequestDetails"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/applicant-parties/individual": {
         parameters: {
             query?: never;
@@ -300,38 +332,6 @@ export interface paths {
             cookie?: never;
         };
         get: operations["GetCurrentIndividualApplicantParty"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/requests": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["ListMyRequests"];
-        put?: never;
-        post: operations["CreateConnectionRequest"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/requests/{requestId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["GetMyRequestDetails"];
         put?: never;
         post?: never;
         delete?: never;
@@ -555,6 +555,12 @@ export interface components {
             /** Format: date-time */
             createdAt?: string | null;
         };
+        CreateApplicantPartyResponseDto: {
+            /** Format: int64 */
+            applicantPartyId?: number;
+            /** Format: int64 */
+            clientAccountId?: number;
+        };
         CreateConnectionRequestDto: {
             applicantContextType?: string | null;
             /** Format: int64 */
@@ -578,12 +584,6 @@ export interface components {
             fullName?: components["schemas"]["FullNameDto"];
             email?: string | null;
             phoneNumber?: string | null;
-        };
-        CreateIndividualApplicantPartyResponseDto: {
-            /** Format: int64 */
-            applicantPartyId?: number;
-            /** Format: int64 */
-            clientAccountId?: number;
         };
         CreateIndividualEntrepreneurApplicantPartyDto: {
             fullName?: components["schemas"]["FullNameDto"];
@@ -1628,6 +1628,188 @@ export interface operations {
             };
         };
     };
+    ListMyRequests: {
+        parameters: {
+            query?: {
+                status?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["MyRequestSummaryDto"][];
+                    "application/json": components["schemas"]["MyRequestSummaryDto"][];
+                    "text/json": components["schemas"]["MyRequestSummaryDto"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            /** @description Client Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    CreateConnectionRequest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["CreateConnectionRequestDto"];
+                "text/json": components["schemas"]["CreateConnectionRequestDto"];
+                "application/*+json": components["schemas"]["CreateConnectionRequestDto"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            /** @description Client Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    GetMyRequestDetails: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                requestId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["MyRequestDetailsDto"];
+                    "application/json": components["schemas"]["MyRequestDetailsDto"];
+                    "text/json": components["schemas"]["MyRequestDetailsDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
     CreateIndividualApplicantParty: {
         parameters: {
             query?: never;
@@ -1649,9 +1831,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "text/plain": components["schemas"]["CreateIndividualApplicantPartyResponseDto"];
-                    "application/json": components["schemas"]["CreateIndividualApplicantPartyResponseDto"];
-                    "text/json": components["schemas"]["CreateIndividualApplicantPartyResponseDto"];
+                    "text/plain": components["schemas"]["CreateApplicantPartyResponseDto"];
+                    "application/json": components["schemas"]["CreateApplicantPartyResponseDto"];
+                    "text/json": components["schemas"]["CreateApplicantPartyResponseDto"];
                 };
             };
             /** @description Unauthorized */
@@ -1721,9 +1903,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "text/plain": components["schemas"]["CreateIndividualApplicantPartyResponseDto"];
-                    "application/json": components["schemas"]["CreateIndividualApplicantPartyResponseDto"];
-                    "text/json": components["schemas"]["CreateIndividualApplicantPartyResponseDto"];
+                    "text/plain": components["schemas"]["CreateApplicantPartyResponseDto"];
+                    "application/json": components["schemas"]["CreateApplicantPartyResponseDto"];
+                    "text/json": components["schemas"]["CreateApplicantPartyResponseDto"];
                 };
             };
             /** @description Unauthorized */
@@ -1793,9 +1975,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "text/plain": components["schemas"]["CreateIndividualApplicantPartyResponseDto"];
-                    "application/json": components["schemas"]["CreateIndividualApplicantPartyResponseDto"];
-                    "text/json": components["schemas"]["CreateIndividualApplicantPartyResponseDto"];
+                    "text/plain": components["schemas"]["CreateApplicantPartyResponseDto"];
+                    "application/json": components["schemas"]["CreateApplicantPartyResponseDto"];
+                    "text/json": components["schemas"]["CreateApplicantPartyResponseDto"];
                 };
             };
             /** @description Unauthorized */
@@ -1963,188 +2145,6 @@ export interface operations {
             };
             /** @description Unauthorized */
             401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "text/plain": components["schemas"]["ProblemDetails"];
-                    "application/json": components["schemas"]["ProblemDetails"];
-                    "text/json": components["schemas"]["ProblemDetails"];
-                };
-            };
-            /** @description Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "text/plain": components["schemas"]["ProblemDetails"];
-                    "application/json": components["schemas"]["ProblemDetails"];
-                    "text/json": components["schemas"]["ProblemDetails"];
-                };
-            };
-        };
-    };
-    ListMyRequests: {
-        parameters: {
-            query?: {
-                status?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Success */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "text/plain": components["schemas"]["MyRequestSummaryDto"][];
-                    "application/json": components["schemas"]["MyRequestSummaryDto"][];
-                    "text/json": components["schemas"]["MyRequestSummaryDto"][];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "text/plain": components["schemas"]["ProblemDetails"];
-                    "application/json": components["schemas"]["ProblemDetails"];
-                    "text/json": components["schemas"]["ProblemDetails"];
-                };
-            };
-            /** @description Client Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "text/plain": components["schemas"]["ProblemDetails"];
-                    "application/json": components["schemas"]["ProblemDetails"];
-                    "text/json": components["schemas"]["ProblemDetails"];
-                };
-            };
-            /** @description Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "text/plain": components["schemas"]["ProblemDetails"];
-                    "application/json": components["schemas"]["ProblemDetails"];
-                    "text/json": components["schemas"]["ProblemDetails"];
-                };
-            };
-        };
-    };
-    CreateConnectionRequest: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["CreateConnectionRequestDto"];
-                "text/json": components["schemas"]["CreateConnectionRequestDto"];
-                "application/*+json": components["schemas"]["CreateConnectionRequestDto"];
-            };
-        };
-        responses: {
-            /** @description Success */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "text/plain": components["schemas"]["ProblemDetails"];
-                    "application/json": components["schemas"]["ProblemDetails"];
-                    "text/json": components["schemas"]["ProblemDetails"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "text/plain": components["schemas"]["ProblemDetails"];
-                    "application/json": components["schemas"]["ProblemDetails"];
-                    "text/json": components["schemas"]["ProblemDetails"];
-                };
-            };
-            /** @description Client Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "text/plain": components["schemas"]["ProblemDetails"];
-                    "application/json": components["schemas"]["ProblemDetails"];
-                    "text/json": components["schemas"]["ProblemDetails"];
-                };
-            };
-            /** @description Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "text/plain": components["schemas"]["ProblemDetails"];
-                    "application/json": components["schemas"]["ProblemDetails"];
-                    "text/json": components["schemas"]["ProblemDetails"];
-                };
-            };
-        };
-    };
-    GetMyRequestDetails: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                requestId: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Success */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "text/plain": components["schemas"]["MyRequestDetailsDto"];
-                    "application/json": components["schemas"]["MyRequestDetailsDto"];
-                    "text/json": components["schemas"]["MyRequestDetailsDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "text/plain": components["schemas"]["ProblemDetails"];
-                    "application/json": components["schemas"]["ProblemDetails"];
-                    "text/json": components["schemas"]["ProblemDetails"];
-                };
-            };
-            /** @description Not Found */
-            404: {
                 headers: {
                     [name: string]: unknown;
                 };

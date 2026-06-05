@@ -31,7 +31,7 @@ public sealed class CreateConnectionRequestIntegrationTests : AppIntegrationTest
             ValidApplicantPartyDto());
         await HttpResponseAssertions.For(applicantResponse, _output).ShouldBeSuccess();
         var applicantParty = await applicantResponse.Content
-            .ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
+            .ReadFromJsonAsync<CreateApplicantPartyResponse>()
             ?? throw new InvalidOperationException("Applicant party response body was empty.");
 
         var requestResponse = await PostAsJsonWithCsrfAsync(

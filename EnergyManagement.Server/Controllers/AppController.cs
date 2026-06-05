@@ -26,9 +26,6 @@ public sealed class AppController : ProjectController
     private readonly ILogger<AppController> _logger;
     private readonly IValidator<RegisterClientAccountDto> _registerValidator;
     private readonly IValidator<LoginRequestDto> _loginValidator;
-    private readonly IValidator<CreateIndividualApplicantPartyDto> _createIndividualApplicantPartyValidator;
-    private readonly IValidator<CreateIndividualEntrepreneurApplicantPartyDto> _createIndividualEntrepreneurApplicantPartyValidator;
-    private readonly IValidator<CreateLegalEntityApplicantPartyDto> _createLegalEntityApplicantPartyValidator;
     private readonly IValidator<CreateConnectionRequestDto> _createConnectionRequestValidator;
     private readonly IValidator<ListMyRequestsQueryDto> _listMyRequestsQueryValidator;
     private readonly ClaimsPrincipalFactory _claimsPrincipalFactory;
@@ -38,9 +35,6 @@ public sealed class AppController : ProjectController
         ILogger<AppController> logger,
         IValidator<RegisterClientAccountDto> registerValidator,
         IValidator<LoginRequestDto> loginValidator,
-        IValidator<CreateIndividualApplicantPartyDto> createIndividualApplicantPartyValidator,
-        IValidator<CreateIndividualEntrepreneurApplicantPartyDto> createIndividualEntrepreneurApplicantPartyValidator,
-        IValidator<CreateLegalEntityApplicantPartyDto> createLegalEntityApplicantPartyValidator,
         IValidator<CreateConnectionRequestDto> createConnectionRequestValidator,
         IValidator<ListMyRequestsQueryDto> listMyRequestsQueryValidator,
         ClaimsPrincipalFactory claimsPrincipalFactory)
@@ -49,9 +43,6 @@ public sealed class AppController : ProjectController
         _logger = logger;
         _registerValidator = registerValidator;
         _loginValidator = loginValidator;
-        _createIndividualApplicantPartyValidator = createIndividualApplicantPartyValidator;
-        _createIndividualEntrepreneurApplicantPartyValidator = createIndividualEntrepreneurApplicantPartyValidator;
-        _createLegalEntityApplicantPartyValidator = createLegalEntityApplicantPartyValidator;
         _createConnectionRequestValidator = createConnectionRequestValidator;
         _listMyRequestsQueryValidator = listMyRequestsQueryValidator;
         _claimsPrincipalFactory = claimsPrincipalFactory;
@@ -171,266 +162,9 @@ public sealed class AppController : ProjectController
         return NoContent();
     }
 
-    [Authorize]
-    [HttpPost("applicant-parties/individual", Name = "CreateIndividualApplicantParty")]
-    [RequireAntiforgeryToken]
-    [ProducesResponseType(typeof(CreateIndividualApplicantPartyResponseDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> CreateIndividualApplicantParty(
-        [FromBody] CreateIndividualApplicantPartyDto? dto,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            var validationProblem = await ValidateBodyAsync(
-                dto,
-                _createIndividualApplicantPartyValidator,
-                cancellationToken);
-            if (validationProblem is not null)
-            {
-                return validationProblem;
-            }
-
-            if (!TryGetCurrentAccountId(out var accountId))
-            {
-                return Unauthorized();
-            }
-
-            var result = await _sender.Send(
-                new CreateIndividualApplicantPartyCommand(
-                    accountId,
-                    dto!.FullName!.FirstName!,
-                    dto.FullName.MiddleName!,
-                    dto.FullName.LastName!,
-                    dto.Email!,
-                    dto.PhoneNumber!),
-                cancellationToken);
-
-            if (result.IsFailure)
-            {
-                return ProblemDetailsFromValidation(result.Error);
-            }
-
-            return Ok(new CreateIndividualApplicantPartyResponseDto(
-                result.Value.ApplicantPartyId,
-                result.Value.ClientAccountId));
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Create individual applicant party failed.");
-            return ProblemDetailsWithExceptionDev(ex);
-        }
-    }
-
-    [Authorize]
-    [HttpPost("applicant-parties/individual-entrepreneur", Name = "CreateIndividualEntrepreneurApplicantParty")]
-    [RequireAntiforgeryToken]
-    [ProducesResponseType(typeof(CreateIndividualApplicantPartyResponseDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> CreateIndividualEntrepreneurApplicantParty(
-        [FromBody] CreateIndividualEntrepreneurApplicantPartyDto? dto,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            var validationProblem = await ValidateBodyAsync(
-                dto,
-                _createIndividualEntrepreneurApplicantPartyValidator,
-                cancellationToken);
-            if (validationProblem is not null)
-            {
-                return validationProblem;
-            }
-
-            if (!TryGetCurrentAccountId(out var accountId))
-            {
-                return Unauthorized();
-            }
-
-            var result = await _sender.Send(
-                new CreateIndividualEntrepreneurApplicantPartyCommand(
-                    accountId,
-                    dto!.FullName!.FirstName!,
-                    dto.FullName.MiddleName!,
-                    dto.FullName.LastName!,
-                    dto.Inn!,
-                    dto.Ogrnip!,
-                    dto.Email!,
-                    dto.PhoneNumber!),
-                cancellationToken);
-
-            if (result.IsFailure)
-            {
-                return ProblemDetailsFromValidation(result.Error);
-            }
-
-            return Ok(new CreateIndividualApplicantPartyResponseDto(
-                result.Value.ApplicantPartyId,
-                result.Value.ClientAccountId));
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Create individual entrepreneur applicant party failed.");
-            return ProblemDetailsWithExceptionDev(ex);
-        }
-    }
-
-    [Authorize]
-    [HttpPost("applicant-parties/legal-entity", Name = "CreateLegalEntityApplicantParty")]
-    [RequireAntiforgeryToken]
-    [ProducesResponseType(typeof(CreateIndividualApplicantPartyResponseDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> CreateLegalEntityApplicantParty(
-        [FromBody] CreateLegalEntityApplicantPartyDto? dto,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            var validationProblem = await ValidateBodyAsync(
-                dto,
-                _createLegalEntityApplicantPartyValidator,
-                cancellationToken);
-            if (validationProblem is not null)
-            {
-                return validationProblem;
-            }
-
-            if (!TryGetCurrentAccountId(out var accountId))
-            {
-                return Unauthorized();
-            }
-
-            var result = await _sender.Send(
-                new CreateLegalEntityApplicantPartyCommand(
-                    accountId,
-                    dto!.OrganizationName!,
-                    dto.Inn!,
-                    dto.Kpp!,
-                    dto.Ogrn!,
-                    dto.Email!,
-                    dto.PhoneNumber!),
-                cancellationToken);
-
-            if (result.IsFailure)
-            {
-                return ProblemDetailsFromValidation(result.Error);
-            }
-
-            return Ok(new CreateIndividualApplicantPartyResponseDto(
-                result.Value.ApplicantPartyId,
-                result.Value.ClientAccountId));
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Create legal entity applicant party failed.");
-            return ProblemDetailsWithExceptionDev(ex);
-        }
-    }
 
 
-    [Authorize]
-    [HttpGet("applicant-parties", Name = "GetAccountApplicantParties")]
-    [ProducesResponseType(typeof(AccountApplicantPartiesResponseDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> ListAccountApplicantParties(CancellationToken cancellationToken)
-    {
-        try
-        {
-            if (!TryGetCurrentAccountId(out var accountId))
-            {
-                return Unauthorized();
-            }
-
-            var result = await _sender.Send(
-                new GetAccountApplicantPartiesQuery(accountId),
-                cancellationToken);
-
-            if (result.IsFailure)
-            {
-                return Unauthorized();
-            }
-
-            return Ok(ToAccountApplicantPartiesResponse(result.Value));
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "List account applicant parties failed.");
-            return ProblemDetailsWithExceptionDev(ex);
-        }
-    }
-
-    [Authorize]
-    [HttpPost("applicant-parties/{applicantPartyId:long}/make-current-default", Name = "MakeApplicantPartyCurrentDefault")]
-    [RequireAntiforgeryToken]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> MakeApplicantPartyCurrentDefault(
-        long applicantPartyId,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            if (!TryGetCurrentAccountId(out var accountId))
-            {
-                return Unauthorized();
-            }
-
-            var result = await _sender.Send(
-                new MakeApplicantPartyCurrentDefaultCommand(accountId, applicantPartyId),
-                cancellationToken);
-
-            return ToActionResult(result);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Make applicant party current/default failed.");
-            return ProblemDetailsWithExceptionDev(ex);
-        }
-    }
-
-    [Authorize]
-    [HttpGet("applicant-parties/current-individual", Name = "GetCurrentIndividualApplicantParty")]
-    [ProducesResponseType(typeof(CurrentIndividualApplicantPartyResponseDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetCurrentIndividualApplicantParty(CancellationToken cancellationToken)
-    {
-        try
-        {
-            if (!TryGetCurrentAccountId(out var accountId))
-            {
-                return Unauthorized();
-            }
-
-            var result = await _sender.Send(
-                new GetCurrentIndividualApplicantPartyQuery(accountId),
-                cancellationToken);
-
-            if (result.IsFailure)
-            {
-                return Unauthorized();
-            }
-
-            return Ok(ToCurrentIndividualApplicantPartyResponse(result.Value));
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Get current individual applicant party failed.");
-            return ProblemDetailsWithExceptionDev(ex);
-        }
-    }
+    
 
     [Authorize]
     [HttpGet("requests", Name = "ListMyRequests")]
@@ -656,57 +390,7 @@ public sealed class AppController : ProjectController
     }
 
 
-    private static AccountApplicantPartiesResponseDto ToAccountApplicantPartiesResponse(
-        GetAccountApplicantPartiesResponse response)
-    {
-        return new AccountApplicantPartiesResponseDto(
-            response.ApplicantParties.Select(ToApplicantPartySummaryDto).ToList());
-    }
-
-    private static ApplicantPartySummaryDto ToApplicantPartySummaryDto(
-        ApplicantPartySummaryResponse applicantParty)
-    {
-        return new ApplicantPartySummaryDto(
-            applicantParty.ApplicantPartyId,
-            applicantParty.ApplicantPartyType.ToString(),
-            applicantParty.DisplayName,
-            applicantParty.FullName is null
-                ? null
-                : new FullNameDto(
-                    applicantParty.FullName.FirstName,
-                    applicantParty.FullName.MiddleName,
-                    applicantParty.FullName.LastName),
-            applicantParty.OrganizationName,
-            applicantParty.Inn,
-            applicantParty.Kpp,
-            applicantParty.Ogrn,
-            applicantParty.Ogrnip,
-            applicantParty.Email,
-            applicantParty.PhoneNumber,
-            applicantParty.VerificationStatus.ToString(),
-            applicantParty.IsCurrentDefault,
-            applicantParty.CreatedAt);
-    }
-
-    private static CurrentIndividualApplicantPartyResponseDto ToCurrentIndividualApplicantPartyResponse(
-        GetCurrentIndividualApplicantPartyResponse response)
-    {
-        if (!response.Exists || response.ApplicantParty is null)
-        {
-            return new CurrentIndividualApplicantPartyResponseDto(false, null);
-        }
-
-        return new CurrentIndividualApplicantPartyResponseDto(
-            true,
-            new IndividualApplicantPartyDto(
-                new FullNameDto(
-                    response.ApplicantParty.FirstName,
-                    response.ApplicantParty.MiddleName,
-                    response.ApplicantParty.LastName),
-                response.ApplicantParty.Email,
-                response.ApplicantParty.PhoneNumber,
-                response.ApplicantParty.VerificationStatus));
-    }
+    
 
     private static MyRequestSummaryDto ToMyRequestSummaryDto(
         MyRequestSummaryResponse request)

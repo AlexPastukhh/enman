@@ -94,7 +94,7 @@ public sealed class AntiforgeryIntegrationTests : AppIntegrationTestBase
             ValidApplicantPartyDto());
 
         await HttpResponseAssertions.For(response, _output).ShouldBeSuccess();
-        var applicant = await response.Content.ReadFromJsonAsync<CreateIndividualApplicantPartyResponse>()
+        var applicant = await response.Content.ReadFromJsonAsync<CreateApplicantPartyResponse>()
             ?? throw new InvalidOperationException("Applicant party response body was empty.");
         applicant.ClientAccountId.Should().Be(account.AccountId);
     }

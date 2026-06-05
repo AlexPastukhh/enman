@@ -7,7 +7,7 @@ using MediatR;
 namespace EnergyManagement.Server.Application.Commands;
 
 public sealed class CreateIndividualApplicantPartyHandler
-    : IRequestHandler<CreateIndividualApplicantPartyCommand, Result<CreateIndividualApplicantPartyResponse, IReadOnlyList<Error>>>
+    : IRequestHandler<CreateIndividualApplicantPartyCommand, Result<CreateApplicantPartyResponse, IReadOnlyList<Error>>>
 {
     private readonly IApplicantPartyCreationService _applicantPartyCreation;
     private readonly IApplicantPartyRepository _applicantParties;
@@ -23,7 +23,7 @@ public sealed class CreateIndividualApplicantPartyHandler
         _context = context;
     }
 
-    public async Task<Result<CreateIndividualApplicantPartyResponse, IReadOnlyList<Error>>> Handle(
+    public async Task<Result<CreateApplicantPartyResponse, IReadOnlyList<Error>>> Handle(
         CreateIndividualApplicantPartyCommand command,
         CancellationToken cancellationToken)
     {
@@ -38,15 +38,15 @@ public sealed class CreateIndividualApplicantPartyHandler
 
         if (applicantPartyResult.IsFailure)
         {
-            return Result.Failure<CreateIndividualApplicantPartyResponse, IReadOnlyList<Error>>(
+            return Result.Failure<CreateApplicantPartyResponse, IReadOnlyList<Error>>(
                 applicantPartyResult.Error);
         }
 
         _applicantParties.Add(applicantPartyResult.Value);
         await _context.SaveChangesAsync(cancellationToken);
 
-        return Result.Success<CreateIndividualApplicantPartyResponse, IReadOnlyList<Error>>(
-            new CreateIndividualApplicantPartyResponse(
+        return Result.Success<CreateApplicantPartyResponse, IReadOnlyList<Error>>(
+            new CreateApplicantPartyResponse(
                 applicantPartyResult.Value.Id,
                 applicantPartyResult.Value.ClientAccountId));
     }

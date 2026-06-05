@@ -8,7 +8,7 @@ export type CreateLegalEntityApplicantPartyRequest =
   components["schemas"]["CreateLegalEntityApplicantPartyDto"];
 
 export type CreateIndividualApplicantPartyResponse =
-  components["schemas"]["CreateIndividualApplicantPartyResponseDto"];
+  components["schemas"]["CreateApplicantPartyResponseDto"];
 export type CurrentIndividualApplicantPartyResponseDto =
   components["schemas"]["CurrentIndividualApplicantPartyResponseDto"];
 export type IndividualApplicantPartyDto =

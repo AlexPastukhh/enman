@@ -42,7 +42,7 @@ public sealed record CreateLegalEntityApplicantPartyDto(
     [property: JsonPropertyName("email")] string? Email,
     [property: JsonPropertyName("phoneNumber")] string? PhoneNumber);
 
-public sealed record CreateIndividualApplicantPartyResponseDto(
+public sealed record CreateApplicantPartyResponseDto(
     [property: JsonPropertyName("applicantPartyId")] long ApplicantPartyId,
     [property: JsonPropertyName("clientAccountId")] long ClientAccountId);
 
