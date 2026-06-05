@@ -354,7 +354,7 @@ public abstract class AppIntegrationTestBase
         return new CreateConnectionRequestDto(
             applicantContextType,
             existingApplicantPartyId,
-            ToConnectionRequestNewApplicantDto(newApplicantParty),
+            ToInlineApplicantPartyForRequestDto(newApplicantParty),
             details,
             new AddressDto(
                 PostalCode,
@@ -383,7 +383,7 @@ public abstract class AppIntegrationTestBase
                 phoneNumber: "79237554728"));
     }
 
-    protected static InlineApplicantPartyForRequestDto? ToConnectionRequestNewApplicantDto(
+    protected static InlineApplicantPartyForRequestDto? ToInlineApplicantPartyForRequestDto(
         CreateIndividualApplicantPartyDto? applicantParty)
     {
         return applicantParty is null

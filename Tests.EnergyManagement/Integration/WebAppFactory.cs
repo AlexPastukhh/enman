@@ -55,6 +55,8 @@ namespace Tests.EnergyManagement.Integration
 
                 services.AddScoped(_ => new EnergyManagementDbContext(ConnectionString));
 
+                ReplaceEmailSenderWithNoop(services);
+
                 var authSchemeProvider = services
                     .FirstOrDefault(d => d.ServiceType == typeof(IAuthenticationSchemeProvider));
 
@@ -71,6 +73,20 @@ namespace Tests.EnergyManagement.Integration
             base.ConfigureWebHost(builder);
         }
 
+
+        private static void ReplaceEmailSenderWithNoop(IServiceCollection services)
+        {
+            var descriptors = services
+                .Where(d => d.ServiceType == typeof(IEmailSender))
+                .ToList();
+
+            foreach (var descriptor in descriptors)
+            {
+                services.Remove(descriptor);
+            }
+
+            services.AddSingleton<IEmailSender, NoopEmailSender>();
+        }
 
         public WebApplicationFactory<Program> WithEmailSender(IEmailSender emailSender)
         {

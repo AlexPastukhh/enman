@@ -1,7 +1,7 @@
 # VKR Finalization Goal Map
 
 Status: active local workstream Goal Map / VKR finalization
-Doc version: v0.1.3
+Doc version: v0.1.4
 Owner format: `planning/goal-map-principles-workflow-template.md`
 Scope: living map for finishing the VKR text, visuals, source references, appendices, and implementation/text consistency for the Enman diploma work.
 
@@ -12,37 +12,44 @@ Encoding note: this version intentionally avoids non-ASCII symbols in status mar
 ## 0. Current Snapshot
 
 Current goal:
-  Finish the VKR final version for the Enman project: complete missing thesis blocks, align text with current implementation, add missing domain classes only if needed for VKR completeness, rebalance visuals, move excessive code evidence to appendices, strengthen testing evidence, clarify terminology, check appendices and references, and increase volume with meaningful material.
+  Finish the VKR final version for the Enman project while keeping implementation evidence truthful: complete missing thesis blocks, align text with current implementation, keep applicant-party support accurate, rebalance visuals, move excessive code evidence to appendices, strengthen testing evidence, clarify terminology, check appendices and references, and increase volume with meaningful material.
 
 Current focus:
-  VKR finalization map is synchronized. No next functional slice is started by this map update.
+  Applicant-party implementation and refactor support are synchronized in the living map. The current narrow package closes goal-map sync, test-only email sender cleanup and helper naming cleanup. No DB rename, frontend refactor or thesis DOCX edit is started by this package.
 
 Active slice:
-  none selected / next-slice decision pending.
+  TEST-INFRA-1 plus goal-map/helper cleanup package.
 
 Latest completed:
   - Root planning source rules were clarified in conversation: legacy/current-like planning files must not be used as primary onboarding/current-state sources.
   - Current VKR focus was redirected to diploma finalization rather than the old L1/L2 implementation cut.
   - Current thesis draft has been inspected in prior chat context for structure, figures, captions, screenshots, code placement, and missing final blocks.
-  - ApplicantParty domain gap was inspected: current implementation supports IndividualApplicantParty, while the VKR narrative and applicant modeling benefit from explicit IndividualEntrepreneur and LegalEntity applicant types.
-  - Applicant type scope was clarified: applicant types should share the same request process; the difference is in fields, validation, and display, not in separate request workflows.
-  - Visual-material additions were collected: current VKR has many useful tables and enough basic UI/code/database/test screenshots, but visual balance is uneven. Chapter 1 needs 1-2 analytical diagrams, chapter 2 needs several design diagrams, and chapter 3 should keep only key screenshots/code evidence while moving excessive code evidence to appendices.
-  - Final VKR correction notes were collected: current thesis already has a coherent three-chapter structure, conclusion, bibliography and Appendix B, but still needs Introduction, chapter conclusions, stronger testing evidence in 3.6, terminology cleanup, visual balance, appendix structure check and source/reference verification.
+  - Applicant party type scope was resolved: Individual, IndividualEntrepreneur and LegalEntity share the same request process through ApplicantParty; applicant type differences are expressed through fields, validation and display, not through separate ConnectionRequest subclasses.
+  - VKR-3A was completed: the domain model supports IndividualApplicantParty, IndividualEntrepreneurApplicantParty and LegalEntityApplicantParty with the required requisites/value objects.
+  - VKR-3A-DB was completed: EF mapping, migrations and test DB support applicant-party subtype requisites.
+  - VKR-3B-1 was completed: CreateConnectionRequest supports inline applicant-party input for Individual, IndividualEntrepreneur and LegalEntity through newApplicantParty / InlineApplicantPartyForRequestDto.
+  - VKR-3B-2 was completed: account applicant management can create Individual, IndividualEntrepreneur and LegalEntity applicant parties separately, and created parties can be reused as existing applicants.
+  - REF-0 through REF-2 were completed: accidental diff artifact was removed, ApplicantPartiesController was extracted, and create applicant response naming was made type-neutral.
+  - REF-SMALL-1 through REF-SMALL-3 were completed: CreateApplicantPartyResponseDto includes applicantPartyType, the legacy frontend create-individual feature was removed, and inline request applicant DTO naming was clarified.
+  - REF-APP-1 was completed: applicant-party API contracts, validators, commands, handlers and queries were moved into applicant-party feature folders.
+  - TEST-INFRA-1 was prepared in this package: integration tests use a test-only NoopEmailSender through WebAppFactory instead of production Program.cs fallback.
 
 Next action:
-  Choose and run the first narrow VKR finalization slice. Recommended first slice remains `VKR-1 - Structure Closure And Final Blocks`, with `VKR-1A - Introduction And Chapter Conclusions` as the first concrete sub-slice, because missing introduction and chapter conclusions should be closed before deeper visual/source/test edits.
+  Apply this narrow package, run backend build and Tests.EnergyManagement, verify that Program.cs still registers SmtpEmailSender, and paste the diff before commit. After this package, choose either VKR-1A for thesis text structure, REF-DB-1 for L1 database table renaming, or stop and stabilize.
 
 Parallel planning notes:
-  - `VKR-3A - Applicant Party Type Domain Completeness` is identified as the first domain-completeness sub-slice, but it must not start unless explicitly selected.
-  - `VKR-4A` through `VKR-4D` detail the visual-material rebalance work, but they must not start from a map-sync/archive command.
-  - `VKR-6A`, `VKR-7A` and `VKR-8A` detail testing evidence, terminology cleanup and appendix/source final pass, but they must be run as separate narrow batches.
+  - `REF-DB-1 - Rename L1 database tables` remains open and must be a separate migration/refactor slice.
+  - `TEST-INFRA-1 - NoopEmailSender in integration tests` is closed only if the test-only WebAppFactory replacement is applied and tests pass. Production Program.cs must keep SmtpEmailSender.
+  - VKR visual/source/testing/terminology work remains separate and must not be mixed into code cleanup packages.
+
+Resolved decisions:
+  - DEC-VKR-3: Applicant party type completeness was resolved by implementing IndividualEntrepreneurApplicantParty and LegalEntityApplicantParty without separate request workflows.
+  - DEC-VKR-5: Applicant type support was expanded beyond domain-only; API/UI support exists for inline request creation and separate account applicant creation.
 
 Open decisions:
   - DEC-VKR-1: Whether the final chapter 2 should keep 2.8 only or add separate 2.9/2.10 for rezervirovanie and legitimnost if required by the methodical guide.
   - DEC-VKR-2: Visual balance and code evidence placement. Decide which code screenshots remain in chapter 3, which are replaced with text listings, and which move to appendices.
-  - DEC-VKR-3: Applicant party type completeness. Decide whether to add IndividualEntrepreneurApplicantParty and LegalEntityApplicantParty at domain/EF/test level, while keeping request creation and review process shared through ApplicantParty.
   - DEC-VKR-4: How many sources are required by final department rules and how to distribute references across chapters.
-  - DEC-VKR-5: Decide whether applicant type support remains domain-only for VKR completeness or is expanded through API/UI forms and screenshots.
   - DEC-VKR-6: Chapter 1 diagrams. Decide whether to add both analytical diagrams: request processing flow and transition from request decision to agreement stage.
   - DEC-VKR-7: Chapter 2 design diagrams. Decide final set of project diagrams: application algorithm, architecture, domain model, request lifecycle, agreement exchange lifecycle.
   - DEC-VKR-8: Additional UI screenshots. Decide whether to add screenshots for applicant management, client request card, employee dashboard, agreement exchange working state, and attached document upload/download evidence.
@@ -51,6 +58,7 @@ Open decisions:
   - DEC-VKR-11: Terminology cleanup. Decide final wording for client/user/account/applicant and agreement exchange/proposal/version/document/file terms.
   - DEC-VKR-12: Appendix structure. Decide whether Appendix A is missing and how to organize appendices A-E.
   - DEC-VKR-13: Source/reference consistency. Decide final pass for in-text references and bibliography numbering.
+  - DEC-REF-DB-1: Whether to rename L1* database tables before final code/DB screenshots. If selected, it must be a dedicated migration/refactor slice.
 
 Invariants:
   - Do not use legacy/current-like planning files as primary source-of-truth for current workflow or implementation state.
@@ -58,9 +66,9 @@ Invariants:
   - Do not start new functional code slices from a map-sync command.
   - Use current VKR document, active thesis workbench docs, scenario/domain/slice docs, repo/code, and tests before changing implementation or writing implementation claims.
   - Long code and auxiliary screenshots should go to appendices when they overload the main text.
-  - Applicant types must not create separate request workflows unless explicitly required; Individual, IndividualEntrepreneur and LegalEntity applicants should share the same request process through ApplicantParty.
+  - Applicant types must not create separate request workflows unless explicitly required; Individual, IndividualEntrepreneur and LegalEntity applicants share the same request process through ApplicantParty.
   - Applicant type differences are represented through fields, validation and display name, not through separate ConnectionRequest subclasses.
-  - Do not claim that all applicant types are supported in UI/API unless implementation and screenshots prove it.
+  - Current implementation supports applicant-party types in domain, persistence, API, UI inline request creation and separate applicant management; screenshots/tests still decide what the thesis may claim.
   - Applicant should be described as a person or organization on whose behalf a request is created, not only as an individual person.
   - Tables that work as classifications, mappings, requirements, checks or reference lists should stay as tables and should not be converted into overloaded diagrams.
   - Chapter 1 should not contain code, database, API or UI screenshots; it should use analytical tables and 1-2 process diagrams.
@@ -73,9 +81,10 @@ Invariants:
   - Introduction must frame the work and must not duplicate chapter 1.
   - Appendices should contain heavy code/listing/testing material and must be referenced from the main text.
   - English technical terms should be either translated or explained at first use.
+  - Production email configuration must stay strict: Program.cs uses SmtpEmailSender. NoopEmailSender is test-only and belongs in integration test DI.
 
 Update rule:
-  Update this map after each meaningful VKR finalization batch: final-block insertion, source/reference pass, visual-material pass, domain implementation completeness pass, appendix/code-evidence pass, testing-evidence pass, terminology pass, or final formatting pass.
+  Update this map after each meaningful VKR finalization batch: final-block insertion, source/reference pass, visual-material pass, domain implementation completeness pass, appendix/code-evidence pass, testing-evidence pass, terminology pass, implementation cleanup pass, or final formatting pass.
 
 Planning rule:
   When planning inside the VKR finalization workstream, consult this map first, choose a narrow slice, state boundaries, then update the map after the batch if status/next action/evidence changes.
@@ -97,7 +106,7 @@ BLOCKED  blocked or needs a decision
 | Phase 0 - Map synchronization | Durable living map exists for the current VKR finalization goal. | VKR-0 - Goal Map Sync | Future chats can find this map and see current goal, slices, invariants and next action. | DONE |
 | Phase 1 - Structure closure | VKR has all required final structural blocks. | VKR-1 - Structure Closure And Final Blocks; VKR-1A - Introduction And Chapter Conclusions | Document contains introduction, conclusions by chapters, final conclusion, sources, appendices plan and consistent contents. | NEXT |
 | Phase 2 - Text consistency | VKR text matches implemented scope and avoids overclaim. | VKR-2 - Text/Implementation Consistency Audit | Claims are marked implemented/designed/deferred and checked against code/tests/screenshots. | TODO |
-| Phase 3 - Domain completeness | Domain model is sufficient for the thesis narrative. | VKR-3 - Domain Completeness / Missing Class Decision; VKR-3A - Applicant Party Type Domain Completeness | Missing domain classes are either implemented, explicitly deferred or removed from thesis claims; applicant party type scope is resolved. | TODO |
+| Phase 3 - Domain completeness | Domain model is sufficient for the current applicant-party thesis narrative. | VKR-3 - Domain Completeness / Missing Class Decision; VKR-3A - Applicant Party Type Domain Completeness | Applicant-party class gap is implemented and tested; no separate request workflow was introduced. | DONE |
 | Phase 4 - Visual balance | Main text has intentional diagrams/screenshots and appendices hold heavy evidence. | VKR-4 - Visual Materials Rebalance; VKR-4A - Chapter 1 Analytical Diagrams; VKR-4B - Chapter 2 Design Diagrams; VKR-4C - Chapter 3 Screenshot And Code Evidence Selection; VKR-4D - Appendix Visual/Listing Relocation | Chapter 1 has 1-2 analytical diagrams; chapter 2 has core design diagrams; chapter 3 keeps essential UI/DB/test/code evidence; excessive code screenshots move to appendices; numbering is checked. | TODO |
 | Phase 5 - Source references | References exist both in text and in bibliography. | VKR-5 - Source/Bibliography Pass | Every non-trivial external claim has `[n]`; bibliography has enough distinct sources and no dead filler. | TODO |
 | Phase 6 - Testing evidence and meaningful volume | Missing volume is filled with relevant content and section 3.6 proves results. | VKR-6 - Content Expansion And Appendix Evidence; VKR-6A - Section 3.6 Testing Evidence Strengthening | Added pages support thesis goals; section 3.6 contains factual tables/screenshots of checks and final demo-flow evidence. | TODO |
@@ -187,7 +196,7 @@ Acceptance criteria:
 ### VKR-3 - Domain Completeness / Missing Class Decision
 
 Status:
-  TODO.
+  DONE for current applicant-party gap; monitor future thesis claims.
 
 Purpose:
   Decide whether any missing domain classes/elements must be added for thesis completeness.
@@ -207,7 +216,7 @@ Acceptance criteria:
 ### VKR-3A - Applicant Party Type Domain Completeness
 
 Status:
-  PLANNED / not started unless explicitly selected.
+  DONE.
 
 Purpose:
   Complete applicant party modeling for the VKR narrative without creating separate request workflows.
@@ -220,14 +229,13 @@ Target outcomes:
   - Differences between applicant types are expressed through fields, validation and display name.
   - No IndividualConnectionRequest / EntrepreneurConnectionRequest / LegalEntityConnectionRequest subclasses are introduced unless explicitly justified.
 
-Suggested implementation scope:
-  - Add IndividualEntrepreneurApplicantParty.
-  - Add LegalEntityApplicantParty.
-  - Add value objects if missing: Inn, Ogrn, Ogrnip, Kpp, OrganizationName.
-  - Extend ApplicantPartyType.
-  - Extend EF discriminator/mapping.
-  - Add domain tests.
-  - Do not expand frontend/API in the same slice unless explicitly selected.
+Implemented scope:
+  - Added IndividualEntrepreneurApplicantParty.
+  - Added LegalEntityApplicantParty.
+  - Added value objects: Inn, Ogrn, Ogrnip, Kpp, OrganizationName.
+  - Extended ApplicantPartyType.
+  - Extended EF discriminator/mapping and persistence support.
+  - Added domain/integration test coverage for applicant type behavior.
 
 Acceptance criteria:
   - Domain model supports three applicant types.
@@ -235,7 +243,130 @@ Acceptance criteria:
   - ConnectionRequest still references ApplicantPartyId and does not depend on concrete applicant subtype.
   - Tests cover creation/display/validation for new applicant types.
   - VKR text can honestly say that the domain model supports different applicant types.
-  - If UI/API are not implemented for all applicant types, thesis wording describes domain extensibility rather than completed user-facing support.
+  - VKR text can also mention UI/API support for applicant types when supported by screenshots/tests from VKR-3B-1/VKR-3B-2.
+
+### VKR-3B-1 - Inline Applicant Type Support In Connection Request
+
+Status:
+  DONE.
+
+Purpose:
+  Support creating a new applicant party inside the CreateConnectionRequest flow without creating separate request workflows.
+
+Target outcomes:
+  - Existing/New applicant flow remains stable.
+  - Public JSON field `newApplicantParty` remains stable.
+  - Internal type name is `InlineApplicantPartyForRequestDto`.
+  - New inline applicant supports Individual, IndividualEntrepreneur and LegalEntity.
+  - ConnectionRequest remains linked to ApplicantParty.
+
+Acceptance criteria:
+  - Request creation with existing applicant still works.
+  - Request creation with new Individual, IndividualEntrepreneur and LegalEntity works.
+  - No separate ConnectionRequest subclasses are introduced.
+
+### VKR-3B-2 - Separate Applicant Party Creation Endpoints And Account UI
+
+Status:
+  DONE.
+
+Purpose:
+  Allow applicant parties to be created separately in account applicant management and reused later as existing applicants.
+
+Target outcomes:
+  - `POST /api/applicant-parties/individual` exists.
+  - `POST /api/applicant-parties/individual-entrepreneur` exists.
+  - `POST /api/applicant-parties/legal-entity` exists.
+  - Account applicant creation UI uses the broader `features/applicant-party/create` feature with an applicant type selector.
+  - Legacy frontend `features/applicant-party/create-individual` is removed.
+
+Acceptance criteria:
+  - Created applicant parties appear in applicant lists.
+  - Created applicant parties can be selected as existing applicants during request creation.
+
+## 2A. Implementation Support / Refactor Cleanup Slices
+
+### REF-0 - Remove Accidental Diff Artifact
+
+Status:
+  DONE.
+
+Purpose:
+  Remove accidental repo-stored diff/package artifacts from implementation commits.
+
+### REF-1 - Extract ApplicantPartiesController
+
+Status:
+  DONE.
+
+Purpose:
+  Move applicant-party endpoints out of broad AppController while keeping routes stable.
+
+### REF-2 - Create Applicant Party Response Naming Cleanup
+
+Status:
+  DONE.
+
+Purpose:
+  Use type-neutral create response naming for all applicant-party subtype creation endpoints.
+
+### REF-SMALL-1 - Applicant Create Response Type Completion
+
+Status:
+  DONE.
+
+Purpose:
+  Include `applicantPartyType` in `CreateApplicantPartyResponseDto` so frontend callers can verify the created subtype.
+
+### REF-SMALL-2 - Remove Legacy Frontend Create Individual Feature
+
+Status:
+  DONE.
+
+Purpose:
+  Remove the old individual-only frontend feature after replacement by the broader applicant-party create feature.
+
+### REF-SMALL-3 - Rename Inline Request Applicant DTO
+
+Status:
+  DONE.
+
+Purpose:
+  Rename internal inline request applicant input from `CreateConnectionRequestNewApplicant*` to `InlineApplicantPartyForRequest*` while keeping public JSON field `newApplicantParty`.
+
+### REF-APP-1 - Applicant Party Feature Folder Cleanup
+
+Status:
+  DONE.
+
+Purpose:
+  Move applicant-party DTOs, validators, commands, handlers and queries into applicant-party feature folders without changing routes, JSON fields, domain, DB or error codes.
+
+### TEST-INFRA-1 - NoopEmailSender In Integration Tests
+
+Status:
+  DONE after this package is applied and tests pass.
+
+Purpose:
+  Remove SMTP configuration log noise from integration tests by replacing `IEmailSender` in test DI only.
+
+Acceptance criteria:
+  - `Program.cs` still registers `SmtpEmailSender`.
+  - Integration test `WebAppFactory` replaces `IEmailSender` with test-only `NoopEmailSender` by default.
+  - Tests that need to inspect email can still use `WithEmailSender(...)`.
+
+### REF-DB-1 - Rename L1 Database Tables
+
+Status:
+  TODO.
+
+Purpose:
+  Rename `L1*` database tables to clean table names for implementation clarity and final evidence.
+
+Boundaries:
+  - Must be a separate migration/refactor slice.
+  - Use table renames where possible, not drop/create.
+  - Update EF mapping, migrations, raw SQL, test DB patches and seed/demo tools together.
 
 ### VKR-4 - Visual Materials Rebalance
 
@@ -649,7 +780,7 @@ snapshot -> object state before operation.
 Recommended next action:
 
 ```text
-Run VKR-1 - Structure Closure And Final Blocks, preferably VKR-1A - Introduction And Chapter Conclusions first.
+Apply and verify the current narrow package: goal-map sync, test-only NoopEmailSender, and helper rename. After that, choose either VKR-1A for thesis text structure or REF-DB-1 for L1 database table renaming.
 ```
 
 Suggested first batch boundary:
