@@ -1,9 +1,10 @@
+using Domain.EnergyManagement;
 using Domain.EnergyManagement.Common;
 using Domain.EnergyManagement.DocumentManaging;
-using Domain.EnergyManagement;
+using EnergyManagement.Server.Api.Contracts.ApplicantParties;
 using FluentValidation;
 
-namespace EnergyManagement.Server.Api.Validation;
+namespace EnergyManagement.Server.Api.Validation.ApplicantParties;
 
 internal static class ApplicantPartyValidation
 {

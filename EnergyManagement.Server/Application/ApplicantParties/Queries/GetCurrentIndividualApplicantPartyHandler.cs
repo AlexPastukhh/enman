@@ -5,7 +5,7 @@ using EnergyManagement.Server.Application.Abstractions;
 using MediatR;
 using static Domain.EnergyManagement.Common.Error;
 
-namespace EnergyManagement.Server.Application.Queries;
+namespace EnergyManagement.Server.Application.ApplicantParties.Queries;
 
 public sealed class GetCurrentIndividualApplicantPartyHandler
     : IRequestHandler<GetCurrentIndividualApplicantPartyQuery, Result<GetCurrentIndividualApplicantPartyResponse, Error>>

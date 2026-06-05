@@ -1,4 +1,5 @@
 using EnergyManagement.Server.Api.Contracts.Common;
+using EnergyManagement.Server.Api.Contracts.ApplicantParties;
 
 namespace EnergyManagement.Server.Api.Validation;
 

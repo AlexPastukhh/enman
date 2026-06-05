@@ -4,6 +4,8 @@ using System.Text.Json;
 using EnergyManagement.Server.Api.Contracts.Common;
 using EnergyManagement.Server.Api.Security;
 using EnergyManagement.Server.Api;
+using EnergyManagement.Server.Api.Contracts.ApplicantParties;
+using EnergyManagement.Server.Application.ApplicantParties.Commands;
 using EnergyManagement.Server.Application.Commands;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;

@@ -4,16 +4,16 @@ using EnergyManagement.Server.Application.Abstractions;
 using EnergyManagement.Server.Persistence;
 using MediatR;
 
-namespace EnergyManagement.Server.Application.Commands;
+namespace EnergyManagement.Server.Application.ApplicantParties.Commands;
 
-public sealed class CreateIndividualEntrepreneurApplicantPartyHandler
-    : IRequestHandler<CreateIndividualEntrepreneurApplicantPartyCommand, Result<CreateApplicantPartyResponse, IReadOnlyList<Error>>>
+public sealed class CreateLegalEntityApplicantPartyHandler
+    : IRequestHandler<CreateLegalEntityApplicantPartyCommand, Result<CreateApplicantPartyResponse, IReadOnlyList<Error>>>
 {
     private readonly IApplicantPartyCreationService _applicantPartyCreation;
     private readonly IApplicantPartyRepository _applicantParties;
     private readonly EnergyManagementDbContext _context;
 
-    public CreateIndividualEntrepreneurApplicantPartyHandler(
+    public CreateLegalEntityApplicantPartyHandler(
         IApplicantPartyCreationService applicantPartyCreation,
         IApplicantPartyRepository applicantParties,
         EnergyManagementDbContext context)
@@ -24,16 +24,15 @@ public sealed class CreateIndividualEntrepreneurApplicantPartyHandler
     }
 
     public async Task<Result<CreateApplicantPartyResponse, IReadOnlyList<Error>>> Handle(
-        CreateIndividualEntrepreneurApplicantPartyCommand command,
+        CreateLegalEntityApplicantPartyCommand command,
         CancellationToken cancellationToken)
     {
-        var applicantPartyResult = await _applicantPartyCreation.CreateIndividualEntrepreneurAsync(
+        var applicantPartyResult = await _applicantPartyCreation.CreateLegalEntityAsync(
             command.ClientAccountId,
-            command.FirstName,
-            command.MiddleName,
-            command.LastName,
+            command.OrganizationName,
             command.Inn,
-            command.Ogrnip,
+            command.Kpp,
+            command.Ogrn,
             command.Email,
             command.PhoneNumber,
             cancellationToken);

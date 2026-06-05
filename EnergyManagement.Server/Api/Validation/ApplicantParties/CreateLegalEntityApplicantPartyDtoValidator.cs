@@ -1,6 +1,7 @@
+using EnergyManagement.Server.Api.Contracts.ApplicantParties;
 using FluentValidation;
 
-namespace EnergyManagement.Server.Api.Validation;
+namespace EnergyManagement.Server.Api.Validation.ApplicantParties;
 
 public sealed class CreateLegalEntityApplicantPartyDtoValidator
     : AbstractValidator<CreateLegalEntityApplicantPartyDto>

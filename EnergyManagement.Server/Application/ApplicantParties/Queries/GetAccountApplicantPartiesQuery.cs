@@ -3,7 +3,7 @@ using Domain.EnergyManagement.Common;
 using Domain.EnergyManagement;
 using MediatR;
 
-namespace EnergyManagement.Server.Application.Queries;
+namespace EnergyManagement.Server.Application.ApplicantParties.Queries;
 
 public sealed record GetAccountApplicantPartiesQuery(long ClientAccountId)
     : IRequest<Result<GetAccountApplicantPartiesResponse, Error>>;

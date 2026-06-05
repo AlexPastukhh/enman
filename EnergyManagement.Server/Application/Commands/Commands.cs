@@ -26,41 +26,6 @@ public sealed record LoginClientAccountResponse(
     bool IsActive,
     Account Account);
 
-public sealed record CreateIndividualApplicantPartyCommand(
-    long ClientAccountId,
-    string FirstName,
-    string MiddleName,
-    string LastName,
-    string Email,
-    string PhoneNumber)
-    : IRequest<Result<CreateApplicantPartyResponse, IReadOnlyList<Error>>>;
-
-public sealed record CreateIndividualEntrepreneurApplicantPartyCommand(
-    long ClientAccountId,
-    string FirstName,
-    string MiddleName,
-    string LastName,
-    string Inn,
-    string Ogrnip,
-    string Email,
-    string PhoneNumber)
-    : IRequest<Result<CreateApplicantPartyResponse, IReadOnlyList<Error>>>;
-
-public sealed record CreateLegalEntityApplicantPartyCommand(
-    long ClientAccountId,
-    string OrganizationName,
-    string Inn,
-    string Kpp,
-    string Ogrn,
-    string Email,
-    string PhoneNumber)
-    : IRequest<Result<CreateApplicantPartyResponse, IReadOnlyList<Error>>>;
-
-public sealed record CreateApplicantPartyResponse(
-    long ApplicantPartyId,
-    long ClientAccountId,
-    string ApplicantPartyType);
-
 public sealed record CreateConnectionRequestCommand(
     long ClientAccountId,
     string? ApplicantContextType,

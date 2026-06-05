@@ -1,5 +1,6 @@
 using Domain.EnergyManagement.Common;
 using Domain.EnergyManagement.DocumentManaging;
+using EnergyManagement.Server.Api.Validation.ApplicantParties;
 using FluentValidation;
 
 namespace EnergyManagement.Server.Api.Validation;

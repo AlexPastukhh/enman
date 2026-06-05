@@ -2,7 +2,7 @@ using CSharpFunctionalExtensions;
 using Domain.EnergyManagement.Common;
 using MediatR;
 
-namespace EnergyManagement.Server.Application.Queries;
+namespace EnergyManagement.Server.Application.ApplicantParties.Queries;
 
 public sealed record GetCurrentIndividualApplicantPartyQuery(long ClientAccountId)
     : IRequest<Result<GetCurrentIndividualApplicantPartyResponse, Error>>;

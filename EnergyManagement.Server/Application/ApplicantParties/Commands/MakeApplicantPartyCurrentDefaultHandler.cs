@@ -5,7 +5,7 @@ using EnergyManagement.Server.Persistence;
 using MediatR;
 using static Domain.EnergyManagement.Common.Error;
 
-namespace EnergyManagement.Server.Application.Commands;
+namespace EnergyManagement.Server.Application.ApplicantParties.Commands;
 
 public sealed class MakeApplicantPartyCurrentDefaultHandler
     : IRequestHandler<MakeApplicantPartyCurrentDefaultCommand, UnitResult<IReadOnlyList<Error>>>

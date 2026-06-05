@@ -3,7 +3,9 @@ using EnergyManagement.Server.Api.Auth;
 using EnergyManagement.Server.Configuration;
 using EnergyManagement.Server.Infrastructure;
 using EnergyManagement.Server.Api;
+using EnergyManagement.Server.Api.Contracts.ApplicantParties;
 using EnergyManagement.Server.Api.Validation;
+using EnergyManagement.Server.Api.Validation.ApplicantParties;
 using EnergyManagement.Server.Application.Abstractions;
 using EnergyManagement.Server.Application.Services;
 using EnergyManagement.Server.Application.Security;
@@ -63,17 +65,7 @@ builder.Services.AddTransient<IAgreementExchangeApplicationService, AgreementExc
 builder.Services.AddTransient<IDocumentStorage, LocalDocumentStorage>();
 builder.Services.Configure<SmtpEmailOptions>(
     builder.Configuration.GetSection(SmtpEmailOptions.SectionName));
-// If running tests or SMTP is not configured, use a noop sender to avoid failing tests.
-var smtpSection = builder.Configuration.GetSection(SmtpEmailOptions.SectionName);
-var smtpHost = smtpSection.GetValue<string>("Host");
-if (builder.Environment.IsEnvironment("Test") || string.IsNullOrWhiteSpace(smtpHost))
-{
-    builder.Services.AddSingleton<IEmailSender, NoopEmailSender>();
-}
-else
-{
-    builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
-}
+builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 builder.Services.AddTransient<IRegistrationEmailNotificationService, RegistrationEmailNotificationService>();
 builder.Services.AddSingleton<ClaimsPrincipalFactory>();
 

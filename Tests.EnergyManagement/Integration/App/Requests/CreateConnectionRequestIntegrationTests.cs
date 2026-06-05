@@ -2,6 +2,8 @@ using System.Net;
 using System.Net.Http.Json;
 using EnergyManagement.Server.Api.Contracts.Common;
 using EnergyManagement.Server.Api;
+using EnergyManagement.Server.Api.Contracts.ApplicantParties;
+using EnergyManagement.Server.Application.ApplicantParties.Commands;
 using EnergyManagement.Server.Application.Commands;
 using FluentAssertions;
 using Tests.EnergyManagement.TestHelpers;

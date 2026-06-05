@@ -4,16 +4,16 @@ using EnergyManagement.Server.Application.Abstractions;
 using EnergyManagement.Server.Persistence;
 using MediatR;
 
-namespace EnergyManagement.Server.Application.Commands;
+namespace EnergyManagement.Server.Application.ApplicantParties.Commands;
 
-public sealed class CreateLegalEntityApplicantPartyHandler
-    : IRequestHandler<CreateLegalEntityApplicantPartyCommand, Result<CreateApplicantPartyResponse, IReadOnlyList<Error>>>
+public sealed class CreateIndividualApplicantPartyHandler
+    : IRequestHandler<CreateIndividualApplicantPartyCommand, Result<CreateApplicantPartyResponse, IReadOnlyList<Error>>>
 {
     private readonly IApplicantPartyCreationService _applicantPartyCreation;
     private readonly IApplicantPartyRepository _applicantParties;
     private readonly EnergyManagementDbContext _context;
 
-    public CreateLegalEntityApplicantPartyHandler(
+    public CreateIndividualApplicantPartyHandler(
         IApplicantPartyCreationService applicantPartyCreation,
         IApplicantPartyRepository applicantParties,
         EnergyManagementDbContext context)
@@ -24,15 +24,14 @@ public sealed class CreateLegalEntityApplicantPartyHandler
     }
 
     public async Task<Result<CreateApplicantPartyResponse, IReadOnlyList<Error>>> Handle(
-        CreateLegalEntityApplicantPartyCommand command,
+        CreateIndividualApplicantPartyCommand command,
         CancellationToken cancellationToken)
     {
-        var applicantPartyResult = await _applicantPartyCreation.CreateLegalEntityAsync(
+        var applicantPartyResult = await _applicantPartyCreation.CreateIndividualAsync(
             command.ClientAccountId,
-            command.OrganizationName,
-            command.Inn,
-            command.Kpp,
-            command.Ogrn,
+            command.FirstName,
+            command.MiddleName,
+            command.LastName,
             command.Email,
             command.PhoneNumber,
             cancellationToken);
