@@ -2390,3 +2390,36 @@ Follow-ups:
   Run the SLICE-REF-GM-0 audit-card pass, then choose SLICE-PILOT-1 from the recorded candidate rules.
 Notes:
   This is a map-sync step only. The new map becomes the current local workstream navigator, while the existing command-system/Tampermonkey map remains scoped to its own paused/deferred workstream.
+
+### 2026-06-05 - Synced Parallel Work Goal Map
+
+Date:
+  2026-06-05
+Action:
+  Added a repo-backed living Goal Map for the parallel-agent workspace architecture workstream.
+Type:
+  Goal Map sync / parallel-agent workstream planning
+Status:
+  applied
+Why:
+  The current chat-local Goal Map for parallel work needed a repo-backed source before preparing the PAR-WORK-1 architecture batch. The map records that parallel workspace architecture belongs in the documentation layer, workspaces are staging-only, and aggregate sync plans may include multiple parallel workspaces.
+Changed files:
+  - planning/workstreams/parallel-work-goal-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added the Parallel Work Goal Map as a living workstream map.
+  - Recorded accepted decisions for workspace shape: README.md, base-snapshot.md, responsibility-map.md, local-action-log.md, copies/ and notes/.
+  - Recorded accepted decision that sync plans live under `planning/documentation/parallel-work/syncs/<sync-id>/` and can aggregate multiple workspaces.
+  - Recorded accepted decision that `sync-plan.md` is the lifecycle file for plan, execution checklist and result; no separate `sync-review.md` is required in v1.
+  - Recorded that standalone `proposed-main-action-log-entry.md` should not be part of workspace v1; canonical action-log draft belongs in the sync plan/result stage.
+Not changed:
+  - No parallel-work workflow files created.
+  - No concrete parallel workspace created.
+  - No sync plan created.
+  - No canonical shared root docs changed beyond this map-sync entry.
+  - No slice/testing/domain files changed.
+  - No command expansion started.
+Follow-ups:
+  Prepare PAR-WORK-1 to add the reusable documentation-layer parallel-work workflow/templates and routing when requested.
+Notes:
+  This is a map-sync batch only. PAR-WORK-1 remains planned and should be implemented separately.
