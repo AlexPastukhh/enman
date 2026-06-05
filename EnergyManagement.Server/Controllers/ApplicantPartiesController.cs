@@ -84,7 +84,8 @@ public sealed class ApplicantPartiesController : ProjectController
 
             return Ok(new CreateApplicantPartyResponseDto(
                 result.Value.ApplicantPartyId,
-                result.Value.ClientAccountId));
+                result.Value.ClientAccountId,
+                result.Value.ApplicantPartyType));
         }
         catch (Exception ex)
         {
@@ -140,7 +141,8 @@ public sealed class ApplicantPartiesController : ProjectController
 
             return Ok(new CreateApplicantPartyResponseDto(
                 result.Value.ApplicantPartyId,
-                result.Value.ClientAccountId));
+                result.Value.ClientAccountId,
+                result.Value.ApplicantPartyType));
         }
         catch (Exception ex)
         {
@@ -195,7 +197,8 @@ public sealed class ApplicantPartiesController : ProjectController
 
             return Ok(new CreateApplicantPartyResponseDto(
                 result.Value.ApplicantPartyId,
-                result.Value.ClientAccountId));
+                result.Value.ClientAccountId,
+                result.Value.ApplicantPartyType));
         }
         catch (Exception ex)
         {

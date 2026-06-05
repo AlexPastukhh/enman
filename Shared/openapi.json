@@ -3722,6 +3722,10 @@
           "clientAccountId": {
             "type": "integer",
             "format": "int64"
+          },
+          "applicantPartyType": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

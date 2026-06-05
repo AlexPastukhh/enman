@@ -58,7 +58,8 @@ public sealed record CreateLegalEntityApplicantPartyCommand(
 
 public sealed record CreateApplicantPartyResponse(
     long ApplicantPartyId,
-    long ClientAccountId);
+    long ClientAccountId,
+    string ApplicantPartyType);
 
 public sealed record CreateConnectionRequestCommand(
     long ClientAccountId,

@@ -560,6 +560,7 @@ export interface components {
             applicantPartyId?: number;
             /** Format: int64 */
             clientAccountId?: number;
+            applicantPartyType?: string | null;
         };
         CreateConnectionRequestDto: {
             applicantContextType?: string | null;

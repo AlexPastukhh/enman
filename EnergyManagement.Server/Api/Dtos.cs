@@ -44,7 +44,8 @@ public sealed record CreateLegalEntityApplicantPartyDto(
 
 public sealed record CreateApplicantPartyResponseDto(
     [property: JsonPropertyName("applicantPartyId")] long ApplicantPartyId,
-    [property: JsonPropertyName("clientAccountId")] long ClientAccountId);
+    [property: JsonPropertyName("clientAccountId")] long ClientAccountId,
+    [property: JsonPropertyName("applicantPartyType")] string ApplicantPartyType);
 
 public sealed record CurrentIndividualApplicantPartyResponseDto(
     [property: JsonPropertyName("exists")] bool Exists,

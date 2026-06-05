@@ -50,6 +50,7 @@ public sealed class CreateIndividualEntrepreneurApplicantPartyHandler
         return Result.Success<CreateApplicantPartyResponse, IReadOnlyList<Error>>(
             new CreateApplicantPartyResponse(
                 applicantPartyResult.Value.Id,
-                applicantPartyResult.Value.ClientAccountId));
+                applicantPartyResult.Value.ClientAccountId,
+                applicantPartyResult.Value.ApplicantPartyType.ToString()));
     }
 }
