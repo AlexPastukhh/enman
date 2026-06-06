@@ -81,7 +81,7 @@ export const Header = () => {
         </nav>
 
         <div className="header__contact" aria-label="Контакты поддержки">
-          <a href="tel:88001007000" className="header__hotline-link">
+          <a href="tel:80000000000" className="header__hotline-link">
             <PhoneIcon /> {headerConst.hotlinePhoneNumberText}
           </a>
           <span>{headerConst.hotlinePhoneLabelText}</span>

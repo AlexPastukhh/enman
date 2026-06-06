@@ -25,8 +25,8 @@
   min-height: var(--header-height);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(20rem, auto) 1fr auto;
-  gap: 2rem;
+  grid-template-columns: minmax(22rem, auto) minmax(0, 1fr) auto;
+  gap: 1.6rem;
   align-items: center;
 }
 
@@ -63,6 +63,7 @@
   align-items: center;
   gap: 0.8rem;
   flex-wrap: wrap;
+  min-width: 0;
 }
 
 .header__nav-button {
@@ -154,7 +155,7 @@
 }
 
 .content {
-  width: min(var(--container-width), calc(100% - 3.2rem));
+  width: min(var(--content-width), calc(100% - 3.2rem));
   margin: 0 auto;
   flex: 1;
   padding: 4rem 0 6rem;
@@ -221,7 +222,7 @@
 
 .accountPage__signedOut,
 .accountPage__panel {
-  padding: 3rem;
+  padding: clamp(2rem, 3vw, 3.2rem);
 }
 
 .accountPage__actions,
@@ -234,17 +235,20 @@
 
 @media (max-width: 88rem) {
   .header__top {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(18rem, auto) minmax(0, 1fr);
     justify-items: stretch;
-    padding: 1.2rem 0;
+    padding: 1rem 0;
   }
 
   .header__actions {
     justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
   }
 
   .header__contact {
-    justify-items: start;
+    display: none;
   }
 }
 
@@ -271,14 +275,12 @@
   }
 
   .header__actions {
-    align-items: stretch;
+    align-items: center;
   }
 
   .header__nav-button,
-  .header__nav-link,
-  .button-primary,
-  .button-hollow {
-    width: 100%;
+  .header__nav-link {
+    flex: 0 0 auto;
   }
 }
 

@@ -127,13 +127,13 @@
 }
 
 .pageSurface {
-  width: min(var(--container-width), calc(100% - 3.2rem));
+  width: min(var(--content-width), calc(100% - 3.2rem));
   margin: 0 auto;
 }
 
 .pageCard {
   border: 0.1rem solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   background: var(--color-surface);
   box-shadow: var(--shadow-sm);
 }
@@ -149,9 +149,9 @@
 
 .pageTitle {
   margin: 0;
-  font-size: clamp(3rem, 5vw, 5.4rem);
-  line-height: 1.05;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.8rem, 3vw, 4.2rem);
+  line-height: 1.08;
+  letter-spacing: 0;
 }
 
 .pageDescription {

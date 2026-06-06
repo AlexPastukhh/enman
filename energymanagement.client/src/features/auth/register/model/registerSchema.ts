@@ -40,4 +40,6 @@ export const registerServerFieldMap: Record<string, string> = {
   email: registerFieldNames.email,
   Password: registerFieldNames.password,
   password: registerFieldNames.password,
+  PasswordConfirmation: registerFieldNames.passwordConfirmation,
+  passwordConfirmation: registerFieldNames.passwordConfirmation,
 };

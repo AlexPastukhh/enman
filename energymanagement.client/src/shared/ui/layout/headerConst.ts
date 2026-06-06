@@ -1,19 +1,29 @@
 export const headerConst = {
-  homeLinkTextPart1: "ООО «ЗСК»",
+  homeLinkTextPart1: "\u041e\u041e\u041e \u00ab\u0417\u0421\u041a\u00bb",
   homeLinkTextPart2: "",
-  sessionLoadingText: "Загружаем сессию...",
-  homeLinkSloganText: "Заявки и договоры в одном интерфейсе",
-  loginLinkText: "Войти",
-  registerLinkText: "Регистрация",
-  logoutButtonText: "Выйти",
-  logoutPendingButtonText: "Выходим...",
-  accountLinkText: "Личный кабинет",
-  createRequestLinkText: "Создать заявку",
-  myRequestsLinkText: "Мои заявки",
-  agreementExchangesLinkText: "Мои договоры",
-  employeeRequestsLinkText: "Заявки",
-  employeeAgreementExchangesLinkText: "Согласование договоров",
-  homeLinkText: "Главная",
-  hotlinePhoneNumberText: "8-800-100-70-00",
-  hotlinePhoneLabelText: "Поддержка",
+  sessionLoadingText:
+    "\u0417\u0430\u0433\u0440\u0443\u0436\u0430\u0435\u043c \u0441\u0435\u0441\u0441\u0438\u044e...",
+  homeLinkSloganText:
+    "\u0417\u0430\u044f\u0432\u043a\u0438 \u0438 \u0434\u043e\u0433\u043e\u0432\u043e\u0440\u044b \u0432 \u043e\u0434\u043d\u043e\u043c \u0438\u043d\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u0435",
+  loginLinkText: "\u0412\u043e\u0439\u0442\u0438",
+  registerLinkText: "\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044f",
+  logoutButtonText: "\u0412\u044b\u0439\u0442\u0438",
+  logoutPendingButtonText:
+    "\u0412\u044b\u0445\u043e\u0434\u0438\u043c...",
+  accountLinkText:
+    "\u041b\u0438\u0447\u043d\u044b\u0439 \u043a\u0430\u0431\u0438\u043d\u0435\u0442",
+  createRequestLinkText:
+    "\u0421\u043e\u0437\u0434\u0430\u0442\u044c \u0437\u0430\u044f\u0432\u043a\u0443",
+  myRequestsLinkText:
+    "\u041c\u043e\u0438 \u0437\u0430\u044f\u0432\u043a\u0438",
+  agreementExchangesLinkText:
+    "\u041c\u043e\u0438 \u0434\u043e\u0433\u043e\u0432\u043e\u0440\u044b",
+  employeeRequestsLinkText:
+    "\u0417\u0430\u044f\u0432\u043a\u0438",
+  employeeAgreementExchangesLinkText:
+    "\u0421\u043e\u0433\u043b\u0430\u0441\u043e\u0432\u0430\u043d\u0438\u0435 \u0434\u043e\u0433\u043e\u0432\u043e\u0440\u043e\u0432",
+  homeLinkText: "\u0413\u043b\u0430\u0432\u043d\u0430\u044f",
+  hotlinePhoneNumberText: "8-000-000-00-00",
+  hotlinePhoneLabelText:
+    "\u041f\u043e\u0434\u0434\u0435\u0440\u0436\u043a\u0430",
 } as const;

@@ -1,33 +1,58 @@
 import { errorCodes } from "../constants/generatedConstants";
 
-export const fallbackErrorMessage = "Не удалось выполнить действие. Попробуйте ещё раз.";
+export const fallbackErrorMessage =
+  "\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u0432\u044b\u043f\u043e\u043b\u043d\u0438\u0442\u044c \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435. \u041f\u043e\u043f\u0440\u043e\u0431\u0443\u0439\u0442\u0435 \u0435\u0449\u0451 \u0440\u0430\u0437.";
 
 export const errorToMessageMap: Record<string, string> = {
   [errorCodes.Email.IsInvalid]:
-    "Неверный формат email. Используйте формат name@example.com.",
-  [errorCodes.Email.IsRegisteredAlready]: "Этот email уже зарегистрирован.",
-  [errorCodes.Email.IsRequired]: "Укажите email.",
+    "\u041d\u0435\u0432\u0435\u0440\u043d\u044b\u0439 \u0444\u043e\u0440\u043c\u0430\u0442 email. \u0418\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0439\u0442\u0435 \u0444\u043e\u0440\u043c\u0430\u0442 name@example.com.",
+  [errorCodes.Email.IsRegisteredAlready]:
+    "\u042d\u0442\u043e\u0442 email \u0443\u0436\u0435 \u0437\u0430\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u043e\u0432\u0430\u043d.",
+  [errorCodes.Email.IsRequired]: "\u0423\u043a\u0430\u0436\u0438\u0442\u0435 email.",
+  "account.email.wasnt.registered":
+    "\u0410\u043a\u043a\u0430\u0443\u043d\u0442 \u0441 \u0442\u0430\u043a\u0438\u043c email \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d.",
+
   [errorCodes.Password.IsTooShort]:
-    "Пароль должен содержать не менее 12 символов.",
-  [errorCodes.Password.IsRequired]: "Укажите пароль.",
+    "\u041f\u0430\u0440\u043e\u043b\u044c \u0434\u043e\u043b\u0436\u0435\u043d \u0441\u043e\u0434\u0435\u0440\u0436\u0430\u0442\u044c \u043d\u0435 \u043c\u0435\u043d\u0435\u0435 12 \u0441\u0438\u043c\u0432\u043e\u043b\u043e\u0432.",
+  [errorCodes.Password.IsRequired]: "\u0423\u043a\u0430\u0436\u0438\u0442\u0435 \u043f\u0430\u0440\u043e\u043b\u044c.",
   [errorCodes.Password.IsTooLong]:
-    "Пароль должен содержать не более 50 символов.",
+    "\u041f\u0430\u0440\u043e\u043b\u044c \u0434\u043e\u043b\u0436\u0435\u043d \u0441\u043e\u0434\u0435\u0440\u0436\u0430\u0442\u044c \u043d\u0435 \u0431\u043e\u043b\u0435\u0435 50 \u0441\u0438\u043c\u0432\u043e\u043b\u043e\u0432.",
   [errorCodes.Password.LacksSpecialChars]:
-    "Пароль должен содержать специальный символ, например !, @, #, $, %, ^, &, *.",
+    "\u041f\u0430\u0440\u043e\u043b\u044c \u0434\u043e\u043b\u0436\u0435\u043d \u0441\u043e\u0434\u0435\u0440\u0436\u0430\u0442\u044c \u0441\u043f\u0435\u0446\u0438\u0430\u043b\u044c\u043d\u044b\u0439 \u0441\u0438\u043c\u0432\u043e\u043b, \u043d\u0430\u043f\u0440\u0438\u043c\u0435\u0440 !, @, #, $, %, ^, &, *.",
+  [errorCodes.Password.IsWrong]:
+    "\u041d\u0435\u0432\u0435\u0440\u043d\u044b\u0439 \u043f\u0430\u0440\u043e\u043b\u044c.",
+
   [errorCodes.PasswordConfirmation.DoesNotMatch]:
-    "Пароли не совпадают.",
+    "\u041f\u0430\u0440\u043e\u043b\u0438 \u043d\u0435 \u0441\u043e\u0432\u043f\u0430\u0434\u0430\u044e\u0442.",
   [errorCodes.PasswordConfirmation.IsRequired]:
-    "Подтвердите пароль.",
-  [errorCodes.Phone.IsRequired]: "Укажите телефон.",
+    "\u041f\u043e\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 \u043f\u0430\u0440\u043e\u043b\u044c.",
+
+  [errorCodes.Phone.IsRequired]: "\u0423\u043a\u0430\u0436\u0438\u0442\u0435 \u0442\u0435\u043b\u0435\u0444\u043e\u043d.",
   [errorCodes.Phone.IsInvalid]:
-    "Неверный формат телефона. Используйте цифры и при необходимости знак + в начале.",
-  "account.firstName.is.required": "Укажите имя.",
-  "account.firstName.is.too.large": "Имя слишком длинное.",
-  "account.middleName.is.required": "Укажите отчество.",
-  "account.middleName.is.too.large": "Отчество слишком длинное.",
-  "account.lastName.is.required": "Укажите фамилию.",
-  "account.lastName.is.too.large": "Фамилия слишком длинная.",
+    "\u041d\u0435\u0432\u0435\u0440\u043d\u044b\u0439 \u0444\u043e\u0440\u043c\u0430\u0442 \u0442\u0435\u043b\u0435\u0444\u043e\u043d\u0430. \u0418\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0439\u0442\u0435 \u0446\u0438\u0444\u0440\u044b \u0438 \u043f\u0440\u0438 \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e\u0441\u0442\u0438 \u0437\u043d\u0430\u043a + \u0432 \u043d\u0430\u0447\u0430\u043b\u0435.",
+
+  "account.firstName.is.required": "\u0423\u043a\u0430\u0436\u0438\u0442\u0435 \u0438\u043c\u044f.",
+  "account.firstName.is.too.large": "\u0418\u043c\u044f \u0441\u043b\u0438\u0448\u043a\u043e\u043c \u0434\u043b\u0438\u043d\u043d\u043e\u0435.",
+  "account.middleName.is.required": "\u0423\u043a\u0430\u0436\u0438\u0442\u0435 \u043e\u0442\u0447\u0435\u0441\u0442\u0432\u043e.",
+  "account.middleName.is.too.large":
+    "\u041e\u0442\u0447\u0435\u0441\u0442\u0432\u043e \u0441\u043b\u0438\u0448\u043a\u043e\u043c \u0434\u043b\u0438\u043d\u043d\u043e\u0435.",
+  "account.lastName.is.required": "\u0423\u043a\u0430\u0436\u0438\u0442\u0435 \u0444\u0430\u043c\u0438\u043b\u0438\u044e.",
+  "account.lastName.is.too.large":
+    "\u0424\u0430\u043c\u0438\u043b\u0438\u044f \u0441\u043b\u0438\u0448\u043a\u043e\u043c \u0434\u043b\u0438\u043d\u043d\u0430\u044f.",
+
+  "l1.applicant.inn.is.required": "\u0423\u043a\u0430\u0436\u0438\u0442\u0435 \u0418\u041d\u041d.",
+  "l1.applicant.inn.is.invalid": "\u0418\u041d\u041d \u0434\u043e\u043b\u0436\u0435\u043d \u0441\u043e\u0441\u0442\u043e\u044f\u0442\u044c \u0438\u0437 10 \u0438\u043b\u0438 12 \u0446\u0438\u0444\u0440.",
+  "l1.applicant.kpp.is.required": "\u0423\u043a\u0430\u0436\u0438\u0442\u0435 \u041a\u041f\u041f.",
+  "l1.applicant.kpp.is.invalid": "\u041a\u041f\u041f \u0434\u043e\u043b\u0436\u0435\u043d \u0441\u043e\u0441\u0442\u043e\u044f\u0442\u044c \u0438\u0437 9 \u0446\u0438\u0444\u0440.",
+  "l1.applicant.ogrn.is.required": "\u0423\u043a\u0430\u0436\u0438\u0442\u0435 \u041e\u0413\u0420\u041d.",
+  "l1.applicant.ogrn.is.invalid": "\u041e\u0413\u0420\u041d \u0434\u043e\u043b\u0436\u0435\u043d \u0441\u043e\u0441\u0442\u043e\u044f\u0442\u044c \u0438\u0437 13 \u0446\u0438\u0444\u0440.",
+  "l1.applicant.ogrnip.is.required": "\u0423\u043a\u0430\u0436\u0438\u0442\u0435 \u041e\u0413\u0420\u041d\u0418\u041f.",
+  "l1.applicant.ogrnip.is.invalid": "\u041e\u0413\u0420\u041d\u0418\u041f \u0434\u043e\u043b\u0436\u0435\u043d \u0441\u043e\u0441\u0442\u043e\u044f\u0442\u044c \u0438\u0437 15 \u0446\u0438\u0444\u0440.",
+  "l1.applicant.organization.name.is.required":
+    "\u0423\u043a\u0430\u0436\u0438\u0442\u0435 \u043d\u0430\u0437\u0432\u0430\u043d\u0438\u0435 \u043e\u0440\u0433\u0430\u043d\u0438\u0437\u0430\u0446\u0438\u0438.",
+  "l1.applicant.organization.name.is.too.long":
+    "\u041d\u0430\u0437\u0432\u0430\u043d\u0438\u0435 \u043e\u0440\u0433\u0430\u043d\u0438\u0437\u0430\u0446\u0438\u0438 \u0441\u043b\u0438\u0448\u043a\u043e\u043c \u0434\u043b\u0438\u043d\u043d\u043e\u0435.",
 };
 
 export const getMessageFromErrorCode = (code: string): string =>
-  errorToMessageMap[code] ?? "Не удалось выполнить действие. Попробуйте ещё раз.";
+  errorToMessageMap[code] ?? fallbackErrorMessage;

@@ -48,7 +48,7 @@ export const EmployeeRequestDashboardFilters = ({
           </option>
           {employeeRequestStatusOptions.map((status) => (
             <option key={status} value={status}>
-              {status}
+              {employeeRequestDashboardConst.statusLabels[status]}
             </option>
           ))}
         </select>

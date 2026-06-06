@@ -15,7 +15,9 @@ const HomePage = () => {
     <main className="content homePage">
         <section className="homePage__hero pageCard" aria-labelledby="home-page-heading">
           <div>
-            <p className="pageEyebrow">ООО «ЗСК»</p>
+            <p className="pageEyebrow">
+              {"\u041e\u041e\u041e \u00ab\u0417\u0421\u041a\u00bb"}
+            </p>
             <h1 className="pageTitle" id="home-page-heading">
               Заявки, проверки и договоры в одном рабочем потоке
             </h1>

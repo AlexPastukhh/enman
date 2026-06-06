@@ -32,9 +32,8 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
     [Fact]
     public async Task Final_refuse_without_csrf_returns_bad_request()
     {
-        const long employeeId = -930;
-        await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedClient(employeeId, "employee--930@example.com", role: "Employee");
+        var employee = await CreateEmployeeAsync();
+        var employeeClient = AuthenticatedClient(employee.AccountId, employee.Email, role: "Employee");
 
         var response = await employeeClient.PostAsync(
             "/api/agreement-exchanges/1/final-refuse",
@@ -61,14 +60,13 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
     {
         var account = await RegisterAccountAsync();
         var requestId = await CreateApprovedRequestForAccountAsync(account.AccountId);
+        var employee = await CreateEmployeeAsync();
         var exchangeId = await InsertExchangeWithSingleEmployeeProposalAsync(
             requestId,
             account.AccountId,
-            employeeSenderId: -931);
+            employeeSenderId: employee.AccountId);
 
-        const long employeeId = -932;
-        await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedClient(employeeId, "employee--932@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employee.AccountId, employee.Email, role: "Employee");
 
         var beforeProposals = await GetProposalRowsAsync(exchangeId);
 
@@ -84,7 +82,7 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
             ?? throw new InvalidOperationException("Exchange row was not found.");
         exchange.Status.Should().Be("FinallyRefused");
         exchange.ActiveProposalVersion.Should().Be(1);
-        exchange.FinalRefusedByEmployeeId.Should().Be(employeeId);
+        exchange.FinalRefusedByEmployeeId.Should().Be(employee.AccountId);
         exchange.FinalRefusedAt.Should().NotBeNull();
         exchange.FinalRefusalReason.Should().Be("Final refusal reason.");
 
@@ -103,14 +101,14 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
     {
         var account = await RegisterAccountAsync();
         var requestId = await CreateApprovedRequestForAccountAsync(account.AccountId);
+        var employee = await CreateEmployeeAsync();
         var exchangeId = await InsertExchangeAwaitingEmployeeAsync(
             requestId,
             account.AccountId,
-            clientSenderId: account.AccountId);
+            clientSenderId: account.AccountId,
+            employeeSenderId: employee.AccountId);
 
-        const long employeeId = -933;
-        await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedClient(employeeId, "employee--933@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employee.AccountId, employee.Email, role: "Employee");
 
         var response = await FinalRefuseRequestAsync(employeeClient, exchangeId);
 
@@ -120,7 +118,7 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
         var exchange = await GetExchangeRowAsync(exchangeId)
             ?? throw new InvalidOperationException("Exchange row was not found.");
         exchange.Status.Should().Be("FinallyRefused");
-        exchange.FinalRefusedByEmployeeId.Should().Be(employeeId);
+        exchange.FinalRefusedByEmployeeId.Should().Be(employee.AccountId);
         exchange.FinalRefusalReason.Should().BeNull();
 
         var request = await GetRequestRowAsync(requestId)
@@ -133,14 +131,13 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
     {
         var account = await RegisterAccountAsync();
         var requestId = await CreateApprovedRequestForAccountAsync(account.AccountId);
+        var employee = await CreateEmployeeAsync();
         var exchangeId = await InsertExchangeWithSingleEmployeeProposalAsync(
             requestId,
             account.AccountId,
-            employeeSenderId: -934);
+            employeeSenderId: employee.AccountId);
 
-        const long employeeId = -935;
-        await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedClient(employeeId, "employee--935@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employee.AccountId, employee.Email, role: "Employee");
 
         var response = await FinalRefuseRequestAsync(
             employeeClient,
@@ -167,14 +164,13 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
     {
         var account = await RegisterAccountAsync();
         var requestId = await CreateApprovedRequestForAccountAsync(account.AccountId);
+        var employee = await CreateEmployeeAsync();
         var exchangeId = await InsertExchangeWithSingleEmployeeProposalAsync(
             requestId,
             account.AccountId,
-            employeeSenderId: -936);
+            employeeSenderId: employee.AccountId);
 
-        const long employeeId = -937;
-        await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedClient(employeeId, "employee--937@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employee.AccountId, employee.Email, role: "Employee");
 
         var response = await FinalRefuseRequestAsync(
             employeeClient,
@@ -199,14 +195,13 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
     {
         var account = await RegisterAccountAsync();
         var requestId = await CreateApprovedRequestForAccountAsync(account.AccountId);
+        var employee = await CreateEmployeeAsync();
         var exchangeId = await InsertAcceptedExchangeAsync(
             requestId,
             account.AccountId,
-            employeeSenderId: -938);
+            employeeSenderId: employee.AccountId);
 
-        const long employeeId = -939;
-        await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedClient(employeeId, "employee--939@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employee.AccountId, employee.Email, role: "Employee");
 
         var response = await FinalRefuseRequestAsync(
             employeeClient,
@@ -234,14 +229,13 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
         await CreateConnectionRequestAsync(account.AccountId, applicant.ApplicantPartyId);
         var request = await GetLatestRequestRowForApplicantPartyAsync(applicant.ApplicantPartyId)
             ?? throw new InvalidOperationException("Could not find created request.");
+        var employee = await CreateEmployeeAsync();
         var exchangeId = await InsertExchangeWithSingleEmployeeProposalAsync(
             request.Id,
             account.AccountId,
-            employeeSenderId: -940);
+            employeeSenderId: employee.AccountId);
 
-        const long employeeId = -941;
-        await InsertEmployeeAsync(employeeId);
-        var employeeClient = AuthenticatedClient(employeeId, "employee--941@example.com", role: "Employee");
+        var employeeClient = AuthenticatedClient(employee.AccountId, employee.Email, role: "Employee");
 
         var response = await FinalRefuseRequestAsync(
             employeeClient,
@@ -324,7 +318,8 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
     private async Task<long> InsertExchangeAwaitingEmployeeAsync(
         long requestId,
         long clientAccountId,
-        long clientSenderId)
+        long clientSenderId,
+        long employeeSenderId)
     {
         var createdAt = DateTimeOffset.UtcNow;
         var exchangeId = await InsertExchangeAsync(
@@ -342,7 +337,7 @@ public sealed class AgreementExchangeFinalRefusalIntegrationTests : AppIntegrati
             exchangeId,
             version: 1,
             sender: "Employee",
-            senderId: 77,
+            senderId: employeeSenderId,
             state: "SupersededByCounterProposal",
             createdAt: createdAt.AddMinutes(1));
 

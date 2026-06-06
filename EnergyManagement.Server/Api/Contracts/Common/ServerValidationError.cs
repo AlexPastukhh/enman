@@ -5,7 +5,10 @@ namespace EnergyManagement.Server.Api.Contracts.Common;
 
 public sealed class ServerValidationError : ValueObject
 {
+    [JsonPropertyName("FieldName")]
     public string FieldName { get; set; } = string.Empty;
+
+    [JsonPropertyName("ErrorCode")]
     public string ErrorCode { get; set; } = string.Empty;
 
     [JsonConstructor]

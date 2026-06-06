@@ -8,7 +8,8 @@
     "IsRequired": "account.password.is.required",
     "IsTooShort": "account.password.is.too.short",
     "IsTooLong": "account.password.is.too.long",
-    "LacksSpecialChars": "account.password.lacks.special.characters"
+    "LacksSpecialChars": "account.password.lacks.special.characters",
+    "IsWrong": "account.password.is.wrong"
   },
   "PasswordConfirmation": {
     "IsRequired": "account.passwordConfirmation.is.required",

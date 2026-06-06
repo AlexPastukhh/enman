@@ -21,6 +21,11 @@ export type ServerValidationError = {
   [serverValidationFieldNames.errorCode]: string;
 };
 
+type NormalizedValidationError = {
+  fieldName: string;
+  errorCode: string;
+};
+
 export type FormErrorTarget = {
   fieldName: string;
   message: string;
@@ -41,15 +46,30 @@ const isServerValidationError = (
   serverValidationFieldNames.fieldName in value &&
   serverValidationFieldNames.errorCode in value;
 
+const normalizeValidationError = (
+  value: unknown,
+): NormalizedValidationError | null => {
+  if (isServerValidationError(value)) {
+    return {
+      fieldName: value[serverValidationFieldNames.fieldName],
+      errorCode: value[serverValidationFieldNames.errorCode],
+    };
+  }
+
+  return null;
+};
+
 export const getServerValidationErrors = (
   problemDetails: ProblemDetails,
-): ServerValidationError[] => {
+): NormalizedValidationError[] => {
   const errors = problemDetails[generalConstants.errorsCollectionName];
   if (!Array.isArray(errors)) {
     return [];
   }
 
-  return errors.filter(isServerValidationError);
+  return errors
+    .map(normalizeValidationError)
+    .filter((error): error is NormalizedValidationError => error !== null);
 };
 
 export const problemDetailsToFormErrors = (
@@ -76,28 +96,24 @@ export const problemDetailsToFormErrors = (
   }
 
   const groupedErrors = serverErrors.reduce((groups, error) => {
-    const serverFieldName = error[serverValidationFieldNames.fieldName];
+    const serverFieldName = error.fieldName;
     const fieldName = fieldNameMap[serverFieldName] ?? serverFieldName;
     const existing = groups.get(fieldName) ?? [];
     existing.push(error);
     groups.set(fieldName, existing);
     return groups;
-  }, new Map<string, ServerValidationError[]>());
+  }, new Map<string, NormalizedValidationError[]>());
 
   return [...groupedErrors.entries()].map(([fieldName, errors]) => {
     const types: Record<string, string> = {};
     errors.forEach((error) => {
-      const code = error[serverValidationFieldNames.errorCode];
-      types[code] = getMessageFromErrorCode(code);
+      types[error.errorCode] = getMessageFromErrorCode(error.errorCode);
     });
 
     return {
       fieldName,
-      message: getMessageFromErrorCode(
-        errors[0][serverValidationFieldNames.errorCode],
-      ),
+      message: getMessageFromErrorCode(errors[0].errorCode),
       types,
     };
   });
 };
-

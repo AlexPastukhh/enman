@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
 using EnergyManagement.Server.Api.Contracts.Common;
 using EnergyManagement.Server.Api;
 using EnergyManagement.Server.Application.Commands;
@@ -50,6 +51,16 @@ public sealed class AuthIntegrationTests : AppIntegrationTestBase
 
         await HttpResponseAssertions.For(response, _output)
             .ShouldBeStatusCode(ProblemDetailsContract.ValidationStatusCode);
+
+        var problem = await response.Content.ReadFromJsonAsync<JsonDocument>()
+            ?? throw new InvalidOperationException("ProblemDetails response body was empty.");
+        var error = problem.RootElement
+            .GetProperty(ProblemDetailsContract.ErrorsExtension)[0];
+
+        error.GetProperty("FieldName").GetString().Should().Be("Password");
+        error.GetProperty("ErrorCode").GetString().Should().Be("account.password.is.wrong");
+        error.TryGetProperty("code", out _).Should().BeFalse();
+        error.TryGetProperty("statusCode", out _).Should().BeFalse();
     }
 
     [Fact]

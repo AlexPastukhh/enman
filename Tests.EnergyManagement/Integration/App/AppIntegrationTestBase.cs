@@ -629,6 +629,49 @@ public abstract class AppIntegrationTestBase
             createdAt);
     }
 
+    protected async Task<CreatedEmployee> CreateEmployeeAsync(
+        string firstName = "Employee",
+        string middleName = "Review",
+        string lastName = "User",
+        bool isActive = true,
+        string? email = null,
+        string? windowsLogin = null)
+    {
+        var employeeEmail = email ?? UniqueEmail();
+        var passwordHash = PasswordHash.CreateFromPlainTextPassword(ValidPassword).Value.Value;
+        await using var connection = new SqlConnection(_fixture.ConnectionString);
+        await connection.OpenAsync();
+
+        await using var command = new SqlCommand(
+            """
+            INSERT INTO dbo.Accounts
+                (Email, PasswordHash, Role, IsActive, CreatedAt, AccountType, WindowsLogin,
+                 EmployeeFullName_FirstName, EmployeeFullName_MiddleName, EmployeeFullName_LastName)
+            OUTPUT INSERTED.Id
+            VALUES
+                (@email, @passwordHash, N'Employee', @isActive, @createdAt, N'Employee', @windowsLogin,
+                 @firstName, @middleName, @lastName);
+            """,
+            connection)
+        {
+            CommandType = CommandType.Text
+        };
+
+        command.Parameters.AddWithValue("@email", employeeEmail);
+        command.Parameters.AddWithValue("@passwordHash", passwordHash);
+        command.Parameters.AddWithValue("@windowsLogin", (object?)windowsLogin ?? DBNull.Value);
+        command.Parameters.AddWithValue("@firstName", firstName);
+        command.Parameters.AddWithValue("@middleName", middleName);
+        command.Parameters.AddWithValue("@lastName", lastName);
+        command.Parameters.AddWithValue("@isActive", isActive);
+        command.Parameters.AddWithValue("@createdAt", DateTimeOffset.UtcNow);
+
+        var createdId = await command.ExecuteScalarAsync()
+            ?? throw new InvalidOperationException("Could not create employee account.");
+
+        return new CreatedEmployee(Convert.ToInt64(createdId), employeeEmail);
+    }
+
     protected async Task InsertEmployeeAsync(
         long employeeId,
         string firstName = "Employee",
@@ -842,6 +885,8 @@ public abstract class AppIntegrationTestBase
         long? CompletedByEmployeeId,
         DateTimeOffset? CompletedAt,
         string? RejectionReason);
+
+    protected sealed record CreatedEmployee(long AccountId, string Email);
 
     protected sealed record AccountRow(
         long Id,
