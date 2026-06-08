@@ -72,6 +72,47 @@ export const getServerValidationErrors = (
     .filter((error): error is NormalizedValidationError => error !== null);
 };
 
+const getMessageFromValidationError = (
+  error: NormalizedValidationError,
+): string => {
+  if (error.fieldName === "document.contentType") {
+    return "\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u0435 PDF-\u0444\u0430\u0439\u043b.";
+  }
+
+  if (error.fieldName === "document.sizeBytes") {
+    return "\u0424\u0430\u0439\u043b \u0434\u043e\u043b\u0436\u0435\u043d \u0431\u044b\u0442\u044c \u043d\u0435 \u043f\u0443\u0441\u0442\u044b\u043c \u0438 \u043d\u0435 \u0431\u043e\u043b\u044c\u0448\u0435 10 \u041c\u0411.";
+  }
+
+  if (error.fieldName === "document") {
+    return "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 PDF-\u0444\u0430\u0439\u043b.";
+  }
+
+  return getMessageFromErrorCode(error.errorCode);
+};
+
+export const problemDetailsToErrorMessage = (
+  problemDetails: ProblemDetails | null,
+): string => {
+  if (problemDetails === null) {
+    return fallbackErrorMessage;
+  }
+
+  const serverErrors = getServerValidationErrors(problemDetails);
+  if (serverErrors.length > 0) {
+    return serverErrors.map(getMessageFromValidationError).join("\n");
+  }
+
+  if (problemDetails.detail && problemDetails.detail !== "Validation Error") {
+    return problemDetails.detail;
+  }
+
+  if (problemDetails.title && problemDetails.title !== "Validation Error") {
+    return problemDetails.title;
+  }
+
+  return fallbackErrorMessage;
+};
+
 export const problemDetailsToFormErrors = (
   problemDetails: ProblemDetails,
   fieldNameMap: Record<string, string>,
@@ -107,12 +148,12 @@ export const problemDetailsToFormErrors = (
   return [...groupedErrors.entries()].map(([fieldName, errors]) => {
     const types: Record<string, string> = {};
     errors.forEach((error) => {
-      types[error.errorCode] = getMessageFromErrorCode(error.errorCode);
+      types[error.errorCode] = getMessageFromValidationError(error);
     });
 
     return {
       fieldName,
-      message: getMessageFromErrorCode(errors[0].errorCode),
+      message: getMessageFromValidationError(errors[0]),
       types,
     };
   });

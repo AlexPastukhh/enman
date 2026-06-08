@@ -54,10 +54,20 @@
 }
 
 .startAgreementExchangeAction__hint,
-.startAgreementExchangeAction__error {
+.startAgreementExchangeAction__error,
+.startAgreementExchangeAction__success {
   margin: 0.75rem 0 0;
 }
 
 .startAgreementExchangeAction__error {
   color: #a40000;
+}
+
+.startAgreementExchangeAction__success {
+  color: #0f6b3d;
+}
+
+.startAgreementExchangeAction__success a {
+  color: inherit;
+  font-weight: 700;
 }

@@ -20,7 +20,9 @@ export const ObjectAddressFields = ({
     className="createConnectionRequestForm__section"
     aria-labelledby="object-address-fields-heading"
   >
-    <h3 id="object-address-fields-heading">Object address</h3>
+    <h3 id="object-address-fields-heading">
+      {"\u0410\u0434\u0440\u0435\u0441 \u043e\u0431\u044a\u0435\u043a\u0442\u0430"}
+    </h3>
     <TextInputField
       fieldName="postalCode"
       label={createConnectionRequestConst.postalCodeLabel}

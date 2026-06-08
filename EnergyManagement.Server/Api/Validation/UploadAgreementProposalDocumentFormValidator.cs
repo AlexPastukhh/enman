@@ -8,7 +8,12 @@ public sealed class UploadAgreementProposalDocumentFormValidator
     : AbstractValidator<UploadAgreementProposalDocumentForm>
 {
     public const long MaxAgreementProposalDocumentBytes = 10 * 1024 * 1024;
-    private static readonly string[] AllowedContentTypes = ["application/pdf"];
+    private static readonly string[] AllowedContentTypes =
+    [
+        "application/pdf",
+        "application/octet-stream",
+        string.Empty
+    ];
 
     public UploadAgreementProposalDocumentFormValidator()
     {
@@ -30,13 +35,23 @@ public sealed class UploadAgreementProposalDocumentFormValidator
                 .OverridePropertyName(FieldNames.AgreementProposalDocumentUpload.DocumentSizeBytes)
                 .WithMessage(Error.Errors.General.ValueIsInvalid.Code);
 
-            RuleFor(x => x.Document!.ContentType)
-                .NotEmpty()
-                .Must(contentType => AllowedContentTypes.Contains(
-                    contentType,
-                    StringComparer.OrdinalIgnoreCase))
+            RuleFor(x => x.Document)
+                .Must(document => IsPdfDocument(document!.FileName, document.ContentType))
                 .OverridePropertyName(FieldNames.AgreementProposalDocumentUpload.DocumentContentType)
                 .WithMessage(Error.Errors.General.ValueIsInvalid.Code);
         });
+    }
+
+    private static bool IsPdfDocument(string fileName, string contentType)
+    {
+        var hasPdfExtension = Path.GetExtension(fileName).Equals(
+            ".pdf",
+            StringComparison.OrdinalIgnoreCase);
+
+        var hasAllowedContentType = AllowedContentTypes.Contains(
+            contentType?.Trim() ?? string.Empty,
+            StringComparer.OrdinalIgnoreCase);
+
+        return hasPdfExtension && hasAllowedContentType;
     }
 }

@@ -1,18 +1,21 @@
-import { fallbackErrorMessage } from "../errors/clientErrorMessages";
 import {
   antiforgeryFailureCode,
   antiforgeryHeaderName,
   ensureAntiforgeryToken,
   refreshAntiforgeryToken,
 } from "./antiforgeryTokenStore";
-import { isProblemDetails, type ProblemDetails } from "./problemDetails";
+import {
+  isProblemDetails,
+  problemDetailsToErrorMessage,
+  type ProblemDetails,
+} from "./problemDetails";
 
 export class ApiError extends Error {
   public readonly status: number;
   public readonly problemDetails: ProblemDetails | null;
 
   constructor(status: number, problemDetails: ProblemDetails | null) {
-    super(problemDetails?.detail ?? problemDetails?.title ?? fallbackErrorMessage);
+    super(problemDetailsToErrorMessage(problemDetails));
     this.status = status;
     this.problemDetails = problemDetails;
   }

@@ -1,5 +1,7 @@
 import { useState, type FormEvent } from "react";
+import { Link } from "react-router-dom";
 import { ApiError } from "../../../../shared/api/fetchJson";
+import { clientRoutes } from "../../../../shared/config/clientRoutes";
 import { uploadAgreementProposalDocument } from "../../upload-document/api/uploadAgreementProposalDocument";
 import { useStartAgreementExchangeMutation } from "../model/useStartAgreementExchangeMutation";
 import { startAgreementExchangeFormConst } from "./startAgreementExchangeFormConst";
@@ -34,6 +36,7 @@ export const StartAgreementExchangeForm = ({
   const [comment, setComment] = useState("");
   const [validationError, setValidationError] = useState<string | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const mutation = useStartAgreementExchangeMutation();
   const isDisabled = disabled || isUploading || mutation.isPending;
@@ -47,12 +50,15 @@ export const StartAgreementExchangeForm = ({
     }
 
     if (document === null) {
+      setSuccessMessage(null);
       setValidationError(startAgreementExchangeFormConst.validationErrorMessage);
       return;
     }
 
     setValidationError(null);
     setUploadError(null);
+    setSuccessMessage(null);
+    mutation.reset();
 
     try {
       setIsUploading(true);
@@ -68,11 +74,13 @@ export const StartAgreementExchangeForm = ({
         },
         {
           onSuccess: () => {
+            setSuccessMessage(startAgreementExchangeFormConst.successMessage);
             onStarted?.();
           },
         },
       );
     } catch (error) {
+      setSuccessMessage(null);
       setUploadError(getErrorMessage(error));
     } finally {
       setIsUploading(false);
@@ -103,6 +111,7 @@ export const StartAgreementExchangeForm = ({
           id={`start-exchange-document-${requestId}`}
           className="startAgreementExchangeAction__input"
           type="file"
+          accept="application/pdf,.pdf"
           disabled={isDisabled}
           onChange={(event) => {
             setDocument(event.target.files?.[0] ?? null);
@@ -150,6 +159,15 @@ export const StartAgreementExchangeForm = ({
       {mutation.isError && (
         <p className="startAgreementExchangeAction__error" role="alert">
           {getErrorMessage(mutation.error)}
+        </p>
+      )}
+      {successMessage && (
+        <p className="startAgreementExchangeAction__success">
+          {successMessage}
+          {" "}
+          <Link to={clientRoutes.employeeAgreementExchanges}>
+            {startAgreementExchangeFormConst.successLinkText}
+          </Link>
         </p>
       )}
     </form>

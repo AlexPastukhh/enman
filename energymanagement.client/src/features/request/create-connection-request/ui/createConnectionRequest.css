@@ -1,5 +1,6 @@
 .createConnectionRequestForm {
   margin-top: 2rem;
+  width: min(100%, 72rem);
   max-width: 72rem;
 }
 

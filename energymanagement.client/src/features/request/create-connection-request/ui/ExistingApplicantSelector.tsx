@@ -10,11 +10,23 @@ type ExistingApplicantSelectorProps = {
   onChange: (applicantPartyId: string) => void;
 };
 
+const applicantPartyTypeLabels: Record<string, string> = {
+  Individual: "\u0424\u0438\u0437\u0438\u0447\u0435\u0441\u043a\u043e\u0435 \u043b\u0438\u0446\u043e",
+  IndividualEntrepreneur: "\u0418\u041f",
+  LegalEntity: "\u042e\u0440\u0438\u0434\u0438\u0447\u0435\u0441\u043a\u043e\u0435 \u043b\u0438\u0446\u043e",
+};
+
+const formatApplicantPartyType = (applicantPartyType: string | null | undefined) =>
+  applicantPartyType
+    ? applicantPartyTypeLabels[applicantPartyType] ?? applicantPartyType
+    : valueOrUnknown(applicantPartyType);
+
 const getApplicantPartyOptionLabel = (applicantParty: ApplicantPartySummary) => {
   const marker = applicantParty.isCurrentDefault
     ? ` (${createConnectionRequestConst.currentDefaultMarker})`
     : "";
-  return `${valueOrUnknown(applicantParty.displayName)} — ${valueOrUnknown(
+
+  return `${valueOrUnknown(applicantParty.displayName)} \u2014 ${formatApplicantPartyType(
     applicantParty.applicantPartyType,
   )}${marker}`;
 };

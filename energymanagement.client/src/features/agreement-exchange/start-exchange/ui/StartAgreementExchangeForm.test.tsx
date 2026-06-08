@@ -5,6 +5,7 @@ import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { StartAgreementExchangeForm } from "./StartAgreementExchangeForm";
+import { startAgreementExchangeFormConst } from "./startAgreementExchangeFormConst";
 
 const {
   mockedUseStartAgreementExchangeMutation,
@@ -26,6 +27,7 @@ vi.mock("../../upload-document/api/uploadAgreementProposalDocument", () => ({
 
 describe("StartAgreementExchangeForm", () => {
   const mutate = vi.fn();
+  const reset = vi.fn();
   const uploadedDocumentRef = {
     storageKey: "agreements/42/initial.pdf",
     originalFileName: "initial.pdf",
@@ -36,6 +38,7 @@ describe("StartAgreementExchangeForm", () => {
   beforeEach(() => {
     mockedUseStartAgreementExchangeMutation.mockReturnValue({
       mutate,
+      reset,
       isPending: false,
       isError: false,
       error: null,
@@ -46,6 +49,7 @@ describe("StartAgreementExchangeForm", () => {
   afterEach(() => {
     cleanup();
     mutate.mockReset();
+    reset.mockReset();
     mockedUseStartAgreementExchangeMutation.mockReset();
     mockedUploadAgreementProposalDocument.mockReset();
   });
@@ -87,7 +91,7 @@ describe("StartAgreementExchangeForm", () => {
     await user.click(screen.getByRole("button", { name: "Начать согласование договора" }));
 
     expect(screen.getByRole("alert")).toHaveTextContent(
-      "Выберите первичный документ предложения.",
+      startAgreementExchangeFormConst.validationErrorMessage,
     );
     expect(mockedUploadAgreementProposalDocument).not.toHaveBeenCalled();
     expect(mutate).not.toHaveBeenCalled();
@@ -116,6 +120,7 @@ describe("StartAgreementExchangeForm", () => {
   it("shows pending state and command error feedback", () => {
     mockedUseStartAgreementExchangeMutation.mockReturnValue({
       mutate,
+      reset,
       isPending: true,
       isError: true,
       error: new Error("Agreement exchange already exists."),
