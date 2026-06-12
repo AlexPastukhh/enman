@@ -1,7 +1,7 @@
 # Tampermonkey Chat Command Helper
 
 Status: current Tampermonkey helper implementation entrypoint  
-Doc version: v0.3.0
+Doc version: v0.4.0
 Scope: implementation documentation entrypoint for the Enman Chat Command Helper; not the userscript source code
 
 ## 0. Source Sync / ROOT-FULL-1 / SRC-CMD-1B
@@ -13,10 +13,10 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.3.0
-    - planning/planning-use-case-map.md @ Doc version: v1.0.0
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v1.1.0
     - tools/tampermonkey/IMPLEMENTATION-NOTES.md @ Doc version: v0.2.0
-    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.3.0
+    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.4.0
   Internal dependencies:
     - Purpose
     - MVP Behavior
@@ -111,6 +111,7 @@ implemented:
   no auto-send
   source/version maintenance command profiles
   explicit `положняк` current-state command profile
+  neutral English command names in labels and inserted bodies
 
 next:
   manual browser test
@@ -149,6 +150,8 @@ The script uses a standard userscript header with `@match` entries for ChatGPT p
 - Inserted body includes source_of_truth.
 - Inserted body includes route_read_rule.
 - Inserted body includes compact key_reminders.
+- Inserted body includes `english_name:`.
+- Button label shows `<english name> · <command label>`.
 - Composer-not-found error is safe and visible.
 ```
 
@@ -178,6 +181,17 @@ Do not ignore `key_reminders`.
 ```
 
 These two lines are intentionally short. Detailed conflict/stop and honesty rules stay in `planning/workflow-activation-map.md` and `planning/planning-use-case-map.md`.
+
+
+English display names:
+
+```text
+- Every helper profile has an English display name.
+- Button labels use `<english name> · <command label>`.
+- Inserted command bodies include `english_name:` immediately after `command:`.
+- English names are readability labels only; they do not override `command`, `command_family`, UCM or owner docs.
+```
+
 
 ```text
 - The helper does not browse the repo or verify freshness.
@@ -232,4 +246,13 @@ These profiles remain editable prompt projections. They do not browse the repo, 
 ```text
 - SRC-CMD-1B added helper profile documentation for source/version maintenance and current-state commands; bumped this README to Doc version: v0.2.0.
 - CASCADE-CMD-PREFLIGHT-0 added the two-line inserted command-body guardrail, clarified `давай архив` as full replacement archive only, and bumped this README to Doc version: v0.3.0.
+```
+
+### CMD-TM-EN-NAMES-1
+
+```text
+Source Delta:
+  - Documented neutral English command names for helper button labels and inserted bodies.
+  - Button labels use `<english name> · <command label>`.
+  - Inserted bodies include `english_name:`.
 ```

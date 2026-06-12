@@ -1,7 +1,7 @@
 # Tampermonkey Command Projection Plan
 
 Status: current workstream planning file  
-Doc version: v0.3.0
+Doc version: v0.4.0
 Scope: planning rules for projecting repository command routes into editable Tampermonkey prompt-helper prompts; not userscript implementation
 
 ## 0. Source Sync / ROOT-FULL-1 / SRC-CMD-1B
@@ -13,13 +13,13 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/planning-use-case-map.md @ Doc version: v1.0.0
+    - planning/planning-use-case-map.md @ Doc version: v1.1.0
     - planning/goal-map-principles-workflow-template.md @ Doc version: v0.1.0
     - planning/documentation/examples/README.md @ Doc version: v0.1.0
     - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
     - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
-    - tools/tampermonkey/README.md @ Doc version: v0.3.0
-    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.3.0
+    - tools/tampermonkey/README.md @ Doc version: v0.4.0
+    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.4.0
   Internal dependencies:
     - Source Of Truth
     - MVP Command Groups
@@ -73,6 +73,9 @@ Do not ignore `key_reminders`.
 command:
   <selected user alias>
 
+english_name:
+  <neutral English display name>
+
 command_family:
   <aliases from planning-use-case-map.md>
 
@@ -95,6 +98,15 @@ user_target:
 ```
 
 The envelope should be inserted into chat input, not auto-sent by default.
+
+English names are neutral display/clarity names. Do not mark Russian or English as primary in the repository docs. For helper buttons, display the English name first for compact scanning:
+
+```text
+<english_name> · <command label>
+```
+
+Inserted command bodies must include `english_name:` directly after `command:`. This field is a display/readability label only; `command` and `command_family` keep routing semantics.
+
 
 Every inserted command body must begin with exactly these two reminder lines immediately after `[ENMAN_COMMAND]`:
 
@@ -792,6 +804,7 @@ user_target:
 [/ENMAN_COMMAND]
 ```
 ### MVP-2 — useful command helpers
+
 #### command.create / `создай команду`
 
 ```text
@@ -801,6 +814,9 @@ Do not ignore `key_reminders`.
 
 command:
   создай команду
+
+english_name:
+  create command
 
 command_family:
   `создай команду` / `создай новую команду` / `добавь команду` / `спланируй команду` / `new command` / `create command`
@@ -838,6 +854,9 @@ Do not ignore `key_reminders`.
 command:
   начни параллельную работу
 
+english_name:
+  start parallel work
+
 command_family:
   `параллельный агент` / `работай параллельно` / `parallel workspace` / `parallel work` / `создай parallel workspace` / `начни параллельную работу` / `старт параллельной работы` / `создай параллельный воркфлоу` / `start parallel workflow`
 
@@ -862,7 +881,6 @@ user_target:
 
 [/ENMAN_COMMAND]
 ```
-
 
 #### current_state.show / `положняк`
 
@@ -1385,4 +1403,13 @@ After this planning file lands:
 
 ```text
 - SRC-CMD-1B added Tampermonkey helper profiles for source/version maintenance commands and the explicit `положняк` current-state command; bumped this plan to Doc version: v0.2.0.
+```
+
+### CMD-TM-EN-NAMES-1
+
+```text
+Source Delta:
+  - Added `english_name:` to the helper prompt envelope.
+  - Added neutral English display-name rule for command buttons and inserted bodies.
+  - Kept Tampermonkey as projection; UCM and owner docs remain source of truth.
 ```

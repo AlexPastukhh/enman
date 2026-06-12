@@ -2540,6 +2540,7 @@ Follow-ups:
 Notes:
   Tampermonkey command bodies remain helper projections. `planning/planning-use-case-map.md` and linked owner docs remain command source of truth.
 
+
 ### 2026-06-05 - Added command creation workflow and Tampermonkey command projections
 
 Date:
@@ -2580,3 +2581,40 @@ Follow-ups:
   Use `создай команду` for future command additions. Create a command-creation example only after the workflow is used on a clean real follow-up command.
 Notes:
   This batch intentionally adds the two requested Tampermonkey profiles because the user explicitly included Tampermonkey in scope. Future command creation should still treat Tampermonkey projection as a separate decision gate.
+
+### 2026-06-06 - Added English command/use-case names to UCM and Tampermonkey helper
+
+Date:
+  2026-06-06
+Action:
+  Added neutral English display names to user-visible command/use-case clusters and Tampermonkey command profiles.
+Type:
+  command routing / Tampermonkey helper projection / readability cleanup
+Status:
+  applied
+Why:
+  Short Russian command labels are efficient for the user but harder for other chats to interpret quickly. English names make command buttons and inserted command bodies readable without changing routing authority.
+Changed files:
+  - planning/planning-use-case-map.md
+  - planning/workstreams/tampermonkey-command-projection-plan.md
+  - tools/tampermonkey/README.md
+  - tools/tampermonkey/chat-command-palette.user.js
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added UCM English command/use-case names as display labels.
+  - Added `english_name:` to inserted `[ENMAN_COMMAND]` bodies.
+  - Added `englishName` to Tampermonkey command profiles.
+  - Updated helper button labels to show English first, then the command label.
+  - Kept English names as neutral display labels, not separate command authority.
+  - Kept UCM and linked owner docs as source of truth.
+Not changed:
+  - No slice/testing/domain files changed.
+  - No new Tampermonkey UI architecture added.
+  - No helper-owned compose buffer, selected-command stack or command cleanup/repair implemented.
+  - No commit or push done by this package.
+Follow-ups:
+  Apply package, paste diff for review, then smoke-test helper labels and inserted `english_name:` fields.
+Notes:
+  Button labels use `<english name> · <command label>`. English names are intentionally compact display names such as `give arch`, `gm brief`, `chat rech` and `polozh` where requested.

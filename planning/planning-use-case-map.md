@@ -1,7 +1,7 @@
 # Planning Use Case Map
 
 Status: current root use-case map / action-to-doc-flow router
-Doc version: v1.0.0
+Doc version: v1.1.0
 Scope: maps user-visible actions and commands to planning docs, workflows, templates, sources and permission boundaries
 
 ## 1. Purpose
@@ -12,7 +12,7 @@ Sources:
     - planning/documentation/field-kits/root-use-case-map-field-kit.md @ Doc version: v0.1.0
     - planning/documentation/use-case-map-workflow.md @ Doc version: v0.1.0
     - planning/documentation/USE-CASE-MAP-TEMPLATE.md @ version not confirmed
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
   Content:
     - planning/README.md @ Doc version: v0.3.0
   Internal dependencies:
@@ -74,7 +74,7 @@ Sources:
     - planning/workflow-activation-map.md @ Doc version: v0.6.0
     - planning/planning-doc-responsibility-map.md @ Doc version: v0.4.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
   Internal dependencies:
     - Purpose
   Not checked:
@@ -120,7 +120,7 @@ Sources:
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
   Content:
     - planning/README.md @ Doc version: v0.3.0
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
   Internal dependencies:
     - Relationship To Root Files
   Not checked:
@@ -161,7 +161,7 @@ Sources:
     - planning/documentation/planning-docs-architecture-principles.md @ Doc version: v0.1.0
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
   Internal dependencies:
     - Universal Chat Algorithm
   Not checked:
@@ -202,7 +202,7 @@ Sources:
   Format/process:
     - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
   Internal dependencies:
     - Universal Chat Algorithm
   Not checked:
@@ -244,7 +244,7 @@ Sources:
     - planning/documentation/planning-docs-architecture-principles.md#24b-accepted-command-and-preservation-guardrails @ version not confirmed
     - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
   Internal dependencies:
     - Active Context Rule
   Not checked:
@@ -360,7 +360,7 @@ Sources:
     - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
     - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
   Internal dependencies:
     - Read Source Modes
   Not checked:
@@ -407,7 +407,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Read Source Modes
@@ -455,7 +455,7 @@ Sources:
     - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
   Internal dependencies:
     - Source Model
   Not checked:
@@ -515,7 +515,7 @@ Sources:
     - planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md @ Doc version: v0.1.0
     - planning/goal-map-principles-workflow-template.md @ version not confirmed
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
   Internal dependencies:
     - Output Modes
     - Source Delta
@@ -628,7 +628,7 @@ Sources:
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
     - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
   Internal dependencies:
     - Active Context Rule
     - Output Modes
@@ -717,6 +717,78 @@ Examples demonstrate valid execution only. They do not own command semantics, ro
 | Plan file update command | `план файл-обновление`, `спланируй файл-обновление`, `спланируй обновление файлов`, `спланируй архив`, `план архива` | `planning/documentation/examples/PLAN-FILE-UPDATE-COMMAND-EXAMPLE.md` | Read when the chat needs to plan file/docs/code/archive updates and end with `План файл-обновление` in planned mode. | Owner shape stays in `planning/documentation/file-update-overview-workflow.md` and `planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md`; this command does not grant edit/archive permission. |
 | Enman scenario/domain/slice route families | `сделай сценарий`, `DATA`, `разбери domain draft`, `задрафти slice`, `server slice`, `client sidecar`, `разбери тестирование` | `planning/documentation/examples/project-specific/enman/SCENARIO-DOMAIN-SLICE-COMMAND-ROUTING-EXAMPLE.md` | Read when updating or reviewing Enman scenario/domain/slice command routes. | Profile-specific reusable demonstration for Enman/scenario-driven planning-app route families; route logic remains in this root map and reusable setup guidance remains in the profile field kit. Example fit must be user/project accepted before wiring similar examples into another concrete root map. |
 
+## 9B. English Command / Use Case Names
+
+```text
+Sources:
+  Format/process:
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.4.0
+    - tools/tampermonkey/README.md @ Doc version: v0.4.0
+  Content:
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
+  Internal dependencies:
+    - Primary Use Case Table
+  Not checked:
+    - non-helper project/layer rows remain translated at command-cluster level only
+```
+
+English names are stable display/clarity labels for user-visible use-case and command clusters.
+They do not create a separate command source of truth and do not override the aliases in `User says` / `command_family`.
+
+Use them in Tampermonkey labels and inserted command bodies when a helper profile exists.
+For ordinary UCM rows, use them as readable names in plans, reviews and command-creation work.
+
+| Use case / command cluster | English name |
+|---|---|
+| New Chat Onboarding / first planning pass | first pass |
+| Non-trivial planning/docs work | planning docs check |
+| Documentation update | docs update |
+| Documentation file creation / new concept artifact setup | create planning file |
+| Documentation governance update | docs governance update |
+| Command creation / command route setup | create command |
+| Documentation responsibility-zone / portability review | docs responsibility review |
+| Source dependency declaration / local `Sources:` + register impact check | source dependency |
+| Source-impact classification / cascade trigger review | source impact |
+| Source usage / cascade governance, local section source drafting or pilot work | source usage governance |
+| Replacement archive/package generation | give arch |
+| Explicit review-diff-file replacement archive/package generation | give arch rev dif |
+| Archive as read source | added arch |
+| Large/shared file update delivery choice | large file delivery choice |
+| Mechanical link/path/name sync | link sync |
+| Slice draft work | slice draft |
+| Server slice draft | server slice draft |
+| Client slice draft | client sidecar draft |
+| Cross-cutting coordination doc | cross-cutting umbrella |
+| Status reconciliation | status reconciliation |
+| Scenario source work | scenario source work |
+| Diagramming work | diagramming work |
+| Domain work | domain work |
+| Testing layer work | testing layer work |
+| API planning work | API planning work |
+| VKR/thesis wording | VKR text |
+| Goal Map sync | sync map |
+| File update planning | plan file update |
+| Critical review | crit |
+| Plan now | plan now |
+| Goal Map brief | gm brief |
+| Context recheck | chat rech |
+| Register stale source/version usage scan | scan register stale versions |
+| Local Sources stale usage scan | scan local source blocks |
+| Full source/version consistency audit | full source/version audit |
+| Current planning state | polozh |
+| Full Goal Map | full Goal Map |
+| Repo structure orientation | repo structure brief |
+| Key points output modifier | key points |
+| Summary output modifier | summary |
+| Show draft | show draft |
+| Active item update | update active item |
+| Clarify active item | clarify |
+| Expand active item | expand |
+| Draft diff | draft diff |
+| Suppress Key points | no key points |
+| Suppress `Краткое саммари` | no summary |
+| Suppress `План файл-обновление` | no file update plan |
+
 ## 10. Primary Use Case Table
 
 ```text
@@ -728,7 +800,7 @@ Sources:
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/README.md @ Doc version: v0.3.0
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
   Internal dependencies:
     - Repeated / Continuation Commands
@@ -779,7 +851,7 @@ Sources:
     - planning/workflow-activation-map.md @ Doc version: v0.6.0
     - planning/planning-doc-responsibility-map.md @ Doc version: v0.4.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
   Internal dependencies:
     - Primary Use Case Table
   Not checked:
@@ -846,7 +918,7 @@ Sources:
   Format/process:
     - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
   Internal dependencies:
     - Active Context Rule
     - Source Delta
@@ -888,7 +960,7 @@ Sources:
     - planning/documentation/example-coverage-workflow.md @ Doc version: v0.1.0
     - planning/documentation/use-case-map-workflow.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
   Internal dependencies:
     - Principle Section References
     - Reusable Command Example References
@@ -933,7 +1005,7 @@ Sources:
     - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
     - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
   Internal dependencies:
     - Output Modes
     - Accepted Command / No Reinvention Rule
@@ -977,7 +1049,7 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
     - planned planning/slices/slice-source-sync-register.md @ not created
   Internal dependencies:
@@ -1043,7 +1115,7 @@ They are review/audit commands by default. They do not edit files, create archiv
 Sources:
   Format/process:
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.8.0
-    - planning/root-source-sync-register.md @ Doc version: v2.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.1.0
   Content:
     - planning/README.md @ Doc version: v0.3.0
     - planning/workflow-activation-map.md @ Doc version: v0.6.0
@@ -1065,4 +1137,13 @@ Sources:
 - SRC-CMD-1C refreshed current root register/source-cascade labels after the Tampermonkey helper profile pass, bumped this map to Doc version: v0.6.0 and did not change command semantics.
 - CASCADE-SRC-1A added the narrow `сорс-импакт` route for source-impact classification, clarified review/classification-only output and bumped this map to Doc version: v0.7.0 without adding command-intake/action-type expansion.
 - CASCADE-ROUTE-1B clarified UCM route ownership, kept WAM as activation/read-order helper, added profile-specific example-fit routing notes and bumped this map to Doc version: v0.8.0 without adding new active command families.
+```
+
+### CMD-TM-EN-NAMES-1
+
+```text
+Source Delta:
+  - Added neutral English command/use-case names for UCM and Tampermonkey display.
+  - Preserved existing command creation and parallel-work routes while adding display names.
+  - English names are display labels only and do not create separate command authority.
 ```

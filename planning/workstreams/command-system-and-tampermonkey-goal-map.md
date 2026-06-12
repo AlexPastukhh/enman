@@ -1,7 +1,7 @@
 # Command System And Tampermonkey Goal Map
 
 Status: active workstream goal map  
-Doc version: v0.2.0
+Doc version: v0.3.0
 Owner format: `planning/goal-map-principles-workflow-template.md`  
 Scope: living goal map for transferable command semantics, command examples, goal/process tracking, generic action overview and Tampermonkey prompt-helper work
 
@@ -28,12 +28,12 @@ Sources:
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
     - planning/goal-map-principles-workflow-template.md @ Doc version: v0.1.0
-    - planning/planning-use-case-map.md @ Doc version: v0.5.0
+    - planning/planning-use-case-map.md @ Doc version: v1.1.0
     - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
-    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.2.0
-    - tools/tampermonkey/README.md @ Doc version: v0.2.0
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.4.0
+    - tools/tampermonkey/README.md @ Doc version: v0.4.0
     - tools/tampermonkey/IMPLEMENTATION-NOTES.md @ Doc version: v0.2.0
-    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.2.0
+    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.4.0
   Internal dependencies:
     - Current Snapshot
     - Roadmap / Дорожная карта
@@ -49,14 +49,18 @@ It does not make the Tampermonkey userscript or any example file a source of tru
 
 ## 0. Current Snapshot
 
+CMD-TM-EN-NAMES-1 note:
+  Neutral English command/use-case names are added for UCM and Tampermonkey helper readability. English names are display labels only; command routing remains in UCM and owner docs.
+
 SRC-CMD-1B note:
   Source/version maintenance commands and the explicit `положняк` current-state command are being added to the Tampermonkey helper palette as prompt projections. This does not make the userscript source of truth and does not replace SL-6 smoke testing.
 
 CMD-CREATE-1 note:
   Command creation workflow and explicit parallel-work start helper profiles are being added as command-system infrastructure. Tampermonkey remains a projection layer; UCM and owner workflow files remain source of truth.
 
+
 Last updated:
-  2026-06-06 / after CMD-CREATE-1 command creation workflow and helper projection update
+  2026-06-06 / after CMD-TM-EN-NAMES-1 English command/use-case names update
 
 Current goal:
   Build a transferable command system and Tampermonkey prompt helper for long-running chats across projects.
@@ -97,8 +101,9 @@ Already available:
   - Root responsibility map now includes Goal Map and Tampermonkey command-helper ownership discovery.
   - Tampermonkey helper has an explicit review-diff-file archive command profile in addition to the default clipboard-diff archive command.
   - Tampermonkey helper has source/version maintenance and `положняк` profiles as prompt projections.
-  - Command creation workflow exists for creating/changing commands by rules and UCM row template.
+  - Neutral English command/use-case names exist for UCM and Tampermonkey helper labels/bodies.
   - Tampermonkey helper has `создай команду` and `начни параллельную работу` profiles as prompt projections.
+  - Command creation workflow exists for creating/changing commands by rules and UCM row template.
 
 Latest completed:
   - Added root Goal Map owner/example.
@@ -124,11 +129,12 @@ Latest completed:
   - Added discovery paths so new chats can find Goal Map maintenance rules and Tampermonkey command-helper ownership.
   - Added explicit Tampermonkey helper profile for `давай архив с review diff file`.
   - Added Tampermonkey helper profiles for source/version maintenance commands and `положняк`.
+  - Added neutral English command/use-case names to UCM and Tampermonkey labels/bodies.
   - Added command creation workflow and Tampermonkey helper profiles for `создай команду` and `начни параллельную работу`.
 
 Next action:
   Continue SL-6 smoke testing:
-    retest the helper command list, including ordinary `давай архив`, explicit `давай архив с review diff file`, source/version audit commands, `положняк`, `создай команду` and `начни параллельную работу`, while keeping userscript profiles as projections rather than source of truth.
+    retest the helper command list, including bilingual English/Russian button labels, inserted `english_name:` fields, ordinary `давай архив`, explicit `давай архив с review diff file`, source/version audit commands, `положняк`, `создай команду` and `начни параллельную работу`, while keeping userscript profiles as projections rather than source of truth.
 Recommended next action:
   Continue Tampermonkey helper smoke testing before adding preview, search, external profile loading or deferred buffer/stack features.
 
