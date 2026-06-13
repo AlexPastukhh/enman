@@ -1,7 +1,7 @@
 # Tampermonkey Command Projection Plan
 
 Status: current workstream planning file  
-Doc version: v0.5.0
+Doc version: v0.6.0
 Scope: Enman-specific application/projection plan for projecting repository command routes into editable Tampermonkey prompt-helper prompts; reusable projection rules now live in planning/documentation/tampermonkey-command-projection-workflow.md
 
 ## 0. Source Sync / ROOT-FULL-1 / SRC-CMD-1B
@@ -19,8 +19,8 @@ Sources:
     - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
     - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
     - planning/documentation/tampermonkey-command-projection-workflow.md @ Doc version: v0.1.0
-    - tools/tampermonkey/README.md @ Doc version: v0.5.0
-    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.4.0
+    - planning/documentation/tools/tampermonkey/README.md @ Doc version: v0.2.0
+    - planning/documentation/tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.5.0
   Internal dependencies:
     - Source Of Truth
     - MVP Command Groups
@@ -1369,8 +1369,8 @@ MVP UI should support:
 Implementation docs:
 
 ```text
-tools/tampermonkey/README.md
-tools/tampermonkey/IMPLEMENTATION-NOTES.md
+planning/documentation/tools/tampermonkey/README.md
+planning/documentation/tools/tampermonkey/chat-command-palette.user.js
 ```
 
 Responsibility split:
@@ -1379,14 +1379,14 @@ Responsibility split:
 planning/workstreams/tampermonkey-command-projection-plan.md
   Owns projection planning and documented inserted command bodies.
 
-tools/tampermonkey/README.md
-  Owns implementation entrypoint and quick orientation.
+planning/documentation/tools/tampermonkey/README.md
+  Owns reusable full-helper entrypoint, boundaries and quick orientation.
 
-tools/tampermonkey/IMPLEMENTATION-NOTES.md
-  Owns working implementation notes, accepted decisions, use cases, text UI sketches, external source checks and doc-reading map.
+planning/documentation/tools/tampermonkey/chat-command-palette.user.js
+  Owns reusable userscript implementation and inline command profiles as projections.
 ```
 
-`IMPLEMENTATION-NOTES.md` is intentionally a compound notes file first. It can later be split into smaller implementation files after the helper shape stabilizes.
+`IMPLEMENTATION-NOTES.md` was removed with the old project-local helper folder. Reusable helper orientation now lives in `planning/documentation/tools/tampermonkey/README.md`.
 
 
 ## 10. Next Implementation Step
@@ -1395,7 +1395,7 @@ After this planning file lands:
 
 ```text
 1. Use the documented command bodies as the first profile body source.
-2. Create implementation infrastructure docs under `tools/tampermonkey/`.
+2. Use the reusable full helper implementation under `planning/documentation/tools/tampermonkey/`; do not recreate a tracked local helper folder by default.
 3. Convert MVP-1 profiles into a minimal userscript data structure.
 4. Build command palette / preview / insert behavior.
 5. Manual browser test.

@@ -159,7 +159,7 @@ Before considering the copied layer ready:
 5. Keep or replace project-specific examples.
 6. Create a fresh project action log if needed.
 7. Do not copy migration or legacy folders as active documentation.
-8. If helper UI commands are needed, adapt planning/documentation/tools/tampermonkey/ into project-local tools/tampermonkey/ and keep Tampermonkey projection rules inside planning/documentation/.
+8. If helper UI commands are needed, use planning/documentation/tools/tampermonkey/ as the reusable helper source and keep Tampermonkey projection rules inside planning/documentation/.
 9. Confirm README read order points to the new project's root files.
 ```
 
@@ -186,4 +186,4 @@ The reusable full helper is tracked inside:
 planning/documentation/tools/tampermonkey/chat-command-palette.user.js
 ```
 
-Do not create a second tracked project-local `tools/tampermonkey/` copy by default. A copied project may install/adapt the userscript in Tampermonkey, but command semantics still come from the project root UCM and owner workflows.
+Do not create a second tracked project-local helper copy by default. A copied project may install/adapt the userscript in Tampermonkey, but command semantics still come from the project root UCM and owner workflows.

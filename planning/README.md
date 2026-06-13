@@ -1,7 +1,7 @@
 # Planning Documentation
 
 Status: stable navigation / source-of-truth map
-Doc version: v0.4.0
+Doc version: v0.5.0
 Purpose: explain where to read planning materials and how not to confuse planning notes with implementation truth.
 
 ## 1. Core Rule
@@ -121,7 +121,7 @@ Sources:
     - planning/goal-map-principles-workflow-template.md @ version not confirmed
     - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ version not confirmed
     - planning/workstreams/tampermonkey-command-projection-plan.md @ version not confirmed
-    - tools/tampermonkey/README.md @ version not declared
+    - planning/documentation/tools/tampermonkey/README.md @ Doc version: v0.2.0
   Internal dependencies:
     - Project-Wide Planning Profiles
   Not checked:
@@ -188,7 +188,7 @@ Sources:
     - planning/goal-map-principles-workflow-template.md @ version not confirmed
     - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ version not confirmed
     - planning/workstreams/tampermonkey-command-projection-plan.md @ version not confirmed
-    - tools/tampermonkey/README.md @ version not declared
+    - planning/documentation/tools/tampermonkey/README.md @ Doc version: v0.2.0
   Internal dependencies:
     - Workflow Activation And Use-Case Navigation
   Not checked:
@@ -201,7 +201,8 @@ When a new chat, restored context or first planning pass touches a long-running 
 planning/goal-map-principles-workflow-template.md
 planning/workstreams/command-system-and-tampermonkey-goal-map.md
 planning/workstreams/tampermonkey-command-projection-plan.md
-tools/tampermonkey/README.md
+planning/documentation/tools/tampermonkey/README.md
+planning/documentation/tools/tampermonkey/chat-command-palette.user.js
 ```
 
 Use them to decide:

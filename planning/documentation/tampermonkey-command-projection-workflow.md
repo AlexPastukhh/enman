@@ -17,7 +17,7 @@ Tampermonkey projection exists to improve command recall and prompt-body consist
 | Project root use-case map | Concrete command route, accepted aliases, traversal/read mode, owner files, expected output and permission boundary. |
 | Command owner workflow/template | Reusable behavior and output rules for the command family. |
 | This workflow | Reusable rules for projecting commands into a helper UI. |
-| `planning/documentation/tools/tampermonkey/chat-command-palette.user.js` | Reusable full helper implementation and common command seed projection. |
+| `planning/documentation/project-local helper folderchat-command-palette.user.js` | Reusable full helper implementation and common command seed projection. |
 | Project-specific workstream plan, if any | Local application backlog and smoke-test state only. |
 
 ## 3. Core Rule
@@ -148,13 +148,13 @@ Before adding/updating a helper command profile, verify:
 The active reusable full helper lives under:
 
 ```text
-planning/documentation/tools/tampermonkey/chat-command-palette.user.js
+planning/documentation/project-local helper folderchat-command-palette.user.js
 ```
 
 Do not keep a second tracked local copy under:
 
 ```text
-tools/tampermonkey/
+project-local helper folder
 ```
 
 unless the project intentionally forks the reusable helper. If a project forks it, document why and keep the fork clearly marked as project-local implementation, not reusable authority.

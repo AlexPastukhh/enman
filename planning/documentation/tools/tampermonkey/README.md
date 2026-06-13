@@ -22,7 +22,7 @@ The full helper userscript lives here:
 planning/documentation/tools/tampermonkey/chat-command-palette.user.js
 ```
 
-There should not be a second project-local tracked copy under `tools/tampermonkey/` while this reusable-only model is active.
+There should not be a second project-local tracked helper copy while this reusable-only model is active.
 
 ## 2. Authority Boundary
 
@@ -72,9 +72,9 @@ Before using it as a project-specific helper, verify:
 ## 5. Do Not
 
 ```text
-- Do not create a second tracked local `tools/tampermonkey/` copy by default.
+- Do not create a second tracked local helper copy by default.
 - Do not treat this helper as command authority.
 - Do not add project-only command semantics here without a UCM route.
-- Do not keep both `chat-command-palette.starter.user.js` and `chat-command-palette.user.js` as competing reusable helpers.
+- Do not keep both starter-only and full-helper userscripts as competing reusable helpers.
 - Do not use the helper to write to the repo or perform network calls.
 ```

@@ -1,7 +1,7 @@
 # Repo Structure Memory
 
 Status: current repo-structure orientation owner  
-Doc version: v0.1.0  
+Doc version: v0.2.0  
 Scope: compact memory of known repository areas, documentation layers, source-of-truth chain and read-next guidance for repo-structure orientation commands
 
 This file supports the command family:
@@ -78,8 +78,10 @@ planning/
 tools/
   repo tooling and helper implementation files.
 
-tools/tampermonkey/
-  Tampermonkey Chat Command Helper docs and userscript.
+planning/documentation/tools/tampermonkey/
+  Reusable Tampermonkey Chat Command Helper docs and userscript.
+
+Former project-local Tampermonkey helper folder: removed from active tracked layout; do not recreate by default.
 
 energymanagement.client/
   known app/client project area.
@@ -171,18 +173,17 @@ planning/workstreams/command-system-and-tampermonkey-goal-map.md
 planning/workstreams/tampermonkey-command-projection-plan.md
 ```
 
-### 3.4 Tooling / implementation layer
+### 3.4 Reusable Tampermonkey helper layer
 
 ```text
-tools/tampermonkey/
+planning/documentation/tools/tampermonkey/
 ```
 
 Current known files:
 
 ```text
-tools/tampermonkey/README.md
-tools/tampermonkey/IMPLEMENTATION-NOTES.md
-tools/tampermonkey/chat-command-palette.user.js
+planning/documentation/tools/tampermonkey/README.md
+planning/documentation/tools/tampermonkey/chat-command-palette.user.js
 ```
 
 Responsibilities:
@@ -218,8 +219,8 @@ Do not treat the userscript as command-semantics source of truth.
 |---|---|---|
 | Command route / accepted command behavior | `planning/planning-use-case-map.md` | owner workflow/template from the route |
 | Goal Map / progress / current workstream state | `planning/goal-map-principles-workflow-template.md` | relevant file in `planning/workstreams/` |
-| Tampermonkey helper command bodies | `planning/workstreams/tampermonkey-command-projection-plan.md` | `tools/tampermonkey/IMPLEMENTATION-NOTES.md` |
-| Tampermonkey implementation behavior | `tools/tampermonkey/README.md` | `tools/tampermonkey/IMPLEMENTATION-NOTES.md`, then userscript |
+| Tampermonkey helper command bodies | `planning/workstreams/tampermonkey-command-projection-plan.md` | `planning/documentation/tools/tampermonkey/README.md` |
+| Tampermonkey implementation behavior | `planning/documentation/tools/tampermonkey/README.md` | `planning/documentation/tools/tampermonkey/chat-command-palette.user.js` |
 | Deferred or far-future ideas | `planning/deferred-goals-and-ideas.md` | relevant workstream notes |
 | File/docs/code/archive update planning | `planning/documentation/file-update-overview-workflow.md` | `planning/planning-use-case-map.md` and target files |
 | Replacement archive output | `planning/replacement-file-generation-guide.md` | active plan/scope and target files |

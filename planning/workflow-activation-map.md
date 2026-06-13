@@ -1,7 +1,7 @@
 # Workflow Activation Map
 
 Status: current workflow activation map
-Doc version: v0.6.0
+Doc version: v0.7.0
 Scope: how chats select and disclose workflows before non-trivial planning/repo work
 
 ## 1. Purpose
@@ -276,7 +276,7 @@ Sources:
 | `planning/goal-map-principles-workflow-template.md` | Active long-running workstream planning/status/next-step work, Goal Map command, Goal Map Brief or map sync | `conditional implicit` / `response-command` | No for check/brief; yes for edits/archive | Goal Map rules, brief shape and map sync obligations |
 | `planning/workstreams/command-system-and-tampermonkey-goal-map.md` | Command-system/Tampermonkey workstream planning, status, continuation or next-step choice | `conditional implicit` | No for read/check; yes for edits/archive | Living workstream state, current focus and next action |
 | `planning/workstreams/tampermonkey-command-projection-plan.md` | Tampermonkey command-helper/profile/body work or checking what inserted commands mean | `conditional implicit` | No for read/check; yes for implementation edits | Command projection rules and profile reminders |
-| `tools/tampermonkey/README.md` | Tampermonkey helper implementation orientation or helper behavior check | `conditional implicit` | No for read/check; yes for userscript edits | Helper entrypoint, boundaries and test checklist |
+| `planning/documentation/tools/tampermonkey/README.md` | Tampermonkey helper implementation orientation or helper behavior check | `conditional implicit` | No for read/check; yes for userscript edits | Helper entrypoint, boundaries and test checklist |
 | `planning/documentation/documentation-responsibility-map.md` | Information already belongs to documentation layer | `conditional implicit` | No | Documentation-layer owner file |
 | `planning/documentation/documentation-update-plan-workflow.md` | Broad docs/navigation/status/register/source-of-truth/multi-file change | `conditional implicit` | No for plan; yes for edits | Documentation Update Plan |
 | `planning/documentation/documentation-update-workflow.md` | Applying approved documentation update or planning docs update process | `conditional implicit` | Yes for GitHub writes | Docs update process |
@@ -465,8 +465,8 @@ planning-use-case-map.md, as command source of truth
 planning-doc-responsibility-map.md, for owner placement
 planning/workstreams/tampermonkey-command-projection-plan.md, for projection rules
 planning/workstreams/command-system-and-tampermonkey-goal-map.md, when workstream status/next action matters
-tools/tampermonkey/README.md, for implementation entrypoint and helper boundaries
-tools/tampermonkey/IMPLEMENTATION-NOTES.md, for implementation decisions/use cases when code behavior matters
+planning/documentation/tools/tampermonkey/README.md, for implementation entrypoint and helper boundaries
+planning/documentation/tools/tampermonkey/chat-command-palette.user.js, for implementation/profile behavior when code behavior matters
 ```
 
 Tampermonkey command bodies are route hints. The userscript is last in the source-of-truth order and must not invent command semantics.

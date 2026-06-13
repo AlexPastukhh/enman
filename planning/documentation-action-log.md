@@ -2707,7 +2707,7 @@ Action:
 Type:
   reusable documentation-layer tool consolidation / Tampermonkey projection cleanup
 Status:
-  prepared
+  applied
 Why:
   The reusable documentation layer is intended to be copyable into another project without requiring a separate project-local tracked Tampermonkey implementation. Keeping both local `tools/tampermonkey/` and reusable starter/full helper copies creates competing helper sources.
 Changed files:
@@ -2738,3 +2738,42 @@ Follow-ups:
   After applying, paste staged diff for review and verify no `tools/tampermonkey/` tracked files remain.
 Notes:
   If a future project intentionally forks the reusable helper, document the fork as project-local implementation and keep UCM/owner docs as semantic authority.
+
+
+### 2026-06-13 - Synced active refs after Tampermonkey reusable-only move
+
+Date:
+  2026-06-13
+Action:
+  Repointed active navigation, UCM, WAM, workstream and root-register references from the removed tracked `tools/tampermonkey/` helper files to the reusable full helper under `planning/documentation/tools/tampermonkey/`.
+Type:
+  documentation cleanup / Tampermonkey reusable-only reference sync
+Status:
+  applied
+Why:
+  The helper layout had already moved to the reusable documentation layer, but active docs/registers still referenced removed project-local helper paths and the old starter userscript. New chats should find the reusable full helper directly inside `planning/documentation/`.
+Changed files:
+  - planning/README.md
+  - planning/planning-doc-responsibility-map.md
+  - planning/planning-use-case-map.md
+  - planning/repo-structure-memory.md
+  - planning/workflow-activation-map.md
+  - planning/workstreams/command-system-and-tampermonkey-goal-map.md
+  - planning/workstreams/tampermonkey-command-projection-plan.md
+  - planning/root-source-sync-register.md
+  - planning/documentation/documentation-responsibility-map.md
+  - planning/documentation-action-log.md
+Updates:
+  - Replaced active `tools/tampermonkey/*` refs with `planning/documentation/tools/tampermonkey/*`.
+  - Removed active starter userscript row from root register.
+  - Updated helper version refs to userscript `@version 0.5.0`.
+  - Marked the full helper move action as applied.
+Not changed:
+  - No helper command semantics changed.
+  - No userscript body/profile logic changed.
+  - No slice/testing source refactor changes.
+  - No tracked local `tools/tampermonkey/` folder recreated.
+Follow-ups:
+  Run a final stale-reference scan for active `tools/tampermonkey/` references outside historical action-log entries.
+Notes:
+  Historical action-log entries may still mention old paths as past state. Active docs/registers should not route to those paths.

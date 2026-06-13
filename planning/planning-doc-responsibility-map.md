@@ -1,7 +1,7 @@
 # Planning Document Responsibility Map
 
 Status: transitional global responsibility map / root layer router
-Doc version: v0.6.0
+Doc version: v0.7.0
 Scope: routes planning documentation information to the correct layer and, where available, to the layer-local responsibility map
 
 ## 1. Core Rule
@@ -176,9 +176,8 @@ Sources:
     - planning/goal-map-principles-workflow-template.md @ version not confirmed
     - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ version not confirmed
     - planning/workstreams/tampermonkey-command-projection-plan.md @ version not confirmed
-    - tools/tampermonkey/README.md @ version not declared
-    - tools/tampermonkey/IMPLEMENTATION-NOTES.md @ version not declared
-    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper source, version not applicable
+    - planning/documentation/tools/tampermonkey/README.md @ Doc version: v0.2.0
+    - planning/documentation/tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.5.0
   Internal dependencies:
     - Agent / Workflow Responsibility
   Not checked:
@@ -191,9 +190,8 @@ Sources:
 | `planning/goal-map-example.md` | Static example for the Goal Map format; demonstration only, not live state |
 | `planning/workstreams/command-system-and-tampermonkey-goal-map.md` | Living Goal Map for the command-system/Tampermonkey workstream; read it before choosing next steps inside that workstream and update it when meaningful batches/decisions change current state |
 | `planning/workstreams/tampermonkey-command-projection-plan.md` | Planning owner for projecting root use-case map routes into compact editable Tampermonkey prompt bodies |
-| `tools/tampermonkey/README.md` | Tampermonkey helper implementation entrypoint, boundaries and manual test orientation; not command source of truth |
-| `tools/tampermonkey/IMPLEMENTATION-NOTES.md` | Current helper implementation notes, decisions, use cases, UI sketches and future split candidates; not command source of truth |
-| `tools/tampermonkey/chat-command-palette.user.js` | Userscript implementation of the prompt-helper UI and inline command profiles; last in source-of-truth order and must not invent command semantics |
+| `planning/documentation/tools/tampermonkey/README.md` | Reusable Tampermonkey helper entrypoint, boundaries and manual test orientation; not command source of truth |
+| `planning/documentation/tools/tampermonkey/chat-command-palette.user.js` | Reusable userscript implementation of the prompt-helper UI and inline command profiles; last in source-of-truth order and must not invent command semantics |
 
 Discovery rule:
 

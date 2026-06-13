@@ -1,7 +1,7 @@
 # Command System And Tampermonkey Goal Map
 
 Status: active workstream goal map  
-Doc version: v0.3.0
+Doc version: v0.4.0
 Owner format: `planning/goal-map-principles-workflow-template.md`  
 Scope: living goal map for transferable command semantics, command examples, goal/process tracking, generic action overview and Tampermonkey prompt-helper work
 
@@ -31,9 +31,8 @@ Sources:
     - planning/planning-use-case-map.md @ Doc version: v1.1.0
     - planning/documentation/reviewable-agent-output-and-commands-workflow.md @ Doc version: v0.1.0
     - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.4.0
-    - tools/tampermonkey/README.md @ Doc version: v0.4.0
-    - tools/tampermonkey/IMPLEMENTATION-NOTES.md @ Doc version: v0.2.0
-    - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.4.0
+    - planning/documentation/tools/tampermonkey/README.md @ Doc version: v0.2.0
+    - planning/documentation/tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.5.0
   Internal dependencies:
     - Current Snapshot
     - Roadmap / Дорожная карта
@@ -979,9 +978,8 @@ Work direction:
 
 Artifacts / actions:
   - `planning/workstreams/tampermonkey-command-projection-plan.md`
-  - `tools/tampermonkey/README.md`
-  - `tools/tampermonkey/IMPLEMENTATION-NOTES.md`
-  - `tools/tampermonkey/chat-command-palette.user.js`
+  - `planning/documentation/tools/tampermonkey/README.md`
+  - `planning/documentation/tools/tampermonkey/chat-command-palette.user.js`
   - optional project profile config
 
 Steps:

@@ -115,7 +115,7 @@ Default:
 
 If Tampermonkey is updated, update the reusable projection workflow or reusable full helper only when reusable rules/common command seed projection changes.
 
-Do not recreate a tracked project-local `tools/tampermonkey/` folder by default.
+Do not recreate a tracked project-local helper folder by default while the reusable-only helper model is active.
 
 ## 6. Do Not
 
