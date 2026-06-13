@@ -1,7 +1,7 @@
 # Planning Documentation
 
 Status: stable navigation / source-of-truth map
-Doc version: v0.3.0
+Doc version: v0.4.0
 Purpose: explain where to read planning materials and how not to confuse planning notes with implementation truth.
 
 ## 1. Core Rule
@@ -10,8 +10,8 @@ Purpose: explain where to read planning materials and how not to confuse plannin
 Sources:
   Format/process:
     - planning/status-evidence-profile.md @ version not confirmed
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - planning/workflow-activation-map.md @ Doc version: v0.3.0
+    - planning/planning-use-case-map.md @ Doc version: v1.1.0
+    - planning/workflow-activation-map.md @ Doc version: v0.6.0
   Content:
     - current codebase/tests/generated artifacts @ not checked in this docs pass
   Internal dependencies:
@@ -34,8 +34,8 @@ For VKR/thesis wording, use `planning/vkr-clean-reference.md`.
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v1.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.3.0
   Content:
     - planning/status-evidence-profile.md @ version not confirmed
     - planning/shared-visibility-map.md @ version not confirmed
@@ -70,13 +70,8 @@ The reusable documentation layer is active under:
 planning/documentation/
 ```
 
-The previous active documentation folder is temporarily preserved under:
-
-```text
-planning/documentation-legacy/
-```
-
-Migration-only reusable-candidate history is preserved under:
+The previous active documentation folder `planning/documentation-legacy/` was removed by ROOT-LEGACY-CLEAN.
+Use the active reusable layer under `planning/documentation/`; migration-only reusable-candidate history is preserved under:
 
 ```text
 planning/documentation-migration/
@@ -87,11 +82,11 @@ planning/documentation-migration/
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v1.1.0
     - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
     - planning/documentation/documentation-update-workflow.md @ version not confirmed
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v2.3.0
   Internal dependencies:
     - Workflow Activation And Use-Case Navigation
   Not checked:
@@ -119,12 +114,11 @@ Mechanical multi-file link/path/name synchronization may use a single bundled co
 ```text
 Sources:
   Format/process:
-    - planning/workflow-activation-map.md @ Doc version: v0.3.0
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
+    - planning/workflow-activation-map.md @ Doc version: v0.6.0
+    - planning/planning-use-case-map.md @ Doc version: v1.1.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.6.0
   Content:
     - planning/goal-map-principles-workflow-template.md @ version not confirmed
-    - planning/workstreams/vkr-finalization-goal-map.md @ Doc version: v0.1.0
     - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ version not confirmed
     - planning/workstreams/tampermonkey-command-projection-plan.md @ version not confirmed
     - tools/tampermonkey/README.md @ version not declared
@@ -188,8 +182,8 @@ A future chat should not require the user to remember workflow file names. It sh
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - planning/workflow-activation-map.md @ Doc version: v0.3.0
+    - planning/planning-use-case-map.md @ Doc version: v1.1.0
+    - planning/workflow-activation-map.md @ Doc version: v0.6.0
   Content:
     - planning/goal-map-principles-workflow-template.md @ version not confirmed
     - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ version not confirmed
@@ -205,7 +199,6 @@ When a new chat, restored context or first planning pass touches a long-running 
 
 ```text
 planning/goal-map-principles-workflow-template.md
-planning/workstreams/vkr-finalization-goal-map.md
 planning/workstreams/command-system-and-tampermonkey-goal-map.md
 planning/workstreams/tampermonkey-command-projection-plan.md
 tools/tampermonkey/README.md
@@ -237,10 +230,10 @@ Sources:
   Format/process:
     - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
-    - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.6.0
   Content:
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v2.3.0
   Internal dependencies:
     - Core Rule
     - Project-Wide Planning Profiles
@@ -376,12 +369,12 @@ Dirty drafts are not source of truth.
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - planning/workflow-activation-map.md @ Doc version: v0.3.0
-    - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
+    - planning/planning-use-case-map.md @ Doc version: v1.1.0
+    - planning/workflow-activation-map.md @ Doc version: v0.6.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.6.0
   Content:
     - planning/domain/domain-source-sync-register.md @ Doc version: v0.2.0
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v2.3.0
   Internal dependencies:
     - Workflow Activation And Use-Case Navigation
     - Source-of-Truth Model
@@ -632,7 +625,7 @@ planning/source-usage-cascade-profile.md
 ```text
 Sources:
   Format/process:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v1.1.0
   Content:
     - planning/documentation-action-log.md @ version not confirmed / evidence trail
   Internal dependencies:
@@ -641,22 +634,24 @@ Sources:
     - historical status notes not implementation proof
 ```
 
-The following files may be useful as historical or internal handoff notes, but they are not implementation truth:
+Legacy current-like planning files were removed by ROOT-LEGACY-CLEAN.
+Do not route new chats to removed files such as:
 
 ```text
 planning/l1-current-implementation-status.md
 planning/l2-current-planning-status.md
 planning/planning-workflow-current.md
+planning/current-state.md
 ```
 
-Use them only as context. For implementation state, inspect the current branch.
+Use active root routing, living Goal Maps, source/register files and current repo evidence instead. For implementation state, inspect the current branch.
 
 ## 7. Internal Labels and VKR Wording
 
 ```text
 Sources:
   Format/process:
-    - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.6.0
   Content:
     - planning/vkr-clean-reference.md @ version not confirmed
   Internal dependencies:
@@ -682,7 +677,7 @@ Use clean terms instead:
 ```text
 Sources:
   Format/process:
-    - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.6.0
   Content:
     - planning/diagrams/scenario-artifact-map.md @ version not confirmed
     - planning/diagrams/scenario-diagram-consistency-report.md @ version not confirmed
@@ -715,9 +710,9 @@ Scenario docs may mark future implementation and deferred extension points unifo
 Sources:
   Format/process:
     - planning/status-evidence-profile.md @ version not confirmed
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
+    - planning/planning-use-case-map.md @ Doc version: v1.1.0
   Content:
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/root-source-sync-register.md @ Doc version: v2.3.0
   Internal dependencies:
     - Core Rule
   Not checked:
@@ -747,12 +742,12 @@ Read this only when copying/adapting the reusable documentation layer into a new
 ```text
 Sources:
   Format/process:
-    - planning/source-cascade-sync-workflow.md @ Doc version: v0.4.0
-    - planning/root-source-sync-register.md @ Doc version: v0.8.0
+    - planning/source-cascade-sync-workflow.md @ Doc version: v1.0.0
+    - planning/root-source-sync-register.md @ Doc version: v2.3.0
   Content:
-    - planning/planning-use-case-map.md @ Doc version: v0.4.0
-    - planning/workflow-activation-map.md @ Doc version: v0.3.0
-    - planning/planning-doc-responsibility-map.md @ Doc version: v0.3.0
+    - planning/planning-use-case-map.md @ Doc version: v1.1.0
+    - planning/workflow-activation-map.md @ Doc version: v0.6.0
+    - planning/planning-doc-responsibility-map.md @ Doc version: v0.6.0
   Internal dependencies:
     - Workflow Activation And Use-Case Navigation
     - Source-of-Truth Model

@@ -319,9 +319,6 @@ planning/scenario-specification-principles.md
 planning/scenario-domain-validation-principles.md
 planning/domain-model.md
 planning/tables/domain-drafts/domain-draft-01.md, if exists
-planning/l1-domain-implementation-cut.md, if exists
-planning/l1-domain-testing-rules.md, if exists
-planning/current-state.md, if exists
 relevant scenario text specs and DATA specs
 ```
 
@@ -594,7 +591,8 @@ planning/README.md
 planning/planning-agent-protocol.md
 planning/workflow-activation-map.md
 planning/repo-grounded-github-line-links-workflow.md
-planning/planning-workflow-current.md
+planning/planning-use-case-map.md
+planning/workflow-activation-map.md
 relevant scenario/domain/slice/API/testing docs
 current implementation files in scope
 ```

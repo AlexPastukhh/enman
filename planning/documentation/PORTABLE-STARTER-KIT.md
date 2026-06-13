@@ -87,7 +87,7 @@ Do not copy Enman history, legacy or active project configuration as reusable st
 ```text
 planning/documentation-action-log.md
 planning/documentation-migration/
-planning/documentation-legacy/
+planning/documentation-legacy/ (older Enman copies only; removed from current active repo)
 planning/source-usage-pilots/
 planning/status-evidence-profile.md
 planning/shared-visibility-map.md

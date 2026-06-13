@@ -1,7 +1,7 @@
 # Root Source Sync Register
 
-Status: skeleton / root planning dependency register partially derived for source-governance core, root router/onboarding core, protocol/role core, output/archive core and Goal Map/Tampermonkey active files, source/version maintenance commands, current-state template, Tampermonkey helper source/version command profiles, stale source-label cleanup and targeted source-impact cleanup, root route/example-fit cleanup and slice/testing source-sync register skeletons, slice/testing owner workflow/template version seed and slice/test refactor Goal Map sync and slice/test audit-card findings; root folder inventory classified, command-aware Workflow Preflight hardening, English command/use-case name projection and reusable Tampermonkey projection/tool starter extraction
-Doc version: v2.2.0
+Status: skeleton / root planning dependency register partially derived for source-governance core, root router/onboarding core, protocol/role core, output/archive core and Goal Map/Tampermonkey active files, source/version maintenance commands, current-state template, Tampermonkey helper source/version command profiles, stale source-label cleanup and targeted source-impact cleanup, root route/example-fit cleanup and slice/testing source-sync register skeletons, slice/testing owner workflow/template version seed and slice/test refactor Goal Map sync and slice/test audit-card findings; root folder inventory classified, command-aware Workflow Preflight hardening, English command/use-case name projection and reusable Tampermonkey projection/tool starter extraction and legacy current-like root cleanup
+Doc version: v2.3.0
 Scope: source dependency skeleton for root planning workflow, routing, source-governance, Goal Map discovery and Tampermonkey command-helper files
 
 ## 1. Purpose
@@ -92,6 +92,8 @@ After CASCADE-CMD-PREFLIGHT-0, this register records command-aware Workflow Pref
 
 After CMD-TM-EN-NAMES-1, this register records neutral English command/use-case display names in UCM and Tampermonkey helper projections. English names are display labels only, not separate command authority.
 
+After ROOT-LEGACY-CLEAN, this register records removal of stale current-like/root bridge files from active routing and collapses their former inventory rows into a deleted legacy cleanup note.
+
 ## 2. Register Rules
 
 ```text
@@ -173,12 +175,12 @@ Sources:
 | `planning/source-cascade-sync-workflow.md` | source cascade workflow | Doc version: v0.8.0 | derived from local section Sources in ROOT-SRC-1; rule updated in SRC-DEP-CMD-1, ROOT-FULL-1, SRC-CMD-1A and source-labels refreshed in SRC-CMD-1C | Root workflow that defines local `Sources:` blocks, register states, layer register rules, structured-file local Sources requirement, explicit source dependency/link declaration rule and active file creation/update version/register checks and source/version maintenance command behavior. |
 | `planning/source-usage-cascade-profile.md` | Enman project profile | Doc version: v0.2.0 | derived from local section Sources in ROOT-SRC-1; triggers updated in SRC-DEP-CMD-1 | Project-specific source/consumer categories, row shape and cascade triggers. |
 | `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md` | local section `Sources:` block template | Doc version: v0.2.0 | derived from local section Sources in ROOT-SRC-1; source labels refreshed in SRC-DEP-CMD-1 | General fenced `Sources:` block format with version/status labels. |
-| `planning/root-source-sync-register.md` | root dependency register | Doc version: v2.2.0 | self row partially synchronized for ROOT-SRC-1/SRC-DEP-CMD-1/ROOT-SRC-2A/ROOT-SRC-2B/ROOT-SRC-3A/ROOT-FULL-1/SRC-CMD-1A/SRC-CMD-1B/SRC-CMD-1C; inventory classified in ROOT-FULL-0 | Still skeleton for full root source coverage; source-governance, root router/onboarding, protocol/role, output/archive and Goal Map/Tampermonkey active rows are derived/synchronized in narrow scopes; other deferred rows remain. |
-| `planning/README.md` | planning navigation and onboarding entrypoint | Doc version: v0.3.0 | derived from local section Sources in ROOT-SRC-2A; source labels refreshed in ROOT-SRC-2B/ROOT-SRC-3A | Points new chats to activation/use-case/responsibility routing, output/archive rules, Goal Map and Tampermonkey command-helper discovery docs. |
+| `planning/root-source-sync-register.md` | root dependency register | Doc version: v2.3.0 | self row partially synchronized for ROOT-SRC-1/SRC-DEP-CMD-1/ROOT-SRC-2A/ROOT-SRC-2B/ROOT-SRC-3A/ROOT-FULL-1/SRC-CMD-1A/SRC-CMD-1B/SRC-CMD-1C; inventory classified in ROOT-FULL-0 | Still skeleton for full root source coverage; source-governance, root router/onboarding, protocol/role, output/archive and Goal Map/Tampermonkey active rows are derived/synchronized in narrow scopes; other deferred rows remain. |
+| `planning/README.md` | planning navigation and onboarding entrypoint | Doc version: v0.4.0 | derived from local section Sources in ROOT-SRC-2A; source labels refreshed in ROOT-SRC-2B/ROOT-SRC-3A | Points new chats to activation/use-case/responsibility routing, output/archive rules, Goal Map and Tampermonkey command-helper discovery docs. |
 | `planning/planning-use-case-map.md` | root action-to-doc router | Doc version: v1.1.0 | derived from local section Sources in ROOT-SRC-2A; source dependency route added in SRC-DEP-CMD-1; source labels refreshed in ROOT-SRC-2B/ROOT-SRC-3A/SRC-CMD-1C; source/version maintenance and current-state command routes added in SRC-CMD-1A | Owns command routing, including `давай архив`, explicit review-diff-file archive route, response commands, Goal Map, current-state `положняк`, source/version maintenance commands, Tampermonkey discovery behavior and source dependency/link declaration routing. |
 | `planning/CURRENT-PLANNING-STATE-TEMPLATE.md` | current planning-state output template | Doc version: v0.2.0 | derived/synchronized in SRC-CMD-1A; source labels refreshed in SRC-CMD-1C | Owns exact output shape for explicit `положняк` / current planning-state command; scope sections are examples, not mandatory headings. |
 | `planning/workflow-activation-map.md` | workflow activation router | Doc version: v0.6.0 | derived from local section Sources in ROOT-SRC-2A; protocol/role sources covered by ROOT-SRC-2B; output/archive labels refreshed in ROOT-SRC-3A | Activates workflow preflight, root routing, output/archive flows, Goal Map and Tampermonkey command-helper chains. |
-| `planning/planning-doc-responsibility-map.md` | root planning responsibility router | Doc version: v0.3.0 | derived from local section Sources in ROOT-SRC-2A; source labels refreshed in ROOT-SRC-2B/ROOT-SRC-3A | Owns root layer placement and responsibility routing, including output/archive, Goal Map and Tampermonkey responsibility anchors. |
+| `planning/planning-doc-responsibility-map.md` | root planning responsibility router | Doc version: v0.6.0 | derived from local section Sources in ROOT-SRC-2A; source labels refreshed in ROOT-SRC-2B/ROOT-SRC-3A | Owns root layer placement and responsibility routing, including output/archive, Goal Map and Tampermonkey responsibility anchors. |
 | `planning/goal-map-principles-workflow-template.md` | Goal Map owner workflow/template | Doc version: v0.1.0 | derived/synchronized in ROOT-FULL-1 narrow Goal Map/Tampermonkey source pass | Owns living Goal Map rules, brief shape and `синх карта`; local source sync section added. |
 | `planning/goal-map-example.md` | Goal Map demonstration example | Doc version: v0.2.0 | derived/synchronized in ROOT-FULL-1 narrow Goal Map/Tampermonkey source pass | Example-only file; demonstrates shape, does not own command/source truth. |
 | `planning/workstreams/command-system-and-tampermonkey-goal-map.md` | living command-system/Tampermonkey Goal Map | Doc version: v0.3.0 | derived/synchronized in ROOT-FULL-1 narrow Goal Map/Tampermonkey source pass; helper profile state refreshed in SRC-CMD-1B | Workstream state artifact; not a generic workflow; local source sync section added; snapshot remains SL-6 smoke testing. |
@@ -245,16 +247,16 @@ implementation/helper:
 
 | File | Classification | Current version/status | Coverage decision | Next action |
 |---|---|---|---|---|
-| `planning/README.md` | covered active core | Doc version: v0.3.0 | root onboarding/navigation coverage done | Refresh only when dependencies change. |
+| `planning/README.md` | covered active core | Doc version: v0.4.0 | root onboarding/navigation coverage done | Refresh only when dependencies change. |
 | `planning/planning-use-case-map.md` | covered active core | Doc version: v1.1.0 | root action/router coverage done; source/version maintenance and current-state command routes added in SRC-CMD-1A; current source labels refreshed in SRC-CMD-1C | Refresh routes as commands change. |
 | `planning/workflow-activation-map.md` | covered active core | Doc version: v0.6.0 | workflow activation coverage done | Refresh after new workflow owners are added. |
-| `planning/planning-doc-responsibility-map.md` | covered active core | Doc version: v0.3.0 | root responsibility coverage done | Refresh after new responsibility owners are added. |
+| `planning/planning-doc-responsibility-map.md` | covered active core | Doc version: v0.6.0 | root responsibility coverage done | Refresh after new responsibility owners are added. |
 | `planning/planning-agent-protocol.md` | covered active core | Doc version: v0.1.0 | protocol coverage done | Refresh when protocol boundaries change. |
 | `planning/agent-roles-and-required-actions.md` | covered active core | Doc version: v0.1.0 | role/read-order coverage done | Refresh when roles or required reads change. |
 | `planning/source-cascade-sync-workflow.md` | covered active core | Doc version: v0.8.0 | source-cascade workflow coverage done; active file creation/update checks added in ROOT-FULL-1; source/version maintenance command behavior added in SRC-CMD-1A; current source labels refreshed in SRC-CMD-1C | Refresh when source/register rules change. |
 | `planning/source-usage-cascade-profile.md` | covered active core | Doc version: v0.2.0 | source usage profile coverage done | Refresh when source categories/triggers change. |
 | `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md` | covered active core | Doc version: v0.2.0 | generic local Sources template coverage done | Refresh when template shape changes. |
-| `planning/root-source-sync-register.md` | covered active core / register | Doc version: v1.4.0 | self row partially synchronized; ROOT-FULL-0 adds inventory, ROOT-FULL-1 adds narrow Goal Map/Tampermonkey source coverage, SRC-CMD-1A adds current-state/source-version command coverage, SRC-CMD-1B adds helper profile coverage and SRC-CMD-1C refreshes stale source labels | Continue as partial until remaining deferred active groups pass. |
+| `planning/root-source-sync-register.md` | covered active core / register | Doc version: v2.3.0 | self row partially synchronized; ROOT-FULL-0 adds inventory, ROOT-FULL-1 adds narrow Goal Map/Tampermonkey source coverage, SRC-CMD-1A adds current-state/source-version command coverage, SRC-CMD-1B adds helper profile coverage and SRC-CMD-1C refreshes stale source labels | Continue as partial until remaining deferred active groups pass. |
 | `planning/CURRENT-PLANNING-STATE-TEMPLATE.md` | covered active command/output template | Doc version: v0.2.0 | created and source-covered in SRC-CMD-1A; current source labels refreshed in SRC-CMD-1C | Exact output shape for explicit `положняк`; do not treat example areas as mandatory headings. |
 | `planning/documentation/examples/CURRENT-PLANNING-STATE-RESPONSE-EXAMPLE.md` | covered command/output example | Doc version: v0.2.0 | created in SRC-CMD-1A; current source labels refreshed in SRC-CMD-1C | Demonstrates `положняк` output; example sections are illustrative only. |
 | `planning/replacement-file-generation-guide.md` | covered active core | Doc version: v0.1.0 | replacement/archive workflow coverage done | Refresh when archive rules change. |
@@ -277,6 +279,15 @@ implementation/helper:
 | `tools/tampermonkey/IMPLEMENTATION-NOTES.md` | ROOT-FULL-1/SRC-CMD-1B-covered helper implementation notes | Doc version: v0.2.0 | helper profile implementation notes updated in SRC-CMD-1B | Avoid overclaiming command semantics. |
 | `tools/tampermonkey/chat-command-palette.user.js` | implementation/helper | implementation/helper source, version not applicable; userscript @version 0.4.0 | source sync boundary comment kept; helper profiles added in SRC-CMD-1B | Projection consistency checked; do not introduce Doc version without code version policy. |
 
+### Removed legacy/current-like root files — ROOT-LEGACY-CLEAN
+
+| Removed group | Former examples | Current routing decision |
+|---|---|---|
+| Current-like root notes | `planning/current-state.md`, `planning/planning-workflow-current.md`, `planning/l1-current-implementation-status.md`, `planning/l2-current-planning-status.md` | Removed from active routing. Use root UCM, Workflow Activation Map, living Goal Maps, source/register files and current repo evidence instead. |
+| Old agent/root rules | `planning/agent-rules.md`, old root bridge/status notes | Removed or no longer active. Use `planning/planning-agent-protocol.md`, `planning/agent-roles-and-required-actions.md` and responsibility maps. |
+| Legacy bridge/diagram/cleanup notes | old diagram root files, cleanup/replacement notes and superseded bridge files | Removed from active inventory or kept only in external history. Do not route new chats to these paths. |
+
+
 ### Evidence, status and maintenance root files
 
 | File | Classification | Current version/status | Coverage decision | Next action |
@@ -285,23 +296,13 @@ implementation/helper:
 | `planning/shared-visibility-map.md` | active project map | version not confirmed | visibility/status source; needs audit | ROOT-FULL-2. |
 | `planning/repo-grounded-github-line-links-workflow.md` | active workflow | version not confirmed | current answer-evidence workflow | ROOT-FULL-2. |
 | `planning/planning-maintenance-register.md` | active maintenance register | version not confirmed | maintenance routing/register | ROOT-FULL-2. |
-| `planning/current-state.md` | status/evidence note | version not declared | decide active vs historical before versioning | ROOT-FULL-2 classification/source pass. |
-| `planning/decisions.md` | decisions log | version not declared | log/evidence, not workflow by default | ROOT-FULL-2; keep evidence-trail semantics. |
-| `planning/risk-log.md` | risk log | version not declared | log/evidence, not workflow by default | ROOT-FULL-2; keep evidence-trail semantics. |
-| `planning/action-log.md` | legacy/general action log | version not declared | likely historical/evidence trail | ROOT-FULL-2 classify before use. |
 | `planning/documentation-action-log.md` | documentation action log | version not confirmed / evidence trail | evidence trail only, not workflow source by itself | Keep candidate/evidence row; do not force local Sources. |
-| `planning/planning-workflow-current.md` | current planning workflow/status note | version not confirmed | may be active or superseded by root router chain | ROOT-FULL-2 decide active/currentness. |
-| `planning/l1-current-implementation-status.md` | status/implementation inventory | version not confirmed | implementation-status evidence; not current proof without repo check | ROOT-FULL-2. |
-| `planning/l2-current-planning-status.md` | status/planning inventory | version not confirmed | planning-status evidence; needs freshness review | ROOT-FULL-2. |
-| `planning/l1-domain-implementation-cut.md` | implementation-readiness bridge | version not confirmed | bridge/status file | ROOT-FULL-2 or ROOT-FULL-4. |
-| `planning/l1-domain-testing-rules.md` | testing rules/status bridge | version not confirmed | bridge to testing/domain | ROOT-FULL-2 or ROOT-FULL-4. |
 
 ### Safety, reusable context and VKR root files
 
 | File | Classification | Current version/status | Coverage decision | Next action |
 |---|---|---|---|---|
 | `planning/agent-scope-boundaries-and-prompt-safety.md` | active safety workflow | version not confirmed | should be versioned/source-covered if still active | ROOT-FULL-3. |
-| `planning/agent-rules.md` | agent rule note | version not declared | decide active vs superseded by protocol/scope docs | ROOT-FULL-3. |
 | `planning/general-project-info.md` | reusable project context | version not declared | context/reference, not implementation proof | ROOT-FULL-3. |
 | `planning/vkr-clean-reference.md` | active VKR wording reference | version not confirmed | clean wording owner | ROOT-FULL-3. |
 | `planning/vkr-formulation-guide.md` | active/internal VKR writing guide | version not confirmed | reusable writing guide | ROOT-FULL-3. |
@@ -314,34 +315,15 @@ implementation/helper:
 | `planning/scenario-specification-principles.md` | active scenario bridge | version not confirmed | root principle that should route to scenario layer docs | ROOT-FULL-4. |
 | `planning/scenario-domain-validation-principles.md` | active scenario/domain bridge | version not confirmed | root principle bridge; avoid duplicating domain register | ROOT-FULL-4. |
 | `planning/scenario-to-implementation-workflow-v5-consolidated.md` | superseded compatibility bridge | superseded | historical unless explicitly revived | Mark historical in ROOT-FULL-4. |
-| `planning/domain-draft-generation-guide.md` | legacy domain bridge | transitional legacy guide | likely historical/superseded by domain workflows | ROOT-FULL-4. |
-| `planning/domain-design-input-navigation-notes.md` | domain navigation note | version not declared | bridge note; verify if still active | ROOT-FULL-4. |
-| `planning/domain-model.md` | background / compatibility note | version not confirmed | context/evidence only; domain register owns current domain sources | ROOT-FULL-4. |
-| `planning/layer-plan.md` | layer bridge note | version not declared | likely planning/status bridge | ROOT-FULL-4. |
-| `planning/api-plan.md` | API bridge note | version not declared | likely superseded by planning/api/** | ROOT-FULL-4. |
-| `planning/testing-strategy.md` | testing bridge note | version not declared | likely superseded by planning/testing/** | ROOT-FULL-4. |
-| `planning/use-cases.md` | use-case bridge note | version not declared | likely historical/root overview | ROOT-FULL-4. |
 
 ### Diagram root files
 
-| File | Classification | Current version/status | Coverage decision | Next action |
-|---|---|---|---|---|
-| `planning/diagram-brief.md` | diagram root bridge | version not declared | likely legacy bridge to diagramming/diagrams layer | ROOT-FULL-5. |
-| `planning/diagram-common-mistakes.md` | diagram root reference | version not confirmed | active or legacy reference; classify before use | ROOT-FULL-5. |
-| `planning/diagram-domain-db-brief.md` | diagram root bridge | version not declared | likely legacy bridge | ROOT-FULL-5. |
-| `planning/diagram-examples-index.md` | diagram examples index | version not confirmed | route to current examples if active | ROOT-FULL-5. |
-| `planning/diagram-generation-rules-with-example.md` | diagram guide | version not confirmed | active or superseded by diagramming workflows | ROOT-FULL-5. |
-| `planning/diagram-prompting-guide.md` | diagram prompting guide | version not confirmed | active or superseded by diagramming workflows | ROOT-FULL-5. |
-| `planning/diagram-scenario-spec.md` | diagram scenario representation source | version not confirmed | likely bridge to scenario/diagramming layer | ROOT-FULL-5. |
+Legacy diagram root bridge files removed by ROOT-LEGACY-CLEAN are not active inventory rows. Current diagramming source ownership should be checked in the diagram/diagramming layer before reintroducing root-level rows.
 
 ### Historical, cleanup and migration root notes
 
 | File | Classification | Current version/status | Coverage decision | Next action |
 |---|---|---|---|---|
-| `planning/navigation-cleanup-notes.md` | cleanup note | version not declared | historical unless reopened | Keep historical/deferred. |
-| `planning/navigation-cleanup-v3-notes.md` | cleanup note | version not declared | historical unless reopened | Keep historical/deferred. |
-| `planning/planning-navigation-replacement-notes.md` | cleanup/replacement note | version not declared | historical unless reopened | Keep historical/deferred. |
-| `planning/solution-map-and-cleanup-plan.md` | cleanup/solution note | version not declared | historical unless reopened | Keep historical/deferred. |
 ```
 
 ## 4. Root Dependency Rows
@@ -366,10 +348,10 @@ Sources:
 | `planning/source-cascade-sync-workflow.md` | source cascade rules and register state model | `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md`; `planning/domain/AGGREGATE-SECTION-SOURCES-TEMPLATE.md`; `planning/slices/SERVER-SLICE-SECTION-SOURCES-TEMPLATE.md`; `planning/source-usage-cascade-profile.md`; `planning/root-source-sync-register.md`; `planning/domain/domain-source-sync-register.md`; planned `planning/slices/slice-source-sync-register.md` | format/process + register-index | source workflow Doc version: v0.8.0; general template Doc version: v0.2.0; profile Doc version: v0.2.0; domain register Doc version: v0.2.0; slice register planned | derived/synchronized for ROOT-SRC-1 local Sources scope; rule updated in SRC-DEP-CMD-1 | explicit source dependency/link rule added; source-block metadata refreshed | Workflow has local section Sources blocks, distinguishes current domain/root registers from planned slice register and classifies file-to-file/section-to-file dependencies. |
 | `planning/source-usage-cascade-profile.md` | Enman source/consumer categories and row conventions | `planning/documentation/field-kits/source-usage-cascade-field-kit.md`; `planning/source-cascade-sync-workflow.md`; `planning/root-source-sync-register.md`; `planning/domain/domain-source-sync-register.md`; planned `planning/slices/slice-source-sync-register.md`; `planning/documentation/examples/project-specific/enman/SOURCE-USAGE-CASCADE-ENMAN-SCENARIO-EXAMPLE.md` | format/process + project profile/example | source workflow Doc version: v0.8.0; root register Doc version: v1.4.0; domain register Doc version: v0.2.0; field-kit/example versions not confirmed; slice register planned | derived/synchronized for ROOT-SRC-1 local Sources scope; triggers updated in SRC-DEP-CMD-1 | source dependency/link trigger added; source-block metadata refreshed | Profile has local section Sources blocks for categories, register model, triggers, pilot and related files. |
 | `planning/SOURCE-SECTION-SOURCES-TEMPLATE.md` | fenced `Sources:` block format | `planning/source-cascade-sync-workflow.md`; `planning/source-usage-cascade-profile.md`; local `Sources:` block rules | format/process | source workflow Doc version: v0.8.0; profile Doc version: v0.2.0; template Doc version: v0.2.0 | derived/synchronized for ROOT-SRC-1 local Sources scope; source labels refreshed in SRC-DEP-CMD-1 | no semantic change; source-block metadata refreshed | Template has minimal local Sources blocks for template, field meaning, rules and source delta sections. |
-| `planning/README.md` | onboarding, root navigation and command-helper discovery | route/read/navigation links only after CASCADE-SRC-1A cleanup; no versioned source files listed for pure discovery links | navigation/discovery; no source/version cascade by default | README Doc version: v0.3.0; linked route targets checked only when their consumed meaning/rules are used in a specific task | derived/synchronized for ROOT-SRC-2A local Sources scope; fake dependency edge list removed in CASCADE-SRC-1A | local Sources exist, but this register row no longer treats every README link as a source dependency | New chat discovery can still point to Goal Map/Tampermonkey docs; downstream review is triggered only by material consumed rule/shape/evidence changes, not by any linked file version bump. |
+| `planning/README.md` | onboarding, root navigation and command-helper discovery | route/read/navigation links only after CASCADE-SRC-1A cleanup; no versioned source files listed for pure discovery links | navigation/discovery; no source/version cascade by default | README Doc version: v0.4.0; linked route targets checked only when their consumed meaning/rules are used in a specific task | derived/synchronized for ROOT-SRC-2A local Sources scope; fake dependency edge list removed in CASCADE-SRC-1A | local Sources exist, but this register row no longer treats every README link as a source dependency | New chat discovery can still point to Goal Map/Tampermonkey docs; downstream review is triggered only by material consumed rule/shape/evidence changes, not by any linked file version bump. |
 | `planning/planning-use-case-map.md` | action-to-doc-flow routing and command semantics | canonical route/process owner refs by command section; route targets and required reads are not source dependencies by default | command routing/process; targeted format/process dependencies only when route semantics consume owner rules/output shapes | use-case map Doc version: v1.1.0; source workflow Doc version: v0.8.0 for source-impact/source-version routes; root register Doc version: v1.4.0 for register-impact review; other route targets checked per command when materially consumed | derived/synchronized for ROOT-SRC-2A local Sources scope; source-impact route added in CASCADE-SRC-1A | broad route-target source list removed; existing command routes preserved; neutral English display names added in CMD-TM-EN-NAMES-1 | UCM still owns user command -> docs/workflows/templates/sources/output/permission routing. Version cascade from UCM happens only when a consumed command rule/output shape/source truth materially changes. |
 | `planning/workflow-activation-map.md` | workflow activation and implicit workflow chains | route/activation links only after CASCADE-SRC-1A cleanup; detailed route ownership to be reviewed in CASCADE-ROUTE-1B | workflow routing/process; no source/version cascade by route membership alone | activation map Doc version: v0.3.0; route targets checked only when consumed activation rules materially change | derived/synchronized for ROOT-SRC-2A local Sources scope; fake route-target dependency edge list removed in CASCADE-SRC-1A | local Sources exist; registry semantics not changed in this batch | WAM remains a current activation map until CASCADE-ROUTE-1B. Its route/read links do not force version cascade across UCM/Goal Map/Tampermonkey/layer workflow files by default. |
-| `planning/planning-doc-responsibility-map.md` | root planning responsibility routing | responsibility/ownership links only after CASCADE-SRC-1A cleanup; layer maps are route targets unless their ownership rules are materially consumed | responsibility routing/process; no source/version cascade by ownership pointer alone | responsibility map Doc version: v0.3.0; source workflow Doc version: v0.8.0 for dependency classification rule; root register Doc version: v1.4.0 for current row status | derived/synchronized for ROOT-SRC-2A local Sources scope; fake ownership-link dependency edge list removed in CASCADE-SRC-1A | local Sources exist; responsibility semantics preserved | Responsibility map can still point to layer/Goal Map/Tampermonkey owners, but those links do not create broad versioned dependencies unless the target's ownership rule is consumed and materially changed. |
+| `planning/planning-doc-responsibility-map.md` | root planning responsibility routing | responsibility/ownership links only after CASCADE-SRC-1A cleanup; layer maps are route targets unless their ownership rules are materially consumed | responsibility routing/process; no source/version cascade by ownership pointer alone | responsibility map Doc version: v0.6.0; source workflow Doc version: v0.8.0 for dependency classification rule; root register Doc version: v1.4.0 for current row status | derived/synchronized for ROOT-SRC-2A local Sources scope; fake ownership-link dependency edge list removed in CASCADE-SRC-1A | local Sources exist; responsibility semantics preserved | Responsibility map can still point to layer/Goal Map/Tampermonkey owners, but those links do not create broad versioned dependencies unless the target's ownership rule is consumed and materially changed. |
 | `planning/planning-agent-protocol.md` | planning protocol, workflow activation gate, role identification and scope boundaries | `planning/README.md`; `planning/workflow-activation-map.md`; `planning/planning-use-case-map.md`; `planning/planning-doc-responsibility-map.md`; `planning/agent-roles-and-required-actions.md`; role/layer workflow files by protocol section | protocol/process + permission boundaries | protocol Doc version: v0.1.0; root router sources versioned; downstream role/layer workflows mixed/not fully audited | derived/synchronized for ROOT-SRC-2B local Sources scope | local Sources added; protocol semantics preserved | Protocol owns preflight, role identification, line-link, scope and question-first rules; downstream layer workflows remain checked per task. |
 | `planning/agent-roles-and-required-actions.md` | planning roles, required read order and role handoff boundaries | `planning/README.md`; `planning/planning-agent-protocol.md`; `planning/workflow-activation-map.md`; `planning/planning-doc-responsibility-map.md`; role-specific workflow docs by section | role routing/process + mandatory actions | role map Doc version: v0.1.0; root protocol/router sources versioned; role-specific workflows mixed/not fully audited | derived/synchronized for ROOT-SRC-2B local Sources scope | local Sources added; role boundaries preserved | Role map names role-specific must-reads but does not audit every downstream workflow. |
 | `planning/replacement-file-generation-guide.md` | replacement package rules, apply command shape and diff capture | `planning/planning-use-case-map.md`; `planning/documentation/review-diff-file-workflow.md`; `planning/documentation/file-update-overview-workflow.md`; target files by package scope | output/process + review loop | replacement guide Doc version: v0.1.0; review-diff workflow Doc version: v0.1.0; file-update overview workflow Doc version: v0.1.0 | derived/synchronized for ROOT-SRC-3A local Sources scope | local Sources added; default clipboard diff preserved | Owns `давай архив` replacement-package mode and explicitly separates it from archive read-source mode. |
@@ -544,4 +526,24 @@ Reason:
 
 Boundary:
   This does not change the project-local userscript command list. It moves reusable ownership and starter guidance into planning/documentation/.
+```
+
+
+## Source Delta — ROOT-LEGACY-CLEAN-STEP2
+
+```text
+Changed files:
+  - planning/README.md @ active navigation after legacy deletion
+  - planning/documentation/README.md @ reusable layer navigation after documentation-legacy removal
+  - planning/documentation/PORTABLE-STARTER-KIT.md @ copy guidance after legacy folder removal
+  - planning/planning-doc-responsibility-map.md @ root responsibility map after legacy route removal / Doc version v0.6.0
+  - planning/agent-roles-and-required-actions.md @ stale read path cleanup
+  - planning/root-source-sync-register.md @ root inventory collapse after deleted legacy/current-like files
+  - planning/documentation-action-log.md @ append-only cleanup record
+
+Reason:
+  Legacy/current-like root files and documentation-legacy were removed, but active docs still referenced them as current or pending inventory. New chats should not route to removed files.
+
+Boundary:
+  This cleanup does not change reusable Tampermonkey projection rules, project-local userscript command profiles or slice/testing source refactor state. It only syncs active documentation after deletion.
 ```

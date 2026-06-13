@@ -2660,3 +2660,39 @@ Follow-ups:
   Review whether `planning/documentation/examples/README.md` needs a reusable Tampermonkey projection/example coverage entry after the workflow has been used in another project.
 Notes:
   Field kits remain for bootstrap of project-specific root/local files. Tampermonkey projection is a reusable workflow because the projection rule is the same across projects.
+
+
+### 2026-06-13 - Synced active docs after legacy root cleanup
+
+Date:
+  2026-06-13
+Action:
+  Updated active planning/navigation/register docs after ROOT-LEGACY-CLEAN deletion of legacy current-like/root bridge files and the former documentation-legacy folder.
+Type:
+  documentation cleanup / active routing synchronization
+Status:
+  applied
+Why:
+  Deleted legacy files should not remain discoverable as active read-order, active inventory or pending source rows. New chats must route through the active root UCM, workflow activation map, responsibility maps, living Goal Maps, source/register files and current repo evidence.
+Changed files:
+  - planning/README.md
+  - planning/documentation/README.md
+  - planning/documentation/PORTABLE-STARTER-KIT.md
+  - planning/planning-doc-responsibility-map.md
+  - planning/agent-roles-and-required-actions.md
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Removed active references to the deleted documentation-legacy folder.
+  - Removed planning-workflow-current from active reusable-layer read order.
+  - Collapsed deleted current-like/root bridge inventory rows into a ROOT-LEGACY-CLEAN cleanup note in the root source register.
+  - Repointed stale role/read paths away from removed current-state/planning-workflow-current files.
+Not changed:
+  - No reusable Tampermonkey projection workflow changes.
+  - No project-local userscript command profile changes.
+  - No slice/testing source refactor changes.
+  - No parallel workspace created.
+Follow-ups:
+  If any removed legacy path still appears in active docs after diff review, handle it as a targeted stale-reference cleanup before starting the next planning slice.
+Notes:
+  This step is intended to be committed together with the prior deletion-only cleanup if those deletions are still staged locally. Do not restore staged deletions before applying this package.

@@ -13,11 +13,7 @@ planning/documentation/
 
 It now contains the reusable documentation layer that was promoted during the folder switch.
 
-The previous active documentation folder is preserved temporarily at:
-
-```text
-planning/documentation-legacy/
-```
+The previous active documentation folder `planning/documentation-legacy/` was removed by ROOT-LEGACY-CLEAN.
 
 Migration-only candidate/history artifacts are preserved at:
 
@@ -139,21 +135,22 @@ For broad documentation updates:
 
 ```text
 1. planning/README.md
-2. planning/planning-workflow-current.md
-3. planning/planning-agent-protocol.md
-4. planning/planning-doc-responsibility-map.md
-5. planning/documentation/README.md
-6. planning/documentation/planning-docs-architecture-principles.md
-7. planning/documentation/documentation-responsibility-map.md
-8. planning/documentation/documentation-update-plan-workflow.md
-9. planning/documentation/documentation-update-workflow.md
-10. planning/documentation/status-reconciliation-workflow.md, when status/current-state claims are involved
-11. planning/documentation/local-global-documentation-sync-workflow.md, when local details need shared visibility
-12. planning/documentation/field-kits/source-usage-cascade-field-kit.md, when source usage/cascade/stale-reference setup is involved
-13. planning/documentation/example-coverage-workflow.md, when templates, output shapes, commands, output modes, draft formats or examples change
-14. planning/documentation/file-update-overview-workflow.md and planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md, when file/change summary behavior changes
-15. planning/documentation-action-log.md, when the update is a significant logical documentation action
-16. planning/replacement-file-generation-guide.md, when archive/replacement mode is relevant
+2. planning/planning-use-case-map.md
+3. planning/workflow-activation-map.md
+4. planning/planning-agent-protocol.md
+5. planning/planning-doc-responsibility-map.md
+6. planning/documentation/README.md
+7. planning/documentation/planning-docs-architecture-principles.md
+8. planning/documentation/documentation-responsibility-map.md
+9. planning/documentation/documentation-update-plan-workflow.md
+10. planning/documentation/documentation-update-workflow.md
+11. planning/documentation/status-reconciliation-workflow.md, when status/current-state claims are involved
+12. planning/documentation/local-global-documentation-sync-workflow.md, when local details need shared visibility
+13. planning/documentation/field-kits/source-usage-cascade-field-kit.md, when source usage/cascade/stale-reference setup is involved
+14. planning/documentation/example-coverage-workflow.md, when templates, output shapes, commands, output modes, draft formats or examples change
+15. planning/documentation/file-update-overview-workflow.md and planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md, when file/change summary behavior changes
+16. planning/documentation-action-log.md, when the update is a significant logical documentation action
+17. planning/replacement-file-generation-guide.md, when archive/replacement mode is relevant
 ```
 
 For root use-case map or command-routing work:
@@ -218,26 +215,23 @@ For copying/adapting this reusable docs layer into a new project or documentatio
 
 ## 5. Migration / Legacy State
 
-After the folder switch:
+After ROOT-LEGACY-CLEAN:
 
 ```text
 planning/documentation/
   active reusable documentation layer
 
-planning/documentation-legacy/
-  previous active documentation folder preserved for verification
-
 planning/documentation-migration/
   migration-only candidate guardrails, classification artifacts and Enman adapter/profile history
 ```
 
-Do not use `planning/documentation-legacy/` or `planning/documentation-migration/` as active read-order sources unless the task is explicitly about migration/history verification.
+The former `planning/documentation-legacy/` folder has been removed. Do not route active work to it.
+Do not use `planning/documentation-migration/` as an active read-order source unless the task is explicitly about migration/history verification.
 
 ## 6. Do Not
 
 ```text
 - Do not recreate a separate reusable-candidate folder after the switch.
-- Do not treat planning/documentation-legacy/ as active.
 - Do not move root Enman project profiles into this folder.
 - Do not create a second generic root use-case map inside this folder.
 - Do not treat examples as rule owners.
@@ -247,5 +241,4 @@ Do not use `planning/documentation-legacy/` or `planning/documentation-migration
 - Do not keep transitional source-usage governance bridges inside this reusable layer once field kits/profiles own the flow.
 - Do not treat project-local tools/tampermonkey files as reusable command authority.
 - Do not put reusable Tampermonkey projection rules only in project workstreams or tools.
-- Do not delete planning/documentation-legacy/ until a post-switch verification batch approves cleanup.
 ```

@@ -1,7 +1,7 @@
 # Planning Document Responsibility Map
 
 Status: transitional global responsibility map / root layer router
-Doc version: v0.5.0
+Doc version: v0.6.0
 Scope: routes planning documentation information to the correct layer and, where available, to the layer-local responsibility map
 
 ## 1. Core Rule
@@ -131,7 +131,6 @@ Sources:
 | `planning/planning-use-case-map.md` | Root action/use-case map: maps user actions and repeated commands to docs/workflows/templates/read paths, active context, traversal depth, read source mode, expected output and permission boundaries |
 | `planning/workflow-activation-map.md` | Root workflow activation/read-order helper: which workflows exist, when they activate, implicit vs explicit activation and Workflow Preflight format; not the owner of command/action semantics when UCM owns the route |
 | `planning/planning-maintenance-register.md` | Root register for deferred planning-docs/workflow maintenance tasks and condition-based follow-ups |
-| `planning/planning-workflow-current.md` | Workflow rules, repository-edit workflow and historical/current-state reminders; concrete inventory sections are not implementation truth |
 | `planning/vkr-clean-reference.md` | Clean VKR/thesis terminology, internal-to-clean mapping and evidence map for VKR-facing materials |
 | `planning/planning-agent-protocol.md` | Role-level protocol, workflow activation rule, read rules, handoff rules and global do-not rules |
 | `planning/agent-roles-and-required-actions.md` | Role map, required read order, mandatory actions and handoff boundaries for planning roles |
@@ -142,7 +141,7 @@ Sources:
 | `planning/documentation/parallel-work/` | Reusable documentation-layer owner for parallel-agent staging workspaces and aggregate sync plans; not a concrete project workspace by itself |
 
 
-Project-wide profiles are concrete Enman configuration files. Reusable field-kit/workflow logic now lives in the active reusable documentation layer under `planning/documentation/`. Previous active docs are preserved temporarily under `planning/documentation-legacy/`; migration-only switch history is preserved under `planning/documentation-migration/`.
+Project-wide profiles are concrete Enman configuration files. Reusable field-kit/workflow logic lives in the active reusable documentation layer under `planning/documentation/`. The former `planning/documentation-legacy/` folder was removed by ROOT-LEGACY-CLEAN; migration-only switch history is preserved under `planning/documentation-migration/`.
 
 
 Use-case map responsibility rule:
@@ -639,4 +638,5 @@ Sources:
 - ROOT-SRC-3A refreshed output/archive source status and bumped this file to Doc version: v0.3.0 without changing routing/navigation semantics.
 - CASCADE-ROUTE-1B bumped this file to Doc version: v0.4.0 and clarified that responsibility pointers are ownership/routing links, not source/version dependencies by default.
 - PAR-WORK-1 bumped this file to Doc version: v0.5.0 and routed reusable parallel-agent workspace/sync architecture to the documentation layer.
+- ROOT-LEGACY-CLEAN-STEP2 bumped this file to Doc version: v0.6.0 and removed active routing to deleted legacy/current-like root files while preserving parallel-work ownership.
 ```
