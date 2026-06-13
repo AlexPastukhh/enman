@@ -1,7 +1,7 @@
 # Tampermonkey Chat Command Helper
 
 Status: current Tampermonkey helper implementation entrypoint  
-Doc version: v0.4.0
+Doc version: v0.5.0
 Scope: implementation documentation entrypoint for the Enman Chat Command Helper; not the userscript source code
 
 ## 0. Source Sync / ROOT-FULL-1 / SRC-CMD-1B
@@ -13,7 +13,8 @@ Sources:
     - planning/SOURCE-SECTION-SOURCES-TEMPLATE.md @ Doc version: v0.2.0
     - planning/source-usage-cascade-profile.md @ Doc version: v0.2.0
   Content:
-    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.4.0
+    - planning/documentation/tampermonkey-command-projection-workflow.md @ Doc version: v0.1.0
+    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.5.0
     - planning/planning-use-case-map.md @ Doc version: v1.1.0
     - tools/tampermonkey/IMPLEMENTATION-NOTES.md @ Doc version: v0.2.0
     - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.4.0
@@ -28,7 +29,7 @@ Sources:
 
 ROOT-FULL-1 source pass treats this file as Tampermonkey helper implementation orientation.
 This section records the files that must be checked when this file is created, updated or used as a source for later work.
-It does not make the Tampermonkey userscript or any example file a source of truth for command semantics.
+It does not make the Tampermonkey userscript, implementation notes or this README a source of truth for command semantics. Reusable projection rules live in `planning/documentation/tampermonkey-command-projection-workflow.md`.
 
 SRC-CMD-1B updates this entrypoint for helper profiles that project source/version maintenance commands and the explicit `положняк` current-state command.
 
@@ -46,7 +47,7 @@ It should make short commands safer in long chats by adding compact reminders ab
 - user target/context.
 ```
 
-The helper does not define command semantics. It only projects existing repository command routes into editable prompt bodies.
+The helper does not define command semantics. It only projects existing repository command routes into editable prompt bodies. Reusable helper/projection rules and reusable starter notes are copied through `planning/documentation/`; this folder is the Enman project-local implementation.
 
 ## 2. Current Implementation Documentation
 
@@ -62,7 +63,13 @@ Detailed implementation notes live here:
 tools/tampermonkey/IMPLEMENTATION-NOTES.md
 ```
 
-Planning source:
+Reusable projection workflow:
+
+```text
+planning/documentation/tampermonkey-command-projection-workflow.md
+```
+
+Enman-specific planning/application source:
 
 ```text
 planning/workstreams/tampermonkey-command-projection-plan.md

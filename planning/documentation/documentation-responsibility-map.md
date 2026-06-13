@@ -59,6 +59,7 @@ This file owns only documentation-layer placement.
 | Status vs implementation evidence reconciliation | `status-reconciliation-workflow.md` | How to update docs when code/tests/generated artifacts changed. |
 | Reviewable answer format and response-level commands | `reviewable-agent-output-and-commands-workflow.md` | Level 1/2/3 answers, sources/coverage, recheck/clarify/keep prev/no ch/section operations. |
 | Command creation/change workflow | `command-creation-workflow.md` | Rules-based process for adding or changing command routes, owner semantics, example coverage and Tampermonkey projection decisions. |
+| Tampermonkey command projection workflow | `tampermonkey-command-projection-workflow.md` | Reusable projection-only helper rules: UCM/owner docs remain authority, profiles use body/englishName and inserted bodies use english_name/key_reminders. |
 | File Update Overview process | `file-update-overview-workflow.md` | Owns when and how to produce the final structured file-change summary for non-trivial file/docs/code update answers. |
 | File Update Overview template | `FILE-UPDATE-OVERVIEW-TEMPLATE.md` | Owns the exact reusable File Update Overview block structure. |
 | Use-case map creation/update workflow | `use-case-map-workflow.md` | Owns the reusable process for creating, updating and maintaining use-case maps. |
@@ -70,6 +71,7 @@ This file owns only documentation-layer placement.
 | Parallel workspace template | `parallel-work/PARALLEL-WORKSPACE-TEMPLATE.md` | Exact reusable shape for concrete workspace folders. |
 | Parallel sync-plan template | `parallel-work/PARALLEL-SYNC-PLAN-TEMPLATE.md` | Exact reusable shape for aggregate sync folders and lifecycle `sync-plan.md`. |
 | Root use-case map setup field kit | `field-kits/root-use-case-map-field-kit.md` | Active reusable setup kit for deriving one concrete project root use-case map and common command clusters. Not a runtime router. |
+| Reusable Tampermonkey helper starter notes/templates | `tools/tampermonkey/README.md` and `tools/tampermonkey/chat-command-palette.starter.user.js` | Portable starter docs/templates for creating project-local Tampermonkey helpers from reusable projection rules. Not project command authority. |
 | Scenario/domain/slice route setup field kit | `profiles/scenario-domain-slice-use-case-field-kit.md` | Active profile-specific setup kit for adding scenario/domain/slice route families to a project root use-case map. Not a second map. |
 | Working example coverage decision process | `example-coverage-workflow.md` | Decides whether a new/changed template, workflow output, response command, output mode or draft format needs a working example. |
 | Concrete compound starter artifact for one documentation concept | `<concept>-principles-workflow-template.md` or `<concept>-concept-kit.md` | Use only when one cohesive early concept intentionally combines principles, workflow and template. The example file remains separate. |
@@ -142,6 +144,7 @@ If documentation-layer files conflict:
 - documentation-action-log.md is historical/explanatory and does not override owner docs, workflows, templates, use-case rows or PMR entries.
 - reviewable-agent-output-and-commands-workflow.md wins for answer format and response-level commands.
 - command-creation-workflow.md wins for the process of creating/changing command routes and deciding Tampermonkey projection gates.
+- tampermonkey-command-projection-workflow.md wins for reusable Tampermonkey projection rules; project-local tools/workstreams do not override it.
 - documentation-update-agent-prompt.md is derived/supporting and does not override canonical docs.
 - scoped sync notes do not override reusable workflow files.
 - README.md is navigation and does not override canonical rules.
@@ -178,6 +181,8 @@ Suggested suffixes:
 | Parallel-work folder navigation | `parallel-work/README.md` |
 | Parallel workspace template | `PARALLEL-WORKSPACE-TEMPLATE.md` |
 | Parallel sync-plan template | `PARALLEL-SYNC-PLAN-TEMPLATE.md` |
+| Reusable Tampermonkey projection workflow | `tampermonkey-command-projection-workflow.md` |
+| Reusable tool starter notes/template | `tools/<tool-name>/README.md` or `tools/<tool-name>/<starter-name>.js` |
 | Reusable prompt | `*-agent-prompt.md` |
 | Architecture principles | `*-architecture-principles.md` |
 
@@ -201,6 +206,7 @@ Suggested suffixes:
 - Do not treat parallel-work workspaces, local action logs or shadow copies as canonical documentation.
 - Do not put per-workspace sync plans in every workspace by default; aggregate sync plans belong under `parallel-work/syncs/`.
 - Do not treat reusable prompts as canonical rules.
+- Do not leave reusable Tampermonkey projection rules only in project-local tools or workstream files.
 - Do not treat scoped sync notes as reusable workflows.
 - Do not add a new file without updating README.md when it must be discoverable.
 ```

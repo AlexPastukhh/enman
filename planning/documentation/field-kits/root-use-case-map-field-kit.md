@@ -1,7 +1,7 @@
 # Root Use-Case Map Field Kit
 
 Status: active reusable documentation-layer field kit  
-Doc version: v0.1.0
+Doc version: v0.2.0
 Scope: one-time / rare setup guidance for deriving a single project root use-case map
 
 ## 1. Purpose
@@ -94,6 +94,43 @@ Most command-heavy assistant projects need some subset of these reusable command
 | Permission boundary | `без изм`, package vs direct edit wording | Prevent silent repository changes or output-mode substitution. |
 
 A project can localize aliases and wording. Keep active-context behavior explicit.
+
+## 5A. Common Root Command Seed Rows
+
+Use these rows as reusable starter rows when creating a new project's `planning/planning-use-case-map.md`.
+
+These rows are not runtime authority while they remain inside this field kit. After the project root UCM exists, the project root UCM owns the concrete routing.
+
+| Command / trigger | Meaning | Active-context behavior | Traversal/read mode | Sources / owner files | Expected output |
+|---|---|---|---|---|---|
+| `давай архив`, `give arch`, `replacement package` | Produce a full replacement archive/package. This is output-package mode, not archive read-source mode. | Use active approved scope; ask only blocking scope questions. | Targeted/full depending on touched files and source certainty. | Project root UCM, replacement/archive generation guide, relevant owner docs and target source files. | Full replacement archive plus apply/diff commands in chat. No patches/patch files/scripts as primary apply mechanism. Do not commit or push. |
+| `давай архив с review diff file`, `give arch rev dif`, `archive with review diff file` | Produce a replacement archive and repo-stored review diff when explicitly requested. | Use only when review-diff-file transfer is approved. | Targeted/full depending on touched files. | Project root UCM, replacement/archive generation guide, review-diff-file workflow if present. | Archive plus `_ai-review-diffs/last-archive.diff` flow if the project uses that convention. Do not commit/push generated package changes without review. |
+| `арх`, `added arch`, `use archive` | Treat provided/latest archive as read-source snapshot. | Use current uploaded/archive source; state freshness limits. | Archive read-source mode; targeted/full depending on question. | Project root UCM and relevant target files from archive. | Answer/review/plan based on archive. Do not create replacement archive unless separately requested. |
+| `синх карта`, `sync map`, `goal map sync` | Synchronize living Goal Map state with accepted repo/chat state. | Use active Goal Map/workstream if clear; otherwise ask target. | Targeted/full by Goal Map scope. | Project root UCM, Goal Map workflow/template, active Goal Map, relevant owner docs. | Goal Map Brief and/or map-sync package only when requested. Do not start next functional slice unless asked. |
+| `план файл-обновление`, `plan file update`, `archive plan` | Produce a concrete file/docs/code/archive update plan. | Ask target/scope if unclear. | Reuse/targeted/full by update risk. | Project root UCM, relevant workflows/templates, target files. | Plan with files, responsibilities, what/why/boundaries/checks/next action. Does not edit files or create archive unless separately requested. |
+| `крит`, `crit`, `critical review` | Critically evaluate target/diff/plan/claim as hypothesis, not accepted truth. | Use provided target; ask only if target is missing. | Targeted/full by risk and evidence needs. | Project root UCM, target docs/diff/files, relevant owner docs. | Honest verdict with strengths/weaknesses/risks/assumptions/alternatives. No edits/archive/commit/push unless separately requested. |
+| `кц`, `gm brief`, `goal map brief` | Produce compact Goal Map Brief for the active workstream/slice. | Use active Goal Map if clear; otherwise ask target. | Targeted read of active Goal Map and required source files. | Project root UCM, Goal Map workflow/template, active Goal Map. | Compact current goal/current slice/done/now/next/after state. No file edits. |
+| `обс`, `chat rech`, `recheck` | Recheck prior answer/context/sources/diff before continuing. | Use current conversation target; ask if unclear. | Targeted/full by risk. | Project root UCM, prior chat context, target source files, owner docs. | Corrected answer/review. State uncertainty and do not invent evidence. |
+| `положняк`, `polozh`, `current state` | Report current operational repo/chat/slice state. | Use active workstream/slice if clear. | Targeted repo/Goal Map/source checks for state claims. | Project root UCM, active Goal Map, source register, relevant repo files. | Concise current state: what is in repo, what is local/unknown, next safe action. |
+| `планируй`, `plan now` | Plan the next concrete step now from active context. | Use active Goal Map/context if available; otherwise ask for target. | Reuse/targeted by uncertainty. | Project root UCM, active Goal Map/workstream, relevant owner docs. | Concrete next step/scope/boundary/evidence/next action. No archive/edit unless separately requested. |
+| `создай команду`, `create command`, `new command` | Plan or create a command route by rules/template. | Ask which command if target command is unclear. | Targeted/full by command scope. | Project root UCM, `planning/documentation/command-creation-workflow.md`, examples index and Tampermonkey projection workflow when in scope. | Command family/type/owner/UCM row/example/projection plan. Does not edit/create archive unless separately requested. |
+| `начни параллельную работу`, `start parallel work`, `parallel workspace` | Start or plan one staging-only parallel workspace. | Ask scope if no concrete agent/workstream target. | Targeted/full by workspace scope. | Project root UCM, `planning/documentation/parallel-work/parallel-workflow.md`, workspace template. | Parallel workspace plan/package when requested. Do not edit canonical docs directly; do not create aggregate sync until a sync-candidate workspace exists. |
+
+If a seed command is projected into Tampermonkey, use:
+
+```text
+planning/documentation/tampermonkey-command-projection-workflow.md
+```
+
+Projection requirements:
+
+```text
+- profile has englishName;
+- inserted body has english_name;
+- button label is <englishName> · <label>;
+- helper stays projection-only and does not own command meaning.
+```
+
 
 ## 6. Root Use-Case Map Sections
 

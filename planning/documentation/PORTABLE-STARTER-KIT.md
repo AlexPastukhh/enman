@@ -33,6 +33,9 @@ planning/documentation/example-coverage-workflow.md
 planning/documentation/file-update-overview-workflow.md
 planning/documentation/FILE-UPDATE-OVERVIEW-TEMPLATE.md
 planning/documentation/reviewable-agent-output-and-commands-workflow.md
+planning/documentation/command-creation-workflow.md
+planning/documentation/tampermonkey-command-projection-workflow.md
+planning/documentation/parallel-work/
 planning/documentation/PORTABLE-STARTER-KIT.md
 ```
 
@@ -41,6 +44,12 @@ Copy reusable kits and reusable specialized profiles:
 ```text
 planning/documentation/field-kits/
 planning/documentation/profiles/
+```
+
+Copy reusable helper/tool starter docs when the target project may use command-helper UI projection:
+
+```text
+planning/documentation/tools/tampermonkey/
 ```
 
 Copy generic examples:
@@ -150,7 +159,8 @@ Before considering the copied layer ready:
 5. Keep or replace project-specific examples.
 6. Create a fresh project action log if needed.
 7. Do not copy migration or legacy folders as active documentation.
-8. Confirm README read order points to the new project's root files.
+8. If helper UI commands are needed, adapt planning/documentation/tools/tampermonkey/ into project-local tools/tampermonkey/ and keep Tampermonkey projection rules inside planning/documentation/.
+9. Confirm README read order points to the new project's root files.
 ```
 
 ## 9. Stop Condition

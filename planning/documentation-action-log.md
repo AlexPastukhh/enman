@@ -2618,3 +2618,45 @@ Follow-ups:
   Apply package, paste diff for review, then smoke-test helper labels and inserted `english_name:` fields.
 Notes:
   Button labels use `<english name> · <command label>`. English names are intentionally compact display names such as `give arch`, `gm brief`, `chat rech` and `polozh` where requested.
+
+
+### 2026-06-13 - Moved reusable Tampermonkey projection rules into documentation layer
+
+Date:
+  2026-06-13
+Action:
+  Added reusable Tampermonkey projection workflow and reusable Tampermonkey tool starter notes/templates inside `planning/documentation/`, then updated command creation, portable starter and documentation routing to reference those reusable owners instead of relying on Enman-specific workstream/tool files.
+Type:
+  reusable documentation-layer architecture / command-system portability / Tampermonkey projection ownership
+Status:
+  applied
+Why:
+  A new project should be able to copy `planning/documentation/` as the reusable layer without also copying Enman workstream history or project-local `tools/tampermonkey/` files as semantic sources. Tampermonkey projection rules are reusable workflow rules, while project-local tools remain implementation/application files.
+Changed files:
+  - planning/documentation/README.md
+  - planning/documentation/documentation-responsibility-map.md
+  - planning/documentation/PORTABLE-STARTER-KIT.md
+  - planning/documentation/field-kits/root-use-case-map-field-kit.md
+  - planning/documentation/command-creation-workflow.md
+  - planning/documentation/tampermonkey-command-projection-workflow.md
+  - planning/documentation/tools/tampermonkey/README.md
+  - planning/documentation/tools/tampermonkey/chat-command-palette.starter.user.js
+  - planning/workstreams/tampermonkey-command-projection-plan.md
+  - tools/tampermonkey/README.md
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Updates:
+  - Added reusable `tampermonkey-command-projection-workflow.md` as the owner for projection-only helper rules.
+  - Added reusable `planning/documentation/tools/tampermonkey/` starter notes/template.
+  - Updated command creation workflow so reusable command creation points to reusable projection workflow, not Enman-specific workstream/implementation files.
+  - Expanded root use-case map field kit with common command seed rows for new project UCM bootstrap.
+  - Clarified Enman-specific Tampermonkey workstream and tools README as local application/implementation, not reusable authority.
+Not changed:
+  - No project-local userscript command profiles changed.
+  - No Enman-specific command semantics changed.
+  - No concrete parallel workspace created.
+  - No commit/push performed by package generation.
+Follow-ups:
+  Review whether `planning/documentation/examples/README.md` needs a reusable Tampermonkey projection/example coverage entry after the workflow has been used in another project.
+Notes:
+  Field kits remain for bootstrap of project-specific root/local files. Tampermonkey projection is a reusable workflow because the projection rule is the same across projects.

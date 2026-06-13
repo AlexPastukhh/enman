@@ -1,8 +1,8 @@
 # Command Creation Workflow
 
 Status: active reusable documentation-layer command creation workflow
-Doc version: v0.1.0
-Scope: rules-based workflow for creating or changing Enman/ChatGPT command routes, owner semantics, examples and optional Tampermonkey projections
+Doc version: v0.2.0
+Scope: rules-based workflow for creating or changing command routes, owner semantics, examples and optional Tampermonkey projections in any project using the reusable documentation layer
 
 ## 1. Purpose
 
@@ -20,7 +20,7 @@ add command
 
 A command must be created from rules and owner templates, not by copying a previous row blindly.
 
-Existing rows in `planning/planning-use-case-map.md` are useful examples, but the rule source is the route/table structure, the command owner workflow/template, response-command boundaries and the Tampermonkey projection rules when helper support is in scope.
+Existing rows in a concrete project root use-case map are useful examples, but the rule source is the route/table structure, the command owner workflow/template, response-command boundaries and the Tampermonkey projection rules when helper support is in scope.
 
 ## 2. Source Of Truth
 
@@ -39,10 +39,19 @@ Example coverage:
   planning/documentation/example-coverage-workflow.md
   planning/documentation/examples/README.md
 
-Tampermonkey projection, only when in scope:
-  planning/workstreams/tampermonkey-command-projection-plan.md
-  tools/tampermonkey/chat-command-palette.user.js
+Reusable Tampermonkey projection, only when in scope:
+  planning/documentation/tampermonkey-command-projection-workflow.md
 ```
+
+Project-specific implementation files may exist at paths such as:
+
+```text
+tools/tampermonkey/README.md
+tools/tampermonkey/chat-command-palette.user.js
+planning/workstreams/tampermonkey-command-projection-plan.md
+```
+
+These local files are application/implementation owners for one project. They do not own reusable command semantics or reusable Tampermonkey projection rules.
 
 Tampermonkey command bodies are projections. They do not own command semantics.
 
@@ -85,6 +94,7 @@ Expected output:
    - canonical phrase;
    - aliases;
    - language variants;
+   - optional neutral English display name;
    - whether the command is a response modifier, output mode, file/update route, audit route, Goal Map route, parallel-work route or implementation/helper route.
 
 2. Identify the owner semantics.
@@ -96,6 +106,7 @@ Expected output:
    - Fill every template slot.
    - Include permission boundary in Expected output.
    - Make active-context behavior explicit.
+   - Keep any English command name as display/readability metadata, not authority.
 
 4. Decide example coverage.
    - If the command changes a non-trivial output mode or workflow, update examples index.
@@ -107,8 +118,8 @@ Expected output:
 
 6. Decide Tampermonkey projection separately.
    - Add or update Tampermonkey profile only when explicitly in scope.
-   - Projection must follow `planning/workstreams/tampermonkey-command-projection-plan.md`.
-   - The inserted body must include command, command_family, source_of_truth, route_read_rule, key_reminders and user_target.
+   - Projection must follow planning/documentation/tampermonkey-command-projection-workflow.md.
+   - The inserted body must include command, english_name, command_family, source_of_truth, route_read_rule, key_reminders and user_target.
 
 7. Record the applied documentation action.
    - Append main action log after real changed files are known.
@@ -127,13 +138,14 @@ Default:
   defer unless the user explicitly asks to add the command to Tampermonkey or the batch scope includes helper projection.
 ```
 
-If Tampermonkey is updated, also update the projection plan before or together with the userscript implementation.
+If Tampermonkey is updated, update the reusable projection workflow if the reusable rule changes. Update project-specific projection plans and userscript files only for project-local implementation/application changes.
 
 ## 6. Do Not
 
 ```text
 - Do not create a command only by copying a similar UCM row.
 - Do not make Tampermonkey the source of truth.
+- Do not point reusable command creation rules at a project-specific workstream as reusable authority.
 - Do not put permission boundaries only in examples.
 - Do not edit files, create archives, commit or push from the command-creation command alone.
 - Do not start unrelated command expansion while adding one command.

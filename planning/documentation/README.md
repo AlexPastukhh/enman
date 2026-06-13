@@ -1,7 +1,7 @@
 # Documentation Reusable Layer Index
 
 Status: active reusable documentation layer index / transitional post-switch cleanup  
-Scope: documentation architecture, documentation update workflows, responsibility routing, reusable field kits, specialized profiles, examples, source-usage governance, parallel-agent work staging and action logging
+Scope: documentation architecture, documentation update workflows, responsibility routing, reusable field kits, specialized profiles, examples, source-usage governance, parallel-agent work staging, command creation, Tampermonkey command projection, reusable tool starters and action logging
 
 ## 1. Purpose
 
@@ -51,6 +51,7 @@ planning/documentation/documentation-update-plan-workflow.md
 planning/documentation/documentation-responsibility-zone-review-workflow.md
 planning/documentation/use-case-map-workflow.md
 planning/documentation/USE-CASE-MAP-TEMPLATE.md
+planning/documentation/tampermonkey-command-projection-workflow.md
 ```
 
 Reusable field kits:
@@ -81,6 +82,13 @@ planning/documentation/reviewable-agent-output-and-commands-workflow.md
 planning/documentation/command-creation-workflow.md
 ```
 
+
+Reusable tool starters:
+
+```text
+planning/documentation/tools/tampermonkey/README.md
+planning/documentation/tools/tampermonkey/chat-command-palette.starter.user.js
+```
 
 Parallel work reusable owners:
 
@@ -156,7 +164,8 @@ For root use-case map or command-routing work:
 3. planning/documentation/use-case-map-workflow.md
 4. planning/documentation/USE-CASE-MAP-TEMPLATE.md
 5. planning/documentation/command-creation-workflow.md, when a command route is created or changed
-6. planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md, when scenario/domain/slice route rows are added or changed
+6. planning/documentation/tampermonkey-command-projection-workflow.md, when command helper projection is in scope
+7. planning/documentation/profiles/scenario-domain-slice-use-case-field-kit.md, when scenario/domain/slice route rows are added or changed
 ```
 
 For status/shared visibility/source-usage setup or repeated use:
@@ -177,7 +186,6 @@ source usage / cascade:
   project profile: planning/source-usage-cascade-profile.md
   project pilots: planning/source-usage-pilots/
 ```
-
 
 For parallel-agent workspace or aggregate sync work:
 
@@ -202,6 +210,8 @@ For copying/adapting this reusable docs layer into a new project or documentatio
 3. planning/documentation/planning-docs-architecture-principles.md
 4. planning/documentation/documentation-responsibility-map.md
 5. relevant field kits/profiles
+6. planning/documentation/tampermonkey-command-projection-workflow.md, when helper projection is part of the target project
+7. planning/documentation/tools/tampermonkey/README.md, when a project-local helper is created
 ```
 
 `PORTABLE-STARTER-KIT.md` is a one-time adaptation guide. It is not a normal read-order source after the target project has its root profiles, root use-case map and active documentation routing.
@@ -235,5 +245,7 @@ Do not use `planning/documentation-legacy/` or `planning/documentation-migration
 - Do not treat parallel-work workspace copies as canonical documentation.
 - Do not create sync plans inside each workspace by default; aggregate sync plans belong under `parallel-work/syncs/`.
 - Do not keep transitional source-usage governance bridges inside this reusable layer once field kits/profiles own the flow.
+- Do not treat project-local tools/tampermonkey files as reusable command authority.
+- Do not put reusable Tampermonkey projection rules only in project workstreams or tools.
 - Do not delete planning/documentation-legacy/ until a post-switch verification batch approves cleanup.
 ```

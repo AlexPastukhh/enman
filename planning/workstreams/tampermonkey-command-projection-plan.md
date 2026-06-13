@@ -1,8 +1,8 @@
 # Tampermonkey Command Projection Plan
 
 Status: current workstream planning file  
-Doc version: v0.4.0
-Scope: planning rules for projecting repository command routes into editable Tampermonkey prompt-helper prompts; not userscript implementation
+Doc version: v0.5.0
+Scope: Enman-specific application/projection plan for projecting repository command routes into editable Tampermonkey prompt-helper prompts; reusable projection rules now live in planning/documentation/tampermonkey-command-projection-workflow.md
 
 ## 0. Source Sync / ROOT-FULL-1 / SRC-CMD-1B
 
@@ -18,7 +18,8 @@ Sources:
     - planning/documentation/examples/README.md @ Doc version: v0.1.0
     - planning/replacement-file-generation-guide.md @ Doc version: v0.1.0
     - planning/documentation/review-diff-file-workflow.md @ Doc version: v0.1.0
-    - tools/tampermonkey/README.md @ Doc version: v0.4.0
+    - planning/documentation/tampermonkey-command-projection-workflow.md @ Doc version: v0.1.0
+    - tools/tampermonkey/README.md @ Doc version: v0.5.0
     - tools/tampermonkey/chat-command-palette.user.js @ implementation/helper @version 0.4.0
   Internal dependencies:
     - Source Of Truth
@@ -29,9 +30,9 @@ Sources:
     - planned planning/slices/slice-source-sync-register.md does not exist yet
 ```
 
-ROOT-FULL-1 source pass treats this file as Tampermonkey command projection planning file.
+ROOT-FULL-1 source pass treats this file as the Enman-specific Tampermonkey command projection planning file.
 This section records the files that must be checked when this file is created, updated or used as a source for later work.
-It does not make the Tampermonkey userscript or any example file a source of truth for command semantics.
+It does not make the Tampermonkey userscript, this Enman workstream plan or any example file a source of truth for command semantics. Reusable projection rules live in `planning/documentation/tampermonkey-command-projection-workflow.md`.
 
 SRC-CMD-1B source pass updates this file with Tampermonkey profiles for source/version maintenance commands and the explicit `положняк` current-state command.
 
@@ -39,7 +40,7 @@ CMD-CREATE-1 adds command creation and parallel-work start profiles as helper pr
 
 ## 1. Purpose
 
-This file plans how the Tampermonkey prompt helper should turn short commands into editable prompts that preserve command route, boundaries and key reminders.
+This file records how Enman applies the reusable Tampermonkey projection workflow to its project-local command helper. Reusable projection rules live in `planning/documentation/tampermonkey-command-projection-workflow.md`; this file is local application/workstream state.
 
 The helper exists because a short user command can lose important execution details in a long chat. The helper should make those details visible before the message is inserted.
 
@@ -53,11 +54,12 @@ Source of truth order:
 1. planning/planning-use-case-map.md
 2. Owner workflow/template files linked from the use-case row
 3. Reusable examples linked from the use-case map or examples index
-4. This planning file
-5. Userscript implementation
+4. planning/documentation/tampermonkey-command-projection-workflow.md
+5. This Enman-specific planning file
+6. Userscript implementation
 ```
 
-If this file or the userscript conflicts with the use-case map or owner workflow, the use-case map / owner workflow wins.
+If this file, the reusable projection workflow or the userscript conflicts with the use-case map or owner workflow, the use-case map / owner workflow wins.
 
 The helper must not invent new command semantics. It can only surface compact reminders that are already grounded in the route chain.
 
