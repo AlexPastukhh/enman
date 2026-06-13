@@ -611,11 +611,12 @@ Tampermonkey command-helper discovery behavior:
   Tampermonkey inserted command bodies are not command authority. They are editable route hints that should lead the chat back to this root use-case map and linked owner workflows/examples.
 
   When a task mentions Tampermonkey, command helper, command palette, inserted command bodies or helper command profiles, read:
-    planning/workstreams/tampermonkey-command-projection-plan.md
+    planning/documentation/tampermonkey-command-projection-workflow.md
     planning/documentation/tools/tampermonkey/README.md
     planning/documentation/tools/tampermonkey/chat-command-palette.user.js, when implementation behavior or UI details matter
+    planning/workstreams/tampermonkey-command-projection-plan.md, only for Enman-local backlog/history/status
 
-  If the userscript or projection plan conflicts with this root map or an owner workflow, this root map / owner workflow wins.
+  If the userscript or Enman-local projection plan conflicts with this root map, this root map / owner workflow / reusable projection workflow wins.
 
 ## 9. Repeated / Continuation Commands
 
@@ -722,8 +723,8 @@ Examples demonstrate valid execution only. They do not own command semantics, ro
 ```text
 Sources:
   Format/process:
-    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.4.0
-    - planning/documentation/tools/tampermonkey/README.md @ Doc version: v0.2.0
+    - planning/documentation/tampermonkey-command-projection-workflow.md @ Doc version: v0.2.1
+    - planning/documentation/tools/tampermonkey/README.md @ Doc version: v0.2.1
   Content:
     - planning/root-source-sync-register.md @ Doc version: v2.1.0
   Internal dependencies:
@@ -876,7 +877,7 @@ Steps:
 5. Read planning/agent-roles-and-required-actions.md when a specialized role may be needed.
 6. Read planning/planning-doc-responsibility-map.md to choose the layer.
 7. If the task touches an active long-running workstream, Goal Map command or next-step choice, read the relevant living Goal Map and `planning/goal-map-principles-workflow-template.md`.
-8. If the task touches Tampermonkey helper commands or inserted command bodies, read `planning/workstreams/tampermonkey-command-projection-plan.md` and `planning/documentation/tools/tampermonkey/README.md` after the root route is known.
+8. If the task touches Tampermonkey helper commands or inserted command bodies, read `planning/documentation/tampermonkey-command-projection-workflow.md` and `planning/documentation/tools/tampermonkey/README.md` after the root route is known; read `planning/workstreams/tampermonkey-command-projection-plan.md` only for Enman-local backlog/history/status.
 9. For documentation-layer work, read documentation README/map/workflows as required by planning-agent-protocol.md.
 10. Select traversal depth:
    - full for first use / new chat / changed scope;

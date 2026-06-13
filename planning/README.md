@@ -120,8 +120,8 @@ Sources:
   Content:
     - planning/goal-map-principles-workflow-template.md @ version not confirmed
     - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ version not confirmed
-    - planning/workstreams/tampermonkey-command-projection-plan.md @ version not confirmed
-    - planning/documentation/tools/tampermonkey/README.md @ Doc version: v0.2.0
+    - planning/documentation/tampermonkey-command-projection-workflow.md @ Doc version: v0.2.1
+    - planning/documentation/tools/tampermonkey/README.md @ Doc version: v0.2.1
   Internal dependencies:
     - Project-Wide Planning Profiles
   Not checked:
@@ -187,8 +187,8 @@ Sources:
   Content:
     - planning/goal-map-principles-workflow-template.md @ version not confirmed
     - planning/workstreams/command-system-and-tampermonkey-goal-map.md @ version not confirmed
-    - planning/workstreams/tampermonkey-command-projection-plan.md @ version not confirmed
-    - planning/documentation/tools/tampermonkey/README.md @ Doc version: v0.2.0
+    - planning/documentation/tampermonkey-command-projection-workflow.md @ Doc version: v0.2.1
+    - planning/documentation/tools/tampermonkey/README.md @ Doc version: v0.2.1
   Internal dependencies:
     - Workflow Activation And Use-Case Navigation
   Not checked:
@@ -200,9 +200,10 @@ When a new chat, restored context or first planning pass touches a long-running 
 ```text
 planning/goal-map-principles-workflow-template.md
 planning/workstreams/command-system-and-tampermonkey-goal-map.md
-planning/workstreams/tampermonkey-command-projection-plan.md
+planning/documentation/tampermonkey-command-projection-workflow.md
 planning/documentation/tools/tampermonkey/README.md
 planning/documentation/tools/tampermonkey/chat-command-palette.user.js
+planning/workstreams/tampermonkey-command-projection-plan.md (only for Enman-local backlog/history/status)
 ```
 
 Use them to decide:
@@ -211,7 +212,8 @@ Use them to decide:
 - whether a living Goal Map exists and must be consulted before choosing the next step;
 - whether the map's Current Snapshot, active slice, next action and evidence are stale;
 - which Tampermonkey command bodies are only prompt projections;
-- which root route/owner workflow files define the actual command behavior.
+- which reusable projection workflow and root route/owner workflow files define the actual command behavior;
+- whether any Enman-local Tampermonkey workstream file is only backlog/history/status, not reusable rule authority.
 ```
 
 Tampermonkey inserted command bodies are not source of truth. They are route hints that tell the chat to start from `planning/planning-use-case-map.md` and then read linked owner workflows/examples before acting.

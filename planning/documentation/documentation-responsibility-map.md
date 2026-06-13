@@ -182,7 +182,7 @@ Suggested suffixes:
 | Parallel workspace template | `PARALLEL-WORKSPACE-TEMPLATE.md` |
 | Parallel sync-plan template | `PARALLEL-SYNC-PLAN-TEMPLATE.md` |
 | Reusable Tampermonkey projection workflow | `tampermonkey-command-projection-workflow.md` |
-| Reusable tool starter notes/template | `tools/<tool-name>/README.md` or `tools/<tool-name>/<starter-name>.js` |
+| Reusable tool docs/full helper | `tools/<tool-name>/README.md` or `tools/<tool-name>/<tool-name>.js` when a reusable tool is intentionally shipped inside the documentation layer |
 | Reusable prompt | `*-agent-prompt.md` |
 | Architecture principles | `*-architecture-principles.md` |
 

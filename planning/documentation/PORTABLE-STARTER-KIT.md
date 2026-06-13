@@ -46,7 +46,7 @@ planning/documentation/field-kits/
 planning/documentation/profiles/
 ```
 
-Copy reusable helper/tool starter docs when the target project may use command-helper UI projection:
+Copy reusable full helper docs/tool when the target project may use command-helper UI projection:
 
 ```text
 planning/documentation/tools/tampermonkey/

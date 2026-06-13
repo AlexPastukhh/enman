@@ -1,7 +1,7 @@
 # Tampermonkey Command Projection Workflow
 
 Status: active reusable documentation-layer workflow
-Doc version: v0.2.0
+Doc version: v0.2.1
 Scope: reusable rules for projecting accepted command routes into the reusable Tampermonkey/ChatGPT command helper UI without making the helper the command authority
 
 ## 1. Purpose
@@ -17,7 +17,7 @@ Tampermonkey projection exists to improve command recall and prompt-body consist
 | Project root use-case map | Concrete command route, accepted aliases, traversal/read mode, owner files, expected output and permission boundary. |
 | Command owner workflow/template | Reusable behavior and output rules for the command family. |
 | This workflow | Reusable rules for projecting commands into a helper UI. |
-| `planning/documentation/project-local helper folderchat-command-palette.user.js` | Reusable full helper implementation and common command seed projection. |
+| `planning/documentation/tools/tampermonkey/chat-command-palette.user.js` | Reusable full helper implementation and common command seed projection. |
 | Project-specific workstream plan, if any | Local application backlog and smoke-test state only. |
 
 ## 3. Core Rule
@@ -148,13 +148,13 @@ Before adding/updating a helper command profile, verify:
 The active reusable full helper lives under:
 
 ```text
-planning/documentation/project-local helper folderchat-command-palette.user.js
+planning/documentation/tools/tampermonkey/chat-command-palette.user.js
 ```
 
 Do not keep a second tracked local copy under:
 
 ```text
-project-local helper folder
+tools/tampermonkey/
 ```
 
 unless the project intentionally forks the reusable helper. If a project forks it, document why and keep the fork clearly marked as project-local implementation, not reusable authority.
@@ -164,7 +164,7 @@ unless the project intentionally forks the reusable helper. If a project forks i
 ```text
 - Do not create Tampermonkey command semantics without a UCM route.
 - Do not treat the userscript as a command source of truth.
-- Do not keep both reusable starter and full helper scripts as competing tracked helpers.
+- Do not keep both the reusable full helper and a tracked local helper fork as competing authorities.
 - Do not copy Enman workstream history into a new project's reusable docs.
 - Do not silently change command meaning while adding UI labels.
 - Do not omit key_reminders from inserted command bodies.

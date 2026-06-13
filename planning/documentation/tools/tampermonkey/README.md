@@ -1,7 +1,7 @@
 # Tampermonkey Command Helper Reusable Tool
 
 Status: active reusable documentation-layer full tool
-Doc version: v0.2.0
+Doc version: v0.2.1
 Scope: reusable full Tampermonkey/ChatGPT command helper implementation and adaptation notes for projects using the reusable documentation layer
 
 Use with:
@@ -56,17 +56,18 @@ The included userscript provides:
 
 ## 4. Adaptation Rule For Another Project
 
-A project copying `planning/documentation/` can use the full helper as the starting script.
+A project copying `planning/documentation/` can use this tracked full helper directly as the reusable command-helper UI projection.
 
-Before using it as a project-specific helper, verify:
+Before enabling or adapting the reusable helper for a target project, verify:
 
 ```text
 1. The project root UCM exists.
 2. Each command in COMMANDS exists in the project root UCM or is being created in the same approved batch.
 3. Commands that do not apply to the target project are removed.
 4. source_of_truth points to the target project's real route/owner docs.
-5. @name and @namespace are adapted if needed.
+5. @name and @namespace are adapted only if the project intentionally forks or rebrands the reusable helper.
 6. The helper remains projection-only.
+7. No second tracked project-local helper copy is created by default.
 ```
 
 ## 5. Do Not
@@ -75,6 +76,6 @@ Before using it as a project-specific helper, verify:
 - Do not create a second tracked local helper copy by default.
 - Do not treat this helper as command authority.
 - Do not add project-only command semantics here without a UCM route.
-- Do not keep both starter-only and full-helper userscripts as competing reusable helpers.
+- Do not keep both the reusable full helper and a tracked local helper fork as competing authorities.
 - Do not use the helper to write to the repo or perform network calls.
 ```
