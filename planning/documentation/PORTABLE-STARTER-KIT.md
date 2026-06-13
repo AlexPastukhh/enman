@@ -176,3 +176,14 @@ Stop reading this file after the target project has:
 ```
 
 After that, use normal read order from `planning/documentation/README.md`.
+
+
+## Tampermonkey reusable-only note
+
+The reusable full helper is tracked inside:
+
+```text
+planning/documentation/tools/tampermonkey/chat-command-palette.user.js
+```
+
+Do not create a second tracked project-local `tools/tampermonkey/` copy by default. A copied project may install/adapt the userscript in Tampermonkey, but command semantics still come from the project root UCM and owner workflows.

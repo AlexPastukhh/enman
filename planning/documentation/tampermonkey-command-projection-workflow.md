@@ -1,12 +1,12 @@
 # Tampermonkey Command Projection Workflow
 
 Status: active reusable documentation-layer workflow
-Doc version: v0.1.0
-Scope: reusable rules for projecting accepted command routes into a Tampermonkey/ChatGPT command helper UI without making the helper the command authority
+Doc version: v0.2.0
+Scope: reusable rules for projecting accepted command routes into the reusable Tampermonkey/ChatGPT command helper UI without making the helper the command authority
 
 ## 1. Purpose
 
-Use this workflow when a project using the reusable documentation layer wants a Tampermonkey helper or similar UI to insert structured command prompts into ChatGPT.
+Use this workflow when a project using the reusable documentation layer wants the reusable Tampermonkey helper to insert structured command prompts into ChatGPT.
 
 Tampermonkey projection exists to improve command recall and prompt-body consistency. It does not define command meaning.
 
@@ -17,8 +17,8 @@ Tampermonkey projection exists to improve command recall and prompt-body consist
 | Project root use-case map | Concrete command route, accepted aliases, traversal/read mode, owner files, expected output and permission boundary. |
 | Command owner workflow/template | Reusable behavior and output rules for the command family. |
 | This workflow | Reusable rules for projecting commands into a helper UI. |
-| Project-specific tools/tampermonkey files | Local implementation and command-profile instances for one project. |
-| Project-specific workstream plan | Local application/projection backlog and smoke-test state. |
+| `planning/documentation/tools/tampermonkey/chat-command-palette.user.js` | Reusable full helper implementation and common command seed projection. |
+| Project-specific workstream plan, if any | Local application backlog and smoke-test state only. |
 
 ## 3. Core Rule
 
@@ -48,7 +48,7 @@ description
   Short helper description.
 
 body
-  Full inserted [ENMAN_COMMAND] body.
+  Full inserted command body.
 
 englishName
   Neutral English display/readability name.
@@ -108,6 +108,8 @@ user_target:
 [/ENMAN_COMMAND]
 ```
 
+The marker may be adapted by another project, but the body must still visibly mark that it is a command body, name the command, name the English display name, state source-of-truth/read rules and list key reminders.
+
 ## 6. Source Of Truth Requirements
 
 A profile's `source_of_truth` block must start with the project root UCM:
@@ -125,7 +127,7 @@ planning/documentation/parallel-work/parallel-workflow.md
 planning/replacement-file-generation-guide.md
 ```
 
-Project-specific implementation files may be named in local projection docs, but do not make them semantic owners.
+The reusable full helper may contain common command seed profiles, but each copied project must still verify those commands against its own root UCM.
 
 ## 7. Common Reusable Projection Checks
 
@@ -138,39 +140,31 @@ Before adding/updating a helper command profile, verify:
 4. englishName and english_name match unless the local project intentionally uses different display wording.
 5. The helper label renders as <englishName> · <label>.
 6. The helper does not add hidden behavior that is absent from the route.
-7. The project-specific tool README says the helper is projection only.
+7. The reusable tool README says the helper is projection only.
 ```
 
-## 8. Project-Specific Tool Placement
+## 8. Reusable Tool Placement
 
-A project may place implementation under:
+The active reusable full helper lives under:
+
+```text
+planning/documentation/tools/tampermonkey/chat-command-palette.user.js
+```
+
+Do not keep a second tracked local copy under:
 
 ```text
 tools/tampermonkey/
 ```
 
-Common local files:
-
-```text
-tools/tampermonkey/README.md
-tools/tampermonkey/IMPLEMENTATION-NOTES.md
-tools/tampermonkey/chat-command-palette.user.js
-```
-
-Reusable starter/tool docs may be copied from:
-
-```text
-planning/documentation/tools/tampermonkey/
-```
-
-After copying, adapt project names, repository URLs, command list and source paths.
+unless the project intentionally forks the reusable helper. If a project forks it, document why and keep the fork clearly marked as project-local implementation, not reusable authority.
 
 ## 9. Do Not
 
 ```text
 - Do not create Tampermonkey command semantics without a UCM route.
 - Do not treat the userscript as a command source of truth.
-- Do not put project-specific command profiles into this reusable workflow.
+- Do not keep both reusable starter and full helper scripts as competing tracked helpers.
 - Do not copy Enman workstream history into a new project's reusable docs.
 - Do not silently change command meaning while adding UI labels.
 - Do not omit key_reminders from inserted command bodies.

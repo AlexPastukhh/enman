@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         Enman Chat Command Helper
-// @namespace    https://github.com/AlexPastukhh/enman
-// @version      0.4.0
-// @description  List-only draggable command helper for inserting Enman command prompt bodies into ChatGPT.
-// @author       Enman
+// @name         Reusable Chat Command Helper
+// @namespace    https://github.com/AlexPastukhh/enman/reusable-docs
+// @version      0.5.0
+// @description  Reusable list-only draggable command helper for inserting structured command prompt bodies into ChatGPT.
+// @author       Reusable docs layer
 // @match        https://chatgpt.com/*
 // @match        https://chat.openai.com/*
 // @run-at       document-idle
@@ -11,18 +11,18 @@
 // ==/UserScript==
 
 /*
-ROOT-FULL-1 source sync:
+TM-REUSE-ONLY source sync:
   Source-of-truth:
     - planning/planning-use-case-map.md @ Doc version: v1.1.0
-    - planning/workstreams/tampermonkey-command-projection-plan.md @ Doc version: v0.4.0
-    - tools/tampermonkey/README.md @ Doc version: v0.4.0
-    - tools/tampermonkey/IMPLEMENTATION-NOTES.md @ Doc version: v0.2.0
+    - planning/documentation/tampermonkey-command-projection-workflow.md @ Doc version: v0.2.0
+    - planning/documentation/tools/tampermonkey/README.md @ Doc version: v0.2.0
+    - planning/documentation/field-kits/root-use-case-map-field-kit.md @ Doc version: v0.2.0
 
   Boundary:
-    - This userscript is an implementation/helper projection.
+    - This userscript is a reusable documentation-layer helper projection.
     - It is not command source of truth.
-    - Do not assign Doc version to this JS file unless a separate implementation version policy is introduced.
-    - Command semantics must remain owned by planning/planning-use-case-map.md and linked owner workflow/example files.
+    - Command semantics remain owned by the project root use-case map and linked owner workflow/example files.
+    - The current command set is a reusable/common seed. A copied project may trim/adapt commands after its UCM routes are accepted.
 */
 
 
@@ -91,7 +91,7 @@ ROOT-FULL-1 source sync:
     "group": "MVP-1",
     "label": "создай команду",
     "description": "new command",
-    "body": "[ENMAN_COMMAND]\nRead this whole command body before answering.\nDo not ignore `key_reminders`.\n\ncommand:\n  создай команду\n\nenglish_name:\n  create command\n\ncommand_family:\n  `создай команду` / `создай новую команду` / `добавь команду` / `спланируй команду` / `new command` / `create command`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read `planning/documentation/command-creation-workflow.md`, `planning/documentation/reviewable-agent-output-and-commands-workflow.md`, `planning/documentation/examples/README.md` and `planning/workstreams/tampermonkey-command-projection-plan.md` when Tampermonkey projection is in scope.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Create command semantics in UCM/owner docs first; Tampermonkey is projection, not source of truth.\n  - Define command family, command type, owner files, expected output and permission boundary.\n  - Use the UCM row template; do not copy a similar row blindly.\n  - Decide example coverage and Goal Map/workstream impact.\n  - Add/update Tampermonkey only when explicitly in scope.\n  - Do not edit files or create archive unless separately requested.\n\nuser_target:\n  <what command should be created or planned>\n\n[/ENMAN_COMMAND]",
+    "body": "[ENMAN_COMMAND]\nRead this whole command body before answering.\nDo not ignore `key_reminders`.\n\ncommand:\n  создай команду\n\nenglish_name:\n  create command\n\ncommand_family:\n  `создай команду` / `создай новую команду` / `добавь команду` / `спланируй команду` / `new command` / `create command`\n\nsource_of_truth:\n  Start from `planning/planning-use-case-map.md`.\n  Then read `planning/documentation/command-creation-workflow.md`, `planning/documentation/reviewable-agent-output-and-commands-workflow.md`, `planning/documentation/examples/README.md` and `planning/documentation/tampermonkey-command-projection-workflow.md` when Tampermonkey projection is in scope.\n\nroute_read_rule:\n  If you have not read this command route and its linked owner/example files in this chat, read them before answering.\n  If you have read them but do not remember the required behavior, boundaries or key points, reread from `planning/planning-use-case-map.md` before answering.\n  Do not rely only on this prompt when command behavior is uncertain.\n\nkey_reminders:\n  - Create command semantics in UCM/owner docs first; Tampermonkey is projection, not source of truth.\n  - Define command family, command type, owner files, expected output and permission boundary.\n  - Use the UCM row template; do not copy a similar row blindly.\n  - Decide example coverage and Goal Map/workstream impact.\n  - Add/update Tampermonkey only when explicitly in scope.\n  - Do not edit files or create archive unless separately requested.\n\nuser_target:\n  <what command should be created or planned>\n\n[/ENMAN_COMMAND]",
     "englishName": "create command"
   },
   {

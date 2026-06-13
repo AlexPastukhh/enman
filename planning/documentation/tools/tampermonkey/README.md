@@ -1,8 +1,8 @@
-# Tampermonkey Command Helper Reusable Tool Notes
+# Tampermonkey Command Helper Reusable Tool
 
-Status: active reusable documentation-layer tool starter notes
-Doc version: v0.1.0
-Scope: portable notes for creating a project-specific Tampermonkey/ChatGPT command helper implementation from the reusable documentation layer
+Status: active reusable documentation-layer full tool
+Doc version: v0.2.0
+Scope: reusable full Tampermonkey/ChatGPT command helper implementation and adaptation notes for projects using the reusable documentation layer
 
 Use with:
 
@@ -14,57 +14,67 @@ planning/documentation/field-kits/root-use-case-map-field-kit.md
 
 ## 1. Purpose
 
-These notes are copied with the reusable documentation layer so a new project can create its own helper under a project-local tools folder without depending on Enman-specific workstream files.
+This folder owns the reusable Tampermonkey helper implementation shipped with the reusable documentation layer.
 
-Suggested target placement after adaptation:
+The full helper userscript lives here:
 
 ```text
-tools/tampermonkey/README.md
-tools/tampermonkey/chat-command-palette.user.js
+planning/documentation/tools/tampermonkey/chat-command-palette.user.js
 ```
 
-## 2. What To Adapt
+There should not be a second project-local tracked copy under `tools/tampermonkey/` while this reusable-only model is active.
 
-When creating the project-local helper:
+## 2. Authority Boundary
 
 ```text
-- set @namespace / repository URL for the target project;
-- set @name for the target project;
-- seed COMMANDS from the project's root use-case map;
-- remove commands that do not apply to the target project;
-- keep englishName and english_name for display/readability;
-- keep route_read_rule and key_reminders in inserted bodies;
-- preserve the rule that the helper is projection only.
+Tampermonkey is projection only, not authority.
 ```
 
-## 3. Minimum Implementation Contract
+The helper inserts command bodies and improves command recall. It does not define command meaning.
 
-A basic helper needs:
+Command semantics must come from:
 
 ```text
-- a COMMANDS array;
-- each command profile with id/group/label/description/body/englishName;
-- a button/list renderer that displays <englishName> · <label>;
-- an insertion function that inserts body text into the active ChatGPT prompt box;
-- no hidden side effects;
+planning/planning-use-case-map.md
+planning/documentation/command-creation-workflow.md
+planning/documentation/tampermonkey-command-projection-workflow.md
+other linked command owner workflows/examples
+```
+
+## 3. Included Full Helper
+
+The included userscript provides:
+
+```text
+- draggable helper panel;
+- command search/list;
+- one-click insertion into ChatGPT prompt textarea/contenteditable;
+- button labels rendered as <englishName> · <label>;
+- full inserted command bodies with command, english_name, command_family, source_of_truth, route_read_rule, key_reminders and user_target;
 - no repo writes, network calls, commits or pushes.
 ```
 
-## 4. Starter Template
+## 4. Adaptation Rule For Another Project
 
-A minimal starter template lives at:
+A project copying `planning/documentation/` can use the full helper as the starting script.
+
+Before using it as a project-specific helper, verify:
 
 ```text
-planning/documentation/tools/tampermonkey/chat-command-palette.starter.user.js
+1. The project root UCM exists.
+2. Each command in COMMANDS exists in the project root UCM or is being created in the same approved batch.
+3. Commands that do not apply to the target project are removed.
+4. source_of_truth points to the target project's real route/owner docs.
+5. @name and @namespace are adapted if needed.
+6. The helper remains projection-only.
 ```
-
-It is intentionally generic and should be copied/adapted into the target project's `tools/tampermonkey/` folder.
 
 ## 5. Do Not
 
 ```text
-- Do not treat this reusable tool note as command authority.
-- Do not copy Enman command history as target-project config.
-- Do not add project-local commands here; add them to the project root UCM and project-local userscript.
-- Do not keep the starter template unadapted if the project has real command routes.
+- Do not create a second tracked local `tools/tampermonkey/` copy by default.
+- Do not treat this helper as command authority.
+- Do not add project-only command semantics here without a UCM route.
+- Do not keep both `chat-command-palette.starter.user.js` and `chat-command-palette.user.js` as competing reusable helpers.
+- Do not use the helper to write to the repo or perform network calls.
 ```

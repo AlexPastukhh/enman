@@ -2696,3 +2696,45 @@ Follow-ups:
   If any removed legacy path still appears in active docs after diff review, handle it as a targeted stale-reference cleanup before starting the next planning slice.
 Notes:
   This step is intended to be committed together with the prior deletion-only cleanup if those deletions are still staged locally. Do not restore staged deletions before applying this package.
+
+
+### 2026-06-13 - Moved full Tampermonkey helper into reusable docs layer
+
+Date:
+  2026-06-13
+Action:
+  Removed the tracked project-local `tools/tampermonkey/` helper files and replaced the reusable starter with one full reusable Tampermonkey helper under `planning/documentation/tools/tampermonkey/`.
+Type:
+  reusable documentation-layer tool consolidation / Tampermonkey projection cleanup
+Status:
+  prepared
+Why:
+  The reusable documentation layer is intended to be copyable into another project without requiring a separate project-local tracked Tampermonkey implementation. Keeping both local `tools/tampermonkey/` and reusable starter/full helper copies creates competing helper sources.
+Changed files:
+  - planning/documentation/tools/tampermonkey/chat-command-palette.user.js
+  - planning/documentation/tools/tampermonkey/README.md
+  - planning/documentation/tampermonkey-command-projection-workflow.md
+  - planning/documentation/command-creation-workflow.md
+  - planning/documentation/README.md
+  - planning/documentation/PORTABLE-STARTER-KIT.md
+  - planning/root-source-sync-register.md
+  - planning/documentation-action-log.md
+Deleted files:
+  - tools/tampermonkey/README.md
+  - tools/tampermonkey/IMPLEMENTATION-NOTES.md
+  - tools/tampermonkey/chat-command-palette.user.js
+  - planning/documentation/tools/tampermonkey/chat-command-palette.starter.user.js
+Updates:
+  - Replaced starter-only helper guidance with a reusable full userscript.
+  - Removed default project-local `tools/tampermonkey/` placement from reusable projection workflow.
+  - Updated command creation workflow to point Tampermonkey projection at reusable docs-layer helper files.
+  - Updated root register to remove local helper rows and add reusable full helper row.
+Not changed:
+  - No command semantics changed.
+  - UCM remains source of truth for command routes.
+  - Tampermonkey remains projection only.
+  - No slice/testing source refactor changes.
+Follow-ups:
+  After applying, paste staged diff for review and verify no `tools/tampermonkey/` tracked files remain.
+Notes:
+  If a future project intentionally forks the reusable helper, document the fork as project-local implementation and keep UCM/owner docs as semantic authority.
